@@ -19,6 +19,7 @@ RCD
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
@@ -45,7 +46,7 @@ RCD
 			user.drop_item()
 			del(W)
 			matter += 10
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
 			desc = "A RCD. It currently holds [matter]/30 matter-units."
 			return
@@ -53,7 +54,7 @@ RCD
 
 	attack_self(mob/user)
 		//Change the mode
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		switch(mode)
 			if(1)
 				mode = 2
@@ -75,11 +76,13 @@ RCD
 				return
 
 	proc/activate()
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 
 
 	afterattack(atom/A, mob/user)
 		if(disabled && !isrobot(user))
+			return 0
+		if(get_dist(user,A)>1)
 			return 0
 		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 			return 0
@@ -99,7 +102,7 @@ RCD
 				if(istype(A, /turf/simulated/floor))
 					if(checkResource(3, user))
 						user << "Building Wall ..."
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 20))
 							if(!useResource(3, user)) return 0
 							activate()
@@ -111,7 +114,7 @@ RCD
 				if(istype(A, /turf/simulated/floor))
 					if(checkResource(10, user))
 						user << "Building Airlock..."
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							if(!useResource(10, user)) return 0
 							activate()
@@ -127,7 +130,7 @@ RCD
 						return 0
 					if(checkResource(5, user))
 						user << "Deconstructing Wall..."
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 40))
 							if(!useResource(5, user)) return 0
 							activate()
@@ -138,7 +141,7 @@ RCD
 				if(istype(A, /turf/simulated/floor))
 					if(checkResource(5, user))
 						user << "Deconstructing Floor..."
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							if(!useResource(5, user)) return 0
 							activate()
@@ -149,7 +152,7 @@ RCD
 				if(istype(A, /obj/machinery/door/airlock))
 					if(checkResource(10, user))
 						user << "Deconstructing Airlock..."
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							if(!useResource(10, user)) return 0
 							activate()
@@ -165,7 +168,7 @@ RCD
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "An RCD. It currently holds [matter]/30 matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
@@ -197,3 +200,4 @@ RCD
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000
+	w_type = RECYK_ELECTRONIC

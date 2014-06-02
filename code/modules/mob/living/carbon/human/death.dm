@@ -20,7 +20,10 @@
 			E.droplimb(1,1)
 
 	flick("gibbed-h", animation)
-	hgibs(loc, viruses, dna)
+	if(species)
+		hgibs(loc, viruses, dna, species.flesh_color, species.blood_color)
+	else
+		hgibs(loc, viruses, dna)
 
 	spawn(15)
 		if(animation)	del(animation)
@@ -57,10 +60,10 @@
 	//Handle brain slugs.
 	var/datum/organ/external/head = get_organ("head")
 	var/mob/living/simple_animal/borer/B
-
-	for(var/I in head.implants)
-		if(istype(I,/mob/living/simple_animal/borer))
-			B = I
+	if(head && istype(head))
+		for(var/I in head.implants)
+			if(istype(I,/mob/living/simple_animal/borer))
+				B = I
 	if(B)
 		if(!B.ckey && ckey && B.controlling)
 			B.ckey = ckey
@@ -74,8 +77,6 @@
 		verbs -= /mob/living/carbon/proc/release_control
 
 	//Check for heist mode kill count.
-	// REMOVED as requested.
-	/*
 	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist) ) )
 		//Check for last assailant's mutantrace.
 		/*if( LAssailant && ( istype( LAssailant,/mob/living/carbon/human ) ) )
@@ -83,7 +84,11 @@
 			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
 		//world << "Vox kills: [vox_kills]"
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
-	*/
+	if(ishuman(LAssailant))
+		var/mob/living/carbon/human/H=LAssailant
+		if(H.mind)
+			H.mind.kills += "[name] ([ckey])"
+
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
@@ -120,7 +125,7 @@
 	return
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(HUSK in mutations)	return
+	if(M_HUSK in mutations)	return
 
 	if(f_style)
 		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
@@ -128,7 +133,7 @@
 		h_style = "Bald"
 	update_hair(0)
 
-	mutations.Add(HUSK)
+	mutations.Add(M_HUSK)
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	update_body(0)
 	update_mutantrace()
@@ -136,5 +141,5 @@
 
 /mob/living/carbon/human/proc/Drain()
 	ChangeToHusk()
-	mutations |= NOCLONE
+	mutations |= M_NOCLONE
 	return

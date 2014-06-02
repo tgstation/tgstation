@@ -70,7 +70,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 /obj/machinery/requests_console/New()
 	name = "[department] Requests Console"
-	allConsoles += src
+	allConsoles.Add(src)
 	//req_console_departments += department
 	switch(departmentType)
 		if(1)
@@ -105,6 +105,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			if(!("[department]" in req_console_information))
 				req_console_information += department
 
+	return ..()
 
 /obj/machinery/requests_console/attack_hand(user as mob)
 	if(..(user))

@@ -22,8 +22,10 @@ hr {
 	border: 1px solid #161616;
 	padding: 0px 4px 4px 4px;
 	margin: 0 2px 2px 0;
-	cursor: default;
+    cursor:default;
+	white-space: nowrap;
 }
+
 .hasIcon {
 	padding: 0px 4px 4px 0px;
 }
@@ -42,7 +44,7 @@ a.white, a.white:link, a.white:visited, a.white:active {
 	border: 1px solid #161616;
 	padding: 1px 4px 1px 4px;
 	margin: 0 2px 0 0;
-	cursor: default;
+    cursor:default;
 }
 a.white:hover {
 	color: #ffffff;
@@ -77,7 +79,7 @@ li {
 	padding: 0 0 2px 0;
 }
 img, a img {
-	border-style: none;
+    border-style:none;
 }
 h1, h2, h3, h4, h5, h6 {
 	margin: 0;
@@ -138,8 +140,24 @@ h4 {
 	clear: both;
 	padding: 8px;
 }
+#uiNoJavaScript {
+    position: relative;
+    background: url(uiNoticeBackground.jpg) 50% 50%;
+    color: #000000;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+    padding: 3px 4px 3px 4px;
+    margin: 4px 0 4px 0;
+}
+
+.white {
+	color: white;
+	font-weight: bold;
+}
+
 .good {
-	color: #4f7529;
+	color: #79B33F; /*#4f7529;*/
 	font-weight: bold;
 }
 .average {
@@ -159,7 +177,7 @@ h4 {
 .notice {
 	position: relative;
 	background: url(uiNoticeBackground.jpg) 50% 50%;
-	color: #15345A;
+    color: #000000;
 	font-size: 12px;
 	font-style: italic;
 	font-weight: bold;
@@ -176,6 +194,8 @@ h4 {
 	width: 16px;
 	height: 16px;
 }
+
+
 div.notice {
 	clear: both;
 }
@@ -190,6 +210,8 @@ div.notice {
 	margin: 4px 0 0 0;
 	clear: both;
 }
+
+
 .itemLabel {
 	float: left;
 	width: 30%;
@@ -204,6 +226,13 @@ div.notice {
 	width: 20%;
 	color: #e9c183;
 }
+.itemLabelWide {
+	float: left;
+	width: 45%;
+	color: #e9c183;
+}
+
+
 .itemContentWide {
 	float: left;
 	width: 79%;
@@ -212,6 +241,11 @@ div.notice {
 	float: left;
 	width: 33%;
 }
+.itemContentMedium {
+	float: left;
+	width: 55%;
+}
+
 .statusDisplay {
 	background: #000000;
 	color: #ffffff;
@@ -219,6 +253,17 @@ div.notice {
 	padding: 4px;
 	margin: 3px 0;
 }
+.statusDisplayRecords {
+	background: #000000;
+	color: #ffffff;
+	border: 1px solid #40628a;
+	padding: 4px;
+	margin: 3px 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+
 .statusLabel {
 	width: 138px;
 	float: left;
@@ -304,19 +349,54 @@ div.notice {
 	width: 110px;
 	float: left;
 }
+.fixedLeftWide {
+	width: 165px;
+	float: left;
+}
+
+.fixedLeftWider{
+	width: 220px;
+	float: left;
+}
+
+.fixedLeftWidest{
+	width: 250px;
+	float: left;
+}
+
 .floatRight {
 	float: right;
 }
 
+/* Used in PDA */
+
+
+.wholeScreen
+{
+  position: absolute
+  color: #517087;
+	font-size: 16px;
+	font-weight: bold;
+  text-align:center;
+}
+
+.pdalink
+{
+	float: left;
+    white-space:nowrap;
+}
+
 /* DNA Modifier UI (dna_modifier.tmpl) */
 
-.dnaBlock {
+.dnaBlock
+{
 	float: left;
 	width: 90px;
 	padding: 0 0 5px 0;
 }
 
-.dnaBlockNumber {
+.dnaBlockNumber
+{
 	font-family: Fixed, monospace;
 	float: left;
 	color: #ffffff;
@@ -327,7 +407,8 @@ div.notice {
 	text-align: center;
 }
 
-.dnaSubBlock {
+.dnaSubBlock
+{
 	font-family: Fixed, monospace;
 	float: left;
 	padding: 0;
@@ -336,7 +417,8 @@ div.notice {
 	text-align: center;
 }
 
-.mask {
+.mask
+{
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -345,7 +427,8 @@ div.notice {
 	background: url(uiMaskBackground.png);
 }
 
-.maskContent {
+.maskContent
+{
 	width: 100%;
 	height: 200px;
 	margin: 200px 0;
@@ -367,4 +450,81 @@ div.notice {
 .link.red:HOVER {
 	color: #ffffff;
 	background: #FF6060;
+}
+
+
+/* Table stuffs for power monitor */
+table.pmon 
+{ 
+border:2px solid RoyalBlue;
+}
+
+table.pmon td, table.pmon th 
+{ 
+border-bottom:1px dotted black;
+padding:0px 5px 0px 5px; 
+}
+
+
+
+/* Table Stuffs for manifest*/
+
+th.command
+{
+	background: #3333FF;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+th.sec
+{
+	background: #8e0000;
+	font-weight: bold;
+	color: #ffffff;
+}
+th.med
+{
+	background: #006600;
+	font-weight: bold;
+	color: #ffffff;
+}
+th.eng
+{
+	background: #b27300;
+	font-weight: bold;
+	color: #ffffff;
+}
+th.sci
+{
+	background: #a65ba6;
+	font-weight: bold;
+	color: #ffffff;
+}
+th.civ
+{
+	background: #a32800;
+	font-weight: bold;
+	color: #ffffff;
+}
+th.misc
+{
+	background: #666666;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.fixed {
+	float: none;
+	display: inline; /* inline-block */
+	padding: 0px 3px 3px 0px;
+	line-height: 50%;
+	height: 16px;
+	vertical-align: middle;
+	margin: 0;
+}
+
+.fixed .uiIcon16 {
+	float: none;
+	display: inline; /* inline-block */
+	vertical-align: middle;
 }

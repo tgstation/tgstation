@@ -21,7 +21,7 @@
 	New()
 		..()
 		spawn(1200)// 2 minutes
-			del(src)
+			qdel(src)
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -32,6 +32,7 @@
 	layer = 2
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dirt"
+	mouse_opacity = 0
 
 /obj/effect/decal/cleanable/flour
 	name = "flour"
@@ -96,9 +97,10 @@
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
 
-	Del()
+	Destroy()
 		for(var/datum/disease/D in viruses)
 			D.cure(0)
+			D.holder = null
 		..()
 
 /obj/effect/decal/cleanable/vomit/HasEntered(mob/living/carbon/human/perp)

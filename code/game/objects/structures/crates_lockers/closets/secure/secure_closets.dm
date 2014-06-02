@@ -5,9 +5,8 @@
 	icon_state = "secure1"
 	density = 1
 	opened = 0
-	var/locked = 1
-	var/broken = 0
-	var/large = 1
+	large = 1
+	locked = 1
 	icon_closed = "secure"
 	var/icon_locked = "secure1"
 	icon_opened = "secureopen"
@@ -17,7 +16,8 @@
 	health = 200
 
 /obj/structure/closet/secure_closet/can_open()
-	..()
+	if(!..())
+		return 0
 	if(src.locked)
 		return 0
 	return 1
@@ -81,8 +81,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
+			playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(get_turf(src), "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 3))
 				O.show_message("<span class='warning'>The locker has been sliced open by [user] with an energy blade!</span>", 1, "You hear metal being sliced and sparks flying.", 2)
 		else
@@ -115,6 +115,8 @@
 				M.client.perspective = MOB_PERSPECTIVE
 		src.icon_state = src.icon_opened
 		src.opened = 1
+		src.density = 0
+		playsound(get_turf(src), 'sound/machines/click.ogg', 15, 1, -3)
 	else
 		user << "<span class='notice'>The locker is locked!</span>"
 		if(world.time > lastbang+5)

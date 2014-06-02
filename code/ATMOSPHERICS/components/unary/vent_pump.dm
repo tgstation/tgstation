@@ -6,7 +6,6 @@
 	desc = "Has a valve and pump attached to it"
 	use_power = 1
 
-	var/area/initial_loc
 	level = 1
 	var/area_uid
 	var/id_tag = null
@@ -44,17 +43,14 @@
 			icon_state = "in"
 
 	New()
-		initial_loc = get_area(loc)
-		if (initial_loc.master)
-			initial_loc = initial_loc.master
-		area_uid = initial_loc.uid
+		..()
+		area_uid = areaMaster.uid
 		if (!id_tag)
 			assign_uid()
 			id_tag = num2text(uid)
 		if(ticker && ticker.current_state == 3)//if the game is running
 			src.initialize()
 			src.broadcast_status()
-		..()
 
 	high_volume
 		name = "Large Air Vent"
@@ -79,6 +75,7 @@
 
 	process()
 		..()
+		CHECK_DISABLED(vents)
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if (!node)
@@ -89,6 +86,9 @@
 
 		if(welded)
 			return 0
+
+		// New GC does this sometimes
+		if(!loc) return
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/environment_pressure = environment.return_pressure()
@@ -101,7 +101,7 @@
 			if(pressure_checks&2)
 				pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
 
-			if(pressure_delta > 0)
+			if(pressure_delta > 0.1)
 				if(air_contents.temperature > 0)
 					var/transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
@@ -119,7 +119,7 @@
 			if(pressure_checks&2)
 				pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
-			if(pressure_delta > 0)
+			if(pressure_delta > 0.1)
 				if(environment.temperature > 0)
 					var/transfer_moles = pressure_delta*air_contents.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
 
@@ -164,11 +164,11 @@
 				"sigtype" = "status"
 			)
 
-			if(!initial_loc.air_vent_names[id_tag])
-				var/new_name = "[initial_loc.name] Vent Pump #[initial_loc.air_vent_names.len+1]"
-				initial_loc.air_vent_names[id_tag] = new_name
-				src.name = new_name
-			initial_loc.air_vent_info[id_tag] = signal.data
+			if(!areaMaster.air_vent_names[id_tag])
+				var/new_name = "[areaMaster.name] Vent Pump #[areaMaster.air_vent_names.len+1]"
+				areaMaster.air_vent_names[id_tag] = new_name
+				name = new_name
+			areaMaster.air_vent_info[id_tag] = signal.data
 
 			radio_connection.post_signal(src, signal, radio_filter_out)
 
@@ -191,67 +191,80 @@
 		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 			return 0
 
-		if(signal.data["purge"] != null)
+		var/handled=0
+		if("purge" in signal.data)
 			pressure_checks &= ~1
 			pump_direction = 0
+			handled=1
 
-		if(signal.data["stabalize"] != null)
+		if("stabilize" in signal.data)
 			pressure_checks |= 1
 			pump_direction = 1
+			handled=1
 
-		if(signal.data["power"] != null)
+		if("power" in signal.data)
 			on = text2num(signal.data["power"])
+			handled=1
 
-		if(signal.data["power_toggle"] != null)
+		if("power_toggle" in signal.data)
 			on = !on
+			handled=1
 
-		if(signal.data["checks"] != null)
+		if("checks" in signal.data)
 			pressure_checks = text2num(signal.data["checks"])
+			handled=1
 
-		if(signal.data["checks_toggle"] != null)
+		if("checks_toggle" in signal.data)
 			pressure_checks = (pressure_checks?0:3)
+			handled=1
 
-		if(signal.data["direction"] != null)
+		if("direction" in signal.data)
 			pump_direction = text2num(signal.data["direction"])
+			handled=1
 
-		if(signal.data["set_internal_pressure"] != null)
+		if("set_internal_pressure" in signal.data)
 			internal_pressure_bound = between(
 				0,
 				text2num(signal.data["set_internal_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
-		if(signal.data["set_external_pressure"] != null)
+		if("set_external_pressure" in signal.data)
 			external_pressure_bound = between(
 				0,
 				text2num(signal.data["set_external_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
-		if(signal.data["adjust_internal_pressure"] != null)
+		if("adjust_internal_pressure" in signal.data)
 			internal_pressure_bound = between(
 				0,
 				internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
-		if(signal.data["adjust_external_pressure"] != null)
+		if("adjust_external_pressure" in signal.data)
 			external_pressure_bound = between(
 				0,
 				external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
+			handled=1
 
-		if(signal.data["init"] != null)
+		if("init" in signal.data)
 			name = signal.data["init"]
 			return
 
-		if(signal.data["status"] != null)
+		if("status" in signal.data)
 			spawn(2)
 				broadcast_status()
 			return //do not update_icon
 
-			//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
+		if(!handled)
+			testing("\[[world.timeofday]\]: vent_pump/receive_signal: unknown command \n[signal.debug_print()]")
 		spawn(2)
 			broadcast_status()
 		update_icon()
@@ -271,27 +284,6 @@
 			on = 0
 		return
 
-	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
-			if (WT.remove_fuel(0,user))
-				user << "\blue Now welding the vent."
-				if(do_after(user, 20))
-					if(!src || !WT.isOn()) return
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-					if(!welded)
-						user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
-						welded = 1
-						update_icon()
-					else
-						user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
-						welded = 0
-						update_icon()
-				else
-					user << "\blue The welding tool needs to be on to start this task."
-			else
-				user << "\blue You need more welding fuel to complete this task."
-				return 1
 	examine()
 		set src in oview(1)
 		..()
@@ -305,7 +297,41 @@
 			stat |= NOPOWER
 		update_icon()
 
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	interact(mob/user as mob)
+		update_multitool_menu(user)
+
+	multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+		return {"
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
+			<li>[format_tag("ID Tag","id_tag","set_id")]</li>
+		</ul>
+		"}
+
+	attackby(var/obj/item/W as obj, var/mob/user as mob)
+		if(istype(W, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = W
+			if (WT.remove_fuel(0,user))
+				user << "\blue Now welding the vent."
+				if(do_after(user, 20))
+					if(!src || !WT.isOn()) return
+					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
+					if(!welded)
+						user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
+						welded = 1
+						update_icon()
+					else
+						user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
+						welded = 0
+						update_icon()
+				else
+					user << "\blue The welding tool needs to be on to start this task."
+			else
+				user << "\blue You need more welding fuel to complete this task."
+				return 1
+		if(istype(W, /obj/item/device/multitool))
+			update_multitool_menu(user)
+			return 1
 		if (!istype(W, /obj/item/weapon/wrench))
 			return ..()
 		if (!(stat & NOPOWER) && on)
@@ -321,7 +347,7 @@
 			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \
@@ -331,9 +357,39 @@
 			new /obj/item/pipe(loc, make_from=src)
 			del(src)
 
-/obj/machinery/atmospherics/unary/vent_pump/Del()
-	if(initial_loc)
-		initial_loc.air_vent_info -= id_tag
-		initial_loc.air_vent_names -= id_tag
+/obj/machinery/atmospherics/unary/vent_pump/Destroy()
+	areaMaster.air_vent_info.Remove(id_tag)
+	areaMaster.air_vent_names.Remove(id_tag)
 	..()
-	return
+
+/obj/machinery/atmospherics/unary/vent_pump/Topic(href, href_list)
+	if(..())
+		return
+
+	if(!issilicon(usr))
+		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			return
+
+	var/obj/item/device/multitool/P = get_multitool(usr)
+	if(!P || !istype(P))
+		return
+
+	if("set_id" in href_list)
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+		if(newid)
+			id_tag = newid
+			initialize()
+	if("set_freq" in href_list)
+		var/newfreq=frequency
+		if(href_list["set_freq"]!="-1")
+			newfreq=text2num(href_list["set_freq"])
+		else
+			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, network) as null|num
+		if(newfreq)
+			if(findtext(num2text(newfreq), "."))
+				newfreq *= 10 // shift the decimal one place
+			if(newfreq < 10000)
+				frequency = newfreq
+				initialize()
+
+	update_multitool_menu(usr)

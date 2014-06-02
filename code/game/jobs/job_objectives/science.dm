@@ -20,12 +20,12 @@
 		//world << "UNABLE TO FIND A GODDAMN RND SERVER. FUCK."
 		return
 	for(var/datum/tech/T in server.files.possible_tech)
-		if(T.max_level==0) // Ignore illegal tech, etc
+		if(T.goal_level==0) // Ignore illegal tech, etc
 			continue
 		var/datum/tech/KT  = locate(T.type, server.files.known_tech)
 		if(!KT)
 			return 0 // Obviously haven't maxed everything if we don't know a tech.
-		if(KT.level<T.max_level)
+		if(KT.level<T.goal_level)
 			return 0
 	return 1
 
@@ -43,7 +43,7 @@
 
 // Mek MoMMI
 /datum/job_objective/make_mommi
-	completion_payment=150
+	completion_payment=350
 	per_unit=1
 
 /datum/job_objective/make_mommi/get_description()

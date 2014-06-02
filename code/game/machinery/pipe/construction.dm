@@ -25,10 +25,12 @@ Buildable meters
 #define PIPE_MANIFOLD4W			20
 #define PIPE_CAP				21
 #define PIPE_THERMAL_PLATE		22
+#define PIPE_INJECTOR    		23
+#define PIPE_DP_VENT    		24
 
 /obj/item/pipe_spawner
-	name = "Used for placing piping parts on the map."
-	desc = "A pipe"
+	name = "Pipe Spawner"
+	desc = "Used for placing piping parts on the map."
 
 	var/pipe_type = 0
 	icon = 'icons/obj/pipe-item.dmi'
@@ -116,6 +118,10 @@ Buildable meters
 			src.pipe_type = PIPE_CAP
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/thermal_plate))
 			src.pipe_type = PIPE_THERMAL_PLATE
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/outlet_injector))
+			src.pipe_type = PIPE_INJECTOR
+		else if(istype(make_from, /obj/machinery/atmospherics/binary/dp_vent_pump))
+			src.pipe_type = PIPE_DP_VENT
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
@@ -126,6 +132,33 @@ Buildable meters
 
 //update the name and icon of the pipe item depending on the type
 
+var/global/list/pipeID2State = list(
+	"simple",
+	"simple",
+	"he",
+	"he",
+	"connector",
+	"manifold",
+	"junction",
+	"uvent",
+	"mvalve",
+	"pump",
+	"scrubber",
+	"insulated",
+	"insulated",
+	"filter",
+	"mixer",
+	"passivegate",
+	"volumepump",
+	"heunary",
+	"dvalve",
+	"mtvalve",
+	"manifold4w",
+	"cap",
+	"thermalplate",
+	"injector",
+	"binary vent",
+)
 /obj/item/pipe/proc/update()
 	var/list/nlist = list( \
 		"pipe", \
@@ -151,35 +184,12 @@ Buildable meters
 		"4-way manifold", \
 		"pipe cap", \
 		"thermal plate", \
+		"injector", \
+		"dual-port vent" \
 	)
 	name = nlist[pipe_type+1] + " fitting"
-	var/list/islist = list( \
-		"simple", \
-		"simple", \
-		"he", \
-		"he", \
-		"connector", \
-		"manifold", \
-		"junction", \
-		"uvent", \
-		"mvalve", \
-		"pump", \
-		"scrubber", \
-		"insulated", \
-		"insulated", \
-		"filter", \
-		"mixer", \
-		"passivegate", \
-		"volumepump", \
-		"heunary", \
-		"dvalve", \
-		"mtvalve", \
-		"manifold4w", \
-		"cap", \
-		"thermalplate", \
-	)
 	icon = 'icons/obj/pipe-item.dmi'
-	icon_state = islist[pipe_type + 1]
+	icon_state = pipeID2State[pipe_type + 1]
 
 //called when a turf is attacked with a pipe item
 // place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
@@ -241,7 +251,7 @@ Buildable meters
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
 			return dir //dir|acw
-		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE)
+		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE,PIPE_INJECTOR)
 			return dir
 		if(PIPE_MANIFOLD4W)
 			return dir|flip|cw|acw
@@ -310,374 +320,88 @@ Buildable meters
 			return 1
 	// no conflicts found
 
-	var/pipefailtext = "\red There's nothing to connect this pipe section to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
-
+	var/obj/machinery/atmospherics/P
 	switch(pipe_type)
 		if(PIPE_SIMPLE_STRAIGHT, PIPE_SIMPLE_BENT)
-			var/obj/machinery/atmospherics/pipe/simple/P = new( src.loc )
-			P.dir = src.dir
-			P.initialize_directions = pipe_dir
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			if (!P)
-				usr << pipefailtext
-				return 1
-			P.build_network()
-			if (P.node1)
-				P.node1.initialize()
-				P.node1.build_network()
-			if (P.node2)
-				P.node2.initialize()
-				P.node2.build_network()
+			P=new/obj/machinery/atmospherics/pipe/simple(loc)
 
 		if(PIPE_HE_STRAIGHT, PIPE_HE_BENT)
-			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/P = new ( src.loc )
-			P.dir = src.dir
-			P.initialize_directions = 0
-			P.initialize_directions_he = pipe_dir
-			//var/turf/T = P.loc
-			//P.level = T.intact ? 2 : 1
-			P.initialize()
-			if (!P)
-				usr << pipefailtext
-				return 1
-			P.build_network()
-			if (P.node1)
-				P.node1.initialize()
-				P.node1.build_network()
-			if (P.node2)
-				P.node2.initialize()
-				P.node2.build_network()
+			P=new/obj/machinery/atmospherics/pipe/simple/heat_exchanging(loc)
 
 		if(PIPE_CONNECTOR)		// connector
-			var/obj/machinery/atmospherics/portables_connector/C = new( src.loc )
-			C.dir = dir
-			C.initialize_directions = pipe_dir
-			if (pipename)
-				C.name = pipename
-			var/turf/T = C.loc
-			C.level = T.intact ? 2 : 1
-			C.initialize()
-			C.build_network()
-			if (C.node)
-				C.node.initialize()
-				C.node.build_network()
-
+			P=new/obj/machinery/atmospherics/portables_connector(loc)
 
 		if(PIPE_MANIFOLD)		//manifold
-			var/obj/machinery/atmospherics/pipe/manifold/M = new( src.loc )
-			M.dir = dir
-			M.initialize_directions = pipe_dir
-			//M.New()
-			var/turf/T = M.loc
-			M.level = T.intact ? 2 : 1
-			M.initialize()
-			if (!M)
-				usr << "There's nothing to connect this manifold to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
-				return 1
-			M.build_network()
-			if (M.node1)
-				M.node1.initialize()
-				M.node1.build_network()
-			if (M.node2)
-				M.node2.initialize()
-				M.node2.build_network()
-			if (M.node3)
-				M.node3.initialize()
-				M.node3.build_network()
+			P=new /obj/machinery/atmospherics/pipe/manifold(loc)
 
 		if(PIPE_MANIFOLD4W)		//4-way manifold
-			var/obj/machinery/atmospherics/pipe/manifold4w/M = new( src.loc )
-			M.dir = dir
-			M.initialize_directions = pipe_dir
-			//M.New()
-			var/turf/T = M.loc
-			M.level = T.intact ? 2 : 1
-			M.initialize()
-			if (!M)
-				usr << "There's nothing to connect this manifold to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
-				return 1
-			M.build_network()
-			if (M.node1)
-				M.node1.initialize()
-				M.node1.build_network()
-			if (M.node2)
-				M.node2.initialize()
-				M.node2.build_network()
-			if (M.node3)
-				M.node3.initialize()
-				M.node3.build_network()
-			if (M.node4)
-				M.node4.initialize()
-				M.node4.build_network()
+			P=new /obj/machinery/atmospherics/pipe/manifold4w(loc)
 
 		if(PIPE_JUNCTION)
-			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/P = new ( src.loc )
-			P.dir = src.dir
-			P.initialize_directions = src.get_pdir()
-			P.initialize_directions_he = src.get_hdir()
-			//var/turf/T = P.loc
-			//P.level = T.intact ? 2 : 1
-			P.initialize()
-			if (!P)
-				usr << "There's nothing to connect this junction to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
-				return 1
-			P.build_network()
-			if (P.node1)
-				P.node1.initialize()
-				P.node1.build_network()
-			if (P.node2)
-				P.node2.initialize()
-				P.node2.build_network()
+			P=new /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction( src.loc )
 
 		if(PIPE_UVENT)		//unary vent
-			var/obj/machinery/atmospherics/unary/vent_pump/V = new( src.loc )
-			V.dir = dir
-			V.initialize_directions = pipe_dir
-			if (pipename)
-				V.name = pipename
-			var/turf/T = V.loc
-			V.level = T.intact ? 2 : 1
-			V.initialize()
-			V.build_network()
-			if (V.node)
-				V.node.initialize()
-				V.node.build_network()
-
+			P=new /obj/machinery/atmospherics/unary/vent_pump( src.loc )
 
 		if(PIPE_MVALVE)		//manual valve
-			var/obj/machinery/atmospherics/valve/V = new( src.loc)
-			V.dir = dir
-			V.initialize_directions = pipe_dir
-			if (pipename)
-				V.name = pipename
-			var/turf/T = V.loc
-			V.level = T.intact ? 2 : 1
-			V.initialize()
-			V.build_network()
-			if (V.node1)
-//					world << "[V.node1.name] is connected to valve, forcing it to update its nodes."
-				V.node1.initialize()
-				V.node1.build_network()
-			if (V.node2)
-//					world << "[V.node2.name] is connected to valve, forcing it to update its nodes."
-				V.node2.initialize()
-				V.node2.build_network()
+			P=new /obj/machinery/atmospherics/valve( src.loc )
 
-
-		if(PIPE_DVALVE)		//manual valve
-			var/obj/machinery/atmospherics/valve/digital/V = new( src.loc)
-			V.dir = dir
-			V.initialize_directions = pipe_dir
-			if (pipename)
-				V.name = pipename
-			var/turf/T = V.loc
-			V.level = T.intact ? 2 : 1
-			V.initialize()
-			V.build_network()
-			if (V.node1)
-//					world << "[V.node1.name] is connected to valve, forcing it to update its nodes."
-				V.node1.initialize()
-				V.node1.build_network()
-			if (V.node2)
-//					world << "[V.node2.name] is connected to valve, forcing it to update its nodes."
-				V.node2.initialize()
-				V.node2.build_network()
+		if(PIPE_DVALVE)		//digital valve
+			P=new /obj/machinery/atmospherics/valve/digital( src.loc )
 
 		if(PIPE_PUMP)		//gas pump
-			var/obj/machinery/atmospherics/binary/pump/P = new(src.loc)
-			P.dir = dir
-			P.initialize_directions = pipe_dir
-			if (pipename)
-				P.name = pipename
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			P.build_network()
-			if (P.node1)
-				P.node1.initialize()
-				P.node1.build_network()
-			if (P.node2)
-				P.node2.initialize()
-				P.node2.build_network()
+			P=new /obj/machinery/atmospherics/binary/pump( src.loc )
 
 		if(PIPE_GAS_FILTER)		//gas filter
-			var/obj/machinery/atmospherics/trinary/filter/P = new(src.loc)
-			P.dir = dir
-			P.initialize_directions = pipe_dir
-			if (pipename)
-				P.name = pipename
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			P.build_network()
-			if (P.node1)
-				P.node1.initialize()
-				P.node1.build_network()
-			if (P.node2)
-				P.node2.initialize()
-				P.node2.build_network()
-			if (P.node3)
-				P.node3.initialize()
-				P.node3.build_network()
+			P=new /obj/machinery/atmospherics/trinary/filter( src.loc )
 
-		if(PIPE_GAS_MIXER)		//gas filter
-			var/obj/machinery/atmospherics/trinary/mixer/P = new(src.loc)
-			P.dir = dir
-			P.initialize_directions = pipe_dir
-			if (pipename)
-				P.name = pipename
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			P.build_network()
-			if (P.node1)
-				P.node1.initialize()
-				P.node1.build_network()
-			if (P.node2)
-				P.node2.initialize()
-				P.node2.build_network()
-			if (P.node3)
-				P.node3.initialize()
-				P.node3.build_network()
+		if(PIPE_GAS_MIXER)		//gas mixer
+			P=new /obj/machinery/atmospherics/trinary/mixer( src.loc )
 
 		if(PIPE_SCRUBBER)		//scrubber
-			var/obj/machinery/atmospherics/unary/vent_scrubber/S = new(src.loc)
-			S.dir = dir
-			S.initialize_directions = pipe_dir
-			if (pipename)
-				S.name = pipename
-			var/turf/T = S.loc
-			S.level = T.intact ? 2 : 1
-			S.initialize()
-			S.build_network()
-			if (S.node)
-				S.node.initialize()
-				S.node.build_network()
+			P=new /obj/machinery/atmospherics/unary/vent_scrubber( src.loc )
 
 		if(PIPE_INSULATED_STRAIGHT, PIPE_INSULATED_BENT)
-			var/obj/machinery/atmospherics/pipe/simple/insulated/P = new( src.loc )
-			P.dir = src.dir
-			P.initialize_directions = pipe_dir
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			if (!P)
-				usr << pipefailtext
-				return 1
-			P.build_network()
-			if (P.node1)
-				P.node1.initialize()
-				P.node1.build_network()
-			if (P.node2)
-				P.node2.initialize()
-				P.node2.build_network()
+			P=new /obj/machinery/atmospherics/pipe/simple/insulated( src.loc )
 
 		if(PIPE_MTVALVE)		//manual t-valve
-			var/obj/machinery/atmospherics/tvalve/V = new(src.loc)
-			V.dir = dir
-			V.initialize_directions = pipe_dir
-			if (pipename)
-				V.name = pipename
-			var/turf/T = V.loc
-			V.level = T.intact ? 2 : 1
-			V.initialize()
-			V.build_network()
-			if (V.node1)
-				V.node1.initialize()
-				V.node1.build_network()
-			if (V.node2)
-				V.node2.initialize()
-				V.node2.build_network()
-			if (V.node3)
-				V.node3.initialize()
-				V.node3.build_network()
+			P=new /obj/machinery/atmospherics/tvalve(src.loc)
 
 		if(PIPE_CAP)
-			var/obj/machinery/atmospherics/pipe/cap/C = new(src.loc)
-			C.dir = dir
-			C.initialize_directions = pipe_dir
-			C.initialize()
-			C.build_network()
-			if(C.node)
-				C.node.initialize()
-				C.node.build_network()
+			P=new /obj/machinery/atmospherics/pipe/cap(src.loc)
 
 		if(PIPE_PASSIVE_GATE)		//passive gate
-			var/obj/machinery/atmospherics/binary/passive_gate/P = new(src.loc)
-			P.dir = dir
-			P.initialize_directions = pipe_dir
-			if (pipename)
-				P.name = pipename
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			P.build_network()
-			if (P.node1)
-				P.node1.initialize()
-				P.node1.build_network()
-			if (P.node2)
-				P.node2.initialize()
-				P.node2.build_network()
+			P=new /obj/machinery/atmospherics/binary/passive_gate(src.loc)
 
 		if(PIPE_VOLUME_PUMP)		//volume pump
-			var/obj/machinery/atmospherics/binary/volume_pump/P = new(src.loc)
-			P.dir = dir
-			P.initialize_directions = pipe_dir
-			if (pipename)
-				P.name = pipename
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			P.build_network()
-			if (P.node1)
-				P.node1.initialize()
-				P.node1.build_network()
-			if (P.node2)
-				P.node2.initialize()
-				P.node2.build_network()
+			P=new /obj/machinery/atmospherics/binary/volume_pump(src.loc)
 
 		if(PIPE_HEAT_EXCHANGE)		// heat exchanger
-			var/obj/machinery/atmospherics/unary/heat_exchanger/C = new( src.loc )
-			C.dir = dir
-			C.initialize_directions = pipe_dir
-			if (pipename)
-				C.name = pipename
-			var/turf/T = C.loc
-			C.level = T.intact ? 2 : 1
-			C.initialize()
-			C.build_network()
-			if (C.node)
-				C.node.initialize()
-				C.node.build_network()
+			P=new /obj/machinery/atmospherics/unary/heat_exchanger( src.loc )
 
 		if(PIPE_THERMAL_PLATE)		//unary vent
-			var/obj/machinery/atmospherics/unary/thermal_plate/P = new( src.loc )
-			P.dir = dir
-			P.initialize_directions = pipe_dir
-			if (pipename)
-				P.name = pipename
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			P.build_network()
-			if (P.node)
-				P.node.initialize()
-				P.node.build_network()
+			P=new /obj/machinery/atmospherics/unary/thermal_plate( src.loc )
 
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user.visible_message( \
-		"[user] fastens the [src].", \
-		"\blue You have fastened the [src].", \
-		"You hear a ratchet.")
-	del(src)	// remove the pipe item
+		if(PIPE_INJECTOR)		//unary vent
+			P=new /obj/machinery/atmospherics/unary/outlet_injector( src.loc )
 
-	return
+		if(PIPE_DP_VENT)		//volume pump
+			P=new /obj/machinery/atmospherics/binary/dp_vent_pump(src.loc)
+
+	if(P.buildFrom(usr,src))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message( \
+			"[user] fastens \the [src].", \
+			"\blue You have fastened \the [src].", \
+			"You hear a ratchet.")
+		del(src)	// remove the pipe item
+		return 0
+	else
+		// If the pipe's still around, nuke it.
+		if(P)
+			del(P)
+	return 1
 	 //TODO: DEFERRED
-
-// ensure that setterm() is called for a newly connected pipeline
-
 
 
 /obj/item/pipe_meter
@@ -698,30 +422,6 @@ Buildable meters
 		user << "\red You need to fasten it to a pipe"
 		return 1
 	new/obj/machinery/meter( src.loc )
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	user << "\blue You have fastened the meter to the pipe"
 	del(src)
-//not sure why these are necessary
-/*
-#undef PIPE_SIMPLE_STRAIGHT
-#undef PIPE_SIMPLE_BENT
-#undef PIPE_HE_STRAIGHT
-#undef PIPE_HE_BENT
-#undef PIPE_CONNECTOR
-#undef PIPE_MANIFOLD
-#undef PIPE_JUNCTION
-#undef PIPE_UVENT
-#undef PIPE_MVALVE
-#undef PIPE_DVALVE
-#undef PIPE_PUMP
-#undef PIPE_SCRUBBER
-#undef PIPE_INSULATED_STRAIGHT
-#undef PIPE_INSULATED_BENT
-#undef PIPE_GAS_FILTER
-#undef PIPE_GAS_MIXER
-#undef PIPE_PASSIVE_GATE
-#undef PIPE_VOLUME_PUMP
-#undef PIPE_OUTLET_INJECT
-#undef PIPE_MTVALVE
-//#undef PIPE_MANIFOLD4W
-*/

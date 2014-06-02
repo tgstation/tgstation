@@ -11,22 +11,42 @@
 	active_power_usage = 100
 	flags = OPENCONTAINER | NOREACT
 	var/operating = 0 // Is it on?
+	var/opened = 0.0
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
 	var/global/list/datum/recipe/available_recipes // List of the recipes you can use
 	var/global/list/acceptable_items // List of the items you can put in
 	var/global/list/acceptable_reagents // List of the reagents you can put in
 	var/global/max_n_of_items = 0
-
+	var/list/holdingitems = list()
+	var/limit = 100
 
 // see code/modules/food/recipes_microwave.dm for recipes
-
+//Cannot use tools - screwdriver and crowbar for recipes. Or at least fix things before you do
+//TODO - Get a maint panel sprite and J-J-Jam it in.
+//Biiiig Thanks to Kaze_Espada, SuperSayu, Jordie, MrPerson, and HUUUUGE thank you to Arancalos from #coderbus for patiently helping for hours, and practically doing it themselves, to get the microwaves to not have their stock parts as ingredients upon construction. May they enjoy their hard earned plunder.
+//HUUUUUUUGE thanks to D3athrow for getting it to the finish line
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
 /*******************
 *   Initialising
 ********************/
 
 /obj/machinery/microwave/New()
-	//..() //do not need this
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/microwave
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
 	reagents = new/datum/reagents(100)
 	reagents.my_atom = src
 	if (!available_recipes)
@@ -46,7 +66,6 @@
 /*******************
 *   Item Adding
 ********************/
-
 /obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.broken > 0)
 		if(src.broken == 2 && istype(O, /obj/item/weapon/screwdriver)) // If it's broken and they're using a screwdriver
@@ -95,6 +114,54 @@
 		else //Otherwise bad luck!!
 			user << "\red It's dirty!"
 			return 1
+	else if (istype(O, /obj/item/weapon/screwdriver))
+		if (!opened)
+			src.opened = 1
+			user << "You open the maintenance hatch of [src]."
+			//src.icon_state = "autolathe_t"
+		else
+			src.opened = 0
+			user << "You close the maintenance hatch of [src]."
+			//src.icon_state = "autolathe"
+			return 1
+	else if(istype(O, /obj/item/weapon/crowbar))
+		if (opened)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
+	else if(holdingitems && holdingitems.len >= limit)
+		usr << "The machine cannot hold anymore items."
+		return 1
+	else if(istype(O, /obj/item/weapon/storage/bag/plants))
+
+		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+			O.contents -= G
+			G.loc = src
+			contents += G
+			if(contents && contents.len >= limit) //Sanity checking so the microwave doesn't overfill
+				user << "You fill the Microwave to the brim."
+				break
+
+		if(!O.contents.len)
+			user << "You empty the plant bag into the Microwave."
+			src.updateUsrDialog()
+			return 0
+			if (!is_type_in_list(O.contents))
+				user << "\red Your [O] contains components unsuitable for cookery."
+				return 1
+
+		user.before_take_item(O)
+		O.loc = src
+		holdingitems += O
+		src.updateUsrDialog()
+		return 1
 	else if(is_type_in_list(O,acceptable_items))
 		if (contents.len>=max_n_of_items)
 			user << "\red This [src] is full of ingredients, you cannot put more."
@@ -109,6 +176,7 @@
 		//	user.before_take_item(O)	//This just causes problems so far as I can tell. -Pete
 			user.drop_item()
 			O.loc = src
+			contents += O
 			user.visible_message( \
 				"\blue [user] has added \the [O] to \the [src].", \
 				"\blue You add \the [O] to \the [src].")
@@ -300,7 +368,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/stop()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = "mw"
 	src.updateUsrDialog()
@@ -315,11 +383,11 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) // Play a splat sound
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) // Play a splat sound
 	src.icon_state = "mwbloody1" // Make it look dirty!!
 
 /obj/machinery/microwave/proc/muck_finish()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 	src.visible_message("\red The microwave gets covered in muck!")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
 	src.flags = null //So you can't add condiments

@@ -1,403 +1,165 @@
+#define CONNECTION_DIRECT 2
+#define CONNECTION_SPACE 4
+#define CONNECTION_INVALID 8
+
 /*
-This object is contained within zone/var/connections. It's generated whenever two turfs from different zones are linked.
-Indirect connections will not merge the two zones after they reach equilibrium.
+
+Overview:
+	Connections are made between turfs by air_master.connect(). They represent a single point where two zones converge.
+
+Class Vars:
+	A - Always a simulated turf.
+	B - A simulated or unsimulated turf.
+
+	zoneA - The archived zone of A. Used to check that the zone hasn't changed.
+	zoneB - The archived zone of B. May be null in case of unsimulated connections.
+
+	edge - Stores the edge this connection is in. Can reference an edge that is no longer processed
+		   after this connection is removed, so make sure to check edge.coefficient > 0 before re-adding it.
+
+Class Procs:
+
+	mark_direct()
+		Marks this connection as direct. Does not update the edge.
+		Called when the connection is made and there are no doors between A and B.
+		Also called by update() as a correction.
+
+	mark_indirect()
+		Unmarks this connection as direct. Does not update the edge.
+		Called by update() as a correction.
+
+	mark_space()
+		Marks this connection as unsimulated. Updating the connection will check the validity of this.
+		Called when the connection is made.
+		This will not be called as a correction, any connections failing a check against this mark are erased and rebuilt.
+
+	direct()
+		Returns 1 if no doors are in between A and B.
+
+	valid()
+		Returns 1 if the connection has not been erased.
+
+	erase()
+		Called by update() and connection_manager/erase_all().
+		Marks the connection as erased and removes it from its edge.
+
+	update()
+		Called by connection_manager/update_all().
+		Makes numerous checks to decide whether the connection is still valid. Erases it automatically if not.
+
 */
-#define CONNECTION_DIRECT   2
-#define CONNECTION_INDIRECT 1
-#define CONNECTION_CLOSED   0
 
-/connection
-	var/turf/simulated/A
-	var/turf/simulated/B
+/connection/var/turf/simulated/A
+/connection/var/turf/simulated/B
+/connection/var/zone/zoneA
+/connection/var/zone/zoneB
 
-	var/zone/zone_A
-	var/zone/zone_B
+/connection/var/connection_edge/edge
 
-	var/ref_A
-	var/ref_B
+/connection/var/state = 0
 
-	var/indirect = CONNECTION_DIRECT //If the connection is purely indirect, the zones should not join.
-
-	var/last_updated //The tick at which this was last updated.
-
-	var/no_zone_count = 0
-
-
-
-/connection/New(turf/T,turf/O)
-	A = T
-	B = O
-	if(A.zone && B.zone)
-		if(!A.zone.connections) A.zone.connections = list()
-		A.zone.connections += src
-		zone_A = A.zone
-		ref_A = "\ref[A]"
-
-		if(!B.zone.connections) B.zone.connections = list()
-		B.zone.connections += src
-		zone_B = B.zone
-		ref_B = "\ref[B]"
-
-		if(ref_A in air_master.turfs_with_connections)
-			var/list/connections = air_master.turfs_with_connections[ref_A]
-			connections.Add(src)
-		else
-			air_master.turfs_with_connections[ref_A] = list(src)
-
-		if(ref_B in air_master.turfs_with_connections)
-			var/list/connections = air_master.turfs_with_connections[ref_B]
-			connections.Add(src)
-		else
-			air_master.turfs_with_connections[ref_B] = list(src)
-
-		if(A.CanPass(null, B, 0, 0))
-
-			ConnectZones(A.zone, B.zone, 1)
-
-			if(A.HasDoor(B) || B.HasDoor(A))
-				indirect = CONNECTION_INDIRECT
-
-		else
-			ConnectZones(A.zone, B.zone)
-			indirect = CONNECTION_CLOSED
-
-
+/connection/New(turf/simulated/A, turf/simulated/B)
+	#ifdef ZASDBG
+	ASSERT(air_master.has_valid_zone(A))
+	//ASSERT(air_master.has_valid_zone(B))
+	#endif
+	src.A = A
+	src.B = B
+	zoneA = A.zone
+	if(!istype(B))
+		mark_space()
+		edge = air_master.get_edge(A.zone,B)
+		edge.add_connection(src)
 	else
-		world.log << "Attempted to create connection object for non-zone tiles: [T] ([T.x],[T.y],[T.z]) -> [O] ([O.x],[O.y],[O.z])"
-		del(src)
+		zoneB = B.zone
+		edge = air_master.get_edge(A.zone,B.zone)
+		edge.add_connection(src)
 
+/connection/proc/mark_direct()
+	state |= CONNECTION_DIRECT
+	//world << "Marked direct."
 
-/connection/Del()
-	//remove connections from master lists.
-	if(ref_B in air_master.turfs_with_connections)
-		var/list/connections = air_master.turfs_with_connections[ref_B]
-		connections.Remove(src)
+/connection/proc/mark_indirect()
+	state &= ~CONNECTION_DIRECT
+	//world << "Marked indirect."
 
-	if(ref_A in air_master.turfs_with_connections)
-		var/list/connections = air_master.turfs_with_connections[ref_A]
-		connections.Remove(src)
+/connection/proc/mark_space()
+	state |= CONNECTION_SPACE
 
-	//Remove connection from zones.
-	if(A)
-		if(A.zone && A.zone.connections)
-			A.zone.connections.Remove(src)
-			if(!A.zone.connections.len)
-				A.zone.connections = null
+/connection/proc/direct()
+	return (state & CONNECTION_DIRECT)
 
-	if(istype(zone_A) && (!A || A.zone != zone_A))
-		if(zone_A.connections)
-			zone_A.connections.Remove(src)
-			if(!zone_A.connections.len)
-				zone_A.connections = null
+/connection/proc/valid()
+	return !(state & CONNECTION_INVALID)
 
-	if(B)
-		if(B.zone && B.zone.connections)
-			B.zone.connections.Remove(src)
-			if(!B.zone.connections.len)
-				B.zone.connections = null
+/connection/proc/erase()
+	edge.remove_connection(src)
+	state |= CONNECTION_INVALID
+	//world << "Connection Erased: [state]"
 
-	if(istype(zone_B) && (!B || B.zone != zone_B))
-		if(zone_B.connections)
-			zone_B.connections.Remove(src)
-			if(!zone_B.connections.len)
-				zone_B.connections = null
-
-	//Disconnect zones while handling unusual conditions.
-	//	e.g. loss of a zone on a turf
-	if(A && A.zone && B && B.zone)
-		DisconnectZones(A.zone, B.zone)
-
-	//Finally, preform actual deletion.
-	. = ..()
-
-
-/connection/proc/ConnectZones(var/zone/zone_1, var/zone/zone_2, open = 0)
-
-	//Sanity checking
-	if(!istype(zone_1) || !istype(zone_2))
+/connection/proc/update()
+	//world << "Updated, \..."
+	if(!istype(A,/turf/simulated))
+		//world << "Invalid A."
+		erase()
 		return
 
-	//Handle zones connecting indirectly/directly.
-	if(open)
-
-		//Create the lists if necessary.
-		if(!zone_1.connected_zones)
-			zone_1.connected_zones = list()
-
-		if(!zone_2.connected_zones)
-			zone_2.connected_zones = list()
-
-		//Increase the number of connections between zones.
-		if(zone_2 in zone_1.connected_zones)
-			zone_1.connected_zones[zone_2]++
-		else
-			zone_1.connected_zones += zone_2
-			zone_1.connected_zones[zone_2] = 1
-
-		if(zone_1 in zone_2.connected_zones)
-			zone_2.connected_zones[zone_1]++
-		else
-			zone_2.connected_zones += zone_1
-			zone_2.connected_zones[zone_1] = 1
-
-	//Handle closed connections.
-	else
-
-		//Create the lists
-		if(!zone_1.closed_connection_zones)
-			zone_1.closed_connection_zones = list()
-
-		if(!zone_2.closed_connection_zones)
-			zone_2.closed_connection_zones = list()
-
-		//Increment the connections.
-		if(zone_2 in zone_1.closed_connection_zones)
-			zone_1.closed_connection_zones[zone_2]++
-		else
-			zone_1.closed_connection_zones += zone_2
-			zone_1.closed_connection_zones[zone_2] = 1
-
-		if(zone_1 in zone_2.closed_connection_zones)
-			zone_2.closed_connection_zones[zone_1]++
-		else
-			zone_2.closed_connection_zones += zone_1
-			zone_2.closed_connection_zones[zone_1] = 1
-
-
-/connection/proc/DisconnectZones(var/zone/zone_1, var/zone/zone_2)
-	//Sanity checking
-	if(!istype(zone_1) || !istype(zone_2))
+	var/block_status = air_master.air_blocked(A,B)
+	if(block_status & AIR_BLOCKED)
+		//world << "Blocked connection."
+		erase()
 		return
-
-	if(indirect != CONNECTION_CLOSED)
-		//Handle disconnection of indirectly or directly connected zones.
-		if( (zone_1 in zone_2.connected_zones) || (zone_2 in zone_1.connected_zones) )
-
-			//If there are more than one connection, decrement the number of connections
-			//Otherwise, remove all connections between the zones.
-			if(zone_2 in zone_1.connected_zones)
-				if(zone_1.connected_zones[zone_2] > 1)
-					zone_1.connected_zones[zone_2]--
-				else
-					zone_1.connected_zones -= zone_2
-					//remove the list if it is empty
-					if(!zone_1.connected_zones.len)
-						zone_1.connected_zones = null
-
-			//Then do the same for the other zone.
-			if(zone_1 in zone_2.connected_zones)
-				if(zone_2.connected_zones[zone_1] > 1)
-					zone_2.connected_zones[zone_1]--
-				else
-					zone_2.connected_zones -= zone_1
-					if(!zone_2.connected_zones.len)
-						zone_2.connected_zones = null
-
-	else
-		//Handle disconnection of closed zones.
-		if( (zone_1 in zone_2.closed_connection_zones) || (zone_2 in zone_1.closed_connection_zones) )
-
-			//If there are more than one connection, decrement the number of connections
-			//Otherwise, remove all connections between the zones.
-			if(zone_2 in zone_1.closed_connection_zones)
-				if(zone_1.closed_connection_zones[zone_2] > 1)
-					zone_1.closed_connection_zones[zone_2]--
-				else
-					zone_1.closed_connection_zones -= zone_2
-					//remove the list if it is empty
-					if(!zone_1.closed_connection_zones.len)
-						zone_1.closed_connection_zones = null
-
-			//Then do the same for the other zone.
-			if(zone_1 in zone_2.closed_connection_zones)
-				if(zone_2.closed_connection_zones[zone_1] > 1)
-					zone_2.closed_connection_zones[zone_1]--
-				else
-					zone_2.closed_connection_zones -= zone_1
-					if(!zone_2.closed_connection_zones.len)
-						zone_2.closed_connection_zones = null
-
-
-/connection/proc/Cleanup()
-
-	//Check sanity: existance of turfs
-	if(!A || !B)
-		del src
-
-	//Check sanity: zones are different
-	if(A.zone == B.zone)
-		del src
-
-	//Check sanity: same turfs as before.
-	if(ref_A != "\ref[A]" || ref_B != "\ref[B]")
-		del src
-
-	//Handle zones changing on a turf.
-	if((A.zone && A.zone != zone_A) || (B.zone && B.zone != zone_B))
-		Sanitize()
-
-	//Manage sudden loss of a turfs zone. (e.g. a wall being built)
-	if(!A.zone || !B.zone)
-		no_zone_count++
-		if(no_zone_count >= 5)
-			//world.log << "Connection removed: [A] or [B] missing a zone."
-			del src
-		return 0
-
-	return 1
-
-
-/connection/proc/CheckPassSanity()
-	//Sanity check, first.
-	Cleanup()
-
-	if(A.zone && B.zone)
-
-		//If no walls are blocking us...
-		if(A.ZAirPass(B))
-			//...we check to see if there is a door in the way...
-			var/door_pass = A.CanPass(null,B,1.5,1)
-			//...and if it is opened.
-			if(door_pass || A.CanPass(null,B,0,0))
-
-				//Make and remove connections to let air pass.
-				if(indirect == CONNECTION_CLOSED)
-					DisconnectZones(A.zone, B.zone)
-					ConnectZones(A.zone, B.zone, 1)
-
-				if(door_pass)
-					indirect = CONNECTION_DIRECT
-				else if(!door_pass)
-					indirect = CONNECTION_INDIRECT
-
-			//The door is instead closed.
-			else if(indirect > CONNECTION_CLOSED)
-				DisconnectZones(A.zone, B.zone)
-				indirect = CONNECTION_CLOSED
-				ConnectZones(A.zone, B.zone)
-
-		//If I can no longer pass air, better delete
+	else if(block_status & ZONE_BLOCKED)
+		if(direct())
+			mark_indirect()
 		else
-			del src
+			mark_direct()
 
-/connection/proc/Sanitize()
-	//If the zones change on connected turfs, update it.
+	var/b_is_space = !istype(B,/turf/simulated)
 
-	//Both zones changed (wat)
-	if(A.zone && A.zone != zone_A && B.zone && B.zone != zone_B)
-
-		//If the zones have gotten swapped
-		//	(do not ask me how, I am just being anal retentive about sanity)
-		if(A.zone == zone_B && B.zone == zone_A)
-			var/turf/temp = B
-			B = A
-			A = temp
-			zone_B = B.zone
-			zone_A = A.zone
-			var/temp_ref = ref_A
-			ref_A = ref_B
-			ref_B = temp_ref
+	if(state & CONNECTION_SPACE)
+		if(!b_is_space)
+			//world << "Invalid B."
+			erase()
 			return
-
-		//Handle removal of connections from archived zones.
-		if(zone_A && zone_A.connections)
-			zone_A.connections.Remove(src)
-			if(!zone_A.connections.len)
-				zone_A.connections = null
-
-		if(zone_B && zone_B.connections)
-			zone_B.connections.Remove(src)
-			if(!zone_B.connections.len)
-				zone_B.connections = null
-
-		if(A.zone)
-			if(!A.zone.connections)
-				A.zone.connections = list()
-			A.zone.connections |= src
-
-		if(B.zone)
-			if(!B.zone.connections)
-				B.zone.connections = list()
-			B.zone.connections |= src
-
-		//If either zone is null, we disconnect the archived ones after cleaning up the connections.
-		if(!A.zone || !B.zone)
-			if(zone_A && zone_B)
-				DisconnectZones(zone_B, zone_A)
-
+		if(A.zone != zoneA)
+			//world << "Zone changed, \..."
 			if(!A.zone)
-				zone_A = A.zone
+				erase()
+				//world << "erased."
+				return
+			else
+				edge.remove_connection(src)
+				edge = air_master.get_edge(A.zone, B)
+				edge.add_connection(src)
+				zoneA = A.zone
 
-			if(!B.zone)
-				zone_B = B.zone
+		//world << "valid."
+		return
+
+	else if(b_is_space)
+		//world << "Invalid B."
+		erase()
+		return
+
+	if(A.zone == B.zone)
+		//world << "A == B"
+		erase()
+		return
+
+	if(A.zone != zoneA || (zoneB && (B.zone != zoneB)))
+
+		//world << "Zones changed, \..."
+		if(A.zone && B.zone)
+			edge.remove_connection(src)
+			edge = air_master.get_edge(A.zone, B.zone)
+			edge.add_connection(src)
+			zoneA = A.zone
+			zoneB = B.zone
+		else
+			//world << "erased."
+			erase()
 			return
 
-		//Handle diconnection and reconnection of zones.
-		if(zone_A && zone_B)
-			DisconnectZones(zone_A, zone_B)
-		ConnectZones(A.zone, B.zone, indirect)
 
-		//resetting values of archived values.
-		zone_B = B.zone
-		zone_A = A.zone
-
-	//The "A" zone changed.
-	else if(A.zone && A.zone != zone_A)
-
-		//Handle connection cleanup
-		if(zone_A)
-			if(zone_A.connections)
-				zone_A.connections.Remove(src)
-				if(!zone_A.connections.len)
-					zone_A.connections = null
-
-		if(A.zone)
-			if(!A.zone.connections)
-				A.zone.connections = list()
-			A.zone.connections |= src
-
-		//If the "A" zone is null, we disconnect the archived ones after cleaning up the connections.
-		if(!A.zone)
-			if(zone_A && zone_B)
-				DisconnectZones(zone_A, zone_B)
-			zone_A = A.zone
-			return
-
-		//Handle diconnection and reconnection of zones.
-		if(zone_A && zone_B)
-			DisconnectZones(zone_A, zone_B)
-		ConnectZones(A.zone, B.zone, indirect)
-		zone_A = A.zone
-
-	//The "B" zone changed.
-	else if(B.zone && B.zone != zone_B)
-
-		//Handle connection cleanup
-		if(zone_B)
-			if(zone_B.connections)
-				zone_B.connections.Remove(src)
-				if(!zone_B.connections.len)
-					zone_B.connections = null
-
-		if(B.zone)
-			if(!B.zone.connections)
-				B.zone.connections = list()
-			B.zone.connections |= src
-
-		//If the "B" zone is null, we disconnect the archived ones after cleaning up the connections.
-		if(!B.zone)
-			if(zone_A && zone_B)
-				DisconnectZones(zone_A, zone_B)
-			zone_B = B.zone
-			return
-
-		//Handle diconnection and reconnection of zones.
-		if(zone_A && zone_B)
-			DisconnectZones(zone_A, zone_B)
-		ConnectZones(A.zone, B.zone, indirect)
-		zone_B = B.zone
-
-
-#undef CONNECTION_DIRECT
-#undef CONNECTION_INDIRECT
-#undef CONNECTION_CLOSED
+	//world << "valid."

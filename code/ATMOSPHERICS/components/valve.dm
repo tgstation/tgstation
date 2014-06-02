@@ -35,9 +35,24 @@ obj/machinery/atmospherics/valve
 				initialize_directions = EAST|WEST
 		..()
 
+	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+		dir = pipe.dir
+		initialize_directions = pipe.get_pipe_dir()
+		if (pipe.pipename)
+			name = pipe.pipename
+		var/turf/T = loc
+		level = T.intact ? 2 : 1
+		initialize()
+		build_network()
+		if (node1)
+			node1.initialize()
+			node1.build_network()
+		if (node2)
+			node2.initialize()
+			node2.build_network()
+		return 1
+
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-
-
 		if(reference == node1)
 			network_node1 = new_network
 			if(open)
@@ -62,7 +77,7 @@ obj/machinery/atmospherics/valve
 
 		return null
 
-	Del()
+	Destroy()
 		loc = null
 
 		if(node1)
@@ -125,6 +140,9 @@ obj/machinery/atmospherics/valve
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
+		if(isobserver(user) && !canGhostWrite(user,src,"toggles"))
+			user << "\red Nope."
+			return
 		src.add_fingerprint(usr)
 		update_icon(1)
 		sleep(10)
@@ -156,24 +174,7 @@ obj/machinery/atmospherics/valve
 	initialize()
 		normalize_dir()
 
-		var/node1_dir
-		var/node2_dir
-
-		for(var/direction in cardinal)
-			if(direction&initialize_directions)
-				if (!node1_dir)
-					node1_dir = direction
-				else if (!node2_dir)
-					node2_dir = direction
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
+		findAllConnections(initialize_directions)
 
 		build_network()
 
@@ -182,39 +183,6 @@ obj/machinery/atmospherics/valve
 			open()
 			openDuringInit = 0
 
-/*
-		var/connect_directions
-		switch(dir)
-			if(NORTH)
-				connect_directions = NORTH|SOUTH
-			if(SOUTH)
-				connect_directions = NORTH|SOUTH
-			if(EAST)
-				connect_directions = EAST|WEST
-			if(WEST)
-				connect_directions = EAST|WEST
-			else
-				connect_directions = dir
-
-		for(var/direction in cardinal)
-			if(direction&connect_directions)
-				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-					if(target.initialize_directions & get_dir(target,src))
-						connect_directions &= ~direction
-						node1 = target
-						break
-				if(node1)
-					break
-
-		for(var/direction in cardinal)
-			if(direction&connect_directions)
-				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-					if(target.initialize_directions & get_dir(target,src))
-						node2 = target
-						break
-				if(node1)
-					break
-*/
 	build_network()
 		if(!network_node1 && node1)
 			network_node1 = new /datum/pipe_network()
@@ -285,7 +253,7 @@ obj/machinery/atmospherics/valve
 					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 		var/frequency = 0
-		var/id = null
+		var/id_tag = null
 		var/datum/radio_frequency/radio_connection
 
 		initialize()
@@ -293,8 +261,46 @@ obj/machinery/atmospherics/valve
 			if(frequency)
 				set_frequency(frequency)
 
+
+
+		multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+			return {"
+			<ul>
+				<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
+				<li>[format_tag("ID Tag","id_tag","set_id")]</a></li>
+			</ul>
+			"}
+
+		Topic(href, href_list)
+			if(..())
+				return
+
+			if(!issilicon(usr))
+				if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+					return
+
+			if("set_id" in href_list)
+				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+				if(newid)
+					id_tag = newid
+					initialize()
+			if("set_freq" in href_list)
+				var/newfreq=frequency
+				if(href_list["set_freq"]!="-1")
+					newfreq=text2num(href_list["set_freq"])
+				else
+					newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+				if(newfreq)
+					if(findtext(num2text(newfreq), "."))
+						newfreq *= 10 // shift the decimal one place
+					if(newfreq < 10000)
+						frequency = newfreq
+						initialize()
+
+			update_multitool_menu(usr)
+
 		receive_signal(datum/signal/signal)
-			if(!signal.data["tag"] || (signal.data["tag"] != id))
+			if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 				return 0
 
 			switch(signal.data["command"])
@@ -306,11 +312,27 @@ obj/machinery/atmospherics/valve
 					if(open)
 						close()
 
+				if("valve_set")
+					if(signal.data["state"])
+						if(!open)
+							open()
+					else
+						if(open)
+							close()
+
 				if("valve_toggle")
 					if(open)
 						close()
 					else
 						open()
+
+		// Just for digital valves.
+		attackby(var/obj/item/W as obj, var/mob/user as mob)
+			if(istype(W, /obj/item/device/multitool))
+				update_multitool_menu(user)
+				return 1
+			// Pass to the method below (does stuff ALL valves should do)
+			..()
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if (!istype(W, /obj/item/weapon/wrench))
@@ -328,7 +350,7 @@ obj/machinery/atmospherics/valve
 			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \

@@ -19,6 +19,7 @@
 	item_state = "welding"
 	m_amt = 3000
 	g_amt = 1000
+	w_type = RECYK_MISC
 	var/up = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)

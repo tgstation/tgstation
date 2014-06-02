@@ -25,75 +25,6 @@
 	flags = TABLEPASS
 	w_class = 3.0
 
-
-/obj/item/weapon/spacecash
-	name = "1 credit chip"
-	desc = "It's worth 1 credit."
-	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
-	icon_state = "spacecash"
-	opacity = 0
-	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
-	throw_speed = 1
-	throw_range = 2
-	w_class = 1.0
-	var/access = list()
-	access = access_crate_cash
-	var/worth = 1
-
-/obj/item/weapon/spacecash/c10
-	name = "10 credit chip"
-	icon_state = "spacecash10"
-	access = access_crate_cash
-	desc = "It's worth 10 credits."
-	worth = 10
-
-/obj/item/weapon/spacecash/c20
-	name = "20 credit chip"
-	icon_state = "spacecash20"
-	access = access_crate_cash
-	desc = "It's worth 20 credits."
-	worth = 20
-
-/obj/item/weapon/spacecash/c50
-	name = "50 credit chip"
-	icon_state = "spacecash50"
-	access = access_crate_cash
-	desc = "It's worth 50 credits."
-	worth = 50
-
-/obj/item/weapon/spacecash/c100
-	name = "100 credit chip"
-	icon_state = "spacecash100"
-	access = access_crate_cash
-	desc = "It's worth 100 credits."
-	worth = 100
-
-/obj/item/weapon/spacecash/c200
-	name = "200 credit chip"
-	icon_state = "spacecash200"
-	access = access_crate_cash
-	desc = "It's worth 200 credits."
-	worth = 200
-
-/obj/item/weapon/spacecash/c500
-	name = "500 credit chip"
-	icon_state = "spacecash500"
-	access = access_crate_cash
-	desc = "It's worth 500 credits."
-	worth = 500
-
-/obj/item/weapon/spacecash/c1000
-	name = "1000 credit chip"
-	icon_state = "spacecash1000"
-	access = access_crate_cash
-	desc = "It's worth 1000 credits."
-	worth = 1000
-
-
 /obj/item/weapon/bananapeel
 	name = "banana peel"
 	desc = "A peel from a banana."
@@ -175,6 +106,7 @@
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 50
+	w_type = RECYK_MISC
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 /obj/item/weapon/disk
@@ -355,10 +287,7 @@
 	icon_state = "rack_parts"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt = 3750
-
-	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.iron++
-		return 1
+	w_type = RECYK_METAL
 
 /obj/item/weapon/shard
 	name = "shard"
@@ -371,16 +300,13 @@
 	throwforce = 15.0
 	item_state = "shard-glass"
 	g_amt = 3750
+	w_type = RECYK_GLASS
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 
 	suicide_act(mob/user)
 		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b>")
 		return (BRUTELOSS)
-
-/obj/item/weapon/shard/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.glass++
-	return 1
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -445,6 +371,7 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
 /obj/item/weapon/staff
@@ -486,12 +413,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
 	m_amt = 3750
+	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS| CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
-
-	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.iron+=2
-		return 1
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
@@ -499,12 +423,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "reinf_tableparts"
 	m_amt = 7500
+	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS| CONDUCT
-
-	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		// 2 metal + 4 rods (0.5 metal ea)
-		rec.iron+=4
-		return 1
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
@@ -521,6 +441,7 @@
 	var/laying = 0.0
 	var/old_lay = null
 	m_amt = 40
+	w_type = RECYK_METAL
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
 	suicide_act(mob/user)
@@ -613,11 +534,12 @@
 	icon_state = "hatchet"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 12.0
-	w_class = 1.0
+	w_class = 2.0
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 4
 	m_amt = 15000
+	w_type = RECYK_METAL
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 
@@ -641,6 +563,8 @@
 	throw_speed = 1
 	throw_range = 3
 	w_class = 4.0
+	m_amt = 15000
+	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
@@ -673,19 +597,6 @@
 
 	var/obj/machinery/machine
 
-/obj/item/weapon/plastique
-	name = "plastic explosives"
-	desc = "Used to put holes in specific areas without too much extra hole."
-	gender = PLURAL
-	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
-	flags = FPRINT | TABLEPASS | USEDELAY
-	w_class = 2.0
-	origin_tech = "syndicate=2"
-	var/timer = 10
-	var/atom/target = null
-
 ///////////////////////////////////////Stock Parts /////////////////////////////////
 
 /obj/item/weapon/stock_parts
@@ -707,14 +618,16 @@
 	icon_state = "screen"
 	origin_tech = "materials=1"
 	g_amt = 200
+	w_type = RECYK_GLASS
 
 /obj/item/weapon/stock_parts/capacitor
 	name = "capacitor"
 	desc = "A basic capacitor used in the construction of a variety of devices."
-	icon_state = "capacitor"
+	icon_state = "capacitor2_basic"
 	origin_tech = "powerstorage=1"
 	m_amt = 50
 	g_amt = 50
+	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/scanning_module
 	name = "scanning module"
@@ -723,6 +636,7 @@
 	origin_tech = "magnets=1"
 	m_amt = 50
 	g_amt = 20
+	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/manipulator
 	name = "micro-manipulator"
@@ -730,6 +644,7 @@
 	icon_state = "micro_mani"
 	origin_tech = "materials=1;programming=1"
 	m_amt = 30
+	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/micro_laser
 	name = "micro-laser"
@@ -738,6 +653,7 @@
 	origin_tech = "magnets=1"
 	m_amt = 10
 	g_amt = 20
+	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/matter_bin
 	name = "matter bin"
@@ -745,12 +661,14 @@
 	icon_state = "matter_bin"
 	origin_tech = "materials=1"
 	m_amt = 80
+	w_type = RECYK_ELECTRONIC
 
 //Rank 2
 
 /obj/item/weapon/stock_parts/capacitor/adv
 	name = "advanced capacitor"
 	desc = "An advanced capacitor used in the construction of a variety of devices."
+	icon_state = "capacitor2_adv"
 	origin_tech = "powerstorage=3"
 	rating = 2
 	m_amt = 50
@@ -769,7 +687,7 @@
 	name = "nano-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "nano_mani"
-	origin_tech = "materials=3,programming=2"
+	origin_tech = "materials=3;programming=2"
 	rating = 2
 	m_amt = 30
 
@@ -795,6 +713,7 @@
 /obj/item/weapon/stock_parts/capacitor/super
 	name = "super capacitor"
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
+	icon_state = "capacitor2_super"
 	origin_tech = "powerstorage=5;materials=4"
 	rating = 3
 	m_amt = 50
@@ -812,7 +731,7 @@
 	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
-	origin_tech = "materials=5,programming=2"
+	origin_tech = "materials=5;programming=2"
 	rating = 3
 	m_amt = 30
 
@@ -895,13 +814,16 @@
 	gender = PLURAL
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
+	w_type = RECYK_BIOLOGICAL
 
+/*
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve
 	name = "research"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "capacitor"
 	desc = "A debug item for research."
 	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
+*/
 
 /////////Random shit////////
 

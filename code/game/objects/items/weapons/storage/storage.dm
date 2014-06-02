@@ -9,8 +9,12 @@
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = 3.0
+
+	// These two accept a string containing the type path and the following optional prefixes:
+	//  = - Strict type matching.  Will NOT check for subtypes.
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
+
 	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	var/storage_slots = 7 //The number of storage slots in this container.
@@ -22,6 +26,7 @@
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
+	var/foldable_amount = 1 // Number of foldables to produce, if any - N3X
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
@@ -30,7 +35,7 @@
 			return ..()
 		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
 			return
-		playsound(src.loc, "rustle", 50, 1, -5)
+		playsound(get_turf(src), "rustle", 50, 1, -5)
 		if (!( M.restrained() ) && !( M.stat ))
 			switch(over_object.name)
 				if("r_hand")
@@ -193,16 +198,34 @@
 	if(can_hold.len)
 		var/ok = 0
 		for(var/A in can_hold)
-			if(istype(W, text2path(A) ))
+			if(dd_hasprefix(A,"="))
+				// Force strict matching of type.
+				// No subtypes allowed.
+				if("[W.type]"==copytext(A,2))
+					ok = 1
+					break
+			else if(istype(W, text2path(A) ))
 				ok = 1
 				break
 		if(!ok)
 			if(!stop_messages)
+				if (istype(W, /obj/item/weapon/hand_labeler))
+					return 0
 				usr << "<span class='notice'>[src] cannot hold [W].</span>"
 			return 0
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
-		if(istype(W, text2path(A) ))
+		var/nope=0
+		if(dd_hasprefix(A,"="))
+			// Force strict matching of type.
+			// No subtypes allowed.
+			if("[W.type]"==copytext(A,2))
+				nope = 1
+				break
+		else if(istype(W, text2path(A) ))
+			nope = 1
+			break
+		if(nope)
 			if(!stop_messages)
 				usr << "<span class='notice'>[src] cannot hold [W].</span>"
 			return 0
@@ -235,8 +258,7 @@
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
 	if(!istype(W)) return 0
 	if(usr)
-		if(!istype(usr, /mob/living/silicon/robot/mommi))
-			usr.u_equip(W)
+		usr.u_equip(W)
 		usr.update_icons()	//update our overlays
 	W.loc = src
 	W.on_enter_storage(src)
@@ -299,7 +321,11 @@
 /obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 
-	if(isrobot(user) && !(istype(user, /mob/living/silicon/robot/mommi)))
+	// /vg/ #11: Recursion.
+	/*if(istype(W,/obj/item/weapon/implanter/compressed))
+		return*/
+
+	if(isrobot(user) && !isMoMMI(user))
 		user << "\blue You're a robot. No."
 		return //Robots can't interact with storage items.
 
@@ -335,7 +361,7 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user as mob)
-	playsound(src.loc, "rustle", 50, 1, -5)
+	playsound(get_turf(src), "rustle", 50, 1, -5)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -442,7 +468,7 @@
 		return
 	// Now make the cardboard
 	user << "<span class='notice'>You fold [src] flat.</span>"
-	new src.foldable(get_turf(src))
+	new src.foldable(get_turf(src),foldable_amount)
 	del(src)
 //BubbleWrap END
 

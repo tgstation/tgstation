@@ -48,7 +48,7 @@ obj/item/weapon/gun/energy/staff
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -87,7 +87,7 @@ obj/item/weapon/gun/energy/staff
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -136,7 +136,7 @@ obj/item/weapon/gun/energy/staff
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -185,3 +185,62 @@ obj/item/weapon/gun/energy/staff/focus
 			charge_cost = 100
 			user << "\red The [src.name] will now strike only a single person."
 			projectile_type = "/obj/item/projectile/forcebolt"
+
+/obj/item/weapon/gun/energy/kinetic_accelerator
+	name = "proto-kinetic accelerator"
+	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
+	icon_state = "kineticgun"
+	item_state = "kineticgun"
+	projectile_type = "/obj/item/projectile/kinetic"
+	cell_type = "/obj/item/weapon/cell/crap"
+	charge_cost = 50
+	var/overheat = 0
+	var/recent_reload = 1
+/*
+/obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
+	overheat = 1
+	spawn(20)
+		overheat = 0
+		recent_reload = 0
+	..()
+*/
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(var/mob/living/user/L)
+	if(overheat || recent_reload)
+		return
+	power_supply.give(500)
+	playsound(src.loc, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	recent_reload = 1
+	update_icon()
+	return
+
+// /vg/ - Broken until we update to /tg/ guncode.
+/obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
+	return
+
+
+/obj/item/weapon/gun/energy/radgun
+	name = "radgun"
+	desc = "An experimental energy gun that fires radioactive projectiles that deal toxin damage, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
+	icon_state = "radgun"
+	fire_sound = 'sound/weapons/pulse3.ogg'
+	charge_cost = 100
+	var/charge_tick = 0
+	projectile_type = "/obj/item/projectile/energy/rad"
+
+	New()
+		..()
+		processing_objects.Add(src)
+
+
+	Destroy()
+		processing_objects.Remove(src)
+		..()
+
+	process()
+		charge_tick++
+		if(charge_tick < 4) return 0
+		charge_tick = 0
+		if(!power_supply) return 0
+		power_supply.give(100)
+		update_icon()
+		return 1

@@ -10,9 +10,60 @@
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
 	var/mob/living/occupant // Mob who has been put inside
+	var/opened = 0.0
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
+
+/********************************************************************
+**   Adding Stock Parts to VV so preconstructed shit has its candy **
+********************************************************************/
+obj/machinery/gibber/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/gibber
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/capacitor
+	component_parts += new /obj/item/weapon/stock_parts/capacitor
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
+	RefreshParts()
+
+/obj/machinery/gibber/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (istype(O, /obj/item/weapon/screwdriver))
+		if (!opened)
+			user << "You open the maintenance hatch of [src]."
+			//src.icon_state = "autolathe_t"
+		else
+			user << "You close the maintenance hatch of [src]."
+			//src.icon_state = "autolathe"
+		opened = !opened
+		return 1
+	else if(istype(O, /obj/item/weapon/crowbar))
+		if (opened)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+			return 1
+	if(istype(O,/obj/item/weapon/grab))
+		return handleGrab(O,user)
+	else
+		user << "\red This item is not suitable for the gibber!"
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
@@ -94,7 +145,8 @@
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+// OLD /obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+/obj/machinery/gibber/proc/handleGrab(obj/item/weapon/grab/G as obj, mob/user as mob)
 	if(src.occupant)
 		user << "\red The gibber is full, empty it first!"
 		return
@@ -116,6 +168,28 @@
 		M.loc = src
 		src.occupant = M
 		del(G)
+		update_icon()
+
+/obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
+	if(target != user || !istype(user, /mob/living/carbon/human) || user.stat || user.weakened || user.stunned || user.paralysis || user.buckled || get_dist(user, src) > 1)
+		return
+	if(src.occupant)
+		user << "\red The gibber is full, empty it first!"
+		return
+	if(user.abiotic(1))
+		user << "\red Subject may not have abiotic items on."
+		return
+
+	src.add_fingerprint(user)
+	user.visible_message("\red [user.name] starts climbing into the [src].", "\red You start climbing into the [src].")
+
+	if(do_after(user, 30) && user && !occupant)
+		user.visible_message("\red [user] climbs into the [src]", "\red You climb into the [src].")
+		if(user.client)
+			user.client.perspective = EYE_PERSPECTIVE
+			user.client.eye = src
+		user.loc = src
+		src.occupant = user
 		update_icon()
 
 /obj/machinery/gibber/verb/eject()
@@ -173,11 +247,16 @@
 	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 	log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]</b>")
 
+	if(!iscarbon(user))
+		src.occupant.LAssailant = null
+	else
+		src.occupant.LAssailant = user
+
 	src.occupant.death(1)
 	src.occupant.ghostize()
 	del(src.occupant)
 	spawn(src.gibtime)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
 			var/obj/item/meatslab = allmeat[i]
@@ -237,12 +316,12 @@
 		B.loc = src.loc
 		B.throw_at(Tx,2,3)
 		if(isalien(victim))
-			new /obj/effect/decal/cleanable/blood/xeno/xgibs(Tx,2)
+			new /obj/effect/decal/cleanable/blood/gibs/xeno(Tx,2)
 		else
 			new /obj/effect/decal/cleanable/blood/gibs(Tx,2)
 	del(victim)
 	spawn(src.gibtime)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
 			var/obj/item/meatslab = allmeat[i]
@@ -253,5 +332,4 @@
 				new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
 		src.operating = 0
 		update_icon()
-
 

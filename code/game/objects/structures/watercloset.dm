@@ -129,6 +129,9 @@
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 
+	ghost_read=0
+	ghost_write=0
+
 //add heat controls? when emagged, you can freeze to death in it?
 
 /obj/effect/mist
@@ -163,6 +166,7 @@
 				if("boiling")
 					watertemp = "normal"
 			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I].</span>")
+			add_fingerprint(user)
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
@@ -321,19 +325,20 @@
 	if(isrobot(M) || isAI(M))
 		return
 
+	if(!Adjacent(M))
+		return
+
 	if(busy)
 		M << "\red Someone's already washing here."
 		return
 
-	var/turf/location = M.loc
-	if(!isturf(location)) return
 	usr << "\blue You start washing your hands."
 
 	busy = 1
 	sleep(40)
 	busy = 0
 
-	if(M.loc != location) return		//Person has moved away from the sink
+	if(!Adjacent(M)) return		//Person has moved away from the sink
 
 	M.clean_blood()
 	if(ishuman(M))
@@ -354,7 +359,7 @@
 
 	else if (istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
-		if (B.charges > 0 && B.status == 1)
+		if (B.bcell && B.bcell.charge > 0 && B.status == 1)
 			flick("baton_active", src)
 			user.Stun(10)
 			user.stuttering = 10
@@ -363,7 +368,7 @@
 				var/mob/living/silicon/robot/R = user
 				R.cell.charge -= 20
 			else
-				B.charges--
+				B.deductcharge(1)
 			user.visible_message( \
 				"[user] was stunned by his wet [O].", \
 				"\red You have wet \the [O], it shocks you!")

@@ -160,13 +160,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 	return
 
 /obj/machinery/hologram/blob_act()
@@ -177,7 +177,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	del(src)
 	return
 
-/obj/machinery/hologram/Del()
+/obj/machinery/hologram/Destroy()
 	if(hologram)
 		src:clear_holo()
 	..()

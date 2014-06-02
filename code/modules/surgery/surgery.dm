@@ -25,6 +25,13 @@
 				return allowed_tools[T]
 		return 0
 
+	proc/check_anesthesia(var/mob/living/carbon/human/target)
+		if( (target.sleeping>0 || target.stat))
+			return 1
+		if(prob(25)) // Pain is tolerable?  Pomf wanted this. - N3X
+			return 1
+		return 0
+
 	// Checks if this step applies to the mutantrace of the user.
 	proc/is_valid_mutantrace(mob/living/carbon/human/target)
 

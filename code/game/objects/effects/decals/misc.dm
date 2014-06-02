@@ -5,6 +5,7 @@
 	icon_state = "arrow"
 	layer = 16.0
 	anchored = 1
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/decal/point/point()
 	set src in oview()
@@ -16,3 +17,24 @@
 	density = 0
 	anchored = 1
 	layer = 50
+
+/obj/effect/decal/snow
+	name="snow"
+	density=0
+	anchored=1
+	layer=2
+	icon='icons/turf/snow.dmi'
+	w_type=NOT_RECYCLABLE
+
+
+/obj/effect/decal/snow/clean/edge
+	icon_state="snow_corner"
+
+/obj/effect/decal/snow/sand/edge
+	icon_state="gravsnow_corner"
+
+/obj/effect/decal/snow/clean/surround
+	icon_state="snow_surround"
+
+/obj/effect/decal/snow/sand/surround
+	icon_state="gravsnow_surround"

@@ -6,6 +6,7 @@
 #define AIRLOCK_TARGET_INOPEN		-1
 #define AIRLOCK_TARGET_NONE			0
 #define AIRLOCK_TARGET_OUTOPEN		1
+#define AIRLOCK_TARGET_LOCKDOWN		2
 
 datum/computer/file/embedded_program/smart_airlock_controller
 	var/id_tag
@@ -19,6 +20,7 @@ datum/computer/file/embedded_program/smart_airlock_controller
 
 	state = AIRLOCK_STATE_WAIT
 	var/target_state = AIRLOCK_TARGET_NONE
+	var/current_state = AIRLOCK_TARGET_NONE
 
 datum/computer/file/embedded_program/smart_airlock_controller/New()
 	..()
@@ -35,16 +37,16 @@ datum/computer/file/embedded_program/smart_airlock_controller/receive_signal(dat
 	if(!receive_tag) return
 
 	if(receive_tag==tag_chamber_sensor)
-		if(signal.data["pressure"])
-			memory["chamber_sensor_pressure"] = text2num(signal.data["pressure"])
+		if("pressure" in signal.data)
+			memory["chamber_sensor_pressure"] = signal.data["pressure"]
 
 	else if(receive_tag==tag_exterior_sensor)
-		if(signal.data["pressure"])
-			memory["external_sensor_pressure"] = text2num(signal.data["pressure"])
+		if("pressure" in signal.data)
+			memory["external_sensor_pressure"] = signal.data["pressure"]
 
 	else if(receive_tag==tag_interior_sensor)
-		if(signal.data["pressure"])
-			memory["internal_sensor_pressure"] = text2num(signal.data["pressure"])
+		if("pressure" in signal.data)
+			memory["internal_sensor_pressure"] = signal.data["pressure"]
 
 	else if(receive_tag==tag_exterior_door)
 		memory["exterior_status"] = signal.data["door_status"]
@@ -63,29 +65,35 @@ datum/computer/file/embedded_program/smart_airlock_controller/receive_signal(dat
 			if("cycle_exterior")
 				state = AIRLOCK_STATE_WAIT
 				target_state = AIRLOCK_TARGET_OUTOPEN
+				current_state = target_state
 			if("cycle_interior")
 				state = AIRLOCK_STATE_WAIT
 				target_state = AIRLOCK_TARGET_INOPEN
+				current_state = target_state
+			if("cycle")
+				state = AIRLOCK_STATE_WAIT
+				if(current_state == AIRLOCK_TARGET_INOPEN)
+					target_state = AIRLOCK_TARGET_OUTOPEN
+				else
+					target_state = AIRLOCK_TARGET_INOPEN
+				current_state = target_state
 
 	master.updateDialog()
 
 datum/computer/file/embedded_program/smart_airlock_controller/receive_user_command(command)
 	var/shutdown_pump = 0
+	var/close_doors=0
 	switch(command)
 		if("cycle_closed")
 			state = AIRLOCK_STATE_WAIT
 			target_state = AIRLOCK_TARGET_NONE
-			if(memory["interior_status"] != "closed")
-				var/datum/signal/signal = new
-				signal.data["tag"] = tag_interior_door
-				signal.data["command"] = "secure_close"
-				post_signal(signal)
-			if(memory["exterior_status"] != "closed")
-				var/datum/signal/signal = new
-				signal.data["tag"] = tag_exterior_door
-				signal.data["command"] = "secure_close"
-				post_signal(signal)
+			current_state = target_state
+			close_doors = 1
 			shutdown_pump = 1
+		if("depressurize")
+			state = AIRLOCK_STATE_WAIT
+			target_state = AIRLOCK_TARGET_LOCKDOWN
+			close_doors = 1
 		if("open_interior")
 			state = AIRLOCK_STATE_WAIT
 			target_state = AIRLOCK_TARGET_NONE
@@ -119,9 +127,19 @@ datum/computer/file/embedded_program/smart_airlock_controller/receive_user_comma
 		if("cycle_exterior")
 			state = AIRLOCK_STATE_WAIT
 			target_state = AIRLOCK_TARGET_OUTOPEN
+			close_doors=1
 		if("cycle_interior")
 			state = AIRLOCK_STATE_WAIT
 			target_state = AIRLOCK_TARGET_INOPEN
+			close_doors=1
+		if("cycle") // From sensor/buttons.
+			close_doors=1
+			state = AIRLOCK_STATE_WAIT
+			if(current_state == AIRLOCK_TARGET_INOPEN)
+				target_state = AIRLOCK_TARGET_OUTOPEN
+			else
+				target_state = AIRLOCK_TARGET_INOPEN
+			current_state = target_state
 
 	if(shutdown_pump)
 		//send a signal to stop pressurizing
@@ -132,6 +150,17 @@ datum/computer/file/embedded_program/smart_airlock_controller/receive_user_comma
 				"power" = 0,
 				"sigtype"="command"
 			)
+			post_signal(signal)
+	if(close_doors)
+		if(memory["interior_status"] != "closed")
+			var/datum/signal/signal = new
+			signal.data["tag"] = tag_interior_door
+			signal.data["command"] = "secure_close"
+			post_signal(signal)
+		if(memory["exterior_status"] != "closed")
+			var/datum/signal/signal = new
+			signal.data["tag"] = tag_exterior_door
+			signal.data["command"] = "secure_close"
 			post_signal(signal)
 	master.updateDialog()
 
@@ -147,10 +176,13 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 					memory["target_pressure"] = memory["internal_sensor_pressure"]
 				if(AIRLOCK_TARGET_OUTOPEN)
 					memory["target_pressure"] = memory["external_sensor_pressure"]
+				if(AIRLOCK_TARGET_LOCKDOWN)
+					memory["target_pressure"] = 0
 
 			//work out whether we need to pressurize or depressurize the chamber (5% leeway with target pressure)
 			var/chamber_pressure = memory["chamber_sensor_pressure"]
 			var/target_pressure = memory["target_pressure"]
+			var/close_doors=0
 			if(chamber_pressure <= target_pressure)
 				state = AIRLOCK_STATE_PRESSURIZE
 
@@ -161,9 +193,12 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 					"sigtype"="command",
 					"power"=1,
 					"direction"=1,
+					"checks"=1,
 					"set_external_pressure"=target_pressure
 				)
 				post_signal(signal)
+				//testing("Pressurizing")
+				close_doors=1
 
 			else if(chamber_pressure > target_pressure)
 				state = AIRLOCK_STATE_DEPRESSURIZE
@@ -176,9 +211,23 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 					"sigtype"="command",
 					"power"=1,
 					"direction"=0,
+					"checks"=0,
 					"set_external_pressure"=target_pressure
 				)
 				post_signal(signal)
+				//testing("Depressurizing")
+				close_doors=1
+			if(close_doors)
+				if(memory["interior_status"] != "closed")
+					var/datum/signal/signal = new
+					signal.data["tag"] = tag_interior_door
+					signal.data["command"] = "secure_close"
+					post_signal(signal)
+				if(memory["exterior_status"] != "closed")
+					var/datum/signal/signal = new
+					signal.data["tag"] = tag_exterior_door
+					signal.data["command"] = "secure_close"
+					post_signal(signal)
 
 		//actually do stuff
 		//override commands are handled elsewhere, otherwise everything proceeds automatically
@@ -213,18 +262,19 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 
 			if(AIRLOCK_STATE_DEPRESSURIZE)
 				if(memory["chamber_sensor_pressure"] <= memory["target_pressure"] * 1.05)
-					if(target_state > 0)
-						if(memory["exterior_status"] != "open")
-							var/datum/signal/signal = new
-							signal.data["tag"] = tag_exterior_door
-							signal.data["command"] = "secure_open"
-							post_signal(signal)
-					else if(target_state < 0)
-						if(memory["interior_status"] != "open")
-							var/datum/signal/signal = new
-							signal.data["tag"] = tag_interior_door
-							signal.data["command"] = "secure_open"
-							post_signal(signal)
+					if(target_state != AIRLOCK_TARGET_LOCKDOWN)
+						if(target_state > 0)
+							if(memory["exterior_status"] != "open")
+								var/datum/signal/signal = new
+								signal.data["tag"] = tag_exterior_door
+								signal.data["command"] = "secure_open"
+								post_signal(signal)
+						else if(target_state < 0)
+							if(memory["interior_status"] != "open")
+								var/datum/signal/signal = new
+								signal.data["tag"] = tag_interior_door
+								signal.data["command"] = "secure_open"
+								post_signal(signal)
 					state = AIRLOCK_STATE_WAIT
 					target_state = AIRLOCK_TARGET_NONE
 
@@ -247,6 +297,8 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 
 
 obj/machinery/embedded_controller/radio/smart_airlock_controller
+	boardtype = /obj/item/weapon/circuitboard/ecb/smart_airlock_controller
+
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 
@@ -291,6 +343,53 @@ obj/machinery/embedded_controller/radio/smart_airlock_controller
 				icon_state = "airlock_control_standby"
 		else
 			icon_state = "airlock_control_off"
+
+	multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+		return {"
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1229]">Reset</a>)</li>
+			<li>[format_tag("ID Tag","id_tag")]</li>
+			<li>[format_tag("Pump","tag_airpump")]</li>
+		</ul>
+		<b>Doors:</b>
+		<ul>
+			<li>[format_tag("Interior","tag_interior_door")]</li>
+			<li>[format_tag("Exterior","tag_exterior_door")]</li>
+		</ul>
+		<b>Sensors:</b>
+		<ul>
+			<li>[format_tag("Interior","tag_interior_sensor")]</li>
+			<li>[format_tag("Chamber","tag_chamber_sensor")]</li>
+			<li>[format_tag("Exterior","tag_exterior_sensor")]</li>
+		</ul>"}
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if(!issilicon(usr))
+			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+				return
+
+		if("set_id" in href_list)
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+			if(newid)
+				id_tag = newid
+		if("set_freq" in href_list)
+			var/newfreq=frequency
+			if(href_list["set_freq"]!="-1")
+				newfreq=text2num(href_list["set_freq"])
+			else
+				newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+			if(newfreq)
+				if(findtext(num2text(newfreq), "."))
+					newfreq *= 10 // shift the decimal one place
+				if(newfreq < 10000)
+					frequency = newfreq
+					initialize()
+
+		usr.set_machine(src)
+		update_multitool_menu(usr)
 
 
 	return_text()
@@ -350,7 +449,7 @@ obj/machinery/embedded_controller/radio/smart_airlock_controller
 			state_options += "<BR>"
 
 		state_options += "<br>"
-		state_options += "<B>Chamber Pressure:</B> [chamber_sensor_pressure] kPa<BR>"
+		state_options += "<B>Chamber Pressure:</B> [chamber_sensor_pressure] kPa <a href=\"?src=\ref[src];command=depressurize\" style=\"color:red;font-weight:bold;\">DEPRESSURIZE</a><BR>"
 		state_options += "<B>Target Chamber Pressure:</B> [target_pressure] kPa<BR>"
 		state_options += "<B>Control Pump: </B> [pump_status]<BR>"
 		if(state)

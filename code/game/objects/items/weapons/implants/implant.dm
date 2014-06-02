@@ -44,7 +44,7 @@
 		icon_state = "implant_melted"
 		malfunction = MALFUNCTION_PERMANENT
 
-	Del()
+	Destroy()
 		if(part)
 			part.implants.Remove(src)
 		..()
@@ -116,7 +116,7 @@ Implant Specifics:<BR>"}
 
 	activate(var/cause)
 		if((!cause) || (!src.imp_in))	return 0
-		explosion(src, -1, 0, 2, 3, 0)//This might be a bit much, dono will have to see.
+		explosion(src, 1, 2, 3, 3, 0)//This might be a bit much, dono will have to see.
 		if(src.imp_in)
 			src.imp_in.gib()
 
@@ -335,6 +335,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(!ishuman(M)) return 0
 		if(!M.mind) return 0
 		var/mob/living/carbon/human/H = M
+		if(M == user)
+			user << "<span class='notice'>You feel quite stupid for doing that.</span>"
+			if(isliving(user))
+				user:brainloss += 10
+			return
 		if(locate(/obj/item/weapon/implant/traitor) in H.contents || locate(/obj/item/weapon/implant/traitor) in H.contents)
 			H.visible_message("[H] seems to resist the implant!", "You feel a strange sensation in your head that quickly dissipates.")
 			return 0

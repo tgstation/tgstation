@@ -10,14 +10,14 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken", "carpet",
 				"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
 				"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
-				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
+				"ironsand12", "ironsand13", "ironsand14", "ironsand15","arcadecarpet")
 
 var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug",
 				"ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5", "ironsand6", "ironsand7",
 				"ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 var/list/wood_icons = list("wood","wood-broken")
-
+var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_state = "wet_floor"))
 /turf/simulated/floor
 
 	//Note to coders, the 'intact' var can no longer be used to determine if the floor is a plating or not.
@@ -35,7 +35,6 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/burnt = 0
 	var/mineral = "metal"
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
-
 
 /turf/simulated/floor/New()
 	..()
@@ -245,8 +244,11 @@ turf/simulated/floor/proc/update_icon()
 	else
 		return 0
 
+/turf/simulated/floor/is_catwalk()
+	return 0
+
 /turf/simulated/floor/is_plating()
-	if(!floor_tile)
+	if(!floor_tile && !is_catwalk())
 		return 1
 	return 0
 
@@ -276,7 +278,7 @@ turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
-	if(istype(src,/turf/simulated/floor/plating/airless/asteroid)) return//Asteroid tiles don't burn
+	if(istype(src,/turf/unsimulated/floor/asteroid)) return//Asteroid tiles don't burn
 	if(broken || burnt) return
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
@@ -301,6 +303,7 @@ turf/simulated/floor/proc/update_icon()
 //This proc auto corrects the grass tiles' siding.
 /turf/simulated/floor/proc/make_plating()
 	if(istype(src,/turf/simulated/floor/engine)) return
+	if(is_catwalk()) return
 
 	if(is_grass_floor())
 		for(var/direction in cardinal)
@@ -316,7 +319,7 @@ turf/simulated/floor/proc/update_icon()
 						FF.update_icon() //so siding get updated properly
 
 	if(!floor_tile) return
-	del(floor_tile)
+	qdel(floor_tile)
 	icon_plating = "plating"
 	SetLuminosity(0)
 	floor_tile = null
@@ -455,21 +458,26 @@ turf/simulated/floor/proc/update_icon()
 				new floor_tile.type(src)
 
 		make_plating()
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 80, 1)
+		// Can't play sounds from areas. - N3X
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 
 		return
 
-	if(istype(C, /obj/item/weapon/screwdriver) && is_wood_floor())
-		if(broken || burnt)
-			return
-		else
-			if(is_wood_floor())
-				user << "\red You unscrew the planks."
-				new floor_tile.type(src)
+	if(istype(C, /obj/item/weapon/screwdriver))
+		if(is_wood_floor())
+			if(broken || burnt)
+				return
+			else
+				if(is_wood_floor())
+					user << "\red You unscrew the planks."
+					new floor_tile.type(src)
 
-		make_plating()
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 80, 1)
-
+			make_plating()
+			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+		if(is_catwalk())
+			if(broken) return
+			ReplaceWithLattice()
+			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return
 
 	if(istype(C, /obj/item/stack/rods))
@@ -479,16 +487,20 @@ turf/simulated/floor/proc/update_icon()
 				user << "\blue Reinforcing the floor..."
 				if(do_after(user, 30) && R && R.amount >= 2 && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
 					return
 			else
 				user << "\red You need more rods."
+		else if (is_catwalk())
+			user << "\red The entire thing is 100% rods already, it doesn't need any more."
 		else
 			user << "\red You must remove the plating first."
 		return
 
 	if(istype(C, /obj/item/stack/tile))
+		if (is_catwalk())
+			user << "\red The catwalk is too primitive to support tiling."
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
@@ -512,13 +524,13 @@ turf/simulated/floor/proc/update_icon()
 				T.use(1)
 				update_icon()
 				levelupdate()
-				playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			else
 				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
 
 
 	if(istype(C, /obj/item/weapon/cable_coil))
-		if(is_plating())
+		if(is_plating() || is_catwalk())
 			var/obj/item/weapon/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
@@ -539,9 +551,32 @@ turf/simulated/floor/proc/update_icon()
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))
 					user << "\red You fix some dents on the broken plating."
-					playsound(src.loc, 'sound/items/Welder.ogg', 80, 1)
+					playsound(src, 'sound/items/Welder.ogg', 80, 1)
 					icon_state = "plating"
 					burnt = 0
 					broken = 0
 				else
 					user << "\blue You need more welding fuel to complete this task."
+
+/turf/simulated/proc/wet(delay = 800)
+	if(wet >= 1) return
+	wet = 1
+	if(wet_overlay)
+		overlays -= wet_overlay
+		wet_overlay = null
+	wet_overlay = w_overlays["wet"]
+	overlays += wet_overlay
+	spawn() dry(delay)
+
+/turf/simulated/proc/dry(delay = 800)
+	if(drying || wet >= 2)
+		return
+	drying = 1
+	spawn(delay)
+		if (!istype(src)) return
+		if(wet >= 2) return
+		wet = 0
+		drying = 0
+		if(wet_overlay)
+			overlays -= wet_overlay
+			wet_overlay = null

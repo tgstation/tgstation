@@ -38,44 +38,31 @@
 	else if(isolating)
 		dat = "Pathogen isolation in progress"
 	else
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\centrifuge.dm:41: dat += "<BR>Blood sample:"
-		dat += {"<BR>Blood sample:
-<br><table cellpadding='10'><tr><td>"}
-		// END AUTOFIX
+		dat += "<BR>Blood sample:"
+		dat += "<br><table cellpadding='10'><tr><td>"
 		if(sample)
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
 			if(B)
 				dat += "Sample inserted."
 				if (B.data["antibodies"])
+					dat += "</td></tr><tr><td>"
+					dat += "Antibodies: [antigens2string(B.data["antibodies"])]"
+					dat += "</td><td><A href='?src=\ref[src];action=antibody'>Isolate</a>"
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\centrifuge.dm:48: dat += "</td></tr><tr><td>"
-					dat += {"</td></tr><tr><td>
-Antibodies: [antigens2string(B.data["antibodies"])]
-</td><td><A href='?src=\ref[src];action=antibody'>Isolate</a>"}
-					// END AUTOFIX
 				var/list/virus = B.data["virus2"]
 				for (var/ID in virus)
 					var/datum/disease2/disease/V = virus[ID]
-
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\centrifuge.dm:55: dat += " </td></tr><tr><td> pathogen [V.name()]"
-					dat += {"</td></tr><tr><td> pathogen [V.name()]
-</td><td><A href='?src=\ref[src];action=isolate;isolate=[V.uniqueID]'>Isolate</a>"}
-					// END AUTOFIX
+					dat += " </td></tr><tr><td> pathogen [V.name()]"
+					dat += "</td><td><A href='?src=\ref[src];action=isolate;isolate=[V.uniqueID]'>Isolate</a>"
 			else
 				dat += "Please check container contents."
 			dat += "</td></tr><tr><td><A href='?src=\ref[src];action=sample'>Eject container</a>"
 		else
 			dat = "Please insert a container."
+		dat += "</td></tr></table><br>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\centrifuge.dm:62: dat += "</td></tr></table><br>"
-		dat += {"</td></tr></table><br>
-			<hr>"}
-		// END AUTOFIX
+		dat += "<hr>"
+
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 	return
@@ -122,7 +109,7 @@ Antibodies: [antigens2string(B.data["antibodies"])]
 
 			else
 				curing = delay
-				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/machines/juicer.ogg', 50, 1)
 				update_icon()
 
 		if("isolate")

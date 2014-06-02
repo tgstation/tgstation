@@ -1,6 +1,7 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
+	desc = "The final frontier."
 	icon_state = "0"
 
 	temperature = TCMB
@@ -34,12 +35,23 @@
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
 	if (istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			return
-		var/obj/item/stack/rods/R = C
+			if(R.amount < 2)
+				user << "\red You don't have enough rods to do that."
+				return
+			user << "\blue You begin to build a catwalk."
+			if(do_after(user,30))
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				user << "\blue You build a catwalk!"
+				R.use(2)
+				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
+				del(L)
+				return
+
 		user << "\blue Constructing support lattice ..."
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		R.use(1)
 		return
@@ -49,7 +61,7 @@
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
 			del(L)
-			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
 			S.use(1)
 			return
@@ -80,7 +92,7 @@
 				return
 
 			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-				del(A) //The disk's Del() proc ensures a new one is created
+				del(A) //The disk's Destroy() proc ensures a new one is created
 				return
 
 			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
@@ -106,6 +118,27 @@
 				return
 
 			var/move_to_z = src.z
+
+			// Prevent MoMMIs from leaving the derelict.
+			if(istype(A, /mob/living))
+				var/mob/living/MM = A
+				if(MM.client && !MM.stat)
+					if(MM.locked_to_z!=0)
+						if(src.z == MM.locked_to_z)
+							MM << "\red You cannot leave this area."
+							if(MM.x <= TRANSITIONEDGE)
+								MM.inertia_dir = 4
+							else if(MM.x >= world.maxx -TRANSITIONEDGE)
+								MM.inertia_dir = 8
+							else if(MM.y <= TRANSITIONEDGE)
+								MM.inertia_dir = 1
+							else if(MM.y >= world.maxy -TRANSITIONEDGE)
+								MM.inertia_dir = 2
+							return
+						else
+							MM << "\red You find your way back."
+							move_to_z=MM.locked_to_z
+
 			var/safety = 1
 
 			while(move_to_z == src.z)

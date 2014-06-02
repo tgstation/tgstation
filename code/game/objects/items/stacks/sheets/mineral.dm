@@ -14,6 +14,9 @@ Mineral Sheets
 		- Enriched Uranium
 */
 
+/obj/item/stack/sheet/mineral
+	w_type=RECYK_METAL
+
 /*
  * Sandstone
  */
@@ -40,6 +43,9 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	pixel_y = rand(0,4)-4
 	..()
 
+/obj/item/stack/sheet/mineral/sandstone/recycle(var/datum/materials/rec)
+	rec.addAmount("glass",1*amount)
+	return 1
 /*
  * Diamond
  */
@@ -63,6 +69,10 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
+
+/obj/item/stack/sheet/mineral/diamond/recycle(var/datum/materials/rec)
+	rec.addAmount("diamond",1*amount)
+	return 1
 
 /*
  * Uranium
@@ -89,6 +99,10 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	pixel_y = rand(0,4)-4
 	..()
 
+/obj/item/stack/sheet/mineral/uranium/recycle(var/datum/materials/rec)
+	rec.addAmount("uranium",1*amount)
+	return 1
+
 /*
  * Plasma
  */
@@ -113,6 +127,10 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
+
+/obj/item/stack/sheet/mineral/plasma/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1*amount)
+	return 1
 
 /obj/item/stack/sheet/mineral/plastic
 	name = "Plastic"
@@ -142,6 +160,10 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	pixel_y = rand(0,4)-4
 	..()
 
+/obj/item/stack/sheet/mineral/plastic/recycle(var/datum/materials/rec)
+	rec.addAmount("plastic",1*amount)
+	return 0
+
 /*
  * Gold
  */
@@ -167,6 +189,10 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	pixel_y = rand(0,4)-4
 	..()
 
+/obj/item/stack/sheet/mineral/gold/recycle(var/datum/materials/rec)
+	rec.addAmount("gold",1*amount)
+	return 1
+
 
 /*
  * Phazon
@@ -180,6 +206,7 @@ var/global/list/datum/stack_recipe/phazon_recipes = list()
 	icon_state = "sheet-phazon"
 	item_state = "sheet-metal"
 	m_amt = 7500
+	w_type = RECYK_METAL
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=9"
@@ -187,6 +214,10 @@ var/global/list/datum/stack_recipe/phazon_recipes = list()
 /obj/item/stack/sheet/mineral/phazon/New(var/loc, var/amount=null)
 		recipes = phazon_recipes
 		return ..()
+
+/obj/item/stack/sheet/mineral/phazon/recycle(var/datum/materials/rec)
+	rec.addAmount("phazon",1*amount)
+	return 1
 
 /*
  * Silver
@@ -213,6 +244,10 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	pixel_y = rand(0,4)-4
 	..()
 
+/obj/item/stack/sheet/mineral/silver/recycle(var/datum/materials/rec)
+	rec.addAmount("silver",1*amount)
+	return 1
+
 /*
  * Clown
  */
@@ -232,6 +267,10 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
+
+/obj/item/stack/sheet/mineral/clown/recycle(var/datum/materials/rec)
+	rec.addAmount("clown",1*amount)
+	return 1
 
 
 /****************************** Others ****************************/

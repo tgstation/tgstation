@@ -20,6 +20,11 @@
 	action(atom/target)
 		if(!action_checks(target)) return
 		if(!cargo_holder) return
+		if(istype(target, /obj/structure/stool)) return
+		for(var/M in target.contents)
+			if(istype(M, /mob/living))
+				return
+
 		if(istype(target,/obj))
 			var/obj/O = target
 			if(!O.anchored)
@@ -89,19 +94,20 @@
 			if(T == chassis.loc && src == chassis.selected)
 				if(istype(target, /turf/simulated/wall/r_wall))
 					occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
-				else if(istype(target, /turf/simulated/mineral))
-					for(var/turf/simulated/mineral/M in range(chassis,1))
+				else if(istype(target, /turf/unsimulated/mineral))
+					for(var/turf/unsimulated/mineral/M in range(chassis,1))
 						if(get_dir(chassis,M)&chassis.dir)
-							M.gets_drilled()
+							M.GetDrilled()
 					log_message("Drilled through [target]")
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir)
-									ore.Move(ore_box)
-				else if(istype(target, /turf/simulated/floor/plating/airless/asteroid))
-					for(var/turf/simulated/floor/plating/airless/asteroid/M in range(chassis,1))
+								if(get_dir(chassis,ore)&chassis.dir && ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
+				else if(istype(target, /turf/unsimulated/floor/asteroid))
+					for(var/turf/unsimulated/floor/asteroid/M in range(chassis,1))
 						if(get_dir(chassis,M)&chassis.dir)
 							M.gets_dug()
 					log_message("Drilled through [target]")
@@ -109,14 +115,19 @@
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir)
-									ore.Move(ore_box)
+								if(get_dir(chassis,ore)&chassis.dir && ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
 				else if(target.loc == C)
 					if(istype(target, /mob/living))
 						var/mob/living/M = target
 						M.attack_log +="\[[time_stamp()]\]<font color='orange'> Mech Drilled by [chassis.occupant.name] ([chassis.occupant.ckey]) with [src.name]</font>"
 						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Mech Drilled [M.name] ([M.ckey]) with [src.name]</font>"
 						log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) mech drilled [M.name] ([M.ckey]) with [src.name]</font>" )
+						if(!iscarbon(chassis.occupant))
+							M.LAssailant = null
+						else
+							M.LAssailant = chassis.occupant
 					log_message("Drilled through [target]")
 					target.ex_act(2)
 		return 1
@@ -132,7 +143,7 @@
 	desc = "This is an upgraded version of the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
 	icon_state = "mecha_diamond_drill"
 	origin_tech = "materials=4;engineering=3"
-	construction_cost = list("metal"=10000,"diamond"=6500)
+	construction_cost = list("iron"=10000,"diamond"=6500)
 	equip_cooldown = 20
 	force = 15
 
@@ -153,32 +164,39 @@
 					if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 						log_message("Drilled through [target]")
 						target.ex_act(3)
-				else if(istype(target, /turf/simulated/mineral))
-					for(var/turf/simulated/mineral/M in range(chassis,1))
+				else if(istype(target, /turf/unsimulated/mineral))
+					for(var/turf/unsimulated/mineral/M in range(chassis,1))
 						if(get_dir(chassis,M)&chassis.dir)
-							M.gets_drilled()
+							M.GetDrilled()
 					log_message("Drilled through [target]")
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir)
-									ore.Move(ore_box)
-				else if(istype(target,/turf/simulated/floor/plating/airless/asteroid))
-					for(var/turf/simulated/floor/plating/airless/asteroid/M in range(target,1))
+								if(get_dir(chassis,ore)&chassis.dir && ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
+				else if(istype(target,/turf/unsimulated/floor/asteroid))
+					for(var/turf/unsimulated/floor/asteroid/M in range(target,1))
 						M.gets_dug()
 					log_message("Drilled through [target]")
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(target,1))
-								ore.Move(ore_box)
+								if(ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
 				else if(target.loc == C)
 					if(istype(target, /mob/living))
 						var/mob/living/M = target
 						M.attack_log +="\[[time_stamp()]\]<font color='orange'> Mech Drilled by [chassis.occupant.name] ([chassis.occupant.ckey]) with [src.name]</font>"
 						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Mech Drilled [M.name] ([M.ckey]) with [src.name]</font>"
 						log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) mech drilled [M.name] ([M.ckey]) with [src.name]</font>" )
+						if(!iscarbon(chassis.occupant))
+							M.LAssailant = null
+						else
+							M.LAssailant = chassis.occupant
 					log_message("Drilled through [target]")
 					target.ex_act(2)
 		return 1
@@ -270,7 +288,7 @@
 	energy_drain = 250
 	range = MELEE|RANGED
 	construction_time = 1200
-	construction_cost = list("metal"=30000,"plasma"=25000,"silver"=20000,"gold"=20000)
+	construction_cost = list("iron"=30000,"plasma"=25000,"silver"=20000,"gold"=20000)
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 	var/disabled = 0 //malf
 
@@ -447,8 +465,18 @@
 	var/atom/movable/locked
 	var/mode = 1 //1 - gravsling 2 - gravpush
 
+	var/last_fired = 0  //Concept stolen from guns.
+	var/fire_delay = 10 //Used to prevent spam-brute against humans.
 
 	action(atom/movable/target)
+
+		if(world.time >= last_fired + fire_delay)
+			last_fired = world.time
+		else
+			if (world.time % 3)
+				occupant_message("<span class='warning'>[src] is not ready to fire again!")
+			return 0
+
 		switch(mode)
 			if(1)
 				if(!action_checks(target) && !locked) return
@@ -495,6 +523,7 @@
 		return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='?src=\ref[src];mode=1'>S</a>|<a href='?src=\ref[src];mode=2'>P</a>\]"
 
 	Topic(href, href_list)
+		..()
 		if(href_list["mode"])
 			mode = text2num(href_list["mode"])
 			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
@@ -509,7 +538,7 @@
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
-	construction_cost = list("metal"=20000,"silver"=5000)
+	construction_cost = list("iron"=20000,"silver"=5000)
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
 
@@ -560,7 +589,7 @@
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
-	construction_cost = list("metal"=20000,"gold"=5000)
+	construction_cost = list("iron"=20000,"gold"=5000)
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
 
@@ -632,7 +661,7 @@
 	equip_cooldown = 20
 	energy_drain = 100
 	range = 0
-	construction_cost = list("metal"=10000,"gold"=1000,"silver"=2000,"glass"=5000)
+	construction_cost = list("iron"=10000,"gold"=1000,"silver"=2000,"glass"=5000)
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay
@@ -722,7 +751,7 @@
 	equip_cooldown = 10
 	energy_drain = 0
 	range = 0
-	construction_cost = list("metal"=10000,"gold"=2000,"silver"=3000,"glass"=2000)
+	construction_cost = list("iron"=10000,"gold"=2000,"silver"=3000,"glass"=2000)
 	var/datum/global_iterator/pr_energy_relay
 	var/coeff = 100
 	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
@@ -834,7 +863,7 @@
 	equip_cooldown = 10
 	energy_drain = 0
 	range = MELEE
-	construction_cost = list("metal"=10000,"silver"=500,"glass"=1000)
+	construction_cost = list("iron"=10000,"silver"=500,"glass"=1000)
 	var/datum/global_iterator/pr_mech_generator
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
@@ -971,7 +1000,7 @@
 	desc = "Generates power using uranium. Pollutes the environment."
 	icon_state = "tesla"
 	origin_tech = "powerstorage=3;engineering=3"
-	construction_cost = list("metal"=10000,"silver"=500,"glass"=1000)
+	construction_cost = list("iron"=10000,"silver"=500,"glass"=1000)
 	max_fuel = 50000
 	fuel_per_cycle_idle = 10
 	fuel_per_cycle_active = 30

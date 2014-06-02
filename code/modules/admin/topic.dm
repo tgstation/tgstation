@@ -45,14 +45,64 @@
 			if("10")
 				log_admin("[key_name(usr)] has spawned a death squad.")
 				if(!makeDeathsquad())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately, there were no candidates available"
 			if("11")
-				usr << "\red Vox Raiders is removed indefinately."
-				/* REMOVED as requested
 				log_admin("[key_name(usr)] has spawned vox raiders.")
 				if(!src.makeVoxRaiders())
-					usr << "\red Unfortunately there weren't enough candidates available."
-				*/
+					usr << "\red Unfortunately, there weren't enough candidates available."
+
+	else if("announce_laws" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+
+		log_admin("[key_name(usr)] has notified [key_name(S)] of a change to their laws.")
+		message_admins("[usr.key] has notified [key_name(S)] of a change to their laws.")
+
+		S << "____________________________________"
+		S << "<span style=\"color:red;font-weight:bold;\">LAW CHANGE NOTICE</span>"
+		if(S.laws)
+			S << "<b>Your new laws are as follows:</b>"
+			S.laws.show_laws(S)
+		else
+			S << "<b>Your laws are null.</b> Contact a coder immediately."
+		S << "____________________________________"
+
+	else if("add_law" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+		var/lawtypes = list(
+			"Law Zero"= LAW_ZERO,
+			"Ion"     = LAW_IONIC,
+			"Core"    = LAW_INHERENT,
+			"Standard"= 1
+		)
+		var/lawtype = input("Select a law type.","Law Type",1) as anything in lawtypes
+		lawtype=lawtypes[lawtype]
+		if(lawtype == null)
+			return
+		testing("Lawtype: [lawtype]")
+		if(lawtype==1)
+			lawtype=text2num(input("Enter desired law priority. (15-50)","Priority", 15) as num)
+			lawtype=Clamp(lawtype,15,50)
+		var/newlaw = copytext(sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", "")),1,MAX_MESSAGE_LEN)
+		if(newlaw=="")
+			return
+		S.laws.add_law(lawtype,newlaw)
+
+		log_admin("[key_name(usr)] has added a law to [key_name(S)]: \"[newlaw]\"")
+		message_admins("[usr.key] has added a law to [key_name(S)]: \"[newlaw]\"")
+
+	else if("clear_laws" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+		S.laws.clear_inherent_laws()
+		S.laws.clear_supplied_laws()
+		S.laws.clear_ion_laws()
+
+		if(S.laws.zeroth || S.laws.zeroth_borg)
+			if(alert(src,"Do you also wish to clear law zero?","Yes","No") == "Yes")
+				S.laws.set_zeroth_law("","")
+
+		log_admin("[key_name(usr)] has purged [key_name(S)]")
+		message_admins("[usr.key] has purged [key_name(S)]")
+
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
@@ -448,12 +498,8 @@
 		var/counter = 0
 //Regular jobs
 	//Command (Blue)
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:448: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
-			<tr align='center' bgcolor='ccccff'><th colspan='[length(command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"}
-		// END AUTOFIX
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr align='center' bgcolor='ccccff'><th colspan='[length(command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in command_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -473,12 +519,8 @@
 
 	//Security (Red)
 		counter = 0
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:469: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
-			<tr bgcolor='ffddf0'><th colspan='[length(security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"}
-		// END AUTOFIX
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='ffddf0'><th colspan='[length(security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in security_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -498,12 +540,8 @@
 
 	//Engineering (Yellow)
 		counter = 0
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:490: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
-			<tr bgcolor='fff5cc'><th colspan='[length(engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"}
-		// END AUTOFIX
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='fff5cc'><th colspan='[length(engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in engineering_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -523,12 +561,8 @@
 
 	//Medical (White)
 		counter = 0
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:511: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
-			<tr bgcolor='ffeef0'><th colspan='[length(medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"}
-		// END AUTOFIX
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='ffeef0'><th colspan='[length(medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in medical_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -548,12 +582,8 @@
 
 	//Science (Purple)
 		counter = 0
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:532: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
-			<tr bgcolor='e79fff'><th colspan='[length(science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"}
-		// END AUTOFIX
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='e79fff'><th colspan='[length(science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in science_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -573,12 +603,8 @@
 
 	//Civilian (Grey)
 		counter = 0
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:553: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
-			<tr bgcolor='dddddd'><th colspan='[length(civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"}
-		// END AUTOFIX
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='dddddd'><th colspan='[length(civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in civilian_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -594,16 +620,18 @@
 			if(counter >= 5) //So things dont get squiiiiished!
 				jobs += "</tr><tr align='center'>"
 				counter = 0
+
+		if(jobban_isbanned(M, "Internal Affairs Agent"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'><font color=red>Internal Affairs Agent</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'>Internal Affairs Agent</a></td>"
+
 		jobs += "</tr></table>"
 
 	//Non-Human (Green)
 		counter = 0
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:574: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
-			<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"}
-		// END AUTOFIX
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)+1]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in nonhuman_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
@@ -621,21 +649,22 @@
 				counter = 0
 
 		//pAI isn't technically a job, but it goes in here.
+
 		if(jobban_isbanned(M, "pAI"))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'>pAI</a></td>"
-
+		if(jobban_isbanned(M, "AntagHUD"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=AntagHUD;jobban4=\ref[M]'><font color=red>AntagHUD</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=AntagHUD;jobban4=\ref[M]'>AntagHUD</a></td>"
 		jobs += "</tr></table>"
 
 	//Antagonist (Orange)
 		var/isbanned_dept = jobban_isbanned(M, "Syndicate")
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:602: jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += {"<table cellpadding='1' cellspacing='0' width='100%'>
-			<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"}
-		// END AUTOFIX
 		//Traitor
 		if(jobban_isbanned(M, "traitor") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=traitor;jobban4=\ref[M]'><font color=red>[replacetext("Traitor", " ", "&nbsp")]</font></a></td>"
@@ -674,6 +703,13 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=wizard;jobban4=\ref[M]'>[replacetext("Wizard", " ", "&nbsp")]</a></td>"
 
+		//ERT
+		if(jobban_isbanned(M, "Emergency Response Team") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Emergency Response Team;jobban4=\ref[M]'><font color=red>Emergency Response Team</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Emergency Response Team;jobban4=\ref[M]'>Emergency Response Team</a></td>"
+
+
 		//Vox Raider
 		if(jobban_isbanned(M, "Vox Raider") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'><font color=red>Vox&nbsp;Raider</font></a></td>"
@@ -698,11 +734,24 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=infested monkey;jobban4=\ref[M]'>[replacetext("Infested Monkey", " ", "&nbsp")]</a></td>"
 */
+
 		jobs += "</tr></table>"
+
+		//Other races  (BLUE, because I have no idea what other color to make this)
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='ccccff'><th colspan='1'>Other Races</th></tr><tr align='center'>"
+
+		if(jobban_isbanned(M, "Dionaea"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Dionaea;jobban4=\ref[M]'><font color=red>Dionaea</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Dionaea;jobban4=\ref[M]'>Dionaea</a></td>"
+
+		jobs += "</tr></table>"
+
 
 		body = "<body>[jobs]</body>"
 		dat = "<tt>[header][body]</tt>"
-		usr << browse(dat, "window=jobban2;size=800x450")
+		usr << browse(dat, "window=jobban2;size=800x490")
 		return
 
 	//JOBBAN'S INNARDS
@@ -1320,6 +1369,19 @@
 
 		usr.client.cmd_admin_animalize(M)
 
+	else if(href_list["togmutate"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["togmutate"])
+		if(!istype(H))
+			usr << "This can only be used on instances of type /mob/living/carbon/human"
+			return
+		var/block=text2num(href_list["block"])
+		//testing("togmutate([href_list["block"]] -> [block])")
+		usr.client.cmd_admin_toggle_block(H,block)
+		show_player_panel(H)
+		//H.regenerate_icons()
+
 /***************** BEFORE**************
 
 	if (href_list["l_players"])
@@ -1522,7 +1584,7 @@
 		src.owner << "You sent [input] to [H] via a secure channel."
 		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
 		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
-		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\""
+		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\""
 
 	else if(href_list["SyndicateReply"])
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
@@ -1538,7 +1600,49 @@
 
 		src.owner << "You sent [input] to [H] via a secure channel."
 		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
-		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
+		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\""
+
+	else if(href_list["CentcommFaxView"])
+		var/info = locate(href_list["CentcommFaxView"])
+
+		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[info]</BODY></HTML>", "window=Centcomm Fax Message")
+
+	else if(href_list["CentcommFaxReply"])
+		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
+
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null
+		if(!input)	return
+
+		var/customname = input(src.owner, "Pick a title for the report", "Title") as text|null
+
+		for(var/obj/machinery/faxmachine/F in machines)
+			if(! (F.stat & (BROKEN|NOPOWER) ) )
+
+				// animate! it's alive!
+				flick("faxreceive", F)
+
+				// give the sprite some time to flick
+				spawn(20)
+					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( F.loc )
+					P.name = "[command_name()]- [customname]"
+					P.info = input
+					P.update_icon()
+
+					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
+
+					// Stamps
+					var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+					stampoverlay.icon_state = "paper_stamp-cent"
+					if(!P.stamped)
+						P.stamped = new
+					P.stamped += /obj/item/weapon/stamp
+					P.overlays += stampoverlay
+					P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+
+		src.owner << "Message reply to transmitted successfully."
+		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
+		message_admins("[key_name_admin(src.owner)] replied to a fax message from [key_name_admin(H)]", 1)
+
 
 	else if(href_list["jumpto"])
 		if(!check_rights(R_ADMIN))	return
@@ -1571,6 +1675,22 @@
 		var/mob/M = locate(href_list["subtlemessage"])
 		usr.client.cmd_admin_subtle_message(M)
 
+	else if(href_list["rapsheet"])
+		checkSessionKey()
+		// build the link
+		//var/dat = "[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]"
+		//if(href_list["rsckey"])
+		//.	dat += "&ckey=[href_list["rsckey"]]"
+		// usr << link(dat)
+		usr << link(getVGPanel("rapsheet",admin=1,query=list("ckey"=href_list["rsckey"])))
+		return
+
+	else if(href_list["bansheet"])
+		//checkSessionKey()
+		//usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]")
+		usr << link(getVGPanel("rapsheet",admin=1))
+		return
+
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN|R_MOD))	return
 
@@ -1583,6 +1703,26 @@
 			usr << "This can only be used on instances of type /mob."
 			return
 		show_traitor_panel(M)
+
+	// /vg/
+	else if(href_list["set_base_laws"])
+		if(!check_rights(R_FUN))
+			usr << "\red You don't have +FUN. Go away."
+			return
+		var/lawtypes = typesof(/datum/ai_laws) - /datum/ai_laws
+		var/selected_law = input("Select the default lawset desired.","Lawset Selection",null) as null|anything in lawtypes
+		if(!selected_law) return
+		var/subject="Unknown"
+		switch(href_list["set_base_laws"])
+			if("ai")
+				base_law_type = selected_law
+				subject = "AIs and Cyborgs"
+			if("mommi")
+				mommi_base_law_type = selected_law
+				subject = "MoMMIs"
+		usr << "\blue New [subject] will spawn with the [selected_law] lawset."
+		log_admin("[key_name(src.owner)] set the default laws of [subject] to: [selected_law]")
+		message_admins("[key_name_admin(src.owner)] set the default laws of [subject] to: [selected_law]", 1)
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
@@ -1799,6 +1939,27 @@
 					log_admin("[key_name(usr)] toggled gravity off.", 1)
 					message_admins("\blue [key_name_admin(usr)] toggled gravity off.", 1)
 					command_alert("Feedback surge detected in mass-distributions systems. Artifical gravity has been disabled whilst the system reinitializes. Further failures may result in a gravitational collapse and formation of blackholes. Have a nice day.")
+			if("wave")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","Meteor")
+				log_admin("[key_name(usr)] spawned a meteor wave", 1)
+				message_admins("\blue [key_name_admin(usr)] spawned a meteor wave.", 1)
+				new /datum/event/meteor_wave
+			if("goblob")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","Blob")
+				log_admin("[key_name(usr)] spawned a blob", 1)
+				message_admins("\blue [key_name_admin(usr)] spawned a blob.", 1)
+				new /datum/event/blob
+
+			if("aliens")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","Aliens")
+				log_admin("[key_name(usr)] spawned an alien infestation", 1)
+				message_admins("\blue [key_name_admin(usr)] attempted an alien infestation", 1)
+				new /datum/event/alien_infestation
+
+
 			if("power")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","P")
@@ -1953,7 +2114,7 @@
 					if(20)	MAX_EXPLOSION_RANGE = 28
 					if(28)	MAX_EXPLOSION_RANGE = 56
 					if(56)	MAX_EXPLOSION_RANGE = 128
-					if(128)	MAX_EXPLOSION_RANGE = 14
+					else	MAX_EXPLOSION_RANGE = 14
 				var/range_dev = MAX_EXPLOSION_RANGE *0.25
 				var/range_high = MAX_EXPLOSION_RANGE *0.5
 				var/range_low = MAX_EXPLOSION_RANGE
@@ -2033,6 +2194,76 @@
 					spawn(0)
 						sleep(rand(30,400))
 						Wall.ex_act(rand(2,1)) */
+			if("wave")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","MW")
+				new /datum/event/meteor_wave
+
+			if("gravanomalies")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","GA")
+				command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
+				world << sound('sound/AI/granomalies.ogg')
+				var/turf/T = pick(blobstart)
+				var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
+				spawn(rand(100, 600))
+					del(bh)
+
+			if("timeanomalies")	//dear god this code was awful :P Still needs further optimisation
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","STA")
+				//moved to its own dm so I could split it up and prevent the spawns copying variables over and over
+				//can be found in code\game\game_modes\events\wormholes.dm
+				wormhole_event()
+
+			if("goblob")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","BL")
+				mini_blob_event()
+				message_admins("[key_name_admin(usr)] has spawned blob", 1)
+			if("aliens")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","AL")
+				if(aliens_allowed)
+					new /datum/event/alien_infestation
+					message_admins("[key_name_admin(usr)] has spawned aliens", 1)
+			if("alien_silent")								//replaces the spawn_xeno verb
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","ALS")
+				if(aliens_allowed)
+					create_xeno()
+			if("spiders")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","SL")
+				new /datum/event/spider_infestation
+				message_admins("[key_name_admin(usr)] has spawned spiders", 1)
+			if("comms_blackout")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","CB")
+				var/answer = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No")
+				if(answer == "Yes")
+					communications_blackout(0)
+				else
+					communications_blackout(1)
+				message_admins("[key_name_admin(usr)] triggered a communications blackout.", 1)
+			if("spaceninja")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","SN")
+				if(toggle_space_ninja)
+					if(space_ninja_arrival())//If the ninja is actually spawned. They may not be depending on a few factors.
+						message_admins("[key_name_admin(usr)] has sent in a space ninja", 1)
+			if("carp")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","C")
+				var/choice = input("You sure you want to spawn carp?") in list("Badmin", "Cancel")
+				if(choice == "Badmin")
+					message_admins("[key_name_admin(usr)] has spawned carp.", 1)
+					new /datum/event/carp_migration
+			if("radiation")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","R")
+				message_admins("[key_name_admin(usr)] has has irradiated the station", 1)
+				new /datum/event/radiation_storm
 			if("immovable")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","IR")
@@ -2065,6 +2296,12 @@
 				message_admins("[key_name_admin(usr)] has spawned aliens", 1)
 				//makeAliens()
 				new /datum/event/alien_infestation
+			if("radiation")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","RAD")
+				message_admins("[key_name_admin(usr)] has started a radiation event", 1)
+				//makeAliens()
+				new /datum/event/radiation_storm
 			if("floorlava")
 				if(floorIsLava)
 					usr << "The floor is lava already."
@@ -2184,7 +2421,7 @@
 			if("spacevines")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","K")
-				//new /datum/event/spacevine
+				new /datum/event/spacevine
 				message_admins("[key_name_admin(usr)] has spawned spacevines", 1)
 			if("onlyone")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2249,12 +2486,8 @@
 					alert("The game mode is [ticker.mode.name]")
 				else alert("For some reason there's a ticker, but not a game mode")
 			if("manifest")
-
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:2252: var/dat = "<B>Showing Crew Manifest.</B><HR>"
-				var/dat = {"<B>Showing Crew Manifest.</B><HR>
-<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"}
-				// END AUTOFIX
+				var/dat = "<B>Showing Crew Manifest.</B><HR>"
+				dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 				for(var/mob/living/carbon/human/H in mob_list)
 					if(H.ckey)
 						dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
@@ -2263,24 +2496,16 @@
 			if("check_antagonist")
 				check_antagonists()
 			if("DNA")
-
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:2262: var/dat = "<B>Showing DNA from blood.</B><HR>"
-				var/dat = {"<B>Showing DNA from blood.</B><HR>
-<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"}
-				// END AUTOFIX
+				var/dat = "<B>Showing DNA from blood.</B><HR>"
+				dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 				for(var/mob/living/carbon/human/H in mob_list)
 					if(H.dna && H.ckey)
 						dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
 				dat += "</table>"
 				usr << browse(dat, "window=DNA;size=440x410")
 			if("fingerprints")
-
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\topic.dm:2270: var/dat = "<B>Showing Fingerprints.</B><HR>"
-				var/dat = {"<B>Showing Fingerprints.</B><HR>
-<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"}
-				// END AUTOFIX
+				var/dat = "<B>Showing Fingerprints.</B><HR>"
+				dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 				for(var/mob/living/carbon/human/H in mob_list)
 					if(H.ckey)
 						if(H.dna && H.dna.uni_identity)

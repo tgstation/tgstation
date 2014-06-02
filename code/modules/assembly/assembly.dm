@@ -7,7 +7,7 @@
 	w_class = 2.0
 	m_amt = 100
 	g_amt = 0
-	w_amt = 0
+	w_type = RECYK_ELECTRONIC
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 10
@@ -49,6 +49,8 @@
 	interact(mob/user as mob)					//Called when attack_self is called
 		return
 
+	proc/describe()									// Called by grenades to describe the state of the trigger (time left, etc)
+		return "The trigger assembly looks broken!"
 
 	process_cooldown()
 		cooldown--
@@ -57,6 +59,14 @@
 			process_cooldown()
 		return 1
 
+	Destroy()
+		if(istype(src.loc, /obj/item/device/assembly_holder) || istype(holder))
+			var/obj/item/device/assembly_holder/A = src.loc
+			if(A.a_left == src)
+				A.a_left = null
+			else if(A.a_right == src)
+				A.a_right = null
+			src.holder = null
 
 	pulsed(var/radio = 0)
 		if(holder && (wires & WIRE_RECEIVE))
@@ -71,6 +81,10 @@
 			holder.process_activation(src, 1, 0)
 		if(holder && (wires & WIRE_PULSE_SPECIAL))
 			holder.process_activation(src, 0, 1)
+
+		if(istype(loc,/obj/item/weapon/grenade)) // This is a hack.  Todo: Manage this better -Sayu
+			var/obj/item/weapon/grenade/G = loc
+			G.prime() 							 // Adios, muchachos
 //		if(radio && (wires & WIRE_RADIO_PULSE))
 			//Not sure what goes here quite yet send signal?
 		return 1

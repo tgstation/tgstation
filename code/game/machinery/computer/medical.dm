@@ -84,6 +84,7 @@
 					dat += text("\n<A href='?src=\ref[];print_p=1'>Print Record</A><BR>\n<A href='?src=\ref[];screen=2'>Back</A><BR>", src, src)
 				if(5.0)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
+					/*	Advanced diseases is weak! Feeble! Glory to virus2!
 					for(var/Dt in typesof(/datum/disease/))
 						var/datum/disease/Dis = new Dt(0)
 						if(istype(Dis, /datum/disease/advance))
@@ -91,6 +92,11 @@
 						if(!Dis.desc)
 							continue
 						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"
+					*/
+					for (var/ID in virusDB)
+						var/datum/data/record/v = virusDB[ID]
+						dat += "<br><a href='?src=\ref[src];vir=\ref[v]'>[v.fields["name"]]</a>"
+
 					dat += "<br><a href='?src=\ref[src];screen=1'>Back</a>"
 				if(6.0)
 
@@ -106,7 +112,7 @@
 						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
 						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
-							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
+							bdat += "[M.name] - <b>\[[bl.x-WORLD_X_OFFSET],[bl.y-WORLD_Y_OFFSET]\]</b> - [M.on ? "Online" : "Offline"]<br>"
 							if((!isnull(M.reagent_glass)) && M.use_beaker)
 								bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
 							else
@@ -136,8 +142,19 @@
 			src.temp = null
 		if (href_list["scan"])
 			if (src.scan)
-				src.scan.loc = src.loc
-				src.scan = null
+
+				if(ishuman(usr))
+					scan.loc = usr.loc
+
+					if(!usr.get_active_hand())
+						usr.put_in_hands(scan)
+
+					scan = null
+
+				else
+					src.scan.loc = src.loc
+					src.scan = null
+
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -149,13 +166,24 @@
 			src.screen = null
 			src.active1 = null
 			src.active2 = null
+
 		else if (href_list["login"])
-			if (istype(usr, /mob/living/silicon))
+
+			if (istype(usr, /mob/living/silicon/ai))
 				src.active1 = null
 				src.active2 = null
-				src.authenticated = 1
+				src.authenticated = usr.name
 				src.rank = "AI"
 				src.screen = 1
+
+			else if (istype(usr, /mob/living/silicon/robot))
+				src.active1 = null
+				src.active2 = null
+				src.authenticated = usr.name
+				var/mob/living/silicon/robot/R = usr
+				src.rank = "[R.modtype] [R.braintype]"
+				src.screen = 1
+
 			else if (istype(src.scan, /obj/item/weapon/card/id))
 				src.active1 = null
 				src.active2 = null
@@ -174,20 +202,12 @@
 				src.active2 = null
 
 			if(href_list["vir"])
-				var/type = href_list["vir"]
-				var/datum/disease/Dis = new type(0)
-				var/AfS = ""
-				for(var/Str in Dis.affected_species)
-					AfS += " [Str];"
-				src.temp = {"<b>Name:</b> [Dis.name]
-<BR><b>Number of stages:</b> [Dis.max_stages]
-<BR><b>Spread:</b> [Dis.spread] Transmission
-<BR><b>Possible Cure:</b> [(Dis.cure||"none")]
-<BR><b>Affected Species:</b>[AfS]
-<BR>
-<BR><b>Notes:</b> [Dis.desc]
-<BR>
-<BR><b>Severity:</b> [Dis.severity]"}
+				var/datum/data/record/v = locate(href_list["vir"])
+				src.temp = "<center>GNAv2 based virus lifeform V-[v.fields["id"]]</center>"
+				src.temp += "<br><b>Name:</b> <A href='?src=\ref[src];field=vir_name;edit_vir=\ref[v]'>[v.fields["name"]]</A>"
+				src.temp += "<br><b>Antigen:</b> [v.fields["antigen"]]"
+				src.temp += "<br><b>Spread:</b> [v.fields["spread type"]] "
+				src.temp += "<br><b>Details:</b><br> <A href='?src=\ref[src];field=vir_desc;edit_vir=\ref[v]'>[v.fields["description"]]</A>"
 
 			if (href_list["del_all"])
 				src.temp = text("Are you sure you wish to delete all records?<br>\n\t<A href='?src=\ref[];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=\ref[];temp=1'>No</A><br>", src, src)
@@ -290,6 +310,20 @@
 							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
 								return
 							src.active1.fields["dna"] = t1
+					if("vir_name")
+						var/datum/data/record/v = locate(href_list["edit_vir"])
+						if (v)
+							var/t1 = copytext(sanitize(input("Please input pathogen name:", "VirusDB", v.fields["name"], null)  as text),1,MAX_MESSAGE_LEN)
+							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+								return
+							v.fields["name"] = t1
+					if("vir_desc")
+						var/datum/data/record/v = locate(href_list["edit_vir"])
+						if (v)
+							var/t1 = copytext(sanitize(input("Please input information about pathogen:", "VirusDB", v.fields["description"], null)  as message),1,MAX_MESSAGE_LEN)
+							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+								return
+							v.fields["description"] = t1
 					else
 
 			if (href_list["p_stat"])
@@ -297,12 +331,14 @@
 					switch(href_list["p_stat"])
 						if("deceased")
 							src.active1.fields["p_stat"] = "*Deceased*"
-						if("unconscious")
-							src.active1.fields["p_stat"] = "*Unconscious*"
+						if("ssd")
+							src.active1.fields["p_stat"] = "*SSD*"
 						if("active")
 							src.active1.fields["p_stat"] = "Active"
 						if("unfit")
 							src.active1.fields["p_stat"] = "Physically Unfit"
+						if("disabled")
+							src.active1.fields["p_stat"] = "Disabled"
 
 			if (href_list["m_stat"])
 				if (src.active1)
@@ -393,7 +429,7 @@
 				var/counter = 1
 				while(src.active2.fields[text("com_[]", counter)])
 					counter++
-				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [], 2053<BR>[]", src.authenticated, src.rank, time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
+				src.active2.fields[text("com_[counter]")] = text("Made by [authenticated] ([rank]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")]<BR>[t1]")
 
 			if (href_list["del_c"])
 				if ((istype(src.active2, /datum/data/record) && src.active2.fields[text("com_[]", href_list["del_c"])]))
@@ -464,7 +500,7 @@
 				if(4)
 					R.fields["b_type"] = pick("A-", "B-", "AB-", "O-", "A+", "B+", "AB+", "O+")
 				if(5)
-					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
+					R.fields["p_stat"] = pick("*SSD*", "Active", "Physically Unfit", "Disabled")
 				if(6)
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 			continue

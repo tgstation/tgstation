@@ -1,3 +1,4 @@
+var/list/camera_names=list()
 /obj/machinery/camera
 	name = "security camera"
 	desc = "It's used to monitor rooms."
@@ -9,22 +10,15 @@
 	active_power_usage = 10
 	layer = 5
 
+	var/datum/wires/camera/wires = null // Wires datum
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = 1.0
 	anchored = 1.0
-	var/panel_open = 0 // 0 = Closed / 1 = Open
 	var/invuln = null
 	var/bugged = 0
 	var/obj/item/weapon/camera_assembly/assembly = null
-
-	// WIRES
-	var/wires = 63 // 0b111111
-	var/list/IndexToFlag = list()
-	var/list/IndexToWireColor = list()
-	var/list/WireColorToIndex = list()
-	var/list/WireColorToFlag = list()
 
 	//OTHER
 
@@ -36,15 +30,11 @@
 	var/busy = 0
 
 /obj/machinery/camera/New()
-	WireColorToFlag = randomCameraWires()
+	wires = new(src)
+
 	assembly = new(src)
 	assembly.state = 4
-	/* // Use this to look for cameras that have the same c_tag.
-	for(var/obj/machinery/camera/C in cameranet.cameras)
-		var/list/tempnetwork = C.network&src.network
-		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
-			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
-	*/
+
 	if(!src.network || src.network.len < 1)
 		if(loc)
 			error("[src.name] in [get_area(src)] (x:[src.x] y:[src.y] z:[src.z] has errored. [src.network?"Empty network list":"Null network list"]")
@@ -52,6 +42,20 @@
 			error("[src.name] in [get_area(src)]has errored. [src.network?"Empty network list":"Null network list"]")
 		ASSERT(src.network)
 		ASSERT(src.network.len > 0)
+
+	if(!c_tag)
+		var/area/A=get_area(src)
+		var/basename=A.name
+		var/nethash=english_list(network)
+		var/suffix = 0
+		while(1)
+			c_tag = "[basename]"
+			if(suffix)
+				c_tag += " [suffix]"
+			if(!(nethash+c_tag in camera_names))
+				camera_names[nethash+c_tag]=src
+				break
+			suffix++
 	..()
 
 /obj/machinery/camera/emp_act(severity)
@@ -106,7 +110,7 @@
 		return
 	status = 0
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	playsound(get_turf(src), 'sound/weapons/slash.ogg', 100, 1)
 	icon_state = "[initial(icon_state)]1"
 	add_hiddenprint(user)
 	deactivate(user,0)
@@ -114,18 +118,18 @@
 /obj/machinery/camera/attackby(W as obj, mob/living/user as mob)
 
 	// DECONSTRUCTION
-	if(isscrewdriver(W))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
 		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 
-	else if((iswirecutter(W) || ismultitool(W)) && panel_open)
-		interact(user)
+	else if((istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool)) && panel_open)
+		wires.Interact(user)
 
-	else if(iswelder(W) && canDeconstruct())
+	else if(istype(W, /obj/item/weapon/weldingtool) && wires.CanDeconstruct())
 		if(weld(W, user))
 			if(assembly)
 				assembly.loc = src.loc
@@ -206,13 +210,21 @@
 	if(choice==1)
 		status = !( src.status )
 		if (!(src.status))
-			visible_message("\red [user] has deactivated [src]!")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			if(user)
+				visible_message("\red [user] has deactivated [src]!")
+				add_hiddenprint(user)
+			else
+				visible_message("\red \The [src] deactivates!")
+			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
 			add_hiddenprint(user)
 		else
-			visible_message("\red [user] has reactivated [src]!")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			if(user)
+				visible_message("\red [user] has reactivated [src]!")
+				add_hiddenprint(user)
+			else
+				visible_message("\red \the [src] reactivates!")
+			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
 			add_hiddenprint(user)
 	// now disconnect anyone using the camera
@@ -298,7 +310,7 @@
 
 	// Do after stuff here
 	user << "<span class='notice'>You start to weld the [src]..</span>"
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
 	if(do_after(user, 100))

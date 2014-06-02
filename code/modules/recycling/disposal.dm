@@ -57,12 +57,12 @@
 					return
 				if(mode==0) // It's off but still not unscrewed
 					mode=-1 // Set it to doubleoff l0l
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 					user << "You remove the screws around the power connection."
 					return
 				else if(mode==-1)
 					mode=0
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 					user << "You attach the screws around the power connection."
 					return
 			else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
@@ -71,7 +71,7 @@
 					return
 				var/obj/item/weapon/weldingtool/W = I
 				if(W.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+					playsound(get_turf(src), 'sound/items/Welder2.ogg', 100, 1)
 					user << "You start slicing the floorweld off the disposal unit."
 
 					if(do_after(user,20))
@@ -106,6 +106,8 @@
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
 				var/mob/GM = G.affecting
+				user.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
+				GM.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
 				for (var/mob/V in viewers(usr))
 					V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
 				if(do_after(usr, 20))
@@ -363,7 +365,8 @@
 		src.updateDialog()
 
 		if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
-			flush()
+			spawn(0)
+				flush()
 
 		if(stat & NOPOWER)			// won't charge if no power
 			return
@@ -456,7 +459,7 @@
 						AM.throw_at(target, 5, 1)
 
 			H.vent_gas(loc)
-			del(H)
+			qdel(H)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if (istype(mover,/obj/item) && mover.throwing)
@@ -515,7 +518,7 @@
 			AM.loc = src
 			if(istype(AM, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = AM
-				if(FAT in H.mutations)		// is a human and fat?
+				if(M_FAT in H.mutations)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
 			if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 				var/obj/structure/bigDelivery/T = AM
@@ -544,6 +547,12 @@
 	proc/move()
 		var/obj/structure/disposalpipe/last
 		while(active)
+			/* vg edit
+			if(hasmob && prob(3))
+				for(var/mob/living/H in src)
+					H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
+					*/
+
 			if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
 				active = 0
 				// find the fat guys
@@ -593,7 +602,7 @@
 
 		if(other.has_fat_guy)
 			has_fat_guy = 1
-		del(other)
+		qdel(other)
 
 
 	// called when player tries to move while in a pipe
@@ -604,7 +613,7 @@
 			for (var/mob/M in hearers(src.loc.loc))
 				M << "<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>"
 
-		playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
+		playsound(get_turf(src), 'sound/effects/clang.ogg', 50, 0, 0)
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
@@ -636,7 +645,7 @@
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
-	Del()
+	Destroy()
 		var/obj/structure/disposalholder/H = locate() in src
 		if(H)
 			// holder was present
@@ -649,7 +658,7 @@
 				for(var/atom/movable/AM in H)
 					AM.loc = T
 					AM.pipe_eject(0)
-				del(H)
+				qdel(H)
 				..()
 				return
 
@@ -745,7 +754,7 @@
 						if(AM)
 							AM.throw_at(target, 100, 1)
 				H.vent_gas(T)
-				del(H)
+				qdel(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -761,7 +770,7 @@
 							AM.throw_at(target, 5, 1)
 
 				H.vent_gas(T)	// all gas vent to turf
-				del(H)
+				qdel(H)
 
 		return
 
@@ -789,7 +798,7 @@
 				for(var/atom/movable/AM in H)
 					AM.loc = T
 					AM.pipe_eject(0)
-				del(H)
+				qdel(H)
 				return
 
 			// otherwise, do normal expel from turf
@@ -838,7 +847,7 @@
 			var/obj/item/weapon/weldingtool/W = I
 
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Welder2.ogg', 100, 1)
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
 				var/atom/wloc = W.loc
@@ -991,7 +1000,7 @@
 
 			if(O.currTag > 0)// Tag set
 				sortType = O.currTag
-				playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/machines/twobeep.ogg', 100, 1)
 				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
 				user << "\blue Changed filter to [tag]"
 				updatedesc()
@@ -1157,7 +1166,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 
 		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
 			var/turf/uloc = user.loc
 			var/atom/wloc = W.loc
@@ -1262,7 +1271,7 @@
 				spawn(5)
 					AM.throw_at(target, 3, 1)
 			H.vent_gas(src.loc)
-			del(H)
+			qdel(H)
 
 		return
 
@@ -1273,18 +1282,18 @@
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(mode==0)
 				mode=1
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "You remove the screws around the power connection."
 				return
 			else if(mode==1)
 				mode=0
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "You attach the screws around the power connection."
 				return
 		else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Welder2.ogg', 100, 1)
 				user << "You start slicing the floorweld off the disposal outlet."
 				if(do_after(user,20))
 					if(!src || !W.isOn()) return
@@ -1326,7 +1335,7 @@
 
 	src.streak(dirs)
 
-/obj/effect/decal/cleanable/blood/robot/gib/pipe_eject(var/direction)
+/obj/effect/decal/cleanable/blood/gibs/robot/pipe_eject(var/direction)
 	var/list/dirs
 	if(direction)
 		dirs = list( direction, turn(direction, -45), turn(direction, 45))

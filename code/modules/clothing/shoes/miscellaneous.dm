@@ -84,6 +84,10 @@
 	_color = "hosred"
 	siemens_coefficient = 0.7
 
+/obj/item/clothing/shoes/jackboots/batmanboots
+	name = "batboots"
+	desc = "Criminal stomping boots for fighting crime and looking good."
+
 /obj/item/clothing/shoes/cult
 	name = "boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."
@@ -118,3 +122,15 @@
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
+
+/obj/item/clothing/shoes/roman
+	name = "roman sandals"
+	desc = "Sandals with buckled leather straps on it."
+	icon_state = "roman"
+	item_state = "roman"
+
+/obj/item/clothing/shoes/simonshoes
+	name = "Simon's Shoes"
+	desc = "Simon's Shoes"
+	icon_state = "simonshoes"
+	item_state = "simonshoes"

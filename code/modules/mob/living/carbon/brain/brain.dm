@@ -7,6 +7,9 @@
 	var/alert = null
 	immune_to_ssd = 1
 	use_me = 0 //Can't use the me verb, it's a freaking immobile brain
+	hasmouth=0 // Can't feed it.
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "brain1"
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(1000)
@@ -14,7 +17,7 @@
 		R.my_atom = src
 		..()
 
-	Del()
+	Destroy()
 		if(key)				//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
 			if(stat!=DEAD)	//If not dead.
 				death(1)	//Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA

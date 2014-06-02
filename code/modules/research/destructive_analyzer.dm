@@ -40,6 +40,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 	return temp_list
 
 
+/obj/machinery/r_n_d/destructive_analyzer/update_icon()
+	overlays.Cut()
+	if(linked_console)
+		overlays += "d_analyzer_link"
+
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
@@ -58,7 +63,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return
 	if (opened)
 		if(istype(O, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -79,7 +84,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return
 	if (istype(O, /obj/item) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
-			return
+			if(isMoMMI(user))
+				var/mob/living/silicon/robot/mommi/mommi = user
+				if(mommi.is_in_modules(O,permit_sheets=1))
+					user << "\red You cannot insert something that is part of you."
+					return
+			else
+				return
 		if(!O.origin_tech)
 			user << "\red This doesn't seem to have a tech origin!"
 			return
@@ -87,9 +98,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if (temp_tech.len == 0)
 			user << "\red You cannot deconstruct this item!"
 			return
-		if(O.reliability < 90 && O.crit_fail == 0)
+		/*if(O.reliability < 90 && O.crit_fail == 0)
 			usr << "\red Item is neither reliable enough or broken enough to learn from."
-			return
+			return*/
 		busy = 1
 		loaded_item = O
 		user.drop_item()

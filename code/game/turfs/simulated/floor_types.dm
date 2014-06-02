@@ -87,7 +87,7 @@
 		return
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "\blue Removing rods..."
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 80, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)
@@ -148,7 +148,6 @@
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 	layer = 2
-	accepts_lighting=0
 
 /turf/simulated/shuttle/wall
 	name = "wall"
@@ -212,20 +211,25 @@
 	name = "Carpet"
 	icon_state = "carpet"
 	floor_tile = new/obj/item/stack/tile/carpet
-
+	var/has_siding=1
 	New()
 		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
 		if(!icon_state)
-			icon_state = "carpet"
+			icon_state = initial(icon_state)
 		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+		if(has_siding)
+			spawn(4)
+				if(src)
+					update_icon()
+					for(var/direction in list(1,2,4,8,5,6,9,10))
+						if(istype(get_step(src,direction),/turf/simulated/floor))
+							var/turf/simulated/floor/FF = get_step(src,direction)
+							FF.update_icon() //so siding get updated properly
 
+/turf/simulated/floor/carpet/arcade
+	name = "Arcade Carpet"
+	icon_state = "arcadecarpet"
+	has_siding=0
 
 
 /turf/simulated/floor/plating/ironsand/New()
@@ -237,6 +241,11 @@
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+
+/turf/simulated/floor/plating/snow/concrete
+	name = "concrete"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "concrete"
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
@@ -251,3 +260,56 @@
 	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
 	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
 	//icon = 'icons/turf/shuttle-debug.dmi'
+
+
+// CATWALKS
+// Space and plating, all in one buggy fucking turf!
+/turf/simulated/floor/plating/airless/catwalk
+	icon = 'icons/turf/catwalks.dmi'
+	icon_state = "catwalk0"
+	name = "catwalk"
+	desc = "Cats really don't like these things."
+
+	temperature = TCMB
+	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
+	heat_capacity = 700000
+
+	lighting_lumcount = 4		//starlight
+
+	intact = 0
+
+	New()
+		..()
+		// Fucking cockshit dickfuck shitslut
+		name = "catwalk"
+		update_icon(1)
+
+	update_icon(var/propogate=1)
+		underlays.Cut()
+		underlays += new /icon('icons/turf/space.dmi',"[((x + y) ^ ~(x * y) + z) % 25]")
+
+		var/dirs = 0
+		for(var/direction in cardinal)
+			var/turf/T = get_step(src,direction)
+			if(T.is_catwalk())
+				var/turf/simulated/floor/plating/airless/catwalk/C=T
+				dirs |= direction
+				if(propogate)
+					C.update_icon(0)
+		icon_state="catwalk[dirs]"
+
+
+	attackby(obj/item/C as obj, mob/user as mob)
+		if(!C || !user)
+			return 0
+		if(istype(C, /obj/item/weapon/screwdriver))
+			ReplaceWithLattice()
+			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+			return
+
+		if(istype(C, /obj/item/weapon/cable_coil))
+			var/obj/item/weapon/cable_coil/coil = C
+			coil.turf_place(src, user)
+
+	is_catwalk()
+		return 1

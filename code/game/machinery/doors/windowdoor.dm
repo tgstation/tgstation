@@ -9,21 +9,10 @@
 	use_power = 0
 	flags = ON_BORDER
 	opacity = 0
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/circuitboard/airlock/electronics = null
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
-
-
-/obj/machinery/door/window/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
-
-	var/turf/simulated/source = get_turf(src)
-	var/turf/simulated/target = get_step(source,dir)
-
-	if(istype(source)) air_master.tiles_to_update |= source
-	if(istype(target)) air_master.tiles_to_update |= target
-
-	return 1
+	ghost_read=0
 
 /obj/machinery/door/window/New()
 	..()
@@ -33,13 +22,13 @@
 		src.base_state = src.icon_state
 	return
 
-/obj/machinery/door/window/Del()
+/obj/machinery/door/window/Destroy()
 	density = 0
 	playsound(src, "shatter", 70, 1)
 	..()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
-	if (!( ismob(AM) ))
+	if (!ismob(AM))
 		var/obj/machinery/bot/bot = AM
 		if(istype(bot))
 			if(density && src.check_access(bot.botcard))
@@ -60,6 +49,7 @@
 		return
 	if (src.density && src.allowed(AM))
 		open()
+		// What.
 		if(src.check_access(null))
 			sleep(50)
 		else //secure doors close faster
@@ -92,7 +82,7 @@
 	if(!src.operating) //in case of emag
 		src.operating = 1
 	flick(text("[]opening", src.base_state), src)
-	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = text("[]open", src.base_state)
 	sleep(10)
 
@@ -110,7 +100,7 @@
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
-	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = src.base_state
 
 	src.density = 1
@@ -127,7 +117,7 @@
 /obj/machinery/door/window/proc/take_damage(var/damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		new /obj/item/weapon/shard(src.loc)
+		getFromPool(/obj/item/weapon/shard, loc)
 		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
 		CC.amount = 2
 		src.density = 0
@@ -149,11 +139,10 @@
 		tforce = 40
 	else
 		tforce = AM:throwforce
-	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 100, 1)
 	take_damage(tforce)
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
-
 
 /obj/machinery/door/window/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -163,11 +152,12 @@
 	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/adult))
 		if(src.operating)
 			return
+		user.changeNext_move(8)
 		src.health = max(0, src.health - 25)
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
 		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
+			getFromPool(/obj/item/weapon/shard, loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
@@ -192,8 +182,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, "sparks", 50, 1)
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(get_turf(src), "sparks", 50, 1)
+			playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
 			visible_message("\blue The glass door was sliced open by [user]!")
 		flick("[src.base_state]spark", src)
 		sleep(6)
@@ -203,12 +193,13 @@
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		var/aforce = I.force
+		user.changeNext_move(8)
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
+			getFromPool(/obj/item/weapon/shard, loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
@@ -240,7 +231,7 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)
-	var/id = null
+	var/id_tag = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
 

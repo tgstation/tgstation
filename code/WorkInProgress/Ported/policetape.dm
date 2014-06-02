@@ -43,6 +43,19 @@
 	req_one_access = list(access_engine,access_atmospherics)
 	icon_base = "engineering"
 
+/obj/item/taperoll/atmos
+	name = "atmospherics tape"
+	desc = "A roll of atmospherics tape used to block off working areas from the public."
+	icon_state = "atmos_start"
+	tape_type = /obj/item/tape/atmos
+	icon_base = "atmos"
+
+/obj/item/tape/atmos
+	name = "atmospherics tape"
+	desc = "A length of atmospherics tape. Better not cross it."
+	req_one_access = list(access_engine,access_atmospherics)
+	icon_base = "atmos"
+
 /obj/item/taperoll/attack_self(mob/user as mob)
 	if(icon_state == "[icon_base]_start")
 		start = get_turf(src)

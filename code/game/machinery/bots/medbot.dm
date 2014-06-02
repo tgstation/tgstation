@@ -103,39 +103,35 @@
 	if (.)
 		return
 	var/dat
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\bots\medbot.dm:106: dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
-	dat += {"<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>
-		Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>
-		Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>
-		Beaker: "}
-	// END AUTOFIX
+	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
+	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
+	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
+	dat += "Beaker: "
 	if (src.reagent_glass)
 		dat += "<A href='?src=\ref[src];eject=1'>Loaded \[[src.reagent_glass.reagents.total_volume]/[src.reagent_glass.reagents.maximum_volume]\]</a>"
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
 	if(!src.locked || issilicon(user))
+		dat += "<TT>Healing Threshold: "
+		dat += "<a href='?src=\ref[src];adj_threshold=-10'>--</a> "
+		dat += "<a href='?src=\ref[src];adj_threshold=-5'>-</a> "
+		dat += "[src.heal_threshold] "
+		dat += "<a href='?src=\ref[src];adj_threshold=5'>+</a> "
+		dat += "<a href='?src=\ref[src];adj_threshold=10'>++</a>"
+		dat += "</TT><br>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\bots\medbot.dm:116: dat += "<TT>Healing Threshold: "
-		dat += {"<TT>Healing Threshold: 
-			<a href='?src=\ref[src];adj_threshold=-10'>--</a> 
-			<a href='?src=\ref[src];adj_threshold=-5'>-</a> 
-			[src.heal_threshold] 
-			<a href='?src=\ref[src];adj_threshold=5'>+</a> 
-			<a href='?src=\ref[src];adj_threshold=10'>++</a>
-			</TT><br>
-			<TT>Injection Level: 
-			<a href='?src=\ref[src];adj_inject=-5'>-</a> 
-			[src.injection_amount] 
-			<a href='?src=\ref[src];adj_inject=5'>+</a> 
-			</TT><br>
-			Reagent Source: 
-			<a href='?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>
-			The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"}
-		// END AUTOFIX
+		dat += "<TT>Injection Level: "
+		dat += "<a href='?src=\ref[src];adj_inject=-5'>-</a> "
+		dat += "[src.injection_amount] "
+		dat += "<a href='?src=\ref[src];adj_inject=5'>+</a> "
+		dat += "</TT><br>"
+
+		dat += "Reagent Source: "
+		dat += "<a href='?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
+
+		dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+
 	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[dat]", "window=automed")
 	onclose(user, "automed")
 	return
@@ -235,7 +231,7 @@
 		src.icon_state = "medibot[src.on]"
 
 /obj/machinery/bot/medbot/process()
-	set background = 1
+	//set background = 1
 
 	if(!src.on)
 		src.stunned = 0
@@ -593,3 +589,4 @@
 					S.name = src.created_name
 					user.drop_from_inventory(src)
 					del(src)
+

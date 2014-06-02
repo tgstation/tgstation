@@ -2,40 +2,24 @@
 // can have multiple per area
 // can also operate on non-loc area through "otherarea" var
 /obj/machinery/light_switch
-	name = "light switch"
 	desc = "It turns lights on and off. What are you, simple?"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = 1.0
-	var/on = 1
-	var/area/area = null
-	var/otherarea = null
+	var/on
 	//	luminosity = 1
 
 /obj/machinery/light_switch/New()
 	..()
-	spawn(5)
-		src.area = src.loc.loc
-
-		if(otherarea)
-			src.area = locate(text2path("/area/[otherarea]"))
-
-		if(!name)
-			name = "light switch ([area.name])"
-
-		src.on = src.area.lightswitch
-		updateicon()
-
-
+	name = "[areaMaster.name] light switch"
+	on = areaMaster.lightswitch
+	updateicon()
 
 /obj/machinery/light_switch/proc/updateicon()
-	if(stat & NOPOWER)
+	if (stat & NOPOWER)
 		icon_state = "light-p"
 	else
-		if(on)
-			icon_state = "light1"
-		else
-			icon_state = "light0"
+		icon_state = on ? "light1" : "light0"
 
 /obj/machinery/light_switch/examine()
 	set src in oview(1)
@@ -46,11 +30,17 @@
 /obj/machinery/light_switch/attack_paw(mob/user)
 	src.attack_hand(user)
 
+/obj/machinery/light_switch/attack_ghost(var/mob/dead/observer/G)
+	if(!G.can_poltergeist())
+		G << "Your poltergeist abilities are still cooling down."
+		return 0
+	return ..()
+
 /obj/machinery/light_switch/attack_hand(mob/user)
 
 	on = !on
 
-	for(var/area/A in area.master.related)
+	for(var/area/A in areaMaster.related)
 		A.lightswitch = on
 		A.updateicon()
 
@@ -58,17 +48,15 @@
 			L.on = on
 			L.updateicon()
 
-	area.master.power_change()
+	areaMaster.power_change()
 
 /obj/machinery/light_switch/power_change()
+	if(powered(LIGHT))
+		stat &= ~NOPOWER
+	else
+		stat |= NOPOWER
 
-	if(!otherarea)
-		if(powered(LIGHT))
-			stat &= ~NOPOWER
-		else
-			stat |= NOPOWER
-
-		updateicon()
+	updateicon()
 
 /obj/machinery/light_switch/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

@@ -105,7 +105,7 @@ proc/move_research_shuttle()
 		usr << "You fried the consoles ID checking system. It's now available to everyone!"
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			var/obj/item/weapon/circuitboard/research_shuttle/M = new /obj/item/weapon/circuitboard/research_shuttle( A )
@@ -116,7 +116,7 @@ proc/move_research_shuttle()
 
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				A.state = 3
 				A.icon_state = "3"
 			else

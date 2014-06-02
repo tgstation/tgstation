@@ -130,13 +130,30 @@
 			src.attack_self(M)
 */
 /*
- * Sunflower
+ * Sunflower & NovaFlower
  */
-
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
 	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
 
+/obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
+	if(!..()) return
+	if(istype(M, /mob/living))
+		M << "\red You are heated by the warmth of the of the [name]!"
+		M.bodytemperature += potency/2 * TEMPERATURE_DAMAGE_COEFFICIENT
+
+/obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user as mob,proximity)
+	if(!proximity) return
+	if(endurance > 0)
+		endurance -= rand(1,(endurance/3)+1)
+	else
+		usr << "All the petals have fallen off the [name] from violent whacking."
+		del(src)
+
+/obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user as mob)
+	if(!user.gloves)
+		user << "\red The [name] burns your bare hand!"
+		user.adjustFireLoss(rand(1,5))
 
 /*
  * Nettle
@@ -189,6 +206,10 @@
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
 
 		log_attack("<font color='red'> [user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])</font>")
+		if(!iscarbon(user))
+			M.LAssailant = null
+		else
+			M.LAssailant = user
 
 		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 

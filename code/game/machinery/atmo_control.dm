@@ -4,6 +4,7 @@ obj/machinery/air_sensor
 	name = "Gas Sensor"
 
 	anchored = 1
+
 	var/state = 0
 
 	var/id_tag
@@ -35,7 +36,9 @@ obj/machinery/air_sensor
 			var/datum/gas_mixture/air_sample = return_air()
 
 			if(output&1)
-				signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
+				// Fucking why do we need num2text
+				//signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
+				signal.data["pressure"] =round(air_sample.return_pressure(),0.1)
 			if(output&2)
 				signal.data["temperature"] = round(air_sample.temperature,0.1)
 
@@ -74,13 +77,14 @@ obj/machinery/air_sensor
 		if(radio_controller)
 			set_frequency(frequency)
 
-obj/machinery/computer/general_air_control
+/obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
 
 	name = "Computer"
 
 	var/frequency = 1439
+	var/show_sensors=1
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
@@ -89,22 +93,26 @@ obj/machinery/computer/general_air_control
 	attack_hand(mob/user)
 		if(..(user))
 			return
-		user << browse(return_text(),"window=computer")
+		var/html=return_text()+"</body></html>"
+		user << browse(html,"window=gac")
 		user.set_machine(src)
-		onclose(user, "computer")
+		onclose(user, "gac")
 
 	process()
 		..()
-		src.updateDialog()
+		if(!sensors)
+			warning("[src.type] at [x],[y],[z] has null sensors.  Please fix.")
+			sensors = list()
+		src.updateUsrDialog()
 
 	attackby(I as obj, user as mob)
 		if(istype(I, /obj/item/weapon/screwdriver))
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					new /obj/item/weapon/shard( src.loc )
+					getFromPool(/obj/item/weapon/shard, loc)
 					var/obj/item/weapon/circuitboard/air_management/M = new /obj/item/weapon/circuitboard/air_management( A )
 					for (var/obj/C in src)
 						C.loc = src.loc
@@ -134,7 +142,7 @@ obj/machinery/computer/general_air_control
 		if(!signal || signal.encryption) return
 
 		var/id_tag = signal.data["tag"]
-		if(!id_tag || !sensors.Find(id_tag)) return
+		if(!id_tag || !sensors || !sensors.Find(id_tag)) return
 
 		sensor_information[id_tag] = signal.data
 
@@ -144,35 +152,79 @@ obj/machinery/computer/general_air_control
 			for(var/id_tag in sensors)
 				var/long_name = sensors[id_tag]
 				var/list/data = sensor_information[id_tag]
-				var/sensor_part = "<B>[long_name]</B>:<BR>"
+				var/sensor_part = "<fieldset><legend>[long_name]</legend>"
 
 				if(data)
-					if(data["pressure"])
-						sensor_part += "   <B>Pressure:</B> [data["pressure"]] kPa<BR>"
+					sensor_part += "<table>"
+					if("pressure" in data)
+						sensor_part += "<tr><th>Pressure:</th><td>[data["pressure"]] kPa</td></tr>"
 					if(data["temperature"])
-						sensor_part += "   <B>Temperature:</B> [data["temperature"]] K<BR>"
+						sensor_part += "<tr><th>Temperature:</th><td>[data["temperature"]] K</td></tr>"
 					if(data["oxygen"]||data["toxins"]||data["nitrogen"]||data["carbon_dioxide"])
-						sensor_part += "   <B>Gas Composition :</B>"
+						sensor_part += "<tr><th>Gas Composition :</th><td><ul>"
 						if(data["oxygen"])
-							sensor_part += "[data["oxygen"]]% O2; "
+							sensor_part += "<li>[data["oxygen"]]% O<sub>2</sub></li>"
 						if(data["nitrogen"])
-							sensor_part += "[data["nitrogen"]]% N; "
+							sensor_part += "<li>[data["nitrogen"]]% N</li>"
 						if(data["carbon_dioxide"])
-							sensor_part += "[data["carbon_dioxide"]]% CO2; "
+							sensor_part += "<li>[data["carbon_dioxide"]]% CO<sub>2</sub></li>"
 						if(data["toxins"])
-							sensor_part += "[data["toxins"]]% TX; "
-					sensor_part += "<HR>"
+							sensor_part += "<li>[data["toxins"]]% Plasma</li>"
+						sensor_part += "</ul></td></tr>"
+					sensor_part += "</table>"
 
 				else
-					sensor_part = "<FONT color='red'>[long_name] can not be found!</FONT><BR>"
-
+					sensor_part += "<FONT color='red'>[long_name] can not be found!</FONT><BR>"
+				sensor_part += "</fieldset>"
 				sensor_data += sensor_part
 
 		else
-			sensor_data = "No sensors connected."
+			sensor_data = "<em>No sensors connected.</em>"
 
-		var/output = {"<B>[name]</B><HR>
-<B>Sensor Data:</B><HR><HR>[sensor_data]"}
+		var/output = {"<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>[name]</title>
+		<style type="text/css">
+html,body {
+	font-family:sans-serif,verdana;
+	font-size:smaller;
+	color:#666;
+}
+h1 {
+	border-bottom:1px solid maroon;
+}
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+td, th {
+	margin: 0;
+	font-size: small;
+	border-bottom: 1px solid #ccc;
+	padding: 3px;
+}
+
+th {
+	text-align:right;
+}
+
+fieldset {
+	border:1px solid #ccc;
+	background: #efefef;
+}
+legend {
+	font-weight:bold;
+}
+		</style>
+	</head>
+	<body>
+		<h1>[name]</h1>"}
+		if(show_sensors)
+			output += {"
+		<h2>Sensor Data:</h2>
+		[sensor_data]"}
 
 		return output
 
@@ -197,36 +249,62 @@ obj/machinery/computer/general_air_control
 
 		var/pressure_setting = ONE_ATMOSPHERE * 45
 
+		process()
+			..()
+			if(!input_info && input_tag)
+				request_device_refresh(input_tag)
+			if(!output_info && output_tag)
+				request_device_refresh(output_tag)
 
 		return_text()
 			var/output = ..()
 			//if(signal.data)
 			//	input_info = signal.data // Attempting to fix intake control -- TLE
 
-			output += "<B>Tank Control System</B><BR>"
-			if(input_info)
-				var/power = (input_info["power"])
-				var/volume_rate = input_info["volume_rate"]
-				output += {"<B>Input</B>: [power?("Injecting"):("On Hold")] <A href='?src=\ref[src];in_refresh_status=1'>Refresh</A><BR>
-Rate: [volume_rate] L/sec<BR>"}
-				output += "Command: <A href='?src=\ref[src];in_toggle_injector=1'>Toggle Power</A><BR>"
+			output += "<h2>Tank Control System</h2><BR>"
+			if(input_tag)
+				if(input_info)
+					var/power = (input_info["power"])
+					var/volume_rate = input_info["volume_rate"]
+					output += {"
+<fieldset>
+	<legend>Input (<A href='?src=\ref[src];in_refresh_status=1'>Refresh</A>)</legend>
+	<table>
+		<tr>
+			<th>State:</th>
+			<td><A href='?src=\ref[src];in_toggle_injector=1'>[power?("Injecting"):("On Hold")]</A></td>
+		</tr>
+		<tr>
+			<th>Rate:</th>
+			<td><a href="?src=\ref[src];in_set_rate=1">[volume_rate]</a> L/sec</td>
+		</tr>
+	</table>
+</fieldset>
+"}
 
-			else
-				output += "<FONT color='red'>ERROR: Can not find input port</FONT> <A href='?src=\ref[src];in_refresh_status=1'>Search</A><BR>"
-
-			output += "<BR>"
-
-			if(output_info)
-				var/power = (output_info["power"])
-				var/output_pressure = output_info["internal"]
-				output += {"<B>Output</B>: [power?("Open"):("On Hold")] <A href='?src=\ref[src];out_refresh_status=1'>Refresh</A><BR>
-Max Output Pressure: [output_pressure] kPa<BR>"}
-				output += "Command: <A href='?src=\ref[src];out_toggle_power=1'>Toggle Power</A> <A href='?src=\ref[src];out_set_pressure=1'>Set Pressure</A><BR>"
-
-			else
-				output += "<FONT color='red'>ERROR: Can not find output port</FONT> <A href='?src=\ref[src];out_refresh_status=1'>Search</A><BR>"
-
-			output += "Max Output Pressure Set: <A href='?src=\ref[src];adj_pressure=-1000'>-</A> <A href='?src=\ref[src];adj_pressure=-100'>-</A> <A href='?src=\ref[src];adj_pressure=-10'>-</A> <A href='?src=\ref[src];adj_pressure=-1'>-</A> [pressure_setting] kPa <A href='?src=\ref[src];adj_pressure=1'>+</A> <A href='?src=\ref[src];adj_pressure=10'>+</A> <A href='?src=\ref[src];adj_pressure=100'>+</A> <A href='?src=\ref[src];adj_pressure=1000'>+</A><BR>"
+				else
+					output += "<FONT color='red'>ERROR: Can not find input port</FONT> <A href='?src=\ref[src];in_refresh_status=1'>Search</A><BR>"
+			if(output_tag)
+				if(output_info)
+					var/power = (output_info["power"])
+					var/output_pressure = output_info["internal"]
+					output += {"
+<fieldset>
+	<legend>Output (<A href='?src=\ref[src];out_refresh_status=1'>Refresh</A>)</legend>
+	<table>
+		<tr>
+			<th>State:</th>
+			<td><A href='?src=\ref[src];out_toggle_power=1'>[power?("Open"):("On Hold")]</A></td>
+		</tr>
+		<tr>
+			<th>Max Output Pressure:</th>
+			<td><A href='?src=\ref[src];out_set_pressure=1'>[output_pressure]</A> kPa</td>
+		</tr>
+	</table>
+</fieldset>
+"}
+				else
+					output += "<FONT color='red'>ERROR: Can not find output port</FONT> <A href='?src=\ref[src];out_refresh_status=1'>Search</A><BR>"
 
 			return output
 
@@ -237,21 +315,34 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 			if(input_tag == id_tag)
 				input_info = signal.data
+				updateUsrDialog()
 			else if(output_tag == id_tag)
 				output_info = signal.data
+				updateUsrDialog()
 			else
 				..(signal)
+
+		proc/request_device_refresh(var/device)
+			send_signal(list("tag"=device, "status"))
+
+		proc/send_signal(var/list/data)
+			var/datum/signal/signal = new
+			signal.transmission_method = 1 //radio signal
+			signal.source = src
+			signal.data=data
+			signal.data["sigtype"]="command"
+			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 		Topic(href, href_list)
 			if(..())
 				return
 
-			if(href_list["adj_pressure"])
-				var/change = text2num(href_list["adj_pressure"])
-				pressure_setting = between(0, pressure_setting + change, 50*ONE_ATMOSPHERE)
-				spawn(1)
-					src.updateDialog()
-				return
+			add_fingerprint(usr)
+
+			if(href_list["out_set_pressure"])
+				var/response=input(usr,"Set new pressure, in kPa. \[0-[50*ONE_ATMOSPHERE]\]") as num
+				pressure_setting = text2num(response)
+				pressure_setting = between(0, pressure_setting, 50*ONE_ATMOSPHERE)
 
 			if(!radio_connection)
 				return 0
@@ -262,27 +353,35 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				input_info = null
 				signal.data = list ("tag" = input_tag, "status")
 
-			if(href_list["in_toggle_injector"])
+			else if(href_list["in_toggle_injector"])
 				input_info = null
 				signal.data = list ("tag" = input_tag, "power_toggle")
 
-			if(href_list["out_refresh_status"])
+			else if(href_list["in_set_rate"])
+				input_info = null
+				var/new_rate=input("Enter the new volume rate of the injector:","Injector Rate") as num
+				new_rate = text2num(new_rate)
+				new_rate = between(0, new_rate, 300)
+				signal.data = list ("tag" = input_tag, "set_volume_rate"=new_rate)
+
+			else if(href_list["out_refresh_status"])
 				output_info = null
 				signal.data = list ("tag" = output_tag, "status")
 
-			if(href_list["out_toggle_power"])
+			else if(href_list["out_toggle_power"])
 				output_info = null
 				signal.data = list ("tag" = output_tag, "power_toggle")
 
-			if(href_list["out_set_pressure"])
+			else if(href_list["out_set_pressure"])
 				output_info = null
 				signal.data = list ("tag" = output_tag, "set_internal_pressure" = "[pressure_setting]")
+			else
+				testing("Bad Topic() to GAC \"[src.name]\": [href]")
+				return // NOPE.
 
 			signal.data["sigtype"]="command"
 			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-
-			spawn(5)
-				src.updateDialog()
+			src.updateUsrDialog()
 
 	fuel_injection
 		icon = 'icons/obj/computer.dmi'
@@ -298,12 +397,12 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 		attackby(I as obj, user as mob)
 			if(istype(I, /obj/item/weapon/screwdriver))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				if(do_after(user, 20))
 					if (src.stat & BROKEN)
 						user << "\blue The broken glass falls out."
 						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-						new /obj/item/weapon/shard( src.loc )
+						getFromPool(/obj/item/weapon/shard, loc)
 						var/obj/item/weapon/circuitboard/injector_control/M = new /obj/item/weapon/circuitboard/injector_control( A )
 						for (var/obj/C in src)
 							C.loc = src.loc
@@ -360,30 +459,47 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 		return_text()
 			var/output = ..()
-
-			output += "<B>Fuel Injection System</B><BR>"
+			output += "<fieldset><legend>Fuel Injection System (<A href='?src=\ref[src];refresh_status=1'>Refresh</A>)</legend>"
 			if(device_info)
 				var/power = device_info["power"]
 				var/volume_rate = device_info["volume_rate"]
-				output += {"Status: [power?("Injecting"):("On Hold")] <A href='?src=\ref[src];refresh_status=1'>Refresh</A><BR>
-Rate: [volume_rate] L/sec<BR>"}
+				output += {"<table>
+				<tr>
+					<th>Status:</th>
+					<td>[power?"Injecting":"On Hold"]</td>
+				</tr>
+				<tr>
+					<th>Rate:</th>
+					<td>[volume_rate] L/sec</td>
+				</tr>
+				<tr>
+					<th>Automated Fuel Injection:</th>
+					<td><A href='?src=\ref[src];toggle_automation=1'>[automation?"Engaged":"Disengaged"]</A></td>
+				</tr>"}
 
 				if(automation)
 
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\atmo_control.dm:372: output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Engaged</A><BR>"
-					output += {"Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Engaged</A><BR>
-						Injector Controls Locked Out<BR>"}
+					output += {"
+					<tr>
+						<td colspan="2">Injector Controls Locked Out</td>
+					</tr>"}
 					// END AUTOFIX
 				else
 
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\atmo_control.dm:375: output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Disengaged</A><BR>"
-					output += {"Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Disengaged</A><BR>
-						Injector: <A href='?src=\ref[src];toggle_injector=1'>Toggle Power</A> <A href='?src=\ref[src];injection=1'>Inject (1 Cycle)</A><BR>"}
+					output += {"
+					<tr>
+						<th>Injector:</th>
+						<td><A href='?src=\ref[src];toggle_injector=1'>Toggle Power</A> <A href='?src=\ref[src];injection=1'>Inject (1 Cycle)</A></td>
+					</td>"}
 					// END AUTOFIX
+				output += "</table>"
 			else
-				output += "<FONT color='red'>ERROR: Can not find device</FONT> <A href='?src=\ref[src];refresh_status=1'>Search</A><BR>"
+				output += {"<p style="color:red"><b>ERROR:</b> Can not find device. <A href='?src=\ref[src];refresh_status=1'>Search</A></p>"}
+			output += "</fieldset>"
 
 			return output
 

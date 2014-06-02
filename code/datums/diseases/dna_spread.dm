@@ -39,13 +39,15 @@
 
 				//Save original dna for when the disease is cured.
 				src.original_dna["name"] = affected_mob.real_name
-				src.original_dna["UI"] = affected_mob.dna.uni_identity
-				src.original_dna["SE"] = affected_mob.dna.struc_enzymes
+				src.original_dna["UI"] = affected_mob.dna.UI.Copy()
+				src.original_dna["SE"] = affected_mob.dna.SE.Copy()
 
 				affected_mob << "\red You don't feel like yourself.."
-				affected_mob.dna.uni_identity = strain_data["UI"]
-				updateappearance(affected_mob, affected_mob.dna.uni_identity)
-				affected_mob.dna.struc_enzymes = strain_data["SE"]
+				var/list/newUI=strain_data["UI"]
+				var/list/newSE=strain_data["SE"]
+				affected_mob.UpdateAppearance(newUI.Copy())
+				affected_mob.dna.SE = newSE.Copy()
+				affected_mob.dna.UpdateSE()
 				affected_mob.real_name = strain_data["name"]
 				domutcheck(affected_mob)
 
@@ -56,9 +58,11 @@
 
 /datum/disease/dnaspread/Del()
 	if ((original_dna["name"]) && (original_dna["UI"]) && (original_dna["SE"]))
-		affected_mob.dna.uni_identity = original_dna["UI"]
-		updateappearance(affected_mob, affected_mob.dna.uni_identity)
-		affected_mob.dna.struc_enzymes = original_dna["SE"]
+		var/list/newUI=original_dna["UI"]
+		var/list/newSE=original_dna["SE"]
+		affected_mob.UpdateAppearance(newUI.Copy())
+		affected_mob.dna.SE = newSE.Copy()
+		affected_mob.dna.UpdateSE()
 		affected_mob.real_name = original_dna["name"]
 
 		affected_mob << "\blue You feel more like yourself."

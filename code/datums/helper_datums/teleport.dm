@@ -182,4 +182,10 @@
 
 		if(destination.z > 7) //Away mission z-levels
 			return 0
+
+		if(istype(teleatom, /mob/living))
+			var/mob/living/MM = teleatom
+			if(MM.locked_to_z != 0 && destination.z != MM.locked_to_z)
+				MM.visible_message("\red <b>[MM] bounces off the portal!</b>","\red You're unable to go to that destination!")
+				return 0
 		return 1

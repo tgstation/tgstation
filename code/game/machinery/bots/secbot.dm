@@ -67,8 +67,6 @@
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 
-
-
 /obj/machinery/bot/secbot
 	New()
 		..()
@@ -192,7 +190,7 @@ Auto Patrol: []"},
 		mode = SECBOT_IDLE
 
 /obj/machinery/bot/secbot/process()
-	set background = 1
+	//set background = 1
 
 	if(!src.on)
 		return
@@ -223,14 +221,14 @@ Auto Patrol: []"},
 					return
 				if(get_dist(src, src.target) <= 1)		// if right next to perp
 					if(istype(src.target,/mob/living/carbon))
-						playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+						playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
 						src.icon_state = "secbot-c"
 						spawn(2)
 							src.icon_state = "secbot[src.on]"
 						var/mob/living/carbon/M = src.target
 						var/maxstuns = 4
 						if(istype(M, /mob/living/carbon/human))
-							if(M.stuttering < 10 && (!(HULK in M.mutations)))
+							if(M.stuttering < 10 && (!(M_HULK in M.mutations)))
 								M.stuttering = 10
 							M.Stun(10)
 							M.Weaken(10)
@@ -251,7 +249,7 @@ Auto Patrol: []"},
 						//just harmbaton them until dead
 						if(world.time > next_harm_time)
 							next_harm_time = world.time + 15
-							playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+							playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
 							visible_message("\red <B>[src] beats [src.target] with the stun baton!</B>")
 							src.icon_state = "secbot-c"
 							spawn(2)
@@ -263,7 +261,7 @@ Auto Patrol: []"},
 								S.adjustBruteLoss(15)
 								if(S.stat)
 									src.frustration = 8
-									playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+									playsound(get_turf(src), pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, src.target)
@@ -286,7 +284,7 @@ Auto Patrol: []"},
 			if(istype(src.target,/mob/living/carbon))
 				var/mob/living/carbon/C = target
 				if(!C.handcuffed && !src.arrest_type)
-					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+					playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
 					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
@@ -307,7 +305,7 @@ Auto Patrol: []"},
 							src.last_found = world.time
 							src.frustration = 0
 
-							playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+							playsound(get_turf(src), pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
 		//					src.speak(arrest_message)
 
@@ -353,7 +351,6 @@ Auto Patrol: []"},
 
 
 		if(SECBOT_PATROL)		// patrol mode
-
 			patrol_step()
 			spawn(5)
 				if(mode == SECBOT_PATROL)
@@ -585,8 +582,10 @@ Auto Patrol: []"},
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/secbot/proc/calc_path(var/turf/avoid = null)
-	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
-	if (!path) path = list()
+	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
+	if(!src.path)
+		src.path = list()
+
 
 // look for a criminal in view of the bot
 
@@ -606,11 +605,18 @@ Auto Patrol: []"},
 			else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
 				src.threatlevel = 4
 
+		/*
 		else if(istype(M, /mob/living/simple_animal/hostile))
 			if(M.stat == DEAD)
 				continue
-			else
-				src.threatlevel = 4
+			// Ignore lazarus-injected mobs.
+			if(M.faction == "lazarus")
+				continue
+			// Minebots only, I hope.
+			if(M.faction == "neutral")
+				continue
+			src.threatlevel = 4
+		*/
 
 		if(!src.threatlevel)
 			continue
@@ -619,7 +625,7 @@ Auto Patrol: []"},
 			src.target = M
 			src.oldtarget_name = M.name
 			src.speak("Level [src.threatlevel] infraction alert!")
-			playsound(src.loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
+			playsound(get_turf(src), pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
 			src.visible_message("<b>[src]</b> points at [M.name]!")
 			mode = SECBOT_HUNT
 			spawn(0)
@@ -718,9 +724,7 @@ Auto Patrol: []"},
 	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
 	Sa.created_name = src.name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
-
-	var/obj/item/weapon/melee/baton/B = new /obj/item/weapon/melee/baton(Tsec)
-	B.charges = 0
+	new /obj/item/weapon/melee/baton/loaded(Tsec)
 
 	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)

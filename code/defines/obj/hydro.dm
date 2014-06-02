@@ -68,6 +68,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/chillighost
+	name = "pack of ghost chilli seeds"
+	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
+	icon_state = "seed-chilighost"
+	mypath = "/obj/item/seeds/chillighost"
+	species = "chilighost"
+	plantname = "Ghost Chili Plants"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli"
+	lifespan = 20
+	endurance = 10
+	maturation = 10
+	production = 10
+	yield = 3
+	potency = 20
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/plastiseed
 	name = "plastellium mycelium"
 	desc = "This mycelium grows into Plastellium"
@@ -85,30 +102,6 @@
 	potency = 20
 	plant_type = 2
 	growthstages = 3
-
-/obj/item/seeds/replicapod
-	name = "pack of replica pod seeds"
-	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
-	icon_state = "seed-replicapod"
-	mypath = "/obj/item/seeds/replicapod"
-	species = "replicapod"
-	plantname = "Replica Pod"
-	productname = "/mob/living/carbon/human" //verrry special -- Urist
-	lifespan = 50 //no idea what those do
-	endurance = 8
-	maturation = 10
-	production = 10
-	yield = 1 //seeds if there isn't a dna inside
-	oneharvest = 1
-	potency = 30
-	plant_type = 0
-	growthstages = 6
-	var/ui = null //for storing the guy
-	var/se = null
-	var/ckey = null
-	var/realName = null
-	var/datum/mind/mind = null
-	gender = MALE
 
 /obj/item/seeds/grapeseed
 	name = "pack of grape seeds"
@@ -160,6 +153,40 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 1
+
+/obj/item/seeds/shandseed
+	name = "pack of s'rendarr's hand seeds"
+	desc = "These seeds grow into a helpful herb called S'Rendarr's Hand, native to Ahdomai."
+	icon_state = "seed-shand"
+	mypath = "/obj/item/seeds/shandseed"
+	species = "shand"
+	plantname = "S'Rendarr's Hand"
+	productname = "/obj/item/stack/medical/bruise_pack/tajaran"
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 3
+
+/obj/item/seeds/mtearseed
+	name = "pack of messa's tear seeds"
+	desc = "These seeds grow into a helpful herb called Messa's Tear, native to Ahdomai."
+	icon_state = "seed-mtear"
+	mypath = "/obj/item/seeds/mtearseed"
+	species = "mtear"
+	plantname = "Messa's Tear"
+	productname = "/obj/item/stack/medical/ointment/tajaran"
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 3
 
 /obj/item/seeds/berryseed
 	name = "pack of berry seeds"
@@ -417,6 +444,23 @@
 	potency = 5
 	plant_type = 0
 	growthstages = 6
+
+/obj/item/seeds/koiseed
+	name = "pack of koibean seeds"
+	desc = "These seeds grow into koibean plants."
+	icon_state = "seed-koibean"
+	mypath = "/obj/item/seeds/koiseed"
+	species = "koibean"
+	plantname = "Koibean Plants"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/koibeans"
+	lifespan = 25
+	endurance = 15
+	maturation = 4
+	production = 4
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 4
 
 /obj/item/seeds/wheatseed
 	name = "pack of wheat seeds"
@@ -724,6 +768,42 @@
 	growthstages = 3
 	plant_type = 1
 
+/obj/item/seeds/moonflowerseed
+	name = "pack of moonflower seeds"
+	desc = "These seeds grow into moonflowers."
+	icon_state = "seed-moonflower"
+	mypath = "/obj/item/seeds/moonflowerseed"
+	species = "moonflower"
+	plantname = "Moonflowers"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/moonflower"
+	lifespan = 25
+	endurance = 20
+	maturation = 6
+	production = 2
+	yield = 2
+	potency = 15
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 0
+
+/obj/item/seeds/novaflowerseed
+	name = "pack of novaflower seeds"
+	desc = "These seeds grow into novaflowers."
+	icon_state = "seed-novaflower"
+	mypath = "/obj/item/seeds/novaflowerseed"
+	species = "novaflower"
+	plantname = "Novaflowers"
+	productname = "/obj/item/weapon/grown/novaflower"
+	lifespan = 25
+	endurance = 20
+	maturation = 6
+	production = 2
+	yield = 2
+	potency = 20
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 0
+
 /obj/item/seeds/brownmold
 	name = "pack of brown mold"
 	desc = "Eww.. moldy."
@@ -801,6 +881,23 @@
 	species = "ambrosiavulgaris"
 	plantname = "Ambrosia Vulgaris"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris"
+	lifespan = 60
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 6
+	potency = 5
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/ambrosiavulgarisseed/cruciatus
+	name = "pack of ambrosia vulgaris seeds"
+	desc = "These seeds grow into common ambrosia, a plant grown by and from medicine."
+	icon_state = "seed-ambrosiavulgaris"
+	mypath = "/obj/item/seeds/ambrosiavulgarisseed/cruciatus"
+	species = "ambrosiavulgaris"
+	plantname = "Ambrosia Vulgaris"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus"
 	lifespan = 60
 	endurance = 25
 	maturation = 6
@@ -1190,6 +1287,30 @@
 	throw_range = 3
 	plant_type = 1
 	seed = "/obj/item/seeds/sunflower"
+
+/obj/item/weapon/grown/novaflower
+	name = "novaflower"
+	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
+	icon = 'icons/obj/harvest.dmi'
+	icon_state = "novaflower"
+	damtype = "fire"
+	force = 0
+	flags = TABLEPASS
+	slot_flags = SLOT_HEAD
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	plant_type = 0
+	seed = "/obj/item/seeds/novaflower"
+	attack_verb = list("seared", "heated", "whacked", "steamed")
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1)
+			reagents.add_reagent("capsaicin", round(potency, 1))
+			force = round((5+potency/5), 1)
+
 /*
 /obj/item/weapon/grown/gibtomato
 	desc = "A plump tomato."
@@ -1322,7 +1443,7 @@
 	name = "weed-spray"
 	icon_state = "weedspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -1341,7 +1462,7 @@
 	name = "pest-spray"
 	icon_state = "pestspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -1360,11 +1481,12 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hoe"
 	item_state = "hoe"
-	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | NOBLUDGEON
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 50
+	w_type = RECYK_METAL
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 
 // *************************************

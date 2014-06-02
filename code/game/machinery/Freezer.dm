@@ -9,22 +9,28 @@
 
 	current_heat_capacity = 1000
 
+	var/list/rotate_verbs=list(
+		/obj/machinery/atmospherics/unary/cold_sink/freezer/verb/rotate,
+		/obj/machinery/atmospherics/unary/cold_sink/freezer/verb/rotate_ccw,
+	)
+
 	New()
 		..()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/freezer
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser
+		component_parts += new /obj/item/weapon/stock_parts/console_screen
+		RefreshParts()
+
+		if(anchored)
+			verbs -= rotate_verbs
+
 		initialize_directions = dir
-
-	initialize()
-		if(node) return
-
-		var/node_connect = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node = target
-				break
-
-		update_icon()
-
 
 	update_icon()
 		if(src.node)
@@ -49,23 +55,40 @@
 				user << "You have to turn off the [src] first!"
 				return
 			if(anchored)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You begin to unfasten the [src]..."
 				if (do_after(user, 40))
+					verbs += rotate_verbs
 					user.visible_message( \
 						"[user] unfastens \the [src].", \
 						"\blue You have unfastened \the [src]. Now it can be pulled somewhere else.", \
 						"You hear ratchet.")
 					src.anchored = 0
+
+					// From Destroy()
+					// Disconnect
+					if(node)
+						node.disconnect(src)
+						del(network)
+					node = null
 			else
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You begin to fasten [src]."
 				if(do_after(user, 40))
+					verbs -= rotate_verbs
 					user.visible_message( \
 						"[user] fastens \the [src].", \
 						"\blue You have fastened \the [src]. Now it can be pulled somewhere else.", \
 						"You hear ratchet.")
 					src.anchored = 1
+
+					// Connect to network
+					initialize_directions = dir
+					initialize()
+					build_network()
+					if (node)
+						node.initialize()
+						node.build_network()
 			return 1
 		if(istype(W, /obj/item/weapon/screwdriver))
 			if(anchored)
@@ -88,7 +111,7 @@
 				return
 			if(istype(W, /obj/item/weapon/crowbar))
 				user << "You begin to remove the circuits from the [src]."
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user, 50))
 					var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 					M.state = 2
@@ -125,9 +148,13 @@
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
 			usr.set_machine(src)
 			if (href_list["start"])
+				if(isobserver(usr) && !canGhostWrite(usr,src,"turned [on?"off":"on"]"))
+					return
 				src.on = !src.on
 				update_icon()
 			if(href_list["temp"])
+				if(isobserver(usr) && !canGhostWrite(usr,src,"set temperature of"))
+					return
 				var/amount = text2num(href_list["temp"])
 				if(amount > 0)
 					src.current_temperature = min(T20C, src.current_temperature+amount)
@@ -142,29 +169,27 @@
 		src.updateUsrDialog()
 
 
-	verb/rotate_clock()
-		set category = "Object"
-		set name = "Rotate Freezer (Clockwise)"
-		set src in view(1)
+/obj/machinery/atmospherics/unary/cold_sink/freezer/verb/rotate()
+	set name = "Rotate Clockwise"
+	set category = "Object"
+	set src in oview(1)
 
-		if (usr.stat || usr.restrained()  || anchored)
-			return
+	if (src.anchored || usr:stat)
+		usr << "It is fastened to the floor!"
+		return 0
+	src.dir = turn(src.dir, 270)
+	return 1
 
-		src.dir = turn(src.dir, 90)
-		initialize_directions = dir
+/obj/machinery/atmospherics/unary/cold_sink/freezer/verb/rotate_ccw()
+	set name = "Rotate Counter Clockwise"
+	set category = "Object"
+	set src in oview(1)
 
-	verb/rotate_anticlock()
-		set category = "Object"
-		set name = "Rotate Freezer (Counterclockwise)"
-		set src in view(1)
-
-		if (usr.stat || usr.restrained()  || anchored)
-			return
-
-		src.dir = turn(src.dir, -90)
-		initialize_directions = dir
-
-
+	if (src.anchored || usr:stat)
+		usr << "It is fastened to the floor!"
+		return 0
+	src.dir = turn(src.dir, 90)
+	return 1
 
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater
@@ -178,22 +203,28 @@
 
 	current_heat_capacity = 1000
 
+	var/list/rotate_verbs=list(
+		/obj/machinery/atmospherics/unary/heat_reservoir/heater/verb/rotate,
+		/obj/machinery/atmospherics/unary/heat_reservoir/heater/verb/rotate_ccw,
+	)
+
 	New()
 		..()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/heater
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser
+		component_parts += new /obj/item/weapon/stock_parts/console_screen
+		RefreshParts()
+
+		if(anchored)
+			verbs -= rotate_verbs
+
 		initialize_directions = dir
-
-	initialize()
-		if(node) return
-
-		var/node_connect = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node = target
-				break
-
-		update_icon()
-
 
 	update_icon()
 		if(src.node)
@@ -218,23 +249,40 @@
 				user << "You have to turn off the [src] first!"
 				return
 			if(anchored)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You begin to unfasten the [src]..."
 				if (do_after(user, 40))
+					verbs += rotate_verbs
 					user.visible_message( \
 						"[user] unfastens \the [src].", \
 						"\blue You have unfastened \the [src]. Now it can be pulled somewhere else.", \
 						"You hear ratchet.")
 					src.anchored = 0
+
+					// From Destroy()
+					// Disconnect
+					if(node)
+						node.disconnect(src)
+						del(network)
+					node = null
 			else
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You begin to fasten [src]."
 				if(do_after(user, 40))
+					verbs -= rotate_verbs
 					user.visible_message( \
 						"[user] fastens \the [src].", \
 						"\blue You have fastened \the [src]. Now it can be pulled somewhere else.", \
 						"You hear ratchet.")
 					src.anchored = 1
+
+					// Connect to network
+					initialize_directions = dir
+					initialize()
+					build_network()
+					if (node)
+						node.initialize()
+						node.build_network()
 			return 1
 		if(istype(W, /obj/item/weapon/screwdriver))
 			if(anchored)
@@ -257,7 +305,7 @@
 				return
 			if(istype(W, /obj/item/weapon/crowbar))
 				user << "You begin to remove the circuits from the [src]."
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user, 50))
 					var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 					M.state = 2
@@ -291,9 +339,13 @@
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
 			usr.set_machine(src)
 			if (href_list["start"])
+				if(isobserver(usr) && !canGhostWrite(usr,src,"turned [on?"off":"on"]"))
+					return
 				src.on = !src.on
 				update_icon()
 			if(href_list["temp"])
+				if(isobserver(usr) && !canGhostWrite(usr,src,"set temperature of"))
+					return
 				var/amount = text2num(href_list["temp"])
 				if(amount > 0)
 					src.current_temperature = min((T20C+280), src.current_temperature+amount)
@@ -308,24 +360,25 @@
 		src.updateUsrDialog()
 
 
-	verb/rotate_clock()
-		set category = "Object"
-		set name = "Rotate Heater (Clockwise)"
-		set src in view(1)
 
-		if (usr.stat || usr.restrained()  || anchored)
-			return
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/verb/rotate()
+	set name = "Rotate Clockwise"
+	set category = "Object"
+	set src in oview(1)
 
-		src.dir = turn(src.dir, 90)
-		initialize_directions = dir
+	if (src.anchored || usr:stat)
+		usr << "It is fastened to the floor!"
+		return 0
+	src.dir = turn(src.dir, 270)
+	return 1
 
-	verb/rotate_anticlock()
-		set category = "Object"
-		set name = "Rotate Heater (Counterclockwise)"
-		set src in view(1)
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/verb/rotate_ccw()
+	set name = "Rotate Counter Clockwise"
+	set category = "Object"
+	set src in oview(1)
 
-		if (usr.stat || usr.restrained()  || anchored)
-			return
-
-		src.dir = turn(src.dir, -90)
-		initialize_directions = dir
+	if (src.anchored || usr:stat)
+		usr << "It is fastened to the floor!"
+		return 0
+	src.dir = turn(src.dir, 90)
+	return 1

@@ -6,7 +6,7 @@
 	icon_state = "infrared"
 	m_amt = 1000
 	g_amt = 500
-	w_amt = 100
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=2"
 
 	wires = WIRE_PULSE
@@ -20,6 +20,8 @@
 	proc
 		trigger_beam()
 
+	//describe()
+	//	return "The infrared trigger is [on?"on":"off"]."
 
 	activate()
 		if(!..())	return 0//Cooldown check
@@ -34,7 +36,7 @@
 			processing_objects.Add(src)
 		else
 			on = 0
-			if(first)	del(first)
+			if(first)	qdel(first)
 			processing_objects.Remove(src)
 		update_icon()
 		return secured
@@ -55,11 +57,21 @@
 	process()//Old code
 		if(!on)
 			if(first)
-				del(first)
+				qdel(first)
 				return
-
-		if((!(first) && (secured && (istype(loc, /turf) || (holder && istype(holder.loc, /turf))))))
-			var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam((holder ? holder.loc : loc) )
+		if(first || !secured) return
+		var/turf/T = null
+		if(istype(loc,/turf))
+			T = loc
+		else if (holder)
+			if (istype(holder.loc,/turf))
+				T = holder.loc
+			else if (istype(holder.loc.loc,/turf)) //for onetankbombs and other tertiary builds with assemblies
+				T = holder.loc.loc
+		else if(istype(loc,/obj/item/weapon/grenade) && istype(loc.loc,/turf))
+			T = loc.loc
+		if(T)
+			var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(T)
 			I.master = src
 			I.density = 1
 			I.dir = dir
@@ -79,7 +91,7 @@
 
 
 	attack_hand()
-		del(first)
+		qdel(first)
 		..()
 		return
 
@@ -88,14 +100,14 @@
 		var/t = dir
 		..()
 		dir = t
-		del(first)
+		qdel(first)
 		return
 
 
 	holder_movement()
 		if(!holder)	return 0
 //		dir = holder.dir
-		del(first)
+		qdel(first)
 		return 1
 
 
@@ -182,7 +194,7 @@
 	if(master)
 		//world << "beam hit \ref[src]: calling master \ref[master].hit"
 		master.trigger_beam()
-	del(src)
+	qdel(src)
 	return
 
 /obj/effect/beam/i_beam/proc/vis_spread(v)
@@ -200,7 +212,7 @@
 
 	if((loc.density || !(master)))
 	//	world << "beam hit loc [loc] or no master [master], deleting"
-		del(src)
+		qdel(src)
 		return
 	//world << "proccess: [src.left] left"
 
@@ -240,17 +252,17 @@
 				return
 		else
 			//world << "is a next: \ref[next], deleting beam \ref[I]"
-			del(I)
+			qdel(I)
 	else
 		//world << "step failed, deleting \ref[next]"
-		del(next)
+		qdel(next)
 	spawn(10)
 		process()
 		return
 	return
 
 /obj/effect/beam/i_beam/Bump()
-	del(src)
+	qdel(src)
 	return
 
 /obj/effect/beam/i_beam/Bumped()
@@ -265,7 +277,7 @@
 		return
 	return
 
-/obj/effect/beam/i_beam/Del()
-	del(next)
+/obj/effect/beam/i_beam/Destroy()
+	qdel(next)
 	..()
 	return

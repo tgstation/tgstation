@@ -172,7 +172,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/DirBlocked(turf/loc,var/dir)
 	for(var/obj/structure/window/D in loc)
 		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1
+		if(D.is_fulltile())	return 1
 		if(D.dir == dir)		return 1
 
 	for(var/obj/machinery/door/D in loc)
@@ -291,6 +291,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					PDA.name = "PDA-[newname] ([PDA.ownjob])"
 					if(!search_id)	break
 					search_pda = 0
+
+		//Fixes renames not being reflected in objective text
+		var/list/O = (typesof(/datum/objective)  - /datum/objective)
+		var/length
+		var/pos
+		for(var/datum/objective/objective in O)
+			if(objective.target != mind) continue
+			length = lentext(oldname)
+			pos = findtextEx(objective.explanation_text, oldname)
+			objective.explanation_text = copytext(objective.explanation_text, 1, pos)+newname+copytext(objective.explanation_text, pos+length)
 	return 1
 
 
@@ -551,6 +561,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 /proc/key_name_admin(var/whom, var/include_name = 1)
 	return key_name(whom, 1, include_name)
+
+// Returns the atom sitting on the turf.
+// For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
+/proc/get_atom_on_turf(var/atom/movable/M)
+	var/atom/loc = M
+	while(loc && loc.loc && !istype(loc.loc, /turf/))
+		loc = loc.loc
+	return loc
 
 
 // Registers the on-close verb for a browse window (client/verb/.windowclose)
@@ -956,11 +974,15 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 							del(O) // prevents multiple shuttle corners from stacking
 							continue
 						if(!istype(O,/obj)) continue
+						O.loc.Exited(O)
 						O.loc = X
+						O.loc.Entered(O)
 					for(var/mob/M in T)
 						if(!M.move_on_shuttle)
 							continue
+						M.loc.Exited(M)
 						M.loc = X
+						M.loc.Entered(M)
 
 //					var/area/AR = X.loc
 
@@ -997,7 +1019,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			/*if(T1.parent)
 				air_master.groups_to_rebuild += T1.parent
 			else
-				air_master.tiles_to_update += T1*/
+				air_master.mark_for_update(T1)*/
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
@@ -1006,10 +1028,10 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			/*if(T2.parent)
 				air_master.groups_to_rebuild += T2.parent
 			else
-				air_master.tiles_to_update += T2*/
+				air_master.mark_for_update(T2)*/
 
 	for(var/obj/O in doors)
-		O:update_nearby_tiles(1)
+		O:update_nearby_tiles()
 
 
 
@@ -1163,10 +1185,10 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 			/*if(T1.parent)
 				air_master.groups_to_rebuild += T1.parent
 			else
-				air_master.tiles_to_update += T1*/
+				air_master.mark_for_update(T1)*/
 
 	for(var/obj/O in doors)
-		O:update_nearby_tiles(1)
+		O:update_nearby_tiles()
 
 
 
@@ -1202,7 +1224,7 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 
 proc/get_mob_with_client_list()
 	var/list/mobs = list()
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if (M.client)
 			mobs += M
 	return mobs
@@ -1224,12 +1246,21 @@ proc/get_mob_with_client_list()
 	else return zone
 
 
-/proc/get_turf(turf/location)
-	while(location)
-		if(isturf(location))
-			return location
-		location = location.loc
-	return null
+/proc/get_turf(const/atom/O)
+	if (isnull(O) || isarea(O))
+		return
+
+	var/atom/A = O
+
+	for (var/i = 0, ++i <= 20)
+		if (isturf(A))
+			return A
+
+		switch (istype(A))
+			if (1)
+				A = A.loc
+			if (0)
+				return
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1470,3 +1501,8 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 		result.Insert(temp, "[angle]")
 
 	return result
+
+/proc/iscatwalk(atom/A)
+	if(istype(A, /turf/simulated/floor/plating/airless/catwalk))
+		return 1
+	return 0

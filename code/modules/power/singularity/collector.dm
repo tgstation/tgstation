@@ -16,12 +16,14 @@ var/global/list/rad_collectors = list()
 	var/active = 0
 	var/locked = 0
 	var/drainratio = 1
+	ghost_read=0
+	ghost_write=0
 
 /obj/machinery/power/rad_collector/New()
 	..()
 	rad_collectors += src
 
-/obj/machinery/power/rad_collector/Del()
+/obj/machinery/power/rad_collector/Destroy()
 	rad_collectors -= src
 	..()
 
@@ -73,7 +75,7 @@ var/global/list/rad_collectors = list()
 		if(P)
 			user << "\blue Remove the plasma tank first."
 			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 		src.anchored = !src.anchored
 		user.visible_message("[user.name] [anchored? "secures":"unsecures"] the [src.name].", \
 			"You [anchored? "secure":"undo"] the external bolts.", \

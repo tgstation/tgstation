@@ -87,6 +87,10 @@
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a thrown [O], last touched by [M.name] ([assailant.ckey])</font>")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
 			msg_admin_attack("[src.name] ([src.ckey]) was hit by a thrown [O], last touched by [M.name] ([assailant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+			if(!iscarbon(M))
+				src.LAssailant = null
+			else
+				src.LAssailant = M
 
 			// Begin BS12 momentum-transfer code.
 
@@ -128,3 +132,47 @@
 	return 0
 
 // End BS12 momentum-transfer code.
+//Mobs on Fire
+/mob/living/proc/IgniteMob()
+	if(fire_stacks > 0 && !on_fire)
+		on_fire = 1
+		src.SetLuminosity(src.luminosity + 3)
+		update_fire()
+
+/mob/living/proc/ExtinguishMob()
+	if(on_fire)
+		on_fire = 0
+		fire_stacks = 0
+		src.SetLuminosity(src.luminosity - 3)
+		update_fire()
+
+/mob/living/proc/update_fire()
+	return
+
+/mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
+    fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
+
+/mob/living/proc/handle_fire()
+	if(fire_stacks < 0)
+		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
+		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
+	if(!on_fire)
+		return 1
+
+	var/oxy=0
+	var/turf/T=loc
+	if(istype(T))
+		var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
+		if(G)
+			oxy=G.oxygen
+	if(oxy < 1 || fire_stacks <= 0)
+		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		return 1
+	var/turf/location = get_turf(src)
+	location.hotspot_expose(700, 50, 1)
+
+/mob/living/fire_act()
+	adjust_fire_stacks(0.5)
+	IgniteMob()
+
+//Mobs on Fire end

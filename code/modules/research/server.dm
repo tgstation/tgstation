@@ -19,12 +19,12 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/rdserver(src)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	RefreshParts()
 	src.initialize(); //Agouri
 
-/obj/machinery/r_n_d/server/Del()
+/obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
 	..()
 
@@ -55,15 +55,18 @@
 			health = min(100, health + 1)
 		if(T0C to (T20C + 20))
 			health = between(0, health, 100)
-		if((T20C + 20) to (T0C + 70))
+		if((T20C + 20) to INFINITY)
 			health = max(0, health - 1)
 	if(health <= 0)
 		griefProtection() //I dont like putting this in process() but it's the best I can do without re-writing a chunk of rd servers.
 		files.known_designs = list()
+		var/changed=0
 		for(var/datum/tech/T in files.known_tech)
 			if(prob(1))
-				T.level--
-		files.RefreshResearch()
+				T.level = 0 // This never happens, so make it dramatic. T.level--
+				changed=1
+		if(changed)
+			files.RefreshResearch()
 	if(delay)
 		delay--
 	else
@@ -138,7 +141,7 @@
 	if (opened)
 		if(istype(O, /obj/item/weapon/crowbar))
 			griefProtection()
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -289,8 +292,8 @@
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:289: dat += "[S.name] || "
-				dat += {"[S.name] || 
-					<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> | 
+				dat += {"[S.name] ||
+					<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> |
 					<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"}
 				// END AUTOFIX
 				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
@@ -331,7 +334,7 @@
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:319: dat += "* [T.name] "
-				dat += {"* [T.name] 
+				dat += {"* [T.name]
 					<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings"}
 				// END AUTOFIX
 			dat += "Known Designs<BR>"
@@ -339,7 +342,7 @@
 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:323: dat += "* [D.name] "
-				dat += {"* [D.name] 
+				dat += {"* [D.name]
 					<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"}
 				// END AUTOFIX
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
@@ -360,12 +363,12 @@
 
 /obj/machinery/computer/rdservercontrol/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 	if(istype(D, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/rdservercontrol/M = new /obj/item/weapon/circuitboard/rdservercontrol( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
@@ -386,7 +389,7 @@
 				A.anchored = 1
 				del(src)
 	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "\blue You you disable the security protocols"
 	src.updateUsrDialog()

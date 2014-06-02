@@ -2,7 +2,10 @@
 /proc/error(msg)
 	world.log << "## ERROR: [msg]"
 
-//print a warning message to world.log
+/*
+ * print a warning message to world.log
+ */
+#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
 /proc/warning(msg)
 	world.log << "## WARNING: [msg]"
 
@@ -64,6 +67,16 @@
 /proc/log_adminwarn(text)
 	if (config.log_adminwarn)
 		diary << "\[[time_stamp()]]ADMINWARN: [text]"
+
+/proc/log_adminghost(text)
+	if (config.log_adminghost)
+		diary << "\[[time_stamp()]]ADMINGHOST: [text]"
+		message_admins("\[ADMINGHOST\] [text]")
+
+/proc/log_ghost(text)
+	if (config.log_adminghost)
+		diary << "\[[time_stamp()]]GHOST: [text]"
+		message_admins("\[GHOST\] [text]")
 
 /proc/log_pda(text)
 	if (config.log_pda)

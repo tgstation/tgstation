@@ -25,11 +25,11 @@ datum/computer/file/embedded_program/airlock_controller
 		if(!receive_tag) return
 
 		if(receive_tag==sensor_tag)
-			if(signal.data["pressure"])
-				sensor_pressure = text2num(signal.data["pressure"])
+			if("pressure" in signal.data)
+				sensor_pressure = signal.data["pressure"]
 		else if(receive_tag==sensor_tag_int)
-			if(signal.data["pressure"])
-				int_sensor_pressure = text2num(signal.data["pressure"])
+			if("pressure" in signal.data)
+				int_sensor_pressure = signal.data["pressure"]
 
 		else if(receive_tag==exterior_door_tag)
 			memory["exterior_status"] = signal.data["door_status"]
@@ -153,7 +153,7 @@ datum/computer/file/embedded_program/airlock_controller
 								"sigtype"="command"
 							)
 							if(memory["pump_status"] == "siphon")
-								signal.data["stabalize"] = 1
+								signal.data["stabilize"] = 1
 							else if(memory["pump_status"] != "release")
 								signal.data["power"] = 1
 							post_signal(signal)
@@ -257,6 +257,8 @@ datum/computer/file/embedded_program/airlock_controller
 
 
 obj/machinery/embedded_controller/radio/airlock_controller
+	boardtype = /obj/item/weapon/circuitboard/ecb/airlock_controller
+
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 
@@ -291,6 +293,59 @@ obj/machinery/embedded_controller/radio/airlock_controller
 
 		new_prog.master = src
 		program = new_prog
+
+	multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+		return {"
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1449]">Reset</a>)</li>
+			<li>[format_tag("ID Tag","id_tag")]</li>
+			<li>[format_tag("Pump ID","airpump_tag")]</li>
+			<li><b>Sanitize:</b> <a href="?src=\ref[src];toggle_sanitize=1">[sanitize_external]</a></li>
+		</ul>
+		<b>Doors:</b>
+		<ul>
+			<li>[format_tag("Exterior","exterior_door_tag")]</li>
+			<li>[format_tag("Interior","interior_door_tag")]</li>
+		</ul>
+		<b>Sensors:</b>
+		<ul>
+			<li>[format_tag("Chamber","sensor_tag")]</li>
+			<li>[format_tag("Interior","sensor_tag_int")]</li>
+		</ul>"}
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if(!issilicon(usr))
+			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+				return
+
+		if("set_id" in href_list)
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+			if(newid)
+				id_tag = newid
+				initialize()
+
+		if("toggle_sanitize" in href_list)
+			sanitize_external=!sanitize_external
+			initialize()
+
+		if("set_freq" in href_list)
+			var/newfreq=frequency
+			if(href_list["set_freq"]!="-1")
+				newfreq=text2num(href_list["set_freq"])
+			else
+				newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+			if(newfreq)
+				if(findtext(num2text(newfreq), "."))
+					newfreq *= 10 // shift the decimal one place
+				if(newfreq < 10000)
+					frequency = newfreq
+					initialize()
+
+		usr.set_machine(src)
+		update_multitool_menu(usr)
 
 	update_icon()
 		if(on && program)

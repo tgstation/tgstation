@@ -2,13 +2,68 @@
 
 
 /obj/machinery/bodyscanner
-	var/mob/living/carbon/occupant
-	var/locked
 	name = "Body Scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scanner_0"
 	density = 1
+
 	anchored = 1
+	idle_power_usage = 125
+	active_power_usage = 250
+
+	var/mob/living/carbon/occupant
+	var/locked
+
+/obj/machinery/bodyscanner/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(O.loc == user) //no you can't pull things out of your ass
+		return
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+		return
+	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
+		return
+	if(!ismob(O)) //humans only
+		return
+	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
+		return
+	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
+		return
+	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
+		return
+	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
+		return
+	if(occupant)
+		user << "\blue <B>The body scanner is already occupied!</B>"
+		return
+	if(isrobot(user))
+		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
+			user << "<span class='warning'>You do not have the means to do this!</span>"
+			return
+	var/mob/living/L = O
+	if(!istype(L) || L.buckled)
+		return
+	if(L.abiotic())
+		user << "\blue <B>Subject cannot have abiotic items on.</B>"
+		return
+	for(var/mob/living/carbon/slime/M in range(1,L))
+		if(M.Victim == L)
+			usr << "[L.name] will not fit into the body scanner because they have a slime latched onto their head."
+			return
+	if(L == user)
+		visible_message("[user] climbs into the body scanner.", 3)
+	else
+		visible_message("[user] puts [L.name] into the body scanner.", 3)
+
+	if (L.client)
+		L.client.perspective = EYE_PERSPECTIVE
+		L.client.eye = src
+	L.loc = src
+	src.occupant = L
+	src.icon_state = "body_scanner_1"
+	for(var/obj/OO in src)
+		OO.loc = src.loc
+		//Foreach goto(154)
+	src.add_fingerprint(user)
+	return
 
 /*/obj/machinery/bodyscanner/allow_drop()
 	return 0*/
@@ -102,7 +157,7 @@
 				ex_act(severity)
 				//Foreach goto(35)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -111,7 +166,7 @@
 					ex_act(severity)
 					//Foreach goto(108)
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
@@ -120,7 +175,7 @@
 					ex_act(severity)
 					//Foreach goto(181)
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -136,12 +191,12 @@
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -180,25 +235,35 @@
 		return
 	return
 
-/obj/machinery/body_scanconsole/process() //not really used right now
+/obj/machinery/body_scanconsole/process()
+	if (stat & (BROKEN | NOPOWER | MAINT | EMPED))
+		use_power = 0
+		return
+
+	if (connected && connected.occupant)
+		use_power = 2
+	else
+		use_power = 1
+
+/*
 	if(stat & (NOPOWER|BROKEN))
 		return
 	use_power(250) // power stuff
 
-//	var/mob/M //occupant
-//	if (!( src.status )) //remove this
-//		return
-//	if ((src.connected && src.connected.occupant)) //connected & occupant ok
-//		M = src.connected.occupant
-//	else
-//		if (istype(M, /mob))
-//		//do stuff
-//		else
-///			src.temphtml = "Process terminated due to lack of occupant in scanning chamber."
-//			src.status = null
-//	src.updateDialog()
-//	return
-
+	var/mob/M //occupant
+	if (!( src.status )) //remove this
+		return
+	if ((src.connected && src.connected.occupant)) //connected & occupant ok
+		M = src.connected.occupant
+	else
+		if (istype(M, /mob))
+		//do stuff
+		else
+			src.temphtml = "Process terminated due to lack of occupant in scanning chamber."
+			src.status = null
+	src.updateDialog()
+	return
+*/
 
 /obj/machinery/body_scanconsole/attack_paw(user as mob)
 	return src.attack_hand(user)

@@ -16,15 +16,66 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/cryo
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
+
 	initialize_directions = dir
 
-/obj/machinery/atmospherics/unary/cryo_cell/initialize()
-	if(node) return
-	var/node_connect = dir
-	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			node = target
-			break
+/obj/machinery/atmospherics/unary/cryo_cell/Destroy()
+	go_out()
+	var/obj/item/weapon/reagent_containers/glass/B = beaker
+	if(beaker)
+		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+	..()
+
+/obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(O.loc == user) //no you can't pull things out of your ass
+		return
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+		return
+	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
+		return
+	if(!ismob(O)) //humans only
+		return
+	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
+		return
+	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
+		return
+	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
+		return
+	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
+		return
+	if(occupant)
+		user << "\blue <B>The cryo cell is already occupied!</B>"
+		return
+	if(isrobot(user))
+		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
+			user << "<span class='warning'>You do not have the means to do this!</span>"
+			return
+	var/mob/living/L = O
+	if(!istype(L) || L.buckled)
+		return
+	if(L.abiotic())
+		user << "\red <B>Subject cannot have abiotic items on.</B>"
+		return
+	for(var/mob/living/carbon/slime/M in range(1,L))
+		if(M.Victim == L)
+			usr << "[L.name] will not fit into the cryo cell because they have a slime latched onto their head."
+			return
+	if(put_mob(L))
+		if(L == user)
+			visible_message("[user] climbs into the cryo cell.", 3)
+		else
+			visible_message("[user] puts [L.name] into the cryo cell.", 3)
+			if(user.pulling == L)
+				user.pulling = null
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
@@ -60,43 +111,46 @@
 	go_out()
 	return
 
+/obj/machinery/atmospherics/unary/cryo_cell/examine()
+	..()
+
+	if(in_range(usr, src))
+		usr << "You can just about make out some loose objects floating in the murk:"
+		for(var/obj/O in src)
+			if(O != beaker)
+				usr << O.name
+		for(var/mob/M in src)
+			if(M != occupant)
+				usr << M.name
+	else
+		usr << "<span class='notice'>Too far away to view contents.</span>"
+
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
 
  /**
   * The ui_interact proc is used to open and update Nano UIs
   * If ui_interact is not used then the UI will not update correctly
-  * ui_interact is currently defined for /atom/movable
+  * ui_interact is currently defined for /atom/movable (which is inherited by /obj and /mob)
   *
   * @param user /mob The mob who is interacting with this ui
-  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")  
+  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
   * @param ui /datum/nanoui This parameter is passed by the nanoui process() proc when updating an open ui
   *
   * @return nothing
   */
 /obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 
-	if(user == occupant || user.stat)
+	if(user == occupant || (user.stat && !isobserver(user)))
 		return
 
 	// this is the data which will be sent to the ui
-	var/data[0]	
+	var/data[0]
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? 1 : 0
 
 	var/occupantData[0]
-	if (!occupant)
-		occupantData["name"] = null
-		occupantData["stat"] = null
-		occupantData["health"] = null
-		occupantData["maxHealth"] = null
-		occupantData["minHealth"] = null
-		occupantData["bruteLoss"] = null
-		occupantData["oxyLoss"] = null
-		occupantData["toxLoss"] = null
-		occupantData["fireLoss"] = null
-		occupantData["bodyTemperature"] = null
-	else
+	if (occupant)
 		occupantData["name"] = occupant.name
 		occupantData["stat"] = occupant.stat
 		occupantData["health"] = occupant.health
@@ -116,7 +170,7 @@
 	else if(air_contents.temperature > 225)
 		data["cellTemperatureStatus"] = "average"
 
-	data["isBeakerLoaded"] = beaker ? 1 : 0	
+	data["isBeakerLoaded"] = beaker ? 1 : 0
 	/* // Removing beaker contents list from front-end, replacing with a total remaining volume
 	var beakerContents[0]
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
@@ -131,24 +185,19 @@
 		if (beaker.reagents && beaker.reagents.reagent_list.len)
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
 				data["beakerVolume"] += R.volume
-	
-	if (!ui) // no ui has been passed, so we'll search for one
-	{
-		ui = nanomanager.get_open_ui(user, src, ui_key)
-	}	
-	if (!ui) 
-		// the ui does not exist, so we'll create a new one
+
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
+	if (!ui)
+		// the ui does not exist, so we'll create a new() one
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
-		// When the UI is first opened this is the data it will use
+		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
+		// open the new ui window
 		ui.open()
-		// Auto update every Master Controller tick
+		// auto update every Master Controller tick
 		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
-	//user.set_machine(src)
 
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
 	if(usr == occupant)
@@ -209,7 +258,7 @@
 			return
 		if(istype(G, /obj/item/weapon/crowbar)) //beakers are destroyed in the process of destroying the cryo cell
 			user << "You begin to remove the circuits from [src]."
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, 50))
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				M.state = 2
@@ -273,7 +322,7 @@
 		var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
 		var/has_cryo_medicine = has_cryo || has_clonexa
 		if(beaker && !has_cryo_medicine)
-			beaker.reagents.trans_to(occupant, 1, 10)
+			beaker.reagents.trans_to(occupant, 1, 1)
 			beaker.reagents.reaction(occupant)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
@@ -313,7 +362,7 @@
 	return
 /obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
 	if (!istype(M))
-		usr << "\red <B>The cryo cell cannot handle such liveform!</B>"
+		usr << "\red <B>The cryo cell cannot handle such a lifeform!</B>"
 		return
 	if (occupant)
 		usr << "\red <B>The cryo cell is already occupied!</B>"
@@ -332,9 +381,10 @@
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
 		M << "\blue <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>"
 	occupant = M
-//	M.metabslow = 1
+	//M.metabslow = 1
 	add_fingerprint(usr)
 	update_icon()
+	M.ExtinguishMob()
 	return 1
 
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()
@@ -350,7 +400,7 @@
 			return
 		go_out()//and release him from the eternal prison.
 	else
-		if (usr.stat != 0)
+		if (usr.stat != 0 || istype(usr, /mob/living/simple_animal))
 			return
 		go_out()
 	add_fingerprint(usr)
@@ -360,6 +410,8 @@
 	set name = "Move Inside"
 	set category = "Object"
 	set src in oview(1)
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
 			usr << "You're too busy getting your life sucked out of you."

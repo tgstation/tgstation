@@ -6,21 +6,23 @@
 	anchored = 1
 	density = 0
 	var/health = 15
+	w_type=NOT_RECYCLABLE
 
 //similar to weeds, but only barfed out by nurses manually
 /obj/effect/spider/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 	return
 
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
+	user.changeNext_move(10)
 	if(W.attack_verb.len)
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
@@ -102,6 +104,9 @@
 		pixel_x = rand(6,-6)
 		pixel_y = rand(6,-6)
 		processing_objects.Add(src)
+		//50% chance to grow up
+		if(prob(50))
+			amount_grown = 1
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -202,7 +207,7 @@
 	New()
 		icon_state = pick("cocoon1","cocoon2","cocoon3")
 
-/obj/effect/spider/cocoon/Del()
+/obj/effect/spider/cocoon/Destroy()
 	src.visible_message("\red \the [src] splits open.")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc

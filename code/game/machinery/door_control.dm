@@ -5,7 +5,7 @@
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
 	power_channel = ENVIRON
-	var/id = null
+	var/id_tag = null
 	var/range = 10
 	var/normaldoorcontrol = 0
 	var/desiredstate = 0 // Zero is closed, 1 is open.
@@ -30,6 +30,9 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+
+	ghost_read=0
+	ghost_write=0
 
 /obj/machinery/door_control/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -61,7 +64,7 @@
 	if(istype(W, /obj/item/weapon/card/emag))
 		req_access = list()
 		req_one_access = list()
-		playsound(src.loc, "sparks", 100, 1)
+		playsound(get_turf(src), "sparks", 100, 1)
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
@@ -80,7 +83,7 @@
 
 	if(normaldoorcontrol)
 		for(var/obj/machinery/door/airlock/D in range(range))
-			if(D.id_tag == src.id)
+			if(D.id_tag == src.id_tag)
 				if(desiredstate == 1)
 					if(specialfunctions & OPEN)
 						if (D.density)
@@ -116,7 +119,7 @@
 
 	else
 		for(var/obj/machinery/door/poddoor/M in world)
-			if (M.id == src.id)
+			if (M.id_tag == src.id_tag)
 				if (M.density)
 					spawn( 0 )
 						M.open()
@@ -166,7 +169,7 @@
 	icon_state = "launcheract"
 
 	for(var/obj/machinery/door/poddoor/M in world)
-		if (M.id == src.id)
+		if (M.id_tag == src.id_tag)
 			spawn( 0 )
 				M.open()
 				return
@@ -174,13 +177,13 @@
 	sleep(20)
 
 	for(var/obj/machinery/mass_driver/M in world)
-		if(M.id == src.id)
+		if(M.id_tag == src.id_tag)
 			M.drive()
 
 	sleep(50)
 
 	for(var/obj/machinery/door/poddoor/M in world)
-		if (M.id == src.id)
+		if (M.id_tag == src.id_tag)
 			spawn( 0 )
 				M.close()
 				return

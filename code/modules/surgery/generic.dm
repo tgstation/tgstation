@@ -5,6 +5,7 @@
 
 /datum/surgery_step/generic/
 	can_infect = 1
+	var/painful=1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (target_zone == "eyes")	//there are specific steps for eye surgery
 			return 0
@@ -18,6 +19,9 @@
 		if (affected.status & ORGAN_ROBOT)
 			return 0
 		if (affected.status & ORGAN_PEG)
+			return 0
+		// N3X:  Patient must be sleeping, dead, or unconscious.
+		if(!check_anesthesia(target) && painful)
 			return 0
 		return 1
 
@@ -218,7 +222,7 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, sawwing through the bone in [target]'s [affected.display_name] with \the [tool]!", \
-		"\red Your hand slips, sawwing through the bone in [target]'s [affected.display_name] with \the [tool]!")
+		user.visible_message("\red [user]'s hand slips, sawing through the bone in [target]'s [affected.display_name] with \the [tool]!", \
+		"\red Your hand slips, sawing through the bone in [target]'s [affected.display_name] with \the [tool]!")
 		affected.createwound(CUT, 30)
 		affected.fracture()

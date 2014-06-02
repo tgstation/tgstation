@@ -16,6 +16,10 @@
 		src << "You whisper silently, \"[message]\""
 		B.host << "The captive mind of [src] whispers, \"[message]\""
 
+		for(var/mob/M in mob_list)
+			if(M.mind && (istype(M, /mob/dead/observer)))
+				M << "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [message]</i>"
+
 /mob/living/captive_brain/emote(var/message)
 	return
 
@@ -32,6 +36,8 @@
 	icon_living = "brainslug"
 	icon_dead = "brainslug_dead"
 	speed = 5
+	small = 1
+	density = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
@@ -62,12 +68,14 @@
 
 				//if(host.brainloss > 100)
 
-/mob/living/simple_animal/borer/New()
+/mob/living/simple_animal/borer/New(var/by_gamemode=0)
 	..()
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
 	host_brain = new/mob/living/captive_brain(src)
 
-	request_player()
+	// Admin spawn.  Request a player.
+	if(!by_gamemode)
+		request_player()
 
 
 /mob/living/simple_animal/borer/say(var/message)
@@ -103,6 +111,10 @@
 
 	src << "You drop words into [host]'s mind: \"[message]\""
 	host << "Your own thoughts speak: \"[message]\""
+
+	for(var/mob/M in mob_list)
+		if(M.mind && (istype(M, /mob/dead/observer)))
+			M << "<i>Thought-speech, <b>[truename]</b> -> <b>[host]:</b> [copytext(message, 2)]</i>"
 
 /mob/living/simple_animal/borer/Stat()
 	..()
@@ -173,7 +185,7 @@
 	if(chemicals < 50)
 		src << "You don't have enough chemicals!"
 
-	var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","tramadol","hyperzine")
+	var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","tramadol","hyperzine","alkysine")
 
 	if(chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
 		return
@@ -199,9 +211,6 @@
 
 	src << "You begin disconnecting from [host]'s synapses and prodding at their internal ear canal."
 
-	if(!host.stat)
-		host << "An odd, uncomfortable pressure begins to build inside your skull, behind your ear..."
-
 	spawn(200)
 
 		if(!host || !src) return
@@ -211,8 +220,6 @@
 			return
 
 		src << "You wiggle out of [host]'s ear and plop to the ground."
-		if(!host.stat)
-			host << "Something slimy wiggles out of your ear and plops to the ground!"
 
 		detatch()
 
@@ -262,18 +269,25 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.stat != 2)
+		if(C.stat != 2 && src.Adjacent(C))
 			choices += C
 
 	var/mob/living/carbon/M = input(src,"Who do you wish to infest?") in null|choices
 
 	if(!M || !src) return
 
+	if(!(src.Adjacent(M))) return
+
 	if(M.has_brain_worms())
 		src << "You cannot infest someone who is already infested!"
 		return
 
-	M << "Something slimy begins probing at the opening of your ear canal..."
+	if(istype(M,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		if(H.check_head_coverage(HIDEEARS))
+			src << "You cannot get through that host's protective gear."
+			return
+
 	src << "You slither up [M] and begin probing at their ear canal..."
 
 	if(!do_after(src,50))
@@ -292,24 +306,27 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	if(M in view(1, src))
 		src << "You wiggle into [M]'s ear."
-		if(!M.stat)
-			M << "Something disgusting and slimy wiggles into your ear!"
-
-		src.host = M
-		src.loc = M
-
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			var/datum/organ/external/head = H.get_organ("head")
-			head.implants += src
-
-		host_brain.name = M.name
-		host_brain.real_name = M.real_name
+		src.perform_infestation(M)
 
 		return
 	else
 		src << "They are no longer in range!"
 		return
+
+/mob/living/simple_animal/borer/proc/perform_infestation(var/mob/living/carbon/M)
+	if(!M || !istype(M))
+		error("[src]: Unable to perform_infestation on [M]!")
+		return
+	src.host = M
+	src.loc = M
+
+	if(istype(M,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		var/datum/organ/external/head = H.get_organ("head")
+		head.implants += src
+
+	host_brain.name = M.name
+	host_brain.real_name = M.real_name
 
 /mob/living/simple_animal/borer/verb/ventcrawl()
 	set name = "Crawl through Vent"

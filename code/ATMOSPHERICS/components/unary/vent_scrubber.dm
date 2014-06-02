@@ -8,7 +8,6 @@
 
 	level = 1
 
-	var/area/initial_loc
 	var/id_tag = null
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
@@ -19,25 +18,23 @@
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
 	var/scrub_O2 = 0
+	var/scrub_N2 = 0
 
-	var/volume_rate = 120
+	var/volume_rate = 1000 // 120
 	var/panic = 0 //is this scrubber panicked?
 
 	var/area_uid
 	var/radio_filter_out
 	var/radio_filter_in
 	New()
-		initial_loc = get_area(loc)
-		if (initial_loc.master)
-			initial_loc = initial_loc.master
-		area_uid = initial_loc.uid
+		..()
+		area_uid = areaMaster.uid
 		if (!id_tag)
 			assign_uid()
 			id_tag = num2text(uid)
 		if(ticker && ticker.current_state == 3)//if the game is running
 			src.initialize()
 			src.broadcast_status()
-		..()
 
 	update_icon()
 		var/hidden=""
@@ -80,13 +77,14 @@
 				"filter_tox" = scrub_Toxins,
 				"filter_n2o" = scrub_N2O,
 				"filter_o2" = scrub_O2,
+				"filter_n2" = scrub_N2,
 				"sigtype" = "status"
 			)
-			if(!initial_loc.air_scrub_names[id_tag])
-				var/new_name = "[initial_loc.name] Air Scrubber #[initial_loc.air_scrub_names.len+1]"
-				initial_loc.air_scrub_names[id_tag] = new_name
+			if(!areaMaster.air_scrub_names[id_tag])
+				var/new_name = "[areaMaster.name] Air Scrubber #[areaMaster.air_scrub_names.len+1]"
+				areaMaster.air_scrub_names[id_tag] = new_name
 				src.name = new_name
-			initial_loc.air_scrub_info[id_tag] = signal.data
+			areaMaster.air_scrub_info[id_tag] = signal.data
 			radio_connection.post_signal(src, signal, radio_filter_out)
 
 			return 1
@@ -100,6 +98,7 @@
 
 	process()
 		..()
+		CHECK_DISABLED(scrubbers)
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if (!node)
@@ -107,6 +106,8 @@
 		//broadcast_status()
 		if(!on)
 			return 0
+		// New GC does this sometimes
+		if(!loc) return
 
 
 		var/datum/gas_mixture/environment = loc.return_air()
@@ -117,7 +118,8 @@
 				(scrub_Toxins && environment.toxins > 0) ||\
 				(scrub_CO2 && environment.carbon_dioxide > 0) ||\
 				(scrub_N2O && environment.trace_gases.len > 0) ||\
-				(scrub_O2 && environment.oxygen > 0))
+				(scrub_O2 && environment.oxygen > 0) ||\
+				(scrub_N2 && environment.nitrogen > 0))
 				var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 				//Take a gas sample
@@ -140,6 +142,10 @@
 				if(scrub_O2)
 					filtered_out.oxygen = removed.oxygen
 					removed.oxygen = 0
+
+				if(scrub_N2)
+					filtered_out.nitrogen = removed.nitrogen
+					removed.nitrogen = 0
 
 				if(removed.trace_gases.len>0)
 					for(var/datum/gas/trace_gas in removed.trace_gases)
@@ -241,6 +247,11 @@
 		if(signal.data["toggle_o2_scrub"])
 			scrub_O2 = !scrub_O2
 
+		if(signal.data["n2_scrub"] != null)
+			scrub_N2 = text2num(signal.data["n2_scrub"])
+		if(signal.data["toggle_n2_scrub"])
+			scrub_N2 = !scrub_N2
+
 		if(signal.data["init"] != null)
 			name = signal.data["init"]
 			return
@@ -264,6 +275,9 @@
 		update_icon()
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if(istype(W, /obj/item/device/multitool))
+			update_multitool_menu(user)
+			return 1
 		if (!istype(W, /obj/item/weapon/wrench))
 			return ..()
 		if (!(stat & NOPOWER) && on)
@@ -279,7 +293,7 @@
 			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \
@@ -289,9 +303,47 @@
 			new /obj/item/pipe(loc, make_from=src)
 			del(src)
 
-/obj/machinery/atmospherics/unary/vent_scrubber/Del()
-	if(initial_loc)
-		initial_loc.air_scrub_info -= id_tag
-		initial_loc.air_scrub_names -= id_tag
+	multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+		return {"
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
+			<li>[format_tag("ID Tag","id_tag")]</li>
+		</ul>
+		"}
+
+/obj/machinery/atmospherics/unary/vent_scrubber/Topic(href, href_list)
+	if(..())
+		return
+
+	if(!issilicon(usr))
+		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			return
+
+	var/obj/item/device/multitool/P = get_multitool(usr)
+	if(!P || !istype(P))
+		return
+
+	if("set_id" in href_list)
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+		if(newid)
+			id_tag = newid
+			initialize()
+	if("set_freq" in href_list)
+		var/newfreq=frequency
+		if(href_list["set_freq"]!="-1")
+			newfreq=text2num(href_list["set_freq"])
+		else
+			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, network) as null|num
+		if(newfreq)
+			if(findtext(num2text(newfreq), "."))
+				newfreq *= 10 // shift the decimal one place
+			if(newfreq < 10000)
+				frequency = newfreq
+				initialize()
+
+	update_multitool_menu(usr)
+
+/obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
+	areaMaster.air_scrub_info.Remove(id_tag)
+	areaMaster.air_scrub_names.Remove(id_tag)
 	..()
-	return

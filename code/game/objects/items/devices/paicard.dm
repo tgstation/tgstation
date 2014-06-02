@@ -15,7 +15,7 @@
 	..()
 	overlays += "pai-off"
 
-/obj/item/device/paicard/Del()
+/obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
 	if(!isnull(pai))
 		pai.death(0)
@@ -40,14 +40,9 @@
 			<h3>Device Settings</h3><br>"}
 		// END AUTOFIX
 		if(radio)
-
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\paicard.dm:39: dat += "<b>Radio Uplink</b><br>"
-			dat += {"<b>Radio Uplink</b><br>
-				Transmit: <A href='byond://?src=\ref[src];wires=4'>[(radio.wires & 4) ? "Enabled" : "Disabled"]</A><br>
-				Receive: <A href='byond://?src=\ref[src];wires=2'>[(radio.wires & 2) ? "Enabled" : "Disabled"]</A><br>
-				Signal Pulser: <A href='byond://?src=\ref[src];wires=1'>[(radio.wires & 1) ? "Enabled" : "Disabled"]</A><br>"}
-			// END AUTOFIX
+			dat += "<b>Radio Uplink</b><br>"
+			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TRANSMIT]'>[(radio.wires.IsIndexCut(WIRE_TRANSMIT)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RECEIVE]'>[(radio.wires.IsIndexCut(WIRE_RECEIVE)) ? "Disabled" : "Enabled"]</A><br>"
 		else
 
 			// AUTOFIXED BY fix_string_idiocy.py
@@ -107,10 +102,8 @@
 			removePersonality()
 	if(href_list["wires"])
 		var/t1 = text2num(href_list["wires"])
-		if (radio.wires & t1)
-			radio.wires &= ~t1
-		else
-			radio.wires |= t1
+		if(radio)
+			radio.wires.CutWireIndex(t1)
 	if(href_list["setlaws"])
 		var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.pai_laws) as message),1,MAX_MESSAGE_LEN)
 		if(newlaws)

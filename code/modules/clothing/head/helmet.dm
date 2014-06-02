@@ -59,3 +59,25 @@
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/roman
+	name = "roman helmet"
+	desc = "An ancient helmet made of bronze and leather."
+	armor = list(melee = 20, bullet = 0, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
+	icon_state = "roman"
+	item_state = "roman"
+
+/obj/item/clothing/head/helmet/roman/legionaire
+	name = "roman legionaire helmet"
+	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
+	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
+	icon_state = "roman_c"
+	item_state = "roman_c"
+
+/obj/item/clothing/head/helmet/hopcap
+	name = "Head of Personnel's Cap"
+	desc = "Papers, Please"
+	armor = list(melee = 25, bullet = 0, laser = 15, energy = 10, bomb = 5, bio = 0, rad = 0)
+	item_state = "hopcap"
+	icon_state = "hopcap"
+	flags_inv = 0

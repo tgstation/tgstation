@@ -125,13 +125,21 @@
 				var/obj/O = locate("landmark*Observer-Start")
 				src << "\blue Now teleporting."
 				observer.loc = O.loc
+				observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
+
+				client.prefs.update_preview_icon(1)
+				observer.icon = client.prefs.preview_icon
+				observer.alpha = 127
+
 				if(client.prefs.be_random_name)
-					client.prefs.real_name = random_name(client.prefs.gender)
+					client.prefs.real_name = random_name(client.prefs.gender,client.prefs.species)
 				observer.real_name = client.prefs.real_name
 				observer.name = observer.real_name
+				if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
+					observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
 				observer.key = key
-
 				del(src)
+
 				return 1
 
 		if(href_list["late_join"])
@@ -268,7 +276,26 @@
 		if((job.current_positions >= job.total_positions) && job.total_positions != -1)	return 0
 		if(jobban_isbanned(src,rank))	return 0
 		if(!job.player_old_enough(src.client))	return 0
+		// assistant limits
+		if(config.assistantlimit)
+			if(job.title == "Assistant")
+				var/count = 0
+				var/datum/job/officer = job_master.GetJob("Security Officer")
+				var/datum/job/warden = job_master.GetJob("Warden")
+				var/datum/job/hos = job_master.GetJob("Head of Security")
+				count += (officer.current_positions + warden.current_positions + hos.current_positions)
+				if(job.current_positions > (config.assistantratio * count))
+					if(count >= 5) // if theres more than 5 security on the station just let assistants join regardless, they should be able to handle the tide
+						return 1
+					return 0
 		return 1
+
+	proc/FuckUpGenes(var/mob/living/carbon/human/H)
+		// 20% of players have bad genetic mutations.
+		if(prob(20))
+			H.dna.GiveRandomSE(notflags = GENE_UNNATURAL,genetype = GENETYPE_BAD)
+			if(prob(10)) // 10% of those have a good mut.
+				H.dna.GiveRandomSE(notflags = GENE_UNNATURAL,genetype = GENETYPE_GOOD)
 
 
 	proc/AttemptLateSpawn(rank)
@@ -300,7 +327,7 @@
 			data_core.manifest_inject(character)
 			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 			AnnounceArrival(character, rank)
-
+			FuckUpGenes(character)
 		else
 			character.Robotize()
 		del(src)
@@ -392,20 +419,22 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 		new_character.dna.b_type = client.prefs.b_type
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_NEARSIGHTED)
-			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,GLASSESBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,GLASSESBLOCK,3)),3)
+			new_character.dna.SetSEState(GLASSESBLOCK,1,1)
 			new_character.disabilities |= NEARSIGHTED
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_FAT)
-			new_character.mutations += FAT
+			new_character.mutations += M_FAT
 			new_character.overeatduration = 600 // Max overeat
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_EPILEPTIC)
-			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,EPILEPSYBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,EPILEPSYBLOCK,3)),3)
+			new_character.dna.SetSEState(EPILEPSYBLOCK,1,1)
 			new_character.disabilities |= EPILEPSY
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_DEAF)
-			new_character.dna.struc_enzymes = setblock(new_character.dna.struc_enzymes,DEAFBLOCK,toggledblock(getblock(new_character.dna.struc_enzymes,DEAFBLOCK,3)),3)
+			new_character.dna.SetSEState(DEAFBLOCK,1,1)
 			new_character.sdisabilities |= DEAF
+
+		new_character.dna.UpdateSE()
 
 		new_character.key = key		//Manually transfer the key to log them in
 

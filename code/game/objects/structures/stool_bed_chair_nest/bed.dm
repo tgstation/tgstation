@@ -18,7 +18,7 @@
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
 
-/obj/structure/stool/bed/Del()
+/obj/structure/stool/bed/Destroy()
 	unbuckle()
 	..()
 	return
@@ -27,6 +27,10 @@
 	return src.attack_hand(user)
 
 /obj/structure/stool/bed/attack_hand(mob/user as mob)
+	manual_unbuckle(user)
+	return
+
+/obj/structure/stool/bed/attack_robot(mob/user as mob)
 	manual_unbuckle(user)
 	return
 

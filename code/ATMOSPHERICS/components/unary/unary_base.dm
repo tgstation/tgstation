@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/unary
 	dir = SOUTH
 	initialize_directions = SOUTH
-	layer = TURF_LAYER+0.1
+	layer = 2.45 // Cable says we're at 2.45, so we're at 2.45.  (old: TURF_LAYER+0.1)
 
 	var/datum/gas_mixture/air_contents
 
@@ -16,6 +16,20 @@
 
 		air_contents.volume = 200
 
+	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+		dir = pipe.dir
+		initialize_directions = pipe.get_pipe_dir()
+		if (pipe.pipename)
+			name = pipe.pipename
+		var/turf/T = loc
+		level = T.intact ? 2 : 1
+		initialize()
+		build_network()
+		if (node)
+			node.initialize()
+			node.build_network()
+		return 1
+
 // Housekeeping and pipe network stuff below
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 		if(reference == node)
@@ -28,7 +42,7 @@
 
 		return null
 
-	Del()
+	Destroy()
 		loc = null
 
 		if(node)

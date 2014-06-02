@@ -7,7 +7,7 @@ var/const/CHUNK_SIZE = 16 // Only chunk sizes that are to the power of 2. E.g: 2
 var/datum/cameranet/cameranet = new()
 
 /datum/cameranet
-	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Del().
+	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Destroy().
 	var/list/cameras = list()
 	// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
@@ -130,6 +130,10 @@ var/datum/cameranet/cameranet = new()
 
 	// 0xf = 15
 	var/turf/position = get_turf(target)
+	return checkTurfVis(position)
+
+
+/datum/cameranet/proc/checkTurfVis(var/turf/position)
 	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
 	if(chunk)
 		if(chunk.changed)

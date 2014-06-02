@@ -13,7 +13,7 @@
 	var/det_time = 50
 
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/user)
-	if((CLUMSY in user.mutations) && prob(50))
+	if((M_CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
 
 		activate(user)
@@ -87,6 +87,11 @@
 	var/turf/T = get_turf(src)
 	if(T)
 		T.hotspot_expose(700,125)
+
+/obj/item/weapon/grenade/proc/update_mob()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.drop_from_inventory(src)
 
 
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)

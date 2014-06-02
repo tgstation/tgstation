@@ -113,6 +113,14 @@ var/list/uplink_items = list()
 	cost = 6
 	job = list("Detective")
 
+//Botanist
+/datum/uplink_item/jobspecific/ambrosiacruciatus
+	name = "Ambrosia Cruciatus Seeds"
+	desc = "Part of the notorious Ambrosia family, this species is nearly indistinguishable from Ambrosia Vulgaris- but its' branches contain a revolting toxin. Eight units are enough to drive victims insane after a three-minute delay."
+	item = /obj/item/seeds/ambrosiavulgarisseed/cruciatus
+	cost = 2
+	job = list("Botanist")
+
 //Chef
 /datum/uplink_item/jobspecific/specialsauce
 	name = "Chef Excellence's Special Sauce"
@@ -129,7 +137,6 @@ var/list/uplink_items = list()
 	job = list("Chef")
 
 //Janitor
-
 /datum/uplink_item/jobspecific/cautionsign
 	name = "Proximity Mine"
 	desc = "An Anti-Personnel proximity mine cleverly disguised as a wet floor caution sign that is triggered by running past it, activate it to start the 15 second timer and activate again to disarm."
@@ -139,7 +146,6 @@ var/list/uplink_items = list()
 
 
 //Assistant
-
 /datum/uplink_item/jobspecific/pickpocketgloves
 	name = "Pickpocket's Gloves"
 	desc = "A pair of sleek gloves to aid in pickpocketing, while wearing these you can see inside the pockets of any unsuspecting mark, loot the ID, belt, or pockets without them knowing, and pickpocketing puts the item directly into your hand."
@@ -153,8 +159,8 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/greytide
 	cost = 7
 	job = list("Assistant")
-//Bartender
 
+//Bartender
 /datum/uplink_item/jobspecific/drunkbullets
 	name = "Boozey Shotgun Shells"
 	desc = "A box containing 6 shotgun shells that simulate the effects of extreme drunkeness on the target, more effective for each type of alcohol in the target's system."
@@ -162,14 +168,29 @@ var/list/uplink_items = list()
 	cost = 3
 	job = list("Bartender")
 
-//Engineer
+//Chemist
+/datum/uplink_item/jobspecific/chemsprayer
+	name = "Chemical Sprayer"
+	desc = "A powerful industrial spraygun that holds 600 units of any liquid, and can cover area faster than a standard spray bottle."
+	item = /obj/item/weapon/reagent_containers/spray/chemsprayer
+	cost = 4
+	job = list("Chemist")
 
+//Engineer
 /datum/uplink_item/jobspecific/powergloves
 	name = "Power Gloves"
 	desc = "Insulated gloves that can utilize the power of the station to deliver a short arc of electricity at a target. Must be standing on a powered cable to use."
 	item = /obj/item/clothing/gloves/yellow/power
 	cost = 7
 	job = list("Station Engineer","Chief Engineer")
+
+//Geneticist
+/datum/uplink_item/jobspecific/radgun
+	name = "Radgun"
+	desc = "An experimental energy gun that fires radioactive projectiles that burn, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
+	item = /obj/item/weapon/gun/energy/radgun
+	cost = 6
+	job = list("Geneticist")
 
 // DANGEROUS WEAPONS
 
@@ -260,6 +281,12 @@ var/list/uplink_items = list()
 	item = /obj/item/clothing/mask/gas/voice
 	cost = 4
 
+/datum/uplink_item/stealthy_tools/dnascrambler
+	name = "DNA Scrambler"
+	desc = "A syringe with one injection that randomizes appearance and name upon use. A cheaper but less versatile alternative to an agent card and voice changer."
+	item = /obj/item/weapon/dnascrambler
+	cost = 2
+
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
@@ -324,7 +351,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
-	item = /obj/item/weapon/aiModule/syndicate
+	item = /obj/item/weapon/aiModule/freeform/syndicate
 	cost = 7
 
 /datum/uplink_item/device_tools/plastic_explosives
@@ -344,6 +371,12 @@ var/list/uplink_items = list()
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/radio/beacon/syndicate
 	cost = 7
+
+/datum/uplink_item/device_tools/pdapinpointer
+	name = "PDA Pinpointer"
+	desc = "A pinpointer that tracks any PDA on the station. Useful for locating assassination targets or other high-value targets that you can't find. WARNING: Can only set once."
+	item = /obj/item/weapon/pinpointer/pdapinpointer
+	cost = 2
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
@@ -386,7 +419,7 @@ var/list/uplink_items = list()
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass
-	category = "(Pointless) Badassery"
+	category = "Badassery"
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
@@ -399,6 +432,12 @@ var/list/uplink_items = list()
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
+
+/datum/uplink_item/badass/trophybelt
+ 	name = "Trophy Belt"
+ 	desc = "A belt for holding the heads you've collected."
+ 	item = /obj/item/weapon/storage/belt/skull
+ 	cost = 2
 
 /datum/uplink_item/badass/random
 	name = "Random Item"

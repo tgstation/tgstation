@@ -166,6 +166,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
 /obj/item/device/pda/chef
+	default_cartridge = /obj/item/weapon/cartridge/chef
 	icon_state = "pda-chef"
 
 /obj/item/device/pda/bar
@@ -357,11 +358,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				// END AUTOFIX
 				//dat += "<li><a href='byond://?src=\red[src];choice=chatroom'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
 
+				dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
+
 				if (cartridge)
 					if (cartridge.access_clown)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png> Honk Synthesizer</a></li>"
-					if (cartridge.access_manifest)
-						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 					if(cartridge.access_status_display)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
 					dat += "</ul>"
@@ -556,6 +557,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += " <img src=pda_locked.png>"
 					dat += "</li>"
 
+			if (41) //Allows everyone to access crew
+
+				// AUTOFIXED BY fix_string_idiocy.py
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\cart.dm:281: menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
+				dat += {"<h4><img src=pda_notes.png> Crew Manifest</h4>
+					Entries cannot be modified from this terminal.<br><br>"}
+				// END AUTOFIX
+				if(data_core)
+					dat += data_core.get_manifest(1) // make it monochrome
+				dat += "<br>"
 
 
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
@@ -624,6 +635,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				mode = 3
 			if("4")//Redirects to hub
 				mode = 0
+			if("41")
+				mode = 41
 			if("chatroom") // chatroom hub
 				mode = 5
 
@@ -734,7 +747,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Toggle Door")
 				if(cartridge && cartridge.access_remote_door)
 					for(var/obj/machinery/door/poddoor/M in world)
-						if(M.id == cartridge.remote_door_id)
+						if(M.id_tag == cartridge.remote_door_id)
 							if(M.density)
 								M.open()
 							else
@@ -765,8 +778,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								U.show_message("\red Energy feeds back into your [src]!", 1)
 								U << browse(null, "window=pda")
 								explode()
+								log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
+								message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up", 1)
 							else
 								U.show_message("\blue Success!", 1)
+								log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeded")
+								message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeded", 1)
 								P.explode()
 					else
 						U << "PDA not found."
@@ -872,6 +889,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
+		for(var/mob/dead/observer/M in player_list)
+			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
+				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
+
 
 		if (prob(15)) //Give the AI a chance of intercepting the message
 			var/who = src.owner
@@ -901,7 +922,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.overlays.Cut()
 		P.overlays += image('icons/obj/pda.dmi', "pda-r")
 	else
-		U << "<span class='notice'>ERROR: Server isn't responding.</span>"
+		U << "<span class='notice'>ERROR: Messaging server is not responding.</span>"
 
 
 /obj/item/device/pda/verb/verb_remove_id()
@@ -1162,10 +1183,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	del(src)
 	return
 
-/obj/item/device/pda/Del()
+/obj/item/device/pda/Destroy()
 	PDAs -= src
 	if (src.id)
 		src.id.loc = get_turf(src.loc)
+	if(src.pai)
+		src.pai.loc = get_turf(src.loc)
 	..()
 
 /obj/item/device/pda/clown/HasEntered(AM as mob|obj) //Clown PDA is slippery.
@@ -1180,7 +1203,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		M.stop_pulling()
 		M << "\blue You slipped on the PDA!"
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(8)
 		M.Weaken(5)
 

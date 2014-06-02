@@ -95,7 +95,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		/* --- Do a snazzy animation! --- */
 		flick("broadcaster_send", src)
 
-/obj/machinery/telecomms/broadcaster/Del()
+/obj/machinery/telecomms/broadcaster/Destroy()
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
 	if(message_delay)
 		message_delay = 0
@@ -422,7 +422,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		//End of research and feedback code.
 
 		var/aitrack = ""
-
+		var/aiopen = ""
 	 /* ###### Send the message ###### */
 
 
@@ -434,11 +434,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 			for (var/mob/R in heard_masked)
 				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
+				aiopen = "<a href='byond://?src=\ref[radio];open2=\ref[R];open=\ref[M]'>\[OPEN\] </a>"
 				if(data == 4)
 					aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]'>"
 
 				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a][aitrack][N] ([J]) </a>[part_b][quotedmsg][part_c]", 2)
+					R.show_message("[part_a][aitrack][N] ([J]) </a>[aiopen][part_b][quotedmsg][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
 
@@ -449,11 +450,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			for (var/mob/R in heard_normal)
 				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
+				aiopen = "<a href='byond://?src=\ref[radio];open2=\ref[R];open=\ref[M]'>\[OPEN\] </a>"
 				if(data == 4)
 					aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]'>"
 
 				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a][aitrack][realname] ([job]) </a>[part_b][quotedmsg][part_c]", 2)
+					R.show_message("[part_a][aitrack][realname] ([job]) </a>[aiopen][part_b][quotedmsg][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
 
@@ -465,12 +467,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			for (var/mob/R in heard_voice)
 				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
+				aiopen = "<a href='byond://?src=\ref[radio];open2=\ref[R];open=\ref[M]'>\[OPEN\] </a>"
 				if(data == 4)
 					aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]'>"
 
 
 				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a][aitrack][vname] ([job]) </a>[part_b][vmessage]][part_c]", 2)
+					R.show_message("[part_a][aitrack][vname] ([job]) </a>[aiopen][part_b][vmessage]][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
 
@@ -487,12 +490,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			for (var/mob/R in heard_garbled)
 				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
+				aiopen = "<a href='byond://?src=\ref[radio];open2=\ref[R];open=\ref[M]'>\[OPEN\] </a>"
 				if(data == 4)
 					aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]'>"
 
 
 				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a][aitrack][vname]</a>[part_b][quotedmsg][part_c]", 2)
+					R.show_message("[part_a][aitrack][vname]</a>[aiopen][part_b][quotedmsg][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
 
@@ -509,12 +513,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			for (var/mob/R in heard_gibberish)
 				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
+				aiopen = "<a href='byond://?src=\ref[radio];open2=\ref[R];open=\ref[M]'>\[OPEN\] </a>"
 				if(data == 4)
 					aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]'>"
 
 
 				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a][aitrack][Gibberish(realname, compression + 50)] ([Gibberish(job, compression + 50)]) </a>[part_b][quotedmsg][part_c]", 2)
+					R.show_message("[part_a][aitrack][Gibberish(realname, compression + 50)] ([Gibberish(job, compression + 50)]) </a>[aiopen][part_b][quotedmsg][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
 

@@ -1,4 +1,7 @@
-
+// Assuming this is http://en.wikipedia.org/wiki/Butane
+// (Autoignition temp 288°C, or 561.15°K)
+// Used in fueltanks exploding.
+#define AUTOIGNITION_WELDERFUEL 561.15
 
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
@@ -46,17 +49,17 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(50))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			if(3.0)
 				if (prob(5))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			else
 		return
@@ -64,7 +67,7 @@
 	blob_act()
 		if(prob(50))
 			new /obj/effect/effect/water(src.loc)
-			del(src)
+			qdel(src)
 
 
 
@@ -94,6 +97,10 @@
 	New()
 		..()
 		reagents.add_reagent("fuel",1000)
+
+	hear_talk(mob/living/M, text)
+		if(rig)
+			rig.hear_talk(M,text)
 
 	examine()
 		set src in view()
@@ -153,6 +160,11 @@
 
 	ex_act()
 		explode()
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		if(exposed_temperature >= AUTOIGNITION_WELDERFUEL)
+			explode()
+
 
 	proc/explode()
 		if (reagents.total_volume > 500)

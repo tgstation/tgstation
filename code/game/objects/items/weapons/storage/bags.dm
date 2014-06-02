@@ -94,7 +94,22 @@
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
 	max_w_class = 3
 	w_class = 1
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown")
+	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown", "/obj/item/weapon/reagent_containers/food/snacks/meat", "/obj/item/weapon/reagent_containers/food/snacks/egg",)
+
+// -----------------------------
+//          Pill Collector
+// -----------------------------
+
+/obj/item/weapon/storage/bag/chem
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "pcollector"
+	name = "Pill Collector"
+	item_state = "pcollector"
+	storage_slots = 50; //the number of plant pieces it can carry.
+	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
+	max_w_class = 3
+	w_class = 1
+	can_hold = list("/obj/item/weapon/reagent_containers/glass/bottle","/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/reagent_containers/syringe")
 
 
 // -----------------------------
@@ -238,3 +253,19 @@
 	name = "Sheet Snatcher 9000"
 	desc = ""
 	capacity = 500//Borgs get more because >specialization
+
+// -----------------------------
+//          Gadget Bag
+// -----------------------------
+
+/obj/item/weapon/storage/bag/gadgets
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "gadget_bag"
+	slot_flags = SLOT_BELT
+	name = "gadget bag"
+	desc = "This bag can be used to store many machine components."
+	storage_slots = 25;
+	max_combined_w_class = 200
+	max_w_class = 3
+	w_class = 1
+	can_hold = list("/obj/item/weapon/stock_parts")

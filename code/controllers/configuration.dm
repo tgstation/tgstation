@@ -16,8 +16,10 @@
 	var/log_attack = 0					// log attack messages
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_adminwarn = 0				// log warnings admins get about bomb construction and such
+	var/log_adminghost = 1				// log warnings admins get about bomb construction and such
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
+	var/log_runtimes = 0                // Logs all runtimes.
 	var/sql_enabled = 1					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -41,7 +43,8 @@
 	var/Tickcomp = 0
 	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 	var/list/resource_urls = null
-
+	var/antag_hud_allowed = 0			// Ghosts can turn on Antagovision to see a HUD of who is the bad guys this round.
+	var/antag_hud_restricted = 0                    // Ghosts that turn on Antagovision cannot rejoin the round.
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
@@ -61,6 +64,13 @@
 	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
+	var/copy_logs = null
+
+	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
+	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
+
+	var/disable_player_mice = 0
+	var/uneducated_mice = 0 //Set to 1 to prevent newly-spawned mice from understanding human speech
 
 	var/usealienwhitelist = 0
 	var/limitalienplayers = 0
@@ -69,7 +79,10 @@
 	var/server
 	var/banappeals
 	var/wikiurl = "http://baystation12.net/wiki/index.php?title=Main_Page"
+	var/vgws_base_url = "http://vg13.undo.it" // No hanging slashes.
 	var/forumurl = "http://baystation12.net/forums/"
+
+	var/media_base_url = "" // http://ss13.nexisonline.net/media
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -83,6 +96,7 @@
 
 	//game_options.txt configs
 
+	var/health_threshold_softcrit = 0
 	var/health_threshold_crit = 0
 	var/health_threshold_dead = -100
 
@@ -124,11 +138,13 @@
 	var/comms_password = ""
 
 	var/use_irc_bot = 0
-	var/irc_bot_host = ""
-	var/main_irc = ""
-	var/admin_irc = ""
+	var/irc_bot_host = "localhost"
+	var/irc_bot_port = 45678
+	var/irc_bot_server_id = 45678
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 
+	var/assistantlimit = 0 //enables assistant limiting
+	var/assistantratio = 2 //how many assistants to security members
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -231,6 +247,12 @@
 
 				if ("log_adminwarn")
 					config.log_adminwarn = 1
+
+				if ("log_adminghost")
+					config.log_adminghost = 1
+
+				if ("log_runtimes")
+					config.log_runtimes = 1
 
 				if ("log_pda")
 					config.log_pda = 1
@@ -385,6 +407,11 @@
 				if("ticklag")
 					Ticklag = text2num(value)
 
+				if("allow_antag_hud")
+					config.antag_hud_allowed = 1
+				if("antag_hud_restricted")
+					config.antag_hud_restricted = 1
+
 				if("socket_talk")
 					socket_talk = text2num(value)
 
@@ -419,17 +446,23 @@
 				if("ghost_interaction")
 					config.ghost_interaction = 1
 
+				if("disable_player_mice")
+					config.disable_player_mice = 1
+
+				if("uneducated_mice")
+					config.uneducated_mice = 1
+
 				if("comms_password")
 					config.comms_password = value
 
 				if("irc_bot_host")
 					config.irc_bot_host = value
 
-				if("main_irc")
-					config.main_irc = value
+				if("irc_bot_port")
+					config.irc_bot_port = text2num(value)
 
-				if("admin_irc")
-					config.admin_irc = value
+				if("irc_bot_server_id")
+					config.irc_bot_server_id = value
 
 				if("python_path")
 					if(value)
@@ -440,9 +473,23 @@
 						else //probably windows, if not this should work anyway
 							config.python_path = "python"
 
+				if("allow_cult_ghostwriter")
+					config.cult_ghostwriter = 1
+
+				if("req_cult_ghostwriter")
+					config.cult_ghostwriter_req_cultists = value
+				if("assistant_limit")
+					config.assistantlimit = 1
+				if("assistant_ratio")
+					config.assistantratio = text2num(value)
+				if("copy_logs")
+					copy_logs=value
+				if("media_base_url")
+					media_base_url = value
+				if("vgws_base_url")
+					vgws_base_url = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
-
 
 		else if(type == "game_options")
 			if(!value)
@@ -450,8 +497,12 @@
 			value = text2num(value)
 
 			switch(name)
+				if("max_explosion_range")
+					MAX_EXPLOSION_RANGE = value
 				if("health_threshold_crit")
 					config.health_threshold_crit = value
+				if("health_threshold_softcrit")
+					config.health_threshold_softcrit = value
 				if("health_threshold_dead")
 					config.health_threshold_dead = value
 				if("revival_pod_plants")
@@ -591,7 +642,7 @@
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
-		world.log << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
+		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
 		if (!(M.config_tag in modes))
 			del(M)
 			continue

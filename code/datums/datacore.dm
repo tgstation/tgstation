@@ -1,3 +1,6 @@
+/hook/startup/proc/createDatacore()
+	data_core = new /obj/effect/datacore()
+	return 1
 
 /obj/effect/datacore/proc/manifest(var/nosleep = 0)
 	spawn()
@@ -8,6 +11,8 @@
 		return
 
 /obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
+	if(PDA_Manifest.len)
+		PDA_Manifest.Cut()
 	var/datum/data/record/foundrecord
 	var/real_title = assignment
 
@@ -31,6 +36,9 @@
 		foundrecord.fields["real_rank"] = real_title
 
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
+	if(PDA_Manifest.len)
+		PDA_Manifest.Cut()
+
 	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
 		if(H.mind.role_alt_title)
@@ -104,14 +112,14 @@
 		var/datum/data/record/L = new()
 		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")
 		L.fields["name"]		= H.real_name
-		L.fields["rank"] = H.mind.assigned_role
+		L.fields["rank"] 		= H.mind.assigned_role
 		L.fields["age"]			= H.age
 		L.fields["sex"]			= H.gender
 		L.fields["b_type"]		= H.b_type
 		L.fields["b_dna"]		= H.dna.unique_enzymes
-		L.fields["enzymes"]		= H.dna.struc_enzymes
-		L.fields["identity"]	= H.dna.uni_identity
-		L.fields["image"]		= getFlatIcon(H,0)	//This is god-awful
+		L.fields["enzymes"]		= H.dna.SE // Used in respawning
+		L.fields["identity"]	= H.dna.UI // "
+		L.fields["image"]		= getFlatIcon(H)	//This is god-awful
 		locked += L
 	return
 
@@ -137,9 +145,11 @@ proc/get_id_photo(var/mob/living/carbon/human/H)
 		var/o_icobase=icobase
 		if(E.status & ORGAN_PEG)
 			o_icobase='icons/mob/human_races/o_peg.dmi'
+		else if(E.status & ORGAN_ROBOT)
+			o_icobase='icons/mob/human_races/o_robot.dmi'
 		temp = new /icon(o_icobase, "[E.name]")
-		if(E.status & ORGAN_ROBOT)
-			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+		//if(E.status & ORGAN_ROBOT)
+		//	temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone

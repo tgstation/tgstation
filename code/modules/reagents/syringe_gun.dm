@@ -14,6 +14,7 @@
 	var/list/syringes = new/list()
 	var/max_syringes = 1
 	m_amt = 2000
+	w_type = RECYK_METAL
 
 /obj/item/weapon/gun/syringe/examine()
 	set src in view()
@@ -38,7 +39,7 @@
 
 
 /obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
-	if(!isturf(target.loc) || target == user) return
+	if(/*!isturf(target.loc) || */target == user) return
 	..()
 
 /obj/item/weapon/gun/syringe/can_fire()
@@ -88,6 +89,10 @@
 						M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
 						user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
 						msg_admin_attack("[user] ([user.ckey]) shot [M] ([M.ckey]) with a syringegun ([R]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+						if(!iscarbon(user))
+							M.LAssailant = null
+						else
+							M.LAssailant = user
 
 					else
 						M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"

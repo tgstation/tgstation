@@ -181,7 +181,7 @@
 		return
 
 
-	Del()
+	Destroy()
 		if(active) Deactivate()
 		..()
 

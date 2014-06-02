@@ -95,6 +95,10 @@
 	name = "implanter (C)"
 	icon_state = "cimplanter1"
 
+	var/list/forbidden_types=list(
+		// /obj/item/weapon/storage/bible // VG #11 - Recursion.
+	)
+
 /obj/item/weapon/implanter/compressed/New()
 	imp = new /obj/item/weapon/implant/compressed( src )
 	..()
@@ -113,6 +117,9 @@
 	return
 
 /obj/item/weapon/implanter/compressed/attack(mob/M as mob, mob/user as mob)
+	// Attacking things in your hands tends to make this fuck up.
+	if(!istype(M))
+		return
 	var/obj/item/weapon/implant/compressed/c = imp
 	if (!c)	return
 	if (c.scanned == null)
@@ -120,12 +127,21 @@
 		return
 	..()
 
-/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob)
-	if(istype(A,/obj/item) && imp)
+/obj/item/weapon/implanter/compressed/afterattack(var/obj/item/I, mob/user as mob)
+	if(is_type_in_list(I,forbidden_types))
+		user << "\red A red light flickers on the implanter."
+		return
+	if(istype(I) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
+			if(istype(I,/obj/item/weapon/storage))
+				..()
+				return
 			user << "\red Something is already scanned inside the implant!"
 			return
-		imp:scanned = A
-		A.loc.contents.Remove(A)
+		if(user)
+			user.u_equip(I)
+			user.update_icons()	//update our overlays
+		c.scanned = I
+		c.scanned.loc = c
 		update()

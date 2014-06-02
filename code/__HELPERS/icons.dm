@@ -634,19 +634,59 @@ as a single icon. Useful for when you want to manipulate an icon via the above a
 The _flatIcons list is a cache for generated icon files.
 */
 
-proc
-	getFlatIcon(atom/A, dir) // 1 = use cache, 2 = override cache, 0 = ignore cache
+proc // Creates a single icon from a given /atom or /image.  Only the first argument is required.
+	getFlatIcon(image/A, defdir=A.dir, deficon=A.icon, defstate=A.icon_state, defblend=A.blend_mode)
+		// We start with a blank canvas, otherwise some icon procs crash silently
+		var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
+		if(!A)
+			return flat
+		if(A.alpha <= 0)
+			return flat
+		var/noIcon = FALSE
+
+		var/curicon
+		if(A.icon)
+			curicon = A.icon
+		else
+			curicon = deficon
+
+		if(!curicon)
+			noIcon = TRUE // Do not render this object.
+
+		var/curstate
+		if(A.icon_state)
+			curstate = A.icon_state
+		else
+			curstate = defstate
+
+		if(!noIcon && !(curstate in icon_states(curicon)))
+			if("" in icon_states(curicon))
+				curstate = ""
+			else
+				noIcon = TRUE // Do not render this object.
+
+		var/curdir
+		if(A.dir)
+			curdir = A.dir
+		else
+			curdir = defdir
+
+		var/curblend
+		if(A.blend_mode == BLEND_DEFAULT)
+			curblend = defblend
+		else
+			curblend = A.blend_mode
+
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
-
-		// Add the atom's icon itself
-		if(A.icon)
-			// Make a copy without pixel_x/y settings
-			var/image/copy = image(icon=A.icon,icon_state=A.icon_state,layer=A.layer,dir=A.dir)
+		var/image/copy
+		// Add the atom's icon itself, without pixel_x/y offsets.
+		if(!noIcon)
+			copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=curdir)
+			copy.color = A.color
+			copy.alpha = A.alpha
+			copy.blend_mode = curblend
 			layers[copy] = A.layer
-
-		// dir defaults to A's dir
-		if(!dir) dir = A.dir
 
 		// Loop through the underlays, then overlays, sorting them into the layers list
 		var/list/process = A.underlays // Current list being processed
@@ -662,7 +702,7 @@ proc
 				if(!current)	continue
 				currentLayer = current:layer
 				if(currentLayer<0) // Special case for FLY_LAYER
-					if(currentLayer <= -1000) return 0
+					if(currentLayer <= -1000) return flat
 					if(pSet == 0) // Underlay
 						currentLayer = A.layer+currentLayer/1000
 					else // Overlay
@@ -688,8 +728,6 @@ proc
 				else // All done
 					break
 
-			// We start with a blank canvas, otherwise some icon procs crash silently
-		var/icon/flat = icon('icons/effects/effects.dmi', "icon_state"="nothing") // Final flattened icon
 		var/icon/add // Icon of overlay being added
 
 			// Current dimensions of flattened icon
@@ -699,23 +737,17 @@ proc
 
 		for(var/I in layers)
 
-			if(I:icon)
-				if(I:icon_state)
-					// Has icon and state set
-					add = icon(I:icon, I:icon_state)
-				else
-					if(A.icon_state in icon_states(I:icon))
-						// Inherits icon_state from atom
-						add = icon(I:icon, A.icon_state)
-					else
-						// Uses default state ("")
-						add = icon(I:icon)
-			else if(I:icon_state)
-				// Inherits icon from atom
-				add = icon(A.icon, I:icon_state)
-			else
-				// Unknown
+			if(I:alpha == 0)
 				continue
+
+			if(I == copy) // 'I' is an /image based on the object being flattened.
+				curblend = BLEND_OVERLAY
+				add = icon(I:icon, I:icon_state, I:dir)
+			else // 'I' is an appearance object.
+				add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend)
+
+			// /vg/: Dodge runtimes?
+			if(!add) continue
 
 			// Find the new dimensions of the flat icon to fit the added overlay
 			addX1 = min(flatX1, I:pixel_x+1)
@@ -730,9 +762,14 @@ proc
 				flatY1=addY1;flatY2=addY2
 
 			// Blend the overlay into the flattened icon
-			flat.Blend(add,ICON_OVERLAY,I:pixel_x+2-flatX1,I:pixel_y+2-flatY1)
+			flat.Blend(add, blendMode2iconMode(curblend), I:pixel_x + 2 - flatX1, I:pixel_y + 2 - flatY1)
 
-		return flat
+		if(A.color)
+			flat.Blend(A.color, ICON_MULTIPLY)
+		if(A.alpha < 255)
+			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
+
+		return icon(flat, "", SOUTH)
 
 	getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 		var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
@@ -774,3 +811,13 @@ proc
 		var/image/I = O
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 	return composite
+
+proc/adjust_brightness(var/color, var/value)
+	if (!color) return "#FFFFFF"
+	if (!value) return color
+
+	var/list/RGB = ReadRGB(color)
+	RGB[1] = Clamp(RGB[1]+value,0,255)
+	RGB[2] = Clamp(RGB[2]+value,0,255)
+	RGB[3] = Clamp(RGB[3]+value,0,255)
+	return rgb(RGB[1],RGB[2],RGB[3])

@@ -1,6 +1,6 @@
 /mob/living/silicon/robot/mommi/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 
 	if (src.monkeyizing)
 		return
@@ -37,7 +37,6 @@
 
 
 /mob/living/silicon/robot/mommi/use_power()
-
 	if (src.cell)
 		if(src.cell.charge <= 0)
 			uneq_all()
@@ -64,7 +63,7 @@
 /mob/living/silicon/robot/mommi/handle_regular_status_updates()
 
 	if(src.camera && !scrambledcodes)
-		if(src.stat == 2 || isWireCut(5))
+		if(src.stat == 2 || wires.IsCameraCut())
 			src.camera.status = 0
 		else
 			src.camera.status = 1
@@ -133,7 +132,7 @@
 /
 /mob/living/silicon/robot/mommi/handle_regular_hud_updates()
 
-	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == 2 || M_XRAY in mutations || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
@@ -275,29 +274,6 @@
 	if(src.tool_state)
 		src.tool_state:screen_loc = ui_inv2
 
-/* INHERIT
-/mob/living/silicon/robot/mommi/process_killswitch()
-	if(killswitch)
-		killswitch_time --
-		if(killswitch_time <= 0)
-			if(src.client)
-				src << "\red <B>Killswitch Activated"
-			killswitch = 0
-			spawn(5)
-				gib()
-
-/mob/living/silicon/robot/mommi/process_locks()
-	if(weapon_lock)
-		uneq_all()
-		weaponlock_time --
-		if(weaponlock_time <= 0)
-			if(src.client)
-				src << "\red <B>Weapon Lock Timed Out!"
-			weapon_lock = 0
-			weaponlock_time = 120
-
 /mob/living/silicon/robot/mommi/update_canmove()
-	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
-	else canmove = 1
+	canmove = !(paralysis || stunned || weakened || buckled || lockcharge || anchored)
 	return canmove
-*/

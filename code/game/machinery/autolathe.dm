@@ -7,6 +7,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/device/flashlight(), \
 		new /obj/item/weapon/extinguisher(), \
 		new /obj/item/device/multitool(), \
+		new /obj/item/device/analyzer(), \
 		new /obj/item/device/t_scanner(), \
 		new /obj/item/weapon/weldingtool(), \
 		new /obj/item/weapon/screwdriver(), \
@@ -14,9 +15,6 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/wrench(), \
 		new /obj/item/clothing/head/welding(), \
 		new /obj/item/weapon/stock_parts/console_screen(), \
-		new /obj/item/weapon/airlock_electronics(), \
-		new /obj/item/weapon/airalarm_electronics(), \
-		new /obj/item/weapon/firealarm_electronics(), \
 		new /obj/item/stack/sheet/metal(), \
 		new /obj/item/stack/sheet/glass(), \
 		new /obj/item/stack/sheet/rglass(), \
@@ -28,8 +26,11 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/surgicaldrill(),\
 		new /obj/item/weapon/retractor(),\
 		new /obj/item/weapon/cautery(),\
+		new /obj/item/weapon/hemostat(),\
 		new /obj/item/weapon/reagent_containers/glass/beaker(), \
 		new /obj/item/weapon/reagent_containers/glass/beaker/large(), \
+		new /obj/item/weapon/reagent_containers/glass/beaker/vial(), \
+		new /obj/item/weapon/reagent_containers/syringe(), \
 		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_magazine/c38(), \
@@ -40,6 +41,8 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/device/radio/off(), \
 		new /obj/item/device/assembly/infra(), \
 		new /obj/item/device/assembly/timer(), \
+		new /obj/item/device/assembly/voice(), \
+		new /obj/item/device/assembly/prox_sensor(), \
 		new /obj/item/weapon/light/tube(), \
 		new /obj/item/weapon/light/bulb(), \
 		new /obj/item/ashtray/glass(), \
@@ -173,7 +176,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 			return 1
 		if (opened)
 			if(istype(O, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				M.state = 2
 				M.icon_state = "box_1"
@@ -199,7 +202,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 				return 1
 			else
 				var/mob/living/silicon/robot/mommi/M = user
-				if(M.is_in_modules(O))
+				if(M.is_in_modules(O,permit_sheets=1))
 					user << "\red You can't put something built into you in [src]."
 					return 1
 		if (src.m_amount + O.m_amt > max_m_amount)
@@ -264,9 +267,42 @@ var/global/list/autolathe_recipes_hidden = list( \
 		if (!busy)
 			if(href_list["make"])
 				var/turf/T = get_step(src.loc, get_dir(src,usr))
-				var/obj/template = locate(href_list["make"])
+
+				// critical exploit fix start -walter0o
+				var/obj/item/template = null
+				var/attempting_to_build = locate(href_list["make"])
+
+				if(!attempting_to_build)
+					return
+
+				if(locate(attempting_to_build, src.L) || locate(attempting_to_build, src.LL)) // see if the requested object is in one of the construction lists, if so, it is legit -walter0o
+					template = attempting_to_build
+
+				else // somebody is trying to exploit, alert admins -walter0o
+
+					var/turf/LOC = get_turf(usr)
+					message_admins("[key_name_admin(usr)] tried to exploit an autolathe to duplicate <a href='?_src_=vars;Vars=\ref[attempting_to_build]'>[attempting_to_build]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
+					log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe to duplicate [attempting_to_build] !")
+					return
+
+				// now check for legit multiplier, also only stacks should pass with one to prevent raw-materials-manipulation -walter0o
+
 				var/multiplier = text2num(href_list["multiplier"])
+
 				if (!multiplier) multiplier = 1
+				var/max_multiplier = 1
+
+				if(istype(template, /obj/item/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
+					var/obj/item/stack/S = template
+					max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)  // pasta from regular_win() to make sure the numbers match -walter0o
+
+				if( (multiplier > max_multiplier) || (multiplier <= 0) ) // somebody is trying to exploit, alert admins-walter0o
+
+					var/turf/LOC = get_turf(usr)
+					message_admins("[key_name_admin(usr)] tried to exploit an autolathe with multiplier set to <u>[multiplier]</u> on <u>[template]</u>  ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])" , 0)
+					log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe with multiplier set to [multiplier] on [template]  !")
+					return
+
 				var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
 				if(src.m_amount >= template.m_amt*multiplier && src.g_amount >= template.g_amt*multiplier)
 					busy = 1

@@ -27,6 +27,7 @@
 /obj/item/weapon/storage/fancy/examine()
 	set src in oview(1)
 
+	..()
 	if(contents.len <= 0)
 		usr << "There are no [src.icon_type]s left in the box."
 	else if(contents.len == 1)
@@ -155,7 +156,7 @@
 	flags = TABLEPASS
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list("/obj/item/clothing/mask/cigarette")
+	can_hold = list("=/obj/item/clothing/mask/cigarette") // Strict type check.
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/New()
@@ -165,7 +166,7 @@
 		new /obj/item/clothing/mask/cigarette(src)
 	create_reagents(15 * storage_slots)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
 
-/obj/item/weapon/storage/fancy/cigarettes/Del()
+/obj/item/weapon/storage/fancy/cigarettes/Destroy()
 	del(reagents)
 	..()
 

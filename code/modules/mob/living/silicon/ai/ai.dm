@@ -32,6 +32,7 @@ var/list/ai_list = list()
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/custom_sprite = 0 //For our custom sprites
+	var/obj/item/device/camera/ai_camera/aicamera = null
 //Hud stuff
 
 	//MALFUNCTION
@@ -50,6 +51,8 @@ var/list/ai_list = list()
 
 	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
 	var/datum/trackable/track = null
+
+	var/last_paper_seen = null
 	var/can_shunt = 1
 	var/last_announcement = ""
 
@@ -89,6 +92,7 @@ var/list/ai_list = list()
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
+	aicamera = new/obj/item/device/camera/ai_camera(src)
 
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
@@ -119,10 +123,9 @@ var/list/ai_list = list()
 	..()
 	return
 
-/mob/living/silicon/ai/Del()
+/mob/living/silicon/ai/Destroy()
 	ai_list -= src
 	..()
-
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -151,7 +154,7 @@ var/list/ai_list = list()
 	var/icontype = ""
 	/* Nuked your hidden shit.*/
 	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
-	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static")
+	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Broken Output", "Triumvirate", "Triumvirate Static", "Searif", "Ravensdale", "Serithi", "Static")
 	switch(icontype)
 		if("Custom") icon_state = "[src.ckey]-ai"
 		if("Clown") icon_state = "ai-clown2"
@@ -160,7 +163,7 @@ var/list/ai_list = list()
 		if("Firewall") icon_state = "ai-magma"
 		if("Green") icon_state = "ai-wierd"
 		if("Red") icon_state = "ai-malf"
-		if("Static") icon_state = "ai-static"
+		if("Broken Output") icon_state = "ai-static"
 		if("Text") icon_state = "ai-text"
 		if("Smiley") icon_state = "ai-smiley"
 		if("Matrix") icon_state = "ai-matrix"
@@ -169,9 +172,10 @@ var/list/ai_list = list()
 		if("Bliss") icon_state = "ai-bliss"
 		if("Triumvirate") icon_state = "ai-triumvirate"
 		if("Triumvirate Static") icon_state = "ai-triumvirate-malf"
-		if("M00X-BC") icon_state = "ai-searif"
-		if("Skuld") icon_state = "ai-ravensdale"
-		if("REMNANT") icon_state = "ai-serithi"
+		if("Searif") icon_state = "ai-searif"
+		if("Ravensdale") icon_state = "ai-ravensdale"
+		if("Serithi") icon_state = "ai-serithi"
+		if("Static") icon_state = "ai-fuzz"
 		else icon_state = "ai"
 	//else
 			//usr <<"You can only change your display once!"
@@ -269,7 +273,7 @@ var/list/ai_list = list()
 		if(AI.control_disabled)
 			src	 << "Wireless control is disabled!"
 			return
-	cancel_call_proc(src)
+	recall_shuttle(src)
 	return
 
 /mob/living/silicon/ai/check_eye(var/mob/user as mob)
@@ -331,6 +335,10 @@ var/list/ai_list = list()
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
 		ai_alerts()
+
+	if(href_list["show_paper"])
+		if(last_paper_seen)
+			src << browse(last_paper_seen, "window=show_paper")
 	//Carn: holopad requests
 	if (href_list["jumptoholopad"])
 		var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
@@ -734,3 +742,7 @@ var/list/ai_list = list()
 			return
 	else
 		return ..()
+
+
+/mob/living/silicon/ai/get_multitool(var/active_only=0)
+	return aiMulti

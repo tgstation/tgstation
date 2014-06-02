@@ -225,6 +225,16 @@
 	anchored = 1
 	density = 0
 	wall_mounted = 1
+	pick_up_stuff = 0 // #367 - Picks up stuff at src.loc, rather than the offset location.
+
+/obj/structure/closet/hydrant/New()
+	..()
+
+	new /obj/item/clothing/suit/fire/firefighter(src)
+	new /obj/item/clothing/mask/gas(src)
+	new /obj/item/weapon/tank/oxygen/red(src)
+	new /obj/item/weapon/extinguisher(src)
+	new /obj/item/clothing/head/hardhat/red(src)
 
 /*
  * First Aid
@@ -238,6 +248,7 @@
 	anchored = 1
 	density = 0
 	wall_mounted = 1
+	pick_up_stuff = 0 // #367 - Picks up stuff at src.loc, rather than the offset location.
 
 /obj/structure/closet/medical_wall/update_icon()
 	if(!opened)

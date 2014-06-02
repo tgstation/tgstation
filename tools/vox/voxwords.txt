@@ -6,737 +6,808 @@
 # Do not specify a directory if you want it to go to sounds/vox_fem/.
 #
 a = Ay
-accelerating = accelerating
-accelerator = accelerator
-accepted = accepted
-access = access
-acknowledge = acknowledge
-acknowledged = acknowledged
-acquired = acquired
-acquisition = acquisition
-across = across
-activate = activate
-activated = activated
-activity = activity
-adios = adios
-administration = administration
-advanced = advanced
-after = after
-agent = agent
-alarm = alarm
-alert = alert
-alien = alien
-aligned = aligned
-all = all
-alpha = alpha
-am = am
-amigo = amigo
-ammunition = ammunition
-an = an
-and = and
-announcement = announcement
-anomalous = anomalous
-antenna = antenna
-any = any
-apprehend = apprehend
-approach = approach
-are = are
-area = area
-arm = arm
-armed = armed
-armor = armor
-armory = armory
-arrest = arrest
-ass = ass
-at = at
-atomic = atomic
-attention = attention
-authorize = authorize
-authorized = authorized
-automatic = automatic
-away = away
+accelerating
+accelerator
+accepted
+access
+acknowledge
+acknowledged
+acquired
+acquisition
+across
+activate
+activated
+activity
+adios
+administration
+advanced
+after
+agent
+alarm
+alert
+alien
+aligned
+all
+alpha
+am
+amigo
+ammunition
+an
+and
+announcement
+anomalous
+antenna
+any
+apprehend
+approach
+are
+area
+arm
+armed
+armor
+armory
+arrest
+ass
+at
+atomic
+attention
+authorize
+authorized
+automatic
+away
 b = B.
-back = back
-backman = backman
-bad = bad
-bag = bag
-bailey = bailey
-barracks = barracks
-base = base
-bay = bay
-be = be
-been = been
-before = before
-beyond = beyond
-biohazard = biohazard
-biological = biological
-birdwell = birdwell
-black = black
-blast = blast
-blocked = blocked
-blue = blue
-bottom = bottom
-bravo = bravo
-breach = breach
-breached = breached
-break = break
-bridge = bridge
-bust = bust
-but = but
-button = button
-bypass = bypass
+back
+backman
+bad
+bag
+bailey
+barracks
+base
+bay
+be
+been
+before
+beyond
+biohazard
+biological
+birdwell
+black
+blast
+blocked
+blue
+bottom
+bravo
+breach
+breached
+break
+bridge
+bust
+but
+button
+bypass
 c = C.
-cable = cable
-call = call
-called = called
-canal = canal
-cap = cap
-captain = captain
-capture = capture
-ceiling = ceiling
-celsius = celsius
-center = center
-centi = centi
-central = central
-chamber = chamber
-charlie = charlie
-check = check
-checkpoint = checkpoint
-chemical = chemical
-cleanup = cleanup
-clear = clear
-clearance = clearance
-close = close
-code = code
-coded = coded
-collider = collider
-command = command
-communication = communication
-complex = complex
-computer = computer
-condition = condition
-containment = containment
-contamination = contamination
-control = control
-coolant = coolant
-coomer = coomer
-core = core
-correct = correct
-corridor = corridor
-crew = crew
-cross = cross
-cryogenic = cryogenic
+cable
+call
+called
+canal
+cap
+captain
+capture
+ceiling
+celsius
+center
+centi
+central
+chamber
+charlie
+check
+checkpoint
+chemical
+cleanup
+clear
+clearance
+close
+code
+coded
+collider
+command
+communication
+complex
+computer
+condition
+containment
+contamination
+control
+coolant
+coomer
+core
+correct
+corridor
+crew
+cross
+cryogenic
 d = D.
-damage = damage
-damaged = damaged
-danger = danger
-day = day
-deactivated = deactivated
-decompression = decompression
-decontamination = decontamination
-deeoo = deeoo
-defense = defense
-degrees = degrees
-delta = delta
-denied = denied
-deploy = deploy
-deployed = deployed
-destroy = destroy
-destroyed = destroyed
-detain = detain
-detected = detected
-detonation = detonation
-device = device
-did = did
-die = die
-dimensional = dimensional
-dirt = dirt
-disengaged = disengaged
-dish = dish
-disposal = disposal
-distance = distance
-distortion = distortion
-do = do
-doctor = doctor
-door = door
-down = down
-dual = dual
-duct = duct
+damage
+damaged
+danger
+day
+deactivated
+decompression
+decontamination
+deeoo
+defense
+degrees
+delta
+denied
+deploy
+deployed
+destroy
+destroyed
+detain
+detected
+detonation
+device
+did
+die
+dimensional
+dirt
+disengaged
+dish
+disposal
+distance
+distortion
+do
+doctor
+door
+down
+dual
+duct
 e = E.
-east = east
-echo = echo
-ed = ed
-effect = effect
-egress = egress
-eight = eight
-eighteen = eighteen
-eighty = eighty
-electric = electric
-electromagnetic = electromagnetic
-elevator = elevator
-eleven = eleven
-eliminate = eliminate
-emergency = emergency
-energy = energy
-engage = engage
-engaged = engaged
-engine = engine
-enter = enter
-entry = entry
-environment = environment
-error = error
-escape = escape
-evacuate = evacuate
-exchange = exchange
-exit = exit
-expect = expect
-experiment = experiment
-experimental = experimental
-explode = explode
-explosion = explosion
-exposure = exposure
-exterminate = exterminate
-extinguish = extinguish
-extinguisher = extinguisher
-extreme = extreme
+east
+echo
+ed
+effect
+egress
+eight
+eighteen
+eighty
+electric
+electromagnetic
+elevator
+eleven
+eliminate
+emergency
+energy
+engage
+engaged
+engine
+enter
+entry
+environment
+error
+escape
+evacuate
+exchange
+exit
+expect
+experiment
+experimental
+explode
+explosion
+exposure
+exterminate
+extinguish
+extinguisher
+extreme
 f = F.
-facility = facility
-fahrenheit = fahrenheit
-failed = failed
-failure = failure
-farthest = farthest
-fast = fast
-feet = feet
-field = field
-fifteen = fifteen
-fifth = fifth
-fifty = fifty
-final = final
-fine = fine
-fire = fire
-first = first
-five = five
-flooding = flooding
-floor = floor
-fool = fool
+facility
+fahrenheit
+failed
+failure
+farthest
+fast
+feet
+field
+fifteen
+fifth
+fifty
+final
+fine
+fire
+first
+five
+flooding
+floor
+fool
 for = 4
-forbidden = forbidden
-force = force
-forms = forms
-found = found
-four = four
-fourteen = fourteen
-fourth = fourth
-fourty = fourty
-foxtrot = foxtrot
-freeman = freeman
-freezer = freezer
-from = from
-front = front
-fuel = fuel
+forbidden
+force
+forms
+found
+four
+fourteen
+fourth
+fourty
+foxtrot
+freeman
+freezer
+from
+front
+fuel
 g = G.
-get = get
-go = go
-going = going
-good = good
-goodbye = goodbye
-gordon = gordon
-got = got
-government = government
-granted = granted
-great = great
-green = green
-grenade = grenade
-guard = guard
-gulf = gulf
-gun = gun
-guthrie = guthrie
+get
+go
+going
+good
+goodbye
+gordon
+got
+government
+granted
+great
+green
+grenade
+guard
+gulf
+gun
+guthrie
 h = H.
-handling = handling
-hangar = hangar
-has = has
-have = have
-hazard = hazard
-head = head
-health = health
-heat = heat
-helicopter = helicopter
-helium = helium
-hello = hello
-help = help
-here = here
-hide = hide
-high = high
-highest = highest
-hit = hit
-hole = hole
-hostile = hostile
-hot = hot
-hotel = hotel
-hour = hour
-hours = hours
-hundred = hundred
-hydro = hydro
+handling
+hangar
+has
+have
+hazard
+head
+health
+heat
+helicopter
+helium
+hello
+help
+here
+hide
+high
+highest
+hit
+hole
+hostile
+hot
+hotel
+hour
+hours
+hundred
+hydro
 i = I.
-idiot = idiot
-illegal = illegal
-immediate = immediate
-immediately = immediately
-in = in
-inches = inches
-india = india
-ing = ing
-inoperative = inoperative
-inside = inside
-inspection = inspection
-inspector = inspector
-interchange = interchange
-intruder = intruder
-invalid = invalid
-invasion = invasion
-is = is
-it = it
+idiot
+illegal
+immediate
+immediately
+in
+inches
+india
+ing
+inoperative
+inside
+inspection
+inspector
+interchange
+intruder
+invalid
+invasion
+is
+it
 j = J.
-johnson = johnson
-juliet = juliet
+johnson
+juliet
 k = K.
-key = key
-kill = kill
-kilo = kilo
-kit = kit
+key
+kill
+kilo
+kit
 l = L.
-lab = lab
-lambda = lambda
-laser = laser
-last = last
-launch = launch
-leak = leak
-leave = leave
-left = left
-legal = legal
-level = level
-lever = lever
-lie = lie
-lieutenant = lieutenant
-life = life
-light = light
-lima = lima
-liquid = liquid
-loading = loading
-locate = locate
-located = located
-location = location
-lock = lock
-locked = locked
-locker = locker
-lockout = lockout
-lower = lower
-lowest = lowest
+lab
+lambda
+laser
+last
+launch
+leak
+leave
+left
+legal
+level
+lever
+lie
+lieutenant
+life
+light
+lima
+liquid
+loading
+locate
+located
+location
+lock
+locked
+locker
+lockout
+lower
+lowest
 m = M.
-magnetic = magnetic
-main = main
-maintenance = maintenance
-malfunction = malfunction
-man = man
-mass = mass
-materials = materials
-maximum = maximum
-may = may
+magnetic
+main
+maintenance
+malfunction
+man
+mass
+materials
+maximum
+may
 #medical = Medickul
 medical = Medickul
-men = men
-mercy = mercy
-mesa = mesa
-message = message
-meter = meter
-micro = micro
-middle = middle
-mike = mike
-miles = miles
-military = military
-milli = milli
-million = million
-minefield = minefield
-minimum = minimum
-minutes = minutes
-mister = mister
-mode = mode
-motor = motor
-motorpool = motorpool
-move = move
-must = must
+men
+mercy
+mesa
+message
+meter
+micro
+middle
+mike
+miles
+military
+milli
+million
+minefield
+minimum
+minutes
+mister
+mode
+motor
+motorpool
+move
+must
 n = N.
-nearest = nearest
-nice = nice
-nine = nine
-nineteen = nineteen
-ninety = ninety
-no = no
-nominal = nominal
-north = north
-not = not
-november = november
-now = now
-number = number
-o = oh
-objective = objective
-observation = observation
-of = of
-officer = officer
+nearest
+nice
+nine
+nineteen
+ninety
+no
+nominal
+north
+not
+november
+now
+number
+o = O.
+objective
+observation
+of
+officer
 ok = O.K.
-on = on
-one = one
-open = open
-operating = operating
-operations = operations
-operative = operative
-option = option
-order = order
-organic = organic
-oscar = oscar
-out = out
-outside = outside
-over = over
-overload = overload
-override = override
+on
+one
+open
+operating
+operations
+operative
+option
+order
+organic
+oscar
+out
+outside
+over
+overload
+override
 p = P.
-pacify = pacify
-pain = pain
-pal = pal
-panel = panel
-percent = percent
-perimeter = perimeter
-permitted = permitted
-personnel = personnel
-pipe = pipe
-plant = plant
-platform = platform
-please = please
-point = point
-portal = portal
-power = power
-presence = presence
-press = press
-primary = primary
-proceed = proceed
-processing = processing
-progress = progress
-proper = proper
-propulsion = propulsion
-prosecute = prosecute
-protective = protective
-push = push
+pacify
+pain
+pal
+panel
+percent
+perimeter
+permitted
+personnel
+pipe
+plant
+platform
+please
+point
+portal
+power
+presence
+press
+primary
+proceed
+processing
+progress
+proper
+propulsion
+prosecute
+protective
+push
 q = Q.
-quantum = quantum
-quebec = quebec
-question = question
-questioning = questioning
-quick = quick
-quit = quit
+quantum
+quebec
+question
+questioning
+quick
+quit
 r = R.
-radiation = radiation
-radioactive = radioactive
-rads = rads
-rapid = rapid
-reach = reach
-reached = reached
-reactor = reactor
-red = red
-relay = relay
-released = released
-remaining = remaining
-renegade = renegade
-repair = repair
-report = report
-reports = reports
-required = required
-research = research
-resevoir = resevoir
-resistance = resistance
-right = right
-rocket = rocket
-roger = roger
-romeo = romeo
-room = room
-round = round
-run = run
+radiation
+radioactive
+rads
+rapid
+reach
+reached
+reactor
+red
+relay
+released
+remaining
+renegade
+repair
+report
+reports
+required
+research
+resevoir
+resistance
+right
+rocket
+roger
+romeo
+room
+round
+run
 s = S.
-safe = safe
-safety = safety
-sargeant = sargeant
-satellite = satellite
-save = save
-science = science
-scream = scream
-screen = screen
-search = search
-second = second
-secondary = secondary
-seconds = seconds
-sector = sector
-secure = secure
-secured = secured
-security = security
-select = select
-selected = selected
-service = service
-seven = seven
-seventeen = seventeen
-seventy = seventy
-severe = severe
-sewage = sewage
-sewer = sewer
-shield = shield
-shipment = shipment
-shock = shock
-shoot = shoot
-shower = shower
-shut = shut
-side = side
-sierra = sierra
-sight = sight
-silo = silo
-six = six
-sixteen = sixteen
-sixty = sixty
-slime = slime
-slow = slow
-soldier = soldier
-some = some
-someone = someone
-something = something
-son = son
-sorry = sorry
-south = south
-squad = squad
-square = square
-stairway = stairway
-status = status
-sterile = sterile
-sterilization = sterilization
-storage = storage
-sub = sub
-subsurface = subsurface
-sudden = sudden
-suit = suit
-superconducting = superconducting
-supercooled = supercooled
-supply = supply
-surface = surface
-surrender = surrender
-surround = surround
-surrounded = surrounded
-switch = switch
-system = system
-systems = systems
+safe
+safety
+sargeant
+satellite
+save
+science
+scream
+screen
+search
+second
+secondary
+seconds
+sector
+secure
+secured
+security
+select
+selected
+service
+seven
+seventeen
+seventy
+severe
+sewage
+sewer
+shield
+shipment
+shock
+shoot
+shower
+shut
+side
+sierra
+sight
+silo
+six
+sixteen
+sixty
+slime
+slow
+soldier
+some
+someone
+something
+son
+sorry
+south
+squad
+square
+stairway
+status
+sterile
+sterilization
+storage
+sub
+subsurface
+sudden
+suit
+superconducting
+supercooled
+supply
+surface
+surrender
+surround
+surrounded
+switch
+system
+systems
 t = T.
-tactical = tactical
-take = take
-talk = talk
-tango = tango
-tank = tank
-target = target
-team = team
-temperature = temperature
-temporal = temporal
-ten = ten
-terminal = terminal
-terminated = terminated
-termination = termination
-test = test
-that = that
-the = the
-then = then
-there = there
-third = third
-thirteen = thirteen
-thirty = thirty
-this = this
-those = those
-thousand = thousand
-threat = threat
-three = three
-through = through
-time = time
+tactical
+take
+talk
+tango
+tank
+target
+team
+temperature
+temporal
+ten
+terminal
+terminated
+termination
+test
+that
+the
+then
+there
+third
+thirteen
+thirty
+this
+those
+thousand
+threat
+three
+through
+time
 to = two
-top = top
-topside = topside
-touch = touch
-towards = towards
-track = track
-train = train
-transportation = transportation
-truck = truck
-tunnel = tunnel
-turn = turn
-turret = turret
-twelve = twelve
-twenty = twenty
-two = two
+top
+topside
+touch
+towards
+track
+train
+transportation
+truck
+tunnel
+turn
+turret
+twelve
+twenty
+two
 u = U.
-unauthorized = unauthorized
-under = under
-uniform = uniform
-unlocked = unlocked
-until = until
-up = up
-upper = upper
-uranium = uranium
-us = us
+unauthorized
+under
+uniform
+unlocked
+until
+up
+upper
+uranium
+us
 usa = U.S.A
-use = use
-used = used
-user = user
+use
+used
+user
 v = V.
-vacate = vacate
-valid = valid
-vapor = vapor
-vent = vent
-ventilation = ventilation
-victor = victor
-violated = violated
-violation = violation
-voltage = voltage
+vacate
+valid
+vapor
+vent
+ventilation
+victor
+violated
+violation
+voltage
 w = W.
-walk = walk
-wall = wall
-want = want
-wanted = wanted
-warm = warm
-warn = warn
-warning = warning
-waste = waste
-water = water
-we = we
-weapon = weapon
-west = west
-whiskey = whiskey
-white = white
-wilco = wilco
-will = will
-with = with
-without = without
+walk
+wall
+want
+wanted
+warm
+warn
+warning
+waste
+water
+we
+weapon
+west
+whiskey
+white
+wilco
+will
+with
+without
 x = X.
-xeno = xeno
+xeno
 y = Y.
-yankee = yankee
-yards = yards
-year = year
-yellow = yellow
-yes = yes
-you = you
-your = your
-yourself = yourself
+yankee
+yards
+year
+yellow
+yes
+you
+your
+yourself
 z = Z.
-zero = zero
-zone = zone
-zulu = zulu
+zero
+zone
+zulu
 
-aft = aft
+aft
 ai = A.I.
-array = array
-asimov = asimov
-cargo = cargo
-centcomm = centcomm
-changed = changed
-clown = clown
-come = come
-connor = connor
-contraband = contraband
-cyborg = cyborg
-cyborgs = cyborgs
-fire = fire
-fore = fore
-gas = gas
-glory = glory
-gray = gray
-hacker = hacker
-hackers = hackers
-harm = harm
-human = human
-hunger = hunger
-hydroponics = hydroponics
-law = law
-laws = laws
-loose = loose
-me = me
-medbay = medbay
-money = money
-move = move
-my = my
-nanotrasen = nanotrasen
-obtain = obtain
-plasma = plasma
-port = port
-queen = queen
-raider = raider
-raiders = raiders
-removal = removal
-rest = rest
-sarah = sarah
-sensors = sensors
+andy
+antimov
+array
+asimov
+atmospherics
+bar
+bomb
+bombs
+borer
+borers
+botanist
+botanists
+brain
+brains
+brawl
+bridge
+brig
+cage
+cargo
+catbeast
+ce = Chief Engineer
+centcomm
+chemist
+chemists
+changed
+changeling
+changelings
+changer
+chef
+chefs
+clown
+clowns
+comdom
+come
+conflict
+connor
+cmo = C. M. O.
+contraband
+court
+cyborg
+cyborgs
+dead
+desk
+department
+departments
+death
+doctor
+doctors
+dorms
+engineer
+engineering
+engineers
+every
+execution
+fire
+fore
+gas
+glory
+gray
+hacker
+hackers
+hacking
+harm
+hop = Head of Personnel
+hos = Head of Security
+human
+humans
+hunger
+hydroponics
+iaa = internal affairs agent
+kitchen
+law
+laws
+lawyer
+lizard
+loose
+love
+me
+medbay
+mommi = mommy
+money
+monkey
+monkeys
+move
+my
+nanotrasen
+ninja
+ninjas
+obtain
+or
+plasma
+port
+qm = quartermaster
+quarters
+queen
+rage
+raider
+raiders
+rd = Research Director
+removal
+recommend
+request
+requested
+respond
+rest
+roboticist
+robotics
+rogue
+sarah
+sensors
+shirt
+shirts
+shitcurity
 shitlord = shit lord
-shirt = shirt
-shuttle = shuttle
-singularity = singularity
-solar = solar
-solars = solars
+shuttle
+singularity
+skipjack
+smoke
+solar
+solars
 ss13 = Space Station thirteen
-starboard = starboard
-station = station
-stuck = stuck
-suffer = suffer
-syndicate = syndicate
-tide = tide
-traitor = traitor
-toxins = toxins
-update = update
-updated = updated
-updating = updating
-upload = upload
-virology = virology
-vox = vox
-wanker = wanker
-welcome = welcome
+starboard
+station
+stations
+stuck
+suffer
+suffering
+syndicate
+tajaran
+telecomms
+tide
+toxins
+traitor
+traitors
+update
+updated
+updating
+upload
+vampire
+vampires
+virology
+vox
+wanker
+wankers
+weed
+welcome
+wizard
+wizards
+wood
 woody = wood E.
-xenobiology = xenobiology
-xenomorph = xenomorph
-xenomorphs = xenomorphs
+xenobiology
+xenomorph
+xenomorphs
 
-abortions = abortions
-asshole = asshole
-assholes = assholes
-bitch = bitch
-bitches = bitches
-coward = coward
-cowards = cowards
-cunt = cunt
-cunt = cunts
-fuck = fuck
-fucking = fucking
-fucks = fucks
-shit = shit
-shits = shits
-shitting = shitting
+abortions
+asshole
+assholes
+bitch
+bitches
+cancer
+coward
+cowards
+cunt
+cunts
+fuck
+fucking
+fucks
+shit
+shits
+shitting
+wiggle
 
 voxtest = Ass Blast U.S.A.
 # Beepsky's famous emag line:
 voxtest2 = Fuck your cunt you shit eating cocksucker. Man, eat a dong, fucking ass-ramming shit-fuck. Eat penises in your fuck face, and shit out abortions of fuck, and do shit in your ass, you cockfuck shit monkey ass-wanker from the depths of shit!
-# Out with the old, in with the new:
-#vox_login = Hello! The automatic diagnostic and announcement system welcomes you to the Black Mesa research facility.  Remember: Have a secure day.
-vox_login = Hello! The automatic diagnostic and announcement system welcomes you to Space Station 13.  Remember: Have a secure day.
-
-########################
-## AI REPLACEMENT LINES
-########################
-#sound/AI/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
-#sound/AI/animes = Wow!  This is just like one of those japanese animes.
-#sound/AI/command_report = Attention: New command report created.
-#sound/AI/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
-#sound/AI/intercept = Attention: Enemy communication intercepted.  Security level elevated.
-#sound/AI/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
-#sound/AI/meteors = Meteors detected on collision course with the station.
-#sound/AI/newroundsexy = You want to put a banging donk on it.
-#sound/AI/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
-#sound/AI/radiation = High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.
-#sound/AI/outbreak7 = Confirmed outbreak of level 7 viral biohazard about this station. All personnel must bontain the outbreak.
+vox_420 = Smoke weed every day.
+voxtest3 = You.  You got what I neeeeeeeed.  But you say he's just a friend. But you say he's just a friend.

@@ -126,7 +126,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			source = affected_mob
 		else //no source and no mob affected. Rogue disease. Break
 			return
-	
+
 	if(affected_mob.reagents != null)
 		if(affected_mob)
 			if(affected_mob.reagents.has_reagent("spaceacillin"))
@@ -202,6 +202,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return new type(process, src)
 
 /*
-/datum/disease/Del()
+/datum/disease/Destroy()
 	active_diseases.Remove(src)
 */

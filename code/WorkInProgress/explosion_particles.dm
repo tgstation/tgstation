@@ -1,5 +1,5 @@
 /obj/effect/expl_particles
-	name = "fire"
+	name = "explosive particles"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "explosion_particle"
 	opacity = 1
@@ -9,7 +9,7 @@
 /obj/effect/expl_particles/New()
 	..()
 	spawn (15)
-		del(src)
+		src.loc = null
 	return
 
 /obj/effect/expl_particles/Move()
@@ -32,13 +32,12 @@
 		spawn(0)
 			var/obj/effect/expl_particles/expl = new /obj/effect/expl_particles(src.location)
 			var/direct = pick(alldirs)
-			var/a = 0
-			for(a=0, a<pick(1;25,2;50,3,4;200), a++)
+			for(i=0, i<pick(1;25,2;50,3,4;200), i++)
 				sleep(1)
 				step(expl,direct)
 
 /obj/effect/explosion
-	name = "fire"
+	name = "explosive particles"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
 	opacity = 1
@@ -50,7 +49,7 @@
 /obj/effect/explosion/New()
 	..()
 	spawn (10)
-		del(src)
+		src.loc = null
 	return
 
 /datum/effect/system/explosion
@@ -66,6 +65,6 @@
 	P.set_up(10,location)
 	P.start()
 	spawn(5)
-		var/datum/effect/effect/system/harmless_smoke_spread/S = new/datum/effect/effect/system/harmless_smoke_spread()
+		var/datum/effect/effect/system/smoke_spread/S = new/datum/effect/effect/system/smoke_spread()
 		S.set_up(5,0,location,null)
 		S.start()

@@ -2,6 +2,8 @@
  * Contains:
  *		Glass sheets
  *		Reinforced glass sheets
+ *		Plasma Glass Sheets
+ *		Reinforced Plasma Glass Sheets (AKA Holy fuck strong windows)
  *		Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 
@@ -14,14 +16,18 @@
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	g_amt = 3750
+	w_type = RECYK_GLASS
 	origin_tech = "materials=1"
+	var/created_window = /obj/structure/window/basic
+	var/full_window = /obj/structure/window/full/basic
 
+/obj/item/stack/sheet/glass/cyborg
+	g_amt = 0
 
 /obj/item/stack/sheet/glass/attack_self(mob/user as mob)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
-	..()
 	if(istype(W,/obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/CC = W
 		if(CC.amount < 5)
@@ -49,13 +55,18 @@
 	else
 		return ..()
 
+/obj/item/stack/sheet/glass/recycle(var/datum/materials/rec)
+	rec.addAmount("glass", 1*src.amount)
+	return 1
+
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user as mob)
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
 		user << "\red You don't have the dexterity to do this!"
 		return 0
-	var/title = "Sheet-Glass ([src.amount] sheet\s left)"
+	var/title = "Sheet-Glass"
+	title += " ([src.amount] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
 		if("One Direction")
 			if(!src)	return 1
@@ -69,7 +80,7 @@
 					user << "\red There are too many windows in this location."
 					return 1
 				directions-=win.dir
-				if(!(win.ini_dir in cardinal))
+				if(win.is_fulltile())
 					user << "\red Can't let you do that."
 					return 1
 
@@ -83,9 +94,8 @@
 				if(!found)
 					dir_to_set = direction
 					break
-
 			var/obj/structure/window/W
-			W = new /obj/structure/window/basic( user.loc, 0 )
+			W = new created_window( user.loc, 0 )
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
@@ -96,13 +106,10 @@
 			if(src.amount < 2)
 				user << "\red You need more glass to do that."
 				return 1
-			if(locate(/obj/structure/window) in user.loc)
-				user << "\red There is a window in the way."
+			if(locate(/obj/structure/window/full) in user.loc)
+				user << "\red There is a full window in the way."
 				return 1
-			var/obj/structure/window/W
-			W = new /obj/structure/window/basic( user.loc, 0 )
-			W.dir = SOUTHWEST
-			W.ini_dir = SOUTHWEST
+			var/obj/structure/window/W = new full_window( user.loc, 0 )
 			W.anchored = 0
 			src.use(2)
 	return 0
@@ -118,6 +125,7 @@
 	icon_state = "sheet-rglass"
 	g_amt = 3750
 	m_amt = 1875
+	w_type = RECYK_GLASS
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/rglass/cyborg
@@ -137,7 +145,8 @@
 	if(!user.IsAdvancedToolUser())
 		user << "\red You don't have the dexterity to do this!"
 		return 0
-	var/title = "Sheet Reinf. Glass ([src.amount] sheet\s left)"
+	var/title = "Sheet Reinf. Glass"
+	title += " ([src.amount] sheet\s left)"
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(!src)	return 1
@@ -150,7 +159,7 @@
 					user << "\red There are too many windows in this location."
 					return 1
 				directions-=win.dir
-				if(!(win.ini_dir in cardinal))
+				if(win.is_fulltile())
 					user << "\red Can't let you do that."
 					return 1
 
@@ -179,7 +188,7 @@
 			if(src.amount < 2)
 				user << "\red You need more glass to do that."
 				return 1
-			if(locate(/obj/structure/window) in user.loc)
+			if(locate(/obj/structure/window/full) in user.loc)
 				user << "\red There is a window in the way."
 				return 1
 			var/obj/structure/window/W
@@ -209,6 +218,8 @@
 			WD = new /obj/structure/windoor_assembly(user.loc)
 			WD.state = "01"
 			WD.anchored = 0
+			WD.dir = user.dir
+			WD.ini_dir = WD.dir
 			src.use(5)
 			switch(user.dir)
 				if(SOUTH)
@@ -232,6 +243,9 @@
 /*
  * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
+/obj/item/weapon/shard/resetVariables()
+	..("pixel_y", "pixel_x", "icon_state", args)
+
 /obj/item/weapon/shard/Bump()
 
 	spawn( 0 )
@@ -260,7 +274,6 @@
 	return
 
 /obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -273,7 +286,7 @@
 				G.attackby(NG, user)
 				usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
 			//SN src = null
-			del(src)
+			returnToPool(src)
 			return
 	return ..()
 
@@ -281,10 +294,10 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		M << "\red <B>You step in the broken glass!</B>"
-		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(!H.shoes)
+			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
 				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
 				if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
 					return
@@ -294,3 +307,69 @@
 					H.UpdateDamageIcon()
 				H.updatehealth()
 	..()
+
+
+
+
+/*
+ * Plasma Glass sheets
+ */
+/obj/item/stack/sheet/glass/plasmaglass
+	name = "plasma glass"
+	desc = "A very strong and very resistant sheet of a plasma-glass alloy."
+	singular_name = "glass sheet"
+	icon_state = "sheet-plasmaglass"
+	//g_amt = 7500
+	g_amt=CC_PER_SHEET_GLASS
+	w_type = RECYK_GLASS
+	origin_tech = "materials=3;plasmatech=2"
+	created_window = /obj/structure/window/plasmabasic
+	full_window = /obj/structure/window/full/plasmabasic
+
+/obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1*src.amount)
+	rec.addAmount("glass", 1*src.amount)
+	return RECYK_GLASS
+
+/obj/item/stack/sheet/glass/plasmaglass/attack_self(mob/user as mob)
+	construct_window(user)
+
+/obj/item/stack/sheet/glass/plasmaglass/attackby(obj/item/W, mob/user)
+	if( istype(W, /obj/item/stack/rods) )
+		var/obj/item/stack/rods/V  = W
+		var/obj/item/stack/sheet/glass/plasmarglass/RG = new (user.loc)
+		RG.add_fingerprint(user)
+		RG.add_to_stacks(user)
+		V.use(1)
+		var/obj/item/stack/sheet/glass/plasmaglass/G = src
+		src = null
+		var/replace = (user.get_inactive_hand()==G)
+		G.use(1)
+		if (!G && !RG && replace)
+			user.put_in_hands(RG)
+	else
+		return ..()
+
+/*
+ * Reinforced plasma glass sheets
+ */
+/obj/item/stack/sheet/glass/plasmarglass
+	name = "reinforced plasma glass"
+	desc = "Plasma glass which seems to have rods or something stuck in them."
+	singular_name = "reinforced plasma glass sheet"
+	icon_state = "sheet-plasmarglass"
+	g_amt=CC_PER_SHEET_GLASS
+	m_amt = 1875
+	w_type = RECYK_GLASS
+	origin_tech = "materials=4;plasmatech=2"
+	created_window = /obj/structure/window/plasmareinforced
+	full_window = /obj/structure/window/full/plasmareinforced
+
+/obj/item/stack/sheet/glass/plasmarglass/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1*src.amount)
+	rec.addAmount("glass", 1*src.amount)
+	rec.addAmount("iron",  0.5*src.amount)
+	return 1
+
+/obj/item/stack/sheet/glass/plasmarglass/attack_self(mob/user as mob)
+	construct_window(user)

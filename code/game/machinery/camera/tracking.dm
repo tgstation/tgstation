@@ -119,6 +119,50 @@
 	src.track = null
 	ai_actual_track(target)
 
+/mob/living/silicon/ai/proc/open_nearest_door(mob/living/target as mob)
+	if(!istype(target)) return
+	spawn(0)
+		if(istype(target, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = target
+			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
+				src << "Unable to locate an airlock"
+				return
+			if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && !H.head.canremove)
+				src << "Unable to locate an airlock"
+				return
+			if(H.digitalcamo)
+				src << "Unable to locate an airlock"
+				return
+		if (!near_camera(target))
+			src << "Target is not near any active cameras."
+			return
+		var/obj/machinery/door/airlock/tobeopened
+		var/dist = -1
+		for(var/obj/machinery/door/airlock/D in range(3,target))
+			if(!D.density) continue
+			if(dist < 0)
+				dist = get_dist(D, target)
+				//world << dist
+				tobeopened = D
+			else
+				if(dist > get_dist(D, target))
+					dist = get_dist(D, target)
+					//world << dist
+					tobeopened = D
+					//world << "found [tobeopened.name] closer"
+				else
+					//world << "[D.name] not close enough | [get_dist(D, target)] | [dist]"
+		if(tobeopened)
+			switch(alert(src, "Do you want to open \the [tobeopened] for [target]?","Doorknob_v2a.exe","Yes","No"))
+				if("Yes")
+					var/nhref = "src=\ref[tobeopened];aiEnable=7"
+					tobeopened.Topic(nhref, params2list(nhref), tobeopened, 1)
+					src << "\blue You've opened \the [tobeopened] for [target]."
+				if("No")
+					src << "\red You deny the request."
+		else
+			src << "\red You've failed to open an airlock for [target]"
+		return
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr

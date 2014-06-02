@@ -1,6 +1,6 @@
 /mob/living/silicon/robot/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 
 	if (src.monkeyizing)
 		return
@@ -19,6 +19,9 @@
 		process_killswitch()
 		process_locks()
 	update_canmove()
+	handle_fire()
+
+
 
 /mob/living/silicon/robot/proc/clamp_values()
 
@@ -61,7 +64,7 @@
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
 
 	if(src.camera && !scrambledcodes)
-		if(src.stat == 2 || isWireCut(5))
+		if(src.stat == 2 || wires.IsCameraCut())
 			src.camera.status = 0
 		else
 			src.camera.status = 1
@@ -139,7 +142,7 @@
 
 /mob/living/silicon/robot/proc/handle_regular_hud_updates()
 
-	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == 2 || M_XRAY in mutations || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
@@ -301,6 +304,26 @@
 				src << "\red <B>Weapon Lock Timed Out!"
 			weapon_lock = 0
 			weaponlock_time = 120
+
+//Robots on fire
+/mob/living/silicon/robot/handle_fire()
+	if(..())
+		return
+	adjustFireLoss(3)
+	return
+
+/mob/living/silicon/robot/update_fire()
+	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+	if(on_fire)
+		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+	update_icons()
+	return
+
+/mob/living/silicon/robot/fire_act()
+	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
+		IgniteMob()
+
+//Robots on fire
 
 /mob/living/silicon/robot/update_canmove()
 	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0

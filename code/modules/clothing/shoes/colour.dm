@@ -3,6 +3,7 @@
 	icon_state = "black"
 	_color = "black"
 	desc = "A pair of black shoes."
+	species_fit = list("Vox")
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECITON_TEMPERATURE
@@ -17,6 +18,7 @@
 	desc = "A pair of brown shoes."
 	icon_state = "brown"
 	_color = "brown"
+	species_fit = list("Vox")
 
 	captain
 		_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
@@ -67,6 +69,7 @@
 	icon_state = "white"
 	permeability_coefficient = 0.01
 	_color = "white"
+	species_fit = list("Vox")
 
 /obj/item/clothing/shoes/leather
 	name = "leather shoes"
@@ -84,22 +87,25 @@
 	name = "orange shoes"
 	icon_state = "orange"
 	_color = "orange"
+	species_fit = list("Vox")
 
 /obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
 	if (src.chained)
 		src.chained = null
 		src.slowdown = SHOES_SLOWDOWN
-		new /obj/item/weapon/handcuffs( user.loc )
+		new chaintype( user.loc )
 		src.icon_state = "orange"
 	return
 
-/obj/item/clothing/shoes/orange/attackby(H as obj, loc)
+/obj/item/clothing/shoes/orange/attackby(var/obj/O, loc)
 	..()
-	if ((istype(H, /obj/item/weapon/handcuffs) && !( src.chained )))
+	if ((istype(O, /obj/item/weapon/handcuffs) && !( src.chained )))
+		var/obj/item/weapon/handcuffs/H=O
 		//H = null
 		if (src.icon_state != "orange") return
-		del(H)
 		src.chained = 1
+		src.chaintype = H.type
 		src.slowdown = 15
 		src.icon_state = "orange1"
+		del(H)
 	return

@@ -10,7 +10,7 @@
 
 	switch(act)
 		if ("help")
-			src << "Available emotes: aflap, bow, clap, custom, flap, twitch, twitch_s, salute, nod, deathgasp, me, glare, stare, beep, ping, buzz, look"
+			src << "Available emotes: aflap, bow, clap, custom, flap, twitch, twitch_s, salute, nod, deathgasp, me, glare, stare, shrug, beep, ping, buzz, look"
 			return
 		if ("salute")
 			//if (!src.buckled)
@@ -43,6 +43,21 @@
 					message = "<B>[src]</B> bows to [param]."
 				else
 					message = "<B>[src]</B> bows."
+			m_type = 1
+		if ("shrug")
+			var/M = null
+			if (param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if (!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> shrugs at [param]."
+			else
+				message = "<B>[src]</B> shrugs."
 			m_type = 1
 
 		if ("clap")
@@ -164,7 +179,7 @@
 				message = "<B>[src]</B> beeps at [param]."
 			else
 				message = "<B>[src]</B> beeps."
-			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
+			playsound(get_turf(src), 'sound/machines/twobeep.ogg', 50, 0)
 			m_type = 1
 
 		if("ping")
@@ -181,7 +196,7 @@
 				message = "<B>[src]</B> pings at [param]."
 			else
 				message = "<B>[src]</B> pings."
-			playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+			playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 			m_type = 1
 
 		if("buzz")
@@ -198,7 +213,7 @@
 				message = "<B>[src]</B> buzzes at [param]."
 			else
 				message = "<B>[src]</B> buzzes."
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			m_type = 1
 
 		else

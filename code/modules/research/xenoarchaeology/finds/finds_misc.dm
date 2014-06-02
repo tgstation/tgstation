@@ -1,6 +1,9 @@
 
 /obj/item/weapon/shard/plasma
 	name = "plasma shard"
+	desc = "A shard of plasma glass. Considerably tougher then normal glass shards. Apparently not tough enough to be a window."
+	force = 8.0
+	throwforce = 15.0
 	icon_state = "plasmalarge"
 
 /obj/item/weapon/shard/plasma/New()
@@ -24,16 +27,16 @@
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/mineral/plasma/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/mineral/plasma/G in user.loc)
+			var/obj/item/stack/sheet/glass/plasmaglass/NG = new (user.loc)
+			for (var/obj/item/stack/sheet/glass/plasmaglass/G in user.loc)
 				if(G==NG)
 					continue
 				if(G.amount>=G.max_amount)
 					continue
 				G.attackby(NG, user)
-				usr << "You add the newly-formed plasma to the stack. It now contains [NG.amount] sheets."
+				usr << "You add the newly-formed plasma glass to the stack. It now contains [NG.amount] sheets."
 			//SN src = null
-			del(src)
+			returnToPool(src)
 			return
 	return ..()
 

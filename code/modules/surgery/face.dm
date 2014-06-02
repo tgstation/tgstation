@@ -25,7 +25,7 @@
 	max_duration = 110
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && target_zone == "mouth" && target.op_stage.face == 0
+		return ..() && target_zone == "mouth" && target.op_stage.face == 0 && check_anesthesia(target)
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts to cut open [target]'s face and neck with \the [tool].", \

@@ -120,7 +120,7 @@
 		return
 	return
 
-/obj/beam/e_beam/Del()
+/obj/beam/e_beam/Destroy()
 	if(next)
 		del(next)
 	..()

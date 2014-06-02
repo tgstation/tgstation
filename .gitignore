@@ -18,4 +18,12 @@ info.json
 /config/*
 !/config/*/*
 
+# OpenBYOND-generated crap
+/dmis
+/interface-indented
+/code-indented
+
 .metadata
+/bot/config.yml
+/bot/data
+/analysis

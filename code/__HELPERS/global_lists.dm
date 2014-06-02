@@ -22,6 +22,9 @@ var/global/list/all_species[0]
 var/global/list/all_languages[0]
 var/global/list/whitelisted_species = list("Human")
 
+// Posters
+var/global/list/datum/poster/poster_designs = typesof(/datum/poster) - /datum/poster - /datum/poster/goldstar
+
 //Preferences stuff
 	//Hairstyles
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
@@ -36,6 +39,9 @@ var/global/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "M
 var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "Babydoll", "Baby-Blue", "Green", "Pink", "Kinky", "None")
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
+
+// This is stupid as fuck.
+var/list/hit_appends = list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF")
 
 //////////////////////////
 /////Initial Building/////

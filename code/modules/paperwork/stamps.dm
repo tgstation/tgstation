@@ -10,6 +10,7 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
+	w_type = RECYK_MISC
 	_color = "cargo"
 	pressure_resistance = 2
 	attack_verb = list("stamped")

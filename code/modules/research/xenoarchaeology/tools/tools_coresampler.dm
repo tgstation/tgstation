@@ -49,13 +49,13 @@
 
 /obj/item/device/core_sampler/proc/sample_item(var/item_to_sample, var/mob/user as mob)
 	var/datum/geosample/geo_data
-	if(istype(item_to_sample, /turf/simulated/mineral))
-		var/turf/simulated/mineral/T = item_to_sample
-		T.geological_data.UpdateNearbyArtifactInfo(T)
-		geo_data = T.geological_data
+	if(istype(item_to_sample, /turf/unsimulated/mineral))
+		var/turf/unsimulated/mineral/T = item_to_sample
+		T.geologic_data.UpdateNearbyArtifactInfo(T)
+		geo_data = T.geologic_data
 	else if(istype(item_to_sample, /obj/item/weapon/ore))
 		var/obj/item/weapon/ore/O = item_to_sample
-		geo_data = O.geological_data
+		geo_data = O.geologic_data
 
 	if(geo_data)
 		if(filled_bag)

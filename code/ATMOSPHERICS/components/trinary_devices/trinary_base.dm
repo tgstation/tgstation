@@ -34,6 +34,26 @@ obj/machinery/atmospherics/trinary
 		air2.volume = 200
 		air3.volume = 200
 
+	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+		dir = pipe.dir
+		initialize_directions = pipe.get_pipe_dir()
+		if (pipe.pipename)
+			name = pipe.pipename
+		var/turf/T = loc
+		level = T.intact ? 2 : 1
+		initialize()
+		build_network()
+		if (node1)
+			node1.initialize()
+			node1.build_network()
+		if (node2)
+			node2.initialize()
+			node2.build_network()
+		if (node3)
+			node3.initialize()
+			node3.build_network()
+		return 1
+
 // Housekeeping and pipe network stuff below
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 		if(reference == node1)
@@ -52,7 +72,7 @@ obj/machinery/atmospherics/trinary
 
 		return null
 
-	Del()
+	Destroy()
 		loc = null
 
 		if(node1)
@@ -74,24 +94,9 @@ obj/machinery/atmospherics/trinary
 	initialize()
 		if(node1 && node2 && node3) return
 
-		var/node1_connect = turn(dir, -180)
-		var/node2_connect = turn(dir, -90)
-		var/node3_connect = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node3 = target
-				break
+		node1 = findConnecting(turn(dir, -180))
+		node2 = findConnecting(turn(dir, -90))
+		node3 = findConnecting(dir)
 
 		update_icon()
 

@@ -137,7 +137,7 @@
 			return //To prevent the stacking of the same sized items.
 
 	user.u_equip(W)
-	playsound(src.loc, "rustle", 50, 1, -5)
+	playsound(get_turf(src), "rustle", 50, 1, -5)
 	W.loc = src
 	if ((user.client && user.s_active != src))
 		user.client.screen -= W
@@ -155,7 +155,7 @@
 		var/mob/living/carbon/human/M = usr
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()
-		playsound(src.loc, "rustle", 50, 1, -5)
+		playsound(get_turf(src), "rustle", 50, 1, -5)
 		if ((!( M.restrained() ) && !( M.stat ) && M.wear_suit == src))
 			if (over_object.name == "r_hand")
 				M.u_equip(src)
@@ -178,11 +178,11 @@
 	return
 
 /obj/item/clothing/suit/storage/attack_paw(mob/user as mob)
-	//playsound(src.loc, "rustle", 50, 1, -5) // what
+	//playsound(get_turf(src), "rustle", 50, 1, -5) // what
 	return src.attack_hand(user)
 
 /obj/item/clothing/suit/storage/attack_hand(mob/user as mob)
-	playsound(src.loc, "rustle", 50, 1, -5)
+	playsound(get_turf(src), "rustle", 50, 1, -5)
 	src.orient2hud(user)
 	if (src.loc == user)
 		if (user.s_active)

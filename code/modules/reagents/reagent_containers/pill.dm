@@ -44,6 +44,10 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 			msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			if(!iscarbon(user))
+				M.LAssailant = null
+			else
+				M.LAssailant = user
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
@@ -63,6 +67,18 @@
 			if(!target.reagents.total_volume)
 				user << "\red [target] is empty. Cant dissolve pill."
 				return
+
+			// /vg/: Logging transfers of bad things
+			if(target.reagents_to_log.len)
+				var/list/badshit=list()
+				for(var/bad_reagent in target.reagents_to_log)
+					if(reagents.has_reagent(bad_reagent))
+						badshit += reagents_to_log[bad_reagent]
+				if(badshit.len)
+					var/hl="\red <b>([english_list(badshit)])</b> \black"
+					message_admins("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					log_game("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].")
+
 			user << "\blue You dissolve the pill in [target]"
 			reagents.trans_to(target, reagents.total_volume)
 			for(var/mob/O in viewers(2, user))

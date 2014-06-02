@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+   <paths>
+      <left>C:\Users\Rob\Documents\Projects\vg-station\</left>
+      <right>C:\Users\Rob\Documents\Projects\vgstation13\</right>
+      <filter>Exclude Source Control</filter>
+      <subfolders>1</subfolders>
+      <left-readonly>1</left-readonly>
+      <right-readonly>0</right-readonly>
+   </paths>
+</project>

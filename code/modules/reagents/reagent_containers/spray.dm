@@ -23,6 +23,8 @@
 	if(istype(A, /obj/effect/proc_holder/spell))
 		return
 
+	user.changeNext_move(8)
+
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
 			user << "<span class='notice'>\The [A] is empty.</span>"
@@ -64,9 +66,10 @@
 					D.reagents.reaction(A_turf)
 				sleep(2)
 			sleep(3)
-		del(D)
+		D.reagents.delete()
+		D.loc = null
 
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from a spray bottle.")
@@ -142,7 +145,7 @@
 	throwforce = 3
 	w_class = 3.0
 	volume = 600
-	origin_tech = "combat=3;materials=3;engineering=3"
+	origin_tech = "combat=3;materials=3;engineering=3;syndicate=5"
 
 
 //this is a big copypasta clusterfuck, but it's still better than it used to be!
@@ -207,7 +210,7 @@
 				sleep(2)
 			del(D)
 
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from a chem sprayer.")

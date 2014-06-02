@@ -64,6 +64,9 @@ LOG_PDA
 ## log admin warning messages
 ##LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
+## log world.log and runtime errors to a file
+# LOG_RUNTIMES
+
 ## sql switching
 # SQL_ENABLED
 
@@ -93,6 +96,8 @@ PROBABILITY EXTEND-A-TRAITORMONGOUS 0
 PROBABILITY EPIDEMIC 1
 PROBABILITY MEME 0
 PROBABILITY HEIST 0
+PROBABILITY MIXED 0
+PROBABILITY RAGINMAGES 0
 
 ## Hash out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
@@ -199,6 +204,12 @@ GATEWAY_DELAY 18000
 ## Remove the # to give assistants maint access.
 #ASSISTANT_MAINT
 
+## Remove the # to enable assistant limiting.
+#ASSISTANT_LIMIT
+
+## If you enabled assistant limiting set the ratio of assistants to security members default is 2 assistants to 1 officer
+ASSISTANT_RATIO 2
+
 ## Remove the # to make rounds which end instantly (Rev, Wizard, Malf) to continue until the shuttle is called or the station is nuked.
 ## Malf and Rev will let the shuttle be called when the antags/protags are dead.
 #CONTINUOUS_ROUNDS
@@ -218,21 +229,27 @@ RESPAWN_AS_MOMMI
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
 
-## Password used for authorizing ircbot and other external tools.
-#COMMS_PASSWORD
-
 ## Uncomment to enable sending data to the IRC bot.
 #USE_IRC_BOT
 
-## Host where the IRC bot is hosted.  Port 45678 needs to be open.
+## Password used for authorizing ircbot and other external tools.
+#COMMS_PASSWORD
+
+## Host where the IRC bot is hosted.
 #IRC_BOT_HOST localhost
 
-## IRC channel to send information to.  Leave blank to disable.
-#MAIN_IRC #main
+## Port used for communications. Default: 45678
+#IRC_BOT_PORT 45678
 
-## IRC channel to send adminhelps to.  Leave blank to disable adminhelps-to-irc.
-#ADMIN_IRC #admin
+## ID tag used to identify the server in the channel
+#IRC_BOT_SERVER_ID Server 1
 
-## Path to the python2 executable on the system.  Leave blank for default.
-## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
-#PYTHON_PATH
+## Copy logs to a location on server startup?
+## IPs are automatically removed.
+## Default: Don't copy logs.
+#COPY_LOGS data/cleaned_logs
+
+## Media URL.
+## The base URL of your media library.  DO NOT ADD A SLASH AT THE END!
+## NOTE that this must be publically-accessible.
+#MEDIA_BASE_URL http://yoursite.tld/media

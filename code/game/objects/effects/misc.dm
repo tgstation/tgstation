@@ -6,3 +6,4 @@
 	icon_state = "strangepresent"
 	density = 1
 	anchored = 0
+	w_type=NOT_RECYCLABLE

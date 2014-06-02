@@ -1,6 +1,6 @@
 /mob/living/carbon/brain/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 	..()
 
 	if(stat != DEAD)
@@ -205,7 +205,7 @@
 
 	proc/handle_regular_hud_updates()
 
-		if (stat == 2 || (XRAY in src.mutations))
+		if (stat == 2 || (M_XRAY in src.mutations))
 			sight |= SEE_TURFS
 			sight |= SEE_MOBS
 			sight |= SEE_OBJS

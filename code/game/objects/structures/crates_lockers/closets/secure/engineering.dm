@@ -29,6 +29,7 @@
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/device/multitool(src)
 		new /obj/item/device/flash(src)
+		new /obj/item/device/gps/engineering(src)
 		return
 
 
@@ -114,4 +115,15 @@
 		new /obj/item/clothing/glasses/meson(src)
 		new /obj/item/taperoll/engineering(src)
 		new /obj/item/taperoll/engineering(src)
+		new /obj/item/device/gps/engineering(src)
 		return
+
+/obj/structure/closet/secure_closet/engineering_general
+	name = "Engineering Locker"
+	req_access = list(access_engine_equip)
+	icon_state = "secureeng1"
+	icon_closed = "secureeng"
+	icon_locked = "secureeng1"
+	icon_opened = "secureengopen"
+	icon_broken = "secureengbroken"
+	icon_off = "secureengoff"

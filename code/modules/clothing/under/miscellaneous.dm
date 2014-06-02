@@ -179,6 +179,7 @@
 	icon_state = "red_suit"
 	item_state = "r_suit"
 	_color = "red_suit"
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
@@ -370,4 +371,26 @@
 	icon_state = "sundress"
 	item_state = "sundress"
 	_color = "sundress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/under/roman
+	name = "roman armor"
+	desc = "An ancient Roman armor. Made of metallic strips and leather straps."
+	icon_state = "roman"
+	_color = "roman"
+	item_state = "armor"
+	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
+
+/obj/item/clothing/under/simonpants
+	name = "Simon's Pants"
+	desc = "Simon's pants, clad with belt and whatever the fuck that thing is around his neck"
+	icon_state = "spants"
+	_color = "simonpants"
+	item_state = "spants"
+
+/obj/item/clothing/under/batmansuit
+	name = "batsuit"
+	desc = "You are the night."
+	icon_state = "bmuniform"
+	_color = "bmuniform"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO

@@ -174,6 +174,47 @@ obj/machinery/embedded_controller/radio/access_controller
 		new_prog.master = src
 		program = new_prog
 
+	multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+		return {"
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1449]">Reset</a>)</li>
+			<li>[format_tag("ID Tag","id_tag")]</li>
+		</ul>
+		<b>Doors:</b>
+		<ul>
+			<li>[format_tag("Exterior","exterior_door_tag")]</a></li>
+			<li>[format_tag("Interior","interior_door_tag")]</a></li>
+		</ul>"}
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if(!issilicon(usr))
+			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+				return
+
+		if("set_id" in href_list)
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+			if(newid)
+				id_tag = newid
+
+		if("set_freq" in href_list)
+			var/newfreq=frequency
+			if(href_list["set_freq"]!="-1")
+				newfreq=text2num(href_list["set_freq"])
+			else
+				newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+			if(newfreq)
+				if(findtext(num2text(newfreq), "."))
+					newfreq *= 10 // shift the decimal one place
+				if(newfreq < 10000)
+					frequency = newfreq
+					initialize()
+
+		usr.set_machine(src)
+		update_multitool_menu(usr)
+
 	update_icon()
 		if(on && program)
 			if(program.memory["processing"])
@@ -185,6 +226,7 @@ obj/machinery/embedded_controller/radio/access_controller
 
 
 	return_text()
+		boardtype = /obj/item/weapon/circuitboard/ecb/access_controller
 		var/state_options = null
 
 		var/state = 0

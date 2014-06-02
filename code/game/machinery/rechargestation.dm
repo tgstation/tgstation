@@ -8,12 +8,20 @@
 	idle_power_usage = 5
 	active_power_usage = 1000
 	var/mob/occupant = null
+	var/opened = 0.0
 
 	New()
 		..()
 		build_icon()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/recharge_station
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin
+		RefreshParts()
 
-	Del()
+	Destroy()
 		src.go_out()
 		..()
 
@@ -21,12 +29,12 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(50))
 					new /obj/item/weapon/circuitboard/recharge_station(src.loc)
-					del(src)
+					qdel(src)
 					return
 			if(3.0)
 				if (prob(25))
@@ -42,7 +50,7 @@
 			if (occupant)
 				user << "\red You cannot unwrench this [src], it's occupado."
 				return 1
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 			if(anchored)
 				user << "\blue You begin to unfasten \the [src]..."
 				if (do_after(user, 40))
@@ -61,7 +69,7 @@
 					anchored=1
 			src.build_icon()
 			return 1
-		// Weld to disassemble.
+			/*// Weld to disassemble.
 		else if(istype(W, /obj/item/weapon/weldingtool))
 			if (occupant)
 				user << "\red You cannot disassemble this [src], it's occupado."
@@ -69,7 +77,7 @@
 			if (!anchored)
 				user << "\red \The [src] is too unstable to weld!  The anchoring bolts need to be tightened."
 				return 1
-			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 			user << "\blue You begin to cut \the [src] into pieces..."
 			if (do_after(user, 40))
 				user.visible_message( \
@@ -88,7 +96,35 @@
 				del(src)
 				return
 			src.build_icon()
-			return 1
+			return 1 */ //Inconsistent with other methods and unintuitive so I'm commenting this out
+		else if (istype(W, /obj/item/weapon/screwdriver))
+			if (!opened)
+				src.opened = 1
+				user << "You open the maintenance hatch of [src]."
+				//src.icon_state = "autolathe_t"
+			else
+				src.opened = 0
+				user << "You close the maintenance hatch of [src]."
+				//src.icon_state = "autolathe"
+				return 1
+		else if(istype(W, /obj/item/weapon/crowbar))
+			if (occupant)
+				user << "\red You cannot disassemble this [src], it's occupado."
+				return 1
+			if(anchored)
+				user << "You have to unanchor the [src] first!"
+				return
+			if (opened)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+				M.state = 2
+				M.icon_state = "box_1"
+				for(var/obj/I in component_parts)
+					if(I.reliability != 100 && crit_fail)
+						I.crit_fail = 1
+					I.loc = src.loc
+				del(src)
+				return
 		return ..()
 
 	process()
@@ -169,7 +205,9 @@
 							// Engineering
 							if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/stack/sheet/glass) || istype(O,/obj/item/weapon/cable_coil))
 								if(O:amount < 50)
-									O:amount += 1
+									O:amount += 2
+								if(O:amount > 50)
+									O:amount = 50
 							// Security
 							if(istype(O,/obj/item/device/flash))
 								if(O:broken)
@@ -183,8 +221,9 @@
 								else
 									O:charge_tick = 0
 							if(istype(O,/obj/item/weapon/melee/baton))
-								if(O:charges < 10)
-									O:charges += 1
+								var/obj/item/weapon/melee/baton/B = O
+								if(B.bcell)
+									B.bcell.charge = B.bcell.maxcharge
 							//Service
 							if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
 								if(O.reagents.get_reagent_amount("enzyme") < 50)
@@ -194,6 +233,14 @@
 								var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
 								if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
 									B.reagents.add_reagent(B.reagent, 2)
+							if(istype(O,/obj/item/stack/medical/bruise_pack) || istype(O,/obj/item/stack/medical/ointment))
+								if(O:amount < O:max_amount)
+									O:amount += 2
+								if(O:amount > O:max_amount)
+									O:amount = O:max_amount
+							if(istype(O,/obj/item/weapon/melee/defibrillator))
+								var/obj/item/weapon/melee/defibrillator/D = O
+								D.charges = initial(D.charges)
 							//Janitor
 							if(istype(O, /obj/item/device/lightreplacer))
 								var/obj/item/device/lightreplacer/LR = O

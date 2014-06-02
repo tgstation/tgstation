@@ -45,8 +45,8 @@
 					var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 					spark_system.set_up(5, 0, src.loc)
 					spark_system.start()
-					playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-					playsound(src.loc, "sparks", 50, 1)
+					playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
+					playsound(get_turf(src), "sparks", 50, 1)
 					user << "You slice through the lock on [src]."
 				else
 					user << "You short out the lock on [src]."
@@ -161,7 +161,7 @@
 		if ((src.loc == user) && (src.locked == 1))
 			usr << "\red [src] is locked and cannot be opened!"
 		else if ((src.loc == user) && (!src.locked))
-			playsound(src.loc, "rustle", 50, 1, -5)
+			playsound(get_turf(src), "rustle", 50, 1, -5)
 			if (user.s_active)
 				user.s_active.close(user) //Close and re-open
 			src.show_to(user)
@@ -176,7 +176,7 @@
 
 	//I consider this worthless but it isn't my code so whatever.  Remove or uncomment.
 	/*attack(mob/M as mob, mob/living/user as mob)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if ((M_CLUMSY in user.mutations) && prob(50))
 			user << "\red The [src] slips out of your hand and hits your head."
 			user.take_organ_damage(10)
 			user.Paralyse(2)
@@ -236,6 +236,14 @@
 
 	attack_hand(mob/user as mob)
 		return attack_self(user)
+
+// Clown planet WMD storage
+/obj/item/weapon/storage/secure/safe/clown
+	name="WMD Storage"
+
+/obj/item/weapon/storage/secure/safe/clown/New()
+	for(var/i=0;i<10;i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/pie(src)
 
 /obj/item/weapon/storage/secure/safe/HoS/New()
 	..()

@@ -13,9 +13,19 @@
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("chair", /obj/structure/stool/bed/chair, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("swivel chair", /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("comfy chair", /obj/structure/stool/bed/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = 1, on_floor = 1), \
+	null, \
+	new/datum/stack_recipe_list("office chairs",list( \
+		new/datum/stack_recipe("dark office chair",  /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("light office chair", /obj/structure/stool/bed/chair/office/light, 5, one_per_turf = 1, on_floor = 1), \
+		), 5), \
+	new/datum/stack_recipe_list("comfy chairs", list( \
+		new/datum/stack_recipe("beige comfy chair", /obj/structure/stool/bed/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("black comfy chair", /obj/structure/stool/bed/chair/comfy/black, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("brown comfy chair", /obj/structure/stool/bed/chair/comfy/brown, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("lime comfy chair",  /obj/structure/stool/bed/chair/comfy/lime,  2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("teal comfy chair",  /obj/structure/stool/bed/chair/comfy/teal,  2, one_per_turf = 1, on_floor = 1), \
+		), 2), \
 	null, \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2), \
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts), \
@@ -26,12 +36,35 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
-	new/datum/stack_recipe("computer frame",   /obj/structure/computerframe,                      5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("wall girders",     /obj/structure/girder,                             2, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("airlock assembly", /obj/structure/door_assembly,                      4, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("machine frame",    /obj/machinery/constructable_frame/machine_frame,  5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("turret frame",     /obj/machinery/porta_turret_construct,             5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("iv drip",          /obj/machinery/iv_drip,                            2, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("machine frame",/obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("iv drip",      /obj/machinery/iv_drip,                            2, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("meat spike",   /obj/structure/kitchenspike,                       2, time = 25, one_per_turf = 1, on_floor = 1), \
+	null, \
+	new/datum/stack_recipe_list("airlock assemblies", list( \
+		new/datum/stack_recipe("standard airlock assembly",      /obj/structure/door_assembly,                            4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("command airlock assembly",       /obj/structure/door_assembly/door_assembly_com,          4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("security airlock assembly",      /obj/structure/door_assembly/door_assembly_sec,          4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("engineering airlock assembly",   /obj/structure/door_assembly/door_assembly_eng,          4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("mining airlock assembly",        /obj/structure/door_assembly/door_assembly_min,          4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("atmospherics airlock assembly",  /obj/structure/door_assembly/door_assembly_atmo,         4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("research airlock assembly",      /obj/structure/door_assembly/door_assembly_research,     4, time = 50, one_per_turf = 1, on_floor = 1), \
+/*		new/datum/stack_recipe("science airlock assembly",       /obj/structure/door_assembly/door_assembly_science,      4, time = 50, one_per_turf = 1, on_floor = 1), \ */
+		new/datum/stack_recipe("medical airlock assembly",       /obj/structure/door_assembly/door_assembly_med,          4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("maintenance airlock assembly",   /obj/structure/door_assembly/door_assembly_mai,          4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("external airlock assembly",      /obj/structure/door_assembly/door_assembly_ext,          4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("freezer airlock assembly",       /obj/structure/door_assembly/door_assembly_fre,          4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("airtight hatch assembly",        /obj/structure/door_assembly/door_assembly_hatch,        4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("maintenance hatch assembly",     /obj/structure/door_assembly/door_assembly_mhatch,       4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("high security airlock assembly", /obj/structure/door_assembly/door_assembly_highsecurity, 4, time = 50, one_per_turf = 1, on_floor = 1), \
+/*		new/datum/stack_recipe("multi-tile airlock assembly",    /obj/structure/door_assembly/multi_tile,                 4, time = 50, one_per_turf = 1, on_floor = 1), \ */
+		), 4), \
+	null, \
+	new/datum/stack_recipe("embedded controller frame",          /obj/item/airlock_controller_frame,                      1, time = 50, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("access button frame",                /obj/item/access_button_frame,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("airlock sensor frame",               /obj/item/airlock_sensor_frame,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
 	new/datum/stack_recipe("light fixture frame", /obj/item/light_fixture_frame, 2), \
@@ -50,18 +83,18 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	m_amt = 3750
+	w_type = RECYK_METAL
 	throwforce = 14.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=1"
 
+/obj/item/stack/sheet/metal/recycle(var/datum/materials/rec)
+	rec.addAmount("iron",1*amount)
+	return 1
+
+// Diet metal.
 /obj/item/stack/sheet/metal/cyborg
-	name = "metal"
-	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
-	singular_name = "metal sheet"
-	icon_state = "sheet-metal"
 	m_amt = 0
-	throwforce = 14.0
-	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
 	recipes = metal_recipes
@@ -84,14 +117,20 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
-	m_amt = 7500
+	m_amt = 3750 // Was 7500, which doesn't make any fucking sense
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=2"
+	w_type = RECYK_METAL
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 		recipes = plasteel_recipes
 		return ..()
+
+/obj/item/stack/sheet/plasteel/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1*amount)
+	rec.addAmount("iron",1*amount)
+	return 1
 
 /*
  * Wood
@@ -102,6 +141,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
 	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("bookcase", /obj/structure/bookcase, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = 0, on_floor = 0), \
@@ -133,6 +173,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
  */
 var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("box", /obj/item/weapon/storage/box), \
+	new/datum/stack_recipe("large box", /obj/item/weapon/storage/box/large, 4), \
 	new/datum/stack_recipe("light tubes", /obj/item/weapon/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs", /obj/item/weapon/storage/box/lights/bulbs), \
 	new/datum/stack_recipe("mouse traps", /obj/item/weapon/storage/box/mousetraps), \
@@ -152,4 +193,21 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
+		return ..()
+
+/*
+ * /vg/ charcoal
+ */
+var/global/list/datum/stack_recipe/charcoal_recipes = list ()
+
+/obj/item/stack/sheet/charcoal	//N3X15
+	name = "charcoal"
+	desc = "Yum."
+	singular_name = "charcoal sheet"
+	icon_state = "sheet-charcoal"
+	flags = FPRINT | TABLEPASS
+	origin_tech = "materials=1"
+
+/obj/item/stack/sheet/charcoal/New(var/loc, var/amount=null)
+		recipes = charcoal_recipes
 		return ..()

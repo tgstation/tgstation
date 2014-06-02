@@ -22,6 +22,12 @@
 	var/icon_old = null
 	var/pathweight = 1
 
+	// Bot shit
+	var/targetted_by=null
+
+	// Decal shit.
+	var/list/decals[0]
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
@@ -170,13 +176,25 @@
 	return 0
 /turf/proc/is_carpet_floor()
 	return 0
+/turf/proc/is_catwalk()
+	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
 
 /turf/proc/inertial_drift(atom/movable/A as mob|obj)
 	if(!(A.last_move))	return
-	if(istype(A, /obj/structure/stool/bed/chair/janicart/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
-		var/obj/structure/stool/bed/chair/janicart/JC = A //A bomb!
+	if(istype(A, /obj/spacepod) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
+		var/obj/spacepod/SP = A
+		if(SP.Process_Spacemove(1))
+			SP.inertia_dir = 0
+			return
+		spawn(5)
+			if((SP && (SP.loc == src)))
+				if(SP.inertia_dir)
+					step(SP, SP.inertia_dir)
+					return
+	if(istype(A, /obj/structure/stool/bed/chair/vehicle/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
+		var/obj/structure/stool/bed/chair/vehicle/JC = A //A bomb!
 		if(JC.Process_Spacemove(1))
 			JC.inertia_dir = 0
 			return
@@ -223,56 +241,90 @@
 	if (!N)
 		return
 
+#ifdef ENABLE_TRI_LEVEL
+// Fuck this, for now - N3X
+///// Z-Level Stuff ///// This makes sure that turfs are not changed to space when one side is part of a zone
+	if(N == /turf/space)
+		var/turf/controller = locate(1, 1, src.z)
+		for(var/obj/effect/landmark/zcontroller/c in controller)
+			if(c.down)
+				var/turf/below = locate(src.x, src.y, c.down_target)
+				if((air_master.has_valid_zone(below) || air_master.has_valid_zone(src)) && !istype(below, /turf/space)) // dont make open space into space, its pointless and makes people drop out of the station
+					var/turf/W = src.ChangeTurf(/turf/simulated/floor/open)
+					var/list/temp = list()
+					temp += W
+					c.add(temp,3,1) // report the new open space to the zcontroller
+					return W
+///// Z-Level Stuff
+#endif
+
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 
+	//world << "Replacing [src.type] with [N]"
+
+	if(connections) connections.erase_all()
+
+	if(istype(src,/turf/simulated))
+		//Yeah, we're just going to rebuild the whole thing.
+		//Despite this being called a bunch during explosions,
+		//the zone will only really do heavy lifting once.
+		var/turf/simulated/S = src
+		if(S.zone) S.zone.rebuild()
+
 	if(ispath(N, /turf/simulated/floor))
+		//if the old turf had a zone, connect the new turf to it as well - Cael
+		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.
+		//if(zone)
+		//	zone.RemoveTurf(src)
+		//	if(!zone.CheckStatus())
+		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
-		W.copy_air_from(src)
 		//W.Assimilate_Air()
 
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount || !accepts_lighting)
+		if(old_lumcount != W.lighting_lumcount)
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
 		if (istype(W,/turf/simulated/floor))
 			W.RemoveLattice()
 
-		//if the old turf had a zone, connect the new turf to it as well - Cael
-		if(src.zone)
-			src.zone.RemoveTurf(src)
-			W.zone = src.zone
-			W.zone.AddTurf(W)
-
-		for(var/turf/simulated/T in orange(src,1))
-			air_master.tiles_to_update.Add(T)
+		if(air_master)
+			air_master.mark_for_update(src)
 
 		W.levelupdate()
 		return W
+
 	else
-		/*if(istype(src, /turf/simulated) && src.zone)
-			src.zone.rebuild = 1*/
+		//if(zone)
+		//	zone.RemoveTurf(src)
+		//	if(!zone.CheckStatus())
+		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount || !accepts_lighting)
+		if(old_lumcount != W.lighting_lumcount)
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
-		if(src.zone)
-			src.zone.RemoveTurf(src)
-			W.zone = src.zone
-			W.zone.AddTurf(W)
-
 		if(air_master)
-			for(var/turf/simulated/T in orange(src,1))
-				air_master.tiles_to_update.Add(T)
+			air_master.mark_for_update(src)
 
 		W.levelupdate()
 		return W
 
+/turf/proc/AddDecal(var/image/decal)
+	decals += decal
+	overlays += decal
+
+
+//Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
+//  If you are replacing a wall, you have increased the volume of the room without increasing the amount of gas in it.
+//  As such, this will no longer be used.
+
 //////Assimilate Air//////
+/*
 /turf/simulated/proc/Assimilate_Air()
 	var/aoxy = 0//Holders to assimilate air from nearby turfs
 	var/anitro = 0
@@ -316,6 +368,7 @@
 				S.air.toxins = air.toxins
 				S.air.temperature = air.temperature
 				S.air.update_values()
+*/
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)
@@ -343,6 +396,14 @@
 			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
 				L.Add(t)
 	return L
+
+// This Distance proc assumes that only cardinal movement is
+//  possible. It results in more efficient (CPU-wise) pathing
+//  for bots and anything else that only moves in cardinal dirs.
+/turf/proc/Distance_cardinal(turf/t)
+	if(!src || !t) return 0
+	return abs(src.x - t.x) + abs(src.y - t.y)
+
 /turf/proc/Distance(turf/t)
 	if(get_dist(src,t) == 1)
 		var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)

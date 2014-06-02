@@ -32,6 +32,9 @@
 	idle_power_usage = 20
 	active_power_usage = 100
 
+	ghost_read=0
+	ghost_write=0
+
 /obj/machinery/shield_gen/New()
 	spawn(10)
 		for(var/obj/machinery/shield_capacitor/possible_cap in range(1, src))
@@ -105,34 +108,34 @@
 		t += {"[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>
 			This generator is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>
 			[time_since_fail > 2 ? "<font color=green>Field is stable.</font>" : "<font color=red>Warning, field is unstable!</font>"]<br>
-			Coverage radius (restart required): 
-		<a href='?src=\ref[src];change_radius=-5'>--</a> 
-		<a href='?src=\ref[src];change_radius=-1'>-</a> 
-		[field_radius * 2]m 
-		<a href='?src=\ref[src];change_radius=1'>+</a> 
+			Coverage radius (restart required):
+		<a href='?src=\ref[src];change_radius=-5'>--</a>
+		<a href='?src=\ref[src];change_radius=-1'>-</a>
+		[field_radius * 2]m
+		<a href='?src=\ref[src];change_radius=1'>+</a>
 		<a href='?src=\ref[src];change_radius=5'>++</a><br>
 		Overall field strength: [average_field_strength] Renwicks ([max_field_strength ? 100 * average_field_strength / max_field_strength : "NA"]%)<br>
-		Charge rate: <a href='?src=\ref[src];strengthen_rate=-0.1'>--</a> 
-		<a href='?src=\ref[src];strengthen_rate=-0.01'>-</a> 
+		Charge rate: <a href='?src=\ref[src];strengthen_rate=-0.1'>--</a>
+		<a href='?src=\ref[src];strengthen_rate=-0.01'>-</a>
 		[strengthen_rate] Renwicks/sec \
-		<a href='?src=\ref[src];strengthen_rate=0.01'>+</a> 
+		<a href='?src=\ref[src];strengthen_rate=0.01'>+</a>
 		<a href='?src=\ref[src];strengthen_rate=0.1'>++</a><br>
 		Upkeep energy: [field.len * average_field_strength / energy_conversion_rate] Watts/sec<br>
 		Additional energy required to charge: [field.len * strengthen_rate / energy_conversion_rate] Watts/sec<br>
-		Maximum field strength: 
-		<a href='?src=\ref[src];max_field_strength=-100'>\[min\]</a> 
-		<a href='?src=\ref[src];max_field_strength=-10'>--</a> 
-		<a href='?src=\ref[src];max_field_strength=-1'>-</a> 
-		[max_field_strength] Renwicks 
-		<a href='?src=\ref[src];max_field_strength=1'>+</a> 
-		<a href='?src=\ref[src];max_field_strength=10'>++</a> 
+		Maximum field strength:
+		<a href='?src=\ref[src];max_field_strength=-100'>\[min\]</a>
+		<a href='?src=\ref[src];max_field_strength=-10'>--</a>
+		<a href='?src=\ref[src];max_field_strength=-1'>-</a>
+		[max_field_strength] Renwicks
+		<a href='?src=\ref[src];max_field_strength=1'>+</a>
+		<a href='?src=\ref[src];max_field_strength=10'>++</a>
 		<a href='?src=\ref[src];max_field_strength=100'>\[max\]</a><br>"}
 		// END NOT-AUTOFIX
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\ShieldGen\shield_gen.dm:127: t += "<hr>"
 	t += {"<hr>
-		<A href='?src=\ref[src]'>Refresh</A> 
+		<A href='?src=\ref[src]'>Refresh</A>
 		<A href='?src=\ref[src];close=1'>Close</A><BR>"}
 	// END AUTOFIX
 	user << browse(t, "window=shield_generator;size=500x800")

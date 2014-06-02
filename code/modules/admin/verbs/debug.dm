@@ -292,7 +292,7 @@ Pressure: [env.return_pressure()]"}
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has made [M.key] a changeling.")
 		spawn(10)
-			M.absorbed_dna[M.real_name] = M.dna
+			M.absorbed_dna[M.real_name] = M.dna.Clone()
 			M.make_changeling()
 			if(M.mind)
 				M.mind.special_role = "Changeling"
@@ -548,6 +548,13 @@ Pressure: [env.return_pressure()]"}
 	//log_admin("[key_name(src)] has alienized [M.key].")
 	var/list/dresspacks = list(
 		"strip",
+		"Engineer RIG",
+		"CE RIG",
+		"Mining RIG",
+		"Syndi RIG",
+		"Wizard RIG",
+		"Medical RIG",
+		"Atmos RIG",
 		"standard space gear",
 		"tournament standard red",
 		"tournament standard green",
@@ -571,14 +578,18 @@ Pressure: [env.return_pressure()]"}
 		"nanotrasen officer",
 		"nanotrasen captain"
 		)
+	var/dostrip = input("Do you want to strip [M] before equipping them? (0=no, 1=yes)", "STRIPTEASE") as null|anything in list(0,1)
+	if(isnull(dostrip))
+		return
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
 		return
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for (var/obj/item/I in M)
-		if (istype(I, /obj/item/weapon/implant))
-			continue
-		del(I)
+	if(dostrip)
+		for (var/obj/item/I in M)
+			if (istype(I, /obj/item/weapon/implant))
+				continue
+			del(I)
 	switch(dresscode)
 		if ("strip")
 			//do nothing
@@ -593,6 +604,34 @@ Pressure: [env.return_pressure()]"}
 			J.toggle()
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
 			J.Topic(null, list("stat" = 1))
+		if ("Engineer RIG","CE RIG","Mining RIG","Syndi RIG","Wizard RIG","Medical RIG","Atmos RIG")
+			if(dresscode=="Engineer RIG")
+				M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig(M), slot_wear_suit)
+				M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig(M), slot_head)
+			else if(dresscode=="CE RIG")
+				M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/elite(M), slot_wear_suit)
+				M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/elite(M), slot_head)
+			else if(dresscode=="Mining RIG")
+				M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/mining(M), slot_wear_suit)
+				M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/mining(M), slot_head)
+			else if(dresscode=="Syndi RIG")
+				M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/syndi(M), slot_wear_suit)
+				M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/syndi(M), slot_head)
+			else if(dresscode=="Wizard RIG")
+				M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/wizard(M), slot_wear_suit)
+				M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/wizard(M), slot_head)
+			else if(dresscode=="Medical RIG")
+				M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/medical(M), slot_wear_suit)
+				M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/medical(M), slot_head)
+			else if(dresscode=="Atmos RIG")
+				M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/atmos(M), slot_wear_suit)
+				M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/atmos(M), slot_head)
+			var /obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack/oxygen(M)
+			M.equip_to_slot_or_del(J, slot_back)
+			J.toggle()
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
+			J.Topic(null, list("stat" = 1))
+
 		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
 			if (dresscode=="tournament standard red")
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), slot_w_uniform)
@@ -846,7 +885,7 @@ Pressure: [env.return_pressure()]"}
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
-			W.assignment = "Emergency Rescue Team"
+			W.assignment = "Emergency Response Team"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -1009,7 +1048,7 @@ Pressure: [env.return_pressure()]"}
 		magic.output=200000 // AKA rape
 		magic.online=1
 
-	world << "<b>LET THERE BE JUICE</b>"
+	//world << "<b>LET THERE BE JUICE</b>"
 
 
 // Getting tired of doing this shit every fucking round when I'm testing something atmos-related
@@ -1034,7 +1073,7 @@ Pressure: [env.return_pressure()]"}
 	for(var/obj/machinery/atmospherics/trinary/filter/F in world)
 		F.target_pressure=4500
 
-	world << "<b>LET THERE BE AIR</b>"
+	//world << "<b>LET THERE BE AIR</b>"
 
 
 /client/proc/cmd_debug_mob_lists()
@@ -1055,3 +1094,57 @@ Pressure: [env.return_pressure()]"}
 			usr << dd_list2text(dead_mob_list,",")
 		if("Clients")
 			usr << dd_list2text(clients,",")
+
+
+/client/proc/cmd_admin_toggle_block(var/mob/M,var/block)
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+	if(istype(M, /mob/living/carbon))
+		M.dna.SetSEState(block,!M.dna.GetSEState(block))
+		domutcheck(M,null,MUTCHK_FORCED)
+		M.update_mutations()
+		var/state="[M.dna.GetSEState(block)?"on":"off"]"
+		var/blockname=assigned_blocks[block]
+		message_admins("[key_name_admin(src)] has toggled [M.key]'s [blockname] block [state]!")
+		log_admin("[key_name(src)] has toggled [M.key]'s [blockname] block [state]!")
+	else
+		alert("Invalid mob")
+
+
+/client/proc/cmd_admin_dump_instances()
+	set category = "Debug"
+	set name = "Dump Instance Counts"
+	set desc = "MEMORY PROFILING IS TOO HIGH TECH"
+
+	var/F=file("instances.csv")
+	fdel(F)
+	F << "Types,Number of Instances"
+	for(var/key in type_instances)
+		F << "[key],[type_instances[key]]"
+
+	usr << "\blue Dumped to instances.csv."
+
+#ifdef PROFILE_MACHINES
+/client/proc/cmd_admin_dump_macprofile()
+	set category = "Debug"
+	set name = "Dump Machine Profiling"
+
+	var/F = file("machine_profiling.csv")
+	fdel(F)
+	F << "type,nanoseconds"
+	for(var/typepath in machine_profiling)
+		var/ns = machine_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to machine_profiling.csv."
+#endif
+
+/client/proc/gib_money()
+	set category = "Fun"
+	set name = "Dispense Money"
+	set desc = "Honk"
+
+	var/response = input(src,"How much moneys?") as num
+	if( response < 1) return
+	dispense_cash(response, mob.loc)

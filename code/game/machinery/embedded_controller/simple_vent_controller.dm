@@ -19,7 +19,7 @@
 					"tag" = airpump_tag,
 					"sigtype"="command"
 				)
-				signal.data["stabalize"] = 1
+				signal.data["stabilize"] = 1
 				signal.data["power"] = 1
 				post_signal(signal)
 
@@ -39,6 +39,8 @@
 
 
 /obj/machinery/embedded_controller/radio/simple_vent_controller
+	boardtype = /obj/item/weapon/circuitboard/ecb/vent_controller
+
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 
@@ -77,3 +79,34 @@
 [state_options]<HR>"}
 
 		return output
+
+	multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+		return {"
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1229]">Reset</a>)</li>
+			<li>[format_tag("Pump ID","airpump_tag")]</li>
+		</ul>"}
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if(!issilicon(usr))
+			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+				return
+
+		if("set_freq" in href_list)
+			var/newfreq=frequency
+			if(href_list["set_freq"]!="-1")
+				newfreq=text2num(href_list["set_freq"])
+			else
+				newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+			if(newfreq)
+				if(findtext(num2text(newfreq), "."))
+					newfreq *= 10 // shift the decimal one place
+				if(newfreq < 10000)
+					frequency = newfreq
+					initialize()
+
+		usr.set_machine(src)
+		update_multitool_menu(usr)

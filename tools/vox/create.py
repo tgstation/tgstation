@@ -34,22 +34,37 @@ THE SOFTWARE.
 ###############################################
 
 ##Voice you want to use 
+#VOICE='rab_diphone'
 # This is the nitech-made ARCTIC voice, tut on how to install: 
 # http://ubuntuforums.org/showthread.php?t=751169 ("Installing the enhanced CMU Arctic voices" section)
-VOICE='nitech_us_clb_arctic_hts'
-#VOICE='nitech_us_slt_arctic_hts'
+#VOICE='nitech_us_bdl_arctic_hts'
+#VOICE='nitech_us_jmk_arctic_hts'
+#VOICE='nitech_us_awb_arctic_hts'
+VOICE='nitech_us_slt_arctic_hts' # DEFAULT, less bored US female
+#VOICE='nitech_us_clb_arctic_hts' # OLD default: bored US female (occasionally comes up with british pronunciations?!)
+#VOICE='nitech_us_rms_arctic_hts'
+
+#PHONESET='mrpa'
+PHONESET=''
 
 # What we do with SoX:
-SOX_ARGS  = 'stretch 1.1'
-#SOX_ARGS += ' phaser 0.89 0.85 2 0.24 1 -t'
+SOX_ARGS  = '' 
+SOX_ARGS += ' pitch -500'  # Lol I male now
+SOX_ARGS += ' stretch 1.2' # Starts the gravelly sound, lowers pitch a bit.
+#SOX_ARGS += ' synth tri fmod 60'
+SOX_ARGS += ' synth sine amod 60' # Now REALLY gravelly.
+#SOX_ARGS += ' synth tri amod 60'
 SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
-SOX_ARGS += ' echo 0.8 0.88 6.0 0.4'
+SOX_ARGS += ' phaser 0.9 0.85 4 0.23 1.3 -s'
+SOX_ARGS += ' compand 0.01,1 -90,-90,-70,-70,-60,-20,0,0 -5 -20' # Dynamic range compression.
+SOX_ARGS += ' echos 0.8 0.5 100 0.25 10 0.25' # Good with stretch, otherwise sounds like bees.
 SOX_ARGS += ' bass -40'
+SOX_ARGS += ' highpass 22 highpass 22'
+#SOX_ARGS += ' delay 0.5'
 SOX_ARGS += ' norm'
-#SOX_ARGS += ' reverb'
 
 # Have to do the trimming seperately.
-PRE_SOX_ARGS = 'trim 0 -0.2' # Trim off last 0.2s.
+PRE_SOX_ARGS = 'trim 0 -0.1' # Trim off last 0.1s.
 
 # Shit we shouldn't change or overwrite. (Boops, pauses, etc)
 preexisting=[
@@ -70,6 +85,7 @@ preexisting=[
 REGEX_SEARCH_STRINGS = re.compile(r'(\'|")(.*?)(?:\1)')
 
 wordlist=[]+preexisting
+othersounds=[]
 
 known_phonemes={}
 
@@ -86,6 +102,7 @@ def cmd(command):
 	try:
 		#if subprocess.call(command,shell=True) != 0:
 		output = subprocess.check_output(command,stderr=subprocess.STDOUT,shell=True)
+		logging.debug(output)
 		return True
 	except Exception as e:
 		logging.error(output)
@@ -97,6 +114,12 @@ class Pronunciation:
 		self.syllables=[]
 		self.name=[]
 		self.type='n'
+		self.phoneConv = {
+			'mrpa': {
+				'ae': 'a',
+				'ih': 'i',
+			}
+		}
 		# DMU phonemes + pau
 		self.validPhonemes=[
 			'aa',
@@ -149,7 +172,6 @@ class Pronunciation:
 		for syllable in self.syllables:
 			lispSyllables.append('( ( {0} ) {1} )'.format(' '.join(syllable[0]),syllable[1]))
 		return '(lex.add.entry\n\t\'( "{0}" {1} ( {2} ) ))\n'.format(self.name,self.type[0],' '.join(lispSyllables))
-		#return '(lex.add.entry ( "{0}" {1} ( {2} ) ))\n'.format(self.name,self.type[0],' '.join(lispSyllables))
 		
 	"""
 	walkers: noun "w oo" 'k @ z'
@@ -171,18 +193,24 @@ class Pronunciation:
 				if phoneme not in self.validPhonemes:
 					logging.error('INVALID PHONEME "{0}" IN LEX ENTRY "{1}"'.format(phoneme,self.name))
 					sys.exit(1)
+				if PHONESET in self.phoneConv:
+					phoneset = self.phoneConv[PHONESET]
+					if phoneme in phoneset:
+						phoneme = phoneset[phoneme]
 				phonemes += [phoneme]
 			self.syllables += [(phonemes, stressLevel)]
 		logging.info('Parsed {0} as {1}.'.format(pronunciation,repr(self.syllables)))
 	
 def GenerateForWord(word,wordfile):
-	global wordlist, preexisting, SOX_ARGS, known_phonemes
+	global wordlist, preexisting, SOX_ARGS, known_phonemes, othersounds
 	my_phonemes={}
 	if wordfile in preexisting:
 		logging.info('Skipping {0}.ogg (Marked as PRE_EXISTING)'.format(wordfile))
 		return
 	if '/' not in wordfile:
 		wordlist += [wordfile]
+	else:
+		othersounds += [wordfile]
 	md5=hashlib.md5(word).hexdigest()
 	for w in word.split(' '):
 		w=w.lower()
@@ -244,9 +272,16 @@ def ProcessWordList(filename):
 	toprocess={}
 	with open(filename,'r') as words:
 		for line in words:
-			if '=' in line and not line.startswith("#"):
+			if line.startswith("#"):
+				continue
+			if line.strip() == '':
+				continue
+			if '=' in line:
 				(wordfile,phrase) = line.split('=')
 				toprocess[wordfile.strip()]=phrase.strip()
+			elif line != '' and ' ' not in line and len(line) > 0:
+				word = line.strip()
+				toprocess[word]=word
 	for wordfile,phrase in iter(sorted(toprocess.iteritems())):
 		GenerateForWord(phrase,wordfile)
 		
@@ -273,16 +308,29 @@ if not os.path.isdir(CODE_BASE):
 ProcessLexicon('lexicon.txt')
 for arg in sys.argv[1:]:
 	ProcessWordList(arg)
+soundsToKeep=set()
+for sound in othersounds:
+	soundsToKeep.add(sound+'.ogg')
 with open(os.path.join(CODE_BASE,'vox_sounds.dm'),'w') as w:
 	w.write("// List is required to compile the resources into the game when it loads.\n")
 	w.write("// Dynamically loading it has bad results with sounds overtaking each other, even with the wait variable.\n")
 	w.write("\n")
-	w.write("var/list/vox_sounds = list(")
+	w.write("var/list/vox_sounds = list(\n")
 	for word in sorted(wordlist):
 		if '/' in word:
 			continue
+		filename=''
 		if word in preexisting:
-			w.write('"{0}" = \'sound/vox/{0}.wav\',\n'.format(word))
+			filename = 'sound/vox/{0}.wav'.format(word)
 		else:
-			w.write('"{0}" = \'sound/vox_fem/{0}.ogg\',\n'.format(word))
+			filename = 'sound/vox_fem/{0}.ogg'.format(word)
+		w.write('\t"{0}" = \'{1}\',\n'.format(word,filename))
+		soundsToKeep.add(filename)
 	w.write(')')
+
+for root, dirs, files in os.walk('sound/', topdown=False):
+    for name in files:
+	filename = os.path.join(root,name)
+	if filename not in soundsToKeep:
+		logging.warning('Removing {0} (no longer defined)'.format(filename))
+		os.remove(filename)

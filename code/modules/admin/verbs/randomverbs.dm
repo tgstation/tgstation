@@ -222,6 +222,128 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 	return 1
 
 /*
+Allow admins to set players to be able to respawn/bypass 30 min wait, without the admin having to edit variables directly
+Ccomp's first proc.
+*/
+
+/client/proc/get_ghosts(var/notify = 0,var/what = 2)
+	// what = 1, return ghosts ass list.
+	// what = 2, return mob list
+
+	var/list/mobs = list()
+	var/list/ghosts = list()
+	var/list/sortmob = sortAtom(mob_list)                           // get the mob list.
+	/var/any=0
+	for(var/mob/dead/observer/M in sortmob)
+		mobs.Add(M)                                             //filter it where it's only ghosts
+		any = 1                                                 //if no ghosts show up, any will just be 0
+	if(!any)
+		if(notify)
+			src << "There doesn't appear to be any ghosts for you to select."
+		return
+
+	for(var/mob/M in mobs)
+		var/name = M.name
+		ghosts[name] = M                                        //get the name of the mob for the popup list
+	if(what==1)
+		return ghosts
+	else
+		return mobs
+
+
+/client/proc/allow_character_respawn()
+	set category = "Special Verbs"
+	set name = "Allow player to respawn"
+	set desc = "Let's the player bypass the 30 minute wait to respawn or allow them to re-enter their corpse."
+	if(!holder)
+		src << "Only administrators may use this command."
+	var/list/ghosts= get_ghosts(1,1)
+
+	var/target = input("Please, select a ghost!", "COME BACK TO LIFE!", null, null) as null|anything in ghosts
+	if(!target)
+		src << "Hrm, appears you didn't select a ghost"		// Sanity check, if no ghosts in the list we don't want to edit a null variable and cause a runtime error.
+		return
+
+	var/mob/dead/observer/G = ghosts[target]
+	if(G.has_enabled_antagHUD && config.antag_hud_restricted)
+		var/response = alert(src, "Are you sure you wish to allow this individual to play?","Ghost has used AntagHUD","Yes","No")
+		if(response == "No") return
+	G.timeofdeath=-19999						/* time of death is checked in /mob/verb/abandon_mob() which is the Respawn verb.
+									   timeofdeath is used for bodies on autopsy but since we're messing with a ghost I'm pretty sure
+									   there won't be an autopsy.
+									*/
+	G.has_enabled_antagHUD = 2
+	G.can_reenter_corpse = 1
+
+	G:show_message(text("\blue <B>You may now respawn.  You should roleplay as if you learned nothing about the round during your time with the dead.</B>"), 1)
+	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the 30 minute respawn limit")
+	message_admins("Admin [key_name_admin(usr)] allowed [key_name_admin(G)] to bypass the 30 minute respawn limit", 1)
+
+
+/client/proc/toggle_antagHUD_use()
+	set category = "Server"
+	set name = "Toggle antagHUD usage"
+	set desc = "Toggles antagHUD usage for observers"
+
+	if(!holder)
+		src << "Only administrators may use this command."
+	var/action=""
+	if(config.antag_hud_allowed)
+		for(var/mob/dead/observer/g in get_ghosts())
+			if(!g.client.holder)						//Remove the verb from non-admin ghosts
+				g.verbs -= /mob/dead/observer/verb/toggle_antagHUD
+			if(g.antagHUD)
+				g.antagHUD = 0						// Disable it on those that have it enabled
+				g.has_enabled_antagHUD = 2				// We'll allow them to respawn
+				g << "\red <B>The Administrator has disabled AntagHUD </B>"
+		config.antag_hud_allowed = 0
+		src << "\red <B>AntagHUD usage has been disabled</B>"
+		action = "disabled"
+	else
+		for(var/mob/dead/observer/g in get_ghosts())
+			if(!g.client.holder)						// Add the verb back for all non-admin ghosts
+				g.verbs += /mob/dead/observer/verb/toggle_antagHUD
+			g << "\blue <B>The Administrator has enabled AntagHUD </B>"	// Notify all observers they can now use AntagHUD
+		config.antag_hud_allowed = 1
+		action = "enabled"
+		src << "\blue <B>AntagHUD usage has been enabled</B>"
+
+
+	log_admin("[key_name(usr)] has [action] antagHUD usage for observers")
+	message_admins("Admin [key_name_admin(usr)] has [action] antagHUD usage for observers", 1)
+
+
+
+/client/proc/toggle_antagHUD_restrictions()
+	set category = "Server"
+	set name = "Toggle antagHUD Restrictions"
+	set desc = "Restricts players that have used antagHUD from being able to join this round."
+	if(!holder)
+		src << "Only administrators may use this command."
+	var/action=""
+	if(config.antag_hud_restricted)
+		for(var/mob/dead/observer/g in get_ghosts())
+			g << "\blue <B>The administrator has lifted restrictions on joining the round if you use AntagHUD</B>"
+		action = "lifted restrictions"
+		config.antag_hud_restricted = 0
+		src << "\blue <B>AntagHUD restrictions have been lifted</B>"
+	else
+		for(var/mob/dead/observer/g in get_ghosts())
+			g << "\red <B>The administrator has placed restrictions on joining the round if you use AntagHUD</B>"
+			g << "\red <B>Your AntagHUD has been disabled, you may choose to re-enabled it but will be under restrictions </B>"
+			g.antagHUD = 0
+			g.has_enabled_antagHUD = 0
+		action = "placed restrictions"
+		config.antag_hud_restricted = 1
+		src << "\red <B>AntagHUD restrictions have been enabled</B>"
+
+	log_admin("[key_name(usr)] has [action] on joining the round if they use AntagHUD")
+	message_admins("Admin [key_name_admin(usr)] has [action] on joining the round if they use AntagHUD", 1)
+
+
+
+
+/*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
 Works kind of like entering the game with a new character. Character receives a new mind if they didn't have one.
 Traitors and the like can also be revived with the previous role mostly intact.
@@ -308,10 +430,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = G_found.real_name
 
 	if(!new_character.real_name)
-		if(new_character.gender == MALE)
-			new_character.real_name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
-		else
-			new_character.real_name = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+		new_character.generate_name()
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
@@ -325,9 +444,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(record_found)//Pull up their name from database records if they did have a mind.
 		new_character.dna = new()//Let's first give them a new DNA.
 		new_character.dna.unique_enzymes = record_found.fields["b_dna"]//Enzymes are based on real name but we'll use the record for conformity.
-		new_character.dna.struc_enzymes = record_found.fields["enzymes"]//This is the default of enzymes so I think it's safe to go with.
-		new_character.dna.uni_identity = record_found.fields["identity"]//DNA identity is carried over.
-		updateappearance(new_character,new_character.dna.uni_identity)//Now we configure their appearance based on their unique identity, same as with a DNA machine or somesuch.
+
+		// I HATE BYOND.  HATE.  HATE. - N3X
+		var/list/newSE= record_found.fields["enzymes"]
+		var/list/newUI = record_found.fields["identity"]
+		new_character.dna.SE = newSE.Copy() //This is the default of enzymes so I think it's safe to go with.
+		new_character.dna.UpdateSE()
+		new_character.UpdateAppearance(newUI.Copy())//Now we configure their appearance based on their unique identity, same as with a DNA machine or somesuch.
 	else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
 		new_character.dna.ready_dna(new_character)
 

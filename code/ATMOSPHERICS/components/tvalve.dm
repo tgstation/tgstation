@@ -29,6 +29,26 @@ obj/machinery/atmospherics/tvalve
 		initialize_directions()
 		..()
 
+	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+		dir = pipe.dir
+		initialize_directions = pipe.get_pipe_dir()
+		if (pipe.pipename)
+			name = pipe.pipename
+		var/turf/T = loc
+		level = T.intact ? 2 : 1
+		initialize()
+		build_network()
+		if (node1)
+			node1.initialize()
+			node1.build_network()
+		if (node2)
+			node2.initialize()
+			node2.build_network()
+		if (node3)
+			node3.initialize()
+			node3.build_network()
+		return 1
+
 	proc/initialize_directions()
 		switch(dir)
 			if(NORTH)
@@ -78,7 +98,7 @@ obj/machinery/atmospherics/tvalve
 
 		return null
 
-	Del()
+	Destroy()
 		loc = null
 
 		if(node1)
@@ -153,6 +173,9 @@ obj/machinery/atmospherics/tvalve
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
+		if(isobserver(user) && !canGhostWrite(user,src,"toggles"))
+			user << "\red Nope."
+			return
 		src.add_fingerprint(usr)
 		update_icon(1)
 		sleep(10)
@@ -182,26 +205,10 @@ obj/machinery/atmospherics/tvalve
 		return
 
 	initialize()
-		var/node1_dir
-		var/node2_dir
-		var/node3_dir
 
-		node1_dir = turn(dir, 180)
-		node2_dir = turn(dir, -90)
-		node3_dir = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
-		for(var/obj/machinery/atmospherics/target in get_step(src,node3_dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node3 = target
-				break
+		node1 = findConnecting(turn(dir, 180))
+		node2 = findConnecting(turn(dir, -90))
+		node3 = findConnecting(dir)
 
 	build_network()
 		if(!network_node1 && node1)
@@ -287,7 +294,7 @@ obj/machinery/atmospherics/tvalve
 					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 		var/frequency = 0
-		var/id = null
+		var/id_tag = null
 		var/datum/radio_frequency/radio_connection
 
 		initialize()
@@ -296,7 +303,7 @@ obj/machinery/atmospherics/tvalve
 				set_frequency(frequency)
 
 		receive_signal(datum/signal/signal)
-			if(!signal.data["tag"] || (signal.data["tag"] != id))
+			if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 				return 0
 
 			switch(signal.data["command"])
@@ -330,7 +337,7 @@ obj/machinery/atmospherics/tvalve
 			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \
@@ -407,7 +414,7 @@ obj/machinery/atmospherics/tvalve/mirrored
 					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 		var/frequency = 0
-		var/id = null
+		var/id_tag = null
 		var/datum/radio_frequency/radio_connection
 
 		initialize()
@@ -416,7 +423,7 @@ obj/machinery/atmospherics/tvalve/mirrored
 				set_frequency(frequency)
 
 		receive_signal(datum/signal/signal)
-			if(!signal.data["tag"] || (signal.data["tag"] != id))
+			if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 				return 0
 
 			switch(signal.data["command"])

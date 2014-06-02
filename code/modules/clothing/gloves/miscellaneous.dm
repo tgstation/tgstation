@@ -71,3 +71,10 @@
 	item_state = "ggloves"
 	permeability_coefficient = 0.9
 	siemens_coefficient = 0.9
+
+/obj/item/clothing/gloves/batmangloves
+	desc = "Used for handling all things bat related."
+	name = "batgloves"
+	icon_state = "bmgloves"
+	item_state = "bmgloves"
+	_color="bmgloves"

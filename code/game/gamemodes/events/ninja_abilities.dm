@@ -57,7 +57,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 	if(!ninjacost(,2))
 		var/mob/living/carbon/human/U = affecting
 		U << "\blue There are <B>[s_bombs]</B> smoke bombs remaining."
-		var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
+		var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
 		playsound(U.loc, 'sound/effects/bamf.ogg', 50, 2)
@@ -279,6 +279,8 @@ Movement impairing would indicate drugs and the like.*/
 	Life.dm will kick the player back into unconsciosness the next process loop.
 	*/
 		U.stat = 0//At least now you should be able to teleport away or shoot ninja stars.
+		if(U.said_last_words)
+			U.said_last_words=0
 		spawn(30)//Slight delay so the enemy does not immedietly know the ability was used. Due to lag, this often came before waking up.
 			U.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
 		spawn(70)

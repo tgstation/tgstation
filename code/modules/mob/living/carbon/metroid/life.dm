@@ -1,6 +1,15 @@
+/mob/living/carbon/slime
+	var/AIproc = 0 // determines if the AI loop is activated
+	var/Atkcool = 0 // attack cooldown
+	var/Tempstun = 0 // temporary temperature stuns
+	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
+	var/SStun = 0 // stun variable
+
+
+
 /mob/living/carbon/slime/Life()
 	set invisibility = 0
-	set background = 1
+	//set background = 1
 
 	if (src.monkeyizing)
 		return
@@ -38,15 +47,6 @@
 	handle_regular_status_updates()
 
 
-
-
-
-/mob/living/carbon/slime
-	var/AIproc = 0 // determines if the AI loop is activated
-	var/Atkcool = 0 // attack cooldown
-	var/Tempstun = 0 // temporary temperature stuns
-	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
-	var/SStun = 0 // stun variable
 
 /mob/living/carbon/slime/proc/AIprocess()  // the master AI process
 
@@ -103,7 +103,7 @@
 							sleep(15)
 							Atkcool = 0
 
-						if(get_obstacle_ok(Target))
+						if(Target.Adjacent(src))
 							Target.attack_slime(src)
 					//world << "retrun 1"
 					return
@@ -116,7 +116,7 @@
 								sleep(25)
 								Atkcool = 0
 
-							if(get_obstacle_ok(Target))
+							if(Target.Adjacent(src))
 								Target.attack_slime(src)
 
 
@@ -124,16 +124,16 @@
 							step_to(src, Target)
 
 					else
-						if(!Atkcool && get_obstacle_ok(Target))
+						if(!Atkcool && Target.Adjacent(src))
 							Feedon(Target)
 
 				else
-					if(!Atkcool && get_obstacle_ok(Target))
+					if(!Atkcool && Target.Adjacent(src))
 						Feedon(Target)
 
 			else
 				if(Target in view(7, src))
-					if(get_obstacle_ok(Target))
+					if(Target.Adjacent(src))
 						step_to(src, Target)
 
 				else
@@ -340,50 +340,20 @@
 		if(istype(src, /mob/living/carbon/slime/adult))
 			if(!client)
 				for(var/i=1,i<=4,i++)
+					var/newslime
 					if(prob(70))
-						var/mob/living/carbon/slime/M = new primarytype(loc)
-						M.powerlevel = round(powerlevel/4)
-						M.Friends = Friends
-						M.tame = tame
-						M.rabid = rabid
-						M.Discipline = Discipline
-						if(i != 1) step_away(M,src)
+						newslime = primarytype
 					else
-						var/mutations = pick("one","two","three","four")
-						switch(mutations)
-							if("one")
-								var/mob/living/carbon/slime/M = new mutationone(loc)
-								M.powerlevel = round(powerlevel/4)
-								M.Friends = Friends
-								M.tame = tame
-								M.rabid = rabid
-								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
-							if("two")
-								var/mob/living/carbon/slime/M = new mutationtwo(loc)
-								M.powerlevel = round(powerlevel/4)
-								M.Friends = Friends
-								M.tame = tame
-								M.rabid = rabid
-								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
-							if("three")
-								var/mob/living/carbon/slime/M = new mutationthree(loc)
-								M.powerlevel = round(powerlevel/4)
-								M.Friends = Friends
-								M.tame = tame
-								M.rabid = rabid
-								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
-							if("four")
-								var/mob/living/carbon/slime/M = new mutationfour(loc)
-								M.powerlevel = round(powerlevel/4)
-								M.Friends = Friends
-								M.tame = tame
-								M.rabid = rabid
-								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+						newslime = slime_mutation[rand(1,4)]
 
+					var/mob/living/carbon/slime/M = new newslime(loc)
+					M.powerlevel = round(powerlevel/4)
+					M.Friends = Friends
+					M.tame = tame
+					M.rabid = rabid
+					M.Discipline = Discipline
+					if(i != 1) step_away(M,src)
+					feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 				del(src)
 
 		else

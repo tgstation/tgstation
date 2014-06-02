@@ -115,6 +115,31 @@
 		return 1
 	return 0
 
+/proc/isAdminGhost(A)
+	if(isobserver(A))
+		var/mob/dead/observer/O = A
+		if(O.check_rights(R_ADMIN|R_FUN))
+			return 1
+	return 0
+
+
+/proc/canGhostRead(var/mob/A, var/obj/target, var/flags=PERMIT_ALL)
+	if(isAdminGhost(A))
+		return 1
+	if(flags & PERMIT_ALL)
+		return 1
+	return 0
+
+/proc/canGhostWrite(var/mob/A, var/obj/target, var/desc="fucked with", var/flags=0)
+	if(flags & PERMIT_ALL)
+		if(!target.blessed)
+			return 1
+	if(isAdminGhost(A))
+		if(desc!="")
+			add_ghostlogs(A, target, desc, 1)
+		return 1
+	return 0
+
 /proc/isliving(A)
 	if(istype(A, /mob/living))
 		return 1
@@ -133,6 +158,12 @@ proc/isovermind(A)
 proc/isorgan(A)
 	if(istype(A, /datum/organ/external))
 		return 1
+	return 0
+
+/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/loyalty/L in A)
+		if(L && L.implanted)
+			return 1
 	return 0
 
 proc/hasorgans(A)
@@ -358,9 +389,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/findname(msg)
+	if(!istext(msg))
+		msg = "[msg]"
 	for(var/mob/M in mob_list)
-		if (M.real_name == text("[msg]"))
-			return 1
+		if(M.real_name == msg)
+			return M
 	return 0
 
 
@@ -372,57 +405,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 1
 
 	return 0
-
-//Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12()
-	set name = "F12"
-	set hidden = 1
-
-	if(hud_used)
-		if(ishuman(src))
-			if(!src.client) return
-
-			if(hud_used.hud_shown)
-				hud_used.hud_shown = 0
-				if(src.hud_used.adding)
-					src.client.screen -= src.hud_used.adding
-				if(src.hud_used.other)
-					src.client.screen -= src.hud_used.other
-				if(src.hud_used.hotkeybuttons)
-					src.client.screen -= src.hud_used.hotkeybuttons
-				if(src.hud_used.item_action_list)
-					src.client.screen -= src.hud_used.item_action_list
-
-				//Due to some poor coding some things need special treatment:
-				//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-				src.client.screen += src.hud_used.l_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.r_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.action_intent		//we want the intent swticher visible
-				src.hud_used.action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
-
-				//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-				src.client.screen -= src.zone_sel	//zone_sel is a mob variable for some reason.
-
-			else
-				hud_used.hud_shown = 1
-				if(src.hud_used.adding)
-					src.client.screen += src.hud_used.adding
-				if(src.hud_used.other && src.hud_used.inventory_shown)
-					src.client.screen += src.hud_used.other
-				if(src.hud_used.hotkeybuttons && !src.hud_used.hotkey_ui_hidden)
-					src.client.screen += src.hud_used.hotkeybuttons
-
-
-				src.hud_used.action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-				src.client.screen += src.zone_sel				//This one is a special snowflake
-
-			hud_used.hidden_inventory_update()
-			hud_used.persistant_inventory_update()
-			update_action_buttons()
-		else
-			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
-	else
-		usr << "\red This mob type does not use a HUD."
 
 //converts intent-strings into numbers and back
 var/list/intents = list("help","disarm","grab","hurt")
@@ -469,3 +451,25 @@ var/list/intents = list("help","disarm","grab","hurt")
 				hud_used.action_intent.icon_state = "harm"
 			else
 				hud_used.action_intent.icon_state = "help"
+proc/is_blind(A)
+	if(istype(A, /mob/living/carbon))
+		var/mob/living/carbon/C = A
+		if(C.blinded != null)
+			return 1
+	return 0
+
+/proc/get_multitool(mob/user as mob)
+	// Get tool
+	var/obj/item/device/multitool/P
+	if(isrobot(user) || ishuman(user))
+		P = user.get_active_hand()
+	else if(isAI(user))
+		var/mob/living/silicon/ai/AI=user
+		P = AI.aiMulti
+	else if(isAdminGhost(user))
+		var/mob/dead/observer/G=user
+		P = G.ghostMulti
+
+	if(!istype(P))
+		return null
+	return P

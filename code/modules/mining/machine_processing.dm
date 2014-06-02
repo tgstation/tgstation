@@ -28,110 +28,98 @@
 /obj/machinery/mineral/processing_unit_console/interact(mob/user)
 	user.set_machine(src)
 
-	var/dat = "<b>Smelter control console</b><br><br>"
-	//iron
-	if(machine.ore_iron || machine.ore_glass || machine.ore_plasma || machine.ore_uranium || machine.ore_gold || machine.ore_silver || machine.ore_diamond || machine.ore_clown || machine.ore_adamantine || machine.ore_phazon)
-		if(machine.ore_iron)
-			if (machine.selected_iron==1)
-				dat += text("<A href='?src=\ref[src];sel_iron=no'><font color='green'>Smelting</font></A> ")
+	var/nloaded=0
+	var/dat = {"
+	<html>
+		<head>
+			<title>MinerX Ore Processing</title>
+			<style type="text/css">
+html,body {
+	font-family:sans-serif,verdana;
+	font-size:smaller;
+	color:#666;
+}
+h1 {
+	border-bottom:1px solid maroon;
+}
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+td, th {
+	margin: 0;
+	font-size: small;
+	border-bottom: 1px solid #ccc;
+	padding: 3px;
+}
+
+tr:nth-child(even) {
+	background: #efefef;
+}
+
+a.smelting {
+	color:white;
+	font-weight:bold;
+	text-decoration:none;
+	background-color:green;
+}
+
+a.notsmelting {
+	color:white;
+	font-weight:bold;
+	text-decoration:none;
+	background-color:maroon;
+}
+			</style>
+		</head>
+		<body>
+			<h1>Smelter Control</h1>
+			<table>
+				<tr>
+					<th>Mineral</th>
+					<th># Sheets</th>
+					<th>Controls</th>
+				</tr>"}
+	for(var/ore_id in machine.ore.storage)
+		var/datum/material/ore_info=machine.ore.getMaterial(ore_id)
+		if(ore_info.stored)
+			// Can't do squat unless we have at least one.
+			if(ore_info.stored<1)
+				if(ore_id in machine.selected)
+					machine.on=0
+					machine.selected -= ore_id
+			dat += {"
+			<tr>
+				<td class="clmName">[ore_info.name]</td>
+				<td>[ore_info.stored]</td>
+				<td>
+					<a href="?src=\ref[src];toggle_select=[ore_id]" "}
+			if(ore_id in machine.selected)
+				dat += "class=\"smelting\">Smelting"
 			else
-				dat += text("<A href='?src=\ref[src];sel_iron=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Iron: [machine.ore_iron]<br>")
+				dat += "class=\"notsmelting\">Not smelting"
+			dat += "</a></td></tr>"
+			nloaded++
 		else
-			machine.selected_iron = 0
-
-		//sand - glass
-		if(machine.ore_glass)
-			if (machine.selected_glass==1)
-				dat += text("<A href='?src=\ref[src];sel_glass=no'><font color='green'>Smelting</font></A> ")
-			else
-				dat += text("<A href='?src=\ref[src];sel_glass=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Sand: [machine.ore_glass]<br>")
-		else
-			machine.selected_glass = 0
-
-		//plasma
-		if(machine.ore_plasma)
-			if (machine.selected_plasma==1)
-				dat += text("<A href='?src=\ref[src];sel_plasma=no'><font color='green'>Smelting</font></A> ")
-			else
-				dat += text("<A href='?src=\ref[src];sel_plasma=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Plasma: [machine.ore_plasma]<br>")
-		else
-			machine.selected_plasma = 0
-
-		//uranium
-		if(machine.ore_uranium)
-			if (machine.selected_uranium==1)
-				dat += text("<A href='?src=\ref[src];sel_uranium=no'><font color='green'>Smelting</font></A> ")
-			else
-				dat += text("<A href='?src=\ref[src];sel_uranium=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Uranium: [machine.ore_uranium]<br>")
-		else
-			machine.selected_uranium = 0
-
-		//gold
-		if(machine.ore_gold)
-			if (machine.selected_gold==1)
-				dat += text("<A href='?src=\ref[src];sel_gold=no'><font color='green'>Smelting</font></A> ")
-			else
-				dat += text("<A href='?src=\ref[src];sel_gold=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Gold: [machine.ore_gold]<br>")
-		else
-			machine.selected_gold = 0
-
-		//silver
-		if(machine.ore_silver)
-			if (machine.selected_silver==1)
-				dat += text("<A href='?src=\ref[src];sel_silver=no'><font color='green'>Smelting</font></A> ")
-			else
-				dat += text("<A href='?src=\ref[src];sel_silver=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Silver: [machine.ore_silver]<br>")
-		else
-			machine.selected_silver = 0
-
-		//diamond
-		if(machine.ore_diamond)
-			if (machine.selected_diamond==1)
-				dat += text("<A href='?src=\ref[src];sel_diamond=no'><font color='green'>Smelting</font></A> ")
-			else
-				dat += text("<A href='?src=\ref[src];sel_diamond=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Diamond: [machine.ore_diamond]<br>")
-		else
-			machine.selected_diamond = 0
-
-		//bananium
-		if(machine.ore_clown)
-			if (machine.selected_clown==1)
-				dat += text("<A href='?src=\ref[src];sel_clown=no'><font color='green'>Smelting</font></A> ")
-			else
-				dat += text("<A href='?src=\ref[src];sel_clown=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Bananium: [machine.ore_clown]<br>")
-		else
-			machine.selected_clown = 0
-
-		//Phazon
-		if(machine.ore_phazon)
-			if (machine.selected_phazon==1)
-				dat += text("<A href='?src=\ref[src];sel_phazon=no'><font color='green'>Smelting</font></A> ")
-			else
-				dat += text("<A href='?src=\ref[src];sel_phazon=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Phazite: [machine.ore_phazon]<br>")
-		else
-			machine.selected_phazon = 0
-
-
+			if(ore_id in machine.selected)
+				machine.selected -= ore_id
+	if(nloaded)
+		dat += {"
+			</table>
+			<p>Machine is currently "}
 		//On or off
-		dat += text("Machine is currently ")
 		if (machine.on==1)
-			dat += text("<A href='?src=\ref[src];set_on=off'>On</A> ")
+			dat += "<A href='?src=\ref[src];set_on=off'>On</A></p>"
 		else
-			dat += text("<A href='?src=\ref[src];set_on=on'>Off</A> ")
+			dat += "<A href='?src=\ref[src];set_on=on'>Off</A></p>"
 	else
-		dat+="---No Materials Loaded---"
+		dat+="<tr><td colspan=\"3\"><em>No Materials Loaded</em></td></tr></table>"
+	dat+={"
+		</body>
+	</html>"}
 
 
-	user << browse("[dat]", "window=console_processing_unit")
+	user << browse(dat, "window=console_processing_unit")
 	onclose(user, "console_processing_unit")
 
 
@@ -140,51 +128,14 @@
 		return
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
-	if(href_list["sel_iron"])
-		if (href_list["sel_iron"] == "yes")
-			machine.selected_iron = 1
+	if(href_list["toggle_select"])
+		var/ore_id=href_list["toggle_select"]
+		if (!(ore_id in machine.ore.storage))
+			error("Unknown ore ID [ore_id]!")
+		if(ore_id in machine.selected)
+			machine.selected -= ore_id
 		else
-			machine.selected_iron = 0
-	if(href_list["sel_glass"])
-		if (href_list["sel_glass"] == "yes")
-			machine.selected_glass = 1
-		else
-			machine.selected_glass = 0
-	if(href_list["sel_plasma"])
-		if (href_list["sel_plasma"] == "yes")
-			machine.selected_plasma = 1
-		else
-			machine.selected_plasma = 0
-	if(href_list["sel_uranium"])
-		if (href_list["sel_uranium"] == "yes")
-			machine.selected_uranium = 1
-		else
-			machine.selected_uranium = 0
-	if(href_list["sel_gold"])
-		if (href_list["sel_gold"] == "yes")
-			machine.selected_gold = 1
-		else
-			machine.selected_gold = 0
-	if(href_list["sel_silver"])
-		if (href_list["sel_silver"] == "yes")
-			machine.selected_silver = 1
-		else
-			machine.selected_silver = 0
-	if(href_list["sel_diamond"])
-		if (href_list["sel_diamond"] == "yes")
-			machine.selected_diamond = 1
-		else
-			machine.selected_diamond = 0
-	if(href_list["sel_clown"])
-		if (href_list["sel_clown"] == "yes")
-			machine.selected_clown = 1
-		else
-			machine.selected_clown = 0
-	if(href_list["sel_phazon"])
-		if (href_list["sel_phazon"] == "yes")
-			machine.selected_phazon = 1
-		else
-			machine.selected_phazon = 0
+			machine.selected += ore_id
 	if(href_list["set_on"])
 		if (href_list["set_on"] == "on")
 			machine.on = 1
@@ -195,7 +146,6 @@
 
 /**********************Mineral processing unit**************************/
 
-
 /obj/machinery/mineral/processing_unit
 	name = "furnace"
 	icon = 'icons/obj/machines/mining_machines.dmi'
@@ -205,25 +155,10 @@
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/obj/machinery/mineral/CONSOLE = null
-	var/ore_gold = 0;
-	var/ore_silver = 0;
-	var/ore_diamond = 0;
-	var/ore_glass = 0;
-	var/ore_plasma = 0;
-	var/ore_uranium = 0;
-	var/ore_iron = 0;
-	var/ore_clown = 0;
-	var/ore_adamantine = 0;
-	var/ore_phazon = 0;
-	var/selected_gold = 0
-	var/selected_silver = 0
-	var/selected_diamond = 0
-	var/selected_glass = 0
-	var/selected_plasma = 0
-	var/selected_uranium = 0
-	var/selected_iron = 0
-	var/selected_clown = 0
-	var/selected_phazon = 0;
+
+	var/datum/materials/ore
+	var/list/recipes=list()
+	var/list/selected[0]
 	var/on = 0 //0 = off, 1 =... oh you know!
 
 /obj/machinery/mineral/processing_unit/New()
@@ -235,368 +170,255 @@
 		for (var/dir in cardinal)
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if(src.output) break
+
 		processing_objects.Add(src)
+
+		ore = new
+
+		for(var/recipetype in typesof(/datum/smelting_recipe) - /datum/smelting_recipe)
+			var/datum/smelting_recipe/recipe = new recipetype
+			// Sanity
+			for(var/ingredient in recipe.ingredients)
+				if(!(ingredient in ore.storage))
+					warning("Unknown ingredient [ingredient] in recipe [recipe.name]!")
+			recipes += recipe
+
 		return
 	return
 
 /obj/machinery/mineral/processing_unit/process()
 	if (src.output && src.input)
 		var/i
-		for (i = 0; i < 10; i++)
-			if (on)
-				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
-					if (ore_glass > 0)
-						ore_glass--;
-						new /obj/item/stack/sheet/glass(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_phazon == 0)
-					if (ore_glass > 0 && ore_iron > 0)
-						ore_glass--;
-						ore_iron--;
-						new /obj/item/stack/sheet/rglass(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
-					if (ore_gold > 0)
-						ore_gold--;
-						new /obj/item/stack/sheet/mineral/gold(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
-					if (ore_silver > 0)
-						ore_silver--;
-						new /obj/item/stack/sheet/mineral/silver(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
-					if (ore_diamond > 0)
-						ore_diamond--;
-						new /obj/item/stack/sheet/mineral/diamond(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
-					if (ore_plasma > 0)
-						ore_plasma--;
-						new /obj/item/stack/sheet/mineral/plasma(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 0)
-					if (ore_uranium > 0)
-						ore_uranium--;
-						new /obj/item/stack/sheet/mineral/uranium(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_phazon == 0)
-					if (ore_iron > 0)
-						ore_iron--;
-						new /obj/item/stack/sheet/metal(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_phazon == 0)
-					if (ore_iron > 0 && ore_plasma > 0)
-						ore_iron--;
-						ore_plasma--;
-						new /obj/item/stack/sheet/plasteel(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1 && selected_phazon == 0)
-					if (ore_clown > 0)
-						ore_clown--;
-						new /obj/item/stack/sheet/mineral/clown(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_phazon == 1)
-					if (ore_phazon > 0)
-						ore_phazon--;
-						new /obj/item/stack/sheet/mineral/phazon(output.loc)
-					else
-						on = 0
-					continue
-				//THESE TWO ARE CODED FOR URIST TO USE WHEN HE GETS AROUND TO IT.
-				//They were coded on 18 Feb 2012. If you're reading this in 2015, then firstly congratulations on the world not ending on 21 Dec 2012 and secondly, Urist is apparently VERY lazy. ~Errorage
-				/*if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
-					if (ore_uranium >= 2 && ore_diamond >= 1)
-						ore_uranium -= 2
-						ore_diamond -= 1
-						new /obj/item/stack/sheet/mineral/adamantine(output.loc)
-					else
-						on = 0
-					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
-					if (ore_silver >= 1 && ore_plasma >= 3)
-						ore_silver -= 1
-						ore_plasma -= 3
-						new /obj/item/stack/sheet/mineral/mythril(output.loc)
-					else
-						on = 0
-					continue*/
+		if(on)
+			for (i = 0; i < 10; i++)
+				var/located=0
+				var/insufficient_ore=0
 
+				// For every recipe
+				for(var/datum/smelting_recipe/recipe in recipes)
+					// Check if it's selected and we have the ingredients
+					var/signal=recipe.checkIngredients(src)
 
-				//if a non valid combination is selected
+					// If we have a matching recipe but we're out of ore,
+					// Shut off but DO NOT spawn slag.
+					if(signal==-1)
+						insufficient_ore=1
+						break
 
-				var/b = 1 //this part checks if all required ores are available
+					// Otherwise, if we've matched
+					else if(signal==1)
 
-				if (!(selected_gold || selected_silver ||selected_diamond || selected_uranium | selected_plasma || selected_iron || selected_iron))
-					b = 0
+						// Take ingredients
+						for(var/ore_id in recipe.ingredients)
+							ore.removeAmount(ore_id,1)
+						// Spawn yield
+						new recipe.yieldtype(output.loc)
 
-				if (selected_gold == 1)
-					if (ore_gold <= 0)
-						b = 0
-				if (selected_silver == 1)
-					if (ore_silver <= 0)
-						b = 0
-				if (selected_diamond == 1)
-					if (ore_diamond <= 0)
-						b = 0
-				if (selected_uranium == 1)
-					if (ore_uranium <= 0)
-						b = 0
-				if (selected_plasma == 1)
-					if (ore_plasma <= 0)
-						b = 0
-				if (selected_iron == 1)
-					if (ore_iron <= 0)
-						b = 0
-				if (selected_glass == 1)
-					if (ore_glass <= 0)
-						b = 0
-				if (selected_clown == 1)
-					if (ore_clown <= 0)
-						b = 0
-				if (selected_phazon == 1)
-					if (ore_phazon <= 0)
-						b = 0
-
-				if (b) //if they are, deduct one from each, produce slag and shut the machine off
-					if (selected_gold == 1)
-						ore_gold--
-					if (selected_silver == 1)
-						ore_silver--
-					if (selected_diamond == 1)
-						ore_diamond--
-					if (selected_uranium == 1)
-						ore_uranium--
-					if (selected_plasma == 1)
-						ore_plasma--
-					if (selected_iron == 1)
-						ore_iron--
-					if (selected_clown == 1)
-						ore_clown--
-					if (selected_phazon == 1)
-						ore_phazon--
-					new /obj/item/weapon/ore/slag(output.loc)
-					on = 0
-				else
-					on = 0
+						located=1
+						break
+				if(insufficient_ore)
+					on=0
 					break
-				break
-			else
-				break
+
+				// If we haven't found a matching recipe,
+				if(!located)
+					// Turn off
+					on=0
+
+					// Take one of every ore selected
+					for(var/ore_id in ore.storage)
+						if(ore.getAmount(ore_id)>0 && ore_id in selected)
+							ore.removeAmount(ore_id,1)
+
+					// Spawn slag
+					new /obj/item/weapon/ore/slag(output.loc)
+					break
+
+		// Collect ore even if not on.
 		for (i = 0; i < 10; i++)
-			var/obj/item/O
-			O = locate(/obj/item, input.loc)
-			if (O)
-				if (istype(O,/obj/item/weapon/ore/iron))
-					ore_iron++;
-					del(O)
+			var/obj/item/I = locate(/obj/item, input.loc)
+			if(istype(I,/obj/item/weapon/ore))
+				var/obj/item/weapon/ore/O=I
+				var/datum/material/po=ore.getMaterial(O.material)
+				if (po.oretype && istype(O,po.oretype))
+					po.stored++
+					qdel(O)
 					continue
-				if (istype(O,/obj/item/weapon/ore/glass))
-					ore_glass++;
-					del(O)
-					continue
-				if (istype(O,/obj/item/weapon/ore/diamond))
-					ore_diamond++;
-					del(O)
-					continue
-				if (istype(O,/obj/item/weapon/ore/plasma))
-					ore_plasma++
-					del(O)
-					continue
-				if (istype(O,/obj/item/weapon/ore/gold))
-					ore_gold++
-					del(O)
-					continue
-				if (istype(O,/obj/item/weapon/ore/silver))
-					ore_silver++
-					del(O)
-					continue
-				if (istype(O,/obj/item/weapon/ore/uranium))
-					ore_uranium++
-					del(O)
-					continue
-				if (istype(O,/obj/item/weapon/ore/clown))
-					ore_clown++
-					del(O)
-					continue
-				if (istype(O,/obj/item/weapon/ore/phazon))
-					ore_phazon++
-					del(O)
-					continue
-				O.loc = src.output.loc
-			else
-				break
+			if(I)
+				I.loc = src.output.loc
 	return
 
 /////////////////////////////////////////////////
 // Recycling Furnace
 /obj/machinery/mineral/processing_unit/recycle
 	name = "recycling furnace"
-	var/gold = 0;
-	var/silver = 0;
-	var/diamond = 0;
-	var/glass = 0;
-	var/plasma = 0;
-	var/uranium = 0;
-	var/iron = 0;
-	var/clown = 0;
-	var/adamantine = 0;
-	var/phazon = 0;
-	var/list/ALLOWED_TYPES=list(
-		/obj/item,
-		/obj/machinery/portable_atmospherics/canister,
-	)
-
 
 /obj/machinery/mineral/processing_unit/recycle/process()
 	if (src.output && src.input)
 		var/i
-		//if(!(stat & (BROKEN|UNPOWERED)))
-		for (i = 0; i < 10; i++)
-			if (glass >= 1)
-				glass--;
-				new /obj/item/stack/sheet/glass(output.loc)
+		if(on)
+			for (i = 0; i < 10; i++)
+				var/located=0
+				var/insufficient_ore=0
 
-			if (gold >= 1)
-				gold--;
-				new /obj/item/stack/sheet/mineral/gold(output.loc)
+				// For every recipe
+				for(var/datum/smelting_recipe/recipe in recipes)
+					// Check if it's selected and we have the ingredients
+					var/signal=recipe.checkIngredients(src)
 
-			if (silver >= 1)
-				silver--;
-				new /obj/item/stack/sheet/mineral/silver(output.loc)
-
-			if (diamond >= 1)
-				diamond--;
-				new /obj/item/stack/sheet/mineral/diamond(output.loc)
-
-			if (plasma >= 1)
-				plasma--;
-				new /obj/item/stack/sheet/mineral/plasma(output.loc)
-
-			if (uranium >= 1)
-				uranium--;
-				new /obj/item/stack/sheet/mineral/uranium(output.loc)
-
-			if (iron >= 1)
-				iron--;
-				new /obj/item/stack/sheet/metal(output.loc)
-
-			if (clown >= 1)
-				clown--;
-				new /obj/item/stack/sheet/mineral/clown(output.loc)
-
-			if (phazon >= 1)
-				clown--;
-				new /obj/item/stack/sheet/mineral/phazon(output.loc)
-
-		for (i = 0; i < 10; i++)
-			var/obj/O
-			for(O in input.loc.contents)
-				var/allowed=0
-				for(var/T in ALLOWED_TYPES)
-					if(istype(O,T))
-						allowed=1
+					// If we have a matching recipe but we're out of ore,
+					// Shut off but DO NOT spawn slag.
+					if(signal==-1)
+						insufficient_ore=1
 						break
-				if(O && allowed)
-					if (O.recycle(src))
-						del(O)
-					else
-						O.loc = src.output.loc
+
+					// Otherwise, if we've matched
+					else if(signal==1)
+
+						// Take ingredients
+						for(var/ore_id in recipe.ingredients)
+							// Oh how I wish ore[ore_id].stored-- worked.
+							ore.removeAmount(ore_id,1)
+
+						// Spawn yield
+						new recipe.yieldtype(output.loc)
+
+						located=1
+						break
+				if(insufficient_ore)
+					on=0
+					break
+
+				// If we haven't found a matching recipe,
+				if(!located)
+					// Turn off
+					on=0
+
+					// Take one of every ore selected
+					for(var/ore_id in ore.storage)
+						var/amount=ore.getAmount(ore_id)
+						if(amount>0 && ore_id in selected)
+							ore.removeAmount(ore_id,1)
+					// Spawn slag
+					new /obj/item/weapon/ore/slag(output.loc)
+					break
+
+		for (i = 0; i < 10; i++)
+			var/atom/movable/O
+			for(O in input.loc.contents)
+				if(O && O.w_type!=NOT_RECYCLABLE && O.w_type!=RECYK_BIOLOGICAL)
+					if (O.recycle(ore))
+						qdel(O)
+						break
+				if(O && istype(O,/obj/item))
+					O.loc = src.output.loc
+					break
 
 
-/obj/machinery/mineral/processing_unit/recycle/attack_ai(var/mob/user as mob)
+/obj/machinery/mineral/processing_unit_console/recycle/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
-/obj/machinery/mineral/processing_unit/recycle/attack_paw(var/mob/user as mob)
+/obj/machinery/mineral/processing_unit_console/recycle/attack_paw(var/mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/mineral/processing_unit/recycle/attack_hand(var/mob/user as mob)
+/obj/machinery/mineral/processing_unit_console/recycle/attack_hand(var/mob/user as mob)
 	return src.interact(user)
 
-/obj/machinery/mineral/processing_unit/recycle/interact(var/mob/user as mob)
+/obj/machinery/mineral/processing_unit_console/recycle/interact(var/mob/user as mob)
 
 	user.set_machine(src)
-	var/found=0
+	var/nloaded=0
 	var/html = {"<html>
 	<head>
 		<title>Recyk Processor</title>
+		<style type="text/css">
+html,body {
+	font-family:sans-serif,verdana;
+	font-size:smaller;
+	color:#666;
+}
+h1 {
+	border-bottom:1px solid maroon;
+}
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+td, th {
+	margin: 0;
+	font-size: small;
+	border-bottom: 1px solid #ccc;
+	padding: 3px;
+}
+
+tr:nth-child(even) {
+	background: #efefef;
+}
+
+a.smelting {
+	color:white;
+	font-weight:bold;
+	text-decoration:none;
+	background-color:green;
+}
+
+a.notsmelting {
+	color:white;
+	font-weight:bold;
+	text-decoration:none;
+	background-color:maroon;
+}
+		</style>
 	</head>
 	<body>
 		<h1>Recyk PRO-1000</h1>
 		<p><b>Current Status:</b> (<a href='?src=\ref[user];mach_close=recyk_furnace'>Close</a>)</p>
-		<ul>
-	"}
-	if(adamantine > 0.0)
-		html += "<li><b>Adamantine:</b> [adamantine]</li>"
-		found=1
-	if(clown > 0.0)
-		html += "<li><b>Bananaium:</b> [clown]</li>"
-		found=1
-	if(diamond > 0.0)
-		html += "<li><b>Diamond:</b> [diamond]</li>"
-		found=1
-	if(glass > 0.0)
-		html += "<li><b>Glass:</b> [glass]</li>"
-		found=1
-	if(gold > 0.0)
-		html += "<li><b>Gold:</b> [gold]</li>"
-		found=1
-	if(iron > 0.0)
-		html += "<li><b>Iron:</b> [iron]</li>"
-		found=1
-	if(plasma > 0.0)
-		html += "<li><b>Plasma:</b> [plasma]</li>"
-		found=1
-	if(silver > 0.0)
-		html += "<li><b>Silver:</b> [silver]</li>"
-		found=1
-	if(uranium > 0.0)
-		html += "<li><b>Uranium:</b> [uranium]</li>"
-		found=1
-	if(phazon > 0.0)
-		html += "<li><b>Phazon:</b> [phazon]</li>"
-		found=1
-	if(!found)
-		html += "<li><i>(Nothing loaded yet!)</i></li>"
+		<table>
+			<tr>
+				<th>Mineral</th>
+				<th># Sheets</th>
+				<th>Controls</th>
+			</tr>"}
+	for(var/ore_id in machine.ore.storage)
+		var/datum/material/ore_info=machine.ore.getMaterial(ore_id)
+		if(ore_info.stored)
+			// Can't do squat unless we have at least one.
+			if(ore_info.stored<1)
+				if(ore_id in machine.selected)
+					machine.on=0
+					machine.selected -= ore_id
+			html += {"
+			<tr>
+				<td class="clmName">[ore_info.name]</td>
+				<td>[ore_info.stored]</td>
+				<td>
+					<a href="?src=\ref[src];toggle_select=[ore_id]" "}
+			if (ore_id in machine.selected)
+				html += "class=\"smelting\">Smelting"
+			else
+				html += "class=\"notsmelting\">Not smelting"
+			html += "</a></td></tr>"
+			nloaded++
+		else
+			if(ore_id in machine.selected)
+				machine.selected -= ore_id
+	if(nloaded)
+		html += {"
+			</table>
+			<p>Machine is currently "}
+		//On or off
+		if (machine.on==1)
+			html += "<A href='?src=\ref[src];set_on=off'>On</A></p>"
+		else
+			html += "<A href='?src=\ref[src];set_on=on'>Off</A></p>"
+	else
+		html+="<tr><td colspan=\"3\"><em>No Materials Loaded</em></td></tr></table>"
 	html +={"
-		</ul>
-		<p><i>(Units are sheets)</i></p>
 	</body>
 </html>
 	"}
 
-	//"<A href='?src=\ref[src];toggle=1'>[valve_open?("Open"):("Closed")]</A><BR>
-
 	user << browse(html, "window=recyk_furnace;size=600x300")
-	onclose(user, "canister")
+	onclose(user, "recyk_furnace")
 	return
-
-/obj/machinery/mineral/processing_unit/recycle/Topic(href, href_list)
-
-	//Do not use "if(..()) return" here, canisters will stop working in unpowered areas like space or on the derelict.
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-		if(1)//if(!isAdminGhost(usr))
-			usr << browse(null, "window=recyk_furnace")
-			onclose(usr, "recyk_furnace")
-			return

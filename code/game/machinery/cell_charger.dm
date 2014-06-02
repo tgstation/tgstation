@@ -10,6 +10,10 @@
 	power_channel = EQUIP
 	var/obj/item/weapon/cell/charging = null
 	var/chargelevel = -1
+
+	ghost_read = 0 // Deactivate ghost touching.
+	ghost_write = 0
+
 	proc
 		updateicon()
 			icon_state = "ccharger[charging ? 1 : 0]"
@@ -63,7 +67,7 @@
 
 			anchored = !anchored
 			user << "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground"
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 
 	attack_hand(mob/user)
 		if(charging)

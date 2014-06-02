@@ -20,3 +20,5 @@
 	var/pose = null
 
 	var/pulse = PULSE_NORM	//current pulse level
+
+	var/hasmouth = 1 // Used for food, etc.

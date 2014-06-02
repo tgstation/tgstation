@@ -185,7 +185,7 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 		else
 			I.lower_aim()
 			return
-		if(m_intent == "run" && T.client.target_can_move == 1 && T.client.target_can_run == 0)
+		if(m_intent == "run" && T.client.target_can_move == 1 && T.client.target_can_run == 0 && (ishuman(T)))
 			src << "\red Your move intent is now set to walk, as your targeter permits it."  //Self explanitory.
 			set_m_intent("walk")
 
@@ -320,7 +320,7 @@ client/verb/AllowTargetMove()
 			for(var/mob/living/M in G.target)
 				if(target_can_move)
 					M << "Your character may now <b>walk</b> at the discretion of their targeter."
-					if(!target_can_run)
+					if(!target_can_run && (ishuman(M)))
 						M << "\red Your move intent is now set to walk, as your targeter permits it."
 						M.set_m_intent("walk")
 				else

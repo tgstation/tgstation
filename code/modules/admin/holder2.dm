@@ -12,6 +12,7 @@ var/list/admin_datums = list()
 	var/datum/feed_message/admincaster_feed_message = new /datum/feed_message   //These two will act as holders.
 	var/datum/feed_channel/admincaster_feed_channel = new /datum/feed_channel
 	var/admincaster_signature	//What you'll sign the newsfeeds as
+	var/sessKey		= 0
 
 /datum/admins/New(initial_rank = "Temporary Admin", initial_rights = 0, ckey)
 	if(!ckey)
@@ -67,6 +68,18 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 					usr << "<font color='red'>Error: You are not an admin.</font>"
 	return 0
 
+// Making this a bit less of a roaring asspain. - N3X
+/mob/proc/check_rights(rights_required)
+	if(src && src.client)
+		if(rights_required)
+			if(src.client.holder)
+				if(rights_required & src.client.holder.rights)
+					return 1
+		else
+			if(src.client.holder)
+				return 1
+	return 0
+
 //probably a bit iffy - will hopefully figure out a better solution
 /proc/check_if_greater_rights_than(client/other)
 	if(usr && usr.client)
@@ -87,3 +100,24 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 		holder.disassociate()
 		del(holder)
 	return 1
+
+/datum/admins/proc/checkSessionKey(var/recurse=0)
+	if(recurse==5)
+		return "\[BROKEN\]";
+	recurse++
+	var/DBQuery/query = dbcon.NewQuery("DELETE FROM admin_sessions WHERE expires < Now()")
+	query.Execute()
+
+	query = dbcon.NewQuery("SELECT sessID FROM admin_sessions WHERE ckey = '[owner.ckey]' AND expires > Now()")
+	query.Execute()
+
+	sessKey=0
+	while(query.NextRow())
+		sessKey = query.item[1]
+		query=dbcon.NewQuery("UPDATE admin_sessions SET expires=DATE_ADD(NOW(), INTERVAL 2 HOUR), IP='[owner.address]' WHERE sessID='[sessKey]'")
+		query.Execute()
+		return sessKey
+
+	query=dbcon.NewQuery("INSERT INTO admin_sessions (sessID,ckey,expires, IP) VALUES (UUID(), '[owner.ckey]', DATE_ADD(NOW(), INTERVAL 2 HOUR), '[owner.address]')")
+	query.Execute()
+	return checkSessionKey(recurse)

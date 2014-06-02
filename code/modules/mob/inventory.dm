@@ -25,6 +25,10 @@
 	if(hand)	return r_hand
 	else		return l_hand
 
+// Because there's several different places it's stored.
+/mob/proc/get_multitool(var/if_active=0)
+	return null
+
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(var/obj/item/W)
 	if(lying)			return 0
@@ -98,6 +102,7 @@
 	if(W)
 		if(client)	client.screen -= W
 		u_equip(W)
+		if(!W) return 1 // self destroying objects (tk, grabs)
 		W.layer = initial(W.layer)
 		W.loc = loc
 

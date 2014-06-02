@@ -40,12 +40,12 @@
 
 /obj/machinery/power/monitor/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/powermonitor/M = new /obj/item/weapon/circuitboard/powermonitor( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
@@ -112,7 +112,7 @@
 
 			for(var/obj/machinery/power/apc/A in L)
 
-				t += copytext(add_tspace("\The [A.area]", 30), 1, 30)
+				t += copytext(add_tspace("\The [A.areaMaster]", 30), 1, 30)
 				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 		t += "</FONT></PRE></TT>"

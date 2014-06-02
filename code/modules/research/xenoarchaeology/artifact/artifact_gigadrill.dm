@@ -22,14 +22,14 @@
 
 /obj/machinery/giga_drill/Bump(atom/A)
 	if(active && !drilling_turf)
-		if(istype(A,/turf/simulated/mineral))
-			var/turf/simulated/mineral/M = A
+		if(istype(A,/turf/unsimulated/mineral))
+			var/turf/unsimulated/mineral/M = A
 			drilling_turf = get_turf(src)
 			src.visible_message("\red <b>[src] begins to drill into [M]!</b>")
 			anchored = 1
 			spawn(drill_time)
 				if(get_turf(src) == drilling_turf && active)
-					M.gets_drilled()
+					M.GetDrilled()
 					src.loc = M
 				drilling_turf = null
 				anchored = 0

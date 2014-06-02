@@ -176,7 +176,7 @@
 					egun = 1
 					reqpower = 200
 
-	Del()
+	Destroy()
 		// deletes its own cover with it
 		del(cover)
 		..()
@@ -348,6 +348,7 @@ Status: []<BR>"},
 			user << "\red Access denied."
 
 	else
+		user.changeNext_move(10)
 		// if the turret was attacked with the intention of harming it:
 		src.health -= W.force * 0.5
 		if (src.health <= 0)
@@ -407,7 +408,7 @@ Status: []<BR>"},
 
 /obj/machinery/porta_turret/ex_act(severity)
 	if(severity >= 3) // turret dies if an explosion touches it!
-		del(src)
+		qdel(src)
 	else
 		src.die()
 
@@ -419,14 +420,14 @@ Status: []<BR>"},
 	invisibility=0
 	src.spark_system.start() // creates some sparks because they look cool
 	src.density=1
-	del(cover) // deletes the cover - no need on keeping it there!
+	qdel(cover) // deletes the cover - no need on keeping it there!
 
 
 
 /obj/machinery/porta_turret/process()
 	// the main machinery process
 
-	set background = 1
+	//set background = 1
 
 	if(src.cover==null && anchored) // if it has no cover and is anchored
 		if (stat & BROKEN) // if the turret is borked
@@ -451,8 +452,12 @@ Status: []<BR>"},
 
 	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "crittersssss"(And simple_animals)
 		for(var/mob/living/simple_animal/C in view(7,src))
-			if(!C.stat)
-				targets += C
+			if(C.stat)
+				continue
+			// Ignore lazarus-injected mobs.
+			if(C.faction == "lazarus")
+				continue
+			targets += C
 
 	for (var/mob/living/carbon/C in view(7,src)) // loops through all living carbon-based lifeforms in view(12)
 		if(istype(C, /mob/living/carbon/alien) && src.check_anomalies) // git those fukken xenos
@@ -646,7 +651,7 @@ Status: []<BR>"},
 	else
 		icon_state = "[lasercolor]orange_target_prism"
 	if(sound)
-		playsound(src.loc, 'sound/weapons/Taser.ogg', 75, 1)
+		playsound(get_turf(src), 'sound/weapons/Taser.ogg', 75, 1)
 	var/obj/item/projectile/A
 	if(emagged)
 		A = new eprojectile( loc )
@@ -693,14 +698,14 @@ Status: []<BR>"},
 	switch(build_step)
 		if(0) // first step
 			if(istype(W, /obj/item/weapon/wrench) && !anchored)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 				user << "\blue You secure the external bolts."
 				anchored = 1
 				build_step = 1
 				return
 
 			else if(istype(W, /obj/item/weapon/crowbar) && !anchored)
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 75, 1)
 				user << "You dismantle the turret construction."
 				new /obj/item/stack/sheet/metal( loc, 5)
 				del(src)
@@ -718,7 +723,7 @@ Status: []<BR>"},
 					return
 
 			else if(istype(W, /obj/item/weapon/wrench))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 				user << "You unfasten the external bolts."
 				anchored = 0
 				build_step = 0
@@ -727,7 +732,7 @@ Status: []<BR>"},
 
 		if(2)
 			if(istype(W, /obj/item/weapon/wrench))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 				user << "\blue You bolt the metal armor into place."
 				build_step = 3
 				return
@@ -739,7 +744,7 @@ Status: []<BR>"},
 					user << "\red You need more fuel to complete this task."
 					return
 
-				playsound(src.loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
+				playsound(get_turf(src), pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 20))
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 1
@@ -760,7 +765,7 @@ Status: []<BR>"},
 				return
 
 			else if(istype(W, /obj/item/weapon/wrench))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 				user << "You remove the turret's metal armor bolts."
 				build_step = 2
 				return
@@ -776,7 +781,7 @@ Status: []<BR>"},
 
 		if(5)
 			if(istype(W, /obj/item/weapon/screwdriver))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 				build_step = 6
 				user << "\blue You close the internal access hatch."
 				return
@@ -794,7 +799,7 @@ Status: []<BR>"},
 					return
 
 			else if(istype(W, /obj/item/weapon/screwdriver))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 				build_step = 5
 				user << "You open the internal access hatch."
 				return
@@ -806,7 +811,7 @@ Status: []<BR>"},
 				if (WT.get_fuel() < 5)
 					user << "\red You need more fuel to complete this task."
 
-				playsound(src.loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
+				playsound(get_turf(src), pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 30))
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 8
@@ -825,7 +830,7 @@ Status: []<BR>"},
 					del(src)
 
 			else if(istype(W, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 75, 1)
 				user << "You pry off the turret's exterior armor."
 				new /obj/item/stack/sheet/metal( loc, 2)
 				build_step = 6

@@ -18,7 +18,15 @@
 			if (copytext(message, 1, 2) != "*")
 				return
 
-	/*if(dna)
+	if(dna)
+		if(length(message) >= 2)
+			if (copytext(message, 1, 2) != "*" && department_radio_keys[copytext(message, 1, 3)] != "changeling")
+				for(var/datum/dna/gene/gene in dna_genes)
+					if(!gene.block)
+						continue
+					if(gene.is_active(src))
+						message = gene.OnSay(src,message)
+	/*
 		if(dna.mutantrace == "lizard")
 			if(copytext(message, 1, 2) != "*")
 				message = replacetext(message, "s", stutter("ss"))
@@ -96,7 +104,34 @@
 				if(!(copytext(message, 1, 2) == "*" || (mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")))
 					message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 
-	if ((HULK in mutations) && health >= 25 && length(message))
+		else if(istype(wear_mask, /obj/item/clothing/mask/happy))
+			var/obj/item/clothing/mask/happy/happiest = wear_mask
+			if(copytext(message, 1, 2) != "*")
+				if(prob(5))
+					message = pick("AHAHAHAHA!", "GAHAHAHAHA!")
+					playsound(get_turf(src), 'sound/effects/hellclown.ogg', 50, 1)
+					flick("happiest_flash", happiest)
+					src << "<span class=warning>You lose self-control for a second and let out an ugly laugh.</span>"
+				else
+					message = replacetext(message, "die", "laugh")
+					message = replacetext(message, "dying", "laughing")
+					message = replacetext(message, "death", "laughter")
+					message = replacetext(message, "kill", "tickle")
+					message = replacetext(message, "killed", "tickled")
+					message = replacetext(message, "killing", "tickling")
+					message = replacetext(message, "murder", "humor")
+					message = replacetext(message, "murderer", "clown")
+					message = replacetext(message, "ghost", "fan")
+					message = replacetext(message, "dead", "happy")
+					message = replacetext(message, "killer", "comedian")
+					message = replacetext(message, "blood", "confetti")
+					message = replacetext(message, "gun", "banana")
+					message = replacetext(message, "killer", "comedian")
+					message = replacetext(message, "bomb", "pie")
+					message = replacetext(message, "explode", "comedian")
+					message = replacetext(message, "violence", "joy")
+
+	if ((M_HULK in mutations) && health >= 25 && length(message))
 		if(copytext(message, 1, 2) != "*")
 			message = "[uppertext(message)]!!" //because I don't know how to code properly in getting vars from other files -Bro
 
@@ -105,7 +140,40 @@
 			message = slur(message)
 	..(message)
 
+/mob/living/carbon/human/proc/forcesay(list/append)
+	if(stat == CONSCIOUS)
+		if(client)
+			var/virgin = 1	//has the text been modified yet?
+			var/temp = winget(client, "input", "text")
+			if(findtextEx(temp, "Say \"", 1, 7) && length(temp) > 5)	//case sensitive means
+
+				temp = replacetext(temp, ";", "")	//general radio
+
+				if(findtext(trim_left(temp), ":", 6, 7))	//dept radio
+					temp = copytext(trim_left(temp), 8)
+					virgin = 0
+
+				if(virgin)
+					temp = copytext(trim_left(temp), 6)	//normal speech
+					virgin = 0
+
+				while(findtext(trim_left(temp), ":", 1, 2))	//dept radio again (necessary)
+					temp = copytext(trim_left(temp), 3)
+
+				if(findtext(temp, "*", 1, 2))	//emotes
+					return
+
+				var/trimmed = trim_left(temp)
+				if(length(trimmed))
+					if(append)
+						temp += pick(append)
+
+					say(temp)
+				winset(client, "input", "text=[null]")
+
 /mob/living/carbon/human/say_understands(var/other,var/datum/language/speaking = null)
+	if(has_brain_worms()) //Brain worms translate everything. Even mice and alien speak.
+		return 1
 	if (istype(other, /mob/living/silicon/ai))
 		return 1
 	if (istype(other, /mob/living/silicon/decoy))

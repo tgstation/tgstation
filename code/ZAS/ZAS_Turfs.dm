@@ -52,7 +52,10 @@
 /turf/simulated/var/tmp/was_icy=0
 
 /turf/simulated/proc/update_visuals()
-	overlays = null
+	overlays = 0
+
+	if(decals.len)
+		overlays += decals
 
 	var/siding_icon_state = return_siding_icon_state()
 	if(siding_icon_state)
@@ -61,9 +64,13 @@
 	// ONLY USED IF ZAS_SETTINGS SAYS SO.
 	var/datum/gas_mixture/model = return_air()
 	if(model.graphics & GRAPHICS_COLD)
-		if(!was_icy)
+		// Only make a few tiles ice at a time.
+		if(!was_icy) // && prob(10))
 			wet=3 // Custom ice
 			was_icy=1
+
+		// Only display ice on tiles that are actually icy.
+		if(was_icy)
 			var/o=""
 			//if(is_plating())
 			//	o="snowfloor_s"
@@ -73,28 +80,33 @@
 			if(o!="")
 				overlays += image('icons/turf/overlays.dmi',o)
 	else
-		if(was_icy)
-			wet=0
-			was_icy=0
-			if(prob(10))
-				wet = 1
+		// ALWAYS unset wet and icy.
+		wet=0
+		was_icy=0
+
+		// 10% chance of becoming wet on thawing
+		if(prob(10) && was_icy)
+			wet = 1
+			if(wet_overlay)
+				overlays -= wet_overlay
+				wet_overlay = null
+			wet_overlay = image('icons/effects/water.dmi',src,"wet_floor")
+			overlays += wet_overlay
+
+			spawn(800)
+				if (!istype(src)) return
+				if(wet >= 2) return
+				wet = 0
 				if(wet_overlay)
 					overlays -= wet_overlay
 					wet_overlay = null
-				wet_overlay = image('icons/effects/water.dmi',src,"wet_floor")
-				overlays += wet_overlay
 
-				spawn(800)
-					if (!istype(src)) return
-					if(wet >= 2) return
-					wet = 0
-					if(wet_overlay)
-						overlays -= wet_overlay
-						wet_overlay = null
 	if(model.graphics & GRAPHICS_PLASMA)
 		overlays.Add(plmaster)
+
 	if(model.graphics & GRAPHICS_N2O)
 		overlays.Add(slmaster)
+
 	//if(model.graphics & GRAPHICS_REAGENTS)
 	//	overlays.Add(slmaster/*rlmaster*/)
 
@@ -123,7 +135,7 @@
 				if(istype(target))
 					air_master.tiles_to_update |= target
 
-/turf/simulated/Del()
+/turf/simulated/Destroy()
 	if(active_hotspot)
 		del(active_hotspot)
 	if(blocks_air)
@@ -141,7 +153,7 @@
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
 	if(!giver)	return 0
-	if(zone)
+	if(zone && zone.air && !iscatwalk(src))
 		zone.air.merge(giver)
 		return 1
 	else
@@ -210,7 +222,7 @@
 		for(var/connection/C in air_master.turfs_with_connections["\ref[src]"])
 			air_master.connections_to_check |= C
 
-	if(zone && !zone.rebuild)
+	if(zone && istype(zone.air) && !zone.rebuild)
 		if(zone.air.check_tile_graphic())
 			update_visuals(zone.air)
 		for(var/direction in cardinal)

@@ -22,6 +22,20 @@
 	var/planted = 0 // Is it occupied?
 	var/harvest = 0 //Ready to harvest?
 	var/obj/item/seeds/myseed = null // The currently planted seed
+	var/opened = 0.0
+
+/obj/machinery/hydroponics/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/hydroponics
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/capacitor
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker
+	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	RefreshParts()
 
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
@@ -337,7 +351,11 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
 	else if ( istype(myseed, /obj/item/seeds/chiliseed ))
 		del(myseed)
-		myseed = new /obj/item/seeds/icepepperseed
+		switch(rand(1,100))
+			if(1 to 60)
+				myseed = new /obj/item/seeds/icepepperseed
+			if(61 to 100)
+				myseed = new /obj/item/seeds/chillighost
 
 	else if ( istype(myseed, /obj/item/seeds/appleseed ))
 		del(myseed)
@@ -380,6 +398,17 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	else if ( istype(myseed, /obj/item/seeds/eggplantseed ))
 		del(myseed)
 		myseed = new /obj/item/seeds/eggyseed
+	else if ( istype(myseed, /obj/item/seeds/soyaseed ))
+		del(myseed)
+		myseed = new /obj/item/seeds/koiseed
+
+	else if ( istype(myseed, /obj/item/seeds/sunflowerseed ))
+		del(myseed)
+		switch(rand(1,100))
+			if(1 to 60)
+				myseed = new /obj/item/seeds/moonflowerseed
+			if(61 to 100)
+				myseed = new /obj/item/seeds/novaflowerseed
 
 	else
 		return
@@ -668,7 +697,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				user.client.screen -= O
 			O.dropped(user)
 			updateicon()
-
+			if(istype(0, /obj/item/seeds/replicapod))
+				var/obj/item/seeds/replicapod/RP = O
+				if(!RP.source)
+					RP.request_player()
 		else
 			user << "\red The [src] already has seeds in it!"
 
@@ -781,11 +813,36 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			A.icon_state = src.icon_state
 			A.hydrotray_type = src.type
 			del(src)
+	else if(istype(O, /obj/item/weapon/screwdriver))
+		if(anchored)
+			user << "You have to unanchor the [src] first!"
+			return
+		if(!opened)
+			src.opened = 1
+			//src.icon_state = "chem_dispenser_t"
+			user << "You open the maintenance hatch of [src]"
+		else
+			src.opened = 0
+			//src.icon_state = "chem_dispenser"
+			user << "You close the maintenance hatch of [src]"
+			return 1
+	else if(opened)
+		if(istype(O, /obj/item/weapon/crowbar))
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+		return 1
 	return
 
 
 /obj/machinery/hydroponics/attack_hand(mob/user as mob)
-	if(istype(usr,/mob/living/silicon))		//How does AI know what plant is?
+	if(!ishuman(user) && !ismonkey(user))
 		return
 	if(harvest)
 		if(!user in range(1,src))
@@ -915,116 +972,13 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	parent.update_tray()
 
-/obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
-	var/obj/machinery/hydroponics/parent = loc
-	var/make_podman = 0
-	var/mob/ghost
-	if(ckey && config.revival_pod_plants)
-		ghost = find_dead_player("[ckey]")
-		if(ismob(ghost))
-			if(istype(ghost,/mob/dead/observer))
-				var/mob/dead/observer/O = ghost
-				if(istype(mind,/datum/mind))
-					if(O.can_reenter_corpse)
-						make_podman = 1
-			else
-				make_podman = 1
-
-	if(make_podman)	//all conditions met!
-		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
-		if(realName)
-			podman.real_name = realName
-		else
-			podman.real_name = "Pod Person [rand(0,999)]"
-		var/oldactive = mind.active
-		mind.active = 1
-		mind.transfer_to(podman)
-		mind.active = oldactive
-			// -- Mode/mind specific stuff goes here. TODO! Broken :( Should be merged into mob/living/Login
-		switch(ticker.mode.name)
-			if ("revolution")
-				if (podman.mind in ticker.mode:revolutionaries)
-					ticker.mode:add_revolutionary(podman.mind)
-					ticker.mode:update_all_rev_icons() //So the icon actually appears
-				if (podman.mind in ticker.mode:head_revolutionaries)
-					ticker.mode:update_all_rev_icons()
-			if ("nuclear emergency")
-				if (podman.mind in ticker.mode:syndicates)
-					ticker.mode:update_all_synd_icons()
-			if ("cult")
-				if (podman.mind in ticker.mode:cult)
-					ticker.mode:add_cultist(podman.mind)
-					ticker.mode:update_all_cult_icons() //So the icon actually appears
-		if("\ref[podman.mind]" in ticker.mode.implanter || podman.mind in ticker.mode.implanted)
-			ticker.mode.update_traitor_icons_added(podman.mind) //So the icon actually appears
-			// -- End mode specific stuff
-
-		podman.gender = ghost.gender
-		if(podman.gender in list(NEUTER, PLURAL))	//Sanity check, which should never actually happen.
-			podman.gender = pick(MALE,FEMALE)
-
-		if(!podman.dna)
-			podman.dna = new /datum/dna()
-			podman.dna.real_name = podman.real_name
-		if(ui)
-			podman.dna.uni_identity = ui
-			updateappearance(podman, ui)
-		if(se)
-			podman.dna.struc_enzymes = se
-		if(!prob(potency)) //if it fails, plantman!
-			if(podman)
-//				podman.dna.mutantrace = "plant"
-				podman.mutations.Add(PLANT)
-		podman.update_mutantrace()
-
-	else //else, one packet of seeds. maybe two
-		var/seed_count = 1
-		if(prob(yield * parent.yieldmod * 20))
-			seed_count++
-		for(var/i=0,i<seed_count,i++)
-			var/obj/item/seeds/replicapod/harvestseeds = new /obj/item/seeds/replicapod(user.loc)
-			harvestseeds.lifespan = lifespan
-			harvestseeds.endurance = endurance
-			harvestseeds.maturation = maturation
-			harvestseeds.production = production
-			harvestseeds.yield = yield
-			harvestseeds.potency = potency
-
-	parent.update_tray()
-
-/obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/reagent_containers))
-
-		user << "You inject the contents of the syringe into the seeds."
-
-		for(var/datum/reagent/blood/bloodSample in W:reagents.reagent_list)
-			var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
-			if (!istype(source))
-				continue
-			//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
-			ui = source.dna.uni_identity
-			se = source.dna.struc_enzymes
-			if(source.ckey)
-				ckey = source.ckey
-			else if(source.mind)
-				ckey = ckey(source.mind.key)
-			realName = source.real_name
-			gender = source.gender
-
-			if (!isnull(source.mind))
-				mind = source.mind
-
-		W:reagents.clear_reagents()
-	else
-		return ..()
-
 /obj/machinery/hydroponics/proc/update_tray(mob/user = usr)
 	harvest = 0
 	lastproduce = age
-	if((yieldmod * myseed.yield) <= 0)
+	if((yieldmod * myseed.yield) <= 0 || istype(myseed,/obj/item/seeds/replicapod))
 		user << text("\red You fail to harvest anything useful.")
 	else
-		user << text("You harvest from the [myseed.plantname]")
+		user << text("You harvest from the [myseed.plantname].")
 	if(myseed.oneharvest)
 		del(myseed)
 		planted = 0

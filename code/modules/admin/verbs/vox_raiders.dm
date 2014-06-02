@@ -57,26 +57,20 @@ var/global/vox_tick = 1
 	equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_back)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_r_store)
 
-	var/obj/item/weapon/card/id/syndicate/W = new(src)
-	W.name = "[real_name]'s Legitimate Human ID Card"
-	W.icon_state = "id"
-	W.access = list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage, access_syndicate)
-	W.assignment = "Trader"
-	W.registered_name = real_name
+	var/obj/item/weapon/card/id/syndicate/C = new(src)
+	C.name = "[real_name]'s Legitimate Human ID Card"
+	C.icon_state = "id"
+	C.access = list(access_syndicate)
+	C.assignment = "Trader"
+	C.registered_name = real_name
+	//C.registered_user = src
+	var/obj/item/weapon/storage/wallet/W = new(src)
+	W.handle_item_insertion(C)
+	// NO. /vg/ spawn_money(rand(50,150)*10,W)
 	equip_to_slot_or_del(W, slot_wear_id)
 
-	var/obj/item/weapon/implant/cortical/I = new(src)
-	I.imp_in = src
-	I.implanted = 1
-	var/datum/organ/external/affected = src.get_organ("head")
-	affected.implants += I
-	I.part = affected
-
-	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist ) ) )
-		var/datum/game_mode/heist/M = ticker.mode
-		M.cortical_stacks += I
-
 	vox_tick++
-	if (vox_tick > 4) vox_tick = 1
+	if (vox_tick > 4)
+		vox_tick = 1
 
 	return 1

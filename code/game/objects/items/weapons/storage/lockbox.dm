@@ -43,8 +43,8 @@
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, src.loc)
 				spark_system.start()
-				playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-				playsound(src.loc, "sparks", 50, 1)
+				playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
+				playsound(get_turf(src), "sparks", 50, 1)
 				for(var/mob/O in viewers(user, 3))
 					O.show_message(text("\blue The locker has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 			else
@@ -77,6 +77,29 @@
 		new /obj/item/weapon/implantcase/loyalty(src)
 		new /obj/item/weapon/implanter/loyalty(src)
 
+/obj/item/weapon/storage/lockbox/tracking
+	name = "Lockbox (Tracking Implants)"
+	req_access = list(access_security)
+
+	New()
+		..()
+		new /obj/item/weapon/implantcase/tracking(src)
+		new /obj/item/weapon/implantcase/tracking(src)
+		new /obj/item/weapon/implantcase/tracking(src)
+		new /obj/item/weapon/implantpad(src)
+		new /obj/item/weapon/implanter(src)
+
+/obj/item/weapon/storage/lockbox/chem
+	name = "Lockbox (Chemical Implants)"
+	req_access = list(access_security)
+
+	New()
+		..()
+		new /obj/item/weapon/implantcase/chem(src)
+		new /obj/item/weapon/implantcase/chem(src)
+		new /obj/item/weapon/implantcase/chem(src)
+		new /obj/item/weapon/reagent_containers/syringe(src)
+		new /obj/item/weapon/implanter(src)
 
 /obj/item/weapon/storage/lockbox/clusterbang
 	name = "lockbox (clusterbang)"

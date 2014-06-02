@@ -1,6 +1,9 @@
 //conveyor2 is pretty much like the original, except it supports corners, but not diverters.
 //note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
 
+// May need to be increased.
+#define CONVEYOR_CONTROL_RANGE 30
+
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "conveyor0"
@@ -14,11 +17,13 @@
 	var/movedir			// the actual direction to move stuff in
 
 	var/list/affecting	// the list of all items that will be moved this ptick
-	var/id = ""			// the control ID	- must match controller ID
+	var/id_tag = ""			// the control ID	- must match controller ID
+
+	var/frequency = 1367
+	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/conveyor/centcom_auto
-	id = "round_end_belt"
-
+	id_tag = "round_end_belt"
 
 // Auto conveyour is always on unless unpowered
 
@@ -40,11 +45,49 @@
 		operating = 1
 	icon_state = "conveyor[operating]"
 
+
+
+/obj/machinery/conveyor/initialize()
+	if(frequency)
+		set_frequency(frequency)
+	update()
+
+/obj/machinery/conveyor/proc/set_frequency(var/new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	radio_connection = radio_controller.add_object(src, frequency, RADIO_CONVEYORS)
+
+/obj/machinery/conveyor/receive_signal(datum/signal/signal)
+	if(!signal || signal.encryption) return
+
+	if(id_tag != signal.data["tag"] || !signal.data["command"]) return
+	switch(signal.data["command"])
+		if("forward")
+			operating = 1
+			setmove()
+			return 1
+		if("reverse")
+			operating = -1
+			setmove()
+			return 1
+		if("stop")
+			operating = 0
+			update()
+			return 1
+		else
+			testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
+
+
 	// create a conveyor
-/obj/machinery/conveyor/New(loc, newdir)
+/obj/machinery/conveyor/New(loc, newdir=null, building=0)
 	..(loc)
 	if(newdir)
 		dir = newdir
+	component_parts = list()
+	RefreshParts()
+	updateConfig(!building)
+
+/obj/machinery/conveyor/proc/updateConfig(var/startup=0)
 	switch(dir)
 		if(NORTH)
 			forwards = NORTH
@@ -70,6 +113,8 @@
 		if(SOUTHWEST)
 			forwards = WEST
 			backwards = NORTH
+	if(!startup) // Need to wait for the radio_controller to wake up.
+		initialize()
 
 /obj/machinery/conveyor/proc/setmove()
 	if(operating == 1)
@@ -110,11 +155,80 @@
 				break
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
+/obj/machinery/conveyor/attackby(var/obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/multitool))
+		update_multitool_menu(user)
+		return 1
+	if(!operating && istype(W, /obj/item/weapon/crowbar))
+		user << "\blue You begin prying apart \the [src]..."
+		if(do_after(user,50))
+			user << "\blue You disassemble \the [src]..."
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			del(src)
+		return 1
 	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
 	user.drop_item()
-	if(I && I.loc)	I.loc = src.loc
+	if(W && W.loc)	W.loc = src.loc
 	return
+
+/obj/machinery/conveyor/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+	//var/obj/item/device/multitool/P = get_multitool(user)
+	var/dis_id_tag="-----"
+	if(id_tag!=null && id_tag!="")
+		dis_id_tag=id_tag
+	return {"
+	<ul>
+		<li><b>Direction:</b>
+			<a href="?src=\ref[src];setdir=[NORTH]" title="North">&uarr;</a>
+			<a href="?src=\ref[src];setdir=[EAST]" title="East">&rarr;</a>
+			<a href="?src=\ref[src];setdir=[SOUTH]" title="South">&darr;</a>
+			<a href="?src=\ref[src];setdir=[WEST]" title="West">&larr;</a>
+		</li>
+		<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=1367">Reset</a>)</li>
+		<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[dis_id_tag]</a></li>
+	</ul>"}
+
+
+/obj/machinery/conveyor/Topic(href, href_list)
+	if(..())
+		return
+
+	if(!issilicon(usr))
+		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			return
+
+	if("set_id" in href_list)
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+		if(newid)
+			id_tag = newid
+			initialize()
+
+	if("set_freq" in href_list)
+		var/newfreq=frequency
+		if(href_list["set_freq"]!="-1")
+			newfreq=text2num(href_list["set_freq"])
+		else
+			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+		if(newfreq)
+			if(findtext(num2text(newfreq), "."))
+				newfreq *= 10 // shift the decimal one place
+			if(newfreq < 10000)
+				frequency = newfreq
+				initialize()
+
+	if("setdir" in href_list)
+		operating=0
+		dir=text2num(href_list["setdir"])
+		updateConfig()
+
+	update_multitool_menu(usr)
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user as mob)
@@ -141,6 +255,7 @@
 	stat |= BROKEN
 	update()
 
+	/*
 	var/obj/machinery/conveyor/C = locate() in get_step(src, dir)
 	if(C)
 		C.set_operable(dir, id, 0)
@@ -148,20 +263,21 @@
 	C = locate() in get_step(src, turn(dir,180))
 	if(C)
 		C.set_operable(turn(dir,180), id, 0)
+	*/
 
 
 //set the operable var if ID matches, propagating in the given direction
 
 /obj/machinery/conveyor/proc/set_operable(stepdir, match_id, op)
 
-	if(id != match_id)
+	if(id_tag != match_id)
 		return
 	operable = op
 
 	update()
 	var/obj/machinery/conveyor/C = locate() in get_step(src, stepdir)
 	if(C)
-		C.set_operable(stepdir, id, op)
+		C.set_operable(stepdir, id_tag, op)
 
 /*
 /obj/machinery/conveyor/verb/destroy()
@@ -178,7 +294,6 @@
 //
 
 /obj/machinery/conveyor_switch
-
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
@@ -187,22 +302,42 @@
 	var/last_pos = -1			// last direction setting
 	var/operated = 1			// true if just operated
 
-	var/id = "" 				// must match conveyor IDs to control them
+	var/id_tag = "" 			// must match conveyor IDs to control them
 
-	var/list/conveyors		// the list of converyors that are controlled by this switch
+	var/frequency = 1367
+	var/datum/radio_frequency/radio_connection
+
 	anchored = 1
 
+/obj/machinery/conveyor_switch/receive_signal(datum/signal/signal)
+	if(!signal || signal.encryption) return
+	if(src == signal.source) return
+
+	if(id_tag != signal.data["tag"] || !signal.data["command"]) return
+	switch(signal.data["command"])
+		if("forward")
+			position = 1
+			last_pos = 0
+		if("reverse")
+			position = -1
+			last_pos = 0
+		if("stop")
+			last_pos = position
+			position = 0
+		else
+			testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
+			return
+	update()
 
 
 /obj/machinery/conveyor_switch/New()
 	..()
 	update()
-
 	spawn(5)		// allow map load
-		conveyors = list()
-		for(var/obj/machinery/conveyor/C in world)
-			if(C.id == id)
-				conveyors += C
+		updateConfig()
+
+/obj/machinery/conveyor_switch/proc/updateConfig()
+	//initialize()
 
 // update the icon depending on the position
 
@@ -214,40 +349,64 @@
 	else
 		icon_state = "switch-off"
 
+/obj/machinery/conveyor_switch/initialize()
+	if(frequency)
+		set_frequency(frequency)
+	update()
 
-// timed process
-// if the switch changed, update the linked conveyors
-
-/obj/machinery/conveyor_switch/process()
-	if(!operated)
-		return
-	operated = 0
-
-	for(var/obj/machinery/conveyor/C in conveyors)
-		C.operating = position
-		C.setmove()
+/obj/machinery/conveyor_switch/proc/set_frequency(var/new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	radio_connection = radio_controller.add_object(src, frequency, RADIO_CONVEYORS)
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
+	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
+		usr << "\red Nope."
+		return 0
 	if(position == 0)
 		if(last_pos < 0)
 			position = 1
 			last_pos = 0
+			send_command("forward")
 		else
 			position = -1
 			last_pos = 0
+			send_command("reverse")
 	else
 		last_pos = position
 		position = 0
+		send_command("stop")
 
-	operated = 1
 	update()
 
-	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in world)
-		if(S.id == src.id)
-			S.position = position
-			S.update()
+/obj/machinery/conveyor_switch/proc/send_command(var/command)
+	if(radio_connection)
+		var/datum/signal/signal = new
+		signal.source=src
+		signal.transmission_method = 1 //radio signal
+		signal.data["tag"] = id_tag
+		signal.data["timestamp"] = world.time
+
+		signal.data["command"] = command
+
+		radio_connection.post_signal(src, signal, range = CONVEYOR_CONTROL_RANGE)
+
+/obj/machinery/conveyor_switch/attackby(var/obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/multitool))
+		update_multitool_menu(user)
+		return 1
+	if(istype(W, /obj/item/weapon/wrench))
+		user << "\blue Deconstructing \the [src]..."
+		if(do_after(user,50))
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
+			user << "\blue You disassemble \the [src]."
+			var/turf/T=get_turf(src)
+			new /obj/item/device/assembly/signaler(T)
+			new /obj/item/stack/rods(T,1)
+			del(src)
+		return 1
+	return ..()
 
 /obj/machinery/conveyor_switch/oneway
 	var/convdir = 1 //Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.)
@@ -255,16 +414,78 @@
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/oneway/attack_hand(mob/user)
+	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
+		usr << "\red Nope."
+		return 0
 	if(position == 0)
 		position = convdir
+		send_command(convdir==1?"forward":"reverse")
 	else
 		position = 0
+		send_command("stop")
 
-	operated = 1
 	update()
 
-	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in world)
-		if(S.id == src.id)
-			S.position = position
-			S.update()
+
+/obj/machinery/conveyor_switch/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+	var/dis_id_tag="-----"
+	if(id_tag!=null && id_tag!="")
+		dis_id_tag=id_tag
+	return {"
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=1367">Reset</a>)</li>
+			<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[dis_id_tag]</a></li>
+		</ul>
+	"}
+
+/obj/machinery/conveyor_switch/oneway/receive_signal(datum/signal/signal)
+	if(!signal || signal.encryption) return
+	if(src == signal.source) return
+
+	if(id_tag != signal.data["tag"] || !signal.data["command"]) return
+	switch(signal.data["command"])
+		if("forward")
+			if(convdir==1)
+				position = 1
+		if("reverse")
+			if(convdir==-1)
+				position = -1
+		if("stop")
+			position = 0
+		else
+			testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
+			return
+	update()
+
+
+/obj/machinery/conveyor_switch/Topic(href, href_list)
+	if(..())
+		return
+
+	if(!issilicon(usr))
+		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			return
+
+	//var/obj/item/device/multitool/P = get_multitool(usr)
+
+	if("set_id" in href_list)
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+		if(newid)
+			id_tag = newid
+			initialize()
+
+	if("set_freq" in href_list)
+		var/newfreq=frequency
+		if(href_list["set_freq"]!="-1")
+			newfreq=text2num(href_list["set_freq"])
+		else
+			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+		if(newfreq)
+			if(findtext(num2text(newfreq), "."))
+				newfreq *= 10 // shift the decimal one place
+			if(newfreq < 10000)
+				frequency = newfreq
+				initialize()
+
+	usr.set_machine(src)
+	update_multitool_menu(usr)

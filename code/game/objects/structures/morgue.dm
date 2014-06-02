@@ -36,21 +36,21 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 	return
 
@@ -65,11 +65,11 @@
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
 			if (!( A.anchored ))
 				A.loc = src
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		//src.connected = null
 		del(src.connected)
 	else
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/m_tray( src.loc )
 		step(src.connected, src.dir)
 		src.connected.layer = OBJ_LAYER
@@ -204,21 +204,21 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 	return
 
@@ -242,11 +242,11 @@
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
 			if (!( A.anchored ))
 				A.loc = src
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		//src.connected = null
 		del(src.connected)
 	else if (src.locked == 0)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/c_tray( src.loc )
 		step(src.connected, SOUTH)
 		src.connected.layer = OBJ_LAYER
@@ -338,7 +338,7 @@
 		sleep(30)
 		cremating = 0
 		locked = 0
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 	return
 
 

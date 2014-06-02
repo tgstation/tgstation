@@ -26,7 +26,7 @@ var/list/solars_list = list()
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
-	var/id = 0
+	var/id_tag = 0
 	var/health = 10
 	var/obscured = 0
 	var/sunfrac = 0
@@ -64,13 +64,13 @@ var/list/solars_list = list()
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 
 	if(iscrowbar(W))
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 		if(do_after(user, 50))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
 				S.give_glass()
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
 			del(src)
 		return
@@ -92,8 +92,8 @@ var/list/solars_list = list()
 		if(!(stat & BROKEN))
 			broken()
 		else
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
+			getFromPool(/obj/item/weapon/shard, loc)
+			getFromPool(/obj/item/weapon/shard, loc)
 			del(src)
 			return
 	return
@@ -157,14 +157,14 @@ var/list/solars_list = list()
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			if(prob(15))
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 			return
 		if(2.0)
 			if (prob(25))
-				new /obj/item/weapon/shard( src.loc )
-				del(src)
+				getFromPool(/obj/item/weapon/shard, loc)
+				qdel(src)
 				return
 			if (prob(50))
 				broken()
@@ -221,13 +221,13 @@ var/list/solars_list = list()
 		if(iswrench(W))
 			anchored = 1
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 			return 1
 	else
 		if(iswrench(W))
 			anchored = 0
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 			return 1
 
 		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
@@ -235,7 +235,7 @@ var/list/solars_list = list()
 			if(S.amount >= 2)
 				glass_type = W.type
 				S.use(2)
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>")
 				if(tracker)
 					new /obj/machinery/power/tracker(get_turf(src), src)
@@ -273,7 +273,7 @@ var/list/solars_list = list()
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 20
-	var/id = 0
+	var/id_tag = 0
 	var/cdir = 0
 	var/gen = 0
 	var/lastgen = 0
@@ -334,12 +334,12 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar_control/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
@@ -470,7 +470,7 @@ Manual Tracking Direction:"}
 		if(src.trackrate) nexttime = world.time + 6000/trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
-			if(!solars_list.Find(src,1,0))
+			if(!solars_list.Find(src,1,0) || !(locate(src) in solars_list) || !(src in solars_list))
 				solars_list.Add(src)
 			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
 				if(powernet.nodes[T])
@@ -520,7 +520,7 @@ Manual Tracking Direction:"}
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))

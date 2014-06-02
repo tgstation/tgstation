@@ -101,6 +101,9 @@
 	disease.stageprob = stageprob
 	disease.antigen   = antigen
 	disease.uniqueID = uniqueID
+	disease.speed = speed
+	disease.stage = stage
+	disease.clicks = clicks
 	for(var/datum/disease2/effectholder/holder in effects)
 		var/datum/disease2/effectholder/newholder = new /datum/disease2/effectholder
 		newholder.effect = new holder.effect.type
@@ -137,7 +140,7 @@
 		if(istype(V))
 			res["[V.uniqueID]"] = V.getcopy()
 		else
-			testing("Got a NULL disease2 in virus_copylist!")
+			testing("Got a NULL disease2 in virus_copylist ([V] is [V.type])!")
 	return res
 
 
@@ -151,13 +154,9 @@ var/global/list/virusDB = list()
 
 /datum/disease2/disease/proc/get_info()
 	var/r = "GNAv2 based virus lifeform - [name()], #[add_zero("[uniqueID]", 4)]"
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\disease2.dm:145: r += "<BR>Infection rate : [infectionchance * 10]"
-	r += {"<BR>Infection rate : [infectionchance * 10]
-<BR>Spread form : [spreadtype]
-<BR>Progress Speed : [stageprob * 10]"}
-	// END AUTOFIX
+	r += "<BR>Infection rate : [infectionchance * 10]"
+	r += "<BR>Spread form : [spreadtype]"
+	r += "<BR>Progress Speed : [stageprob * 10]"
 	for(var/datum/disease2/effectholder/E in effects)
 		r += "<BR>Effect:[E.effect.name]. Strength : [E.multiplier * 8]. Verosity : [E.chance * 15]. Type : [5-E.stage]."
 

@@ -1,7 +1,43 @@
 //STRIKE TEAMS
+//Thanks to Kilakk for the admin-button portion of this code.
 
 var/list/response_team_members = list()
-var/send_emergency_team = 0
+var/global/send_emergency_team = 0 // Used for automagic response teams
+                                   // 'admin_emergency_team' for admin-spawned response teams
+var/ert_base_chance = 10 // Default base chance. Will be incremented by increment ERT chance.
+var/can_call_ert
+
+/client/proc/response_team()
+	set name = "Dispatch Emergency Response Team"
+	set category = "Special Verbs"
+	set desc = "Send an emergency response team to the station"
+
+	if(!holder)
+		usr << "\red Only administrators may use this command."
+		return
+	if(!ticker)
+		usr << "\red The game hasn't started yet!"
+		return
+	if(ticker.current_state == 1)
+		usr << "\red The round hasn't started yet!"
+		return
+	if(send_emergency_team)
+		usr << "\red Central Command has already dispatched an emergency response team!"
+		return
+	if(alert("Do you want to dispatch an Emergency Response Team?",,"Yes","No") != "Yes")
+		return
+	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red
+		switch(alert("The station is not in red alert. Do you still want to dispatch a response team?",,"Yes","No"))
+			if("No")
+				return
+	if(send_emergency_team)
+		usr << "\red Looks like somebody beat you to it!"
+		return
+
+	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
+	log_admin("[key_name(usr)] used Dispatch Response Team.")
+	trigger_armed_response_team(1)
+
 
 client/verb/JoinResponseTeam()
 	set category = "IC"
@@ -16,15 +52,16 @@ client/verb/JoinResponseTeam()
 
 		if(response_team_members.len > 5) usr << "The emergency response team is already full!"
 
-		var/leader_selected = (response_team_members.len == 0)
 
-
-		for (var/obj/effect/landmark/L in world) if (L.name == "Commando")
-
+		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
+			L.name = null//Reserving the place.
 			var/new_name = input(usr, "Pick a name","Name") as null|text
-			if(!new_name) return
-			var/mob/living/carbon/human/new_commando = create_response_team(L, leader_selected, new_name)
-
+			if(!new_name)//Somebody changed his mind, place is available again.
+				L.name = "Commando"
+				return
+			var/leader_selected = isemptylist(response_team_members)
+			var/mob/living/carbon/human/new_commando = create_response_team(L.loc, leader_selected, new_name)
+			del(L)
 			new_commando.mind.key = usr.key
 			new_commando.key = usr.key
 
@@ -34,7 +71,7 @@ client/verb/JoinResponseTeam()
 				new_commando << "<b>As member of the Emergency Response Team, you answer only to your leader and CentComm officials.</b>"
 			else
 				new_commando << "<b>As leader of the Emergency Response Team, you answer only to CentComm, and have authority to override the Captain where it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the captain where possible, however."
-			del(L)
+			return
 
 	else
 		usr << "You need to be an observer or new player to use this."
@@ -43,9 +80,10 @@ client/verb/JoinResponseTeam()
 proc/percentage_dead()
 	var/total = 0
 	var/deadcount = 0
-	for(var/mob/living/carbon/human/H in world) if(H.mind) // I *think* monkeys gone human don't have a mind
-		if(H.stat == 2) deadcount++
-		total++
+	for(var/mob/living/carbon/human/H in mob_list)
+		if(H.client) // Monkeys and mice don't have a client, amirite?
+			if(H.stat == 2) deadcount++
+			total++
 
 	if(total == 0) return 0
 	else return round(100 * deadcount / total)
@@ -54,7 +92,7 @@ proc/percentage_dead()
 proc/percentage_antagonists()
 	var/total = 0
 	var/antagonists = 0
-	for(var/mob/living/carbon/human/H in world)
+	for(var/mob/living/carbon/human/H in mob_list)
 		if(is_special_character(H) >= 1)
 			antagonists++
 		total++
@@ -62,12 +100,28 @@ proc/percentage_antagonists()
 	if(total == 0) return 0
 	else return round(100 * antagonists / total)
 
+// Increments the ERT chance automatically, so that the later it is in the round,
+// the more likely an ERT is to be able to be called.
+proc/increment_ert_chance()
+	while(send_emergency_team == 0) // There is no ERT at the time.
+		if(get_security_level() == "green")
+			ert_base_chance += 1
+		if(get_security_level() == "blue")
+			ert_base_chance += 2
+		if(get_security_level() == "red")
+			ert_base_chance += 3
+		if(get_security_level() == "delta")
+			ert_base_chance += 10           // Need those big guns
+		sleep(600 * 3) // Minute * Number of Minutes
+
 
 proc/trigger_armed_response_team(var/force = 0)
+	if(!can_call_ert && !force)
+		return
 	if(send_emergency_team)
 		return
 
-	var/send_team_chance = 20 // base chance that a team will be sent
+	var/send_team_chance = ert_base_chance // Is incremented by increment_ert_chance.
 	send_team_chance += 2*percentage_dead() // the more people are dead, the higher the chance
 	send_team_chance += percentage_antagonists() // the more antagonists, the higher the chance
 	send_team_chance = min(send_team_chance, 100)
@@ -75,13 +129,20 @@ proc/trigger_armed_response_team(var/force = 0)
 	if(force) send_team_chance = 100
 
 	// there's only a certain chance a team will be sent
-	if(!prob(send_team_chance)) return
+	if(!prob(send_team_chance))
+		command_alert("It would appear that an emergency response team was requested for [station_name()]. Unfortunately, we were unable to send one at this time.", "Central Command")
+		can_call_ert = 0 // Only one call per round, ladies.
+		return
 
-	command_alert("According to our sensors, [station_name()] has entered code red. We will prepare and dispatch an emergency response team to deal with the situation.", "Command Report")
+	command_alert("It would appear that an emergency response team was requested for [station_name()]. We will prepare and send one as soon as possible.", "Central Command")
 
+	can_call_ert = 0 // Only one call per round, gentleman.
 	send_emergency_team = 1
 
-	var/area/security/nuke_storage/nukeloc = locate()//To find the nuke in the vault
+	sleep(600 * 5)
+	send_emergency_team = 0 // Can no longer join the ERT.
+
+	var/area/storage/nuke_storage/nukeloc = locate()//To find the nuke in the vault
 	var/obj/machinery/nuclearbomb/nuke = locate() in nukeloc
 	if(!nuke)
 		nuke = locate() in world
@@ -208,9 +269,8 @@ proc/trigger_armed_response_team(var/force = 0)
 	M.mind.special_role = "Response Team"
 	if(!(M.mind in ticker.minds))
 		ticker.minds += M.mind//Adds them to regular mind list.
-	M.loc = spawn_location.loc
+	M.loc = spawn_location
 	M.equip_strike_team(leader_selected)
-	del(spawn_location)
 	return M
 
 /mob/living/carbon/human/proc/equip_strike_team(leader_selected = 0)
@@ -247,25 +307,18 @@ proc/trigger_armed_response_team(var/force = 0)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
 
 	var/obj/item/weapon/card/id/W = new(src)
-	W.name = "[real_name]'s ID Card (Emergency Response Team)"
-	W.icon_state = "centcom"
-	if(leader_selected)
-		W.name = "[real_name]'s ID Card (Emergency Response Team Leader)"
-		W.access = get_all_accesses()
-		W.access += get_all_centcom_access()
-		W.assignment = "Emergency Response Team Leader"
-	else
-		W.access = get_all_accesses()
-		W.access += get_all_centcom_access()
-		W.assignment = "Emergency Response Team"
-	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
+	W.assignment = "Emergency Response Team[leader_selected ? " Leader" : ""]"
 	W.registered_name = real_name
+	W.name = "[real_name]'s ID Card ([W.assignment])"
+	W.icon_state = "centcom"
+	W.access = get_all_accesses()
+	W.access += get_all_centcom_access()
 	equip_to_slot_or_del(W, slot_wear_id)
 
 	return 1
 
-/*//debug verb
-client/verb/ResponseTeam()
+//debug verb (That is horribly coded, LEAVE THIS OFF UNLESS PRIVATELY TESTING. Seriously.
+/*client/verb/ResponseTeam()
 	set category = "Admin"
 	if(!send_emergency_team)
 		send_emergency_team = 1*/

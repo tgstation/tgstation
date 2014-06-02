@@ -30,13 +30,22 @@
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = traitor
 		kill_objective.target = target_list[traitor]
-		kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.special_role]."
+		if(kill_objective.target)
+			kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.special_role]."
+		else //Something went wrong, so give them a random assasinate objective
+			kill_objective.find_target()
 		traitor.objectives += kill_objective
 
+
 	// Escape
-	var/datum/objective/escape/escape_objective = new
-	escape_objective.owner = traitor
-	traitor.objectives += escape_objective
+	if(prob(25))
+		var/datum/objective/die/die_objective = new
+		die_objective.owner = traitor
+		traitor.objectives += die_objective
+	else
+		var/datum/objective/escape/escape_objective = new
+		escape_objective.owner = traitor
+		traitor.objectives += escape_objective
 	return
 
 /datum/game_mode/traitor/double_agents/greet_traitor(var/datum/mind/traitor)

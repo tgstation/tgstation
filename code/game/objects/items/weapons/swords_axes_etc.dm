@@ -27,7 +27,7 @@
 	_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((M_CLUMSY in user.mutations) && prob(50))
 		user << "\red You accidentally cut yourself with [src]."
 		user.take_organ_damage(5,5)
 	active = !active
@@ -79,7 +79,7 @@
 	force = 10
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((M_CLUMSY in user.mutations) && prob(50))
 		user << "\red You club yourself over the head."
 		user.Weaken(3 * force)
 		if(ishuman(user))
@@ -97,20 +97,24 @@
 */
 	if (user.a_intent == "hurt")
 		if(!..()) return
-		playsound(src.loc, "swing_hit", 50, 1, -1)
-		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+		playsound(get_turf(src), "swing_hit", 50, 1, -1)
+		if (M.stuttering < 8 && (!(M_HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
 		M.Stun(8)
 		M.Weaken(8)
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been beaten with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
 	else
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
+		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1, -1)
 		M.Stun(5)
 		M.Weaken(5)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 		log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+		if(!iscarbon(user))
+			M.LAssailant = null
+		else
+			M.LAssailant = user
 		src.add_fingerprint(user)
 
 		for(var/mob/O in viewers(M))
@@ -150,7 +154,7 @@
 		w_class = 2
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
-	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 
 	if(blood_overlay)							//updates blood overlay, if any
@@ -167,7 +171,7 @@
 
 /obj/item/weapon/melee/telebaton/attack(mob/target as mob, mob/living/user as mob)
 	if(on)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if ((M_CLUMSY in user.mutations) && prob(50))
 			user << "\red You club yourself over the head."
 			user.Weaken(3 * force)
 			if(ishuman(user))
@@ -179,17 +183,21 @@
 		if (user.a_intent == "hurt")
 			if(!..()) return
 			if(!isrobot(target))
-				playsound(src.loc, "swing_hit", 50, 1, -1)
+				playsound(get_turf(src), "swing_hit", 50, 1, -1)
 				//target.Stun(4)	//naaah
 				target.Weaken(4)
 		else
-			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
+			playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1, -1)
 			target.Weaken(2)
 			target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [target.name] ([target.ckey])</font>")
 			log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 			src.add_fingerprint(user)
 			target.visible_message("\red <B>[target] has been stunned with \the [src] by [user]!</B>")
+			if(!iscarbon(user))
+				target.LAssailant = null
+			else
+				target.LAssailant = user
 		return
 	else
 		return ..()
@@ -254,7 +262,7 @@
 		return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((M_CLUMSY in user.mutations) && prob(50))
 		user << "\red You beat yourself in the head with [src]."
 		user.take_organ_damage(5)
 	active = !active

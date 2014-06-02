@@ -20,15 +20,18 @@
 	flick("h2monkey", animation)
 	sleep(48)
 	//animation = null
-	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
-	del(animation)
 
-	O.name = "monkey"
-	O.dna = dna
-	dna = null
-	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
-	//O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
-	O.dna.struc_enzymes = "[copytext(O.dna.struc_enzymes,1,1+3*(STRUCDNASIZE-1))]BB8"
+	if(!species.primitive) //If the creature in question has no primitive set, this is going to be messy.
+		gib()
+		return
+
+	var/mob/living/carbon/monkey/O = null
+
+	O = new species.primitive(loc)
+
+	O.dna = dna.Clone()
+	O.dna.SetSEState(MONKEYBLOCK,1)
+	O.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
 	O.loc = loc
 	O.viruses = viruses
 	viruses = list()
@@ -39,10 +42,13 @@
 		client.mob = O
 	if(mind)
 		mind.transfer_to(O)
-	O.a_intent = "hurt"
-	O << "<B>You are now a monkey.</B>"
+
+	O << "<B>You are now [O]. </B>"
+
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
+	del(animation)
+
 	return O
 
 /mob/new_player/AIize()
@@ -152,16 +158,14 @@
 	O.cell.maxcharge = 7500
 	O.cell.charge = 7500
 
-
 	O.gender = gender
 	O.invisibility = 0
-
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
 		if(O.mind.assigned_role == "Cyborg")
 			O.mind.original = O
-		else if(mind.special_role)
+		else if(mind&&mind.special_role)
 			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else
 		O.key = key
@@ -194,10 +198,10 @@
 
 	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi( loc )
 
-	// cyborgs produced by Robotize get an automatic power cell
+	// MoMMIs produced by Robotize get an automatic power cell
 	O.cell = new(O)
-	O.cell.maxcharge = 7500
-	O.cell.charge = 7500
+	O.cell.maxcharge = 15000
+	O.cell.charge = 15000
 
 
 	O.gender = gender
@@ -208,7 +212,7 @@
 		mind.transfer_to(O)
 		if(O.mind.assigned_role == "Cyborg")
 			O.mind.original = O
-		else if(mind.special_role)
+		else if(mind && mind.special_role)
 			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else
 		O.key = key
@@ -402,7 +406,7 @@
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/mushroom))
+	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/shade))
 		return 1

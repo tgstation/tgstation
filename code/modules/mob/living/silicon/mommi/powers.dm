@@ -30,3 +30,13 @@
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O << "[src] slowly peeks up..."
+	updateicon()
+
+/mob/living/silicon/robot/mommi/verb/park()
+	set name = "Toggle Parking Brake"
+	set desc = "Lock yourself in place"
+	set category = "Robot Commands"
+	var/mob/living/silicon/robot/mommi/R = src
+	R.anchored=!R.anchored
+	R.canmove=!R.anchored
+	updateicon()

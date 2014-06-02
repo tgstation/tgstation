@@ -23,6 +23,20 @@
 		initialize_directions = dir
 		..()
 
+	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+		dir = pipe.dir
+		initialize_directions = pipe.get_pipe_dir()
+		if (pipe.pipename)
+			name = pipe.pipename
+		var/turf/T = loc
+		level = T.intact ? 2 : 1
+		initialize()
+		build_network()
+		if (node)
+			node.initialize()
+			node.build_network()
+		return 1
+
 	update_icon()
 		if(node)
 			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
@@ -62,7 +76,7 @@
 
 		return null
 
-	Del()
+	Destroy()
 		loc = null
 
 		if(connected_device)
@@ -146,7 +160,7 @@
 			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \
@@ -154,4 +168,4 @@
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
 			new /obj/item/pipe(loc, make_from=src)
-			del(src)
+			qdel(src)

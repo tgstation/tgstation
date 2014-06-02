@@ -19,7 +19,7 @@
 	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(user.loc)
 	user.put_in_active_hand(B)
 	if(prob(33))
-		new/obj/item/weapon/shard(target.loc) // Create a glass shard at the target's location!
+		getFromPool(/obj/item/weapon/shard, target.loc) // Create a glass shard at the target's location!
 	B.icon_state = src.icon_state
 
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
@@ -101,6 +101,10 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [target.name] ([target.ckey]) with a bottle!</font>")
 	target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [user.name] ([user.ckey])</font>")
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] with a bottle. ([target.ckey])</font>")
+	if(!iscarbon(user))
+		target.LAssailant = null
+	else
+		target.LAssailant = user
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	if(src.reagents)

@@ -17,7 +17,8 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	m_amt = 10000
-	g_amt = 5000
+	g_amt = 5000 // OH COME ON, WHERE THE FUCK IS THERE ANY GLASS IN A GODDAMN RETRACTOR
+	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
@@ -132,6 +133,7 @@ LOOK FOR SURGERY.DM*/
 	icon_state = "hemostat"
 	m_amt = 5000
 	g_amt = 2500
+	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
@@ -267,6 +269,7 @@ LOOK FOR SURGERY.DM*/
 	icon_state = "cautery"
 	m_amt = 5000
 	g_amt = 2500
+	w_type = RECYK_ELECTRONIC
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
@@ -358,6 +361,7 @@ LOOK FOR SURGERY.DM*/
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	m_amt = 15000
 	g_amt = 10000
+	w_type = RECYK_ELECTRONIC
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0
@@ -385,6 +389,7 @@ LOOK FOR SURGERY.DM*/
 	throw_range = 5
 	m_amt = 10000
 	g_amt = 5000
+	w_type = RECYK_METAL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -399,9 +404,9 @@ LOOK FOR SURGERY.DM*/
 	if(!istype(M))
 		return ..()
 
-	//if(M.mutations & HUSK)	return ..()
+	//if(M.mutations & M_HUSK)	return ..()
 
-	if((CLUMSY in user.mutations) && prob(50))
+	if((M_CLUMSY in user.mutations) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -637,6 +642,7 @@ LOOK FOR SURGERY.DM*/
 	throw_range = 5
 	m_amt = 20000
 	g_amt = 10000
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 
@@ -645,7 +651,7 @@ LOOK FOR SURGERY.DM*/
 	if(!istype(M))
 		return ..()
 
-	if((CLUMSY in user.mutations) && prob(50))
+	if((M_CLUMSY in user.mutations) && prob(50))
 		M = user
 		return eyestab(M,user)
 
