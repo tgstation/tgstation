@@ -252,6 +252,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
 	overlay_on = "cigarlit"
+	flags = FPRINT|TABLEPASS|MASKINTERNALS
 	type_butt = /obj/item/weapon/cigbutt/cigarbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
