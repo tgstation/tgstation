@@ -12,29 +12,36 @@
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
 	minimal_player_age = 14
+
+	pdaslot=slot_l_store
+	pdatype=/obj/item/device/pda/captain
+
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_to_slot_or_drop(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
+		H.equip_or_collect(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
 		switch(H.backbag)
-			if(2) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/captain(H), slot_back)
-			if(3) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/satchel_cap(H), slot_back)
-			if(4) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-		H.equip_to_slot_or_drop(new H.species.survival_gear(H.back), slot_in_backpack)
+			if(2) H.equip_or_collect(new /obj/item/weapon/storage/backpack/captain(H), slot_back)
+			if(3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_cap(H), slot_back)
+			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+		H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
 		U.hastie = new /obj/item/clothing/tie/medal/gold/captain(U)
-		H.equip_to_slot_or_drop(U, slot_w_uniform)
-		H.equip_to_slot_or_drop(new /obj/item/device/pda/captain(H), slot_belt)
-		H.equip_to_slot_or_drop(new /obj/item/clothing/shoes/brown(H), slot_shoes)
-		H.equip_to_slot_or_drop(new /obj/item/clothing/head/caphat(H), slot_head)
-		H.equip_to_slot_or_drop(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
+		H.equip_or_collect(U, slot_w_uniform)
+		//H.equip_or_collect(new /obj/item/device/pda/captain(H), slot_belt)
+		H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+		H.equip_or_collect(new /obj/item/clothing/head/caphat(H), slot_head)
+		H.equip_or_collect(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
 		if(H.backbag == 1)
-			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
+			H.equip_or_collect(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
 		else
-			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
+			H.equip_or_collect(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 		L.imp_in = H
 		L.implanted = 1
 		world << "<b>[H.real_name] is the captain!</b>"
+		var/datum/organ/external/affected = H.get_organ("head")
+		affected.implants += L
+		L.part = affected
 		return 1
 
 	get_access()
@@ -67,20 +74,21 @@
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway)
 
-
+	pdaslot=slot_l_store
+	pdatype=/obj/item/device/pda/heads/hop
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_to_slot_or_drop(new /obj/item/device/radio/headset/heads/hop(H), slot_ears)
+		H.equip_or_collect(new /obj/item/device/radio/headset/heads/hop(H), slot_ears)
 		switch(H.backbag)
-			if(2) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack(H), slot_back)
-			if(3) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
-			if(4) H.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-		H.equip_to_slot_or_drop(new H.species.survival_gear(H.back), slot_in_backpack)
-		H.equip_to_slot_or_drop(new /obj/item/clothing/under/rank/head_of_personnel(H), slot_w_uniform)
-		H.equip_to_slot_or_drop(new /obj/item/clothing/shoes/brown(H), slot_shoes)
-		H.equip_to_slot_or_drop(new /obj/item/device/pda/heads/hop(H), slot_belt)
+			if(2) H.equip_or_collect(new /obj/item/weapon/storage/backpack(H), slot_back)
+			if(3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
+			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+		H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
+		H.equip_or_collect(new /obj/item/clothing/under/rank/head_of_personnel(H), slot_w_uniform)
+		H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+		//H.equip_or_collect(new /obj/item/device/pda/heads/hop(H), slot_belt)
 		if(H.backbag == 1)
-			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
+			H.equip_or_collect(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
 		else
-			H.equip_to_slot_or_drop(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
+			H.equip_or_collect(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
 		return 1

@@ -20,7 +20,7 @@
 		..(loc, h)
 
 
-	Del()
+	Destroy()
 		blob_cores -= src
 		if(overmind)
 			del(overmind)
@@ -33,7 +33,7 @@
 
 	update_icon()
 		if(health <= 0)
-			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 			Delete()
 			return
 		return

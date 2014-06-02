@@ -7,7 +7,7 @@
 	anchored = 1.0
 	power_channel = ENVIRON
 	var/frequency = 0
-	var/id
+	var/id_tag
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
@@ -67,7 +67,7 @@
 		signal.source = src
 		signal.transmission_method = 1
 		signal.data = list(
-			"tag" = id,
+			"tag" = id_tag,
 			"device" = "AM",
 			"pressure" = round(env_pressure),
 			"sigtype" = "status"
@@ -113,7 +113,7 @@
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	user << "\blue You begin to unfasten \the [src]..."
 	if (do_after(user, 40))
 		user.visible_message( \

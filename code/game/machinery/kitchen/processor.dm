@@ -78,6 +78,7 @@
 
 
 		slime
+			time=0//It's painful enough
 
 			process(loc, what)
 
@@ -156,7 +157,7 @@
 		return 1
 	else if(istype(O, /obj/item/weapon/crowbar))
 		if (opened)
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -195,7 +196,7 @@
 		user.visible_message("\blue [user] turns on \a [src].", \
 			"You turn on \a [src].", \
 			"You hear a food processor")
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/blender.ogg', 50, 1)
 		use_power(500)
 		sleep(P.time)
 		P.process(src.loc, O)

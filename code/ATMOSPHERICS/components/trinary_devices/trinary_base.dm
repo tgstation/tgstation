@@ -72,7 +72,7 @@ obj/machinery/atmospherics/trinary
 
 		return null
 
-	Del()
+	Destroy()
 		loc = null
 
 		if(node1)

@@ -11,6 +11,39 @@ var/global/last_tick_duration = 0
 var/global/air_processing_killed = 0
 var/global/pipe_processing_killed = 0
 
+var/list/near = list()
+var/list/nearr = list()
+
+/client/proc/dumpmch()
+	set category = "Debug"
+	set name = "Dump muh mch"
+	var/temp
+
+	usr << "--------"
+	for (var/x = 1 to near.len)
+		temp = null
+		for (var/y = 1 to length(near[x]))
+			temp += "[near[x][y]], "
+		usr << temp
+
+	usr << "/--------/"
+
+	for (var/x = 1 to nearr.len)
+		temp = null
+		for (var/y = 1 to length(nearr[x]))
+			temp += "[nearr[x][y]], "
+		usr << temp
+
+	// This list get too big fast so use only after the feature cooldowned.
+	//nearr = list()
+
+	usr << "--------"
+
+#ifdef PROFILE_MACHINES
+// /type = time this tick
+var/list/machine_profiling=list()
+#endif
+
 datum/controller/game_controller
 	var/processing = 0
 	var/breather_ticks = 2		//a somewhat crude attempt to iron over the 'bumps' caused by high-cpu use by letting the MC have a breather for this many ticks after every loop
@@ -27,13 +60,17 @@ datum/controller/game_controller
 	var/nano_cost		= 0
 	var/events_cost		= 0
 	var/ticker_cost		= 0
+	var/gc_cost         = 0
 	var/total_cost		= 0
 
 	var/last_thing_processed
+	var/mob/list/expensive_mobs = list()
+	var/rebuild_active_areas = 0
 
 datum/controller/game_controller/New()
 	//There can be only one master_controller. Out with the old and in with the new.
 	if(master_controller != src)
+		log_debug("Rebuilding Master Controller")
 		if(istype(master_controller))
 			Recover()
 			del(master_controller)
@@ -52,29 +89,33 @@ datum/controller/game_controller/New()
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
 
+	// notify the other process that we started up
 	socket_talk = new /datum/socket_talk()
-// notify the other process that we started up
 	socket_talk.send_raw("type=startup")
-
 
 	createRandomZlevel()
 
 	if(!air_master)
 		air_master = new /datum/controller/air_system()
-		air_master.setup()
+		air_master.Setup()
 
 	if(!ticker)
 		ticker = new /datum/controller/gameticker()
+
+	if(!garbage)
+		garbage = new /datum/controller/garbage_collector()
 
 	setup_objects()
 	setupgenetics()
 	setupfactions()
 	setup_economy()
+	SetupXenoarch()
 
 	for(var/i=0, i<max_secret_rooms, i++)
 		make_mining_asteroid_secret()
 
-	//if(config.socket_talk) spawn keepalive()
+	//if(config.socket_talk)
+	//	keepalive()
 
 	spawn(0)
 		if(ticker)
@@ -132,14 +173,8 @@ datum/controller/game_controller/proc/process()
 				if(!air_processing_killed)
 					timer = world.timeofday
 					last_thing_processed = air_master.type
-					//air_master.tick()
-					//air_cost = (world.timeofday - timer) / 10				// this might make atmos slower
-				//  1. atmos won't process if the game is generally lagged out(no deadlocks)
-				//  2. if the server frequently crashes during atmos processing we will knowif(!kill_air)
-					//src.set_debug_state("Air Master")
 
-					air_master.current_cycle++
-					if(!air_master.tick()) //Runtimed.
+					if(!air_master.Tick()) //Runtimed.
 						air_master.failed_ticks++
 						if(air_master.failed_ticks > 5)
 							world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
@@ -148,7 +183,8 @@ datum/controller/game_controller/proc/process()
 							log_admin("ZASALERT: unable run zone/process() -- [air_master.tick_progress]")
 							air_processing_killed = 1
 							air_master.failed_ticks = 0
-				air_cost = (world.timeofday - timer) / 10
+
+					air_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
@@ -162,28 +198,28 @@ datum/controller/game_controller/proc/process()
 
 				//MOBS
 				timer = world.timeofday
-				process_mobs()
+				processMobs()
 				mobs_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//DISEASES
 				timer = world.timeofday
-				process_diseases()
+				processDiseases()
 				diseases_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//MACHINES
 				timer = world.timeofday
-				process_machines()
+				processMachines()
 				machines_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//OBJECTS
 				timer = world.timeofday
-				process_objects()
+				processObjects()
 				objects_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
@@ -191,28 +227,28 @@ datum/controller/game_controller/proc/process()
 				//PIPENETS
 				if(!pipe_processing_killed)
 					timer = world.timeofday
-					process_pipenets()
+					processPipenets()
 					networks_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//POWERNETS
 				timer = world.timeofday
-				process_powernets()
+				processPowernets()
 				powernets_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//NANO UIS
 				timer = world.timeofday
-				process_nano()
+				processNano()
 				nano_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//EVENTS
 				timer = world.timeofday
-				process_events()
+				processEvents()
 				events_cost = (world.timeofday - timer) / 10
 
 				//TICKER
@@ -221,8 +257,14 @@ datum/controller/game_controller/proc/process()
 				ticker.process()
 				ticker_cost = (world.timeofday - timer) / 10
 
+				// GC
+				timer = world.timeofday
+				last_thing_processed = garbage.type
+				garbage.process()
+				gc_cost = (world.timeofday - timer) / 10
+
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost + gc_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -231,95 +273,112 @@ datum/controller/game_controller/proc/process()
 			else
 				sleep(10)
 
-datum/controller/game_controller/proc/process_mobs()
+datum/controller/game_controller/proc/processMobs()
 	var/i = 1
+	expensive_mobs.Cut()
 	while(i<=mob_list.len)
 		var/mob/M = mob_list[i]
 		if(M)
+			var/clock = world.timeofday
 			last_thing_processed = M.type
 			M.Life()
+			if((world.timeofday - clock) > 1)
+				expensive_mobs += M
 			i++
 			continue
 		mob_list.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_diseases()
-	var/i = 1
-	while(i<=active_diseases.len)
-		var/datum/disease/Disease = active_diseases[i]
+/datum/controller/game_controller/proc/processDiseases()
+	for (var/datum/disease/Disease in active_diseases)
 		if(Disease)
 			last_thing_processed = Disease.type
 			Disease.process()
-			i++
 			continue
-		active_diseases.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_machines()
-	var/i = 1
-	while(i<=machines.len)
-		var/obj/machinery/Machine = machines[i]
-		if(Machine)
-			last_thing_processed = Machine.type
-			if(Machine.process() != PROCESS_KILL)
-				if(Machine)
-					if(Machine.use_power)
-						Machine.auto_use_power()
-					i++
-					continue
-		machines.Cut(i,i+1)
+		active_diseases -= Disease
 
-datum/controller/game_controller/proc/process_objects()
-	var/i = 1
-	while(i<=processing_objects.len)
-		var/obj/Object = processing_objects[i]
-		if(Object)
+/datum/controller/game_controller/proc/processMachines()
+	#ifdef PROFILE_MACHINES
+	machine_profiling.Cut()
+	#endif
+
+	for (var/obj/machinery/Machinery in machines)
+		if (Machinery && Machinery.loc)
+			last_thing_processed = Machinery.type
+
+			#ifdef PROFILE_MACHINES
+			var/start = world.timeofday
+			#endif
+
+			if(PROCESS_KILL == Machinery.process())
+				Machinery.inMachineList = 0
+				machines.Remove(Machinery)
+				continue
+
+			if (Machinery && Machinery.use_power)
+				Machinery.auto_use_power()
+
+			var/end = world.timeofday
+			var/timeUsed = end - start
+
+			if (timeUsed > 1)
+				near += list(list("[worldtime2text()]", timeUsed, Machinery.x, Machinery.y, Machinery.z, Machinery.type))
+
+			#ifdef PROFILE_MACHINES
+			if(!(Machinery.type in machine_profiling))
+				machine_profiling[Machinery.type] = 0
+
+			machine_profiling[Machinery.type] += end - start
+			#endif
+
+
+/datum/controller/game_controller/proc/processObjects()
+	for (var/obj/Object in processing_objects)
+		if (Object && Object.loc)
 			last_thing_processed = Object.type
 			Object.process()
-			i++
 			continue
-		processing_objects.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_pipenets()
+		processing_objects -= Object
+
+/datum/controller/game_controller/proc/processPipenets()
 	last_thing_processed = /datum/pipe_network
-	var/i = 1
-	while(i<=pipe_networks.len)
-		var/datum/pipe_network/Network = pipe_networks[i]
-		if(Network)
-			Network.process()
-			i++
-			continue
-		pipe_networks.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_powernets()
+	for (var/datum/pipe_network/Pipe_Network in pipe_networks)
+		if(Pipe_Network)
+			Pipe_Network.process()
+			continue
+
+		pipe_networks -= Pipe_Network
+
+/datum/controller/game_controller/proc/processPowernets()
 	last_thing_processed = /datum/powernet
-	var/i = 1
-	while(i<=powernets.len)
-		var/datum/powernet/Powernet = powernets[i]
-		if(Powernet)
+
+	for (var/datum/powernet/Powernet in powernets)
+		if (Powernet)
 			Powernet.reset()
-			i++
 			continue
-		powernets.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_nano()
-	var/i = 1
-	while(i<=nanomanager.processing_uis.len)
-		var/datum/nanoui/ui = nanomanager.processing_uis[i]
-		if(ui && ui.src_object && ui.user)
-			ui.process()
-			i++
+		powernets -= Powernet
+
+/datum/controller/game_controller/proc/processNano()
+	for (var/datum/nanoui/Nanoui in nanomanager.processing_uis)
+		if (Nanoui)
+			Nanoui.process()
 			continue
-		nanomanager.processing_uis.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_events()
+		nanomanager.processing_uis -= Nanoui
+
+/datum/controller/game_controller/proc/processEvents()
 	last_thing_processed = /datum/event
-	var/i = 1
-	while(i<=events.len)
-		var/datum/event/Event = events[i]
-		if(Event)
+
+	for (var/datum/event/Event in events)
+		if (Event)
 			Event.process()
-			i++
 			continue
-		events.Cut(i,i+1)
+
+		events -= Event
+
 	checkEvent()
 
 datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.

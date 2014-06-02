@@ -282,8 +282,8 @@ var/global/ZAS_Settings/zas_settings = new
 		src.SetFromConfig(name,value)
 
 // INTERNAL USE ONLY
-/ZAS_Settings/proc/idfrompath(var/str)
-	return replacetext(str,"/datum/ZAS_Setting/","")
+/ZAS_Settings/proc/idfrompath(const/path)
+	return copytext(path, strpos(path, "/") + 1)
 
 // INTERNAL USE ONLY
 /ZAS_Settings/proc/ChangeSetting(var/user,var/id)

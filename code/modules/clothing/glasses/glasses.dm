@@ -84,6 +84,15 @@
 	item_state = "sunglasses"
 	darkness_view = -1
 
+
+/obj/item/clothing/glasses/virussunglasses
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
+	name = "sunglasses"
+	icon_state = "sun"
+	item_state = "sunglasses"
+	darkness_view = -1
+
+
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
@@ -91,6 +100,9 @@
 	item_state = "welding-g"
 	icon_action_button = "action_welding_g"
 	var/up = 0
+
+/obj/item/clothing/glasses/welding/proc/getMask()
+	return global_hud.darkMask
 
 /obj/item/clothing/glasses/welding/attack_self()
 	toggle()
@@ -119,10 +131,13 @@
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"
-	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes."
+	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes. Allows for better vision than normal goggles.."
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
 	icon_action_button = "action_welding_g"
+
+/obj/item/clothing/glasses/welding/superior/getMask()
+	return null
 
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"
@@ -195,3 +210,17 @@
 	desc = "A set of implantable lenses designed to augment your vision"
 	icon_state = "thermalimplants"
 	item_state = "syringe_kit"
+
+/obj/item/clothing/glasses/simonglasses
+	name = "Simon's Glasses"
+	desc = "Just who the hell do you think I am?"
+	icon_state = "simonglasses"
+	item_state = "simonglasses"
+	cover_hair = 1
+
+/obj/item/clothing/glasses/kaminaglasses
+	name = "Kamina's Glasses"
+	desc = "I'm going to tell you something important now, so you better dig the wax out of those huge ears of yours and listen! The reputation of Team Gurren echoes far and wide. When they talk about its badass leader - the man of indomitable spirit and masculinity - they're talking about me! The mighty Kamina!"
+	icon_state = "kaminaglasses"
+	item_state = "kaminaglasses"
+	cover_hair = 1

@@ -11,6 +11,7 @@
 	density = 0
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	m_amt = 1850
+	w_type = RECYK_METAL
 	level = 2
 	var/ptype = 0
 	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet
@@ -206,14 +207,14 @@
 				else
 					density = 1 // We don't want disposal bins or outlets to go density 0
 				user << "You attach the [nicetype] to the underfloor."
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			update()
 
 		else if(istype(I, /obj/item/weapon/weldingtool))
 			if(anchored)
 				var/obj/item/weapon/weldingtool/W = I
 				if(W.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+					playsound(get_turf(src), 'sound/items/Welder2.ogg', 100, 1)
 					user << "Welding the [nicetype] in place."
 					if(do_after(user, 20))
 						if(!src || !W.isOn()) return

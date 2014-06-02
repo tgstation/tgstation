@@ -132,7 +132,7 @@
 				observer.alpha = 127
 
 				if(client.prefs.be_random_name)
-					client.prefs.real_name = random_name(client.prefs.gender)
+					client.prefs.real_name = random_name(client.prefs.gender,client.prefs.species)
 				observer.real_name = client.prefs.real_name
 				observer.name = observer.real_name
 				if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
@@ -290,6 +290,13 @@
 					return 0
 		return 1
 
+	proc/FuckUpGenes(var/mob/living/carbon/human/H)
+		// 20% of players have bad genetic mutations.
+		if(prob(20))
+			H.dna.GiveRandomSE(notflags = GENE_UNNATURAL,genetype = GENETYPE_BAD)
+			if(prob(10)) // 10% of those have a good mut.
+				H.dna.GiveRandomSE(notflags = GENE_UNNATURAL,genetype = GENETYPE_GOOD)
+
 
 	proc/AttemptLateSpawn(rank)
 		if (src != usr)
@@ -320,7 +327,7 @@
 			data_core.manifest_inject(character)
 			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 			AnnounceArrival(character, rank)
-
+			FuckUpGenes(character)
 		else
 			character.Robotize()
 		del(src)
@@ -384,10 +391,10 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 
 		var/datum/language/chosen_language
 		if(client.prefs.language)
-			chosen_language = all_languages["[client.prefs.language]"]
+			chosen_language = all_languages[client.prefs.language]
 		if(chosen_language)
 			if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED))
-				new_character.add_language("client.prefs.language")
+				new_character.add_language(client.prefs.language)
 		if(ticker.random_players || appearance_isbanned(src)) //disabling ident bans for now
 			new_character.gender = pick(MALE, FEMALE)
 			client.prefs.real_name = random_name(new_character.gender)
@@ -416,7 +423,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 			new_character.disabilities |= NEARSIGHTED
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_FAT)
-			new_character.mutations += FAT
+			new_character.mutations += M_FAT
 			new_character.overeatduration = 600 // Max overeat
 
 		if(client.prefs.disabilities & DISABILITY_FLAG_EPILEPTIC)

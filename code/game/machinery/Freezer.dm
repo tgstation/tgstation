@@ -55,7 +55,7 @@
 				user << "You have to turn off the [src] first!"
 				return
 			if(anchored)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You begin to unfasten the [src]..."
 				if (do_after(user, 40))
 					verbs += rotate_verbs
@@ -65,14 +65,14 @@
 						"You hear ratchet.")
 					src.anchored = 0
 
-					// From Del()
+					// From Destroy()
 					// Disconnect
 					if(node)
 						node.disconnect(src)
 						del(network)
 					node = null
 			else
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You begin to fasten [src]."
 				if(do_after(user, 40))
 					verbs -= rotate_verbs
@@ -111,7 +111,7 @@
 				return
 			if(istype(W, /obj/item/weapon/crowbar))
 				user << "You begin to remove the circuits from the [src]."
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user, 50))
 					var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 					M.state = 2
@@ -249,7 +249,7 @@
 				user << "You have to turn off the [src] first!"
 				return
 			if(anchored)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You begin to unfasten the [src]..."
 				if (do_after(user, 40))
 					verbs += rotate_verbs
@@ -259,14 +259,14 @@
 						"You hear ratchet.")
 					src.anchored = 0
 
-					// From Del()
+					// From Destroy()
 					// Disconnect
 					if(node)
 						node.disconnect(src)
 						del(network)
 					node = null
 			else
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user << "You begin to fasten [src]."
 				if(do_after(user, 40))
 					verbs -= rotate_verbs
@@ -305,7 +305,7 @@
 				return
 			if(istype(W, /obj/item/weapon/crowbar))
 				user << "You begin to remove the circuits from the [src]."
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user, 50))
 					var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 					M.state = 2

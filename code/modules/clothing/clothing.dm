@@ -28,19 +28,42 @@
 
 	return ..()
 
-//Ears: currently only used for headsets and earmuffs
+//Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
 	w_class = 1.0
 	throwforce = 2
 	slot_flags = SLOT_EARS
 
+/obj/item/clothing/ears/attack_hand(mob/user as mob)
+	if (!user) return
+
+	if (src.loc != user || !istype(user,/mob/living/carbon/human))
+		..()
+		return
+
+	var/mob/living/carbon/human/H = user
+	if(H.ears != src)
+		..()
+		return
+
+	if(!canremove)
+		return
+
+	var/obj/item/clothing/ears/O = src
+
+	user.u_equip(src)
+
+	if (O)
+		user.put_in_hands(O)
+		O.add_fingerprint(user)
+
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
-
+	slot_flags = SLOT_EARS
 
 //Glasses
 /obj/item/clothing/glasses
@@ -52,6 +75,7 @@
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
+	var/cover_hair = 0
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -73,6 +97,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.50
 	var/wired = 0
 	var/obj/item/weapon/cell/cell = 0
+	var/clipped = 0
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
@@ -93,6 +118,9 @@ BLIND     // can't see anything
 			cell.reliability -= 10 / severity
 	..()
 
+// Called just before an attack_hand(), in mob/UnarmedAttack()
+/obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
+	return 0 // return 1 to cancel attack_hand()
 
 //Head
 /obj/item/clothing/head
@@ -263,9 +291,6 @@ BLIND     // can't see anything
 	if(usr.stat) return
 
 	if(hastie)
-		usr.put_in_hands(hastie)
-		hastie = null
-
 		if (istype(hastie,/obj/item/clothing/tie/holster))
 			verbs -= /obj/item/clothing/under/proc/holster
 
@@ -273,7 +298,10 @@ BLIND     // can't see anything
 			verbs -= /obj/item/clothing/under/proc/storage
 			var/obj/item/clothing/tie/storage/W = hastie
 			if (W.hold)
-				W.hold.loc = hastie
+				W.hold.close(usr)
+
+		usr.put_in_hands(hastie)
+		hastie = null
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc

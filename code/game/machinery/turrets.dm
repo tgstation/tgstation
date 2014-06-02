@@ -22,6 +22,9 @@
 		var/obj/mecha/Mech = O
 		if( Mech.occupant )
 			turretTargets |= Mech
+	// /vg/ vehicles
+	else if( istype(O, /obj/structure/stool/bed/chair/vehicle) )
+		turretTargets |= O
 	else if(istype(O,/mob/living/simple_animal))
 		turretTargets |= O
 	return 1
@@ -31,6 +34,9 @@
 		return master.Exited(O)
 
 	if( ismob(O) && !issilicon(O) )
+		turretTargets -= O
+	// /vg/ vehicles
+	else if( istype(O, /obj/structure/stool/bed/chair/vehicle) )
 		turretTargets -= O
 	else if( istype(O, /obj/mecha) )
 		turretTargets -= O
@@ -139,10 +145,15 @@
 			var/obj/mecha/ME = T
 			if( ME.occupant )
 				return 1
+		// /vg/ vehicles
+		else if( istype(T, /obj/structure/stool/bed/chair/vehicle) )
+			var/obj/structure/stool/bed/chair/vehicle/V = T
+			if(V.buckled_mob)
+				return 1
 		else if(istype(T,/mob/living/simple_animal))
 			var/mob/living/simple_animal/A = T
 			if( !A.stat )
-				if(lasers)
+				if(lasers || ismouse(A))
 					return 1
 	return 0
 
@@ -156,6 +167,12 @@
 	for(var/obj/mecha/M in protected_area.turretTargets)
 		if(M.occupant)
 			new_targets += M
+
+	// /vg/ vehicles
+	for(var/obj/structure/stool/bed/chair/vehicle/V in protected_area.turretTargets)
+		if(V.buckled_mob)
+			new_targets += V
+
 	for(var/mob/living/simple_animal/M in protected_area.turretTargets)
 		if(!M.stat)
 			new_targets += M
@@ -193,9 +210,9 @@
 
 		if(prob(15))
 			if(prob(50))
-				playsound(src.loc, 'sound/effects/turret/move1.wav', 60, 1)
+				playsound(get_turf(src), 'sound/effects/turret/move1.wav', 60, 1)
 			else
-				playsound(src.loc, 'sound/effects/turret/move2.wav', 60, 1)
+				playsound(get_turf(src), 'sound/effects/turret/move2.wav', 60, 1)
 	else if(!isPopping())//else, pop down
 		if(!isDown())
 			popDown()
@@ -219,22 +236,24 @@
 	if (src.lasers)
 		switch(lasertype)
 			if(1)
-				A = new /obj/item/projectile/beam( loc )
+				A = getFromPool(/obj/item/projectile/beam, loc)
 			if(2)
-				A = new /obj/item/projectile/beam/heavylaser( loc )
+				A = getFromPool(/obj/item/projectile/beam/heavylaser, loc)
 			if(3)
-				A = new /obj/item/projectile/beam/pulse( loc )
+				A = getFromPool(/obj/item/projectile/beam/pulse, loc)
 			if(4)
-				A = new /obj/item/projectile/change( loc )
+				A = getFromPool(/obj/item/projectile/change, loc)
 			if(5)
-				A = new /obj/item/projectile/beam/lastertag/blue( loc )
+				A = getFromPool(/obj/item/projectile/beam/lastertag/blue, loc)
 			if(6)
-				A = new /obj/item/projectile/beam/lastertag/red( loc )
+				A = getFromPool(/obj/item/projectile/beam/lastertag/red, loc)
 		A.original = target
 		use_power(500)
 	else
 		A = new /obj/item/projectile/energy/electrode( loc )
 		use_power(200)
+
+	A.original = target
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -250,7 +269,7 @@
 	if ((!isPopping()) || src.popping==-1)
 		invisibility = 0
 		popping = 1
-		playsound(src.loc, 'sound/effects/turret/open.wav', 60, 1)
+		playsound(get_turf(src), 'sound/effects/turret/open.wav', 60, 1)
 		if (src.cover!=null)
 			flick("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
@@ -260,7 +279,7 @@
 /obj/machinery/turret/proc/popDown()
 	if ((!isPopping()) || src.popping==1)
 		popping = -1
-		playsound(src.loc, 'sound/effects/turret/open.wav', 60, 1)
+		playsound(get_turf(src), 'sound/effects/turret/open.wav', 60, 1)
 		if (src.cover!=null)
 			flick("popdown", src.cover)
 			src.cover.icon_state = "turretCover"
@@ -279,8 +298,9 @@
 	return
 
 /obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
+	user.changeNext_move(10)
 	..()
-	playsound(src.loc, 'sound/weapons/smash.ogg', 60, 1)
+	playsound(get_turf(src), 'sound/weapons/smash.ogg', 60, 1)
 	src.spark_system.start()
 	src.health -= W.force * 0.5
 	if (src.health <= 0)
@@ -309,7 +329,7 @@
 	sleep(3)
 	flick("explosion", src)
 	spawn(13)
-		del(src)
+		qdel(src)
 
 /obj/machinery/turretid
 	name = "Turret deactivation control"
@@ -323,6 +343,8 @@
 	var/control_area //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
+
+	ghost_read=0
 
 /obj/machinery/turretid/New()
 	..()
@@ -425,7 +447,7 @@
 
 /obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(!(stat & BROKEN))
-		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+		playsound(get_turf(src), 'sound/weapons/slash.ogg', 25, 1, -1)
 		visible_message("\red <B>[] has slashed at []!</B>", M, src)
 		src.health -= 15
 		if (src.health <= 0)

@@ -87,7 +87,7 @@
 		return
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "\blue Removing rods..."
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 80, 1)
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)
@@ -148,7 +148,6 @@
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 	layer = 2
-	accepts_lighting=0
 
 /turf/simulated/shuttle/wall
 	name = "wall"
@@ -212,20 +211,25 @@
 	name = "Carpet"
 	icon_state = "carpet"
 	floor_tile = new/obj/item/stack/tile/carpet
-
+	var/has_siding=1
 	New()
 		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
 		if(!icon_state)
-			icon_state = "carpet"
+			icon_state = initial(icon_state)
 		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+		if(has_siding)
+			spawn(4)
+				if(src)
+					update_icon()
+					for(var/direction in list(1,2,4,8,5,6,9,10))
+						if(istype(get_step(src,direction),/turf/simulated/floor))
+							var/turf/simulated/floor/FF = get_step(src,direction)
+							FF.update_icon() //so siding get updated properly
 
+/turf/simulated/floor/carpet/arcade
+	name = "Arcade Carpet"
+	icon_state = "arcadecarpet"
+	has_siding=0
 
 
 /turf/simulated/floor/plating/ironsand/New()
@@ -271,7 +275,8 @@
 	heat_capacity = 700000
 
 	lighting_lumcount = 4		//starlight
-	accepts_lighting=0 			// Don't apply overlays
+
+	intact = 0
 
 	New()
 		..()
@@ -293,50 +298,18 @@
 					C.update_icon(0)
 		icon_state="catwalk[dirs]"
 
+
+	attackby(obj/item/C as obj, mob/user as mob)
+		if(!C || !user)
+			return 0
+		if(istype(C, /obj/item/weapon/screwdriver))
+			ReplaceWithLattice()
+			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+			return
+
+		if(istype(C, /obj/item/weapon/cable_coil))
+			var/obj/item/weapon/cable_coil/coil = C
+			coil.turf_place(src, user)
+
 	is_catwalk()
 		return 1
-
-	/** ACT UNSIMULATED! **/
-/*
-	assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-		del(giver)
-		return 0
-
-	return_air()
-		//Create gas mixture to hold data for passing
-		var/datum/gas_mixture/GM = new
-
-		GM.oxygen = oxygen
-		GM.carbon_dioxide = carbon_dioxide
-		GM.nitrogen = nitrogen
-		GM.toxins = toxins
-
-		GM.temperature = temperature
-		GM.update_values()
-
-		return GM
-
-	// For new turfs
-	copy_air_from(var/turf/T)
-		oxygen = T.oxygen
-		carbon_dioxide = T.carbon_dioxide
-		nitrogen = T.nitrogen
-		toxins = T.toxins
-
-		temperature = T.temperature
-
-	remove_air(amount as num)
-		var/datum/gas_mixture/GM = new
-
-		var/sum = oxygen + carbon_dioxide + nitrogen + toxins
-		if(sum>0)
-			GM.oxygen = (oxygen/sum)*amount
-			GM.carbon_dioxide = (carbon_dioxide/sum)*amount
-			GM.nitrogen = (nitrogen/sum)*amount
-			GM.toxins = (toxins/sum)*amount
-
-		GM.temperature = temperature
-		GM.update_values()
-
-		return GM
-*/

@@ -2,7 +2,7 @@
 	name = "suspension field generator"
 	desc = "It has stubby legs bolted up against it's body for stabilising."
 	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "suspension2"
+	icon_state = "suspension2-b"
 	density = 1
 	req_access = list(access_research)
 	var/obj/item/weapon/cell/cell
@@ -81,48 +81,32 @@
 
 	dat += "<hr>"
 	if(!locked)
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:84: dat += "<b>Select field mode</b><br>"
-		dat += {"<b>Select field mode</b><br>
-			[field_type=="carbon"?"<b>":""			]<A href='?src=\ref[src];select_field=carbon'>Diffracted carbon dioxide laser</A></b><br>
-			[field_type=="nitrogen"?"<b>":""		]<A href='?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>
-			[field_type=="potassium"?"<b>":""		]<A href='?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>
-			[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>
-			[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>
-			[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>
-			[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>
-			[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=plasma'>Plasma saturated field</A></b><br>"}
-		// END AUTOFIX
+		dat += "<b>Select field mode</b><br>"
+		dat += "[field_type=="carbon"?"<b>":""			]<A href='?src=\ref[src];select_field=carbon'>Diffracted carbon dioxide laser</A></b><br>"
+		dat += "[field_type=="nitrogen"?"<b>":""		]<A href='?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>"
+		dat += "[field_type=="potassium"?"<b>":""		]<A href='?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>"
+		dat += "[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>"
+		dat += "[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>"
+		dat += "[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>"
+		dat += "[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>"
+		dat += "[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=plasma'>Plasma saturated field</A></b><br>"
 	else
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:94: dat += "<br>"
-		dat += {"<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>"}
-		// END AUTOFIX
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:102: dat += "<hr>"
-	dat += {"<hr>
-		<font color='blue'><b>Always wear safety gear and consult a field manual before operation.</b></font><br>"}
-	// END AUTOFIX
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+	dat += "<hr>"
+	dat += "<font color='blue'><b>Always wear safety gear and consult a field manual before operation.</b></font><br>"
 	if(!locked)
 		dat += "<A href='?src=\ref[src];lock=1'>Lock console</A><br>"
 	else
 		dat += "<br>"
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:108: dat += "<A href='?src=\ref[src];refresh=1'>Refresh console</A><br>"
-	dat += {"<A href='?src=\ref[src];refresh=1'>Refresh console</A><br>
-		<A href='?src=\ref[src];close=1'>Close console</A>"}
-	// END AUTOFIX
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh console</A><br>"
+	dat += "<A href='?src=\ref[src];close=1'>Close console</A>"
 	user << browse(dat, "window=suspension;size=500x400")
 	onclose(user, "suspension")
 
@@ -173,11 +157,16 @@
 	if(!open)
 		interact(user)
 	else if(cell)
+		if(isobserver(user))
+			return 0
 		cell.loc = loc
 		cell.add_fingerprint(user)
 		cell.updateicon()
 
-		icon_state = "suspension0"
+		if(anchored)
+			icon_state = "suspension0"
+		else
+			icon_state = "suspension0-b"
 		cell = null
 		user << "<span class='info'>You remove the power cell</span>"
 
@@ -198,7 +187,7 @@
 					else
 						open = 1
 					user << "<span class='info'>You crowbar the battery panel [open ? "open" : "in place"].</span>"
-					icon_state = "suspension[open ? (cell ? "1" : "0") : "2"]"
+					icon_state = "suspension[anchored ? (open ? (cell ? "1" : "0") : "2") : (open ? (cell ? "1-b" : "0-b") : "2-b")]"
 				else
 					user << "<span class='warning'>[src]'s safety locks are engaged, shut it down first.</span>"
 			else
@@ -211,6 +200,7 @@
 				anchored = 0
 			else
 				anchored = 1
+			icon_state = "suspension[anchored ? (open ? (cell ? "1" : "0") : "2") : (open ? (cell ? "1-b" : "0-b") : "2-b")]"
 			user << "<span class='info'>You wrench the stabilising legs [anchored ? "into place" : "up against the body"].</span>"
 			if(anchored)
 				desc = "It is resting securely on four stubby legs."
@@ -227,7 +217,10 @@
 				W.loc = src
 				cell = W
 				user << "<span class='info'>You insert the power cell.</span>"
-				icon_state = "suspension1"
+				if(anchored)
+					icon_state = "suspension1"
+				else
+					icon_state = "suspension1-b"
 	else if(istype(W, /obj/item/weapon/card))
 		var/obj/item/weapon/card/I = W
 		if(!auth_card)
@@ -325,7 +318,7 @@
 	del(suspension_field)
 	icon_state = "suspension2"
 
-/obj/machinery/suspension_gen/Del()
+/obj/machinery/suspension_gen/Destroy()
 	//safety checks: clear the field and drop anything it's holding
 	deactivate()
 	..()
@@ -347,7 +340,7 @@
 	density = 1
 	var/field_type = "chlorine"
 
-/obj/effect/suspension_field/Del()
+/obj/effect/suspension_field/Destroy()
 	for(var/obj/I in src)
 		I.loc = src.loc
 	..()

@@ -23,37 +23,46 @@
 		..()
 	return
 
-// the power cable object
-
+/**
+ * The power cable object.
+ */
 /obj/structure/cable/New()
 	..()
 
-
-	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
-
+	// Ensure d1 & d2 reflect the icon_state for entering and exiting cable.
 	var/dash = findtext(icon_state, "-")
+	d1 = text2num(copytext(icon_state, 1, dash))
+	d2 = text2num(copytext(icon_state, dash + 1))
 
-	d1 = text2num( copytext( icon_state, 1, dash ) )
+	var/turf/T = src.loc // Hide if turf is not intact.
 
-	d2 = text2num( copytext( icon_state, dash+1 ) )
+	if (level==1)
+		hide(T.intact)
 
-	var/turf/T = src.loc			// hide if turf is not intact
+	cable_list.Add(src)
 
-	if(level==1) hide(T.intact)
-	cable_list += src
+/obj/structure/cable/Destroy() // Called when a cable is deleted.
+	if (!defer_powernet_rebuild) // Set if network will be rebuilt manually.
+		if (powernet)
+			powernet.cut_cable(src) // Update the powernets
 
+	cable_list.Remove(src)
 
-/obj/structure/cable/Del()						// called when a cable is deleted
-	if(!defer_powernet_rebuild)					// set if network will be rebuilt manually
-		if(powernet)
-			powernet.cut_cable(src)				// update the powernets
-	cable_list -= src
-	..()													// then go ahead and delete the cable
+	if (istype(attached))
+		attached.SetLuminosity(0)
+		attached.icon_state = "powersink0"
+		attached.mode = 0
+		processing_objects.Remove(attached)
+		attached.anchored = 0
+		attached.attached = null
+
+	attached = null
+	..() // Then go ahead and delete the cable.
 
 /obj/structure/cable/hide(var/i)
-
-	if(level == 1 && istype(loc, /turf))
+	if (level == 1 && istype(loc, /turf))
 		invisibility = i ? 101 : 0
+
 	updateicon()
 
 /obj/structure/cable/proc/updateicon()
@@ -67,10 +76,7 @@
 /obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
 	return powernet
 
-/obj/structure/cable/attack_hand(mob/user)
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("WIRE",src,user:wear_suit)
+/obj/structure/cable/attack_tk(mob/user)
 	return
 
 /obj/structure/cable/attackby(obj/item/W, mob/user)
@@ -96,7 +102,7 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
 
-		var/message = "A wire has been cut"
+		var/message = "A wire has been cut "
 		var/atom/A = user
 		if(A)
 			var/turf/Z = get_turf(A)
@@ -111,7 +117,7 @@
 				message += " - Cut By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
 				log_game("[M.real_name] ([M.key]) cut a wire in [my_area.name] ([T.x],[T.y],[T.z])")
 		message_admins(message, 0, 1)
-		del(src)
+		qdel(src)
 
 		return	// not needed, but for clarity
 
@@ -154,16 +160,16 @@
 /obj/structure/cable/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
 				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, _color)
-				del(src)
+				qdel(src)
 
 		if(3.0)
 			if (prob(25))
 				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, _color)
-				del(src)
+				qdel(src)
 	return
 
 // the cable coil object, used for laying cable
@@ -181,8 +187,8 @@
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 5
-	m_amt = 50
-	g_amt = 20
+	m_amt = CC_PER_SHEET_METAL
+	w_type = RECYK_METAL
 	flags = TABLEPASS | USEDELAY | FPRINT | CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "coil_red"
@@ -332,7 +338,7 @@
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
 				new/obj/item/weapon/cable_coil(C.loc, 1, C._color)
-				del(C)
+				qdel(C)
 		//src.laying = 1
 		//last = C
 
@@ -392,7 +398,7 @@
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
 					new/obj/item/weapon/cable_coil(NC.loc, 1, NC._color)
-					del(NC)
+					qdel(NC)
 
 			return
 	else if(C.d1 == 0)		// exisiting cable doesn't point at our position, so see if it's a stub
@@ -431,7 +437,7 @@
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
 				new/obj/item/weapon/cable_coil(C.loc, 2, C._color)
-				del(C)
+				qdel(C)
 
 		return
 

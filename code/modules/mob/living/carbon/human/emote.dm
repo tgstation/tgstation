@@ -205,9 +205,14 @@
 					m_type = 2
 
 		if ("deathgasp")
-			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
+			if(M_ELVIS in mutations)
+				message = "<B>[src]</B> has left the building..."
+			if(M_HARDCORE in mutations)
+				message = "<B>[src]</B> whispers with his final breath, <i>'i told u i was hardcore..'</i>"
+			else
+				message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
-
+			
 		if ("giggle")
 			if(miming)
 				message = "<B>[src]</B> giggles silently!"
@@ -539,6 +544,80 @@
 					message = "<B>[src]</B> makes a very loud noise."
 					m_type = 2
 
+		// Needed for M_TOXIC_FART
+		if("fart")
+			if(world.time-lastFart >= 600)
+				message = "<b>[src]</b> [pick("passes wind","farts")]."
+				m_type = 2
+
+				var/turf/location = get_turf(src)
+				var/aoe_range=2 // Default
+				if(M_SUPER_FART in mutations)
+					aoe_range+=3 //Was 5
+
+				// If we're wearing a suit, don't blast or gas those around us.
+				var/wearing_suit=0
+				var/wearing_mask=0
+				if(wear_suit && wear_suit.body_parts_covered & LOWER_TORSO)
+					wearing_suit=1
+					if (internal != null && wear_mask && (wear_mask.flags & MASKINTERNALS))
+						wearing_mask=1
+
+				// Process toxic farts first.
+				if(M_TOXIC_FARTS in mutations)
+					message=""
+					if(wearing_suit)
+						if(!wearing_mask)
+							src << "\red You gas yourself!"
+							reagents.add_reagent("space_drugs", rand(10,50))
+					else
+						// Was /turf/, now /mob/
+						for(var/mob/M in view(location,aoe_range))
+							if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
+								continue
+							if(!airborne_can_reach(location,get_turf(M),aoe_range))
+								continue
+							// Now, we don't have this:
+							//new /obj/effects/fart_cloud(T,L)
+							// But:
+							// <[REDACTED]> so, what it does is...imagine a 3x3 grid with the person in the center. When someone uses the emote *fart (it's not a spell style ability and has no cooldown), then anyone in the 8 tiles AROUND the person who uses it
+							// <[REDACTED]> gets between 1 and 10 units of jenkem added to them...we obviously don't have Jenkem, but Space Drugs do literally the same exact thing as Jenkem
+							// <[REDACTED]> the user, of course, isn't impacted because it's not an actual smoke cloud
+							// So, let's give 'em space drugs.
+							M.reagents.add_reagent("space_drugs",rand(1,50))
+						/*
+						var/datum/effect/effect/system/smoke_spread/chem/fart/S = new /datum/effect/effect/system/smoke_spread/chem/fart
+						S.attach(location)
+						S.set_up(src, 10, 0, location)
+						spawn(0)
+							S.start()
+							sleep(10)
+							S.start()
+						*/
+				if(M_SUPER_FART in mutations)
+					message=""
+					playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+					visible_message("\red <b>[name]</b> hunches down and grits their teeth!")
+					if(do_after(usr,30))
+						visible_message("\red <b>[name]</b> unleashes a [pick("tremendous","gigantic","colossal")] fart!","You hear a [pick("tremendous","gigantic","colossal")] fart.")
+						//playsound(L.loc, 'superfart.ogg', 50, 0)
+						if(!wearing_suit)
+							for(var/mob/living/V in view(src,aoe_range))
+								shake_camera(V,10,5)
+								if (V == src)
+									continue
+								V << "\red You are sent flying!"
+								V.Weaken(5) // why the hell was this set to 12 christ
+								step_away(V,location,15)
+								step_away(V,location,15)
+								step_away(V,location,15)
+					else
+						usr << "\red You were interrupted and couldn't fart! Rude!"
+				lastFart=world.time
+			else
+				message = "<b>[src]</b> strains, and nothing happens."
+				m_type = 1
+
 		if ("help")
 			src << "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn"
 
@@ -563,12 +642,11 @@
 
 
 		if (m_type & 1)
-			for (var/mob/O in get_mobs_in_view(world.view,src))
+			for (var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
 		else if (m_type & 2)
-			for (var/mob/O in (hearers(src.loc, null) | get_mobs_in_view(world.view,src)))
+			for (var/mob/O in hearers(src.loc, null))
 				O.show_message(message, m_type)
-
 
 /mob/living/carbon/human/verb/pose()
 	set name = "Set Pose"

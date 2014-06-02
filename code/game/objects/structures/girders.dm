@@ -8,7 +8,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/wrench) && state == 0)
 			if(anchored && !istype(src,/obj/structure/girder/displaced))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 				user << "\blue Now disassembling the girder"
 				if(do_after(user,40))
 					if(!src) return
@@ -16,11 +16,12 @@
 					new /obj/item/stack/sheet/metal(get_turf(src))
 					del(src)
 			else if(!anchored)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 				user << "\blue Now securing the girder"
 				if(get_turf(user, 40))
 					user << "\blue You secured the girder!"
-					new/obj/structure/girder( src.loc )
+					var/obj/structure/girder/G = new/obj/structure/girder( src.loc )
+					G.add_hiddenprint(user)
 					del(src)
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
@@ -37,7 +38,7 @@
 			del(src)
 
 		else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 			user << "\blue Now unsecuring support struts"
 			if(do_after(user,40))
 				if(!src) return
@@ -45,7 +46,7 @@
 				state = 1
 
 		else if(istype(W, /obj/item/weapon/wirecutters) && istype(src,/obj/structure/girder/reinforced) && state == 1)
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 			user << "\blue Now removing support struts"
 			if(do_after(user,40))
 				if(!src) return
@@ -54,12 +55,13 @@
 				del(src)
 
 		else if(istype(W, /obj/item/weapon/crowbar) && state == 0 && anchored )
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
 			user << "\blue Now dislodging the girder"
 			if(do_after(user, 40))
 				if(!src) return
 				user << "\blue You dislodged the girder!"
-				new/obj/structure/girder/displaced( src.loc )
+				var/obj/structure/girder/displaced/D = new/obj/structure/girder/displaced( src.loc )
+				D.add_hiddenprint(user)
 				del(src)
 
 		else if(istype(W, /obj/item/stack/sheet))
@@ -74,7 +76,8 @@
 						if(!pdiff)
 							S.use(2)
 							user << "\blue You create a false wall! Push on it to open or close the passage."
-							new /obj/structure/falsewall (src.loc)
+							var/obj/structure/falsewall/FW = new /obj/structure/falsewall (src.loc)
+							FW.add_hiddenprint(user)
 							del(src)
 						else
 							user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
@@ -102,7 +105,8 @@
 						if(!pdiff)
 							S.use(2)
 							user << "\blue You create a false wall! Push on it to open or close the passage."
-							new /obj/structure/falserwall (src.loc)
+							var/obj/structure/falserwall/FW = new /obj/structure/falserwall (src.loc)
+							FW.add_hiddenprint(user)
 							del(src)
 						else
 							user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
@@ -130,7 +134,8 @@
 								if(!src || !S || S.amount < 1) return
 								S.use(1)
 								user << "\blue Girders reinforced!"
-								new/obj/structure/girder/reinforced( src.loc )
+								var/obj/structure/girder/reinforced/R = new /obj/structure/girder/reinforced( src.loc )
+								R.add_hiddenprint(user)
 								del(src)
 							return
 
@@ -143,7 +148,8 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						var/F = text2path("/obj/structure/falsewall/[M]")
-						new F (src.loc)
+						var/obj/structure/falsewall/FW = new F (src.loc)
+						FW.add_hiddenprint(user)
 						del(src)
 					else
 						user << "\red There is too much air moving through the gap!  The door wouldn't stay closed if you built it."
@@ -180,23 +186,28 @@
 		if(prob(40))
 			del(src)
 
+	bullet_act(var/obj/item/projectile/Proj)
+		if(istype(Proj ,/obj/item/projectile/beam/pulse))
+			src.ex_act(2)
+		..()
+		return 0
 
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(30))
 					var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 					new remains(loc)
-					del(src)
+					qdel(src)
 				return
 			if(3.0)
 				if (prob(5))
 					var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 					new remains(loc)
-					del(src)
+					qdel(src)
 				return
 			else
 		return
@@ -218,7 +229,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/wrench))
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			user << "\blue Now disassembling the girder"
 			if(do_after(user,40))
 				user << "\blue You dissasembled the girder!"
@@ -245,17 +256,17 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(30))
 					new /obj/effect/decal/remains/human(loc)
-					del(src)
+					qdel(src)
 				return
 			if(3.0)
 				if (prob(5))
 					new /obj/effect/decal/remains/human(loc)
-					del(src)
+					qdel(src)
 				return
 			else
 		return

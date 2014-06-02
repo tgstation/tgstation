@@ -25,7 +25,7 @@
 		else
 			user.visible_message("\red [user] swings at some bees, they don't seem to like it.","\red You swing at some bees, they don't seem to like it.")
 			B.feral = 5
-			B.target_mob = user
+			B.target = user
 
 /obj/item/weapon/bee_net/verb/empty_bees()
 	set src in usr
@@ -40,7 +40,7 @@
 		while(caught_bees > 5)
 			var/mob/living/simple_animal/bee/B = new(src.loc)
 			B.feral = 5
-			B.target_mob = M
+			B.target = M
 			B.strength = 6
 			B.icon_state = "bees_swarm"
 			caught_bees -= 6
@@ -50,7 +50,7 @@
 		B.strength = caught_bees
 		B.icon_state = "bees[B.strength]"
 		B.feral = 5
-		B.target_mob = M
+		B.target = M
 
 		caught_bees = 0
 

@@ -20,6 +20,11 @@
 	action(atom/target)
 		if(!action_checks(target)) return
 		if(!cargo_holder) return
+		if(istype(target, /obj/structure/stool)) return
+		for(var/M in target.contents)
+			if(istype(M, /mob/living))
+				return
+
 		if(istype(target,/obj))
 			var/obj/O = target
 			if(!O.anchored)
@@ -92,14 +97,15 @@
 				else if(istype(target, /turf/unsimulated/mineral))
 					for(var/turf/unsimulated/mineral/M in range(chassis,1))
 						if(get_dir(chassis,M)&chassis.dir)
-							M.gets_drilled()
+							M.GetDrilled()
 					log_message("Drilled through [target]")
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir)
-									ore.Move(ore_box)
+								if(get_dir(chassis,ore)&chassis.dir && ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
 				else if(istype(target, /turf/unsimulated/floor/asteroid))
 					for(var/turf/unsimulated/floor/asteroid/M in range(chassis,1))
 						if(get_dir(chassis,M)&chassis.dir)
@@ -109,8 +115,9 @@
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir)
-									ore.Move(ore_box)
+								if(get_dir(chassis,ore)&chassis.dir && ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
 				else if(target.loc == C)
 					if(istype(target, /mob/living))
 						var/mob/living/M = target
@@ -160,14 +167,15 @@
 				else if(istype(target, /turf/unsimulated/mineral))
 					for(var/turf/unsimulated/mineral/M in range(chassis,1))
 						if(get_dir(chassis,M)&chassis.dir)
-							M.gets_drilled()
+							M.GetDrilled()
 					log_message("Drilled through [target]")
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir)
-									ore.Move(ore_box)
+								if(get_dir(chassis,ore)&chassis.dir && ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
 				else if(istype(target,/turf/unsimulated/floor/asteroid))
 					for(var/turf/unsimulated/floor/asteroid/M in range(target,1))
 						M.gets_dug()
@@ -176,7 +184,9 @@
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(target,1))
-								ore.Move(ore_box)
+								if(ore.material)
+									ore_box.materials.addAmount(ore.material,1)
+									qdel(ore)
 				else if(target.loc == C)
 					if(istype(target, /mob/living))
 						var/mob/living/M = target
@@ -455,8 +465,18 @@
 	var/atom/movable/locked
 	var/mode = 1 //1 - gravsling 2 - gravpush
 
+	var/last_fired = 0  //Concept stolen from guns.
+	var/fire_delay = 10 //Used to prevent spam-brute against humans.
 
 	action(atom/movable/target)
+
+		if(world.time >= last_fired + fire_delay)
+			last_fired = world.time
+		else
+			if (world.time % 3)
+				occupant_message("<span class='warning'>[src] is not ready to fire again!")
+			return 0
+
 		switch(mode)
 			if(1)
 				if(!action_checks(target) && !locked) return
@@ -503,6 +523,7 @@
 		return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='?src=\ref[src];mode=1'>S</a>|<a href='?src=\ref[src];mode=2'>P</a>\]"
 
 	Topic(href, href_list)
+		..()
 		if(href_list["mode"])
 			mode = text2num(href_list["mode"])
 			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())

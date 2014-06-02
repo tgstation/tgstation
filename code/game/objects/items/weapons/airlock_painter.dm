@@ -9,6 +9,7 @@
 
 	m_amt = 50
 	g_amt = 50
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=1"
 
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -24,7 +25,7 @@
 	proc/use(mob/user as mob)
 		if(can_use(user))
 			ink.charges--
-			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1)
 			return 1
 		else
 			return 0
@@ -66,12 +67,12 @@
 			W.loc = src
 			user << "<span class='notice'>You install \the [W] into \the [name].</span>"
 			ink = W
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 
 
 	attack_self(mob/user)
 		if(ink)
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			ink.loc = user.loc
 			user.put_in_hands(ink)
 			user << "<span class='notice'>You remove \the [ink] from \the [name].</span>"

@@ -39,7 +39,7 @@
 		usr << "\red [src.name] cannot be placed on this spot."
 		return
 	usr << "Attaching [src] to the wall."
-	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
+	playsound(get_turf(src), 'sound/machines/click.ogg', 75, 1)
 	var/constrdir = usr.dir
 	var/constrloc = usr.loc
 	if (!do_after(usr, 30))
@@ -103,14 +103,14 @@
 	src.add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 			usr << "You begin deconstructing [src]."
 			if (!do_after(usr, 30))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 75, 1)
 			del(src)
 		if (src.stage == 2)
 			usr << "You have to remove the wires first."
@@ -131,7 +131,7 @@
 		new /obj/item/weapon/cable_coil(get_turf(src.loc), 1, "red")
 		user.visible_message("[user.name] removes the wiring from [src].", \
 			"You remove the wiring from [src].", "You hear a noise.")
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
 	if(istype(W, /obj/item/weapon/cable_coil))
@@ -158,7 +158,7 @@
 			src.stage = 3
 			user.visible_message("[user.name] closes [src]'s casing.", \
 				"You close [src]'s casing.", "You hear a noise.")
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 75, 1)
 
 			switch(fixture_type)
 
@@ -209,6 +209,10 @@
 
 	var/rigged = 0				// true if rigged to explode
 
+	// No ghost interaction.
+	ghost_read=0
+	ghost_write=0
+
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
@@ -253,7 +257,7 @@
 		spawn(1)
 			update(0)
 
-/obj/machinery/light/Del()
+/obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
 	if(A)
 		on = 0
@@ -333,7 +337,7 @@
 // attack with item - insert light (if right type), otherwise try to break the light
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
-
+	user.changeNext_move(8)
 	//Light replacer code
 	if(istype(W, /obj/item/device/lightreplacer))
 		var/obj/item/device/lightreplacer/LR = W
@@ -386,18 +390,17 @@
 					continue
 				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 			if(on && (W.flags & CONDUCT))
-				//if(!user.mutations & COLD_RESISTANCE)
+				//if(!user.mutations & M_RESIST_COLD)
 				if (prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
 			broken()
 
 		else
 			user << "You hit the light!"
-
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 75, 1)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
 			var/obj/machinery/light_construct/newlight = null
@@ -422,7 +425,7 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-			//if(!user.mutations & COLD_RESISTANCE)
+			//if(!user.mutations & M_RESIST_COLD)
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
 
@@ -447,8 +450,13 @@
 			update(0)
 		flickering = 0
 
-// ai attack - make lights flicker, because why not
+/obj/machinery/light/attack_ghost(mob/user)
+	if(blessed) return
+	src.add_hiddenprint(user)
+	src.flicker(1)
+	return
 
+// ai attack - make lights flicker, because why not
 /obj/machinery/light/attack_ai(mob/user)
 	// attack_robot is flaky.
 	if(isMoMMI(user))
@@ -492,6 +500,8 @@
 	if(isobserver(user))
 		return
 
+	if(!Adjacent(user)) return
+
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
@@ -511,7 +521,7 @@
 		else
 			prot = 1
 
-		if(prot > 0 || (mHeatres in user.mutations))
+		if(prot > 0 || (M_RESIST_HEAT in user.mutations))
 			user << "You remove the light [fitting]"
 		else
 			user << "You try to remove the light [fitting], but it's too hot and you don't want to burn your hand."
@@ -543,7 +553,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		if(on)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -565,7 +575,7 @@
 /obj/machinery/light/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(75))
@@ -594,9 +604,7 @@
 // called when area power state changes
 /obj/machinery/light/power_change()
 	spawn(10)
-		var/area/A = src.loc.loc
-		A = A.master
-		seton(A.lightswitch && A.power_light)
+		seton(areaMaster.lightswitch && areaMaster.power_light)
 
 // called when on fire
 
@@ -639,6 +647,7 @@
 	base_state = "ltube"
 	item_state = "c_tube"
 	g_amt = 100
+	w_type = RECYK_GLASS
 	brightness = 8
 
 /obj/item/weapon/light/tube/large
@@ -654,6 +663,7 @@
 	item_state = "contvapour"
 	g_amt = 100
 	brightness = 5
+	w_type = RECYK_GLASS
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()
@@ -731,5 +741,5 @@
 		src.visible_message("\red [name] shatters.","\red You hear a small glass object shatter.")
 		status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		update()

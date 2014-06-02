@@ -56,7 +56,7 @@
 	if (istype(W, /obj/item/weapon/crowbar))
 		if(opened)
 			if(has_electronics & 1)
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				user << "You begin removing the circuitboard" //lpeters - fixed grammar issues
 				if(do_after(user, 50))
 					user.visible_message(\
@@ -84,7 +84,7 @@
 			user << "\red You need more wires."
 			return
 		user << "You start adding cables to the frame..."
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20) && C.amount >= 10)
 			C.use(10)
 			user.visible_message(\
@@ -95,7 +95,7 @@
 
 	else if (istype(W, /obj/item/weapon/wirecutters) && opened && (has_electronics & 2))
 		user << "You begin to cut the cables..."
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 50))
 			new /obj/item/weapon/cable_coil(loc,10)
 			user.visible_message(\
@@ -106,7 +106,7 @@
 
 	else if (istype(W, /obj/item/weapon/module/rust_fuel_port) && opened && !(has_electronics & 1))
 		user << "You trying to insert the port control board into the frame..."
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10))
 			has_electronics &= 1
 			user << "You place the port control board inside the frame."
@@ -119,7 +119,7 @@
 			user << "\blue You need more welding fuel to complete this task."
 			return
 		user << "You start welding the port frame..."
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 		if(do_after(user, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
 			new /obj/item/rust_fuel_assembly_port_frame(loc)

@@ -10,7 +10,7 @@
 
 	update_icon()
 		if(health <= 0)
-			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 			Delete()
 			return
 		return
@@ -73,7 +73,7 @@
 	Die()
 		del(src)
 
-	Del()
+	Destroy()
 		if(factory)
 			factory.spores -= src
 		..()

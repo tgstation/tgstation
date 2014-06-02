@@ -1,3 +1,6 @@
+/hook/startup/proc/createDatacore()
+	data_core = new /obj/effect/datacore()
+	return 1
 
 /obj/effect/datacore/proc/manifest(var/nosleep = 0)
 	spawn()
@@ -8,6 +11,8 @@
 		return
 
 /obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
+	if(PDA_Manifest.len)
+		PDA_Manifest.Cut()
 	var/datum/data/record/foundrecord
 	var/real_title = assignment
 
@@ -31,6 +36,9 @@
 		foundrecord.fields["real_rank"] = real_title
 
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
+	if(PDA_Manifest.len)
+		PDA_Manifest.Cut()
+
 	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
 		if(H.mind.role_alt_title)
@@ -111,7 +119,7 @@
 		L.fields["b_dna"]		= H.dna.unique_enzymes
 		L.fields["enzymes"]		= H.dna.SE // Used in respawning
 		L.fields["identity"]	= H.dna.UI // "
-		L.fields["image"]		= getFlatIcon(H,0)	//This is god-awful
+		L.fields["image"]		= getFlatIcon(H)	//This is god-awful
 		locked += L
 	return
 

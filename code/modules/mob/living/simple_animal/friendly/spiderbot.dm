@@ -183,7 +183,7 @@
 		src.name = "Spider-bot"
 		update_icon()
 
-/mob/living/simple_animal/spiderbot/Del()
+/mob/living/simple_animal/spiderbot/Destroy()
 	eject_brain()
 	..()
 
@@ -203,12 +203,12 @@
 
 	if(camera)
 		camera.status = 0
-
-	held_item.loc = src.loc
-	held_item = null
+	if(held_item && !isnull(held_item))
+		held_item.loc = src.loc
+		held_item = null
 
 	robogibs(src.loc, viruses)
-	src.Del()
+	src.Destroy()
 	return
 
 //copy paste from alien/larva, if that func is updated please update this one also

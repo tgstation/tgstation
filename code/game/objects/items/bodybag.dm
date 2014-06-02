@@ -9,7 +9,7 @@
 	attack_self(mob/user)
 		var/obj/structure/closet/body_bag/R = new /obj/structure/closet/body_bag(user.loc)
 		R.add_fingerprint(user)
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/storage/box/bodybags
@@ -91,7 +91,6 @@
 	desc = "A folded, non-reusable bag designed for the preservation of an occupant's brain by stasis."
 	icon = 'icons/obj/cryobag.dmi'
 	icon_state = "bodybag_folded"
-
 
 	attack_self(mob/user)
 		var/obj/structure/closet/body_bag/cryobag/R = new /obj/structure/closet/body_bag/cryobag(user.loc)

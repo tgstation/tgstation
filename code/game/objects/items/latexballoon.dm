@@ -30,10 +30,10 @@
 	burst()
 	switch(severity)
 		if (1)
-			del(src)
+			qdel(src)
 		if (2)
 			if (prob(50))
-				del(src)
+				qdel(src)
 
 /obj/item/latexballon/bullet_act()
 	burst()

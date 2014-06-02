@@ -110,6 +110,7 @@
 		who = world
 	else
 		who = src
+
 	if(lawupdate)
 		if (connected_ai)
 			if(connected_ai.stat || connected_ai.control_disabled)

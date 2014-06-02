@@ -13,6 +13,7 @@
 	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface."
 	icon_state = "rolled_poster"
 	var/serial_number = 0
+	w_type=RECYK_MISC
 
 
 /obj/item/weapon/contraband/poster/New(turf/loc, var/given_serial = 0)
@@ -21,6 +22,8 @@
 	else
 		serial_number = given_serial
 	name += " - No. [serial_number]"
+	if(serial_number == -1)
+		name = "Commendation Poster"
 	..(loc)
 
 //############################## THE ACTUAL DECALS ###########################
@@ -38,15 +41,21 @@ obj/structure/sign/poster/New(var/serial)
 
 	serial_number = serial
 
-	if(serial_number == loc)
-		serial_number = rand(1, poster_designs.len)	//This is for the mappers that want individual posters without having to use rolled posters.
+	if(serial_number == -1)
+		name += "Award of Sufficiency"
+		desc += "The mere sight of it makes you very proud."
+		icon_state = "goldstar"
 
-	var/designtype = poster_designs[serial_number]
-	var/datum/poster/design=new designtype
-	name += " - [design.name]"
-	desc += " [design.desc]"
-	icon_state = design.icon_state // poster[serial_number]
-	..()
+	else
+		if(serial_number == loc)
+			serial_number = rand(1, poster_designs.len)	//This is for the mappers that want individual posters without having to use rolled posters.
+
+		var/designtype = poster_designs[serial_number]
+		var/datum/poster/design=new designtype
+		name += " - [design.name]"
+		desc += " [design.desc]"
+		icon_state = design.icon_state // poster[serial_number]
+		..()
 
 obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -69,7 +78,7 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 			if(user.loc != temp_loc)
 				return
 			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
-			playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
+			playsound(get_turf(src), 'sound/items/poster_ripped.ogg', 100, 1)
 			ruined = 1
 			icon_state = "poster_ripped"
 			name = "ripped poster"

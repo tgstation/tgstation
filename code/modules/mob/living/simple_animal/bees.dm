@@ -9,7 +9,7 @@
 	var/mut = 0
 	var/toxic = 0
 	var/turf/target_turf
-	var/mob/target_mob
+	var/mob/target
 	var/obj/machinery/apiary/parent
 	pass_flags = PASSTABLE
 	turns_per_move = 6
@@ -32,7 +32,7 @@
 	parent = new_parent
 	verbs -= /atom/movable/verb/pull
 
-/mob/living/simple_animal/bee/Del()
+/mob/living/simple_animal/bee/Destroy()
 	if(parent)
 		parent.owned_bee_swarms.Remove(src)
 	..()
@@ -42,7 +42,7 @@
 
 	if(stat == CONSCIOUS)
 		//if we're strong enough, sting some people
-		var/mob/living/carbon/human/M = target_mob
+		var/mob/living/carbon/human/M = target
 		var/sting_prob = 100 // Bees will always try to sting.
 		if(M in view(src,1)) // Can I see my target?
 			if(prob(max(feral * 10, 0)))	// Am I mad enough to want to sting? And yes, when I initially appear, I AM mad enough
@@ -59,7 +59,7 @@
 					M.flash_pain()
 
 		//if we're chasing someone, get a little bit angry
-		if(target_mob && prob(10))
+		if(target && prob(10))
 			feral++
 
 		//calm down a little bit
@@ -71,8 +71,8 @@
 			if(feral < 0)
 				feral += 1
 
-			if(target_mob)
-				target_mob = null
+			if(target)
+				target = null
 				target_turf = null
 			if(strength > 5)
 				//calm down and spread out a little
@@ -92,7 +92,7 @@
 
 		//smoke, water and steam calms us down
 		var/calming = 0
-		var/list/calmers = list(/obj/effect/effect/chem_smoke, \
+		var/list/calmers = list(/obj/effect/effect/smoke/chem, \
 		/obj/effect/effect/water, \
 		/obj/effect/effect/foam, \
 		/obj/effect/effect/steam, \
@@ -108,7 +108,7 @@
 			if(feral > 0)
 				src.visible_message("\blue The bees calm down!")
 			feral = -10
-			target_mob = null
+			target = null
 			target_turf = null
 			wander = 1
 
@@ -141,21 +141,21 @@
 					density = 0
 				break
 
-		if(target_mob)
-			if(target_mob in view(src,7))
-				target_turf = get_turf(target_mob)
+		if(target)
+			if(target in view(src,7))
+				target_turf = get_turf(target)
 				wander = 0
 
 			else // My target's gone! But I might still be pissed! You there. You look like a good stinging target!
 				for(var/mob/living/carbon/G in view(src,7))
-					target_mob = G
+					target = G
 					break
 
 		if(target_turf)
 			if (!(DirBlocked(get_step(src, get_dir(src,target_turf)),get_dir(src,target_turf)))) // Check for windows and doors!
 				Move(get_step(src, get_dir(src,target_turf)))
 				if (prob(0.1))
-					src.visible_message("\blue The bees swarm after [target_mob]!")
+					src.visible_message("\blue The bees swarm after [target]!")
 			if(src.loc == target_turf)
 				target_turf = null
 				wander = 1

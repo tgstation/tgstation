@@ -1,6 +1,7 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
+	desc = "The final frontier."
 	icon_state = "0"
 
 	temperature = TCMB
@@ -50,7 +51,7 @@
 				return
 
 		user << "\blue Constructing support lattice ..."
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		R.use(1)
 		return
@@ -60,7 +61,7 @@
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
 			del(L)
-			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
 			S.use(1)
 			return
@@ -91,7 +92,7 @@
 				return
 
 			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-				del(A) //The disk's Del() proc ensures a new one is created
+				del(A) //The disk's Destroy() proc ensures a new one is created
 				return
 
 			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)

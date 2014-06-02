@@ -11,6 +11,7 @@
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 500
+	w_type = RECYK_MISC
 	origin_tech = "combat=1;plasmatech=1"
 	var/status = 0
 	var/throw_amount = 100
@@ -22,7 +23,7 @@
 	var/obj/item/weapon/tank/plasma/ptank = null
 
 
-/obj/item/weapon/flamethrower/Del()
+/obj/item/weapon/flamethrower/Destroy()
 	if(weldtool)
 		del(weldtool)
 	if(igniter)

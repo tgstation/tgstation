@@ -1,13 +1,10 @@
 /world
 	mob = /mob/new_player
 	turf = /turf/space
-	area = /area
 	view = "15x15"
 	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
 
-
-
-#define RECOMMENDED_VERSION 500
+#define RECOMMENDED_VERSION 501
 /world/New()
 	// Honk honk, fuck you science
 	WORLD_X_OFFSET=rand(-50,50)
@@ -16,6 +13,7 @@
 	starticon = rotate_icon('icons/obj/lightning.dmi', "lightningstart")
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
 	endicon = rotate_icon('icons/obj/lightning.dmi', "lightningend")
+
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
@@ -26,7 +24,7 @@
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	if(byond_version < RECOMMENDED_VERSION)
-		world.log << "Your server's byond version does not meet the recommended requirements for TGstation code. Please update BYOND"
+		world.log << "Your server's byond version does not meet the recommended requirements for this code. Please update BYOND"
 
 	if(config && config.log_runtimes)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
@@ -47,6 +45,9 @@
 	jobban_updatelegacybans()
 	appearance_loadbanfile()
 	LoadBans()
+	SetupHooks() // /vg/
+
+	copy_logs() // Just copy the logs.
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
@@ -88,8 +89,6 @@
 
 	src.update_status()
 
-	. = ..()
-
 	sleep_offline = 1
 
 	send2mainirc("Server starting up on [config.server? "byond://[config.server]" : "byond://[world.address]:[world.port]"]")
@@ -111,7 +110,7 @@
 
 #undef RECOMMENDED_VERSION
 
-	return
+	return ..()
 
 //world/Topic(href, href_list[])
 //		world << "Received a Topic() call!"
@@ -168,7 +167,7 @@
 		return list2params(s)
 
 
-/world/Reboot(var/reason)
+/world/Reboot(reason)
 	spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
 
@@ -178,7 +177,7 @@
 		else
 			C << link("byond://[world.address]:[world.port]")
 
-	..(reason)
+	..()
 
 
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)

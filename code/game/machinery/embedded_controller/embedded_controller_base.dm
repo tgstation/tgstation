@@ -64,7 +64,7 @@ obj/machinery/embedded_controller
 						usr << "You begin removing screws from \the [src] backplate..."
 						if(do_after(user, 50))
 							usr << "\blue You unscrew \the [src] from the wall."
-							playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+							playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 							new /obj/item/airlock_controller_frame(get_turf(src))
 							del(src)
 						return 1
@@ -79,7 +79,7 @@ obj/machinery/embedded_controller
 							user.drop_item()
 							_circuitboard=C
 							C.loc=src
-							playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+							playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 							build++
 							update_icon()
 						return 1
@@ -87,7 +87,7 @@ obj/machinery/embedded_controller
 					if(istype(W, /obj/item/weapon/crowbar))
 						usr << "You begin to pry out \the [W] into \the [src]."
 						if(do_after(user, 10))
-							playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+							playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 							build--
 							update_icon()
 							var/obj/item/weapon/circuitboard/C
@@ -104,7 +104,7 @@ obj/machinery/embedded_controller
 					if(istype(W, /obj/item/weapon/cable_coil))
 						var/obj/item/weapon/cable_coil/C=W
 						user << "You start adding cables to \the [src]..."
-						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 						if(do_after(user, 20) && C.amount >= 10)
 							C.use(5)
 							build++
@@ -125,7 +125,7 @@ obj/machinery/embedded_controller
 						return 1
 					if(istype(W, /obj/item/weapon/screwdriver))
 						user << "You begin to complete \the [src]..."
-						playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 						if(do_after(user, 20))
 							if(!_circuitboard)
 								_circuitboard=new boardtype(src)

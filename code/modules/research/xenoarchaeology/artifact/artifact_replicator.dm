@@ -96,12 +96,8 @@
 	interact(user)
 
 /obj/machinery/replicator/interact(mob/user)
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\artifact\artifact_replicator.dm:99: var/dat = "The control panel displays an incomprehensible selection of controls, many with unusual markings or text around them.<br>"
-	var/dat = {"The control panel displays an incomprehensible selection of controls, many with unusual markings or text around them.<br>
-<br>"}
-	// END AUTOFIX
+	var/dat = "The control panel displays an incomprehensible selection of controls, many with unusual markings or text around them.<br>"
+	dat += "<br>"
 	for(var/index=1, index<=construction.len, index++)
 		dat += "<A href='?src=\ref[src];activate=[index]'>\[[construction[index]]\]</a><br>"
 

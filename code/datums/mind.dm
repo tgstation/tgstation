@@ -53,7 +53,6 @@ datum/mind
 
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
-
 	var/datum/vampire/vampire			//vampire holder
 
 	var/rev_cooldown = 0
@@ -69,7 +68,8 @@ datum/mind
 
 	proc/transfer_to(mob/living/new_character)
 		if(!istype(new_character))
-			world.log << "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn"
+			error("transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn")
+
 		if(current)					//remove ourself from our old body's mind variable
 			if(changeling)
 				current.remove_changeling_powers()
@@ -483,6 +483,10 @@ datum/mind
 					new_objective = new /datum/objective/survive
 					new_objective.owner = src
 
+				if ("die")
+					new_objective = new /datum/objective/die
+					new_objective.owner = src
+
 				if ("nuclear")
 					new_objective = new /datum/objective/nuclear
 					new_objective.owner = src
@@ -654,8 +658,8 @@ datum/mind
 						ticker.mode.cult += src
 						ticker.mode.update_cult_icons_added(src)
 						special_role = "Cultist"
-						current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
-						current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+						current << "<span class='sinister'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>"
+						current << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
 							cult.memoize_cult_objectives(src)
@@ -905,7 +909,7 @@ datum/mind
 
 						A.malf_picker.remove_verbs(A)
 
-						A.laws = new /datum/ai_laws/asimov
+						A.laws = new base_law_type
 						del(A.malf_picker)
 						A.show_laws()
 						A.icon_state = "ai"
@@ -1059,7 +1063,8 @@ datum/mind
 			current.verbs += /mob/living/silicon/ai/proc/choose_modules
 			current.verbs += /datum/game_mode/malfunction/proc/takeover
 			current:malf_picker = new /datum/module_picker
-			current:laws = new /datum/ai_laws/malfunction
+			var/datum/ai_laws/laws = current:laws
+			laws.malfunction()
 			current:show_laws()
 			current << "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"
 			special_role = "malfunction"
@@ -1135,8 +1140,8 @@ datum/mind
 			ticker.mode.cult += src
 			ticker.mode.update_cult_icons_added(src)
 			special_role = "Cultist"
-			current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
-			current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+			current << "<span class='sinister'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>"
+			current << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
 			var/datum/game_mode/cult/cult = ticker.mode
 			if (istype(cult))
 				cult.memoize_cult_objectives(src)

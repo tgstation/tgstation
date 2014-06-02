@@ -282,7 +282,7 @@
 	if(opened)
 		if(istype(O, /obj/item/weapon/crowbar))
 			user << "You begin to remove the circuits from the [src]."
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, 50))
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				M.state = 2
@@ -298,10 +298,10 @@
 /obj/machinery/photocopier/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if(prob(50))
-				del(src)
+				qdel(src)
 			else
 				if(toner > 0)
 					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))

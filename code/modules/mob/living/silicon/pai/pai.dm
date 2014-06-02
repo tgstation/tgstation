@@ -4,6 +4,7 @@
 	icon_state = "shadow"
 
 	robot_talk_understand = 0
+	emote_type = 2		// pAIs emotes are heard, not seen, so they can be seen through a container (eg. person)
 
 	var/network = list("SS13")
 	var/obj/machinery/camera/current = null
@@ -193,7 +194,7 @@
 		else //harm
 			var/damage = rand(10, 20)
 			if (prob(90))
-				playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+				playsound(get_turf(src), 'sound/weapons/slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
@@ -202,7 +203,7 @@
 				src.adjustBruteLoss(damage)
 				src.updatehealth()
 			else
-				playsound(src.loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+				playsound(get_turf(src), 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)

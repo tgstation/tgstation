@@ -43,9 +43,12 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/space_oddity.ogg',\
 	'sound/music/title1.ogg',\
 	'sound/music/title2.ogg',\
-	'sound/music/clown.ogg')
+	'sound/music/clown.ogg',\
+	'sound/music/robocop.ogg',\
+	'sound/music/gaytony.ogg',\
+	'sound/music/rocketman.ogg')
 	do
-		pregame_timeleft = 180
+		pregame_timeleft = 300
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
 		while(current_state == GAME_STATE_PREGAME)
@@ -137,8 +140,30 @@ var/global/datum/controller/gameticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				del(S)
+		var/list/obj/effect/landmark/spacepod/random/L = list()
+		for(var/obj/effect/landmark/spacepod/random/SS in landmarks_list)
+			if(istype(SS))
+				L += SS
+		var/obj/effect/landmark/spacepod/random/S = pick(L)
+		new /obj/spacepod/random(S.loc)
+		for(var/obj in L)
+			if(istype(obj, /obj/effect/landmark/spacepod/random))
+				del(obj)
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
-		world << sound('sound/AI/welcome.ogg') // Skie
+		//world << sound('sound/AI/welcome.ogg') // Skie //Out with the old, in with the new. - N3X15
+		var/welcome_sentence=list('sound/AI/vox_login.ogg')
+		welcome_sentence += pick(
+			'sound/AI/vox_reminder1.ogg',
+			'sound/AI/vox_reminder2.ogg',
+			'sound/AI/vox_reminder3.ogg',
+			'sound/AI/vox_reminder4.ogg',
+			'sound/AI/vox_reminder5.ogg',
+			'sound/AI/vox_reminder6.ogg',
+			'sound/AI/vox_reminder7.ogg',
+			'sound/AI/vox_reminder8.ogg',
+			'sound/AI/vox_reminder9.ogg')
+		for(var/sound in welcome_sentence)
+			play_vox_sound(sound,STATION_Z,null)
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
 
@@ -276,7 +301,7 @@ var/global/datum/controller/gameticker/ticker
 				else if(!player.mind.assigned_role)
 					continue
 				else
-					player.create_character()
+					player.FuckUpGenes(player.create_character())
 					del(player)
 
 

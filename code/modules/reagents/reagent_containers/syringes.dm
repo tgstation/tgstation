@@ -58,7 +58,7 @@
 			return
 
 		if (user.a_intent == "hurt" && ismob(target))
-			if((CLUMSY in user.mutations) && prob(50))
+			if((M_CLUMSY in user.mutations) && prob(50))
 				target = user
 			syringestab(target, user)
 			return
@@ -83,9 +83,9 @@
 						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 						var/mob/living/carbon/T = target
 						if(!T.dna)
-							usr << "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)"
+							user << "You are unable to locate any blood. (BUG: To be specific, your target seems to be missing their DNA datum)"
 							return
-						if(NOCLONE in T.mutations) //target done been et, no more blood in him
+						if(M_NOCLONE in T.mutations) //target done been et, no more blood in him
 							user << "\red You are unable to locate any blood."
 							return
 
@@ -96,9 +96,12 @@
 							src.reagents.update_total()
 							src.on_reagent_change()
 							src.reagents.handle_reactions()
-						user << "\blue You take a blood sample from [target]"
-						for(var/mob/O in viewers(4, user))
-							O.show_message("\red [user] takes a blood sample from [target].", 1)
+							user << "\blue You take a blood sample from [target]"
+							for(var/mob/O in viewers(4, user))
+								O.show_message("\red [user] takes a blood sample from [target].", 1)
+						else
+							user.visible_message("\red [user] inserts the syringe into [target], draws back the plunger and gets... Nothing?",\
+								"\red You insert the syringe into [target], draw back the plunger and get... Nothing?")
 
 				else //if not mob
 					if(!target.reagents.total_volume)
@@ -165,6 +168,19 @@
 					src.reagents.reaction(target, INGEST)
 				if(ismob(target) && target == user)
 					src.reagents.reaction(target, INGEST)
+
+				if(isobj(target))
+					// /vg/: Logging transfers of bad things
+					if(target.reagents_to_log.len)
+						var/list/badshit=list()
+						for(var/bad_reagent in target.reagents_to_log)
+							if(reagents.has_reagent(bad_reagent))
+								badshit += reagents_to_log[bad_reagent]
+						if(badshit.len)
+							var/hl="\red <b>([english_list(badshit)])</b> \black"
+							message_admins("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+							log_game("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].")
+
 				spawn(5)
 					var/datum/reagent/blood/B
 					for(var/datum/reagent/blood/d in src.reagents.reagent_list)
@@ -174,6 +190,7 @@
 					if(B && istype(target,/mob/living/carbon))
 						var/mob/living/carbon/C = target
 						C.inject_blood(src,5)
+						trans = 5
 					else
 						trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
@@ -413,6 +430,15 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
+/obj/item/weapon/reagent_containers/syringe/charcoal
+	name = "Syringe (Activated Charcoal)"
+	desc = "Contains activated charcoal - used to treat overdoses."
+	New()
+		..()
+		reagents.add_reagent("charcoal", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
 /obj/item/weapon/reagent_containers/ld50_syringe/choral
 	New()
 		..()
@@ -438,6 +464,15 @@
 	New()
 		..()
 		reagents.add_reagent("inaprovaline", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/robot/charcoal
+	name = "Syringe (Activated Charcoal)"
+	desc = "Contains activated charcoal - used to treat overdoses."
+	New()
+		..()
+		reagents.add_reagent("charcoal", 15)
 		mode = SYRINGE_INJECT
 		update_icon()
 

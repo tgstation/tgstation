@@ -152,7 +152,7 @@
 						var/datum/organ/external/affecting
 						if(T.organs["head"]) affecting = T.organs["head"]
 						affecting.take_damage(rand(1,7), 0)
-						playsound(src.loc, 'sound/items/eatfood.ogg', 50, 1)
+						playsound(get_turf(src), 'sound/items/eatfood.ogg', 50, 1)
 						if(prob(25))
 							target.contract_disease(new/datum/disease/z_virus)
 						src.add_blood(src.target)
@@ -535,7 +535,7 @@ datum/reagent/zed
 //			return
 
 	if(usr) message_admins("[key_name_admin(usr)] has spawned a zombie", 1)
-//	command_alert("Confirmed outbreak of level 13 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+	biohazard_alert(7)
 	var/list/t = list()
 	for(var/obj/landmark/zspawn/O in world)
 		t += O

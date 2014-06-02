@@ -3,7 +3,7 @@
 	desc = "It's useful for igniting plasma."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
-	var/id = null
+	var/id_tag = null
 	var/on = 1.0
 	var/obj/item/device/assembly_holder/assembly=null
 	anchored = 1.0
@@ -60,7 +60,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool) && src.assembly)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 			user << "\blue You begin to cut \the [src] off the floor..."
 			if (do_after(user, 40))
 				user.visible_message( \
@@ -82,7 +82,7 @@
 	desc = "A wall-mounted ignition device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"
-	var/id = null
+	var/id_tag = null
 	var/disable = 0
 	var/last_spark = 0
 	var/base_state = "migniter"
@@ -175,12 +175,12 @@
 	icon_state = "launcheract"
 
 	for(var/obj/machinery/sparker/M in world)
-		if (M.id == src.id)
+		if (M.id_tag == src.id_tag)
 			spawn( 0 )
 				M.ignite()
 
 	for(var/obj/machinery/igniter/M in world)
-		if(M.id == src.id)
+		if(M.id_tag == src.id_tag)
 			use_power(50)
 			M.on = !( M.on )
 			M.icon_state = text("igniter[]", M.on)

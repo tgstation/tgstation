@@ -77,6 +77,9 @@ field_generator power level display
 
 
 /obj/machinery/field_generator/attack_hand(mob/user as mob)
+	if(isobserver(user) && !isAdminGhost(user))
+		return 0
+
 	if(state == 2)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(src.active >= 1)
@@ -92,7 +95,7 @@ field_generator power level display
 				src.add_fingerprint(user)
 	else
 		user << "The [src] needs to be firmly secured to the floor first."
-		return
+		return 0
 
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
@@ -103,14 +106,14 @@ field_generator power level display
 		switch(state)
 			if(0)
 				state = 1
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
 					"You secure the external reinforcing bolts to the floor.", \
 					"You hear ratchet")
 				src.anchored = 1
 			if(1)
 				state = 0
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"You undo the external reinforcing bolts.", \
 					"You hear ratchet")
@@ -126,7 +129,7 @@ field_generator power level display
 				return
 			if(1)
 				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld the [src] to the floor.", \
 						"You hear welding")
@@ -138,7 +141,7 @@ field_generator power level display
 					return
 			if(2)
 				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut the [src] free from the floor.", \
 						"You hear welding")
@@ -173,7 +176,7 @@ field_generator power level display
 	return 0
 
 
-/obj/machinery/field_generator/Del()
+/obj/machinery/field_generator/Destroy()
 	src.cleanup()
 	..()
 

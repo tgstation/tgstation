@@ -30,7 +30,18 @@
 	var/list/datum/mind/possible_wizards = get_players_for_role(BE_WIZARD)
 	if(possible_wizards.len==0)
 		return 0
-	var/datum/mind/wizard = pick(possible_wizards)
+	var/datum/mind/wizard
+	while(possible_wizards.len)
+		wizard = pick(possible_wizards)
+		if(wizard.special_role)
+			possible_wizards -= wizard
+			wizard = null
+			continue
+		else
+			break
+	if(isnull(wizard))
+		log_admin("COULD NOT MAKE A WIZARD, Mixed mode is [mixed ? "enabled" : "disabled"]")
+		return 0
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
@@ -56,9 +67,9 @@
 		equip_wizard(wizard.current)
 		name_wizard(wizard.current)
 		greet_wizard(wizard)
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+	if(!mixed)
+		spawn (rand(waittime_l, waittime_h))
+			send_intercept()
 	..()
 	return
 
@@ -184,11 +195,13 @@
 
 
 /datum/game_mode/wizard/check_finished()
-
-	if(config.continous_rounds)
+	if(istype(ticker.mode, /datum/game_mode/mixed))
+		mixed = 1
+	if(config.continous_rounds || mixed)
 		return ..()
 
 	var/wizards_alive = 0
+	var/traitors_alive = 0
 	for(var/datum/mind/wizard in wizards)
 		if(!istype(wizard.current,/mob/living/carbon))
 			continue
@@ -196,7 +209,15 @@
 			continue
 		wizards_alive++
 
-	if (wizards_alive)
+	if(!wizards_alive)
+		for(var/datum/mind/traitor in traitors)
+			if(!istype(traitor.current,/mob/living/carbon))
+				continue
+			if(traitor.current.stat==2)
+				continue
+			traitors_alive++
+
+	if (wizards_alive || traitors_alive)
 		return ..()
 	else
 		finished = 1
@@ -204,8 +225,8 @@
 
 
 
-/datum/game_mode/wizard/declare_completion()
-	if(finished)
+/datum/game_mode/wizard/declare_completion(var/ragin = 0)
+	if(finished && !ragin)
 		feedback_set_details("round_end_result","loss - wizard killed")
 		world << "\red <FONT size = 3><B> The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
 	..()
@@ -214,18 +235,18 @@
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
 	if(wizards.len)
-		var/text = "<FONT size = 2><B>The wizards/witches were:</B></FONT>"
+		var/text = "<br><font size=3><b>the wizards/witches were:</b></font>"
 
 		for(var/datum/mind/wizard in wizards)
 
-			text += "<br>[wizard.key] was [wizard.name] ("
+			text += "<br><b>[wizard.key]</b> was <b>[wizard.name]</b> ("
 			if(wizard.current)
 				if(wizard.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
 				if(wizard.current.real_name != wizard.name)
-					text += " as [wizard.current.real_name]"
+					text += " as <b>[wizard.current.real_name]</b>"
 			else
 				text += "body destroyed"
 			text += ")"
@@ -248,6 +269,15 @@
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 				feedback_add_details("wizard_success","FAIL")
+			if(wizard.current && wizard.current.spell_list)
+				text += "<br><B>[wizard.name] used the following spells: </B>"
+				var/i = 1
+				for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
+					text += "[S.name]"
+					if(wizard.current.spell_list.len > i)
+						text += ", "
+					i++
+			text += "<br>"
 
 		world << text
 	return 1

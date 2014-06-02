@@ -17,13 +17,13 @@
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "pokes the"
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/spidermeat
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "hits"
 	stop_automated_movement_when_pulled = 0
-	maxHealth = 75 // Was 200
-	health = 75 // 150/2
+	maxHealth = 200 // Was 75
+	health = 200
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	heat_damage_per_tick = 20
@@ -43,8 +43,8 @@
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
-	maxHealth = 40
-	health = 40
+	maxHealth = 75 // 40
+	health = 75
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	poison_per_bite = 10
@@ -60,18 +60,42 @@
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
-	maxHealth = 60 // Was 120
-	health = 60
+	maxHealth = 120 // Was 60
+	health = 120
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	poison_per_bite = 5
 	speed=-1
-	//var/target=null
+	// Hunters attack doors (jam them open)
+	wanted_objects = list(
+		/obj/machinery/door/airlock,
+		/obj/machinery/bot // Beepsky and friends
+	)
+	idle_vision_range = 7
+	search_objects = 1 // Consider objects when searching.  Set to 0 when attacked
+	wander = 1
+	ranged = 0
+	minimum_distance = 1
 
 /mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
+	if(istype(target,/obj/machinery/door))
+		var/obj/machinery/door/D = target
+		if(D.density==1)
+			if(get_dist(src, target) > 1)
+				return // keep movin'.
+			stop_automated_movement = 1
+			walk(src,0)
+			D.visible_message("\red \The [D]'s motors whine as four arachnid claws begin trying to force it open!")
+			spawn(50)
+				if(prob(25))
+					D.open()
+					D.visible_message("\red \The [src] forces \the [D] open!")
+		busy = 0
+		stop_automated_movement = 0
+		return
 	..()
-	if(isliving(target_mob))
-		var/mob/living/L = target_mob
+	if(isliving(target))
+		var/mob/living/L = target
 		if(L.reagents)
 			if(prob(poison_per_bite))
 				src.visible_message("\red \the [src] injects a powerful toxin!")
@@ -91,42 +115,7 @@
 				spawn(50)
 					stop_automated_movement = 0
 					walk(src,0)
-/mob/living/simple_animal/hostile/giant_spider/hunter/Life()
-	..()
-	if(!stat)
-		if(stance == HOSTILE_STANCE_IDLE)
-			if(!busy && prob(40)) // Pick a door and rape it
-				var/list/doors = list()
-				for(var/obj/machinery/door/O in oview(src, 7))
-					// Skip some door types
-					if(istype(O,/obj/machinery/door/poddoor))
-						continue
-					doors+=O
-				if(doors.len>0)
-					for(var/i=0;i<doors.len;i++)
-						var/obj/machinery/door/D = pick(doors)
-						if(D.density==1) // Closed
-							busy=MOVING_TO_TARGET
-							Goto(D, move_to_delay)
-							target_mob=D
-							GiveUp(D)
-							return
-			if(busy)
-				if(busy == MOVING_TO_TARGET && target_mob)
-					var/obj/machinery/door/D = target_mob
-					if(D.density==1)
-						if(get_dist(src, target_mob) > 1)
-							return // keep movin'.
-						stop_automated_movement = 1
-						walk(src,0)
-						D.visible_message("\red \the [D]'s motors whine as four arachnid claws begin trying to force it open!")
-						spawn(50)
-							if(prob(25))
-								D.open(1)
-								D.visible_message("\red \the [src] forces \the [D] open!")
-					busy = 0
-					stop_automated_movement = 0
-
+				return 1
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/proc/GiveUp(var/C)
 	spawn(100)
@@ -139,8 +128,8 @@
 /mob/living/simple_animal/hostile/giant_spider/hunter/proc/GiveUp(var/C)
 	spawn(100)
 		if(busy == MOVING_TO_TARGET)
-			if(target_mob == C && get_dist(src,target_mob) > 1)
-				target_mob = null
+			if(target == C && get_dist(src,target) > 1)
+				target = null
 			busy = 0
 			stop_automated_movement = 0
 
@@ -153,9 +142,7 @@
 			if(!busy && prob(30))
 				//first, check for potential food nearby to cocoon
 				for(var/mob/living/C in can_see)
-					if(istype(C, /mob/living/simple_animal/hostile/giant_spider))
-						continue
-					if(C.stat)
+					if(C.stat && !istype(C,/mob/living/simple_animal/hostile/giant_spider))
 						cocoon_target = C
 						busy = MOVING_TO_TARGET
 						Goto(C, move_to_delay)
@@ -235,13 +222,13 @@
 						if(busy == SPINNING_COCOON)
 							if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
 								if(istype(cocoon_target,/obj/machinery/door))
-									//var/obj/machinery/door/D=cocoon_target
+									var/obj/machinery/door/D=cocoon_target
 									var/obj/effect/spider/stickyweb/W = locate() in get_turf(cocoon_target)
 									if(!W)
 										src.visible_message("\red \the [src] jams \the [cocoon_target] open with web!")
 										W=new /obj/effect/spider/stickyweb(cocoon_target.loc)
 										// Jam the door open with webs
-										//D.jammed=W
+										D.jammed=W
 									busy = 0
 									stop_automated_movement = 0
 								else

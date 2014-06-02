@@ -1,3 +1,4 @@
+
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
@@ -11,18 +12,20 @@
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
-	m_amt = 90
+	m_amt = 90 // TODO: Check against autolathe.
+	w_type = RECYK_METAL
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
-	var/list/reagents_to_log=list(
-		"fuel"=    "welder fuel",
-		"plasma"=  "plasma",
-		"pacid"=   "polytrinic acid",
-		"sacid"=   "sulphuric acid"
-	)
 	var/max_water = 50
 	var/last_use = 1.0
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
+
+	reagents_to_log=list(
+		"fuel"  =  "welder fuel",
+		"plasma"=  "plasma",
+		"pacid" =  "polytrinic acid",
+		"sacid" =  "sulphuric acid"
+	)
 
 /obj/item/weapon/extinguisher/mini
 	name = "fire extinguisher"
@@ -88,6 +91,9 @@
 		if(locate(/obj) in src)
 			user << "There's already something crammed into the nozzle."
 			return
+		if(isrobot(user) && !isMoMMI(user)) // MoMMI's can but borgs can't
+			user << "You're a robot. No."
+			return
 		user.drop_item()
 		W.loc=src
 		user << "You cram \the [W] into the nozzle of \the [src]."
@@ -107,7 +113,7 @@
 				log_game("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			o.reagents.trans_to(src, 50)
 			user << "\blue \The [src] is now refilled"
-			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 			return
 
 		if(is_open_container() && reagents.total_volume)
@@ -137,7 +143,7 @@
 
 		src.last_use = world.time
 
-		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
+		playsound(get_turf(src), 'sound/effects/extinguish.ogg', 75, 1, -3)
 
 		var/direction = get_dir(src,target)
 
@@ -191,7 +197,7 @@
 				for(var/b=0, b<5, b++)
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return
-					W.reagents.reaction(get_turf(W))
+					W.reagents.reaction(get_turf(W), TOUCH)
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
 						W.reagents.reaction(atm, TOUCH)                      // Touch, since we sprayed it.

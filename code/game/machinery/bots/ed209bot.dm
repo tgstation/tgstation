@@ -274,14 +274,14 @@ Auto Patrol: []"},
 				if(!istype(target.loc, /turf))
 					return
 				if (get_dist(src, src.target) <= 1)		// if right next to perp
-					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+					playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
 					src.icon_state = "[lasercolor]ed209-c"
 					spawn(2)
 						src.icon_state = "[lasercolor]ed209[src.on]"
 					var/mob/living/carbon/M = src.target
 					var/maxstuns = 4
 					if (istype(M, /mob/living/carbon/human))
-						if (M.stuttering < 10 && (!(HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+						if (M.stuttering < 10 && (!(M_HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 							M.stuttering = 10
 						M.Stun(10)
 						M.Weaken(10)
@@ -323,7 +323,7 @@ Auto Patrol: []"},
 
 			if(istype(src.target,/mob/living/carbon))
 				if (!src.target.handcuffed && !src.arrest_type)
-					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+					playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
 					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
@@ -342,7 +342,7 @@ Auto Patrol: []"},
 							src.last_found = world.time
 							src.frustration = 0
 
-		//					playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+		//					playsound(get_turf(src), pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
 		//					src.speak(arrest_message)
 			else
@@ -651,7 +651,7 @@ Auto Patrol: []"},
 			src.oldtarget_name = C.name
 			src.speak("Level [src.threatlevel] infraction alert!")
 			if(!src.lasercolor)
-				playsound(src.loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
+				playsound(get_turf(src), pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
 			src.visible_message("<b>[src]</b> points at [C.name]!")
 			mode = SECBOT_HUNT
 			spawn(0)
@@ -817,7 +817,7 @@ Auto Patrol: []"},
 		return
 
 	//if(lastfired && world.time - lastfired < 100)
-	//	playsound(src.loc, 'ed209_shoot.ogg', 50, 0)
+	//	playsound(get_turf(src), 'ed209_shoot.ogg', 50, 0)
 
 	if(!projectile)
 		if(!lasercolor)
@@ -995,7 +995,7 @@ Auto Patrol: []"},
 
 		if(8)
 			if( istype(W, /obj/item/weapon/screwdriver) )
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
 				user << "<span class='notice'>Now attaching the gun to the frame...</span>"
 				sleep(40)
@@ -1020,7 +1020,8 @@ Auto Patrol: []"},
 	if((src.lasercolor == "b") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/beam/lastertag/red))
 			src.disabled = 1
-			del (Proj)
+			//del (Proj)
+			returnToPool(Proj)
 			sleep(100)
 			src.disabled = 0
 		else
@@ -1028,7 +1029,8 @@ Auto Patrol: []"},
 	else if((src.lasercolor == "r") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/beam/lastertag/blue))
 			src.disabled = 1
-			del (Proj)
+			//del (Proj)
+			returnToPool(Proj)
 			sleep(100)
 			src.disabled = 0
 		else

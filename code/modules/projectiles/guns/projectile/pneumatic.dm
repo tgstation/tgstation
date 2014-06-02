@@ -1,6 +1,6 @@
 /obj/item/weapon/storage/pneumatic
 	name = "pneumatic cannon"
-	desc = "A large gas-powered cannon."
+	desc = "A launcher powered by compressed air."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "pneumatic"
 	item_state = "pneumatic"
@@ -9,6 +9,7 @@
 	slot_flags = SLOT_BELT
 	max_w_class = 3
 	max_combined_w_class = 20
+	origin_tech = "materials=3;engineering=3"
 
 	var/obj/item/weapon/tank/tank = null                // Tank of gas for use in firing the cannon.
 	var/obj/item/weapon/storage/tank_container = new()  // Something to hold the tank item so we don't accidentally fire it.
@@ -16,7 +17,7 @@
 	var/possible_pressure_amounts = list(5,10,20,25,50) // Possible pressure settings.
 	var/minimum_tank_pressure = 10                      // Minimum pressure to fire the gun.
 	var/cooldown = 0                                    // Whether or not we're cooling down.
-	var/cooldown_time = 50                              // Time between shots.
+	var/cooldown_time = 30                              // Time between shots.
 	var/force_divisor = 400                             // Force equates to speed. Speed/5 equates to a damage multiplier for whoever you hit.
 	                                                    // For reference, a fully pressurized oxy tank at 50% gas release firing a health
 	                                                    // analyzer with a force_divisor of 10 hit with a damage multiplier of 3000+.

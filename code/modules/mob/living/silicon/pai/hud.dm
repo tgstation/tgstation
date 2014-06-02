@@ -80,6 +80,12 @@
 				holder.icon_state = "hudxeno"
 			else if(foundVirus)
 				holder.icon_state = "hudill"
+			else if(patient.has_brain_worms())
+				var/mob/living/simple_animal/borer/B = patient.has_brain_worms()
+				if(B.controlling)
+					holder.icon_state = "hudbrainworm"
+				else
+					holder.icon_state = "hudhealthy"
 			else
 				holder.icon_state = "hudhealthy"
 			client.images += holder

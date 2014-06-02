@@ -3,6 +3,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
 	unacidable = 1//Just to be sure.
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/manifest/New()
 

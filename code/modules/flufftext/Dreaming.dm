@@ -13,6 +13,7 @@ mob/living/carbon/proc/dream()
 		"the virologist","the roboticist","the chef","the bartender","the chaplain","the librarian","a mouse","an ert member",
 		"a beach","the holodeck","a smokey room","a voice","the cold","a mouse","an operating table","the bar","the rain","a skrell",
 		"a unathi","a tajaran","the ai core","the mining station","the research station","a beaker of strange liquid",
+		"a war","a team","a man with a bad haircut","the moons of jupiter","an old malfunctioning AI","a ship full of spiders",
 		)
 	spawn(0)
 		for(var/i = rand(1,4),i > 0, i--)

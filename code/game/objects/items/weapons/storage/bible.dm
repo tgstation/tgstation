@@ -56,7 +56,7 @@
 		user.take_organ_damage(0,10)
 		return
 
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((M_CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.Paralyse(20)
@@ -69,7 +69,7 @@
 		if(M.mind && (M.mind.assigned_role == "Chaplain"))
 			user << "\red You can't heal yourself!"
 			return
-		if((M.mind in ticker.mode.cult) && (prob(20)))
+		if((M.mind in ticker.mode.cult && !(M.mind in ticker.mode.modePlayer)) && (prob(20))) // can't deconvert originals - Pomf
 			M << "\red The power of [src.deity_name] clears your mind of heresy!"
 			user << "\red You see how [M]'s eyes become clear, the cult no longer holds control over him!"
 			ticker.mode.remove_cultist(M.mind)
@@ -78,18 +78,18 @@
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] heals [] with the power of [src.deity_name]!</B>", user, M), 1)
 			M << "\red May the power of [src.deity_name] compel you to be healed!"
-			playsound(src.loc, "punch", 25, 1, -1)
+			playsound(get_turf(src), "punch", 25, 1, -1)
 		else
 			if(ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 				M.adjustBrainLoss(10)
 				M << "\red You feel dumber."
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] beats [] over the head with []!</B>", user, M, src), 1)
-			playsound(src.loc, "punch", 25, 1, -1)
+			playsound(get_turf(src), "punch", 25, 1, -1)
 	else if(M.stat == 2)
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] smacks []'s lifeless corpse with [].</B>", user, M, src), 1)
-		playsound(src.loc, "punch", 25, 1, -1)
+		playsound(get_turf(src), "punch", 25, 1, -1)
 	return
 
 /obj/item/weapon/storage/bible/afterattack(atom/A, mob/user as mob)
@@ -105,5 +105,5 @@
 			A.reagents.add_reagent("holywater",water2holy)
 
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	playsound(src.loc, "rustle", 50, 1, -5)
+	playsound(get_turf(src), "rustle", 50, 1, -5)
 	..()

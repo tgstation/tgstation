@@ -29,9 +29,9 @@ obj/structure/windoor_assembly
 obj/structure/windoor_assembly/New(dir=NORTH)
 	..()
 	src.ini_dir = src.dir
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
-obj/structure/windoor_assembly/Del()
+obj/structure/windoor_assembly/Destroy()
 	density = 0
 	update_nearby_tiles()
 	..()
@@ -65,7 +65,7 @@ obj/structure/windoor_assembly/Del()
 				var/obj/item/weapon/weldingtool/WT = W
 				if (WT.remove_fuel(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 
 					if(do_after(user, 40))
 						if(!src || !WT.isOn()) return
@@ -80,7 +80,7 @@ obj/structure/windoor_assembly/Del()
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
 			if(istype(W, /obj/item/weapon/wrench) && !anchored)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
 
 				if(do_after(user, 40))
@@ -94,7 +94,7 @@ obj/structure/windoor_assembly/Del()
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
 			else if(istype(W, /obj/item/weapon/wrench) && anchored)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
 
 				if(do_after(user, 40))
@@ -146,7 +146,7 @@ obj/structure/windoor_assembly/Del()
 
 			//Removing wire from the assembly. Step 5 undone.
 			if(istype(W, /obj/item/weapon/wirecutters))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
 				if(do_after(user, 40))
@@ -161,8 +161,8 @@ obj/structure/windoor_assembly/Del()
 						src.name = "Wired Windoor Assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/weapon/circuitboard/airlock))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+			else if(istype(W, /obj/item/weapon/circuitboard/airlock) && W:icon_state != "door_electronics_smoked")
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
 				if(do_after(user, 40))
@@ -178,7 +178,7 @@ obj/structure/windoor_assembly/Del()
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(istype(W, /obj/item/weapon/screwdriver) && electronics)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to uninstall electronics from the airlock assembly.")
 
 				if(do_after(user, 40))
@@ -197,7 +197,7 @@ obj/structure/windoor_assembly/Del()
 					usr << "\red The assembly is missing electronics."
 					return
 				usr << browse(null, "window=windoor_access")
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
 				user.visible_message("[user] pries the windoor into the frame.", "You start prying the windoor into the frame.")
 
 				if(do_after(user, 40))
@@ -257,12 +257,12 @@ obj/structure/windoor_assembly/Del()
 		usr << "It is fastened to the floor; therefore, you can't rotate it!"
 		return 0
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1) //Compel updates before
+		update_nearby_tiles() //Compel updates before
 
 	src.dir = turn(src.dir, 270)
 
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles()
 
 	src.ini_dir = src.dir
 	update_icon()
@@ -284,13 +284,13 @@ obj/structure/windoor_assembly/Del()
 	update_icon()
 	return
 
-/obj/structure/windoor_assembly/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
+/obj/structure/windoor_assembly/proc/update_nearby_tiles()
+	if (isnull(air_master))
+		return 0
 
-	var/turf/simulated/source = loc
-	var/turf/simulated/target = get_step(source,dir)
+	var/T = loc
 
-	if(istype(source)) air_master.tiles_to_update += source
-	if(istype(target)) air_master.tiles_to_update += target
+	if (isturf(T))
+		air_master.mark_for_update(T)
 
 	return 1

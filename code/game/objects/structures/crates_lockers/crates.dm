@@ -13,6 +13,8 @@
 	flags = FPRINT
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
+	var/sound_effect_open = 'sound/machines/click.ogg'
+	var/sound_effect_close = 'sound/machines/click.ogg'
 
 /obj/structure/closet/pcrate
 	name = "plastic crate"
@@ -27,6 +29,8 @@
 	flags = FPRINT
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
+	var/sound_effect_open = 'sound/machines/click.ogg'
+	var/sound_effect_close = 'sound/machines/click.ogg'
 
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
@@ -223,8 +227,9 @@
 	var/greenlight = "securecrateg"
 	var/sparks = "securecratesparks"
 	var/emag = "securecrateemag"
-	var/broken = 0
-	var/locked = 1
+	broken = 0
+	locked = 1
+	health = 1000
 
 /obj/structure/closet/crate/large
 	name = "large crate"
@@ -259,6 +264,48 @@
 	icon_opened = "hydrocrateopen"
 	icon_closed = "hydrocrate"
 	density = 1
+
+/obj/structure/closet/crate/sci
+	desc = "A science crate."
+	name = "science crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "scicrate"
+	density = 1
+	icon_opened = "scicrateopen"
+	icon_closed = "scicrate"
+
+/obj/structure/closet/crate/secure/scisec
+	desc = "A secure science crate."
+	name = "secure science crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "scisecurecrate"
+	density = 1
+	icon_opened = "scisecurecrateopen"
+	icon_closed = "scisecurecrate"
+
+/obj/structure/closet/crate/engi
+	desc = "An engineering crate."
+	name = "engineering crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "engicrate"
+	density = 1
+	icon_opened = "engicrateopen"
+	icon_closed = "engicrate"
+
+/obj/structure/closet/crate/secure/engisec
+	desc = "A secure engineering crate."
+	name = "secure engineering crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "engisecurecrate"
+	density = 1
+	icon_opened = "engisecurecrateopen"
+	icon_closed = "engisecurecrate"
+
+/obj/structure/closet/crate/secure/plasma/prefilled
+	var/count=10
+/obj/structure/closet/crate/secure/plasma/prefilled/New()
+	for(var/i=0;i<count;i++)
+		new /obj/item/weapon/tank/plasma(src)
 
 /obj/structure/closet/crate/hydroponics/prespawned
 	//This exists so the prespawned hydro crates spawn with their contents.
@@ -309,36 +356,45 @@
 	new /obj/item/clothing/head/radiation(src)
 
 /obj/structure/closet/crate/open()
-	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(get_turf(src), sound_effect_open, 15, 1, -3)
 
-	for(var/obj/O in src)
-		O.loc = get_turf(src)
+	dump_contents()
 
 	icon_state = icon_opened
 	src.opened = 1
+	return 1
 
 /obj/structure/closet/crate/close()
-	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(get_turf(src), sound_effect_close, 15, 1, -3)
 
-	var/itemcount = 0
-
-	for(var/obj/O in get_turf(src))
-		if(itemcount >= storage_capacity)
-			break
-
-		if(O.density || O.anchored || istype(O,/obj/structure/closet))
-			continue
-
-		if(istype(O, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
-			var/obj/structure/stool/bed/B = O
-			if(B.buckled_mob)
-				continue
-
-		O.loc = src
-		itemcount++
+	take_contents()
 
 	icon_state = icon_closed
 	src.opened = 0
+	return 1
+
+/obj/structure/closet/crate/insert(var/atom/movable/AM, var/include_mobs = 0)
+
+	if(contents.len >= storage_capacity)
+		return -1
+
+	if(include_mobs && isliving(AM))
+		var/mob/living/L = AM
+		if(L.buckled)
+			return 0
+	else if(isobj(AM))
+		if(AM.density || AM.anchored || istype(AM,/obj/structure/closet))
+			return 0
+	else
+		return 0
+
+	if(istype(AM, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+		var/obj/structure/stool/bed/B = AM
+		if(B.buckled_mob)
+			return 0
+
+	AM.loc = src
+	return 1
 
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
 	if(opened)
@@ -381,7 +437,7 @@
 		overlays += emag
 		overlays += sparks
 		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
-		playsound(src.loc, "sparks", 60, 1)
+		playsound(get_turf(src), "sparks", 60, 1)
 		src.locked = 0
 		src.broken = 1
 		user << "<span class='notice'>You unlock \the [src].</span>"
@@ -422,7 +478,8 @@
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			rigged = 0
 			return
-	else return attack_hand(user)
+	else if(!place(user, W))
+		return attack_hand(user)
 
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)
@@ -437,7 +494,7 @@
 			overlays += emag
 			overlays += sparks
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
-			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+			playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 			src.locked = 0
 	if(!opened && prob(20/severity))
 		if(!locked)
@@ -452,18 +509,18 @@
 	switch(severity)
 		if(1.0)
 			for(var/obj/O in src.contents)
-				del(O)
-			del(src)
+				qdel(O)
+			qdel(src)
 			return
 		if(2.0)
 			for(var/obj/O in src.contents)
 				if(prob(50))
-					del(O)
-			del(src)
+					qdel(O)
+			qdel(src)
 			return
 		if(3.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 			return
 		else
 	return
