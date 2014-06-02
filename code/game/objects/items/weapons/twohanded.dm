@@ -1,150 +1,3 @@
-/*
-
-/obj/item/weapon/twohanded
-	var/wielded = 0
-	var/force_unwielded = 0
-	var/force_wielded = 0
-	var/wieldsound = null
-	var/unwieldsound = null
-
-
-
-
-/obj/item/weapon/twohanded/pickup(mob/user)
-	wielded = 0
-	set_icon()
-	update_icon()
-
-
-/obj/item/weapon/twohanded/proc/set_icon()
-	set src in usr
-
-	if(findtext(icon_state, "fireaxe"))
-		item_state = "fireaxe[wielded]"
-
-
-	else if(findtext(icon_state, "dualsaber"))
-		item_state = "duelsaber[wielded]"
-
-
-	else if(findtext(icon_state, "hfrequency"))
-		item_state = "hfrequency[wielded]"
-
-	else
-		item_state = "spearglass[wielded]"
-	usr.update_inv_l_hand()
-	usr.update_inv_r_hand()
-	world << "[item_state]"
-	return
-
-
-
-
-
-
-
-/obj/item/weapon/twohanded/proc/unwield()
-	wielded = 0
-	force = force_unwielded
-	name = "[initial(name)]"
-	set_icon()
-
-
-/obj/item/weapon/twohanded/proc/wield()
-	wielded = 1
-	force = force_wielded
-	name = "[initial(name)] (Wielded)"
-	set_icon()
-
-
-
-
-
-
-
-/obj/item/weapon/twohanded/attack_self()
-	..()
-	if(wielded)
-		unwield()
-		return
-	else
-		wield()
-		return
-
-
-
-
-
-
-
-
-
-/obj/item/weapon/twohanded/fireaxe
-	icon_state = "fireaxe0"
-
-	name = "fire axe"
-	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
-	force = 5
-	w_class = 4.0
-	slot_flags = SLOT_BACK
-	force_unwielded = 10
-	force_wielded = 40
-	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
-
-
-
-
-
-
-
-
-
-
-
-/obj/item/weapon/twohanded/dualsaber
-	icon_state = "fireaxe1"
-
-	name = "fire axe1"
-	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
-	force = 5
-	w_class = 4.0
-	slot_flags = SLOT_BACK
-	//force_unwielded = 10
-	//force_wielded = 40
-	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
-
-
-
-
-
-
-
-
-
-
-
-/obj/item/weapon/twohanded/spear
-	icon_state = "fireaxe1"
-
-	name = "fire axe2"
-	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
-	force = 5
-	w_class = 4.0
-	slot_flags = SLOT_BACK
-	//force_unwielded = 10
-	//force_wielded = 40
-	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
-
-
-
-
-
-
-*/
-
-
-
-
 
 
 /* Two-handed Weapons
@@ -161,7 +14,9 @@
 
 //Rewrote TwoHanded weapons stuff and put it all here. Just copypasta fireaxe to make new ones ~Carn
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
-//It also tidies stuff up elsewhere.
+//It also tidies stuff up elsewhere. also derp.
+
+
 
 /*
  * Twohanded
@@ -191,7 +46,6 @@
 
 
 
-
 /obj/item/weapon/twohanded/proc/set_icon()
 	set src in usr
 
@@ -213,11 +67,6 @@
 	usr.update_inv_l_hand()
 	usr.update_inv_r_hand()
 	update_icon()
-
-
-
-
-
 
 
 /obj/item/weapon/twohanded/mob_can_equip(M as mob, slot)
@@ -398,8 +247,6 @@
 		return 1
 	else
 		return 0
-
-
 
 
 
