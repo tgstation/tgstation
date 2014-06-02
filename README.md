@@ -1,3 +1,5 @@
+Time to remove the fun ᕕ( ᐛ )ᕗ
+
 /tg/station 13 v1.0 - 6 October 2010 [![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
 
 Website: http://www.tgstation13.org
