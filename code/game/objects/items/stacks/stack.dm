@@ -139,15 +139,13 @@
 			return
 		var/atom/O = new R.result_type( usr.loc )
 		O.dir = usr.dir
-		/*if (R.max_res_amount>1)
+		if (R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
-			new_item.add_to_stacks(usr)*/
-		var/tmp = use(R.req_amount*multiplier)
-		//src.amount-=R.req_amount*multiplier
-		if (tmp)
-			if (istype(O,/obj/item))
-				usr.put_in_hands(O)
+			new_item.add_to_stacks(usr)
+		use(R.req_amount * multiplier)
+		if (istype(O,/obj/item))
+			usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty // This is so insanely bad I don't even
 		if ( istype(O, /obj/item/weapon/storage) )
