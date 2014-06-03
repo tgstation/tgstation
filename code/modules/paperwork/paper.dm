@@ -28,9 +28,6 @@
 	var/spam_flag = 0
 
 	var/const/deffont = "Verdana"
-	//var/const/signfont = "Lucida Handwriting"
-	//var/const/crayonfont = "Comic Sans MS"
-
 
 /obj/item/weapon/paper/New()
 	..()
@@ -50,8 +47,6 @@
 
 /obj/item/weapon/paper/proc/Display(var/client/c=null,var/stars=0,var/infolinks=0)
 	if(c==null) return
-
-	//"<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
 
 	var/info_shown = info
 	if(info_links) info_shown = info_links
