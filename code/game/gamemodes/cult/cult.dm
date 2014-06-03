@@ -204,7 +204,7 @@
 				if(cultist.current.client)
 					for(var/image/I in cultist.current.client.images)
 						if(I.icon_state == "cult")
-							del(I)
+							cultist.current.client.images -= I
 
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)
@@ -235,13 +235,13 @@
 				if(cultist.current.client)
 					for(var/image/I in cultist.current.client.images)
 						if(I.icon_state == "cult" && I.loc == cult_mind.current)
-							del(I)
+							cultist.current.client.images -= I
 
 		if(cult_mind.current)
 			if(cult_mind.current.client)
 				for(var/image/I in cult_mind.current.client.images)
 					if(I.icon_state == "cult")
-						del(I)
+						cult_mind.current.client.images -= I
 
 
 /datum/game_mode/cult/proc/get_unconvertables()
