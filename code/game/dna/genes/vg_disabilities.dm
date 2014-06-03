@@ -13,7 +13,7 @@
 
 	OnSay(var/mob/M, var/message)
 		message = replacetext(message,".","!")
-		message = replacetext(message,"?","!")
+		message = replacetext(message,"?","?!")
 		message = replacetext(message,"!","!!")
 		return uppertext(message)
 
