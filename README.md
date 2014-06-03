@@ -6,7 +6,7 @@ Code: https://github.com/tgstation/-tg-station
 
 IRC: irc://irc.rizon.net/coderbus
 
-# DOWNLOADING
+##DOWNLOADING
 
 There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/index.php/Downloading_the_source_code
 
@@ -28,7 +28,7 @@ Follow this: http://www.tgstation13.org/wiki/index.php/Setting_up_git
 (It's recommended that you use git-scm, as above, rather than the git CLI
 suggested by the guide)
 
-#INSTALLATION
+##INSTALLATION
 
 First-time installation should be fairly straightforward.  First, you'll need
 BYOND installed.  You can get it from http://www.byond.com/.  Once you've done 
@@ -73,7 +73,7 @@ compiled tgstation.dmb file.  Make sure to set the port to the one you
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join.
 
-#UPDATING
+##UPDATING
 
 To update an existing installation, first back up your /config and /data folders
 as these store your server configuration, player preferences and banlist.
@@ -84,24 +84,36 @@ install, overwriting when prompted except if we've specified otherwise, and
 recompile the game.  Once you start the server up again, you should be running
 the new version.
 
-#SQL SETUP
+##MAPS
+
+/tg/station currently comes equipped with three maps.
+
+* [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
+* [MetaStation](http://tgstation13.org/wiki/MetaStation)
+* [MiniStation](http://tgstation13.org/wiki/MiniStation)
+
+All maps have their own code file that is in the base of the _maps directory, instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
+
+If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all code files are unticked in the file tree, in the left side of the screen, and then tick the desired map's code file.
+
+##SQL SETUP
 
 The SQL backend for the library and stats tracking requires a 
 MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
 schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/index.php/Downloading_the_source_code#Setting_up_the_database
 
-#IRC BOT SETUP
+##IRC BOT SETUP
 
 Included in the SVN is an IRC bot capable of relaying adminhelps to a specified
 IRC channel/server (thanks to Skibiliano).
 Instructions for bot setup are included in the /bot folder along with the script
 itself
 
-#CONTRIBUTING
+##CONTRIBUTING
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
-#LICENSE
+##LICENSE
 
 All code is under a GNU GPL v3 license (http://www.gnu.org/licenses/gpl.html),
 including tools unless their readme specifies otherwise.
