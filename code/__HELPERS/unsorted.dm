@@ -716,7 +716,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		animation.master = target
 		flick(flick_anim, animation)
 	sleep(max(sleeptime, 15))
-	del(animation)
+	animation.loc = null
 
 //Will return the contents of an atom recursivly to a depth of 'searchDepth'
 /atom/proc/GetAllContents(searchDepth = 5)
