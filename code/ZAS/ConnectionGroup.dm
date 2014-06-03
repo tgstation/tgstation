@@ -86,7 +86,11 @@ Class Procs:
 /connection_edge/proc/tick()
 
 /connection_edge/proc/flow(list/movable, differential, repelled)
+	if(!zas_settings.Get(/datum/ZAS_Setting/airflow_push))
+		return
 	for(var/atom/movable/M in movable)
+		if(!M.AirflowCanPush())
+			continue
 		//If they're already being tossed, don't do it again.
 		if(M.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay))
 			continue
@@ -110,7 +114,6 @@ Class Procs:
 			M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
 			if(M)
-				// THERE WAS A SPAWN HERE.  STOP DOING THIS SHIT. - N3X
 				if(repelled)
 					M.RepelAirflowDest(differential/5)
 				else
