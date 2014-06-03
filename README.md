@@ -1,10 +1,11 @@
-/tg/station 13 v1.0 - 6 October 2010 [![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
+##/tg/station v1.0.1
 
-Website: http://www.tgstation13.org
+[![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
 
-Code: https://github.com/tgstation/-tg-station
 
-IRC: irc://irc.rizon.net/coderbus
+**Website:** http://www.tgstation13.org <BR>
+**Code:** https://github.com/tgstation/-tg-station <BR>
+**IRC:** irc://irc.rizon.net/coderbus <BR>
 
 ##DOWNLOADING
 
@@ -92,9 +93,9 @@ the new version.
 * [MetaStation](http://tgstation13.org/wiki/MetaStation)
 * [MiniStation](http://tgstation13.org/wiki/MiniStation)
 
-All maps have their own code file that is in the base of the _maps directory, instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
+All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 
-If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all code files are unticked in the file tree, in the left side of the screen, and then tick the desired map's code file.
+If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all of the other map code files are unticked in the file tree, in the left side of the screen, and then make sure the map code file you want is ticked.
 
 ##SQL SETUP
 
