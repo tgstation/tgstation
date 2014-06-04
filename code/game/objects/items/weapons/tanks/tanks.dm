@@ -261,6 +261,11 @@
 			for(var/obj/machinery/computer/bhangmeter/bhangmeter in doppler_arrays)
 				if(bhangmeter)
 					bhangmeter.sense_explosion(epicenter.x,epicenter.y,epicenter.z,round(uncapped*0.25), round(uncapped*0.5), round(uncapped),"???", cap)
+
+		if(istype(src.loc,/obj/item/device/transfer_valve))
+			var/obj/item/device/transfer_valve/TV = src.loc
+			TV.child_ruptured(src, range)
+
 		del(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)

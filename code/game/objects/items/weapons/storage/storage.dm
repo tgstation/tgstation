@@ -442,6 +442,12 @@
 			O.emp_act(severity)
 	..()
 
+/obj/item/weapon/storage/ex_act(var/severity,var/child=null)
+	if(!istype(src.loc, /mob/living))
+		for(var/obj/O in contents)
+			O.ex_act(severity)
+	..()
+
 // BubbleWrap - A box can be folded up to make card
 /obj/item/weapon/storage/attack_self(mob/user as mob)
 
