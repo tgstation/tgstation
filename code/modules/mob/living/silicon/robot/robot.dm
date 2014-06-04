@@ -317,6 +317,8 @@
 			if(internal)
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
+			for (var/datum/robot_energy_storage/st in module.storages)
+				stat("[st.name]: [st.energy]/[st.max_energy]")
 
 /mob/living/silicon/robot/restrained()
 	return 0
@@ -413,11 +415,13 @@
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		var/obj/item/stack/cable_coil/coil = W
-		adjustFireLoss(-30)
-		updatehealth()
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
-		coil.use(1)
+		if (coil.use(1))
+			adjustFireLoss(-30)
+			updatehealth()
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
+		else
+			user << "<span class='warning'>You need one length of cable to repair [src].</span>"
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)

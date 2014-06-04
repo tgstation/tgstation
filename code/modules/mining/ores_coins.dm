@@ -224,21 +224,20 @@
 
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/stack/cable_coil) )
+	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
-			user << "\blue There already is a string attached to this coin."
+			user << "<span class='notice'>There already is a string attached to this coin.</span>"
 			return
 
-		if(CC.amount <= 0)
-			user << "\blue This cable coil appears to be empty."
-			qdel(CC)
+		if (CC.use(1))
+			overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
+			string_attached = 1
+			user << "<span class='notice'>You attach a string to the coin.</span>"
+		else
+			user << "<span class='warning'>You need one length of cable to attach a string to the coin.</span>"
 			return
 
-		overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
-		string_attached = 1
-		user << "\blue You attach a string to the coin."
-		CC.use(1)
 	else if(istype(W,/obj/item/weapon/wirecutters))
 		if(!string_attached)
 			..()
