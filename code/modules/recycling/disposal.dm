@@ -43,12 +43,19 @@
 		src.attackby(target,user)
 
 
-	ex_act(var/severity)
+	ex_act(var/severity,var/child=null)
+		var/child_severity=severity
+		if(!child)
+			child_severity++
+		if(child_severity <= 3)
+			for(var/obj/O in contents)
+				O.ex_act(child_severity)
 		switch(severity)
 			if(2 to INFINITY)
 				if(prob(50))
 					eject()
-					qdel(src)
+					if(severity==2)
+						qdel(src)
 			if(1)
 				eject()
 				qdel(src)
