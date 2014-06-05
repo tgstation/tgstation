@@ -158,7 +158,7 @@
 		filter.addWordReplacement("thank(s|\\s+you)","thank you, thank you very much")
 		filter.addWordReplacement("what are you","whatcha")
 		filter.addPickReplacement("\\byes\\b",list("sure", "yea"))
-		filter.addWordReplacement("(faggot|dick|shitlord|fuck(|er|wit)|asshole|nigger)","square")
+		filter.addWordReplacement("(faggot|dick|shitlord|fuck(er|wit)?|asshole|nigger)","square")
 		filter.addWordReplacement("muh valids","getting my kicks")
 		filter.addWordReplacement("vox","bird")
 
@@ -194,7 +194,7 @@
 
 		// THIS ENTIRE THING BEGS FOR REGEX
 		// NOW IN REGEX
-		filter.addPickReplacement("\\b(dick|comdom|shit(|ter|lord)|fuck(er|lord))",list("prat","knob'ead"))
+		filter.addPickReplacement("\\b(dick|comdom|shit(ter|lord)?|fuck(er|lord))",list("prat","knob'ead"))
 		filter.addReplacement("lookin\['g\] at","gawpin' at")
 		filter.addWordReplacement("great","bangin'")
 		filter.addWordReplacement("man","mate")

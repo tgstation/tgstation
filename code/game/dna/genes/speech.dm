@@ -32,6 +32,7 @@
 			if(SFA && !SFA.broken)
 				msg = SFA.Run(msg)
 	return msg
+
 #undef ACT_REPLACE
 
 /datum/speech_filter_action
