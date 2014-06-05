@@ -78,9 +78,8 @@
 			if(Target in view(1,src))
 				if(istype(Target, /mob/living/silicon))
 					if(!Atkcool)
-						spawn()
-							Atkcool = 1
-							sleep(45)
+						Atkcool = 1
+						spawn(45)
 							Atkcool = 0
 
 						if(Target.Adjacent(src))
@@ -90,9 +89,8 @@
 
 					if(Target.client && Target.health >= 20)
 						if(!Atkcool)
-							spawn()
-								Atkcool = 1
-								sleep(45)
+							Atkcool = 1
+							spawn(45)
 								Atkcool = 0
 
 							if(Target.Adjacent(src))
@@ -324,18 +322,17 @@
 
 				for(var/mob/living/L in view(7,src))
 
-					if(isslime(L) || L.stat == DEAD || isanimal(L)) // Ignore other slimes, dead mobs, and simple_animals
+					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
 
 					if(L in Friends) // No eating friends!
 						continue
 
-					if(issilicon(L)) // They can't eat silicons, but they can glomp them in defence
-						if (rabid || attacked)
-							targets += L // Possible target found!
+					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
+						targets += L // Possible target found!
 
-					if(!iscarbon(L))
-						continue
+					if(isanimal(L) && (rabid || attacked || hungry >= 2)) //Simple_Animals only get retaliated against.
+						targets += L
 
 					if(istype(L, /mob/living/carbon/human)) // Ignore slime(wo)men
 						var/mob/living/carbon/human/H = L

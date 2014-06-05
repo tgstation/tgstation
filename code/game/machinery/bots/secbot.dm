@@ -37,6 +37,11 @@
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/control_freq = 1447		// bot control frequency
 
+	//List of weapons that secbots will not arrest for
+	var/safe_weapons = list(\
+		/obj/item/weapon/gun/energy/laser/bluetag,\
+		/obj/item/weapon/gun/energy/laser/redtag,\
+		/obj/item/weapon/gun/energy/laser/practice)
 
 	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
 	var/new_destination		// pending new destination (waiting for beacon response)
@@ -581,10 +586,8 @@ Auto Patrol: []"},
 		if((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
 			continue
 
-		if(istype(C, /mob/living/carbon/human))
+		if(istype(C, /mob/living/carbon))
 			src.threatlevel = src.assess_perp(C)
-		else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
-			src.threatlevel = 4
 
 		if(!src.threatlevel)
 			continue
@@ -605,48 +608,50 @@ Auto Patrol: []"},
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-/obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/human/perp as mob)
+/obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/perp as mob)
 	var/threatcount = 0
 
 	if(src.emagged == 2) return 10 //Everyone is a criminal!
 
 	if(src.idcheck && !src.allowed(perp))
 
-		if(istype(perp.l_hand, /obj/item/weapon/gun) || istype(perp.l_hand, /obj/item/weapon/melee))
-			if(!istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 4
+		if(check_for_weapons(perp.l_hand))
+			threatcount += 4
+		if(check_for_weapons(perp.r_hand))
+			threatcount += 4
 
-		if(istype(perp.r_hand, /obj/item/weapon/gun) || istype(perp.r_hand, /obj/item/weapon/melee))
-			if(!istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 4
+	if(istype(perp, /mob/living/carbon/human))
+		var/mob/living/carbon/human/humanperp = perp
 
-		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
-			if(!istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/practice))
+		if(src.idcheck && !src.allowed(perp))
+			if(check_for_weapons(humanperp.belt))
 				threatcount += 2
 
-		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
+		if(istype(humanperp.head, /obj/item/clothing/head/wizard) || istype(humanperp.head, /obj/item/clothing/head/helmet/space/rig/wizard))
 			threatcount += 2
 
-		if(perp.dna && perp.dna.mutantrace && perp.dna.mutantrace != "none")
+		if(humanperp.dna && humanperp.dna.mutantrace && humanperp.dna.mutantrace != "none")
 			threatcount += 2
 
 		//Agent cards lower threatlevel.
-		if(perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
+		if(humanperp.wear_id && istype(humanperp.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 			threatcount -= 2
 
-	if(check_records)	//check if they are set to *Arrest* on records
-		var/perpname = perp.get_face_name(perp.get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
-		if(R && (R.fields["criminal"] == "*Arrest*"))
-			threatcount += 4
+		if(check_records)	//check if they are set to *Arrest* on records
+			var/perpname = humanperp.get_face_name(humanperp.get_id_name())
+			var/datum/data/record/R = find_record("name", perpname, data_core.security)
+			if(R && (R.fields["criminal"] == "*Arrest*"))
+				threatcount += 4
+	else
+		threatcount += 2
 
 	return threatcount
+
+/obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
+	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
+		if(!(slot_item.type in safe_weapons))
+			return 1
+	return 0
 
 /obj/machinery/bot/secbot/Bump(M as mob|obj) //Leave no door unopened!
 	if((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))

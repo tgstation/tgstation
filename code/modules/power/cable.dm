@@ -228,7 +228,7 @@ obj/structure/cable/proc/add_avail(var/amount)
 
 obj/structure/cable/proc/add_load(var/amount)
 	if(powernet)
-		powernet.newload += amount
+		powernet.load += amount
 
 obj/structure/cable/proc/surplus()
 	if(powernet)
