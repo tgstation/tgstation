@@ -440,16 +440,7 @@
 				if (Victim) // We are asked to stop feeding
 					if (Friends[who] > 4)
 						Victim = null
-						Target = null
 						if (Friends[who] < 7)
-							--Friends[who]
-							to_say = "Grrr..." // I'm angry but I do it
-						else
-							to_say = "Fine..."
-				else if (Target) // We are asked to stop chasing
-					if (Friends[who] > 3)
-						Target = null
-						if (Friends[who] < 6)
 							--Friends[who]
 							to_say = "Grrr..." // I'm angry but I do it
 						else
