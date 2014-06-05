@@ -15,7 +15,7 @@
 	if(stat == DEAD)	return
 	stat = DEAD
 	icon_state = "[colour] baby slime dead"
-	overlays = 0
+	overlays.len = 0
 	for(var/mob/O in viewers(src, null))
 		O.show_message("<b>The [name]</b> seizes up and falls limp...", 1) //ded -- Urist
 

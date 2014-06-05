@@ -7,7 +7,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"asteroid","asteroid_dug",
 				"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
 				"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
-				"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken", "carpet",
+				"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken",
 				"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
 				"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
@@ -113,46 +113,48 @@ turf/simulated/floor/proc/update_icon()
 				icon_state = "grass[pick("1","2","3","4")]"
 	else if(is_carpet_floor())
 		if(!broken && !burnt)
-			if(icon_state == "carpet")
-				var/connectdir = 0
-				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						if(FF.is_carpet_floor())
-							connectdir |= direction
+			if(icon_state == "carpetsymbol") //le snowflake :^)
+				return
 
-				//Check the diagonal connections for corners, where you have, for example, connections both north and east. In this case it checks for a north-east connection to determine whether to add a corner marker or not.
-				var/diagonalconnect = 0 //1 = NE; 2 = SE; 4 = NW; 8 = SW
+			var/connectdir = 0
+			for(var/direction in cardinal)
+				if(istype(get_step(src,direction),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,direction)
+					if(FF.is_carpet_floor())
+						connectdir |= direction
 
-				//Northeast
-				if(connectdir & NORTH && connectdir & EAST)
-					if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
-						if(FF.is_carpet_floor())
-							diagonalconnect |= 1
+			//Check the diagonal connections for corners, where you have, for example, connections both north and east. In this case it checks for a north-east connection to determine whether to add a corner marker or not.
+			var/diagonalconnect = 0 //1 = NE; 2 = SE; 4 = NW; 8 = SW
 
-				//Southeast
-				if(connectdir & SOUTH && connectdir & EAST)
-					if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
-						if(FF.is_carpet_floor())
-							diagonalconnect |= 2
+			//Northeast
+			if(connectdir & NORTH && connectdir & EAST)
+				if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
+					if(FF.is_carpet_floor())
+						diagonalconnect |= 1
 
-				//Northwest
-				if(connectdir & NORTH && connectdir & WEST)
-					if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
-						if(FF.is_carpet_floor())
-							diagonalconnect |= 4
+			//Southeast
+			if(connectdir & SOUTH && connectdir & EAST)
+				if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
+					if(FF.is_carpet_floor())
+						diagonalconnect |= 2
 
-				//Southwest
-				if(connectdir & SOUTH && connectdir & WEST)
-					if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
-						if(FF.is_carpet_floor())
-							diagonalconnect |= 8
+			//Northwest
+			if(connectdir & NORTH && connectdir & WEST)
+				if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
+					if(FF.is_carpet_floor())
+						diagonalconnect |= 4
 
-				icon_state = "carpet[connectdir]-[diagonalconnect]"
+			//Southwest
+			if(connectdir & SOUTH && connectdir & WEST)
+				if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
+					if(FF.is_carpet_floor())
+						diagonalconnect |= 8
+
+			icon_state = "carpet[connectdir]-[diagonalconnect]"
 
 	else if(is_wood_floor())
 		if(!broken && !burnt)

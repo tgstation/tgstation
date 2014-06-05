@@ -59,14 +59,15 @@
 ********************/
 
 /obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(!broken && !dirty && !operating)
+	if(operating)
+		return
+	if(!broken && dirty<100)
 		if(default_deconstruction_screwdriver(user, "mw-o", "mw", O))
 			return
 		if(default_unfasten_wrench(user, O))
 			return
-
-	if(exchange_parts(user, O))
-		return
+		if(exchange_parts(user, O))
+			return
 
 	default_deconstruction_crowbar(O)
 
@@ -171,7 +172,7 @@
 		user << "\red This is ridiculous. You can not fit \the [G.affecting] in this [src]."
 		return 1
 	else
-		user << "\red You have no idea what you can cook with this [O]."
+		user << "\red You have no idea what you can cook with this."
 		return 1
 	src.updateUsrDialog()
 
@@ -190,7 +191,7 @@
 ********************/
 
 /obj/machinery/microwave/interact(mob/user as mob) // The microwave Menu
-	if(panel_open)
+	if(panel_open || !anchored)
 		return
 	var/dat = "<div class='statusDisplay'>"
 	if(src.broken > 0)
