@@ -574,7 +574,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
-		user << "The emergency shuttle is refueling. Please wait another [round((config.shuttle_refuel_delay - round_start_time)/600)] minutes before trying again."
+		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
 		return
 
 	if(emergency_shuttle.direction == -1)
