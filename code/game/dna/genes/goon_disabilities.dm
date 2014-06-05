@@ -66,6 +66,15 @@
 /////////////////////////
 // SPEECH MANIPULATORS //
 /////////////////////////
+/datum/dna/gene/disability/speech
+	var/datum/speech_filter/filter
+
+	New()
+		..()
+		filter = new
+
+	OnSay(var/mob/M, var/message)
+		return filter.FilterSpeech(message)
 
 // WAS: /datum/bioEffect/smile
 /datum/dna/gene/disability/speech/smile
@@ -78,57 +87,60 @@
 		..()
 		block=SMILEBLOCK
 
-	OnSay(var/mob/M, var/message)
 		//Time for a friendly game of SS13
-		message = replacetext(message,"stupid","smart")
-		message = replacetext(message,"retard","genius")
-		message = replacetext(message,"unrobust","robust")
-		message = replacetext(message,"dumb","smart")
-		message = replacetext(message,"awful","great")
-		message = replacetext(message,"gay",pick("nice","ok","alright"))
-		message = replacetext(message,"horrible","fun")
-		message = replacetext(message,"terrible","terribly fun")
-		message = replacetext(message,"terrifying","wonderful")
-		message = replacetext(message,"gross","cool")
-		message = replacetext(message,"disgusting","amazing")
-		message = replacetext(message,"loser","winner")
-		message = replacetext(message,"useless","useful")
-		message = replacetext(message,"oh god","cheese and crackers")
-		message = replacetext(message,"jesus","gee wiz")
-		message = replacetext(message,"weak","strong")
-		message = replacetext(message,"kill","hug")
-		message = replacetext(message,"murder","tease")
-		message = replacetext(message,"ugly","beutiful")
-		message = replacetext(message,"douchbag","nice guy")
-		message = replacetext(message,"whore","lady")
-		message = replacetext(message,"nerd","smart guy")
-		message = replacetext(message,"moron","fun person")
-		message = replacetext(message,"IT'S LOOSE","EVERYTHING IS FINE")
-		message = replacetext(message,"rape","hug fight")
-		message = replacetext(message,"idiot","genius")
-		message = replacetext(message,"fat","thin")
-		message = replacetext(message,"beer","water with ice")
-		message = replacetext(message,"drink","water")
-		message = replacetext(message,"feminist","empowered woman")
-		message = replacetext(message,"i hate you","you're mean")
-		message = replacetext(message,"nigger","african american")
-		message = replacetext(message,"jew","jewish")
-		message = replacetext(message,"shit","shiz")
-		message = replacetext(message,"crap","poo")
-		message = replacetext(message,"slut","tease")
-		message = replacetext(message,"ass","butt")
-		message = replacetext(message,"damn","dang")
-		message = replacetext(message,"fuck","")
-		message = replacetext(message,"penis","privates")
-		message = replacetext(message,"cunt","privates")
-		message = replacetext(message,"dick","jerk")
-		message = replacetext(message,"vagina","privates")
+		// NOW IN REGEX
+		filter.addWordReplacement("stupid","smart")
+		filter.addWordReplacement("retards","geniuses")
+		filter.addWordReplacement("retard\[ed\]","genius")
+		filter.addWordReplacement("unrobust","robust")
+		filter.addWordReplacement("dumb","smart")
+		filter.addWordReplacement("awful","great")
+		filter.addPickReplacement("\\bgay\\b",list("nice","ok","alright"))
+		filter.addWordReplacement("horrible","fun")
+		filter.addWordReplacement("terrible","terribly fun")
+		filter.addReplacement("terrifying","wonderful")
+		filter.addReplacement("gross","cool")
+		filter.addReplacement("disgusting","amazing")
+		filter.addReplacement("\\bloser","\\bwinner")
+		filter.addWordReplacement("useless","useful")
+		filter.addWordReplacement("oh god","cheese and crackers")
+		filter.addWordReplacement("jesus","gee wiz")
+		filter.addReplacement("weak","strong")
+		filter.addReplacement("kill","hug")
+		filter.addReplacement("murder","tease")
+		filter.addReplacement("ugly","beautiful")
+		filter.addReplacement("douche?bag","nice guy")
+		filter.addWordReplacement("whores","ladies")
+		filter.addWordReplacement("whore","lady")
+		filter.addReplacement("nerd","smart guy")
+		filter.addWordReplacement("moron","fun person")
+		filter.addReplacement("(IT'S\\s+|SINGU|SINGULOTH\\s*(\[I'\]S)?)LOOSE","EVERYTHING IS FINE")
+		filter.addWordReplacement("rape","hug fight")
+		filter.addReplacement("idiot","genius")
+		filter.addReplacement("fat","thin")
+		filter.addWordReplacement("beer","water with ice")
+		filter.addReplacement("drink","water")
+		filter.addWordReplacement("feminists","empowered women")
+		filter.addWordReplacement("feminist","empowered woman")
+		filter.addReplacement("(i|me) hate you","you're mean")
+		filter.addReplacement("nigger","african american")
+		filter.addWordReplacement("jew","upstanding jewish citizen")
+		filter.addReplacement("shit+","sludge") // "t+" means at least one t
+		filter.addReplacement("crap","poo")
+		filter.addReplacement("slut","tease")
+		filter.addReplacement("ass","butt")
+		filter.addReplacement("damn","dang")
+		filter.addReplacement("fuck(ing|s)","frick$1")
+		filter.addReplacement("(dick|dong|wang|penis|cunt|axe wound|vagina|shlong)","naughty place")
+
+	OnSay(var/mob/M, var/message)
+		message = ..(M,message)
 //		message += "[pick(":)",":^)",":*)")]"             : ^ (
 		if(prob(30))
 			message += " check your privilege."
 		return message
-		
-		
+
+
 // WAS: /datum/bioEffect/elvis
 /datum/dna/gene/disability/speech/elvis
 	name = "Elvis"
@@ -139,25 +151,23 @@
 	New()
 		..()
 		block=ELVISBLOCK
+		filter.addReplacement("i'?m not","I ain't")
+		filter.addPickReplacement("\\bgirl\\b",list("honey","baby","baby doll"))
+		filter.addPickReplacement("\\bman\\b",list("son","buddy","brother", "pal", "friendo"))
+		filter.addWordReplacement("out of","outta")
+		filter.addWordReplacement("thank(s|\\s+you)","thank you, thank you very much")
+		filter.addWordReplacement("what are you","whatcha")
+		filter.addPickReplacement("\\byes\\b",list("sure", "yea"))
+		filter.addWordReplacement("(faggot|dick|shitlord|fuck(|er|wit)|asshole|nigger)","square")
+		filter.addWordReplacement("muh valids","getting my kicks")
+		filter.addWordReplacement("vox","bird")
 
 	OnSay(var/mob/M, var/message)
-		message = replacetext(message,"im not","I ain't")
-		message = replacetext(message,"i'm not","I aint")
-		message = replacetext(message," girl ",pick(" honey "," baby "," baby doll "))
-		message = replacetext(message," man ",pick(" son "," buddy "," brother ", " pal ", " friendo "))
-		message = replacetext(message,"out of","outta")
-		message = replacetext(message,"thank you","thank you, thank you very much")
-		message = replacetext(message,"what are you","whatcha")
-		message = replacetext(message,"yes",pick("sure", "yea"))
-		message = replacetext(message,"faggot","square")
-		message = replacetext(message,"muh valids","getting my kicks")
-		message = replacetext(message," vox ","bird")
-		
 		if(prob(5))
 			return ""
 			M.visible_message("<b>[M]</b> [pick("rambles to themselves.","begins talking to themselves.")]")
 		else
-			return message
+			return ..(M,message)
 
 	OnMobLife(var/mob/M)
 		switch(pick(1,2))
@@ -182,32 +192,27 @@
 		..()
 		block=CHAVBLOCK
 
-	OnSay(var/mob/M, var/message)
 		// THIS ENTIRE THING BEGS FOR REGEX
-		message = replacetext(message,"dick","prat")
-		message = replacetext(message,"comdom","knob'ead")
-		message = replacetext(message,"looking at","gawpin' at")
-		message = replacetext(message,"great","bangin'")
-		message = replacetext(message,"man","mate")
-		message = replacetext(message,"friend",pick("mate","bruv","bledrin"))
-		message = replacetext(message,"what","wot")
-		message = replacetext(message,"drink","wet")
-		message = replacetext(message,"get","giz")
-		message = replacetext(message,"what","wot")
-		message = replacetext(message,"no thanks","wuddent fukken do one")
-		message = replacetext(message,"i don't know","wot mate")
-		message = replacetext(message,"no","naw")
-		message = replacetext(message,"robust","chin")
-		message = replacetext(message," hi ","how what how")
-		message = replacetext(message,"hello","sup bruv")
-		message = replacetext(message,"kill","bang")
-		message = replacetext(message,"murder","bang")
-		message = replacetext(message,"windows","windies")
-		message = replacetext(message,"window","windy")
-		message = replacetext(message,"break","do")
-		message = replacetext(message,"your","yer")
-		message = replacetext(message,"security","coppers")
-		return message
+		// NOW IN REGEX
+		filter.addPickReplacement("\\b(dick|comdom|shit(|ter|lord)|fuck(er|lord))",list("prat","knob'ead"))
+		filter.addReplacement("lookin\['g\] at","gawpin' at")
+		filter.addWordReplacement("great","bangin'")
+		filter.addWordReplacement("man","mate")
+		filter.addPickReplacement("\\bfriend\\b",list("mate","bruv","bledrin"))
+		filter.addWordReplacement("what","wot")
+		filter.addReplacement("\\bdrink","wet")
+		filter.addWordReplacement("get","giz")
+		filter.addWordReplacement("no thank(s| you)","wuddent fukken do one")
+		filter.addWordReplacement("i don't know","wot mate")
+		filter.addWordReplacement("no","naw")
+		filter.addReplacement("robust","chin")
+		filter.addPickReplacement("\\b(hi|hello)\\b",list("how what how","sup bruv"))
+		filter.addWordReplacement("(kill|murder)","bang")
+		filter.addWordReplacement("windows","windies")
+		filter.addWordReplacement("window","windy")
+		filter.addReplacement("\\b(break|destroy|bust)","do")
+		filter.addWordReplacement("(your|you're)","yer")
+		filter.addWordReplacement("(se|shit)curity","coppers")
 
 // WAS: /datum/bioEffect/swedish
 /datum/dna/gene/disability/speech/swedish
@@ -220,9 +225,16 @@
 		..()
 		block=SWEDEBLOCK
 
+		// FUN WITH REGEX
+		filter.addReplacement("w","v")
+		filter.addReplacement("or","ör") // May need to make this one use the HTML entity.
+		filter.addReplacement("the","thur")
+		filter.addReplacement("e\\b","e-a")
+		filter.addReplacement("\\bth","z")
+
 	OnSay(var/mob/M, var/message)
 		// svedish!
-		message = replacetext(message,"w","v")
+		message = ..(M,message)
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
 		return message
