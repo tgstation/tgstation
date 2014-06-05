@@ -52,14 +52,17 @@
 	if(istype(I, /obj/item/stack/cable_coil))
 		if(assembled == 1)
 			var/obj/item/stack/cable_coil/C = I
-			C.use(1)
-			assembled = 2
-			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
-			desc = "A weak, improvised explosive."
-			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
-			name = "improvised explosive"
-			active = 0
-			det_time = rand(30,80)
+			if (C.use(1))
+				assembled = 2
+				user << "<span class='notice'>You wire the igniter to detonate the fuel.</span>"
+				desc = "A weak, improvised explosive."
+				overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
+				name = "improvised explosive"
+				active = 0
+				det_time = rand(30,80)
+			else
+				user <<"span class='warning'>You need one length of cable to add an igniter.</span>"
+				return
 
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //
 	if(!active)
