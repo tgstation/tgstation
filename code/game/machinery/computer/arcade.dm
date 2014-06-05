@@ -73,7 +73,7 @@
 	icon_state = "arcade"
 	circuit = /obj/item/weapon/circuitboard/arcade/battle
 	var/enemy_name = "Space Villian"
-	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
+	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
 	var/player_mp = 10
 	var/enemy_hp = 45 //Enemy health/attack points
@@ -503,7 +503,7 @@
 
 	else if(event == "Breakdown")
 		eventdat += "Oh no! The engine has broken down!"
-		eventdat += "<br>You can repair it with an engine part, or you can make reapirs for 3 days."
+		eventdat += "<br>You can repair it with an engine part, or you can make repairs for 3 days."
 		if(engine >= 1)
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];useengine=1'>Use Part</a><a href='byond://?src=\ref[src];wait=1'>Wait</a></P>"
 		else
