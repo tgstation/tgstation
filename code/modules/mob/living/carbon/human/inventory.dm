@@ -437,7 +437,7 @@
 					qdel(src)
 					return
 			if("internal")
-				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.back, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
+				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && (istype(target.back, /obj/item/weapon/tank) || istype(target.s_store, /obj/item/weapon/tank) || istype(target.belt, /obj/item/weapon/tank)) && !( target.internal )) ) && !( target.internal )))
 					qdel(src)
 
 	var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel")
