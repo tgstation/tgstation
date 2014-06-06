@@ -59,8 +59,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
-	if(stat == CONSCIOUS)
-		src.visible_message("\red [src] gets an evil-looking gleam in \his eye.")
+	src.visible_message("\red [src] gets an evil-looking gleam in \his eye.")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
