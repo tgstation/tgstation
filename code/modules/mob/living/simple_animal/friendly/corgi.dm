@@ -360,30 +360,31 @@
 						movement_target = S
 						break
 			if(movement_target)
-				stop_automated_movement = 1
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
+				spawn(0)
+					stop_automated_movement = 1
+					step_to(src,movement_target,1)
+					sleep(3)
+					step_to(src,movement_target,1)
+					sleep(3)
+					step_to(src,movement_target,1)
 
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					if (movement_target.loc.x < src.x)
-						dir = WEST
-					else if (movement_target.loc.x > src.x)
-						dir = EAST
-					else if (movement_target.loc.y < src.y)
-						dir = SOUTH
-					else if (movement_target.loc.y > src.y)
-						dir = NORTH
-					else
-						dir = SOUTH
+					if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+						if (movement_target.loc.x < src.x)
+							dir = WEST
+						else if (movement_target.loc.x > src.x)
+							dir = EAST
+						else if (movement_target.loc.y < src.y)
+							dir = SOUTH
+						else if (movement_target.loc.y > src.y)
+							dir = NORTH
+						else
+							dir = SOUTH
 
-					if(isturf(movement_target.loc) )
-						movement_target.attack_animal(src)
-					else if(ishuman(movement_target.loc) )
-						if(prob(20))
-							emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+						if(isturf(movement_target.loc) )
+							movement_target.attack_animal(src)
+						else if(ishuman(movement_target.loc) )
+							if(prob(20))
+								emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
 
 		if(prob(1))
 			emote(pick("dances around","chases its tail"))
