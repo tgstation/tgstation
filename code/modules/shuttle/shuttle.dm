@@ -29,25 +29,15 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 			if(T.y < throwy)
 				throwy = T.y
 
-		// hey you, get out of the way!
+		// Destroy everything in the destination area
 		for(var/turf/T in dstturfs)
-			// find the turf to move things to
-			var/turf/D = locate(T.x, throwy - 1, 1)
-			//var/turf/E = get_step(D, SOUTH)
 			for(var/atom/movable/AM as mob|obj in T)
-				AM.Move(D)
-				// NOTE: Commenting this out to avoid recreating mass driver glitch
-				/*
-				spawn(0)
-					AM.throw_at(E, 1, 1)
-					return
-				*/
+				AM.ex_act(1) //splat
+				if(AM)
+					qdel(AM)
 
 			if(istype(T, /turf/simulated))
 				del(T)
-
-		for(var/mob/living/carbon/bug in toArea) // If someone somehow is still in the shuttle's docking area...
-			bug.gib()
 
 		fromArea.move_contents_to(toArea)
 		location = toArea.type
@@ -108,11 +98,11 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 		if(id in shuttles)
 			var/datum/shuttle_manager/s = shuttles[id]
 			if (s.move_shuttle())
-				usr << "\blue Shuttle recieved message and will be sent shortly."
+				usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
 			else
-				usr << "\blue Shuttle is already moving."
+				usr << "<span class='notice'>Shuttle is already moving.</span>"
 		else
-			usr << "\red Invalid shuttle requested."
+			usr << "<span class='warning'>Invalid shuttle requested.</span>"
 
 
 /obj/machinery/computer/shuttle/attackby(I as obj, user as mob)
