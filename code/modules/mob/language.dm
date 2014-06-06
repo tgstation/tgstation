@@ -102,7 +102,7 @@
 	native=1
 	flags = RESTRICTED
 
-/datum/language/grey/say_misunderstood(mob/M, message)
+/datum/language/skellington/say_misunderstood(mob/M, message)
 	message="CLICK"
 	var/len = max(1,Ceiling(length(message)/5))
 	if(len > 1)
