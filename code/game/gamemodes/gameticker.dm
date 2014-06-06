@@ -65,6 +65,8 @@ var/round_start_time = 0
 		src.hide_mode = 1
 	var/list/datum/game_mode/runnable_modes
 	if((master_mode=="random") || (master_mode=="secret"))
+		runnable_modes = config.get_runnable_modes()
+
 		if((master_mode=="secret") && (secret_force_mode != "secret"))
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
 			if (!smode.can_start())
@@ -73,7 +75,6 @@ var/round_start_time = 0
 				src.mode = smode
 
 		if(!src.mode)
-			runnable_modes = config.get_runnable_modes()
 			if (runnable_modes.len==0)
 				current_state = GAME_STATE_PREGAME
 				world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
