@@ -184,7 +184,7 @@
 		possible_modes.Remove(pick(possible_modes))
 
 	if(!intercept_hacked) //if not malf and AI not intercepting the report
-		possible_modes[rand(possible_modes.len)] = "[ticker.mode]" //replace a random game mode with the current one
+		possible_modes[rand(1, possible_modes.len)] = "[ticker.mode]" //replace a random game mode with the current one
 
 	possible_modes = shuffle(possible_modes) //shuffle the list to prevent meta
 
