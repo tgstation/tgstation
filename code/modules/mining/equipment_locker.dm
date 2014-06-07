@@ -156,22 +156,22 @@
 	anchored = 1.0
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-		new /datum/data/mining_equipment("Chili",               /obj/item/weapon/reagent_containers/food/snacks/hotchili,          100),
-		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    100),
-		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    150),
-		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           150),
-		new /datum/data/mining_equipment("Stimulant pills",     /obj/item/weapon/storage/pill_bottle/stimulant, 				   350),
-		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                   250),
+		new /datum/data/mining_equipment("Chili",               /obj/item/weapon/reagent_containers/food/snacks/hotchili,          200),
+		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    200),
+		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    300),
+		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           350),
+		new /datum/data/mining_equipment("Stimulant pills",     /obj/item/weapon/storage/pill_bottle/stimulant, 				   1000),
+		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                   500),
 		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                   500),
 		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			   500),
-		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                1000),
+		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                2000),
 		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			  5000),
-		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               500),
-		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                   500),
-		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 200),
-		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                        750),
-		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  1000),
-		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               2000),
+		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               1000),
+		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                   1000),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 500),
+		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                        1200),
+		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  2000),
+		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               4000),
 		)
 
 /datum/data/mining_equipment/
