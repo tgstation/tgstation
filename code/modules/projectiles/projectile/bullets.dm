@@ -82,6 +82,15 @@
 	damage = 5
 
 
+/obj/item/projectile/bullet/mime
+	damage = 20
+
+/obj/item/projectile/bullet/mime/on_hit(var/atom/target, var/blocked = 0)
+		if(istype(target, /mob/living/carbon))
+				var/mob/living/carbon/M = target
+				M.silent = max(M.silent, 10)
+
+
 /obj/item/projectile/bullet/dart
 	name = "dart"
 	icon_state = "cbbolt"

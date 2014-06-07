@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
 	if(!stat)
 		Aggro()
-	if(P.damage < 30)
+	if(P.damage < 30 && P.damage_type != BRUTE)
 		P.damage = (P.damage / 3)
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
 	..()
@@ -76,6 +76,7 @@
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
+	turns_per_move = 5
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -174,7 +175,7 @@
 		ore_eaten++
 		if(!(O.type in ore_types_eaten))
 			ore_types_eaten += O.type
-		del(O)
+		qdel(O)
 	if(ore_eaten > 5)//Limit the scope of the reward you can get, or else things might get silly
 		ore_eaten = 5
 	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
@@ -185,7 +186,7 @@
 		spawn(chase_time)
 		if(alerted)
 			visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-			del(src)
+			qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
 	if(!ore_eaten || ore_types_eaten.len == 0)
@@ -285,7 +286,7 @@
 				user << "<span class='notice'>You chomp into [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
 			playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			H.revive()
-			del(src)
+			qdel(src)
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
@@ -298,7 +299,7 @@
 	icon_dead = "Hivelordbrood"
 	icon_gib = "syndicate_gib"
 	mouse_opacity = 2
-	move_to_delay = 0
+	move_to_delay = 1
 	friendly = "buzzes near"
 	vision_range = 10
 	speed = 3
@@ -315,10 +316,10 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
 	spawn(100)
-		del(src)
+		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Die()
-	del(src)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
@@ -346,12 +347,22 @@
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
 	idle_vision_range = 5
+	anchored = 1 //Stays anchored until death as to be unpullable
+
+/mob/living/simple_animal/hostile/asteroid/goliath/revive()
+	anchored = 1
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/goliath/Die()
+	anchored = 0
+	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
-	visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 	var/tturf = get_turf(target)
-	new /obj/effect/goliath_tentacle/original(tturf)
-	ranged_cooldown = ranged_cooldown_cap
+	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
+		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
+		new /obj/effect/goliath_tentacle/original(tturf)
+		ranged_cooldown = ranged_cooldown_cap
 	return
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(var/damage)
@@ -387,7 +398,7 @@
 	for(var/mob/living/M in src.loc)
 		M.Weaken(5)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
-	del(src)
+	qdel(src)
 
 /obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
 	if(isliving(AM))
@@ -413,10 +424,10 @@
 		if(istype(target, /obj/item/clothing/suit/space/rig/mining) || istype(target, /obj/item/clothing/head/helmet/space/rig/mining))
 			var/obj/item/clothing/C = target
 			var/current_armor = C.armor
-			if(current_armor.["melee"] < 90)
-				current_armor.["melee"] = min(current_armor.["melee"] + 10, 90)
+			if(current_armor.["melee"] < 80)
+				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
-				del(src)
+				qdel(src)
 			else
 				user << "<span class='info'>You can't improve [C] any further.</span>"
 	return

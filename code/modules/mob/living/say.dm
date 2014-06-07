@@ -233,6 +233,7 @@ var/list/department_radio_keys = list(
 
 		if("changeling")
 			if(mind && mind.changeling)
+				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 				for(var/mob/Changeling in mob_list)
 					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
 						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
@@ -286,6 +287,16 @@ var/list/department_radio_keys = list(
 			if(P.speech_buffer.len >= 10)
 				P.speech_buffer.Remove(pick(P.speech_buffer))
 			P.speech_buffer.Add(html_decode(message))
+
+		if(isslime(A)) //Slimes answering to people
+			if (A == src)
+				continue
+
+			var/mob/living/carbon/slime/S = A
+			if (src in S.Friends)
+				S.speech_buffer = list()
+				S.speech_buffer.Add(src)
+				S.speech_buffer.Add(lowertext(html_decode(message)))
 
 		if(istype(A, /obj/)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 			var/obj/O = A

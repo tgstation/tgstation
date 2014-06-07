@@ -82,6 +82,14 @@
 				holder.icon_state = "hudhealthy"
 			C.images += holder
 
+/obj/item/clothing/glasses/hud/health/night
+	name = "Night Vision Health Scanner HUD"
+	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
+	icon_state = "healthhudnight"
+	item_state = "glasses"
+	darkness_view = 8
+	invis_view = SEE_INVISIBLE_MINIMUM
+
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
@@ -94,6 +102,12 @@
 	darkness_view = 1
 	flash_protect = 1
 	tint = 1
+/obj/item/clothing/glasses/hud/security/night
+	name = "Night Vision Security HUD"
+	desc = "An advanced heads-up display which provides id data and vision in complete darkness."
+	icon_state = "securityhudnight"
+	darkness_view = 8
+	invis_view = SEE_INVISIBLE_MINIMUM
 
 /obj/item/clothing/glasses/hud/security/sunglasses/emp_act(severity)
 	if(emagged == 0)

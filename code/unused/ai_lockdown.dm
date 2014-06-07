@@ -1,13 +1,3 @@
-/mob/living/silicon/ai/proc/lockdown()
-	set category = "AI Commands"
-	set name = "Lockdown"
-
-	if(usr.stat == 2)
-		usr <<"You cannot initiate lockdown because you are dead!"
-		return
-
-	src << "<b>Initiating lockdowns has been disabled due to system stress.</b>"
-//	Commented this out to disable Lockdowns -- TLE
 /*	world << "\red Lockdown initiated by [usr.name]!"
 
 	for(var/obj/machinery/firealarm/FA in world) //activate firealarms

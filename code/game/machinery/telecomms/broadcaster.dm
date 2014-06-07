@@ -96,7 +96,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		/* --- Do a snazzy animation! --- */
 		flick("broadcaster_send", src)
 
-/obj/machinery/telecomms/broadcaster/Del()
+/obj/machinery/telecomms/broadcaster/Destroy()
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
 	if(message_delay)
 		message_delay = 0
@@ -352,6 +352,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Service"
 			if(SUPP_FREQ)
 				freq_text = "Supply"
+			if(AIPRIV_FREQ)
+				freq_text = "AI Private"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 
@@ -365,7 +367,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		var/part_b_extra = ""
 		if(data == 3) // intercepted radio message
 			part_b_extra = " <i>(Intercepted)</i>"
-		var/part_b = "</span><b> \[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/part_b = "</span><b> \[[freq_text]\][part_b_extra]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 
 		if (display_freq==SYND_FREQ)
@@ -386,6 +388,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='suppradio'><span class='name'>"
 		else if (display_freq==DSQUAD_FREQ)
 			part_a = "<span class='dsquadradio'><span class='name'>"
+		else if (display_freq==AIPRIV_FREQ)
+			part_a = "<span class='aiprivradio'><span class='name'>"
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
@@ -397,7 +401,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
-		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>"
 		var/blackbox_msg = "[part_a][name][part_blackbox_b][quotedmsg][part_c]"
 		//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
 
@@ -647,6 +651,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Service"
 			if(SUPP_FREQ)
 				freq_text = "Supply"
+			if(AIPRIV_FREQ)
+				freq_text = "AI Private"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 
@@ -664,7 +670,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		// Create a radio headset for the sole purpose of using its icon
 		var/obj/item/device/radio/headset/radio = new
 
-		var/part_b = "</span><b> \icon[radio]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/part_b = "</span><b> \icon[radio]\[[freq_text]\][part_b_extra]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 
 		if (display_freq==SYND_FREQ)
@@ -685,10 +691,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='suppradio'><span class='name'>"
 		else if (display_freq==DSQUAD_FREQ)
 			part_a = "<span class='dsquadradio'><span class='name'>"
+		else if (display_freq==AIPRIV_FREQ)
+			part_a = "<span class='aiprivradio'><span class='name'>"
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
-		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>"
 		var/blackbox_msg = "[part_a][source][part_blackbox_b]\"[text]\"[part_c]"
 		//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
 

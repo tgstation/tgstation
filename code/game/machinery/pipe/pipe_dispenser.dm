@@ -75,7 +75,7 @@
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		usr << "<span class='notice'>You put [W] back into [src].</span>"
 		user.drop_item()
-		del(W)
+		qdel(W)
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
@@ -116,7 +116,7 @@
 //Allow you to push disposal pipes into it (for those with density 1)
 /obj/machinery/pipedispenser/disposal/Crossed(var/obj/structure/disposalconstruct/pipe as obj)
 	if(istype(pipe) && !pipe.anchored)
-		del(pipe)
+		qdel(pipe)
 
 Nah
 */
@@ -132,7 +132,7 @@ Nah
 	if (pipe.anchored)
 		return
 
-	del(pipe)
+	qdel(pipe)
 
 /obj/machinery/pipedispenser/disposal/attack_hand(user as mob)
 	if(..())

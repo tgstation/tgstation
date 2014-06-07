@@ -1,3 +1,10 @@
+/mob/living/carbon/Destroy()
+	for(var/atom/movable/guts in internal_organs)
+		qdel(guts)
+	for(var/atom/movable/food in stomach_contents)
+		qdel(food)
+	return ..()
+
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
@@ -54,14 +61,14 @@
 /mob/living/carbon/MiddleClickOn(var/atom/A)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
-		call(src, src.mind.changeling.chosen_sting)(A)
+		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
 		..()
 
 /mob/living/carbon/AltClickOn(var/atom/A)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
-		call(src, src.mind.changeling.chosen_sting)(A)
+		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
 		..()
 
@@ -169,11 +176,11 @@
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
-				if(halloss > 0)
+				if(hallucination)
 					if(prob(30))
-						brutedamage += halloss
+						brutedamage += rand(30,40)
 					if(prob(30))
-						burndamage += halloss
+						burndamage += rand(30,40)
 
 				if(brutedamage > 0)
 					status = "bruised"
@@ -193,6 +200,11 @@
 				if(status == "")
 					status = "OK"
 				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
+			if(staminaloss)
+				if(staminaloss > 30)
+					src << "<span class='info'>You're completely exhausted.</span>"
+				else
+					src << "<span class='info'>You feel fatigued.</span>"
 			if(dna && (dna.mutantrace == "skeleton") && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
@@ -225,8 +237,6 @@
 
 /mob/living/carbon/proc/tintcheck()
 	return 0
-
-// ++++ROCKDTBEN++++ MOB PROCS //END
 
 /mob/living/carbon/clean_blood()
 	if(ishuman(src))
@@ -263,6 +273,7 @@
 
 /mob/proc/throw_item(atom/target)
 	return
+
 /mob/living/carbon/throw_item(atom/target)
 	throw_mode_off()
 	if(usr.stat || !target)
@@ -276,7 +287,7 @@
 	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.throw() //throw the person instead of the grab
-		del(G)			//We delete the grab, as it needs to stay around until it's returned.
+		qdel(G)			//We delete the grab, as it needs to stay around until it's returned.
 		if(ismob(item))
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
@@ -301,7 +312,7 @@
 
 		if(!src.lastarea)
 			src.lastarea = get_area(src.loc)
-		if((istype(src.loc, /turf/space)) || (src.lastarea.has_gravity == 0))
+		if(!has_gravity(src))
 			src.inertia_dir = get_dir(target, src)
 			step(src, inertia_dir)
 
@@ -328,6 +339,8 @@
 		return 1
 	return
 
+/mob/living/carbon/proc/canBeHandcuffed()
+	return 0
 
 /mob/living/carbon/unEquip(obj/item/I) //THIS PROC DID NOT CALL ..() AND THAT COST ME AN ENTIRE DAY OF DEBUGGING.
 	. = ..() //Sets the default return value to what the parent returns.
@@ -409,21 +422,23 @@
 	//strip panel
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
 		if(href_list["internal"])
-			if(back && istype(back, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-				visible_message("<span class='danger'>[usr] tries to [internal ? "disable" : "set"] [src]'s internals.</span>", \
-								"<span class='userdanger'>[usr] tries to [internal ? "disable" : "set"] [src]'s internals.</span>")
+			var/slot = text2num(href_list["internal"])
+			var/obj/item/ITEM = get_item_by_slot(slot)
+			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>", \
+								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>")
 				if(do_mob(usr, src, STRIP_DELAY))
 					if(internal)
 						internal = null
 						if(internals)
 							internals.icon_state = "internal0"
-					else if(back && istype(back, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-						internal = back
+					else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+						internal = ITEM
 						if(internals)
 							internals.icon_state = "internal1"
 
-					visible_message("<span class='danger'>[usr] [internal ? "sets" : "disables"] [src]'s internals.</span>", \
-									"<span class='userdanger'>[usr] [internal ? "sets" : "disables"] [src]'s internals.</span>")
+					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
+									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
 
 
 /mob/living/carbon/attackby(obj/item/I, mob/user)

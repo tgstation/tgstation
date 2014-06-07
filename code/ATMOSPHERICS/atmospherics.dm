@@ -24,6 +24,8 @@ obj/machinery/atmospherics/var/initialize_directions = 0
 obj/machinery/atmospherics/var/pipe_color
 
 obj/machinery/atmospherics/process()
+	if(gc_destroyed) //comments on /vg/ imply that GC'd pipes still process
+		return PROCESS_KILL
 	build_network()
 
 obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
@@ -66,7 +68,7 @@ obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user a
 		var/datum/gas_mixture/int_air = return_air()
 		var/datum/gas_mixture/env_air = loc.return_air()
 		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+			user << "\red You cannot unwrench this [src], it is too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -83,7 +85,7 @@ obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user a
 				for(var/obj/machinery/meter/meter in T)
 					if(meter.target == src)
 						new /obj/item/pipe_meter(T)
-						del(meter)
-			del(src)
+						qdel(meter)
+			qdel(src)
 	else
 		return ..()

@@ -7,6 +7,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	name = "Spell"
 	desc = "A wizard spell"
 	panel = "Spells"
+	anchored = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	density = 0
 	opacity = 0
 
@@ -75,7 +76,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 		var/mob/living/carbon/human/H = user
 
-		if(istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+		if((invocation_type == "whisper" || invocation_type == "shout") && istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
 			user << "<span class='notice'>You can't get the words out!</span>"
 			return 0
 
@@ -135,7 +136,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	return
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
-	while(charge_counter < charge_max)
+	while(charge_counter < charge_max && isnull(gc_destroyed))
 		sleep(1)
 		charge_counter++
 
@@ -166,7 +167,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.anchored = 1
 			spell.density = 0
 			spawn(overlay_lifespan)
-				del(spell)
+				qdel(spell)
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)

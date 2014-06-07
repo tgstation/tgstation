@@ -19,6 +19,9 @@
 		return
 
 	attack(mob/M, mob/user, def_zone)
+		if(!canconsume(M, user))
+			return 0
+
 		if(M == user)
 			M << "<span class='notice'>You swallow [src].</span>"
 			M.unEquip(src) //icon update
@@ -26,9 +29,9 @@
 				reagents.reaction(M, INGEST)
 				spawn(5)
 					reagents.trans_to(M, reagents.total_volume)
-					del(src)
+					qdel(src)
 			else
-				del(src)
+				qdel(src)
 			return 1
 
 		else if(istype(M, /mob/living/carbon/human) )
@@ -47,9 +50,9 @@
 				reagents.reaction(M, INGEST)
 				spawn(5)
 					reagents.trans_to(M, reagents.total_volume)
-					del(src)
+					qdel(src)
 			else
-				del(src)
+				qdel(src)
 
 			return 1
 
@@ -66,7 +69,7 @@
 				O << "<span class='warning'>[user] slips something into [target].</span>"
 			reagents.trans_to(target, reagents.total_volume)
 			spawn(5)
-				del(src)
+				qdel(src)
 
 
 ////////////////////////////////////////////////////////////////////////////////

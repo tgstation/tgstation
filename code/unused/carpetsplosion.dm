@@ -21,7 +21,7 @@
 /obj/effect/spreader
 	var/list/obj/effect/spreader/spreadList = list()
 
-/obj/effect/spreader/Del()
+/obj/effect/spreader/Delete()
 	for(var/obj/effect/spreader/spread in spreadList)
 		if(spread != src)
 			del(spread)

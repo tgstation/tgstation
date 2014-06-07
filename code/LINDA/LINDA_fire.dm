@@ -95,7 +95,7 @@
 		return
 
 	if(location.excited_group)
-		location.excited_group.breakdown = 0
+		location.excited_group.reset_cooldowns()
 
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
 		Kill()

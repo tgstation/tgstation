@@ -18,7 +18,7 @@ RCD
 	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 50000
+	m_amt = 30000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
@@ -106,7 +106,7 @@ RCD
 				user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
 				return
 			user.drop_item()
-			del(W)
+			qdel(W)
 			matter += 10
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
@@ -217,7 +217,7 @@ RCD
 						if(do_after(user, 50))
 							if(!useResource(10, user)) return 0
 							activate()
-							del(A)
+							qdel(A)
 							return 1
 					return	0
 				return 0
@@ -260,5 +260,5 @@ RCD
 	density = 0
 	anchored = 0.0
 	origin_tech = "materials=2"
-	m_amt = 30000
-	g_amt = 15000
+	m_amt = 16000
+	g_amt = 8000

@@ -1,7 +1,12 @@
 /mob/living/silicon/ai/death(gibbed)
 	if(stat == DEAD)	return
 	stat = DEAD
-	icon_state = "ai-crash"
+
+
+	if("[icon_state]_dead" in icon_states(src.icon,1))
+		icon_state = "[icon_state]_dead"
+	else
+		icon_state = "ai_dead"
 
 	update_canmove()
 	if(src.eyeobj)

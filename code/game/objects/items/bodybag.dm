@@ -10,7 +10,7 @@
 /obj/item/bodybag/attack_self(mob/user)
 		var/obj/structure/closet/body_bag/R = new /obj/structure/closet/body_bag(user.loc)
 		R.add_fingerprint(user)
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/storage/box/bodybags
@@ -79,7 +79,7 @@
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
 		var/obj/item/bodybag/B = new /obj/item/bodybag(get_turf(src))
 		usr.put_in_hands(B)
-		del(src)
+		qdel(src)
 
 
 /obj/structure/closet/bodybag/update_icon()

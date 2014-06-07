@@ -7,6 +7,7 @@
 	throw_range = 5
 	w_class = 1.0
 
+	var/damage_coeff  = 1
 	var/list/fields
 
 /obj/item/weapon/dnainjector/attack_paw(mob/user)
@@ -18,7 +19,7 @@
 		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
 			user << "<span class='notice'>You can't modify [M]'s DNA while \he's dead.</span>"
 			return
-		M.radiation += rand(20, 50)
+		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		if(fields)
 			var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 			if(fields["name"] && fields["UE"] && fields["blood_type"])

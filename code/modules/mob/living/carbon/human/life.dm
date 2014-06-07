@@ -851,20 +851,12 @@
 
 				if(hallucination<=2)
 					hallucination = 0
-					halloss = 0
 				else
 					hallucination -= 2
 
 			else
 				for(var/atom/a in hallucinations)
-					del a
-
-				if(halloss > 100)
-					src << "<span class='notice'>You're too tired to keep going...</span>"
-					for(var/mob/O in oviewers(src, null))
-						O.show_message("<B>[src]</B> slumps to the ground panting, too weak to continue fighting.", 1)
-					Paralyse(3)
-					setHalLoss(99)
+					qdel(a)
 
 			if(paralysis)
 				AdjustParalysis(-1)
@@ -872,7 +864,7 @@
 				stat = UNCONSCIOUS
 			else if(sleeping)
 				handle_dreams()
-				adjustHalLoss(-5)
+				adjustStaminaLoss(-10)
 				sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS
@@ -898,11 +890,11 @@
 			//Ears
 			if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
 				ear_deaf = max(ear_deaf, 1)
-			else if(ear_deaf)			//deafness, heals slowly over time
-				ear_deaf = max(ear_deaf-1, 0)
-			else if(istype(ears, /obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster
+			else if(istype(ears, /obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster, and slowly heals deafness
 				ear_damage = max(ear_damage-0.15, 0)
-				ear_deaf = max(ear_deaf, 1)
+				ear_deaf = max(ear_deaf-1, 1)
+			else if(ear_deaf) //deafness, heals slowly over time
+				ear_deaf = max(ear_deaf-1, 0)
 			else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
 				ear_damage = max(ear_damage-0.05, 0)
 
@@ -955,7 +947,7 @@
 				AdjustStunned(-1)
 
 			if(weakened)
-				weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+				weakened = max(weakened-1,0)
 
 			if(stuttering)
 				stuttering = max(stuttering-1, 0)
@@ -965,6 +957,9 @@
 
 			if(druggy)
 				druggy = max(druggy-1, 0)
+
+			CheckStamina()
+
 		return 1
 
 	proc/handle_regular_hud_updates()
@@ -1064,7 +1059,7 @@
 			see_invisible = SEE_INVISIBLE_LIVING
 			if(dna)
 				switch(dna.mutantrace)
-					if("lizard","slime")
+					if("slime")
 						see_in_dark = 3
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
 					if("shadow")
@@ -1127,7 +1122,7 @@
 					if(1)	healths.icon_state = "health6"
 					if(2)	healths.icon_state = "health7"
 					else
-						switch(health - halloss)
+						switch(health - staminaloss)
 							if(100 to INFINITY)		healths.icon_state = "health0"
 							if(80 to 100)			healths.icon_state = "health1"
 							if(60 to 80)			healths.icon_state = "health2"
@@ -1236,7 +1231,7 @@
 					if(M.stat == 2)
 						M.death(1)
 						stomach_contents.Remove(M)
-						del(M)
+						qdel(M)
 						continue
 					if(air_master.current_cycle%3==1)
 						if(!(M.status_flags & GODMODE))

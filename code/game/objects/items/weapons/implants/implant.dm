@@ -28,7 +28,7 @@
 
 /obj/item/weapon/implant/dropped(mob/user as mob)
 	. = 1
-	del src
+	qdel(src)
 	return .
 
 /obj/item/weapon/implant/tracking
@@ -119,7 +119,7 @@
 	R << "You hear a faint *beep*."
 	if(!reagents.total_volume)
 		R << "You hear a faint click from your chest."
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/implant/loyalty
@@ -139,15 +139,13 @@
 	return dat
 
 
-/obj/item/weapon/implant/loyalty/implanted(mob/M)
-	if(!ishuman(M))	return 0
-	var/mob/living/carbon/human/H = M
-	if(H.mind in ticker.mode.head_revolutionaries)
-		H.visible_message("<span class='warning'>[H] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
+/obj/item/weapon/implant/loyalty/implanted(mob/target)
+	if(target.mind in ticker.mode.head_revolutionaries)
+		target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
 		return 0
-	else if(H.mind in ticker.mode:revolutionaries)
-		ticker.mode:remove_revolutionary(H.mind)
-	H << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
+	if(target.mind in ticker.mode.revolutionaries)
+		ticker.mode.remove_revolutionary(target.mind)
+	target << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
 	return 1
 
 

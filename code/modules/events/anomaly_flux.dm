@@ -11,7 +11,7 @@
 
 
 /datum/round_event/anomaly/anomaly_flux/announce()
-	command_alert("Localized hyper-energetic flux wave detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Localized hyper-energetic flux wave detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
 
 
 /datum/round_event/anomaly/anomaly_flux/start()
@@ -23,4 +23,4 @@
 /datum/round_event/anomaly/anomaly_flux/end()
 	if(newAnomaly)//If it hasn't been neutralized, it's time to blow up.
 		explosion(newAnomaly, -1, 3, 5, 5)
-		del(newAnomaly)
+		qdel(newAnomaly)

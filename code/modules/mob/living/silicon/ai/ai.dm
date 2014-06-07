@@ -16,7 +16,7 @@ var/list/ai_list = list()
 	name = "AI"
 	icon = 'icons/mob/AI.dmi'//
 	icon_state = "ai"
-	anchored = 1 // -- TLE
+	anchored = 1
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
 	var/list/network = list("SS13")
@@ -37,8 +37,9 @@ var/list/ai_list = list()
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
 
-	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click() -- TLE
+	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click()
 	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
+	var/malf_cooldown = 0 //Cooldown var for malf modules
 
 	var/obj/machinery/power/apc/malfhack = null
 	var/explosive = 0 //does the AI explode when it dies?
@@ -97,7 +98,7 @@ var/list/ai_list = list()
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
 			new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
-			del(src)//Delete AI.
+			qdel(src)//Delete AI.
 			return
 		else
 			if (B.brainmob.mind)
@@ -118,7 +119,7 @@ var/list/ai_list = list()
 	..()
 	return
 
-/mob/living/silicon/ai/Del()
+/mob/living/silicon/ai/Destroy()
 	ai_list -= src
 	shuttle_caller_list -= src
 	emergency_shuttle.autoshuttlecall()
@@ -132,7 +133,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -151,6 +152,10 @@ var/list/ai_list = list()
 		icon_state = "ai-static"
 	else if(icontype == "Red October")
 		icon_state = "ai-redoctober"
+	else if(icontype == "House")
+		icon_state = "ai-house"
+	else if(icontype == "Heartline")
+		icon_state = "ai-heartline"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
@@ -240,10 +245,10 @@ var/list/ai_list = list()
 			usr << "Wireless control is disabled!"
 			return
 
-	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
+	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as text
 
-	if(confirm == "Yes")
-		call_shuttle_proc(src)
+	if(length(trim(reason)) > 0)
+		call_shuttle_proc(src, reason)
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)
@@ -372,26 +377,15 @@ var/list/ai_list = list()
 				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
 				sleep(40)
 				continue
-
 		return
-
 	return
 
-/mob/living/silicon/ai/meteorhit(obj/O as obj)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\red [] has been hit by []", src, O), 1)
-		//Foreach goto(19)
-	if (health > 0)
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			adjustFireLoss(40)
-		updatehealth()
-	return
 
 /mob/living/silicon/ai/bullet_act(var/obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()
 	return 2
+
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)

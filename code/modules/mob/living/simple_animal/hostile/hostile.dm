@@ -10,7 +10,7 @@
 	var/projectiletype
 	var/projectilesound
 	var/casingtype
-	var/move_to_delay = 2 //delay for the automated movement.
+	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
 	var/vision_range = 9 //How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
 
@@ -254,7 +254,7 @@
 	if(!A)	return
 
 	if (!istype(target, /turf))
-		del(A)
+		qdel(A)
 		return
 	A.current = target
 	A.yo = target:y - start:y

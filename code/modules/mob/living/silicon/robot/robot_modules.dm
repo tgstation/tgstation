@@ -193,7 +193,7 @@
 		L.lit = 1
 		modules += L
 
-		modules += new /obj/item/weapon/tray(src)
+		modules += new /obj/item/weapon/storage/bag/tray(src)
 		modules += new /obj/item/weapon/reagent_containers/borghypo/borgshaker(src)
 		emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 
@@ -223,7 +223,7 @@
 	on_emag()
 		..()
 		for(var/obj/item/weapon/pickaxe/borgdrill/D in modules)
-			del(D)
+			qdel(D)
 		modules += new /obj/item/weapon/pickaxe/diamonddrill(src)
 		rebuild()
 

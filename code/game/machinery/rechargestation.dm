@@ -66,6 +66,11 @@
 	open_machine()
 	..(severity)
 
+/obj/machinery/recharge_station/ex_act(severity)
+	if(occupier)
+		open_machine()
+	..(severity)
+
 /obj/machinery/recharge_station/attack_paw(user as mob)
 	return attack_hand(user)
 
@@ -189,7 +194,7 @@
 				if(istype(O, /obj/item/device/lightreplacer))
 					var/obj/item/device/lightreplacer/LR = O
 					var/i = 1
-					for(1, i < coeff, i++)
+					for(1, i <= coeff, i++)
 						LR.Charge(occupier)
 
 			if(occupier)

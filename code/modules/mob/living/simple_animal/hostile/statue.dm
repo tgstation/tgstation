@@ -50,11 +50,12 @@
 	status_flags = GODMODE // Cannot push also
 
 	var/cannot_be_seen = 1
+	var/mob/living/creator = null
 
 
 // No movement while seen code.
 
-/mob/living/simple_animal/hostile/statue/New()
+/mob/living/simple_animal/hostile/statue/New(loc, var/mob/living/creator)
 	..()
 	// Give spells
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
@@ -63,6 +64,10 @@
 
 	// Give nightvision
 	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+
+	// Set creator
+	if(creator)
+		src.creator = creator
 
 /mob/living/simple_animal/hostile/statue/Move(var/turf/NewLoc)
 	if(can_be_seen(NewLoc))
@@ -146,6 +151,11 @@
 			return 0
 	return ..()
 
+// Don't attack your creator if there is one
+
+/mob/living/simple_animal/hostile/statue/ListTargets()
+	. = ..()
+	return . - creator
 
 // Statue powers
 

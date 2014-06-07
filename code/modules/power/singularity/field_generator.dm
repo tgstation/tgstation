@@ -169,7 +169,7 @@ field_generator power level display
 	return 0
 
 
-/obj/machinery/field/generator/Del()
+/obj/machinery/field/generator/Destroy()
 	src.cleanup()
 	..()
 
@@ -327,7 +327,7 @@ field_generator power level display
 	for (var/obj/machinery/field/containment/F in fields)
 		if (isnull(F))
 			continue
-		del(F)
+		qdel(F)
 	fields = list()
 	for(var/obj/machinery/field/generator/FG in connected_gens)
 		if (isnull(FG))

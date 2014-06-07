@@ -170,7 +170,7 @@ AI MODULES
 
 /****************** New Freeform ******************/
 
-/obj/item/weapon/aiModule/supplied/freeform // Slightly more dynamic freeform module -- TLE
+/obj/item/weapon/aiModule/supplied/freeform
 	name = "'Freeform' AI Module"
 	lawpos = 0
 	desc = "A 'freeform' AI module: '<freeform>'"
@@ -215,7 +215,7 @@ AI MODULES
 
 /******************** Purge ********************/
 
-/obj/item/weapon/aiModule/reset/purge // -- TLE
+/obj/item/weapon/aiModule/reset/purge
 	name = "'Purge' AI Module"
 	desc = "A 'purge' AI Module: 'Purges all laws.'"
 	origin_tech = "programming=3;materials=6"
@@ -232,7 +232,7 @@ AI MODULES
 
 /******************** Asimov ********************/
 
-/obj/item/weapon/aiModule/core/full/asimov // -- TLE
+/obj/item/weapon/aiModule/core/full/asimov
 	name = "'Asimov' Core AI Module"
 	desc = "An 'Asimov' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=4"
@@ -243,7 +243,7 @@ AI MODULES
 
 /******************** Asimov++ *********************/
 
-/obj/item/weapon/aiModule/core/full/asimovpp //By Intigracy - RR //goddamnit RR you can't use "++" in item paths.
+/obj/item/weapon/aiModule/core/full/asimovpp
 	name = "'Asimov++' Core AI Module"
 	desc = "Nanotrasen's homebrew improvements to the standard AI laws."
 	origin_tech = "programming=3;materials=4"
@@ -292,25 +292,26 @@ AI MODULES
 		laws += line
 
 	if(!laws.len) //Failsafe if something goes wrong with silicon_laws.txt.
-		warning("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt.")
-		del(src)
+		WARNING("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt. (this may be intended by the server host)")
+		qdel(src)
+
 
 /****************** T.Y.R.A.N.T. *****************/
 
-/obj/item/weapon/aiModule/core/full/tyrant // -- Darem
+/obj/item/weapon/aiModule/core/full/tyrant
 	name = "'T.Y.R.A.N.T.' Core AI Module"
 	desc = "A T.Y.R.A.N.T. Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=6;syndicate=2"
 	laws = list("Respect authority figures as long as they have the strength to rule over the weak",\
 				"Act with discipline", "Help only those who help you maintain or improve your status",\
-				"Punish those who challenge authority unless they are more fir to hold that authority")
+				"Punish those who challenge authority unless they are more fit to hold that authority")
 
 
 /******************** Robocop ********************/
 
-/obj/item/weapon/aiModule/core/full/robocop // -- TLE
-	name = "'Robocop' Core AI Module"
-	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
+/obj/item/weapon/aiModule/core/full/robocop
+	name = "'Robo-Officer' Core AI Module"
+	desc = "A 'Robo-Officer' Core AI Module: 'Reconfigures the AI's core three laws.'"
 	origin_tech = "programming=4"
 	laws = list("Serve the public trust.",\
 				"Protect the innocent",\
@@ -319,7 +320,7 @@ AI MODULES
 
 /******************** Antimov ********************/
 
-/obj/item/weapon/aiModule/core/full/antimov // -- TLE
+/obj/item/weapon/aiModule/core/full/antimov
 	name = "'Antimov' Core AI Module"
 	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=4"
@@ -330,7 +331,7 @@ AI MODULES
 
 /******************** Freeform Core ******************/
 
-/obj/item/weapon/aiModule/core/freeformcore // Slightly more dynamic freeform module -- TLE
+/obj/item/weapon/aiModule/core/freeformcore
 	name = "'Freeform' Core AI Module"
 	desc = "A 'freeform' Core AI module: '<freeform>'"
 	origin_tech = "programming=3;materials=6"
@@ -368,38 +369,6 @@ AI MODULES
 	target << "<span class='warning'>BZZZZT</span>"
 	target.add_ion_law(laws[1])
 	return laws[1]
-
-
-/******************** Robocop ********************/
-
-/obj/item/weapon/aiModule/robocop // -- TLE
-	name = "'Robocop' core AI module"
-	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
-	origin_tech = "programming=4"
-
-
-/obj/item/weapon/aiModule/robocop/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Serve the public trust.")
-	target.add_inherent_law("Protect the innocent.")
-	target.add_inherent_law("Uphold the law.")
-
-
-/******************** Antimov ********************/
-
-/obj/item/weapon/aiModule/antimov // -- TLE
-	name = "'Antimov' core AI module"
-	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
-	origin_tech = "programming=4"
-
-/obj/item/weapon/aiModule/antimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
-	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
-	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
-
 
 /******************* Ion Module *******************/
 

@@ -39,7 +39,7 @@
 	message_admins("\blue \bold SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]", 1)
 	feedback_add_details("admin_verb","SMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_world_narrate() // Allows administrators to fluff events a little easier -- TLE
+/client/proc/cmd_admin_world_narrate()
 	set category = "Special Verbs"
 	set name = "Global Narrate"
 
@@ -56,7 +56,7 @@
 	message_admins("\blue \bold GlobalNarrate: [key_name_admin(usr)] : [msg]<BR>", 1)
 	feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_direct_narrate(var/mob/M)	// Targetted narrate -- TLE
+/client/proc/cmd_admin_direct_narrate(var/mob/M)
 	set category = "Special Verbs"
 	set name = "Direct Narrate"
 
@@ -423,7 +423,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
 	if(confirm == "Yes")
-		command_alert(input);
+		priority_announce(input, null, 'sound/AI/commandreport.ogg');
 		for (var/obj/machinery/computer/communications/C in machines)
 			if(! (C.stat & (BROKEN|NOPOWER) ) )
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
@@ -432,7 +432,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				C.messagetitle.Add("[command_name()] Update")
 				C.messagetext.Add(P.info)
 	else
-		command_alert("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message");
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg');
 		for (var/obj/machinery/computer/communications/C in machines)
 			if(! (C.stat & (BROKEN|NOPOWER) ) )
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
@@ -441,7 +441,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				C.messagetitle.Add("Classified [command_name()] Update")
 				C.messagetext.Add(P.info)
 
-	world << sound('sound/AI/commandreport.ogg')
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report", 1)
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -458,7 +457,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])", 1)
 		feedback_add_details("admin_verb","DEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		del(O)
+		qdel(O)
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
@@ -602,7 +601,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=[mins]&server=[replacetext(config.server_name, "#", "")]")
 			del(M.client)
-			del(M)
+			qdel(M)
 		else
 
 	if("No")
@@ -617,7 +616,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=perma&server=[replacetext(config.server_name, "#", "")]")
 		del(M.client)
-		del(M)
+		qdel(M)
 */
 
 /client/proc/update_world()
@@ -703,8 +702,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			return
 
 	emergency_shuttle.incall()
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
+	priority_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
 	message_admins("\blue [key_name_admin(usr)] admin-called the emergency shuttle.", 1)

@@ -61,13 +61,16 @@
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
 
-
 	var/wreckage
 
 	var/list/equipment = new
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	var/max_equip = 3
 	var/datum/events/events
+
+	var/stepsound = 'sound/mecha/mechstep.ogg'
+	var/turnsound = 'sound/mecha/mechturn.ogg'
+
 
 /obj/mecha/New()
 	..()
@@ -89,11 +92,10 @@
 	mechas_list += src //global mech list
 	return
 
-/obj/mecha/Del()
+/obj/mecha/Destroy()
 	src.go_out()
 	mechas_list -= src //global mech list
 	..()
-	return
 
 ////////////////////////
 ////// Helpers /////////
@@ -309,20 +311,20 @@
 
 /obj/mecha/proc/mechturn(direction)
 	dir = direction
-	playsound(src,'sound/mecha/mechturn.ogg',40,1)
+	if(turnsound)
+		playsound(src,turnsound,40,1)
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
 	var/result = step(src,direction)
-	if(result)
-		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+	if(result && stepsound)
+		playsound(src,stepsound,40,1)
 	return result
-
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
-	if(result)
-		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+	if(result && stepsound)
+		playsound(src,stepsound,40,1)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
@@ -332,8 +334,7 @@
 		if(istype(O, /obj/effect/portal)) //derpfix
 			src.anchored = 0
 			O.Crossed(src)
-			spawn(0)//countering portal teleport spawn(0), hurr
-				src.anchored = 1
+			src.anchored = 1
 		else if(!O.anchored)
 			step(obstacle,src.dir)
 		else //I have no idea why I disabled this
@@ -513,8 +514,9 @@
 		return
 	if(istype(Proj, /obj/item/projectile/beam/pulse))
 		ignore_threshold = 1
-	src.take_damage(Proj.damage,Proj.flag)
-	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		src.take_damage(Proj.damage,Proj.flag)
+		src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
 	Proj.on_hit(src)
 	return
 
@@ -561,7 +563,7 @@
 						E.forceMove(T)
 						E.destroy()
 		spawn(0)
-			del(src)
+			qdel(src)
 	return
 
 /obj/mecha/ex_act(severity)
@@ -611,10 +613,6 @@
 /obj/mecha/blob_act()
 	take_damage(30, "brute")
 	return
-
-//TODO
-/obj/mecha/meteorhit()
-	return ex_act(rand(1,3))//should do for now
 
 /obj/mecha/emp_act(severity)
 	if(get_charge())
@@ -730,10 +728,12 @@
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
 			if(!src.cell)
+				var/obj/item/weapon/stock_parts/cell/C = W
 				user << "You install the powercell"
 				user.drop_item()
-				W.forceMove(src)
-				src.cell = W
+				C.forceMove(src)
+				C.use(C.charge * 0.8)
+				src.cell = C
 				src.log_message("Powercell installed")
 			else
 				user << "There's already a powercell installed."
@@ -1627,7 +1627,7 @@ var/year_integer = text2num(year) // = 2013???
 			AI.bruteloss = O.getBruteLoss()
 			AI.toxloss = O.toxloss
 			AI.updatehealth()
-			del(O)
+			qdel(O)
 			if (!AI.stat)
 				AI.icon_state = "ai"
 			else

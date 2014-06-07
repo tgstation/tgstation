@@ -287,7 +287,6 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 
 /datum/excited_group
 	var/list/turf_list = list()
-	var/breakdown = 0
 	var/breakdown_cooldown = 0
 
 /datum/excited_group/New()

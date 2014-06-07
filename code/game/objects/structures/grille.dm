@@ -12,18 +12,11 @@
 	var/health = 10
 	var/destroyed = 0
 
-/obj/structure/grille/Del()
-	loc = null //garbage collect
-
 /obj/structure/grille/ex_act(severity)
-	del(src)
+	qdel(src)
 
 /obj/structure/grille/blob_act()
-	del(src)
-
-/obj/structure/grille/meteorhit(var/obj/M)
-	del(src)
-
+	qdel(src)
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)
@@ -33,6 +26,7 @@
 	attack_hand(user)
 
 /obj/structure/grille/attack_hand(mob/user as mob)
+	user.changeNext_move(8)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='warning'>You kick [src].</span>", \
@@ -48,7 +42,7 @@
 
 /obj/structure/grille/attack_alien(mob/user as mob)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
-
+	user.changeNext_move(8)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
 						 "<span class='warning'>You mangle [src].</span>", \
@@ -60,6 +54,7 @@
 		return
 
 /obj/structure/grille/attack_slime(mob/living/carbon/slime/user as mob)
+	user.changeNext_move(8)
 	if(!user.is_adult)	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -72,6 +67,7 @@
 	return
 
 /obj/structure/grille/attack_animal(var/mob/living/simple_animal/M as mob)
+	M.changeNext_move(8)
 	if(M.melee_damage_upper == 0)	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -95,13 +91,16 @@
 			return !density
 
 /obj/structure/grille/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj)	return
+	if(!Proj)
+		return
 	..()
-	src.health -= Proj.damage*0.2
-	healthcheck()
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		src.health -= Proj.damage*0.2
+		healthcheck()
 	return
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	user.changeNext_move(8)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
@@ -110,13 +109,13 @@
 			else
 				new /obj/item/stack/rods(loc)
 				new /obj/item/stack/rods(loc)
-			del(src)
+			qdel(src)
 	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			anchored = !anchored
-			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the grille.</span>", \
-								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] the floor.</span>")
+			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the [src].</span>", \
+								 "<span class='notice'>You have [anchored ? "fastened the [src] to" : "unfastened the [src] from"] the floor.</span>")
 			return
 
 //window placing begin
@@ -191,7 +190,7 @@
 		else
 			if(health <= -6)
 				new /obj/item/stack/rods(loc)
-				del(src)
+				qdel(src)
 				return
 	return
 

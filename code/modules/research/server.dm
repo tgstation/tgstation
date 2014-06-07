@@ -24,7 +24,7 @@
 	RefreshParts()
 	src.initialize(); //Agouri
 
-/obj/machinery/r_n_d/server/Del()
+/obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
 	..()
 
@@ -73,10 +73,6 @@
 	else
 		produce_heat(heat_gen)
 		delay = initial(delay)
-
-/obj/machinery/r_n_d/server/meteorhit(var/obj/O as obj)
-	griefProtection()
-	..()
 
 
 /obj/machinery/r_n_d/server/emp_act(severity)
@@ -238,7 +234,7 @@
 			temp_server.id_with_download += num
 
 	else if(href_list["reset_tech"])
-		var/choice = alert("Technology Data Rest", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			for(var/datum/tech/T in temp_server.files.known_tech)
 				if(T.id == href_list["reset_tech"])

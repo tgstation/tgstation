@@ -10,9 +10,9 @@
 
 
 /obj/structure/bigDelivery/attack_hand(mob/user as mob)
-	del(src)
+	qdel(src)
 
-/obj/structure/bigDelivery/Del()
+/obj/structure/bigDelivery/Destroy()
 	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = (get_turf(loc))
 		if(istype(wrapped, /obj/structure/closet))
@@ -66,7 +66,7 @@
 			else
 				wrapped.loc = get_turf(src)
 
-		del(src)
+		qdel(src)
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -156,7 +156,7 @@
 			user << "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery.</span>"
 		if(amount <= 0)
 			new /obj/item/weapon/c_tube( loc )
-			del(src)
+			qdel(src)
 			return
 		return
 
@@ -315,7 +315,7 @@
 				C.update()
 				C.anchored = 1
 				C.density = 1
-				del(src)
+				qdel(src)
 			return
 		else
 			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"

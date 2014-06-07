@@ -1,150 +1,148 @@
 //Due to how large this one is it gets its own file
+/*
+Chaplain
+*/
 /datum/job/chaplain
 	title = "Chaplain"
 	flag = CHAPLAIN
+	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+
+	default_pda = /obj/item/device/pda/chaplain
+
 	access = list(access_morgue, access_chapel_office, access_crematorium, access_maint_tunnels)
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
 
+	//Pretty bible names
+	var/global/list/biblenames =		list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light", "The God Delusion", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon")
 
-	equip(var/mob/living/carbon/human/H)
-		if(!H)	return 0
+	//Bible iconstates
+	var/global/list/biblestates =		list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon")
 
-		var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(H)
-		H.equip_to_slot_or_del(B, slot_l_hand)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-		spawn(0)
-			var/religion_name = "Christianity"
-			var/new_religion = copytext(sanitize(input(H, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
+	//Bible itemstates
+	var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "bible", "bible", "syringe_kit", "syringe_kit", "syringe_kit", "syringe_kit", "syringe_kit", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon")
 
-			if (!new_religion)
-				new_religion = religion_name
+/datum/job/chaplain/proc/setupbiblespecifics(var/obj/item/weapon/storage/book/bible/B, var/mob/living/carbon/human/H)
+	switch(B.icon_state)
+		if("honk1","honk2")
+			new /obj/item/weapon/grown/bananapeel(B)
+			new /obj/item/weapon/grown/bananapeel(B)
 
-			switch(lowertext(new_religion))
-				if("christianity")
-					B.name = pick("The Holy Bible","The Dead Sea Scrolls")
-				if("satanism")
-					B.name = "The Unholy Bible"
-				if("cthulu")
-					B.name = "The Necronomicon"
-				if("islam")
-					B.name = "Quran"
-				if("scientology")
-					B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
-				if("chaos")
-					B.name = "The Book of Lorgar"
-				if("imperium")
-					B.name = "Uplifting Primer"
-				if("toolboxia")
-					B.name = "Toolbox Manifesto"
-				if("homosexuality")
-					B.name = "Guys Gone Wild"
-				if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
-					B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
-					H.setBrainLoss(100) // starts off retarded as fuck
-				if("science")
-					B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
-				else
-					B.name = "The Holy Book of [new_religion]"
-			feedback_set_details("religion_name","[new_religion]")
+			if(B.icon_state == "honk1")
+				H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
 
-		spawn(1)
-			var/deity_name = "Space Jesus"
-			var/new_deity = copytext(sanitize(input(H, "Would you like to change your deity? Default is Space Jesus.", "Name change", deity_name)),1,MAX_NAME_LEN)
+		if("bible")
+			for(var/area/chapel/main/A in world)
+				for(var/turf/T in A.contents)
+					if(T.icon_state == "carpetsymbol")
+						T.dir = 2
+		if("koran")
+			for(var/area/chapel/main/A in world)
+				for(var/turf/T in A.contents)
+					if(T.icon_state == "carpetsymbol")
+						T.dir = 4
+		if("scientology")
+			for(var/area/chapel/main/A in world)
+				for(var/turf/T in A.contents)
+					if(T.icon_state == "carpetsymbol")
+						T.dir = 8
+		if("athiest")
+			for(var/area/chapel/main/A in world)
+				for(var/turf/T in A.contents)
+					if(T.icon_state == "carpetsymbol")
+						T.dir = 10
 
-			if ((length(new_deity) == 0) || (new_deity == "Space Jesus") )
-				new_deity = deity_name
-			B.deity_name = new_deity
+/datum/job/chaplain/Topic(href, href_list)
+	if(href_list["seticon"])
+		var/iconi = text2num(href_list["seticon"])
 
-			var/accepted = 0
-			var/outoftime = 0
-			spawn(200) // 20 seconds to choose
-				outoftime = 1
-			var/new_book_style = "Bible"
+		var/biblename = biblenames[iconi]
+		var/obj/item/weapon/storage/book/bible/B = locate(href_list["bible"])
 
-			while(!accepted)
-				if(!B) break // prevents possible runtime errors
-				new_book_style = input(H,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts", "Necronomicon")
-				switch(new_book_style)
-					if("Koran")
-						B.icon_state = "koran"
-						B.item_state = "koran"
-						for(var/area/chapel/main/A in world)
-							for(var/turf/T in A.contents)
-								if(T.icon_state == "carpetsymbol")
-									T.dir = 4
-					if("Scrapbook")
-						B.icon_state = "scrapbook"
-						B.item_state = "scrapbook"
-					if("Creeper")
-						B.icon_state = "creeper"
-						B.item_state = "syringe_kit"
-					if("White Bible")
-						B.icon_state = "white"
-						B.item_state = "syringe_kit"
-					if("Holy Light")
-						B.icon_state = "holylight"
-						B.item_state = "syringe_kit"
-					if("Athiest")
-						B.icon_state = "athiest"
-						B.item_state = "syringe_kit"
-						for(var/area/chapel/main/A in world)
-							for(var/turf/T in A.contents)
-								if(T.icon_state == "carpetsymbol")
-									T.dir = 10
-					if("Tome")
-						B.icon_state = "tome"
-						B.item_state = "syringe_kit"
-					if("The King in Yellow")
-						B.icon_state = "kingyellow"
-						B.item_state = "kingyellow"
-					if("Ithaqua")
-						B.icon_state = "ithaqua"
-						B.item_state = "ithaqua"
-					if("Scientology")
-						B.icon_state = "scientology"
-						B.item_state = "scientology"
-						for(var/area/chapel/main/A in world)
-							for(var/turf/T in A.contents)
-								if(T.icon_state == "carpetsymbol")
-									T.dir = 8
-					if("the bible melts")
-						B.icon_state = "melted"
-						B.item_state = "melted"
-					if("Necronomicon")
-						B.icon_state = "necronomicon"
-						B.item_state = "necronomicon"
-					else
-						// if christian bible, revert to default
-						B.icon_state = "bible"
-						B.item_state = "bible"
-						for(var/area/chapel/main/A in world)
-							for(var/turf/T in A.contents)
-								if(T.icon_state == "carpetsymbol")
-									T.dir = 2
+		B.icon_state = biblestates[iconi]
+		B.item_state = bibleitemstates[iconi]
 
-				H.update_inv_l_hand(0) // so that it updates the bible's item_state in his hand
+		//Set biblespecific chapels
+		setupbiblespecifics(B, usr)
 
-				switch(input(H,"Look at your bible - is this what you want?") in list("Yes","No"))
-					if("Yes")
-						accepted = 1
-					if("No")
-						if(outoftime)
-							H << "Welp, out of time, buddy. You're stuck. Next time choose faster."
-							accepted = 1
+		usr.put_in_hands(B) // Update inhand icon
 
-			if(ticker)
-				ticker.Bible_icon_state = B.icon_state
-				ticker.Bible_item_state = B.item_state
-				ticker.Bible_name = B.name
-				ticker.Bible_deity_name = B.deity_name
-			feedback_set_details("religion_deity","[new_deity]")
-			feedback_set_details("religion_book","[new_book_style]")
-		return 1
+		if(ticker)
+			ticker.Bible_icon_state = B.icon_state
+			ticker.Bible_item_state = B.item_state
+			ticker.Bible_name = B.name
+		feedback_set_details("religion_book","[biblename]")
+
+		usr << browse(null, "window=editicon") // Close window
+
+/datum/job/chaplain/equip_items(var/mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
+
+	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
+	spawn(0)
+		var/religion_name = "Christianity"
+		var/new_religion = copytext(sanitize(input(H, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
+
+		if (!new_religion)
+			new_religion = religion_name
+
+		switch(lowertext(new_religion))
+			if("christianity")
+				B.name = pick("The Holy Bible","The Dead Sea Scrolls")
+			if("satanism")
+				B.name = "The Unholy Bible"
+			if("cthulu")
+				B.name = "The Necronomicon"
+			if("islam")
+				B.name = "Quran"
+			if("scientology")
+				B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+			if("chaos")
+				B.name = "The Book of Lorgar"
+			if("imperium")
+				B.name = "Uplifting Primer"
+			if("toolboxia")
+				B.name = "Toolbox Manifesto"
+			if("homosexuality")
+				B.name = "Guys Gone Wild"
+			if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
+				B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
+				H.setBrainLoss(100) // starts off retarded as fuck
+			if("science")
+				B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+			else
+				B.name = "The Holy Book of [new_religion]"
+		feedback_set_details("religion_name","[new_religion]")
+
+	spawn(1)
+		var/deity_name = "Space Jesus"
+		var/new_deity = copytext(sanitize(input(H, "Would you like to change your deity? Default is Space Jesus.", "Name change", deity_name)),1,MAX_NAME_LEN)
+
+		if ((length(new_deity) == 0) || (new_deity == "Space Jesus") )
+			new_deity = deity_name
+		B.deity_name = new_deity
+
+		if(ticker)
+			ticker.Bible_deity_name = B.deity_name
+		feedback_set_details("religion_deity","[new_deity]")
+
+		//Open bible selection
+		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
+
+		var/i
+		for(i = 1, i < biblestates.len, i++)
+			var/icon/bibleicon = icon('icons/obj/storage.dmi', biblestates[i])
+
+			var/nicename = biblenames[i]
+			H << browse_rsc(bibleicon, nicename)
+			dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=\ref[src];seticon=[i];bible=\ref[B]">[nicename]</a></td></tr>"}
+
+		dat += "</table></body></html>"
+
+		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")

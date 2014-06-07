@@ -14,7 +14,7 @@
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
 
-/obj/machinery/field/containment/Del()
+/obj/machinery/field/containment/Destroy()
 	if(FG1 && !FG1.clean_up)
 		FG1.cleanup()
 	if(FG2 && !FG2.clean_up)
@@ -36,8 +36,6 @@
 /obj/machinery/field/containment/ex_act(severity)
 	return 0
 
-/obj/machinery/field/containment/meteorhit()
-	return 0
 
 /obj/machinery/field/containment/Crossed(atom/movable/mover)
 	if(isliving(mover))
@@ -52,7 +50,7 @@
 
 /obj/machinery/field/containment/shock(mob/living/user as mob)
 	if(!FG1 || !FG2)
-		del(src)
+		qdel(src)
 		return 0
 	..()
 

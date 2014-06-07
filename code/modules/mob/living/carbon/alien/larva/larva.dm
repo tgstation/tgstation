@@ -113,17 +113,6 @@
 /mob/living/carbon/alien/larva/attack_ui(slot_id)
 	return
 
-/mob/living/carbon/alien/larva/meteorhit(O as obj)
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message(text("\red [] has been hit by []", src, O), 1)
-	if (health > 0)
-		adjustBruteLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
-		adjustFireLoss(30)
-
-		updatehealth()
-	return
-
 /mob/living/carbon/alien/larva/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
@@ -134,7 +123,6 @@
 		adjustBruteLoss(damage)
 		add_logs(M, src, "attacked", admin=0)
 		updatehealth()
-
 
 
 /mob/living/carbon/alien/larva/attack_paw(mob/living/carbon/monkey/M as mob)
@@ -306,10 +294,10 @@
 	return
 
 /* Commented out because it's duplicated in life.dm
-/mob/living/carbon/alien/larva/proc/grow() // Larvae can grow into full fledged Xenos if they survive long enough -- TLE
+/mob/living/carbon/alien/larva/proc/grow() // Larvae can grow into full fledged Xenos if they survive long enough
 	if(icon_state == "larva_l" && !canmove) // This is a shit death check. It is made of shit and death. Fix later.
 		return
 	else
 		var/mob/living/carbon/alien/humanoid/A = new(loc)
 		A.key = key
-		del(src) */
+		qdel(src) */

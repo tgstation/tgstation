@@ -27,12 +27,13 @@
 #define APC_UPOVERLAY_ENVIRON1 1024
 #define APC_UPOVERLAY_ENVIRON2 2048
 #define APC_UPOVERLAY_LOCKED 4096
+#define APC_UPOVERLAY_OPERATING 8192
 
 
 #define APC_UPDATE_ICON_COOLDOWN 200 // 20 seconds
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
-// one per area, needs wire conection to power network
+// one per area, needs wire conection to power network through a terminal
 
 // controls power to devices in that area
 // may be opened to change power cell
@@ -136,7 +137,23 @@
 		spawn(5)
 			src.update()
 
-
+/obj/machinery/power/apc/Destroy()
+	if(malfai && operating)
+		if (ticker.mode.config_tag == "malfunction")
+			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+				ticker.mode:apcs--
+	area.power_light = 0
+	area.power_equip = 0
+	area.power_environ = 0
+	area.power_change()
+	if(occupier)
+		malfvacate(1)
+	del(wires)
+	if(cell)
+		qdel(cell)
+	if(terminal)
+		disconnect_terminal()
+	..()
 
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
@@ -302,6 +319,9 @@
 	if(update_state <= 1)
 		update_state |= UPSTATE_ALLGOOD
 
+	if(operating)
+		update_overlay |= APC_UPOVERLAY_OPERATING
+
 	if(update_state & UPSTATE_ALLGOOD)
 		if(locked)
 			update_overlay |= APC_UPOVERLAY_LOCKED
@@ -333,6 +353,7 @@
 			update_overlay |= APC_UPOVERLAY_ENVIRON1
 		else if(environ==2)
 			update_overlay |= APC_UPOVERLAY_ENVIRON2
+
 
 	var/results = 0
 	if(last_update_state == update_state && last_update_overlay == update_overlay)
@@ -505,14 +526,14 @@
 			user.visible_message(\
 				"\red [user.name] cut the cables and dismantled the power terminal.",\
 				"You cut the cables and dismantle the power terminal.")
-			del(terminal)
+			qdel(terminal)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user << "You trying to insert the power control board into the frame..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10))
 			has_electronics = 1
 			user << "You place the power control board inside the frame."
-			del(W)
+			qdel(W)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
 		user << "\red You cannot put the board inside, the frame is damaged."
 		return
@@ -537,7 +558,7 @@
 					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
 					"You cut the APC frame from the wall.",\
 					"\red You hear welding.")
-			del(src)
+			qdel(src)
 			return
 	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
 		emagged = 0
@@ -546,7 +567,7 @@
 		user.visible_message(\
 			"\red [user.name] has replaced the damaged APC frontal panel with a new one.",\
 			"You replace the damaged APC frontal panel with a new one.")
-		del(W)
+		qdel(W)
 		update_icon()
 	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
@@ -557,7 +578,7 @@
 			user.visible_message(\
 				"\red [user.name] has replaced the damaged APC frame with new one.",\
 				"You replace the damaged APC frame with new one.")
-			del(W)
+			qdel(W)
 			stat &= ~BROKEN
 			malfai = null
 			malfhack = 0
@@ -752,7 +773,7 @@
 		return 0
 	if ( ! (istype(user, /mob/living/carbon/human) || \
 			istype(user, /mob/living/silicon) || \
-			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
+			istype(user, /mob/living/carbon/monkey)) )
 		user << "\red You don't have the dexterity to use this [src]!"
 		return 0
 	if(user.restrained())
@@ -907,7 +928,7 @@
 	malf.mind.transfer_to(src.occupier)
 	src.occupier.eyeobj.name = "[src.occupier.name] (AI Eye)"
 	if(malf.parent)
-		del(malf)
+		qdel(malf)
 	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
 	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupier.cancel_camera()
@@ -923,7 +944,7 @@
 		src.occupier.mind.transfer_to(src.occupier.parent)
 		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
 		src.occupier.parent.cancel_camera()
-		del(src.occupier)
+		qdel(src.occupier)
 		if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
 			for(var/obj/item/weapon/pinpointer/point in world)
 				for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
@@ -971,7 +992,7 @@
 
 /obj/machinery/power/apc/add_load(var/amount)
 	if(terminal && terminal.powernet)
-		terminal.powernet.newload += amount
+		terminal.powernet.load += amount
 
 /obj/machinery/power/apc/avail()
 	if(terminal)
@@ -1019,32 +1040,28 @@
 	else
 		main_status = 2
 
-	var/perapc = 0
-	if(terminal && terminal.powernet)
-		perapc = terminal.powernet.perapc
-
 	//if(debug)
 	//	world.log << "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]"
 
 	if(cell && !shorted)
 
 
-		// draw power from cell as before
+		// draw power from cell as before to power the area
 		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
-		if(excess > 0 || perapc > lastused_total)		// if power excess, or enough anyway, recharge the cell
-														// by the same amount just used
+		if(excess > lastused_total)		// if power excess recharge the cell
+										// by the same amount just used
 			cell.give(cellused)
 			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
 
 
 		else		// no excess, and not enough per-apc
 
-			if( (cell.charge/CELLRATE+perapc) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
+			if( (cell.charge/CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
 
-				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * perapc)	//recharge with what we can
-				add_load(perapc)		// so draw what we can from the grid
+				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * excess)	//recharge with what we can
+				add_load(excess)		// so draw what we can from the grid
 				charging = 0
 
 			else	// not enough power available to run the last tick!
@@ -1091,12 +1108,8 @@
 
 		if(chargemode && charging == 1 && operating)
 			if(excess > 0)		// check to make sure we have enough to charge
-				// Max charge is perapc share, capped to cell capacity, or % per second constant (Whichever is smallest)
-/*				var/ch = min(perapc, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
-				add_load(ch) // Removes the power we're taking from the grid
-				cell.give(ch) // actually recharge the cell
-*/
-				var/ch = min(perapc*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
+				// Max charge is capped to % per second constant
+				var/ch = min(excess*CELLRATE, cell.maxcharge*CHARGELEVEL)
 				add_load(ch/CELLRATE) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
@@ -1105,8 +1118,8 @@
 				chargecount = 0
 
 		// show cell as fully charged if so
-
 		if(cell.charge >= cell.maxcharge)
+			cell.charge = cell.maxcharge
 			charging = 2
 
 		if(chargemode)
@@ -1162,13 +1175,8 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 
 	return val
 
+
 // damage and destruction acts
-
-/obj/machinery/power/apc/meteorhit(var/obj/O as obj)
-
-	set_broken()
-	return
-
 /obj/machinery/power/apc/emp_act(severity)
 	if(cell)
 		cell.emp_act(severity)
@@ -1189,7 +1197,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 			//set_broken() //now Del() do what we need
 			if (cell)
 				cell.ex_act(1.0) // more lags woohoo
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -1208,6 +1216,11 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		set_broken()
 		if (cell && prob(5))
 			cell.blob_act()
+
+/obj/machinery/power/apc/disconnect_terminal()
+	if(terminal)
+		terminal.master = null
+		terminal = null
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
@@ -1234,19 +1247,6 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 					L.on = 1
 					L.broken()
 					sleep(1)
-
-/obj/machinery/power/apc/Del()
-	if(malfai && operating)
-		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
-				ticker.mode:apcs--
-	area.power_light = 0
-	area.power_equip = 0
-	area.power_environ = 0
-	area.power_change()
-	if(occupier)
-		malfvacate(1)
-	..()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))

@@ -20,6 +20,9 @@
 		if(F.on)
 			F.on = 0
 			F.update_brightness(src)
+	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
+		var/obj/item/weapon/storage/bag/tray/T = O
+		T.do_quick_empty()
 	if(client)
 		client.screen -= O
 	contents -= O

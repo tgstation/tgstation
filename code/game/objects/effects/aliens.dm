@@ -28,7 +28,7 @@
 	air_update_turf(1)
 	return
 
-/obj/structure/alien/resin/Del()
+/obj/structure/alien/resin/Destroy()
 	density = 0
 	air_update_turf(1)
 	..()
@@ -47,6 +47,9 @@
 	desc = "Purple slime solidified into a wall."
 	icon_state = "resinwall"	//same as resin, but consistency ho!
 
+/obj/structure/alien/resin/wall/BlockSuperconductivity()
+	return 1
+
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Purple slime just thin enough to let light pass through."
@@ -57,7 +60,7 @@
 
 /obj/structure/alien/resin/proc/healthcheck()
 	if(health <=0)
-		del(src)
+		qdel(src)
 
 
 /obj/structure/alien/resin/bullet_act(obj/item/projectile/Proj)
@@ -153,7 +156,7 @@
 	..()
 	linked_node = node
 	if(istype(loc, /turf/space))
-		del(src)
+		qdel(src)
 		return
 	if(icon_state == "weeds")
 		icon_state = pick("weeds", "weeds1", "weeds2")
@@ -168,7 +171,7 @@
 	var/turf/U = get_turf(src)
 
 	if(istype(U, /turf/space))
-		del(src)
+		qdel(src)
 		return
 
 	direction_loop:
@@ -189,7 +192,7 @@
 
 
 /obj/structure/alien/weeds/ex_act(severity)
-	del(src)
+	qdel(src)
 
 
 /obj/structure/alien/weeds/attackby(obj/item/I, mob/user)
@@ -211,7 +214,7 @@
 
 /obj/structure/alien/weeds/proc/healthcheck()
 	if(health <= 0)
-		del(src)
+		qdel(src)
 
 
 /obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -270,7 +273,7 @@
 			if(BURST)
 				user << "<span class='notice'>You clear the hatched egg.</span>"
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-				del(src)
+				qdel(src)
 				return
 			if(GROWING)
 				user << "<span class='notice'>The child is not developed yet.</span>"
@@ -344,7 +347,7 @@
 		if(status != BURST && status != BURSTING)
 			Burst()
 		else if(status == BURST && prob(50))
-			del(src)	//Remove the egg after it has been hit after bursting.
+			qdel(src)	//Remove the egg after it has been hit after bursting.
 
 
 /obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -407,7 +410,7 @@
 
 /obj/effect/acid/proc/tick()
 	if(!target)
-		del(src)
+		qdel(src)
 
 	ticks++
 
@@ -418,9 +421,9 @@
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
 		else
-			del(target)
+			qdel(target)
 
-		del(src)
+		qdel(src)
 		return
 
 	loc = target.loc

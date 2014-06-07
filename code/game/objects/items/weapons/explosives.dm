@@ -14,14 +14,16 @@
 	var/timer = 10
 	var/atom/target = null
 	var/open_panel = 0
+	var/image_overlay = null
 
 /obj/item/weapon/plastique/New()
 	wires = new(src)
+	image_overlay = image('icons/obj/assemblies.dmi', "plastic-explosive2")
 	..()
 
 /obj/item/weapon/plastique/suicide_act(var/mob/user)
 	. = (BRUTELOSS)
-	viewers(user) << "<span class='suicide'>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</span>"
+	user.visible_message("<span class='suicide'>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -54,8 +56,8 @@
 		timer = newtime
 		user << "Timer set for [timer] seconds."
 
-/obj/item/weapon/plastique/preattack(atom/target as obj|turf, mob/user as mob,proximity_flag)
-	if (!proximity_flag)
+/obj/item/weapon/plastique/afterattack(atom/movable/target, mob/user, flag)
+	if (!flag)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
 		return
@@ -77,14 +79,13 @@
 			log_game("[key_name(user)] planted C4 on [key_name(target)] with [timer] second fuse")
 
 		else
-			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted C4 on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) with [timer] second fuse",0,1)
+			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted C4 on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [timer] second fuse",0,1)
 			log_game("[key_name(user)] planted C4 on [target.name] at ([target.x],[target.y],[target.z]) with [timer] second fuse")
 
-		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
+		target.overlays += image_overlay
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
 			explode(get_turf(target))
-	return 1
 
 /obj/item/weapon/plastique/proc/explode(var/location)
 
@@ -100,10 +101,9 @@
 			target:dismantle_wall(1)
 		else
 			target.ex_act(1)
-		if (isobj(target))
-			if (target)
-				del(target)
-	del(src)
+	if(target)
+		target.overlays -= image_overlay
+	qdel(src)
 
 /obj/item/weapon/plastique/attack(mob/M as mob, mob/user as mob, def_zone)
 	return

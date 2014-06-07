@@ -86,7 +86,7 @@
 				new /obj/item/clothing/under/rank/medical/purple(src)
 		new /obj/item/clothing/under/rank/medical(src)
 		new /obj/item/clothing/suit/labcoat(src)
-		new /obj/item/clothing/shoes/white(src)
+		new /obj/item/clothing/shoes/sneakers/white(src)
 //		new /obj/item/weapon/cartridge/medical(src)
 		new /obj/item/device/radio/headset/headset_med(src)
 		new /obj/item/weapon/storage/belt/medical(src)
@@ -95,7 +95,7 @@
 
 
 /obj/structure/closet/secure_closet/CMO
-	name = "chief medical officer's locker"
+	name = "\proper chief medical officer's locker"
 	req_access = list(access_cmo)
 	icon_state = "cmosecure1"
 	icon_closed = "cmosecure"
@@ -117,7 +117,7 @@
 		new /obj/item/clothing/suit/labcoat/cmo(src)
 		new /obj/item/weapon/cartridge/cmo(src)
 		new /obj/item/clothing/gloves/latex(src)
-		new /obj/item/clothing/shoes/brown	(src)
+		new /obj/item/clothing/shoes/sneakers/brown	(src)
 		new /obj/item/device/radio/headset/heads/cmo(src)
 		new /obj/item/weapon/storage/belt/medical(src)
 		new /obj/item/device/flash(src)
