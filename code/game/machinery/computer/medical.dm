@@ -15,6 +15,9 @@
 	var/a_id = null
 	var/temp = null
 	var/printing = null
+	//Sorting Variables
+	var/sortBy = "name"
+	var/order = 1 // -1 = Descending - 1 = Ascending
 
 /obj/machinery/computer/med_data/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -47,11 +50,52 @@
 <BR><A href='?src=\ref[src];logout=1'>{Log Out}</A><BR>
 "}
 				if(2.0)
-					dat += "<B>Record List</B>:<HR>"
-					if(data_core.general)
-						for(var/datum/data/record/R in sortRecord(data_core.general))
-							dat += "<A href='?src=\ref[src];d_rec=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<BR>"
-							//Foreach goto(132)
+					dat += {"
+</p>
+<table style="text-align:center;" cellspacing="0" width="100%">
+<tr>
+<th>Records:</th>
+</tr>
+</table>
+<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+<tr>
+<th><A href='?src=\ref[src];choice=Sorting;sort=name'>Name</A></th>
+<th><A href='?src=\ref[src];choice=Sorting;sort=id'>ID</A></th>
+<th>Fingerprints (F) | DNA (D)</th>
+<th><A href='?src=\ref[src];choice=Sorting;sort=bloodtype'>Blood Type</A></th>
+<th>Physical Status</th>
+<th>Mental Status</th>
+</tr>"}
+
+
+					if(!isnull(data_core.general))
+						for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
+							var/blood_type = ""
+							var/b_dna = ""
+							for(var/datum/data/record/E in data_core.medical)
+								if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
+									blood_type = E.fields["blood_type"]
+									b_dna = E.fields["b_dna"]
+							var/background
+
+							if(R.fields["m_stat"] == "*Insane*" || R.fields["p_stat"] == "*Deceased*")
+								background = "'background-color:#990000;'"
+							else if(R.fields["p_stat"] == "Physically Unfit" || R.fields["p_stat"] == "*Unconscious*" || R.fields["m_stat"] == "*Unstable*" || R.fields["m_stat"] == "*Watch*")
+								background = "'background-color:#CD6500;'"
+							else
+								background = "'background-color:#4F7529;'"
+
+							dat += text("<tr style=[]><td><A href='?src=\ref[];d_rec=[]'>[]</a></td>", background, src, R.fields["id"], R.fields["name"])
+							dat += text("<td>[]</td>", R.fields["id"])
+							dat += text("<td>F:[]<BR>D:[]</td>", R.fields["fingerprint"], b_dna)
+							dat += text("<td>[]</td>", blood_type)
+							dat += text("<td>[]</td>", R.fields["p_stat"])
+							dat += text("<td>[]</td></tr>", R.fields["m_stat"])
+					dat += "</table><hr width='75%' />"
+//					if(data_core.general)
+//						for(var/datum/data/record/R in sortRecord(data_core.general))
+//							dat += "<A href='?src=\ref[src];d_rec=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<BR>"
+//							//Foreach goto(132)
 					dat += text("<HR><A href='?src=\ref[];screen=1'>Back</A>", src)
 				if(3.0)
 					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[];u_load=1'>Upload From Disk</A><BR>\n<A href='?src=\ref[];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];screen=1'>Back</A>", src, src, src, src)
@@ -108,7 +152,7 @@
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
 	//user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", dat), "window=med_rec")
 	//onclose(user, "med_rec")
-	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console")
+	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console", 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -141,6 +185,19 @@
 			src.screen = null
 			src.active1 = null
 			src.active2 = null
+		else if (href_list["choice"])
+			// SORTING!
+			if(href_list["choice"] == "Sorting")
+				// Reverse the order if clicked twice
+				if(sortBy == href_list["sort"])
+					if(order == 1)
+						order = -1
+					else
+						order = 1
+				else
+				// New sorting order!
+					sortBy = href_list["sort"]
+					order = initial(order)
 		else if (href_list["login"])
 			if (istype(usr, /mob/living/silicon))
 				src.active1 = null
