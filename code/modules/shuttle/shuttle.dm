@@ -21,23 +21,7 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 		fromArea = locate(location) //the location of the shuttle
 		toArea = locate(fromArea.destination)
 
-		var/list/dstturfs = list()
-		var/throwy = world.maxy
-
-		for(var/turf/T in toArea)
-			dstturfs += T
-			if(T.y < throwy)
-				throwy = T.y
-
-		// Destroy everything in the destination area
-		for(var/turf/T in dstturfs)
-			for(var/atom/movable/AM as mob|obj in T)
-				AM.ex_act(1) //splat
-				if(AM)
-					qdel(AM)
-
-			if(istype(T, /turf/simulated))
-				del(T)
+		toArea.clear_docking_area()
 
 		fromArea.move_contents_to(toArea)
 		location = toArea.type
@@ -62,8 +46,6 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 
 		moving = 0
 	return 1
-
-
 
 
 /obj/machinery/computer/shuttle
