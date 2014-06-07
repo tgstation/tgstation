@@ -67,7 +67,7 @@
 			var/safety = 1
 
 			//Check if it's a mob pulling an object
-			var/obj/was_pulling = null
+			var/atom/movable/was_pulling = null
 			var/mob/living/MOB = null
 			if(isliving(A))
 				MOB = A
@@ -105,8 +105,7 @@
 			spawn (0)
 				if(was_pulling && MOB) //Carry the object they were pulling over when they transition
 					was_pulling.loc = MOB.loc
-					MOB.pulling = was_pulling
-					was_pulling.pulledby = MOB
+					MOB.start_pulling(was_pulling)
 				if ((A && A.loc))
 					A.loc.Entered(A)
 
