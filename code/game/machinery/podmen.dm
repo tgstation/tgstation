@@ -26,6 +26,7 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 	gender = MALE
 	var/obj/machinery/hydroponics/parent = null
 	var/list/found_player = list()
+	var/beingharvested = 0
 
 /obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -69,7 +70,12 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 	parent = loc
 	found_player.len = 0
 
-	user.visible_message("\blue [user] carefully begins to open the pod...","\blue You carefully begin to open the pod...")
+
+	if(beingharvested)
+		user << ("\red You can only harvest the pod once!")
+	else
+		user.visible_message("\blue [user] carefully begins to open the pod...","\blue You carefully begin to open the pod...")
+		beingharvested = 1
 
 	//If a sample is injected (and revival is allowed) the plant will be controlled by the original donor.
 	if(source && source.stat == 2 && source.client && source.ckey && config.revival_pod_plants)
