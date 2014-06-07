@@ -10,7 +10,7 @@
 
 
 /datum/round_event/electrical_storm/announce()
-	command_alert("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
+	priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
 
 
 /datum/round_event/electrical_storm/start()

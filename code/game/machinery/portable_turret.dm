@@ -300,6 +300,7 @@
 
 	else
 		//if the turret was attacked with the intention of harming it:
+		user.changeNext_move(8)
 		health -= I.force * 0.5
 		if(health <= 0)
 			die()
@@ -992,6 +993,7 @@ Status: []<BR>"},
 			user << "<span class='notice'>Access denied.</span>"
 
 	else
+		user.changeNext_move(8)
 		Parent_Turret.health -= I.force * 0.5
 		if(Parent_Turret.health <= 0)
 			Parent_Turret.die()

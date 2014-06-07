@@ -21,7 +21,7 @@
 
 
 /datum/round_event/brand_intelligence/announce()
-	command_alert("Rampant brand intelligence has been detected aboard [station_name()], please stand-by. The origin is believed to be \a [originMachine.name].", "Machine Learning Alert")
+	priority_announce("Rampant brand intelligence has been detected aboard [station_name()], please stand-by. The origin is believed to be \a [originMachine.name].", "Machine Learning Alert")
 
 
 /datum/round_event/brand_intelligence/start()

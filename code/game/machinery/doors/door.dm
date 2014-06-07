@@ -27,6 +27,7 @@
 		explosion_resistance = 0
 	update_freelook_sight()
 	air_update_turf(1)
+	portals += src
 	return
 
 
@@ -34,6 +35,7 @@
 	density = 0
 	air_update_turf(1)
 	update_freelook_sight()
+	portals -= src
 	..()
 	return
 
@@ -90,10 +92,6 @@
 	if(density && !emagged)
 		if(allowed(user) || src.emergency == 1)	open()
 		else				flick("door_deny", src)
-	return
-
-/obj/machinery/door/meteorhit(obj/M as obj)
-	src.open()
 	return
 
 
