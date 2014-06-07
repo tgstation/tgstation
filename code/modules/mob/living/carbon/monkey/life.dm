@@ -22,15 +22,17 @@
 	if(loc)
 		environment = loc.return_air()
 
-	if (stat != DEAD && !istype(src,/mob/living/carbon/monkey/diona)) //still breathing
-		//First, resolve location and get a breath
-		if(air_master.current_cycle%4==2)
-			//Only try to take a breath every 4 seconds, unless suffocating
-			breathe()
-		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
+	if (stat != DEAD) //still breathing
+		//Is not a Diona Nymph - Snowflake Code
+		if(!istype(src,/mob/living/carbon/monkey/diona))
+			//First, resolve location and get a breath
+			if(air_master.current_cycle%4==2)
+				//Only try to take a breath every 4 seconds, unless suffocating
+				breathe()
+			else //Still give containing object the chance to interact
+				if(istype(loc, /obj/))
+					var/obj/location_as_object = loc
+					location_as_object.handle_internal_lifeform(src, 0)
 
 
 		//Updates the number of stored chemicals for powers
