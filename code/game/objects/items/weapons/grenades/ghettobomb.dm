@@ -29,6 +29,7 @@
 	active = 1
 	det_time = 50
 	display_timer = 0
+	var/range = 3
 
 
 
@@ -59,7 +60,21 @@
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
 			name = "improvised explosive"
 			active = 0
-			det_time = rand(30,80)
+			det_time = pick(
+				prob(10)	// Yes, that is indeed a 1 in 10 chance it'll blow up in your hand
+					5,
+				prob(20) 	// dud
+					-1,
+				prob(50) 	// short fuse
+					rand(30,80),
+				prob(20) 	// long fuse
+					rand(70,160)
+				)
+			if(det_time < 0) //checking for 'duds'
+				range = 1
+				det_time = rand(30,80)
+			else
+				range = pick(2,3,3,4)
 
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //
 	if(!active)
@@ -83,7 +98,7 @@
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()
-	explosion(src.loc,-1,0,2)
+	explosion(src.loc,-1,-1,-1, flame_range = range)	// no explosive damage, only a large fireball.
 	qdel(src)
 
 /obj/item/weapon/grenade/iedcasing/examine()
