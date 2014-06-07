@@ -206,6 +206,7 @@
 
 		if ("deathgasp")
 			if(M_ELVIS in mutations)
+				src.emote("fart")
 				message = "<B>[src]</B> has left the building..."
 			if(M_HARDCORE in mutations)
 				message = "<B>[src]</B> whispers with his final breath, <i>'i told u i was hardcore..'</i>"
@@ -547,7 +548,9 @@
 		// Needed for M_TOXIC_FART
 		if("fart")
 			if(world.time-lastFart >= 600)
-				message = "<b>[src]</b> [pick("passes wind","farts")]."
+				var/list/farts = list("farts","passes wind","toots","tries to fart, but nothing happens.","farts with the force of one thousand suns")
+				var/fart = pick(farts)
+				message = "<b>[src]</b> [fart]."
 				m_type = 2
 
 				var/turf/location = get_turf(src)

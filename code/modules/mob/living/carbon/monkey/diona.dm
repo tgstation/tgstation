@@ -154,8 +154,8 @@
 
 /mob/living/carbon/monkey/diona/verb/steal_blood()
 	set category = "Diona"
-	set name = "Steal Blood"
-	set desc = "Take a blood sample from a suitable donor."
+	set name = "Take Blood Sample"
+	set desc = "Take a blood sample from a suitable donor to help understand those around you and evolve."
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(1,src))
@@ -188,6 +188,8 @@
 		src << "\green You feel your awareness expand, and realize you know how to understand the creatures around you."
 	else if(donors.len == 4)
 		universal_speak = 1
-		src << "\green You feel your awareness expand, and realize you know how to speak with the creatures around you."
+		src << "\green You feel your vocal range expand, and realize you know how to speak with the creatures around you."
+	else if(donors.len == 3)
+		src << "\green More blood seeps into you, continuing to expand your growing collection of memories."
 	else
 		src << "\green The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind."

@@ -1953,7 +1953,10 @@ datum
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				if(!M) M = holder.my_atom
-				M.status_flags |= FAKEDEATH
+				if(volume >= 1) //Hotfix for Fakedeath never ending.
+					M.status_flags |= FAKEDEATH
+				else
+					M.status_flags &= ~FAKEDEATH
 				M.adjustOxyLoss(0.5*REM)
 				M.adjustToxLoss(0.5*REM)
 				M.Weaken(10)
@@ -1962,11 +1965,11 @@ datum
 				..()
 				return
 
-			Del()
+			/*Del()
 				if(holder && ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 					M.status_flags &= ~FAKEDEATH
-				..()
+				..()8*/
 
 		mindbreaker
 			name = "Mindbreaker Toxin"
