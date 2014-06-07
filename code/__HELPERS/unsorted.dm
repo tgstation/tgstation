@@ -920,11 +920,15 @@ atom/proc/GetTypeInAllContents(typepath)
 							qdel(O) // prevents multiple shuttle corners from stacking
 							continue
 						if(!istype(O,/obj)) continue
+						O.loc.Exited(O)
 						O.loc = X
+						O.loc.Entered(O)
 					for(var/mob/M in T)
 						if(!M.move_on_shuttle)
 							continue
+						M.loc.Exited(M)
 						M.loc = X
+						M.loc.Entered(M)
 
 //					var/area/AR = X.loc
 

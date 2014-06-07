@@ -84,7 +84,7 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/bar
 	playlist_id="bar"
-	// Must be defined on your server.
+	// Must be defined one your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
 		"jazz" = "Jazz",
@@ -105,7 +105,7 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/update_icon()
 	overlays = 0
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (NOPOWER|BROKEN) || !anchored)
 		if(stat & BROKEN)
 			icon_state = "jukebox2-broken"
 		else
@@ -144,7 +144,7 @@ var/global/loopModeNames=list(
 			for(var/plid in playlists)
 				t += "<a href='?src=\ref[src];playlist=[plid]'>[playlists[plid]]</a>"
 		else
-			t += "<i>Please wait before changing playlists.<i>"
+			t += "<i>Please wait before changing playlists.</i>"
 		t += "<br />"
 		if(current_song)
 			var/datum/song_info/song=playlist[current_song]
@@ -172,10 +172,20 @@ var/global/loopModeNames=list(
 			loop_mode = JUKEMODE_SHUFFLE
 			emagged = 1
 			playing = 1
-			user.visible_message("[user.name] slides something into the [src.name]'s card-reader.","<span class='danger'>You short out the [src.name].</span>")
+			user.visible_message("<span class='danger'>[user.name] slides something into the [src.name]'s card-reader.</span>","<span class='danger'>You short out the [src.name].</span>")
 			update_icon()
 			update_music()
 		return
+	else if(istype(W, /obj/item/weapon/wrench))
+		var/un = !anchored ? "" : "un"
+		user.visible_message("<span class='notice'>[user.name] begins [un]locking \the [src.name]'s casters.</span>","<span class='notice'>You begin [un]locking \the [src.name]'s casters.</span>")
+		if(do_after(user,30))
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+			anchored = !anchored
+			user.visible_message("<span class='notice'>[user.name] [un]locks \the [src.name]'s casters.</span>","<span class='notice'>You [un]lock \the [src.name]'s casters.</span>")
+			playing = emagged
+			update_music()
+			update_icon()
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	if(isobserver(usr))
@@ -214,7 +224,6 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/process()
 	if(!playlist)
 		var/url="[config.media_base_url]/index.php?playlist=[playlist_id]"
-		testing("[src] - Updating playlist from [url]...")
 		var/response = world.Export(url)
 		playlist=list()
 		if(response)

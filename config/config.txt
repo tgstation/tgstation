@@ -151,4 +151,4 @@ TICKCOMP 0
 ##Media URL
 ##The base URL of your media library. DO NOT ADD THE SLASH AT THE END!
 ##Must be publically accessible.
-MEDIA_BASE_URL http://ss13.nexisonline.net/media
+MEDIA_BASE_URL http://vista.bananabox.biz/media/

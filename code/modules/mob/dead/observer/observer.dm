@@ -90,6 +90,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.Crossed(src)
 
+		var/area/A = get_area_master(src)
+		if(A)
+			A.Entered(src)
+
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
@@ -103,6 +107,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.Crossed(src)
+
+	var/area/A = get_area_master(src)
+	if(A)
+		A.Entered(src)
 
 /mob/dead/observer/examine()
 	if(usr)
