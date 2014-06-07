@@ -104,11 +104,6 @@
 	malf.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
 	return
 
-
-/datum/game_mode/malfunction/proc/hack_intercept()
-	intercept_hacked = 1
-
-
 /datum/game_mode/malfunction/process()
 	if (apcs >= 3 && malf_mode_declared)
 		AI_win_timeleft -= ((apcs/6)*last_tick_duration) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite

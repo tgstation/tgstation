@@ -15,7 +15,6 @@
 /datum/game_mode
 	var/name = "invalid"
 	var/config_tag = null
-	var/intercept_hacked = 0
 	var/votable = 1
 	var/probability = 1
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
@@ -176,15 +175,14 @@
 
 	var/list/possible_modes = list()
 	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
-	possible_modes -= "[ticker.mode]" //remove current gamemode, it will be readded later if not malf and AI not intercepting the report
+	possible_modes -= "[ticker.mode]" //remove current gamemode to prevent it from being randomly deleted, it will be readded later
 
 	var/number = pick(1, 2)
 	var/i = 0
 	for(i = 0, i < number, i++) //remove 1 or 2 possibles modes from the list
 		possible_modes.Remove(pick(possible_modes))
 
-	if(!intercept_hacked) //if not malf and AI not intercepting the report
-		possible_modes[rand(1, possible_modes.len)] = "[ticker.mode]" //replace a random game mode with the current one
+	possible_modes[rand(1, possible_modes.len)] = "[ticker.mode]" //replace a random game mode with the current one
 
 	possible_modes = shuffle(possible_modes) //shuffle the list to prevent meta
 
