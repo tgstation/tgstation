@@ -30,6 +30,7 @@
 	det_time = 50
 	display_timer = 0
 	var/range = 3
+	var/times = list()
 
 
 
@@ -53,6 +54,7 @@
 	if(istype(I, /obj/item/stack/cable_coil))
 		if(assembled == 1)
 			var/obj/item/stack/cable_coil/C = I
+			times = list("5"=10, "-1"=20, "[rand(30,80)]"=50, "[rand(65,180)]"=20)	// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
 			C.use(1)
 			assembled = 2
 			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
@@ -60,16 +62,7 @@
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
 			name = "improvised explosive"
 			active = 0
-			det_time = pick(
-				prob(10)	// Yes, that is indeed a 1 in 10 chance it'll blow up in your hand
-					5,
-				prob(20) 	// dud
-					-1,
-				prob(50) 	// short fuse
-					rand(30,80),
-				prob(20) 	// long fuse
-					rand(70,160)
-				)
+			det_time = text2num(pickweight(times))
 			if(det_time < 0) //checking for 'duds'
 				range = 1
 				det_time = rand(30,80)
