@@ -388,7 +388,8 @@
 	if(canUseTopic(src))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
-			if(slot in check_obscured_slots())
+			var/list/obscured = check_obscured_slots()
+			if(slot in obscured)
 				usr << "<span class='warning'>You can't reach that. Something is covering it.</span>"
 				return
 
