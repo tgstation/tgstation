@@ -397,9 +397,10 @@
 			else if (href_list["print_p"])
 				if (!( src.printing ))
 					src.printing = 1
+					data_core.medicalPrintCount++
 					sleep(50)
 					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
-					P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
+					P.info = "<CENTER><B>Medical Record - (MR-[data_core.medicalPrintCount])</B></CENTER><BR>"
 					if(active1 in data_core.general)
 						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", src.active1.fields["name"], src.active1.fields["id"], src.active1.fields["sex"], src.active1.fields["age"], src.active1.fields["fingerprint"], src.active1.fields["p_stat"], src.active1.fields["m_stat"])
 					else
@@ -413,7 +414,7 @@
 					else
 						P.info += "<B>Medical Record Lost!</B><BR>"
 					P.info += "</TT>"
-					P.name = "paper- 'Medical Record'"
+					P.name = text("MR-[] '[]'", data_core.medicalPrintCount, src.active1.fields["name"])
 					src.printing = null
 
 	src.add_fingerprint(usr)

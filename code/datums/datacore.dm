@@ -2,6 +2,7 @@
 /obj/effect/datacore
 	name = "datacore"
 	var/medical[] = list()
+	var/medicalPrintCount = 0
 	var/general[] = list()
 	var/security[] = list()
 	var/securityPrintCount = 0
