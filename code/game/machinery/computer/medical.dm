@@ -80,8 +80,10 @@
 
 							if(R.fields["m_stat"] == "*Insane*" || R.fields["p_stat"] == "*Deceased*")
 								background = "'background-color:#990000;'"
-							else if(R.fields["p_stat"] == "Physically Unfit" || R.fields["p_stat"] == "*Unconscious*" || R.fields["m_stat"] == "*Unstable*" || R.fields["m_stat"] == "*Watch*")
+							else if(R.fields["p_stat"] == "*Unconscious*" || R.fields["m_stat"] == "*Unstable*")
 								background = "'background-color:#CD6500;'"
+							else if(R.fields["p_stat"] == "Physically Unfit" || R.fields["m_stat"] == "*Watch*")
+								background = "'background-color:#3BB9FF;'"
 							else
 								background = "'background-color:#4F7529;'"
 
