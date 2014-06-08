@@ -178,7 +178,7 @@
 	icon_state = "rock_Clown"
 	mineralName = "Clown"
 	mineralAmt = 3
-	spreadChance = 25
+	spreadChance = 0
 	spread = 0
 	hidden = 0
 
