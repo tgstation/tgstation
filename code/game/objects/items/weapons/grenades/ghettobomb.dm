@@ -54,7 +54,7 @@
 	if(istype(I, /obj/item/stack/cable_coil))
 		if(assembled == 1)
 			var/obj/item/stack/cable_coil/C = I
-			times = list("5"=10, "-1"=20, "[rand(30,80)]"=50, "[rand(65,180)]"=20)	// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
+			times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)	// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
 			C.use(1)
 			assembled = 2
 			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
