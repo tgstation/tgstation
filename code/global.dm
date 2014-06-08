@@ -99,6 +99,16 @@ var/SUPERFARTBLOCK = 0
 var/IMMOLATEBLOCK = 0
 var/POLYMORPHBLOCK = 0
 
+///////////////////////////////
+// /vg/ Mutations
+///////////////////////////////
+var/LOUDBLOCK = 0
+var/WHISPERBLOCK = 0
+var/DIZZYBLOCK = 0
+
+
+
+
 var/skipupdate = 0
 	///////////////
 var/eventchance = 10 //% per 5 mins
