@@ -18,6 +18,11 @@
 	icon_state = "redtie"
 	item_color = "redtie"
 
+/obj/item/clothing/tie/black
+	name = "black tie"
+	icon_state = "blacktie"
+	item_color = "blacktie"
+
 /obj/item/clothing/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
@@ -189,8 +194,8 @@
 	icon_state = "med"
 	item_color = "med"
 
-/obj/item/clothing/tie/armband/medgreen
+/obj/item/clothing/tie/armband/medblue
 	name = "medical guard armband"
-	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and green."
-	icon_state = "medgreen"
-	item_color = "medgreen"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
+	icon_state = "medblue"
+	item_color = "medblue"

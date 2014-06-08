@@ -12,6 +12,7 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
+	ventcrawler = 2
 	var/colour = "grey"
 
 /mob/living/simple_animal/slime/Bump(atom/movable/AM as mob|obj, yes)
@@ -72,4 +73,4 @@
 	S2.icon_living = "[src.colour] baby slime"
 	S2.icon_dead = "[src.colour] baby slime dead"
 	S2.colour = "[src.colour]"
-	del(src)
+	qdel(src)

@@ -56,7 +56,6 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	w_class = 3.0
 	throw_range = 3
 	origin_tech = "materials=6"
-	perunit = 3750
 	sheettype = "diamond"
 
 var/global/list/datum/stack_recipe/diamond_recipes = list ( \
@@ -82,7 +81,6 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=5"
-	perunit = 2000
 	sheettype = "uranium"
 
 var/global/list/datum/stack_recipe/uranium_recipes = list ( \
@@ -108,7 +106,6 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "plasmatech=2;materials=2"
-	perunit = 2000
 	sheettype = "plasma"
 
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
@@ -134,7 +131,6 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
-	perunit = 2000
 	sheettype = "gold"
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
@@ -160,7 +156,6 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=3"
-	perunit = 2000
 	sheettype = "silver"
 
 var/global/list/datum/stack_recipe/silver_recipes = list ( \
@@ -186,7 +181,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
-	perunit = 2000
 	sheettype = "clown"
 
 /obj/item/stack/sheet/mineral/clown/New(var/loc, var/amount=null)
@@ -210,7 +204,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=5"
-	perunit = 1000
 
 /*
  * Adamantine
@@ -225,7 +218,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
-	perunit = 2000
 
 /*
  * Mythril
@@ -240,4 +232,3 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
-	perunit = 2000

@@ -48,9 +48,7 @@
 
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
-			del(SV)
-			if(prob(10))
-				say("Nom")
+			SV.eat(src)
 
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
@@ -68,9 +66,8 @@
 	if(!stat)
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
-			del(SV)
-			if(prob(10))
-				say("Nom")
+			SV.eat(src)
+
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
@@ -166,6 +163,7 @@
 	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 1
+	ventcrawler = 2
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 
@@ -182,7 +180,7 @@
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
-			del(src)
+			qdel(src)
 
 var/const/MAX_CHICKENS = 50
 var/global/chicken_count = 0
@@ -206,6 +204,7 @@ var/global/chicken_count = 0
 	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 10
+	ventcrawler = 2
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
@@ -230,7 +229,7 @@ var/global/chicken_count = 0
 		if(!stat && eggsleft < 8)
 			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
 			user.drop_item()
-			del(O)
+			qdel(O)
 			eggsleft += rand(1, 4)
 			//world << eggsleft
 		else
@@ -259,6 +258,6 @@ var/global/chicken_count = 0
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))
 			processing_objects.Remove(src)
-			del(src)
+			qdel(src)
 	else
 		processing_objects.Remove(src)

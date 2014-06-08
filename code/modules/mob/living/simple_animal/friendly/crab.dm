@@ -16,6 +16,7 @@
 	response_harm   = "stomps"
 	stop_automated_movement = 1
 	friendly = "pinches"
+	ventcrawler = 2
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 
@@ -57,7 +58,7 @@
 					health = min(maxHealth, health + MED.heal_brute)
 					MED.amount -= 1
 					if(MED.amount <= 0)
-						del(MED)
+						qdel(MED)
 					for(var/mob/M in viewers(src, null))
 						if ((M.client && !( M.blinded )))
 							M.show_message("\blue [user] applies [MED] on [src]")

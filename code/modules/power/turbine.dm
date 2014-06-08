@@ -121,6 +121,9 @@
 			stat |= BROKEN
 		return
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
 /obj/machinery/power/compressor/CanAtmosPass(var/turf/T)
@@ -279,6 +282,9 @@
 		else
 			user << "<span class='alert'>Compressor not connected.</span>"
 			stat |= BROKEN
+		return
+
+	if(exchange_parts(user, I))
 		return
 
 	default_deconstruction_crowbar(I)

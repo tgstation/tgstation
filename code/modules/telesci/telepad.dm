@@ -37,6 +37,9 @@
 			M.buffer = src
 			user << "<span class = 'caution'>You save the data in the [I.name]'s buffer.</span>"
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
 
@@ -75,7 +78,7 @@
 		user << "<span class = 'caution'> You disassemble the telepad.</span>"
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		new /obj/item/stack/sheet/glass(get_turf(src))
-		del(src)
+		qdel(src)
 
 ///TELEPAD CALLER///
 /obj/item/device/telepad_beacon
@@ -91,7 +94,7 @@
 		user << "<span class = 'caution'> Locked In</span>"
 		new /obj/machinery/telepad_cargo(user.loc)
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
-		del(src)
+		qdel(src)
 	return
 
 ///HANDHELD TELEPAD USER///
@@ -121,7 +124,7 @@
 	desc = "Use this to send crates and closets to cargo telepads. There are [rcharges] charges left."
 	..()
 
-/obj/item/weapon/rcs/Del()
+/obj/item/weapon/rcs/Destroy()
 	processing_objects.Remove(src)
 	..()
 /obj/item/weapon/rcs/process()

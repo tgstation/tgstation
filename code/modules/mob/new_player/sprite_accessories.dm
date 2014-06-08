@@ -52,6 +52,10 @@
 		name = "Short Hair"	  // try to capatilize the names please~
 		icon_state = "hair_a" // you do not need to define _s or _l sub-states, game automatically does this for you
 
+	shorthair2
+		name = "Short Hair 2"
+		icon_state = "hair_shorthair2"
+
 	cut
 		name = "Cut Hair"
 		icon_state = "hair_c"
@@ -64,9 +68,17 @@
 		name = "Long Hair"
 		icon_state = "hair_vlong"
 
+	long_over_eye
+		name = "Over eye"
+		icon_state = "hair_longovereye"
+
 	longest
 		name = "Very Long Hair"
 		icon_state = "hair_longest"
+
+	longest2
+		name = "Very Long Over Eye"
+		icon_state = "hair_longest2"
 
 	longfringe
 		name = "Long Fringe"
@@ -75,6 +87,10 @@
 	longestalt
 		name = "Longer Fringe"
 		icon_state = "hair_vlongfringe"
+
+	gentle
+		name = "Gentle"
+		icon_state = "hair_gentle"
 
 	halfbang
 		name = "Half-banged Hair"
@@ -96,6 +112,26 @@
 		name = "Ponytail 3"
 		icon_state = "hair_ponytail3"
 
+	side_tail
+		name = "Side Pony"
+		icon_state = "hair_sidetail"
+
+	side_tail2
+		name = "Side Pony 2"
+		icon_state = "hair_sidetail2"
+
+	side_tail3
+		name = "Side Pony 3"
+		icon_state = "hair_stail"
+
+	oneshoulder
+		name = "One Shoulder"
+		icon_state = "hair_oneshoulder"
+
+	tressshoulder
+		name = "Tress Shoulder"
+		icon_state = "hair_tressshoulder"
+
 	parted
 		name = "Parted"
 		icon_state = "hair_parted"
@@ -103,12 +139,10 @@
 	pompadour
 		name = "Pompadour"
 		icon_state = "hair_pompadour"
-		gender = MALE
 
 	quiff
 		name = "Quiff"
 		icon_state = "hair_quiff"
-		gender = MALE
 
 	bedhead
 		name = "Bedhead"
@@ -122,40 +156,37 @@
 		name = "Bedhead 3"
 		icon_state = "hair_bedheadv3"
 
+	messy
+		name = "Messy"
+		icon_state = "hair_messy"
+
 	beehive
 		name = "Beehive"
 		icon_state = "hair_beehive"
-		gender = FEMALE
 
 	bobcurl
 		name = "Bobcurl"
 		icon_state = "hair_bobcurl"
-		gender = FEMALE
 
 	bob
 		name = "Bob"
 		icon_state = "hair_bobcut"
-		gender = FEMALE
 
 	bowl
 		name = "Bowl"
 		icon_state = "hair_bowlcut"
-		gender = MALE
 
 	buzz
 		name = "Buzzcut"
 		icon_state = "hair_buzzcut"
-		gender = MALE
 
 	crew
 		name = "Crewcut"
 		icon_state = "hair_crewcut"
-		gender = MALE
 
 	combover
 		name = "Combover"
 		icon_state = "hair_combover"
-		gender = MALE
 
 	devillock
 		name = "Devil Lock"
@@ -164,7 +195,6 @@
 	dreadlocks
 		name = "Dreadlocks"
 		icon_state = "hair_dreads"
-		gender = MALE // okay.jpg
 
 	curls
 		name = "Curls"
@@ -181,12 +211,10 @@
 	afro_large
 		name = "Big Afro"
 		icon_state = "hair_bigafro"
-		gender = MALE
 
 	sargeant
 		name = "Flat Top"
 		icon_state = "hair_sargeant"
-		gender = MALE
 
 	emo
 		name = "Emo"
@@ -203,27 +231,26 @@
 	hitop
 		name = "Hitop"
 		icon_state = "hair_hitop"
-		gender = MALE
 
 	mohawk
 		name = "Mohawk"
 		icon_state = "hair_d"
-		gender = MALE // gross
 
 	jensen
 		name = "Adam Jensen Hair"
 		icon_state = "hair_jensen"
-		gender = MALE
 
 	gelled
 		name = "Gelled Back"
 		icon_state = "hair_gelled"
-		gender = FEMALE
 
 	spiky
 		name = "Spiky"
 		icon_state = "hair_spikey"
-		gender = MALE
+
+	protagonist
+		name = "Slightly long"
+		icon_state = "hair_protagonist"
 
 	kusangi
 		name = "Kusanagi Hair"
@@ -232,32 +259,46 @@
 	kagami
 		name = "Pigtails"
 		icon_state = "hair_kagami"
-		gender = FEMALE
 
 	himecut
 		name = "Hime Cut"
 		icon_state = "hair_himecut"
-		gender = FEMALE
+
+	antenna
+		name = "Ahoge"
+		icon_state = "hair_antenna"
+
+	pigtail
+		name = "Pig tails"
+		icon_state = "hair_pigtails"
+
+	front_braid
+		name = "Braided front"
+		icon_state = "hair_braidfront"
+
+	lowbraid
+		name = "Low Braid"
+		icon_state = "hair_hbraid"
+
+	not_floorlength_braid
+		name = "High Braid"
+		icon_state = "hair_braid2"
 
 	braid
 		name = "Floorlength Braid"
 		icon_state = "hair_braid"
-		gender = FEMALE
 
 	odango
 		name = "Odango"
 		icon_state = "hair_odango"
-		gender = FEMALE
 
 	ombre
 		name = "Ombre"
 		icon_state = "hair_ombre"
-		gender = FEMALE
 
 	updo
 		name = "Updo"
 		icon_state = "hair_updo"
-		gender = FEMALE
 
 	skinhead
 		name = "Skinhead"
@@ -266,21 +307,26 @@
 	longbangs
 		name = "Long Bangs"
 		icon_state = "hair_lbangs"
-		gender = FEMALE
 
 	balding
 		name = "Balding Hair"
 		icon_state = "hair_e"
-		gender = MALE // turnoff!
 
 	bald
 		name = "Bald"
 		icon_state = null
-		gender = MALE
 
 	parted
 		name = "Side Part"
 		icon_state = "hair_part"
+
+	braided
+		name = "Braided"
+		icon_state = "hair_braided"
+
+	bun
+		name = "Bun Head"
+		icon_state = "hair_bun"
 
 /////////////////////////////
 // Facial Hair Definitions //

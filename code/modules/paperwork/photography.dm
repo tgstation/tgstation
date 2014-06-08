@@ -86,7 +86,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
-	can_hold = list("/obj/item/weapon/photo",)
+	can_hold = list(/obj/item/weapon/photo)
 
 
 /*
@@ -95,7 +95,7 @@
 /obj/item/device/camera
 	name = "camera"
 	icon = 'icons/obj/items.dmi'
-	desc = "A polaroid camera. 10 photos left."
+	desc = "A polaroid camera."
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = 2.0
@@ -139,10 +139,15 @@
 			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		user.drop_item()
-		del(I)
+		qdel(I)
 		pictures_left = pictures_max
 		return
 	..()
+
+
+/obj/item/device/camera/examine()
+	..()
+	usr << "It has [pictures_left] photos left."
 
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
@@ -323,7 +328,7 @@
 
 	P.show(usr)
 	usr << P.desc
-	del P    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
+	qdel(P)    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || ismob(target.loc)) return
@@ -332,7 +337,6 @@
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
 	pictures_left--
-	desc = "A polaroid camera. It has [pictures_left] photos left."
 	user << "<span class='notice'>[pictures_left] photos left.</span>"
 	icon_state = "camera_off"
 	on = 0

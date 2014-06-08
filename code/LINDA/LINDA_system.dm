@@ -42,11 +42,25 @@ datum/controller/air_system
 
 /datum/controller/air_system/proc/process_air()
 	current_cycle++
+	var/timer = world.timeofday
 	process_active_turfs()
+	master_controller.air_turfs = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_excited_groups()
+	master_controller.air_groups = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_high_pressure_delta()
+	master_controller.air_highpressure = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_hotspots()
+	master_controller.air_hotspots = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_super_conductivity()
+	master_controller.air_superconductivity = (world.timeofday - timer) / 10
 
 /datum/controller/air_system/proc/process_hotspots()
 	for(var/obj/effect/hotspot/H in hotspots)
@@ -110,19 +124,12 @@ datum/controller/air_system
 
 /datum/controller/air_system/proc/process_excited_groups()
 	for(var/datum/excited_group/EG in excited_groups)
-		if(EG.breakdown)
-			EG.breakdown_cooldown ++
-		else
-			EG.breakdown_cooldown = 0
-
-		if(EG.breakdown_cooldown > 10)
-			if(EG.self_compare())
-				EG.dismantle()
+		EG.breakdown_cooldown ++
 		if(EG.breakdown_cooldown == 10)
-			if(!EG.self_compare())
-				EG.reset_cooldowns()
 			EG.self_breakdown()
-		EG.breakdown = 1
+			return
+		if(EG.breakdown_cooldown > 20)
+			EG.dismantle()
 
 /turf/proc/CanAtmosPass(var/turf/T)
 	if(!istype(T))	return 0
@@ -229,7 +236,7 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
 	T.atmos_spawn_air(text, amount)
 
 var/const/SPAWN_HEAT = 1
-
+var/const/SPAWN_20C = 2
 var/const/SPAWN_TOXINS = 4
 var/const/SPAWN_OXYGEN = 8
 var/const/SPAWN_CO2 = 16
@@ -244,6 +251,9 @@ var/const/SPAWN_AIR = 256
 		return
 
 	var/datum/gas_mixture/G = new
+
+	if(flag & SPAWN_20C)
+		G.temperature = T20C
 
 	if(flag & SPAWN_HEAT)
 		G.temperature += 1000

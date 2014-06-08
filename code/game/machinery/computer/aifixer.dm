@@ -37,8 +37,10 @@
 /obj/machinery/computer/aifixer/attack_hand(var/mob/user as mob)
 	if(..())
 		return
+	interact(user)
 
-	user.set_machine(src)
+/obj/machinery/computer/aifixer/interact(mob/user)
+
 	var/dat = ""
 
 	if (src.occupier)

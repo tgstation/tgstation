@@ -9,14 +9,14 @@
 	w_class = 3
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
-	var/stunforce = 10
+	var/stunforce = 7
 	var/status = 0
-	var/obj/item/weapon/cell/high/bcell = null
+	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>"
-		return (FIRELOSS)
+/obj/item/weapon/melee/baton/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
+	return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
 	..()
@@ -24,7 +24,7 @@
 	return
 
 /obj/item/weapon/melee/baton/CheckParts()
-	bcell = locate(/obj/item/weapon/cell) in contents
+	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
 	update_icon()
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
@@ -35,11 +35,13 @@
 
 /obj/item/weapon/melee/baton/proc/deductcharge(var/chrgdeductamt)
 	if(bcell)
+		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
+			status = 0
+			update_icon()
+			playsound(loc, "sparks", 75, 1, -1)
 		if(bcell.use(chrgdeductamt))
 			return 1
 		else
-			status = 0
-			update_icon()
 			return 0
 
 /obj/item/weapon/melee/baton/update_icon()
@@ -59,15 +61,19 @@
 		usr <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/cell))
-		if(!bcell)
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/C = W
+		if(bcell)
+			user << "<span class='notice'>[src] already has a cell.</span>"
+		else
+			if(C.maxcharge < hitcost)
+				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
+				return
 			user.drop_item()
 			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
 			update_icon()
-		else
-			user << "<span class='notice'>[src] already has a cell.</span>"
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(bcell)
@@ -86,13 +92,13 @@
 		status = !status
 		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
 		playsound(loc, "sparks", 75, 1, -1)
-		update_icon()
 	else
 		status = 0
 		if(!bcell)
 			user << "<span class='warning'>[src] does not have a power source!</span>"
 		else
 			user << "<span class='warning'>[src] is out of charge.</span>"
+	update_icon()
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/user)

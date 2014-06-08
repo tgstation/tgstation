@@ -56,6 +56,17 @@
 			else
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
+/proc/toggle_ooc()
+	ooc_allowed = !( ooc_allowed )
+	if (ooc_allowed)
+		world << "<B>The OOC channel has been globally enabled!</B>"
+	else
+		world << "<B>The OOC channel has been globally disabled!</B>"
+
+/proc/auto_toggle_ooc(var/on)
+	if(!config.ooc_during_round && ooc_allowed != on)
+		toggle_ooc()
+
 var/global/normal_ooc_colour = "#002eb8"
 
 /client/proc/set_ooc(newColor as color)

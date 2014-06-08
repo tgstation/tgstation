@@ -42,7 +42,7 @@
 	powercell
 		name = "Powercell interface"
 		desc = "Boring, but reliable."
-		var/obj/item/weapon/cell/cell
+		var/obj/item/weapon/stock_parts/cell/cell
 		slowdown = 0.5
 
 		process()

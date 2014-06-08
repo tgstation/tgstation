@@ -32,7 +32,7 @@
 	for(var/atom/movable/O in src)
 		O.loc = src.loc
 
-	del(src)
+	qdel(src)
 
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user)
@@ -134,7 +134,7 @@
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()
 	if(!isturf(loc)) //blackhole cannot be contained inside anything. Weird stuff might happen
-		del(src)
+		qdel(src)
 		return
 
 	grav(rand(0,3), rand(2,3), 50, 25)

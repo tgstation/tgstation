@@ -74,8 +74,6 @@
 	var/bodytemperature = 310.055	//98.7 F
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
-	var/is_dizzy = 0
-	var/is_jittery = 0
 	var/jitteriness = 0//Carbon
 	var/nutrition = 400//Carbon
 
@@ -163,7 +161,7 @@
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 
 	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.
-	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
+	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
 

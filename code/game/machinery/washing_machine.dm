@@ -44,7 +44,7 @@
 	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
 		var/obj/item/stack/sheet/wetleather/WL = new(src)
 		WL.amount = HH.amount
-		del(HH)
+		qdel(HH)
 
 
 	if(crayon)
@@ -70,17 +70,17 @@
 			var/new_softcap_icon_state = ""
 			var/new_softcap_name = ""
 			var/new_desc = "The colors are a bit dodgy."
-			for(var/T in typesof(/obj/item/clothing/under))
-				var/obj/item/clothing/under/J = new T
+			for(var/T in typesof(/obj/item/clothing/under/color))
+				var/obj/item/clothing/under/color/J = new T
 				//world << "DEBUG: [wash_color] == [J.item_color]"
 				if(wash_color == J.item_color)
 					new_jumpsuit_icon_state = J.icon_state
 					new_jumpsuit_item_state = J.item_state
 					new_jumpsuit_name = J.name
-					del(J)
+					qdel(J)
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
-				del(J)
+				qdel(J)
 			for(var/T in typesof(/obj/item/clothing/gloves))
 				var/obj/item/clothing/gloves/G = new T
 				//world << "DEBUG: [wash_color] == [J.item_color]"
@@ -88,42 +88,42 @@
 					new_glove_icon_state = G.icon_state
 					new_glove_item_state = G.item_state
 					new_glove_name = G.name
-					del(G)
+					qdel(G)
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
-				del(G)
-			for(var/T in typesof(/obj/item/clothing/shoes))
-				var/obj/item/clothing/shoes/S = new T
+				qdel(G)
+			for(var/T in typesof(/obj/item/clothing/shoes/sneakers))
+				var/obj/item/clothing/shoes/sneakers/S = new T
 				//world << "DEBUG: [wash_color] == [J.item_color]"
 				if(wash_color == S.item_color)
 					new_shoe_icon_state = S.icon_state
 					new_shoe_name = S.name
-					del(S)
+					qdel(S)
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
-				del(S)
+				qdel(S)
 			for(var/T in typesof(/obj/item/weapon/bedsheet))
 				var/obj/item/weapon/bedsheet/B = new T
 				//world << "DEBUG: [wash_color] == [J.item_color]"
 				if(wash_color == B.item_color)
 					new_sheet_icon_state = B.icon_state
 					new_sheet_name = B.name
-					del(B)
+					qdel(B)
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
-				del(B)
+				qdel(B)
 			for(var/T in typesof(/obj/item/clothing/head/soft))
 				var/obj/item/clothing/head/soft/H = new T
 				//world << "DEBUG: [wash_color] == [J.item_color]"
 				if(wash_color == H.item_color)
 					new_softcap_icon_state = H.icon_state
 					new_softcap_name = H.name
-					del(H)
+					qdel(H)
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
-				del(H)
+				qdel(H)
 			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
-				for(var/obj/item/clothing/under/J in contents)
+				for(var/obj/item/clothing/under/color/J in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
 					J.item_state = new_jumpsuit_item_state
 					J.icon_state = new_jumpsuit_icon_state
@@ -139,7 +139,7 @@
 					G.name = new_glove_name
 					G.desc = new_desc
 			if(new_shoe_icon_state && new_shoe_name)
-				for(var/obj/item/clothing/shoes/S in contents)
+				for(var/obj/item/clothing/shoes/sneakers/S in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
 					if (S.chained == 1)
 						S.chained = 0
@@ -163,7 +163,7 @@
 					H.item_color = wash_color
 					H.name = new_softcap_name
 					H.desc = new_desc
-		del(crayon)
+		qdel(crayon)
 		crayon = null
 
 
@@ -206,7 +206,7 @@
 			var/obj/item/weapon/grab/G = W
 			if(ishuman(G.assailant) && iscorgi(G.affecting))
 				G.affecting.loc = src
-				del(G)
+				qdel(G)
 				state = 3
 		else
 			..()
@@ -255,6 +255,9 @@
 //			return
 		if ( istype(W,/obj/item/clothing/head/helmet ) )
 			user << "This item does not fit."
+			return
+		if(W.flags & NODROP) //if "can't drop" item
+			user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>"
 			return
 
 		if(contents.len < 5)

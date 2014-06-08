@@ -55,8 +55,8 @@ datum/hSB
 					"Spawn 50 Reinforced Glass"         = "hsbrglass",
 					"Spawn 50 Glass"					= "hsbglass",
 					"Spawn Full Cable Coil"				= "hsbspawn&path=[/obj/item/stack/cable_coil]",
-					"Spawn Hyper Capacity Power Cell"	= "hsbspawn&path=[/obj/item/weapon/cell/hyper]",
-					"Spawn Inf. Capacity Power Cell"	= "hsbspawn&path=[/obj/item/weapon/cell/infinite]",
+					"Spawn Hyper Capacity Power Cell"	= "hsbspawn&path=[/obj/item/weapon/stock_parts/cell/hyper]",
+					"Spawn Inf. Capacity Power Cell"	= "hsbspawn&path=[/obj/item/weapon/stock_parts/cell/infinite]",
 					"Spawn Rapid Construction Device"	= "hsbrcd",
 					"Spawn RCD Ammo"					= "hsb_safespawn&path=[/obj/item/weapon/rcd_ammo]",
 					"Spawn Airlock"						= "hsbairlock",
@@ -195,7 +195,7 @@ datum/hSB
 					new/obj/item/stack/sheet/glass{amount=50}(usr.loc)
 
 				if("hsbwood")
-					new/obj/item/stack/sheet/wood{amount=50}(usr.loc)
+					new/obj/item/stack/sheet/mineral/wood{amount=50}(usr.loc)
 
 				//
 				// All access ID
@@ -205,7 +205,7 @@ datum/hSB
 					ID.registered_name = usr.real_name
 					ID.assignment = "Sandbox"
 					ID.access = get_all_accesses()
-					ID.name = "[ID.registered_name]'s ID Card ([ID.assignment])"
+					ID.update_label()
 
 				//
 				// RCD - starts with full clip

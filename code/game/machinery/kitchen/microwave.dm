@@ -1,4 +1,3 @@
-
 /obj/machinery/microwave
 	name = "microwave"
 	icon = 'icons/obj/kitchen.dmi'
@@ -46,8 +45,7 @@
 	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 2)
 	RefreshParts()
 
 /obj/machinery/microwave/RefreshParts()
@@ -61,10 +59,14 @@
 ********************/
 
 /obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(!broken && !dirty && !operating)
+	if(operating)
+		return
+	if(!broken && dirty<100)
 		if(default_deconstruction_screwdriver(user, "mw-o", "mw", O))
 			return
 		if(default_unfasten_wrench(user, O))
+			return
+		if(exchange_parts(user, O))
 			return
 
 	default_deconstruction_crowbar(O)
@@ -170,7 +172,7 @@
 		user << "\red This is ridiculous. You can not fit \the [G.affecting] in this [src]."
 		return 1
 	else
-		user << "\red You have no idea what you can cook with this [O]."
+		user << "\red You have no idea what you can cook with this."
 		return 1
 	src.updateUsrDialog()
 
@@ -189,7 +191,7 @@
 ********************/
 
 /obj/machinery/microwave/interact(mob/user as mob) // The microwave Menu
-	if(panel_open)
+	if(panel_open || !anchored)
 		return
 	var/dat = "<div class='statusDisplay'>"
 	if(src.broken > 0)
@@ -390,7 +392,7 @@
 			var/id = O.reagents.get_master_reagent_id()
 			if (id)
 				amount+=O.reagents.get_reagent_amount(id)
-		del(O)
+		qdel(O)
 	src.reagents.clear_reagents()
 	ffuu.reagents.add_reagent("carbon", amount)
 	ffuu.reagents.add_reagent("toxin", amount/10)

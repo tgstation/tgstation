@@ -11,7 +11,7 @@
 	blocks_air = 1
 	temperature = TCMB
 	var/mineralName = ""
-	var/mineralAmt = 0
+	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/last_act = 0
@@ -109,7 +109,7 @@
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 10)
+	mineralSpawnChanceList = list("Uranium" = 35, "Diamond" = 10, "Gold" = 35, "Silver" = 35, "Plasma" = 35, "Iron" = 50)
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
@@ -127,8 +127,7 @@
 /turf/simulated/mineral/uranium
 	name = "Uranium deposit"
 	mineralName = "Uranium"
-	mineralAmt = 5
-	spreadChance = 0
+	spreadChance = 5
 	spread = 1
 	hidden = 1
 	scan_state = "rock_Uranium"
@@ -137,7 +136,6 @@
 	name = "Iron deposit"
 	icon_state = "rock_Iron"
 	mineralName = "Iron"
-	mineralAmt = 5
 	spreadChance = 20
 	spread = 1
 	hidden = 0
@@ -145,7 +143,6 @@
 /turf/simulated/mineral/diamond
 	name = "Diamond deposit"
 	mineralName = "Diamond"
-	mineralAmt = 5
 	spreadChance = 0
 	spread = 1
 	hidden = 1
@@ -154,8 +151,7 @@
 /turf/simulated/mineral/gold
 	name = "Gold deposit"
 	mineralName = "Gold"
-	mineralAmt = 5
-	spreadChance = 0
+	spreadChance = 5
 	spread = 1
 	hidden = 1
 	scan_state = "rock_Gold"
@@ -163,8 +159,7 @@
 /turf/simulated/mineral/silver
 	name = "Silver deposit"
 	mineralName = "Silver"
-	mineralAmt = 5
-	spreadChance = 0
+	spreadChance = 5
 	spread = 1
 	hidden = 1
 	scan_state = "rock_Silver"
@@ -173,8 +168,7 @@
 	name = "Plasma deposit"
 	icon_state = "rock_Plasma"
 	mineralName = "Plasma"
-	mineralAmt = 5
-	spreadChance = 0
+	spreadChance = 5
 	spread = 1
 	hidden = 1
 	scan_state = "rock_Plasma"
@@ -226,7 +220,8 @@
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 		var/log_str = "[src.activated_ckey]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> [src.activated_name] has triggered a gibtonite deposit reaction <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
-		message_admins(log_str)
+		if(z != 5)
+			message_admins(log_str)
 		log_game("[src.activated_ckey] ([src.activated_name]) has triggered a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z]).")
 		countdown()
 
@@ -279,7 +274,7 @@
 
 /turf/simulated/floor/plating/asteroid/airless/cave
 	var/length = 100
-	var/mob_spawn_list = list("Goldgrub" = 1, "Goliath" = 5, "Basilisk" = 3, "Hivelord" = 5)
+	var/mob_spawn_list = list("Goldgrub" = 1, "Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3)
 	var/sanity = 1
 
 /turf/simulated/floor/plating/asteroid/airless/cave/New(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
@@ -355,10 +350,10 @@
 		t.fullUpdateMineralOverlays()
 
 /turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnMonster(var/turf/T)
-	if(prob(2))
+	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
-		for(var/atom/A in range(7,T))//Lowers chance of mob clumps
+		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)

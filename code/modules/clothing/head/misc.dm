@@ -46,9 +46,9 @@
 	icon_state = "nursehat"
 
 /obj/item/clothing/head/syndicatefake
-	name = "red space-helmet replica"
-	icon_state = "syndicate"
-	item_state = "syndicate"
+	name = "black space-helmet replica"
+	icon_state = "syndicate-helm-black-red"
+	item_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -175,3 +175,22 @@
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+
+/obj/item/clothing/head/sombrero
+	name = "sombrero"
+	icon_state = "sombrero"
+	item_state = "sombrero"
+	desc = "You feel mexican just wearing this."
+
+/obj/item/clothing/head/sombrero/green
+	name = "green sombrero"
+	icon_state = "greensombrero"
+	item_state = "greensombrero"
+	desc = "As elegant as a dancing cactus."
+
+/obj/item/clothing/head/sombrero/shamebrero
+	name = "shamebrero"
+	icon_state = "shamebrero"
+	item_state = "shamebrero"
+	desc = "Once it's on, it never comes off."
+	flags = NODROP

@@ -134,40 +134,51 @@
 
 //var/debug_mob = 0
 
-// Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
-// It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
-// being unable to hear people due to being in a box within a bag.
+// Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
+//No need for a recursive limit either
 
-/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
 
-	//debug_mob += O.contents.len
-	if(!recursion_limit)
-		return L
-	for(var/atom/A in O.contents)
+proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
+
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/list/found_mobs = list()
+
+	while(processing_list.len)
+
+		var/atom/A = processing_list[1]
+		var/passed = 0
 
 		if(ismob(A))
-			var/mob/M = A
-			if(client_check && !M.client)
-				L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
-				continue
-			if(sight_check && !isInSight(A, O))
-				continue
-			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			var/mob/A_tmp = A
+			passed=1
+
+			if(client_check && !A_tmp.client)
+				passed=0
+
+			if(sight_check && !isInSight(A_tmp, O))
+				passed=0
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
+			passed=1
+
 			if(sight_check && !isInSight(A, O))
-				continue
-			L |= A
+				passed=0
 
-		if(isobj(A) || ismob(A))
-			L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
-	return L
+		if(passed)
+			found_mobs |= A
 
-// The old system would loop through lists for a total of 5000 per function call, in an empty server.
-// This new system will loop at around 1000 in an empty server.
+		for(var/atom/B in A)
+			if(!processed_list[B])
+				processing_list |= B
 
-/proc/get_mobs_in_view(var/R, var/atom/source)
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_mobs
+
+
+proc/get_mobs_in_view(var/R, var/atom/source)
 	// Returns a list of mobs in range of R from source. Used in radio and say code.
 
 	var/turf/T = get_turf(source)
@@ -178,19 +189,11 @@
 
 	var/list/range = hear(R, T)
 
-	for(var/atom/A in range)
-		if(ismob(A))
-			var/mob/M = A
-			if(M.client)
-				hear += M
-			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
-		else if(istype(A, /obj/item/device/radio))
-			hear += A
-
-		if(isobj(A) || ismob(A))
-			hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
+	for(var/atom/movable/A in range)
+		hear |= recursive_mob_check(A, 1, 0, 1)
 
 	return hear
+
 
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)

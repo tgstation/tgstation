@@ -17,8 +17,8 @@
 	icon_state = "welding"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	m_amt = 3000
-	g_amt = 1000
+	m_amt = 1750
+	g_amt = 400
 //	var/up = 0
 	flash_protect = 2
 	tint = 2
@@ -124,6 +124,16 @@
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
+	color = "#999"
+
+/obj/item/clothing/head/kitty/equipped(mob/user, slot)
+	if(user && slot == slot_head)
+		update_icon(user)
+	..()
+
+/obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
+	if(istype(user))
+		color = "#[user.hair_color]"
 
 
 /obj/item/clothing/head/hardhat/reindeer

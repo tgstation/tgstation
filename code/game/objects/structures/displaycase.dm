@@ -17,7 +17,7 @@
 			if (occupied)
 				new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 				occupied = 0
-			del(src)
+			qdel(src)
 		if (2)
 			if (prob(50))
 				src.health -= 15
@@ -29,7 +29,8 @@
 
 
 /obj/structure/displaycase/bullet_act(var/obj/item/projectile/Proj)
-	health -= Proj.damage
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		health -= Proj.damage
 	..()
 	src.healthcheck()
 	return
@@ -41,13 +42,7 @@
 		if (occupied)
 			new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 			occupied = 0
-		del(src)
-
-
-/obj/structure/displaycase/meteorhit(obj/O as obj)
-		new /obj/item/weapon/shard( src.loc )
-		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
-		del(src)
+		qdel(src)
 
 
 /obj/structure/displaycase/proc/healthcheck()
@@ -71,6 +66,7 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	user.changeNext_move(8)
 	src.health -= W.force
 	src.healthcheck()
 	..()
@@ -80,6 +76,7 @@
 	return src.attack_hand(user)
 
 /obj/structure/displaycase/attack_hand(mob/user as mob)
+	user.changeNext_move(8)
 	if (src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 		user << "\b You deactivate the hover field built into the case."

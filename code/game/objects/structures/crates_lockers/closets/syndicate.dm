@@ -19,7 +19,7 @@
 	new /obj/item/clothing/suit/space/rig/syndi(src)
 	new /obj/item/weapon/storage/belt/military(src)
 	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/weapon/cell/high(src)
+	new /obj/item/weapon/stock_parts/cell/high(src)
 	new /obj/item/device/multitool(src)
 
 
@@ -68,7 +68,7 @@
 		//Sad trombone
 		if(pickednum == 1)
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
-			P.name = "IOU"
+			P.name = "\improper IOU"
 			P.info = "Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!"
 
 		//Metal (common ore)

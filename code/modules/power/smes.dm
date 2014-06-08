@@ -1,6 +1,8 @@
 // the SMES
 // stores power
 
+#define SMESRATE 0.05			// rate of internal charge to external power
+
 /obj/machinery/power/smes
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
@@ -30,11 +32,11 @@
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smes(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
-	component_parts += new /obj/item/weapon/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 5)
 	RefreshParts()
@@ -61,7 +63,7 @@
 		IO += CP.rating
 	input_level_max = 200000 * IO
 	output_level_max = 200000 * IO
-	for(var/obj/item/weapon/cell/PC in component_parts)
+	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 		C += PC.maxcharge
 	capacity = C / (15000) * 1e6
 
@@ -92,15 +94,26 @@
 		update_icon()
 		return
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/smes/Del()
+/obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 		log_game("SMES deleted at ([area.name])")
 		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
+	if(terminal)
+		disconnect_terminal()
 	..()
+
+/obj/machinery/power/smes/disconnect_terminal()
+	if(terminal)
+		terminal.master = null
+		terminal = null
+
 
 /obj/machinery/power/smes/update_icon()
 	overlays.Cut()
@@ -127,9 +140,6 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/capacity)
 
-#define SMESRATE 0.05			// rate of internal charge to external power
-
-
 /obj/machinery/power/smes/process()
 
 	if(stat & BROKEN)	return
@@ -139,6 +149,7 @@
 	var/last_chrg = inputting
 	var/last_onln = outputting
 
+	//inputting
 	if(terminal && input_attempt)
 		input_available = terminal.surplus()
 
@@ -158,7 +169,7 @@
 			if(input_attempt && input_available > 0 && input_available >= input_level)
 				inputting = 1
 
-
+	//outputting
 	if(outputting)
 		output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
 
@@ -182,7 +193,6 @@
 
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
-
 /obj/machinery/power/smes/proc/restore()
 	if(stat & BROKEN)
 		return
@@ -201,19 +211,19 @@
 
 	var/clev = chargedisplay()
 
-	charge += excess * SMESRATE
+	charge += excess * SMESRATE			// restore unused power
 	powernet.netexcess -= excess		// remove the excess from the powernet, so later SMESes don't try to use it
 
 	output_used -= excess
 
-	if(clev != chargedisplay() )
+	if(clev != chargedisplay() ) //if needed updates the icons overlay
 		update_icon()
 	return
 
 
 /obj/machinery/power/smes/add_load(var/amount)
 	if(terminal && terminal.powernet)
-		terminal.powernet.newload += amount
+		terminal.powernet.load += amount
 
 
 /obj/machinery/power/smes/attack_ai(mob/user)
@@ -290,7 +300,8 @@
 			if("custom")
 				var/custom = input(usr, "What rate would you like this SMES to attempt to charge at? Max is [input_level_max].") as null|num
 				if(isnum(custom))
-					input_level = custom
+					href_list["set_input_level"] = custom
+					.()
 			if("plus")
 				input_level += 10000
 			if("minus")
@@ -310,7 +321,8 @@
 			if("custom")
 				var/custom = input(usr, "What rate would you like this SMES to attempt to output at? Max is [output_level_max].") as null|num
 				if(isnum(custom))
-					output_level = custom
+					href_list["set_output_level"] = custom
+					.()
 			if("plus")
 				output_level += 10000
 			if("minus")

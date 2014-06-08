@@ -89,7 +89,9 @@
 		if(w_items + I.w_class > 5)
 			user << "<span class='notice'>The cistern is full.</span>"
 			return
-		user.drop_item()
+		if(!user.drop_item())
+			user << "<span class='notice'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>"
+			return
 		I.loc = src
 		w_items += I.w_class
 		user << "<span class='notice'>You carefully place [I] into the cistern.</span>"
@@ -152,11 +154,8 @@
 	on = !on
 	update_icon()
 	if(on)
-		if (M.loc == loc)
-			wash(M)
-			check_heat(M)
 		for (var/atom/movable/G in loc)
-			G.clean_blood()
+			Crossed(G)
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
@@ -178,7 +177,7 @@
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
-		del(mymist)
+		qdel(mymist)
 
 	if(on)
 		overlays += image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
@@ -196,8 +195,8 @@
 		ismist = 1
 		mymist = new /obj/effect/mist(loc)
 		spawn(250)
-			if(src && !on)
-				del(mymist)
+			if(src && !on && mymist)
+				qdel(mymist)
 				ismist = 0
 
 
@@ -295,7 +294,7 @@
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
 			if(istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay))
-				del(E)
+				qdel(E)
 
 
 /obj/machinery/shower/process()
@@ -369,7 +368,7 @@
 	if(istype(O, /obj/item/trash))
 		user.drop_item()
 		user << "<span class='notice'>You wash up [O].</span>"	//sims!!!
-		del(O)
+		qdel(O)
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O

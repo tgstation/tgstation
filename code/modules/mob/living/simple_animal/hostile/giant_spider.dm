@@ -34,6 +34,7 @@
 	var/busy = 0
 	pass_flags = PASSTABLE
 	move_to_delay = 6
+	ventcrawler = 2
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/giant_spider/nurse
@@ -62,7 +63,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	poison_per_bite = 5
-	move_to_delay = 4
+	move_to_delay = 5
 
 /mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
 	..()

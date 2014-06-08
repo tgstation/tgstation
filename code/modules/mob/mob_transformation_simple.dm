@@ -30,7 +30,7 @@
 
 	if(!M || !ismob(M))
 		usr << "Type path is not a mob (new_type = [new_type]) in change_mob_type(). Contact a coder."
-		del(M)
+		qdel(M)
 		return
 
 	if( istext(new_name) )
@@ -44,15 +44,18 @@
 		var/mob/living/carbon/C = src
 		var/mob/living/carbon/D = M
 		D.dna = C.dna
+		updateappearance(D)
 	else
+		if(istype(M, /mob/living/carbon/human))
+			src.client.prefs.copy_to(M)
 		ready_dna(M)
 
-	if(mind)
+	if(mind && istype(M, /mob/living))
 		mind.transfer_to(M)
 	else
 		M.key = key
 
 	if(delete_old_mob)
 		spawn(1)
-			del(src)
+			qdel(src)
 	return M

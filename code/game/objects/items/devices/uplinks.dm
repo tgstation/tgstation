@@ -6,18 +6,28 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 */
 
+var/list/world_uplinks = list()
+
 /obj/item/device/uplink
 	var/welcome 					// Welcoming menu message
 	var/uses 						// Numbers of crystals
 	// List of items not to shove in their hands.
-	var/list/purchase_log = list()
+	var/purchase_log = ""
 	var/show_description = null
 	var/active = 0
 
+	var/uplink_owner = null//text-only
+	var/used_TC = 0
+
 /obj/item/device/uplink/New()
 	..()
+	world_uplinks+=src
 	welcome = ticker.mode.uplink_welcome
 	uses = ticker.mode.uplink_uses
+
+/obj/item/device/uplink/Destroy()
+	world_uplinks-=src
+	..()
 
 //Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu()
@@ -169,7 +179,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		var/obj/item/weapon/antag_spawner/borg_tele/S = W
 		if(!S.used)
 			hidden_uplink.uses += S.TC_cost
-			del(S)
+			qdel(S)
 			user << "<span class='notice'>Teleporter refunded.</span>"
 		else
 			user << "<span class='notice'>This teleporter is already used.</span>"

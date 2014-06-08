@@ -1,13 +1,11 @@
 /mob/living/carbon/human/movement_delay()
-	if(istype(loc, /turf/space))
+	if(!has_gravity(src))
 		return -1	//It's hard to be slowed down in space by... anything
-	if(reagents.has_reagent("hyperzine"))
-		return -1
-	if(reagents.has_reagent("nuka_cola"))
+	else if(status_flags & GOTTAGOFAST)
 		return -1
 
 	. = 0
-	var/health_deficiency = (100 - health - halloss)
+	var/health_deficiency = (100 - health + staminaloss)
 	if(health_deficiency >= 40)
 		. += (health_deficiency / 25)
 
@@ -32,7 +30,7 @@
 
 /mob/living/carbon/human/Process_Spacemove(var/check_drift = 0)
 	//Can we act
-	if(restrained())	return 0
+	if(!canmove)	return 0
 
 	//Do we have a working jetpack
 	if(istype(back, /obj/item/weapon/tank/jetpack))
@@ -40,10 +38,12 @@
 		if(((!check_drift) || (check_drift && J.stabilization_on)) && (!lying) && (J.allow_thrust(0.01, src)))
 			inertia_dir = 0
 			return 1
-//		if(!check_drift && J.allow_thrust(0.01, src))
-//			return 1
-
-	//If no working jetpack then use the other checks
+	//Do we have working magboots
+	if(istype(shoes, /obj/item/clothing/shoes/magboots))
+		var/obj/item/clothing/shoes/magboots/B = shoes
+		if((B.flags & NOSLIP) && istype(src.loc,/turf/simulated/floor) && (!has_gravity(src.loc)))
+			return 1
+	//If no working jetpack or magboots then use the other checks
 	if(..())	return 1
 	return 0
 

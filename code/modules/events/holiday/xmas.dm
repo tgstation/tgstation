@@ -12,7 +12,7 @@
 		evil_tree.icon_living = evil_tree.icon_state
 		evil_tree.icon_dead = evil_tree.icon_state
 		evil_tree.icon_gib = evil_tree.icon_state
-		del(xmas)
+		qdel(xmas) //b-but I don't want to delete xmas...
 
 //this is an example of a possible round-start event
 /datum/round_event_control/presents
@@ -35,7 +35,7 @@
 		Monitor.icon_state = "entertainment_xmas"
 
 /datum/round_event/presents/announce()
-	command_alert("Ho Ho Ho, Merry Xmas!", "Unknown Transmission")
+	priority_announce("Ho Ho Ho, Merry Xmas!", "Unknown Transmission")
 
 
 /obj/item/weapon/toy/xmas_cracker

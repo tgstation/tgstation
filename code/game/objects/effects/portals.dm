@@ -5,34 +5,29 @@
 	icon_state = "portal"
 	density = 1
 	unacidable = 1//Can't destroy energy portals.
-	var/failchance = 5
 	var/obj/item/target = null
 	var/creator = null
 	anchored = 1.0
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)
-	spawn(0)
-		src.teleport(M)
-		return
-	return
+	src.teleport(M)
 
 /obj/effect/portal/Crossed(AM as mob|obj)
-	spawn(0)
-		src.teleport(AM)
-		return
-	return
+	src.teleport(AM)
 
 /obj/effect/portal/New(loc, turf/target, creator, lifespan=300)
 	portals += src
 	src.loc = loc
 	src.target = target
 	src.creator = creator
+	for(var/mob/M in src.loc)
+		src.teleport(M)
 	if(lifespan > 0)
 		spawn(lifespan)
-			del(src)
+			qdel(src)
 	return
 
-/obj/effect/portal/Del()
+/obj/effect/portal/Destroy()
 	portals -= src
 	if(istype(creator, /obj/item/weapon/hand_tele))
 		var/obj/item/weapon/hand_tele/O = creator
@@ -47,12 +42,8 @@
 	if(icon_state == "portal1")
 		return
 	if (!( target ))
-		del(src)
+		qdel(src)
 		return
 	if (istype(M, /atom/movable))
-		if(prob(failchance)) //oh dear a problem, put em in deep space
-			src.icon_state = "portal1"
-			do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0)
-		else
-			do_teleport(M, target, 1) ///You will appear adjacent to the beacon
+		do_teleport(M, target, 1) ///You will appear adjacent to the beacon
 

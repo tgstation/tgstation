@@ -292,7 +292,7 @@ Code:
 				menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=lockdown'>Lockdown</A> |"
 				menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
 
-			if (43) //Muskets' and Rockdtben's power monitor :D
+			if (43)
 				menu = "<h4><img src=pda_power.png> Power Monitors - Please select one</h4><BR>"
 				powmonitor = null
 				powermonitors = list()
@@ -318,7 +318,7 @@ Code:
 
 					menu += "</FONT>"
 
-			if (433) //Muskets' and Rockdtben's power monitor :D
+			if (433)
 				menu = "<h4><img src=pda_power.png> Power Monitor </h4><BR>"
 				if(!powmonitor)
 					menu += "\red No connection<BR>"

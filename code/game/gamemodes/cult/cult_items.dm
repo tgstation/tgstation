@@ -26,7 +26,7 @@
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user as mob)
 	if(!iscultist(user))
 		user << "\red An overwhelming feeling of dread comes over you as you pick up the cultist's sword. It would be wise to be rid of this blade quickly."
-		user.make_dizzy(120)
+		user.Dizzy(120)
 
 
 /obj/item/clothing/head/culthood

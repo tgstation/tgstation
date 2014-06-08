@@ -30,6 +30,7 @@
 	var/response_disarm = "shoves"
 	var/response_harm   = "hits"
 	var/harm_intent_damage = 3
+	var/force_threshold = 0 //Minimum force required to deal any damage
 
 	//Temperature effect
 	var/minbodytemp = 250
@@ -57,7 +58,7 @@
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
 	var/environment_smash = 0 //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
-	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
+	var/speed = 1 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	//Hot simple_animal baby making vars
 	var/childtype = null
@@ -261,9 +262,11 @@
 		adjustBruteLoss(damage)
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj)	return
-	adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src, 0)
+	if(!Proj)
+		return
+	if((Proj.damage_type != STAMINA))
+		adjustBruteLoss(Proj.damage)
+		Proj.on_hit(src, 0)
 	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
@@ -350,8 +353,8 @@
 			visible_message("\red <B>[L] bites [src]!</B>")
 
 			if(stat != DEAD)
-				adjustBruteLoss(damage)
 				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+				adjustBruteLoss(damage)
 
 
 /mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M as mob)
@@ -387,7 +390,7 @@
 						adjustBruteLoss(-MED.heal_brute)
 						MED.amount -= 1
 						if(MED.amount <= 0)
-							del(MED)
+							qdel(MED)
 						for(var/mob/M in viewers(src, null))
 							if ((M.client && !( M.blinded )))
 								M.show_message("\blue [user] applies [MED] on [src]")
@@ -405,14 +408,21 @@
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			harvest()
 	else
+		user.changeNext_move(8)
 		if(O.force)
-			var/damage = O.force
-			if (O.damtype == HALLOSS)
-				damage = 0
-			adjustBruteLoss(damage)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>"+"[src] has been attacked with [O] by [user]!</span>")
+			if(O.force >= force_threshold)
+				var/damage = O.force
+				if (O.damtype == STAMINA)
+					damage = 0
+				adjustBruteLoss(damage)
+				visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>",\
+								"<span class='userdanger'>[src] has been attacked with [O] by [user]!</span>")
+			else
+				visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>",\
+								"<span class='userdanger'>[O] bounces harmlessly off of [src].</span>")
+		else
+			user.visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>",\
+							"<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later
@@ -517,7 +527,7 @@
 /mob/living/simple_animal/proc/harvest()
 	new meat_type (get_turf(src))
 	if(prob(95))
-		del(src)
+		qdel(src)
 		return
 	gib()
 	return

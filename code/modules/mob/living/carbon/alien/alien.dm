@@ -11,6 +11,7 @@
 	gender = NEUTER
 	dna = null
 	faction = "alien"
+	ventcrawler = 2
 
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -209,8 +210,11 @@ Des: Removes all infected images from the alien.
 	if (client)
 		for(var/image/I in client.images)
 			if(dd_hasprefix_case(I.icon_state, "infected"))
-				del(I)
+				qdel(I)
 	return
+
+/mob/living/carbon/alien/canBeHandcuffed()
+	return 1
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

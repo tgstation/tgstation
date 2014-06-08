@@ -18,10 +18,9 @@
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
 
-/obj/structure/stool/bed/Del()
+/obj/structure/stool/bed/Destroy()
 	unbuckle()
 	..()
-	return
 
 /obj/structure/stool/bed/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -33,11 +32,14 @@
 /obj/structure/stool/bed/attack_animal(var/mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
 	if(M.environment_smash)
 		new /obj/item/stack/sheet/metal(src.loc)
-		del(src)
+		qdel(src)
 
 /obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
 	buckle_mob(M, user)
+	return
+
+/obj/structure/stool/bed/proc/afterbuckle(mob/M as mob) // Called after somebody buckled / unbuckled
 	return
 
 /obj/structure/stool/bed/proc/unbuckle()
@@ -46,7 +48,11 @@
 			buckled_mob.buckled = null
 			buckled_mob.anchored = initial(buckled_mob.anchored)
 			buckled_mob.update_canmove()
+
+			var/M = buckled_mob
 			buckled_mob = null
+
+			afterbuckle(M)
 	return
 
 /obj/structure/stool/bed/proc/manual_unbuckle(mob/user as mob)
@@ -80,7 +86,7 @@
 /obj/structure/stool/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	if (!ticker)
 		user << "You can't buckle anyone in before the game starts."
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) || M.anchored)
 		return
 
 	if (istype(M, /mob/living/carbon/slime))
@@ -105,6 +111,8 @@
 	M.update_canmove()
 	src.buckled_mob = M
 	src.add_fingerprint(user)
+
+	afterbuckle(M)
 	return
 
 /*
@@ -117,30 +125,18 @@
 	anchored = 0
 	var/const/buckled_pixel_y_offset = 6 //Mobs buckled will have their pixel_y offset by this much
 
+/obj/structure/stool/bed/roller/afterbuckle(mob/M as mob)
+	if(buckled_mob)
+		density = 1
+		icon_state = "up"
+		M.pixel_y += buckled_pixel_y_offset
+	else
+		density = 0
+		icon_state = "down"
+		M.pixel_y -= buckled_pixel_y_offset
+
 /obj/structure/stool/bed/roller/Move()
 	..()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = src.loc
-
-/obj/structure/stool/bed/roller/buckle_mob(mob/M as mob, mob/user as mob)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(usr, /mob/living/silicon/pai) )
-		return
-	M.pixel_y += buckled_pixel_y_offset
-	density = 1
-	icon_state = "up"
-	..()
-	return
-
-/obj/structure/stool/bed/roller/manual_unbuckle(mob/user as mob)
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
-			buckled_mob.pixel_y -= buckled_pixel_y_offset
-			buckled_mob.anchored = initial(buckled_mob.anchored)
-			buckled_mob.buckled = null
-			buckled_mob.update_canmove()
-			buckled_mob = null
-	density = 0
-	icon_state = "down"
-	..()
-	return

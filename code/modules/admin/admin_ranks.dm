@@ -3,14 +3,14 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 /datum/admin_rank
 	var/name = "NoRank"
 	var/rights = 0
-	var/list/adds 
+	var/list/adds
 	var/list/subs
 
 /datum/admin_rank/New(init_name, init_rights, list/init_adds, list/init_subs)
 	name = init_name
 	switch(name)
 		if("Removed",null,"")
-			error("invalid admin-rank name. datum deleted")
+			ERROR("invalid admin-rank name. datum deleted")
 			del(src)
 	if(init_rights)	rights = init_rights
 	if(!init_adds)	init_adds = list()
@@ -74,7 +74,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				next = findchar(line, "+-", prev+1, 0)
 				R.process_keyword(copytext(line, prev, next), previous_rights)
 				prev = next
-			
+
 			previous_rights = R.rights
 	else
 		establish_db_connection()
@@ -117,7 +117,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/list/rank_names = list()
 	for(var/datum/admin_rank/R in admin_ranks)
 		rank_names[R.name] = R
-	
+
 	if(config.admin_legacy_system)
 		//load text from file
 		var/list/Lines = file2list("config/admins.txt")
@@ -158,7 +158,10 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 		while(query.NextRow())
 			var/ckey = ckey(query.item[1])
 			var/rank = ckeyEx(query.item[2])
-			var/datum/admins/D = new(rank, ckey)				//create the admin datum and store it for later use
+			if(rank_names[rank] == null)
+				error("Admin rank ([rank]) does not exist.")
+				continue
+			var/datum/admins/D = new(rank_names[rank], ckey)				//create the admin datum and store it for later use
 			if(!D)	continue									//will occur if an invalid rank is provided
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 
@@ -214,7 +217,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				return
 
 	var/datum/admins/D = admin_datums[adm_ckey]
-	
+
 	switch(task)
 		if("remove")
 			if(alert("Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
@@ -228,57 +231,57 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 		if("rank")
 			var/datum/admin_rank/R
-			
+
 			var/list/rank_names = list("*New Rank*")
 			for(R in admin_ranks)
 				rank_names[R.name] = R
-			
+
 			var/new_rank = input("Please select a rank", "New rank", null, null) as null|anything in rank_names
-			
+
 			switch(new_rank)
 				if(null)	return
 				if("*New Rank*")
 					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null) as null|text)
 					if(!new_rank)	return
-					
+
 			R = rank_names[new_rank]
 			if(!R)	//rank with that name doesn't exist yet - make it
 				if(D)	R = new(new_rank, D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
 				else	R = new(new_rank)							//blank new admin_rank
 				admin_ranks += R
-			
+
 			if(D)	//they were previously an admin
 				D.disassociate()	//existing admin needs to be disassociated
 				D.rank = R			//set the admin_rank as our rank
 			else
 				D = new(R,adm_ckey)	//new admin
-						
+
 			var/client/C = directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
-						
+
 			message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 			log_admin("[key_name(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 			log_admin_rank_modification(adm_ckey, new_rank)
 
 		if("permissions")
 			if(!D)	return	//they're not an admin!
-			
+
 			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null) as null|text
 			if(!keyword)	return
-			
+
 			D.disassociate()
-			
+
 			if(!findtext(D.rank.name, "([adm_ckey])"))	//not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too
 				D.rank = new("[D.rank.name]([adm_ckey])", D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
 				//we don't add this clone to the admin_ranks list, as it is unique to that ckey
-			
+
 			D.rank.process_keyword(keyword)
-			
+
 			var/client/C = directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
-			
+
 			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
 			log_admin("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
 			log_admin_permission_modification(adm_ckey, D.rank.rights)
-			
+
 	edit_admin_permissions()

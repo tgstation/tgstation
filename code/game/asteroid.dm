@@ -32,7 +32,6 @@ proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/list/walltypes, 
 
 			A.contents += T
 
-
 	return room_turfs
 
 //////////////
@@ -61,24 +60,27 @@ proc/make_mining_asteroid_secret()
 		if("organharvest")
 			walltypes = list(/turf/simulated/wall/r_wall=2,/turf/simulated/wall=2,/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor,/turf/simulated/floor/engine)
-			treasureitems = list(/obj/item/device/mass_spectrometer/adv=1,/obj/item/clothing/glasses/hud/health=1,/obj/machinery/bot/medbot/mysterious=1)
+			treasureitems = list(/obj/machinery/bot/medbot/mysterious=1, /obj/item/weapon/circular_saw=1, /obj/structure/closet/critter/cat=2)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=5,/obj/item/organ/appendix=2,/obj/structure/closet/crate/freezer=2,
 							  /obj/structure/optable=1,/obj/item/weapon/scalpel=1,/obj/item/weapon/storage/firstaid/regular=3,
-							  /obj/item/weapon/tank/anesthetic=1, /obj/item/weapon/surgical_drapes=2)
+							  /obj/item/weapon/tank/anesthetic=1, /obj/item/weapon/surgical_drapes=2, /obj/item/device/mass_spectrometer/adv=1,/obj/item/clothing/glasses/hud/health=1)
 
 		if("cult")
 			theme = "cult"
 			walltypes = list(/turf/simulated/wall/cult=3,/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor/engine/cult)
-			treasureitems = list(/mob/living/simple_animal/hostile/creature=1,/obj/item/organ/heart=2,/obj/item/device/soulstone=1)
+			treasureitems = list(/obj/item/device/soulstone=1, /obj/item/clothing/suit/space/cult=1, /obj/item/weapon/bedsheet/cult=2,
+								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)
 			fluffitems = list(/obj/effect/gateway=1,/obj/effect/gibspawner=1,/obj/structure/cult/talisman=1,/obj/item/toy/crayon/red=2,
-							  /obj/effect/decal/cleanable/blood=4,/obj/structure/table/woodentable=2,/obj/item/weapon/ectoplasm=3)
+							  /obj/item/organ/heart=2, /obj/effect/decal/cleanable/blood=4,/obj/structure/table/woodentable=2,/obj/item/weapon/ectoplasm=3,
+							  /obj/item/clothing/head/helmet/space/cult=1, /obj/item/clothing/shoes/cult=1)
 
 		if("wizden")
 			theme = "wizden"
 			walltypes = list(/turf/simulated/wall/mineral/plasma=3,/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor/wood)
-			treasureitems = list(/obj/item/weapon/veilrender/vealrender=1,/obj/item/clothing/glasses/monocle=1,/obj/item/key=1)
+			treasureitems = list(/obj/item/weapon/veilrender/vealrender=2, /obj/item/weapon/spellbook/oneuse/blind=1,/obj/item/clothing/head/wizard/red=2,
+							/obj/item/weapon/spellbook/oneuse/forcewall=1, /obj/item/weapon/spellbook/oneuse/smoke=1, /obj/structure/constructshell = 1, /obj/item/toy/katana=3)
 			fluffitems = list(/obj/structure/safe/floor=1,/obj/structure/dresser=1,/obj/item/weapon/storage/belt/soulstone=1,/obj/item/trash/candle=3,
 							  /obj/item/weapon/dice=3,/obj/item/weapon/staff=2,/obj/effect/decal/cleanable/dirt=3,/obj/item/weapon/coin/mythril=3)
 
@@ -86,7 +88,8 @@ proc/make_mining_asteroid_secret()
 			theme = "cavein"
 			walltypes = list(/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/beach/sand)
-			treasureitems = list(/obj/mecha/working/ripley/mining=1,/obj/item/weapon/pickaxe/jackhammer=2,/obj/item/weapon/pickaxe/diamonddrill=2,)
+			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator=1,
+							/obj/item/weapon/resonator=1, /obj/item/weapon/pickaxe/jackhammer=5)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=3,/obj/effect/decal/remains/human=1,/obj/item/clothing/under/overalls=1,
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/chili=1,/obj/item/weapon/tank/oxygen/red=2)
 
@@ -101,22 +104,25 @@ proc/make_mining_asteroid_secret()
 			theme = "hitech"
 			walltypes = list(/turf/simulated/wall/r_wall=5,/turf/simulated/mineral/random=1)
 			floortypes = list(/turf/simulated/floor/greengrid,/turf/simulated/floor/bluegrid)
-			treasureitems = list(/obj/item/weapon/pickaxe/plasmacutter=1,/obj/machinery/shieldgen=1,/obj/item/weapon/cell/hyper=1)
+			treasureitems = list(/obj/item/weapon/stock_parts/cell/hyper=1, /obj/machinery/chem_dispenser/constructable=1,/obj/machinery/computer/telescience=1, /obj/machinery/r_n_d/protolathe=1,
+								/obj/machinery/biogenerator=1)
 			fluffitems = list(/obj/structure/table/reinforced=2,/obj/item/weapon/stock_parts/scanning_module/phasic=3,
 							  /obj/item/weapon/stock_parts/matter_bin/super=3,/obj/item/weapon/stock_parts/manipulator/pico=3,
-							  /obj/item/weapon/stock_parts/capacitor/super=3,/obj/item/device/pda/clear=1)
+							  /obj/item/weapon/stock_parts/capacitor/super=3,/obj/item/device/pda/clear=1, /obj/structure/mecha_wreckage/phazon=1)
 
 		if("speakeasy")
 			theme = "speakeasy"
 			floortypes = list(/turf/simulated/floor,/turf/simulated/floor/wood)
-			treasureitems = list(/obj/item/weapon/melee/energy/sword/pirate=1,/obj/structure/closet/syndicate/resources=2)
+			treasureitems = list(/obj/item/weapon/melee/energy/sword/pirate=1,/obj/item/weapon/gun/projectile/revolver/doublebarrel=1, /obj/machinery/reagentgrinder=2,
+			 /obj/structure/reagent_dispensers/beerkeg=5, /obj/machinery/computer/security/wooden_tv=4, /obj/machinery/vending/coffee=3)
 			fluffitems = list(/obj/structure/table/woodentable=2,/obj/structure/reagent_dispensers/beerkeg=1,/obj/item/weapon/spacecash/c500=4,
 							  /obj/item/weapon/reagent_containers/food/drinks/shaker=1,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine=3,
 							  /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey=3,/obj/item/clothing/shoes/laceup=2)
 
 		if("plantlab")
 			theme = "plantlab"
-			treasureitems = list(/obj/item/weapon/gun/energy/floragun=1,/obj/item/seeds/novaflowerseed=2,/obj/item/seeds/bluespacetomatoseed=2)
+			treasureitems = list(/obj/item/weapon/gun/energy/floragun=1,/obj/item/seeds/novaflowerseed=2,/obj/item/seeds/bluespacetomatoseed=2,/obj/item/seeds/bluetomatoseed=2,
+			/obj/item/seeds/coffee_robusta_seed=2, /obj/item/seeds/cashseed=2)
 			fluffitems = list(/obj/structure/flora/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics=1,
 							  /obj/effect/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/antitoxin=2,
 							  /obj/item/weapon/reagent_containers/glass/bottle/diethylamine=3,/obj/item/weapon/reagent_containers/glass/bottle/ammonia=3)
@@ -167,7 +173,7 @@ proc/make_mining_asteroid_secret()
 			valid = 0
 			continue
 
-		if(locate(/turf/simulated/floor/plating/asteroid/airless) in surroundings)
+		if(locate(/turf/simulated/floor/plating/asteroid/airless) in range(5,T))//A little less strict than the other checks due to tunnels
 			valid = 0
 			continue
 
@@ -182,10 +188,9 @@ proc/make_mining_asteroid_secret()
 			if(istype(A))
 				spawn(2)
 					A.fullUpdateMineralOverlays()
-
 		T = pick(emptyturfs)
 		if(T)
-
+			new /obj/effect/glowshroom/single(T) //Just to make it a little more visible
 			var/surprise = null
 			surprise = pickweight(treasureitems)
 			new surprise(T)//here's the prize

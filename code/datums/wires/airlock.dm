@@ -34,13 +34,13 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 /datum/wires/airlock/GetInteractWindow()
 	var/obj/machinery/door/airlock/A = holder
 	. += ..()
-	. += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]", (A.locked ? "The door bolts have fallen!" : "The door bolts look up."),
+	. += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]", (A.locked ? "The door bolts have fallen!" : "The door bolts look up."),
 	(A.lights ? "The door bolt lights are on." : "The door bolt lights are off!"),
 	((A.arePowerSystemsOn() && !(A.stat & NOPOWER)) ? "The test light is on." : "The test light is off!"),
-	(A.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),
+	((A.aiControlDisabled==0 && !A.emagged) ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),
 	(A.safe==0 ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."),
-	(A.normalspeed==0 ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."))
-
+	(A.normalspeed==0 ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."),
+	(A.emergency==0 ? "The emergency lights are off." : "The emergency lights are on."))
 
 /datum/wires/airlock/UpdateCut(var/index, var/mended)
 
@@ -123,9 +123,12 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 	var/obj/machinery/door/airlock/A = holder
 	switch(index)
 		if(AIRLOCK_WIRE_IDSCAN)
-			//Sending a pulse through this flashes the red light on the door (if the door has power).
+			//Sending a pulse through this disables emergency access and flashes the red light on the door (if the door has power).
 			if((A.arePowerSystemsOn()) && (!(A.stat & NOPOWER)) && A.density)
 				A.do_animate("deny")
+				if(A.emergency)
+					A.emergency = 0
+					A.update_icon()
 		if(AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
 			//Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter).
 			A.loseMainPower()
@@ -176,7 +179,8 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				return
 		if(AIRLOCK_WIRE_OPEN_DOOR)
 			//tries to open the door without ID
-			//will succeed only if the ID wire is cut or the door requires no access
+			//will succeed only if the ID wire is cut or the door requires no access and it's not emagged
+			if(A.emagged)	return
 			if(!A.requiresID() || A.check_access(null))
 				if(A.density)	A.open()
 				else		A.close()

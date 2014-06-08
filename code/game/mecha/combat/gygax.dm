@@ -2,7 +2,7 @@
 	desc = "A lightweight, security exosuit. Popular among private and corporate security."
 	name = "\improper Gygax"
 	icon_state = "gygax"
-	step_in = 2
+	step_in = 3
 	dir_in = 1 //Facing North.
 	health = 250
 	deflect_chance = 5
@@ -41,7 +41,7 @@
 	ME.attach(src)
 	return
 
-/obj/mecha/combat/gygax/dark/add_cell(var/obj/item/weapon/cell/C=null)
+/obj/mecha/combat/gygax/dark/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
