@@ -8,6 +8,7 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 	siemens_coefficient = 0.8
+	species_fit = list("Vox")
 
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
@@ -66,6 +67,7 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
+	species_fit = list("Vox")
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"
@@ -122,6 +124,7 @@
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
+	species_fit = list("Vox")
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
