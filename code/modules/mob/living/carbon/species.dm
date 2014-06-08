@@ -256,8 +256,16 @@
 	flesh_color = "#808D11"
 
 	uniform_icons = 'icons/mob/species/vox/uniform.dmi'
+//	fat_uniform_icons = 'icons/mob/uniform_fat.dmi'
+	gloves_icons    = 'icons/mob/species/vox/gloves.dmi'
+//	glasses_icons   = 'icons/mob/eyes.dmi'
+//	ears_icons      = 'icons/mob/ears.dmi'
 	shoes_icons = 'icons/mob/species/vox/shoes.dmi'
+//	head_icons      = 'icons/mob/head.dmi'
+//	belt_icons      = 'icons/mob/belt.dmi'
+	wear_suit_icons = 'icons/mob/species/vox/suit.dmi'
 	wear_mask_icons = 'icons/mob/species/vox/masks.dmi'
+//	back_icons      = 'icons/mob/back.dmi'
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.

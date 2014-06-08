@@ -6,6 +6,7 @@
 	flags = FPRINT|TABLEPASS|BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
+	species_fit = list("Vox")
 
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
