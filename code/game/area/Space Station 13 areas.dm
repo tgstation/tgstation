@@ -1041,6 +1041,10 @@ proc/process_ghost_teleport_locs()
 		name = "Supermatter Room"
 		icon_state = "engine_control"
 
+	engineering_auxiliary
+		name = "Auxiliary Engineering"
+		icon_state = "engiaux"
+
 //Solars
 
 /area/solar
