@@ -626,8 +626,8 @@
 	
 
 /obj/item/toy/minimeteor
-	name = "Mini Meteor™"
-	desc = "Relive the horror of a meteor shower! SweetMeat-eor. Co is not responsible for any injury caused by Mini Meteor™"
+	name = "Mini Meteor"
+	desc = "Relive the horror of a meteor shower! SweetMeat-eor. Co is not responsible for any injury caused by Mini Meteor"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "flaming"
 

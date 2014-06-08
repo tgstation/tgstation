@@ -58,6 +58,11 @@
 		COIN.loc = src.loc
 	return
 
+/obj/item/weapon/moneybag/MouseDrop(obj/over_object as obj)
+	if(ishuman(usr))
+		if(over_object == usr)
+			var/mob/living/carbon/human/H = usr
+			H.put_in_hands(src)
 
 
 /obj/item/weapon/moneybag/vault

@@ -139,15 +139,15 @@
 /datum/game_mode/proc/auto_declare_completion_enthralled()
 	if(enthralled.len)
 		var/text = "<FONT size = 2><B>The Enthralled were:</B></FONT>"
-		for(var/datum/mind/enthralled in enthralled)
-			text += "<br>[enthralled.key] was [enthralled.name] ("
-			if(enthralled.current)
-				if(enthralled.current.stat == DEAD)
+		for(var/datum/mind/Mind in enthralled)
+			text += "<br>[Mind.key] was [Mind.name] ("
+			if(Mind.current)
+				if(Mind.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
-				if(enthralled.current.real_name != enthralled.name)
-					text += " as [enthralled.current.real_name]"
+				if(Mind.current.real_name != Mind.name)
+					text += " as [Mind.current.real_name]"
 			else
 				text += "body destroyed"
 			text += ")"

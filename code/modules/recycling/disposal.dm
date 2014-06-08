@@ -42,6 +42,25 @@
 	MouseDrop_T(var/obj/item/target, mob/user)
 		src.attackby(target,user)
 
+
+	ex_act(var/severity,var/child=null)
+		var/child_severity=severity
+		if(!child)
+			child_severity++
+		if(child_severity <= 3)
+			for(var/obj/O in contents)
+				O.ex_act(child_severity)
+		switch(severity)
+			if(2 to INFINITY)
+				if(prob(50))
+					eject()
+					if(severity==2)
+						qdel(src)
+			if(1)
+				eject()
+				qdel(src)
+
+
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
 		if(stat & BROKEN || !I || !user)

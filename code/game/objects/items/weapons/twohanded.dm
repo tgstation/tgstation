@@ -1,3 +1,5 @@
+
+
 /* Two-handed Weapons
  * Contains:
  * 		Twohanded
@@ -12,11 +14,16 @@
 
 //Rewrote TwoHanded weapons stuff and put it all here. Just copypasta fireaxe to make new ones ~Carn
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
-//It also tidies stuff up elsewhere.
+//It also tidies stuff up elsewhere. also derp.
+
+
 
 /*
  * Twohanded
  */
+
+
+
 /obj/item/weapon/twohanded
 	var/wielded = 0
 	var/force_unwielded = 0
@@ -28,13 +35,39 @@
 	wielded = 0
 	force = force_unwielded
 	name = "[initial(name)]"
-	update_icon()
+	set_icon()
+
 
 /obj/item/weapon/twohanded/proc/wield()
 	wielded = 1
 	force = force_wielded
 	name = "[initial(name)] (Wielded)"
+	set_icon()
+
+
+
+/obj/item/weapon/twohanded/proc/set_icon()
+	set src in usr
+
+	if(findtext(icon_state, "fireaxe"))
+		item_state = "fireaxe[wielded]"
+
+
+	else if(findtext(icon_state, "dualsaber"))
+		item_state = "dualsaber[wielded]"
+
+
+	else if(findtext(icon_state, "hfrequency"))
+		item_state = "hfrequency[wielded]"
+
+	else
+		item_state = "spearglass[wielded]"
+
+
+	usr.update_inv_l_hand()
+	usr.update_inv_r_hand()
 	update_icon()
+
 
 /obj/item/weapon/twohanded/mob_can_equip(M as mob, slot)
 	//Cannot equip wielded items.
@@ -52,18 +85,20 @@
 			O.unwield()
 	return	unwield()
 
-/obj/item/weapon/twohanded/update_icon()
-	return
+//obj/item/weapon/twohanded/update_icon()
+//	return
 
 /obj/item/weapon/twohanded/pickup(mob/user)
-	unwield()
+	wielded = 0
+	set_icon()
+	wielded = 0
 
 /obj/item/weapon/twohanded/attack_self(mob/user as mob)
 	if( istype(user,/mob/living/carbon/monkey) )
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
 
-	..()
+	//..()
 	if(wielded) //Trying to unwield it
 		unwield()
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
@@ -73,6 +108,7 @@
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(O && istype(O))
 			O.unwield()
+		//world << "<span class='warning'>[icon_state]</span>" // debugging
 		return
 
 	else //Trying to wield it
@@ -88,6 +124,7 @@
 		O.name = "[initial(name)] - offhand"
 		O.desc = "Your second grip on the [initial(name)]"
 		user.put_in_inactive_hand(O)
+		//world << "<span class='warning'>[icon_state]</span>" // debugging
 		return
 
 ///////////OFFHAND///////////////
@@ -136,7 +173,7 @@
 	wielded = 1
 
 
-obj/item/weapon/twohanded/
+//obj/item/weapon/twohanded/
 
 /*
  * Fireaxe
@@ -152,9 +189,7 @@ obj/item/weapon/twohanded/
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
-/obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
-	icon_state = "fireaxe[wielded]"
-	return
+
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
 	if(!proximity) return
@@ -215,8 +250,6 @@ obj/item/weapon/twohanded/
 
 
 
-
-
 /*
  * High-Frequency Blade
  */
@@ -259,4 +292,3 @@ obj/item/weapon/twohanded/
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 	return
-

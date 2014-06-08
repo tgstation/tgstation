@@ -288,7 +288,13 @@ its easier to just keep the beam vertical.
 /atom/proc/relaymove()
 	return
 
-/atom/proc/ex_act()
+// Severity is actually "distance".
+// 1 is pretty much just del(src).
+// 2 is moderate damage.
+// 3 is light damage.
+//
+// child is set to the child object that exploded, if available.
+/atom/proc/ex_act(var/severity, var/child=null)
 	return
 
 /atom/proc/blob_act()

@@ -181,6 +181,7 @@
 		//new /datum/data/mining_equipment("Stimulant pills",     /obj/item/weapon/storage/pill_bottle/stimulant, 				   350),
 		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                   250),
 		//new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                   250),
+		new /datum/data/mining_equipment("Lazarus Capsule",     /obj/item/device/mobcapsule,     				                   250),
 		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			   500),
 		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                1000),
 		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               500),
@@ -691,6 +692,105 @@
 	..()
 	if(!loaded)
 		usr << "<span class='info'>[src] is empty.</span>"
+
+
+/*********************Mob Capsule*************************/
+
+/obj/item/device/mobcapsule
+	name = "Lazarus Capsule"
+	desc = "It allows you to store and deploy lazarus injected creatures easier."
+	icon = 'icons/obj/mobcap.dmi'
+	icon_state = "mobcap0"
+	throwforce = 00
+	throw_speed = 4
+	throw_range = 20
+	force = 0
+	var/storage_capacity = 1
+	var/capsuleowner = null
+	var/tripped = 0
+	var/colorindex = 0
+
+	throw_impact(atom/A, mob/user)
+		..()
+		if(!tripped)
+			if(contents.len >= storage_capacity)
+				dump_contents()
+				tripped = 1
+			else
+				take_contents()
+				tripped = 1
+
+
+
+/obj/item/device/mobcapsule/proc/insert(var/atom/movable/AM)
+
+	if(contents.len >= storage_capacity)
+		return -1
+
+
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		if(L.buckled)
+			return 0
+		if(L.client)
+			L.client.perspective = EYE_PERSPECTIVE
+			L.client.eye = src
+	else if(!istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
+		return 0
+	else if(AM.density || AM.anchored)
+		return 0
+	AM.loc = src
+	return 1
+
+
+/obj/item/device/mobcapsule/pickup(mob/user)
+	tripped = 0
+	capsuleowner = user
+
+
+/obj/item/device/mobcapsule/proc/dump_contents()
+	//Cham Projector Exception
+	for(var/obj/effect/dummy/chameleon/AD in src)
+		AD.loc = src.loc
+
+	for(var/obj/O in src)
+		O.loc = src.loc
+
+	for(var/mob/M in src)
+		M.loc = src.loc
+		if(M.client)
+			M.client.eye = M.client.mob
+			M.client.perspective = MOB_PERSPECTIVE
+
+
+
+
+
+/obj/item/device/mobcapsule/attack_self(mob/user)
+	//
+	colorindex += 1
+	if(colorindex >= 6)
+		colorindex = 0
+	icon_state = "mobcap[colorindex]"
+	update_icon()
+
+
+
+
+
+/obj/item/device/mobcapsule/proc/take_contents(atom/target)
+	for(var/atom/AM in src.loc)
+
+
+		if(istype(AM, /mob/living/simple_animal))
+			var/mob/living/simple_animal/M = AM
+			var/mob/living/simple_animal/hostile/H = M
+			for(var/things in H.friends)
+			if(capsuleowner in H.friends)
+				if(insert(AM) == -1) // limit reached
+					break
+
+
 
 /**********************Mining Scanner**********************/
 /obj/item/device/mining_scanner

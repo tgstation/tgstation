@@ -283,13 +283,22 @@
 		alpha = round((255 * 0.80))
 
 /mob/proc/can_enthrall(mob/living/carbon/C)
+	var/enthrall_safe = 0
+	for(var/obj/item/weapon/implant/loyalty/L in C)
+		if(L && L.implanted)
+			enthrall_safe = 1
+			break
+	for(var/obj/item/weapon/implant/traitor/T in C)
+		if(T && T.implanted)
+			enthrall_safe = 1
+			break
 	if(!C)
 		world.log << "something bad happened on enthralling a mob src is [src] [src.key] \ref[src]"
 		return 0
 	if(!C.mind)
 		src << "\red [C.name]'s mind is not there for you to enthrall."
 		return 0
-	if((/obj/item/weapon/implant/traitor in C.contents) || (/obj/item/weapon/implant/loyalty in C.contents )||( C.mind in ticker.mode.vampires )||( C.mind.vampire )||( C.mind in ticker.mode.enthralled ))
+	if(enthrall_safe || ( C.mind in ticker.mode.vampires )||( C.mind.vampire )||( C.mind in ticker.mode.enthralled ))
 		C.visible_message("\red [C] seems to resist the takeover!", "\blue You feel a familiar sensation in your skull that quickly dissipates.")
 		return 0
 	if(!C.vampire_affected(mind))

@@ -521,6 +521,37 @@ var/list/admin_verbs_mod = list(
 		D.save_preferences()
 	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/unwarn(warned_ckey)
+	if(!check_rights(R_ADMIN))	return
+
+	if(!warned_ckey || !istext(warned_ckey))	return
+	/*if(warned_ckey in admin_datums)
+		usr << "<font color='red'>Error: warn(): You can't warn admins.</font>"
+		return*/
+
+	var/datum/preferences/D
+	var/client/C = directory[warned_ckey]
+	if(C)	D = C.prefs
+	else	D = preferences_datums[warned_ckey]
+
+	if(!D)
+		src << "<font color='red'>Error: unwarn(): No such ckey found.</font>"
+		return
+
+	if(D.warns == 0)
+		src << "<font color='red'>Error: unwarn(): You can't unwarn someone with 0 warnings, you big dummy.</font>"
+		return
+
+	D.warns-=1
+	var/strikesleft = MAX_WARNS-D.warns
+	if(C)
+		C << "<font color='red'><BIG><B>One of your warnings has been removed.</B></BIG><br>You currently have [strikesleft] strike\s left</font>"
+		message_admins("[key_name_admin(src)] has unwarned [key_name_admin(C)]. They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
+	else
+		message_admins("[key_name_admin(src)] has unwarned [warned_ckey] (DC). They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
+	D.save_preferences()
+	feedback_add_details("admin_verb","UNWARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 #undef MAX_WARNS
 #undef AUTOBANTIME
 

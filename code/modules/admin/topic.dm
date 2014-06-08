@@ -370,6 +370,9 @@
 	else if(href_list["warn"])
 		usr.client.warn(href_list["warn"])
 
+	else if(href_list["unwarn"])
+		usr.client.unwarn(href_list["unwarn"])
+
 	else if(href_list["unbane"])
 		if(!check_rights(R_BAN))	return
 

@@ -194,11 +194,6 @@
 		mob.apply_damages(backlash_amt,backlash_amt,backlash_amt,backlash_amt)
 
 
-
-
-
-
-
 /datum/disease2/effect/bones
 	name = "Fragile Bones Syndrome"
 	stage = 4
@@ -213,12 +208,6 @@
 			var/mob/living/carbon/human/H = mob
 			for (var/datum/organ/external/E in H.organs)
 				E.min_broken_damage = initial(E.min_broken_damage)
-
-
-
-
-
-
 
 /datum/disease2/effect/scc
 	name = "Spontaneous Cellular Collapse"
@@ -329,8 +318,8 @@
 		var/placemob = locate(mob.x + pick(1,-1), mob.y, mob.z)
 		playsound(mob.loc, 'sound/effects/splat.ogg', 50, 1)
 
-		new /mob/living/simple_animal/hostile/giant_spider/hunter(placemob)
-		mob.emote("me",1,"vomits up a live spider!")
+		new /obj/effect/spider/spiderling(placemob)
+		mob.emote("me",1,"vomits up a live spiderling!")
 
 
 

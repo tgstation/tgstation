@@ -16,13 +16,6 @@
 	icon_state = "ash"
 	anchored = 1
 
-/obj/effect/decal/cleanable/greenglow
-
-	New()
-		..()
-		spawn(1200)// 2 minutes
-			qdel(src)
-
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."

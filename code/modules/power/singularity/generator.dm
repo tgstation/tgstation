@@ -13,8 +13,8 @@
 	if (energy < 200)
 		return
 
+	var/prints
 	if (fingerprintshidden && fingerprintshidden.len)
-		var/prints
 
 		for (var/i = 1, i < fingerprintshidden.len, i++)
 			if (i > fingerprintshidden.len)
@@ -25,8 +25,8 @@
 			else
 				prints += ", [fingerprintshidden[i]]"
 
-		log_admin("New singularity made, all touchers. [prints]. Last touched by [fingerprintslast].")
-
+	log_admin("New singularity made, all touchers. [prints]. Last touched by [fingerprintslast].")
+	message_admins("New singularity made, all touchers. [prints]. Last touched by [fingerprintslast].")
 	new /obj/machinery/singularity/(get_turf(src), 50)
 	qdel(src)
 
