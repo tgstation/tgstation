@@ -18,7 +18,7 @@
 	icon_state = "plaguedoctor"
 	item_state = "gas_mask"
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
-	species_fit = list()
+	species_fit = list("Vox")
 
 /obj/item/clothing/mask/gas/swat
 	name = "\improper SWAT mask"
@@ -50,7 +50,7 @@
 	item_state = "s-ninja_mask"
 	vchange = 1
 	siemens_coefficient = 0.2
-	species_fit = list()
+	species_fit = list("Vox")
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
@@ -71,7 +71,6 @@
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
-	species_fit = list()
 	species_fit = list("Vox")
 
 /obj/item/clothing/mask/gas/mime
