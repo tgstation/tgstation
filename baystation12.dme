@@ -1382,6 +1382,7 @@
 #include "code\modules\supermatter\supermatter.dm"
 #include "code\modules\surgery\appendix.dm"
 #include "code\modules\surgery\bones.dm"
+#include "code\modules\surgery\butt.dm"
 #include "code\modules\surgery\braincore.dm"
 #include "code\modules\surgery\eye.dm"
 #include "code\modules\surgery\face.dm"
