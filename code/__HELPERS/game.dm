@@ -469,3 +469,35 @@ var/list/DummyCache = list()
 			continue
 		mobs_found += M
 	return mobs_found
+
+/proc/GetRedPart(const/hexa)
+	var/hex = uppertext(hexa)
+	var/hi = text2ascii(hex, 2)
+	var/lo = text2ascii(hex, 3)
+	return (((hi >= 65 ? hi - 55 : hi - 48) << 4) | (lo >= 65 ? lo - 55 : lo - 48))
+
+/proc/GetGreenPart(const/hexa)
+	var/hex = uppertext(hexa)
+	var/hi = text2ascii(hex, 4)
+	var/lo = text2ascii(hex, 5)
+	return (((hi >= 65 ? hi - 55 : hi - 48) << 4) | (lo >= 65 ? lo - 55 : lo - 48))
+
+/proc/GetBluePart(const/hexa)
+	var/hex = uppertext(hexa)
+	var/hi = text2ascii(hex, 6)
+	var/lo = text2ascii(hex, 7)
+	return (((hi >= 65 ? hi - 55 : hi - 48) << 4) | (lo >= 65 ? lo - 55 : lo - 48))
+
+/proc/GetHexColors(const/hexa)
+	var/hex = uppertext(hexa)
+	var/hi1 = text2ascii(hex, 2)
+	var/lo1 = text2ascii(hex, 3)
+	var/hi2 = text2ascii(hex, 4)
+	var/lo2 = text2ascii(hex, 5)
+	var/hi3 = text2ascii(hex, 6)
+	var/lo3 = text2ascii(hex, 7)
+	return list(
+		((hi1 >= 65 ? hi1 - 55 : hi1 - 48) << 4) | (lo1 >= 65 ? lo1 - 55 : lo1 - 48),
+		((hi2 >= 65 ? hi2 - 55 : hi2 - 48) << 4) | (lo2 >= 65 ? lo2 - 55 : lo2 - 48),
+		((hi3 >= 65 ? hi3 - 55 : hi3 - 48) << 4) | (lo3 >= 65 ? lo3 - 55 : lo3 - 48)
+		)

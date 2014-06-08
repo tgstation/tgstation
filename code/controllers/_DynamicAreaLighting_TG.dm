@@ -32,6 +32,7 @@
 #define LIGHTING_CIRCULAR 1									//comment this out to use old square lighting effects.
 #define LIGHTING_LAYER 10									//Drawing layer for lighting overlays
 #define LIGHTING_ICON 'icons/effects/ss13_dark_alpha6.dmi'	//Icon used for lighting shading effects
+#define LIGHT_WHITE "#FFFFFF" // Hex for white light, aka normal.
 
 datum/light_source
 	var/atom/owner
@@ -39,6 +40,7 @@ datum/light_source
 	var/list/effect = list()
 	var/__x = 0		//x coordinate at last update
 	var/__y = 0		//y coordinate at last update
+	var/l_color
 
 
 	New(atom/A)
@@ -46,6 +48,7 @@ datum/light_source
 			CRASH("The first argument to the light object's constructor must be the atom that is the light source. Expected atom, received '[A]' instead.")
 		..()
 		owner = A
+		l_color = owner.l_color
 		__x = owner.x
 		__y = owner.y
 		// the lighting object maintains a list of all light sources
@@ -74,7 +77,7 @@ datum/light_source
 	proc/remove_effect()
 		// before we apply the effect we remove the light's current effect.
 		for(var/turf/T in effect)	// negate the effect of this light source
-			T.update_lumcount(-effect[T])
+			T.update_lumcount(-effect[T], l_color, 1)
 		effect.Cut()					// clear the effect list
 
 	proc/add_effect()
@@ -85,7 +88,7 @@ datum/light_source
 				var/delta_lumen = lum(T)
 				if(delta_lumen > 0)
 					effect[T] = delta_lumen
-					T.update_lumcount(delta_lumen)
+					T.update_lumcount(delta_lumen, l_color, 0)
 
 			return 0
 		else
@@ -114,7 +117,7 @@ atom
 	var/datum/light_source/light
 	var/trueLuminosity = 0  // Typically 'luminosity' squared.  The builtin luminosity must remain linear.
 	                        // We may read it, but NEVER set it directly.
-
+	var/l_color
 
 //Turfs with opacity when they are constructed will trigger nearby lights to update
 //Turfs and atoms with luminosity when they are constructed will create a light_source automatically
@@ -208,12 +211,66 @@ turf/SetOpacity(new_opacity)
 turf
 	var/lighting_lumcount = 0
 	var/lighting_changed = 0
+	var/color_lighting_lumcount = 0
+	var/list/colors = list()
 
 turf/space
 	lighting_lumcount = 4		//starlight
 
-turf/proc/update_lumcount(amount)
+turf/proc/update_lumcount(amount, _lcolor, removing = 0)
 	lighting_lumcount += amount
+	var/blended
+
+	if (_lcolor)
+		if (l_color != LIGHT_WHITE && _lcolor != LIGHT_WHITE && l_color != _lcolor && !removing) // Blend colors.
+			var/redblend = min((GetRedPart(l_color)) + (GetRedPart(_lcolor)), 255)
+			var/greenblend = min((GetGreenPart(l_color)) + (GetGreenPart(_lcolor)), 255)
+			var/blueblend = min((GetBluePart(l_color)) + (GetBluePart(_lcolor)), 255)
+			blended = "#[add_zero2(num2hex(redblend), 2)][add_zero2(num2hex(greenblend),2)][add_zero2(num2hex(blueblend),2)]"
+
+		if (removing)
+			colors.Remove(_lcolor) // Remove the color that's leaving us from our list.
+
+			if (colors && !colors.len)
+				l_color = null // All our color is gone, no color for us.
+			else if (colors && colors.len > 1)
+				var/maxdepth = 3 // Will blend 3 colors, anymore than that and it looks bad or we will get lag on every tile update.
+				var/currentblended
+
+				for (var/i = 0, ++i <= colors.len)
+					if (i > maxdepth)
+						//world << "Maxdepth reached, breaking loop."
+						break
+
+					if (!currentblended)
+						//world << "First iteration, currentblended = [colors[i]]."
+						currentblended = colors[i] // Start with the first of the remaining colors.
+						continue
+
+					var/redblend = min((GetRedPart(currentblended)) + (GetRedPart(colors[i])), 255)
+					var/greenblend = min((GetGreenPart(currentblended)) + (GetGreenPart(colors[i])), 255)
+					var/blueblend = min((GetBluePart(currentblended)) + (GetBluePart(colors[i])), 255)
+					currentblended = "#[add_zero2(num2hex(redblend), 2)][add_zero2(num2hex(greenblend), 2)][add_zero2(num2hex(blueblend), 2)]"
+					//world << "Finished [i] [currentblended]."
+
+				if (currentblended)
+					//world << "Ended up with [currentblended]"
+					l_color = currentblended // blended the remaining colors so apply it.
+				else
+					l_color = null // Something went wrong, no color for you.
+			else
+				l_color = colors[colors.len]
+		else // we added a color.
+			colors.Add(_lcolor) // Add the base color to the list.
+
+			if (blended)
+				l_color = blended // If we had a blended color, this is what we get otherwise.
+			else
+				l_color = _lcolor // Basecolor is our color.
+
+		// if ((l_color != LIGHT_WHITE && l_color != "#FFF") || removing)
+		color_lighting_lumcount = max(color_lighting_lumcount + amount, 0) // Minimum of 0.
+
 	if(!lighting_changed)
 		lighting_controller.changed_turfs += src
 		lighting_changed = 1
@@ -222,21 +279,27 @@ turf/proc/lighting_tag(var/level)
 	var/area/A = loc
 	return A.tagbase + "sd_L[level]"
 
-turf/proc/build_lighting_area(var/tag, var/level)
+turf/proc/build_lighting_area(var/tag, var/level, const/color_light)
 	var/area/Area = loc
 	var/area/A = new Area.type()    // create area if it wasn't found
 	// replicate vars
 	for(var/V in Area.vars)
 		switch(V)
-			if("contents","lighting_overlay","overlays")	continue
+			if ("contents","lighting_overlay", "color_overlay", "overlays")
+				continue
 			else
 				if(issaved(Area.vars[V])) A.vars[V] = Area.vars[V]
 
 	A.tag = tag
 	A.lighting_subarea = 1
 	A.lighting_space = 0 // in case it was copied from a space subarea
-	A.SetLightLevel(level)
 
+	if (A.l_color != l_color)
+		A.l_color = l_color
+		//color_light = min(max(round(color_lighting_lumcount, 1), 0), lighting_controller.lighting_states)
+		//world << "[color_light] [color_lighting_lumcount]"
+
+	A.SetLightLevel(level, color_light)
 	Area.related += A
 	return A
 
@@ -248,11 +311,26 @@ turf/proc/shift_to_subarea()
 
 	var/level = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
 	var/new_tag = lighting_tag(level)
+
+	// pomf - If we have a lighting color that is not white, apply the new tag to seperate the areas.
+	if (color_lighting_lumcount && l_color)
+		new_tag += "sd_LC[light]" // pomf - We append the color lighting lumcount so we can have colored lights.
+	else
+		new_tag += "sd_L[light]"
+
+	if (l_color)
+		new_tag += "[l_color][color_lighting_lumcount]"
+
 	if(Area.tag!=new_tag)	//skip if already in this area
 		var/area/A = locate(new_tag)	// find an appropriate area
+		var/color_light = min(max(round(color_lighting_lumcount,1),0),lighting_controller.lighting_states)
 
-		if(!A)
-			A = build_lighting_area(new_tag,level)
+		if (!A)
+			A = build_lighting_area(new_tag, level, color_light)
+		else if (A.l_color != l_color)
+			A.l_color = l_color
+			//color_light = min(max(round(color_lighting_lumcount, 1), 0), lighting_controller.lighting_states)
+			A.SetLightLevel(level, color_light)
 
 		A.contents += src	// move the turf into the area
 
@@ -275,8 +353,9 @@ area
 	var/lighting_subarea = 0		//tracks whether we're a lighting sub-area
 	var/lighting_space = 0			// true for space-only lighting subareas
 	var/tagbase
+	var/image/color_overlay //Tracks the color image.
 
-	proc/SetLightLevel(light)
+	proc/SetLightLevel(light, color_light = 0)
 		if(!src) return
 		if(light <= 0)
 			light = 0
@@ -292,7 +371,69 @@ area
 		else
 			lighting_overlay = image(LIGHTING_ICON,,num2text(light),LIGHTING_LAYER)
 
-		overlays += lighting_overlay
+		if (color_overlay)
+			overlays.Remove(color_overlay)
+			color_overlay.icon_state = "white"
+		else
+			if (l_color && l_color != LIGHT_WHITE)
+				color_overlay = image('icons/obj/weapons.dmi', ,"white", 10.1)
+
+		if (istype(color_overlay))
+			color_overlay.color = l_color
+
+			/*
+			if (light < 6)
+				switch (level)
+					if (6)
+						color_overlay.alpha = 140
+					if (5)
+						color_overlay.alpha = 120
+					if (4)
+						color_overlay.alpha = 100
+					if (3)
+						color_overlay.alpha = 80
+					if (2)
+						color_overlay.alpha = 60
+					if (1)
+						color_overlay.alpha = 40
+					if (-INFINITY to 0)
+					//world << "Zero or below, [color_light]."
+					color_overlay.alpha = 0
+					else
+						//world << "Setting the alpha to max... color_light [color_light]."
+						color_overlay.alpha = 140
+
+				color_overlay.blend_mode = BLEND_MULTIPLY
+			*/
+
+			if (1)
+				switch (color_light)
+					if (6)
+						color_overlay.alpha = 180
+					if (5)
+						color_overlay.alpha = 140
+					if (4)
+						color_overlay.alpha = 120
+					if (3)
+						color_overlay.alpha = 80
+					if (2)
+						color_overlay.alpha = 60
+					if (1)
+						color_overlay.alpha = 20
+					if (-INFINITY to 0)
+						//world << "Zero or below, [color_light]."
+						color_overlay.alpha = 0
+					else
+						//world << "Setting the alpha to max... color_light [color_light]."
+						color_overlay.alpha = 180
+
+			if (color_overlay.color)
+				overlays.Add(color_overlay)
+
+		if (isnull(color_overlay))
+			overlays.Add(lighting_overlay)
+		else if (light < 6)
+			overlays.Add(lighting_overlay)
 
 	proc/SetDynamicLighting()
 
@@ -311,6 +452,8 @@ area
 //#undef LIGHTING_LAYER
 #undef LIGHTING_CIRCULAR
 //#undef LIGHTING_ICON
+#undef LIGHT_WHITE
+
 #define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.
 #define LIGHTING_MAX_LUMINOSITY_MOBILE	5	//Moving objects have a lower max luminosity since these update more often. (lag reduction)
 #define LIGHTING_MAX_LUMINOSITY_TURF	1	//turfs have a severely shortened range to protect from inevitable floor-lighttile spam.
