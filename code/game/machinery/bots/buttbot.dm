@@ -11,7 +11,7 @@ Here it is: Buttbot.
 /obj/machinery/bot/buttbot
 	name = "butt bot"
 	desc = "Somehow, this doesn't bode well with you."
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "buttbot"
 	layer = 5.0
 	density = 0
