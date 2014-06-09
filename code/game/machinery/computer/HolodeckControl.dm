@@ -140,10 +140,6 @@
 	emergencyShutdown()
 	..()
 
-/obj/machinery/computer/HolodeckControl/meteorhit(var/obj/O as obj)
-	emergencyShutdown()
-	..()
-
 
 /obj/machinery/computer/HolodeckControl/emp_act(severity)
 	emergencyShutdown()
@@ -426,6 +422,7 @@
 	desc = "Used for playing the most violent and degrading of childhood games."
 
 /obj/item/weapon/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom)
+	..()
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)

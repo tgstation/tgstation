@@ -218,7 +218,7 @@ datum
 					T.MakeSlippery()
 
 				for(var/mob/living/carbon/slime/M in T)
-					M.adjustToxLoss(rand(15,20))
+					M.apply_water()
 
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
@@ -649,11 +649,14 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(volume >= 5)
-					if(istype(T, /turf/simulated/wall))
-						T:thermite = 1
-						T.overlays.Cut()
-						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
+				if(volume >= 1 && istype(T, /turf/simulated/wall))
+					var/turf/simulated/wall/Wall = T
+					if(istype(Wall, /turf/simulated/wall/r_wall))
+						Wall.thermite = Wall.thermite+(volume*2.5)
+					else
+						Wall.thermite = Wall.thermite+(volume*10)
+					Wall.overlays = list()
+					Wall.overlays += image('icons/effects/effects.dmi',"thermite")
 				return
 
 			on_mob_life(var/mob/living/M as mob)

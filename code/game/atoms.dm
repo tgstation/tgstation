@@ -80,9 +80,6 @@
 */
 
 
-/atom/proc/meteorhit(obj/meteor as obj)
-	return
-
 /atom/proc/allow_drop()
 	return 1
 
@@ -212,6 +209,7 @@ its easier to just keep the beam vertical.
 
 	if (!( usr ))
 		return
+	usr.face_atom(src)
 	usr << "\icon[src]That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
 	if(desc)
 		usr << desc

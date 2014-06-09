@@ -916,7 +916,6 @@ FIRE ALARM
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
-	var/working = 1.0
 	var/time = 10.0
 	var/timing = 0.0
 	var/lockdownbyai = 0
@@ -1136,7 +1135,7 @@ FIRE ALARM
 	src.updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
-	if (!( src.working ))
+	if (stat & (NOPOWER|BROKEN)) // can't reset alarm if it's unpowered or broken.
 		return
 	var/area/A = src.loc
 	A = A.loc
@@ -1148,7 +1147,7 @@ FIRE ALARM
 	return
 
 /obj/machinery/firealarm/proc/alarm()
-	if (!( src.working ))
+	if (stat & (NOPOWER|BROKEN))  // can't activate alarm if it's unpowered or broken.
 		return
 	var/area/A = src.loc
 	A = A.loc
@@ -1282,7 +1281,7 @@ Code shamelessly copied from apc_frame
 	return
 
 /obj/machinery/firealarm/partyalarm/reset()
-	if (!( src.working ))
+	if (stat & (NOPOWER|BROKEN))
 		return
 	var/area/A = src.loc
 	A = A.loc
@@ -1293,7 +1292,7 @@ Code shamelessly copied from apc_frame
 	return
 
 /obj/machinery/firealarm/partyalarm/alarm()
-	if (!( src.working ))
+	if (stat & (NOPOWER|BROKEN))
 		return
 	var/area/A = src.loc
 	A = A.loc

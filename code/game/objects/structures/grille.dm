@@ -18,10 +18,6 @@
 /obj/structure/grille/blob_act()
 	qdel(src)
 
-/obj/structure/grille/meteorhit(var/obj/M)
-	qdel(src)
-
-
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)
 
