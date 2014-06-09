@@ -78,6 +78,7 @@ var/global/list/RPD_recipes=list(
 	"Devices"=list(
 		"Connector"      = new /datum/pipe_info(4, 1, PIPE_UNARY),
 		"Unary Vent"     = new /datum/pipe_info(7, 1, PIPE_UNARY),
+		"Passive Vent"   = new /datum/pipe_info(PIPE_PASV_VENT,    1, PIPE_UNARY),
 		"Gas Pump"       = new /datum/pipe_info(9, 1, PIPE_UNARY),
 		"Passive Gate"   = new /datum/pipe_info(15,1, PIPE_UNARY),
 		"Volume Pump"    = new /datum/pipe_info(16,1, PIPE_UNARY),
