@@ -429,12 +429,12 @@
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
 
-
-// returns whether this light has power
-// true if area has power and lightswitch is on
+/*
+ * Returns whether this light has power
+ * TRUE if area has power and lightswitch is on otherwise FALSE.
+ */
 /obj/machinery/light/proc/has_power()
-	var/area/A = src.loc.loc
-	return A.master.lightswitch && A.master.power_light
+	return areaMaster.lightswitch && areaMaster.power_light
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
 	if(flickering) return
