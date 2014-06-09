@@ -258,10 +258,7 @@
 			update(0)
 
 /obj/machinery/light/Destroy()
-	var/area/A = get_area(src)
-	if(A)
-		on = 0
-//		A.update_lights()
+	seton(0)
 	..()
 
 /obj/machinery/light/update_icon()
@@ -312,9 +309,11 @@
 		on_gs = on
 
 
-// attempt to set the light's on/off status
-// will not switch on if broken/burned/empty
-/obj/machinery/light/proc/seton(var/s)
+/*
+ * Attempt to set the light's on/off status.
+ * Will not switch on if broken/burned/empty.
+ */
+/obj/machinery/light/proc/seton(const/s)
 	on = (s && status == LIGHT_OK)
 	update()
 
