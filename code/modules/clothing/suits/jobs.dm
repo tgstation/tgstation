@@ -9,6 +9,7 @@
 	icon_state = "paramedic-vest"
 	item_state = "paramedic-vest"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 10)
+	species_fit = list("Vox")
 
 //Botonist
 /obj/item/clothing/suit/apron
@@ -19,6 +20,7 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list (/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
+	species_fit = list("Vox")
 
 //Captain
 /obj/item/clothing/suit/captunic
@@ -28,6 +30,7 @@
 	item_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+	species_fit = list("Vox")
 
 /obj/item/clothing/suit/captunic/capjacket
 	name = "captain's uniform jacket"
@@ -36,6 +39,7 @@
 	item_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+	species_fit = list("Vox")
 
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
@@ -44,6 +48,7 @@
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	species_fit = list("Vox")
 
 //Chaplain
 /obj/item/clothing/suit/nun
@@ -53,6 +58,7 @@
 	item_state = "nun"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	species_fit = list("Vox")
 
 //Chef
 /obj/item/clothing/suit/chef
@@ -64,6 +70,7 @@
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
+	species_fit = list("Vox")
 
 //Chef
 /obj/item/clothing/suit/chef/classic
@@ -73,6 +80,7 @@
 	item_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	species_fit = list("Vox")
 
 //Detective
 /obj/item/clothing/suit/storage/det_suit
@@ -84,6 +92,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
+	species_fit = list("Vox")
 
 //Forensics
 /obj/item/clothing/suit/storage/forensics
@@ -114,6 +123,7 @@
 	allowed = list (/obj/item/device/analyzer, /obj/item/device/flashlight, /obj/item/device/multitool, /obj/item/device/radio, /obj/item/device/t_scanner, \
 	/obj/item/weapon/crowbar, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool, /obj/item/weapon/wirecutters, /obj/item/weapon/wrench, \
 	/obj/item/weapon/tank/emergency_oxygen)
+	species_fit = list("Vox")
 
 //Lawyer
 /obj/item/clothing/suit/storage/lawyer/bluejacket

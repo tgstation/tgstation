@@ -1,4 +1,3 @@
-
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
@@ -17,11 +16,13 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2;engineering=2"
 	vision_flags = SEE_TURFS
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription mesons"
 	desc = "Optical Meson Scanner with prescription lenses."
 	prescription = 1
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
@@ -37,6 +38,7 @@
 	origin_tech = "magnets=2"
 	vision_flags = SEE_TURFS
 	darkness_view = 3
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -49,6 +51,7 @@
 	desc = "Such a dapper eyepiece!"
 	icon_state = "monocle"
 	item_state = "headset" // lol
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/material
 	name = "Optical Material Scanner"
@@ -57,6 +60,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 	vision_flags = SEE_OBJS
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
@@ -83,7 +87,7 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = -1
-
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/virussunglasses
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
@@ -91,7 +95,7 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = -1
-
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -100,6 +104,7 @@
 	item_state = "welding-g"
 	icon_action_button = "action_welding_g"
 	var/up = 0
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/welding/proc/getMask()
 	return global_hud.darkMask
@@ -135,6 +140,7 @@
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
 	icon_action_button = "action_welding_g"
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/welding/superior/getMask()
 	return null
@@ -145,21 +151,25 @@
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	vision_flags = BLIND
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/sunglasses/prescription
 	name = "prescription sunglasses"
 	prescription = 1
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/sunglasses/sechud
 	name = "HUDSunglasses"
 	desc = "Sunglasses with a HUD."
 	icon_state = "sunhud"
 	var/obj/item/clothing/glasses/hud/security/hud = null
+	species_fit = list("Vox")
 
 	New()
 		..()
@@ -192,6 +202,7 @@
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
 	origin_tech = "magnets=3;syndicate=4"
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "Thermonocle"
@@ -210,6 +221,7 @@
 	desc = "A set of implantable lenses designed to augment your vision"
 	icon_state = "thermalimplants"
 	item_state = "syringe_kit"
+	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/simonglasses
 	name = "Simon's Glasses"
