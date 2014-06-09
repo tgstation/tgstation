@@ -11,7 +11,7 @@
 		return target_zone == "groin" && hasorgans(target)
 
 
-//And thus begins the madness.	
+//And thus begins the madness.
 
 /datum/surgery_step/butt/slice_cheek
 	allowed_tools = list(
@@ -24,20 +24,20 @@
 	max_duration = 70
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && target_zone == "groin" && target.butt_op_stage == 1
+		return ..() && target_zone == "groin" && target.op_stage.butt == 0 && istype(target)
 
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] begins to slice [target]'s ass cheek with \the [tool].", \
 		"You begin to slice [target]'s ass cheek with \the [tool].")
-		target.custom_pain("You haven't felt a pain like this since collage!",1)
+		target.custom_pain("You haven't felt a pain like this since college!",1)
 		..()
 
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] has sliced through [target]'s ass cheek with \the [tool].",		\
 		"\blue You have sliced through [target]'s ass cheek with \the [tool].")
-		target.butt_op_stage = 2
+		target.op_stage.butt = 1
 
 
 
@@ -59,7 +59,7 @@
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && target.butt_op_stage == 2
+		return ..() && target.op_stage.butt == 1
 
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -72,7 +72,7 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] shortens the end of [target]'s anus with \the [tool].",	\
 		"\blue You shorten [target]'s anus with \the [tool].")
-		target.butt_op_stage = 3
+		target.op_stage.butt = 2
 
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -82,7 +82,7 @@
 
 
 
-/datum/surgery_step/brain/saw_hip
+/datum/surgery_step/butt/saw_hip
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
 	/obj/item/weapon/hatchet = 75
@@ -92,7 +92,7 @@
 	max_duration = 70
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && target_zone == "groin" && target.butt_op_stage == 3
+		return ..() && target_zone == "groin" && target.op_stage.butt == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] begins to cut off ends of [target]'s hip with \the [tool].", \
@@ -103,7 +103,7 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] finishes cutting [target]'s hip with \the [tool].",		\
 		"\blue You have cut [target]'s hip with \the [tool].")
-		target.butt_op_stage = 4
+		target.op_stage.butt = 3
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cracking [target]'s hip with \the [tool]!" , \
@@ -123,7 +123,7 @@
 	max_duration = 70
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && target_zone == "groin" && target.butt_op_stage == 4
+		return ..() && target_zone == "groin" && target.op_stage.butt == 3
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] begins to cauterize [target]'s ass with \the [tool].", \
@@ -135,7 +135,7 @@
 		user.visible_message("\blue [user] finishes cauterizing [target]'s ass with \the [tool].",		\
 		"\blue You have cauterized [target]'s ass with \the [tool].")
 		new /obj/item/clothing/head/butt(get_turf(target))
-		target.butt_op_stage = 5
+		target.op_stage.butt = 4
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [target] lets out a small fart, which gets set alight with [user]'s [tool]!" , \
