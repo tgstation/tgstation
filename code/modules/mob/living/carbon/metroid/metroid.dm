@@ -452,9 +452,7 @@
 
 	switch(M.a_intent)
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 
 		if ("harm")
 
@@ -464,20 +462,17 @@
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'> <B>[] has attacked [name]!</B></span>", M), 1)
+					visible_message("<span class='danger'>[M] has attacked [name]!</span>", \
+							"<span class='userdanger'>[M] has attacked [name]!</span>")
 				else
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'> <B>[] has wounded [name]!</B></span>", M), 1)
+					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
+							"<span class='userdanger'>)[M] has wounded [name]!</span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has attempted to lunge at [name]!</B></span>", M), 1)
+				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
+						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
 		if ("grab")
 			if (M == src || anchored)
@@ -491,8 +486,7 @@
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("<span class='warning'> [] has grabbed [name] passively!</span>", M), 1)
+			visible_message("<span class='warning'> [M] has grabbed [name] passively!</span>")
 
 		if ("disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
@@ -500,9 +494,8 @@
 			attacked += 10
 
 			if(prob(95))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has tackled [name]!</B></span>", M), 1)
+				visible_message("<span class='danger'>[M] has tackled [name]!</span>", \
+				"<span class='userdanger'>[M] has tackled [name]!</span>")
 
 				if(Victim || Target)
 					Victim = null
@@ -527,9 +520,8 @@
 
 			else
 				drop_item()
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has disarmed [name]!</B></span>", M), 1)
+				visible_message("<span class='danger'>[M] has disarmed [name]!</span>",
+						"<span class='userdanger'>[M] has disarmed [name]!</span>")
 			adjustBruteLoss(damage)
 			updatehealth()
 	return
@@ -538,7 +530,7 @@
 	if(W.force > 0)
 		attacked += 10
 		if(prob(25))
-			user << "\red [W] passes right through [src]!"
+			user << "<span class='danger'>[W] passes right through [src]!</span>"
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
@@ -1047,9 +1039,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	processing_objects.Remove(src)
 	var/turf/T = get_turf(src)
-	src.visible_message("\blue The [name] pulsates and quivers!")
+	src.visible_message("<span class='warning'> The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("\blue The [name] bursts open!")
+		src.visible_message("<span class='warning'> The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		qdel(src)
 
