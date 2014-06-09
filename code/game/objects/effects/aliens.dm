@@ -47,6 +47,9 @@
 	desc = "Purple slime solidified into a wall."
 	icon_state = "resinwall"	//same as resin, but consistency ho!
 
+/obj/structure/alien/resin/wall/BlockSuperconductivity()
+	return 1
+
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Purple slime just thin enough to let light pass through."

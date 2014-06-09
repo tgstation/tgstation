@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1)))
+		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "bond" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1)))
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
 				new /obj/item/clothing/mask/gas/voice(src)
@@ -13,6 +13,14 @@
 				new /obj/item/weapon/gun/energy/crossbow(src)
 				new /obj/item/weapon/pen/paralysis(src)
 				new /obj/item/device/chameleon(src)
+				return
+
+			if("bond")
+				new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+				new /obj/item/weapon/silencer(src)
+				new /obj/item/ammo_box/magazine/m10mm(src)
+				new /obj/item/ammo_box/magazine/m10mm(src)
+				new /obj/item/clothing/under/chameleon(src)
 				return
 
 			if("screwed")

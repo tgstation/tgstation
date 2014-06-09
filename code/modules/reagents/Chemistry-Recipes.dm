@@ -935,7 +935,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Spawn"
 	id = "m_spawn"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/grey
 	required_other = 1
@@ -951,7 +951,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Monkey"
 	id = "m_monkey"
 	result = null
-	required_reagents = list("blood" = 5)
+	required_reagents = list("blood" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/grey
 	required_other = 1
@@ -966,7 +966,7 @@ datum/chemical_reaction/pestkiller
 	name = "Mutation Toxin"
 	id = "mutationtoxin"
 	result = "mutationtoxin"
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
@@ -978,7 +978,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Metal"
 	id = "m_metal"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/metal
 	required_other = 1
@@ -996,7 +996,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Crit"
 	id = "m_tele"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/gold
 	required_other = 1
@@ -1065,7 +1065,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Crit Lesser"
 	id = "m_tele3"
 	result = null
-	required_reagents = list("blood" = 5)
+	required_reagents = list("blood" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/gold
 	required_other = 1
@@ -1117,7 +1117,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Bork"
 	id = "m_tele2"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/silver
 	required_other = 1
@@ -1148,7 +1148,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Bork 2"
 	id = "m_tele4"
 	result = null
-	required_reagents = list("water" = 5)
+	required_reagents = list("water" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/silver
 	required_other = 1
@@ -1180,7 +1180,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Frost Oil"
 	id = "m_frostoil"
 	result = "frostoil"
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 10
 	required_container = /obj/item/slime_extract/blue
 	required_other = 1
@@ -1192,7 +1192,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Freeze"
 	id = "m_freeze"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/darkblue
 	required_other = 1
@@ -1212,7 +1212,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Capsaicin Oil"
 	id = "m_capsaicinoil"
 	result = "capsaicin"
-	required_reagents = list("blood" = 5)
+	required_reagents = list("blood" = 1)
 	result_amount = 10
 	required_container = /obj/item/slime_extract/orange
 	required_other = 1
@@ -1223,7 +1223,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime fire"
 	id = "m_fire"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/orange
 	required_other = 1
@@ -1243,7 +1243,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime EMP"
 	id = "m_emp"
 	result = null
-	required_reagents = list("blood" = 5)
+	required_reagents = list("blood" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/yellow
 	required_other = 1
@@ -1256,7 +1256,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Powercell"
 	id = "m_cell"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/yellow
 	required_other = 1
@@ -1269,7 +1269,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Glow"
 	id = "m_glow"
 	result = null
-	required_reagents = list("water" = 5)
+	required_reagents = list("water" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/yellow
 	required_other = 1
@@ -1286,7 +1286,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Steroid"
 	id = "m_steroid"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/purple
 	required_other = 1
@@ -1299,7 +1299,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Jam"
 	id = "m_jam"
 	result = "slimejelly"
-	required_reagents = list("sugar" = 5)
+	required_reagents = list("sugar" = 1)
 	result_amount = 10
 	required_container = /obj/item/slime_extract/purple
 	required_other = 1
@@ -1312,7 +1312,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Plasma"
 	id = "m_plasma"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/darkpurple
 	required_other = 1
@@ -1327,7 +1327,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Glycerol"
 	id = "m_glycerol"
 	result = "glycerol"
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 8
 	required_container = /obj/item/slime_extract/red
 	required_other = 1
@@ -1339,14 +1339,13 @@ datum/chemical_reaction/pestkiller
 	name = "Bloodlust"
 	id = "m_bloodlust"
 	result = null
-	required_reagents = list("blood" = 5)
+	required_reagents = list("blood" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/red
 	required_other = 1
 /datum/chemical_reaction/slimebloodlust/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 	for(var/mob/living/carbon/slime/slime in viewers(get_turf(holder.my_atom), null))
-		slime.tame = 0
 		slime.rabid = 1
 		for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 			O.show_message(text("\red The [slime] is driven into a frenzy!."), 1)
@@ -1356,7 +1355,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Potion"
 	id = "m_potion"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/pink
 	required_other = 1
@@ -1371,7 +1370,7 @@ datum/chemical_reaction/pestkiller
 	name = "Advanced Mutation Toxin"
 	id = "mutationtoxin2"
 	result = "amutationtoxin"
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_other = 1
 	required_container = /obj/item/slime_extract/black
@@ -1383,7 +1382,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Explosion"
 	id = "m_explosion"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/oil
 	required_other = 1
@@ -1401,7 +1400,7 @@ datum/chemical_reaction/pestkiller
 	result = null
 	result_amount = 1
 	required_container = /obj/item/slime_extract/lightpink
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	required_other = 1
 /datum/chemical_reaction/slimepotion2/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
@@ -1412,7 +1411,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Golem"
 	id = "m_golem"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/adamantine
 	required_other = 1
@@ -1428,7 +1427,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Crystal"
 	id = "m_crystal"
 	result = null
-	required_reagents = list("blood" = 5)
+	required_reagents = list("blood" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/bluespace
 	required_other = 1
@@ -1444,7 +1443,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Steroid 2"
 	id = "m_steroid2"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/cerulean
 	required_other = 1
@@ -1458,7 +1457,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Camera"
 	id = "m_camera"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/sepia
 	required_other = 1
@@ -1471,7 +1470,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Film"
 	id = "m_film"
 	result = null
-	required_reagents = list("blood" = 5)
+	required_reagents = list("blood" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/sepia
 	required_other = 1
@@ -1487,7 +1486,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Paint"
 	id = "s_paint"
 	result = null
-	required_reagents = list("plasma" = 5)
+	required_reagents = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/pyrite
 	required_other = 1

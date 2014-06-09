@@ -128,8 +128,11 @@
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/New()
 	..()
 	initialize_directions = dir
+	var/obj/item/weapon/circuitboard/thermomachine/H = new /obj/item/weapon/circuitboard/thermomachine(null)
+	H.build_path = /obj/machinery/atmospherics/unary/heat_reservoir/heater
+	H.name = "circuit board (Heater)"
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/thermomachine(null)
+	component_parts += H
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)

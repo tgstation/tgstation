@@ -20,12 +20,12 @@
 	var/list/resources = list(
 										"metal"=0,
 										"glass"=0,
-										"gold"=0,
-										"silver"=0,
+										"bananium"=0,
 										"diamond"=0,
+										"gold"=0,
 										"plasma"=0,
-										"uranium"=0,
-										"bananium"=0
+										"silver"=0,
+										"uranium"=0
 										)
 	var/res_max_amount = 200000
 	var/datum/research/files

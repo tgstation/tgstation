@@ -37,6 +37,11 @@
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/control_freq = 1447		// bot control frequency
 
+	//List of weapons that secbots will not arrest for
+	var/safe_weapons = list(\
+		/obj/item/weapon/gun/energy/laser/bluetag,\
+		/obj/item/weapon/gun/energy/laser/redtag,\
+		/obj/item/weapon/gun/energy/laser/practice)
 
 	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
 	var/new_destination		// pending new destination (waiting for beacon response)
@@ -105,7 +110,7 @@
 
 /obj/machinery/bot/secbot/interact(mob/user as mob)
 	var/dat
-
+	dat += hack(user)
 	dat += text({"
 <TT><B>Automatic Security Unit v1.3</B></TT><BR><BR>
 Status: []<BR>
@@ -136,7 +141,7 @@ Auto Patrol: []"},
 		return
 	usr.set_machine(src)
 	if((href_list["power"]) && (src.allowed(usr)))
-		if(src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -156,6 +161,18 @@ Auto Patrol: []"},
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
 			updateUsrDialog()
+		if("hack")
+			if(!src.emagged)
+				src.emagged = 2
+				src.hacked = 1
+				usr << "<span class='warning'>You overload [src]'s target identification system.</span>"
+			else if(!src.hacked)
+				usr << "<span class='userdanger'>[src] refuses to accept your authority!</span>"
+			else
+				src.emagged = 0
+				src.hacked = 0
+				usr << "<span class='notice'>You reboot [src] and restore the target identification.</span>"
+			src.updateUsrDialog()
 
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -261,7 +278,7 @@ Auto Patrol: []"},
 				mode = SECBOT_HUNT
 				return
 
-			if(istype(src.target,/mob/living/carbon))
+			if(iscarbon(target) && target.canBeHandcuffed())
 				if(!src.target.handcuffed && !src.arrest_type)
 					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
@@ -569,10 +586,8 @@ Auto Patrol: []"},
 		if((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
 			continue
 
-		if(istype(C, /mob/living/carbon/human))
+		if(istype(C, /mob/living/carbon))
 			src.threatlevel = src.assess_perp(C)
-		else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
-			src.threatlevel = 4
 
 		if(!src.threatlevel)
 			continue
@@ -593,48 +608,50 @@ Auto Patrol: []"},
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-/obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/human/perp as mob)
+/obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/perp as mob)
 	var/threatcount = 0
 
 	if(src.emagged == 2) return 10 //Everyone is a criminal!
 
 	if(src.idcheck && !src.allowed(perp))
 
-		if(istype(perp.l_hand, /obj/item/weapon/gun) || istype(perp.l_hand, /obj/item/weapon/melee))
-			if(!istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 4
+		if(check_for_weapons(perp.l_hand))
+			threatcount += 4
+		if(check_for_weapons(perp.r_hand))
+			threatcount += 4
 
-		if(istype(perp.r_hand, /obj/item/weapon/gun) || istype(perp.r_hand, /obj/item/weapon/melee))
-			if(!istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 4
+	if(istype(perp, /mob/living/carbon/human))
+		var/mob/living/carbon/human/humanperp = perp
 
-		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
-			if(!istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/practice))
+		if(src.idcheck && !src.allowed(perp))
+			if(check_for_weapons(humanperp.belt))
 				threatcount += 2
 
-		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
+		if(istype(humanperp.head, /obj/item/clothing/head/wizard) || istype(humanperp.head, /obj/item/clothing/head/helmet/space/rig/wizard))
 			threatcount += 2
 
-		if(perp.dna && perp.dna.mutantrace && perp.dna.mutantrace != "none")
+		if(humanperp.dna && humanperp.dna.mutantrace && humanperp.dna.mutantrace != "none")
 			threatcount += 2
 
 		//Agent cards lower threatlevel.
-		if(perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
+		if(humanperp.wear_id && istype(humanperp.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 			threatcount -= 2
 
-	if(check_records)	//check if they are set to *Arrest* on records
-		var/perpname = perp.get_face_name(perp.get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
-		if(R && (R.fields["criminal"] == "*Arrest*"))
-			threatcount += 4
+		if(check_records)	//check if they are set to *Arrest* on records
+			var/perpname = humanperp.get_face_name(humanperp.get_id_name())
+			var/datum/data/record/R = find_record("name", perpname, data_core.security)
+			if(R && (R.fields["criminal"] == "*Arrest*"))
+				threatcount += 4
+	else
+		threatcount += 2
 
 	return threatcount
+
+/obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
+	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
+		if(!(slot_item.type in safe_weapons))
+			return 1
+	return 0
 
 /obj/machinery/bot/secbot/Bump(M as mob|obj) //Leave no door unopened!
 	if((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
@@ -654,12 +671,6 @@ Auto Patrol: []"},
 			var/turf/T = get_turf(src)
 			M:loc = T
 */
-
-/obj/machinery/bot/secbot/proc/speak(var/message)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
-	return
-
 
 /obj/machinery/bot/secbot/explode()
 

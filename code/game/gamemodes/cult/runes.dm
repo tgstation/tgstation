@@ -861,7 +861,7 @@ var/list/sacrificed = list()
 					user << "\red You cannot summon the [cultist], for his shackles of blood are strong"
 					return fizzle()
 				cultist.loc = src.loc
-				cultist.lying = 1
+				cultist.Weaken(5)
 				cultist.regenerate_icons()
 				for(var/mob/living/carbon/human/C in orange(1,src))
 					if(iscultist(C) && !C.stat)
