@@ -176,7 +176,6 @@
 
 	var/list/possible_modes = list()
 	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
-	possible_modes -= "[ticker.mode]"
 	var/number = pick(2, 3)
 	var/i = 0
 	for(i = 0, i < number, i++)
