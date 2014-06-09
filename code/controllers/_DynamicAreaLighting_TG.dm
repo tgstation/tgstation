@@ -117,7 +117,7 @@ atom
 	var/datum/light_source/light
 	var/trueLuminosity = 0  // Typically 'luminosity' squared.  The builtin luminosity must remain linear.
 	                        // We may read it, but NEVER set it directly.
-	var/l_color.
+	var/l_color
 
 //Turfs with opacity when they are constructed will trigger nearby lights to update
 //Turfs and atoms with luminosity when they are constructed will create a light_source automatically
