@@ -89,7 +89,7 @@
 
 							dat += text("<tr style=[]><td><A href='?src=\ref[];d_rec=[]'>[]</a></td>", background, src, R.fields["id"], R.fields["name"])
 							dat += text("<td>[]</td>", R.fields["id"])
-							dat += text("<td>F:[]<BR>D:[]</td>", R.fields["fingerprint"], b_dna)
+							dat += text("<td><b>F:</b> []<BR><b>D:</b> []</td>", R.fields["fingerprint"], b_dna)
 							dat += text("<td>[]</td>", blood_type)
 							dat += text("<td>[]</td>", R.fields["p_stat"])
 							dat += text("<td>[]</td></tr>", R.fields["m_stat"])

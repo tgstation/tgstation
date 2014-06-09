@@ -464,12 +464,41 @@ What a mess.*/
 				G.fields["rank"] = "Unassigned"
 				G.fields["sex"] = "Male"
 				G.fields["age"] = "Unknown"
-				G.fields["fingerprint"] = "Unknown"
+				G.fields["fingerprint"] = "?????"
 				G.fields["p_stat"] = "Active"
 				G.fields["m_stat"] = "Stable"
 				data_core.general += G
 				active1 = G
-				active2 = null
+
+				var/datum/data/record/R = new /datum/data/record()
+				R.fields["name"] = active1.fields["name"]
+				R.fields["id"] = active1.fields["id"]
+				R.name = text("Security Record #[]", R.fields["id"])
+				R.fields["criminal"] = "None"
+				R.fields["mi_crim"] = list()
+				R.fields["ma_crim"] = list()
+				R.fields["notes"] = "No notes."
+				data_core.security += R
+				active2 = R
+
+						//Medical Record
+				var/datum/data/record/M = new /datum/data/record()
+				M.fields["id"]			= active1.fields["id"]
+				M.fields["name"]		= active1.fields["name"]
+				M.fields["blood_type"]	= "?"
+				M.fields["b_dna"]		= "?????"
+				M.fields["mi_dis"]		= "None"
+				M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
+				M.fields["ma_dis"]		= "None"
+				M.fields["ma_dis_d"]	= "No major disabilities have been diagnosed."
+				M.fields["alg"]			= "None"
+				M.fields["alg_d"]		= "No allergies have been detected in this patient."
+				M.fields["cdi"]			= "None"
+				M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
+				M.fields["notes"]		= "No notes."
+				data_core.medical += M
+
+
 
 //FIELD FUNCTIONS
 			if ("Edit Field")
