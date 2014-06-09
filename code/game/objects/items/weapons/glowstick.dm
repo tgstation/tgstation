@@ -6,7 +6,7 @@
 	name = "glowstick"
 	desc = "A plastic stick filled with luminescent liquid, this one is green."
 	color = GLOW_GREEN
-	icon = 'icons/glowstick.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "glowstick"
 
 	l_color = GLOW_GREEN

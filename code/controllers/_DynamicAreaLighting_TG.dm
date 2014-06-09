@@ -376,7 +376,7 @@ area
 			color_overlay.icon_state = "white"
 		else
 			if (l_color && l_color != LIGHT_WHITE)
-				color_overlay = image('icons/weapons.dmi', ,"white", 10.1)
+				color_overlay = image('icons/obj/weapons.dmi', ,"white", 10.1)
 
 		if (istype(color_overlay))
 			color_overlay.color = l_color
