@@ -609,7 +609,9 @@
 			idle = 0
 #undef LIGHTING_POWER_FACTOR
 
-// called when area power state changes
+/*
+ * Called when area power state changes.
+ */
 /obj/machinery/light/power_change()
 	spawn(10)
 		seton(areaMaster.lightswitch && areaMaster.power_light)
@@ -620,16 +622,16 @@
 	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
 		broken()
 
-// explode the light
-
+/*
+ * Explode the light.
+ */
 /obj/machinery/light/proc/explode()
-	var/turf/T = get_turf(src.loc)
 	spawn(0)
-		broken()	// break it first to give a warning
+		broken() // Break it first to give a warning.
 		sleep(2)
-		explosion(T, 0, 0, 2, 2)
+		explosion(get_turf(src), 0, 0, 2, 2)
 		sleep(1)
-		del(src)
+		qdel(src)
 
 // the light item
 // can be tube or bulb subtypes
