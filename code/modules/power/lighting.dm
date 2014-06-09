@@ -2,6 +2,7 @@
 //
 // consists of light fixtures (/obj/machinery/light) and light tube/bulb items (/obj/item/weapon/light)
 
+#define LIGHTING_POWER_FACTOR 20 // Watt per unit luminosity.
 
 // status values shared between lighting fixtures and items
 #define LIGHT_OK     0
@@ -213,6 +214,8 @@
 	ghost_read=0
 	ghost_write=0
 
+	var/idle = 0 // For process().
+
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
@@ -314,7 +317,7 @@
  * Will not switch on if broken/burned/empty.
  */
 /obj/machinery/light/proc/seton(const/s)
-	on = (s && status == LIGHT_OK)
+	on = (s && LIGHT_OK == status)
 	update()
 
 // examine verb
@@ -590,15 +593,21 @@
 	if(prob(75))
 		broken()
 
-
-// timed process
-// use power
-
-#define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
-
-/obj/machinery/light/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
-	if(on)
-		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
+/obj/machinery/light/process()
+	switch (on)
+		if (1)
+			switch (idle)
+				if (1)
+					use_power = 2
+					idle_power_usage = active_power_usage >> 1
+				if (0)
+					use_power = 1
+					active_power_usage = LIGHTING_POWER_FACTOR * luminosity
+					idle = 1
+		if (0)
+			use_power = 0
+			idle = 0
+#undef LIGHTING_POWER_FACTOR
 
 // called when area power state changes
 /obj/machinery/light/power_change()
