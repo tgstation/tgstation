@@ -25,6 +25,7 @@
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	icon_action_button = "action_welding"
 	siemens_coefficient = 0.9
+	species_fit = list("Vox")
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -173,9 +174,9 @@
 		var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")
 		mob.Blend(earbit, ICON_OVERLAY)
 		mob2.Blend(earbit2, ICON_OVERLAY)
-		
-		
-		
+
+
+
 
 
 /obj/item/clothing/head/butt
