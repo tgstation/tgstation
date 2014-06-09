@@ -581,6 +581,7 @@
 #include "code\game\objects\items\weapons\extinguisher.dm"
 #include "code\game\objects\items\weapons\flamethrower.dm"
 #include "code\game\objects\items\weapons\gift_wrappaper.dm"
+#include "code\game\objects\items\weapons\glowstick.dm"
 #include "code\game\objects\items\weapons\handcuffs.dm"
 #include "code\game\objects\items\weapons\hydroponics.dm"
 #include "code\game\objects\items\weapons\kitchen.dm"
