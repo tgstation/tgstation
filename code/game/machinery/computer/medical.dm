@@ -466,7 +466,8 @@
 				if (!( src.printing ))
 					src.printing = 1
 					data_core.medicalPrintCount++
-					sleep(50)
+					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+					sleep(30)
 					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
 					P.info = "<CENTER><B>Medical Record - (MR-[data_core.medicalPrintCount])</B></CENTER><BR>"
 					if(active1 in data_core.general)

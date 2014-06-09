@@ -350,7 +350,8 @@ What a mess.*/
 				if (!( printing ))
 					printing = 1
 					data_core.securityPrintCount++
-					sleep(50)
+					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+					sleep(30)
 					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 					P.info = "<CENTER><B>Security Record - (SR-[data_core.securityPrintCount])</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
