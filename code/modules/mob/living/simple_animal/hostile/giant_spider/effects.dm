@@ -88,7 +88,7 @@
 		var/num = rand(4,6)
 		for(var/i=0, i<num, i++)
 			//new /obj/effect/spider/spiderling(src.loc)
-			new /mob/living/simple_animal/hostile/giant_spider(src.loc)
+			new /mob/living/simple_animal/hostile/giant_spider/spiderling(src.loc)
 		del(src)
 /*s
 /obj/effect/spider/spiderling
