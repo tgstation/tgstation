@@ -200,22 +200,17 @@ its easier to just keep the beam vertical.
 					//I've found that 3 ticks provided a nice balance for my use.
 	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) qdel(O)
 
-
-//All atoms
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
-	var/determiner = "This is"
-	if(src.gender == PLURAL)
-		determiner = "These are"
 	var/f_name = "\a [src]."
 	if(src.blood_DNA)
 		if(gender == PLURAL)
 			f_name = "some "
 		else
 			f_name = "a "
-		f_name += "<span class='danger'>bloody</span> [name]!"
+		f_name += "<span class='danger'>bloody [name]</span>!"
 
-	user << "\icon[src][determiner] [f_name]"
+	user << "\icon[src] That's [f_name]"
 
 	if(desc)
 		user << desc

@@ -13,7 +13,7 @@
 
 /obj/item/device/onetankbomb/examine(mob/user)
 	..()
-	bombtank.examine(user)
+	user.examinate(bombtank)
 
 /obj/item/device/onetankbomb/update_icon()
 	if(bombtank)

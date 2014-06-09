@@ -54,10 +54,10 @@
 	if(in_range(user, src))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(usr, "[name]")
+			onclose(user, "[name]")
 		else
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(usr, "[name]")
+			onclose(user, "[name]")
 	else
 		user << "<span class='notice'>It is too far away.</span>"
 
@@ -78,7 +78,7 @@
 
 
 /obj/item/weapon/paper/attack_self(mob/user)
-	user.examine(src)
+	user.examinate(src)
 	if(rigged && (events.holiday == "April Fool's Day"))
 		if(spam_flag == 0)
 			spam_flag = 1
