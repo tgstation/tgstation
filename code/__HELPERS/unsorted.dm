@@ -1256,7 +1256,10 @@ proc/get_mob_with_client_list()
 		if (isturf(A))
 			return A
 
-		A = A.loc
+		if (istype(A))
+			A = A.loc
+		else
+			return
 
 /proc/get(atom/loc, type)
 	while(loc)
