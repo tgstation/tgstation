@@ -46,9 +46,11 @@
 	..()
 	if (src.health < maxhealth)
 		if (src.health > maxhealth/3)
-			user << "<span class='warning'>[src]'s parts look loose.</span>"
+			user << "<span class='danger'>[src]'s parts look loose.</span>"
 		else
-			user << "<span class='danger'>[src]'s parts look very loose!</span>"
+			user << "<span class='danger'>[src]'s parts look very loose.</span>"
+	else
+		user << "[src] is in pristine condition."
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	src.health -= rand(15,30)*brute_dam_coeff

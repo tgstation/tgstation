@@ -195,13 +195,13 @@
 		else if (!has_electronics && terminal)
 			user << "There are some wires but not any electronics."
 		else if (has_electronics && !terminal)
-			user << "There are lectronics installed but not any wires."
+			user << "There are electronics installed but not any wires."
 		else /* if (!has_electronics && !terminal) */
 			user << "There are no electronics nor connected wires."
 
 	else
 		if (stat & MAINT)
-			user << "The cover is closed. Something wrong with it: it doesn't work."
+			user << "The cover is closed. Something is wrong with it. It doesn't work."
 		else if (malfhack)
 			user << "The cover is broken. It may be hard to force it open."
 		else

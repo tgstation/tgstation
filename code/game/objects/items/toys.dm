@@ -109,7 +109,7 @@
  */
 /obj/item/toy/gun
 	name = "cap gun"
-	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
+	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
@@ -121,9 +121,9 @@
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
-/obj/item/toy/gun/examine()
-	desc = text("There are [] cap\s left. Looks almost like the real thing! Ages 8 and up.", src.bullets)
+/obj/item/toy/gun/examine(mob/user)
 	..()
+	user << "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob)
 
@@ -163,7 +163,7 @@
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
-	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
+	desc = "Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357-7"
 	w_class = 1.0
@@ -173,8 +173,10 @@
 
 /obj/item/toy/ammo/gun/update_icon()
 	src.icon_state = text("357-[]", src.amount_left)
-	src.desc = text("There are [] cap\s left! Make sure to recycle the box in an autolathe when it gets empty.", src.amount_left)
-	return
+
+/obj/item/toy/ammo/gun/examine(mob/user)
+	..()
+	user << "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
 /*
  * Toy crossbow
@@ -190,10 +192,10 @@
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
 
-/obj/item/toy/crossbow/examine()
+/obj/item/toy/crossbow/examine(mob/user)
 	..()
 	if (bullets)
-		usr << "<span class='info'>It is loaded with [bullets] foam darts.</span>"
+		user << "<span class='info'>It is loaded with [bullets] foam dart\s.</span>"
 
 /obj/item/toy/crossbow/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/toy/ammo/crossbow))

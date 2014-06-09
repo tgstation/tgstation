@@ -33,7 +33,7 @@
 		if(open)
 			user << "The power cell is [cell ? "installed" : "missing"]."
 		else
-			user << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
+			user << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%."
 
 	emp_act(severity)
 		if(stat & (BROKEN|NOPOWER))

@@ -82,7 +82,7 @@
 /obj/item/weapon/card/id/examine(mob/user)
 	..()
 	if(mining_points)
-		user << "There's [mining_points] mining equipment redemption points loaded onto this card."
+		user << "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 
 /obj/item/weapon/card/id/GetAccess()
 	return access

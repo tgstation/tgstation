@@ -660,12 +660,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/examine(mob/user)
 	..()
-	if ((in_range(src, user) || loc == user))
-		if (b_stat)
-			user.show_message("<span class='notice'>\The [src] can be attached and modified.</span>")
-		else
-			user.show_message("<span class='notice'>\The [src] can not be modified or attached.</span>")
-	return
+	if (b_stat)
+		user << "<span class='notice'>[name] can be attached and modified.</span>"
+	else
+		user << "<span class='notice'>[name] can not be modified or attached.</span>"
 
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

@@ -2618,7 +2618,7 @@ ________________________________________________________________________________
 			mode = "Thermal Scanner"
 		if(3)
 			mode = "Meson Scanner"
-	user << "<B>[mode]</B> is active."//Leaving usr here since it may be on the floor or on a person.
+	user << "<B>[mode]</B> is active."
 	user << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
 
 /*

@@ -100,19 +100,6 @@
 
 		return
 
-	examine(mob/user)
-		..()
-		if(!reagents || reagents.total_volume==0)
-			user << "<span class='notice'>\The [src] is empty!</span>"
-		else if (reagents.total_volume<=src.volume/4)
-			user << "<span class='notice'>\The [src] is almost empty!</span>"
-		else if (reagents.total_volume<=src.volume*0.66)
-			user << "<span class='notice'>\The [src] is half full!</span>"
-		else if (reagents.total_volume<=src.volume*0.90)
-			user << "<span class='notice'>\The [src] is almost full!</span>"
-		else
-			user << "<span class='notice'>\The [src] is full!</span>"
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END

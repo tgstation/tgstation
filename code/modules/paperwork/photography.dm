@@ -33,7 +33,7 @@
 
 
 /obj/item/weapon/photo/attack_self(mob/user)
-	user.examine(src)
+	user.examinate(src)
 
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
@@ -142,9 +142,9 @@
 	..()
 
 
-/obj/item/device/camera/examine()
+/obj/item/device/camera/examine(mob/user)
 	..()
-	usr << "It has [pictures_left] photos left."
+	user << "It has [pictures_left] photos left."
 
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)

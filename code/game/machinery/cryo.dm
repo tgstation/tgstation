@@ -88,16 +88,13 @@
 /obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
 
-	if(in_range(user, src))
+	var/list/otherstuff = contents - beaker
+	if(otherstuff.len > 0)
 		user << "You can just about make out some loose objects floating in the murk:"
-		for(var/obj/O in src)
-			if(O != beaker)
-				user << O.name
-		for(var/mob/M in src)
-			if(M != occupant)
-				user << M.name
+		for(var/atom/movable/floater in otherstuff)
+			user << "\icon[floater] [floater.name]"
 	else
-		user << "<span class='notice'>Too far away to view contents.</span>"
+		user << "Seems empty."
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)

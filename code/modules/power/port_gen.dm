@@ -32,7 +32,7 @@ tank [un]loading stuff
 /obj/machinery/power/port_gen/attack_hand(mob/user)
 turn on/off
 
-/obj/machinery/power/port_gen/examine()
+/obj/machinery/power/port_gen/examine(mob/user)
 display round(lastgen) and plasmatank amount
 
 */
