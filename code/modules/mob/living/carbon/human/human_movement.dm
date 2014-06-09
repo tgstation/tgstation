@@ -38,11 +38,6 @@
 		if(((!check_drift) || (check_drift && J.stabilization_on)) && (!lying) && (J.allow_thrust(0.01, src)))
 			inertia_dir = 0
 			return 1
-	//Do we have working magboots
-	if(istype(shoes, /obj/item/clothing/shoes/magboots))
-		var/obj/item/clothing/shoes/magboots/B = shoes
-		if((B.flags & NOSLIP) && istype(src.loc,/turf/simulated/floor) && (!has_gravity(src.loc)))
-			return 1
 	//If no working jetpack or magboots then use the other checks
 	if(..())	return 1
 	return 0
