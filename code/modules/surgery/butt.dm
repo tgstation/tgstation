@@ -104,6 +104,8 @@
 		user.visible_message("\blue [user] finishes cutting [target]'s hip with \the [tool].",		\
 		"\blue You have cut [target]'s hip with \the [tool].")
 		target.op_stage.butt = 3
+		var/obj/item/clothing/head/butt/b = new(target.loc)
+		b.name = "\improper [target.name]'s butt"
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cracking [target]'s hip with \the [tool]!" , \
