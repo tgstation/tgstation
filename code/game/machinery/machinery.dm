@@ -105,8 +105,8 @@ Class Procs:
 		//2 = run auto, use active
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
-	var/power_channel = EQUIP //EQUIP,ENVIRON or LIGHT
-	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
+	var/power_channel = EQUIP // EQUIP, ENVIRON or LIGHT.
+	var/list/component_parts // List of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
 	var/global/gl_uid = 1
@@ -123,7 +123,13 @@ Class Procs:
 	if (src in machines)
 		machines.Remove(src)
 
-	return ..()
+	if (component_parts && component_parts.len)
+		for (var/atom/movable/AM in component_parts)
+			qdel(AM)
+
+		component_parts = null
+
+	..()
 
 /obj/machinery/process() // If you dont use process or power why are you here
 	return PROCESS_KILL
@@ -244,14 +250,14 @@ Class Procs:
 			var/obj/O = P.buffer
 			if(!O)
 				return 1
-			if(!canLink(O))
+			if(!canLink(O,href_list))
 				usr << "\red You can't link with that device."
 				return 1
 			if (isLinkedWith(O))
 				usr << "\red A red light flashes on \the [P]. The two devices are already linked."
 				return 1
 
-			if(linkWith(usr, O))
+			if(linkWith(usr, O, href_list))
 				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
 			else
 				usr << "\red A red light flashes on \the [P].  It appears something went wrong when linking the two devices."

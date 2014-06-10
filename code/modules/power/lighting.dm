@@ -2,6 +2,7 @@
 //
 // consists of light fixtures (/obj/machinery/light) and light tube/bulb items (/obj/item/weapon/light)
 
+#define LIGHTING_POWER_FACTOR 20 // Watt per unit luminosity.
 
 // status values shared between lighting fixtures and items
 #define LIGHT_OK     0
@@ -213,6 +214,8 @@
 	ghost_read=0
 	ghost_write=0
 
+	var/idle = 0 // For process().
+
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
@@ -258,10 +261,7 @@
 			update(0)
 
 /obj/machinery/light/Destroy()
-	var/area/A = get_area(src)
-	if(A)
-		on = 0
-//		A.update_lights()
+	seton(0)
 	..()
 
 /obj/machinery/light/update_icon()
@@ -312,10 +312,12 @@
 		on_gs = on
 
 
-// attempt to set the light's on/off status
-// will not switch on if broken/burned/empty
-/obj/machinery/light/proc/seton(var/s)
-	on = (s && status == LIGHT_OK)
+/*
+ * Attempt to set the light's on/off status.
+ * Will not switch on if broken/burned/empty.
+ */
+/obj/machinery/light/proc/seton(const/s)
+	on = (s && LIGHT_OK == status)
 	update()
 
 // examine verb
@@ -429,12 +431,12 @@
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
 
-
-// returns whether this light has power
-// true if area has power and lightswitch is on
+/*
+ * Returns whether this light has power
+ * TRUE if area has power and lightswitch is on otherwise FALSE.
+ */
 /obj/machinery/light/proc/has_power()
-	var/area/A = src.loc.loc
-	return A.master.lightswitch && A.master.power_light
+	return areaMaster.lightswitch && areaMaster.power_light
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
 	if(flickering) return
@@ -591,17 +593,25 @@
 	if(prob(75))
 		broken()
 
+/obj/machinery/light/process()
+	switch (on)
+		if (1)
+			switch (idle)
+				if (1)
+					use_power = 2
+					idle_power_usage = active_power_usage >> 1
+				if (0)
+					use_power = 1
+					active_power_usage = LIGHTING_POWER_FACTOR * luminosity
+					idle = 1
+		if (0)
+			use_power = 0
+			idle = 0
+#undef LIGHTING_POWER_FACTOR
 
-// timed process
-// use power
-
-#define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
-
-/obj/machinery/light/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
-	if(on)
-		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
-
-// called when area power state changes
+/*
+ * Called when area power state changes.
+ */
 /obj/machinery/light/power_change()
 	spawn(10)
 		seton(areaMaster.lightswitch && areaMaster.power_light)
@@ -612,16 +622,16 @@
 	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
 		broken()
 
-// explode the light
-
+/*
+ * Explode the light.
+ */
 /obj/machinery/light/proc/explode()
-	var/turf/T = get_turf(src.loc)
 	spawn(0)
-		broken()	// break it first to give a warning
+		broken() // Break it first to give a warning.
 		sleep(2)
-		explosion(T, 0, 0, 2, 2)
+		explosion(get_turf(src), 0, 0, 2, 2)
 		sleep(1)
-		del(src)
+		qdel(src)
 
 // the light item
 // can be tube or bulb subtypes

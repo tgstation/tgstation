@@ -627,6 +627,40 @@
 	else
 		icon_state = "exposed"
 
+/obj/machinery/atmospherics/pipe/vent/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+	dir = pipe.dir
+	initialize_directions = pipe.get_pipe_dir()
+	if (pipe.pipename)
+		name = pipe.pipename
+	var/turf/T = loc
+	level = T.intact ? 2 : 1
+	initialize()
+	build_network()
+	if (node1)
+		node1.initialize()
+		node1.build_network()
+	return 1
+
+/obj/machinery/atmospherics/pipe/vent/attackby(var/obj/item/weapon/W, var/mob/user)
+	if (!istype(W, /obj/item/weapon/wrench))
+		return ..()
+	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/int_air = return_air()
+	var/datum/gas_mixture/env_air = T.return_air()
+	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+		user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+		add_fingerprint(user)
+		return 1
+	playsound(T, 'sound/items/Ratchet.ogg', 50, 1)
+	user << "\blue You begin to unfasten \the [src]..."
+	if (do_after(user, 40))
+		user.visible_message( \
+			"[user] unfastens \the [src].", \
+			"\blue You have unfastened \the [src].", \
+			"You hear ratchet.")
+		new /obj/item/pipe(T, make_from=src)
+		del(src)
+
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
 	icon_state = "manifold"

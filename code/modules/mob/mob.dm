@@ -1,19 +1,21 @@
 /mob/recycle(var/datum/materials)
 	return RECYK_BIOLOGICAL
 
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
-	dead_mob_list -= src
-	living_mob_list -= src
+/mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
+	mob_list.Remove(src)
+	dead_mob_list.Remove(src)
+	living_mob_list.Remove(src)
 	ghostize()
 	..()
 
 /mob/New()
-	mob_list += src
-	if(stat == DEAD)
-		dead_mob_list += src
+	mob_list.Add(src)
+
+	if (DEAD == stat)
+		dead_mob_list.Add(src)
 	else
-		living_mob_list += src
+		living_mob_list.Add(src)
+
 	..()
 
 /mob/proc/generate_name()
