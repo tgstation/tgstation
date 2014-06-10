@@ -124,7 +124,10 @@
 	allow_quick_gather = 1
 	use_to_pickup = 1
 	storage_slots = 14
-
+	m_amt = 10
+	g_amt = 60
+	w_type = RECYK_MISC
+	
 /obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
 
 	if (ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
@@ -194,6 +197,8 @@
 /obj/item/weapon/storage/pill_bottle/dice
 	name = "pack of dice"
 	desc = "It's a small container with dice inside."
+	m_amt = 20
+	g_amt = 70
 
 	New()
 		..()
