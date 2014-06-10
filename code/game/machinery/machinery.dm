@@ -123,10 +123,7 @@ Class Procs:
 	if (src in machines)
 		machines.Remove(src)
 
-	if (component_parts && component_parts.len)
-		for (var/atom/movable/AM in component_parts)
-			qdel(AM)
-
+	if (component_parts)
 		component_parts = null
 
 	..()
