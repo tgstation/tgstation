@@ -221,7 +221,7 @@ var/global/list/uneatable = list(
 		var/dist = get_dist(T, src)
 
 		for (var/atom/A in T.contents)
-			if (is_type_in_list(A, uneatable) || A == src) // This is the snowflake.
+			if (A == src) // This is the snowflake.
 				continue
 
 			if (dist <= consume_range)
@@ -398,23 +398,27 @@ var/global/list/uneatable = list(
 			return 0
 	return 1
 
-/obj/machinery/singularity/proc/can_move(var/turf/T)
-	if(!T)
+/obj/machinery/singularity/proc/can_move(const/turf/T)
+	if (!T)
 		eatlimit = maxeat
 		return 0
-	if((locate(/obj/machinery/containment_field) in T)||(locate(/obj/machinery/shieldwall) in T))
+
+	if ((locate(/obj/machinery/containment_field) in T) || (locate(/obj/machinery/shieldwall) in T))
 		eatlimit = 0
 		return 0
-	else if(locate(/obj/machinery/field_generator) in T)
+	else if (locate(/obj/machinery/field_generator) in T)
 		var/obj/machinery/field_generator/G = locate(/obj/machinery/field_generator) in T
-		if(G && G.active)
+
+		if (G && G.active)
 			eatlimit = 0
 			return 0
-	else if(locate(/obj/machinery/shieldwallgen) in T)
+	else if (locate(/obj/machinery/shieldwallgen) in T)
 		var/obj/machinery/shieldwallgen/S = locate(/obj/machinery/shieldwallgen) in T
+
 		if(S && S.active)
 			eatlimit = 0
 			return 0
+
 	eatlimit = maxeat
 	return 1
 
@@ -465,7 +469,7 @@ var/global/list/uneatable = list(
 		M << "\red You look directly into The [name] and feel weak."
 		M.apply_effect(3, STUN)
 
-		for(var/mob/O in viewers(M, null))
+		for (var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] stares blankly at The []!</B>", M, src), 1)
 
 /obj/machinery/singularity/proc/emp_area()
@@ -502,59 +506,55 @@ var/global/list/uneatable = list(
 /obj/machinery/singularity/narsie/large/New()
 	..()
 	world << "<font size='15' color='red'><b>[uppertext(name)] HAS RISEN</b></font>"
-	if(emergency_shuttle)
-		emergency_shuttle.incall(0.3) // Cannot recall
+
+	if (emergency_shuttle)
+		emergency_shuttle.incall(0.3) // Cannot recall.
 
 /obj/machinery/singularity/narsie/process()
 	eat()
-	if(!target || prob(5))
+
+	if (!target || prob(5))
 		pickcultist()
+
 	move()
-	if(prob(25))
+
+	if (prob(25))
 		mezzer()
 
 
-/obj/machinery/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
+/obj/machinery/singularity/narsie/Bump(atom/A) // You dare stand before a god?!
 	consume(A)
 
 /obj/machinery/singularity/narsie/Bumped(atom/A)
 	consume(A)
 
 /obj/machinery/singularity/narsie/mezzer()
-	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(M.stat == CONSCIOUS)
-			if(!iscultist(M))
+	for (var/mob/living/carbon/M in oviewers(8, src))
+		if (CONSCIOUS == M.stat)
+			if (!iscultist(M))
 				M << "\red You feel your sanity crumble away in an instant as you gaze upon [src.name]..."
 				M.apply_effect(3, STUN)
 
-
-/obj/machinery/singularity/narsie/consume(var/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
-	if(is_type_in_list(A, uneatable))
+/obj/machinery/singularity/narsie/consume(const/atom/A) // Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO.
+	if (is_type_in_list(A, uneatable))
 		return 0
-	if(istype(A,/mob/living/))
-		var/mob/living/C = A
-		C.dust() // Changed from gib(), just for less lag.
-	else if(istype(A,/obj/))
-		A:ex_act(1.0)
-		if(A)
-			qdel(A)
-	else if(isturf(A))
+
+	if (istype(A, /mob/living/))
+		var/mob/living/M = A
+		M.gib()
+	else if (istype(A, /obj/))
+		qdel(A)
+	else if (isturf(A))
 		var/turf/T = A
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-				if(O.invisibility == 101)
-					src.consume(O)
-		A:ChangeTurf(/turf/space)
+		T.ChangeTurf(/turf/space)
+
+/obj/machinery/singularity/narsie/ex_act() // No throwing bombs at it either. --NEO.
 	return
 
-/obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
-	return
-
-/obj/machinery/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
+/obj/machinery/singularity/narsie/proc/pickcultist() // Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO.
 	var/list/cultists = list()
-	for(var/datum/mind/cult_nh_mind in ticker.mode.cult)
+
+	for (var/datum/mind/cult_nh_mind in ticker.mode.cult)
 		if(!cult_nh_mind.current)
 			continue
 		if(cult_nh_mind.current.stat)
@@ -563,7 +563,7 @@ var/global/list/uneatable = list(
 		if(pos.z != src.z)
 			continue
 		cultists += cult_nh_mind.current
-	if(cultists.len)
+	if (cultists.len)
 		acquire(pick(cultists))
 		return
 		//If there was living cultists, it picks one to follow.
@@ -590,34 +590,38 @@ var/global/list/uneatable = list(
 		return
 		//no living humans, follow a ghost instead.
 
-/obj/machinery/singularity/narsie/proc/acquire(var/mob/food)
-	var/capname=uppertext(name)
+/obj/machinery/singularity/narsie/proc/acquire(const/mob/food)
+	var/capname = uppertext(name)
+
 	target << "\blue <b>[capname] HAS LOST INTEREST IN YOU</b>"
 	target = food
-	if(ishuman(target))
-		target << "\red <b>[capname] HUNGERS FOR YOUR SOUL</b>"
+
+	if (ishuman(target))
+		target << "\red <b>[capname] HUNGERS FOR YOUR SOUL.</b>"
 	else
-		target << "\red <b>[capname] HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
+		target << "\red <b>[capname] HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL.</b>"
 
-//Wizard narsie
-
+/**
+ * Wizard narsie
+ */
 /obj/machinery/singularity/narsie/wizard
 	grav_pull = 0
 
 /obj/machinery/singularity/narsie/wizard/eat()
-	//set background = 1
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
-	for(var/atom/X in orange(consume_range,src))
-		if(isturf(X) || istype(X, /atom/movable))
-			consume(X)
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
-	return
+	set background = BACKGROUND_ENABLED
 
-/////////////////////////////////////////////////
-// MR. CLEAN
-/////////////////////////////////////////////////
+	if (defer_powernet_rebuild != 2)
+		defer_powernet_rebuild = 1
+
+	for (var/atom/A in trange(consume_range, src))
+		consume(A)
+
+	if (defer_powernet_rebuild != 2)
+		defer_powernet_rebuild = 0
+
+/**
+ * MR. CLEAN.
+ */
 
 var/global/mr_clean_targets=list(
 	/obj/effect/decal/cleanable,
@@ -631,7 +635,8 @@ var/global/mr_clean_targets=list(
 	/obj/effect/blob,
 	/obj/effect/spider,
 )
-/obj/machinery/singularity/narsie/large/clean // Mr. Clean
+
+/obj/machinery/singularity/narsie/large/clean // Mr. Clean.
 	name = "Mr. Clean"
 	desc = "This universe is dirty.  Time to change that."
 	icon = 'icons/obj/mrclean.dmi'
@@ -646,29 +651,24 @@ var/global/mr_clean_targets=list(
 	..()
 	update_icon()
 
-/obj/machinery/singularity/narsie/large/clean/consume(var/atom/A)
-	if(is_type_in_list(A, uneatable))
+/obj/machinery/singularity/narsie/large/clean/consume(const/atom/A)
+	if (is_type_in_list(A, uneatable))
 		return 0
-	if(istype(A,/mob/living/))
+
+	if(istype(A, /mob/living/))
 		var/mob/living/C = A
-		if(isrobot(C))
-			var/mob/living/silicon/robot/R=C
-			if(R.mmi)
-				del(R.mmi) // Nuke MMI
-		del(C) // Just delete it.
-	else if(is_type_in_list(A, mr_clean_targets))
+
+		if (isrobot(C))
+			var/mob/living/silicon/robot/R = C
+
+			if (R.mmi)
+				del(R.mmi) // Nuke MMI.
+		qdel(C) // Just delete it.
+	else if (is_type_in_list(A, mr_clean_targets))
 		qdel(A)
-	else if(isturf(A))
+	else if (isturf(A))
 		var/turf/T = A
 		T.clean_blood()
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-				if(O.invisibility == 101)
-					src.consume(O)
-		//A:ChangeTurf(/turf/space)
-	return
 
 // Mr. Clean just follows the dirt and grime.
 /obj/machinery/singularity/narsie/large/clean/pickcultist()
