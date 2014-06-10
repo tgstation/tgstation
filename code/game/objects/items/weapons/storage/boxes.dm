@@ -461,7 +461,7 @@
 		new /obj/item/weapon/match(src)
 
 /obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/match) && W.lit == 0)
+	if(istype(W, /obj/item/weapon/match))
 		W.matchignite()
 	return
 
