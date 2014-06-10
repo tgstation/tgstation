@@ -93,10 +93,13 @@
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
-		C.use(1)
-		det_time = 50 // In case the cable_coil was removed and readded.
-		stage_change(WIRED)
-		user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
+		if (C.use(1))
+			det_time = 50 // In case the cable_coil was removed and readded.
+			stage_change(WIRED)
+			user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
+		else
+			user << "<span class='warning'>You need one length of coil to wire the assembly.</span>"
+			return
 
 	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
 		stage_change(WIRED)

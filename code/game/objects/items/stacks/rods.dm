@@ -19,7 +19,7 @@
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
-		if(amount < 2)
+		if(get_amount() < 2)
 			user << "\red You need at least two rods to do this."
 			return
 
@@ -54,7 +54,7 @@
 			else
 				return 1
 	else
-		if(amount < 2)
+		if(get_amount() < 2)
 			user << "\blue You need at least two rods to do this."
 			return
 		usr << "\blue Assembling grille..."
@@ -68,3 +68,5 @@
 
 /obj/item/stack/rods/cyborg/
 	m_amt = 0
+	is_cyborg = 1
+	cost = 250

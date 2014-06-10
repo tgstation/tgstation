@@ -653,16 +653,12 @@
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
-				if(M.amount>=2) //requires 2 metal sheets
+				if(M.use(2))
 					user << "<span class='notice'>You add some metal armor to the interior frame.</span>"
 					build_step = 2
-					M.amount -= 2
 					icon_state = "turret_frame2"
-					if(M.amount <= 0)
-						user.unEquip(M, 1) //We're deleting it anyway, so no point in having NODROP fuck shit up.
-						qdel(M)
 				else
-					user << "<span class='warning'>You need two sheets of metal for that.</span>"
+					user << "<span class='warning'>You need two sheets of metal to continue construction.</span>"
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
@@ -743,15 +739,11 @@
 		if(6)
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
-				if(M.amount>=2)
+				if(M.use(2))
 					user << "<span class='notice'>You add some metal armor to the exterior frame.</span>"
 					build_step = 7
-					M.amount -= 2
-					if(M.amount <= 0)
-						user.unEquip(M, 1) //If we don't force-unequip, bugs happen because the item was deleted without updating the neccesary stuffs.
-						qdel(M)
 				else
-					user << "<span class='warning'>You need two sheets of metal for that.</span>"
+					user << "<span class='warning'>You need two sheets of metal to continue construction.</span>"
 				return
 
 			else if(istype(I, /obj/item/weapon/screwdriver))

@@ -137,15 +137,17 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		if (src.stage != 1) return
 		var/obj/item/stack/cable_coil/coil = W
-		coil.use(1)
-		switch(fixture_type)
-			if ("tube")
-				src.icon_state = "tube-construct-stage2"
-			if("bulb")
-				src.icon_state = "bulb-construct-stage2"
-		src.stage = 2
-		user.visible_message("[user.name] adds wires to [src].", \
-			"You add wires to [src].")
+		if (coil.use(1))
+			switch(fixture_type)
+				if ("tube")
+					src.icon_state = "tube-construct-stage2"
+				if("bulb")
+					src.icon_state = "bulb-construct-stage2"
+			src.stage = 2
+			user.visible_message("[user.name] adds wires to [src].", \
+				"You add wires to [src].")
+		else
+			user << "<span class='warning'>You need one length of cable to wire [src]."
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
