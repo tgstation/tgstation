@@ -27,8 +27,6 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/retractor(),\
 		new /obj/item/weapon/cautery(),\
 		new /obj/item/weapon/hemostat(),\
-		new /obj/item/stack/medical/bruise_pack(),\
-		new /obj/item/stack/medical/ointment(),\
 		new /obj/item/weapon/storage/pill_bottle(),\
 		new /obj/item/weapon/reagent_containers/glass/beaker(), \
 		new /obj/item/weapon/reagent_containers/glass/beaker/large(), \
@@ -63,8 +61,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/ammo_casing/shotgun(), \
 		new /obj/item/ammo_casing/shotgun/dart(), \
 		/* new /obj/item/weapon/shield/riot(), */ \
-		new /obj/item/stack/medical/advanced/bruise_pack(),\
-		new /obj/item/stack/medical/advanced/ointment(),\
 	)
 
 /obj/machinery/autolathe
