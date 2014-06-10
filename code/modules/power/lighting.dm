@@ -599,7 +599,7 @@
 			switch (idle)
 				if (1)
 					use_power = 2
-					idle_power_usage = active_power_usage << 1
+					idle_power_usage = active_power_usage >> 1
 				if (0)
 					use_power = 1
 					active_power_usage = LIGHTING_POWER_FACTOR * luminosity
