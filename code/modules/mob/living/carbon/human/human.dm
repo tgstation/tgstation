@@ -507,7 +507,7 @@
 	if(handcuffed)
 		dat += "<BR><B>Handcuffed:</B> <A href='?src=\ref[src];item=handcuff'>Remove</A>"
 	if(legcuffed)
-		dat += "<BR><B>Legcuffed:</B> <A href='?src=\ref[src];item=egcuff'>Remove</A>"
+		dat += "<BR><B>Legcuffed:</B> <A href='?src=\ref[src];item=legcuff'>Remove</A>"
 
 	dat += {"
 	<BR>
@@ -623,8 +623,53 @@
 		siemens_coeff = 0
 	return ..(shock_damage,source,siemens_coeff)
 
+
+/mob/living/carbon/human/proc/num2slotname(var/slot_id)
+	if(slot_id == null)
+		return
+	else if(slot_id == 1)
+		return "back"
+	else if(slot_id == 2)
+		return "mask"
+	else if(slot_id == 3)
+		return "handcuffed"
+	else if(slot_id == 4)
+		return "l_hand"
+	else if(slot_id == 5)
+		return "r_hand"
+	else if(slot_id == 6)
+		return "belt"
+	else if(slot_id == 7)
+		return "wear_id"
+	else if(slot_id == 8)
+		return "ears"
+	else if(slot_id == 9)
+		return "eyes"
+	else if(slot_id == 10)
+		return "gloves"
+	else if(slot_id == 11)
+		return "head"
+	else if(slot_id == 12)
+		return "shoes"
+	else if(slot_id == 13)
+		return "wear_suit"
+	else if(slot_id == 14)
+		return "uniform"
+	else if(slot_id == 15)
+		return "l_store"
+	else if(slot_id == 16)
+		return "r_store"
+	else if(slot_id == 17)
+		return "s_store"
+	else if(slot_id == 18)
+		return "in_backpack"
+	else if(slot_id == 19)
+		return "h_store"
+
+
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
+	var/list/ourlist = list()
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
 	/*
 
@@ -639,8 +684,13 @@
 	*/
 
 		if(href_list["item"])
-			var/slot = text2num(href_list["item"])
-			if(slot in check_obscured_slots())
+			var/slot = href_list["item"]
+
+			for(var/things in check_obscured_slots())
+				ourlist += num2slotname(things)
+			for(var/thingsa in ourlist)
+
+			if(slot in ourlist)
 				usr << "<span class='warning'>You can't reach that. Something is covering it.</span>"
 				return
 			else
@@ -658,8 +708,7 @@
 				O.pickpocket = pickpocket //Stealthy
 				requests += O
 				spawn( 0 )
-					if(!(slot in check_obscured_slots()))
-						O.process()
+					O.process()
 					return
 
 

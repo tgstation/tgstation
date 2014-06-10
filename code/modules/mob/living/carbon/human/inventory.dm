@@ -815,6 +815,7 @@ It can still be worn/put on as normal.
 
 	if(slot_to_process)
 		if(strip_item) //Stripping an item from the mob
+
 			var/obj/item/W = strip_item
 			target.u_equip(W)
 			if (target.client)
@@ -848,4 +849,7 @@ It can still be worn/put on as normal.
 	if(active_only && istype(get_inactive_hand(),/obj/item/device/multitool))
 		return get_inactive_hand()
 	return null
+
+
+
 
