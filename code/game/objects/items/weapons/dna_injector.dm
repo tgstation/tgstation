@@ -1140,7 +1140,7 @@
 		block = ELVISBLOCK
 		..()
 
-/obj/item/weapon/dnainjector/antielvis
+/obj/item/weapon/dnainjector/antiquiet
 	name = "DNA-Injector (Anti-Quiet)"
 	desc = "WOOOO HOOOO!"
 	datatype = DNA2_BUF_SE
