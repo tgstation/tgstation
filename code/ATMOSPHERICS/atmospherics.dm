@@ -26,6 +26,8 @@ Pipelines + Other Objects -> Pipe network
 	// Pipe painter color setting.
 	var/_color
 
+	var/list/available_colors
+
 // Find a connecting /obj/machinery/atmospherics in specified direction.
 /obj/machinery/atmospherics/proc/findConnecting(var/direction)
 	for(var/obj/machinery/atmospherics/target in get_step(src,direction))

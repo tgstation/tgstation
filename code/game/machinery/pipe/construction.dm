@@ -115,7 +115,7 @@ Buildable meters
 			src.pipe_type = PIPE_MTVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w))
 			src.pipe_type = PIPE_MANIFOLD4W
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/cap))
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/cap))
 			src.pipe_type = PIPE_CAP
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/thermal_plate))
 			src.pipe_type = PIPE_THERMAL_PLATE
@@ -373,7 +373,7 @@ var/global/list/pipeID2State = list(
 			P=new /obj/machinery/atmospherics/tvalve(src.loc)
 
 		if(PIPE_CAP)
-			P=new /obj/machinery/atmospherics/pipe/cap(src.loc)
+			P=new /obj/machinery/atmospherics/unary/cap(src.loc)
 
 		if(PIPE_PASSIVE_GATE)		//passive gate
 			P=new /obj/machinery/atmospherics/binary/passive_gate(src.loc)
