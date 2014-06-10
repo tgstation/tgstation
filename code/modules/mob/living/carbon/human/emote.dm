@@ -551,6 +551,7 @@
 				var/list/farts = list("farts","passes wind","toots","tries to fart, but nothing happens.","farts with the force of one thousand suns")
 				var/fart = pick(farts)
 				message = "<b>[src]</b> [fart]."
+				playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
 				m_type = 2
 
 				var/turf/location = get_turf(src)
@@ -569,6 +570,7 @@
 				// Process toxic farts first.
 				if(M_TOXIC_FARTS in mutations)
 					message=""
+					playsound(get_turf(src), 'sound/effects/superfart.ogg', 50, 1)
 					if(wearing_suit)
 						if(!wearing_mask)
 							src << "\red You gas yourself!"

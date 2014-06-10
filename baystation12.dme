@@ -71,6 +71,7 @@
 #include "code\ATMOSPHERICS\components\trinary_devices\filter.dm"
 #include "code\ATMOSPHERICS\components\trinary_devices\mixer.dm"
 #include "code\ATMOSPHERICS\components\trinary_devices\trinary_base.dm"
+#include "code\ATMOSPHERICS\components\unary\cap.dm"
 #include "code\ATMOSPHERICS\components\unary\cold_sink.dm"
 #include "code\ATMOSPHERICS\components\unary\generator_input.dm"
 #include "code\ATMOSPHERICS\components\unary\heat_exchanger.dm"
