@@ -220,7 +220,7 @@ var/global/list/uneatable = list(
 	for (var/turf/T in trange(grav_pull, src)) // TODO: Create a similar trange for orange to prevent snowflake of self check.
 		var/dist = get_dist(T, src)
 
-		for (var/atom/A in T.contents)
+		for (var/atom/movable/A in T.contents)
 			if (A == src) // This is the snowflake.
 				continue
 
@@ -613,8 +613,14 @@ var/global/list/uneatable = list(
 	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 
-	for (var/atom/A in trange(consume_range, src))
-		consume(A)
+	for (var/turf/T in trange(consume_range, src))
+		for (var/atom/movable/AM in T.contents)
+			if (AM == src)
+				continue
+
+			consume(AM)
+
+		consume(T)
 
 	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0

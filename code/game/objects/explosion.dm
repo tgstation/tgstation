@@ -95,7 +95,7 @@
 			else
 				continue
 
-			for (var/atom/A in T.contents)
+			for (var/atom/movable/A in T.contents)
 				A.ex_act(dist)
 
 			T.ex_act(dist)
