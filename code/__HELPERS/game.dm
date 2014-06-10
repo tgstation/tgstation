@@ -17,11 +17,10 @@
 		if (isarea(A))
 			return A
 
-		switch (istype(A))
-			if (1)
-				A = A.loc
-			if (0)
-				return
+		if (istype(A))
+			A = A.loc
+		else
+			return
 
 /proc/get_area_master(const/O)
 	var/area/A = get_area(O)
