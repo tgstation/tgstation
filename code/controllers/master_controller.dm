@@ -11,34 +11,6 @@ var/global/last_tick_duration = 0
 var/global/air_processing_killed = 0
 var/global/pipe_processing_killed = 0
 
-var/list/near = list()
-var/list/nearr = list()
-
-/client/proc/dumpmch()
-	set category = "Debug"
-	set name = "Dump muh mch"
-	var/temp
-
-	usr << "--------"
-	for (var/x = 1 to near.len)
-		temp = null
-		for (var/y = 1 to length(near[x]))
-			temp += "[near[x][y]], "
-		usr << temp
-
-	usr << "/--------/"
-
-	for (var/x = 1 to nearr.len)
-		temp = null
-		for (var/y = 1 to length(nearr[x]))
-			temp += "[nearr[x][y]], "
-		usr << temp
-
-	// This list get too big fast so use only after the feature cooldowned.
-	//nearr = list()
-
-	usr << "--------"
-
 #ifdef PROFILE_MACHINES
 // /type = time this tick
 var/list/machine_profiling=list()
@@ -318,17 +290,13 @@ datum/controller/game_controller/proc/processMobs()
 			if (Machinery && Machinery.use_power)
 				Machinery.auto_use_power()
 
-			var/end = world.timeofday
-			var/timeUsed = end - start
-
-			if (timeUsed > 1)
-				near += list(list("[worldtime2text()]", timeUsed, Machinery.x, Machinery.y, Machinery.z, Machinery.type))
-
 			#ifdef PROFILE_MACHINES
-			if(!(Machinery.type in machine_profiling))
+			var/end = world.timeofday
+
+			if (!(Machinery.type in machine_profiling))
 				machine_profiling[Machinery.type] = 0
 
-			machine_profiling[Machinery.type] += end - start
+			machine_profiling[Machinery.type] += (end - start)
 			#endif
 
 
