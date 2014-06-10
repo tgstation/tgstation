@@ -83,6 +83,22 @@
 		if(prob(newsev*25)+25) // 1=100, 2=75, 3=50
 			qdel(src)
 
+/obj/item/weapon/storage/lockbox/emp_act(severity)
+	..()
+	if(!broken)
+		switch(severity)
+			if(1)
+				if(prob(80))
+					locked = !locked
+					src.update_icon()
+			if(2)
+				if(prob(50))
+					locked = !locked
+					src.update_icon()
+			if(3)
+				if(prob(25))
+					locked = !locked
+					src.update_icon()
 
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "Lockbox (Loyalty Implants)"
