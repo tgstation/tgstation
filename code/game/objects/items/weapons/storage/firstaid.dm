@@ -126,7 +126,6 @@
 	storage_slots = 14
 	m_amt = 10
 	g_amt = 60
-	w_type = RECYK_MISC
 	
 /obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
 
