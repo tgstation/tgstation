@@ -789,7 +789,7 @@
 "api" = (/obj/machinery/atmospherics/pipe/simple{dir = 5; icon_state = "intact"; level = 2},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "apj" = (/obj/machinery/atmospherics/valve{dir = 4},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "apk" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
-"apl" = (/obj/structure/closet,/obj/item/clothing/gloves/white{color = "yellow"; desc = "The colors are a bit dodgy."; icon_state = "yellow"; name = "insulated gloves"},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
+"apl" = (/obj/structure/closet,/obj/item/clothing/gloves/white{color = "yellow"; desc = "The colors are a bit dodgy."; icon_state = "yellow"; item_color = "yellow"; item_state = "ygloves"; name = "insulated gloves"},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "apm" = (/obj/structure/closet/emcloset,/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "apn" = (/obj/machinery/power/apc{dir = 1; name = "Arrivals North Maintenance APC"; pixel_x = -1; pixel_y = 26},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "apo" = (/obj/machinery/camera{c_tag = "Fore Port Solar Access"},/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
