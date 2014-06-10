@@ -18,20 +18,22 @@
 		//SN src = null
 		qdel(src)
 	if (istype(W, /obj/item/stack/rods))
-		if (W:amount >= 4)
+		var/obj/item/stack/rods/R = W
+		if (R.amount >= 4)
 			new /obj/item/weapon/table_parts/reinforced( user.loc )
-			user << "\blue You reinforce the [name]."
-			W:use(4)
+			user << "<span class='notice'>You reinforce the [name].</span>"
+			R.use(4)
 			qdel(src)
-		else if (W:amount < 4)
-			user << "\red You need at least four rods to do this."
+		else if (R.amount < 4)
+			user << "<span class='notice'>You need at least 4 rods to do that.</span>"
 
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)
-	new /obj/structure/table( user.loc )
-	user.drop_item()
-	qdel(src)
-	return
-
+	user << "<span class='notice'>Constructing table..</span>"
+	if (do_after(user, construct_delay))
+		new table_type( user.loc )
+		user.drop_item()
+		qdel(src)
+		return
 
 /*
  * Reinforced Table Parts
@@ -42,18 +44,12 @@
 		new /obj/item/stack/rods( user.loc )
 		qdel(src)
 
-/obj/item/weapon/table_parts/reinforced/attack_self(mob/user as mob)
-	new /obj/structure/table/reinforced( user.loc )
-	user.drop_item()
-	qdel(src)
-	return
-
 /*
  * Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/wood( user.loc )
+		new /obj/item/stack/sheet/mineral/wood( user.loc )
 		qdel(src)
 
 	if (istype(W, /obj/item/stack/tile/grass))
@@ -62,15 +58,11 @@
 			Grass.amount -= 1
 		else
 			qdel(Grass)
-		new /obj/item/weapon/table_parts/wood/poker( src.loc )
+		var/obj/item/weapon/table_parts/wood/poker/P = new
+		user.put_in_hands(P)
 		visible_message("<span class='notice'>[user] adds grass to the wooden table parts</span>")
-		qdel(src)
 
-/obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)
-	new /obj/structure/table/woodentable( user.loc )
-	user.drop_item()
-	qdel(src)
-	return
+		qdel(src)
 
 
 /*
@@ -79,16 +71,9 @@
 
 /obj/item/weapon/table_parts/wood/poker/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/wood( user.loc )
+		new /obj/item/stack/sheet/mineral/wood( user.loc )
 		new /obj/item/stack/tile/grass( user.loc )
 		qdel(src)
-
-/obj/item/weapon/table_parts/wood/poker/attack_self(mob/user as mob)
-	new /obj/structure/table/woodentable/poker( user.loc )
-	user.drop_item()
-	qdel(src)
-	return
-
 
 /*
  * Rack Parts
@@ -102,8 +87,10 @@
 	return
 
 /obj/item/weapon/rack_parts/attack_self(mob/user as mob)
-	var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
-	R.add_fingerprint(user)
-	user.drop_item()
-	qdel(src)
-	return
+	user << "<span class='notice'>Constructing rack...</span>"
+	if (do_after(user, 50))
+		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
+		R.add_fingerprint(user)
+		user.drop_item()
+		qdel(src)
+		return

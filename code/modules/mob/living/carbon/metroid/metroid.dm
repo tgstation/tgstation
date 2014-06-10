@@ -15,7 +15,7 @@
 	gender = NEUTER
 
 	update_icon = 0
-	nutrition = 700 // 1000 = max
+	nutrition = 700
 
 	see_in_dark = 8
 	update_slimes = 0
@@ -25,23 +25,27 @@
 	status_flags = CANPARALYSE|CANPUSH
 
 	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
+	var/mutation_chance = 30 // Chance of mutating, should be between 25 and 35
 
-	var/powerlevel = 0 	// 1-10 controls how much electricity they are generating
-	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows into an adult
-						 // if adult: if 10: reproduces
+	var/powerlevel = 0 // 1-10 controls how much electricity they are generating
+	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows or reproduces
 
+	var/number = 0 // Used to understand when someone is talking to it
 
 	var/mob/living/Victim = null // the person the slime is currently feeding on
 	var/mob/living/Target = null // AI variable - tells the slime to hunt this down
+	var/mob/living/Leader = null // AI variable - tells the slime to follow this person
 
-	var/attacked = 0 // determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
-	var/tame = 0 // if set to 1, the slime will not eat humans ever, or attack them
-	var/rabid = 0 // if set to 1, the slime will attack and eat anything it comes in contact with
+	var/attacked = 0 // Determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
+	var/rabid = 0 // If set to 1, the slime will attack and eat anything it comes in contact with
+	var/holding_still = 0 // AI variable, cooloff-ish for how long it's going to stay in one place
+	var/target_patience = 0 // AI variable, cooloff-ish for how long it's going to follow its target
 
-	var/list/Friends = list() // A list of potential friends
-	var/list/FriendsWeight = list() // A list containing values respective to Friends. This determines how many times a slime "likes" something. If the slime likes it more than 2 times, it becomes a friend
+	var/list/Friends = list() // A list of friends; they are not considered targets for feeding; passed down after splitting
 
-	// slimes pass on genetic data, so all their offspring have the same "Friends",
+	var/list/speech_buffer = list() // Last phrase said near it and person who said it
+
+	var/mood = "" // To show its face
 
 	///////////TIME FOR SUBSPECIES
 
@@ -52,19 +56,27 @@
 /mob/living/carbon/slime/New()
 	create_reagents(100)
 	spawn (0)
-		name = "[colour] [is_adult ? "adult" : "baby"] slime ([rand(1, 1000)])"
+		number = rand(1, 1000)
+		name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
 		icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
 		real_name = name
 		slime_mutation = mutation_table(colour)
+		mutation_chance = rand(25, 35)
 		var/sanitizedcolour = replacetext(colour, " ", "")
 		coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	..()
 
 /mob/living/carbon/slime/regenerate_icons()
 	icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
+	overlays.len = 0
+	if (mood)
+		overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
 	..()
 
 /mob/living/carbon/slime/movement_delay()
+	if (bodytemperature >= 330.23) // 135 F
+		return -1	// slimes become supercharged at high temperatures
+
 	var/tally = 0
 
 	var/health_deficiency = (100 - health)
@@ -74,23 +86,19 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
 	if(reagents)
-		if(reagents.has_reagent("hyperzine")) // hyperzine slows slimes down
-			tally *= 2 // moves twice as slow
+		if(reagents.has_reagent("hyperzine")) // Hyperzine slows slimes down
+			tally *= 2
 
-		if(reagents.has_reagent("frostoil")) // frostoil also makes them move VEEERRYYYYY slow
+		if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
 			tally *= 5
 
 	if(health <= 0) // if damaged, the slime moves twice as slow
 		tally *= 2
 
-	if (bodytemperature >= 330.23) // 135 F
-		return -1	// slimes become supercharged at high temperatures
-
-	return tally+config.slime_delay
-
+	return tally + config.slime_delay
 
 /mob/living/carbon/slime/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
+	if ((!(yes) || now_pushing))
 		return
 	now_pushing = 1
 
@@ -98,31 +106,21 @@
 		if(!client && powerlevel > 0)
 			var/probab = 10
 			switch(powerlevel)
-				if(1 to 2) probab = 20
-				if(3 to 4) probab = 30
-				if(5 to 6) probab = 40
-				if(7 to 8) probab = 60
-				if(9) 	   probab = 70
-				if(10) 	   probab = 95
+				if(1 to 2)	probab = 20
+				if(3 to 4)	probab = 30
+				if(5 to 6)	probab = 40
+				if(7 to 8)	probab = 60
+				if(9)		probab = 70
+				if(10)		probab = 95
 			if(prob(probab))
-
-
 				if(istype(AM, /obj/structure/window) || istype(AM, /obj/structure/grille))
-					if(is_adult)
-						if(nutrition <= 600 && !Atkcool)
+					if(nutrition <= get_hunger_nutrition() && !Atkcool)
+						if (is_adult || prob(5))
 							AM.attack_slime(src)
 							spawn()
 								Atkcool = 1
-								sleep(15)
+								sleep(45)
 								Atkcool = 0
-					else
-						if(nutrition <= 500 && !Atkcool)
-							if(prob(5))
-								AM.attack_slime(src)
-								spawn()
-									Atkcool = 1
-									sleep(15)
-									Atkcool = 0
 
 	if(ismob(AM))
 		var/mob/tmob = AM
@@ -156,7 +154,6 @@
 /mob/living/carbon/slime/Process_Spacemove()
 	return 2
 
-
 /mob/living/carbon/slime/Stat()
 	..()
 
@@ -166,19 +163,15 @@
 	else
 		stat(null, "Health: [round((health / 150) * 100)]%")
 
-
 	if (client.statpanel == "Status")
-		if(is_adult)
-			stat(null, "Nutrition: [nutrition]/1200")
-			if(amount_grown >= 10)
+		stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
+		if(amount_grown >= 10)
+			if(is_adult)
 				stat(null, "You can reproduce!")
-		else
-			stat(null, "Nutrition: [nutrition]/1000")
-			if(amount_grown >= 10)
+			else
 				stat(null, "You can evolve!")
 
 		stat(null,"Power Level: [powerlevel]")
-
 
 /mob/living/carbon/slime/adjustFireLoss(amount)
 	..(-abs(amount)) // Heals them
@@ -188,7 +181,6 @@
 	attacked += 10
 	..(Proj)
 	return 0
-
 
 /mob/living/carbon/slime/emp_act(severity)
 	powerlevel = 0 // oh no, the power!
@@ -244,28 +236,15 @@
 /mob/living/carbon/slime/unEquip(obj/item/W as obj)
 	return
 
-
 /mob/living/carbon/slime/attack_ui(slot)
 	return
-
-/mob/living/carbon/slime/meteorhit(O as obj)
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message(text("<span class='warning'> [] has been hit by []</span>", src, O), 1)
-	if (health > 0)
-		adjustBruteLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
-		adjustFireLoss(30)
-
-		updatehealth()
-	return
-
 
 /mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
 
-	if(Victim) return // can't attack while eating!
+	if (Victim) return // can't attack while eating!
 
 	if (health > -100)
 
@@ -276,18 +255,15 @@
 		var/damage = rand(1, 3)
 		attacked += 5
 
-		if(is_adult)
+		if(M.is_adult)
 			damage = rand(1, 6)
 		else
 			damage = rand(1, 3)
 
 		adjustBruteLoss(damage)
 
-
 		updatehealth()
-
 	return
-
 
 /mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
@@ -299,11 +275,13 @@
 			O.show_message("<span class='warning'> <B>[M]</B> [M.attacktext] [src]!</span>", 1)
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		attacked += 10
 		adjustBruteLoss(damage)
 		updatehealth()
 
 /mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M as mob)
-	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
+	if(!(istype(M, /mob/living/carbon/monkey)))
+		return // Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
@@ -312,6 +290,7 @@
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
+
 	..()
 
 	switch(M.a_intent)
@@ -412,7 +391,7 @@
 		if ("grab")
 			if (M == src || anchored)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
@@ -433,8 +412,9 @@
 			if (prob(90))
 				if (HULK in M.mutations)
 					damage += 5
-					if(Victim)
+					if(Victim || Target)
 						Victim = null
+						Target = null
 						anchored = 0
 						if(prob(80) && !client)
 							Discipline++
@@ -524,8 +504,9 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("<span class='warning'> <B>[] has tackled [name]!</B></span>", M), 1)
 
-				if(Victim)
+				if(Victim || Target)
 					Victim = null
+					Target = null
 					anchored = 0
 					if(prob(80) && !client)
 						Discipline++
@@ -559,16 +540,17 @@
 		if(prob(25))
 			user << "\red [W] passes right through [src]!"
 			return
-		if(Discipline && prob(50))	// wow, buddy, why am I getting attacked??
+		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
 	if(W.force >= 3)
 		if(is_adult)
 			if(prob(5 + round(W.force/2)))
-				if(Victim)
+				if(Victim || Target)
 					if(prob(80) && !client)
 						Discipline++
 
 					Victim = null
+					Target = null
 					anchored = 0
 
 					spawn()
@@ -588,7 +570,7 @@
 
 		else
 			if(prob(10 + W.force*2))
-				if(Victim)
+				if(Victim || Target)
 					if(prob(80) && !client)
 						Discipline++
 					if(Discipline == 1)
@@ -599,6 +581,7 @@
 						SStun = 0
 
 					Victim = null
+					Target = null
 					anchored = 0
 
 					spawn(0)
@@ -615,10 +598,8 @@
 /mob/living/carbon/slime/restrained()
 	return 0
 
-
 mob/living/carbon/slime/var/co2overloadtime = null
 mob/living/carbon/slime/var/temperature_resistance = T0C+75
-
 
 /mob/living/carbon/slime/show_inv(mob/user)
 	return
@@ -626,6 +607,13 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /mob/living/carbon/slime/toggle_throw_mode()
 	return
 
+/mob/living/carbon/slime/proc/apply_water()
+	adjustToxLoss(rand(15,20))
+	if (!client)
+		if (Target) // Like cats
+			Target = null
+			++Discipline
+	return
 
 /obj/item/slime_extract
 	name = "slime extract"

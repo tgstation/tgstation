@@ -144,7 +144,9 @@
 
 					if( ! ( item_to_add.type in allowed_types ) )
 						usr << "You set [item_to_add] on [src]'s back, but \he shakes it off!"
-						usr.drop_item()
+						if(!usr.drop_item())
+							usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
+							return
 						item_to_add.loc = loc
 						if(prob(25))
 							step_rand(item_to_add)
@@ -305,17 +307,21 @@
 
 	if(valid)
 		if(usr)
+			if(!usr.drop_item())
+				usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+				return 0
 			usr.visible_message("[usr] puts [item_to_add] on [real_name]'s head.  [src] looks at [usr] and barks once.",
 				"You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.",
 				"You hear a friendly-sounding bark.")
-			usr.drop_item()
 		item_to_add.loc = src
 		src.inventory_head = item_to_add
 		regenerate_icons()
 
 	else
+		if(!usr.drop_item())
+			usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+			return 0
 		usr << "You set [item_to_add] on [src]'s head, but \he shakes it off!"
-		usr.drop_item()
 		item_to_add.loc = loc
 		if(prob(25))
 			step_rand(item_to_add)
@@ -331,14 +337,12 @@
 	name = "Ian"
 	real_name = "Ian"	//Intended to hold the name without altering it.
 	gender = MALE
-	desc = "wow"
+	desc = "It's a corgi."
 	var/turns_since_scan = 0
 	var/obj/movement_target
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
-
-	speak = list("wow", "such corgi", "much cute", "very pet")
 
 /mob/living/simple_animal/corgi/Ian/Life()
 	..()
@@ -384,16 +388,12 @@
 						if(prob(20))
 							emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
 
-		if(prob(2))
-			say(pick("wow", "such dog", "much corgi", "very cute"))
-
 		if(prob(1))
 			emote(pick("dances around","chases its tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
 					sleep(1)
-
 
 /mob/living/simple_animal/corgi/Ian/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -423,22 +423,10 @@
 		now_pushing = null
 //PC stuff-Sieve
 
-/mob/living/simple_animal/corgi/Ian/Die()
-	say(pick("wow", "much die", "very dead", "such afterlife"))
-	..()
-
-/mob/living/simple_animal/corgi/Ian/gib(animation)
-	say(pick("wow", "such gore", "much graphic", "very gib"))
-	..()
-
-/mob/living/simple_animal/corgi/Ian/adjustBruteLoss(damage)
-	say(pick("wow", "much hurt", "very pain", "such damage"))
-
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/weapon/newspaper))
 		if(!stat)
 			user.visible_message("\blue [user] baps [name] on the nose with the rolled up [O]")
-			say(pick("much pain", "very hurt", "such sad"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					dir = i

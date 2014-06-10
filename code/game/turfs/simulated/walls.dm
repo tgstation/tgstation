@@ -92,12 +92,14 @@
 	user.changeNext_move(8)
 	if ((HULK in user.mutations))
 		if (prob(hardness))
-			usr << text("\blue You smash through the wall.")
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+			usr << text("<span class='notice'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
-			usr << text("\blue You punch the wall.")
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+			usr << text("<span class='notice'>You punch the wall.</span>")
 			return
 
 	return src.attack_hand(user)
@@ -108,11 +110,13 @@
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
 				dismantle_wall(1)
-				M << "<span class='info'>You smash through the wall.</span>"
+				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+				M << "<span class='notice'>You smash through the wall.</span>"
 			else
-				M << "<span class='info'>This wall is far too strong for you to destroy.</span>"
+				M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 		else
-			M << "<span class='info'>You smash through the wall.</span>"
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+			M << "<span class='notice'>You smash through the wall.</span>"
 			dismantle_wall(1)
 			return
 
@@ -120,15 +124,17 @@
 	user.changeNext_move(8)
 	if (HULK in user.mutations)
 		if (prob(hardness))
-			usr << text("\blue You smash through the wall.")
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+			usr << text("<span class='notice'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
-			usr << text("\blue You punch the wall.")
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+			usr << text("<span class='notice'>You punch the wall.</span>")
 			return
 
-	user << "\blue You push the wall but nothing happens!"
+	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	..()
@@ -282,30 +288,29 @@
 /turf/simulated/wall/proc/thermitemelt(mob/user as mob)
 	if(mineral == "diamond")
 		return
+
+	overlays = list()
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
-	O.name = "Thermite"
+	O.name = "thermite"
 	O.desc = "Looks hot."
 	O.icon = 'icons/effects/fire.dmi'
 	O.icon_state = "2"
 	O.anchored = 1
+	O.opacity = 1
 	O.density = 1
 	O.layer = 5
 
-	var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
-	F.burn_tile()
-	F.icon_state = "wall_thermite"
-	user << "<span class='warning'>The thermite melts through the wall.</span>"
+	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-	spawn(100)
-		if(O)	qdel(O)
-//	F.sd_LumReset()		//TODO: ~Carn
-	return
-
-/turf/simulated/wall/meteorhit(obj/M as obj)
-	if (prob(15))
-		dismantle_wall()
-	else if(prob(70))
-		ChangeTurf(/turf/simulated/floor/plating)
+	if(thermite >= 50)
+		var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
+		F.burn_tile()
+		F.icon_state = "wall_thermite"
+		F.add_hiddenprint(user)
+		spawn(max(100,300-thermite))
+			if(O)	qdel(O)
 	else
-		ReplaceWithLattice()
-	return 0
+		thermite = 0
+		spawn(50)
+			if(O)	qdel(O)
+	return

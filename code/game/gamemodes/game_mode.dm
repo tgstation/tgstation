@@ -45,8 +45,9 @@
 	for(var/mob/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
-	if(playerC < required_players)
-		return 0
+	if(!Debug2)
+		if(playerC < required_players)
+			return 0
 	antag_candidates = get_players_for_role(antag_flag)
 	if(!Debug2)
 		if(antag_candidates.len < required_enemies)
@@ -175,7 +176,6 @@
 
 	var/list/possible_modes = list()
 	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
-	possible_modes -= "[ticker.mode]"
 	var/number = pick(2, 3)
 	var/i = 0
 	for(i = 0, i < number, i++)
@@ -202,10 +202,7 @@
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
-			M << sound('sound/AI/intercept.ogg')
+	priority_announce("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.", 'sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 

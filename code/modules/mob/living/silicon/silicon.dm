@@ -31,7 +31,7 @@
 		alarm_types_clear[type] += 1
 
 	if(!in_cooldown)
-		spawn(10 * 10) // 10 seconds
+		spawn(3 * 10) // 10 seconds
 
 			if(alarms_to_show.len < 5)
 				for(var/msg in alarms_to_show)
@@ -299,3 +299,11 @@
                                                 return
                         step(AM, t)
                 now_pushing = null
+
+/mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
+	return 0
+
+// The src mob is trying to place an item on someone
+// But the src mob is a silicon!!  Disable.
+/mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
+	return 0

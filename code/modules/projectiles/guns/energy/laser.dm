@@ -60,6 +60,8 @@ obj/item/weapon/gun/energy/laser/retro
 				chambered.newshot()
 	return
 
+/obj/item/weapon/gun/energy/laser/cyborg/emp_act()
+	return
 
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"

@@ -171,7 +171,7 @@
 		Ninja.internals.icon_state = "internal1"
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
-		error("The ninja wasn't assigned the right mind. ;(")
+		ERROR("The ninja wasn't assigned the right mind. ;ç;")
 
 	success_spawn = 1
 
@@ -2369,7 +2369,7 @@ ________________________________________________________________________________
 						var/drained = 0
 						if(PN&&do_after(U,10))
 							drained = min(drain, PN.avail)
-							PN.newload += drained
+							PN.load += drained
 							if(drained < drain)//if no power on net, drain apcs
 								for(var/obj/machinery/power/terminal/T in PN.nodes)
 									if(istype(T.master, /obj/machinery/power/apc))
@@ -2415,13 +2415,13 @@ ________________________________________________________________________________
 
 		if("WIRE")
 			var/obj/structure/cable/A = target
-			var/datum/powernet/PN = A.get_powernet()
+			var/datum/powernet/PN = A.powernet
 			while(G.candrain&&!maxcapacity&&!isnull(A))
 				drain = (round((rand(G.mindrain,G.maxdrain))/2))
 				var/drained = 0
 				if(PN&&do_after(U,10))
 					drained = min(drain, PN.avail)
-					PN.newload += drained
+					PN.load += drained
 					if(drained < drain)//if no power on net, drain apcs
 						for(var/obj/machinery/power/terminal/T in PN.nodes)
 							if(istype(T.master, /obj/machinery/power/apc))
@@ -2736,11 +2736,6 @@ It is possible to destroy the net by the occupant or someone else.
 		return
 
 	blob_act()
-		health-=50
-		healthcheck()
-		return
-
-	meteorhit()
 		health-=50
 		healthcheck()
 		return

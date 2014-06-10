@@ -20,12 +20,12 @@
 	var/list/resources = list(
 										"metal"=0,
 										"glass"=0,
-										"gold"=0,
-										"silver"=0,
+										"bananium"=0,
 										"diamond"=0,
+										"gold"=0,
 										"plasma"=0,
-										"uranium"=0,
-										"bananium"=0
+										"silver"=0,
+										"uranium"=0
 										)
 	var/res_max_amount = 200000
 	var/datum/research/files
@@ -695,10 +695,10 @@
 			return 0
 	var/result = 0
 	var/obj/item/stack/sheet/res = new type(src)
-	var/total_amount = round(resources[mat_string]/res.perunit)
-	res.amount = min(total_amount,amount)
+	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
+	res.amount = min(total_amount,res.max_amount)
 	if(res.amount>0)
-		resources[mat_string] -= res.amount*res.perunit
+		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
 		res.Move(src.loc)
 		result = res.amount
 	else
@@ -713,34 +713,48 @@
 	if(exchange_parts(user, W))
 		return
 
-	default_deconstruction_crowbar(W)
-
-	if (panel_open)
+	if(panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
-			if(src.resources["metal"] >= 3750)
+			while(src.resources["metal"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
-				G.amount = round(src.resources["metal"] / G.perunit)
-			if(src.resources["glass"] >= 3750)
+				var/sheet_conversion = round(src.resources["metal"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["metal"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["glass"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-				G.amount = round(src.resources["glass"] / G.perunit)
-			if(src.resources["plasma"] >= 2000)
+				var/sheet_conversion = round(src.resources["glass"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["glass"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["plasma"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/plasma/G = new /obj/item/stack/sheet/mineral/plasma(src.loc)
-				G.amount = round(src.resources["plasma"] / G.perunit)
-			if(src.resources["silver"] >= 2000)
+				var/sheet_conversion = round(src.resources["plasma"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["plasma"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["silver"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/silver/G = new /obj/item/stack/sheet/mineral/silver(src.loc)
-				G.amount = round(src.resources["silver"] / G.perunit)
-			if(src.resources["gold"] >= 2000)
+				var/sheet_conversion = round(src.resources["silver"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["silver"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["gold"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold(src.loc)
-				G.amount = round(src.resources["gold"] / G.perunit)
-			if(src.resources["uranium"] >= 2000)
+				var/sheet_conversion = round(src.resources["gold"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["gold"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["uranium"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium(src.loc)
-				G.amount = round(src.resources["uranium"] / G.perunit)
-			if(src.resources["diamond"] >= 2000)
+				var/sheet_conversion = round(src.resources["uranium"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["uranium"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["diamond"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
-				G.amount = round(src.resources["diamond"] / G.perunit)
-			if(src.resources["bananium"] >= 2000)
+				var/sheet_conversion = round(src.resources["diamond"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["diamond"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["bananium"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
-				G.amount = round(src.resources["bananium"] / G.perunit)
+				var/sheet_conversion = round(src.resources["bananium"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["bananium"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
 			return 1
 		else
@@ -776,12 +790,11 @@
 		return
 	var/obj/item/stack/sheet/stack = W
 	var/sname = "[stack.name]"
-	var/amnt = stack.perunit
 	if(src.resources[material] < res_max_amount)
 		var/count = 0
 		src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 		while(src.resources[material] < res_max_amount && stack && stack.amount > 0)
-			src.resources[material] += amnt
+			src.resources[material] += MINERAL_MATERIAL_AMOUNT
 			stack.use(1)
 			count++
 		sleep(10)

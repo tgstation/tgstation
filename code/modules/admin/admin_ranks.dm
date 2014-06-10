@@ -10,7 +10,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	name = init_name
 	switch(name)
 		if("Removed",null,"")
-			error("invalid admin-rank name. datum deleted")
+			ERROR("invalid admin-rank name. datum deleted")
 			del(src)
 	if(init_rights)	rights = init_rights
 	if(!init_adds)	init_adds = list()

@@ -351,7 +351,7 @@
 ///Return 1 for movement 0 for none
 /mob/proc/Process_Spacemove(var/check_drift = 0)
 	//First check to see if we can do things
-	if(restrained())
+	if(!canmove)
 		return 0
 
 	if(!isturf(loc))	//if they're in a disposal unit, for example
@@ -361,11 +361,6 @@
 	for(var/turf/turf in oview(1,src))
 		if(istype(turf,/turf/space))
 			continue
-
-		if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-			if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src)) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
-				continue
-
 
 		else
 			if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src))) // No one else gets a chance.

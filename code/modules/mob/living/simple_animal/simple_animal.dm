@@ -30,6 +30,7 @@
 	var/response_disarm = "shoves"
 	var/response_harm   = "hits"
 	var/harm_intent_damage = 3
+	var/force_threshold = 0 //Minimum force required to deal any damage
 
 	//Temperature effect
 	var/minbodytemp = 250
@@ -352,8 +353,8 @@
 			visible_message("\red <B>[L] bites [src]!</B>")
 
 			if(stat != DEAD)
-				adjustBruteLoss(damage)
 				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+				adjustBruteLoss(damage)
 
 
 /mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M as mob)
@@ -407,14 +408,21 @@
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			harvest()
 	else
+		user.changeNext_move(8)
 		if(O.force)
-			var/damage = O.force
-			if (O.damtype == STAMINA)
-				damage = 0
-			adjustBruteLoss(damage)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>"+"[src] has been attacked with [O] by [user]!</span>")
+			if(O.force >= force_threshold)
+				var/damage = O.force
+				if (O.damtype == STAMINA)
+					damage = 0
+				adjustBruteLoss(damage)
+				visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>",\
+								"<span class='userdanger'>[src] has been attacked with [O] by [user]!</span>")
+			else
+				visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>",\
+								"<span class='userdanger'>[O] bounces harmlessly off of [src].</span>")
+		else
+			user.visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>",\
+							"<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later

@@ -20,7 +20,8 @@
 
 	var/blocks_air = 0
 	var/icon_old = null
-	var/pathweight = 1
+
+	flags = 0
 
 /turf/New()
 	..()
@@ -269,8 +270,7 @@
 /turf/proc/Distance(turf/t)
 	if(get_dist(src,t) == 1)
 		var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
-		cost *= (pathweight+t.pathweight)/2
-		return cost
+		return sqrt(cost)
 	else
 		return get_dist(src,t)
 

@@ -13,12 +13,20 @@
 	var/charge_tick = 0
 	var/can_charge = 1
 	var/ammo_type
+	var/no_den_usage
 	origin_tech = null
 	clumsy_check = 0
 	trigger_guard = 0
 
 /obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
 	newshot()
+	if(no_den_usage)
+		var/area/A = get_area(user)
+		if(istype(A, /area/wizard_station))
+			user << "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>"
+			return
+		else
+			no_den_usage = 0
 	..()
 
 /obj/item/weapon/gun/magic/proc/newshot()
