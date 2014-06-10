@@ -27,6 +27,11 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/retractor(),\
 		new /obj/item/weapon/cautery(),\
 		new /obj/item/weapon/hemostat(),\
+		new /obj/item/stack/medical/bruise_pack(),\
+		new /obj/item/stack/medical/ointment(),\
+		new /obj/item/stack/medical/advanced/bruise_pack(),\
+		new /obj/item/stack/medical/advanced/ointment(),\
+		new /obj/item/weapon/storage/pill_bottle(),\
 		new /obj/item/weapon/reagent_containers/glass/beaker(), \
 		new /obj/item/weapon/reagent_containers/glass/beaker/large(), \
 		new /obj/item/weapon/reagent_containers/glass/beaker/vial(), \
@@ -35,6 +40,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_magazine/c38(), \
 		new /obj/item/device/taperecorder(), \
+		new /obj/item/weapon/storage/pill_bottle/dice(),\
 		new /obj/item/device/assembly/igniter(), \
 		new /obj/item/device/assembly/signaler(), \
 		new /obj/item/device/radio/headset(), \
