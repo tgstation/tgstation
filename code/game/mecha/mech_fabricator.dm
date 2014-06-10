@@ -30,13 +30,14 @@
 	var/res_max_amount = 200000
 	var/datum/research/files
 	var/id
-	var/sync = 0
+	var/async = 0
 	var/part_set
 	var/obj/being_built
 	var/list/queue = list()
 	var/processing_queue = 0
 	var/screen = "main"
 	var/temp
+	var/list/consoles = list()//Holds consoles to exchange info with
 	var/list/part_sets = list( //set names must be unique
 	"Cyborg"=list(
 						/obj/item/robot_parts/robot_suit,
@@ -499,15 +500,19 @@
 		sleep(30) //only sleep if called by user
 
 	var/found = 0
-	for(var/obj/machinery/computer/rdconsole/RDC in area_contents(get_area(src)))
+	if(consoles.len == 0)
+		for(var/obj/machinery/computer/rdconsole/RDC in area_contents(get_area(src)))
+			consoles.Add(RDC)
+	for(var/obj/machinery/computer/rdconsole/RDC in consoles)
 		if(!RDC.sync)
 			continue
 		found = 1
-		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
-		files.RefreshResearch()
+		if(files.checksum != RDC.files.checksum)
+			for(var/datum/tech/T in RDC.files.known_tech)
+				files.AddTech2Known(T)
+			for(var/datum/design/D in RDC.files.known_designs)
+				files.AddDesign2Known(D)
+			files.RefreshResearch()
 		var/i = src.convert_designs()
 		var/tech_output = update_tech()
 		if(!silent)
@@ -564,8 +569,9 @@
 			if("main")
 				left_part = output_available_resources()+"<hr>"
 				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
+//				left_part += "<a href='?src=\ref[src];async=1'>Auto-Sync [async ? "Enabled" : "Disabled"]</a><hr>"
 				for(var/part_set in part_sets)
-					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
+					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue</a>\]<br>"
 			if("parts")
 				left_part += output_parts_list(part_set)
 				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
@@ -660,6 +666,9 @@
 		queue = list()
 		src.sync()
 		return update_queue_on_page()
+	if(href_list["async"])
+		async = !async
+		return updateUsrDialog()
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")
 		if(part)
