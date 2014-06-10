@@ -58,6 +58,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(lit == 1)
 		lit = -1
 		damtype = "brute"
+		force = initial(force)
 		icon_state = "match_burnt"
 		item_state = "cigoff"
 		name = "burnt match"
