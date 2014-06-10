@@ -1461,6 +1461,42 @@ other types of metals and chemistry for reagents).
 ////////////Medical Tools////////////////
 /////////////////////////////////////////
 
+/datum/design/bruise_pack
+	name = "Roll of gauze"
+	desc = "Some sterile gauze to wrap around bloody stumps."
+	id = "bruise_pack"
+	req_tech = list("biotech" = 1)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 400, "$glass" = 125)
+	build_path = /obj/item/stack/medical/bruise_pack
+
+/datum/design/ointment
+	name = "Ointment"
+	desc = "Used to treat those nasty burns."
+	id = "ointment"
+	req_tech = list("biotech" = 1)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 400, "$glass" = 125)
+	build_path = /obj/item/stack/medical/ointment
+
+/datum/design/adv_bruise_pack
+	name = "Advanced trauma kit"
+	desc = "Used to treat those nasty burns."
+	id = "adv_bruise_pack"
+	req_tech = list("biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 600, "$glass" = 250)
+	build_path = /obj/item/stack/medical/advanced/bruise_pack
+
+/datum/design/adv_ointment
+	name = "Advanced burn kit"
+	desc = "Used to treat those nasty burns."
+	id = "adv_ointment"
+	req_tech = list("biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 600, "$glass" = 250)
+	build_path = /obj/item/stack/medical/advanced/ointment
+
 /datum/design/mass_spectrometer
 	name = "Mass-Spectrometer"
 	desc = "A device for analyzing chemicals in the blood."
