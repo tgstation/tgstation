@@ -65,6 +65,24 @@
 			..()
 		return
 
+	bullet_act(var/obj/item/projectile/Proj)
+		health -= Proj.damage
+		..()
+		if(health <= 0)
+			for(var/atom/movable/A as mob|obj in src)
+				A.loc = src.loc
+			del(src)
+		return
+
+	ex_act(severity)
+		var/newsev = max(3,severity+1)
+		for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
+			A.loc = src.loc
+			A.ex_act(newsev)
+		newsev=4-severity
+		if(prob(newsev*25)+25) // 1=100, 2=75, 3=50
+			qdel(src)
+
 
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "Lockbox (Loyalty Implants)"
