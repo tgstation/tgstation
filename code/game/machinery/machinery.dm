@@ -244,14 +244,14 @@ Class Procs:
 			var/obj/O = P.buffer
 			if(!O)
 				return 1
-			if(!canLink(O))
+			if(!canLink(O,href_list))
 				usr << "\red You can't link with that device."
 				return 1
 			if (isLinkedWith(O))
 				usr << "\red A red light flashes on \the [P]. The two devices are already linked."
 				return 1
 
-			if(linkWith(usr, O))
+			if(linkWith(usr, O, href_list))
 				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
 			else
 				usr << "\red A red light flashes on \the [P].  It appears something went wrong when linking the two devices."

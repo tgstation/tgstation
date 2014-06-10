@@ -105,8 +105,11 @@ obj/machinery/air_sensor
 			sensors = list()
 		src.updateUsrDialog()
 
+
 	attackby(I as obj, user as mob)
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/device/multitool))
+			update_multitool_menu(user)
+		else if(istype(I, /obj/item/weapon/screwdriver))
 			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
@@ -247,7 +250,77 @@ legend {
 		var/list/input_info
 		var/list/output_info
 
+		var/list/input_linkable=list(
+			/obj/machinery/atmospherics/unary/outlet_injector,
+			/obj/machinery/atmospherics/unary/vent_pump
+		)
+
+		var/list/output_linkable=list(
+			/obj/machinery/atmospherics/unary/vent_pump
+		)
+
 		var/pressure_setting = ONE_ATMOSPHERE * 45
+
+		multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+			var/dat= {"
+			<ul>
+				<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
+				<li>[format_tag("Input","input_tag")]</li>
+				<li>[format_tag("Output","output_tag")]</li>
+			</ul>"}
+			/*{"<b>Sensors:</b>
+			<ul>"}
+			for(var/label in sensors)
+				dat += {"<li>[format_tag(label,sensors[label])]</li>"}*/
+			return dat
+
+		linkWith(var/mob/user, var/obj/O, var/list/context)
+			if(context["slot"]=="input" && is_type_in_list(O,input_linkable))
+				input_tag = O:id_tag
+				input_info = null
+				if(istype(O,/obj/machinery/atmospherics/unary/vent_pump))
+					send_signal("tag"=input_tag,
+						"direction"="1", // Release
+						"checks"   ="0"  // No pressure checks.
+						)
+			if(context["slot"]=="output" && is_type_in_list(O,input_linkable))
+				input_tag = O:id_tag
+				input_info = null
+				if(istype(O,/obj/machinery/atmospherics/unary/vent_pump))
+					send_signal("tag"=input_tag,
+						"direction"="0", // Suck
+						"checks"   ="2", // Internal pressure checks.
+						)
+
+		unlinkFrom(var/mob/user, var/obj/O)
+			if("id_tag" in O.vars)
+				if(O:id_tag == input_tag)
+					input_tag=null
+					input_info=null
+					return 1
+				if(O:id_tag == output_tag)
+					output_tag=null
+					output_info=null
+					return 1
+			return 0
+
+		linkMenu(var/obj/O)
+			var/dat=""
+			if(canLink(O,list("slot"="input")))
+				dat += " <a href='?src=\ref[src];link=1'>\[Link @ Input\]</a> "
+			if(canLink(O,list("slot"="output")))
+				dat += " <a href='?src=\ref[src];link=1'>\[Link @ Output\]</a> "
+			return dat
+
+		canLink(var/obj/O, var/list/context)
+			return (context["slot"]=="input" && is_type_in_list(O,input_linkable)) || (context["slot"]=="output" && is_type_in_list(O,output_linkable))
+
+		isLinkedWith(var/obj/O)
+			if(O:id_tag == input_tag)
+				return 1
+			if(O:id_tag == output_tag)
+				return 1
+			return 0
 
 		process()
 			..()
