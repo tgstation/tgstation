@@ -6,7 +6,6 @@
 
 // Added spess ghoasts/cameras to this so they don't add to the lag. - N3X
 var/global/list/uneatable = list(
-	/turf/space,
 	/obj/effect/overlay,
 	/mob/dead,
 	/mob/camera,
@@ -38,7 +37,6 @@ var/global/list/uneatable = list(
 	var/event_chance = 15 //Prob for event each tick
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
-	var/teleport_del = 0
 	var/last_warning
 
 
@@ -227,298 +225,91 @@ var/global/list/uneatable = list(
 
 
 /obj/machinery/singularity/proc/eat()
+	set background = BACKGROUND_ENABLED
 
-
-
-
-	var/countit = 0
-
-
-
-
-
-	//set background = 1
-	if(defer_powernet_rebuild != 2)
+	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 
-	// Let's just make this one loop.
-	var/atom/X
+	for (var/turf/T in trange(grav_pull, src)) // TODO: Create a similar trange for orange to prevent snowflake of self check.
+		var/dist = get_dist(T, src)
 
-	for(X in orange(grav_pull, src))
-		// N3X: Move this up here since get_dist is slow.
-		if(is_type_in_list(X, uneatable))
-			continue
+		for (var/atom/A in T.contents)
+			if (is_type_in_list(A, uneatable) || A == src)
+				continue
 
-		var/dist = get_dist(X, src)
+			if (dist <= consume_range)
+				consume(A)
+				continue
 
+			if (dist > consume_range)
+				if (101 == A.invisibility)
+					continue
 
+				step_towards(A, src)
 
+		if (!istype(T, /turf/space) && dist <= consume_range)
+			consume(T)
 
-
-
-
-
-
-
-
-
-
-/*
-
-
-
-		// Movable atoms only
-		if(dist > consume_range && istype(X, /atom/movable))
-			var/pullable = canPull(X)
-
-			if(pullable)
-			/////////////////////////////////////////////////////////////////////////////////////////////////////////////test
-				//world << "<font size='1' color='red'><b>[X.type]/b></font>" //debugging
-				if(istype(X, /mob) && pullable)
-
-					if(pick(0,1))
-						step_towards(X,src)
-						//if(prob(10))
-						//	consume(X) //sometimes you get unlucky, gravitation corona effect or some such.......... (apparently players dont want to die, who knew?)
-
-
-				else
-
-
-				//some sort of event horizon effect yea? it all makes sense.....shhhh....it all makes sense....
-					if((countit <= eatlimit) || current_size == 1)
-					//	world << "<font size='1' color='red'><b>Hit here: [countit]</b></font>" //debugging
-						if(pick(0,1))
-							/////////////
-
-							if!((current_size >= 9) && !(pullable))
-								return
-
-
-							spawn(0)
-
-								var/takeloc = get_turf(X.loc)
-								var/obj/machinery/singularity/takeit = new /atom/movable/overlay( takeloc )
-
-
-
-
-								takeit.icon = 'icons/obj/singularity.dmi'
-								takeit.density = 0
-								takeit.anchored = 1
-								takeit.icon_state = "takefxb"
-								takeit.layer = 5
-
-
-
-
-
-								takeit.screen_loc = takeloc
-								flick("takefx", takeit)
-								playsound(get_turf(X.loc), 'sound/effects/sparks2.ogg', 100, 1)
-
-								//var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-							//	s.set_up(1, 1, X.loc)
-							//	s.start()
-								consume(X)
-								countit += 1
-								sleep(3)
-								del(takeit)
-
-
-
-
-
-
-				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-		// Turf and movable atoms
-		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
-
-			consume(X)
-
-
-
-*/
-
-
-////////////////////////////////////////////////////////serious change/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-		// Movable atoms only
-		if(dist > consume_range) //if outside the sing
-			var/pullable = canPull(X) //check if we can pull
-
-
-
-
-				//world << "<font size='1' color='red'><b>[X.type]/b></font>" //debugging
-			if(istype(X, /mob) && (pullable == 1)) //are you a pullable mob?
-
-				if(pick(0,1))
-					step_towards(X,src)
-
-
-			else
-
-				if((countit < eatlimit) || current_size == 1) //are you allowed to eat? being fat causes lag
-
-
-
-
-					if(pick(0,1))//dont eat everything at once
-
-						if((current_size >= 9) || (pullable == 1)) //is the sing a monster or is this item pullable? if not gtfo
-
-
-
-
-							//alright item, prepare to get rekt
-
-							spawn(0)
-
-								var/takeloc = get_turf(X.loc)
-								var/obj/machinery/singularity/takeit = new /atom/movable/overlay( takeloc )
-
-
-
-
-								takeit.icon = 'icons/obj/singularity.dmi'
-								takeit.density = 0
-								takeit.anchored = 1
-								takeit.icon_state = "takefxb"
-								takeit.layer = 5
-
-
-
-
-
-								takeit.screen_loc = takeloc
-								flick("takefx", takeit)
-								playsound(get_turf(X.loc), 'sound/effects/sparks2.ogg', 100, 1)
-
-									//var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-								//	s.set_up(1, 1, X.loc)
-								//	s.start()
-								consume(X)
-								countit += 1
-								sleep(3)
-								del(takeit)
-
-
-
-
-
-
-
-
-		// Turf and movable atoms
-		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable))) //of course if you are all up in the biz yer done, i guess eat all this up asap
-
-			consume(X)
-
-
-
-
-
-
-
-		//////////////////////////////////////////////////////////////end change/////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-	if(defer_powernet_rebuild != 2)
+	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
 
-
-
-
-		////////////////////////////////////////////////////////////////////////////////////////////////this too
-
-// Singulo optimization:
-// Jump out whenever we've made a decision.
-/obj/machinery/singularity/proc/canPull(var/atom/movable/A)
+/*
+ * Singulo optimization.
+ * Jump out whenever we've made a decision.
+ */
+/obj/machinery/singularity/proc/canPull(const/atom/movable/A)
 	// If we're big enough, stop checking for this and that and JUST EAT.
-//	if(current_size >= 9)
-//		return 1
-//	else
-//		if(A && !A.anchored)
-//			if(A.canSingulothPull(src))
-//				return 1
+	if (current_size >= 9)
+		return 1
 
-
-
-	if(A && !A.anchored)
-		if(A.canSingulothPull(src))
+	if (A && !A.anchored)
+		if (A.canSingulothPull(src))
 			return 1
 
-
 	return 0
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/machinery/singularity/proc/consume(var/atom/A)
+/obj/machinery/singularity/proc/consume(const/atom/A)
 	var/gain = 0
-	if(is_type_in_list(A, uneatable))
+
+	if (is_type_in_list(A, uneatable))
 		return 0
-	if (istype(A,/mob/living))//Mobs get gibbed
+
+	if (istype(A, /mob/living)) // Mobs get gibbed.
 		var/mob/living/M = A
 		gain = 20
-		if(istype(M,/mob/living/carbon/human))
+
+		if (istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if(H.mind)
-				switch(H.mind.assigned_role)
-					if("Station Engineer","Chief Engineer")
+
+			if (H.mind)
+				switch (H.mind.assigned_role)
+					if ("Station Engineer", "Chief Engineer")
 						gain = 100
-					if("Clown")
-						gain = rand(-300, 300) // HONK
+					if ("Clown")
+						gain = rand(-300, 300) // HONK.
 		M.gib()
-		// Why
-		sleep(1)
-	else if(istype(A,/obj/))
-
-		if (istype(A,/obj/item/weapon/storage/backpack/holding))
-			var/dist = max((current_size - 2),1)
-			explosion(src.loc,(dist),(dist*2),(dist*4))
+	else if (istype(A,/obj/))
+		if (istype(A, /obj/item/weapon/storage/backpack/holding))
+			var/dist = max((current_size - 2), 1)
+			explosion(get_turf(src), dist, dist * 2, dist * 4)
 			return
-		if(istype(A, /obj/machinery/singularity))//Welp now you did it
+
+		if (istype(A, /obj/machinery/singularity)) //Welp now you did it.
 			var/obj/machinery/singularity/S = A
-			src.energy += (S.energy/2)//Absorb most of it
-			del(S)
+			energy += (S.energy / 2) // Absorb most of it.
+			qdel(S)
 			var/dist = max((current_size - 2),1)
-			explosion(src.loc,(dist),(dist*2),(dist*4))
-			return//Quits here, the obj should be gone, hell we might be
+			explosion(get_turf(src), dist, dist * 2, dist * 4)
+			return
 
-		if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2
-			qdel(A)
-		else
-			A.ex_act(1.0)
-			if(A)
-				qdel(A)
+		qdel(A)
 		gain = 2
-	else if(isturf(A))
+	else if (isturf(A))
 		var/turf/T = A
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-				if(O.invisibility == 101)
-					src.consume(O)
+		T.ChangeTurf(/turf/space)
+		gain = 2
 
-
-		//////////////////////////////////////////////////////////////////////////////////////break this up
-		if(pick(1,0))
-			T.ChangeTurf(/turf/space)
-			gain = 3
-	src.energy += gain
-	return
-
+	energy += gain
 
 /obj/machinery/singularity/proc/move(var/force_move = 0)
 	if(!move_self)
