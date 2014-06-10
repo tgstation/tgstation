@@ -1,11 +1,8 @@
-
-
-
-
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
-// Added spess ghoasts/cameras to this so they don't add to the lag. - N3X
+// Added spess ghoasts/cameras to this so they don't add to the lag. - N3X.
 var/global/list/uneatable = list(
+	/turf/space,
 	/obj/effect/overlay,
 	/mob/dead,
 	/mob/camera,
@@ -247,7 +244,7 @@ var/global/list/uneatable = list(
 
 				step_towards(A, src)
 
-		if (!istype(T, /turf/space) && dist <= consume_range)
+		if (dist <= consume_range)
 			consume(T)
 
 	if (defer_powernet_rebuild != 2)
