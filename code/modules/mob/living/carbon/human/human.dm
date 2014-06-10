@@ -385,7 +385,7 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(canUseTopic(src))
+	if(usr.canUseTopic(src))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			if(slot in check_obscured_slots())
