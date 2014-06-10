@@ -1,7 +1,7 @@
 // So you can be all 10 SECONDS
-#define SECONDS **10
-#define MINUTES **600
-#define HOURS   **36000
+#define SECONDS * 10
+#define MINUTES * 600
+#define HOURS   * 36000
 
 //Returns the world time in english
 proc/worldtime2text()
