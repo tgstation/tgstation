@@ -66,6 +66,14 @@
 			var/move_to_z = src.z
 			var/safety = 1
 
+			//Check if it's a mob pulling an object
+			var/atom/movable/was_pulling = null
+			var/mob/living/MOB = null
+			if(isliving(A))
+				MOB = A
+				if(MOB.pulling)
+					was_pulling = MOB.pulling //Store the object to transition later
+
 			while(move_to_z == src.z)
 				var/move_to_z_str = pickweight(accessable_z_levels)
 				move_to_z = text2num(move_to_z_str)
@@ -94,10 +102,10 @@
 				A.y = TRANSITIONEDGE + 1
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
-
-
-
 			spawn (0)
+				if(was_pulling && MOB) //Carry the object they were pulling over when they transition
+					was_pulling.loc = MOB.loc
+					MOB.start_pulling(was_pulling)
 				if ((A && A.loc))
 					A.loc.Entered(A)
 
