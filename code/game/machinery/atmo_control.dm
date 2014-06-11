@@ -1,4 +1,4 @@
-obj/machinery/air_sensor
+/obj/machinery/air_sensor
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
 	name = "Gas Sensor"
@@ -25,6 +25,20 @@ obj/machinery/air_sensor
 
 	update_icon()
 		icon_state = "gsensor[on]"
+
+	multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+		return {"
+		<b>Main</b>
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
+			<li>[format_tag("ID Tag","id_tag")]</li>
+		</ul>"}
+
+	attackby(var/obj/item/W as obj, var/mob/user as mob)
+		if(istype(W, /obj/item/device/multitool))
+			update_multitool_menu(user)
+			return 1
+		..()
 
 	process()
 		if(on)
@@ -60,8 +74,6 @@ obj/machinery/air_sensor
 					signal.data["carbon_dioxide"] = 0
 			signal.data["sigtype"]="status"
 			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-
-
 	proc
 		set_frequency(new_frequency)
 			radio_controller.remove_object(src, frequency)
@@ -240,6 +252,75 @@ legend {
 	initialize()
 		set_frequency(frequency)
 
+	multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+		var/dat= {"
+		<b>Main</b>
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
+		</ul>
+		<b>Sensors:</b>
+		<ul>"}
+		for(var/id_tag in sensors)
+			dat += {"<li><a href="?src=\ref[src];edit_sensor=[id_tag]">[sensors[id_tag]]</a></li>"}
+		dat += {"<li><a href="?src=\ref[src];add_sensor=1">\[+\]</a></li></ul>"}
+		return dat
+
+	multitool_topic(var/mob/user,var/list/href_list,var/obj/O)
+		. = ..()
+		if(.) return .
+		if("add_sensor" in href_list)
+			var/list/sensor_list = list()
+			for(var/obj/machinery/air_sensor/G in machines)
+				if(!isnull(G.id_tag) && G.frequency == frequency)
+					sensor_list|=G.id_tag
+			if(!sensor_list.len)
+				user << "<span class=\"warning\">No sensors on this frequency.</span>"
+				return MT_ERROR
+			var/sensor = input(user, "Select a sensor:", "Sensor Data") as null|anything in sensor_list
+			if(!sensor)
+				return MT_ERROR
+			var/label = reject_bad_name( input(user, "Choose a sensor label:", "Sensor Label")  as text|null, allow_numbers=1)
+			if(!label)
+				return MT_ERROR
+			sensors[sensor] = label
+			return MT_UPDATE
+		if("edit_sensor" in href_list)
+			var/list/sensor_list = list()
+			for(var/obj/machinery/air_sensor/G in machines)
+				if(!isnull(G.id_tag) && G.frequency == frequency)
+					sensor_list|=G.id_tag
+			if(!sensor_list.len)
+				user << "<span class=\"warning\">No sensors on this frequency.</span>"
+				return MT_ERROR
+			var/label = sensors[href_list["edit_sensor"]]
+			var/sensor = input(user, "Select a sensor:", "Sensor Data", href_list["edit_sensor"]) as null|anything in sensor_list
+			if(!sensor)
+				return MT_ERROR
+			sensors.Remove(href_list["edit_sensor"])
+			sensors[sensor] = label
+			return MT_UPDATE
+
+	unlinkFrom(var/mob/user, var/obj/O)
+		..()
+		if("id_tag" in O.vars && istype(O,/obj/machinery/air_sensor))
+			sensors.Remove(O:id_tag)
+			return 1
+		return 0
+
+	linkMenu(var/obj/O)
+		var/dat=""
+		if(istype(O,/obj/machinery/air_sensor) && !isLinkedWith(O))
+			dat += " <a href='?src=\ref[src];link=1'>\[New Sensor\]</a> "
+		return dat
+
+	canLink(var/obj/O, var/list/context)
+		if(istype(O,/obj/machinery/air_sensor))
+			return O:id_tag
+
+	isLinkedWith(var/obj/O)
+		if(istype(O,/obj/machinery/air_sensor))
+			return O:id_tag in sensors
+
 	large_tank_control
 		icon = 'icons/obj/computer.dmi'
 		icon_state = "tank"
@@ -267,11 +348,12 @@ legend {
 				<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
 				<li>[format_tag("Input","input_tag")]</li>
 				<li>[format_tag("Output","output_tag")]</li>
-			</ul>"}
-			/*{"<b>Sensors:</b>
+			</ul>
+			<b>Sensors:</b>
 			<ul>"}
-			for(var/label in sensors)
-				dat += {"<li>[format_tag(label,sensors[label])]</li>"}*/
+			for(var/id_tag in sensors)
+				dat += {"<li><a href="?src=\ref[src];edit_sensor=[id_tag]">[sensors[id_tag]]</a></li>"}
+			dat += {"<li><a href="?src=\ref[src];add_sensor=1">\[+\]</a></li></ul>"}
 			return dat
 
 		linkWith(var/mob/user, var/obj/O, var/list/context)
