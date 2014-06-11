@@ -102,7 +102,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
-	absorb_objective.gen_amount_goal(6, 8)
+	absorb_objective.gen_amount_goal(2, 4)
 	changeling.objectives += absorb_objective
 
 	var/datum/objective/assassinate/kill_objective = new
@@ -110,17 +110,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	kill_objective.find_target()
 	changeling.objectives += kill_objective
 
-	switch(rand(1,100))
-		if(1 to 60)
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = changeling
-			steal_objective.find_target()
-			changeling.objectives += steal_objective
-		else
-			var/datum/objective/debrain/debrain_objective = new
-			debrain_objective.owner = changeling
-			debrain_objective.find_target()
-			changeling.objectives += debrain_objective
+	var/datum/objective/steal/steal_objective = new
+	steal_objective.owner = changeling
+	steal_objective.find_target()
+	changeling.objectives += steal_objective
 
 	if (!(locate(/datum/objective/escape) in changeling.objectives))
 		var/datum/objective/escape/escape_objective = new
@@ -272,12 +265,16 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
 		return
+	if(!check_dna_integrity(target))
+		user << "<span class='warning'>[target] is not compatible with our biology.</span>"
+		return
+	return 1
+
+/datum/changeling/proc/can_extract_sting(var/mob/living/carbon/user, var/mob/living/carbon/target)
+	if(can_absorb_dna(user, target) != 1) return
 	var/datum/dna/tDna = target.dna
 	for(var/datum/dna/D in absorbed_dna)
 		if(tDna.is_same_as(D))
 			user << "<span class='warning'>We already have that DNA in storage.</span>"
 			return
-	if(!check_dna_integrity(target))
-		user << "<span class='warning'>[target] is not compatible with our biology.</span>"
-		return
 	return 1
