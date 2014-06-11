@@ -48,10 +48,59 @@
 		if (authenticated)
 			switch(screen)
 				if(1.0)
+
+					//body tag start + onload and onkeypress (onkeyup) javascript event calls
+					dat += "<body onload='selectTextField(); updateSearch();' onkeyup='updateSearch();'>"
+					//search bar javascript
+					dat += {"
+
+		<head>
+			<script src="libraries.min.js"></script>
+			<script type='text/javascript'>
+
+				function updateSearch(){
+					var filter_text = document.getElementById('filter');
+					var filter = filter_text.value.toLowerCase();
+
+					if(complete_list != null && complete_list != ""){
+						var mtbl = document.getElementById("maintable_data_archive");
+						mtbl.innerHTML = complete_list;
+					}
+
+					if(filter.value == ""){
+						return;
+					}else{
+						$("#maintable_data").children("tbody").children("tr").children("td").children("input").filter(function(index)
+						{
+							return $(this)\[0\].value.toLowerCase().indexOf(filter) == -1
+						}).parent("td").parent("tr").hide()
+					}
+				}
+
+				function selectTextField(){
+					var filter_text = document.getElementById('filter');
+					filter_text.focus();
+					filter_text.select();
+				}
+
+			</script>
+		</head>
+
+
+	"}
 					dat += {"
 <p style='text-align:center;'>"}
-					dat += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>", src)
 					dat += text("<A href='?src=\ref[];choice=New Record (General)'>New Record</A><BR>", src)
+					//search bar
+					dat += {"
+						<table width='560' align='center' cellspacing='0' cellpadding='5' id='maintable'>
+							<tr id='search_tr'>
+								<td align='center'>
+									<b>Search:</b> <input type='text' id='filter' value='' style='width:300px;'>
+								</td>
+							</tr>
+						</table>
+					"}
 					dat += {"
 </p>
 <table style="text-align:center;" cellspacing="0" width="100%">
@@ -59,7 +108,9 @@
 <th>Records:</th>
 </tr>
 </table>
-<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+
+<span id='maintable_data_archive'>
+<table id='maintable_data' style="text-align:center;" border="1" cellspacing="0" width="100%">
 <tr>
 <th><A href='?src=\ref[src];choice=Sorting;sort=name'>Name</A></th>
 <th><A href='?src=\ref[src];choice=Sorting;sort=id'>ID</A></th>
@@ -88,12 +139,19 @@
 								if("")
 									background = "''" //"'background-color:#FFFFFF;'"
 									crimstat = "No Record."
-							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+							dat += "<tr style=[background]>"
+							dat += text("<td><input type='hidden' value='[] [] [] []'></input><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", R.fields["name"], R.fields["id"], R.fields["rank"], R.fields["fingerprint"], src, R, R.fields["name"])
 							dat += text("<td>[]</td>", R.fields["id"])
 							dat += text("<td>[]</td>", R.fields["rank"])
 							dat += text("<td>[]</td>", R.fields["fingerprint"])
 							dat += text("<td>[]</td></tr>", crimstat)
-						dat += "</table><hr width='75%' />"
+						dat += {"
+						</table></span>
+						<script type='text/javascript'>
+							var maintable = document.getElementById("maintable_data_archive");
+							var complete_list = maintable.innerHTML;
+						</script>
+						<hr width='75%' />"}
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
 					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
 				if(2.0)
