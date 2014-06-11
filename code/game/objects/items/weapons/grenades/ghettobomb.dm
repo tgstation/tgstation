@@ -15,7 +15,7 @@
 
 
 /obj/item/weapon/grenade/iedcasing
-	name = "improvised explosive assembly"
+	name = "improvised firebomb assembly"
 	desc = "An igniter stuffed into an aluminium shell."
 	w_class = 2.0
 	icon = 'icons/obj/grenade.dmi'
@@ -45,7 +45,7 @@
 			assembled = 1
 			user << "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-			desc = "An improvised explosive assembly. Filled to the brim with 'Explosive flavor'"
+			desc = "An improvised firebomb assembly. Filled to the brim with 'Firery flavor'"
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
 			return
 
@@ -58,9 +58,9 @@
 			C.use(1)
 			assembled = 2
 			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
-			desc = "A weak, improvised explosive."
+			desc = "A weak, improvised incendiary device."
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
-			name = "improvised explosive"
+			name = "improvised firebomb"
 			active = 0
 			det_time = text2num(pickweight(times))
 			if(det_time < 0) //checking for 'duds'
