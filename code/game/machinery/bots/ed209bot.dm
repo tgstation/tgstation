@@ -968,7 +968,7 @@ Auto Patrol: []"},
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
 				if (coil.get_amount() < 1)
-					user << "<span class='warning'>You need one length of cable to wire ED-209.</span>"
+					user << "<span class='warning'>You need one length of cable to wire the ED-209.</span>"
 					return
 				user << "<span class='notice'>You start to wire [src]...</span>"
 				if (do_after(user, 40))

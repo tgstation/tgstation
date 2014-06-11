@@ -147,7 +147,7 @@
 		if (istype(O,/obj/item))
 			usr.put_in_hands(O)
 		O.add_fingerprint(usr)
-		//BubbleWrap - so newly formed boxes are empty // This is so insanely bad I don't even
+		//BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
 				qdel(I)

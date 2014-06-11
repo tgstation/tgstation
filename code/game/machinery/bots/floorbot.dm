@@ -109,7 +109,7 @@
 			user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
 			src.updateicon()
 		else
-			user << "<span class='warning'>You need at least one floor tile to put it into floorbot.</span>"
+			user << "<span class='warning'>You need at least one floor tile to put into the floorbot.</span>"
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked

@@ -808,7 +808,7 @@ table tr:first-child th:first-child { border: none;}
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
 				if(cable.get_amount() < 5)
-					user << "<span class='warning'>You need five lengths of cable to wire fire alarm.</span>"
+					user << "<span class='warning'>You need five lengths of cable to wire the fire alarm.</span>"
 					return
 				user << "<span class='notice'>You start wiring the air alarm.</span>"
 				if (do_after(user, 20))
