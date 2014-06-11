@@ -125,7 +125,7 @@ var/global/list/RPD_recipes=list(
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 75000
-	g_amt = 37500 glass
+	g_amt = 37500
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
