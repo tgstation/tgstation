@@ -103,7 +103,7 @@ obj/effect/proc_holder/changeling/sting/extract_dna
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(var/mob/user, var/mob/target)
 	if(..())
-		return user.mind.changeling.can_absorb_dna(user, target)
+		return user.mind.changeling.can_extract_sting(user, target)
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(var/mob/user, var/mob/target)
 	add_logs(user, target, "stung", object="extraction sting")
