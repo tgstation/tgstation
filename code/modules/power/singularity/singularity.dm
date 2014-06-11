@@ -2,7 +2,6 @@
 
 // Added spess ghoasts/cameras to this so they don't add to the lag. - N3X
 var/global/list/uneatable = list(
-	/turf/space,
 	/obj/effect/overlay,
 	/mob/dead,
 	/mob/camera,
@@ -34,7 +33,6 @@ var/global/list/uneatable = list(
 	var/event_chance = 15 //Prob for event each tick
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
-	var/teleport_del = 0
 	var/last_warning
 
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
@@ -214,96 +212,94 @@ var/global/list/uneatable = list(
 
 
 /obj/machinery/singularity/proc/eat()
-	//set background = 1
-	if(defer_powernet_rebuild != 2)
+	set background = BACKGROUND_ENABLED
+
+	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 
-	// Let's just make this one loop.
-	var/atom/X
+	for (var/turf/T in trange(grav_pull, src)) // TODO: Create a similar trange for orange to prevent snowflake of self check.
+		consume(T)
 
-	for(X in orange(grav_pull, src))
-		// N3X: Move this up here since get_dist is slow.
-		if(is_type_in_list(X, uneatable))
-			continue
-
-		var/dist = get_dist(X, src)
-
-		// Movable atoms only
-		if(dist > consume_range && istype(X, /atom/movable))
-			if(canPull(X))
-				step_towards(X,src)
-		// Turf and movable atoms
-		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
-			consume(X)
-
-	if(defer_powernet_rebuild != 2)
+	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
 
-// Singulo optimization:
-// Jump out whenever we've made a decision.
-/obj/machinery/singularity/proc/canPull(var/atom/movable/A)
+/*
+ * Singulo optimization.
+ * Jump out whenever we've made a decision.
+ */
+/obj/machinery/singularity/proc/canPull(const/atom/movable/A)
 	// If we're big enough, stop checking for this and that and JUST EAT.
-	if(current_size >= 9)
+	if (current_size >= 9)
 		return 1
-	else
-		if(A && !A.anchored)
-			if(A.canSingulothPull(src))
-				return 1
+
+	if (A && !A.anchored)
+		if (A.canSingulothPull(src))
+			return 1
+
 	return 0
 
-
-/obj/machinery/singularity/proc/consume(var/atom/A)
-	var/gain = 0
-	if(is_type_in_list(A, uneatable))
+/obj/machinery/singularity/proc/consume(const/atom/A)
+	if (is_type_in_list(A, uneatable))
 		return 0
-	if (istype(A,/mob/living))//Mobs get gibbed
+
+	var/gain = 0
+
+	if (istype(A, /mob/living)) // Mobs get gibbed.
 		var/mob/living/M = A
 		gain = 20
-		if(istype(M,/mob/living/carbon/human))
+
+		if (istype(M,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if(H.mind)
-				switch(H.mind.assigned_role)
-					if("Station Engineer","Chief Engineer")
+
+			if (H.mind)
+				switch (H.mind.assigned_role)
+					if ("Station Engineer", "Chief Engineer")
 						gain = 100
-					if("Clown")
-						gain = rand(-300, 300) // HONK
+					if ("Clown")
+						gain = rand(-300, 300) // HONK!
 		M.gib()
-		// Why
-		sleep(1)
-	else if(istype(A,/obj/))
-
-		if (istype(A,/obj/item/weapon/storage/backpack/holding))
-			var/dist = max((current_size - 2),1)
-			explosion(src.loc,(dist),(dist*2),(dist*4))
+	else if (istype(A, /obj/))
+		if (istype(A, /obj/item/weapon/storage/backpack/holding))
+			var/dist = max((current_size - 2), 1)
+			explosion(get_turf(src), dist, dist * 2, dist * 4)
 			return
-		if(istype(A, /obj/machinery/singularity))//Welp now you did it
+
+		if (istype(A, /obj/machinery/singularity)) // Welp now you did it.
 			var/obj/machinery/singularity/S = A
-			src.energy += (S.energy/2)//Absorb most of it
-			del(S)
-			var/dist = max((current_size - 2),1)
-			explosion(src.loc,(dist),(dist*2),(dist*4))
-			return//Quits here, the obj should be gone, hell we might be
+			energy += (S.energy / 2) // Absorb most of it.
+			qdel(S)
+			var/dist = max((current_size - 2), 1)
+			explosion(get_turf(src), dist, dist * 2, dist * 4)
+			return
 
-		if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2
-			qdel(A)
-		else
-			A.ex_act(1.0)
-			if(A)
-				qdel(A)
+		qdel(A)
 		gain = 2
-	else if(isturf(A))
+	else if (isturf(A))
 		var/turf/T = A
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-				if(O.invisibility == 101)
-					src.consume(O)
-		T.ChangeTurf(/turf/space)
-		gain = 2
-	src.energy += gain
-	return
+		var/dist = get_dist(T, src)
 
+		for (var/atom/movable/AM in T.contents)
+			if (AM == src) // This is the snowflake.
+				continue
+
+			if (dist <= consume_range)
+				consume(AM)
+				continue
+
+			if (dist > consume_range && canPull(AM))
+				if (is_type_in_list(AM, uneatable))
+					continue
+
+				if (101 == AM.invisibility)
+					continue
+
+				step_towards(AM, src)
+
+		if (dist <= consume_range && !istype(T, /turf/space))
+			T.ChangeTurf(/turf/space)
+			gain = 2
+
+	energy += gain
 
 /obj/machinery/singularity/proc/move(var/force_move = 0)
 	if(!move_self)
