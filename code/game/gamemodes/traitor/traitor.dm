@@ -116,16 +116,17 @@
 				assign_exchange_role(exchange_red,"red")
 				assign_exchange_role(exchange_blue,"blue")
 		else
-			if(prob(50))
-				var/datum/objective/assassinate/kill_objective = new
-				kill_objective.owner = traitor
-				kill_objective.find_target()
-				traitor.objectives += kill_objective
-			else
-				var/datum/objective/steal/steal_objective = new
-				steal_objective.owner = traitor
-				steal_objective.find_target()
-				traitor.objectives += steal_objective
+			for(var/i = 0, i < config.traitor_objectives_amount, i++)
+				if(prob(50))
+					var/datum/objective/assassinate/kill_objective = new
+					kill_objective.owner = traitor
+					kill_objective.find_target()
+					traitor.objectives += kill_objective
+				else
+					var/datum/objective/steal/steal_objective = new
+					steal_objective.owner = traitor
+					steal_objective.find_target()
+					traitor.objectives += steal_objective
 
 			if(prob(90))
 				if (!(locate(/datum/objective/escape) in traitor.objectives))
