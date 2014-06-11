@@ -49,6 +49,8 @@
 		var/obj/Loc=loc
 		Loc.on_log()
 
+	CallHook("Login", list("client" = src.client, "mob" = src))
+
 // Calling update_interface() in /mob/Login() causes the Cyborg to immediately be ghosted; because of winget().
 // Calling it in the overriden Login, such as /mob/living/Login() doesn't cause this.
 /mob/proc/update_interface()

@@ -147,3 +147,8 @@ TICKCOMP 0
 
 ## Communication key for receiving data through world/Topic(), you don't want to give this out
 #COMMS_KEY default_pwd
+
+##Media URL
+##The base URL of your media library. DO NOT ADD THE SLASH AT THE END!
+##Must be publically accessible.
+MEDIA_BASE_URL http://vista.bananabox.biz/media/

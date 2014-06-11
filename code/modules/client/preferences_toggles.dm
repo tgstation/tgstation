@@ -98,6 +98,19 @@
 			admin_sound.status ^= SOUND_PAUSED
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_media()
+	set name = "Hear/Silence Streaming"
+	set category = "Preferences"
+	set desc = "Toggle hearing streaming media (radios, jukeboxes, etc)"
+
+	prefs.toggles ^= SOUND_STREAMING
+	prefs.save_preferences()
+	usr << "You will [(prefs.toggles & SOUND_STREAMING) ? "now" : "no longer"] hear streamed media."
+	// Restart.
+	media.stop_music()
+	media.update_music()
+	feedback_add_details("admin_verb","TStreaming") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/listen_ooc()
 	set name = "Show/Hide OOC"
 	set category = "Preferences"
