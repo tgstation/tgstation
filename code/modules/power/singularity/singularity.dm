@@ -272,7 +272,11 @@ var/global/list/uneatable = list(
 			explosion(get_turf(src), dist, dist * 2, dist * 4)
 			return
 
-		qdel(A)
+		A.ex_act(1)
+
+		if (A)
+			qdel(A)
+
 		gain = 2
 	else if (isturf(A))
 		var/turf/T = A
@@ -512,26 +516,42 @@ var/global/list/uneatable = list(
 				M.apply_effect(3, STUN)
 
 
-/obj/machinery/singularity/narsie/consume(var/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
-	if(is_type_in_list(A, uneatable))
+/obj/machinery/singularity/narsie/consume(const/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
+	if (is_type_in_list(A, uneatable))
 		return 0
-	if(istype(A,/mob/living/))
+
+	if (istype(A, /mob/living/))
 		var/mob/living/C = A
 		C.dust() // Changed from gib(), just for less lag.
-	else if(istype(A,/obj/))
-		A:ex_act(1.0)
-		if(A)
+
+	else if (istype(A, /obj/))
+		A.ex_act(1)
+
+		if (A)
 			qdel(A)
-	else if(isturf(A))
+	else if (isturf(A))
 		var/turf/T = A
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
+		var/dist = get_dist(T, src)
+
+		for (var/atom/movable/AM in T.contents)
+			if (AM == src) // This is the snowflake.
+				continue
+
+			if (dist <= consume_range)
+				consume(AM)
+				continue
+
+			if (dist > consume_range && canPull(AM))
+				if (is_type_in_list(AM, uneatable))
 					continue
-				if(O.invisibility == 101)
-					src.consume(O)
-		A:ChangeTurf(/turf/space)
-	return
+
+				if (101 == AM.invisibility)
+					continue
+
+				step_towards(AM, src)
+
+		if (dist <= consume_range && !istype(T, /turf/space))
+			T.ChangeTurf(/turf/space)
 
 /obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
 	return
@@ -583,21 +603,23 @@ var/global/list/uneatable = list(
 	else
 		target << "\red <b>[capname] HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
 
-//Wizard narsie
-
+/**
+ * Wizard narsie.
+ */
 /obj/machinery/singularity/narsie/wizard
 	grav_pull = 0
 
 /obj/machinery/singularity/narsie/wizard/eat()
-	//set background = 1
-	if(defer_powernet_rebuild != 2)
+	set background = BACKGROUND_ENABLED
+
+	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
-	for(var/atom/X in orange(consume_range,src))
-		if(isturf(X) || istype(X, /atom/movable))
-			consume(X)
-	if(defer_powernet_rebuild != 2)
+
+	for (var/turf/T in trange(consume_range, src))
+		consume(T)
+
+	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
-	return
 
 /////////////////////////////////////////////////
 // MR. CLEAN
@@ -631,28 +653,41 @@ var/global/mr_clean_targets=list(
 	update_icon()
 
 /obj/machinery/singularity/narsie/large/clean/consume(var/atom/A)
-	if(is_type_in_list(A, uneatable))
+	if (is_type_in_list(A, uneatable))
 		return 0
-	if(istype(A,/mob/living/))
+
+	if (istype(A, /mob/living/))
 		var/mob/living/C = A
-		if(isrobot(C))
+
+		if (isrobot(C))
 			var/mob/living/silicon/robot/R=C
-			if(R.mmi)
+
+			if (R.mmi)
 				del(R.mmi) // Nuke MMI
-		del(C) // Just delete it.
-	else if(is_type_in_list(A, mr_clean_targets))
+		qdel(C) // Just delete it.
+	else if (is_type_in_list(A, mr_clean_targets))
 		qdel(A)
-	else if(isturf(A))
+	else if (isturf(A))
 		var/turf/T = A
 		T.clean_blood()
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
+		var/dist = get_dist(T, src)
+
+		for (var/atom/movable/AM in T.contents)
+			if (!is_type_in_list(A, mr_clean_targets))
+				continue
+
+			if (dist <= consume_range)
+				consume(AM)
+				continue
+
+			if (dist > consume_range && canPull(AM))
+				if (is_type_in_list(AM, uneatable))
 					continue
-				if(O.invisibility == 101)
-					src.consume(O)
-		//A:ChangeTurf(/turf/space)
-	return
+
+				if (101 == AM.invisibility)
+					continue
+
+				step_towards(AM, src)
 
 // Mr. Clean just follows the dirt and grime.
 /obj/machinery/singularity/narsie/large/clean/pickcultist()
