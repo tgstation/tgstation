@@ -123,7 +123,7 @@ Class Procs:
 	if (src in machines)
 		machines.Remove(src)
 
-	if (component_parts && component_parts.len)
+	if (component_parts)
 		component_parts = null
 
 	..()
