@@ -640,7 +640,7 @@
 	else if(slot_id == 6)
 		return "belt"
 	else if(slot_id == 7)
-		return "wear_id"
+		return "id"
 	else if(slot_id == 8)
 		return "ears"
 	else if(slot_id == 9)
@@ -652,7 +652,7 @@
 	else if(slot_id == 12)
 		return "shoes"
 	else if(slot_id == 13)
-		return "wear_suit"
+		return "suit"
 	else if(slot_id == 14)
 		return "uniform"
 	else if(slot_id == 15)
@@ -685,6 +685,8 @@
 
 		if(href_list["item"])
 			var/slot = href_list["item"]
+			var/obj/item/place_item = usr.get_active_hand()
+			var/obj/item/id_item = src.wear_id
 
 			for(var/things in check_obscured_slots())
 				ourlist += num2slotname(things)
@@ -707,9 +709,32 @@
 				O.place = href_list["item"]
 				O.pickpocket = pickpocket //Stealthy
 				requests += O
-				spawn( 0 )
-					O.process()
-					return
+				//world << O.place
+				if(O.place == "id")
+					if(id_item)
+						usr << "<span class='notice'>You try to take [src]'s ID.</span>"
+					else if(place_item && place_item.mob_can_equip(src, slot_wear_id, 1))
+						usr << "<span class='notice'>You try to place [place_item] on [src].</span>"
+
+					if(do_mob(usr, src, STRIP_DELAY))
+						if(id_item)
+							u_equip(id_item)
+							if(pickpocket) usr.put_in_hands(id_item)
+						else
+							if(place_item)
+								usr.u_equip(place_item)
+								equip_to_slot_if_possible(place_item, slot_wear_id, 0, 1)
+						// Update strip window
+						if(usr.machine == src && in_range(src, usr))
+							show_inv(usr)
+
+					else if(!pickpocket)
+						// Display a warning if the user mocks up
+						src << "<span class='warning'>You feel your ID being fumbled with!</span>"
+				else
+					spawn( 0 )
+						O.process()
+						return
 
 
 		if(href_list["pockets"])
