@@ -113,8 +113,8 @@
 
 
 /obj/effect/proc_holder/spell/targeted/smoke/disable
-	name = "Disabling Smoke"
-	desc = "This spell spawns a cloud of disabling smoke."
+	name = "Paralysing Smoke"
+	desc = "This spell spawns a cloud of paralysing smoke."
 
 	school = "conjuration"
 	charge_max = 200
