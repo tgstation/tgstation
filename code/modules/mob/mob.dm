@@ -487,7 +487,7 @@ var/list/slot_equipment_priority = list( \
 			show_inv(machine)
 		return
 
-	if(!usr.canUseTopic(src) && !iscarbon(usr))
+	if(!usr.canUseTopic(src))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			var/obj/item/what = get_item_by_slot(slot)
