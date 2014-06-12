@@ -67,7 +67,7 @@
 				range = 1
 				det_time = rand(30,80)
 			else
-				range = pick(2,3,3,4)
+				range = pick(2,2,2,3,3,3,4)
 
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //
 	if(!active)
