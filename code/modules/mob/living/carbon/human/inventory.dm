@@ -436,9 +436,21 @@
 				if(count == 0)
 					qdel(src)
 					return
+
+
+
 			if("internal")
 				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.back, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
 					qdel(src)
+
+			if("internal1")
+				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.belt, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
+					qdel(src)
+
+			if("internal2")
+				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.s_store, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
+					qdel(src)
+
 
 	var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel")
 	if ((item && !( L.Find(place) )))
@@ -575,6 +587,22 @@
 				else
 					source << "\blue You try to take off [target.wear_id] from [target]'s uniform!"
 			if("internal")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their internals toggled by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) internals</font>")
+				if (target.internal)
+					message = "\red <B>[source] is trying to remove [target]'s internals</B>"
+				else
+					message = "\red <B>[source] is trying to set on [target]'s internals.</B>"
+
+			if("internal1")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their internals toggled by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) internals</font>")
+				if (target.internal)
+					message = "\red <B>[source] is trying to remove [target]'s internals</B>"
+				else
+					message = "\red <B>[source] is trying to set on [target]'s internals.</B>"
+
+			if("internal2")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their internals toggled by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) internals</font>")
 				if (target.internal)
@@ -741,8 +769,53 @@ It can still be worn/put on as normal.
 						target.internal.add_fingerprint(source)
 						if (target.internals)
 							target.internals.icon_state = "internal1"
+
+
+
+		if("internal1")
+			if (target.internal)
+				target.internal.add_fingerprint(source)
+				target.internal = null
+				if (target.internals)
+					target.internals.icon_state = "internal0"
+			else
+				if (!( istype(target.wear_mask, /obj/item/clothing/mask) ))
+					return
+				else
+					if (istype(target.belt, /obj/item/weapon/tank))
+						target.internal = target.belt
+
+					if (target.internal)
+						for(var/mob/M in viewers(target, 1))
+							M.show_message("[target] is now running on internals.", 1)
+						target.internal.add_fingerprint(source)
+						if (target.internals)
+							target.internals.icon_state = "internal1"
+
+
+		if("internal2")
+			if (target.internal)
+				target.internal.add_fingerprint(source)
+				target.internal = null
+				if (target.internals)
+					target.internals.icon_state = "internal0"
+			else
+				if (!( istype(target.wear_mask, /obj/item/clothing/mask) ))
+					return
+				else
+					if (istype(target.s_store, /obj/item/weapon/tank))
+						target.internal = target.s_store
+
+					if (target.internal)
+						for(var/mob/M in viewers(target, 1))
+							M.show_message("[target] is now running on internals.", 1)
+						target.internal.add_fingerprint(source)
+						if (target.internals)
+							target.internals.icon_state = "internal1"
+
 	if(slot_to_process)
 		if(strip_item) //Stripping an item from the mob
+
 			var/obj/item/W = strip_item
 			target.u_equip(W)
 			if (target.client)
@@ -776,3 +849,7 @@ It can still be worn/put on as normal.
 	if(active_only && istype(get_inactive_hand(),/obj/item/device/multitool))
 		return get_inactive_hand()
 	return null
+
+
+
+

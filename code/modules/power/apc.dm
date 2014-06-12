@@ -1274,6 +1274,11 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	areaMaster.power_change()
 	if(occupant)
 		malfvacate(1)
+
+	if (terminal)
+		terminal.master = null
+		terminal = null
+
 	..()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)

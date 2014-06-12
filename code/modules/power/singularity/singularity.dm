@@ -276,10 +276,9 @@ var/global/list/uneatable = list(
 
 		gain = 2
 	else if (isturf(A))
-		var/turf/T = A
-		var/dist = get_dist(T, src)
+		var/dist = get_dist(A, src)
 
-		for (var/atom/movable/AM in T.contents)
+		for (var/atom/movable/AM in A.contents)
 			if (AM == src) // This is the snowflake.
 				continue
 
@@ -294,9 +293,11 @@ var/global/list/uneatable = list(
 				if (101 == AM.invisibility)
 					continue
 
-				step_towards(AM, src)
+				spawn (0)
+					step_towards(AM, src)
 
-		if (dist <= consume_range && !istype(T, /turf/space))
+		if (dist <= consume_range && !istype(A, /turf/space))
+			var/turf/T = A
 			T.ChangeTurf(/turf/space)
 			gain = 2
 
@@ -517,10 +518,9 @@ var/global/list/uneatable = list(
 		if (A)
 			qdel(A)
 	else if (isturf(A))
-		var/turf/T = A
-		var/dist = get_dist(T, src)
+		var/dist = get_dist(A, src)
 
-		for (var/atom/movable/AM in T.contents)
+		for (var/atom/movable/AM in A.contents)
 			if (AM == src) // This is the snowflake.
 				continue
 
@@ -535,9 +535,11 @@ var/global/list/uneatable = list(
 				if (101 == AM.invisibility)
 					continue
 
-				step_towards(AM, src)
+				spawn (0)
+					step_towards(AM, src)
 
-		if (dist <= consume_range && !istype(T, /turf/space))
+		if (dist <= consume_range && !istype(A, /turf/space))
+			var/turf/T = A
 			T.ChangeTurf(/turf/space)
 
 /obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
@@ -647,14 +649,12 @@ var/global/mr_clean_targets = list(
 		return 0
 
 	if (istype(A, /mob/living/))
-		var/mob/living/C = A
-
-		if (isrobot(C))
-			var/mob/living/silicon/robot/R = C
+		if (isrobot(A))
+			var/mob/living/silicon/robot/R = A
 
 			if (R.mmi)
 				del(R.mmi) // Nuke MMI.
-		qdel(C) // Just delete it.
+		qdel(A) // Just delete it.
 	else if (is_type_in_list(A, mr_clean_targets))
 		qdel(A)
 	else if (isturf(A))
@@ -663,7 +663,7 @@ var/global/mr_clean_targets = list(
 		var/dist = get_dist(T, src)
 
 		for (var/atom/movable/AM in T.contents)
-			if (!is_type_in_list(A, mr_clean_targets))
+			if (AM == src) // This is the snowflake.
 				continue
 
 			if (dist <= consume_range)
@@ -677,7 +677,8 @@ var/global/mr_clean_targets = list(
 				if (101 == AM.invisibility)
 					continue
 
-				step_towards(AM, src)
+				spawn (0)
+					step_towards(AM, src)
 
 /*
  * Mr. Clean just follows the dirt and grime.

@@ -81,6 +81,9 @@
 	else
 		stat |= NOPOWER
 
+/obj/machinery/power/tracker/Destroy()
+	solars_list -= src
+	..()
 
 // Tracker Electronic
 
