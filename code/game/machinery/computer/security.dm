@@ -132,7 +132,7 @@
 									background = "'background-color:#CD6500;'"
 								if("Parolled")
 									background = "'background-color:#CD6500;'"
-								if("Released")
+								if("Discharged")
 									background = "'background-color:#006699;'"
 								if("None")
 									background = "'background-color:#4F7529;'"
@@ -565,7 +565,7 @@ What a mess.*/
 							temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=arrest'>*Arrest*</a></li>"
 							temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=incarcerated'>Incarcerated</a></li>"
 							temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=parolled'>Parolled</a></li>"
-							temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=released'>Released</a></li>"
+							temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=released'>Discharged</a></li>"
 							temp += "</ul>"
 					if("rank")
 						var/list/L = list( "Head of Personnel", "Captain", "AI" )
@@ -600,7 +600,7 @@ What a mess.*/
 								if("parolled")
 									active2.fields["criminal"] = "Parolled"
 								if("released")
-									active2.fields["criminal"] = "Released"
+									active2.fields["criminal"] = "Discharged"
 
 					if ("Delete Record (Security) Execute")
 						if (active2)
@@ -637,7 +637,7 @@ What a mess.*/
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)
-					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Parolled", "Released")
+					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged")
 				if(5)
 					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
 				if(6)
