@@ -35,7 +35,7 @@ var/global/list/rad_collectors = list()
 			P.air_contents.toxins = 0
 			eject()
 		else
-			P.air_contents.toxins -= 0.001 * drainratio
+			P.air_contents.toxins -= (0.001 * drainratio)
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user as mob)
 	if(anchored)
