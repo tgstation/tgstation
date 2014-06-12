@@ -517,11 +517,12 @@ obj/structure/door_assembly
 	else if(istype(W, /obj/item/stack/sheet) && !mineral)
 		var/obj/item/stack/sheet/G = W
 		if(G)
-			if(G.amount>=1)
+			if(G.get_amount() >= 1)
 				if(G.type == /obj/item/stack/sheet/rglass)
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", "You start to install [G.name] into the airlock assembly.")
 					if(do_after(user, 40))
+						if(C.get_amount() < 1 || mineral) return
 						user << "\blue You've installed reinforced glass windows into the airlock assembly."
 						G.use(1)
 						mineral = "glass"
@@ -540,10 +541,11 @@ obj/structure/door_assembly
 						glass_base_icon_state = "door_as_g[icontext]"
 				else if(istype(G, /obj/item/stack/sheet/mineral))
 					var/M = G.sheettype
-					if(G.amount>=2)
+					if(G.get_amount() >= 2)
 						playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 						user.visible_message("[user] adds [G.name] to the airlock assembly.", "You start to install [G.name] into the airlock assembly.")
 						if(do_after(user, 40))
+							if(C.get_amount() < 2 || mineral) return
 							user << "\blue You've installed [M] plating into the airlock assembly."
 							G.use(2)
 							mineral = "[M]"

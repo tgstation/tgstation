@@ -39,7 +39,7 @@
 		new_tile.add_fingerprint(user)
 	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
-		if (V.get_amount() > 1 && src.get_amount() > 1)
+		if (V.get_amount() >= 1 && src.get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 			RG.add_fingerprint(user)
 			RG.add_to_stacks(user)
