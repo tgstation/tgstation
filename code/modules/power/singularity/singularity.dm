@@ -293,7 +293,8 @@ var/global/list/uneatable = list(
 				if (101 == AM.invisibility)
 					continue
 
-				step_towards(AM, src)
+				spawn (0)
+					step_towards(AM, src)
 
 		if (dist <= consume_range && !istype(A, /turf/space))
 			var/turf/T = A
