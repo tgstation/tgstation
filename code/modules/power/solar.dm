@@ -187,6 +187,14 @@ var/list/solars_list = list()
 	. = PROCESS_KILL
 	return
 
+/obj/machinery/power/solar/Destroy()
+	if (src in solars_list)
+		solars_list -= src
+
+	if (control)
+		control = null
+
+	..()
 
 //
 // Solar Assembly - For construction of solar arrays.

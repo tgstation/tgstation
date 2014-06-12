@@ -464,7 +464,7 @@
 	 ..()
 
 	return
-
+/*
 /mob/living/carbon/show_inv(mob/living/carbon/user as mob)
 	user.set_machine(src)
 	var/dat = {"
@@ -483,6 +483,44 @@
 	user << browse(dat, text("window=mob\ref[src];size=325x500"))
 	onclose(user, "mob\ref[src]")
 	return
+*/
+
+
+/mob/living/carbon/show_inv(mob/living/carbon/user as mob)
+	user.set_machine(src)
+	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
+	var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
+
+	var/dat = {"
+	<B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>		[(l_hand && !( src.l_hand.abstract ))		? l_hand	: "<font color=grey>Empty</font>"]</A><BR>
+	<B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>		[(r_hand && !( src.r_hand.abstract ))		? r_hand	: "<font color=grey>Empty</font>"]</A><BR>
+	"}
+
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=back'> [(back && !(src.back.abstract)) ? back : "<font color=grey>Empty</font>"]</A>"
+	if(has_breathable_mask && istype(back, /obj/item/weapon/tank))
+		dat += "<BR>[TAB]&#8627;<A href='?src=\ref[src];item=internal'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+
+	dat += "<BR>"
+
+
+	dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=mask'>		[(wear_mask && !(src.wear_mask.abstract))	? wear_mask	: "<font color=grey>Empty</font>"]</A>"
+
+
+	if(handcuffed)
+		dat += "<BR><B>Handcuffed:</B> <A href='?src=\ref[src];item=handcuff'>Remove</A>"
+
+	dat += {"
+	<BR>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	"}
+
+	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 340, 500)
+	popup.set_content(dat)
+	popup.open()
+
+
+
+
 
 //generates realistic-ish pulse output based on preset levels
 /mob/living/carbon/proc/get_pulse(var/method)	//method 0 is for hands, 1 is for machines, more accurate

@@ -202,7 +202,7 @@ var/global/mulebot_count = 0
 			if(5,6)
 				dat += "Calculating navigation path"
 			if(7)
-				dat += "Unable to locate destination"
+				dat += "Unable to reach destination"
 
 
 		dat += "<BR>Current Load: [load ? load.name : "<i>none</i>"]<BR>"

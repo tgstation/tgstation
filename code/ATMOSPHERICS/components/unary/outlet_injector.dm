@@ -157,33 +157,6 @@
 			<li>[format_tag("ID Tag","id_tag","set_id")]</a></li>
 		</ul>
 "}
-	Topic(href, href_list)
-		if(..())
-			return
-
-		if(!issilicon(usr))
-			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				return
-
-		if("set_id" in href_list)
-			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
-			if(newid)
-				id_tag = newid
-				initialize()
-		if("set_freq" in href_list)
-			var/newfreq=frequency
-			if(href_list["set_freq"]!="-1")
-				newfreq=text2num(href_list["set_freq"])
-			else
-				newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
-			if(newfreq)
-				if(findtext(num2text(newfreq), "."))
-					newfreq *= 10 // shift the decimal one place
-				if(newfreq < 10000)
-					frequency = newfreq
-					initialize()
-
-		update_multitool_menu(usr)
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/device/multitool))

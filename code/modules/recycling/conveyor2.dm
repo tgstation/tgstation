@@ -196,39 +196,14 @@
 	</ul>"}
 
 
-/obj/machinery/conveyor/Topic(href, href_list)
-	if(..())
-		return
-
-	if(!issilicon(usr))
-		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			return
-
-	if("set_id" in href_list)
-		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
-		if(newid)
-			id_tag = newid
-			initialize()
-
-	if("set_freq" in href_list)
-		var/newfreq=frequency
-		if(href_list["set_freq"]!="-1")
-			newfreq=text2num(href_list["set_freq"])
-		else
-			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
-		if(newfreq)
-			if(findtext(num2text(newfreq), "."))
-				newfreq *= 10 // shift the decimal one place
-			if(newfreq < 10000)
-				frequency = newfreq
-				initialize()
-
+/obj/machinery/conveyor/multitool_topic(var/mob/user,var/list/href_list,var/obj/O)
+	. = ..()
+	if(.) return .
 	if("setdir" in href_list)
 		operating=0
 		dir=text2num(href_list["setdir"])
 		updateConfig()
-
-	update_multitool_menu(usr)
+		return MT_UPDATE
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user as mob)
@@ -456,36 +431,3 @@
 			testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
 			return
 	update()
-
-
-/obj/machinery/conveyor_switch/Topic(href, href_list)
-	if(..())
-		return
-
-	if(!issilicon(usr))
-		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			return
-
-	//var/obj/item/device/multitool/P = get_multitool(usr)
-
-	if("set_id" in href_list)
-		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
-		if(newid)
-			id_tag = newid
-			initialize()
-
-	if("set_freq" in href_list)
-		var/newfreq=frequency
-		if(href_list["set_freq"]!="-1")
-			newfreq=text2num(href_list["set_freq"])
-		else
-			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
-		if(newfreq)
-			if(findtext(num2text(newfreq), "."))
-				newfreq *= 10 // shift the decimal one place
-			if(newfreq < 10000)
-				frequency = newfreq
-				initialize()
-
-	usr.set_machine(src)
-	update_multitool_menu(usr)
