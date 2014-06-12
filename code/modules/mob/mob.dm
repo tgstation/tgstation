@@ -480,12 +480,14 @@ var/list/slot_equipment_priority = list( \
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
 		src << browse(null, t1)
+		return
 
 	if(href_list["refresh"])
 		if(machine && in_range(src, usr))
 			show_inv(machine)
+		return
 
-	if(!usr.stat && usr.canmove && !usr.restrained() && Adjacent(usr))
+	if(!usr.canUseTopic(src) && !iscarbon(usr))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			var/obj/item/what = get_item_by_slot(slot)
@@ -494,12 +496,14 @@ var/list/slot_equipment_priority = list( \
 				usr.stripPanelUnequip(src,what,slot)
 			else
 				usr.stripPanelEquip(src,what,slot)
+		return
 
 	if(usr.machine == src)
 		if(Adjacent(usr))
 			show_inv(usr)
 		else
 			usr << browse(null,"window=mob\ref[src]")
+		return
 
 // The src mob is trying to strip an item from someone
 // Defined in living.dm
