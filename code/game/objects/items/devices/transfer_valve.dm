@@ -77,9 +77,8 @@
 	<BR> <B> Valve attachment:</B> [attached_device ? "<A href='?src=\ref[src];device=1'>[attached_device]</A>" : "None"] [attached_device ? "<A href='?src=\ref[src];rem_device=1'>Remove</A>" : ""]
 	<BR> <B> Valve status: </B> [ valve_open ? "<A href='?src=\ref[src];open=1'>Closed</A> <B>Open</B>" : "<B>Closed</B> <A href='?src=\ref[src];open=1'>Open</A>"]"}
 
-	var/datum/browser/popup = new(user, "trans_valve", name)
-	popup.set_content(dat)
-	popup.open()
+	user << browse(dat, "window=trans_valve;size=600x300")
+	onclose(user, "trans_valve")
 	return
 
 /obj/item/device/transfer_valve/Topic(href, href_list)
@@ -170,13 +169,6 @@
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 
-		var/attachment = "no device"
-		if(attached_device)
-			if(istype(attached_device, /obj/item/device/assembly/signaler))
-				attachment = "<A HREF='?_src_=holder;secretsadmin=list_signalers'>[attached_device]</A>"
-			else
-				attachment = attached_device
-
 		var/attacher_name = ""
 		if(!attacher)
 			attacher_name = "Unknown"
@@ -184,7 +176,7 @@
 			attacher_name = "[attacher.name]([attacher.ckey])"
 
 		var/log_str1 = "Bomb valve opened in "
-		var/log_str2 = "with [attachment] attacher: [attacher_name]"
+		var/log_str2 = "with [attached_device ? attached_device : "no device"] attacher: [attacher_name]"
 
 		var/log_attacher = ""
 		if(attacher)
@@ -192,16 +184,14 @@
 
 		var/mob/mob = get_mob_by_key(src.fingerprintslast)
 		var/last_touch_info = ""
+
 		if(mob)
 			last_touch_info = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[mob]'>?</A>)"
 
 		var/log_str3 = " Last touched by: [src.fingerprintslast]"
+		bombers += "[log_str1] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a>  [log_str2][log_attacher] [log_str3][last_touch_info]"
 
-		var/bomb_message = "[log_str1] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a>  [log_str2][log_attacher] [log_str3][last_touch_info]"
-
-		bombers += bomb_message
-
-		message_admins(bomb_message, 0, 1)
+		message_admins("[log_str1] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a>  [log_str2][log_attacher] [log_str3][last_touch_info]", 0, 1)
 		log_game("[log_str1] [A.name]([A.x],[A.y],[A.z]) [log_str2] [log_str3]")
 		merge_gases()
 		spawn(20) // In case one tank bursts

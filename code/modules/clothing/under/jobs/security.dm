@@ -28,7 +28,7 @@
 /*
  * Detective
  */
-/obj/item/clothing/under/rank/det
+/obj/item/clothing/under/det
 	name = "hard-worn suit"
 	desc = "Someone who wears this means business."
 	icon_state = "detective"

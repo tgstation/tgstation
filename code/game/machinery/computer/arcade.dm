@@ -49,11 +49,9 @@
 		prize.loc = src.loc
 
 /obj/machinery/computer/arcade/emp_act(severity)
-	..(severity)
-
 	if(stat & (NOPOWER|BROKEN))
+		..(severity)
 		return
-
 	var/empprize = null
 	var/num_of_prizes = 0
 	switch(severity)
@@ -61,10 +59,11 @@
 			num_of_prizes = rand(1,4)
 		if(2)
 			num_of_prizes = rand(0,2)
-	for(var/i = num_of_prizes; i > 0; i--)
+	for(num_of_prizes; num_of_prizes > 0; num_of_prizes--)
 		empprize = pickweight(prizes)
 		new empprize(src.loc)
-	explosion(src.loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
+
+	..(severity)
 
 
 /obj/machinery/computer/arcade/battle

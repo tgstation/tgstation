@@ -15,7 +15,7 @@
 
 
 /obj/item/weapon/grenade/iedcasing
-	name = "improvised firebomb assembly"
+	name = "improvised explosive assembly"
 	desc = "An igniter stuffed into an aluminium shell."
 	w_class = 2.0
 	icon = 'icons/obj/grenade.dmi'
@@ -29,8 +29,6 @@
 	active = 1
 	det_time = 50
 	display_timer = 0
-	var/range = 3
-	var/times = list()
 
 
 
@@ -45,7 +43,7 @@
 			assembled = 1
 			user << "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-			desc = "An improvised firebomb assembly. Filled to the brim with 'Firery flavor'"
+			desc = "An improvised explosive assembly. Filled to the brim with 'Explosive flavor'"
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
 			return
 
@@ -54,20 +52,14 @@
 	if(istype(I, /obj/item/stack/cable_coil))
 		if(assembled == 1)
 			var/obj/item/stack/cable_coil/C = I
-			times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)	// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
 			C.use(1)
 			assembled = 2
 			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
-			desc = "A weak, improvised incendiary device."
+			desc = "A weak, improvised explosive."
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
-			name = "improvised firebomb"
+			name = "improvised explosive"
 			active = 0
-			det_time = text2num(pickweight(times))
-			if(det_time < 0) //checking for 'duds'
-				range = 1
-				det_time = rand(30,80)
-			else
-				range = pick(2,2,2,3,3,3,4)
+			det_time = rand(30,80)
 
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //
 	if(!active)
@@ -91,7 +83,7 @@
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()
-	explosion(src.loc,-1,-1,-1, flame_range = range)	// no explosive damage, only a large fireball.
+	explosion(src.loc,-1,0,2)
 	qdel(src)
 
 /obj/item/weapon/grenade/iedcasing/examine()

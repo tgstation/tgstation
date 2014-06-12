@@ -24,7 +24,7 @@
 						if("*Arrest*")		holder.icon_state = "hudwanted"
 						if("Incarcerated")	holder.icon_state = "hudincarcerated"
 						if("Parolled")		holder.icon_state = "hudparolled"
-						if("Discharged")		holder.icon_state = "huddischarged"
+						if("Released")		holder.icon_state = "hudreleased"
 						else
 							return
 					client.images += holder

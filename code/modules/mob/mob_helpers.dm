@@ -419,27 +419,3 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 /proc/get_both_hands(mob/living/carbon/M)
 	var/list/hands = list(M.l_hand, M.r_hand)
 	return hands
-
-/proc/item_heal_robotic(var/mob/living/carbon/human/H, var/mob/user, var/brute, var/burn)
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
-
-	var/dam //changes repair text based on how much brute/burn was supplied
-
-	if(brute > burn)
-		dam = 1
-	else
-		dam = 0
-
-	if(affecting.status == ORGAN_ROBOTIC)
-		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
-			affecting.heal_damage(brute,burn,1)
-			H.update_damage_overlays(0)
-			H.updatehealth()
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]!</span>"), 1)
-			return
-		else
-			user << "<span class='notice'>[H]'s [affecting.getDisplayName()] is already in good condition</span>"
-			return
-	else
-		return

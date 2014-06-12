@@ -491,7 +491,7 @@ obj/structure/cable/proc/avail()
 
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 	if(affecting.status == ORGAN_ROBOTIC)
-		item_heal_robotic(H, user, 0, 30)
+		src.item_heal_robotic(H, user, 0, 30)
 		src.use(1)
 		return
 	else
