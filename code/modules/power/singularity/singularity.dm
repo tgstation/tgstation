@@ -276,10 +276,9 @@ var/global/list/uneatable = list(
 
 		gain = 2
 	else if (isturf(A))
-		var/turf/T = A
-		var/dist = get_dist(T, src)
+		var/dist = get_dist(A, src)
 
-		for (var/atom/movable/AM in T.contents)
+		for (var/atom/movable/AM in A.contents)
 			if (AM == src) // This is the snowflake.
 				continue
 
@@ -296,7 +295,8 @@ var/global/list/uneatable = list(
 
 				step_towards(AM, src)
 
-		if (dist <= consume_range && !istype(T, /turf/space))
+		if (dist <= consume_range && !istype(A, /turf/space))
+			var/turf/T = A
 			T.ChangeTurf(/turf/space)
 			gain = 2
 
