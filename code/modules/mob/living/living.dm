@@ -577,6 +577,19 @@
 	src << "<span class='notice'>You're too exhausted to keep going...</span>"
 	Weaken(5)
 
+/mob/living/update_gravity(has_gravity)
+	if(!ticker)
+		return
+	float(!has_gravity)
+
+/mob/living/proc/float(on)
+	if(on && !floating)
+		animate(src, pixel_y = 2, time = 10, loop = -1)
+		floating = 1
+	else if(!on && floating)
+		animate(src, pixel_y = initial(pixel_y), time = 10)
+		floating = 0
+
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(mob/who, obj/item/what, where)
