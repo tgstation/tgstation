@@ -32,7 +32,7 @@
 
 /obj/machinery/power/terminal/Destroy()
 	if (master)
-		master.terminal = null
+		master:terminal = null
 		master = null
 
 	..()

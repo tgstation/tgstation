@@ -188,8 +188,8 @@ var/list/solars_list = list()
 	return
 
 /obj/machinery/power/solar/Destroy()
-	if (src in solar_list)
-		solar_list -= src
+	if (src in solars_list)
+		solars_list -= src
 
 	if (control)
 		control = null
