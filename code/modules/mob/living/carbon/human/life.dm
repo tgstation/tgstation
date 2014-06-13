@@ -53,6 +53,7 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 	var/temperature_alert = 0
 	var/in_stasis = 0
 	var/do_deferred_species_setup=0
+	var/havecancer = 0
 
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
@@ -1494,6 +1495,19 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		if(!stat)
 			if (getToxLoss() >= 45 && nutrition > 20)
 				vomit()
+		if((air_master.current_cycle % 3) == 0)
+			if (getToxLoss() >= 20)
+				var/chancesick = (getToxLoss() / 4)
+				if(havecancer == 0)
+					if(prob(chancesick))
+						havecancer = 1
+			if(havecancer)
+				if(prob(10))
+					Get_Cancer()
+				if(prob(20))
+					emote("cough")
+				if(src.radiation >= 50)
+					havecancer = 0
 
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
@@ -1662,6 +1676,29 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 	we only set those statuses and icons upon changes.  Then those HUD items will simply add those pre-made images.
 	This proc below is only called when those HUD elements need to change as determined by the mobs hud_updateflag.
 */
+/mob/living/carbon/human/proc/Get_Cancer()
+	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
+	O.imp = new /obj/item/weapon/implant/cancer(O)
+	if (!istype(src, /mob/living/carbon))
+		return
+
+
+	if(O.imp.implanted(src))
+		O.imp.loc = src
+		O.imp.imp_in = src
+		O.imp.implanted = 1
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			var/datum/organ/external/affected = H.get_organ(randorgan())
+			affected.implants += O.imp
+			O.imp.part = affected
+
+	return
+
+/mob/living/carbon/human/proc/randorgan()
+	var/randorgan = pick("head","chest","l_arm","r_arm","l_hand","r_hand","groin","l_leg","r_leg","l_foot","r_foot")
+	//var/randorgan = pick("head","chest","groin")
+	return randorgan
 
 
 /mob/living/carbon/human/proc/handle_hud_list()

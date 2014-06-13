@@ -53,7 +53,7 @@
 	idtype = /obj/item/weapon/card/id/medical
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology)
-	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist")
+	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist", "Oncologist")
 
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/medical
@@ -81,6 +81,9 @@
 				if("Medical Doctor")
 					H.equip_or_collect(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 					H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
+				if("Oncologist")
+					H.equip_or_collect(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
+					H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/oncologist(H), slot_wear_suit)
 				if("Nurse")
 					if(H.gender == FEMALE)
 						if(prob(50))
@@ -135,6 +138,22 @@
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
+
+/datum/job/oncologist
+	title = "Oncologist"
+
+	department_flag = MEDSCI
+	faction = "Station"
+
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/medical
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_genetics)
+	minimal_access = list(access_medical, access_chemistry, access_surgery, access_genetics)
+
+	pdaslot=slot_belt
+	pdatype=/obj/item/device/pda/medical
+
 
 
 
