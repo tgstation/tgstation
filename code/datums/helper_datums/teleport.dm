@@ -158,18 +158,3 @@
 			var/mob/living/MM = teleatom
 			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
 	return 1
-
-/datum/teleport/instant/science/teleportChecks()
-	if(istype(teleatom, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
-		teleatom.visible_message("<span class='warning'>The portal rejects [teleatom]!</span>")
-		return 0
-
-	if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/disk/nuclear)))
-		if(istype(teleatom, /mob/living))
-			var/mob/living/MM = teleatom
-			MM.visible_message("<span class='warning'>The portal rejects [MM]!","<span class='warning'>The nuclear disk that you're carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>")
-		else
-			teleatom.visible_message("<span class='warning'>The portal rejects [teleatom]!</span>")
-		return 0
-
-	return 1

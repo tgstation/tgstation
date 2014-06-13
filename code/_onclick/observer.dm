@@ -84,6 +84,10 @@
 	else
 		user << "[src] has no destination."
 
+/obj/item/weapon/storage/attack_ghost(mob/user as mob)
+	orient2hud(user)
+	show_to(user)
+
 // -------------------------------------------
 // This was supposed to be used by adminghosts
 // I think it is a *terrible* idea

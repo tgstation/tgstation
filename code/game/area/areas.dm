@@ -286,9 +286,10 @@
 /area/proc/mob_activate(var/mob/living/L)
 	return
 
-/proc/has_gravity(var/atom/AT)
-	var/area/A = get_area(AT)
-	var/turf/T = get_turf(AT)
+/proc/has_gravity(atom/AT, turf/T)
+	if(!T)
+		T = get_turf(AT)
+	var/area/A = get_area(T)
 	if(istype(T, /turf/space)) // Turf never has gravity
 		return 0
 	else if(A && A.has_gravity) // Areas which always has gravity

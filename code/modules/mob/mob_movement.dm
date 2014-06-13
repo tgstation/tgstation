@@ -362,9 +362,8 @@
 		if(istype(turf,/turf/space))
 			continue
 
-		else
-			if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src))) // No one else gets a chance.
-				continue
+		if(!turf.density && !mob_negates_gravity())
+			continue
 
 		dense_object++
 		break
@@ -385,18 +384,22 @@
 	if(!dense_object)
 		return 0
 
-
-
 	//Check to see if we slipped
 	if(prob(Process_Spaceslipping(5)))
 		src << "\blue <B>You slipped!</B>"
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0
+
 	//If not then we can reset inertia and move
 	inertia_dir = 0
 	return 1
 
+/mob/proc/mob_has_gravity(turf/T)
+	return has_gravity(src, T)
+
+/mob/proc/mob_negates_gravity()
+	return 0
 
 /mob/proc/Process_Spaceslipping(var/prob_slip = 5)
 	//Setup slipage
@@ -426,4 +429,7 @@
 	return
 
 /mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+	return
+
+/mob/proc/update_gravity()
 	return
