@@ -150,10 +150,14 @@
 /obj/machinery/door/window/proc/take_damage(var/damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/stack/rods(src.loc, 2)
-		new /obj/item/stack/cable_coil(src.loc, 2)
+		var/debris = list(
+			new /obj/item/weapon/shard(src.loc),
+			new /obj/item/weapon/shard(src.loc),
+			new /obj/item/stack/rods(src.loc, 2),
+			new /obj/item/stack/cable_coil(src.loc, 2)
+			)
+		for(var/obj/fragment in debris)
+			transfer_fingerprints_to(fragment)
 		src.density = 0
 		qdel(src)
 		return
@@ -223,6 +227,8 @@
 	if (src.operating)
 		return
 
+	add_fingerprint(user)
+
 	//Emags and ninja swords? You may pass.
 	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		src.operating = -1
@@ -241,7 +247,7 @@
 		open()
 		emagged = 1
 		return 1
-	
+
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
 	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(stat & NOPOWER)
@@ -260,8 +266,7 @@
 		if(I.damtype == BURN || I.damtype == BRUTE)
 			take_damage(aforce)
 		return
-	
-	src.add_fingerprint(user)
+
 	if (!src.requiresID())
 		//don't care who they are or what they have, act as if they're NOTHING
 		user = null
