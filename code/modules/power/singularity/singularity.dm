@@ -496,6 +496,7 @@
 
 /obj/machinery/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
 	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
+	new /obj/effect/effect/sleep_smoke(user.loc)
 
 
 /obj/machinery/singularity/narsie/process()
