@@ -11,7 +11,7 @@
 
 	var/canister_color = "yellow"
 	var/can_label = 1
-	var/filled = 0.5
+	var/filled = 0.5 // Mapping var: Set to 0 for empty, 1 to full, anywhere between.
 	pressure_resistance = 7*ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	volume = 1000

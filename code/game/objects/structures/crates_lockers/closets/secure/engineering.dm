@@ -127,3 +127,11 @@
 	icon_opened = "secureengopen"
 	icon_broken = "secureengbroken"
 	icon_off = "secureengoff"
+
+
+/obj/structure/closet/crate/secure/large/reinforced/shard
+	name = "Supermatter Shard Crate"
+	New()
+		..()
+		sleep(2)
+		new /obj/machinery/power/supermatter/shard(src)

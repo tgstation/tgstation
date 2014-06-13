@@ -378,6 +378,11 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_SMILE         206		// :)
 #define M_ELVIS         207		// You ain't nothin' but a hound dog.
 
+// /vg/ muts
+#define M_LOUD		208		// CAUSES INTENSE YELLING
+#define M_WHISPER	209		// causes quiet whispering
+#define M_DIZZY		210		// Trippy.
+
 // Bustanuts
 #define M_HARDCORE      300
 
@@ -862,3 +867,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
 // 1 will enable set background. 0 will disable set background.
 #define BACKGROUND_ENABLED 0
+
+// multitool_topic() shit
+#define MT_ERROR  -1
+#define MT_UPDATE 1
+#define MT_REINIT 2

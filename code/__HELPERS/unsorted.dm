@@ -1252,15 +1252,14 @@ proc/get_mob_with_client_list()
 
 	var/atom/A = O
 
-	for (var/i = 0, ++i <= 20)
+	for (var/i = 0, ++i <= 16)
 		if (isturf(A))
 			return A
 
-		switch (istype(A))
-			if (1)
-				A = A.loc
-			if (0)
-				return
+		if (istype(A))
+			A = A.loc
+		else
+			return
 
 /proc/get(atom/loc, type)
 	while(loc)

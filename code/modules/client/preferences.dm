@@ -578,9 +578,9 @@ datum/preferences
 			<b>Choose disabilities</b><ul>"}
 		// END AUTOFIX
 		HTML += ShowDisabilityState(user,DISABILITY_FLAG_NEARSIGHTED,"Needs Glasses")
-		HTML += ShowDisabilityState(user,DISABILITY_FLAG_FAT,"Obese")
-		HTML += ShowDisabilityState(user,DISABILITY_FLAG_EPILEPTIC,"Seizures")
-		HTML += ShowDisabilityState(user,DISABILITY_FLAG_DEAF,"Deaf")
+		HTML += ShowDisabilityState(user,DISABILITY_FLAG_FAT,        "Obese")
+		HTML += ShowDisabilityState(user,DISABILITY_FLAG_EPILEPTIC,  "Seizures")
+		HTML += ShowDisabilityState(user,DISABILITY_FLAG_DEAF,       "Deaf")
 
 
 		// AUTOFIXED BY fix_string_idiocy.py

@@ -17,10 +17,6 @@
 	h_style = "Skrell Male Tentacles"
 	..(new_loc, "Skrell")
 
-/mob/living/carbon/human/tajaran/New(var/new_loc)
-	h_style = "Tajaran Ears"
-	..(new_loc, "Tajaran")
-
 /mob/living/carbon/human/unathi/New(var/new_loc)
 	h_style = "Unathi Horns"
 	..(new_loc, "Unathi")
@@ -492,7 +488,7 @@
 
 
 
-		if(istype(user:gloves, /obj/item/clothing/gloves/black/thief))
+		if(ishuman(user) && istype(user:gloves, /obj/item/clothing/gloves/black/thief))
 			dat += "<BR>[TAB]&#8627;<B>Pockets:</B> <A href='?src=\ref[src];pockets=left'>[(l_store && !(src.l_store.abstract)) ? l_store : "<font color=grey>Left (Empty)</font>"]</A>"
 			dat += " <A href='?src=\ref[src];pockets=right'>[(r_store && !(src.r_store.abstract)) ? r_store : "<font color=grey>Right (Empty)</font>"]</A>"
 

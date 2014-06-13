@@ -13,15 +13,14 @@
 
 	var/atom/A = O
 
-	for (var/i = 0, ++i <= 20)
+	for (var/i = 0, ++i <= 16)
 		if (isarea(A))
 			return A
 
-		switch (istype(A))
-			if (1)
-				A = A.loc
-			if (0)
-				return
+		if (istype(A))
+			A = A.loc
+		else
+			return
 
 /proc/get_area_master(const/O)
 	var/area/A = get_area(O)
@@ -58,19 +57,6 @@
 		if(our_area == get_area_master(C))
 			return 0
 	return 1
-
-
-//Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
-//They should approximate pythagoras theorem well enough for our needs.
-#define k1 0.934
-#define k2 0.427
-/proc/cheap_hypotenuse(Ax,Ay,Bx,By) // T is just the second atom to check distance to center with
-	var/dx = abs(Ax - Bx)	//sides of right-angled triangle
-	var/dy = abs(Ay - By)
-	if(dx>=dy)	return (k1*dx) + (k2*dy)	//No sqrt or powers :)
-	else		return (k2*dx) + (k1*dy)
-#undef k1
-#undef k2
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -469,3 +455,35 @@ var/list/DummyCache = list()
 			continue
 		mobs_found += M
 	return mobs_found
+
+/proc/GetRedPart(const/hexa)
+	var/hex = uppertext(hexa)
+	var/hi = text2ascii(hex, 2)
+	var/lo = text2ascii(hex, 3)
+	return (((hi >= 65 ? hi - 55 : hi - 48) << 4) | (lo >= 65 ? lo - 55 : lo - 48))
+
+/proc/GetGreenPart(const/hexa)
+	var/hex = uppertext(hexa)
+	var/hi = text2ascii(hex, 4)
+	var/lo = text2ascii(hex, 5)
+	return (((hi >= 65 ? hi - 55 : hi - 48) << 4) | (lo >= 65 ? lo - 55 : lo - 48))
+
+/proc/GetBluePart(const/hexa)
+	var/hex = uppertext(hexa)
+	var/hi = text2ascii(hex, 6)
+	var/lo = text2ascii(hex, 7)
+	return (((hi >= 65 ? hi - 55 : hi - 48) << 4) | (lo >= 65 ? lo - 55 : lo - 48))
+
+/proc/GetHexColors(const/hexa)
+	var/hex = uppertext(hexa)
+	var/hi1 = text2ascii(hex, 2)
+	var/lo1 = text2ascii(hex, 3)
+	var/hi2 = text2ascii(hex, 4)
+	var/lo2 = text2ascii(hex, 5)
+	var/hi3 = text2ascii(hex, 6)
+	var/lo3 = text2ascii(hex, 7)
+	return list(
+		((hi1 >= 65 ? hi1 - 55 : hi1 - 48) << 4) | (lo1 >= 65 ? lo1 - 55 : lo1 - 48),
+		((hi2 >= 65 ? hi2 - 55 : hi2 - 48) << 4) | (lo2 >= 65 ? lo2 - 55 : lo2 - 48),
+		((hi3 >= 65 ? hi3 - 55 : hi3 - 48) << 4) | (lo3 >= 65 ? lo3 - 55 : lo3 - 48)
+		)

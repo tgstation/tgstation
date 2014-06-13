@@ -120,13 +120,13 @@
 /obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return "<b>NO MULTITOOL_MENU!</b>"
 
-/obj/proc/linkWith(var/mob/user, var/obj/buffer)
+/obj/proc/linkWith(var/mob/user, var/obj/buffer, var/link/context)
 	return 0
 
 /obj/proc/unlinkFrom(var/mob/user, var/obj/buffer)
 	return 0
 
-/obj/proc/canLink(var/obj/O)
+/obj/proc/canLink(var/obj/O, var/link/context)
 	return 0
 
 /obj/proc/isLinkedWith(var/obj/O)
@@ -134,6 +134,12 @@
 
 /obj/proc/getLink(var/idx)
 	return null
+
+/obj/proc/linkMenu(var/obj/O)
+	var/dat=""
+	if(canLink(O, list()))
+		dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> "
+	return dat
 
 /obj/proc/format_tag(var/label,var/varname, var/act="set_tag")
 	var/value = vars[varname]
@@ -177,8 +183,9 @@ a {
 			else
 				id=P.buffer:id_tag
 			dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] ([id])"
-			if(canLink(P.buffer))
-				dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> "
+
+			dat += linkMenu(P.buffer)
+
 			if(P.buffer)
 				dat += "<a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
 			dat += "</p>"
@@ -193,7 +200,7 @@ a {
 	return
 
 /mob/proc/unset_machine()
-	if(machine)
+	if(machine && istype(machine, /obj/machinery))
 		machine._using -= src
 		machine = null
 

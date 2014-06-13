@@ -78,6 +78,7 @@ var/global/list/RPD_recipes=list(
 	"Devices"=list(
 		"Connector"      = new /datum/pipe_info(4, 1, PIPE_UNARY),
 		"Unary Vent"     = new /datum/pipe_info(7, 1, PIPE_UNARY),
+		"Passive Vent"   = new /datum/pipe_info(PIPE_PASV_VENT,    1, PIPE_UNARY),
 		"Gas Pump"       = new /datum/pipe_info(9, 1, PIPE_UNARY),
 		"Passive Gate"   = new /datum/pipe_info(15,1, PIPE_UNARY),
 		"Volume Pump"    = new /datum/pipe_info(16,1, PIPE_UNARY),
@@ -123,7 +124,8 @@ var/global/list/RPD_recipes=list(
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 50000
+	m_amt = 75000
+	g_amt = 37500
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system

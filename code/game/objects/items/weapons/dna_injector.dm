@@ -1109,3 +1109,63 @@
 	New()
 		block = ELVISBLOCK
 		..()
+
+/obj/item/weapon/dnainjector/loud
+	name = "DNA-Injector (Loud)"
+	desc = "CAPS LOCK IS CRUISE CONRTOL FOR COOL!"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = LOUDBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antiloud
+	name = "DNA-Injector (Anti-Loud)"
+	desc = "No, keep yelling!"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = LOUDBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/whisper
+	name = "DNA-Injector (Quiet)"
+	desc = "Shhh..."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = ELVISBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antiquiet
+	name = "DNA-Injector (Anti-Quiet)"
+	desc = "WOOOO HOOOO!"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = ELVISBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/dizzy
+	name = "DNA-Injector (Dizzy)"
+	desc = "Touch fuzzy,"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = ELVISBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antidizzy
+	name = "DNA-Injector (Anti-Dizzy)"
+	desc = "Get dizzy."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = ELVISBLOCK
+		..()

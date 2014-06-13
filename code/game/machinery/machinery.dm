@@ -105,8 +105,8 @@ Class Procs:
 		//2 = run auto, use active
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
-	var/power_channel = EQUIP //EQUIP,ENVIRON or LIGHT
-	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
+	var/power_channel = EQUIP // EQUIP, ENVIRON or LIGHT.
+	var/list/component_parts // List of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
 	var/global/gl_uid = 1
@@ -123,7 +123,10 @@ Class Procs:
 	if (src in machines)
 		machines.Remove(src)
 
-	return ..()
+	if (component_parts)
+		component_parts = null
+
+	..()
 
 /obj/machinery/process() // If you dont use process or power why are you here
 	return PROCESS_KILL
@@ -175,43 +178,35 @@ Class Procs:
 
 	return 1
 
-/obj/machinery/Topic(href, href_list)
-	..()
-	if(stat & (NOPOWER|BROKEN))
-		return 1
-	var/ghost_flags=0
-	if(ghost_write)
-		ghost_flags |= PERMIT_ALL
-	if(!canGhostWrite(usr,src,"fucked with",ghost_flags))
-		if(usr.restrained() || usr.lying || usr.stat)
-			return 1
-		if ( ! (istype(usr, /mob/living/carbon/human) || \
-				istype(usr, /mob/living/silicon) || \
-				istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-			usr << "\red You don't have the dexterity to do this!"
-			return 1
+/obj/machinery/proc/multitool_topic(var/mob/user,var/list/href_list,var/obj/O)
+	if("set_id" in href_list)
+		if(!("id_tag" in vars))
+			warning("set_id: [type] has no id_tag var.")
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, src:id_tag) as null|text),1,MAX_MESSAGE_LEN)
+		if(newid)
+			src:id_tag = newid
+			return MT_UPDATE|MT_REINIT
+	if("set_freq" in href_list)
+		if(!("frequency" in vars))
+			warning("set_freq: [type] has no frequency var.")
+		var/newfreq=src:frequency
+		if(href_list["set_freq"]!="-1")
+			newfreq=text2num(href_list["set_freq"])
+		else
+			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, src:frequency) as null|num
+		if(newfreq)
+			if(findtext(num2text(newfreq), "."))
+				newfreq *= 10 // shift the decimal one place
+			if(newfreq < 10000)
+				src:frequency = newfreq
+				return MT_UPDATE|MT_REINIT
+	return 0
 
-		var/norange = 0
-		if(istype(usr, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = usr
-			if(istype(H.l_hand, /obj/item/tk_grab))
-				norange = 1
-			else if(istype(H.r_hand, /obj/item/tk_grab))
-				norange = 1
-
-		if(!norange)
-			if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
-				return 1
-	else if(!custom_aghost_alerts)
-		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
-
-	src.add_fingerprint(usr)
-
+/obj/machinery/proc/handle_multitool_topic(var/href, var/list/href_list, var/mob/user)
 	var/obj/item/device/multitool/P = get_multitool(usr)
 	if(P && istype(P))
 		var/update_mt_menu=0
 		var/re_init=0
-
 		if("set_tag" in href_list)
 			if(!(href_list["set_tag"] in vars))
 				usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
@@ -244,14 +239,14 @@ Class Procs:
 			var/obj/O = P.buffer
 			if(!O)
 				return 1
-			if(!canLink(O))
+			if(!canLink(O,href_list))
 				usr << "\red You can't link with that device."
 				return 1
 			if (isLinkedWith(O))
 				usr << "\red A red light flashes on \the [P]. The two devices are already linked."
 				return 1
 
-			if(linkWith(usr, O))
+			if(linkWith(usr, O, href_list))
 				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
 			else
 				usr << "\red A red light flashes on \the [P].  It appears something went wrong when linking the two devices."
@@ -267,12 +262,54 @@ Class Procs:
 			P.buffer = null
 			update_mt_menu=1
 
+		var/ret = multitool_topic(usr,href_list,P.buffer)
+		if(ret == MT_ERROR)
+			return 1
+		if(ret & MT_UPDATE)
+			update_mt_menu=1
+		if(ret & MT_REINIT)
+			re_init=1
+
 		if(re_init)
 			initialize()
 		if(update_mt_menu)
 			//usr.set_machine(src)
 			update_multitool_menu(usr)
 			return 1
+
+/obj/machinery/Topic(href, href_list)
+	..()
+	if(stat & (NOPOWER|BROKEN))
+		return 1
+	var/ghost_flags=0
+	if(ghost_write)
+		ghost_flags |= PERMIT_ALL
+	if(!canGhostWrite(usr,src,"fucked with",ghost_flags))
+		if(usr.restrained() || usr.lying || usr.stat)
+			return 1
+		if ( ! (istype(usr, /mob/living/carbon/human) || \
+				istype(usr, /mob/living/silicon) || \
+				istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+			usr << "\red You don't have the dexterity to do this!"
+			return 1
+
+		var/norange = 0
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			if(istype(H.l_hand, /obj/item/tk_grab))
+				norange = 1
+			else if(istype(H.r_hand, /obj/item/tk_grab))
+				norange = 1
+
+		if(!norange)
+			if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
+				return 1
+	else if(!custom_aghost_alerts)
+		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
+
+	src.add_fingerprint(usr)
+
+	handle_multitool_topic(href,href_list,usr)
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)

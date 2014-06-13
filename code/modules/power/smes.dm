@@ -419,5 +419,11 @@
 	if(Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"
 	return rate
 
+/obj/machinery/power/smes/Destroy()
+	if (terminal)
+		terminal.master = null
+		terminal = null
+
+	..()
 
 #undef SMESRATE

@@ -80,7 +80,7 @@
 			max_number = 6
 			vermstring = "lizards"
 		if(VERM_SPIDERS)
-			spawn_types = list(/obj/effect/spider/spiderling)
+			spawn_types = list(/mob/living/simple_animal/hostile/giant_spider/spiderling)
 			vermstring = "spiders"
 		if(VERM_SLIMES)
 			spawn_types = typesof(/mob/living/carbon/slime) - /mob/living/carbon/slime - typesof(/mob/living/carbon/slime/adult)
@@ -98,8 +98,8 @@
 
 
 			if(vermin == VERM_SPIDERS)
-				var/obj/effect/spider/spiderling/S = new(T)
-				S.amount_grown = -1
+				var/mob/living/simple_animal/hostile/giant_spider/spiderling/S = new(T)
+				S.amount_grown = 0
 			else
 				var/spawn_type = pick(spawn_types)
 				new spawn_type(T)

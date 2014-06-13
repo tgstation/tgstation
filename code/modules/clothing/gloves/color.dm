@@ -6,6 +6,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	_color="yellow"
+	species_fit = list("Vox")
 
 	power
 		var/next_shock = 0
@@ -17,6 +18,7 @@
 	item_state = "ygloves"
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
+	species_fit = list("Vox")
 
 	_color="yellow"
 
@@ -29,6 +31,7 @@
 	icon_state = "black"
 	item_state = "bgloves"
 	_color="brown"
+	species_fit = list("Vox")
 
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
@@ -53,6 +56,7 @@
 	icon_state = "orange"
 	item_state = "orangegloves"
 	_color="orange"
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/red
 	name = "red gloves"
@@ -60,6 +64,7 @@
 	icon_state = "red"
 	item_state = "redgloves"
 	_color = "red"
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/rainbow
 	name = "rainbow gloves"
@@ -67,6 +72,7 @@
 	icon_state = "rainbow"
 	item_state = "rainbowgloves"
 	_color = "rainbow"
+	species_fit = list("Vox")
 
 	clown
 		_color = "clown"
@@ -77,6 +83,7 @@
 	icon_state = "blue"
 	item_state = "bluegloves"
 	_color="blue"
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/purple
 	name = "purple gloves"
@@ -84,6 +91,7 @@
 	icon_state = "purple"
 	item_state = "purplegloves"
 	_color="purple"
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/green
 	name = "green gloves"
@@ -91,6 +99,7 @@
 	icon_state = "green"
 	item_state = "greengloves"
 	_color="green"
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/grey
 	name = "grey gloves"
@@ -98,6 +107,7 @@
 	icon_state = "gray"
 	item_state = "graygloves"
 	_color="grey"
+	species_fit = list("Vox")
 
 	rd
 		_color = "director"			//Exists for washing machines. Is not different from gray gloves in any way.
@@ -111,6 +121,7 @@
 	icon_state = "lightbrown"
 	item_state = "lightbrowngloves"
 	_color="light brown"
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/brown
 	name = "brown gloves"
@@ -118,6 +129,7 @@
 	icon_state = "brown"
 	item_state = "browngloves"
 	_color="brown"
+	species_fit = list("Vox")
 
 	cargo
 		_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.

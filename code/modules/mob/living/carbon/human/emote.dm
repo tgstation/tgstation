@@ -206,6 +206,7 @@
 
 		if ("deathgasp")
 			if(M_ELVIS in mutations)
+				src.emote("fart")
 				message = "<B>[src]</B> has left the building..."
 			if(M_HARDCORE in mutations)
 				message = "<B>[src]</B> whispers with his final breath, <i>'i told u i was hardcore..'</i>"
@@ -547,7 +548,10 @@
 		// Needed for M_TOXIC_FART
 		if("fart")
 			if(world.time-lastFart >= 600)
-				message = "<b>[src]</b> [pick("passes wind","farts")]."
+				var/list/farts = list("farts","passes wind","toots","tries to fart, but nothing happens.","farts with the force of one thousand suns")
+				var/fart = pick(farts)
+				message = "<b>[src]</b> [fart]."
+				playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
 				m_type = 2
 
 				var/turf/location = get_turf(src)
@@ -566,6 +570,7 @@
 				// Process toxic farts first.
 				if(M_TOXIC_FARTS in mutations)
 					message=""
+					playsound(get_turf(src), 'sound/effects/superfart.ogg', 50, 1)
 					if(wearing_suit)
 						if(!wearing_mask)
 							src << "\red You gas yourself!"

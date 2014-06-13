@@ -204,6 +204,49 @@
 
 	flesh_color = "#AFA59E"
 
+	var/datum/speech_filter/filter = new
+
+/datum/species/tajaran/New()
+	// Combining all the worst shit the world has ever offered.
+
+	// Note: Comes BEFORE other stuff.
+	// Trying to remember all the stupid fucking furry memes is hard
+	filter.addPickReplacement("\b(asshole|comdom|shitter|shitler|retard|dipshit|dipshit|greyshirt|nigger)",
+		list(
+			"silly rabbit",
+			"sandwich", // won't work too well with plurals OH WELL
+			"recolor",
+			"party pooper"
+		)
+	)
+	filter.addWordReplacement("me","meow")
+	filter.addWordReplacement("I","meow") // Should replace with player's first name.
+	filter.addReplacement("fuck","yiff")
+	filter.addReplacement("shit","scat")
+	filter.addReplacement("scratch","scritch")
+	filter.addWordReplacement("(help|assist)\\bmeow","kill meow") // help me(ow) -> kill meow
+	filter.addReplacement("god","gosh")
+	filter.addWordReplacement("(ass|butt)", "rump")
+
+/datum/species/tajaran/say_filter(mob/M, message, datum/language/speaking)
+	if(prob(15))
+		message = ""
+		if(prob(50))
+			message = pick(
+				"GOD, PLEASE",
+				"NO, GOD",
+				"AGGGGGGGH",
+			)+" "
+		message += pick(
+			"KILL ME",
+			"END MY SUFFERING",
+			"I CAN'T DO THIS ANYMORE",
+		)
+		return message
+	if(copytext(message, 1, 2) != "*")
+		message = filter.FilterSpeech(message)
+	return message
+
 /datum/species/grey // /vg/
 	name = "Grey"
 	icobase = 'icons/mob/human_races/r_grey.dmi'
@@ -256,8 +299,16 @@
 	flesh_color = "#808D11"
 
 	uniform_icons = 'icons/mob/species/vox/uniform.dmi'
-	shoes_icons = 'icons/mob/species/vox/shoes.dmi'
+//	fat_uniform_icons = 'icons/mob/uniform_fat.dmi'
+	gloves_icons    = 'icons/mob/species/vox/gloves.dmi'
+	glasses_icons   = 'icons/mob/species/vox/eyes.dmi'
+//	ears_icons      = 'icons/mob/ears.dmi'
+	shoes_icons 	= 'icons/mob/species/vox/shoes.dmi'
+	head_icons      = 'icons/mob/species/vox/head.dmi'
+//	belt_icons      = 'icons/mob/belt.dmi'
+	wear_suit_icons = 'icons/mob/species/vox/suit.dmi'
 	wear_mask_icons = 'icons/mob/species/vox/masks.dmi'
+//	back_icons      = 'icons/mob/back.dmi'
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.

@@ -46,6 +46,7 @@
 <ul>
 	<li><a href='?src=\ref[src];make=4;dir=1'>Connector</a></li>
 	<li><a href='?src=\ref[src];make=7;dir=1'>Unary Vent</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_PASV_VENT];dir=1'>Passive Vent</a></li>
 	<li><a href='?src=\ref[src];make=9;dir=1'>Gas Pump</a></li>
 	<li><a href='?src=\ref[src];make=15;dir=1'>Passive Gate</a></li>
 	<li><a href='?src=\ref[src];make=16;dir=1'>Volume Pump</a></li>

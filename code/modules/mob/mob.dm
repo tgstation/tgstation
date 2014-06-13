@@ -1,19 +1,21 @@
 /mob/recycle(var/datum/materials)
 	return RECYK_BIOLOGICAL
 
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
-	dead_mob_list -= src
-	living_mob_list -= src
+/mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
+	mob_list.Remove(src)
+	dead_mob_list.Remove(src)
+	living_mob_list.Remove(src)
 	ghostize()
 	..()
 
 /mob/New()
-	mob_list += src
-	if(stat == DEAD)
-		dead_mob_list += src
+	mob_list.Add(src)
+
+	if (DEAD == stat)
+		dead_mob_list.Add(src)
 	else
-		living_mob_list += src
+		living_mob_list.Add(src)
+
 	..()
 
 /mob/proc/generate_name()
@@ -1167,10 +1169,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 		if(statpanel("Status"))	//not looking at that panel
 			stat(null, "Location:\t([x], [y], [z])")
-			var/muh_cpu = world.cpu
-			if (muh_cpu > 79)
-				nearr += list(list("[worldtime2text()]", muh_cpu, master_controller.last_thing_processed))
-			stat(null, "CPU:\t[muh_cpu]")
+			stat(null, "CPU:\t[world.cpu]")
 			stat(null, "Instances:\t[world.contents.len]")
 
 			if(master_controller)

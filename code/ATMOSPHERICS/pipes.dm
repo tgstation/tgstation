@@ -22,7 +22,8 @@
 	use_power = 0
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 	var/baseicon=""
-	var/list/available_colors = list(
+
+	available_colors = list(
 		"grey"=PIPE_COLOR_GREY,
 		"red"=PIPE_COLOR_RED,
 		"blue"=PIPE_COLOR_BLUE,
@@ -627,6 +628,40 @@
 	else
 		icon_state = "exposed"
 
+/obj/machinery/atmospherics/pipe/vent/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+	dir = pipe.dir
+	initialize_directions = pipe.get_pipe_dir()
+	if (pipe.pipename)
+		name = pipe.pipename
+	var/turf/T = loc
+	level = T.intact ? 2 : 1
+	initialize()
+	build_network()
+	if (node1)
+		node1.initialize()
+		node1.build_network()
+	return 1
+
+/obj/machinery/atmospherics/pipe/vent/attackby(var/obj/item/weapon/W, var/mob/user)
+	if (!istype(W, /obj/item/weapon/wrench))
+		return ..()
+	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/int_air = return_air()
+	var/datum/gas_mixture/env_air = T.return_air()
+	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+		user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+		add_fingerprint(user)
+		return 1
+	playsound(T, 'sound/items/Ratchet.ogg', 50, 1)
+	user << "\blue You begin to unfasten \the [src]..."
+	if (do_after(user, 40))
+		user.visible_message( \
+			"[user] unfastens \the [src].", \
+			"\blue You have unfastened \the [src].", \
+			"You hear ratchet.")
+		new /obj/item/pipe(T, make_from=src)
+		del(src)
+
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
 	icon_state = "manifold"
@@ -1097,99 +1132,6 @@
 	color=IPIPE_COLOR_BLUE
 	_color = "blue"
 
-/obj/machinery/atmospherics/pipe/cap
-	name = "pipe endcap"
-	desc = "An endcap for pipes"
-	icon = 'icons/obj/pipes.dmi'
-	icon_state = "cap"
-	level = 2
-	layer = 2.4 //under wires with their 2.44
-	volume = 35
-	dir = SOUTH
-	initialize_directions = NORTH
-	var/obj/machinery/atmospherics/node
-
-/obj/machinery/atmospherics/pipe/cap/New()
-	..()
-	switch(dir)
-		if(SOUTH)
-			initialize_directions = NORTH
-		if(NORTH)
-			initialize_directions = SOUTH
-		if(WEST)
-			initialize_directions = EAST
-		if(EAST)
-			initialize_directions = WEST
-
-
-/obj/machinery/atmospherics/pipe/cap/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
-	dir = pipe.dir
-	initialize_directions = pipe.get_pipe_dir()
-	initialize()
-	build_network()
-	if(node)
-		node.initialize()
-		node.build_network()
-	return 1
-
-
-/obj/machinery/atmospherics/pipe/cap/hide(var/i)
-	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
-	update_icon()
-
-
-/obj/machinery/atmospherics/pipe/cap/pipeline_expansion()
-	return list(node)
-
-
-/obj/machinery/atmospherics/pipe/cap/process()
-	if(!parent)
-		..()
-	else
-		. = PROCESS_KILL
-
-
-/obj/machinery/atmospherics/pipe/cap/Destroy()
-	if(node)
-		node.disconnect(src)
-
-	..()
-
-
-/obj/machinery/atmospherics/pipe/cap/disconnect(obj/machinery/atmospherics/reference)
-	if(reference == node)
-		if(istype(node, /obj/machinery/atmospherics/pipe))
-			del(parent)
-		node = null
-
-	update_icon()
-
-	..()
-
-
-/obj/machinery/atmospherics/pipe/cap/update_icon()
-	overlays = 0
-	alpha = invisibility ? 128 : 255
-	color = available_colors[_color]
-	icon_state = "cap"
-	return
-
-
-/obj/machinery/atmospherics/pipe/cap/initialize(var/skip_update_icon=0)
-	node = findConnecting(initialize_directions)
-
-	var/turf/T = src.loc			// hide if turf is not intact
-	hide(T.intact)
-	if(!skip_update_icon)
-		update_icon()
-
-/obj/machinery/atmospherics/pipe/cap/visible
-	level = 2
-	icon_state = "cap"
-/obj/machinery/atmospherics/pipe/cap/hidden
-	level = 1
-	alpha=128
 
 /obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))

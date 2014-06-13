@@ -728,7 +728,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 		var/obj/item/I = wear_mask
 		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.wear_mask_icons)
+			if(species.wear_mask_icons)   //This REQUIRES the species to be listed in species_fit and also to have an appropriate dmi allocated in their species datum
 				standing.icon = species.wear_mask_icons
 
 		if( !istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA )

@@ -318,7 +318,7 @@
 		var/placemob = locate(mob.x + pick(1,-1), mob.y, mob.z)
 		playsound(mob.loc, 'sound/effects/splat.ogg', 50, 1)
 
-		new /obj/effect/spider/spiderling(placemob)
+		new /mob/living/simple_animal/hostile/giant_spider/spiderling(placemob)
 		mob.emote("me",1,"vomits up a live spiderling!")
 
 
