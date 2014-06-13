@@ -426,7 +426,7 @@ obj/structure/door_assembly
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 
 			if(do_after(user, 40))
-				if(!src || !WT.isOn()) 
+				if( !WT.isOn() ) 
 					return
 				user << "<span class='notice'> You've disassembled the airlock assembly.</span>"
 				new /obj/item/stack/sheet/metal(get_turf(src), 4)
@@ -447,7 +447,7 @@ obj/structure/door_assembly
 		user.visible_message("[user] secures the airlock assembly to the floor.", "You start to secure the airlock assembly to the floor.")
 
 		if(do_after(user, 40))
-			if(!src || src.anchored ) 
+			if( src.anchored ) 
 				return
 			user << "<span class='notice'> You've secured the airlock assembly.</span>"
 			src.name = "secured airlock assembly"
@@ -457,7 +457,7 @@ obj/structure/door_assembly
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		user.visible_message("[user] unsecures the airlock assembly from the floor.", "You start to unsecure the airlock assembly from the floor.")
 		if(do_after(user, 40))
-			if(!src || !src.anchored ) 
+			if( !src.anchored ) 
 				return
 			user << "<span class='notice'> You've unsecured the airlock assembly.</span>"
 			src.name = "airlock assembly"
@@ -467,8 +467,6 @@ obj/structure/door_assembly
 		var/obj/item/stack/cable_coil/coil = W
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
 		if(do_after(user, 40))
-			if(!src) 
-				return
 			coil.use(1)
 			src.state = 1
 			user << "<span class='notice'> You've wired the airlock assembly.</span>"
@@ -479,7 +477,7 @@ obj/structure/door_assembly
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
 		if(do_after(user, 40))
-			if(!src || src.state != 1 ) 
+			if( src.state != 1 ) 
 				return
 			user << "<span class='notice'> You've cut the wires from the airlock assembly.</span>"
 			new/obj/item/stack/cable_coil(get_turf(user), 1)
@@ -493,7 +491,7 @@ obj/structure/door_assembly
 		W.loc = src
 
 		if(do_after(user, 40))
-			if(!src || src.state != 1 ) 
+			if( src.state != 1 ) 
 				return
 			user << "<span class='notice'> You've installed the airlock electronics.</span>"
 			src.state = 2
@@ -509,7 +507,7 @@ obj/structure/door_assembly
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove the electronics from the airlock assembly.")
 
 		if(do_after(user, 40))
-			if( !src || src.state != 2 )
+			if( src.state != 2 )
 				return
 			user << "<span class='notice'> You've removed the airlock electronics.</span>"
 			src.state = 1
@@ -565,8 +563,6 @@ obj/structure/door_assembly
 		user.visible_message("[user] finishes the airlock.", "You start finishing the airlock.")
 
 		if(do_after(user, 40))
-			if(!src)
-				return
 			user << "<span class='notice'> You've finished the airlock.</span>"
 			var/obj/machinery/door/airlock/door
 			if(mineral == "glass")
