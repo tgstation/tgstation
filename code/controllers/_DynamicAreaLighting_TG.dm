@@ -32,7 +32,6 @@
 #define LIGHTING_CIRCULAR 1									//comment this out to use old square lighting effects.
 #define LIGHTING_LAYER 10									//Drawing layer for lighting overlays
 #define LIGHTING_ICON 'icons/effects/ss13_dark_alpha6.dmi'	//Icon used for lighting shading effects
-#define LIGHT_WHITE "#FFFFFF" // Hex for white light, aka normal.
 
 datum/light_source
 	var/atom/owner
@@ -67,6 +66,9 @@ datum/light_source
 			__y = owner.y
 			changed = 1
 
+		if (owner.l_color != l_color)
+			changed = 1
+
 		if(changed)
 			changed = 0
 			remove_effect()
@@ -83,6 +85,7 @@ datum/light_source
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map
 		if(owner.loc && owner.luminosity > 0)
+			l_color = owner.l_color
 			effect = list()
 			for(var/turf/T in view(owner.get_light_range(),owner))
 				var/delta_lumen = lum(T)
@@ -222,10 +225,13 @@ turf/proc/update_lumcount(amount, _lcolor, removing = 0)
 	var/blended
 
 	if (_lcolor)
-		if (l_color != LIGHT_WHITE && _lcolor != LIGHT_WHITE && l_color != _lcolor && !removing) // Blend colors.
+		if (l_color && _lcolor && l_color != _lcolor && !removing) // Blend colors.
 			var/redblend = min((GetRedPart(l_color)) + (GetRedPart(_lcolor)), 255)
 			var/greenblend = min((GetGreenPart(l_color)) + (GetGreenPart(_lcolor)), 255)
 			var/blueblend = min((GetBluePart(l_color)) + (GetBluePart(_lcolor)), 255)
+			//var/redblend = av * GetRedPart(_lcolor) + (1 - av) * GetRedPart(l_color)
+			//var/greenblend = av * GetGreenPart(_lcolor) + (1 - av) * GetGreenPart(l_color)
+			//var/blueblend = av * GetBluePart(_lcolor) + (1 - av) * GetBluePart(l_color)
 			blended = "#[add_zero2(num2hex(redblend), 2)][add_zero2(num2hex(greenblend),2)][add_zero2(num2hex(blueblend),2)]"
 
 		if (removing)
@@ -247,10 +253,13 @@ turf/proc/update_lumcount(amount, _lcolor, removing = 0)
 						currentblended = colors[i] // Start with the first of the remaining colors.
 						continue
 
+					//var/redblend = av * GetRedPart(currentblended) + (1 - av) * GetRedPart(colors[i])
+					//var/greenblend = av * GetGreenPart(currentblended) + (1 - av) * GetGreenPart(colors[i])
+					//var/blueblend = av * GetBluePart(currentblended) + (1 - av) * GetBluePart(colors[i])
 					var/redblend = min((GetRedPart(currentblended)) + (GetRedPart(colors[i])), 255)
 					var/greenblend = min((GetGreenPart(currentblended)) + (GetGreenPart(colors[i])), 255)
 					var/blueblend = min((GetBluePart(currentblended)) + (GetBluePart(colors[i])), 255)
-					currentblended = "#[add_zero2(num2hex(redblend), 2)][add_zero2(num2hex(greenblend), 2)][add_zero2(num2hex(blueblend), 2)]"
+					blended = "#[add_zero2(num2hex(redblend), 2)][add_zero2(num2hex(greenblend), 2)][add_zero2(num2hex(blueblend), 2)]"
 					//world << "Finished [i] [currentblended]."
 
 				if (currentblended)
@@ -258,6 +267,7 @@ turf/proc/update_lumcount(amount, _lcolor, removing = 0)
 					l_color = currentblended // blended the remaining colors so apply it.
 				else
 					l_color = null // Something went wrong, no color for you.
+
 			else
 				l_color = colors[colors.len]
 		else // we added a color.
@@ -277,6 +287,11 @@ turf/proc/update_lumcount(amount, _lcolor, removing = 0)
 
 turf/proc/lighting_tag(var/level)
 	var/area/A = loc
+
+	// pomf - If we have a lighting color that is not white, apply the new tag to seperate the areas.
+	if (l_color)
+		return A.tagbase + "sd_LC[level][l_color][color_lighting_lumcount]" // pomf - We append the color lighting lumcount so we can have colored lights.
+
 	return A.tagbase + "sd_L[level]"
 
 turf/proc/build_lighting_area(var/tag, var/level, const/color_light)
@@ -311,15 +326,6 @@ turf/proc/shift_to_subarea()
 
 	var/level = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
 	var/new_tag = lighting_tag(level)
-
-	// pomf - If we have a lighting color that is not white, apply the new tag to seperate the areas.
-	if (color_lighting_lumcount && l_color)
-		new_tag += "sd_LC[light]" // pomf - We append the color lighting lumcount so we can have colored lights.
-	else
-		new_tag += "sd_L[light]"
-
-	if (l_color)
-		new_tag += "[l_color][color_lighting_lumcount]"
 
 	if(Area.tag!=new_tag)	//skip if already in this area
 		var/area/A = locate(new_tag)	// find an appropriate area
@@ -375,7 +381,7 @@ area
 			overlays.Remove(color_overlay)
 			color_overlay.icon_state = "white"
 		else
-			if (l_color && l_color != LIGHT_WHITE)
+			if (l_color)
 				color_overlay = image('icons/obj/weapons.dmi', ,"white", 10.1)
 
 		if (istype(color_overlay))
@@ -452,7 +458,6 @@ area
 //#undef LIGHTING_LAYER
 #undef LIGHTING_CIRCULAR
 //#undef LIGHTING_ICON
-#undef LIGHT_WHITE
 
 #define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.
 #define LIGHTING_MAX_LUMINOSITY_MOBILE	5	//Moving objects have a lower max luminosity since these update more often. (lag reduction)
