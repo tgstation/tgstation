@@ -248,7 +248,7 @@
 					return 0
 				if(!H.w_uniform && !nojumpsuit)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [I.name]."
+						H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
 					return 0
 				if( !(I.slot_flags & SLOT_BELT) )
 					return
@@ -282,7 +282,7 @@
 					return 0
 				if(!H.w_uniform && !nojumpsuit)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [I.name]."
+						H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
 					return 0
 				if( !(I.slot_flags & SLOT_ID) )
 					return 0
@@ -294,7 +294,7 @@
 					return 0
 				if(!H.w_uniform && !nojumpsuit)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [I.name]."
+						H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
 					return 0
 				if(I.slot_flags & SLOT_DENYPOCKET)
 					return
@@ -307,7 +307,7 @@
 					return 0
 				if(!H.w_uniform && !nojumpsuit)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [I.name]."
+						H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
 					return 0
 				if(I.slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -321,7 +321,7 @@
 					return 0
 				if(!H.wear_suit)
 					if(!disable_warning)
-						H << "\red You need a suit before you can attach this [I.name]."
+						H << "<span class='danger'>You need a suit before you can attach this [I.name].</span>"
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
@@ -376,13 +376,13 @@
 		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in H.mutations)
 			if(H.overeatduration < 100)
-				H << "\blue You feel fit again!"
+				H << "<span class='notice'>You feel fit again!</span>"
 				H.mutations -= FAT
 				H.update_inv_w_uniform(0)
 				H.update_inv_wear_suit()
 		else
 			if(H.overeatduration > 500)
-				H << "\red You suddenly feel blubbery!"
+				H << "<span class='danger'>You suddenly feel blubbery!</span>"
 				H.mutations |= FAT
 				H.update_inv_w_uniform(0)
 				H.update_inv_wear_suit()
@@ -575,7 +575,7 @@
 		if ((HULK in H.mutations) && H.health <= 25)
 			H.mutations.Remove(HULK)
 			H.update_mutations()		//update our mutation overlays
-			H << "\red You suddenly feel very weak."
+			H << "<span class='danger'>You suddenly feel very weak.</span>"
 			H.Weaken(3)
 			H.emote("collapse")
 
@@ -583,7 +583,7 @@
 			if (H.radiation > 100)
 				H.radiation = 100
 				H.Weaken(10)
-				H << "\red You feel weak."
+				H << "<span class='danger'>You feel weak.</span>"
 				H.emote("collapse")
 
 			if (H.radiation < 0)
@@ -603,7 +603,7 @@
 						if(prob(5))
 							H.radiation -= 5
 							H.Weaken(3)
-							H << "\red You feel weak."
+							H << "<span class='danger'>You feel weak.</span>"
 							H.emote("collapse")
 						if(prob(15))
 							if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || HAIR in specflags)
@@ -618,7 +618,7 @@
 						H.radiation -= 3
 						H.adjustToxLoss(3)
 						if(prob(1))
-							H << "\red You mutate!"
+							H << "<span class='danger'>You mutate!</span>"
 							randmutb(H)
 							domutcheck(H,null)
 							H.emote("gasp")
@@ -926,7 +926,7 @@
 			"<span class='userdanger'>[H] has been attacked with [I][showname]</span>")
 		if(!showname && user)
 			if(user.client)
-				user << "\red <B>You attack [H] with [I]. </B>"
+				user << "<span class='danger'><B>You attack [H] with [I]. </B></span>"
 
 		return
 
@@ -966,9 +966,9 @@
 		// called when hit by a projectile
 		switch(proj_type)
 			if(/obj/item/projectile/energy/floramut) // overwritten by plants/pods
-				H.show_message("\blue The radiation beam dissipates harmlessly through your body.")
+				H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 			if(/obj/item/projectile/energy/florayield)
-				H.show_message("\blue The radiation beam dissipates harmlessly through your body.")
+				H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 		return
 
 	/////////////
@@ -1156,10 +1156,10 @@
 		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in H.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
 			if(breath.temperature < 260.15)
 				if(prob(20))
-					H << "\red You feel your face freezing and an icicle forming in your lungs!"
+					H << "<span class='danger'>You feel your face freezing and an icicle forming in your lungs!</span>"
 			else if(breath.temperature > 360.15 && !(HEATRES in specflags))
 				if(prob(20))
-					H << "\red You feel your face burning and a searing heat in your lungs!"
+					H << "<span class='danger'>You feel your face burning and a searing heat in your lungs!</span>"
 
 			if(!(COLDRES in specflags)) // COLD DAMAGE
 				switch(breath.temperature)

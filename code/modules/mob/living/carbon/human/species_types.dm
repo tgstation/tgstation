@@ -7,7 +7,7 @@
 
 	handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 		if(chem.id == "mutationtoxin")
-			H << "\red Your flesh rapidly mutates!"
+			H << "<span class='danger'>Your flesh rapidly mutates!</span>"
 			H.dna.species = new /datum/species/slime()
 			H.regenerate_icons()
 			H.reagents.del_reagent(chem.type)
@@ -25,12 +25,12 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 
-	// This is commented out since it was... kinda annoying.
-	/*handle_speech(message)
+	handle_speech(message)
+		// jesus christ why
 		if(copytext(message, 1, 2) != "*")
 			message = replacetext(message, "s", stutter("ss"))
 
-		return message*/
+		return message
 
 /datum/species/plant
 	// Creatures made of leaves and plant matter.
@@ -57,7 +57,7 @@
 					H.apply_effect((rand(30,80)),IRRADIATE)
 					H.Weaken(5)
 					for (var/mob/V in viewers(H))
-						V.show_message("\red [H] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
+						V.show_message("<span class='danger'>[H] writhes in pain as \his vacuoles boil.</span>", 3, "<span class='danger'>You hear the crunching of leaves.</span>", 2)
 					if(prob(80))
 						randmutb(H)
 						domutcheck(H,null)
@@ -66,7 +66,7 @@
 						domutcheck(H,null)
 				else
 					H.adjustFireLoss(rand(5,15))
-					H.show_message("\red The radiation beam singes you!")
+					H.show_message("<span class='danger'>The radiation beam singes you!</span>")
 			if(/obj/item/projectile/energy/florayield)
 				H.nutrition = min(H.nutrition+30, 500)
 		return
