@@ -229,9 +229,6 @@ turf/proc/update_lumcount(amount, _lcolor, removing = 0)
 			var/redblend = min((GetRedPart(l_color)) + (GetRedPart(_lcolor)), 255)
 			var/greenblend = min((GetGreenPart(l_color)) + (GetGreenPart(_lcolor)), 255)
 			var/blueblend = min((GetBluePart(l_color)) + (GetBluePart(_lcolor)), 255)
-			//var/redblend = av * GetRedPart(_lcolor) + (1 - av) * GetRedPart(l_color)
-			//var/greenblend = av * GetGreenPart(_lcolor) + (1 - av) * GetGreenPart(l_color)
-			//var/blueblend = av * GetBluePart(_lcolor) + (1 - av) * GetBluePart(l_color)
 			blended = "#[add_zero2(num2hex(redblend), 2)][add_zero2(num2hex(greenblend),2)][add_zero2(num2hex(blueblend),2)]"
 
 		if (removing)
@@ -253,13 +250,10 @@ turf/proc/update_lumcount(amount, _lcolor, removing = 0)
 						currentblended = colors[i] // Start with the first of the remaining colors.
 						continue
 
-					//var/redblend = av * GetRedPart(currentblended) + (1 - av) * GetRedPart(colors[i])
-					//var/greenblend = av * GetGreenPart(currentblended) + (1 - av) * GetGreenPart(colors[i])
-					//var/blueblend = av * GetBluePart(currentblended) + (1 - av) * GetBluePart(colors[i])
 					var/redblend = min((GetRedPart(currentblended)) + (GetRedPart(colors[i])), 255)
 					var/greenblend = min((GetGreenPart(currentblended)) + (GetGreenPart(colors[i])), 255)
 					var/blueblend = min((GetBluePart(currentblended)) + (GetBluePart(colors[i])), 255)
-					blended = "#[add_zero2(num2hex(redblend), 2)][add_zero2(num2hex(greenblend), 2)][add_zero2(num2hex(blueblend), 2)]"
+					currentblended = "#[add_zero2(num2hex(redblend), 2)][add_zero2(num2hex(greenblend), 2)][add_zero2(num2hex(blueblend), 2)]"
 					//world << "Finished [i] [currentblended]."
 
 				if (currentblended)
