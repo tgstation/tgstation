@@ -934,7 +934,7 @@
 
 
 /obj/mecha/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if (!usr.canUseTopic(src) || (user != M))
+	if (!user.canUseTopic(src) || (user != M))
 		return
 	src.log_message("[user] tries to move in.")
 	if (src.occupant)
