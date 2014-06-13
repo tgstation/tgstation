@@ -35,6 +35,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	speed = 3
+	attack_sound = 'sound/weapons/bladeslice.ogg'
 
 	wanted_objects = list(
 		/obj/machinery/bot,          // Beepsky and friends
@@ -49,6 +50,17 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	var/busy = 0
 	var/poison_per_bite = 5
 	var/poison_type = "toxin"
+
+	//Spider aren't affected by atmos.
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
 
 // Checks pressure here vs. around us.
 /mob/living/simple_animal/hostile/giant_spider/proc/performPressureCheck(var/turf/loc)
@@ -100,7 +112,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	var/turf/T = get_turf(D)
 
 	// Don't kill ourselves
-	if(performPressureCheck(T))
+	if(!performPressureCheck(T))
 		return 0
 
 	return 1
