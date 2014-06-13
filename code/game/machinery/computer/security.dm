@@ -284,9 +284,10 @@ What a mess.*/
 
 			if("Log In")
 				if (istype(usr, /mob/living/silicon))
+					var/mob/living/silicon/borg = usr
 					active1 = null
 					active2 = null
-					authenticated = 1
+					authenticated = borg.name
 					rank = "AI"
 					screen = 1
 				else if (istype(scan, /obj/item/weapon/card/id))
@@ -529,7 +530,7 @@ What a mess.*/
 							var/t2 = copytext(sanitize(input("Please input minor crime details:", "Secure. records", "", null)  as message),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( t2 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
-							var/crime = data_core.createCrimeEntry(t1, t2, scan.registered_name ? scan.registered_name : "Unknown", worldtime2text())
+							var/crime = data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
 							data_core.addMinorCrime(active1.fields["id"], crime)
 					if("mi_crim_delete")
 						if (istype(active1, /datum/data/record))
@@ -543,7 +544,7 @@ What a mess.*/
 							var/t2 = copytext(sanitize(input("Please input major crime details:", "Secure. records", "", null)  as message),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( t2 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
-							var/crime = data_core.createCrimeEntry(t1, t2, scan.registered_name ? scan.registered_name : "Unknown", worldtime2text())
+							var/crime = data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
 							data_core.addMajorCrime(active1.fields["id"], crime)
 					if("ma_crim_delete")
 						if (istype(active1, /datum/data/record))
