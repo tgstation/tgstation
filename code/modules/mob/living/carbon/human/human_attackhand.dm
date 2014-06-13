@@ -132,6 +132,34 @@
 					M.handle_bloodsucking(src)
 					return
 			//end vampire codes
+
+			// BITING
+			var/can_bite = 0
+			for(var/datum/disease/D in M.viruses)
+				if(D.spread == "Bite")
+					can_bite = 1
+					break
+			if(can_bite)
+				if ((prob(75) && health > 0))
+					playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+					for(var/mob/O in viewers(src, null))
+						O.show_message("\red <B>[M.name] has bit [name]!</B>", 1)
+					var/damage = rand(1, 5)
+					adjustBruteLoss(damage)
+					health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+					for(var/datum/disease/D in M.viruses)
+						if(D.spread == "Bite")
+							contract_disease(D,1,0)
+					M.attack_log += text("\[[time_stamp()]\] <font color='red'>bitten by [src.name] ([src.ckey])</font>")
+					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been bitten by [M.name] ([M.ckey])</font>")
+					if(!iscarbon(M))
+						LAssailant = null
+					else
+						LAssailant = M
+					log_attack("[M.name] ([M.ckey]) bitten by [src.name] ([src.ckey])")
+					return
+			//end biting
+
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[M.species.attack_verb]ed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.species.attack_verb]ed by [M.name] ([M.ckey])</font>")
 			if(!iscarbon(M))

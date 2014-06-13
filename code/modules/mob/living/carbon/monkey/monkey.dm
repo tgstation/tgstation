@@ -206,7 +206,7 @@
 				adjustBruteLoss(damage)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 				for(var/datum/disease/D in M.viruses)
-					if(istype(D, /datum/disease/jungle_fever))
+					if(D.spread == "Bite")
 						contract_disease(D,1,0)
 			else
 				for(var/mob/O in viewers(src, null))

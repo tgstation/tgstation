@@ -55,7 +55,6 @@
 					temp_message[H] = "HONK"
 					pick_list -= H //Make sure that you dont HONK the same word twice
 				message = dd_list2text(temp_message, " ")
-
 	if(wear_mask)
 		if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja) && wear_mask:voice == "Unknown")
 			if(copytext(message, 1, 2) != "*")
