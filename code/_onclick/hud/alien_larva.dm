@@ -6,6 +6,7 @@
 
 	using = new /obj/screen()
 	using.name = "act_intent"
+	using.icon = 'icons/mob/screen_alien.dmi'
 	using.icon_state = mymob.a_intent
 	using.screen_loc = ui_acti
 	using.layer = 20
