@@ -41,6 +41,34 @@
 
 
 
+/////////////////////////////////////////I know this is out of place...its here on a temp basis to help roll out oncology////////////////////////////////////////
+
+/obj/item/weapon/paper/oncpamphlet
+	name = "oncology pamphlet"
+	icon_state = "pamphlet"
+	info = "<b>Thank you Doctor, you've got lots of work to do!</b><br>\
+			Congratulations! If you're reading this, you have chosen a difficult path,\
+			but with a bit of careful consideration you will be in a position to save \
+			many lives from the deadly disease that is cancer.<br><br>\
+			Cancer is an uncontrolled growth of malignant cells in the body which will\
+			show up in a body scan. As the body's systems shut down from the cancerous\
+			growths the patient will begin to cough.<br><br>\
+			Cancer develops in the body as a systemic mutation of healthy cells from\
+			prolonged exposure to high toxin levels. As it progresses, localized tumors\
+			delevop in the body which can lead to rapid mortality if left untreated.<br><br>\
+			The patient must be irratiated to a level of 50% while supressing the toxin\
+			levels in the blood. The patient must be kept in this state until systemic\
+			symptoms cease. This may seem like an impossible balancing act but it is\
+			possible and your patients are depending on you.<br><br>\
+			Once the patient has undergone radiation treatment you may proceed with\
+			removal of the tumors, but it is possible for a patient to live with them\
+			if surgery is deemed too risky or if patient is low risk for relapse."
+
+/obj/item/weapon/paper/oncpamphlet/update_icon()
+	return
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/job/doctor
 	title = "Medical Doctor"
 	flag = DOCTOR
@@ -84,6 +112,8 @@
 				if("Oncologist")
 					H.equip_or_collect(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 					H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/oncologist(H), slot_wear_suit)
+					H.equip_or_collect(new /obj/item/weapon/paper/oncpamphlet(H), slot_r_hand)
+
 				if("Nurse")
 					if(H.gender == FEMALE)
 						if(prob(50))

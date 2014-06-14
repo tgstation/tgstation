@@ -1508,6 +1508,9 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 					emote("cough")
 				if(src.radiation >= 50)
 					havecancer = 0
+					src.h_style = "Bald"
+					src.f_style = "Shaved"
+					src.update_hair()
 
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
@@ -1689,26 +1692,8 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		affected.implants += imp
 		imp.part = affected
 
-
-/*
-	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
-	O.imp = new /obj/item/weapon/implant/cancer(O)
-	if (!istype(src, /mob/living/carbon))
-		return
-
-
-	if(O.imp.implanted(src))
-		O.imp.loc = src
-		O.imp.imp_in = src
-		O.imp.implanted = 1
-		if (ishuman(src))
-			var/mob/living/carbon/human/H = src
-			var/datum/organ/external/affected = H.get_organ(randorgan())
-			affected.implants += O.imp
-			O.imp.part = affected
-
 	return
-*/
+
 
 
 /mob/living/carbon/human/proc/randorgan()
