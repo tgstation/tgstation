@@ -161,7 +161,7 @@
 	name = "Chef"
 	corpseuniform = /obj/item/clothing/under/rank/chef
 	corpsesuit = /obj/item/clothing/suit/chef/classic
-	corpseshoes = /obj/item/clothing/shoes/black
+	corpseshoes = /obj/item/clothing/shoes/sneakers/black
 	corpsehelmet = /obj/item/clothing/head/chefhat
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseradio = /obj/item/device/radio/headset
@@ -177,7 +177,7 @@
 	corpsesuit = /obj/item/clothing/suit/labcoat
 	corpseback = /obj/item/weapon/storage/backpack/medic
 	corpsepocket1 = /obj/item/device/flashlight/pen
-	corpseshoes = /obj/item/clothing/shoes/black
+	corpseshoes = /obj/item/clothing/shoes/sneakers/black
 	corpseid = 1
 	corpseidjob = "Medical Doctor"
 	corpseidaccess = "Medical Doctor"
@@ -187,7 +187,7 @@
 	corpseradio = /obj/item/device/radio/headset/headset_eng
 	corpseuniform = /obj/item/clothing/under/rank/engineer
 	corpseback = /obj/item/weapon/storage/backpack/industrial
-	corpseshoes = /obj/item/clothing/shoes/orange
+	corpseshoes = /obj/item/clothing/shoes/sneakers/orange
 	corpsebelt = /obj/item/weapon/storage/belt/utility/full
 	corpsegloves = /obj/item/clothing/gloves/yellow
 	corpsehelmet = /obj/item/clothing/head/hardhat
@@ -218,7 +218,7 @@
 	corpseuniform = /obj/item/clothing/under/rank/scientist
 	corpsesuit = /obj/item/clothing/suit/labcoat/science
 	corpseback = /obj/item/weapon/storage/backpack
-	corpseshoes = /obj/item/clothing/shoes/white
+	corpseshoes = /obj/item/clothing/shoes/sneakers/white
 	corpseid = 1
 	corpseidjob = "Scientist"
 	corpseidaccess = "Scientist"
@@ -228,7 +228,7 @@
 	corpseuniform = /obj/item/clothing/under/rank/miner
 	corpsegloves = /obj/item/clothing/gloves/black
 	corpseback = /obj/item/weapon/storage/backpack/industrial
-	corpseshoes = /obj/item/clothing/shoes/black
+	corpseshoes = /obj/item/clothing/shoes/sneakers/black
 	corpseid = 1
 	corpseidjob = "Shaft Miner"
 	corpseidaccess = "Shaft Miner"
@@ -246,7 +246,7 @@
 	corpseradio = /obj/item/device/radio/headset/heads/hop
 	corpseuniform = /obj/item/clothing/under/rank/centcom_officer
 	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
-	corpseshoes = /obj/item/clothing/shoes/black
+	corpseshoes = /obj/item/clothing/shoes/sneakers/black
 	corpseglasses = /obj/item/clothing/glasses/sunglasses
 	corpseid = 1
 	corpseidjob = "Bridge Officer"

@@ -188,6 +188,10 @@
 /mob/living/carbon/alien/getTrail()
 	return "xltrails"
 
+/mob/living/carbon/alien/cuff_break(obj/item/I, mob/living/carbon/C)
+	playsound(C, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when breaking free.
+	..()
+
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
@@ -212,6 +216,9 @@ Des: Removes all infected images from the alien.
 			if(dd_hasprefix_case(I.icon_state, "infected"))
 				qdel(I)
 	return
+
+/mob/living/carbon/alien/canBeHandcuffed()
+	return 1
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

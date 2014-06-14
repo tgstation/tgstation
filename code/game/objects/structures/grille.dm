@@ -18,10 +18,6 @@
 /obj/structure/grille/blob_act()
 	qdel(src)
 
-/obj/structure/grille/meteorhit(var/obj/M)
-	qdel(src)
-
-
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)
 
@@ -105,14 +101,14 @@
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.changeNext_move(8)
+	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			if(destroyed)
-				new /obj/item/stack/rods(loc)
-			else
-				new /obj/item/stack/rods(loc)
-				new /obj/item/stack/rods(loc)
+			var/obj/item/stack/rods/newrods = new(loc)
+			transfer_fingerprints_to(newrods)
+			if(!destroyed)
+				newrods.amount = 2
 			qdel(src)
 	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
@@ -185,15 +181,16 @@
 
 /obj/structure/grille/proc/healthcheck()
 	if(health <= 0)
+		var/obj/item/stack/rods/newrods = new(loc)
+		transfer_fingerprints_to(newrods)
+
 		if(!destroyed)
 			icon_state = "brokengrille"
 			density = 0
 			destroyed = 1
-			new /obj/item/stack/rods(loc)
 
 		else
 			if(health <= -6)
-				new /obj/item/stack/rods(loc)
 				qdel(src)
 				return
 	return

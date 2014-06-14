@@ -305,8 +305,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/update_inv_wear_id()
 	remove_overlay(ID_LAYER)
 	if(wear_id)
-		if(client && hud_used && hud_used.hud_shown)
-			wear_id.screen_loc = ui_id	//TODO
+		wear_id.screen_loc = ui_id	//TODO
+		if(client && hud_used)
 			client.screen += wear_id
 
 		overlays_standing[ID_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="id", "layer"=-ID_LAYER)
@@ -388,8 +388,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(SUIT_STORE_LAYER)
 
 	if(s_store)
-		if(client && hud_used && hud_used.hud_shown)
-			s_store.screen_loc = ui_sstore1		//TODO
+		s_store.screen_loc = ui_sstore1		//TODO
+		if(client && hud_used)
 			client.screen += s_store
 
 		var/t_state = s_store.item_state
@@ -425,8 +425,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(BELT_LAYER)
 
 	if(belt)
-		if(client && hud_used && hud_used.hud_shown)
-			belt.screen_loc = ui_belt
+		belt.screen_loc = ui_belt
+		if(client && hud_used)
 			client.screen += belt
 
 		var/t_state = belt.item_state
@@ -463,12 +463,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_pockets()
 	if(l_store)
-		if(client && hud_used && hud_used.hud_shown)
-			l_store.screen_loc = ui_storage1	//TODO
+		l_store.screen_loc = ui_storage1	//TODO
+		if(client && hud_used)
 			client.screen += l_store
 	if(r_store)
-		if(client && hud_used && hud_used.hud_shown)
-			r_store.screen_loc = ui_storage2	//TODO
+		r_store.screen_loc = ui_storage2	//TODO
+		if(client && hud_used)
 			client.screen += r_store
 
 
@@ -495,8 +495,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(BACK_LAYER)
 
 	if(back)
+		back.screen_loc = ui_back
 		if(client && hud_used && hud_used.hud_shown)
-			back.screen_loc = ui_back	//TODO
 			client.screen += back
 
 		overlays_standing[BACK_LAYER]	= image("icon"='icons/mob/back.dmi', "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
@@ -552,8 +552,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 		drop_r_hand()
 		return
 	if(r_hand)
+		r_hand.screen_loc = ui_rhand	//TODO
 		if(client)
-			r_hand.screen_loc = ui_rhand	//TODO
 			client.screen += r_hand
 
 		var/t_state = r_hand.item_state
@@ -571,8 +571,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 		drop_l_hand()
 		return
 	if(l_hand)
+		l_hand.screen_loc = ui_lhand	//TODO
 		if(client)
-			l_hand.screen_loc = ui_lhand	//TODO
 			client.screen += l_hand
 
 		var/t_state = l_hand.item_state

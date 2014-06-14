@@ -264,7 +264,7 @@
 	energy_drain = 250
 	range = MELEE|RANGED
 	construction_time = 1200
-	construction_cost = list("metal"=30000,"plasma"=25000,"silver"=20000,"gold"=20000)
+	construction_cost = list("metal"=30000,"gold"=20000,"plasma"=25000,"silver"=20000)
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 	var/disabled = 0 //malf
 
@@ -485,7 +485,6 @@
 				set_ready_state(0)
 				chassis.use_power(energy_drain)
 				var/turf/T = get_turf(target)
-				message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) used a Gravitational Catapult in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 				log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Gravitational Catapult in ([T.x],[T.y],[T.z])")
 				do_after_cooldown()
 		return
@@ -632,7 +631,7 @@
 	equip_cooldown = 20
 	energy_drain = 100
 	range = 0
-	construction_cost = list("metal"=10000,"gold"=1000,"silver"=2000,"glass"=5000)
+	construction_cost = list("metal"=10000,"glass"=5000,"gold"=1000,"silver"=2000)
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay
@@ -722,7 +721,7 @@
 	equip_cooldown = 10
 	energy_drain = 0
 	range = 0
-	construction_cost = list("metal"=10000,"gold"=2000,"silver"=3000,"glass"=2000)
+	construction_cost = list("metal"=10000,"glass"=2000,"gold"=2000,"silver"=3000)
 	var/datum/global_iterator/pr_energy_relay
 	var/coeff = 100
 	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
@@ -834,7 +833,7 @@
 	equip_cooldown = 10
 	energy_drain = 0
 	range = MELEE
-	construction_cost = list("metal"=10000,"silver"=500,"glass"=1000)
+	construction_cost = list("metal"=10000,"glass"=1000,"silver"=500)
 	var/datum/global_iterator/pr_mech_generator
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
@@ -971,7 +970,7 @@
 	desc = "An exosuit module that generates power using uranium as fuel. Pollutes the environment."
 	icon_state = "tesla"
 	origin_tech = "powerstorage=3;engineering=3"
-	construction_cost = list("metal"=10000,"silver"=500,"glass"=1000)
+	construction_cost = list("metal"=10000,"glass"=1000,"silver"=500)
 	max_fuel = 50000
 	fuel_per_cycle_idle = 10
 	fuel_per_cycle_active = 30

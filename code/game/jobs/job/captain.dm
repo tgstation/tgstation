@@ -25,19 +25,18 @@ Captain
 
 /datum/job/captain/equip_items(var/mob/living/carbon/human/H)
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
-	U.hastie = new /obj/item/clothing/tie/medal/gold/captain(U)
+	U.attachTie(new /obj/item/clothing/tie/medal/gold/captain())
 	H.equip_to_slot_or_del(U, slot_w_uniform)
-
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/capcarapace(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
 
 	//Equip ID box
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/silver_ids(H), slot_l_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/silver_ids(H.back), slot_in_backpack)
 
 	//Implant him
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
@@ -85,7 +84,7 @@ Head of Personnel
 
 /datum/job/hop/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/hopcap(H), slot_head)
 
 	//Equip ID box

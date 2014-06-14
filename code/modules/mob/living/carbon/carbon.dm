@@ -339,6 +339,8 @@
 		return 1
 	return
 
+/mob/living/carbon/proc/canBeHandcuffed()
+	return 0
 
 /mob/living/carbon/unEquip(obj/item/I) //THIS PROC DID NOT CALL ..() AND THAT COST ME AN ENTIRE DAY OF DEBUGGING.
 	. = ..() //Sets the default return value to what the parent returns.
@@ -420,21 +422,23 @@
 	//strip panel
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
 		if(href_list["internal"])
-			if(back && istype(back, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-				visible_message("<span class='danger'>[usr] tries to [internal ? "disable" : "set"] [src]'s internals.</span>", \
-								"<span class='userdanger'>[usr] tries to [internal ? "disable" : "set"] [src]'s internals.</span>")
+			var/slot = text2num(href_list["internal"])
+			var/obj/item/ITEM = get_item_by_slot(slot)
+			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>", \
+								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>")
 				if(do_mob(usr, src, STRIP_DELAY))
 					if(internal)
 						internal = null
 						if(internals)
 							internals.icon_state = "internal0"
-					else if(back && istype(back, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-						internal = back
+					else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+						internal = ITEM
 						if(internals)
 							internals.icon_state = "internal1"
 
-					visible_message("<span class='danger'>[usr] [internal ? "sets" : "disables"] [src]'s internals.</span>", \
-									"<span class='userdanger'>[usr] [internal ? "sets" : "disables"] [src]'s internals.</span>")
+					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
+									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
 
 
 /mob/living/carbon/attackby(obj/item/I, mob/user)

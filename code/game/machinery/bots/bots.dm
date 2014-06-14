@@ -108,10 +108,6 @@
 		healthcheck()
 	return
 
-/obj/machinery/bot/meteorhit()
-	src.explode()
-	return
-
 /obj/machinery/bot/blob_act()
 	src.health -= rand(20,40)*fire_dam_coeff
 	healthcheck()
@@ -163,6 +159,13 @@
 
 /obj/machinery/bot/attack_ai(mob/user as mob)
 	src.attack_hand(user)
+
+/obj/machinery/bot/proc/speak(var/message)
+	if((!src.on) || (!message))
+		return
+	for(var/mob/O in hearers(src, null))
+		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>",2)
+	return
 
 /******************************************************************/
 // Navigation procs

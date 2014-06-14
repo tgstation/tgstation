@@ -143,7 +143,7 @@
 		s["host"] = host ? host : null
 
 		var/admins = 0
-		for(var/client/C in admins)
+		for(var/client/C in clients)
 			if(C.holder)
 				if(C.holder.fakekey)
 					continue	//so stealthmins aren't revealed by the hub

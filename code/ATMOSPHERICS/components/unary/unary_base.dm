@@ -53,7 +53,7 @@
 
 		update_icon()
 
-	default_change_direction_wrench(mob/user, /obj/item/weapon/wrench/W)
+	default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 		if(..())
 			initialize_directions = dir
 			if(node)

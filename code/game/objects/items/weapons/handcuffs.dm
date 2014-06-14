@@ -38,16 +38,13 @@
 		else
 			playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 
-		var/turf/user_loc = user.loc
-		var/turf/C_loc = C.loc
-		if(do_after(user, 30))
-			if(!C || C.handcuffed)
+		if(do_mob(user, C, 30))
+			if(C.handcuffed)
 				return
-			if(user_loc == user.loc && C_loc == C.loc)
-				user.drop_item()
-				loc = C
-				C.handcuffed = src
-				C.update_inv_handcuffed(0)
+			user.drop_item()
+			loc = C
+			C.handcuffed = src
+			C.update_inv_handcuffed(0)
 			if(cable)
 				feedback_add_details("handcuffs","C")
 			else
@@ -104,14 +101,11 @@
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
 		if(!C.handcuffed)
-			var/turf/user_loc = user.loc
-			var/turf/C_loc = C.loc
 			playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] is trying to put handcuffs on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put handcuffs on [C]!</span>")
-			if(do_after(user, 30))
-				if(!C || C.handcuffed)
-					return
-				if(user_loc == user.loc && C_loc == C.loc)
+			if(do_mob(user, C, 30))
+				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/handcuffs(C)
 					C.update_inv_handcuffed(0)
+					add_logs(user, C, "handcuffed")

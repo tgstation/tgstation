@@ -7,6 +7,7 @@
 
 	using = new /obj/screen()
 	using.name = "act_intent"
+	using.icon = ui_style
 	using.icon_state = mymob.a_intent
 	using.screen_loc = ui_acti
 	using.layer = 20
