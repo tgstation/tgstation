@@ -1,5 +1,6 @@
 #define GC_COLLECTIONS_PER_TICK 250 // Was 100.
 #define GC_COLLECTION_TIMEOUT 100 // 10s.
+#define GC_FORCE_DEL_PER_TICK 15
 
 var/global/datum/controller/garbage_collector/garbage
 
@@ -41,17 +42,7 @@ var/global/list/uncollectable_vars=list(
 	var/list/destroyed = list()
 	var/waiting = 0
 	var/del_everything = 1
-
-/datum/controller/garbage_collectorproc/AddTrash(const/atom/A)
-	if (isnull(A))
-		return
-
-	if (del_everything)
-		del(A)
-		return
-
-	queue.Add(A)
-	waiting++
+	var/dels = 0
 
 /datum/controller/garbage_collectorproc/Pop()
 	var/atom/movable/A = queue[1]
@@ -81,6 +72,8 @@ var/global/list/uncollectable_vars=list(
 	queue.Remove(A)
 
 /datum/controller/garbage_collector/proc/process()
+	dels = 0
+
 	for (var/i = 0, ++i <= min(waiting, GC_COLLECTIONS_PER_TICK))
 		if (waiting--)
 			Pop()
@@ -97,24 +90,36 @@ var/global/list/uncollectable_vars=list(
 			destroyed.Remove(refID)
 
 /*
- * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable.
+ * NEVER USE THIS FOR ANYTHING OTHER THAN /atom.
  */
 /proc/qdel(const/atom/A)
-	if (isnull(A))
+	if (isnull(A)) // Two possibilities, proc is called with null arg or object is gced normally.
+		return
+
+	if (isnull(garbage))
+		del A
 		return
 
 	if (!istype(A))
 		warning("qdel() passed object of type [A.type]. qdel() can only handle /atom types.")
-		del(A)
+		del A
+		garbage.dels++
 		return
 
-	if (!garbage)
-		del(A)
+	if (del_everything)
+		del A
+		garbage.dels++
+		return
+
+	if (A.gc_destroyed)
 		return
 
 	// Let our friend know they're about to get fucked up.
 	A.Destroy()
-	garbage.AddTrash(A)
+
+	A.gc_destroyed = world.timeofday
+	queue.Add(A)
+	waiting++
 
 /client/proc/qdel_toggle()
 	set name = "Toggle qdel Behavior"
