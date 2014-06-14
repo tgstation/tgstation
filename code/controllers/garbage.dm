@@ -86,8 +86,21 @@ var/global/list/uncollectable_vars=list(
 			if (A && A.gc_destroyed && A.gc_destroyed >= world.timeofday - GC_COLLECTION_TIMEOUT)
 				// Something's still referring to the qdel'd object. Kill it.
 				del A
+				dels++
 
 			destroyed.Remove(refID)
+
+/datum/controller/garbage_collector/proc/AddTrash(const/atom/A)
+	if (isnull(A))
+		return
+
+	if (del_everything)
+		del A
+		dels++
+		return
+
+	queue.Add(A)
+	waiting++
 
 /*
  * NEVER USE THIS FOR ANYTHING OTHER THAN /atom.
@@ -101,25 +114,15 @@ var/global/list/uncollectable_vars=list(
 		return
 
 	if (!istype(A))
-		warning("qdel() passed object of type [A.type]. qdel() can only handle /atom types.")
+		WARNING("qdel() passed object of type [A.type]. qdel() can only handle /atom types.")
 		del A
 		garbage.dels++
-		return
-
-	if (del_everything)
-		del A
-		garbage.dels++
-		return
-
-	if (A.gc_destroyed)
 		return
 
 	// Let our friend know they're about to get fucked up.
 	A.Destroy()
 
-	A.gc_destroyed = world.timeofday
-	queue.Add(A)
-	waiting++
+	garbage.AddTrash(A)
 
 /client/proc/qdel_toggle()
 	set name = "Toggle qdel Behavior"
