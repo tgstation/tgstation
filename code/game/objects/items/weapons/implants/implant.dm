@@ -528,3 +528,45 @@ the implant may become unstable and either pre-maturely inject the subject or si
 /obj/item/weapon/implant/cortical
 	name = "cortical stack"
 	desc = "A fist-sized mass of biocircuits and chips."
+
+
+
+
+/obj/item/weapon/implant/cancer
+	name = "malignant tumor"
+	desc = "A mass of cancerous cells"
+	icon_state = "cancer"
+	var/activation_emote = "cough"
+
+	trigger(emote, mob/source as mob)
+		if (emote == src.activation_emote)
+			activate()
+		else
+			if(source:havecancer == 0)
+				if(prob(5))
+					source:havecancer = 1
+
+	activate(mob/source as mob)
+		var/thisdmg = pick(1, 5, 10)
+		if(pick(0,1))
+			if (part)
+				part.take_damage(brute = thisdmg, used_weapon = "cancer")
+			else
+				var/mob/living/M = imp_in
+				M.apply_damage(thisdmg,BRUTE)
+		else
+			var/mob/living/M = imp_in
+			M.apply_damage(thisdmg,CLONE)
+
+		if(prob(20))
+			var/painword = pick("stabbing", "throbbing", "stinging", "sticking", "burning", "terrible")
+			source << "\red You feel a [painword] pain inside [part ? "your [part.display_name]" : "you"]!"
+	//
+
+
+
+	implanted(mob/source as mob)
+		return 1
+
+	islegal()
+		return 1
