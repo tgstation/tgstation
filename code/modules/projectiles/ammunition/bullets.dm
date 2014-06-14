@@ -56,7 +56,7 @@
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet
-	m_amt = 6500
+	m_amt = 4000
 
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "buckshot shell"							 //combat
@@ -89,14 +89,14 @@
 	variance = 0.8
 
 /obj/item/ammo_casing/shotgun/incendiary
-	name = "incendiary shell"						//hacked autolathe
-	desc = "An incendiary slug."
+	name = "incendiary slug"						//hacked autolathe
+	desc = "A smaller, flammable lead slug that coats targets in flame."
 	icon_state = "ishell"
 	projectile_type = /obj/item/projectile/bullet/incendiary/shell
 
 /obj/item/ammo_casing/shotgun/dragon
 	name = "dragon's breath shell"					//syndie chaos
-	desc = "A dragon's breath shell."
+	desc = "A dragon's breath shell of several flammable pellets."
 	icon_state = "ishell"
 	projectile_type = /obj/item/projectile/bullet/incendiary/mech
 	pellets = 5
