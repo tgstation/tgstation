@@ -152,7 +152,8 @@ atom/movable/Destroy()
 		if(isturf(loc))
 			if(loc:lighting_lumcount > 1)
 				UpdateAffectingLights()
-	return ..()
+
+	..()
 
 //Sets our luminosity.
 //If we have no light it will create one.
