@@ -153,8 +153,6 @@ atom/movable/Destroy()
 			if(loc:lighting_lumcount > 1)
 				UpdateAffectingLights()
 
-	areaMaster = null
-	loc = null
 	..()
 
 //Sets our luminosity.

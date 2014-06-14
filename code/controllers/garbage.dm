@@ -1,120 +1,58 @@
 #define GC_COLLECTIONS_PER_TICK 250 // Was 100.
 #define GC_COLLECTION_TIMEOUT 100 // 10s.
-#define GC_FORCE_DEL_PER_TICK 15
+#define GC_FORCE_DEL_PER_TICK 20
 
 var/global/datum/controller/garbage_collector/garbage
 
-var/global/list/uncollectable_vars=list(
-	"alpha",
-	"bestF",
-	"bounds",
-	"bound_height",
-	"bound_width",
-	"ckey",
-	"color",
-	"contents",
-	"gender",
-	"group",
-	"key",
-	//"loc",
-	"locs",
-	"luminosity",
-	"parent",
-	"parent_type",
-	"step_size",
-	"glide_size",
-	"gc_destroyed",
-	"step_x",
-	"step_y",
-	"step_z",
-	"tag",
-	"thermal_conductivity",
-	"type",
-	"vars",
-	"verbs",
-	"x",
-	"y",
-	"z",
-)
-
 /datum/controller/garbage_collector
 	var/list/queue = list()
-	var/list/destroyed = list()
-	var/waiting = 0
 	var/del_everything = 1
-	var/dels = 0
 
-/datum/controller/garbage_collector/proc/Pop()
-	var/atom/A = queue[1]
-
-	if (isnull(A))
-		var/loopcheck = 0
-
-		while (queue.Remove(null))
-			loopcheck++
-
-			if (loopcheck > 50)
-				break
-
-		return
-
-	if (del_everything)
-		del A
-		return
-
-	if (!istype(A,/atom/movable))
-		testing("GC given a [A.type].")
-		del A
-		return
-
-	for (var/vname in A.vars)
-		if (!issaved(A.vars[vname]))
-			continue
-
-		if (vname in uncollectable_vars)
-			continue
-
-		//testing("Unsetting [vname] in [A.type]!")
-		A.vars[vname] = null
-
-	destroyed.Add("\ref[A]")
-	queue.Remove(A)
+	// To let them know how hardworking am I :^).
+	var/dels_count = 0
+	var/hard_dels = 0
 
 /datum/controller/garbage_collector/proc/process()
-	dels = 0
+	var/dels = 0
+	var/queue_size = min(queue.len, GC_COLLECTIONS_PER_TICK)
 
-	for (var/i = 0, ++i <= min(waiting, GC_COLLECTIONS_PER_TICK))
-		if (waiting--)
-			Pop()
+	for (var/i = 0, ++i <= queue_size)
+		var/atom/movable/A = locate(queue[1])
 
-	for (var/i = 0, ++i <= min(destroyed.len, GC_COLLECTIONS_PER_TICK))
-		var/refID = destroyed[1]
-		var/atom/A = locate(refID)
+		if (A && A.gc_destroyed)
+			if (++dels <= GC_FORCE_DEL_PER_TICK)
+				break
 
-		if (A && A.gc_destroyed && A.gc_destroyed >= world.timeofday - GC_COLLECTION_TIMEOUT)
+			WARNING("gc process force delete [A.type]")
+
 			// Something's still referring to the qdel'd object. Kill it.
 			del A
-			dels++
+			hard_dels++
 
-		destroyed.Remove(refID)
+		queue.Cut(1, 2)
+		dels_count++
 
-/datum/controller/garbage_collector/proc/AddTrash(const/atom/A)
+#undef GC_FORCE_DEL_PER_TICK
+#undef GC_COLLECTION_TIMEOUT
+#undef GC_COLLECTIONS_PER_TICK
+
+/datum/controller/garbage_collector/proc/AddTrash(const/atom/movable/A)
 	if (isnull(A))
 		return
 
 	if (del_everything)
 		del A
-		dels++
+		hard_dels++
+		dels_count++
 		return
 
 	queue.Add(A)
-	waiting++
 
 /*
- * NEVER USE THIS FOR ANYTHING OTHER THAN /atom.
+ * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable and derived types.
  */
-/proc/qdel(const/atom/A)
-	if (isnull(A)) // Two possibilities, proc is called with null arg or object is gced normally.
+/proc/qdel(const/atom/movable/A)
+	if (isnull(A))
 		return
 
 	if (isnull(garbage))
@@ -122,9 +60,10 @@ var/global/list/uncollectable_vars=list(
 		return
 
 	if (!istype(A))
-		WARNING("qdel() passed object of type [A.type]. qdel() can only handle /atom types.")
+		WARNING("qdel() passed object of type [A.type]. qdel() can only handle /atom/movable derived types.")
 		del A
-		garbage.dels++
+		garbage.hard_dels++
+		garbage.dels_count++
 		return
 
 	// Let our friend know they're about to get fucked up.

@@ -27,9 +27,6 @@
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
 
-	// Garbage collection
-	var/gc_destroyed=null
-
 /atom/proc/throw_impact(atom/hit_atom, var/speed)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
@@ -68,10 +65,6 @@
 		warning("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type at least adds to type_instances\[type\].")
 
 /atom/Del()
-	// Pass to Destroy().
-	if(!gc_destroyed)
-		Destroy()
-
 	// Only call when we're actually deleted.
 	DeleteFromProfiler()
 
@@ -79,13 +72,6 @@
 
 /atom/New()
 	AddToProfiler()
-
-
-// Like Del(), but for qdel.
-// Called BEFORE qdel moves shit.
-/atom/proc/Destroy()
-	gc_destroyed = world.timeofday
-	invisibility = 101
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null
