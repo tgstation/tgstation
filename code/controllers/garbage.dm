@@ -1,7 +1,8 @@
+#define GC_COLLECTIONS_PER_TICK 250 // Was 100.
+#define GC_COLLECTION_TIMEOUT 100 // 10s.
 
-#define GC_COLLECTIONS_PER_TICK 250 // Was 100
-#define GC_COLLECTION_TIMEOUT 100 // 10s
 var/global/datum/controller/garbage_collector/garbage
+
 var/global/list/uncollectable_vars=list(
 	"alpha",
 	"bestF",
@@ -36,46 +37,48 @@ var/global/list/uncollectable_vars=list(
 )
 
 /datum/controller/garbage_collector
-	var/list/queue=list()
-	var/list/destroyed=list()
-	var/waiting=0
-	var/del_everything=1
+	var/list/queue = list()
+	var/list/destroyed = list()
+	var/waiting = 0
+	var/del_everything = 1
 
-	proc/AddTrash(var/atom/movable/A)
-		if(!A)
-			return
-		if(del_everything)
-			del(A)
-			return
-		queue.Add(A)
-		waiting++
+/datum/controller/garbage_collectorproc/AddTrash(const/atom/A)
+	if (isnull(A))
+		return
 
-	proc/Pop()
-		var/atom/movable/A = queue[1]
-		if(!A)
-			if(isnull(A))
-				var/loopcheck = 0
-				while(queue.Remove(null))
-					loopcheck++
-					if(loopcheck > 50)
-						break
-			return
-		if(del_everything)
-			del(A)
-			return
-		if(!istype(A,/atom/movable))
-			testing("GC given a [A.type].")
-			del(A)
-			return
-		for(var/vname in A.vars)
-			if(!issaved(A.vars[vname]))
-				continue
-			if(vname in uncollectable_vars)
-				continue
-			//testing("Unsetting [vname] in [A.type]!")
-			A.vars[vname]=null
-		destroyed.Add("\ref[A]")
-		queue.Remove(A)
+	if (del_everything)
+		del(A)
+		return
+
+	queue.Add(A)
+	waiting++
+
+/datum/controller/garbage_collectorproc/Pop()
+	var/atom/movable/A = queue[1]
+	if(!A)
+		if(isnull(A))
+			var/loopcheck = 0
+			while(queue.Remove(null))
+				loopcheck++
+				if(loopcheck > 50)
+					break
+		return
+	if(del_everything)
+		del(A)
+		return
+	if(!istype(A,/atom/movable))
+		testing("GC given a [A.type].")
+		del(A)
+		return
+	for(var/vname in A.vars)
+		if(!issaved(A.vars[vname]))
+			continue
+		if(vname in uncollectable_vars)
+			continue
+		//testing("Unsetting [vname] in [A.type]!")
+		A.vars[vname]=null
+	destroyed.Add("\ref[A]")
+	queue.Remove(A)
 
 /datum/controller/garbage_collector/proc/process()
 	for (var/i = 0, ++i <= min(waiting, GC_COLLECTIONS_PER_TICK))
@@ -93,19 +96,22 @@ var/global/list/uncollectable_vars=list(
 
 			destroyed.Remove(refID)
 
-/**
-* NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
-* OTHER TYPES CANNOT BE QDEL'D BECAUSE THEIR LOC IS LOCKED OR THEY DON'T HAVE ONE.
-*/
-/proc/qdel(var/atom/movable/A)
-	if(!A) return
-	if(!istype(A))
-		warning("qdel() passed object of type [A.type]. qdel() can only handle /atom/movable types.")
+/*
+ * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable.
+ */
+/proc/qdel(const/atom/A)
+	if (isnull(A))
+		return
+
+	if (!istype(A))
+		warning("qdel() passed object of type [A.type]. qdel() can only handle /atom types.")
 		del(A)
 		return
-	if(!garbage)
+
+	if (!garbage)
 		del(A)
 		return
+
 	// Let our friend know they're about to get fucked up.
 	A.Destroy()
 	garbage.AddTrash(A)
