@@ -3,6 +3,9 @@
 	var/traitor_name = "traitor"
 	var/list/datum/mind/traitors = list()
 
+	var/datum/mind/exchange_red
+	var/datum/mind/exchange_blue
+
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
@@ -104,8 +107,16 @@
 			traitor.objectives += block_objective
 
 	else
-		switch(rand(1,100))
-			if(1 to 50)
+		//Assign two traitors for exchange objective
+		if((traitors.len > 5) && !exchange_blue)
+			if(!exchange_red)
+				exchange_red = traitor
+			else
+				exchange_blue = traitor
+				assign_exchange_role(exchange_red,"red")
+				assign_exchange_role(exchange_blue,"blue")
+		else
+			if(prob(50))
 				var/datum/objective/assassinate/kill_objective = new
 				kill_objective.owner = traitor
 				kill_objective.find_target()
@@ -115,13 +126,12 @@
 				steal_objective.owner = traitor
 				steal_objective.find_target()
 				traitor.objectives += steal_objective
-		switch(rand(1,100))
-			if(1 to 90)
+
+			if(prob(90))
 				if (!(locate(/datum/objective/escape) in traitor.objectives))
 					var/datum/objective/escape/escape_objective = new
 					escape_objective.owner = traitor
 					traitor.objectives += escape_objective
-
 			else
 				if (!(locate(/datum/objective/hijack) in traitor.objectives))
 					var/datum/objective/hijack/hijack_objective = new
@@ -151,6 +161,16 @@
 	..()
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
 
+/datum/game_mode/proc/give_codewords(mob/living/traitor_mob)
+	traitor_mob << "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>"
+	traitor_mob << "<B>Code Phrase</B>: <span class='danger'>[syndicate_code_phrase]</span>"
+	traitor_mob << "<B>Code Response</B>: <span class='danger'>[syndicate_code_response]</span>"
+	
+	traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
+	traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
+	
+	traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
+
 
 /datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
@@ -158,23 +178,9 @@
 	killer << "<b>Your laws have been changed!</b>"
 	killer.set_zeroth_law(law, law_borg)
 	killer << "New law: 0. [law]"
+	give_codewords(killer)
 
-	//Begin code phrase.
-	killer << "The Syndicate provided you with the following information on how to identify their agents:"
-	if(prob(80))
-		killer << "\red Code Phrase: \black [syndicate_code_phrase]"
-		killer.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
-	else
-		killer << "Unfortunately, the Syndicate did not provide you with a code phrase."
-	if(prob(80))
-		killer << "\red Code Response: \black [syndicate_code_response]"
-		killer.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
-	else
-		killer << "Unfortunately, the Syndicate did not provide you with a code response."
-	killer << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
-	//End code phrase.
-
-
+	
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
 		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
@@ -293,18 +299,51 @@
 
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
-	//Begin code phrase.
 	if(!safety)//If they are not a rev. Can be added on to.
-		traitor_mob << "The Syndicate provided you with the following information on how to identify other agents:"
-		if(prob(80))
-			traitor_mob << "\red Code Phrase: \black [syndicate_code_phrase]"
-			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
-		else
-			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code phrase."
-		if(prob(80))
-			traitor_mob << "\red Code Response: \black [syndicate_code_response]"
-			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
-		else
-			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
-		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
-	//End code phrase.
+		give_codewords(traitor_mob)
+	if(traitor_mob.mind == exchange_red || traitor_mob.mind == exchange_blue)
+		equip_exchange(traitor_mob)
+
+/datum/game_mode/proc/assign_exchange_role(var/datum/mind/owner, var/faction)
+	var/datum/objective/steal/exchange/exchange_objective = new
+	exchange_objective.owner = owner
+	exchange_objective.set_faction(faction,(faction == "red" ? exchange_blue : exchange_red))
+	owner.objectives += exchange_objective
+
+	if(prob(20))
+		var/datum/objective/steal/exchange/backstab/backstab_objective = new
+		backstab_objective.owner = owner
+		backstab_objective.set_faction(faction)
+		owner.objectives += backstab_objective
+
+	var/datum/objective/escape_objective
+	if(90)
+		escape_objective = new/datum/objective/escape
+	else
+		escape_objective = new/datum/objective/hijack
+	escape_objective.owner = owner
+	owner.objectives += escape_objective
+
+/datum/game_mode/proc/equip_exchange(mob/living/carbon/human/mob)
+	if(!istype(mob))
+		return
+
+	var/obj/item/weapon/folder/syndicate/folder
+	if(mob.mind == exchange_red)
+		folder = new/obj/item/weapon/folder/syndicate/red(mob)
+	else
+		folder = new/obj/item/weapon/folder/syndicate/blue(mob)
+
+	var/list/slots = list (
+		"backpack" = slot_in_backpack,
+		"left pocket" = slot_l_store,
+		"right pocket" = slot_r_store,
+		"left hand" = slot_l_hand,
+		"right hand" = slot_r_hand,
+	)
+	var/where = mob.equip_in_one_of_slots(folder, slots)
+	if (!where)
+		mob << "<span class='warning'>Your Syndicate employer was unable to send you their secret documents.</span>"
+	else
+		mob << "<span class='info'>In your [where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span>"
+		mob.update_icons()

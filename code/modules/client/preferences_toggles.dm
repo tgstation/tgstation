@@ -55,6 +55,15 @@
 	src << "You will [(prefs.toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/togglePRs()
+	set name = "Show/Hide Pull Request Announcements"
+	set category = "Preferences"
+	set desc = "Toggles receiving a notification when new pull requests are created."
+	prefs.toggles ^= CHAT_PULLR
+	prefs.save_preferences()
+	src << "You will [(prefs.toggles & CHAT_PULLR) ? "now" : "no longer"] see new pull request announcements."
+	feedback_add_details("admin_verb","TPullR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/toggletitlemusic()
 	set name = "Hear/Silence LobbyMusic"
 	set category = "Preferences"

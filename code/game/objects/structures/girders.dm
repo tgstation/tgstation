@@ -73,7 +73,9 @@
 
 				if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
 					if(!anchored)
-						if(S.amount < 2) return
+						if(S.amount < 2)
+							user << "<span class='warning'>You need at least two sheets to create a false wall.</span>"
+							return
 						S.use(2)
 						user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
 						var/obj/structure/falsewall/F = new (loc)
@@ -95,10 +97,12 @@
 
 				if(/obj/item/stack/sheet/plasteel)
 					if(!anchored)
-						if(S.amount < 2) return
+						if(S.amount < 2)
+							user << "<span class='warning'>You need at least two sheets to create a false wall.</span>"
+							return
 						S.use(2)
 						user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
-						var/obj/structure/falserwall/FW = new (loc)
+						var/obj/structure/falsewall/reinforced/FW = new (loc)
 						transfer_fingerprints_to(FW)
 						qdel(src)
 					else
@@ -130,7 +134,9 @@
 			if(S.sheettype)
 				var/M = S.sheettype
 				if(!anchored)
-					if(S.amount < 2) return
+					if(S.amount < 2)
+						user << "<span class='warning'>You need at least two sheets to create a false wall.</span>"
+						return
 					S.use(2)
 					user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
 					var/F = text2path("/obj/structure/falsewall/[M]")

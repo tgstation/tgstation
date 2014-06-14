@@ -143,17 +143,6 @@
 			istype(W, /obj/item/weapon/hatchet) \
 		)
 		inaccurate = 1
-	else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
-		if(!iscarbon(user))
-			return 0
-		user << "<span class='notice'>You slip [W] inside [src].</span>"
-		user.unEquip(W)
-		if ((user.client && user.s_active != src))
-			user.client.screen -= W
-		W.dropped(user)
-		add_fingerprint(user)
-		contents += W
-		return 1 // no afterattack here
 	else
 		return 0 // --- this is everything that is NOT a slicing implement, and which is not being slipped into food; allow afterattack ---
 
@@ -161,7 +150,7 @@
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
 			!(locate(/obj/structure/optable) in src.loc) && \
-			!(locate(/obj/item/weapon/tray) in src.loc) \
+			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
 		)
 		user << "<span class='notice'>You cannot slice [src] here! You need a table or at least a tray.</span>"
 		return 1
@@ -437,7 +426,7 @@
 		..()
 		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
 		reagents.reaction(hit_atom, TOUCH)
-		qdel(src)
+		del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype( W, /obj/item/toy/crayon ))
@@ -786,7 +775,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-	qdel(src)
+	reagents.reaction(hit_atom, TOUCH)
+	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
 
 /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis
 	name = "berry clafoutis"
@@ -1763,9 +1753,27 @@
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
-// sliceable is just an organization type path, it doesn't have any additional code or variables tied to it.
+//sliceable only changes w class, storage is handled by sliceable/store
+/obj/item/weapon/reagent_containers/food/snacks/sliceable
+	w_class = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/meatbread
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/attackby(obj/item/weapon/W, mob/user)
+	if(W.w_class <= 2)
+		if(contents.len)
+			return 0
+		if(!iscarbon(user))
+			return 0
+		user << "<span class='notice'>You slip [W] inside [src].</span>"
+		user.unEquip(W)
+		add_fingerprint(user)
+		contents += W
+		return 1 // no afterattack here
+	else
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/meatbread
 	name = "meatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
 	icon_state = "meatbread"
@@ -1783,7 +1791,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/xenomeatbread
 	name = "xenomeatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
 	icon_state = "xenomeatbread"
@@ -1801,7 +1809,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/spidermeatbread
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/spidermeatbread
 	name = "spider meat loaf"
 	desc = "Reassuringly green meatloaf made from spider meat."
 	icon_state = "spidermeatbread"
@@ -1823,7 +1831,7 @@
 		..()
 		reagents.add_reagent("toxin", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/bananabread
 	name = "banana-nut bread"
 	desc = "A heavenly and filling treat."
 	icon_state = "bananabread"
@@ -1842,7 +1850,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/tofubread
 	name = "Tofubread"
 	desc = "Like meatbread but for vegetarians. Not guaranteed to give superpowers."
 	icon_state = "tofubread"
@@ -1861,7 +1869,7 @@
 	bitesize = 2
 
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/carrotcake
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/carrotcake
 	name = "carrot cake"
 	desc = "A favorite desert of a certain wascally wabbit. Not a lie."
 	icon_state = "carrotcake"
@@ -1880,7 +1888,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/braincake
 	name = "brain cake"
 	desc = "A squishy cake-thing."
 	icon_state = "braincake"
@@ -1899,7 +1907,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesecake
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/cheesecake
 	name = "cheese cake"
 	desc = "DANGEROUSLY cheesy."
 	icon_state = "cheesecake"
@@ -1917,7 +1925,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/plaincake
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/plaincake
 	name = "vanilla cake"
 	desc = "A plain cake, not a lie."
 	icon_state = "plaincake"
@@ -1934,7 +1942,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/orangecake
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/orangecake
 	name = "orange cake"
 	desc = "A cake with added orange."
 	icon_state = "orangecake"
@@ -1951,7 +1959,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/limecake
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/limecake
 	name = "lime cake"
 	desc = "A cake with added lime."
 	icon_state = "limecake"
@@ -1968,7 +1976,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/lemoncake
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/lemoncake
 	name = "lemon cake"
 	desc = "A cake with added lemon."
 	icon_state = "lemoncake"
@@ -1985,7 +1993,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/chocolatecake
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/chocolatecake
 	name = "chocolate cake"
 	desc = "A cake with added chocolate."
 	icon_state = "chocolatecake"
@@ -2019,7 +2027,7 @@
 	icon_state = "cheesewedge"
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/birthdaycake
 	name = "birthday cake"
 	desc = "Happy Birthday little clown..."
 	icon_state = "birthdaycake"
@@ -2038,7 +2046,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/bread
 	name = "bread"
 	desc = "Some plain old Earthen bread."
 	icon_state = "bread"
@@ -2057,7 +2065,7 @@
 	bitesize = 2
 
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/creamcheesebread
 	name = "cream cheese bread"
 	desc = "Yum yum yum!"
 	icon_state = "creamcheesebread"
@@ -2083,7 +2091,7 @@
 	bitesize = 2
 
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/applecake
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/applecake
 	name = "apple cake"
 	desc = "A cake centred with Apple."
 	icon_state = "applecake"

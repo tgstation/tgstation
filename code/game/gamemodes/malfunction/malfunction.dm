@@ -104,11 +104,6 @@
 	malf.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
 	return
 
-
-/datum/game_mode/malfunction/proc/hack_intercept()
-	intercept_hacked = 1
-
-
 /datum/game_mode/malfunction/process()
 	if (apcs >= 3 && malf_mode_declared)
 		AI_win_timeleft -= ((apcs/6)*last_tick_duration) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
@@ -184,7 +179,7 @@
 	if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
 		return
 
-	command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert")
+	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
 	set_security_level("delta")
 
 	for(var/obj/item/weapon/pinpointer/point in world)
@@ -196,9 +191,6 @@
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
-	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
-			M << sound('sound/AI/aimalf.ogg')
 
 
 /datum/game_mode/malfunction/proc/ai_win()

@@ -43,6 +43,7 @@
 /obj/structure/closet/secure_closet/proc/togglelock(mob/user as mob)
 	if(src.allowed(user))
 		src.locked = !src.locked
+		add_fingerprint(user)
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
 				O << "<span class='notice'>The locker has been [locked ? null : "un"]locked by [user].</span>"

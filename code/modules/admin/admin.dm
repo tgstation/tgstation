@@ -566,11 +566,7 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle OOC"
-	ooc_allowed = !( ooc_allowed )
-	if (ooc_allowed)
-		world << "<B>The OOC channel has been globally enabled!</B>"
-	else
-		world << "<B>The OOC channel has been globally disabled!</B>"
+	toggle_ooc()
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled OOC.", 1)
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

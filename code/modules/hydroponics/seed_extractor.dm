@@ -6,7 +6,7 @@
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = new F.seed(O.loc)
+			var/obj/item/seeds/t_prod = new F.seed(O.loc, O)
 			t_prod.lifespan = F.lifespan
 			t_prod.endurance = F.endurance
 			t_prod.maturation = F.maturation
@@ -21,7 +21,7 @@
 		var/obj/item/weapon/grown/F = O
 		if(F.seed)
 			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = new F.seed(O.loc)
+				var/obj/item/seeds/t_prod = new F.seed(O.loc, O)
 				t_prod.lifespan = F.lifespan
 				t_prod.endurance = F.endurance
 				t_prod.maturation = F.maturation
@@ -55,7 +55,7 @@
 obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(isrobot(user))
 		return
-	
+
 	if (istype(O,/obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/storage/P = O
 		var/loaded = 0
@@ -70,7 +70,10 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 			user << "<span class='notice'>There are no seeds in \the [O.name].</span>"
 		return
 
-	user.drop_item()
+	if(!user.drop_item()) //couldn't drop the item
+		user << "<span class='notice'>\The [O] is stuck to your hand, you cannot put it in the seed extractor!</span>"
+		return
+
 	if(O && O.loc)
 		O.loc = src.loc
 
@@ -112,9 +115,9 @@ datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie,
 obj/machinery/seed_extractor/interact(mob/user as mob)
 	if (stat)
 		return 0
-	
+
 	var/dat = "<b>Stored seeds:</b><br>"
-	
+
 	if (contents.len == 0)
 		dat += "<font color='red'>No seeds</font>"
 	else

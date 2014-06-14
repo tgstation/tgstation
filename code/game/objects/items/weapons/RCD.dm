@@ -18,7 +18,7 @@ RCD
 	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 50000
+	m_amt = 30000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
@@ -260,5 +260,5 @@ RCD
 	density = 0
 	anchored = 0.0
 	origin_tech = "materials=2"
-	m_amt = 30000
-	g_amt = 15000
+	m_amt = 16000
+	g_amt = 8000

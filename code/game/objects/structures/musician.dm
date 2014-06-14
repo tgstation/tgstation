@@ -174,7 +174,7 @@
 
 
 /datum/song/Topic(href, href_list)
-	if(!in_range(instrumentObj, usr) || (issilicon(usr) && instrumentObj.loc != usr) || !isliving(usr) || !usr.canmove || usr.restrained())
+	if(usr.canUseTopic(src))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return

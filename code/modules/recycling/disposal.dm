@@ -69,30 +69,30 @@
 	if(mode<=0) // It's off
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(contents.len > 0)
-				user << "Eject the items first!"
+				user << "<span class='notice'>Eject the items first!</span>"
 				return
 			if(mode==0) // It's off but still not unscrewed
 				mode=-1 // Set it to doubleoff l0l
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "You remove the screws around the power connection."
+				user << "<span class='notice'>You remove the screws around the power connection.</span>"
 				return
 			else if(mode==-1)
 				mode=0
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "You attach the screws around the power connection."
+				user << "<span class='notice'>You attach the screws around the power connection.</span>"
 				return
 		else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
 			if(contents.len > 0)
-				user << "Eject the items first!"
+				user << "<span class='notice'>Eject the items first!</span>"
 				return
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "You start slicing the floorweld off \the [src]."
+				user << "<span class='notice'>You start slicing the floorweld off \the [src].</span>"
 
 				if(do_after(user,20))
 					if(!src || !W.isOn()) return
-					user << "You slice the floorweld off \the [src]."
+					user << "<span class='notice'>You've sliced the floorweld off \the [src].</span>"
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					src.transfer_fingerprints_to(C)
 					C.ptype = 6 // 6 = disposal unit
@@ -102,16 +102,16 @@
 					qdel(src)
 				return
 			else
-				user << "You need more welding fuel to complete this task."
+				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		user << "You can't place \the [I] into \the [src]."
+		user << "<span class='notice'>You can't place \the [I] into \the [src].</span>"
 		return
 
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
-		user << "\blue You empty the bag."
+		user << "<span class='warning'> You empty the bag.</span>"
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)
 		T.update_icon()
@@ -121,17 +121,7 @@
 	var/obj/item/weapon/grab/G = I
 	if(istype(G))	// handle grabbed mob
 		if(ismob(G.affecting))
-			var/mob/GM = G.affecting
-			for (var/mob/V in viewers(usr))
-				V.show_message("[usr] starts putting [GM.name] into \the [src].", 3)
-			if(do_after(usr, 20))
-				if (GM.client)
-					GM.client.perspective = EYE_PERSPECTIVE
-					GM.client.eye = src
-				GM.loc = src
-				for (var/mob/C in viewers(src))
-					C.show_message("\red [GM.name] has been placed in \the [src] by [user].", 3)
-				qdel(G)
+			stuff_mob_in(G.affecting, usr)
 		return
 
 	if(!I)	return
@@ -140,7 +130,7 @@
 	if(I)
 		I.loc = src
 
-	user << "You place \the [I] into \the [src]."
+	user << "<span class='notice'>You place \the [I] into \the [src].</span>"
 	for(var/mob/M in viewers(src))
 		if(M == user)
 			continue
@@ -151,43 +141,31 @@
 // mouse drop another mob or self
 //
 /obj/machinery/disposal/MouseDrop_T(mob/target, mob/user)
-	if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
+	stuff_mob_in(target, user)
+
+/obj/machinery/disposal/proc/stuff_mob_in(mob/target, mob/user)
+	if (!user.canUseTopic(target) || istype(user, /mob/living/silicon/ai))
 		return
 	src.add_fingerprint(user)
-	var/target_loc = target.loc
-	var/msg
-	for (var/mob/V in viewers(usr))
-		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			V.show_message("[usr] starts climbing into \the [src].", 3)
-		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			if(target.anchored) return
-			if(!ishuman(user) && !ismonkey(user)) return
-			V.show_message("[usr] starts stuffing [target.name] into \the [src].", 3)
-	if(!do_after(usr, 20))
-		return
-	if(target_loc != target.loc)
-		return
-	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
-											// must be awake, not stunned or whatever
-		msg = "[user.name] climbs into \the [src]."
-		user << "You climb into \the [src]."
-	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-		msg = "[user.name] stuffs [target.name] into \the [src]!"
-		user << "You stuff [target.name] into \the [src]!"
+	if(user == target)
+		user.visible_message("<span class='warning'>[user] starts climbing into [src].</span>", \
+								"<span class='notice'>[user] starts climbing into [src].</span>")
 	else
-		return
-	if (target.client)
-		target.client.perspective = EYE_PERSPECTIVE
-		target.client.eye = src
-	target.loc = src
-
-	for (var/mob/C in viewers(src))
-		if(C == user)
-			continue
-		C.show_message(msg, 3)
-
-	update()
-	return
+		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
+								"<span class='userdanger'>[user] starts putting [target] into [src].</span>")
+	if(do_mob(usr, target, 20))
+		if (target.client)
+			target.client.perspective = EYE_PERSPECTIVE
+			target.client.eye = src
+		target.loc = src
+		if(user == target)
+			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", \
+									"<span class='notice'>[user] climbs into [src].</span>")
+		else
+			target.visible_message("<span class='danger'>[target] has been placed in [src] by [user].</span>", \
+									"<span class='userdanger'>[target] has been placed in [src] by [user].</span>")
+			add_logs(user, target, "stuffed", addition="into [src]")
+		update()
 
 // can breath normally in the disposal
 /obj/machinery/disposal/alter_health()
@@ -496,7 +474,12 @@
 	var/tomail = 0 //changes if contains wrapped package
 	var/hasmob = 0 //If it contains a mob
 
+/obj/structure/disposalholder/Destroy()
+	qdel(gas)
+	active = 0
+	..()
 
+/obj/structure/disposalholder
 	// initialize a holder from the contents of a disposal unit
 	proc/init(var/obj/machinery/disposal/D)
 		gas = D.air_contents// transfer gas resv. into holder object
@@ -550,20 +533,13 @@
 	proc/move()
 		var/obj/structure/disposalpipe/last
 		while(active)
-			if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
-				active = 0
-				// find the fat guys
-				for(var/mob/living/carbon/human/H in src)
-
-				break
-			sleep(1)		// was 1
 			var/obj/structure/disposalpipe/curr = loc
 			last = curr
 			curr = curr.transfer(src)
-			if(!curr)
+			if(!curr && active)
 				last.expel(src, loc, dir)
 
-			//
+			sleep(1)
 			if(!(count--))
 				active = 0
 		return
@@ -615,6 +591,7 @@
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
 		location.assume_air(gas)  // vent all gas to turf
+		air_update_turf()
 		return
 
 // Disposal pipes
@@ -726,7 +703,7 @@
 		if(istype(T, /turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			if(F.floor_tile)
-				F.floor_tile.loc = H //It took me a day to figure out this was the right way to do it. ¯\_(;_;)_/¯
+				F.floor_tile.loc = H //It took me a day to figure out this was the right way to do it.
 			F.floor_tile = null //So it doesn't get deleted in make_plating()
 			F.make_plating()
 
@@ -835,18 +812,14 @@
 
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				user << "<span class='notice'>You start slicing the disposal pipe.</span>"
 				// check if anything changed over 2 seconds
-				var/turf/uloc = user.loc
-				var/atom/wloc = W.loc
-				user << "Slicing the disposal pipe."
-				sleep(30)
-				if(!W.isOn()) return
-				if(user.loc == uloc && wloc == W.loc)
+				if(do_after(user,30))
+					if(!src || !W.isOn()) return
 					welded()
-				else
-					user << "You must stay still while welding the pipe."
+					user << "<span class='notice'>You've sliced the disposal pipe.</span>"
 			else
-				user << "You need more welding fuel to cut the pipe."
+				user << "<span class='notice'>You need more welding fuel to cut the pipe.</span>"
 				return
 
 	// called when pipe is cut with welder
@@ -989,7 +962,7 @@
 				sortType = O.currTag
 				playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-				user << "\blue Changed filter to [tag]"
+				user << "<span class='warning'> Changed filter to [tag].</span>"
 				updatedesc()
 
 
@@ -1152,23 +1125,18 @@
 		var/obj/item/weapon/weldingtool/W = I
 
 		if(linked)
-			user << "You need to deconstruct disposal machinery above this pipe."
+			user << "<span class='notice'>You need to deconstruct disposal machinery above this pipe.</span>"
 			return
 
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			// check if anything changed over 2 seconds
-			var/turf/uloc = user.loc
-			var/atom/wloc = W.loc
-			user << "Slicing the disposal pipe."
-			sleep(30)
-			if(!W.isOn()) return
-			if(user.loc == uloc && wloc == W.loc)
+			user << "<span class='notice'>You start slicing the disposal pipe.</span>"
+			if(do_after(user,30))
+				if(!src || !W.isOn()) return
 				welded()
-			else
-				user << "You must stay still while welding the pipe."
+				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
 		else
-			user << "You need more welding fuel to cut the pipe."
+			user << "<span class='notice'>You need more welding fuel to cut the pipe.</span>"
 
 			return
 
@@ -1279,21 +1247,21 @@
 			if(mode==0)
 				mode=1
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "You remove the screws around the power connection."
+				user << "<span class='notice'>You remove the screws around the power connection.</span>"
 				return
 			else if(mode==1)
 				mode=0
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "You attach the screws around the power connection."
+				user << "<span class='notice'>You attach the screws around the power connection.</span>"
 				return
 		else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "You start slicing the floorweld off \the [src]."
+				user << "<span class='notice'>You start slicing the floorweld off \the [src].</span>"
 				if(do_after(user,20))
 					if(!src || !W.isOn()) return
-					user << "You slice the floorweld off \the [src]."
+					user << "<span class='notice'>You've sliced the floorweld off \the [src].</span>"
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					src.transfer_fingerprints_to(C)
 					C.ptype = 7 // 7 =  outlet
@@ -1303,7 +1271,7 @@
 					qdel(src)
 				return
 			else
-				user << "You need more welding fuel to complete this task."
+				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 
 

@@ -56,7 +56,7 @@
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet
-	m_amt = 12500
+	m_amt = 4000
 
 
 /obj/item/ammo_casing/shotgun/buckshot
@@ -73,7 +73,7 @@
 	desc = "A weak beanbag shell."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
-	m_amt = 500
+	m_amt = 250
 
 
 /obj/item/ammo_casing/shotgun/stunshell
@@ -81,7 +81,7 @@
 	desc = "A stunning shell."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
-	m_amt = 2500
+	m_amt = 200
 
 
 /obj/item/ammo_casing/shotgun/incendiary
@@ -89,7 +89,6 @@
 	desc = "An incendiary shell"
 	icon_state = "ishell"
 	projectile_type = /obj/item/projectile/bullet/incendiary/shell
-	m_amt = 12500
 
 
 /obj/item/ammo_casing/shotgun/dart
@@ -97,7 +96,6 @@
 	desc = "A dart for use in shotguns. Can be injected with up to 30 units of any chemical."
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/bullet/dart
-	m_amt = 12500
 
 /obj/item/ammo_casing/shotgun/dart/New()
 	..()

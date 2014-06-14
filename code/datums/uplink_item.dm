@@ -101,10 +101,16 @@ var/list/uplink_items = list()
 	category = "Conspicuous and Dangerous Weapons"
 
 /datum/uplink_item/dangerous/revolver
-	name = "Full Revolver"
+	name = "Syndicate Revolver"
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 6
+
+/datum/uplink_item/dangerous/pistol
+	name = "Stechkin Pistol"
+	desc = "A small, easily concealable handgun that uses 10mm magazines and is compatible with silencers."
+	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	cost = 5
 
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
@@ -217,7 +223,6 @@ var/list/uplink_items = list()
 	desc = "An additional 8-round 10mm magazine for use in the Stetchkin pistol."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
-	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
 	name = "Ammo-7.62×51mm"
@@ -257,7 +262,6 @@ var/list/uplink_items = list()
 	desc = "Fitted for use on the Stetchkin pistol, this silencer will make its shots quieter when equipped onto it."
 	item = /obj/item/weapon/silencer
 	cost = 2
-	gamemodes = list(/datum/game_mode/nuclear)
 
 // STEALTHY TOOLS
 

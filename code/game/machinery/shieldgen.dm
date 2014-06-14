@@ -52,20 +52,7 @@
 
 	opacity = 1
 	spawn(20) if(src) opacity = 0
-
 	..()
-
-/obj/machinery/shield/meteorhit()
-	src.health -= max_health*0.75 //3/4 health as damage
-
-	if(src.health <= 0)
-		visible_message("\blue The [src] dissapates")
-		qdel(src)
-		return
-
-	opacity = 1
-	spawn(20) if(src) opacity = 0
-	return
 
 /obj/machinery/shield/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
@@ -192,13 +179,6 @@
 	if(health <= 0)
 		qdel(src)
 	update_icon()
-	return
-
-/obj/machinery/shieldgen/meteorhit(obj/O as obj)
-	src.health -= max_health*0.25 //A quarter of the machine's health
-	if (prob(5))
-		src.malfunction = 1
-	src.checkhp()
 	return
 
 /obj/machinery/shieldgen/ex_act(severity)
@@ -360,7 +340,7 @@
 		power = 1	// IVE GOT THE POWER!
 		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
 			storedpower += shieldload
-			PN.newload += shieldload //uses powernet power.
+			PN.load += shieldload //uses powernet power.
 //		message_admins("[PN.load]", 1)
 //		use_power(250) //uses APC power
 

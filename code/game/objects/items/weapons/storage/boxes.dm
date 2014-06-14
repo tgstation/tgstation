@@ -350,6 +350,21 @@
 		new /obj/item/weapon/card/id(src)
 		new /obj/item/weapon/card/id(src)
 
+/obj/item/weapon/storage/box/silver_ids
+	name = "box of spare silver IDs"
+	desc = "Shiny IDs for important people."
+	icon_state = "id"
+
+	New()
+		..()
+		new /obj/item/weapon/card/id/silver(src)
+		new /obj/item/weapon/card/id/silver(src)
+		new /obj/item/weapon/card/id/silver(src)
+		new /obj/item/weapon/card/id/silver(src)
+		new /obj/item/weapon/card/id/silver(src)
+		new /obj/item/weapon/card/id/silver(src)
+		new /obj/item/weapon/card/id/silver(src)
+
 /obj/item/weapon/storage/box/prisoner
 	name = "box of prisoner IDs"
 	desc = "Take away their last shred of dignity, their name."
@@ -439,7 +454,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "spbox"
 	storage_slots = 8
-	can_hold = list("/obj/item/toy/snappop")
+	can_hold = list(/obj/item/toy/snappop)
 	New()
 		..()
 		for(var/i=1; i <= storage_slots; i++)

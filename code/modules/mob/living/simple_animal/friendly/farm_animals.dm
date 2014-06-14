@@ -48,9 +48,7 @@
 
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
-			qdel(SV)
-			if(prob(10))
-				say("Nom")
+			SV.eat(src)
 
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
@@ -68,9 +66,8 @@
 	if(!stat)
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
-			qdel(SV)
-			if(prob(10))
-				say("Nom")
+			SV.eat(src)
+
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))

@@ -42,11 +42,25 @@ datum/controller/air_system
 
 /datum/controller/air_system/proc/process_air()
 	current_cycle++
+	var/timer = world.timeofday
 	process_active_turfs()
+	master_controller.air_turfs = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_excited_groups()
+	master_controller.air_groups = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_high_pressure_delta()
+	master_controller.air_highpressure = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_hotspots()
+	master_controller.air_hotspots = (world.timeofday - timer) / 10
+
+	timer = world.timeofday
 	process_super_conductivity()
+	master_controller.air_superconductivity = (world.timeofday - timer) / 10
 
 /datum/controller/air_system/proc/process_hotspots()
 	for(var/obj/effect/hotspot/H in hotspots)

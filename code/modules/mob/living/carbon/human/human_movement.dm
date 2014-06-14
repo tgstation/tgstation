@@ -30,7 +30,7 @@
 
 /mob/living/carbon/human/Process_Spacemove(var/check_drift = 0)
 	//Can we act
-	if(restrained())	return 0
+	if(!canmove)	return 0
 
 	//Do we have a working jetpack
 	if(istype(back, /obj/item/weapon/tank/jetpack))
@@ -38,10 +38,7 @@
 		if(((!check_drift) || (check_drift && J.stabilization_on)) && (!lying) && (J.allow_thrust(0.01, src)))
 			inertia_dir = 0
 			return 1
-//		if(!check_drift && J.allow_thrust(0.01, src))
-//			return 1
-
-	//If no working jetpack then use the other checks
+	//If no working jetpack or magboots then use the other checks
 	if(..())	return 1
 	return 0
 
@@ -69,3 +66,12 @@
 	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
 		return 0
 	.=..()
+
+/mob/living/carbon/human/mob_has_gravity()
+	. = ..()
+	if(!.)
+		if(mob_negates_gravity())
+			. = 1
+
+/mob/living/carbon/human/mob_negates_gravity()
+	return shoes && shoes.negates_gravity()
