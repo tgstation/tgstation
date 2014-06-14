@@ -172,7 +172,7 @@
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
 
 	for(var/client/C in clients)
-		if (config.server) // If you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite.
+		if(config.server)	// If you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite.
 			C << link("byond://[config.server]")
 		else
 			C << link("byond://[world.address]:[world.port]")
