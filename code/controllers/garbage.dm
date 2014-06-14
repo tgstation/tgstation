@@ -40,10 +40,6 @@ var/global/list/uncollectable_vars=list(
 	var/list/destroyed=list()
 	var/waiting=0
 	var/del_everything=1
-	var/turf/trashbin=null
-
-	New()
-		trashbin=locate(0,0,CENTCOMM_Z)
 
 	proc/AddTrash(var/atom/movable/A)
 		if(!A)
@@ -51,7 +47,6 @@ var/global/list/uncollectable_vars=list(
 		if(del_everything)
 			del(A)
 			return
-		A.loc=trashbin
 		queue.Add(A)
 		waiting++
 
@@ -79,7 +74,6 @@ var/global/list/uncollectable_vars=list(
 				continue
 			//testing("Unsetting [vname] in [A.type]!")
 			A.vars[vname]=null
-		A.loc=null
 		destroyed.Add("\ref[A]")
 		queue.Remove(A)
 
