@@ -44,30 +44,39 @@ var/global/list/uncollectable_vars=list(
 	var/del_everything = 1
 	var/dels = 0
 
-/datum/controller/garbage_collectorproc/Pop()
-	var/atom/movable/A = queue[1]
-	if(!A)
-		if(isnull(A))
-			var/loopcheck = 0
-			while(queue.Remove(null))
-				loopcheck++
-				if(loopcheck > 50)
-					break
+/datum/controller/garbage_collector/proc/Pop()
+	var/atom/A = queue[1]
+
+	if (isnull(A))
+		var/loopcheck = 0
+
+		while (queue.Remove(null))
+			loopcheck++
+
+			if (loopcheck > 50)
+				break
+
 		return
-	if(del_everything)
-		del(A)
+
+	if (del_everything)
+		del A
 		return
-	if(!istype(A,/atom/movable))
+
+	if (!istype(A,/atom/movable))
 		testing("GC given a [A.type].")
-		del(A)
+		del A
 		return
-	for(var/vname in A.vars)
-		if(!issaved(A.vars[vname]))
+
+	for (var/vname in A.vars)
+		if (!issaved(A.vars[vname]))
 			continue
-		if(vname in uncollectable_vars)
+
+		if (vname in uncollectable_vars)
 			continue
+
 		//testing("Unsetting [vname] in [A.type]!")
-		A.vars[vname]=null
+		A.vars[vname] = null
+
 	destroyed.Add("\ref[A]")
 	queue.Remove(A)
 
@@ -79,16 +88,15 @@ var/global/list/uncollectable_vars=list(
 			Pop()
 
 	for (var/i = 0, ++i <= min(destroyed.len, GC_COLLECTIONS_PER_TICK))
-		if (destroyed.len)
-			var/refID = destroyed[1]
-			var/atom/A = locate(refID)
+		var/refID = destroyed[1]
+		var/atom/A = locate(refID)
 
-			if (A && A.gc_destroyed && A.gc_destroyed >= world.timeofday - GC_COLLECTION_TIMEOUT)
-				// Something's still referring to the qdel'd object. Kill it.
-				del A
-				dels++
+		if (A && A.gc_destroyed && A.gc_destroyed >= world.timeofday - GC_COLLECTION_TIMEOUT)
+			// Something's still referring to the qdel'd object. Kill it.
+			del A
+			dels++
 
-			destroyed.Remove(refID)
+		destroyed.Remove(refID)
 
 /datum/controller/garbage_collector/proc/AddTrash(const/atom/A)
 	if (isnull(A))
