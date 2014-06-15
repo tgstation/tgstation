@@ -546,18 +546,8 @@
 
 	//Check for ID
 	var/obj/item/weapon/card/id/idcard = get_idcard()
-	if(!idcard)
-		threatcount += 1
-		if(judgebot.idcheck)
-			threatcount += 3
-
-	//Loyalty implants imply trustworthyness
-	if(isloyal(src))
-		threatcount -= 1
-
-	//Agent cards lower threatlevel.
-	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
-		threatcount -= 2
+	if(judgebot.idcheck && !idcard)
+		threatcount += 4
 
 	//Check for weapons
 	if(judgebot.weaponscheck)
@@ -573,8 +563,14 @@
 	if(judgebot.check_records)
 		var/perpname = get_face_name(get_id_name())
 		var/datum/data/record/R = find_record("name", perpname, data_core.security)
-		if(R && (R.fields["criminal"] == "*Arrest*"))
-			threatcount += 5
+		if(R && R.fields["criminal"])
+			switch(R.fields["criminal"])
+				if("*Arrest*")
+					threatcount += 5
+				if("Incarcerated")
+					threatcount += 2
+				if("Parolled")
+					threatcount += 2
 
 	//Check for dresscode violations
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/rig/wizard))
@@ -582,6 +578,14 @@
 
 	//Check for nonhuman scum
 	if(dna && dna.mutantrace && dna.mutantrace != "none")
-		threatcount += 2
+		threatcount += 1
+
+	//Loyalty implants imply trustworthyness
+	if(isloyal(src))
+		threatcount -= 1
+
+	//Agent cards lower threatlevel.
+	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
+		threatcount -= 2
 
 	return threatcount

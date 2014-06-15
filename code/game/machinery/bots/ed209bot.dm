@@ -237,6 +237,7 @@ Auto Patrol: []"},
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
 		src.anchored = 0
+		src.declare_arrests = 0
 		src.emagged = 2
 		src.on = 1
 		src.icon_state = "[lasercolor]ed209[src.on]"
@@ -1015,4 +1016,4 @@ Auto Patrol: []"},
 	var/area/location = get_area(src)
 	for(var/mob/living/carbon/human/human in world)
 		if((human.z == src.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security) && !human.blinded)
-			human << "<span class='info'>\icon[human.glasses] [src.name] requesting assistance [arrest_type ? "detaining" : "arresting"] scumbag <b>[target]</b> in <b>[location]</b></span>"
+			human << "<span class='info'>\icon[human.glasses] [src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>"
