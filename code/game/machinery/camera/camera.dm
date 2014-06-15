@@ -72,7 +72,7 @@
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
-			triggerCameraAlarm()
+//			triggerCameraAlarm()		// This was making EMP weapons a fucking joke, lets not have an autosnitch to the AI thing ja?
 			emped = emped+1  //Increase the number of consecutive EMP's
 			var/thisemp = emped //Take note of which EMP this proc is for
 			spawn(900)

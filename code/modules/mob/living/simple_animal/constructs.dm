@@ -126,8 +126,8 @@
 	health = 250
 	response_harm   = "harmlessly punches"
 	harm_intent_damage = 0
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	attacktext = "smashes their armoured gauntlet into"
 	speed = 3
 	environment_smash = 2
@@ -139,7 +139,7 @@
 
 /mob/living/simple_animal/construct/armoured/bullet_act(var/obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		var/reflectchance = 80 - round(P.damage/3)
+		var/reflectchance = 70 - round(P.damage/3)
 		if(prob(reflectchance))
 			if(P.damage_type == BURN || P.damage_type == BRUTE)
 				adjustBruteLoss(P.damage * 0.5)
@@ -153,6 +153,7 @@
 				var/turf/curloc = get_turf(src)
 
 				// redirect the projectile
+				P.damage = P.damage * 0.5		// returned projectiles does half damage, balanced energy equations and all that
 				P.original = locate(new_x, new_y, P.z)
 				P.starting = curloc
 				P.current = curloc
@@ -179,8 +180,8 @@
 	icon_living = "floating"
 	maxHealth = 75
 	health = 75
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 30
+	melee_damage_upper = 30
 	attacktext = "slashes"
 	speed = 0
 	see_in_dark = 7
@@ -203,18 +204,16 @@
 	maxHealth = 50
 	health = 50
 	response_harm = "viciously beats"
-	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 5
+	harm_intent_damage = 10
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	attacktext = "rams"
 	speed = 0
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
-							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor)
 
 
 /////////////////////////////Behemoth/////////////////////////
