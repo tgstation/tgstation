@@ -317,9 +317,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.fire_stacks = min(5,M.fire_stacks + 3)
 				M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
-				M.adjustToxLoss(1)
-				M.adjustFireLoss(1)		//Hence the other damages... ain't I a bastard?
-				M.adjustBrainLoss(5)
+				M.bodytemperature += 100 * TEMPERATURE_DAMAGE_COEFFICIENT		// or i can just increase the body temp directly... duhh
 				holder.remove_reagent(src.id, 1)
 
 		lube

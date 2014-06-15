@@ -99,13 +99,13 @@ var/list/sacrificed = list()
 /////////////////////////////////////////THIRD RUNE
 
 		convert()
-			var/list/mob/living/carbon/human/cultsinrange = list()
-			for(var/mob/living/carbon/M in src.loc)
+			var/list/mob/living/cultsinrange = list()
+			for(var/mob/living/M in src.loc)
 				if(iscultist(M))
 					continue
 				if(M.stat==2)
 					continue
-				for(var/mob/living/carbon/C in orange(1,src))
+				for(var/mob/living/C in orange(1,src))
 					if(iscultist(C) && !C.stat)		//converting requires three cultists
 						cultsinrange += C
 						C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
@@ -793,12 +793,12 @@ var/list/sacrificed = list()
 
 		freedom()
 			var/mob/living/user = usr
-			var/list/mob/living/carbon/cultists = new
+			var/list/mob/living/cultists = new
 			for(var/datum/mind/H in ticker.mode.cult)
-				if (istype(H.current,/mob/living/carbon))
+				if (istype(H.current,/mob/living))
 					cultists+=H.current
-			var/list/mob/living/carbon/users = new
-			for(var/mob/living/carbon/C in orange(1,src))
+			var/list/mob/living/users = new
+			for(var/mob/living/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					users+=C
 			if(users.len>=1)
@@ -833,7 +833,7 @@ var/list/sacrificed = list()
 					cultist.loc:locked = 0
 				if(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked)
 					cultist.loc:locked = 0
-				for(var/mob/living/carbon/C in users)
+				for(var/mob/living/C in users)
 					user.take_overall_damage(15, 0)
 					C.say("Khari[pick("'","`")]d! Gual'te nikka!")
 				qdel(src)
@@ -847,8 +847,8 @@ var/list/sacrificed = list()
 			for(var/datum/mind/H in ticker.mode.cult)
 				if (istype(H.current,/mob/living/carbon))
 					cultists+=H.current
-			var/list/mob/living/carbon/users = new
-			for(var/mob/living/carbon/C in orange(1,src))
+			var/list/mob/living/users = new
+			for(var/mob/living/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					users+=C
 			if(users.len>=3)
@@ -863,7 +863,7 @@ var/list/sacrificed = list()
 				cultist.loc = src.loc
 				cultist.Weaken(5)
 				cultist.regenerate_icons()
-				for(var/mob/living/carbon/human/C in orange(1,src))
+				for(var/mob/living/C in orange(1,src))
 					if(iscultist(C) && !C.stat)
 						C.say("N'ath reth sh'yro eth d[pick("'","`")]rekkathnor!")
 						C.take_overall_damage(25, 0)
@@ -976,7 +976,7 @@ var/list/sacrificed = list()
 					var/obj/item/weapon/nullrod/N = locate() in M
 					if(N)
 						continue
-					M.take_overall_damage(51,51)
+					M.reagents.add_reagent("hell_water", 15)
 					M << "\red Your blood boils!"
 					if(prob(5))
 						spawn(5)
@@ -1086,12 +1086,12 @@ var/list/sacrificed = list()
 			qdel(src)
 
 		summon_shell()		// Summons a construct shell
-			for(var/obj/item/stack/sheet/plasteel/PS in src.loc)		//I could probably combine the amounts but I'm too lazy to compensate for others' lazyness
-				if(PS.amount >= 4)		// may need increasing?
+			for(var/obj/item/stack/sheet/metal/PS in src.loc)		//I could probably combine the amounts but I'm too lazy to compensate for others' lazyness
+				if(PS.amount >= 20)		// may need increasing?
 					usr.say("Eth ra p'ni[pick("'","`")]dedo ol!")		//I have no idea if these are written in a proper made up language or just Urist smacking his face on the keyboard
 					new /obj/structure/constructshell(src.loc)
 		//?			PS.remove_amount(4)			//TO-DO: Write a proc for removing sheets from a stack and deleting when stack is empty... why doesnt this exist yet??
-					PS.amount -= 4
+					PS.amount -= 20
 					if(PS.amount <= 0)
 						qdel(PS)
 					qdel(src)
