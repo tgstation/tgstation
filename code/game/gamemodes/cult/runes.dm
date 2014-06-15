@@ -58,7 +58,7 @@ var/list/sacrificed = list()
 				if (istype(user, /mob/living))
 					user.take_overall_damage(5, 0)
 				qdel(src)
-			for(var/mob/living/carbon/C in orange(1,src))
+			for(var/mob/living/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					culcount++
 			if(user.loc==src.loc)
@@ -100,7 +100,7 @@ var/list/sacrificed = list()
 
 		convert()
 			var/list/mob/living/cultsinrange = list()
-			for(var/mob/living/M in src.loc)
+			for(var/mob/living/carbon/M in src.loc)
 				if(iscultist(M))
 					continue
 				if(M.stat==2)
@@ -795,7 +795,7 @@ var/list/sacrificed = list()
 			var/mob/living/user = usr
 			var/list/mob/living/cultists = new
 			for(var/datum/mind/H in ticker.mode.cult)
-				if (istype(H.current,/mob/living))
+				if (istype(H.current,/mob/living/carbon))
 					cultists+=H.current
 			var/list/mob/living/users = new
 			for(var/mob/living/C in orange(1,src))
@@ -978,9 +978,6 @@ var/list/sacrificed = list()
 						continue
 					M.reagents.add_reagent("hell_water", 15)
 					M << "\red Your blood boils!"
-					if(prob(5))
-						spawn(5)
-							M.gib()
 				for(var/obj/effect/rune/R in view(src))
 					if(prob(10))
 						explosion(R.loc, -1, 0, 1, 5)
