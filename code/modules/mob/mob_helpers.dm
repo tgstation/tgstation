@@ -408,7 +408,7 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 				if(M.mind in ticker.mode.wizards)
 					return 2
 			if("monkey")
-				if(M.viruses && (locate(/datum/disease/jungle_fever) in M.viruses))
+				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
 		return 1
 	return 0
