@@ -169,10 +169,10 @@
 	traitor_mob << "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>"
 	traitor_mob << "<B>Code Phrase</B>: <span class='danger'>[syndicate_code_phrase]</span>"
 	traitor_mob << "<B>Code Response</B>: <span class='danger'>[syndicate_code_response]</span>"
-	
+
 	traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 	traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
-	
+
 	traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 
 
@@ -184,7 +184,7 @@
 	killer << "New law: 0. [law]"
 	give_codewords(killer)
 
-	
+
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
 		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
@@ -304,25 +304,7 @@
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 	if(!safety)//If they are not a rev. Can be added on to.
-<<<<<<< HEAD
-		traitor_mob << "The Syndicate provided you with the following information on how to identify other agents:"
-		if(prob(80))
-			traitor_mob << "\red Code Phrase: \black [syndicate_code_phrase]"
-			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
-		else
-			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code phrase."
-		if(prob(80))
-			traitor_mob << "\red Code Response: \black [syndicate_code_response]"
-			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
-		else
-			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
-		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
-	//End code phrase.
-=======
 		give_codewords(traitor_mob)
-	if(traitor_mob.mind == exchange_red || traitor_mob.mind == exchange_blue)
-		equip_exchange(traitor_mob)
->>>>>>> 514ed5f0af4672e146dcebbf9cb9313490de48a5
 
 /datum/game_mode/proc/assign_exchange_role(var/datum/mind/owner)
 	//set faction
