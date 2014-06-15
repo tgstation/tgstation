@@ -85,8 +85,7 @@
 			A powerful chemotherapy agent <br><br>\
 			1 part Arithrazine<br>\
 			1 part Diethylamine<br>\
-			1 part Unstable Mutagen<br>\
-			"
+			1 part Unstable Mutagen"
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/job/doctor
@@ -188,23 +187,6 @@
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
-
-/*
-/datum/job/oncologist
-	title = "Oncologist"
-
-	department_flag = MEDSCI
-	faction = "Station"
-
-	supervisors = "the chief medical officer"
-	selection_color = "#ffeef0"
-	idtype = /obj/item/weapon/card/id/medical
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_genetics)
-	minimal_access = list(access_medical, access_chemistry, access_surgery, access_genetics)
-
-	pdaslot=slot_belt
-	pdatype=/obj/item/device/pda/medical
-*/
 
 /datum/job/geneticist
 	title = "Geneticist"
