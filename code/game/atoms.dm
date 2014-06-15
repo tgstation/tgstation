@@ -50,28 +50,37 @@
 				M.take_organ_damage(20)
 
 /atom/proc/AddToProfiler()
-	// Memory usage profiling - N3X
-	if(type in type_instances)
-		type_instances[type]=type_instances[type]+1
+	// Memory usage profiling - N3X.
+	if (type in type_instances)
+		type_instances[type] = type_instances[type] + 1
 	else
-		type_instances[type]=1
+		type_instances[type] = 1
 
 /atom/proc/DeleteFromProfiler()
-	// Memory usage profiling - N3X
-	if(type in type_instances)
-		type_instances[type]=type_instances[type]-1
+	// Memory usage profiling - N3X.
+	if (type in type_instances)
+		type_instances[type] = type_instances[type] - 1
 	else
-		type_instances[type]=0
-		warning("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type at least adds to type_instances\[type\].")
+		type_instances[type] = 0
+		WARNING("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type at least adds to type_instances\[type\].")
 
-/atom/Del()
+/atom/Destroy()
 	// Only call when we're actually deleted.
 	DeleteFromProfiler()
 
-	..()
+	if (tag)
+		tag = null
 
 /atom/New()
+	. = ..()
 	AddToProfiler()
+
+/atom/Del()
+	// Pass to Destroy().
+	if (isnull(gc_destroyed))
+		Destroy()
+
+	..()
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null

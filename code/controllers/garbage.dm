@@ -1,6 +1,7 @@
 #define GC_COLLECTIONS_PER_TICK 250 // Was 100.
 #define GC_COLLECTION_TIMEOUT 100 // 10s.
 #define GC_FORCE_DEL_PER_TICK 20
+//#define GC_DEBUG
 
 var/global/datum/controller/garbage_collector/garbage
 
@@ -12,64 +13,94 @@ var/global/datum/controller/garbage_collector/garbage
 	var/dels_count = 0
 	var/hard_dels = 0
 
+/datum/controller/garbage_collector/proc/AddTrash(const/atom/movable/AM)
+	if (isnull(AM) || AM.gc_destroyed)
+		return
+
+	if (del_everything)
+		del AM
+		hard_dels++
+		dels_count++
+		return
+
+	AM.gc_destroyed = "Bye world!"
+	queue -= "\ref[AM]"
+	queue["\ref[AM]"] = world.timeofday
+
 /datum/controller/garbage_collector/proc/process()
-	var/dels = 0
-	var/queue_size = min(queue.len, GC_COLLECTIONS_PER_TICK)
+	var/collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
+	var/remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
+	var/remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
 
-	for (var/i = 0, ++i <= queue_size)
-		var/atom/movable/A = locate(queue[1])
+	while (queue.len && --remainingCollectionPerTick >= 0)
+		var/refID = queue[1]
 
-		if (A && A.gc_destroyed)
-			if (++dels <= GC_FORCE_DEL_PER_TICK)
+		if (queue[refID] > collectionTimeScope)
+			break
+
+		var/atom/A = locate(refID)
+
+		if (A)
+			if (remainingForceDelPerTick <= 0)
 				break
 
+			#ifdef GC_DEBUG
 			WARNING("gc process force delete [A.type]")
+			#endif
 
 			// Something's still referring to the qdel'd object. Kill it.
 			del A
+			remainingForceDelPerTick--
 			hard_dels++
 
 		queue.Cut(1, 2)
 		dels_count++
 
+#ifdef GC_DEBUG
+#undef GC_DEBUG
+#endif
+
 #undef GC_FORCE_DEL_PER_TICK
 #undef GC_COLLECTION_TIMEOUT
 #undef GC_COLLECTIONS_PER_TICK
 
-/datum/controller/garbage_collector/proc/AddTrash(const/atom/movable/A)
-	if (isnull(A))
-		return
-
-	if (del_everything)
-		del A
-		hard_dels++
-		dels_count++
-		return
-
-	queue.Add(A)
-
-/*
- * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable and derived types.
- */
-/proc/qdel(const/atom/movable/A)
-	if (isnull(A))
+/proc/qdel(const/O)
+	if (isnull(O))
 		return
 
 	if (isnull(garbage))
-		del A
+		del O
 		return
 
-	if (!istype(A))
-		WARNING("qdel() passed object of type [A.type]. qdel() can only handle /atom/movable derived types.")
-		del A
+	if (!istype(O, /datum))
+		del O
 		garbage.hard_dels++
 		garbage.dels_count++
 		return
 
-	// Let our friend know they're about to get fucked up.
-	A.Destroy()
+	var/datum/D = O
 
-	garbage.AddTrash(A)
+	if (isnull(D.gc_destroyed))
+		// Let our friend know they're about to get fucked up.
+		D.Destroy()
+
+		if (D)
+			if (isturf(D))
+				del D
+				return
+
+			garbage.AddTrash(D)
+
+/datum
+	// Garbage collection (qdel).
+	var/gc_destroyed
+
+/*
+ * Like Del(), but for qdel.
+ * Called BEFORE qdel moves shit.
+ */
+/datum/proc/Destroy()
+	del src
 
 /client/proc/qdel_toggle()
 	set name = "Toggle qdel Behavior"

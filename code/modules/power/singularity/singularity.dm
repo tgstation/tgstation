@@ -542,7 +542,7 @@ var/global/list/uneatable = list(
 			var/turf/T = A
 			T.ChangeTurf(/turf/space)
 
-/obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
+/obj/machinery/singularity/narsie/ex_act(severity) //No throwing bombs at it either. --NEO
 	return
 
 /obj/machinery/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
