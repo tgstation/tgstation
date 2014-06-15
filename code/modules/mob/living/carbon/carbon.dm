@@ -483,3 +483,7 @@ var/const/GALOSHES_DONT_HELP = 8
 
 /mob/living/carbon/fall(var/forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
+
+
+/mob/living/carbon/proc/assess_threat()
+	return
