@@ -1674,23 +1674,6 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 
 
 /mob/living/carbon/human/proc/Get_Cancer()
-	if(!(ishuman(src)))
-		return
-	var/obj/item/weapon/implant/cancer/imp = new(src)
-
-
-
-	if(imp.implanted(src))
-		imp.loc = src
-		imp.imp_in = src
-		imp.implanted = 1
-		var/mob/living/carbon/human/H = src
-		var/datum/organ/external/affected = H.get_organ(randorgan())
-		affected.implants += imp
-		imp.part = affected
-
-
-/*
 	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
 	O.imp = new /obj/item/weapon/implant/cancer(O)
 	if (!istype(src, /mob/living/carbon))
@@ -1708,8 +1691,6 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 			O.imp.part = affected
 
 	return
-*/
-
 
 /mob/living/carbon/human/proc/randorgan()
 	var/randorgan = pick("head","chest","l_arm","r_arm","l_hand","r_hand","groin","l_leg","r_leg","l_foot","r_foot")
