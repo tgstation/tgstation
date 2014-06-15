@@ -46,6 +46,7 @@
 /obj/item/weapon/paper/oncpamphlet
 	name = "oncology pamphlet"
 	icon_state = "pamphlet"
+	var/pcount = 0
 	info = "<b>Thank you Doctor, you've got lots of work to do!</b><br>\
 			Congratulations! If you're reading this, you have chosen a difficult path,\
 			but with a bit of careful consideration you will be in a position to save \
@@ -62,11 +63,30 @@
 			possible and your patients are depending on you.<br><br>\
 			Once the patient has undergone radiation treatment you may proceed with\
 			removal of the tumors, but it is possible for a patient to live with them\
-			if surgery is deemed too risky or if patient is low risk for relapse."
+			if surgery is deemed too risky or if patient is low risk for relapse.<br><br>\
+			Phalanximine is the chemotherapy agent you will use to treat your patients.\
+			30 units should be sufficient to raise your patient's rad level while keeping\
+			their blood toxins low. A follow up treatment of anti-toxin may be required.<br><br>\
+			There is a prescription tucked in this pamphlet to help assist your pharmacist."
+/obj/item/weapon/paper/oncpamphlet/attack_self(mob/M as mob)
+	if(pcount < 1)
+		new /obj/item/weapon/paper/oncscript(M.loc)
+		M << "<span class='notice'>A small piece of paper falls out of the pamphlet!</span>"
+		pcount += 1
+	..()
 
 /obj/item/weapon/paper/oncpamphlet/update_icon()
 	return
 
+/obj/item/weapon/paper/oncscript
+	name = "Phalanximine prescription"
+	icon_state = "paper_words"
+	info = "<b>Phalanximine</b><br>\
+			A powerful chemotherapy agent <br><br>\
+			1 part Arithrazine<br>\
+			1 part Diethylamine<br>\
+			1 part Unstable Mutagen<br>\
+			"
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/job/doctor
@@ -81,7 +101,7 @@
 	idtype = /obj/item/weapon/card/id/medical
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology)
-	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist")
+	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist","Oncologist")
 
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/medical
@@ -169,7 +189,7 @@
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
 
-
+/*
 /datum/job/oncologist
 	title = "Oncologist"
 
@@ -184,7 +204,7 @@
 
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/medical
-
+*/
 
 /datum/job/geneticist
 	title = "Geneticist"
