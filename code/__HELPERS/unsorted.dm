@@ -339,23 +339,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 		if(cmptext("ai",role))
 			if(isAI(src))
-				var/mob/living/silicon/ai/A = src
 				oldname = null//don't bother with the records update crap
-				//world << "<b>[newname] is the AI!</b>"
-				//world << sound('sound/AI/newAI.ogg')
-				// Set eyeobj name
-				if(A.eyeobj)
-					A.eyeobj.name = "[newname] (AI Eye)"
-
-				// Set ai pda name
-				if(A.aiPDA)
-					A.aiPDA.owner = newname
-					A.aiPDA.name = newname + " (" + A.aiPDA.ownjob + ")"
-
-				// Notify Cyborgs
-				for(var/mob/living/silicon/robot/Slave in A.connected_robots)
-					Slave.show_laws()
-
 				if(announce_ai)
 					world << "<b>AI unit [newname] online.</b>"
 
