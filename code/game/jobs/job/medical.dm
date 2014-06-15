@@ -17,6 +17,7 @@
 			access_keycard_auth, access_sec_doors, access_paramedic)
 	minimal_player_age = 7
 
+
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/heads/cmo
 
@@ -41,6 +42,53 @@
 
 
 
+/////////////////////////////////////////I know this is out of place...its here on a temp basis to help roll out oncology////////////////////////////////////////
+
+/obj/item/weapon/paper/oncpamphlet
+	name = "oncology pamphlet"
+	icon_state = "pamphlet"
+	var/pcount = 0
+	info = "<b>Thank you Doctor, you've got lots of work to do!</b><br>\
+			Congratulations! If you're reading this, you have chosen a difficult path,\
+			but with a bit of careful consideration you will be in a position to save \
+			many lives from the deadly disease that is cancer.<br><br>\
+			Cancer is an uncontrolled growth of malignant cells in the body which will\
+			show up in a body scan. As the body's systems shut down from the cancerous\
+			growths the patient will begin to cough.<br><br>\
+			Cancer develops in the body as a systemic mutation of healthy cells from\
+			prolonged exposure to high toxin levels. As it progresses, localized tumors\
+			delevop in the body which can lead to rapid mortality if left untreated.<br><br>\
+			The patient must be irratiated to a level of 50% while supressing the toxin\
+			levels in the blood. The patient must be kept in this state until systemic\
+			symptoms cease. This may seem like an impossible balancing act but it is\
+			possible and your patients are depending on you.<br><br>\
+			Once the patient has undergone radiation treatment you may proceed with\
+			removal of the tumors, but it is possible for a patient to live with them\
+			if surgery is deemed too risky or if patient is low risk for relapse.<br><br>\
+			Phalanximine is the chemotherapy agent you will use to treat your patients.\
+			30 units should be sufficient to raise your patient's rad level while keeping\
+			their blood toxins low. A follow up treatment of anti-toxin may be required.<br><br>\
+			There is a prescription tucked in this pamphlet to help assist your pharmacist."
+/obj/item/weapon/paper/oncpamphlet/attack_self(mob/M as mob)
+	if(pcount < 1)
+		new /obj/item/weapon/paper/oncscript(M.loc)
+		M << "<span class='notice'>A small piece of paper falls out of the pamphlet!</span>"
+		pcount += 1
+	..()
+
+/obj/item/weapon/paper/oncpamphlet/update_icon()
+	return
+
+/obj/item/weapon/paper/oncscript
+	name = "Phalanximine prescription"
+	icon_state = "paper_words"
+	info = "<b>Phalanximine</b><br>\
+			A powerful chemotherapy agent <br><br>\
+			1 part Arithrazine<br>\
+			1 part Diethylamine<br>\
+			1 part Unstable Mutagen"
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/job/doctor
 	title = "Medical Doctor"
 	flag = DOCTOR
@@ -53,7 +101,7 @@
 	idtype = /obj/item/weapon/card/id/medical
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology)
-	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist")
+	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist","Oncologist")
 
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/medical
@@ -81,6 +129,11 @@
 				if("Medical Doctor")
 					H.equip_or_collect(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 					H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
+				if("Oncologist")
+					H.equip_or_collect(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
+					H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/oncologist(H), slot_wear_suit)
+					H.equip_or_collect(new /obj/item/weapon/paper/oncpamphlet(H), slot_r_hand)
+
 				if("Nurse")
 					if(H.gender == FEMALE)
 						if(prob(50))
@@ -135,8 +188,6 @@
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
-
-
 
 /datum/job/geneticist
 	title = "Geneticist"
