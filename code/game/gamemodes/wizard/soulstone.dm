@@ -98,11 +98,6 @@
 			var/mob/living/carbon/T = target
 			var/obj/item/device/soulstone/C = src
 			if(T.client != null)
-				if(C.contents.len)
-					return 0
-				else
-					for(var/obj/item/W in T)
-						T.unEquip(W)
 				init_shade(C, T, U)
 				//qdel T		//Gib instead
 				return 1
