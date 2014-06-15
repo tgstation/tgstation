@@ -66,7 +66,7 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		if(!exchange_blue && traitors.len > 5) //Set up an exchange if there are enough traitors
+		if(!exchange_blue && traitors.len >= 6) //Set up an exchange if there are enough traitors
 			if(!exchange_red)
 				exchange_red = traitor
 			else
@@ -331,14 +331,14 @@
 
 	//Assign objectives
 	var/datum/objective/steal/exchange/exchange_objective = new
+	exchange_objective.set_faction(faction,((faction == "red") ? exchange_blue : exchange_red))
 	exchange_objective.owner = owner
-	exchange_objective.set_faction(faction,(faction == "red" ? exchange_blue : exchange_red))
 	owner.objectives += exchange_objective
 
 	if(prob(20))
-		var/datum/objective/steal/backstab/backstab_objective = new
-		backstab_objective.owner = owner
+		var/datum/objective/steal/exchange/backstab/backstab_objective = new
 		backstab_objective.set_faction(faction)
+		backstab_objective.owner = owner
 		owner.objectives += backstab_objective
 
 	forge_escape_objective(owner)

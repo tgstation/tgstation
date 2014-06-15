@@ -324,14 +324,14 @@ datum/objective/steal/special/find_target()
 
 datum/objective/steal/exchange
 	dangerrating = 10
-	var/faction //Exchange objectives: Which side are we on?
 
-datum/objective/steal/exchange/proc/set_faction(faction,target)
+datum/objective/steal/exchange/proc/set_faction(var/faction,var/otheragent)
+	target = otheragent
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_blue
 	else if(faction == "blue")
 		targetinfo = new/datum/objective_item/unique/docs_red
-	explanation_text = "Acquire [targetinfo.name] held by [src.target.current.real_name], the [src.target.assigned_role] and syndicate agent"
+	explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
 	steal_target = targetinfo.targetitem
 
 
@@ -343,10 +343,10 @@ datum/objective/steal/exchange/update_explanation_text()
 		explanation_text = "Free Objective"
 
 
-datum/objective/steal/backstab
+datum/objective/steal/exchange/backstab
 	dangerrating = 3
 
-datum/objective/steal/backstab/proc/set_faction(faction)
+datum/objective/steal/exchange/backstab/set_faction(var/faction)
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_red
 	else if(faction == "blue")
