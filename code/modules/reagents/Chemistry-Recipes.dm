@@ -118,6 +118,14 @@ datum
 			result = "phalanximine"
 			required_reagents = list("arithrazine" = 1, "diethylamine" = 1, "mutagen" = 1)
 			result_amount = 1
+/*
+		phalanximine
+			name = "Phalanximine"
+			id = "phalanximine"
+			result = "phalanximine"
+			required_reagents = list("radium" = 1, "water" = 1, "sugar" = 1) //easy test recipe
+			result_amount = 1
+*/
 
 		mutagen
 			name = "Unstable mutagen"
