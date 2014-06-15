@@ -19,14 +19,12 @@
 	var/scanmode = 0
 	var/senset = 0
 
-
 	req_access = list(access_security)
-
-
 
 /obj/machinery/detector/proc/assess_perp(mob/living/carbon/human/perp as mob)
 	var/threatcount = 0
-
+	if(!(istype(perp, /mob/living/carbon)))
+		return
 	if(src.emagged == 2) return 10
 
 	if(!src.allowed(perp))
@@ -43,40 +41,40 @@
 			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/practice))
 				threatcount += 4
 
-		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
-			if(!istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/practice))
+		if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee))
+			if(!istype(perp.belt, /obj/item/weapon/gun/energy/laser/bluetag) \
+			&& !istype(perp.belt, /obj/item/weapon/gun/energy/laser/redtag) \
+			&& !istype(perp.belt, /obj/item/weapon/gun/energy/laser/practice))
 				threatcount += 2
 
-		if(istype(perp:back, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
-			if(!istype(perp:back, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp:back, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp:back, /obj/item/weapon/gun/energy/laser/practice))
+		if(istype(perp.back, /obj/item/weapon/gun) || istype(perp.back, /obj/item/weapon/melee))
+			if(!istype(perp.back, /obj/item/weapon/gun/energy/laser/bluetag) \
+			&& !istype(perp.back, /obj/item/weapon/gun/energy/laser/redtag) \
+			&& !istype(perp.back, /obj/item/weapon/gun/energy/laser/practice))
 				threatcount += 2
 
 
 
-		if(istype(perp:s_store, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
-			if(!istype(perp:s_store, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp:s_store, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp:s_store, /obj/item/weapon/gun/energy/laser/practice))
+		if(istype(perp.s_store, /obj/item/weapon/gun) || istype(perp.s_store, /obj/item/weapon/melee))
+			if(!istype(perp.s_store, /obj/item/weapon/gun/energy/laser/bluetag) \
+			&& !istype(perp.s_store, /obj/item/weapon/gun/energy/laser/redtag) \
+			&& !istype(perp.s_store, /obj/item/weapon/gun/energy/laser/practice))
 				threatcount += 2
 
 
 		if(scanmode)
 			//
-			if(istype(perp:l_store, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
-				if(!istype(perp:l_store, /obj/item/weapon/gun/energy/laser/bluetag) \
-				&& !istype(perp:l_store, /obj/item/weapon/gun/energy/laser/redtag) \
-				&& !istype(perp:l_store, /obj/item/weapon/gun/energy/laser/practice))
+			if(istype(perp.l_store, /obj/item/weapon/gun) || istype(perp.l_store, /obj/item/weapon/melee))
+				if(!istype(perp.l_store, /obj/item/weapon/gun/energy/laser/bluetag) \
+				&& !istype(perp.l_store, /obj/item/weapon/gun/energy/laser/redtag) \
+				&& !istype(perp.l_store, /obj/item/weapon/gun/energy/laser/practice))
 					threatcount += 2
 
 
-			if(istype(perp:r_store, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
-				if(!istype(perp:r_store, /obj/item/weapon/gun/energy/laser/bluetag) \
-				&& !istype(perp:r_store, /obj/item/weapon/gun/energy/laser/redtag) \
-				&& !istype(perp:r_store, /obj/item/weapon/gun/energy/laser/practice))
+			if(istype(perp.r_store, /obj/item/weapon/gun) || istype(perp.r_store, /obj/item/weapon/melee))
+				if(!istype(perp.r_store, /obj/item/weapon/gun/energy/laser/bluetag) \
+				&& !istype(perp.r_store, /obj/item/weapon/gun/energy/laser/redtag) \
+				&& !istype(perp.r_store, /obj/item/weapon/gun/energy/laser/practice))
 					threatcount += 2
 
 
@@ -87,7 +85,7 @@
 							//
 				for(var/things in B.contents)
 					//
-					if(istype(things, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
+					if(istype(things, /obj/item/weapon/gun) || istype(things, /obj/item/weapon/melee))
 						if(!istype(things, /obj/item/weapon/gun/energy/laser/bluetag) \
 						&& !istype(things, /obj/item/weapon/gun/energy/laser/redtag) \
 						&& !istype(things, /obj/item/weapon/gun/energy/laser/practice))
@@ -99,16 +97,16 @@
 
 		if(idmode)
 			//
-			if(!perp:wear_id)
+			if(!perp.wear_id)
 				threatcount += 4
 
 		else
 
-			if(!perp:wear_id)
+			if(!perp.wear_id)
 				threatcount += 2
 
 
-		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
+		if(istype(perp.wear_suit, /obj/item/clothing/suit/wizrobe))
 			threatcount += 2
 
 		if(perp.dna && perp.dna.mutantrace && perp.dna.mutantrace != "none")
