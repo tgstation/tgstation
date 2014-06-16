@@ -51,7 +51,6 @@ var/global/datum/controller/garbage_collector/garbage
 			WARNING("gc process force delete [A.type]")
 			#endif
 
-			sleep(-1)
 			del A
 
 			remainingForceDelPerTick--
@@ -99,6 +98,10 @@ var/global/datum/controller/garbage_collector/garbage
 	// Garbage collection (qdel).
 	var/gcDestroyed
 	var/timeDestroyed
+
+/datum/Del()
+	sleep(-1)
+	..()
 
 /*
  * Like Del(), but for qdel.
