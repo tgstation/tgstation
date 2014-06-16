@@ -14,7 +14,7 @@ var/global/datum/controller/garbage_collector/garbage
 	var/hard_dels = 0
 
 /datum/controller/garbage_collector/proc/AddTrash(const/atom/movable/AM)
-	if (isnull(AM) || AM.gc_destroyed)
+	if (isnull(AM))
 		return
 
 	if (del_everything)
@@ -23,9 +23,10 @@ var/global/datum/controller/garbage_collector/garbage
 		dels_count++
 		return
 
-	AM.gc_destroyed = "Bye world!"
+	var/timeofday = world.timeofday
+	AM.timeDestroyed = timeofday
 	queue -= "\ref[AM]"
-	queue["\ref[AM]"] = world.timeofday
+	queue["\ref[AM]"] = timeofday
 
 /datum/controller/garbage_collector/proc/process()
 	var/collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
@@ -34,13 +35,14 @@ var/global/datum/controller/garbage_collector/garbage
 
 	while (queue.len && --remainingCollectionPerTick >= 0)
 		var/refID = queue[1]
+		var/destroyedAtTime = queue[refID]
 
-		if (queue[refID] > collectionTimeScope)
+		if (destroyedAtTime > collectionTimeScope)
 			break
 
 		var/atom/A = locate(refID)
 
-		if (A)
+		if (A && A.timeDestroyed == destroyedAtTime)
 			if (remainingForceDelPerTick <= 0)
 				break
 
@@ -80,7 +82,7 @@ var/global/datum/controller/garbage_collector/garbage
 
 	var/datum/D = O
 
-	if (isnull(D.gc_destroyed))
+	if (isnull(D.gcDestroyed))
 		// Let our friend know they're about to get fucked up.
 		D.Destroy()
 
@@ -93,7 +95,8 @@ var/global/datum/controller/garbage_collector/garbage
 
 /datum
 	// Garbage collection (qdel).
-	var/gc_destroyed
+	var/gcDestroyed
+	var/timeDestroyed
 
 /*
  * Like Del(), but for qdel.

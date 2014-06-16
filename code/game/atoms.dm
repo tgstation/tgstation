@@ -71,13 +71,15 @@
 	if (tag)
 		tag = null
 
+	gcDestroyed = "Bye world!"
+
 /atom/New()
 	. = ..()
 	AddToProfiler()
 
 /atom/Del()
 	// Pass to Destroy().
-	if (isnull(gc_destroyed))
+	if (isnull(gcDestroyed))
 		Destroy()
 
 	..()
