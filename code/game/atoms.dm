@@ -68,8 +68,12 @@
 	// Only call when we're actually deleted.
 	DeleteFromProfiler()
 
+	//world << "[type] - [tag] - [x].[y].[z]"
+
+	// Idea by ChuckTheSheep to make the object even more unreferencable.
+	invisibility = 101
+
 	tag = null
-	invisibility = 101 // Idea by ChuckTheSheep to make the object even more unreferencable.
 	gcDestroyed = "Bye world!"
 
 /atom/New()

@@ -5,14 +5,13 @@
 	icon_closed = "blue"
 
 /obj/structure/closet/wardrobe/New()
+	. = ..()
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/brown(src)
-	return
-
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"

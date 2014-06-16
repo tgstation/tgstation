@@ -412,6 +412,7 @@
 		remove_from_storage(I, T)
 
 /obj/item/weapon/storage/New()
+	. = ..()
 
 	if(allow_quick_empty)
 		verbs += /obj/item/weapon/storage/verb/quick_empty
@@ -434,7 +435,6 @@
 	src.closer.icon_state = "x"
 	src.closer.layer = 20
 	orient2hud()
-	return
 
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
