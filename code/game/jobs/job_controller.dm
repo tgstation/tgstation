@@ -189,9 +189,6 @@ var/global/datum/controller/occupations/job_master
 	Debug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)	return 0
 
-	//Scale number of open security officer slots to population
-	setup_officer_positions()
-
 	//Shuffle players and jobs
 	unassigned = shuffle(unassigned)
 
@@ -310,24 +307,6 @@ var/global/datum/controller/occupations/job_master
 	H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
 	return 1
 
-
-/datum/controller/occupations/proc/setup_officer_positions()
-	var/officer_positions = 5 //Number of open security officer positions at round start
-
-	if(config.security_scaling_coeff > 0)
-		officer_positions = min(12, max(5, (unassigned.len/config.security_scaling_coeff)))
-		var/datum/job/J = job_master.GetJob("Security Officer")
-		if(J  || J.spawn_positions > 0)
-			Debug("Setting open security officer positions to [officer_positions]")
-			J.total_positions = officer_positions
-			J.spawn_positions = officer_positions
-	for(var/i=officer_positions-5, i>1, i--) //Spawn some extra lockers if we don't have enough
-		if(secequipment.len)
-			var/spawnloc = secequipment[1]
-			new /obj/structure/closet/secure_closet/security(spawnloc)
-			secequipment -= spawnloc
-		else //We ran out of spare locker spawns!
-			break
 
 /datum/controller/occupations/proc/LoadJobs(jobsfile) //ran during round setup, reads info from jobs.txt -- Urist
 	if(!config.load_jobs_from_txt)

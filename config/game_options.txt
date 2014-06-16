@@ -114,11 +114,6 @@ SHUTTLE_REFUEL_DELAY 12000
 TRAITOR_SCALING_COEFF 6
 CHANGELING_SCALING_COEFF 7
 
-## Variables calculate how number of open security officer positions will scale to population.
-## Used as (Officers = Population / Coeff)
-## Set to 0 to disable scaling and use default numbers instead.
-SECURITY_SCALING_COEFF 8
-
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
 #PROTECT_ROLES_FROM_ANTAGONIST
