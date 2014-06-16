@@ -868,7 +868,6 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
-	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
 	if(!istype(usr, /mob/living/silicon))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
@@ -879,12 +878,16 @@ About the new airlock wires panel:
 	src.add_fingerprint(user)
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
-		if(W.remove_fuel(0,user))
-			if(!src.welded)
-				src.welded = 1
-			else
-				src.welded = null
-			src.update_icon()
+		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>"
+		if(do_after(user,40,5,1))
+			if(W.remove_fuel(0,user))
+				playsound(loc, 'sound/items/welder.ogg', 50, 1, -6)
+				if(!src.welded)
+					src.welded = 1
+				else
+					src.welded = null
+				user << "<span class='notice'>You [welded ? "welded the airlock shut":"unwelded the airlock"]</span>"
+				src.update_icon()
 			return
 		else
 			return
