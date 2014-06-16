@@ -76,6 +76,7 @@
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
+	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
@@ -344,6 +345,8 @@
 					config.traitor_scaling_coeff	= text2num(value)
 				if("changeling_scaling_coeff")
 					config.changeling_scaling_coeff	= text2num(value)
+				if("security_scaling_coeff")
+					config.security_scaling_coeff	= text2num(value)
 				if("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
