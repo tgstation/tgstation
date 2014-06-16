@@ -42,6 +42,7 @@ var/global/datum/controller/garbage_collector/garbage
 
 		var/atom/A = locate(refID)
 
+		// Something's still referring to the qdel'd object. Kill it.
 		if (A && A.timeDestroyed == destroyedAtTime)
 			if (remainingForceDelPerTick <= 0)
 				break
@@ -50,8 +51,9 @@ var/global/datum/controller/garbage_collector/garbage
 			WARNING("gc process force delete [A.type]")
 			#endif
 
-			// Something's still referring to the qdel'd object. Kill it.
+			sleep(-1)
 			del A
+
 			remainingForceDelPerTick--
 			hard_dels++
 
