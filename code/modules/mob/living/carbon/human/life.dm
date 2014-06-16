@@ -53,6 +53,7 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 	var/temperature_alert = 0
 	var/in_stasis = 0
 	var/do_deferred_species_setup=0
+	var/havecancer = 0
 
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
@@ -1494,6 +1495,22 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		if(!stat)
 			if (getToxLoss() >= 45 && nutrition > 20)
 				vomit()
+		if((air_master.current_cycle % 3) == 0)
+			if (getToxLoss() >= 20)
+				var/chancesick = (getToxLoss() / 4)
+				if(havecancer == 0)
+					if(prob(chancesick))
+						havecancer = 1
+			if(havecancer)
+				if(prob(10))
+					Get_Cancer()
+				if(prob(20))
+					emote("cough")
+				if(src.radiation >= 50)
+					havecancer = 0
+					src.h_style = "Bald"
+					src.f_style = "Shaved"
+					src.update_hair()
 
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
@@ -1656,6 +1673,41 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 					break
 
 		return temp
+
+
+
+/mob/living/carbon/human/proc/Get_Cancer()
+	if(!(ishuman(src)))
+		return
+	var/obj/item/weapon/implant/cancer/imp = new(src)
+
+
+
+	if(imp.implanted(src))
+		imp.loc = src
+		imp.imp_in = src
+		imp.implanted = 1
+		var/mob/living/carbon/human/H = src
+		var/datum/organ/external/affected = H.get_organ(randorgan())
+		affected.implants += imp
+		imp.part = affected
+
+	return
+
+
+
+/mob/living/carbon/human/proc/randorgan()
+	var/randorgan = pick("head","chest","l_arm","r_arm","l_hand","r_hand","groin","l_leg","r_leg","l_foot","r_foot")
+	//var/randorgan = pick("head","chest","groin")
+	return randorgan
+
+
+
+
+
+
+
+
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
