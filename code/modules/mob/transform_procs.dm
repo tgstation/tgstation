@@ -257,7 +257,7 @@
 
 	O.job = "AI"
 
-	O.rename_self("ai",1, 1)
+	O.rename_self("ai",1)
 	. = O
 	qdel(src)
 	return
