@@ -1704,7 +1704,7 @@
 			if("goblob")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BL")
-				message_admins("[key_name_admin(usr)] has spawned blob", 1)
+				message_admins("[key_name_admin(usr)] has spawned a minor blob", 1)
 				E = new /datum/round_event/blob()
 			if("aliens")
 				feedback_inc("admin_secrets_fun_used",1)
