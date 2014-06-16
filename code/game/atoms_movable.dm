@@ -18,9 +18,6 @@
 
 	var/area/areaMaster
 
-	// Garbage collection (qdel).
-	var/gc_destroyed
-
 /atom/movable/Move()
 	var/atom/A = src.loc
 	. = ..()
@@ -189,21 +186,10 @@
 		return src.master.attack_hand(a, b, c)
 	return
 
-/atom/movable/Del()
-	// Pass to Destroy().
-	if (isnull(gc_destroyed))
-		Destroy()
-
-	..()
-
-/*
- * Like Del(), but for qdel.
- * Called BEFORE qdel moves shit.
- */
-/atom/movable/proc/Destroy()
-	gc_destroyed = world.timeofday
+/atom/movable/Destroy()
 	areaMaster = null
 	loc = null
+	..()
 
 /////////////////////////////
 // SINGULOTH PULL REFACTOR
