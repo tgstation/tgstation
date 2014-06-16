@@ -210,7 +210,7 @@ a {
 	src.machine = O
 	if(istype(O))
 		O.in_use = 1
-		O._using += src
+		O._using |= list(src) // TODO: Come up with a better fix.
 
 /obj/item/proc/updateSelfDialog()
 	var/mob/M = src.loc

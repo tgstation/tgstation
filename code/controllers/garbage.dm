@@ -43,7 +43,7 @@ var/global/datum/controller/garbage_collector/garbage
 		var/atom/A = locate(refID)
 
 		// Something's still referring to the qdel'd object. Kill it.
-		if (A && A.timeDestroyed == destroyedAtTime)
+		if (A) //&& A.timeDestroyed == destroyedAtTime) uncomment if many things at deleted randomly.
 			if (remainingForceDelPerTick <= 0)
 				break
 

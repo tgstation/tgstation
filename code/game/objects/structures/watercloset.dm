@@ -13,6 +13,7 @@
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
 /obj/structure/toilet/New()
+	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
 

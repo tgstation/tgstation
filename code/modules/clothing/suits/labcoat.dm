@@ -11,9 +11,6 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
 	species_fit = list("Vox")
 
-	New()
-		..()
-		update_icon()
 
 
 	update_icon()
@@ -37,6 +34,10 @@
 		open=!open
 		update_icon()
 		usr.update_inv_wear_suit()	//so our overlays update
+
+/obj/item/clothing/suit/storage/labcoat/New()
+	. = ..()
+	update_icon()
 
 /obj/item/clothing/suit/storage/labcoat/cmo
 	name = "chief medical officer's labcoat"
