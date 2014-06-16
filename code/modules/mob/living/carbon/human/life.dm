@@ -1689,6 +1689,8 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		imp.implanted = 1
 		var/mob/living/carbon/human/H = src
 		var/datum/organ/external/affected = H.get_organ(randorgan())
+		if(affected.implants.len >= 1)
+			return
 		affected.implants += imp
 		imp.part = affected
 

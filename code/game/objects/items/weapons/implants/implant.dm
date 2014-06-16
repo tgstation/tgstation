@@ -548,7 +548,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 					source:havecancer = 1
 
 	activate(mob/source as mob)
-		var/thisdmg = pick(1, 5)
+		var/thisdmg = pick(1, 5, 10)
 		if(pick(0,1))
 			if (part)
 				part.take_damage(brute = thisdmg, used_weapon = "cancer")
@@ -557,6 +557,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				M.apply_damage(thisdmg,BRUTE)
 		else
 			var/mob/living/M = imp_in
+			thisdmg = pick(1, 3)
 			M.apply_damage(thisdmg,CLONE)
 
 		if(prob(20))
