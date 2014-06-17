@@ -49,24 +49,24 @@
 	icon_state = "pamphlet"
 	var/pcount = 0
 	info = "<b>Thank you Doctor, you've got lots of work to do!</b><br>\
-			Congratulations! If you're reading this, you have chosen a difficult path,\
-			but with a bit of careful consideration you will be in a position to save \
+			Congratulations! If you're reading this, you have chosen a difficult path,<br>\
+			but with a bit of careful consideration you will be in a position to save <br>\
 			many lives from the deadly disease that is cancer.<br><br>\
-			Cancer is an uncontrolled growth of malignant cells in the body which will\
-			show up in a body scan. As the body's systems shut down from the cancerous\
+			Cancer is an uncontrolled growth of malignant cells in the body which will<br>\
+			show up in a body scan. As the body's systems shut down from the cancerous<br>\
 			growths the patient will begin to cough.<br><br>\
-			Cancer develops in the body as a systemic mutation of healthy cells from\
-			prolonged exposure to high toxin levels. As it progresses, localized tumors\
+			Cancer develops in the body as a systemic mutation of healthy cells from<br>\
+			prolonged exposure to high toxin levels. As it progresses, localized tumors<br>\
 			delevop in the body which can lead to rapid mortality if left untreated.<br><br>\
-			The patient must be irratiated to a level of 50% while supressing the toxin\
-			levels in the blood. The patient must be kept in this state until systemic\
-			symptoms cease. This may seem like an impossible balancing act but it is\
+			The patient must be irratiated to a level of 50% while supressing the toxin<br>\
+			levels in the blood. The patient must be kept in this state until systemic<br>\
+			symptoms cease. This may seem like an impossible balancing act but it is<br>\
 			possible and your patients are depending on you.<br><br>\
-			Once the patient has undergone radiation treatment you may proceed with\
-			removal of the tumors, but it is possible for a patient to live with them\
+			Once the patient has undergone radiation treatment you may proceed with<br>\
+			removal of the tumors, but it is possible for a patient to live with them<br>\
 			if surgery is deemed too risky or if patient is low risk for relapse.<br><br>\
-			Phalanximine is the chemotherapy agent you will use to treat your patients.\
-			30 units should be sufficient to raise your patient's rad level while keeping\
+			Phalanximine is the chemotherapy agent you will use to treat your patients.<br>\
+			30 units should be sufficient to raise your patient's rad level while keeping<br>\
 			their blood toxins low. A follow up treatment of anti-toxin may be required.<br><br>\
 			There is a prescription tucked in this pamphlet to help assist your pharmacist."
 /obj/item/weapon/paper/oncpamphlet/attack_self(mob/M as mob)
