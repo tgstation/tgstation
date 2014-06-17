@@ -54,7 +54,7 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 	var/in_stasis = 0
 	var/do_deferred_species_setup=0
 	var/havecancer = 0
-
+	var/cancerfactor = 6
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
 	var/mut_update=0
@@ -1496,8 +1496,9 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 			if (getToxLoss() >= 45 && nutrition > 20)
 				vomit()
 		if((air_master.current_cycle % 3) == 0)
-			if (getToxLoss() >= 40)
-				var/chancesick = (getToxLoss() / 5)
+
+			if (getToxLoss() >= (cancerfactor * 10))
+				var/chancesick = (getToxLoss() / cancerfactor)
 				if(havecancer == 0)
 					if(prob(chancesick))
 						havecancer = 1
