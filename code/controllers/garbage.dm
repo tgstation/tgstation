@@ -51,7 +51,7 @@ var/global/datum/controller/garbage_collector/garbage
 			WARNING("gc process force delete [A.type]")
 			#endif
 
-			sleep (-1)
+			sleep(-1)
 			del A
 
 			remainingForceDelPerTick--
