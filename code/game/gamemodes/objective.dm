@@ -212,7 +212,7 @@ datum/objective/escape/check_completion()
 	if(!location)
 		return 0
 
-	if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
+	if(istype(location, /turf/simulated/floor/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
 	var/area/check_area = location.loc

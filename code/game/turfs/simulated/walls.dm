@@ -12,8 +12,12 @@
 
 	var/walltype = "metal"
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
+	var/can_dismantle = 1
+	var/uses_smooth_wall = 1
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
+	if(!can_dismantle)
+		return
 	var/newgirder = null
 	if(istype(src,/turf/simulated/wall/r_wall))
 		if(!devastated)

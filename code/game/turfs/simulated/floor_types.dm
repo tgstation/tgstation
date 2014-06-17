@@ -41,6 +41,7 @@
 
 /turf/simulated/wall/vault
 	icon_state = "rockvault"
+	uses_smooth_wall = 0
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
@@ -104,6 +105,10 @@
 		..()
 		name = "plating"
 
+/turf/simulated/floor/plating/shuttle
+	name = "plating"
+	icon_state = "plating"
+
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
@@ -112,33 +117,25 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
 
-
-/turf/simulated/shuttle
-	name = "shuttle"
+/turf/simulated/floor/shuttle
+	name = "floor"
+	icon_state = "floor"
 	icon = 'icons/turf/shuttle.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 	layer = 2
 
-/turf/simulated/shuttle/wall
-	name = "wall"
-	icon_state = "wall1"
-	opacity = 1
-	density = 1
-	blocks_air = 1
-
-/turf/simulated/shuttle/floor
-	name = "floor"
-	icon_state = "floor"
-
-/turf/simulated/shuttle/plating
-	name = "plating"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "plating"
-
-/turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
+/turf/simulated/floor/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
 	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
 	icon_state = "floor4"
+
+/turf/simulated/wall/shuttle
+	icon = 'icons/turf/shuttle.dmi'
+	name = "wall"
+	icon_state = "wall1"
+	hardness = 0
+	can_dismantle = 0
+	uses_smooth_wall = 0
 
 /turf/simulated/floor/beach
 	name = "Beach"
