@@ -114,6 +114,10 @@ var/global/datum/controller/garbage_collector/garbage
 /datum/proc/Destroy()
 	del src
 
+/datum/controller/proc/Destroy()
+	tag = null
+	..()
+
 /client/proc/qdel_toggle()
 	set name = "Toggle qdel Behavior"
 	set desc = "Toggle qdel usage between normal and force del()."
