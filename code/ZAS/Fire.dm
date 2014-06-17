@@ -58,14 +58,16 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 /obj/fire/process()
 	. = 1
 
-	//get location and check if it is in a proper ZAS zone
-	var/turf/simulated/S = loc
+	// Get location and check if it is in a proper ZAS zone.
+	var/turf/simulated/S = get_turf(loc)
 
-	if(!istype(S))
-		del src
+	if (!istype(S))
+		qdel(src)
+		return
 
-	if(!S.zone)
-		del src
+	if (isnull(S.zone))
+		qdel(src)
+		return
 
 	var/datum/gas_mixture/air_contents = S.return_air()
 	//get liquid fuels on the ground.
@@ -83,10 +85,10 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		if(fuel.moles < 0.1)
 			air_contents.trace_gases.Remove(fuel)
 
-	//check if there is something to combust
-	if(!air_contents.check_recombustability(liquid))
-		//del src
-		RemoveFire()
+	// Check if there is something to combust.
+	if (!air_contents.check_recombustability(liquid))
+		qdel(src)
+		return
 
 	//get a firelevel and set the icon
 	firelevel = air_contents.calculate_firelevel(liquid)
@@ -151,33 +153,16 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 
 /obj/fire/New(newLoc,fl)
-	..()
-
-	if(!istype(loc, /turf))
-		del src
-
+	. = ..()
 	dir = pick(cardinal)
 	SetLuminosity(3)
 	firelevel = fl
 	air_master.active_hotspots.Add(src)
 
-
 /obj/fire/Destroy()
-	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
-
-		loc = null
 	air_master.active_hotspots.Remove(src)
-
+	SetLuminosity(0)
 	..()
-
-/obj/fire/proc/RemoveFire()
-	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
-		loc = null
-	air_master.active_hotspots.Remove(src)
-
-
 
 turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
 turf/proc/apply_fire_protection()
