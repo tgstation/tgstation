@@ -76,18 +76,6 @@ proc/explosion_rec(turf/epicenter, power)
 /turf/simulated/mineral
 	explosion_resistance = 2
 
-/turf/simulated/shuttle/floor
-	explosion_resistance = 1
-
-/turf/simulated/shuttle/floor4
-	explosion_resistance = 1
-
-/turf/simulated/shuttle/plating
-	explosion_resistance = 1
-
-/turf/simulated/shuttle/wall
-	explosion_resistance = 5
-
 /turf/simulated/wall
 	explosion_resistance = 5
 

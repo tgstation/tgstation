@@ -12,8 +12,12 @@
 
 	var/walltype = "metal"
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
+	var/can_dismantle = 1
+	var/uses_smooth_wall = 1
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
+	if(!can_dismantle)
+		return
 	var/newgirder = null
 	if(istype(src,/turf/simulated/wall/r_wall))
 		if(!devastated)
@@ -156,16 +160,25 @@
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
 		if( istype(W, /obj/item/weapon/weldingtool) )
+			if(!can_dismantle)
+				return
+
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT.remove_fuel(0,user) )
 				thermitemelt(user)
 				return
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+			if(!can_dismantle)
+				return
+
 			thermitemelt(user)
 			return
 
 		else if( istype(W, /obj/item/weapon/melee/energy/blade) )
+			if(!can_dismantle)
+				return
+
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
 			EB.spark_system.start()
@@ -182,6 +195,9 @@
 	add_fingerprint(user)
 
 	if( istype(W, /obj/item/weapon/weldingtool) )
+		if(!can_dismantle)
+			return
+
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating.</span>"
@@ -198,6 +214,8 @@
 			return
 
 	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+		if(!can_dismantle)
+			return
 
 		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -216,6 +234,8 @@
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+		if(!can_dismantle)
+			return
 
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 
@@ -232,6 +252,9 @@
 		return
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
+		if(!can_dismantle)
+			return
+
 		var/obj/item/weapon/melee/energy/blade/EB = W
 
 		EB.spark_system.start()

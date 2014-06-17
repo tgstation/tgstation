@@ -79,7 +79,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	for (var/mob/O in hearers(src, null))
 		O.show_message("CLANG", 2)
 
-	if(istype(clong, /turf/unsimulated) || istype(clong, /turf/simulated/shuttle)) //Unstoppable force meets immovable object
+	if(istype(clong, /turf/unsimulated) || istype(clong, /turf/simulated/floor/shuttle) || istype(clong, /turf/simulated/wall/shuttle)) //Unstoppable force meets immovable object
 		explosion(src.loc, 4, 5, 6, 7, 0)
 		if(src)
 			qdel(src)

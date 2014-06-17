@@ -67,7 +67,7 @@
 		//spawn some stuff as reward
 		var/area/shuttle_at = locate(SUPPLY_DOCK_AREATYPE)
 		var/list/empty_shuttle_turfs = list()
-		for(var/turf/simulated/shuttle/T in shuttle_at)
+		for(var/turf/simulated/floor/shuttle/T in shuttle_at)
 			if(T.density)
 				continue
 			empty_shuttle_turfs.Add(T)
