@@ -68,9 +68,8 @@
 	// Only call when we're actually deleted.
 	DeleteFromProfiler()
 
-	if (tag)
-		tag = null
-
+	tag = null
+	invisibility = 101 // Idea by ChuckTheSheep to make the object even more unreferencable.
 	gcDestroyed = "Bye world!"
 
 /atom/New()
