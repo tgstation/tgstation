@@ -110,6 +110,7 @@ datum/mind
 				changeling = null
 		special_role = null
 		remove_objectives()
+		remove_antag_equip()
 
 	proc/remove_traitor()
 		if(src in ticker.mode.traitors)
@@ -120,6 +121,7 @@ datum/mind
 				A.show_laws()
 		special_role = null
 		remove_objectives()
+		remove_antag_equip()
 
 	proc/remove_nukeop()
 		if(src in ticker.mode.syndicates)
@@ -127,6 +129,7 @@ datum/mind
 			ticker.mode.update_synd_icons_removed(src)
 		special_role = null
 		remove_objectives()
+		remove_antag_equip()
 
 	proc/remove_wizard()
 		if(src in ticker.mode.wizards)
@@ -134,6 +137,7 @@ datum/mind
 			current.spellremove(current)
 		special_role = null
 		remove_objectives()
+		remove_antag_equip()
 
 	proc/remove_cultist()
 		if(src in ticker.mode.cult)
@@ -144,6 +148,7 @@ datum/mind
 				cult.memorize_cult_objectives(src)
 		special_role = null
 		remove_objectives()
+		remove_antag_equip()
 
 	proc/remove_rev()
 		if(src in ticker.mode.revolutionaries)
@@ -154,6 +159,7 @@ datum/mind
 			ticker.mode.update_rev_icons_removed(src)
 		special_role = null
 		remove_objectives()
+		remove_antag_equip()
 
 	proc/remove_malf()
 		if(src in ticker.mode.malf_ai)
@@ -169,6 +175,7 @@ datum/mind
 			A.icon_state = "ai"
 		special_role = null
 		remove_objectives()
+		remove_antag_equip()
 
 	proc/remove_antag_equip()
 		var/list/Mob_Contents = current.get_contents()
