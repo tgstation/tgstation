@@ -67,7 +67,7 @@
 	if(..())
 		return
 	if(a_intent != "harm" || !ismob(A)) return
-	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
+	if(is_muzzled())
 		return
 	var/mob/living/carbon/ML = A
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")

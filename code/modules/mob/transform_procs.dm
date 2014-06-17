@@ -72,6 +72,8 @@
 	//transfer mind and delete old mob
 	if(mind)
 		mind.transfer_to(O)
+		if(O.mind.changeling)
+			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
 	updateappearance(O)
