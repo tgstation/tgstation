@@ -42,15 +42,17 @@ datum/controller/game_controller
 datum/controller/game_controller/New()
 	. = ..()
 
-	//There can be only one master_controller. Out with the old and in with the new.
-	if(master_controller != src)
+	// There can be only one master_controller. Out with the old and in with the new.
+	if (master_controller != src)
 		log_debug("Rebuilding Master Controller")
-		if(istype(master_controller))
+
+		if (istype(master_controller))
 			Recover()
-			del(master_controller)
+			qdel(master_controller)
+
 		master_controller = src
 
-	if(!job_master)
+	if (isnull(job_master))
 		job_master = new /datum/controller/occupations()
 		job_master.SetupOccupations()
 		job_master.LoadJobs("config/jobs.txt")

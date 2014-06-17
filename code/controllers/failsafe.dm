@@ -17,9 +17,9 @@ var/datum/controller/failsafe/Failsafe
 	if (Failsafe != src)
 		if (istype(Failsafe))
 			qdel(Failsafe)
-			return
 
-	Failsafe = src
+		Failsafe = src
+
 	Failsafe.process()
 
 /datum/controller/failsafe/proc/process()
