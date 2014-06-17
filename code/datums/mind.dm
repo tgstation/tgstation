@@ -29,6 +29,16 @@
 
 */
 
+
+var/const/Changeling = 1
+var/const/Traitor = 2
+var/const/NuclearOp = 3
+var/const/Wizard = 4
+var/const/Cultist = 5
+var/const/Rev = 6
+var/const/Malf = 7
+//remove_antag() constants
+
 datum/mind
 	var/key
 	var/name				//replaces mob/var/original_name
@@ -89,13 +99,13 @@ datum/mind
 	proc/wipe_memory()
 		memory = null
 
+
+/*
+	Removes antag type's references from a mind.
+	objectives, uplinks, powers etc are all handled.
+*/
+
 	proc/remove_antag(specified_antag)
-
-		/*
-		Removes antag type's references from a mind.
-		objectives, uplinks, powers etc are all handled.
-		*/
-
 		special_role = null
 
 		if(objectives.len)
@@ -104,49 +114,43 @@ datum/mind
 				qdel(O)
 
 		switch(specified_antag)
-			if("Changeling")
+			if(Changeling)
 				if(src in ticker.mode.changelings)
 					ticker.mode.changelings -= src
 					current.remove_changeling_powers()
 					if(changeling)
 						qdel(changeling)
 						changeling = null
-
-			if("Traitor")
+			if(Traitor)
 				if(src in ticker.mode.traitors)
 					ticker.mode.traitors -= src
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
 						A.set_zeroth_law("")
 						A.show_laws()
-
-			if("NuclearOp")
+			if(NuclearOp)
 				if(src in ticker.mode.syndicates)
 					ticker.mode.syndicates -= src
 					ticker.mode.update_synd_icons_removed(src)
-
-			if("Wizard")
+			if(Wizard)
 				if(src in ticker.mode.wizards)
 					ticker.mode.wizards -= src
 					current.spellremove(current)
-
-			if("Cultist")
+			if(Cultist)
 				if(src in ticker.mode.cult)
 					ticker.mode.cult -= src
 					ticker.mode.update_cult_icons_removed(src)
 					var/datum/game_mode/cult/cult = ticker.mode
 					if(istype(cult))
 						cult.memorize_cult_objectives(src)
-
-			if("Rev")
+			if(Rev)
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
 				if(src in ticker.mode.head_revolutionaries)
 					ticker.mode.head_revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-
-			if("Malf")
+			if(Malf)
 				if(src in ticker.mode.malf_ai)
 					ticker.mode.malf_ai -= src
 					var/mob/living/silicon/ai/A = current
@@ -170,13 +174,13 @@ datum/mind
 				R.traitor_frequency = 0.0
 
 	proc/remove_all_antag() //For the Lazy amongst us.
-		remove_antag("Changeling")
-		remove_antag("Traitor")
-		remove_antag("NuclearOp")
-		remove_antag("Wizard")
-		remove_antag("Cultist")
-		remove_antag("Rev")
-		remove_antag("Malf")
+		remove_antag(Changeling)
+		remove_antag(Traitor)
+		remove_antag(NuclearOp)
+		remove_antag(Wizard)
+		remove_antag(Cultist)
+		remove_antag(Rev)
+		remove_antag(Malf)
 
 	proc/show_memory(mob/recipient, window=1)
 		if(!recipient)
@@ -585,7 +589,7 @@ datum/mind
 		else if (href_list["revolution"])
 			switch(href_list["revolution"])
 				if("clear")
-					remove_antag("Rev")
+					remove_antag(Rev)
 					current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT>"
 					message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
 					log_admin("[key_name(usr)] has de-rev'ed [current].")
@@ -668,7 +672,7 @@ datum/mind
 		else if (href_list["cult"])
 			switch(href_list["cult"])
 				if("clear")
-					remove_antag("Cultist")
+					remove_antag(Cultist)
 					current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT>"
 					message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
 					log_admin("[key_name(usr)] has de-cult'ed [current].")
@@ -702,7 +706,7 @@ datum/mind
 		else if (href_list["wizard"])
 			switch(href_list["wizard"])
 				if("clear")
-					remove_antag("Wizard")
+					remove_antag(Wizard)
 					current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>"
 					log_admin("[key_name(usr)] has de-wizard'ed [current].")
 				if("wizard")
@@ -726,7 +730,7 @@ datum/mind
 		else if (href_list["changeling"])
 			switch(href_list["changeling"])
 				if("clear")
-					remove_antag("Changeling")
+					remove_antag(Changeling)
 					current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 					message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 					log_admin("[key_name(usr)] has de-changeling'ed [current].")
@@ -755,7 +759,7 @@ datum/mind
 		else if (href_list["nuclear"])
 			switch(href_list["nuclear"])
 				if("clear")
-					remove_antag("NuclearOp")
+					remove_antag(NuclearOp)
 					current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT>"
 					message_admins("[key_name_admin(usr)] has de-nuke op'ed [current].")
 					log_admin("[key_name(usr)] has de-nuke op'ed [current].")
@@ -804,7 +808,7 @@ datum/mind
 		else if (href_list["traitor"])
 			switch(href_list["traitor"])
 				if("clear")
-					remove_antag("Traitor")
+					remove_antag(Traitor)
 					current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>"
 					message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 					log_admin("[key_name(usr)] has de-traitor'ed [current].")
@@ -876,7 +880,7 @@ datum/mind
 		else if (href_list["silicon"])
 			switch(href_list["silicon"])
 				if("unmalf")
-					remove_antag("Malf")
+					remove_antag(Malf)
 					current << "\red <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT>"
 					message_admins("[key_name_admin(usr)] has de-malf'ed [current].")
 					log_admin("[key_name(usr)] has de-malf'ed [current].")
