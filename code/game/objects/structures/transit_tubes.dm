@@ -45,15 +45,11 @@
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
 
-
-
 /obj/structure/transit_tube_pod/Destroy()
 	for(var/atom/movable/AM in contents)
 		AM.loc = loc
 
 	..()
-
-
 
 // When destroyed by explosions, properly handle contents.
 obj/structure/ex_act(severity)
@@ -77,28 +73,21 @@ obj/structure/ex_act(severity)
 		if(3.0)
 			return
 
-
-
-/obj/structure/transit_tube_pod/New(loc)
-	..(loc)
-
+/obj/structure/transit_tube_pod/New()
+	. = ..()
 	air_contents.oxygen = MOLES_O2STANDARD * 2
 	air_contents.nitrogen = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
 	// Give auto tubes time to align before trying to start moving
-	spawn(5)
+	spawn (5)
 		follow_tube()
 
+/obj/structure/transit_tube/New()
+	. = ..()
 
-
-/obj/structure/transit_tube/New(loc)
-	..(loc)
-
-	if(tube_dirs == null)
+	if (tube_dirs == null)
 		init_dirs()
-
-
 
 /obj/structure/transit_tube/Bumped(mob/AM as mob|obj)
 	var/obj/structure/transit_tube/T = locate() in AM.loc

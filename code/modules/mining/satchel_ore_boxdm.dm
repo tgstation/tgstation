@@ -10,6 +10,7 @@
 	var/datum/materials/materials
 
 /obj/structure/ore_box/New()
+	. = ..()
 	materials = new
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
