@@ -54,7 +54,10 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 	var/in_stasis = 0
 	var/do_deferred_species_setup=0
 	var/havecancer = 0
-	var/cancerfactor = 6
+	var/cancerfactor = 3
+	var/exposedtimenow = 0
+	var/cancerwait = 2500
+	var/firstexposed = 0
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
 	var/mut_update=0
@@ -1498,10 +1501,17 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		if((air_master.current_cycle % 3) == 0)
 
 			if (getToxLoss() >= (cancerfactor * 10))
+				if(firstexposed == 0)
+					firstexposed = world.timeofday
 				var/chancesick = (getToxLoss() / cancerfactor)
 				if(havecancer == 0)
 					if(prob(chancesick))
-						havecancer = 1
+						exposedtimenow = world.timeofday
+						if((firstexposed + cancerwait) <= exposedtimenow)
+							havecancer = 1
+			else
+				if(firstexposed != 0)
+					firstexposed = 0
 			if(havecancer)
 				if(prob(10))
 					Get_Cancer()
@@ -1677,7 +1687,9 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 
 
 
+
 /mob/living/carbon/human/proc/Get_Cancer()
+
 	if(!(ishuman(src)))
 		return
 	var/obj/item/weapon/implant/cancer/imp = new(src)
@@ -1690,7 +1702,7 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		imp.implanted = 1
 		var/mob/living/carbon/human/H = src
 		var/datum/organ/external/affected = H.get_organ(randorgan())
-		if(affected.implants.len >= 1)
+		if(affected.implants.len >= 1 || affected == null)
 			return
 		affected.implants += imp
 		imp.part = affected

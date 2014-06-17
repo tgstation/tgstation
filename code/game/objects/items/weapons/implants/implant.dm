@@ -547,23 +547,24 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				if(prob(5))
 					source:havecancer = 1
 
-	activate(mob/source as mob)
-		var/thisdmg = pick(1, 5, 10)
-		if(pick(0,1))
-			if (part)
-				part.take_damage(brute = thisdmg, used_weapon = "cancer")
+	OnMobLife(mob/source as mob)
+		if(prob(2) && source:havecancer == 1)
+			var/thisdmg = pick(1, 5, 10)
+			if(pick(0,1))
+				if (part)
+					part.take_damage(brute = thisdmg, used_weapon = "cancer")
+				else
+					var/mob/living/M = imp_in
+					M.apply_damage(thisdmg,BRUTE)
 			else
 				var/mob/living/M = imp_in
-				M.apply_damage(thisdmg,BRUTE)
-		else
-			var/mob/living/M = imp_in
-			thisdmg = pick(1, 3)
-			M.apply_damage(thisdmg,CLONE)
+				thisdmg = pick(1, 3)
+				M.apply_damage(thisdmg,CLONE)
 
-		if(prob(20))
-			var/painword = pick("stabbing", "throbbing", "stinging", "sticking", "burning", "terrible")
-			source << "\red You feel a [painword] pain inside [part ? "your [part.display_name]" : "you"]!"
-	//
+			if(prob(30))
+				var/painword = pick("stabbing", "throbbing", "stinging", "sticking", "burning", "terrible")
+				source << "\red You feel a [painword] pain inside [part ? "your [part.display_name]" : "you"]!"
+
 
 
 
