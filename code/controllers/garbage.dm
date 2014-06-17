@@ -13,10 +13,6 @@ var/global/datum/controller/garbage_collector/garbage
 	var/dels_count = 0
 	var/hard_dels = 0
 
-/datum/controller/garbage_collector/New()
-	. = ..()
-	tag = "NO GC FOR ME"
-
 /datum/controller/garbage_collector/proc/AddTrash(const/atom/movable/AM)
 	if (isnull(AM))
 		return
@@ -102,6 +98,10 @@ var/global/datum/controller/garbage_collector/garbage
 	// Garbage collection (qdel).
 	var/gcDestroyed
 	var/timeDestroyed
+
+/datum/controller/New()
+	. = ..()
+	tag = "NO GC CONTROLLER"
 
 /datum/Del()
 	sleep(-1)
