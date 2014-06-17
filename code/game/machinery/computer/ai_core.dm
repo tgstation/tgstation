@@ -10,6 +10,7 @@
 	var/obj/item/device/mmi/brain = null
 
 /obj/structure/AIcore/New()
+	. = ..()
 	laws = new base_law_type
 
 /obj/structure/AIcore/attackby(obj/item/P as obj, mob/user as mob)

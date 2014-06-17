@@ -49,7 +49,6 @@ ________________________________________________________________________________
 		del(hologram.i_attached)//Delete it and the attached image.
 		del(hologram)
 	..()
-	return
 
 //Simply deletes all the attachments and self, killing all related procs.
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()

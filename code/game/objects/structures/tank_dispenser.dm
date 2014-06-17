@@ -19,6 +19,7 @@
 
 
 /obj/structure/dispenser/New()
+	. = ..()
 	update_icon()
 
 

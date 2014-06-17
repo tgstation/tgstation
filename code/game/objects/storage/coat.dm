@@ -197,19 +197,18 @@
 	return
 
 /obj/item/clothing/suit/storage/New()
-
-	src.boxes = new /obj/screen/storage(  )
-	src.boxes.name = "storage"
-	src.boxes.master = src
-	src.boxes.icon_state = "block"
-	src.boxes.screen_loc = "7,7 to 10,8"
-	src.boxes.layer = 19
-	src.closer = new /obj/screen/close(  )
-	src.closer.master = src
-	src.closer.icon_state = "x"
-	src.closer.layer = 20
+	. = ..()
+	boxes = new /obj/screen/storage(  )
+	boxes.name = "storage"
+	boxes.master = src
+	boxes.icon_state = "block"
+	boxes.screen_loc = "7,7 to 10,8"
+	boxes.layer = 19
+	closer = new /obj/screen/close(  )
+	closer.master = src
+	closer.icon_state = "x"
+	closer.layer = 20
 	orient2hud()
-	return
 
 /obj/item/clothing/suit/emp_act(severity)
 	if(!istype(src.loc, /mob/living))

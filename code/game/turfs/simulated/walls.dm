@@ -421,7 +421,7 @@
 		ReplaceWithLattice()
 	return 0
 
-/turf/simulated/wall/Destroy()
+/turf/simulated/wall/Del()
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
 	..()
 

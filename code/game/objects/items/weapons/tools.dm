@@ -57,6 +57,8 @@
 		return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
+	. = ..()
+
 	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
 		if ("red")
 			icon_state = "screwdriver2"
@@ -82,7 +84,6 @@
 
 	if (prob(75))
 		src.pixel_y = rand(0, 16)
-	return
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))	return ..()
@@ -112,6 +113,8 @@
 	attack_verb = list("pinched", "nipped")
 
 /obj/item/weapon/wirecutters/New()
+	. = ..()
+
 	if(prob(50))
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
@@ -159,13 +162,12 @@
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 
 /obj/item/weapon/weldingtool/New()
+	. = ..()
 //	var/random_fuel = min(rand(10,20),max_fuel)
 	var/datum/reagents/R = new/datum/reagents(max_fuel)
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
-	return
-
 
 /obj/item/weapon/weldingtool/examine()
 	set src in usr

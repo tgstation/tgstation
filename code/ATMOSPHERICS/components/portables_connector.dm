@@ -77,8 +77,6 @@
 		return null
 
 	Destroy()
-		loc = null
-
 		if(connected_device)
 			connected_device.disconnect()
 

@@ -27,9 +27,10 @@
 	attack_verb = list("attacked", "stabbed", "poked")
 
 /obj/item/weapon/kitchen/utensil/New()
+	. = ..()
+
 	if (prob(60))
 		src.pixel_y = rand(0, 4)
-	return
 
 /*
  * Spoons

@@ -205,11 +205,17 @@ a {
 		machine = null
 
 /mob/proc/set_machine(var/obj/O)
-	if(src.machine)
+	if (src.machine)
 		unset_machine()
+
 	src.machine = O
-	if(istype(O))
+
+	if (istype(O))
 		O.in_use = 1
+
+		if (src in O._using)
+			return
+
 		O._using += src
 
 /obj/item/proc/updateSelfDialog()

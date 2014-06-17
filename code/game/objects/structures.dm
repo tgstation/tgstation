@@ -23,3 +23,5 @@ obj/structure/meteorhit(obj/O as obj)
 /obj/structure/Destroy()
 	if(hascall(src, "unbuckle"))
 		src:unbuckle()
+
+	..()
