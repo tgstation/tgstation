@@ -35,6 +35,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/burnt = 0
 	var/mineral = "metal"
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
+	var/can_crowbar = 1
 
 
 /turf/simulated/floor/New()
@@ -433,6 +434,8 @@ turf/simulated/floor/proc/update_icon()
 				user << "\blue The lightbulb seems fine, no need to replace it."
 
 	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
+		if(!can_crowbar)
+			return
 		if(broken || burnt)
 			user << "\red You remove the broken plating."
 		else
