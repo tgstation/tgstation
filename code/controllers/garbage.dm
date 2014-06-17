@@ -13,10 +13,6 @@ var/global/datum/controller/garbage_collector/garbage
 	var/dels_count = 0
 	var/hard_dels = 0
 
-/datum/controller/garbage_collector/New()
-	. = ..()
-	tag = "NO GC FOR ME"
-
 /datum/controller/garbage_collector/proc/AddTrash(const/atom/movable/AM)
 	if (isnull(AM))
 		return
@@ -103,6 +99,10 @@ var/global/datum/controller/garbage_collector/garbage
 	var/gcDestroyed
 	var/timeDestroyed
 
+/datum/controller/New()
+	. = ..()
+	tag = "NO GC CONTROLLER"
+
 /datum/Del()
 	sleep(-1)
 	..()
@@ -113,6 +113,10 @@ var/global/datum/controller/garbage_collector/garbage
  */
 /datum/proc/Destroy()
 	del src
+
+/datum/controller/Destroy()
+	tag = null
+	..()
 
 /client/proc/qdel_toggle()
 	set name = "Toggle qdel Behavior"

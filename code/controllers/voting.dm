@@ -12,9 +12,12 @@ datum/controller/vote
 	var/list/current_votes = list()
 
 	New()
-		if(vote != src)
-			if(istype(vote))
-				del(vote)
+		. = ..()
+
+		if (vote != src)
+			if (istype(vote))
+				qdel(vote)
+
 			vote = src
 
 	proc/process()	//called by master_controller

@@ -11,13 +11,16 @@ var/datum/controller/failsafe/Failsafe
 	var/lighting_defcon = 0		//alert level for lighting controller.
 
 /datum/controller/failsafe/New()
-	//There can be only one failsafe. Out with the old in with the new (that way we can restart the Failsafe by spawning a new one)
-	if(Failsafe != src)
-		if(istype(Failsafe))
-			del(Failsafe)
-	Failsafe = src
-	Failsafe.process()
+	. = ..()
 
+	// There can be only one failsafe. Out with the old in with the new (that way we can restart the Failsafe by spawning a new one).
+	if (Failsafe != src)
+		if (istype(Failsafe))
+			qdel(Failsafe)
+
+		Failsafe = src
+
+	Failsafe.process()
 
 /datum/controller/failsafe/proc/process()
 	processing = 1
