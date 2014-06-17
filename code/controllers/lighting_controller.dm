@@ -22,7 +22,7 @@ datum/controller/lighting
 	lighting_states = max(0, length(icon_states(LIGHTING_ICON)) - 1)
 
 	if (lighting_controller != src)
-		if (istype(lighting_controller)
+		if (istype(lighting_controller))
 			Recover() // If we are replacing an existing lighting_controller (due to a crash) we attempt to preserve as much as we can.
 			qdel(lighting_controller)
 
