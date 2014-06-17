@@ -265,6 +265,20 @@
 	return
 
 
+/obj/structure/closet/wardrobe/oncology_white
+	name = "oncology wardrobe"
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/oncology_white/New()
+	new /obj/item/clothing/under/rank/medical(src)
+	new /obj/item/clothing/under/rank/medical(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/suit/storage/labcoat/oncologist(src)
+	new /obj/item/clothing/suit/storage/labcoat/oncologist(src)
+	return
+
 /obj/structure/closet/wardrobe/genetics_white
 	name = "genetics wardrobe"
 	icon_state = "white"
