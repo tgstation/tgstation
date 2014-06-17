@@ -550,7 +550,7 @@
 			if(world.time-lastFart >= 600)
 				var/list/farts = list("farts","passes wind","toots","tries to fart, but nothing happens.","farts with the force of one thousand suns")
 				var/fart = pick(farts)
-				for(var/mob/M in get_turf(src))
+				for(var/mob/M in view(1))
 					if(M != src)
 						visible_message("\red <b>[src]</b> farts in <b>[M]</b>'s face!")
 					else
