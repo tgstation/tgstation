@@ -141,8 +141,8 @@
 
 /obj/item/weapon/ore/New()
 	. = ..()
-	pixel_x = rand(-8, 8) - 8
-	pixel_y = rand(-8, 0) - 8
+	pixel_x = rand(-8, 8)
+	pixel_y = rand(-8, 0)
 
 /obj/item/weapon/ore/ex_act()
 	return
