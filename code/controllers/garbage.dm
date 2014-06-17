@@ -101,7 +101,7 @@ var/global/datum/controller/garbage_collector/garbage
 
 /datum/controller/New()
 	. = ..()
-	tag = "NO GC CONTROLLER"
+	tag = "[type]:NOGC"
 
 /datum/Del()
 	sleep(-1)
