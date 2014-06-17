@@ -114,7 +114,7 @@ var/global/datum/controller/garbage_collector/garbage
 /datum/proc/Destroy()
 	del src
 
-/datum/controller/proc/Destroy()
+/datum/controller/Destroy()
 	tag = null
 	..()
 
