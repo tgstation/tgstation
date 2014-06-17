@@ -40,6 +40,8 @@ datum/controller/game_controller
 	var/rebuild_active_areas = 0
 
 datum/controller/game_controller/New()
+	. = ..()
+
 	//There can be only one master_controller. Out with the old and in with the new.
 	if(master_controller != src)
 		log_debug("Rebuilding Master Controller")
