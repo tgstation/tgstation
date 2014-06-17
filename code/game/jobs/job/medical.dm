@@ -84,9 +84,9 @@
 	icon_state = "paper_words"
 	info = "<b>Phalanximine</b><br>\
 			A powerful chemotherapy agent <br><br>\
-			1 part Radium<br>\
-			1 part Ethanol<br>\
-			1 part Oxygen "
+			1 part Arithrazine<br>\
+			1 part Diethylamine<br>\
+			1 part Unstable Mutagen "
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/job/doctor

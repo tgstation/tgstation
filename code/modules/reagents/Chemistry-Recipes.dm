@@ -90,7 +90,7 @@ datum
 			name = "Phalanximine"
 			id = "phalanximine"
 			result = "phalanximine"
-			required_reagents = list("radium" = 1, "ethanol" = 1, "oxygen" = 1)
+			required_reagents = list("arithrazine" = 1, "diethylamine" = 1, "mutagen" = 1)
 			result_amount = 1
 
 		stoxin
