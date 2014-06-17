@@ -1496,8 +1496,8 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 			if (getToxLoss() >= 45 && nutrition > 20)
 				vomit()
 		if((air_master.current_cycle % 3) == 0)
-			if (getToxLoss() >= 20)
-				var/chancesick = (getToxLoss() / 4)
+			if (getToxLoss() >= 40)
+				var/chancesick = (getToxLoss() / 5)
 				if(havecancer == 0)
 					if(prob(chancesick))
 						havecancer = 1
