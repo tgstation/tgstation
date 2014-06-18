@@ -74,7 +74,7 @@
 			if(SDQL_expression(d, query_tree["where"]))
 				objs += d
 
-	var/query_log = "[usr] executed SDQL query: \"[query_text]\"."
+	var/query_log = "[usr.key]/([usr]) executed SDQL query: \"[query_text]\"."
 	world.log << query_log
 	message_admins(query_log)
 	log_game(query_log)
