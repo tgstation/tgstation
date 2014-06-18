@@ -957,6 +957,18 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		return 0
 	.=..()
 
+// The src mob is trying to strip an item from someone
+// But we wont let them
+/mob/living/carbon/slime/stripPanelUnequip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
+
+// The src mob is trying to place an item on someone
+// But we wont let them
+/mob/living/carbon/slime/stripPanelEquip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
+
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 

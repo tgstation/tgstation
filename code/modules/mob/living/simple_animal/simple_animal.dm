@@ -521,3 +521,15 @@
 		return
 	gib()
 	return
+
+// The src mob is trying to strip an item from someone
+// But we wont let them
+/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
+
+// The src mob is trying to place an item on someone
+// But we wont let them
+/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
