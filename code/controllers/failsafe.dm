@@ -15,8 +15,6 @@ var/global/datum/controller/failsafe/failsafe
 	var/masterControllerAlertLevel = 0
 
 	// lighting
-	var/lighting_iteration = 0
-	var/lighting_defcon = 0
 	var/lightingControllerIteration = 0
 	var/lightingControllerAlertLevel = 0
 
