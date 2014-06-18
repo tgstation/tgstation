@@ -247,14 +247,17 @@
 
 	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = W
-		user << "\blue You begin to replace the wires."
-		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
+		if (coil.get_amount() < 1)
+			user << "You need one length of cable to repair [src]."
+			return
+		user << "<span class='notice'>You begin to replace the wires.</span>"
 		if(do_after(user, 30))
-			if(!src || !coil) return
+			if(coil.get_amount() < 1)
+				return
 			coil.use(1)
 			health = max_health
 			malfunction = 0
-			user << "\blue You repair the [src]!"
+			user << "<span class='notice'>You repair the [src]!</span>"
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/wrench))
@@ -310,7 +313,6 @@
 		var/recalc = 0
 		var/locked = 1
 		var/destroyed = 0
-		var/directwired = 1
 //		var/maxshieldload = 200
 		var/obj/structure/cable/attached		// the attached cable
 		var/storedpower = 0

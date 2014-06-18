@@ -34,7 +34,7 @@
 	if(!(pod1.occupant || pod1.mess) && (pod1.efficiency > 5))
 		for(var/datum/data/record/R in records)
 			if(!(pod1.occupant || pod1.mess))
-				if(pod1.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"]))
+				if(pod1.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["mcolor"]))
 					records -= R
 
 /obj/machinery/computer/cloning/proc/updatemodules()
@@ -328,7 +328,7 @@
 				temp = "<font class='bad'>Clonepod malfunction.</font>"
 			else if(!config.revival_cloning)
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
-			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"]))
+			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["mcolor"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				records.Remove(C)
 				if(active_record == C)
@@ -368,10 +368,10 @@
 		return
 
 	var/datum/data/record/R = new()
-	if(subject.dna)
-		R.fields["mrace"] = subject.dna.mutantrace
+	if(subject.dna.species)
+		R.fields["mrace"] = subject.dna.species.type
 	else
-		R.fields["mrace"] = null
+		R.fields["mrace"] = /datum/species/human
 	R.fields["ckey"] = subject.ckey
 	R.fields["name"] = subject.real_name
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)
@@ -379,6 +379,7 @@
 	R.fields["UI"] = subject.dna.uni_identity
 	R.fields["SE"] = subject.dna.struc_enzymes
 	R.fields["blood_type"] = subject.dna.blood_type
+	R.fields["mcolor"] = subject.dna.mutant_color
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)

@@ -73,7 +73,7 @@ datum/shuttle_controller
 				last_call_loc = null
 
 			if(recall_count == 2)
-				priority_announce("The emergency shuttle has been recalled.\n\nExcessive number of emergency shuttle calls detected. We will attempt to trace any further signals to their source. Results may be viewed on any communications console.", null, 'sound/AI/shuttlerecalled.ogg')
+				priority_announce("The emergency shuttle has been recalled.\n\nExcessive number of emergency shuttle calls detected. We will attempt to trace all future calls and recalls to their source. Tracing results can be viewed on any communications console.", null, 'sound/AI/shuttlerecalled.ogg')
 			else
 				priority_announce("The emergency shuttle has been recalled.", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
 			setdirection(-1)

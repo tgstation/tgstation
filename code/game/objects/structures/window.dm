@@ -220,15 +220,19 @@
 			var/index = null
 			index = 0
 			while(index < 2)
-				new /obj/item/weapon/shard(loc)
-				if(reinf) new /obj/item/stack/rods(loc)
+				spawnfragments()
 				index++
 		else
-			new /obj/item/weapon/shard(loc)
-			if(reinf) new /obj/item/stack/rods(loc)
+			spawnfragments()
 		qdel(src)
 		return
 
+/obj/structure/window/proc/spawnfragments()
+	var/newshard = new /obj/item/weapon/shard(loc)
+	transfer_fingerprints_to(newshard)
+	if(reinf)
+		var/newrods = new /obj/item/stack/rods(loc)
+		transfer_fingerprints_to(newrods)
 
 /obj/structure/window/verb/rotate()
 	set name = "Rotate Window Counter-Clockwise"

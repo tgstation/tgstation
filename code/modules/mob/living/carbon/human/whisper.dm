@@ -33,7 +33,7 @@
 	if (src.sdisabilities & MUTE)
 		return
 
-	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+	if (is_muzzled())
 		return
 
 	var/whispers = "whispers"

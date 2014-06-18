@@ -66,46 +66,6 @@
 	icon_state = "spacecash1000"
 	desc = "It's worth 1000 credits."
 
-/obj/item/weapon/soap
-	name = "soap"
-	desc = "A cheap bar of soap. Doesn't smell."
-	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
-	icon_state = "soap"
-	w_class = 1.0
-	throwforce = 0
-	throw_speed = 3
-	throw_range = 7
-
-/obj/item/weapon/soap/nanotrasen
-	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
-	icon_state = "soapnt"
-
-/obj/item/weapon/soap/deluxe
-	desc = "A deluxe Waffle Co. brand bar of soap. Smells of condoms."
-	icon_state = "soapdeluxe"
-
-/obj/item/weapon/soap/syndie
-	desc = "An untrustworthy bar of soap. Smells of fear."
-	icon_state = "soapsyndie"
-
-/obj/item/weapon/bikehorn
-	name = "bike horn"
-	desc = "A horn off of a bicycle."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "bike_horn"
-	item_state = "bike_horn"
-	throwforce = 0
-	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 7
-	attack_verb = list("HONKED")
-	var/spam_flag = 0
-
-/obj/item/weapon/bikehorn/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1) //plays instead of tap.ogg!
-	return ..()
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
@@ -133,26 +93,6 @@
 /obj/item/weapon/disk
 	name = "disk"
 	icon = 'icons/obj/items.dmi'
-
-/obj/item/weapon/disk/nuclear
-	name = "nuclear authentication disk"
-	desc = "Better keep this safe."
-	icon_state = "nucleardisk"
-	item_state = "card-id"
-	w_class = 1.0
-
-/*
-/obj/item/weapon/game_kit
-	name = "Gaming Kit"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "game_kit"
-	var/selected = null
-	var/board_stat = null
-	var/data = ""
-	var/base_url = "http://svn.slurm.us/public/spacestation13/misc/game_kit"
-	item_state = "sheet-metal"
-	w_class = 5.0
-*/
 
 /obj/item/weapon/legcuffs
 	name = "legcuffs"
@@ -212,7 +152,6 @@
 			else
 				L.apply_damage(20,BRUTE)
 	..()
-
 
 
 /obj/item/weapon/caution

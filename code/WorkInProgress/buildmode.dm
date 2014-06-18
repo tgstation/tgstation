@@ -10,6 +10,7 @@
 				if(H.cl == M.client)
 					qdel(H)
 		else
+			message_admins("[key_name(usr)] has entered build mode.")
 			log_admin("[key_name(usr)] has entered build mode.")
 			M.client.buildmode = 1
 			M.client.show_popup_menus = 0
@@ -186,35 +187,31 @@
 	switch(buildmode)
 		if(1)
 			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
+				var/turf/T = object
 				if(istype(object,/turf/space))
-					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/floor)
-					return
 				else if(istype(object,/turf/simulated/floor))
-					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall)
-					return
 				else if(istype(object,/turf/simulated/wall))
-					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall/r_wall)
-					return
+				log_admin("Build Mode: [key_name(usr)] built [T] at ([T.x],[T.y],[T.z])")
+				return
 			else if(pa.Find("right"))
+				log_admin("Build Mode: [key_name(usr)] deleted [object] at ([object.x],[object.y],[object.z])")
 				if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/floor)
-					return
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
 					T.ChangeTurf(/turf/space)
-					return
 				else if(istype(object,/turf/simulated/wall/r_wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall)
-					return
 				else if(istype(object,/obj))
 					qdel(object)
-					return
+				return
 			else if(istype(object,/turf) && pa.Find("alt") && pa.Find("left"))
+				log_admin("Build Mode: [key_name(usr)] built an airlock at ([object.x],[object.y],[object.z])")
 				new/obj/machinery/door/airlock(get_turf(object))
 			else if(istype(object,/turf) && pa.Find("ctrl") && pa.Find("left"))
 				switch(holder.builddir.dir)
@@ -233,30 +230,35 @@
 					if(NORTHWEST)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = NORTHWEST
+				log_admin("Build Mode: [key_name(usr)] built a window at ([object.x],[object.y],[object.z])")
 		if(2)
 			if(pa.Find("left"))
 				if(ispath(holder.buildmode.objholder,/turf))
 					var/turf/T = get_turf(object)
+					log_admin("Build Mode: [key_name(usr)] modified [T] ([T.x],[T.y],[T.z]) to [holder.buildmode.objholder]")
 					T.ChangeTurf(holder.buildmode.objholder)
 				else
 					var/obj/A = new holder.buildmode.objholder (get_turf(object))
 					A.dir = holder.builddir.dir
+					log_admin("Build Mode: [key_name(usr)] modified [A]'s ([A.x],[A.y],[A.z]) dir to [holder.builddir.dir]")
 			else if(pa.Find("right"))
-				if(isobj(object)) qdel(object)
+				if(isobj(object))
+					log_admin("Build Mode: [key_name(usr)] deleted [object] at ([object.x],[object.y],[object.z])")
+					qdel(object)
 
 		if(3)
 			if(pa.Find("left")) //I cant believe this shit actually compiles.
 				if(object.vars.Find(holder.buildmode.varholder))
-					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
+					log_admin("Build Mode: [key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = holder.buildmode.valueholder
 				else
-					usr << "\red [initial(object.name)] does not have a var called '[holder.buildmode.varholder]'"
+					usr << "<span class='warning'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>"
 			if(pa.Find("right"))
 				if(object.vars.Find(holder.buildmode.varholder))
-					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
+					log_admin("Build Mode: [key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = initial(object.vars[holder.buildmode.varholder])
 				else
-					usr << "\red [initial(object.name)] does not have a var called '[holder.buildmode.varholder]'"
+					usr << "<span class='warning'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>"
 
 		if(4)
 			if(pa.Find("left"))
@@ -266,4 +268,5 @@
 			if(pa.Find("right"))
 				if(holder.throw_atom)
 					holder.throw_atom.throw_at(object, 10, 1)
+					log_admin("Build Mode: [key_name(usr)] threw [holder.throw_atom] at [object] ([object.x],[object.y],[object.z])")
 

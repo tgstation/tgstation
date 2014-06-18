@@ -1419,7 +1419,7 @@ datum/chemical_reaction/pestkiller
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 	var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 	Z.loc = get_turf(holder.my_atom)
-	Z.announce_to_ghosts()
+	notify_ghosts("Golem rune created in [Z.name]", 'sound/effects/ghost2.ogg')
 
 //Bluespace
 

@@ -331,13 +331,10 @@
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
 
-					if(isanimal(L) && (rabid || attacked || hungry >= 2)) //Simple_Animals only get retaliated against.
-						targets += L
-
-					if(istype(L, /mob/living/carbon/human)) // Ignore slime(wo)men
+					if(istype(L, /mob/living/carbon/human) && dna) //Ignore slime(wo)men
 						var/mob/living/carbon/human/H = L
 						if(H.dna)
-							if(H.dna.mutantrace == "slime")
+							if(/mob/living/carbon/slime in H.dna.species.ignored_by)
 								continue
 
 					if(!L.canmove) // Only one slime can latch on at a time.
@@ -437,7 +434,16 @@
 				if (Victim) // We are asked to stop feeding
 					if (Friends[who] > 4)
 						Victim = null
+						Target = null
 						if (Friends[who] < 7)
+							--Friends[who]
+							to_say = "Grrr..." // I'm angry but I do it
+						else
+							to_say = "Fine..."
+				else if (Target) // We are asked to stop chasing
+					if (Friends[who] > 3)
+						Target = null
+						if (Friends[who] < 6)
 							--Friends[who]
 							to_say = "Grrr..." // I'm angry but I do it
 						else

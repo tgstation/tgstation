@@ -1018,7 +1018,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/mask/gas/clown_hat,
 					/obj/item/clothing/under/rank/clown,
 					/obj/item/weapon/bikehorn,
-					/obj/item/clothing/under/mime,
+					/obj/item/clothing/under/rank/mime,
 					/obj/item/clothing/shoes/sneakers/black,
 					/obj/item/clothing/gloves/white,
 					/obj/item/clothing/mask/gas/mime,

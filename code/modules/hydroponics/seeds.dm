@@ -205,7 +205,7 @@
 	icon_state = "seed-eggy"
 	species = "eggy"
 	plantname = "Eggplants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/egg
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	lifespan = 75
 	endurance = 15
 	maturation = 6
@@ -221,7 +221,7 @@
 	icon_state = "seed-bloodtomato"
 	species = "bloodtomato"
 	plantname = "Blood-Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood
 	lifespan = 25
 	endurance = 20
 	maturation = 8
@@ -255,7 +255,7 @@
 	icon_state = "seed-killertomato"
 	species = "killertomato"
 	plantname = "Killer-Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -273,7 +273,7 @@
 	icon_state = "seed-bluetomato"
 	species = "bluetomato"
 	plantname = "Blue-Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -291,7 +291,7 @@
 	icon_state = "seed-bluespacetomato"
 	species = "bluespacetomato"
 	plantname = "Blue-Space Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -475,7 +475,7 @@
 
 /obj/item/seeds/angelmycelium
 	name = "pack of destroying angel mycelium"
-	desc = "This mycelium grows into something devestating."
+	desc = "This mycelium grows into something devastating."
 	icon_state = "mycelium-angel"
 	species = "angel"
 	plantname = "Destroying Angels"
@@ -907,7 +907,7 @@
 	icon_state = "seed-cash"
 	species = "cashtree"
 	plantname = "Money Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/money
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
 	lifespan = 55
 	endurance = 45
 	maturation = 6

@@ -10,26 +10,33 @@
 	icon_state = "tracker"
 	anchored = 1
 	density = 1
-	directwired = 1
 	use_power = 0
 
 	var/id = 0
 	var/sun_angle = 0		// sun angle as set by sun datum
+	var/obj/machinery/power/solar_control/control = null
 
 /obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc)
 	Make(S)
 	connect_to_network()
 
-/obj/machinery/power/tracker/disconnect_from_network()
+/obj/machinery/power/tracker/Destroy()
+	unset_control() //remove from control computer
 	..()
-	solars_list.Remove(src)
 
-/obj/machinery/power/tracker/connect_to_network()
-	var/to_return = ..()
-	if(powernet)	//if connected and not already in solar_list...
-		solars_list |= src				//... add it
-	return to_return
+//set the control of the tracker to a given computer if closer than SOLAR_MAX_DIST
+/obj/machinery/power/tracker/proc/set_control(var/obj/machinery/power/solar_control/SC)
+	if(SC && (get_dist(src, SC) > SOLAR_MAX_DIST))
+		return 0
+	control = SC
+	return 1
+
+//set the control of the tracker to null and removes it from the previous control computer if needed
+/obj/machinery/power/tracker/proc/unset_control()
+	if(control)
+		control.connected_tracker = null
+	control = null
 
 /obj/machinery/power/tracker/proc/Make(var/obj/item/solar_assembly/S)
 	if(!S)
@@ -40,27 +47,21 @@
 	S.loc = src
 	update_icon()
 
-// called by datum/sun/calc_position() as sun's angle changes
+//updates the tracker icon and the facing angle for the control computer
 /obj/machinery/power/tracker/proc/set_angle(var/angle)
 	sun_angle = angle
 
 	//set icon dir to show sun illumination
 	dir = turn(NORTH, -angle - 22.5)	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
-	// find all solar controls and update them
-	// currently, just update all controllers in world
-	// ***TODO: better communication system using network
-	if(powernet)
-		for(var/obj/machinery/power/solar_control/C in powernet.nodes)
-			if(powernet.nodes[C])
-				if(get_dist(C, src) < SOLAR_MAX_DIST)
-					C.tracker_update(angle)
+	if(powernet && (powernet == control.powernet)) //update if we're still in the same powernet
+		control.cdir = angle
 
 /obj/machinery/power/tracker/attackby(var/obj/item/weapon/W, var/mob/user)
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user << "<span class='notice'>You begin to take the glass off the solar tracker...</span>"
+		user.visible_message("<span class='notice'>[user] begins to take the glass off the solar tracker.</span>")
 		if(do_after(user, 50))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)

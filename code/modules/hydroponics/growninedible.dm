@@ -45,7 +45,6 @@
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra,
@@ -60,13 +59,14 @@
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of the [src]!</span>", 1)
-		for(var/i=0,i<2,i++)
+		for(var/i = 0,i < 2,i++)
 			var/obj/item/stack/sheet/mineral/wood/NG = new (user.loc)
 			for (var/obj/item/stack/sheet/mineral/wood/G in user.loc)
-				if(G==NG)
+				if(G == NG)
 					continue
-				if(G.amount>=G.max_amount)
+				if(G.amount >= G.max_amount)
 					continue
+				G.amount += round(potency / 25)
 				G.attackby(NG, user)
 				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
 		qdel(src)
@@ -122,7 +122,7 @@
 	if(reagents)
 		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("capsaicin", round(potency, 1))
-	force = round((5+potency/5), 1)
+	force = round((5 + potency / 5), 1)
 
 /obj/item/weapon/grown/nettle // -- Skie
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
@@ -144,7 +144,7 @@
 	if(reagents)
 		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("sacid", round(potency, 1))
-	force = round((5+potency/5), 1)
+	force = round((5 + potency / 5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	desc = "The \red glowing \black nettle incites \red<B> rage</B>\black in you just from looking at it!"
@@ -167,7 +167,7 @@
 	if(reagents)
 		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("pacid", round(potency, 1))
-	force = round((5+potency/2.5), 1)
+	force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -183,8 +183,17 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+
 /obj/item/weapon/grown/bananapeel/New(var/loc, var/potency = 10)
 	..()
+
+/obj/item/weapon/grown/bananapeel/Crossed(AM as mob|obj)
+	if (istype(AM, /mob/living/carbon))
+		var/mob/living/carbon/M = AM
+		var/stun = Clamp(potency / 10, 1, 10)
+		var/weaken = Clamp(potency / 20, 0.5, 5)
+		M.slip(stun, weaken, src)
+
 
 /obj/item/weapon/grown/corncob
 	name = "corn cob"

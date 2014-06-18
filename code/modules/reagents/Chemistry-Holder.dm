@@ -200,7 +200,9 @@ datum
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
 					if(M && R)
-						R.on_mob_life(M)
+						if(M.reagent_check(R) != 1)
+							R.on_mob_life(M)
+
 				update_total()
 
 			conditional_update_move(var/atom/A, var/Running = 0)

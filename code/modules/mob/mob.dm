@@ -558,6 +558,9 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/is_active()
 	return (0 >= usr.stat)
 
+/mob/proc/is_muzzled()
+	return 0
+
 /mob/proc/see(message)
 	if(!is_active())
 		return 0
@@ -797,3 +800,5 @@ var/list/slot_equipment_priority = list( \
 	update_canmove()
 	return
 
+/mob/proc/assess_threat() //For sec bot threat assessment
+	return
