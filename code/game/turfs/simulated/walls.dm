@@ -14,10 +14,11 @@
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
+	var/newgirder = null
 	if(istype(src,/turf/simulated/wall/r_wall))
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			new /obj/structure/girder/reinforced(src)
+			newgirder = new /obj/structure/girder/reinforced(src)
 			new /obj/item/stack/sheet/plasteel( src )
 		else
 			new /obj/item/stack/sheet/metal( src )
@@ -35,7 +36,7 @@
 	else
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			new /obj/structure/girder(src)
+			newgirder = new /obj/structure/girder(src)
 			if (mineral == "metal")
 				new /obj/item/stack/sheet/metal( src )
 				new /obj/item/stack/sheet/metal( src )
@@ -53,6 +54,9 @@
 				new M( src )
 				new M( src )
 				new /obj/item/stack/sheet/metal( src )
+
+	if(newgirder)
+		transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
@@ -175,6 +179,8 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
+	add_fingerprint(user)
+
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )

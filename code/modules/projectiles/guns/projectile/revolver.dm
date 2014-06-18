@@ -29,6 +29,7 @@
 		CB = magazine.get_round(0)
 		chambered = null
 		CB.loc = get_turf(src.loc)
+		CB.SpinAnimation(10, 1)
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)

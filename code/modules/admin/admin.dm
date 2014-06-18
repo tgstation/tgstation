@@ -434,7 +434,6 @@ var/global/floorIsLava = 0
 		dat += {"
 			<B>'Random' Events</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secretsfun=gravity'>Trigger a gravity-failure event</A><BR>
 			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors (aka lagocolyptic shower)</A><BR>
 			<A href='?src=\ref[src];secretsfun=blackhole'>Spawn a vortex anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly</A><BR>

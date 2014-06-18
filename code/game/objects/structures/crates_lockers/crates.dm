@@ -290,6 +290,7 @@
 			src.locked = 0
 			overlays.Cut()
 			overlays += greenlight
+			add_fingerprint(user)
 			return
 		else
 			user << "<span class='notice'>[src] is locked.</span>"
@@ -303,6 +304,7 @@
 		src.locked = 1
 		overlays.Cut()
 		overlays += redlight
+		add_fingerprint(user)
 		return
 	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
 		overlays.Cut()
@@ -313,6 +315,7 @@
 		src.locked = 0
 		src.broken = 1
 		user << "<span class='notice'>You unlock \the [src].</span>"
+		add_fingerprint(user)
 		return
 
 	return ..()
