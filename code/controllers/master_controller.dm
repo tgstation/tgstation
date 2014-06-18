@@ -4,7 +4,6 @@
 
 var/global/datum/controller/game_controller/master_controller //Set in world.New()
 
-var/global/controller_iteration = 0
 var/global/last_tick_timeofday = world.timeofday
 var/global/last_tick_duration = 0
 
@@ -17,7 +16,6 @@ var/list/machine_profiling=list()
 #endif
 
 datum/controller/game_controller
-	var/processing = 0
 	var/breather_ticks = 2		//a somewhat crude attempt to iron over the 'bumps' caused by high-cpu use by letting the MC have a breather for this many ticks after every loop
 	var/minimum_ticks = 20		//The minimum length of time between MC ticks
 
@@ -32,7 +30,6 @@ datum/controller/game_controller
 	var/nano_cost		= 0
 	var/events_cost		= 0
 	var/ticker_cost		= 0
-	var/gc_cost         = 0
 	var/total_cost		= 0
 
 	var/last_thing_processed
@@ -47,7 +44,7 @@ datum/controller/game_controller/New()
 		log_debug("Rebuilding Master Controller")
 
 		if (istype(master_controller))
-			Recover()
+			recover()
 			qdel(master_controller)
 
 		master_controller = src
@@ -125,21 +122,24 @@ datum/controller/game_controller/proc/setup_objects()
 	sleep(-1)
 
 
-datum/controller/game_controller/proc/process()
+/datum/controller/game_controller/proc/process()
 	processing = 1
-	spawn(0)
-		//set background = 1
-		while(1)	//far more efficient than recursively calling ourself
-			if(!Failsafe)	new /datum/controller/failsafe()
+
+	spawn (0)
+		set background = BACKGROUND_ENABLED
+
+		while (1) // Far more efficient than recursively calling ourself.
+			if (isnull(failsafe))
+				new /datum/controller/failsafe()
 
 			var/currenttime = world.timeofday
 			last_tick_duration = (currenttime - last_tick_timeofday) / 10
 			last_tick_timeofday = currenttime
 
-			if(processing)
+			if (processing)
+				iteration++
 				var/timer
 				var/start_time = world.timeofday
-				controller_iteration++
 
 				vote.process()
 				//process_newscaster()
@@ -233,14 +233,8 @@ datum/controller/game_controller/proc/process()
 				ticker.process()
 				ticker_cost = (world.timeofday - timer) / 10
 
-				// GC
-				timer = world.timeofday
-				last_thing_processed = garbage.type
-				garbage.process()
-				gc_cost = (world.timeofday - timer) / 10
-
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost + gc_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -353,7 +347,8 @@ datum/controller/game_controller/proc/processMobs()
 
 	checkEvent()
 
-datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
+datum/controller/game_controller/recover()		//Mostly a placeholder for now.
+	. = ..()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
 	for(var/varname in master_controller.vars)
 		switch(varname)

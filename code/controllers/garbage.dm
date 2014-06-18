@@ -1,11 +1,13 @@
-#define GC_COLLECTIONS_PER_TICK 250 // Was 100.
-#define GC_COLLECTION_TIMEOUT 100 // 10s.
+#define GC_COLLECTIONS_PER_TICK 300 // Was 100.
+#define GC_COLLECTION_TIMEOUT (10 SECONDS)
 #define GC_FORCE_DEL_PER_TICK 20
 //#define GC_DEBUG
 
 var/global/datum/controller/garbage_collector/garbage
 
 /datum/controller/garbage_collector
+	processing_interval = GC_COLLECTION_TIMEOUT
+
 	var/list/queue = list()
 	var/del_everything = 1
 
@@ -13,7 +15,17 @@ var/global/datum/controller/garbage_collector/garbage
 	var/dels_count = 0
 	var/hard_dels = 0
 
-/datum/controller/garbage_collector/proc/AddTrash(const/atom/movable/AM)
+/datum/controller/garbage_collector/New()
+	. = ..()
+
+	if (garbage != src)
+		if (istype(garbage))
+			recover()
+			qdel(garbage)
+
+		garbage = src
+
+/datum/controller/garbage_collector/proc/addTrash(const/atom/movable/AM)
 	if (isnull(AM))
 		return
 
@@ -29,39 +41,61 @@ var/global/datum/controller/garbage_collector/garbage
 	queue["\ref[AM]"] = timeofday
 
 /datum/controller/garbage_collector/proc/process()
-	var/collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
-	var/remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
-	var/remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
+	processing = 1
 
-	while (queue.len && --remainingCollectionPerTick >= 0)
-		var/refID = queue[1]
-		var/destroyedAtTime = queue[refID]
+	spawn (0)
+		var/remainingCollectionPerTick
+		var/remainingForceDelPerTick
+		var/collectionTimeScope
 
-		if (destroyedAtTime > collectionTimeScope)
-			break
+		while (1)
+			iteration++
 
-		var/atom/A = locate(refID)
+			if (processing)
+				remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
+				remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
+				collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
 
-		// Something's still referring to the qdel'd object. Kill it.
-		if (A && A.timeDestroyed == destroyedAtTime)
-			if (remainingForceDelPerTick <= 0)
-				break
+				while (queue.len && --remainingCollectionPerTick >= 0)
+					var/refID = queue[1]
+					var/destroyedAtTime = queue[refID]
 
-			#ifdef GC_DEBUG
-			WARNING("gc process force delete [A.type]")
-			#endif
+					if (destroyedAtTime > collectionTimeScope)
+						break
 
-			del A
+					var/atom/A = locate(refID)
 
-			remainingForceDelPerTick--
-			hard_dels++
+					// Something's still referring to the qdel'd object. Kill it.
+					if (A && A.timeDestroyed == destroyedAtTime)
+						if (remainingForceDelPerTick <= 0)
+							break
 
-		queue.Cut(1, 2)
-		dels_count++
+						#ifdef GC_DEBUG
+						WARNING("gc process force delete [A.type]")
+						#endif
+
+						del A
+
+						hard_dels++
+						remainingForceDelPerTick--
+
+					queue.Cut(1, 2)
+					dels_count++
+
+			sleep(processing_interval)
 
 #ifdef GC_DEBUG
 #undef GC_DEBUG
 #endif
+
+/datum/controller/garbage_collector/recover()
+	. = ..()
+	iteration = garbage.iteration
+	del_everything = garbage.del_everything
+	queue = garbage.queue.Copy()
+	dels_count = garbage.dels_count
+	hard_dels = garbage.hard_dels
+	processing_interval = garbage.processing_interval
 
 #undef GC_FORCE_DEL_PER_TICK
 #undef GC_COLLECTION_TIMEOUT
@@ -92,12 +126,19 @@ var/global/datum/controller/garbage_collector/garbage
 				del D
 				return
 
-			garbage.AddTrash(D)
+			garbage.addTrash(D)
 
 /datum
 	// Garbage collection (qdel).
 	var/gcDestroyed
 	var/timeDestroyed
+
+/datum/controller
+	var/processing = 0
+	var/iteration = 0
+	var/processing_interval = 0
+
+/datum/controller/proc/recover() // If we are replacing an existing controller (due to a crash) we attempt to preserve as much as we can.
 
 /datum/controller/New()
 	. = ..()

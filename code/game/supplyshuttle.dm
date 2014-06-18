@@ -129,9 +129,8 @@ var/list/mechtoys = list(
 	var/comment = null
 
 /datum/controller/supply_shuttle
-	var/processing = 1
-	var/processing_interval = 300
-	var/iteration = 0
+	processing = 1
+	processing_interval = 300
 	//supply points have been replaced with MONEY MONEY MONEY - N3X
 	var/credits_per_slip = 2
 	var/credits_per_crate = 5

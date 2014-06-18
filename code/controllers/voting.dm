@@ -1,6 +1,6 @@
-var/datum/controller/vote/vote = new()
+var/global/datum/controller/vote/vote = new()
 
-datum/controller/vote
+/datum/controller/vote
 	var/initiator = null
 	var/started_time = null
 	var/time_remaining = 0

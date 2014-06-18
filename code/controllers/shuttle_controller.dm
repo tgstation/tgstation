@@ -283,28 +283,24 @@ datum/shuttle_controller
 
 /obj/effect/bgstar
 	name = "star"
-	var/speed = 10
+	var/speed
 	var/direction = SOUTH
-	layer = 2 // TURF_LAYER
+	layer = TURF_LAYER
 
-	New()
-		..()
-		pixel_x += rand(-2,30)
-		pixel_y += rand(-2,30)
-		var/starnum = pick("1", "1", "1", "2", "3", "4")
+/obj/effect/bgstar/New()
+	. = ..()
+	pixel_x += rand(-2, 30)
+	pixel_y += rand(-2, 30)
+	icon_state = "star" + pick("1", "1", "1", "2", "3", "4")
+	speed = rand(2, 5)
 
-		icon_state = "star"+starnum
+/obj/effect/bgstar/proc/startmove()
+	while (src)
+		sleep(speed)
+		step(src, direction)
 
-		speed = rand(2, 5)
-
-	proc/startmove()
-
-		while(src)
-			sleep(speed)
-			step(src, direction)
-			for(var/obj/effect/starender/E in loc)
-				del(src)
-
+		for (var/obj/effect/starender/E in loc)
+			qdel(src)
 
 /obj/effect/starender
 	invisibility = 101
@@ -325,5 +321,3 @@ datum/shuttle_controller
 			S.direction = spawndir
 			spawn()
 				S.startmove()
-
-

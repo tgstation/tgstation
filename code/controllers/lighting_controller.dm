@@ -1,10 +1,9 @@
-var/datum/controller/lighting/lighting_controller = new ()
+var/global/datum/controller/lighting/lighting_controller = new ()
 
 datum/controller/lighting
-	var/processing = 0
-	var/processing_interval = 5	//setting this too low will probably kill the server. Don't be silly with it!
+	processing_interval = 5 // Setting this too low will probably kill the server. Don't be silly with it!
+
 	var/process_cost = 0
-	var/iteration = 0
 	var/max_cpu_use = 98		//this is just to prevent it queueing up when the server is dying. Not a solution, just damage control while I rethink a lot of this and try out ideas.
 
 	var/lighting_states = 6
@@ -23,7 +22,7 @@ datum/controller/lighting
 
 	if (lighting_controller != src)
 		if (istype(lighting_controller))
-			Recover() // If we are replacing an existing lighting_controller (due to a crash) we attempt to preserve as much as we can.
+			recover()
 			qdel(lighting_controller)
 
 		lighting_controller = src
@@ -97,7 +96,9 @@ datum/controller/lighting/proc/Initialize(var/z_level)
 //Used to strip valid information from an existing controller and transfer it to a replacement
 //It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfered but the loop
 //does not crash
-datum/controller/lighting/proc/Recover()
+/datum/controller/lighting/recover()
+	. = ..()
+
 	if(!istype(lighting_controller.changed_turfs,/list))
 		lighting_controller.changed_turfs = list()
 	if(!istype(lighting_controller.lights,/list))
