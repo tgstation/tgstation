@@ -4,28 +4,32 @@
 
 proc/SetupXenoarch()
 	for(var/turf/unsimulated/mineral/M in block(locate(1,1,1), locate(world.maxx, world.maxy, world.maxz)))
-		if(!M.geologic_data)
-			M.geologic_data = new/datum/geosample(M)
-
 		if(!prob(XENOARCH_SPAWN_CHANCE))
 			continue
 
 		var/digsite = get_random_digsite_type()
 		var/list/processed_turfs = list()
 		var/list/turfs_to_process = list(M)
-		for(var/turf/unsimulated/mineral/archeo_turf in turfs_to_process)
+
+		while(turfs_to_process.len)
+			var/turf/unsimulated/mineral/archeo_turf = turfs_to_process[1]
 
 			for(var/turf/unsimulated/mineral/T in orange(1, archeo_turf))
 				if(T.finds)
 					continue
+
 				if(T in processed_turfs)
 					continue
+
 				if(prob(XENOARCH_SPREAD_CHANCE))
 					turfs_to_process.Add(T)
 
+			turfs_to_process.Remove(archeo_turf)
 			processed_turfs.Add(archeo_turf)
-			if(!archeo_turf.finds)
+
+			if(isnull(archeo_turf.finds))
 				archeo_turf.finds = list()
+
 				if(prob(50))
 					archeo_turf.finds.Add(new /datum/find(digsite, rand(5,95)))
 				else if(prob(75))
@@ -38,6 +42,7 @@ proc/SetupXenoarch()
 
 				//sometimes a find will be close enough to the surface to show
 				var/datum/find/F = archeo_turf.finds[1]
+
 				if(F.excavation_required <= F.view_range)
 					archeo_turf.archaeo_overlay = "overlay_archaeo[rand(1,3)]"
 					archeo_turf.overlays += archeo_turf.archaeo_overlay
@@ -45,8 +50,14 @@ proc/SetupXenoarch()
 		//dont create artifact machinery in animal or plant digsites, or if we already have one
 		if(!M.artifact_find && digsite != 1 && digsite != 2 && prob(ARTIFACT_SPAWN_CHANCE))
 			M.artifact_find = new()
-			artifact_spawn.Add(src)
+			master_controller.artifact_spawning_turfs.Add(M)
 
+		if(isnull(M.geologic_data))
+			M.geologic_data = new/datum/geosample(M)
+
+#undef XENOARCH_SPAWN_CHANCE
+#undef XENOARCH_SPREAD_CHANCE
+#undef ARTIFACT_SPAWN_CHANCE
 
 //---- Noticeboard
 
