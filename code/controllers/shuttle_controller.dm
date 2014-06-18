@@ -294,7 +294,7 @@ datum/shuttle_controller
 	icon_state = "star" + pick("1", "1", "1", "2", "3", "4")
 	speed = rand(2, 5)
 
-/obj/effect/proc/startmove()
+/obj/effect/bgstar/proc/startmove()
 	while (src)
 		sleep(speed)
 		step(src, direction)
