@@ -74,7 +74,7 @@
 			if(SDQL_expression(d, query_tree["where"]))
 				objs += d
 
-	var/query_log = "[usr] executed SDQL query: \"[query_text]\"."
+	var/query_log = "[key_name(src)] executed SDQL query: \"[query_text]\"."
 	world.log << query_log
 	message_admins(query_log)
 	log_game(query_log)
@@ -93,7 +93,7 @@
 
 		if("delete")
 			for(var/datum/d in objs)
-				del d
+				qdel(d)
 
 		if("select")
 			var/text = ""
@@ -145,7 +145,7 @@
 	var/datum/SDQL_parser/parser = new(query_list)
 	var/list/query_tree = parser.parse()
 
-	del(parser)
+	qdel(parser)
 
 	return query_tree
 

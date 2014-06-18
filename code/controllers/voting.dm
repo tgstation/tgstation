@@ -1,6 +1,6 @@
-var/datum/controller/vote/vote = new()
+var/global/datum/controller/vote/vote = new()
 
-datum/controller/vote
+/datum/controller/vote
 	var/initiator = null
 	var/started_time = null
 	var/time_remaining = 0
@@ -12,9 +12,12 @@ datum/controller/vote
 	var/list/current_votes = list()
 
 	New()
-		if(vote != src)
-			if(istype(vote))
-				del(vote)
+		. = ..()
+
+		if (vote != src)
+			if (istype(vote))
+				qdel(vote)
+
 			vote = src
 
 	proc/process()	//called by master_controller
