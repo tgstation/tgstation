@@ -122,7 +122,7 @@ datum/controller/game_controller/proc/setup_objects()
 	sleep(-1)
 
 
-datum/controller/game_controller/proc/process()
+/datum/controller/game_controller/proc/process()
 	processing = 1
 
 	spawn (0)
