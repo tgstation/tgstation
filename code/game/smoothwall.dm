@@ -100,7 +100,7 @@
 
 	..()*/
 
-/turf/simulated/wall/Destroy()
+/turf/simulated/wall/Del()
 
 	var/temploc = src.loc
 

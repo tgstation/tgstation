@@ -1,4 +1,3 @@
-
 /obj/item/queen_bee
 	name = "queen bee packet"
 	desc = "Place her into an apiary so she can get busy."
@@ -66,20 +65,19 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
 	flags = FPRINT |  TABLEPASS
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/beezeez/New()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb
 	name = "honeycomb"
 	icon_state = "honeycomb"
 	desc = "Dripping with sugary sweetness."
 
-	New()
-		..()
-
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb/New()
-	..()
+	. = ..()
 	reagents.add_reagent("honey",10)
 	reagents.add_reagent("nutriment", 0.5)
 	reagents.add_reagent("sugar", 2)

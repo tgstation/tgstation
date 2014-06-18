@@ -8,10 +8,13 @@
 	color = GLOW_GREEN
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "glowstick"
-	luminosity = 2
 
 	l_color = GLOW_GREEN
 	w_class = 2
+
+/obj/item/weapon/glowstick/New()
+	. = ..()
+	SetLuminosity(2)
 
 /obj/item/weapon/glowstick/red
 	desc = "A plastic stick filled with luminescent liquid, this one is red."

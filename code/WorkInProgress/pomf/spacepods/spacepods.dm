@@ -23,6 +23,7 @@
 	var/next_firetime = 0
 
 /obj/spacepod/New()
+	. = ..()
 	bound_width = 64
 	bound_height = 64
 	dir = EAST

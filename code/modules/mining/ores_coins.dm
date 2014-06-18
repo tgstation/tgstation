@@ -140,8 +140,9 @@
 				del(src)
 
 /obj/item/weapon/ore/New()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	. = ..()
+	pixel_x = rand(-8, 8)
+	pixel_y = rand(-8, 0)
 
 /obj/item/weapon/ore/ex_act()
 	return
@@ -168,8 +169,9 @@
 	var/credits = 0 // How many credits is this coin worth?
 
 /obj/item/weapon/coin/New()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	. = ..()
+	pixel_x = rand(-8, 8)
+	pixel_y = rand(-8, 0)
 
 /obj/item/weapon/coin/gold
 	material="gold"

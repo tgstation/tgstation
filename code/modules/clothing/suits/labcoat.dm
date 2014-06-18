@@ -11,9 +11,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
 	species_fit = list("Vox")
 
-	New()
-		..()
-		update_icon()
+
 
 	update_icon()
 		if(open)
@@ -36,6 +34,10 @@
 		open=!open
 		update_icon()
 		usr.update_inv_wear_suit()	//so our overlays update
+
+/obj/item/clothing/suit/storage/labcoat/New()
+	. = ..()
+	update_icon()
 
 /obj/item/clothing/suit/storage/labcoat/cmo
 	name = "chief medical officer's labcoat"
@@ -74,4 +76,11 @@
 	name = "Scientist Labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	base_icon_state = "labcoat_tox"
+	species_fit = list("Vox")
+
+/obj/item/clothing/suit/storage/labcoat/oncologist
+	name = "Oncologist Labcoat"
+	desc = "A suit that protects against minor radiation exposure. Offers slightly more protection against radiation than the standard model. Has a black stripe on the shoulder."
+	base_icon_state = "labcoat_onc"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 60)
 	species_fit = list("Vox")

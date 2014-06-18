@@ -43,8 +43,6 @@
 		return null
 
 	Destroy()
-		loc = null
-
 		if(node)
 			node.disconnect(src)
 			del(network)
