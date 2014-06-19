@@ -446,4 +446,3 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			return
 	else
 		return
->>>>>>> origin/mutraceupdate
