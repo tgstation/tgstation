@@ -394,6 +394,6 @@
 				O << "<span class ='warning'>You feel a mild stinging sensation as the tachyon beam activates.</span>"
 				O.apply_effect(rads,IRRADIATE,0)
 				if(rads > 3)
-					usr << "<span class ='warning'>The tachyon refraction alarm goes off!</span>"
+					O << "<span class ='warning'>The tachyon refraction alarm goes off!</span>"
 	src.updateUsrDialog()
 	return
