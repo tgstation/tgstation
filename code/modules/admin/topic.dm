@@ -1584,13 +1584,6 @@
 				usr.client.triple_ai()
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","TriAI")
-			if("gravity")
-				alert("WIP - event unavailable")
-/*				E = new /datum/round_event/weightless()
-				log_admin("[key_name(usr)] triggered a gravity-failure event.", 1)
-				message_admins("\blue [key_name_admin(usr)] triggered a gravity-failure event.", 1)
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","Grav")	*/
 			if("power")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","P")

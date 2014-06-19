@@ -225,7 +225,7 @@
 
 		//paralysis += 1
 
-	show_message("<span class='warning'> The blob attacks you!</span>")
+	show_message("<span class='userdanger'> The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 
@@ -248,10 +248,8 @@
 
 	if (health > -100)
 
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'> <B>The [M.name] has glomped []!</B></span>", src), 1)
-
+		visible_message("<span class='danger'> The [M.name] has glomped [src]!</span>", \
+				"<span class='userdanger'> The [M.name] has glomped [src]!</span>")
 		var/damage = rand(1, 3)
 		attacked += 5
 
@@ -271,8 +269,8 @@
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='warning'> <B>[M]</B> [M.attacktext] [src]!</span>", 1)
+		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
+				"<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		attacked += 10
@@ -303,9 +301,8 @@
 			if (health > 0)
 				attacked += 10
 				//playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[M.name] has attacked [src]!</B></span>"), 1)
+				visible_message("<span class='danger'>[M.name] has attacked [src]!</span>", \
+						"<span class='userdanger'>[M.name] has attacked [src]!</span>")
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -325,15 +322,11 @@
 	if(Victim)
 		if(Victim == M)
 			if(prob(60))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'> [M] attempts to wrestle \the [name] off!</span>", 1)
+				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'> [M] manages to wrestle \the [name] off!</span>", 1)
+				visible_message("<span class='warning'> [M] manages to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				if(prob(90) && !client)
@@ -353,15 +346,11 @@
 
 		else
 			if(prob(30))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'> [M] attempts to wrestle \the [name] off of [Victim]!</span>", 1)
+				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'> [M] manages to wrestle \the [name] off of [Victim]!</span>", 1)
+				visible_message("<span class='warning'> [M] manages to wrestle \the [name] off of [Victim]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				if(prob(80) && !client)
@@ -400,9 +389,7 @@
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='warning'> [] has grabbed [] passively!</span>", M, src), 1)
+			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 
 		else
 
@@ -426,17 +413,14 @@
 
 
 				playsound(loc, "punch", 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has punched []!</B></span>", M, src), 1)
+				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
+						"<span class='userdanger'>[M] has punched [src]!</span>")
 
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has attempted to punch []!</B></span>", M, src), 1)
+				visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
 	return
 
 
@@ -452,9 +436,7 @@
 
 	switch(M.a_intent)
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 
 		if ("harm")
 
@@ -464,20 +446,17 @@
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'> <B>[] has attacked [name]!</B></span>", M), 1)
+					visible_message("<span class='danger'>[M] has attacked [name]!</span>", \
+							"<span class='userdanger'>[M] has attacked [name]!</span>")
 				else
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'> <B>[] has wounded [name]!</B></span>", M), 1)
+					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
+							"<span class='userdanger'>)[M] has wounded [name]!</span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has attempted to lunge at [name]!</B></span>", M), 1)
+				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
+						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
 		if ("grab")
 			if (M == src || anchored)
@@ -491,8 +470,7 @@
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("<span class='warning'> [] has grabbed [name] passively!</span>", M), 1)
+			visible_message("<span class='warning'> [M] has grabbed [name] passively!</span>")
 
 		if ("disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
@@ -500,9 +478,8 @@
 			attacked += 10
 
 			if(prob(95))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has tackled [name]!</B></span>", M), 1)
+				visible_message("<span class='danger'>[M] has tackled [name]!</span>", \
+						"<span class='userdanger'>[M] has tackled [name]!</span>")
 
 				if(Victim || Target)
 					Victim = null
@@ -527,9 +504,8 @@
 
 			else
 				drop_item()
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has disarmed [name]!</B></span>", M), 1)
+				visible_message("<span class='danger'>[M] has disarmed [name]!</span>",
+						"<span class='userdanger'>[M] has disarmed [name]!</span>")
 			adjustBruteLoss(damage)
 			updatehealth()
 	return
@@ -538,7 +514,7 @@
 	if(W.force > 0)
 		attacked += 10
 		if(prob(25))
-			user << "\red [W] passes right through [src]!"
+			user << "<span class='danger'>[W] passes right through [src]!</span>"
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
@@ -1033,9 +1009,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	processing_objects.Remove(src)
 	var/turf/T = get_turf(src)
-	src.visible_message("\blue The [name] pulsates and quivers!")
+	src.visible_message("<span class='warning'> The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("\blue The [name] bursts open!")
+		src.visible_message("<span class='warning'> The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		qdel(src)
 
