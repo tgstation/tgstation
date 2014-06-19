@@ -129,7 +129,7 @@
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(mindref)
-	if(!istype(clonemind,/datum/mind))	//not a mind
+	if(!istype(clonemind))	//not a mind
 		return 0
 	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
 		return 0
@@ -137,13 +137,13 @@
 		if( ckey(clonemind.key)!=ckey )
 			return 0
 	else
-		for(var/mob/dead/observer/G in player_list)
-			if(G.ckey == ckey)
-				if(G.can_reenter_corpse)
-					break
-				else
-					return 0
-
+		for(var/mob/M in player_list)
+			if(M.ckey == ckey)
+				if(istype(M, /mob/dead/observer))
+					var/mob/dead/observer/G = M
+					if(G.can_reenter_corpse)
+						break
+				return 0
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1

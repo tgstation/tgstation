@@ -132,7 +132,6 @@ emp_act
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
 
 	else
-
 		if((user != src) && check_shields(I.force, "the [I.name]"))
 			return 0
 
@@ -176,7 +175,6 @@ emp_act
 								H.add_blood(H)
 								H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
 
-
 			switch(hit_area)
 				if("head")	//Harder to score a stun but if you do it lasts a bit longer
 					if(stat == CONSCIOUS && prob(I.force))
@@ -185,7 +183,6 @@ emp_act
 						apply_effect(20, PARALYZE, armor)
 						if(src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
-
 					if(bloody)	//Apply blood
 						if(wear_mask)
 							wear_mask.add_blood(src)
@@ -212,9 +209,7 @@ emp_act
 							update_inv_w_uniform(0)
 
 			if(Iforce > 10 || Iforce >= 5 && prob(33))
-				forcesay(hit_appends)	//forcesay checks stat already.
-
-
+				forcesay(hit_appends)	//forcesay checks stat already
 
 /mob/living/carbon/human/emp_act(severity)
 	var/informed = 0

@@ -38,6 +38,10 @@
 /obj/item/weapon/grab/Destroy()
 	if(affecting)
 		affecting.grabbed_by -= src
+		affecting = null
+	if(assailant)
+		assailant.client.screen -= hud
+		assailant = null
 	qdel(hud)
 	..()
 
@@ -61,7 +65,8 @@
 
 
 /obj/item/weapon/grab/process()
-	confirm()
+	if(!confirm())
+		return 0
 
 	if(assailant.client)
 		assailant.client.screen -= hud

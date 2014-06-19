@@ -172,6 +172,7 @@ proc/isorgan(A)
 		return 0
 
 /proc/stars(n, pr)
+	n = html_decode(n)
 	if (pr == null)
 		pr = 25
 	if (pr <= 0)
@@ -190,7 +191,7 @@ proc/isorgan(A)
 		else
 			t = text("[]*", t)
 		p++
-	return t
+	return sanitize(t)
 
 
 /proc/stutter(n)
@@ -421,3 +422,28 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 
 /mob/proc/reagent_check(var/datum/reagent/R) // utilized in the species code
 	return 1
+
+/proc/item_heal_robotic(var/mob/living/carbon/human/H, var/mob/user, var/brute, var/burn)
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+
+	var/dam //changes repair text based on how much brute/burn was supplied
+
+	if(brute > burn)
+		dam = 1
+	else
+		dam = 0
+
+	if(affecting.status == ORGAN_ROBOTIC)
+		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
+			affecting.heal_damage(brute,burn,1)
+			H.update_damage_overlays(0)
+			H.updatehealth()
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]!</span>"), 1)
+			return
+		else
+			user << "<span class='notice'>[H]'s [affecting.getDisplayName()] is already in good condition</span>"
+			return
+	else
+		return
+>>>>>>> origin/mutraceupdate

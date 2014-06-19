@@ -252,6 +252,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(isAI(src))
 		var/mob/living/silicon/ai/AI = src
 		if(oldname != real_name)
+			if(AI.eyeobj)
+				AI.eyeobj.name = "[newname] (AI Eye)"
+
+			// Set ai pda name
+			if(AI.aiPDA)
+				AI.aiPDA.owner = newname
+				AI.aiPDA.name = newname + " (" + AI.aiPDA.ownjob + ")"
+
+			// Notify Cyborgs
 			for(var/mob/living/silicon/robot/Slave in AI.connected_robots)
 				Slave.show_laws()
 
@@ -330,22 +339,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 		if(cmptext("ai",role))
 			if(isAI(src))
-				var/mob/living/silicon/ai/A = src
 				oldname = null//don't bother with the records update crap
-				//world << "<b>[newname] is the AI!</b>"
-				//world << sound('sound/AI/newAI.ogg')
-				// Set eyeobj name
-				if(A.eyeobj)
-					A.eyeobj.name = "[newname] (AI Eye)"
-
-				// Set ai pda name
-				if(A.aiPDA)
-					A.aiPDA.owner = newname
-					A.aiPDA.name = newname + " (" + A.aiPDA.ownjob + ")"
-
-				// Notify Cyborgs
-				for(var/mob/living/silicon/robot/Slave in A.connected_robots)
-					Slave.show_laws()
 
 		if(cmptext("cyborg",role))
 			if(isrobot(src))
@@ -534,6 +528,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 /proc/key_name_admin(var/whom, var/include_name = 1)
 	return key_name(whom, 1, include_name)
+
+/proc/get_mob_by_ckey(var/key)
+	if(!key)
+		return
+	var/list/mobs = sortmobs()
+	for(var/mob/M in mobs)
+		if(M.ckey == key)
+			return M
 
 // Returns the atom sitting on the turf.
 // For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.

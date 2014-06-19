@@ -6,6 +6,9 @@
 		return 1
 	return 0
 
+/mob/living/carbon/human/canBeHandcuffed()
+	return 1
+
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(var/if_no_id = "No id", var/if_no_job = "No job")

@@ -8,12 +8,14 @@
 			maxHealth = 150
 			revive()
 			regenerate_icons()
-			name = "[colour] [is_adult ? "adult" : "baby"] slime ([rand(1, 1000)])"
+			number = rand(1, 1000)
+			name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
 			return
 
 	if(stat == DEAD)	return
 	stat = DEAD
 	icon_state = "[colour] baby slime dead"
+	overlays.len = 0
 	for(var/mob/O in viewers(src, null))
 		O.show_message("<b>The [name]</b> seizes up and falls limp...", 1) //ded -- Urist
 

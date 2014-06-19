@@ -122,7 +122,8 @@ proc
 		var/closed[] = new()
 		var/path[]
 		start = get_turf(start)
-		if(!start) return 0
+		if(!start)
+			return 0
 
 		open.Enqueue(new /PathNode(start,null,0,call(start,dist)(end)))
 
@@ -166,10 +167,7 @@ proc
 						continue
 
 				open.Enqueue(new /PathNode(d,cur,ng,call(d,dist)(end),cur.nt+1))
-				if(maxnodes && open.L.len > maxnodes)
-					open.L.Cut(open.L.len)
 		}
-
 		var/PathNode/temp
 		while(!open.IsEmpty())
 			temp = open.Dequeue()
@@ -179,6 +177,8 @@ proc
 			temp.bestF = 0
 			closed.Cut(closed.len)
 
+		if(path && maxnodes && path.len > maxnodes+1)
+			return 0
 		if(path)
 			for(var/i = 1; i <= path.len/2; i++)
 				path.Swap(i,path.len-i+1)

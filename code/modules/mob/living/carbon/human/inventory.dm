@@ -387,5 +387,3 @@
 		else
 			src << "\red You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"
 			return
-
->>>>>>> 7a042e8... Removes owner

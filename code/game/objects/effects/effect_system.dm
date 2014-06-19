@@ -34,6 +34,16 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		reagents.delete()
 	return
 
+/datum/effect/effect/proc/fadeOut(var/atom/A, var/frames = 16)
+	if(A.alpha == 0) //Handle already transparent case
+		return
+	if(frames == 0)
+		frames = 1 //We will just assume that by 0 frames, the coder meant "during one frame".
+	var/step = A.alpha / frames
+	for(var/i = 0, i < frames, i++)
+		A.alpha -= step
+		sleep(world.tick_lag)
+	return
 
 /obj/effect/effect/water/New()
 	..()
@@ -317,6 +327,7 @@ steam.start() -- spawns the effect
 					step(smoke,direction)
 				spawn(75+rand(10,30))
 					if(smoke)
+						fadeOut(smoke)
 						smoke.delete()
 					src.total_smoke--
 
@@ -417,7 +428,9 @@ steam.start() -- spawns the effect
 					sleep(10)
 					step(smoke,direction)
 				spawn(150+rand(10,30))
-					smoke.delete()
+					if(smoke)
+						fadeOut(smoke)
+						smoke.delete()
 					src.total_smoke--
 
 
@@ -548,6 +561,7 @@ steam.start() -- spawns the effect
 					step(smoke,direction)
 				spawn(150+rand(10,30))
 					if(smoke)
+						fadeOut(smoke)
 						smoke.delete()
 					src.total_smoke--
 
@@ -568,6 +582,7 @@ steam.start() -- spawns the effect
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
+	color = "#9C3636"
 
 /obj/effect/effect/sleep_smoke/New()
 	..()
@@ -582,7 +597,7 @@ steam.start() -- spawns the effect
 //		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal))  // I'll work on it later
 		else
 			M.drop_item()
-			M:sleeping += 1
+			M:sleeping += 5
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
@@ -598,7 +613,7 @@ steam.start() -- spawns the effect
 			return
 		else
 			M.drop_item()
-			M:sleeping += 1
+			M:sleeping += 5
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
@@ -643,7 +658,9 @@ steam.start() -- spawns the effect
 					sleep(10)
 					step(smoke,direction)
 				spawn(150+rand(10,30))
-					smoke.delete()
+					if(smoke)
+						fadeOut(smoke)
+						smoke.delete()
 					src.total_smoke--
 
 

@@ -336,20 +336,8 @@
 		if(3.0)
 			if (stat != 2)
 				adjustBruteLoss(30)
-
 	return
 
-
-/mob/living/silicon/robot/meteorhit(obj/O as obj)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\red [src] has been hit by [O]"), 1)
-		//Foreach goto(19)
-	if (health > 0)
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			adjustFireLoss(40)
-		updatehealth()
-	return
 
 
 /mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)

@@ -10,6 +10,7 @@ Head of Shitcurity
 /datum/job/hos
 	title = "Head of Security"
 	flag = HOS
+	department_head = list("Captain")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -58,6 +59,7 @@ Warden
 /datum/job/warden
 	title = "Warden"
 	flag = WARDEN
+	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -103,6 +105,7 @@ Detective
 /datum/job/detective
 	title = "Detective"
 	flag = DETECTIVE
+	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -118,8 +121,8 @@ Detective
 	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 
 /datum/job/detective/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/det(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/det(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/det_suit(H), slot_wear_suit)
@@ -146,6 +149,7 @@ Security Officer
 /datum/job/officer
 	title = "Security Officer"
 	flag = OFFICER
+	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 5

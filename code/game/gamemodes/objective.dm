@@ -308,8 +308,6 @@ datum/objective/steal/check_completion()
 				return 1
 	return 0
 
-
-
 var/global/list/possible_items_special = list()
 datum/objective/steal/special //ninjas are so special they get their own subtype good for them
 
@@ -321,6 +319,33 @@ datum/objective/steal/special/New()
 
 datum/objective/steal/special/find_target()
 	return set_target(pick(possible_items_special))
+
+
+
+datum/objective/steal/exchange
+	dangerrating = 10
+	var/faction //Exchange objectives: Which side are we on?
+	var/datum/mind/otheragent //Exchange objectives: The mind of the other party
+
+datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
+	if(faction == "red")
+		targetinfo = new/datum/objective_item/unique/docs_blue
+	else if(faction == "blue")
+		targetinfo = new/datum/objective_item/unique/docs_red
+	explanation_text = "Acquire [targetinfo.name] held by [otheragent], the Syndicate Agent"
+	steal_target = targetinfo.targetitem
+
+
+datum/objective/steal/exchange/backstab
+	dangerrating = 3
+
+datum/objective/steal/exchange/backstab/set_faction(faction)
+	if(faction == "red")
+		targetinfo = new/datum/objective_item/unique/docs_red
+	else if(faction == "blue")
+		targetinfo = new/datum/objective_item/unique/docs_blue
+	explanation_text = "Do not give up or lose [targetinfo.name]."
+	steal_target = targetinfo.targetitem
 
 
 

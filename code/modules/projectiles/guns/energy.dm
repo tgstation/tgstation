@@ -10,9 +10,8 @@
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 
 /obj/item/weapon/gun/energy/emp_act(severity)
-	power_supply.use(round(power_supply.maxcharge / severity))
+	power_supply.use(round(power_supply.charge / severity))
 	update_icon()
-	..()
 
 
 /obj/item/weapon/gun/energy/New()
@@ -34,20 +33,24 @@
 
 
 /obj/item/weapon/gun/energy/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
-	newshot()
+	newshot() //prepare a new shot
 	..()
 
 
 /obj/item/weapon/gun/energy/proc/newshot()
-	if (!ammo_type || !power_supply)	return
+	if (!ammo_type || !power_supply)
+		return
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if (!power_supply.use(shot.e_cost))	return
-	chambered = shot
-	chambered.newshot()
+	if(power_supply.charge >= shot.e_cost) //if there's enough power in the power_supply cell...
+		chambered = shot //...prepare a new shot based on the current ammo type selected
+		chambered.newshot()
 	return
 
 /obj/item/weapon/gun/energy/process_chamber()
-	chambered = null
+	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
+		var/obj/item/ammo_casing/energy/shot = chambered
+		power_supply.use(shot.e_cost)//... drain the power_supply cell
+	chambered = null //either way, released the prepared shot
 	return
 
 /obj/item/weapon/gun/energy/proc/select_fire(mob/living/user as mob)
@@ -57,7 +60,7 @@
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	if (shot.select_name)
-		user << "\red [src] is now set to [shot.select_name]."
+		user << "<span class='danger'>[src] is now set to [shot.select_name].</span>"
 	update_icon()
 	return
 

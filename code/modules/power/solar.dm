@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 #define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
 
@@ -25,21 +23,20 @@ var/list/solars_list = list()
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S, var/process = 1)
+/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc)
 	Make(S)
-	connect_to_network(process)
-
+	connect_to_network()
 
 /obj/machinery/power/solar/disconnect_from_network()
 	..()
 	solars_list.Remove(src)
 
-/obj/machinery/power/solar/connect_to_network(var/process)
-	..()
-	if(process)
-		solars_list.Add(src)
-
+/obj/machinery/power/solar/connect_to_network()
+	var/to_return = ..()
+	if(powernet) //if connected and not already in solar_list...
+		solars_list |= src			   //... add it
+	return to_return
 
 /obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
 	if(!S)
@@ -47,6 +44,8 @@ var/list/solars_list = list()
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.anchored = 1
 	S.loc = src
+	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
+		health *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
 	update_icon()
 
 
@@ -55,6 +54,7 @@ var/list/solars_list = list()
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user << "<span class='notice'>You begin to take the glass off the solar panel...</span>"
 		if(do_after(user, 50))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
@@ -106,21 +106,22 @@ var/list/solars_list = list()
 	if(obscured)
 		sunfrac = 0
 		return
-	var/p_angle = abs((360+adir)%360 - (360+sun.angle)%360)
+
+	//find the smaller angle between the direction the panel is facing and the direction of the sun (the sign is not important here)
+	var/p_angle = min(abs(adir - sun.angle), 360 - abs(adir - sun.angle))
+
 	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
 		sunfrac = 0
 		return
-	sunfrac = cos(p_angle) ** 2
 
+	sunfrac = cos(p_angle) ** 2
+	//isn't the power recieved from the incoming light proportionnal to cos(p_angle) (Lambert's cosine law) rather than cos(p_angle)^2 ?
 
 /obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
-	if(stat & BROKEN)	return
-	if(!control)	return
-
-	if(adir != ndir)
-		adir = (360+adir+dd_range(-10,10,ndir-adir))%360
-		update_icon()
-		update_solar_exposure()
+	if(stat & BROKEN)
+		return
+	if(!sun || !control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
+		return
 
 	if(obscured)	return
 
@@ -137,27 +138,23 @@ var/list/solars_list = list()
 	return
 
 
-/obj/machinery/power/solar/meteorhit()
-	if(stat & !BROKEN)
-		broken()
-	else
-		qdel(src)
-
-
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			qdel(src)
 			if(prob(15))
 				new /obj/item/weapon/shard( src.loc )
+			qdel(src)
 			return
+
 		if(2.0)
 			if (prob(25))
 				new /obj/item/weapon/shard( src.loc )
 				qdel(src)
 				return
+
 			if (prob(50))
 				broken()
+
 		if(3.0)
 			if (prob(25))
 				broken()
@@ -264,12 +261,12 @@ var/list/solars_list = list()
 	idle_power_usage = 250
 	var/id = 0
 	var/cdir = 0
+	var/targetdir = 0		// target angle in manual tracking (since it updates every game minute)
 	var/gen = 0
 	var/lastgen = 0
 	var/track = 0			// 0= off  1=timed  2=auto (tracker)
 	var/trackrate = 600		// 300-900 seconds
-	var/trackdir = 1		// 0 =CCW, 1=CW
-	var/nexttime = 0
+	var/nexttime = 0		// time for a panel to rotate of 1° in manual tracking
 
 
 /obj/machinery/power/solar_control/New()
@@ -283,9 +280,10 @@ var/list/solars_list = list()
 	solars_list.Remove(src)
 
 /obj/machinery/power/solar_control/connect_to_network()
-	..()
-	if(powernet)
-		solars_list.Add(src)
+	var/to_return = ..()
+	if(powernet) //if connected and not already in solar_list...
+		solars_list |= src //... add it
+	return to_return
 
 /obj/machinery/power/solar_control/initialize()
 	..()
@@ -324,7 +322,7 @@ var/list/solars_list = list()
 		if(2)
 			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Timed</A> <span class='linkOn'>Auto</span><BR>"
 
-	t += "Tracking Rate: [rate_control(src,"tdir","[trackrate] deg/h ([trackrate<0 ? "CCW" : "CW"])",5,30,180)]</div><BR>"
+	t += "Tracking Rate: [rate_control(src,"tdir","[trackrate] deg/h ([trackrate<0 ? "CCW" : "CW"])",1,30,180)]</div><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A>"
 
 	var/datum/browser/popup = new(user, "solar", name)
@@ -364,7 +362,6 @@ var/list/solars_list = list()
 		src.attack_hand(user)
 	return
 
-
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
 	gen = 0
@@ -372,19 +369,23 @@ var/list/solars_list = list()
 	if(stat & (NOPOWER | BROKEN))
 		return
 
-	if(track==1 && nexttime < world.timeofday && trackrate)
-		nexttime = world.timeofday + 3600/abs(trackrate)
-		cdir = (cdir+trackrate/abs(trackrate)+360)%360
-		set_panels(cdir)
+	if(track==1 && trackrate) //manual tracking and set a rotation speed
+		if(nexttime <= world.time) //every time we need to increase/decrease the angle by 1°...
+			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
+			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
 
 	src.updateDialog()
 
 
 // called by solar tracker when sun position changes
+// or called by the sun controller for manual tracking updates
 /obj/machinery/power/solar_control/proc/tracker_update(var/angle)
-	if(track != 2 || stat & (NOPOWER | BROKEN))
+	if(stat & (NOPOWER | BROKEN) || track == 0)
 		return
-	cdir = angle
+	if (track == 2) // auto-tracking (called by tracker.dm /set_angle)
+		cdir = angle
+	else if (trackrate) //else we're manual tracking. If we set a rotation speed...
+		cdir = targetdir //...the current direction is the targetted one (and rotates panels to it)
 	set_panels(cdir)
 	src.updateDialog()
 
@@ -399,29 +400,30 @@ var/list/solars_list = list()
 		usr.unset_machine()
 		return
 
-	if(href_list["dir"])
-		cdir = text2num(href_list["dir"])
-		set_panels(cdir)
-
 	if(href_list["rate control"])
 		if(href_list["cdir"])
 			src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
+			src.targetdir = src.cdir
+			if(track == 2) //manual update, so losing auto-tracking
+				track = 0
 			spawn(1)
 				set_panels(cdir)
 		if(href_list["tdir"])
 			src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(href_list["tdir"]))
-			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
+			if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
 
 	if(href_list["track"])
-		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
 			for(var/obj/machinery/power/tracker/T in powernet.nodes)
 				if(powernet.nodes[T])
-					cdir = T.sun_angle
+					T.set_angle(sun.angle)
 					break
+		else if (track == 1) //begin manual tracking
+			src.targetdir = src.cdir
+			if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
+			set_panels(targetdir)
 
-	set_panels(cdir)
 	src.updateUsrDialog()
 	return
 
@@ -433,7 +435,10 @@ var/list/solars_list = list()
 			if(get_dist(S, src) < SOLAR_MAX_DIST)
 				if(!S.control)
 					S.control = src
-				S.ndir = cdir
+				S.adir = cdir //instantly rotates the panel
+				S.update_icon() //and
+				S.update_solar_exposure() //update it
+
 	update_icon()
 
 
@@ -445,11 +450,6 @@ var/list/solars_list = list()
 /obj/machinery/power/solar_control/proc/broken()
 	stat |= BROKEN
 	update_icon()
-
-
-/obj/machinery/power/solar_control/meteorhit()
-	broken()
-	return
 
 
 /obj/machinery/power/solar_control/ex_act(severity)

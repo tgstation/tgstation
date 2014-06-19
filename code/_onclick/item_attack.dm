@@ -25,7 +25,7 @@
 	var/showname = "."
 	if(user)
 		showname = " by [user]!"
-	if(!(user in viewers(I, null)))
+	if(!(user in viewers(src, null)))
 		showname = "."
 
 	if(I.attack_verb && I.attack_verb.len)
@@ -34,20 +34,12 @@
 	else if(I.force)
 		src.visible_message("<span class='danger'>[src] has been attacked with [I][showname]</span>",
 		"<span class='userdanger'>[src] has been attacked with [I][showname]</span>")
-	if(!showname && user)
-		if(user.client)
-			user << "\red <B>You attack [src] with [I]. </B>"
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	return
 
-// Overrides the weapon attack so it can attack any atoms like when we want to have an effect on an object independent of attackby
-// It is a powerfull proc but it should be used wisely, if there is other alternatives instead use those
-// If it returns 1 it exits click code. Always . = 1 at start of the function if you delete src.
-/obj/item/proc/preattack(atom/target, mob/user, proximity_flag, click_parameters)
-	return
 
 obj/item/proc/get_clamped_volume()
 	if(src.force && src.w_class)
