@@ -380,14 +380,20 @@
 		playsound(get_turf(src), "sound/machines/heps.ogg", 100, 1)
 		affected.take_damage(burn = 5, used_weapon = "tachyon beam")
 		dudeinside << "<span class ='warning'>The tachyon stream burns your [affected.display_name]!</span>"
-		src.use_power(300)
-		if(prob(60))
-			if(istype(objh,/obj/item/weapon/implant/cancer))
+		src.use_power(1000)
+		var/rads = 3
+
+		if(istype(objh,/obj/item/weapon/implant/cancer))
+			if(prob(60))
 				affected.implants -= objh
 				dudeinside.contents -= objh
+		else
+			rads += 3
 		for(var/mob/living/carbon/O in viewers(src, null))
 			if(O != dudeinside)
 				O << "<span class ='warning'>You feel a mild stinging sensation as the tachyon beam activates.</span>"
-				O.apply_effect(3,IRRADIATE,0)
+				O.apply_effect(rads,IRRADIATE,0)
+				if(rads > 3)
+					usr << "<span class ='warning'>The tachyon refraction alarm goes off!</span>"
 	src.updateUsrDialog()
 	return
