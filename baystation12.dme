@@ -332,6 +332,7 @@
 #include "code\game\machinery\flasher.dm"
 #include "code\game\machinery\floodlight.dm"
 #include "code\game\machinery\Freezer.dm"
+#include "code\game\machinery\heps.dm"
 #include "code\game\machinery\hologram.dm"
 #include "code\game\machinery\holosign.dm"
 #include "code\game\machinery\hydroponics.dm"

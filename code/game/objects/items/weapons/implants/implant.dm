@@ -538,16 +538,17 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	desc = "A mass of cancerous cells"
 	icon_state = "cancer"
 	var/activation_emote = "cough"
-
+	var/is_dead = 0
+	w_class = 3
 	trigger(emote, mob/source as mob)
-		if (emote == src.activation_emote)
-			activate()
-		else
-			if(source:havecancer == 0)
-				if(prob(5))
-					source:havecancer = 1
-
+		if(!istype(source, /mob/living/carbon/human) || is_dead)
+			return
+		if (emote)
+			if(prob(5))
+				source:havecancer = 1
 	OnMobLife(mob/source as mob)
+		if(!istype(source, /mob/living/carbon/human) || is_dead)
+			return
 		if(prob(2) && source:havecancer == 1)
 			var/thisdmg = pick(1, 5, 10)
 			if(pick(0,1))
