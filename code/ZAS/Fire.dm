@@ -36,7 +36,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 		if(! (locate(/obj/fire) in src))
 
-			new /obj/fire(src,1000)
+			new /obj/fire(src)
 
 	return igniting
 
@@ -50,10 +50,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
-
 	layer = TURF_LAYER
-
-	var/firelevel = 10000 //Calculated by gas_mixture.calculate_firelevel()
 
 /obj/fire/process()
 	. = 1
@@ -91,7 +88,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		return
 
 	//get a firelevel and set the icon
-	firelevel = air_contents.calculate_firelevel(liquid)
+	var/firelevel = air_contents.calculate_firelevel(liquid)
 
 	if(firelevel > 6)
 		icon_state = "3"
@@ -128,7 +125,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 				//Spread the fire.
 				if(!(locate(/obj/fire) in enemy_tile))
 					if( prob( 50 + 50 * (firelevel/zas_settings.Get(/datum/ZAS_Setting/fire_firelevel_multiplier)) ) && S.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, S, 0,0))
-						new/obj/fire(enemy_tile,firelevel)
+						new/obj/fire(enemy_tile)
 
 	//seperate part of the present gas
 	//this is done to prevent the fire burning all gases in a single pass
@@ -152,11 +149,10 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 ///////////////////////////////// FLOW HAS BEEN REMERGED /// feel free to delete the fire again from here on //////////////////////////////////////////////////////////////////
 
 
-/obj/fire/New(newLoc,fl)
+/obj/fire/New()
 	. = ..()
 	dir = pick(cardinal)
 	SetLuminosity(3)
-	firelevel = fl
 	air_master.active_hotspots.Add(src)
 
 /obj/fire/Destroy()
