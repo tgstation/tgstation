@@ -235,7 +235,6 @@ var/global/list/uneatable = list(
 					var/list/handlist = list(H.l_hand, H.r_hand)
 					for(var/obj/item/hand in handlist)
 						if(prob(current_size * 5) && hand.w_class >= 5 - sizes_to_number["[current_size]"]  && H.unEquip(hand))
-							H.unEquip(hand)
 							step_towards(hand, src)
 							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"
 
