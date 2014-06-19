@@ -247,11 +247,10 @@
 			if(prob(30 - (accurate * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
-					if(human.dna && !human.dna.mutantrace)
+					if(human.dna && human.dna.species.id == "human")
 						M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
-						human.dna.mutantrace = "fly"
-						human.update_body()
-						human.update_hair()
+						human.dna.species = new /datum/species/fly()
+						human.regenerate_icons()
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 	return
 

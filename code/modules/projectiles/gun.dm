@@ -80,8 +80,8 @@
 				return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.dna && H.dna.mutantrace == "adamantine")
-				user << "<span class='notice'>Your metal fingers don't fit in the trigger guard!</span>"
+			if(H.dna && NOGUNS in H.dna.species.specflags)
+				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
 				return
 
 	add_fingerprint(user)

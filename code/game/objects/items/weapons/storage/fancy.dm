@@ -192,3 +192,28 @@
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "Dpacket"
 	item_state = "Dpacket"
+
+
+/obj/item/weapon/storage/fancy/rollingpapers
+	name = "rolling paper pack"
+	desc = "A pack of NanoTrasen brand rolling papers."
+	w_class = 1
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "cig_paper_pack"
+	storage_slots = 10
+	icon_type = "rolling papers"
+	can_hold = list(/obj/item/weapon/rollingpaper)
+
+/obj/item/weapon/storage/fancy/rollingpapers/update_icon()
+	if(!contents.len)
+		icon_state = "[initial(icon_state)]0"
+	else
+		icon_state = initial(icon_state)
+
+	desc = "There are [contents.len] papers\s left!"
+	return
+
+/obj/item/weapon/storage/fancy/rollingpapers/New()
+	..()
+	for(var/i = 1 to storage_slots)
+		new /obj/item/weapon/rollingpaper(src)

@@ -102,6 +102,7 @@ mob/living/carbon/human/proc/hat_fall_prob()
 	var/obj/item/organ/limb/picked = pick(parts)
 	if(picked.take_damage(brute,burn))
 		update_damage_overlays(0)
+
 	updatehealth()
 
 
@@ -128,6 +129,7 @@ mob/living/carbon/human/proc/hat_fall_prob()
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(var/brute, var/burn)
 	if(status_flags & GODMODE)	return	//godmode
+
 	var/list/obj/item/organ/limb/parts = get_damageable_organs()
 	var/update = 0
 	while(parts.len && (brute>0 || burn>0) )
@@ -143,7 +145,9 @@ mob/living/carbon/human/proc/hat_fall_prob()
 		burn	-= (picked.burn_dam - burn_was)
 
 		parts -= picked
+
 	updatehealth()
+
 	if(update)	update_damage_overlays(0)
 
 
@@ -159,34 +163,38 @@ mob/living/carbon/human/proc/hat_fall_prob()
 
 
 /mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
-	if((damagetype != BRUTE) && (damagetype != BURN))
-		..(damage, damagetype, def_zone, blocked)
-		return 1
-
-	blocked = (100-blocked)/100
-	if(blocked <= 0)	return 0
-
-	var/obj/item/organ/limb/organ = null
-	if(isorgan(def_zone))
-		organ = def_zone
+	if(dna)	// if you have a species, it will run the apply_damage code there instead
+		dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)
 	else
-		if(!def_zone)	def_zone = ran_zone(def_zone)
-		organ = get_organ(check_zone(def_zone))
-	if(!organ)	return 0
+		if((damagetype != BRUTE) && (damagetype != BURN))
+			..(damage, damagetype, def_zone, blocked)
+			return 1
 
-	damage = (damage * blocked)
+		else
+			blocked = (100-blocked)/100
+			if(blocked <= 0)	return 0
 
-	switch(damagetype)
-		if(BRUTE)
-			damageoverlaytemp = 20
-			if(organ.take_damage(damage, 0))
-				update_damage_overlays(0)
-		if(BURN)
-			damageoverlaytemp = 20
-			if(organ.take_damage(0, damage))
-				update_damage_overlays(0)
+			var/obj/item/organ/limb/organ = null
+			if(isorgan(def_zone))
+				organ = def_zone
+			else
+				if(!def_zone)	def_zone = ran_zone(def_zone)
+				organ = get_organ(check_zone(def_zone))
+			if(!organ)	return 0
 
-	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
+			damage = (damage * blocked)
 
-	updatehealth()
+			switch(damagetype)
+				if(BRUTE)
+					damageoverlaytemp = 20
+					if(organ.take_damage(damage, 0))
+						update_damage_overlays(0)
+				if(BURN)
+					damageoverlaytemp = 20
+					if(organ.take_damage(0, damage))
+						update_damage_overlays(0)
+
+		// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
+
+		updatehealth()
 	return 1
