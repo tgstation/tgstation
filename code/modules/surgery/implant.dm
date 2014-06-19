@@ -132,7 +132,7 @@
 			affected.wounds += I
 			affected.owner.custom_pain("You feel something rip in your [affected.display_name]!", 1)
 		user.drop_item()
-		affected.hidden = tool //depreciated?
+		affected.hidden = tool
 		tool.loc = target
 
 		if(istype(tool, /obj/item/weapon/implant))
