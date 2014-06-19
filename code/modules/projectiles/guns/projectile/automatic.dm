@@ -16,7 +16,7 @@
 	if(..() && chambered)
 		alarmed = 0
 
-/obj/item/weapon/gun/projectile/automatic/proc/empty_alarm()
+/obj/item/weapon/gun/projectile/automatic/proc/empty_alarm(mob/user)
 	playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
 	update_icon()
 	alarmed = 1
@@ -51,7 +51,7 @@
 /obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
-		proc/empty_alarm
+		empty_alarm(user)
 	return
 
 
@@ -145,7 +145,7 @@
 /obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
-		proc/empty_alarm
+		empty_alarm(user)
 	return
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
