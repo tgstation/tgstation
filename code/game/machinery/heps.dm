@@ -387,7 +387,7 @@
 			if(prob(60))
 				affected.implants -= objh
 				dudeinside.contents -= objh
-		else
+		else if(istype(objh,/obj/item/weapon/implant))
 			rads += 3
 		for(var/mob/living/carbon/O in viewers(src, null))
 			if(O != dudeinside)
