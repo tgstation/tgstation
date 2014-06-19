@@ -17,8 +17,7 @@
 
 /obj/item/device/ano_scanner/interact(var/mob/user as mob)
 	if(world.time - last_scan_time >= scan_delay)
-		spawn(0)
-			scan()
+		scan()
 
 	var/message = "Background radiation levels detected."
 
