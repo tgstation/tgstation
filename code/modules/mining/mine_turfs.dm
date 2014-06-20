@@ -72,8 +72,8 @@
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
 	icon_state = "rock"
-	var/mineralSpawnChanceList = list("Uranium" = 18, "Diamond" = 5, "Gold" = 12, "Silver" = 18, "Plasma" = 25, "Iron" = 40, "Gibtonite" = 2/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
-	var/mineralChance = 17
+	var/mineralSpawnChanceList = list("Uranium" = 18, "Diamond" = 3, "Gold" = 12, "Silver" = 16, "Plasma" = 25, "Iron" = 40, "Gibtonite" = 2/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralChance = 16
 
 /turf/simulated/mineral/random/New()
 	..()
@@ -117,19 +117,10 @@
 	icon_state = "rock"
 	..()
 
-/turf/simulated/mineral/random/clown
-	icon_state = "rock_highchance"
-	mineralChance = 25
-	mineralSpawnChanceList = list("Clown" = 50)
-
-/turf/simulated/mineral/random/clown/New()
-	icon_state = "rock"
-	..()
-
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 8
-	mineralSpawnChanceList = list("Uranium" = 8, "Diamond" = 2, "Gold" = 4, "Silver" = 8, "Plasma" = 20, "Iron" = 40, "Gibtonite" = 1)
+	mineralSpawnChanceList = list("Uranium" = 8, "Diamond" = 2, "Gold" = 4, "Silver" = 6, "Plasma" = 20, "Iron" = 40, "Gibtonite" = 1)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
@@ -364,7 +355,7 @@
 	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
-		for(var/atom/A in range(30,T))//Lowers chance of mob clumps
+		for(var/atom/A in range(20,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)
