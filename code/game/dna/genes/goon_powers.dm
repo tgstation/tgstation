@@ -339,7 +339,7 @@
 
 /obj/effect/proc_holder/spell/targeted/leap/cast(list/targets)
 	var/failure = 0
-	if (istype(usr.loc,/mob/))
+	if (istype(usr.loc,/mob/) || usr.lying || usr.stunned || usr.buckled || usr.stat)
 		usr << "\red You can't jump right now!"
 		return
 
