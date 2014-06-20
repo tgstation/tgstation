@@ -1,7 +1,7 @@
 /**********************Mineral deposits**************************/
 
-/datum/controller/game_controller/var/list/artifact_spawning_turfs = list()
-var/list/artifact_spawn = list() // Runtime fix for geometry loading before controller is instantiated.
+/datum/controller/game_controller
+	var/list/artifact_spawning_turfs = list()
 
 /turf/unsimulated/mineral //wall piece
 	name = "Rock"
