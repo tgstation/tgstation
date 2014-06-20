@@ -183,22 +183,30 @@
 			var/mob/living/M = G.affecting
 			var/state = G.state
 			del(W)	//gotta delete it here because if window breaks, it won't get deleted
+			var/damage
 			switch (state)
 				if(1)
 					M.apply_damage(7)
+					damage = 7
 					hit(10)
 					visible_message("\red [user] slams [M] against \the [src]!")
 				if(2)
 					if (prob(50))
 						M.Weaken(1)
 					M.apply_damage(10)
+					damage = 10
 					hit(25)
 					visible_message("\red <b>[user] bashes [M] against \the [src]!</b>")
 				if(3)
 					M.Weaken(5)
 					M.apply_damage(20)
+					damage = 20
 					hit(50)
 					visible_message("\red <big><b>[user] crushes [M] against \the [src]!</b></big>")
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been window slammed by [user.name] ([user.ckey]) for [damage] damage.</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Window slammed [M.name] for [damage] damage.</font>")
+			msg_admin_attack("[user.name] ([user.ckey]) window slammed [M.name] ([M.ckey]) for [damage] damage (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			log_attack("[user.name] ([user.ckey]) window slammed [M.name] ([M.ckey]) for [damage] damage (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			return
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)
