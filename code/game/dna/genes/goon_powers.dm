@@ -54,7 +54,7 @@
 		if(!istype(T))
 			return
 		if(T.lighting_lumcount <= 2)
-			M.alpha = 0
+			M.alpha -= 25
 		else
 			M.alpha = round(255 * 0.80)
 
@@ -70,7 +70,7 @@
 
 	OnMobLife(var/mob/M)
 		if((world.time - M.last_movement) >= 30 && !M.stat && M.canmove && !M.restrained())
-			M.alpha = 0
+			M.alpha -= 25
 		else
 			M.alpha = round(255 * 0.80)
 
@@ -147,12 +147,26 @@
 	if (M_RESIST_COLD in C.mutations)
 		C.visible_message("\red A cloud of fine ice crystals engulfs [C.name], but disappears almost instantly!")
 		return
+	var/handle_suit = 0
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(istype(H.head, /obj/item/clothing/head/helmet/space))
+			if(istype(H.wear_suit, /obj/item/clothing/suit/space))
+				handle_suit = 1
+				if(H.internal)
+					H.visible_message("\red A cloud of fine ice crystals engulfs [H]!",
+										"<span class='notice'>A cloud of fine ice crystals cover your [H.head]'s visor.</span>")
+				else
+					H.visible_message("\red A cloud of fine ice crystals engulfs [H]!",
+										"<span class='warning'>A cloud of fine ice crystals cover your [H.head]'s visor and make it into your air vents!.</span>")
+					H.bodytemperature = max(0, H.bodytemperature - 50)
+					H.adjustFireLoss(5)
+	if(!handle_suit)
+		C.bodytemperature = max(0, C.bodytemperature - 100)
+		C.adjustFireLoss(10)
+		C.ExtinguishMob()
 
-	C.bodytemperature = 0
-	C.adjustFireLoss(20)
-	C.ExtinguishMob()
-
-	C.visible_message("\red A cloud of fine ice crystals engulfs [C]!")
+		C.visible_message("\red A cloud of fine ice crystals engulfs [C]!")
 
 	//playsound(usr.loc, 'bamf.ogg', 50, 0)
 
@@ -317,20 +331,41 @@
 	include_user = 1
 
 	charge_type = "recharge"
-	charge_max = 30
+	charge_max = 60
 
 	clothes_req = 0
 	stat_allowed = 0
 	invocation_type = "none"
 
 /obj/effect/proc_holder/spell/targeted/leap/cast(list/targets)
+	var/failure = 0
 	if (istype(usr.loc,/mob/))
 		usr << "\red You can't jump right now!"
 		return
 
 	if (istype(usr.loc,/turf/))
+
+
+		if(usr.restrained())//Why being pulled while cuffed prevents you from moving
+			for(var/mob/M in range(usr, 1))
+				if(M.pulling == usr)
+					if(!M.restrained() && M.stat == 0 && M.canmove && usr.Adjacent(M))
+						failure = 1
+					else
+						M.stop_pulling()
+
+		if(usr.pinned.len)
+			failure = 1
+
 		usr.visible_message("\red <b>[usr.name]</b> takes a huge leap!")
 		playsound(usr.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
+		if(failure)
+			usr.Weaken(5)
+			usr.Stun(5)
+			usr.visible_message("<span class='warning'> \the [usr] attempts to leap away but is slammed back down to the ground!</span>",
+								"<span class='warning'>You attempt to leap away but are suddenly slammed back down to the ground!</span>",
+								"<span class='notice'>You hear the flexing of powerful muscles and suddenly a crash as a body hits the floor.</span>")
+			return 0
 		var/prevLayer = usr.layer
 		usr.layer = 9
 

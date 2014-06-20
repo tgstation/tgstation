@@ -163,12 +163,20 @@
 			sleep(5)
 			del(animation)
 
-	for(var/mob/living/carbon/M in oviewers(3, null))
+	for(var/mob/living/carbon/M in viewers(3, null))
 		if(prob(50))
 			if (locate(/obj/item/weapon/cloaking_device, M))
 				for(var/obj/item/weapon/cloaking_device/S in M)
 					S.active = 0
 					S.icon_state = "shield0"
+		if(M.alpha < 255)
+			var/oldalpha = M.alpha
+			if(prob(80))
+				M.alpha = 255
+				M.visible_message("<span class='warning'>[M] suddenly becomes fully visible!</span>",\
+								"<span class='warning'>You see a bright flash of light and are suddenly fully visible again.</span>")
+				spawn(10)
+					M.alpha = oldalpha
 		var/safety = M:eyecheck()
 		if(!safety)
 			if(!M.blinded)
