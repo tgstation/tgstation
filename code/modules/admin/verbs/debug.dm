@@ -1137,3 +1137,15 @@ var/global/list/g_fancy_list_of_safe_types = null
 			usr << list2text(clients,",")
 		if("Joined Clients")
 			usr << list2text(joined_player_list,",")
+
+/client/proc/cmd_display_del_log()
+	set category = "Debug"
+	set name = "Display del() Log"
+	set desc = "Displays a list of things that have failed to GC this round"
+
+	var/dat = "<B>List of things that failed to GC this round</B><BR><BR>"
+
+	for(var/path in garbage.logging)
+		dat += "[path] - [garbage.logging[path]] times<BR>"
+
+	usr << browse(dat, "window=dellog")
