@@ -1276,7 +1276,7 @@
 	//////////
 
 	proc/handle_fire(var/mob/living/carbon/human/H)
-		if(HEATRES in specflags || NOFIRE in specflags)
+		if((HEATRES in specflags) || (NOFIRE in specflags))
 			return
 		if(H.fire_stacks < 0)
 			H.fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
