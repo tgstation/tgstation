@@ -73,7 +73,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(11)	underwear = "Ladies Kinky"
 				if(12)	underwear = "Tankini"
 				if(13)	underwear = "Nude"
-		if(!pref_species in species_list)
+		if(!(pref_species in species_list))
 			pref_species = new /datum/species/human()
 	return
 
@@ -192,9 +192,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
-	if(!pref_species in species_list)
+	if(!(pref_species in species_list))
 		pref_species = new /datum/species/human()
-		world << "[pref_species] is the species"
 	if(!real_name)	real_name = random_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
