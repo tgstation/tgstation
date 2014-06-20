@@ -464,12 +464,16 @@ obj/structure/door_assembly
 			src.anchored = 0
 
 	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
-		var/obj/item/stack/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/C = W
+		if (C.get_amount() < 1)
+			user << "<span class='warning'>You need one length of cable to wire the airlock assembly.</span>"
+			return
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
 		if(do_after(user, 40))
-			coil.use(1)
+			if(C.get_amount() < 1 || state != 0) return
+			C.use(1)
 			src.state = 1
-			user << "<span class='notice'> You've wired the airlock assembly.</span>"
+			user << "<span class='notice'>You've wired the airlock assembly.</span>"
 			src.name = "wired airlock assembly"
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
@@ -522,12 +526,13 @@ obj/structure/door_assembly
 	else if(istype(W, /obj/item/stack/sheet) && !mineral)
 		var/obj/item/stack/sheet/G = W
 		if(G)
-			if(G.amount>=1)
+			if(G.get_amount() >= 1)
 				if(G.type == /obj/item/stack/sheet/rglass)
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", "You start to install [G.name] into the airlock assembly.")
 					if(do_after(user, 40))
-						user << "<span class='notice'> You've installed reinforced glass windows into the airlock assembly.</span>"
+						if(G.get_amount() < 1 || mineral) return
+						user << "<span class='notice'>You've installed reinforced glass windows into the airlock assembly.</span>"
 						G.use(1)
 						mineral = "glass"
 						name = "near finished window airlock assembly"
@@ -545,11 +550,12 @@ obj/structure/door_assembly
 						glass_base_icon_state = "door_as_g[icontext]"
 				else if(istype(G, /obj/item/stack/sheet/mineral))
 					var/M = G.sheettype
-					if(G.amount>=2)
+					if(G.get_amount() >= 2)
 						playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 						user.visible_message("[user] adds [G.name] to the airlock assembly.", "You start to install [G.name] into the airlock assembly.")
 						if(do_after(user, 40))
-							user << "<span class='notice'> You've installed [M] plating into the airlock assembly.</span>"
+							if(G.get_amount() < 2 || mineral) return
+							user << "<span class='notice'>You've installed [M] plating into the airlock assembly.</span>"
 							G.use(2)
 							mineral = "[M]"
 							name = "near finished [M] airlock assembly"

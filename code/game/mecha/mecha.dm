@@ -703,12 +703,11 @@
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 			var/obj/item/stack/cable_coil/CC = W
-			if(CC.amount > 1)
-				CC.use(2)
+			if(CC.use(2))
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
-				user << "You replace the fused wires."
+				user << "<span class='notice'>You replace the fused wires.</span>"
 			else
-				user << "There's not enough wire to finish the task."
+				user << "<span class='warning'>You need two lengths of cable to fix this mecha.</span>"
 		return
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))

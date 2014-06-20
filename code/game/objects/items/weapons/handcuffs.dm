@@ -88,15 +88,15 @@
 	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
-		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
-		R.use(1)
-
-		user.unEquip(src)
-
-		user.put_in_hands(W)
-		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
-
-		qdel(src)
+		if (R.use(1))
+			var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
+			user.unEquip(src)
+			user.put_in_hands(W)
+			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
+			qdel(src)
+		else
+			user << "<span class='warning'>You need one rod to make a wired rod.</span>"
+			return
 
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
