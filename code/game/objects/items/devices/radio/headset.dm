@@ -56,9 +56,9 @@
 
 /obj/item/device/radio/headset/headset_sec
 	name = "security radio headset"
-	desc = "This is a robust headset used by your elite security force. To access the security channel, use :s."
+	desc = "This is used by your elite security force. To access the security channel, use :s."
 	icon_state = "sec_headset"
-	item_state = "null"
+	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sec
 
 /obj/item/device/radio/headset/headset_eng
@@ -120,8 +120,8 @@
 /obj/item/device/radio/headset/heads/hos
 	name = "\proper the head of security's headset"
 	desc = "The headset of the man in charge of keeping order and protecting the station. To access the security channel, use :s. For command, use :c."
-	icon_state = "hos_headset"
-	item_state = "null"
+	icon_state = "com_headset"
+	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/hos
 
 /obj/item/device/radio/headset/heads/ce
@@ -165,6 +165,20 @@
 	icon_state = "cent_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
+
+/obj/item/device/radio/headset/headset_sec_alt
+	name = "security bowman headset"
+	desc = "A tactical version of the classic radio headset with secured straps used by security. To access the security channel, use :s."
+	icon_state = "sec_headset_alt"
+	item_state = "null"
+	keyslot2 = new /obj/item/device/encryptionkey/headset_sec
+
+/obj/item/device/radio/headset/heads/hos_alt
+	name = "\proper the head of security's bowman headset"
+	desc = "A tactical version of the classic radio headset for the man in charge of keeping the station secure. To access the security channel, use :s. For command, use :c."
+	icon_state = "com_headset_alt"
+	item_state = "null"
+	keyslot2 = new /obj/item/device/encryptionkey/heads/hos
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
