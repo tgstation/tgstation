@@ -10,10 +10,11 @@
 	WORLD_X_OFFSET=rand(-50,50)
 	WORLD_Y_OFFSET=rand(-50,50)
 
+	/*Runtimes, not sure if i need it still so commenting out for now
 	starticon = rotate_icon('icons/obj/lightning.dmi', "lightningstart")
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
 	endicon = rotate_icon('icons/obj/lightning.dmi', "lightningend")
-
+	*/
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")

@@ -64,7 +64,7 @@
 			possible and your patients are depending on you.<br><br>\
 			Once the patient has undergone radiation treatment you may proceed with<br>\
 			removal of the tumors, but it is possible for a patient to live with them<br>\
-			if surgery is deemed too risky or if patient is low risk for relapse.<br><br>\
+			if surgery or H.E.P.S. is too risky or if the patient is low risk for relapse.<br><br>\
 			Phalanximine is the chemotherapy agent you will use to treat your patients.<br>\
 			30 units should be sufficient to raise your patient's rad level while keeping<br>\
 			their blood toxins low. A follow up treatment of anti-toxin may be required.<br><br>\
