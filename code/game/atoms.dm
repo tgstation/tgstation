@@ -73,19 +73,11 @@
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
 
-	tag = null
-	gcDestroyed = "Bye world!"
+	..()
 
 /atom/New()
 	. = ..()
 	AddToProfiler()
-
-/atom/Del()
-	// Pass to Destroy().
-	if (isnull(gcDestroyed))
-		Destroy()
-
-	..()
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null

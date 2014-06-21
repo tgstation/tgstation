@@ -25,16 +25,23 @@ var/global/datum/controller/garbage_collector/garbage
 
 		garbage = src
 
-/datum/controller/garbage_collector/proc/addTrash(const/atom/movable/AM)
-	if (isnull(AM))
+/datum/controller/garbage_collector/proc/addTrash(const/datum/D)
+	if (isnull(D))
 		return
 
 	if (del_everything)
-		del AM
+		del D
 		hard_dels++
 		dels_count++
 		return
 
+	if(!istype(D, /atom/movable))
+		del D
+		hard_dels++
+		dels_count++
+		return
+
+	var/atom/movable/AM = D
 	var/timeofday = world.timeofday
 	AM.timeDestroyed = timeofday
 	queue -= "\ref[AM]"
@@ -43,31 +50,31 @@ var/global/datum/controller/garbage_collector/garbage
 /datum/controller/garbage_collector/proc/process()
 	processing = 1
 
-	spawn (0)
+	spawn(0)
 		var/remainingCollectionPerTick
 		var/remainingForceDelPerTick
 		var/collectionTimeScope
 
-		while (1)
+		while(1)
 			iteration++
 
-			if (processing)
+			if(processing)
 				remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
 				remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
 				collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
 
-				while (queue.len && --remainingCollectionPerTick >= 0)
+				while(queue.len && --remainingCollectionPerTick >= 0)
 					var/refID = queue[1]
 					var/destroyedAtTime = queue[refID]
 
-					if (destroyedAtTime > collectionTimeScope)
+					if(destroyedAtTime > collectionTimeScope)
 						break
 
-					var/atom/A = locate(refID)
+					var/atom/movable/A = locate(refID)
 
 					// Something's still referring to the qdel'd object. Kill it.
-					if (A && A.timeDestroyed == destroyedAtTime)
-						if (remainingForceDelPerTick <= 0)
+					if(A && A.timeDestroyed == destroyedAtTime)
+						if(remainingForceDelPerTick <= 0)
 							break
 
 						#ifdef GC_DEBUG
@@ -120,18 +127,11 @@ var/global/datum/controller/garbage_collector/garbage
 	if (isnull(D.gcDestroyed))
 		// Let our friend know they're about to get fucked up.
 		D.Destroy()
-
-		if (D)
-			if (isturf(D))
-				del D
-				return
-
-			garbage.addTrash(D)
+		garbage.addTrash(D)
 
 /datum
 	// Garbage collection (qdel).
 	var/gcDestroyed
-	var/timeDestroyed
 
 /datum/controller
 	var/processing = 0
@@ -145,6 +145,10 @@ var/global/datum/controller/garbage_collector/garbage
 	tag = "[type]:NOGC"
 
 /datum/Del()
+	// Pass to Destroy().
+	if(isnull(gcDestroyed))
+		Destroy()
+
 	sleep(-1)
 	..()
 
@@ -153,11 +157,8 @@ var/global/datum/controller/garbage_collector/garbage
  * Called BEFORE qdel moves shit.
  */
 /datum/proc/Destroy()
-	del src
-
-/datum/controller/Destroy()
 	tag = null
-	..()
+	gcDestroyed = "Bye world!"
 
 /client/proc/qdel_toggle()
 	set name = "Toggle qdel Behavior"
