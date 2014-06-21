@@ -69,10 +69,11 @@
 	return L
 
 /obj/item/weapon/storage/proc/show_to(mob/user as mob)
-	if(user.s_active != src)
-		for(var/obj/item/I in src)
-			if(I.on_found(user))
-				return
+	if(isliving(user))
+		if(user.s_active != src)
+			for(var/obj/item/I in src)
+				if(I.on_found(user))
+					return
 	if(user.s_active)
 		user.s_active.hide_from(user)
 	user.client.screen -= src.boxes
