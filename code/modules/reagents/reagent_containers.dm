@@ -62,9 +62,9 @@
 			var/who = (isnull(user) || eater == user) ? "your" : "their"
 
 			if(istype(cover, /obj/item/clothing/mask/))
-				user << "<span class='notice'>You have to remove [who] mask first!</span>"
+				user << "<span class='warning'>You have to remove [who] mask first!</span>"
 			else
-				user << "<span class='notice'>You have to remove [who] helmet first!</span>"
+				user << "<span class='warning'>You have to remove [who] helmet first!</span>"
 
 			return 0
 	return 1

@@ -1,10 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
-var/global/list/uneatable = list(
-	/turf/space,
-	/obj/effect/overlay
-	)
-
 /obj/machinery/singularity
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
@@ -31,7 +26,9 @@ var/global/list/uneatable = list(
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/teleport_del = 0
+	var/sizes_to_number = list("1" = 0, "3" = 1, "5" = 2, "7" = 3, "9" = 4) //so i dont have to mess around with weirdass formulas to get this done.
 	var/last_warning
+	var/list/uneatable = list(/turf/space, /obj/effect/overlay)
 
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -233,7 +230,7 @@ var/global/list/uneatable = list(
 				if(current_size >= 5)
 					var/list/handlist = list(H.l_hand, H.r_hand)
 					for(var/obj/item/hand in handlist)
-						if(prob(current_size * 5) && hand.w_class <= 2 && H.unEquip(hand))
+						if(prob(current_size * 5) && hand.w_class >= 5 - sizes_to_number["[current_size]"]  && H.unEquip(hand))
 							step_towards(hand, src)
 							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"
 
@@ -477,6 +474,7 @@ var/global/list/uneatable = list(
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
+	uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
@@ -495,6 +493,12 @@ var/global/list/uneatable = list(
 	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
 	if(emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall
+
+
+/obj/machinery/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
+	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
+	new /obj/effect/effect/sleep_smoke(user.loc)
+
 
 /obj/machinery/singularity/narsie/process()
 	eat()
@@ -538,8 +542,11 @@ var/global/list/uneatable = list(
 
 	if(istype(A,/mob/living/))
 		var/mob/living/C = A
+		if(C.client)
+			makeNewConstruct(/mob/living/simple_animal/construct/harvester, C, null, 1)
 		C.spawn_dust()
 		C.gib()
+		return
 
 	if(isturf(A))
 		var/turf/T = A
@@ -550,35 +557,33 @@ var/global/list/uneatable = list(
 			if(prob(20)) T.ChangeTurf(/turf/simulated/wall/cult)
 	return
 
+
 /obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
 	return
 
+
 /obj/machinery/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
 	var/list/cultists = list()
-	for(var/datum/mind/cult_nh_mind in ticker.mode.cult)
-		if(!cult_nh_mind.current)
-			continue
-		if(cult_nh_mind.current.stat)
-			continue
-		var/turf/pos = get_turf(cult_nh_mind.current)
-		if(pos.z != src.z)
-			continue
-		cultists += cult_nh_mind.current
-	if(cultists.len)
-		acquire(pick(cultists))
-		return
-		//If there was living cultists, it picks one to follow.
-	for(var/mob/living/carbon/human/food in living_mob_list)
-		if(food.stat)
-			continue
+	var/list/noncultists = list()
+	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
 		if(pos.z != src.z)
 			continue
-		cultists += food
-	if(cultists.len)
-		acquire(pick(cultists))
-		return
-		//no living cultists, pick a living human instead.
+
+		if(iscultist(food))
+			cultists += food
+		else
+			noncultists += food
+
+		if(cultists.len) //cultists get higher priority
+			acquire(pick(cultists))
+			return
+
+		if(noncultists.len)
+			acquire(pick(noncultists))
+			return
+
+	//no living humans, follow a ghost instead.
 	for(var/mob/dead/observer/ghost in player_list)
 		if(!ghost.client)
 			continue
@@ -589,7 +594,7 @@ var/global/list/uneatable = list(
 	if(cultists.len)
 		acquire(pick(cultists))
 		return
-		//no living humans, follow a ghost instead.
+
 
 /obj/machinery/singularity/narsie/proc/acquire(var/mob/food)
 	target << "\blue <b>NAR-SIE HAS LOST INTEREST IN YOU</b>"

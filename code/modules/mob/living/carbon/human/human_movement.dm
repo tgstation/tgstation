@@ -1,29 +1,6 @@
 /mob/living/carbon/human/movement_delay()
-	if(!has_gravity(src))
-		return -1	//It's hard to be slowed down in space by... anything
-	else if(status_flags & GOTTAGOFAST)
-		return -1
-
-	. = 0
-	var/health_deficiency = (100 - health + staminaloss)
-	if(health_deficiency >= 40)
-		. += (health_deficiency / 25)
-
-	var/hungry = (500 - nutrition) / 5	//So overeat would be 100 and default level would be 80
-	if(hungry >= 70)
-		. += hungry / 50
-
-	if(wear_suit)
-		. += wear_suit.slowdown
-	if(shoes)
-		. += shoes.slowdown
-	if(back)
-		. += back.slowdown
-
-	if(FAT in mutations)
-		. += 1.5
-	if(bodytemperature < 283.222)
-		. += (283.222 - bodytemperature) / 10 * 1.75
+	if(dna)
+		. += dna.species.movement_delay(src)
 
 	. += ..()
 	. += config.human_delay

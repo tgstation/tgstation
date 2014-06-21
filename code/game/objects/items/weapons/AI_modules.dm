@@ -279,8 +279,8 @@ AI MODULES
 /********************* Custom *********************/
 
 /obj/item/weapon/aiModule/core/full/custom
-	name = "Custom Core AI Module"
-	desc = "A core AI module that is adjusted to fit each station's needs."
+	name = "Default Core AI Module"
+	desc = "A core AI module custom-made for each station by Nanotrasen."
 	origin_tech = "programming=3;materials=4" //Should be the same as asimov, considering that this is the "default" lawset.
 
 /obj/item/weapon/aiModule/core/full/custom/New()

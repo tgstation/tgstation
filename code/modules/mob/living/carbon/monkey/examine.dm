@@ -43,7 +43,7 @@
 		msg += "</span>"
 
 	if (src.digitalcamo)
-		msg += "It is repulsively uncanny!\n"
+		msg += "It is moving its body in an unnatural and blatantly unsimian manner.\n"
 
 	msg += "*---------*</span>"
 

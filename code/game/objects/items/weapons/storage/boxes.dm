@@ -470,25 +470,15 @@
 	w_class = 1
 	slot_flags = SLOT_BELT
 
-	New()
-		..()
-		for(var/i=1; i <= storage_slots; i++)
-			new /obj/item/weapon/match(src)
+/obj/item/weapon/storage/box/matches/New()
+	..()
+	for(var/i=1; i <= storage_slots; i++)
+		new /obj/item/weapon/match(src)
 
-	attackby(obj/item/weapon/match/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/match) && W.lit == 0)
-			W.lit = 1
-			W.icon_state = "match_lit"
-			W.damtype = "fire"
-			W.force = 3
-			W.hitsound = 'sound/items/welder.ogg'
-			W.item_state = "cigon"
-			W.name = "lit match"
-			W.desc = "A match. This one is lit."
-			W.attack_verb = list("burnt","singed")
-			processing_objects.Add(W)
-		W.update_icon()
-		return
+/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/match))
+		W.matchignite()
+	return
 
 /obj/item/weapon/storage/box/lights
 	name = "box of replacement bulbs"
