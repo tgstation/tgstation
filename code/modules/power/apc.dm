@@ -877,7 +877,7 @@
 					malfai.malfhacking = 0
 					locked = 1
 					if (ticker.mode.config_tag == "malfunction")
-						if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+						if (STATION_Z == z)
 							ticker.mode:apcs++
 					if(usr:parent)
 						src.malfai = usr:parent
@@ -909,7 +909,7 @@
 
 	if(malfai)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (STATION_Z == z)
 				operating ? ticker.mode:apcs++ : ticker.mode:apcs--
 
 	src.update()
@@ -924,7 +924,7 @@
 	if(!malf.can_shunt)
 		malf << "<span class='warning'>You cannot shunt.</span>"
 		return
-	if(src.z != 1)
+	if(STATION_Z != z)
 		return
 	src.occupant = new /mob/living/silicon/ai(src,malf.laws,null,1)
 	src.occupant.adjustOxyLoss(malf.getOxyLoss())
@@ -973,7 +973,7 @@
 
 /obj/machinery/power/apc/proc/ion_act()
 	//intended to be exactly the same as an AI malf attack
-	if(!src.malfhack && src.z == 1)
+	if(!src.malfhack && STATION_Z == z)
 		if(prob(3))
 			src.locked = 1
 			if (src.cell.charge > 0)
@@ -1240,7 +1240,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (STATION_Z == z)
 				ticker.mode:apcs--
 	stat |= BROKEN
 	operating = 0
@@ -1266,7 +1266,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 /obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (STATION_Z == z)
 				ticker.mode:apcs--
 	areaMaster.power_light = 0
 	areaMaster.power_equip = 0
