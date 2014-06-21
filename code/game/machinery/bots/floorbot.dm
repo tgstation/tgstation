@@ -110,7 +110,7 @@
 			src.updateicon()
 		else
 			user << "<span class='warning'>You need at least one floor tile to put into the floorbot.</span>"
-	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(is_id(W))
 		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked
 			user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"

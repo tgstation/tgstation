@@ -175,7 +175,7 @@ Auto Patrol: []"},
 			src.updateUsrDialog()
 
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(is_id(W))
 		if(src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
