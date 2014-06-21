@@ -123,13 +123,13 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/mcolor)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(mindref)
-	if(!istype(clonemind,/datum/mind))	//not a mind
+	if(!istype(clonemind))	//not a mind
 		return 0
 	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
 		return 0
@@ -137,13 +137,13 @@
 		if( ckey(clonemind.key)!=ckey )
 			return 0
 	else
-		for(var/mob/dead/observer/G in player_list)
-			if(G.ckey == ckey)
-				if(G.can_reenter_corpse)
-					break
-				else
-					return 0
-
+		for(var/mob/M in player_list)
+			if(M.ckey == ckey)
+				if(istype(M, /mob/dead/observer))
+					var/mob/dead/observer/G = M
+					if(G.can_reenter_corpse)
+						break
+				return 0
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1
@@ -188,7 +188,8 @@
 
 	// -- End mode specific stuff
 
-	hardset_dna(H, ui, se, null, mrace)
+	hardset_dna(H, ui, se, null, null, mrace, mcolor)
+
 	if(efficiency > 2)
 		for(var/A in bad_se_blocks)
 			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
@@ -202,6 +203,8 @@
 	else
 		H.facial_hair_style = "Shaved"
 	H.hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+
+	H.regenerate_icons()
 
 	H.suiciding = 0
 	src.attempting = 0

@@ -3,14 +3,14 @@
 
 /obj/machinery/mineral/ore_redemption
 	name = "ore redemption machine"
-	desc = "A machine that accepts ore and instantly transforms it into workable material sheets, but cannot produce alloys such as Plasteel. Points for ore are generated based on type and can be redeemed at a mining equipment locker."
+	desc = "A machine that accepts ore and instantly transforms it into workable material sheets, but cannot produce alloys such as Plasteel. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
 	density = 1
 	anchored = 1.0
 	input_dir = WEST
 	output_dir = SOUTH
-	req_one_access = list(access_mining_station, access_chemistry, access_bar, access_research, access_ce, access_virology)
+	req_access = list(access_mineral_storeroom)
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
@@ -145,11 +145,11 @@
 /obj/machinery/mineral/ore_redemption/ex_act()
 	return //So some chucklefuck doesn't ruin miners reward with an explosion
 
-/**********************Mining Equipment Locker**************************/
+/**********************Mining Equipment Vendor**************************/
 
-/obj/machinery/mineral/equipment_locker
-	name = "mining equipment locker"
-	desc = "An equipment locker for miners, points collected at an ore redemption machine can be spent here."
+/obj/machinery/mineral/equipment_vendor
+	name = "mining equipment vendor"
+	desc = "An equipment vendor for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
 	density = 1
@@ -184,14 +184,14 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_locker/attack_hand(user as mob)
+/obj/machinery/mineral/equipment_vendor/attack_hand(user as mob)
 	if(..())
 		return
 	interact(user)
 
-/obj/machinery/mineral/equipment_locker/interact(mob/user)
+/obj/machinery/mineral/equipment_vendor/interact(mob/user)
 	var/dat
-	dat += text("<b>Mining Equipment Locker</b><br><br>")
+	dat += text("<b>Mining Equipment vendor</b><br><br>")
 
 	if(istype(inserted_id))
 		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
@@ -203,10 +203,10 @@
 		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=\ref[src];purchase=\ref[prize]'>Purchase</A></td></tr>"
 	dat += "</table>"
 
-	user << browse("[dat]", "window=mining_equipment_locker")
+	user << browse("[dat]", "window=mining_equipment_vendor")
 	return
 
-/obj/machinery/mineral/equipment_locker/Topic(href, href_list)
+/obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
 	if(..())
 		return
 	if(href_list["choice"])
@@ -234,7 +234,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/equipment_locker/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/mineral/equipment_vendor/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
@@ -248,9 +248,9 @@
 		return
 	..()
 
-/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator", "Kinetic Accelerator", "Mining Drone", "Cancel")
-	if(!selection || !Adjacent(redeemer) || !voucher)
+/obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Resonator", "Kinetic Accelerator", "Mining Drone")
+	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Resonator")
@@ -260,20 +260,18 @@
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
-		if("Cancel")
-			return
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_locker/ex_act()
+/obj/machinery/mineral/equipment_vendor/ex_act()
 	return
 
-/**********************Mining Equipment Locker Items**************************/
+/**********************Mining Equipment Vendor Items**************************/
 
 /**********************Mining Equipment Voucher**********************/
 
 /obj/item/weapon/mining_voucher
 	name = "mining voucher"
-	desc = "A token to redeem a piece of equipment. Use it on a mining equipment locker."
+	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "mining_voucher"
 	w_class = 1
@@ -347,20 +345,20 @@
 	if(istype(M, /obj/effect))
 		return
 	if(istype(M, /atom/movable))
-		do_teleport(M, target, 6)
-		if(isliving(M))
-			var/mob/living/L = M
-			L.Weaken(3)
-			if(ishuman(L))
-				shake_camera(L, 20, 1)
-				spawn(20)
-					if(L)
-						L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>")
-						L.nutrition -= 20
-						L.adjustToxLoss(-3)
-						var/turf/T = get_turf(L)
-						T.add_vomit_floor(L)
-						playsound(L, 'sound/effects/splat.ogg', 50, 1)
+		if(do_teleport(M, target, 6))
+			if(isliving(M))
+				var/mob/living/L = M
+				L.Weaken(3)
+				if(ishuman(L))
+					shake_camera(L, 20, 1)
+					spawn(20)
+						if(L)
+							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>")
+							L.nutrition -= 20
+							L.adjustToxLoss(-3)
+							var/turf/T = get_turf(L)
+							T.add_vomit_floor(L)
+							playsound(L, 'sound/effects/splat.ogg', 50, 1)
 
 /**********************Resonator**********************/
 
@@ -594,6 +592,7 @@
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
+	var/malfunctioning = 0
 
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)
@@ -602,13 +601,17 @@
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
-				M.faction = "lazarus"
+				M.faction = "neutral"
 				M.revive()
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
-					H.friends += user
-					H.attack_same = 1 //No invincible army of completely loyal mobs
-					log_game("[user] has revived hostile mob [target] with a lazarus injector")
+					if(malfunctioning)
+						M.faction = "lazarus"
+						H.friends += user
+						H.attack_same = 1
+						log_game("[user] has revived hostile mob [target] with a malfunctioning lazarus injector")
+					else
+						H.attack_same = 0
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
 				playsound(src,'sound/effects/refill.ogg',50,1)
@@ -621,10 +624,16 @@
 			user << "<span class='info'>[src] is only effective on lesser beings.</span>"
 			return
 
+/obj/item/weapon/lazarus_injector/emp_act()
+	if(!malfunctioning)
+		malfunctioning = 1
+
 /obj/item/weapon/lazarus_injector/examine()
 	..()
 	if(!loaded)
 		usr << "<span class='info'>[src] is empty.</span>"
+	if(malfunctioning)
+		usr << "<span class='info'>The display on [src] seems to be flickering.</span>"
 
 /**********************Mining Scanner**********************/
 /obj/item/device/mining_scanner
@@ -661,6 +670,15 @@
 				spawn(30)
 					if(C)
 						C.images -= I
+
+//Debug item to identify all ore spread quickly
+/obj/item/device/mining_scanner/admin
+
+/obj/item/device/mining_scanner/admin/attack_self(mob/user)
+	for(var/turf/simulated/mineral/M in world)
+		if(M.scan_state)
+			M.icon_state = M.scan_state
+	del(src)
 
 /**********************Xeno Warning Sign**********************/
 /obj/structure/sign/xeno_warning_mining

@@ -36,8 +36,6 @@
 /obj/machinery/field/containment/ex_act(severity)
 	return 0
 
-/obj/machinery/field/containment/meteorhit()
-	return 0
 
 /obj/machinery/field/containment/Crossed(atom/movable/mover)
 	if(isliving(mover))

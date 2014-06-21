@@ -32,10 +32,14 @@
 	..()
 
 /atom/movable/Destroy()
-	loc = null	// can never null their loc enough really
+	if(reagents)
+		qdel(reagents)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	..()
+	tag = null
+	loc = null
+	invisibility = 101
+	// Do not call ..()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -123,7 +127,10 @@
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
-	if(isobj(src)) src.throw_impact(get_turf(src))
+	if(isobj(src))
+		src.throw_impact(get_turf(src))
+	
+	return 1
 
 
 //Overlays

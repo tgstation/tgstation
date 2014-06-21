@@ -116,7 +116,7 @@
 	if (.)
 		return
 	var/dat
-
+	dat += hack(user)
 	dat += text({"
 <TT><B>Automatic Security Unit v2.5</B></TT><BR><BR>
 Status: []<BR>
@@ -160,7 +160,7 @@ Auto Patrol: []"},
 		else if((lasercolor == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
 			return
 	if ((href_list["power"]) && (src.allowed(usr)))
-		if (src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -180,6 +180,18 @@ Auto Patrol: []"},
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
 			updateUsrDialog()
+		if("hack")
+			if(!src.emagged)
+				src.emagged = 2
+				src.hacked = 1
+				usr << "<span class='warning'>You disable [src]'s combat inhibitor.</span>"
+			else if(!src.hacked)
+				usr << "<span class='userdanger'>[src] ignores your attempts to restrict it!</span>"
+			else
+				src.emagged = 0
+				src.hacked = 0
+				usr << "<span class='notice'>You restore [src]'s combat inhibitor.</span>"
+			src.updateUsrDialog()
 
 /obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -231,8 +243,6 @@ Auto Patrol: []"},
 			continue
 		if (istype(C, /mob/living/carbon/human))
 			threatlevel = src.assess_perp(C)
-		else if ((istype(C, /mob/living/carbon/monkey)) && (C.client) && (ticker.mode.name == "monkey"))
-			threatlevel = 4
 		//src.speak(C.real_name + text(": threat: []", threatlevel))
 		if (threatlevel < 4 )
 			continue
@@ -319,7 +329,7 @@ Auto Patrol: []"},
 				mode = SECBOT_HUNT
 				return
 
-			if(istype(src.target,/mob/living/carbon))
+			if(iscarbon(target) && target.canBeHandcuffed())
 				if (!src.target.handcuffed && !src.arrest_type)
 					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
@@ -638,8 +648,6 @@ Auto Patrol: []"},
 
 		if (istype(C, /mob/living/carbon/human))
 			src.threatlevel = src.assess_perp(C)
-		else if ((istype(C, /mob/living/carbon/monkey)) && (C.client) && (ticker.mode.name == "monkey"))
-			src.threatlevel = 4
 
 		if (!src.threatlevel)
 			continue
@@ -688,9 +696,6 @@ Auto Patrol: []"},
 				threatcount += 2
 
 		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
-			threatcount += 2
-
-		if(perp.dna && perp.dna.mutantrace && perp.dna.mutantrace != "none")
 			threatcount += 2
 
 //Agent cards lower threatlevel when normal idchecking is off.
@@ -744,11 +749,6 @@ Auto Patrol: []"},
 			var/turf/T = get_turf(src)
 			M:loc = T
 */
-
-/obj/machinery/bot/ed209/proc/speak(var/message)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
-	return
 
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
@@ -964,14 +964,16 @@ Auto Patrol: []"},
 		if(6)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
-				var/turf/T = get_turf(user)
+				if (coil.get_amount() < 1)
+					user << "<span class='warning'>You need one length of cable to wire the ED-209.</span>"
+					return
 				user << "<span class='notice'>You start to wire [src]...</span>"
-				sleep(40)
-				if(get_turf(user) == T)
-					coil.use(1)
-					build_step++
-					user << "<span class='notice'>You wire the ED-209 assembly.</span>"
-					name = "wired ED-209 assembly"
+				if (do_after(user, 40))
+					if (coil.get_amount() >= 1 && build_step == 6)
+						coil.use(1)
+						build_step = 7
+						user << "<span class='notice'>You wire the ED-209 assembly.</span>"
+						name = "wired ED-209 assembly"
 
 		if(7)
 			switch(lasercolor)

@@ -11,7 +11,7 @@
  */
 
 /obj/structure/morgue
-	name = "morgue"
+	name = "Morgue"
 	desc = "Used to keep bodies in until someone fetches them."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
@@ -240,10 +240,6 @@
 			return
 
 	else
-		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
-			usr << "You get the feeling that you shouldn't cremate one of the items in the cremator."
-			return
-
 		for (var/mob/M in viewers(src))
 			M.show_message("\red You hear a roar as the crematorium activates.", 1)
 

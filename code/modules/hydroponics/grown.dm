@@ -144,14 +144,16 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/stack/cable_coil))
-		if(W:amount >= 5)
-			W:amount -= 5
-			if(!W:amount) qdel(W)
+		var/obj/item/stack/cable_coil/C
+		if (C.use(5))
 			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
 			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
 			pocell.maxcharge = src.potency * 10
 			pocell.charge = pocell.maxcharge
 			qdel(src)
+			return
+		else
+			user << "<span class='warning'>You need five lengths of cable to make a potato battery.</span>"
 			return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
@@ -586,7 +588,9 @@
 		..()
 		new/obj/effect/decal/cleanable/tomato_smudge(src.loc)
 		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-		qdel(src)
+		for(var/atom/A in get_turf(hit_atom))
+			src.reagents.reaction(A)
+		del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
 		return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
@@ -628,7 +632,7 @@
 	src.reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		src.reagents.reaction(A)
-	qdel(src)
+	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
@@ -651,7 +655,7 @@
 	src.reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		src.reagents.reaction(A)
-	qdel(src)
+	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM as mob|obj)
@@ -706,6 +710,9 @@
 	name = "kudzu pod"
 	desc = "<I>Pueraria Virallis</I>: An invasive species with vines that rapidly creep and wrap around whatever they contact."
 	icon_state = "kudzupod"
+	var/list/mutations = list()
+	var/mutating = 0
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)

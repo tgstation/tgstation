@@ -52,20 +52,7 @@
 
 	opacity = 1
 	spawn(20) if(src) opacity = 0
-
 	..()
-
-/obj/machinery/shield/meteorhit()
-	src.health -= max_health*0.75 //3/4 health as damage
-
-	if(src.health <= 0)
-		visible_message("\blue The [src] dissapates")
-		qdel(src)
-		return
-
-	opacity = 1
-	spawn(20) if(src) opacity = 0
-	return
 
 /obj/machinery/shield/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
@@ -194,13 +181,6 @@
 	update_icon()
 	return
 
-/obj/machinery/shieldgen/meteorhit(obj/O as obj)
-	src.health -= max_health*0.25 //A quarter of the machine's health
-	if (prob(5))
-		src.malfunction = 1
-	src.checkhp()
-	return
-
 /obj/machinery/shieldgen/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -267,14 +247,17 @@
 
 	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = W
-		user << "\blue You begin to replace the wires."
-		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
+		if (coil.get_amount() < 1)
+			user << "You need one length of cable to repair [src]."
+			return
+		user << "<span class='notice'>You begin to replace the wires.</span>"
 		if(do_after(user, 30))
-			if(!src || !coil) return
+			if(coil.get_amount() < 1)
+				return
 			coil.use(1)
 			health = max_health
 			malfunction = 0
-			user << "\blue You repair the [src]!"
+			user << "<span class='notice'>You repair the [src]!</span>"
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/wrench))
@@ -360,7 +343,7 @@
 		power = 1	// IVE GOT THE POWER!
 		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
 			storedpower += shieldload
-			PN.newload += shieldload //uses powernet power.
+			PN.load += shieldload //uses powernet power.
 //		message_admins("[PN.load]", 1)
 //		use_power(250) //uses APC power
 

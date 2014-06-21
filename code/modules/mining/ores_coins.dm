@@ -21,7 +21,7 @@
 	name = "Uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
-	points = 20
+	points = 18
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/weapon/ore/iron
@@ -52,7 +52,7 @@
 	name = "Plasma ore"
 	icon_state = "Plasma ore"
 	origin_tech = "materials=2"
-	points = 40
+	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob)
@@ -68,28 +68,28 @@
 	name = "Silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
-	points = 20
+	points = 18
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/weapon/ore/gold
 	name = "Gold ore"
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
-	points = 20
+	points = 18
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/weapon/ore/diamond
 	name = "Diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
-	points = 40
+	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/weapon/ore/clown
 	name = "Bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
-	points = 30
+	points = 27
 	refined_type = /obj/item/stack/sheet/mineral/clown
 
 /obj/item/weapon/ore/slag
@@ -224,21 +224,20 @@
 
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/stack/cable_coil) )
+	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
-			user << "\blue There already is a string attached to this coin."
+			user << "<span class='notice'>There already is a string attached to this coin.</span>"
 			return
 
-		if(CC.amount <= 0)
-			user << "\blue This cable coil appears to be empty."
-			qdel(CC)
+		if (CC.use(1))
+			overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
+			string_attached = 1
+			user << "<span class='notice'>You attach a string to the coin.</span>"
+		else
+			user << "<span class='warning'>You need one length of cable to attach a string to the coin.</span>"
 			return
 
-		overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
-		string_attached = 1
-		user << "\blue You attach a string to the coin."
-		CC.use(1)
 	else if(istype(W,/obj/item/weapon/wirecutters))
 		if(!string_attached)
 			..()

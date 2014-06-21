@@ -75,6 +75,7 @@
 
 /obj/machinery/bot/floorbot/interact(mob/user as mob)
 	var/dat
+	dat += hack(user)
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
@@ -101,11 +102,14 @@
 		var/obj/item/stack/tile/plasteel/T = W
 		if(src.amount >= 50)
 			return
-		var/loaded = min(50-src.amount, T.amount)
+		var/loaded = min(50 - src.amount, T.get_amount())
 		T.use(loaded)
 		src.amount += loaded
-		user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
-		src.updateicon()
+		if (loaded > 0)
+			user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
+			src.updateicon()
+		else
+			user << "<span class='warning'>You need at least one floor tile to put into the floorbot.</span>"
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked
@@ -133,7 +137,7 @@
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
-			if (src.on)
+			if (src.on && !src.emagged)
 				turn_off()
 			else
 				turn_on()
@@ -145,6 +149,18 @@
 			src.updateUsrDialog()
 		if("make")
 			src.maketiles = !src.maketiles
+			src.updateUsrDialog()
+		if("hack")
+			if(!src.emagged)
+				src.emagged = 2
+				src.hacked = 1
+				usr << "<span class='warning'>You corrupt [src]'s construction protocols.</span>"
+			else if(!src.hacked)
+				usr << "<span class='userdanger'>[src] is not responding to reset commands!</span>"
+			else
+				src.emagged = 0
+				src.hacked = 0
+				usr << "<span class='notice'>You detect errors in [src] and reset its programming.</span>"
 			src.updateUsrDialog()
 		if("bridgemode")
 			switch(src.targetdirection)
@@ -396,16 +412,19 @@
 		..()
 		return
 	if(src.contents.len >= 1)
-		user << "<span class='notice'>They wont fit in as there is already stuff inside.</span>"
+		user << "<span class='alert'>They won't fit in, as there is already stuff inside.</span>"
 		return
-	if(user.s_active)
-		user.s_active.close(user)
-	qdel(T)
-	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
-	user.put_in_hands(B)
-	user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
-	user.unEquip(src, 1)
-	qdel(src)
+	if(T.use(10))
+		if(user.s_active)
+			user.s_active.close(user)
+		var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
+		user.put_in_hands(B)
+		user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
+		user.unEquip(src, 1)
+		qdel(src)
+	else
+		user << "<span class='alert'>You need 10 floor tiles to start building a floorbot.</span>"
+		return
 
 /obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
 	..()

@@ -33,7 +33,7 @@
 #define APC_UPDATE_ICON_COOLDOWN 200 // 20 seconds
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
-// one per area, needs wire conection to power network
+// one per area, needs wire conection to power network through a terminal
 
 // controls power to devices in that area
 // may be opened to change power cell
@@ -353,7 +353,7 @@
 			update_overlay |= APC_UPOVERLAY_ENVIRON1
 		else if(environ==2)
 			update_overlay |= APC_UPOVERLAY_ENVIRON2
-	
+
 
 	var/results = 0
 	if(last_update_state == update_state && last_update_overlay == update_overlay)
@@ -488,28 +488,29 @@
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
 	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
-			user << "\red You must remove the floor plating in front of the APC first."
+			user << "<span class='warning'>You must remove the floor plating in front of the APC first.</span>"
 			return
 		var/obj/item/stack/cable_coil/C = W
-		if(C.amount < 10)
-			user << "\red You need more wires."
+		if(C.get_amount() < 10)
+			user << "<span class='warning'>You need ten lengths of cable for APC.</span>"
 			return
 		user << "You start adding cables to the APC frame..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20) && C.amount >= 10)
-			var/turf/T = get_turf(src)
-			var/obj/structure/cable/N = T.get_cable_node()
-			if (prob(50) && electrocute_mob(usr, N, N))
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-				return
-			C.use(10)
-			user.visible_message(\
-				"\red [user.name] has added cables to the APC frame!",\
-				"You add cables to the APC frame.")
-			make_terminal()
-			terminal.connect_to_network()
+		if(do_after(user, 20))
+			if (C.amount >= 10 && !terminal && opened && has_electronics != 2)
+				var/turf/T = get_turf(src)
+				var/obj/structure/cable/N = T.get_cable_node()
+				if (prob(50) && electrocute_mob(usr, N, N))
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(5, 1, src)
+					s.start()
+					return
+				C.use(10)
+				user.visible_message(\
+					"\red [user.name] has added cables to the APC frame!",\
+					"You add cables to the APC frame.")
+				make_terminal()
+				terminal.connect_to_network()
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
 			user << "\red You must remove the floor plating in front of the APC first."
@@ -773,7 +774,7 @@
 		return 0
 	if ( ! (istype(user, /mob/living/carbon/human) || \
 			istype(user, /mob/living/silicon) || \
-			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
+			istype(user, /mob/living/carbon/monkey)) )
 		user << "\red You don't have the dexterity to use this [src]!"
 		return 0
 	if(user.restrained())
@@ -992,7 +993,7 @@
 
 /obj/machinery/power/apc/add_load(var/amount)
 	if(terminal && terminal.powernet)
-		terminal.powernet.newload += amount
+		terminal.powernet.load += amount
 
 /obj/machinery/power/apc/avail()
 	if(terminal)
@@ -1040,32 +1041,28 @@
 	else
 		main_status = 2
 
-	var/perapc = 0
-	if(terminal && terminal.powernet)
-		perapc = terminal.powernet.perapc
-
 	//if(debug)
 	//	world.log << "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]"
 
 	if(cell && !shorted)
 
 
-		// draw power from cell as before
+		// draw power from cell as before to power the area
 		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
-		if(excess > 0 || perapc > lastused_total)		// if power excess, or enough anyway, recharge the cell
-														// by the same amount just used
+		if(excess > lastused_total)		// if power excess recharge the cell
+										// by the same amount just used
 			cell.give(cellused)
 			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
 
 
 		else		// no excess, and not enough per-apc
 
-			if( (cell.charge/CELLRATE+perapc) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
+			if( (cell.charge/CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
 
-				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * perapc)	//recharge with what we can
-				add_load(perapc)		// so draw what we can from the grid
+				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * excess)	//recharge with what we can
+				add_load(excess)		// so draw what we can from the grid
 				charging = 0
 
 			else	// not enough power available to run the last tick!
@@ -1112,12 +1109,8 @@
 
 		if(chargemode && charging == 1 && operating)
 			if(excess > 0)		// check to make sure we have enough to charge
-				// Max charge is perapc share, capped to cell capacity, or % per second constant (Whichever is smallest)
-/*				var/ch = min(perapc, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
-				add_load(ch) // Removes the power we're taking from the grid
-				cell.give(ch) // actually recharge the cell
-*/
-				var/ch = min(perapc*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
+				// Max charge is capped to % per second constant
+				var/ch = min(excess*CELLRATE, cell.maxcharge*CHARGELEVEL)
 				add_load(ch/CELLRATE) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
@@ -1126,8 +1119,8 @@
 				chargecount = 0
 
 		// show cell as fully charged if so
-
 		if(cell.charge >= cell.maxcharge)
+			cell.charge = cell.maxcharge
 			charging = 2
 
 		if(chargemode)
@@ -1183,13 +1176,8 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 
 	return val
 
+
 // damage and destruction acts
-
-/obj/machinery/power/apc/meteorhit(var/obj/O as obj)
-
-	set_broken()
-	return
-
 /obj/machinery/power/apc/emp_act(severity)
 	if(cell)
 		cell.emp_act(severity)

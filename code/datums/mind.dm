@@ -61,7 +61,7 @@ datum/mind
 
 	proc/transfer_to(mob/living/new_character)
 		if(!istype(new_character))
-			error("transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn")
+			ERROR("transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform coderbus")
 
 		if(current)					//remove ourself from our old body's mind variable
 			current.mind = null
@@ -1095,7 +1095,7 @@ datum/mind
 		if(ticker)
 			ticker.minds += mind
 		else
-			error("mind_initialize(): No ticker ready yet! Please inform Carn")
+			ERROR("mind_initialize(): No ticker ready yet! Please inform coderbus")
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
 
@@ -1172,19 +1172,8 @@ datum/mind
 	..()
 	mind.assigned_role = "Shade"
 
-/mob/living/simple_animal/construct/builder/mind_initialize()
+/mob/living/simple_animal/construct/mind_initialize()
 	..()
-	mind.assigned_role = "Artificer"
+	mind.assigned_role = "[initial(name)]"
 	mind.special_role = "Cultist"
-
-/mob/living/simple_animal/construct/wraith/mind_initialize()
-	..()
-	mind.assigned_role = "Wraith"
-	mind.special_role = "Cultist"
-
-/mob/living/simple_animal/construct/armoured/mind_initialize()
-	..()
-	mind.assigned_role = "Juggernaut"
-	mind.special_role = "Cultist"
-
 

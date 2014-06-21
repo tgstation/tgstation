@@ -137,15 +137,17 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		if (src.stage != 1) return
 		var/obj/item/stack/cable_coil/coil = W
-		coil.use(1)
-		switch(fixture_type)
-			if ("tube")
-				src.icon_state = "tube-construct-stage2"
-			if("bulb")
-				src.icon_state = "bulb-construct-stage2"
-		src.stage = 2
-		user.visible_message("[user.name] adds wires to [src].", \
-			"You add wires to [src].")
+		if (coil.use(1))
+			switch(fixture_type)
+				if ("tube")
+					src.icon_state = "tube-construct-stage2"
+				if("bulb")
+					src.icon_state = "bulb-construct-stage2"
+			src.stage = 2
+			user.visible_message("[user.name] adds wires to [src].", \
+				"You add wires to [src].")
+		else
+			user << "<span class='warning'>You need one length of cable to wire [src]."
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -650,11 +652,6 @@
 	g_amt = 100
 	brightness = 8
 
-/obj/item/weapon/light/tube/large
-	w_class = 2
-	name = "large light tube"
-	brightness = 15
-
 /obj/item/weapon/light/bulb
 	name = "light bulb"
 	desc = "A replacement light bulb."
@@ -662,20 +659,11 @@
 	base_state = "lbulb"
 	item_state = "contvapour"
 	g_amt = 100
-	brightness = 5
+	brightness = 4
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()
 	shatter()
-
-/obj/item/weapon/light/bulb/fire
-	name = "fire bulb"
-	desc = "A replacement fire bulb."
-	icon_state = "fbulb"
-	base_state = "fbulb"
-	item_state = "egg4"
-	g_amt = 100
-	brightness = 5
 
 // update the icon state and description of the light
 
@@ -694,11 +682,6 @@
 
 /obj/item/weapon/light/New()
 	..()
-	switch(name)
-		if("light tube")
-			brightness = rand(6,9)
-		if("light bulb")
-			brightness = rand(4,6)
 	update()
 
 

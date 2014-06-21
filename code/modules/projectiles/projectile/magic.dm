@@ -117,6 +117,7 @@ proc/wabbajack(mob/living/M)
 			if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/Robot = M
 				if(Robot.mmi)	qdel(Robot.mmi)
+				Robot.notify_ai(1)
 			else
 				for(var/obj/item/W in M)
 					if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
@@ -198,8 +199,12 @@ proc/wabbajack(mob/living/M)
 					var/mob/living/carbon/human/H = new_mob
 					ready_dna(H)
 					if(H.dna)
-						H.dna.mutantrace = pick("lizard","golem","slime","plant","fly","shadow","adamantine","skeleton",8;"")
-						H.update_body()
+						var/list/randspecies = list()
+						for(var/t in typesof(/datum/species)) // returns a bunch of types
+							var/datum/species/temp = new t()
+							randspecies += "[temp.type]"
+						var/datum/species/new_species = pick(randspecies)
+						H.dna.species = new new_species()
 				else
 					return
 

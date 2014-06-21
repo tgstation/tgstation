@@ -59,6 +59,12 @@
 					return
 
 				if(ismob(target))	//Blood!
+					if(ishuman(target))
+						var/mob/living/carbon/human/H = target
+						if(H.dna)
+							if(NOBLOOD in H.dna.species.specflags)
+								user << "<span class='notice'>You are unable to locate any blood.</span>"
+								return
 					if(reagents.has_reagent("blood"))
 						user << "<span class='notice'>There is already a blood sample in this syringe.</span>"
 						return
@@ -72,6 +78,11 @@
 						if(NOCLONE in T.mutations)	//target done been et, no more blood in him
 							user << "<span class='notice'>You are unable to locate any blood.</span>"
 							return
+						if(target != user)
+							target.visible_message("<span class='danger'>[user] is trying to take a blood sample from  [target]!</span>", \
+											"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
+							if(!do_mob(user, target)) 
+								return
 						B.holder = src
 						B.volume = amount
 						//set reagent data

@@ -249,6 +249,28 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(C.dna)
 			C.dna.real_name = real_name
 
+	if(isAI(src))
+		var/mob/living/silicon/ai/AI = src
+		if(oldname != real_name)
+			if(AI.eyeobj)
+				AI.eyeobj.name = "[newname] (AI Eye)"
+
+			// Set ai pda name
+			if(AI.aiPDA)
+				AI.aiPDA.owner = newname
+				AI.aiPDA.name = newname + " (" + AI.aiPDA.ownjob + ")"
+
+			// Notify Cyborgs
+			for(var/mob/living/silicon/robot/Slave in AI.connected_robots)
+				Slave.show_laws()
+
+	if(isrobot(src))
+		var/mob/living/silicon/robot/R = src
+		if(oldname != real_name)
+			R.notify_ai(3, oldname, newname)
+		if(R.camera)
+			R.camera.c_tag = real_name
+
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
 		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
@@ -265,7 +287,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				var/obj/item/weapon/card/id/ID = A
 				if(ID.registered_name == oldname)
 					ID.registered_name = newname
-					ID.name = "[newname]'s ID Card ([ID.assignment])"
+					ID.update_label()
 					if(!search_pda)	break
 					search_id = 0
 
@@ -273,7 +295,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				var/obj/item/device/pda/PDA = A
 				if(PDA.owner == oldname)
 					PDA.owner = newname
-					PDA.name = "PDA-[newname] ([PDA.ownjob])"
+					PDA.update_label()
 					if(!search_id)	break
 					search_pda = 0
 
@@ -317,18 +339,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 		if(cmptext("ai",role))
 			if(isAI(src))
-				var/mob/living/silicon/ai/A = src
 				oldname = null//don't bother with the records update crap
-				//world << "<b>[newname] is the AI!</b>"
-				//world << sound('sound/AI/newAI.ogg')
-				// Set eyeobj name
-				if(A.eyeobj)
-					A.eyeobj.name = "[newname] (AI Eye)"
-
-				// Set ai pda name
-				if(A.aiPDA)
-					A.aiPDA.owner = newname
-					A.aiPDA.name = newname + " (" + A.aiPDA.ownjob + ")"
 
 		if(cmptext("cyborg",role))
 			if(isrobot(src))
@@ -518,6 +529,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/key_name_admin(var/whom, var/include_name = 1)
 	return key_name(whom, 1, include_name)
 
+/proc/get_mob_by_ckey(var/key)
+	if(!key)
+		return
+	var/list/mobs = sortmobs()
+	for(var/mob/M in mobs)
+		if(M.ckey == key)
+			return M
+
 // Returns the atom sitting on the turf.
 // For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
 /proc/get_atom_on_turf(var/atom/movable/M)
@@ -701,7 +720,7 @@ atom/proc/GetTypeInAllContents(typepath)
 	else
 		return 0
 
-/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1)
+/proc/do_after(mob/user, delay, numticks = 5, needhand = 1)
 	if(!user || isnull(user))
 		return 0
 	if(numticks == 0)
@@ -710,6 +729,9 @@ atom/proc/GetTypeInAllContents(typepath)
 	var/delayfraction = round(delay/numticks)
 	var/turf/T = user.loc
 	var/holding = user.get_active_hand()
+	var/holdingnull = 1
+	if(holding)
+		holdingnull = 0
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
@@ -717,8 +739,13 @@ atom/proc/GetTypeInAllContents(typepath)
 
 		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T))
 			return 0
-		if(needhand && !(user.get_active_hand() == holding))	//Sometimes you don't want the user to have to keep their active hand
-			return 0
+
+		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
+			if(!holdingnull)
+				if(!holding)
+					return 0
+			if(user.get_active_hand() != holding)
+				return 0
 
 	return 1
 

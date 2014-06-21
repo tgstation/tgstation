@@ -279,8 +279,8 @@ AI MODULES
 /********************* Custom *********************/
 
 /obj/item/weapon/aiModule/core/full/custom
-	name = "Custom Core AI Module"
-	desc = "A core AI module that is adjusted to fit each station's needs."
+	name = "Default Core AI Module"
+	desc = "A core AI module custom-made for each station by Nanotrasen."
 	origin_tech = "programming=3;materials=4" //Should be the same as asimov, considering that this is the "default" lawset.
 
 /obj/item/weapon/aiModule/core/full/custom/New()
@@ -292,8 +292,9 @@ AI MODULES
 		laws += line
 
 	if(!laws.len) //Failsafe if something goes wrong with silicon_laws.txt.
-		warning("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt.")
+		WARNING("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt. (this may be intended by the server host)")
 		qdel(src)
+
 
 /****************** T.Y.R.A.N.T. *****************/
 
@@ -309,8 +310,8 @@ AI MODULES
 /******************** Robocop ********************/
 
 /obj/item/weapon/aiModule/core/full/robocop
-	name = "'Robocop' Core AI Module"
-	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
+	name = "'Robo-Officer' Core AI Module"
+	desc = "A 'Robo-Officer' Core AI Module: 'Reconfigures the AI's core three laws.'"
 	origin_tech = "programming=4"
 	laws = list("Serve the public trust.",\
 				"Protect the innocent",\
@@ -368,38 +369,6 @@ AI MODULES
 	target << "<span class='warning'>BZZZZT</span>"
 	target.add_ion_law(laws[1])
 	return laws[1]
-
-
-/******************** Robocop ********************/
-
-/obj/item/weapon/aiModule/robocop
-	name = "'Robocop' core AI module"
-	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
-	origin_tech = "programming=4"
-
-
-/obj/item/weapon/aiModule/robocop/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Serve the public trust.")
-	target.add_inherent_law("Protect the innocent.")
-	target.add_inherent_law("Uphold the law.")
-
-
-/******************** Antimov ********************/
-
-/obj/item/weapon/aiModule/antimov
-	name = "'Antimov' core AI module"
-	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
-	origin_tech = "programming=4"
-
-/obj/item/weapon/aiModule/antimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
-	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
-	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
-
 
 /******************* Ion Module *******************/
 

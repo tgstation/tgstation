@@ -13,28 +13,28 @@
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
 	construction_time = 200
-	construction_cost = list("metal"=18000)
+	construction_cost = list("metal"=10000)
 
 /obj/item/robot_parts/r_arm
 	name = "cyborg right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
 	construction_time = 200
-	construction_cost = list("metal"=18000)
+	construction_cost = list("metal"=10000)
 
 /obj/item/robot_parts/l_leg
 	name = "cyborg left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
 	construction_time = 200
-	construction_cost = list("metal"=15000)
+	construction_cost = list("metal"=10000)
 
 /obj/item/robot_parts/r_leg
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
 	construction_time = 200
-	construction_cost = list("metal"=15000)
+	construction_cost = list("metal"=10000)
 
 /obj/item/robot_parts/chest
 	name = "cyborg torso"
@@ -50,7 +50,7 @@
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
 	construction_time = 350
-	construction_cost = list("metal"=25000)
+	construction_cost = list("metal"=5000)
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
 
@@ -59,7 +59,7 @@
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
 	icon_state = "robo_suit"
 	construction_time = 500
-	construction_cost = list("metal"=50000)
+	construction_cost = list("metal"=15000)
 	var/obj/item/robot_parts/l_arm/l_arm = null
 	var/obj/item/robot_parts/r_arm/r_arm = null
 	var/obj/item/robot_parts/l_leg/l_leg = null
@@ -104,14 +104,18 @@
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
-		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
-		B.loc = get_turf(src)
-		user << "You armed the robot frame"
-		W:use(1)
-		if (user.get_inactive_hand()==src)
-			user.unEquip(src)
-			user.put_in_inactive_hand(B)
-		qdel(src)
+		var/obj/item/stack/sheet/metal/M = W
+		if (M.use(1))
+			var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
+			B.loc = get_turf(src)
+			user << "<span class='notice'>You armed the robot frame.</span>"
+			if (user.get_inactive_hand()==src)
+				user.unEquip(src)
+				user.put_in_inactive_hand(B)
+			qdel(src)
+		else
+			user << "<span class='warning'>You need one sheet of metal to start building ED-209.</span>"
+			return
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return
 		user.drop_item()
@@ -213,8 +217,10 @@
 			if(!aisync)
 				lawsync = 0
 				O.connected_ai = null
-			else if(forced_ai)
-				O.connected_ai = forced_ai
+			else
+				O.notify_ai(1)
+				if(forced_ai)
+					O.connected_ai = forced_ai
 			if(!lawsync)
 				O.lawupdate = 0
 				O.make_laws()
@@ -272,7 +278,7 @@
 		return
 
 	if(href_list["Name"])
-		var/new_name = reject_bad_name(input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name))
+		var/new_name = reject_bad_name(input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name),1)
 		if(!in_range(src, usr) && src.loc != usr)
 			return
 		if(new_name)
@@ -311,13 +317,14 @@
 			user << "\blue You insert the cell!"
 	if(istype(W, /obj/item/stack/cable_coil))
 		if(src.wires)
-			user << "\blue You have already inserted wire!"
+			user << "<span class='warning'>You have already inserted wire.</span>"
 			return
-		else
-			var/obj/item/stack/cable_coil/coil = W
-			coil.use(1)
+		var/obj/item/stack/cable_coil/coil = W
+		if (coil.use(1))
 			src.wires = 1.0
-			user << "\blue You insert the wire!"
+			user << "<span class='notice'>You insert the wire.</span>"
+		else
+			user << "<span class='warning'>You need one length of coil to wire it.</span>"
 	return
 
 /obj/item/robot_parts/head/attackby(obj/item/W as obj, mob/user as mob)

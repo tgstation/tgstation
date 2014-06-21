@@ -90,7 +90,8 @@
 	new_dna.uni_identity = T.dna.uni_identity
 	new_dna.struc_enzymes = T.dna.struc_enzymes
 	new_dna.real_name = T.dna.real_name
-	new_dna.mutantrace = T.dna.mutantrace
+	new_dna.species = T.dna.species
+	new_dna.mutant_color = T.dna.mutant_color
 	new_dna.blood_type = T.dna.blood_type
 	absorbed_dna |= new_dna //And add the target DNA to our absorbed list.
 	absorbedcount++ //all that done, let's increment the objective counter.

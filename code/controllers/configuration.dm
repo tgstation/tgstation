@@ -53,7 +53,7 @@
 
 	var/server
 	var/banappeals
-	var/wikiurl = "http://www.ss13.eu/wiki" // Default wiki link.
+	var/wikiurl = "http://www.tgstation13.org/wiki" // Default wiki link.
 	var/forumurl
 
 	var/forbid_singulo_possession = 0
@@ -77,12 +77,16 @@
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
 
+	var/traitor_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
 	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
+	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
+	var/mutant_races = 0				//players can choose their mutant race before joining the game
+	var/mutant_colors = 0
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -99,6 +103,7 @@
 	var/revival_brain_life = -1
 
 	var/rename_cyborg = 0
+	var/ooc_during_round = 0
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -264,6 +269,10 @@
 					Tickcomp = 1
 				if("automute_on")
 					automute_on = 1
+				if("comms_key")
+					global.comms_key = value
+					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
+						global.comms_allowed = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -281,6 +290,8 @@
 					config.revival_brain_life		= text2num(value)
 				if("rename_cyborg")
 					config.rename_cyborg			= 1
+				if("ooc_during_round")
+					config.ooc_during_round			= 1
 				if("run_delay")
 					config.run_speed				= text2num(value)
 				if("walk_delay")
@@ -325,6 +336,8 @@
 					config.continuous_round_wiz		= 1
 				if("continuous_round_malf")
 					config.continuous_round_malf	= 1
+				if("shuttle_refuel_delay")
+					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
 					config.show_game_type_odds		= 1
 				if("ghost_interaction")
@@ -333,6 +346,8 @@
 					config.traitor_scaling_coeff	= text2num(value)
 				if("changeling_scaling_coeff")
 					config.changeling_scaling_coeff	= text2num(value)
+				if("traitor_objectives_amount")
+					config.traitor_objectives_amount = text2num(value)
 				if("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
@@ -372,6 +387,10 @@
 					config.sandbox_autoclose		= 1
 				if("default_laws")
 					config.default_laws				= text2num(value)
+				if("join_with_mutant_race")
+					config.mutant_races				= 1
+				if("mutant_colors")
+					config.mutant_colors			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

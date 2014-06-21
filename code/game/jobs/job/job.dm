@@ -7,6 +7,9 @@
 	var/list/minimal_access = list()		//Useful for servers which prefer to only have access given to the places a job absolutely needs (Larger server population)
 	var/list/access = list()				//Useful for servers which either have fewer players, so each person needs to fill more than one role, or servers which like to give more access, so players can't hide forever in their super secure departments (I'm looking at you, chemistry!)
 
+	//Determines who can demote this position
+	var/department_head = list()
+
 	//Bitflags for the job
 	var/flag = 0
 	var/department_flag = 0
@@ -29,8 +32,6 @@
 	//Sellection screen color
 	var/selection_color = "#ffffff"
 
-	//the type of the ID the player will have
-	var/idtype = /obj/item/weapon/card/id
 
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
@@ -38,10 +39,70 @@
 	//If you have the use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
+	//Job specific items
+	var/default_id				= /obj/item/weapon/card/id //this is just the looks of it
+	var/default_pda				= /obj/item/device/pda
+	var/default_pda_slot	= slot_belt
+	var/default_headset		= /obj/item/device/radio/headset
+	var/default_backpack	= /obj/item/weapon/storage/backpack
+	var/default_satchel		= /obj/item/weapon/storage/backpack/satchel_norm
+	var/default_storagebox= /obj/item/weapon/storage/box/survival
+
+//Only override this proc
+/datum/job/proc/equip_items(var/mob/living/carbon/human/H)
+
+//Or this proc
+/datum/job/proc/equip_backpack(var/mob/living/carbon/human/H)
+	switch(H.backbag)
+		if(1) //No backpack or satchel
+			H.equip_to_slot_or_del(new default_storagebox(H), slot_r_hand)
+		if(2) // Backpack
+			var/obj/item/weapon/storage/backpack/BPK = new default_backpack(H)
+			new default_storagebox(BPK)
+			H.equip_to_slot_or_del(BPK, slot_back,1)
+		if(3) //Satchel
+			var/obj/item/weapon/storage/backpack/BPK = new default_satchel(H)
+			new default_storagebox(BPK)
+			H.equip_to_slot_or_del(BPK, slot_back,1)
+
+//But don't override this
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
-	return 1
+	if(!H)
+		return 0
+
+	//Equip backpack
+	equip_backpack(H)
+
+	//Equip the rest of the gear
+	if(H.dna)
+		H.dna.species.before_equip_job(src, H)
+
+	equip_items(H)
+
+	if(H.dna)
+		H.dna.species.after_equip_job(src, H)
+
+	//Equip ID
+	var/obj/item/weapon/card/id/C = new default_id(H)
+	C.access = get_access()
+	C.registered_name = H.real_name
+	C.assignment = H.job
+	C.update_label()
+	H.equip_to_slot_or_del(C, slot_wear_id)
+
+	//Equip PDA
+	var/obj/item/device/pda/PDA = new default_pda(H)
+	PDA.owner = H.real_name
+	PDA.ownjob = H.job
+	PDA.update_label()
+	H.equip_to_slot_or_del(PDA, default_pda_slot)
+
+	//Equip headset
+	H.equip_to_slot_or_del(new src.default_headset(H), slot_ears)
 
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/H)
+	if(!istype(H))
+		return
 	if(H.back)
 		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
 		for(var/obj/item/I in H.back.contents)

@@ -111,14 +111,14 @@
 		set_mode(DISCONNECTED)
 		return
 
-	var/datum/powernet/PN = attached.get_powernet()
+	var/datum/powernet/PN = attached.powernet
 	if(PN)
 		SetLuminosity(5)
 
 		// found a powernet, so drain up to max power from it
 
 		var/drained = min ( drain_rate, PN.avail )
-		PN.newload += drained
+		PN.load += drained
 		power_drained += drained
 
 		// if tried to drain more than available on powernet

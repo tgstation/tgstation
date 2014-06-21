@@ -218,7 +218,7 @@ datum
 					T.MakeSlippery()
 
 				for(var/mob/living/carbon/slime/M in T)
-					M.adjustToxLoss(rand(15,20))
+					M.apply_water()
 
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
@@ -341,18 +341,6 @@ datum
 			description = "A corruptive toxin produced by slimes."
 			reagent_state = LIQUID
 			color = "#13BC5E" // rgb: 19, 188, 94
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				if(ishuman(M))
-					var/mob/living/carbon/human/human = M
-					if(human.dna && !human.dna.mutantrace)
-						M << "\red Your flesh rapidly mutates!"
-						human.dna.mutantrace = "slime"
-						human.update_body()
-						human.update_hair()
-				..()
-				return
 
 		aslimetoxin
 			name = "Advanced Mutation Toxin"
@@ -649,11 +637,14 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(volume >= 5)
-					if(istype(T, /turf/simulated/wall))
-						T:thermite = 1
-						T.overlays.Cut()
-						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
+				if(volume >= 1 && istype(T, /turf/simulated/wall))
+					var/turf/simulated/wall/Wall = T
+					if(istype(Wall, /turf/simulated/wall/r_wall))
+						Wall.thermite = Wall.thermite+(volume*2.5)
+					else
+						Wall.thermite = Wall.thermite+(volume*10)
+					Wall.overlays = list()
+					Wall.overlays += image('icons/effects/effects.dmi',"thermite")
 				return
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1352,12 +1343,12 @@ datum
 					if (egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
-				O.atmos_spawn_air(SPAWN_TOXINS, volume)
+				O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				src = null
 				if(istype(T))
-					T.atmos_spawn_air(SPAWN_TOXINS, volume)
+					T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
 				return
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with plasma is stronger than fuel!
@@ -1396,7 +1387,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(prob(10))
-					M << "\red Your insides are burning!"
+					M << "<span class='danger'>Your insides are burning!</span>"
 					M.adjustToxLoss(rand(20,60)*REM)
 				else if(prob(40))
 					M.heal_organ_damage(5*REM,0)
@@ -1495,8 +1486,8 @@ datum
 				else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
 					qdel(O)
 				else if(istype(O,/obj/effect/spacevine))
-					if(prob(50)) qdel(O) //Kills kudzu too.
-				// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
+					var/obj/effect/spacevine/SV = O
+					SV.on_chem_effect(src)
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				src = null
@@ -1504,11 +1495,6 @@ datum
 					var/mob/living/carbon/C = M
 					if(!C.wear_mask) // If not wearing a mask
 						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if(H.dna)
-							if(H.dna.mutantrace == "plant") //plantmen take a LOT of damage
-								H.adjustToxLoss(10)
 
 		toxin/plantbgone/weedkiller
 			name = "Weed Killer"
@@ -1531,11 +1517,6 @@ datum
 					var/mob/living/carbon/C = M
 					if(!C.wear_mask) // If not wearing a mask
 						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if(H.dna)
-							if(H.dna.mutantrace == "fly") //Botanists can now genocide plant and fly people alike.
-								H.adjustToxLoss(10)
 
 		toxin/stoxin
 			name = "Sleep Toxin"
@@ -1697,10 +1678,10 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
 					if(!O.unacidable)
-						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(get_turf(O))
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
-							M << "\red \the [O] melts."
+							M << "<span class='danger'> \the [O] melts.</span>"
 						qdel(O)
 
 		toxin/acid/polyacid
@@ -1943,6 +1924,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(5))
 					M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+				..()
 				return
 
 		frostoil

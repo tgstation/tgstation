@@ -23,7 +23,7 @@
 
 /obj/item/weapon/plastique/suicide_act(var/mob/user)
 	. = (BRUTELOSS)
-	viewers(user) << "<span class='suicide'>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</span>"
+	user.visible_message("<span class='suicide'>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -56,8 +56,8 @@
 		timer = newtime
 		user << "Timer set for [timer] seconds."
 
-/obj/item/weapon/plastique/preattack(atom/target as obj|turf, mob/user as mob,proximity_flag)
-	if (!proximity_flag)
+/obj/item/weapon/plastique/afterattack(atom/movable/target, mob/user, flag)
+	if (!flag)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
 		return
@@ -86,7 +86,6 @@
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
 			explode(get_turf(target))
-	return 1
 
 /obj/item/weapon/plastique/proc/explode(var/location)
 

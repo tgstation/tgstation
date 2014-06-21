@@ -768,9 +768,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 /obj/item/seeds/proc/harvest(mob/user = usr)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
+	var/list/result = list()
 
 	while(t_amount < getYield())
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(user.loc, potency) // User gets a consumable
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(user.loc, potency)
+		result.Add(t_prod) // User gets a consumable
 		if(!t_prod)	return
 		t_prod.seed = type
 		t_prod.lifespan = lifespan
@@ -783,6 +785,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		t_amount++
 
 	parent.update_tray()
+
+	return result
 /*
 /obj/item/seeds/grassseed/harvest(mob/user = usr)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
@@ -905,7 +909,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		podman.gender = ghost.gender
 
 		//dna stuff
-		hardset_dna(podman, ui, se, null, !prob(potency) ? "plant" : null)	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
+		hardset_dna(podman, ui, se, null, null, null, !prob(potency) ? /datum/species/plant/pod : null, "#59CE00")	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

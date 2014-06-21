@@ -13,6 +13,11 @@
 	song = new("violin", src)
 	song.instrumentExt = "ogg"
 
+/obj/item/device/violin/Destroy()
+	qdel(song)
+	song = null
+	..()
+
 /obj/item/device/violin/attack_self(mob/user as mob)
 	interact(user)
 

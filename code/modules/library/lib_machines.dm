@@ -280,7 +280,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if("6")
 				if(!bibledelay)
 
-					var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(src.loc)
+					var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
 					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
 						B.icon_state = ticker.Bible_icon_state
 						B.item_state = ticker.Bible_item_state

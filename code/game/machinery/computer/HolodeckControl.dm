@@ -119,7 +119,7 @@
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "\blue You vastly increase projector power and override the safety and security protocols."
+		user << "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>"
 		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
 		log_game("[key_name(usr)] emagged the Holodeck Control Console")
 		src.updateUsrDialog()
@@ -137,10 +137,6 @@
 
 //This could all be done better, but it works for now.
 /obj/machinery/computer/HolodeckControl/Destroy()
-	emergencyShutdown()
-	..()
-
-/obj/machinery/computer/HolodeckControl/meteorhit(var/obj/O as obj)
 	emergencyShutdown()
 	..()
 
@@ -329,11 +325,11 @@
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
-			user << "\red You need a better grip to do that!"
+			user << "<span class='danger'> You need a better grip to do that!</span>"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
+		visible_message("<span class='danger'> [G.assailant] puts [G.affecting] on the table.</span>")
 		qdel(W)
 		return
 
@@ -360,6 +356,7 @@
 	damtype = STAMINA
 
 /obj/item/weapon/holo/esword
+	name = "holographic energy sword"
 	desc = "May the force be with you. Sorta"
 	icon_state = "sword0"
 	force = 3.0
@@ -367,6 +364,7 @@
 	throw_range = 5
 	throwforce = 0
 	w_class = 2.0
+	hitsound = "swing_hit"
 	flags = NOSHIELD
 	var/active = 0
 
@@ -395,15 +393,16 @@
 		force = 30
 		icon_state = "sword[item_color]"
 		w_class = 4
+		hitsound = 'sound/weapons/blade1.ogg'
 		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
-		user << "\blue [src] is now active."
+		user << "<span class='warning'>[src] is now active.</span>"
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = 2
+		hitsound = "swing_hit"
 		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
-		user << "\blue [src] can now be concealed."
-	add_fingerprint(user)
+		user << "<span class='warning'>[src] can now be concealed.</span>"
 	return
 
 //BASKETBALL OBJECTS
@@ -423,13 +422,14 @@
 	desc = "Used for playing the most violent and degrading of childhood games."
 
 /obj/item/weapon/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom)
+	..()
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
 			M.Weaken(3)
-			visible_message("\red [M] is knocked right off \his feet!", 3)
+			visible_message("<span class='danger'>[M] is knocked right off \his feet!</span>", 3)
 
 /obj/structure/holohoop
 	name = "basketball hoop"
@@ -444,16 +444,16 @@
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
-			user << "\red You need a better grip to do that!"
+			user << "<span class='danger'>You need a better grip to do that!</span>"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] dunks [G.affecting] into the [src]!", 3)
+		visible_message("<span class='danger'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
 		user.drop_item(src)
-		visible_message("\blue [user] dunks [W] into the [src]!", 3)
+		visible_message("<span class='warning'> [user] dunks [W] into the [src]!</span>", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -463,9 +463,9 @@
 			return
 		if(prob(50))
 			I.loc = src.loc
-			visible_message("\blue Swish! \the [I] lands in \the [src].", 3)
+			visible_message("<span class='warning'> Swish! \the [I] lands in \the [src].</span>", 3)
 		else
-			visible_message("\red \the [I] bounces off of \the [src]'s rim!", 3)
+			visible_message("<span class='danger'> \the [I] bounces off of \the [src]'s rim!</span>", 3)
 		return 0
 	else
 		return ..(mover, target, height, air_group)
