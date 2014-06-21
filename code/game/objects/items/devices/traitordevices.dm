@@ -88,7 +88,7 @@ effective or pretty fucking useless.
 
 /obj/item/device/rad_laser/attack(mob/living/M as mob, mob/living/user as mob)
 	if(!used)
-		user.visible_message(text("<span class='alert'>[] has analyzed []'s vitals!</span>", user, M))
+		user.visible_message(text("<span class='notice'>[] has analyzed []'s vitals.</span>", user, M))
 		var/cooldown = round(max(100,(((intensity*8)-(wavelength/2))+(intensity*2))*10))
 		used = 1
 		icon_state = "health1"
