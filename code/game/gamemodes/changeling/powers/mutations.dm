@@ -1,5 +1,5 @@
 /*
-	Changeling Mutations! ~By Miauw (ALL OF IT)
+	Changeling Mutations! ~By Miauw (ALL OF IT :V)
 	Contains:
 		Arm Blade
 		Space Suit
@@ -200,7 +200,7 @@
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
 	flags = NODROP
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "riot"
+	icon_state = "ling_shield"
 
 	var/remaining_uses //Set by the changeling ability.
 
@@ -303,8 +303,7 @@
 /obj/item/clothing/suit/armor/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin."
-	icon_state = "riot"
-	item_state = "swat_suit"
+	icon_state = "lingarmor"
 	flags = NODROP
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
@@ -324,8 +323,7 @@
 /obj/item/clothing/head/helmet/changeling
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
-	icon_state = "riot"
-	item_state = "helmet"
+	icon_state = "lingarmorhelmet"
 	flags = HEADCOVERSEYES | BLOCKHAIR | NODROP
 	armor = list(melee = 70, bullet = 15, laser = 7,energy = 10, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
