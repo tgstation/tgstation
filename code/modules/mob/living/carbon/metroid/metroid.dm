@@ -823,6 +823,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 ////////Adamantine Golem stuff I dunno where else to put it
 
+// This will eventually be removed.
+
 /obj/item/clothing/under/golem
 	name = "adamantine skin"
 	desc = "a golem's skin"
@@ -831,7 +833,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_color = "golem"
 	flags = ABSTRACT | NODROP
 	has_sensor = 0
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/golem
 	name = "adamantine shell"
@@ -842,14 +843,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = FULL_BODY
-	slowdown = 1.0
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
-	flags = STOPSPRESSUREDMAGE | ABSTRACT | NODROP
-	heat_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS | HEAD
-	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS | HEAD
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
+	flags = ABSTRACT | NODROP
 
 /obj/item/clothing/shoes/golem
 	name = "golem's feet"
@@ -857,7 +852,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	item_state = null
 	flags = NOSLIP | ABSTRACT | NODROP
-	slowdown = SHOES_SLOWDOWN+1
 
 
 /obj/item/clothing/mask/breath/golem
@@ -867,7 +861,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_state = "golem"
 	siemens_coefficient = 0
 	unacidable = 1
-	flags = ABSTRACT | NODROP | MASKINTERNALS | MASKCOVERSMOUTH
+	flags = ABSTRACT | NODROP
 
 
 /obj/item/clothing/gloves/golem
@@ -886,10 +880,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "golem's head"
 	desc = "a golem's head"
 	unacidable = 1
-	flags = STOPSPRESSUREDMAGE | ABSTRACT | NODROP
-	heat_protection = HEAD
-	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
+	flags = ABSTRACT | NODROP
 
 /obj/effect/golemrune
 	anchored = 1
@@ -928,14 +919,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			return
 		var/mob/living/carbon/human/G = new /mob/living/carbon/human
 		if(prob(50))	G.gender = "female"
-		hardset_dna(G, null, null, null, "adamantine")
+		hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
 		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
-		G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
-		G.equip_to_slot_or_del(new /obj/item/clothing/suit/golem(G), slot_wear_suit)
-		G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
-		G.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/golem(G), slot_wear_mask)
-		G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
-		//G.equip_to_slot_or_del(new /obj/item/clothing/head/space/golem(G), slot_head)
+		G.dna.species.auto_equip(G)
 		G.loc = src.loc
 		G.key = ghost.key
 		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."

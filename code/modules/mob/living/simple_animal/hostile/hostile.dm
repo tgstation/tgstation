@@ -111,6 +111,11 @@
 			return 0
 		if(L in friends)
 			return 0
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.dna)
+				if(src.type in H.dna.species.ignored_by)
+					return 0
 		return 1
 	if(isobj(the_target))
 		if(the_target.type in wanted_objects)

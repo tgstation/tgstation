@@ -108,9 +108,14 @@ MASS SPECTROMETER
 		mob_status = "<font color='red'>Deceased</font>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
-	user.show_message("<span class='notice'>Analyzing Results for [M]:\n\t Overall Status: [mob_status]</span>", 1)
+	user.show_message(text("<span class='notice'>Analyzing Results for []:\n\t Overall Status: []</span>", M, mob_status), 1)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.dna)// Show target's species, if they have one
+			user.show_message("<span class='notice'>Species: <b>[H.dna.species.name]</b></span>", 1)
+		else // Otherwise we can assume that they are a regular human
+			user.show_message("<span class='notice'>Species: <b>Human</b></span>", 1)
 	user.show_message("<span class='notice'>\t Damage Specifics: <font color='blue'>[oxy_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='red'>[brute_loss]</font></span>", 1)
-
 	user.show_message("<span class='notice'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>", 1)
 	user.show_message("<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
 
