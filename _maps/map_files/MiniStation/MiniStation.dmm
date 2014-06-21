@@ -1968,7 +1968,7 @@
 "aLR" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/obj{anchored = 1; icon_state = "floor3"; layer = 1; name = "floor"},/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/shuttle/escape/centcom)
 "aLS" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/extinguisher,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/escape/centcom)
 "aLT" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/shuttle/floor,/area/shuttle/escape/centcom)
-"aLU" = (/obj/machinery/computer/shuttle,/turf/simulated/shuttle/floor,/area/shuttle/escape/centcom)
+"aLU" = (/obj/machinery/computer/emergency_shuttle,/turf/simulated/shuttle/floor,/area/shuttle/escape/centcom)
 "aLV" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/escape/centcom)
 "aLW" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/obj{anchored = 1; icon_state = "floor3"; layer = 1; name = "floor"},/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/shuttle/escape/centcom)
 "aLX" = (/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/control)
