@@ -128,7 +128,7 @@ effective or pretty fucking useless.
 
 /obj/item/device/rad_laser/Topic(href, href_list)
 	if(..())
-		return
+		return 1
 
 	usr.set_machine(src)
 
