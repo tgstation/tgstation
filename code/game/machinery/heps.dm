@@ -384,7 +384,7 @@
 		var/rads = 3
 
 		if(istype(objh,/obj/item/weapon/implant/cancer))
-			if(prob(60))
+			if(prob(70))
 				affected.implants -= objh
 				dudeinside.contents -= objh
 		else if(istype(objh,/obj/item/weapon/implant))
