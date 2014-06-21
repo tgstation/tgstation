@@ -321,8 +321,8 @@
 	qdel(src)
 
 /obj/item/clothing/head/helmet/changeling
-	name = "riot helmet"
-	desc = "It's a helmet specifically designed to protect against close range attacks."
+	name = "chitinous mass"
+	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
 	flags = HEADCOVERSEYES | BLOCKHAIR | NODROP
 	armor = list(melee = 70, bullet = 15, laser = 7,energy = 10, bomb = 5, bio = 2, rad = 0)
