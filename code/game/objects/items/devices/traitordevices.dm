@@ -81,7 +81,7 @@ effective or pretty fucking useless.
 	throw_speed = 3
 	throw_range = 7
 	m_amt = 400
-	origin_tech = "magnets=2;biotech=3;syndicate=2"
+	origin_tech = "magnets=3;biotech=5;syndicate=3"
 	var/intensity = 5 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 	var/used = 0 // is it cooling down?
@@ -89,15 +89,18 @@ effective or pretty fucking useless.
 /obj/item/device/rad_laser/attack(mob/living/M as mob, mob/living/user as mob)
 	if(!used)
 		user.visible_message(text("<span class='alert'>[] has analyzed []'s vitals!</span>", user, M))
-		var/cooldown = max(100,((intensity*8)-(wavelength/2))*10)
+		var/cooldown = round(max(100,(((intensity*8)-(wavelength/2))+(intensity*2))*10))
 		used = 1
 		icon_state = "health1"
-		handle_cooldown(cooldown)
-		spawn((wavelength+(intensity*2.5))*10)
+		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
+		spawn((wavelength+(intensity*4))*10)
 			if(M)
-				if(intensity >= 5)
-					M.apply_effect(intensity/2, PARALYZE, 0)
-				M.apply_effect(intensity*10, IRRADIATE, 0)
+				if(M.reagents.get_reagent_amount("anti_toxin") >= 30 || M.reagents.get_reagent_amount("hyronalin") >= 20 || M.reagents.get_reagent_amount("arithrazine") >= 10)
+					M.apply_effect((intensity/2)*10, IRRADIATE)
+				else
+					if(intensity >= 5)
+						M.apply_effect(round(intensity/1.5), PARALYZE)
+					M.apply_effect(intensity*10, IRRADIATE)
 	else
 		user << "<span class='danger'>The radioactive microlaser is still recharging.</span>"
 
@@ -112,10 +115,10 @@ effective or pretty fucking useless.
 /obj/item/device/rad_laser/interact(mob/user as mob)
 	usr.set_machine(src)
 
-	var/cooldown = max(10,((intensity*8)-(wavelength/2)))
+	var/cooldown = round(max(10,((intensity*8)-(wavelength/2))+(intensity*2)))
 	var/dat = {"
 	Radiation Intensity: <A href='?src=\ref[src];radint=-5'>-</A><A href='?src=\ref[src];radint=-1'>-</A> [intensity] <A href='?src=\ref[src];radint=1'>+</A><A href='?src=\ref[src];radint=5'>+</A><BR>
-	Radiation Wavelength: <A href='?src=\ref[src];radwav=-5'>-</A><A href='?src=\ref[src];radwav=-1'>-</A> [(wavelength+(intensity*2.5))] <A href='?src=\ref[src];radwav=1'>+</A><A href='?src=\ref[src];radwav=5'>+</A><BR>
+	Radiation Wavelength: <A href='?src=\ref[src];radwav=-5'>-</A><A href='?src=\ref[src];radwav=-1'>-</A> [(wavelength+(intensity*4))] <A href='?src=\ref[src];radwav=1'>+</A><A href='?src=\ref[src];radwav=5'>+</A><BR>
 	Laser Cooldown: [cooldown] Seconds<BR>
 	"}
 
