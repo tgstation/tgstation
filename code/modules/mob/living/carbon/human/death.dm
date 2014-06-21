@@ -10,6 +10,8 @@
 /mob/living/carbon/human/spawn_gibs()
 	if(dna)
 		hgibs(loc, viruses, dna)
+	else
+		hgibs(loc, viruses, null)
 
 /mob/living/carbon/human/spawn_dust()
 	new /obj/effect/decal/remains/human(loc)

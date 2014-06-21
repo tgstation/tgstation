@@ -249,7 +249,6 @@ client
 			body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
 			body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
-			body += "<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>"
 			body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
 			body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
 			if(ishuman(D))
@@ -580,17 +579,6 @@ client
 
 			if(usr.client)
 				usr.client.cmd_assume_direct_control(M)
-
-		else if(href_list["make_skeleton"])
-			if(!check_rights(R_FUN))	return
-
-			var/mob/living/carbon/human/H = locate(href_list["make_skeleton"])
-			if(!istype(H))
-				usr << "This can only be used on instances of type /mob/living/carbon/human"
-				return
-
-			H.makeSkeleton()
-			href_list["datumrefresh"] = href_list["make_skeleton"]
 
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))	return
