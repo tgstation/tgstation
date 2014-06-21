@@ -89,7 +89,7 @@ var/global/list/rad_collectors = list()
 				"You unsecure the external bolts.", \
 				"You hear a ratchet")
 			disconnect_from_network()
-	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(is_id(W))
 		if (src.allowed(user))
 			if(active)
 				src.locked = !src.locked

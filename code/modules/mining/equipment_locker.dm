@@ -51,7 +51,7 @@
 						break
 
 /obj/machinery/mineral/ore_redemption/attackby(var/obj/item/weapon/W, var/mob/user)
-	if(istype(W,/obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
 			usr.drop_item()
@@ -238,7 +238,7 @@
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
-	if(istype(I,/obj/item/weapon/card/id))
+	if(istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = usr.get_active_hand()
 		if(istype(C) && !istype(inserted_id))
 			usr.drop_item()

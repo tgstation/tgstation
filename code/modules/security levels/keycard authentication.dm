@@ -32,7 +32,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		user << "This device is not powered."
 		return
-	if(istype(W,/obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/ID = W
 		if(access_keycard_auth in ID.access)
 			if(active == 1)

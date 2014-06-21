@@ -453,7 +453,7 @@
 			user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
 			update_icon()
 
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
+	else if (is_id(W))			// trying to unlock the interface with an ID card
 		if(emagged)
 			user << "The interface is broken."
 		else if(opened)

@@ -1275,6 +1275,21 @@ var/list/WALLITEMS = list(
 					return 1
 	return 0
 
+/proc/is_id(obj/item/W as obj) // Checks if it's the item that can provide access
+	if (istype(W, /obj/item/weapon/card/id))
+		return 1
+	if (istype(W, /obj/item/device/pda))
+		var/obj/item/device/pda/P = W
+		if (P.id)
+			return 1
+		return 0
+	if (istype(W, /obj/item/weapon/storage/wallet))
+		var/obj/item/weapon/storage/wallet/L = W
+		if (L.front_id)
+			return 1
+		return 0
+	return 0
+
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 

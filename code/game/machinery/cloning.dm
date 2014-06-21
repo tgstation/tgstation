@@ -267,7 +267,7 @@
 
 	default_deconstruction_crowbar(W)
 
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if (is_id(W))
 		if (!src.check_access(W))
 			user << "<span class='danger'>Access Denied.</span>"
 			return

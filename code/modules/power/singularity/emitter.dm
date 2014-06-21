@@ -204,7 +204,7 @@
 					user << "\red You need more welding fuel to complete this task."
 		return
 
-	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+	if(is_id(W))
 		if(emagged)
 			user << "\red The lock seems to be broken"
 			return

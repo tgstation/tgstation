@@ -101,7 +101,7 @@ var/global/mulebot_count = 0
 		user << "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!"
 		flick("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
-	else if(istype(I, /obj/item/weapon/card/id))
+	else if(is_id(I))
 		if(toggle_lock(user))
 			user << "\blue Controls [(locked ? "locked" : "unlocked")]."
 
