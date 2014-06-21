@@ -1275,7 +1275,11 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	if(occupant)
 		malfvacate(1)
 
-	if (terminal)
+	if(cell)
+		cell.loc = loc
+		cell = null
+
+	if(terminal)
 		terminal.master = null
 		terminal = null
 
