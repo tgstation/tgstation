@@ -361,13 +361,17 @@
 /obj/item/weapon/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
 	if(!status)
 		var/obj/item/stack/rods/R = I
-		R.use(1)
-		var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-		user.unEquip(src)
-		loc = F
-		F.weldtool = src
-		add_fingerprint(user)
-		user.put_in_hands(F)
+		if (R.use(1))
+			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
+			user.unEquip(src)
+			loc = F
+			F.weldtool = src
+			add_fingerprint(user)
+			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"
+			user.put_in_hands(F)
+		else
+			user << "<span class='warning'>You need one rod to start building a flamethrower.</span>"
+			return
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"

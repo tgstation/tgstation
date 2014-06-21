@@ -630,9 +630,6 @@ Auto Patrol: []"},
 		if(istype(humanperp.head, /obj/item/clothing/head/wizard) || istype(humanperp.head, /obj/item/clothing/head/helmet/space/rig/wizard))
 			threatcount += 2
 
-		if(humanperp.dna && humanperp.dna.mutantrace && humanperp.dna.mutantrace != "none")
-			threatcount += 2
-
 		//Agent cards lower threatlevel.
 		if(humanperp.wear_id && istype(humanperp.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 			threatcount -= 2

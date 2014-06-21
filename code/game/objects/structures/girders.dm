@@ -73,25 +73,29 @@
 
 				if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
 					if(!anchored)
-						if(S.amount < 2)
-							user << "<span class='warning'>You need at least two sheets to create a false wall.</span>"
+						if (S.use(2))
+							user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
+							var/obj/structure/falsewall/F = new (loc)
+							transfer_fingerprints_to(F)
+							qdel(src)
+						else
+							user << "<span class='warning'>You need two sheets of metal to create a false wall.</span>"
 							return
-						S.use(2)
-						user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
-						var/obj/structure/falsewall/F = new (loc)
-						transfer_fingerprints_to(F)
-						qdel(src)
 					else
-						if(S.amount < 2) return ..()
+						if(S.get_amount() < 2)
+							user << "<span class='warning'>You need two sheets of metal to finish a wall.</span>"
+							return
 						user << "<span class='notice'>Now adding plating...</span>"
-						if (do_after(user,40))
-							if(!src || !S || S.amount < 2) return
+						if (do_after(user, 40))
+							if(loc == null || S.get_amount() < 2)
+								return
 							S.use(2)
 							user << "<span class='notice'>You added the plating!</span>"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall)
 							for(var/turf/simulated/wall/X in Tsrc.loc)
-								if(X)	transfer_fingerprints_to(X)
+								if(X)
+									transfer_fingerprints_to(X)
 							qdel(src)
 						return
 

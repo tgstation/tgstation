@@ -115,16 +115,17 @@
 			traitor.objectives += block_objective
 
 	else
-		if(prob(50))
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = traitor
-			kill_objective.find_target()
-			traitor.objectives += kill_objective
-		else
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = traitor
-			steal_objective.find_target()
-			traitor.objectives += steal_objective
+		for(var/i = 0, i < config.traitor_objectives_amount, i++)
+			if(prob(50))
+				var/datum/objective/assassinate/kill_objective = new
+				kill_objective.owner = traitor
+				kill_objective.find_target()
+				traitor.objectives += kill_objective
+			else
+				var/datum/objective/steal/steal_objective = new
+				steal_objective.owner = traitor
+				steal_objective.find_target()
+				traitor.objectives += steal_objective
 
 		forge_escape_objective(traitor)
 

@@ -249,12 +249,11 @@ client
 			body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
 			body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
-			body += "<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>"
 			body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
 			body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
 			if(ishuman(D))
 				body += "<option value>---</option>"
-				body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
+				body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
 				body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
 				body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 				body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
@@ -581,17 +580,6 @@ client
 			if(usr.client)
 				usr.client.cmd_assume_direct_control(M)
 
-		else if(href_list["make_skeleton"])
-			if(!check_rights(R_FUN))	return
-
-			var/mob/living/carbon/human/H = locate(href_list["make_skeleton"])
-			if(!istype(H))
-				usr << "This can only be used on instances of type /mob/living/carbon/human"
-				return
-
-			H.makeSkeleton()
-			href_list["datumrefresh"] = href_list["make_skeleton"]
-
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))	return
 
@@ -786,25 +774,24 @@ client
 				return
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
 
-		else if(href_list["setmutantrace"])
+		else if(href_list["setspecies"])
 			if(!check_rights(R_SPAWN))	return
 
-			var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
+			var/mob/living/carbon/human/H = locate(href_list["setspecies"])
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
 
-			var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow", "fly", "skeleton")
-			switch(new_mutantrace)
-				if(null)		return
-				if("NONE")		new_mutantrace = ""
+			var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
+
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
-			if(H.dna)
-				H.dna.mutantrace = new_mutantrace
-				H.update_body()
-				H.update_hair()
+
+			if(result)
+				var/newtype = species_list[result]
+				H.dna.species = new newtype()
+				H.regenerate_icons()
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))	return
