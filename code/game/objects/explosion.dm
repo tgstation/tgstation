@@ -60,7 +60,7 @@
 
 		var/close = trange(world.view+round(devastation_range,1), epicenter)
 		// to all distanced mobs play a different sound
-		for(var/mob/M in world) if(M.z == epicenter.z) if(!(M in close))
+		for(var/mob/M in mob_list) if(M.z == epicenter.z) if(!(M in close))
 			// check if the mob can hear
 			if(M.ear_deaf <= 0 || !M.ear_deaf) if(!istype(M.loc,/turf/space))
 				M << 'sound/effects/explosionfar.ogg'

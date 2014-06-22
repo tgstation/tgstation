@@ -9,14 +9,13 @@
 	..()
 
 /mob/New()
-	mob_list.Add(src)
+	. = ..()
+	mob_list += src
 
-	if (DEAD == stat)
-		dead_mob_list.Add(src)
+	if(DEAD == stat)
+		dead_mob_list += src
 	else
-		living_mob_list.Add(src)
-
-	..()
+		living_mob_list += src
 
 /mob/proc/generate_name()
 	return name
