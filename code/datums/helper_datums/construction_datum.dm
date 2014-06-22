@@ -93,11 +93,6 @@
 	proc/spawn_result(mob/user as mob)
 		if(result)
 			testing("[user] finished a [result]!")
-			if(taskpath)
-				var/datum/job_objective/task = user.mind.findJobTask(taskpath)
-				testing("task is [task==null?"null":task]")
-				if(istype(task))
-					task.unit_completed()
 
 			new result(get_turf(holder))
 			spawn()

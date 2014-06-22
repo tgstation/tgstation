@@ -18,7 +18,6 @@
 # +STEALTH = the ability to stealthmin (make yourself appear with a fake name to everyone but other admins
 # +POSSESS = the ability to possess objects
 # +REJUV (or +REJUVINATE) = the ability to heal, respawn, modify damage and use godmode
-# +BUILD (or +BUILDMODE) = the ability to use buildmode
 # +SERVER = higher-risk admin verbs and abilities, such as those which affect the server configuration.
 # +DEBUG = debug tools used for diagnosing and fixing problems. It's useful to give this to coders so they can investigate problems on a live server.
 # +VAREDIT = everyone may view viewvars/debugvars/whatever you call it. This keyword allows you to actually EDIT those variables.
@@ -32,7 +31,7 @@ Retired Admin		+MOD +ADMIN
 Moderator		+MOD
 Admin Candidate	+ADMIN
 Trial Admin		+@ +SPAWN +REJUV +VAREDIT +BAN
-Badmin			+@ +POSSESS +BUILDMODE +SERVER +FUN
+Badmin			+@ +POSSESS +SERVER +FUN
 Game Admin		+@ +STEALTH +SOUNDS +DEBUG
 Game Master		+EVERYTHING
 

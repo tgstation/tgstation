@@ -78,9 +78,6 @@
 			var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi(get_turf(loc))
 			if(!M)	return
 
-			var/datum/job_objective/make_mommi/task = user.mind.findJobTask(/datum/job_objective/make_mommi)
-			if(istype(task))
-				task.unit_completed()
 
 			user.drop_item()
 

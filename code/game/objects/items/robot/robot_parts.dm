@@ -212,10 +212,6 @@
 
 			user.drop_item()
 
-			var/datum/job_objective/make_cyborg/task = user.mind.findJobTask(/datum/job_objective/make_cyborg)
-			if(istype(task))
-				task.unit_completed()
-
 			O.mmi = W
 			O.invisibility = 0
 			O.custom_name = created_name
@@ -230,7 +226,7 @@
 
 			O.cell = chest.cell
 			O.cell.loc = O
-			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			W.loc = O //Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 
 			// Since we "magically" installed a cell, we also have to update the correct component.
 			if(O.cell)
