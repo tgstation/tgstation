@@ -114,11 +114,11 @@
 	return H.mind.special_role == track_special_role
 
 /obj/machinery/computer/crew/proc/scan()
-	for(var/mob/M in mob_list)
-		if(istype(M.w_uniform, /obj/item/clothing/under))
-			var/obj/item/clothing/under/U = M.w_uniform
+	for(var/mob/living/carbon/human/H in mob_list)
+		if(istype(H.w_uniform, /obj/item/clothing/under))
+			var/obj/item/clothing/under/U = H.w_uniform
 
-			if(is_scannable(U, U.loc))
+			if(is_scannable(U, H))
 				if(!(U in tracked))
 					tracked += U
 	return 1
