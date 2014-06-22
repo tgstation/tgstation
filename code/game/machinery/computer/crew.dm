@@ -6,20 +6,13 @@
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = "/obj/item/weapon/circuitboard/crew"
-	var/list/tracked = list(  )
-	var/track_special_role=null
-
-
-/obj/machinery/computer/crew/New()
-	tracked = list()
-	..()
-
+	var/list/tracked = list()
+	var/track_special_role
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	src.add_hiddenprint(user)
 	attack_hand(user)
 	interact(user)
-
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -27,9 +20,7 @@
 		return
 	interact(user)
 
-
 /obj/machinery/computer/crew/update_icon()
-
 	if(stat & BROKEN)
 		icon_state = "crewb"
 	else
@@ -39,7 +30,6 @@
 		else
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
-
 
 /obj/machinery/computer/crew/Topic(href, href_list)
 	if(..()) return
@@ -53,7 +43,6 @@
 	if(href_list["update"])
 		src.updateDialog()
 		return
-
 
 /obj/machinery/computer/crew/interact(mob/user)
 	if(stat & (BROKEN|NOPOWER))
@@ -115,22 +104,21 @@
 	user << browse(t, "window=crewcomp;size=900x600")
 	onclose(user, "crewcomp")
 
-/obj/machinery/computer/crew/proc/is_scannable(var/obj/item/clothing/under/C,var/mob/living/carbon/human/H)
+/obj/machinery/computer/crew/proc/is_scannable(const/obj/item/clothing/under/C, const/mob/living/carbon/human/H)
 	if(!istype(H))
 		return 0
-	if(track_special_role==null)
+
+	if(isnull(track_special_role))
 		return C.has_sensor
+
 	return H.mind.special_role == track_special_role
 
-
 /obj/machinery/computer/crew/proc/scan()
-	for(var/obj/item/clothing/under/C in world)
-		if(is_scannable(C,C.loc))
-			var/check = 0
-			for(var/O in src.tracked)
-				if(O == C)
-					check = 1
-					break
-			if(!check)
-				src.tracked.Add(C)
+	for(var/mob/M in mob_list)
+		if(istype(M.w_uniform, /obj/item/clothing/under))
+			var/obj/item/clothing/under/U = M.w_uniform
+
+			if(is_scannable(U, U.loc))
+				if(!(U in tracked))
+					tracked += U
 	return 1
