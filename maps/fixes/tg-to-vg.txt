@@ -67,5 +67,14 @@ TYPE: /area/security/nuke_storage > /area/storage/nuke_storage
 TYPE: /area/atmos > /area/engineering/atmos
 TYPE: /area/medical/research > /area/science/lab
 
+# UNKNOWN SHIT FIXME
+TYPE: /area/tcommsat/server             > /area/tcomms/chamber
+TYPE: /area/toxins/telesci              > /area/science/telescience
+TYPE: /area/crew_quarters/hor           > /area
+TYPE: /area/shuttle/escape_pod4/station > /area
+TYPE: /area/shuttle/escape_pod4/transit > /area
+TYPE: /area/shuttle/escape_pod4/centcom > /area
+TYPE: /area/centcom/prison              > /area
+
 # Vroom
 TYPE: /obj/structure/stool/bed/chair/janicart > /obj/structure/stool/bed/chair/vehicle/janicart
