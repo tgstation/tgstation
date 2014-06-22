@@ -308,8 +308,8 @@ BLIND     // can't see anything
 			H.update_inv_w_uniform()
 
 /obj/item/clothing/under/rank/New()
-	sensor_mode = pick(0,1,2,3)
-	..()
+	. = ..()
+	sensor_mode = pick(0, 1, 2, 3)
 
 /obj/item/clothing/under/proc/holster()
 	set name = "Holster"
