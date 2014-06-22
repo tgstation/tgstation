@@ -9,7 +9,7 @@ var/global/datum/controller/garbage_collector/garbage
 	processing_interval = GC_COLLECTION_TIMEOUT
 
 	var/list/queue = list()
-	var/del_everything = 1
+	var/del_everything = 0
 
 	// To let them know how hardworking am I :^).
 	var/dels_count = 0
@@ -127,6 +127,7 @@ var/global/datum/controller/garbage_collector/garbage
 	if (isnull(D.gcDestroyed))
 		// Let our friend know they're about to get fucked up.
 		D.Destroy()
+
 		garbage.addTrash(D)
 
 /datum
