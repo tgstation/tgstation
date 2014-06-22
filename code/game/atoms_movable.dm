@@ -19,6 +19,9 @@
 	var/area/areaMaster
 	var/global/guid = 0
 
+	// Garbage collection (controller).
+	var/timeDestroyed
+
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)
