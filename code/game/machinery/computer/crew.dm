@@ -6,7 +6,6 @@
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = "/obj/item/weapon/circuitboard/crew"
-	var/list/tracked = list()
 	var/track_special_role
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
@@ -52,7 +51,6 @@
 		user << browse(null, "window=powcomp")
 		return
 	user.set_machine(src)
-	src.scan()
 	var/t = "<TT><B>Crew Monitoring</B><HR>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
@@ -62,9 +60,11 @@
 		<table><tr><td width='40%'>Name</td><td width='20%'>Vitals</td><td width='40%'>Position</td></tr>"}
 	// END AUTOFIX
 	var/list/logs = list()
-	for(var/obj/item/clothing/under/C in src.tracked)
+
+	for(var/obj/item/clothing/under/C in scan())
 		var/log = ""
 		var/turf/pos = get_turf(C)
+
 		if((C) && (C.has_sensor) && (pos) && (pos.z == src.z) && C.sensor_mode)
 			if(istype(C.loc, /mob/living/carbon/human))
 
@@ -114,6 +114,8 @@
 	return H.mind.special_role == track_special_role
 
 /obj/machinery/computer/crew/proc/scan()
+	var/list/tracked = new
+
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(istype(H.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = H.w_uniform
@@ -121,4 +123,5 @@
 			if(is_scannable(U, H))
 				if(!(U in tracked))
 					tracked += U
-	return 1
+
+	return tracked
