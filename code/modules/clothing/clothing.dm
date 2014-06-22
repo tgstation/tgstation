@@ -220,6 +220,13 @@ BLIND     // can't see anything
 	var/obj/item/clothing/tie/hastie = null
 	var/displays_id = 1
 
+/obj/item/clothing/under/Destroy()
+	for(var/obj/machinery/computer/crew/C in machines)
+		if(C && src in C.tracked)
+			C.tracked -= src
+
+	..()
+
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	if(!hastie && istype(I, /obj/item/clothing/tie))
 		user.drop_item()
