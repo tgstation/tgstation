@@ -191,19 +191,19 @@ var/list/beam_master = list()
 	var/reference = "\ref[src]"
 
 	spawn(0)
-		var/current1 = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
+		var/nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 		var/target_dir
 
 		while(src && --kill_count >= 0)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				returnToPool(src, current)
+				returnToPool(src)
 				return
 
-			if(loc == current1)
-				current1 = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
+			if(loc == nextLoc)
+				nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 
-			step_towards(src, current1, 0)
-			target_dir = get_dir(src, current1)
+			step_towards(src, nextLoc, 0)
+			target_dir = get_dir(src, nextLoc)
 
 			if(!("[icon_state][target_dir]" in beam_master))
 				beam_master["[icon_state][target_dir]"] = image(icon, icon_state, 10, target_dir)
@@ -233,7 +233,7 @@ var/list/beam_master = list()
 	var/reference = "\ref[src]"
 
 	spawn(0)
-		var/current1 = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
+		var/nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 		var/target_dir = dir
 
 		while(src && --kill_count >= 0)
@@ -241,10 +241,10 @@ var/list/beam_master = list()
 				returnToPool(src)
 				return
 
-			if(loc == current1)
-				current1 = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
+			if(loc == nextLoc)
+				nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 
-			step_towards(src, current1, 0)
+			step_towards(src, nextLoc, 0)
 
 			if(!("[icon_state][target_dir]" in beam_master))
 				beam_master["[icon_state][target_dir]"] = image(icon, icon_state, 10, target_dir)
@@ -267,7 +267,7 @@ var/list/beam_master = list()
 	cleanup(reference)
 
 /obj/item/projectile/beam/Destroy()
-	cleanup("\ref[src]")
+	// don't use qdel when deleting this, returnToPool will handle it.
 	..()
 
 /obj/item/projectile/beam/proc/cleanup(const/reference)
@@ -280,6 +280,8 @@ var/list/beam_master = list()
 			for(var/atom/A in turfs)
 				A.overlays -= beam_master[laser_state]
 				turfs -= A
+
+		returnToPool(src)
 
 /obj/item/projectile/beam/practice
 	name = "laser"

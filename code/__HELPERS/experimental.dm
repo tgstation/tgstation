@@ -88,31 +88,32 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
  *
  * Example call: returnToPool(src)
  */
-/proc/returnToPool(const/A)
-	if (!istype(A, /atom/movable))
+/proc/returnToPool(const/atom/movable/AM)
+	if(isnull(AM))
 		return -1
 
-	var/atom/movable/O = A
-	O.resetVariables()
+	AM.resetVariables()
 
-	switch (length(masterPool[O.type]))
-		if (MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
+	switch(length(masterPool[AM.type]))
+		if(MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
 			#ifdef DEBUG_OBJECT_POOL
-			world << "DEBUG_OBJECT_POOL: returnToPool([O.type]) exceeds [MAINTAINING_OBJECT_POOL_COUNT] discarding..."
+			world << "DEBUG_OBJECT_POOL: returnToPool([AM.type]) exceeds [MAINTAINING_OBJECT_POOL_COUNT] discarding..."
 			#endif
+
+			qdel(AM)
 
 			return
-		if (0) // In a numeric context (like a mathematical operation), null evaluates to 0.
+		if(0) // In a numeric context (like a mathematical operation), null evaluates to 0.
 			#ifdef DEBUG_OBJECT_POOL
-			world << "DEBUG_OBJECT_POOL: [O.type] pool is empty, recreating pool."
+			world << "DEBUG_OBJECT_POOL: [AM.type] pool is empty, recreating pool."
 			#endif
 
-			masterPool[O.type] = list()
+			masterPool[AM.type] = list()
 
-	masterPool[O.type] += O
+	masterPool[AM.type] += AM
 
 	#ifdef DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: returnToPool([O.type]) [length(masterPool[O.type])] left."
+	world << "DEBUG_OBJECT_POOL: returnToPool([AM.type]) [length(masterPool[AM.type])] left."
 	#endif
 
 #undef MAINTAINING_OBJECT_POOL_COUNT
