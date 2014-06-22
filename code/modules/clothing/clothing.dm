@@ -222,7 +222,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/Destroy()
 	for(var/obj/machinery/computer/crew/C in machines)
-		if(C && (src in C.tracked)
+		if(C && src in C.tracked)
 			C.tracked -= src
 
 	..()
