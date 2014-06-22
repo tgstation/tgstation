@@ -7,6 +7,13 @@
 	active_power_usage = 500
 	circuit = "/obj/item/weapon/circuitboard/crew"
 	var/track_special_role
+	var/list/tracked
+
+/obj/machinery/computer/crew/Destroy()
+	if(tracked)
+		tracked = null
+
+	..()
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	src.add_hiddenprint(user)
@@ -60,8 +67,9 @@
 		<table><tr><td width='40%'>Name</td><td width='20%'>Vitals</td><td width='40%'>Position</td></tr>"}
 	// END AUTOFIX
 	var/list/logs = list()
+	scan()
 
-	for(var/obj/item/clothing/under/C in scan())
+	for(var/obj/item/clothing/under/C in tracked)
 		var/log = ""
 		var/turf/pos = get_turf(C)
 
@@ -114,7 +122,7 @@
 	return H.mind.special_role == track_special_role
 
 /obj/machinery/computer/crew/proc/scan()
-	var/list/tracked = new
+	tracked = new
 
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(istype(H.w_uniform, /obj/item/clothing/under))
@@ -123,5 +131,3 @@
 			if(is_scannable(U, H))
 				if(!(U in tracked))
 					tracked += U
-
-	return tracked
