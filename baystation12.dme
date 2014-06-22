@@ -279,8 +279,6 @@
 #include "code\game\gamemodes\nuclear\nuclearbomb.dm"
 #include "code\game\gamemodes\nuclear\pinpointer.dm"
 #include "code\game\gamemodes\revolution\revolution.dm"
-#include "code\game\gamemodes\sandbox\h_sandbox.dm"
-#include "code\game\gamemodes\sandbox\sandbox.dm"
 #include "code\game\gamemodes\traitor\doubleagent.dm"
 #include "code\game\gamemodes\traitor\traitor.dm"
 #include "code\game\gamemodes\vampire\hud.dm"

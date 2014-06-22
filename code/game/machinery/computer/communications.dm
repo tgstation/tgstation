@@ -418,7 +418,7 @@ var/shuttle_call/shuttle_calls[0]
 			user << "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again."//may need to change "/600"
 			return
 
-		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
+		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction")
 			//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
 			emergency_shuttle.fake_recall = rand(300,500)
 
