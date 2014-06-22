@@ -163,6 +163,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			del(src)
 			return
 		flags &= ~NOREACT // allowing reagents to react after being lit
+		flags |= (MASKINTERNALS | BLOCK_GAS_SMOKE_EFFECT)
+
 		reagents.handle_reactions()
 		// This ain't ready yet.
 		//overlays.Cut()
@@ -252,7 +254,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
 	overlay_on = "cigarlit"
-	flags = FPRINT|TABLEPASS|MASKINTERNALS
+	flags = FPRINT|TABLEPASS
 	type_butt = /obj/item/weapon/cigbutt/cigarbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
@@ -384,6 +386,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe
 	name = "smoking pipe"
 	desc = "A pipe, for smoking. Probably made of meershaum or something."
+	flags = FPRINT|TABLEPASS
 	icon_state = "pipeoff"
 	item_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi
