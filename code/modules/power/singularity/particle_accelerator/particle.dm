@@ -30,16 +30,16 @@
 	movement_range = 20
 	energy = 50
 
-
 /obj/effect/accelerated_particle/New(loc, dir = 2)
+	. = ..()
 	src.loc = loc
 	src.dir = dir
+
 	if(movement_range > 20)
 		movement_range = 20
+
 	spawn(0)
 		move(1)
-	return
-
 
 /obj/effect/accelerated_particle/Bump(atom/A)
 	if (A)
@@ -69,12 +69,9 @@
 		Bump(A)
 	return
 
-
 /obj/effect/accelerated_particle/ex_act(severity)
 	qdel(src)
 	return
-
-
 
 /obj/effect/accelerated_particle/proc/toxmob(var/mob/living/M)
 	var/radiation = (energy*2)

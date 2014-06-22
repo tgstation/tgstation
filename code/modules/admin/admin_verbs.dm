@@ -155,7 +155,7 @@ var/list/admin_verbs_debug = list(
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
 #endif
-	) + PROFILING_VERBS
+	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
 	/proc/release

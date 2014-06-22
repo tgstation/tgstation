@@ -1208,7 +1208,7 @@
 
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
-	set category = "Superpower"
+	set category = "Mutant Abilities"
 
 	if(stat!=CONSCIOUS)
 		reset_view(0)
@@ -1287,7 +1287,7 @@
 
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
-	set category = "Superpower"
+	set category = "Mutant Abilities"
 
 	if(stat!=CONSCIOUS)
 		reset_view(0)
@@ -1315,7 +1315,7 @@
 
 /mob/living/carbon/human/proc/remoteobserve()
 	set name = "Remote View"
-	set category = "Superpower"
+	set category = "Mutant Abilities"
 
 	if(stat!=CONSCIOUS)
 		remoteview_target = null

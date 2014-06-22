@@ -4,7 +4,7 @@ var/global/PROFILING_VERBS = list(
 )
 /*
 /client/proc/disable_scrubbers()
-	set category = "Profiling"
+	set category = "Debug"
 	set name = "Disable all scrubbers"
 
 	disable_scrubbers = !disable_scrubbers
@@ -13,7 +13,7 @@ var/global/PROFILING_VERBS = list(
 
 #define gen_disable_proc(TYPE,LABEL) \
 /client/proc/disable_##TYPE() { \
-	set category = "Profiling"; \
+	set category = "Debug"; \
 	set name = "Disable all "+LABEL; \
 	disable_##TYPE = !disable_##TYPE; \
 	world << "\red "+LABEL+" are now <b>[disable_##TYPE?"OFF":"ON"]</b>."; \
