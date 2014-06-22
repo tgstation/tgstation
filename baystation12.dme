@@ -1415,7 +1415,6 @@
 #include "code\modules\virus2\isolator.dm"
 #include "code\modules\virus2\items_devices.dm"
 #include "code\WorkInProgress\autopsy.dm"
-#include "code\WorkInProgress\buildmode.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
 #include "code\WorkInProgress\periodic_news.dm"
 #include "code\WorkInProgress\Cael_Aislinn\sculpture.dm"

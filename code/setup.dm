@@ -664,7 +664,6 @@ var/list/TAGGERLOCATIONS = list(
 
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
-#define R_BUILDMODE		1
 #define R_ADMIN			2
 #define R_BAN			4
 #define R_FUN			8
