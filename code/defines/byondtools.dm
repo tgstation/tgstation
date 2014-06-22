@@ -13,5 +13,5 @@
 
 /obj/effect/byondtools/changed/New()
 	layer = TURF_LAYER
-	warning("Some dipshit left a [type] at [x],[y],[z].  Might want to fix that (dmm clean)")
+	warning("Some dipshit left a [type] at [x],[y],[z].  Might want to fix that (dmmfix map.dmm)")
 	del(src)
