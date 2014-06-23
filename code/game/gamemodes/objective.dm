@@ -14,8 +14,8 @@ datum/objective/proc/check_completion()
 	return completed
 
 datum/objective/proc/is_unique_objective(possible_target)
-	for(var/datum/objective/assassinate/O in owner.objectives)
-		if(O.get_target() == possible_target)
+	for(var/datum/objective/O in owner.objectives)
+		if(istype(O, type) && O.get_target() == possible_target)
 			return 0
 	return 1
 
