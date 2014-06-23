@@ -226,7 +226,7 @@ var/list/beam_master = list()
 	cleanup(reference)
 
 /obj/item/projectile/beam/dumbfire(const/dir)
-	if(!(dir in alldirs)
+	if(!(dir in alldirs))
 		returnToPool(src)
 		return
 
