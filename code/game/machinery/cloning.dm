@@ -186,7 +186,7 @@
 	H.real_name = R.dna.real_name
 
 	if (R.dna.mutantrace == "adamantine")
- 	H.dna.mutantrace = "adamantine"
+ 		H.dna.mutantrace = "adamantine"
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
