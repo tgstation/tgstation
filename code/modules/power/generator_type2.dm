@@ -1,4 +1,4 @@
-/obj/machinery/power/generator_type2
+/obj/machinery/power/generator/type2
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
 	icon_state = "teg"
@@ -9,40 +9,28 @@
 	var/obj/machinery/atmospherics/unary/generator_input/input1
 	var/obj/machinery/atmospherics/unary/generator_input/input2
 
-	var/lastgen = 0
-	var/lastgenlev = -1
+	var/input1_dir=NORTH
+	var/input2_dir=SOUTH
 
 
-/obj/machinery/power/generator_type2/New()
-	..()
-	spawn(5)
-		input1 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,turn(dir, 90))
-		input2 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,turn(dir, -90))
-		if(!input1 || !input2)
-			stat |= BROKEN
-		updateicon()
+/obj/machinery/power/generator/type2/reconnect()
+	input1_dir = turn(dir, 90)
+	input2_dir = turn(dir, -90)
+	input1 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,input1_dir)
+	input2 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,input2_dir)
+	updateicon()
 
-
-/obj/machinery/power/generator_type2/proc/updateicon()
-
-	if(stat & (NOPOWER|BROKEN))
-		overlays.Cut()
-	else
-		overlays.Cut()
-
-		if(lastgenlev != 0)
-			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
+/obj/machinery/power/generator/type2/operable()
+	return !(stat & (NOPOWER|BROKEN) || !anchored || !input1 || !input2)
 
 #define GENRATE 800		// generator output coefficient from Q
 
-
-/obj/machinery/power/generator_type2/process()
-	if(!input1 || !input2)
+/obj/machinery/power/generator/type2/process()
+	if(!input1 || !input2 || !anchored || stat & (NOPOWER|BROKEN))
 		return
 
 	var/datum/gas_mixture/air1 = input1.return_exchange_air()
 	var/datum/gas_mixture/air2 = input2.return_exchange_air()
-
 
 	lastgen = 0
 
@@ -88,19 +76,27 @@
 	src.updateDialog()
 
 
-/obj/machinery/power/generator_type2/attack_ai(mob/user)
+/obj/machinery/power/generator/type2/attack_ai(mob/user)
 	src.add_hiddenprint(user)
 	if(stat & (BROKEN|NOPOWER)) return
 	interact(user)
 
-
-/obj/machinery/power/generator_type2/attack_hand(mob/user)
+/obj/machinery/power/generator/type2/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(stat & (BROKEN|NOPOWER)) return
 	interact(user)
 
+/obj/machinery/power/generator/type2/proc/get_loop_state(var/loop_name,var/loop_dir,var/obj/machinery/atmospherics/unary/generator_input/loop)
+	if(!loop)
+		return "<b>[loop_name] Loop</b> ([dir2text(loop_dir)], <span style=\"color:red;font-weight:bold;\">UNCONNECTED</span>)<br />"
+	else
+		return {"<B>Cold Loop</B> ([dir2text(loop_dir)])
+<ul>
+	<li><b>Temperature:</b> [round(loop.air_contents.temperature, 0.1)] K</li>
+	<li><b>Pressure:</b> [round(loop.air_contents.return_pressure(), 0.1)] kPa</li>
+</ul>"}
 
-/obj/machinery/power/generator_type2/interact(mob/user)
+/obj/machinery/power/generator/type2/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) && (!istype(user, /mob/living/silicon/ai)))
 		user.unset_machine()
 		user << browse(null, "window=teg")
@@ -108,37 +104,17 @@
 
 	user.set_machine(src)
 
-	var/t = "<PRE><B>Thermo-Electric Generator</B><HR>"
+	var/t = "<h2>Thermo-Electric Generator Mk. 2</h2>"
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\generator_type2.dm:113: t += "Output : [round(lastgen)] W<BR><BR>"
 	t += {"Output : [round(lastgen)] W<BR><BR>
-<B>Cold loop</B><BR>
-Temperature: [round(input1.air_contents.temperature, 0.1)] K<BR>
-Pressure: [round(input1.air_contents.return_pressure(), 0.1)] kPa<BR>
-<B>Hot loop</B><BR>
-Temperature: [round(input2.air_contents.temperature, 0.1)] K<BR>
-Pressure: [round(input2.air_contents.return_pressure(), 0.1)] kPa<BR>
+[get_loop_state("Cold",input1_dir,input1)]
+[get_loop_state("Hot",input2_dir,input2)]
 <BR><HR><A href='?src=\ref[src];close=1'>Close</A>
-</PRE>"}
+| <A href='?src=\ref[src];reconnect=1'>Refresh Inputs</A>"}
 	// END AUTOFIX
 	user << browse(t, "window=teg;size=460x300")
 	onclose(user, "teg")
 	return 1
-
-
-/obj/machinery/power/generator_type2/Topic(href, href_list)
-	..()
-
-	if( href_list["close"] )
-		usr << browse(null, "window=teg")
-		usr.unset_machine()
-		return 0
-
-	return 1
-
-
-/obj/machinery/power/generator_type2/power_change()
-	..()
-	updateicon()

@@ -13,6 +13,7 @@
 	var/tail                     // Name of tail image in species effects icon file.
 	var/language                 // Default racial language, if any.
 	var/attack_verb = "punch"    // Empty hand hurt intent verb.
+	var/punch_damage = 0		 // Extra empty hand attack damage.
 	var/mutantrace               // Safeguard due to old code.
 
 	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
@@ -44,6 +45,83 @@
 
 	var/flags = 0       // Various specific features.
 
+	var/list/abilities = list()	// For species-derived or admin-given powers
+
+	var/blood_color = "#A10808" // Red.
+	var/flesh_color = "#FFC896" // Pink.
+
+	var/uniform_icons = 'icons/mob/uniform.dmi'
+	var/fat_uniform_icons = 'icons/mob/uniform_fat.dmi'
+	var/gloves_icons    = 'icons/mob/hands.dmi'
+	var/glasses_icons   = 'icons/mob/eyes.dmi'
+	var/ears_icons      = 'icons/mob/ears.dmi'
+	var/shoes_icons     = 'icons/mob/feet.dmi'
+	var/head_icons      = 'icons/mob/head.dmi'
+	var/belt_icons      = 'icons/mob/belt.dmi'
+	var/wear_suit_icons = 'icons/mob/suit.dmi'
+	var/wear_mask_icons = 'icons/mob/mask.dmi'
+	var/back_icons      = 'icons/mob/back.dmi'
+
+/datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
+	//This is a basic humanoid limb setup.
+	H.organs = list()
+	H.organs_by_name["chest"] = new/datum/organ/external/chest()
+	H.organs_by_name["groin"] = new/datum/organ/external/groin(H.organs_by_name["chest"])
+	H.organs_by_name["head"] = new/datum/organ/external/head(H.organs_by_name["chest"])
+	H.organs_by_name["l_arm"] = new/datum/organ/external/l_arm(H.organs_by_name["chest"])
+	H.organs_by_name["r_arm"] = new/datum/organ/external/r_arm(H.organs_by_name["chest"])
+	H.organs_by_name["r_leg"] = new/datum/organ/external/r_leg(H.organs_by_name["groin"])
+	H.organs_by_name["l_leg"] = new/datum/organ/external/l_leg(H.organs_by_name["groin"])
+	H.organs_by_name["l_hand"] = new/datum/organ/external/l_hand(H.organs_by_name["l_arm"])
+	H.organs_by_name["r_hand"] = new/datum/organ/external/r_hand(H.organs_by_name["r_arm"])
+	H.organs_by_name["l_foot"] = new/datum/organ/external/l_foot(H.organs_by_name["l_leg"])
+	H.organs_by_name["r_foot"] = new/datum/organ/external/r_foot(H.organs_by_name["r_leg"])
+
+	H.internal_organs = list()
+	H.internal_organs_by_name["heart"] = new/datum/organ/internal/heart(H)
+	H.internal_organs_by_name["lungs"] = new/datum/organ/internal/lungs(H)
+	H.internal_organs_by_name["liver"] = new/datum/organ/internal/liver(H)
+	H.internal_organs_by_name["kidney"] = new/datum/organ/internal/kidney(H)
+	H.internal_organs_by_name["brain"] = new/datum/organ/internal/brain(H)
+	H.internal_organs_by_name["eyes"] = new/datum/organ/internal/eyes(H)
+
+	for(var/name in H.organs_by_name)
+		H.organs += H.organs_by_name[name]
+
+	for(var/datum/organ/external/O in H.organs)
+		O.owner = H
+
+	/*
+	if(flags & IS_SYNTHETIC)
+		for(var/datum/organ/external/E in H.organs)
+			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
+			E.status |= ORGAN_ROBOT
+		for(var/datum/organ/internal/I in H.internal_organs)
+			I.mechanize()
+	*/
+
+	return
+
+/datum/species/proc/handle_post_spawn(var/mob/living/carbon/C) //Handles anything not already covered by basic species assignment.
+	return
+
+// Used for species-specific names (Vox, etc)
+/datum/species/proc/makeName(var/gender,var/mob/living/carbon/C=null)
+	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+
+/datum/species/proc/handle_death(var/mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
+	/*
+	if(flags & IS_SYNTHETIC)
+		//H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
+		H.h_style = ""
+		spawn(100)
+			//H.is_jittery = 0
+			//H.jitteriness = 0
+			H.update_hair()
+	*/
+	return
+
 /datum/species/proc/say_filter(mob/M, message, datum/language/speaking)
 	return message
 
@@ -51,6 +129,7 @@
 
 /datum/species/human
 	name = "Human"
+	language = "Sol Common"
 	primitive = /mob/living/carbon/monkey
 
 	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
@@ -62,10 +141,21 @@
 	language = "Sinta'unathi"
 	tail = "sogtail"
 	attack_verb = "scratch"
+	punch_damage = 5
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
-	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+	cold_level_1 = 280 //Default 260 - Lower is better
+	cold_level_2 = 220 //Default 200
+	cold_level_3 = 130 //Default 120
+
+	heat_level_1 = 420 //Default 360 - Higher is better
+	heat_level_2 = 480 //Default 400
+	heat_level_3 = 1100 //Default 1000
+
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+
+	flesh_color = "#34AF10"
 
 /datum/species/unathi/say_filter(mob/M, message, datum/language/speaking)
 	if(copytext(message, 1, 2) != "*")
@@ -79,7 +169,15 @@
 	language = "Clatter"
 	attack_verb = "punch"
 
-	flags = WHITELISTED | HAS_LIPS | HAS_TAIL | NO_EAT | NO_BREATHE | NON_GENDERED
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_TAIL /*| NO_EAT*/ | NO_BREATHE /*| NON_GENDERED*/ | NO_BLOOD
+
+	default_mutations=list(SKELETON)
+
+/datum/species/skellington/say_filter(mob/M, message, datum/language/speaking)
+	// 25% chance of adding ACK ACK! to the end of a message.
+	if(copytext(message, 1, 2) != "*" && prob(25))
+		message += "  ACK ACK!"
+	return message
 
 
 /datum/species/tajaran
@@ -89,19 +187,65 @@
 	language = "Siik'tajr"
 	tail = "tajtail"
 	attack_verb = "scratch"
+	punch_damage = 5
 	darksight = 8
 
-	cold_level_1 = 200
-	cold_level_2 = 140
-	cold_level_3 = 80
+	cold_level_1 = 200 //Default 260
+	cold_level_2 = 140 //Default 200
+	cold_level_3 = 80 //Default 120
 
-	heat_level_1 = 330
-	heat_level_2 = 380
-	heat_level_3 = 800
+	heat_level_1 = 330 //Default 360
+	heat_level_2 = 380 //Default 400
+	heat_level_3 = 800 //Default 1000
 
 	primitive = /mob/living/carbon/monkey/tajara
 
-	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+
+	flesh_color = "#AFA59E"
+
+	var/datum/speech_filter/filter = new
+
+/datum/species/tajaran/New()
+	// Combining all the worst shit the world has ever offered.
+
+	// Note: Comes BEFORE other stuff.
+	// Trying to remember all the stupid fucking furry memes is hard
+	filter.addPickReplacement("\b(asshole|comdom|shitter|shitler|retard|dipshit|dipshit|greyshirt|nigger)",
+		list(
+			"silly rabbit",
+			"sandwich", // won't work too well with plurals OH WELL
+			"recolor",
+			"party pooper"
+		)
+	)
+	filter.addWordReplacement("me","meow")
+	filter.addWordReplacement("I","meow") // Should replace with player's first name.
+	filter.addReplacement("fuck","yiff")
+	filter.addReplacement("shit","scat")
+	filter.addReplacement("scratch","scritch")
+	filter.addWordReplacement("(help|assist)\\bmeow","kill meow") // help me(ow) -> kill meow
+	filter.addReplacement("god","gosh")
+	filter.addWordReplacement("(ass|butt)", "rump")
+
+/datum/species/tajaran/say_filter(mob/M, message, datum/language/speaking)
+	if(prob(15))
+		message = ""
+		if(prob(50))
+			message = pick(
+				"GOD, PLEASE",
+				"NO, GOD",
+				"AGGGGGGGH",
+			)+" "
+		message += pick(
+			"KILL ME",
+			"END MY SUFFERING",
+			"I CAN'T DO THIS ANYMORE",
+		)
+		return message
+	if(copytext(message, 1, 2) != "*")
+		message = filter.FilterSpeech(message)
+	return message
 
 /datum/species/grey // /vg/
 	name = "Grey"
@@ -119,7 +263,7 @@
 	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
 
 	// Both must be set or it's only a 45% chance of manifesting.
-	default_mutations=list(mRemotetalk)
+	default_mutations=list(M_REMOTE_TALK)
 	default_block_names=list("REMOTETALK")
 
 /datum/species/skrell
@@ -129,7 +273,9 @@
 	language = "Skrellian"
 	primitive = /mob/living/carbon/monkey/skrell
 
-	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR
+
+	flesh_color = "#8CD7A3"
 
 /datum/species/vox
 	name = "Vox"
@@ -147,7 +293,22 @@
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
 
-	flags = WHITELISTED | NO_SCAN
+	flags = WHITELISTED | NO_SCAN | NO_BLOOD
+
+	blood_color = "#2299FC"
+	flesh_color = "#808D11"
+
+	uniform_icons = 'icons/mob/species/vox/uniform.dmi'
+//	fat_uniform_icons = 'icons/mob/uniform_fat.dmi'
+	gloves_icons    = 'icons/mob/species/vox/gloves.dmi'
+	glasses_icons   = 'icons/mob/species/vox/eyes.dmi'
+//	ears_icons      = 'icons/mob/ears.dmi'
+	shoes_icons 	= 'icons/mob/species/vox/shoes.dmi'
+	head_icons      = 'icons/mob/species/vox/head.dmi'
+//	belt_icons      = 'icons/mob/belt.dmi'
+	wear_suit_icons = 'icons/mob/species/vox/suit.dmi'
+	wear_mask_icons = 'icons/mob/species/vox/masks.dmi'
+//	back_icons      = 'icons/mob/back.dmi'
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
@@ -155,7 +316,7 @@
 		H.u_equip(H.head)
 		H.u_equip(H.wear_mask) // CLOOOOWN
 
-		H.equip_to_slot_or_drop(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
+		H.equip_or_collect(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
 		var/suit=/obj/item/clothing/suit/space/vox/casual
 		var/helm=/obj/item/clothing/head/helmet/space/vox/casual
 		switch(H.mind.assigned_role)
@@ -171,13 +332,23 @@
 			if("Chief Medical Officer","Medical Doctor","Paramedic","Chemist")
 				suit=/obj/item/clothing/suit/space/vox/casual/medical
 				helm=/obj/item/clothing/head/helmet/space/vox/casual/medical
-		H.equip_to_slot_or_drop(new suit(H), slot_wear_suit)
-		H.equip_to_slot_or_drop(new helm(H), slot_head)
-		H.equip_to_slot_or_drop(new/obj/item/weapon/tank/nitrogen(H), slot_s_store)
-		H << "\blue You are now running on nitrogen internals from the [H.s_store] in your suit storage. Your species finds oxygen toxic, so you must breathe nitrogen only."
+		H.equip_or_collect(new suit(H), slot_wear_suit)
+		H.equip_or_collect(new helm(H), slot_head)
+		H.equip_or_collect(new/obj/item/weapon/tank/nitrogen(H), slot_s_store)
+		H << "\blue You are now running on nitrogen internals from the [H.s_store] in your suit storage. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only."
 		H.internal = H.s_store
 		if (H.internals)
 			H.internals.icon_state = "internal1"
+
+	makeName(var/gender,var/mob/living/carbon/human/H=null)
+		var/sounds = rand(2,8)
+		var/i = 0
+		var/newname = ""
+
+		while(i<=sounds)
+			i++
+			newname += pick(vox_name_syllables)
+		return capitalize(newname)
 
 /datum/species/diona
 	name = "Diona"
@@ -185,6 +356,7 @@
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
 	language = "Rootspeak"
 	attack_verb = "slash"
+	punch_damage = 5
 	primitive = /mob/living/carbon/monkey/diona
 
 	warning_low_pressure = 50
@@ -198,4 +370,8 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
-	flags = WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NON_GENDERED | NO_SCAN | IS_PLANT | RAD_ABSORB
+	flags = IS_WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NO_SCAN | IS_PLANT | RAD_ABSORB | NO_BLOOD | IS_SLOW | NO_PAIN
+
+	blood_color = "#004400"
+	flesh_color = "#907E4A"
+

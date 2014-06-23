@@ -1,9 +1,10 @@
-obj/machinery/air_sensor
+/obj/machinery/air_sensor
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
 	name = "Gas Sensor"
 
 	anchored = 1
+
 	var/state = 0
 
 	var/id_tag
@@ -25,6 +26,20 @@ obj/machinery/air_sensor
 	update_icon()
 		icon_state = "gsensor[on]"
 
+	multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+		return {"
+		<b>Main</b>
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
+			<li>[format_tag("ID Tag","id_tag")]</li>
+		</ul>"}
+
+	attackby(var/obj/item/W as obj, var/mob/user as mob)
+		if(istype(W, /obj/item/device/multitool))
+			update_multitool_menu(user)
+			return 1
+		..()
+
 	process()
 		if(on)
 			var/datum/signal/signal = new
@@ -35,7 +50,9 @@ obj/machinery/air_sensor
 			var/datum/gas_mixture/air_sample = return_air()
 
 			if(output&1)
-				signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
+				// Fucking why do we need num2text
+				//signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
+				signal.data["pressure"] =round(air_sample.return_pressure(),0.1)
 			if(output&2)
 				signal.data["temperature"] = round(air_sample.temperature,0.1)
 
@@ -57,8 +74,6 @@ obj/machinery/air_sensor
 					signal.data["carbon_dioxide"] = 0
 			signal.data["sigtype"]="status"
 			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-
-
 	proc
 		set_frequency(new_frequency)
 			radio_controller.remove_object(src, frequency)
@@ -81,6 +96,7 @@ obj/machinery/air_sensor
 	name = "Computer"
 
 	var/frequency = 1439
+	var/show_sensors=1
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
@@ -90,26 +106,28 @@ obj/machinery/air_sensor
 		if(..(user))
 			return
 		var/html=return_text()+"</body></html>"
-		//testing("Remember to remove [__FILE__]:[__LINE__]!")
-		//var/f = file("data/gac_debug.html")
-		//fdel(f)
-		//f << html
 		user << browse(html,"window=gac")
 		user.set_machine(src)
 		onclose(user, "gac")
 
 	process()
 		..()
+		if(!sensors)
+			warning("[src.type] at [x],[y],[z] has null sensors.  Please fix.")
+			sensors = list()
 		src.updateUsrDialog()
 
+
 	attackby(I as obj, user as mob)
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/device/multitool))
+			update_multitool_menu(user)
+		else if(istype(I, /obj/item/weapon/screwdriver))
 			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					new /obj/item/weapon/shard( src.loc )
+					getFromPool(/obj/item/weapon/shard, loc)
 					var/obj/item/weapon/circuitboard/air_management/M = new /obj/item/weapon/circuitboard/air_management( A )
 					for (var/obj/C in src)
 						C.loc = src.loc
@@ -139,7 +157,7 @@ obj/machinery/air_sensor
 		if(!signal || signal.encryption) return
 
 		var/id_tag = signal.data["tag"]
-		if(!id_tag || !sensors.Find(id_tag)) return
+		if(!id_tag || !sensors || !sensors.Find(id_tag)) return
 
 		sensor_information[id_tag] = signal.data
 
@@ -153,7 +171,7 @@ obj/machinery/air_sensor
 
 				if(data)
 					sensor_part += "<table>"
-					if(data["pressure"])
+					if("pressure" in data)
 						sensor_part += "<tr><th>Pressure:</th><td>[data["pressure"]] kPa</td></tr>"
 					if(data["temperature"])
 						sensor_part += "<tr><th>Temperature:</th><td>[data["temperature"]] K</td></tr>"
@@ -217,7 +235,9 @@ legend {
 		</style>
 	</head>
 	<body>
-		<h1>[name]</h1>
+		<h1>[name]</h1>"}
+		if(show_sensors)
+			output += {"
 		<h2>Sensor Data:</h2>
 		[sensor_data]"}
 
@@ -232,6 +252,75 @@ legend {
 	initialize()
 		set_frequency(frequency)
 
+	multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+		var/dat= {"
+		<b>Main</b>
+		<ul>
+			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
+		</ul>
+		<b>Sensors:</b>
+		<ul>"}
+		for(var/id_tag in sensors)
+			dat += {"<li><a href="?src=\ref[src];edit_sensor=[id_tag]">[sensors[id_tag]]</a></li>"}
+		dat += {"<li><a href="?src=\ref[src];add_sensor=1">\[+\]</a></li></ul>"}
+		return dat
+
+	multitool_topic(var/mob/user,var/list/href_list,var/obj/O)
+		. = ..()
+		if(.) return .
+		if("add_sensor" in href_list)
+			var/list/sensor_list = list()
+			for(var/obj/machinery/air_sensor/G in machines)
+				if(!isnull(G.id_tag) && G.frequency == frequency)
+					sensor_list|=G.id_tag
+			if(!sensor_list.len)
+				user << "<span class=\"warning\">No sensors on this frequency.</span>"
+				return MT_ERROR
+			var/sensor = input(user, "Select a sensor:", "Sensor Data") as null|anything in sensor_list
+			if(!sensor)
+				return MT_ERROR
+			var/label = reject_bad_name( input(user, "Choose a sensor label:", "Sensor Label")  as text|null, allow_numbers=1)
+			if(!label)
+				return MT_ERROR
+			sensors[sensor] = label
+			return MT_UPDATE
+		if("edit_sensor" in href_list)
+			var/list/sensor_list = list()
+			for(var/obj/machinery/air_sensor/G in machines)
+				if(!isnull(G.id_tag) && G.frequency == frequency)
+					sensor_list|=G.id_tag
+			if(!sensor_list.len)
+				user << "<span class=\"warning\">No sensors on this frequency.</span>"
+				return MT_ERROR
+			var/label = sensors[href_list["edit_sensor"]]
+			var/sensor = input(user, "Select a sensor:", "Sensor Data", href_list["edit_sensor"]) as null|anything in sensor_list
+			if(!sensor)
+				return MT_ERROR
+			sensors.Remove(href_list["edit_sensor"])
+			sensors[sensor] = label
+			return MT_UPDATE
+
+	unlinkFrom(var/mob/user, var/obj/O)
+		..()
+		if("id_tag" in O.vars && istype(O,/obj/machinery/air_sensor))
+			sensors.Remove(O:id_tag)
+			return 1
+		return 0
+
+	linkMenu(var/obj/O)
+		var/dat=""
+		if(istype(O,/obj/machinery/air_sensor) && !isLinkedWith(O))
+			dat += " <a href='?src=\ref[src];link=1'>\[New Sensor\]</a> "
+		return dat
+
+	canLink(var/obj/O, var/list/context)
+		if(istype(O,/obj/machinery/air_sensor))
+			return O:id_tag
+
+	isLinkedWith(var/obj/O)
+		if(istype(O,/obj/machinery/air_sensor))
+			return O:id_tag in sensors
+
 	large_tank_control
 		icon = 'icons/obj/computer.dmi'
 		icon_state = "tank"
@@ -242,7 +331,78 @@ legend {
 		var/list/input_info
 		var/list/output_info
 
+		var/list/input_linkable=list(
+			/obj/machinery/atmospherics/unary/outlet_injector,
+			/obj/machinery/atmospherics/unary/vent_pump
+		)
+
+		var/list/output_linkable=list(
+			/obj/machinery/atmospherics/unary/vent_pump
+		)
+
 		var/pressure_setting = ONE_ATMOSPHERE * 45
+
+		multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+			var/dat= {"
+			<ul>
+				<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
+				<li>[format_tag("Input","input_tag")]</li>
+				<li>[format_tag("Output","output_tag")]</li>
+			</ul>
+			<b>Sensors:</b>
+			<ul>"}
+			for(var/id_tag in sensors)
+				dat += {"<li><a href="?src=\ref[src];edit_sensor=[id_tag]">[sensors[id_tag]]</a></li>"}
+			dat += {"<li><a href="?src=\ref[src];add_sensor=1">\[+\]</a></li></ul>"}
+			return dat
+
+		linkWith(var/mob/user, var/obj/O, var/list/context)
+			if(context["slot"]=="input" && is_type_in_list(O,input_linkable))
+				input_tag = O:id_tag
+				input_info = null
+				if(istype(O,/obj/machinery/atmospherics/unary/vent_pump))
+					send_signal("tag"=input_tag,
+						"direction"="1", // Release
+						"checks"   ="0"  // No pressure checks.
+						)
+			if(context["slot"]=="output" && is_type_in_list(O,input_linkable))
+				input_tag = O:id_tag
+				input_info = null
+				if(istype(O,/obj/machinery/atmospherics/unary/vent_pump))
+					send_signal("tag"=input_tag,
+						"direction"="0", // Suck
+						"checks"   ="2", // Internal pressure checks.
+						)
+
+		unlinkFrom(var/mob/user, var/obj/O)
+			if("id_tag" in O.vars)
+				if(O:id_tag == input_tag)
+					input_tag=null
+					input_info=null
+					return 1
+				if(O:id_tag == output_tag)
+					output_tag=null
+					output_info=null
+					return 1
+			return 0
+
+		linkMenu(var/obj/O)
+			var/dat=""
+			if(canLink(O,list("slot"="input")))
+				dat += " <a href='?src=\ref[src];link=1'>\[Link @ Input\]</a> "
+			if(canLink(O,list("slot"="output")))
+				dat += " <a href='?src=\ref[src];link=1'>\[Link @ Output\]</a> "
+			return dat
+
+		canLink(var/obj/O, var/list/context)
+			return (context["slot"]=="input" && is_type_in_list(O,input_linkable)) || (context["slot"]=="output" && is_type_in_list(O,output_linkable))
+
+		isLinkedWith(var/obj/O)
+			if(O:id_tag == input_tag)
+				return 1
+			if(O:id_tag == output_tag)
+				return 1
+			return 0
 
 		process()
 			..()
@@ -271,7 +431,7 @@ legend {
 		</tr>
 		<tr>
 			<th>Rate:</th>
-			<td>[volume_rate] L/sec</td>
+			<td><a href="?src=\ref[src];in_set_rate=1">[volume_rate]</a> L/sec</td>
 		</tr>
 	</table>
 </fieldset>
@@ -352,6 +512,13 @@ legend {
 				input_info = null
 				signal.data = list ("tag" = input_tag, "power_toggle")
 
+			else if(href_list["in_set_rate"])
+				input_info = null
+				var/new_rate=input("Enter the new volume rate of the injector:","Injector Rate") as num
+				new_rate = text2num(new_rate)
+				new_rate = between(0, new_rate, 300)
+				signal.data = list ("tag" = input_tag, "set_volume_rate"=new_rate)
+
 			else if(href_list["out_refresh_status"])
 				output_info = null
 				signal.data = list ("tag" = output_tag, "status")
@@ -390,7 +557,7 @@ legend {
 					if (src.stat & BROKEN)
 						user << "\blue The broken glass falls out."
 						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-						new /obj/item/weapon/shard( src.loc )
+						getFromPool(/obj/item/weapon/shard, loc)
 						var/obj/item/weapon/circuitboard/injector_control/M = new /obj/item/weapon/circuitboard/injector_control( A )
 						for (var/obj/C in src)
 							C.loc = src.loc

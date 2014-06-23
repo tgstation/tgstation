@@ -1,8 +1,12 @@
 /atom/movable
+	// Recycling shit
+	var/m_amt = 0	         // metal (CC)
+	var/g_amt = 0	         // glass (CC)
+	var/w_type = NOT_RECYCLABLE  // Waste category for sorters. See setup.dm
+
 	layer = 3
 	var/last_move = null
 	var/anchored = 0
-	// var/elevation = 2    - not used anywhere
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/m_flag = 1
@@ -11,6 +15,17 @@
 	var/throw_range = 7
 	var/moved_recently = 0
 	var/mob/pulledby = null
+
+	var/area/areaMaster
+	var/global/guid = 0
+
+	// Garbage collection (controller).
+	var/timeDestroyed
+
+/atom/movable/New()
+	. = ..()
+	areaMaster = get_area_master(src)
+	tag = "[++guid]"
 
 /atom/movable/Move()
 	var/atom/A = src.loc
@@ -22,7 +37,7 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
-/atom/movable/proc/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+/atom/movable/proc/recycle(var/datum/materials/rec)
 	return 0
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
@@ -30,11 +45,10 @@
 		src.throw_impact(A)
 		src.throwing = 0
 
-	spawn( 0 )
-		if ((A && yes))
-			A.last_bumped = world.time
-			A.Bumped(src)
-		return
+	if ((A && yes))
+		A.last_bumped = world.time
+		A.Bumped(src)
+	return
 	..()
 	return
 
@@ -65,10 +79,11 @@
 	if(!target || !src)	return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
-	src.throwing = 1
+	throwing = 1
+	throw_speed = speed
 
 	if(usr)
-		if(HULK in usr.mutations)
+		if(M_HULK in usr.mutations)
 			src.throwing = 2 // really strong throw!
 
 	var/dist_x = abs(target.x - src.x)
@@ -100,11 +115,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check(throw_speed)
 				error += dist_x
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= throw_speed)
 					dist_since_sleep = 0
 					sleep(1)
 			else
@@ -112,11 +127,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check(throw_speed)
 				error -= dist_y
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= throw_speed)
 					dist_since_sleep = 0
 					sleep(1)
 			a = get_area(src.loc)
@@ -129,11 +144,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check(throw_speed)
 				error += dist_y
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= throw_speed)
 					dist_since_sleep = 0
 					sleep(1)
 			else
@@ -141,11 +156,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check(throw_speed)
 				error -= dist_x
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= throw_speed)
 					dist_since_sleep = 0
 					sleep(1)
 
@@ -153,7 +168,7 @@
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
-	if(isobj(src)) src:throw_impact(get_turf(src),speed)
+	if(isobj(src)) src.throw_impact(get_turf(src),throw_speed)
 
 
 //Overlays
@@ -162,9 +177,8 @@
 	anchored = 1
 
 /atom/movable/overlay/New()
-	for(var/x in src.verbs)
-		src.verbs -= x
-	return
+	. = ..()
+	verbs.Cut()
 
 /atom/movable/overlay/attackby(a, b)
 	if (src.master)
@@ -180,3 +194,14 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
+
+/atom/movable/Destroy()
+	areaMaster = null
+	loc = null
+	..()
+
+/////////////////////////////
+// SINGULOTH PULL REFACTOR
+/////////////////////////////
+/atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
+	return 1

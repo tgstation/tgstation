@@ -1,4 +1,3 @@
-
 var/const/ENGSEC			=(1<<0)
 
 var/const/CAPTAIN			=(1<<0)

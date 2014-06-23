@@ -7,6 +7,7 @@
 	item_state = "ba_suit"
 	_color = "ba_suit"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
@@ -16,6 +17,7 @@
 	item_state = "caparmor"
 	_color = "captain"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/rank/cargo
@@ -25,6 +27,7 @@
 	item_state = "lb_suit"
 	_color = "qm"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/rank/cargotech
@@ -34,6 +37,7 @@
 	item_state = "lb_suit"
 	_color = "cargo"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/rank/chaplain
@@ -43,6 +47,7 @@
 	item_state = "bl_suit"
 	_color = "chapblack"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/rank/chef
@@ -51,6 +56,7 @@
 	icon_state = "chef"
 	_color = "chef"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/rank/clown
@@ -69,6 +75,7 @@
 	item_state = "b_suit"
 	_color = "hop"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/rank/hydroponics
@@ -79,6 +86,7 @@
 	_color = "hydroponics"
 	permeability_coefficient = 0.50
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/rank/internalaffairs
@@ -88,6 +96,7 @@
 	item_state = "internalaffairs"
 	_color = "internalaffairs"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/rank/janitor
@@ -97,6 +106,7 @@
 	_color = "janitor"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/lawyer
@@ -104,30 +114,29 @@
 	name = "Lawyer suit"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
-
 /obj/item/clothing/under/lawyer/black
 	icon_state = "lawyer_black"
 	item_state = "lawyer_black"
 	_color = "lawyer_black"
-
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/lawyer/female
 	icon_state = "black_suit_fem"
 	item_state = "black_suit_fem"
 	_color = "black_suit_fem"
-
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/lawyer/red
 	icon_state = "lawyer_red"
 	item_state = "lawyer_red"
 	_color = "lawyer_red"
-
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/lawyer/blue
 	icon_state = "lawyer_blue"
 	item_state = "lawyer_blue"
 	_color = "lawyer_blue"
-
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/lawyer/bluesuit
 	name = "Blue Suit"
@@ -135,13 +144,14 @@
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
 	_color = "bluesuit"
-
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/lawyer/purpsuit
 	name = "Purple Suit"
 	icon_state = "lawyer_purp"
 	item_state = "lawyer_purp"
 	_color = "lawyer_purp"
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/lawyer/oldman
 	name = "Old Man's Suit"
@@ -149,6 +159,7 @@
 	icon_state = "oldman"
 	item_state = "oldman"
 	_color = "oldman"
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/under/librarian
@@ -158,6 +169,8 @@
 	item_state = "red_suit"
 	_color = "red_suit"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")
+
 
 /obj/item/clothing/under/mime
 	name = "mime's outfit"
@@ -167,6 +180,7 @@
 	_color = "mime"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
+
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
 	name = "shaft miner's jumpsuit"
@@ -174,3 +188,4 @@
 	item_state = "miner"
 	_color = "miner"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	species_fit = list("Vox")

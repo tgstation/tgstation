@@ -5,7 +5,7 @@
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
 	power_channel = ENVIRON
-	var/id = null
+	var/id_tag = null
 	var/range = 10
 	var/normaldoorcontrol = 0
 	var/desiredstate = 0 // Zero is closed, 1 is open.
@@ -83,7 +83,7 @@
 
 	if(normaldoorcontrol)
 		for(var/obj/machinery/door/airlock/D in range(range))
-			if(D.id_tag == src.id)
+			if(D.id_tag == src.id_tag)
 				if(desiredstate == 1)
 					if(specialfunctions & OPEN)
 						if (D.density)
@@ -119,7 +119,7 @@
 
 	else
 		for(var/obj/machinery/door/poddoor/M in world)
-			if (M.id == src.id)
+			if (M.id_tag == src.id_tag)
 				if (M.density)
 					spawn( 0 )
 						M.open()
@@ -169,7 +169,7 @@
 	icon_state = "launcheract"
 
 	for(var/obj/machinery/door/poddoor/M in world)
-		if (M.id == src.id)
+		if (M.id_tag == src.id_tag)
 			spawn( 0 )
 				M.open()
 				return
@@ -177,13 +177,13 @@
 	sleep(20)
 
 	for(var/obj/machinery/mass_driver/M in world)
-		if(M.id == src.id)
+		if(M.id_tag == src.id_tag)
 			M.drive()
 
 	sleep(50)
 
 	for(var/obj/machinery/door/poddoor/M in world)
-		if (M.id == src.id)
+		if (M.id_tag == src.id_tag)
 			spawn( 0 )
 				M.close()
 				return

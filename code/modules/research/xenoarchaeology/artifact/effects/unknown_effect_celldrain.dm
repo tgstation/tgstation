@@ -22,7 +22,7 @@
 				B.charge = max(B.charge - 50,0)
 		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
 			S.charge = max(S.charge - 100,0)
-		for (var/mob/living/silicon/robot/M in world)
+		for (var/mob/living/silicon/robot/M in mob_list)
 			for (var/obj/item/weapon/cell/D in M.contents)
 				D.charge = max(D.charge - 50,0)
 				M << "\red SYSTEM ALERT: Energy drain detected!"
@@ -35,7 +35,7 @@
 				B.charge = max(B.charge - rand() * 150,0)
 		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
 			S.charge = max(S.charge - 250,0)
-		for (var/mob/living/silicon/robot/M in world)
+		for (var/mob/living/silicon/robot/M in mob_list)
 			for (var/obj/item/weapon/cell/D in M.contents)
 				D.charge = max(D.charge - rand() * 150,0)
 				M << "\red SYSTEM ALERT: Energy drain detected!"

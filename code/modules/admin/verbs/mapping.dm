@@ -77,8 +77,8 @@ var/intercom_range_display_status = 0
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		CL += C
 
-	var/output = {"<B>CAMERA ANNOMALITIES REPORT</B><HR>
-<B>The following annomalities have been detected. The ones in red need immediate attention: Some of those in black may be intentional.</B><BR><ul>"}
+	var/output = {"<B>CAMERA ANOMALIES REPORT</B><HR>
+<B>The following anomalies have been detected. The ones in red need immediate attention: Some of those in black may be intentional.</B><BR><ul>"}
 
 	for(var/obj/machinery/camera/C1 in CL)
 		for(var/obj/machinery/camera/C2 in CL)
@@ -94,7 +94,7 @@ var/intercom_range_display_status = 0
 			if(!(locate(/obj/structure/grille,T)))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
+					if (W.dir == turn(C1.dir,180) || W.is_fulltile() )
 						window_check = 1
 						break
 				if(!window_check)
@@ -156,14 +156,16 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/print_jobban_old
 	src.verbs += /client/proc/print_jobban_old_filter
 	src.verbs += /client/proc/forceEvent
-	src.verbs += /client/proc/break_all_air_groups
-	src.verbs += /client/proc/regroup_all_air_groups
-	src.verbs += /client/proc/kill_pipe_processing
-	src.verbs += /client/proc/kill_air_processing
-	src.verbs += /client/proc/disable_communication
-	src.verbs += /client/proc/disable_movement
+	//src.verbs += /client/proc/break_all_air_groups
+	//src.verbs += /client/proc/regroup_all_air_groups
+	//src.verbs += /client/proc/kill_pipe_processing
+	//src.verbs += /client/proc/kill_air_processing
+	//src.verbs += /client/proc/disable_communication
+	//src.verbs += /client/proc/disable_movement
 	src.verbs += /client/proc/Zone_Info
 	src.verbs += /client/proc/Test_ZAS_Connection
+	src.verbs += /client/proc/SDQL2_query
+	src.verbs += /client/proc/check_sim_unsim
 	//src.verbs += /client/proc/cmd_admin_rejuvenate
 
 	feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -238,9 +240,84 @@ var/intercom_range_display_status = 0
 	world << "There are [count] objects of type [type_path] in the game world"
 	feedback_add_details("admin_verb","mOBJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/check_sim_unsim()
+	set category = "Mapping"
+	set name = "Check Sim/Unsim Bounds"
+	set background = 1
+
+	// this/can/be/next/to = list(these)
+	var/list/acceptable_types=list(
+		/turf/simulated/wall = list(
+			/turf/simulated,
+			// Asteroid shit
+			/turf/unsimulated/mineral,
+			/turf/unsimulated/floor/airless,
+			/turf/unsimulated/floor/asteroid,
+			// Space is okay for walls
+			/turf/space
+		),
+		/turf/simulated/shuttle/floor = list(
+			/turf/simulated/shuttle,
+			/turf/space
+		),
+		/turf/simulated/shuttle/floor4 = list(
+			/turf/simulated/shuttle,
+			/turf/space
+		),
+		/turf/simulated/floor/plating/airless = list(
+			/turf/simulated/floor/plating/airless,
+			/turf/simulated/floor/airless,
+			/turf/simulated/wall,
+			/turf/space
+		),
+		/turf/simulated/floor/airless = list(
+			/turf/simulated/floor/airless,
+			/turf/simulated/floor/plating/airless,
+			/turf/simulated/wall,
+			/turf/space
+		),
+		/turf/simulated/floor = list(
+			/turf/simulated/floor,
+			/turf/simulated/wall,
+			/turf/simulated/shuttle/wall
+		),
+	)
+
+	// Actually a "wall" if we have this shit on the tile:
+	var/list/wallify=list(
+		/turf/simulated/wall,
+		/obj/structure/window,
+		/obj/structure/shuttle,
+		/obj/machinery/door
+	)
+
+	for(var/turf/T in world)
+		for(var/basetype in acceptable_types)
+			var/list/badtiles[0]
+			if(istype(T,basetype))
+				for(var/atom/A in T)
+					if(is_type_in_list(A,wallify))
+						basetype = /turf/simulated/wall
+						break
+				for(var/D in cardinal)
+					var/turf/AT = get_step(T,D)
+					if(!is_type_in_list(AT, acceptable_types[basetype]))
+						badtiles += AT.type
+				var/oldcolor = initial(T.color)
+				var/newcolor = oldcolor
+				if(badtiles.len>0)
+					message_admins("Tile [formatJumpTo(T)] (BT: [basetype]) is next to: [dd_list2text(badtiles,", ")]")
+					newcolor="#ff0000"
+				if(newcolor!=oldcolor)
+					T.color=newcolor
+				break
+
+	feedback_add_details("admin_verb","mSIM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 var/global/prevent_airgroup_regroup = 0
 
+/*
 /client/proc/break_all_air_groups()
 	set category = "Mapping"
 	set name = "Break All Airgroups"
@@ -284,9 +361,10 @@ var/global/prevent_airgroup_regroup = 0
 		message_admins("[src.ckey] used 'kill air processing', stopping all air processing.")
 	else
 		message_admins("[src.ckey] used 'kill air processing', restoring all air processing.")*/
-
+*/
 //This proc is intended to detect lag problems relating to communication procs
 var/global/say_disabled = 0
+/*
 /client/proc/disable_communication()
 	set category = "Mapping"
 	set name = "Disable all communication verbs"
@@ -300,8 +378,10 @@ var/global/say_disabled = 0
 		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")*/
 
 //This proc is intended to detect lag problems relating to movement
+*/
 var/global/movement_disabled = 0
 var/global/movement_disabled_exception //This is the client that calls the proc, so he can continue to run around to gauge any change to lag.
+/*
 /client/proc/disable_movement()
 	set category = "Mapping"
 	set name = "Disable all movement"
@@ -314,3 +394,4 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 		movement_disabled_exception = usr.ckey
 	else
 		message_admins("[src.ckey] used 'Disable all movement', restoring all movement.")*/
+*/

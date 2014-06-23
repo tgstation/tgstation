@@ -273,6 +273,9 @@ obj/structure/door_assembly
 			var/obj/machinery/door/airlock/door = new path(src.loc)
 			door.assembly_type = type
 			door.electronics = src.electronics
+			door.fingerprints += src.fingerprints
+			door.fingerprintshidden += src.fingerprintshidden
+			door.fingerprintslast = user.ckey
 			if(src.electronics.one_access)
 				door.req_access = null
 				door.req_one_access = src.electronics.conf_access

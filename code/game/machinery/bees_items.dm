@@ -1,4 +1,3 @@
-
 /obj/item/queen_bee
 	name = "queen bee packet"
 	desc = "Place her into an apiary so she can get busy."
@@ -25,7 +24,7 @@
 		else
 			user.visible_message("\red [user] swings at some bees, they don't seem to like it.","\red You swing at some bees, they don't seem to like it.")
 			B.feral = 5
-			B.target_mob = user
+			B.target = user
 
 /obj/item/weapon/bee_net/verb/empty_bees()
 	set src in usr
@@ -40,7 +39,7 @@
 		while(caught_bees > 5)
 			var/mob/living/simple_animal/bee/B = new(src.loc)
 			B.feral = 5
-			B.target_mob = M
+			B.target = M
 			B.strength = 6
 			B.icon_state = "bees_swarm"
 			caught_bees -= 6
@@ -50,7 +49,7 @@
 		B.strength = caught_bees
 		B.icon_state = "bees[B.strength]"
 		B.feral = 5
-		B.target_mob = M
+		B.target = M
 
 		caught_bees = 0
 
@@ -66,20 +65,19 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
 	flags = FPRINT |  TABLEPASS
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/beezeez/New()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb
 	name = "honeycomb"
 	icon_state = "honeycomb"
 	desc = "Dripping with sugary sweetness."
 
-	New()
-		..()
-
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb/New()
-	..()
+	. = ..()
 	reagents.add_reagent("honey",10)
 	reagents.add_reagent("nutriment", 0.5)
 	reagents.add_reagent("sugar", 2)

@@ -4,7 +4,8 @@
 	icon_state = "magboots0"
 	var/magpulse = 0
 //	flags = NOSLIP //disabled by default
-
+	icon_action_button = "action_magboots"
+	species_fit = list("Vox")
 
 	verb/toggle()
 		set name = "Toggle Magboots"
@@ -26,6 +27,10 @@
 			usr << "You enable the mag-pulse traction system."
 		usr.update_inv_shoes()	//so our mob-overlays update
 
+	attack_self()
+		src.toggle()
+		..()
+		return
 
 	examine()
 		set src in view()

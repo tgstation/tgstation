@@ -71,7 +71,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
-	var/datum/reagent/temp_reagent
 	var/return_name = null
 	if (copytext(ID, 1, 2) == "$")
 		return_name = copytext(ID, 2)
@@ -94,12 +93,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				return_name = "Bananium"
 	else
 		for(var/R in typesof(/datum/reagent) - /datum/reagent)
-			temp_reagent = null
-			temp_reagent = new R()
-			if(temp_reagent.id == ID)
-				return_name = temp_reagent.name
-				del(temp_reagent)
-				temp_reagent = null
+			var/datum/reagent/T = new R()
+			if(T.id == ID)
+				return_name = T.name
 				break
 	return return_name
 
@@ -358,9 +354,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
 				//screen = 0.3
-				for(var/i=1;i<=text2num(href_list["n"]);i++)
+				var/n=text2num(href_list["n"])
+				if(n>10)
+					n=10
+				if(n<1)
+					n=1
+				for(var/i=1;i<=n;i++)
 					use_power(power)
 					linked_lathe.enqueue(usr.key,being_built)
+				if(href_list["now"]=="1")
+					linked_lathe.stopped=0
 				updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
@@ -375,9 +378,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/M in being_built.materials)
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
-				for(var/i=1;i<=text2num(href_list["n"]);i++)
+				var/n=text2num(href_list["n"])
+				if(n>10)
+					n=10
+				if(n<1)
+					n=1
+				for(var/i=1;i<=n;i++)
 					use_power(power)
 					linked_imprinter.enqueue(usr.key,being_built)
+				if(href_list["now"]=="1")
+					linked_imprinter.stopped=0
 				updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
@@ -783,12 +793,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/M in D.materials)
 					temp_dat += " [D.materials[M]] [CallMaterialName(M)]"
 					var/num_units_avail=linked_lathe.check_mat(D,M,upTo)
-					if(num_units_avail<upTo)
+					if(upTo && num_units_avail<upTo)
 						upTo=num_units_avail
-						if(!upTo)
-							break
 				if (upTo)
-					dat += "<li><A href='?src=\ref[src];build=[D.id];n=1'>[temp_dat]</A> "
+					dat += {"<li>
+						<A href='?src=\ref[src];build=[D.id];n=1;now=1'>[temp_dat]</A>
+						<A href='?src=\ref[src];build=[D.id];n=1'>(Queue &times;1)</A>"}
 					if(upTo>=5)
 						dat += "<A href='?src=\ref[src];build=[D.id];n=5'>(&times;5)</A>"
 					if(upTo>=10)
@@ -877,7 +887,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(!upTo)
 							break
 				if (upTo)
-					dat += "<li><A href='?src=\ref[src];imprint=[D.id];n=1'>[temp_dat]</A> "
+					dat += {"<li><A href='?src=\ref[src];imprint=[D.id];n=1;now=1'>[temp_dat]</A>
+						<A href='?src=\ref[src];imprint=[D.id];n=1'>(Queue &times;1)</A>"}
 					if(upTo>=5)
 						dat += "<A href='?src=\ref[src];imprint=[D.id];n=5'>(&times;5)</A>"
 					if(upTo>=10)
@@ -910,8 +921,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				Material Storage<HR><ul>"}
 
 
-			for(var/matID in linked_imprinter.materials)
-				var/datum/material/M=linked_imprinter.materials[matID]
+			for(var/matID in linked_imprinter.materials.storage)
+				var/datum/material/M=linked_imprinter.materials.storage[matID]
 				if(!(M.sheettype in linked_imprinter.allowed_materials))
 					continue
 				dat += "<li>[M.stored] cm<sup>3</sup> of [M.processed_name]"
@@ -950,11 +961,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
 	id = 2
-	req_access = list(access_robotics,access_tox)
+	req_one_access = list(access_tox,access_robotics)
+	req_access=list()
 	circuit = "/obj/item/weapon/circuitboard/rdconsole/robotics"
 
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
 	id = 1
 	req_access = list(access_tox)
-	circuit = "/obj/item/weapon/circuitboard/rdconsole/core"
+	circuit = "/obj/item/weapon/circuitboard/rdconsole"

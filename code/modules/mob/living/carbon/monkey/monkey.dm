@@ -14,6 +14,7 @@
 	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
 	var/update_muts = 1                        // Monkey gene must be set at start.
+	var/alien = 0								//Used for reagent metabolism.
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
@@ -60,6 +61,7 @@
 
 		// We're a monkey
 		dna.SetSEState(MONKEYBLOCK,   1)
+		dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
 		// Fix gender
 		dna.SetUIState(DNA_UI_GENDER, gender != MALE, 1)
 
@@ -99,6 +101,7 @@
 /mob/living/carbon/monkey/diona/New()
 
 	..()
+	alien = 1
 	gender = NEUTER
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
@@ -126,7 +129,7 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (HULK in tmob.mutations))
+			if(istype(tmob, /mob/living/carbon/human) && (M_HULK in tmob.mutations))
 				if(prob(70))
 					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
@@ -144,11 +147,10 @@
 			now_pushing = 1
 			if (!( AM.anchored ))
 				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
+				if (istype(AM, /obj/structure/window/full))
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
 				step(AM, t)
 			now_pushing = null
 		return
@@ -188,23 +190,6 @@
 
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
 
-/mob/living/carbon/monkey/hand_p(mob/M as mob)
-	if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
-		if ((prob(75) && health > 0))
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-			var/damage = rand(1, 5)
-			if (HULK in mutations) damage += 10
-			adjustBruteLoss(damage)
-			updatehealth()
-
-			for(var/datum/disease/D in M.viruses)
-				if(istype(D, /datum/disease/jungle_fever))
-					contract_disease(D,1,0)
-		else
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-	return
 
 /mob/living/carbon/monkey/attack_paw(mob/M as mob)
 	..()
@@ -221,7 +206,7 @@
 				adjustBruteLoss(damage)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 				for(var/datum/disease/D in M.viruses)
-					if(istype(D, /datum/disease/jungle_fever))
+					if(D.spread == "Bite")
 						contract_disease(D,1,0)
 			else
 				for(var/mob/O in viewers(src, null))
@@ -242,7 +227,7 @@
 		if(G.cell)
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
-					G.cell.charge -= 2500
+					G.cell.use(2500)
 					Weaken(5)
 					if (stuttering < 5)
 						stuttering = 5
@@ -285,10 +270,10 @@
 						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
 		else
 			if (M.a_intent == "grab")
-				if (M == src)
+				if (M == src || anchored)
 					return
 
-				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
 
 				M.put_in_active_hand(G)
 
@@ -357,7 +342,7 @@
 		if ("grab")
 			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
 
 			M.put_in_active_hand(G)
 
@@ -531,3 +516,10 @@
 	if(!ticker.mode.name == "monkey")	return 0
 	return 1
 
+// Get ALL accesses available.
+/mob/living/carbon/monkey/GetAccess()
+	var/list/ACL=list()
+	var/obj/item/I = get_active_hand()
+	if(istype(I))
+		ACL |= I.GetAccess()
+	return ACL

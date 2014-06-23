@@ -6,6 +6,7 @@
 #define AIRLOCK_TARGET_INOPEN		-1
 #define AIRLOCK_TARGET_NONE			0
 #define AIRLOCK_TARGET_OUTOPEN		1
+#define AIRLOCK_TARGET_LOCKDOWN		2
 
 datum/computer/file/embedded_program/smart_airlock_controller
 	var/id_tag
@@ -36,16 +37,16 @@ datum/computer/file/embedded_program/smart_airlock_controller/receive_signal(dat
 	if(!receive_tag) return
 
 	if(receive_tag==tag_chamber_sensor)
-		if(signal.data["pressure"])
-			memory["chamber_sensor_pressure"] = text2num(signal.data["pressure"])
+		if("pressure" in signal.data)
+			memory["chamber_sensor_pressure"] = signal.data["pressure"]
 
 	else if(receive_tag==tag_exterior_sensor)
-		if(signal.data["pressure"])
-			memory["external_sensor_pressure"] = text2num(signal.data["pressure"])
+		if("pressure" in signal.data)
+			memory["external_sensor_pressure"] = signal.data["pressure"]
 
 	else if(receive_tag==tag_interior_sensor)
-		if(signal.data["pressure"])
-			memory["internal_sensor_pressure"] = text2num(signal.data["pressure"])
+		if("pressure" in signal.data)
+			memory["internal_sensor_pressure"] = signal.data["pressure"]
 
 	else if(receive_tag==tag_exterior_door)
 		memory["exterior_status"] = signal.data["door_status"]
@@ -89,6 +90,10 @@ datum/computer/file/embedded_program/smart_airlock_controller/receive_user_comma
 			current_state = target_state
 			close_doors = 1
 			shutdown_pump = 1
+		if("depressurize")
+			state = AIRLOCK_STATE_WAIT
+			target_state = AIRLOCK_TARGET_LOCKDOWN
+			close_doors = 1
 		if("open_interior")
 			state = AIRLOCK_STATE_WAIT
 			target_state = AIRLOCK_TARGET_NONE
@@ -171,6 +176,8 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 					memory["target_pressure"] = memory["internal_sensor_pressure"]
 				if(AIRLOCK_TARGET_OUTOPEN)
 					memory["target_pressure"] = memory["external_sensor_pressure"]
+				if(AIRLOCK_TARGET_LOCKDOWN)
+					memory["target_pressure"] = 0
 
 			//work out whether we need to pressurize or depressurize the chamber (5% leeway with target pressure)
 			var/chamber_pressure = memory["chamber_sensor_pressure"]
@@ -190,7 +197,7 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 					"set_external_pressure"=target_pressure
 				)
 				post_signal(signal)
-				testing("Pressurizing")
+				//testing("Pressurizing")
 				close_doors=1
 
 			else if(chamber_pressure > target_pressure)
@@ -208,7 +215,7 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 					"set_external_pressure"=target_pressure
 				)
 				post_signal(signal)
-				testing("Depressurizing")
+				//testing("Depressurizing")
 				close_doors=1
 			if(close_doors)
 				if(memory["interior_status"] != "closed")
@@ -255,18 +262,19 @@ datum/computer/file/embedded_program/smart_airlock_controller/process()
 
 			if(AIRLOCK_STATE_DEPRESSURIZE)
 				if(memory["chamber_sensor_pressure"] <= memory["target_pressure"] * 1.05)
-					if(target_state > 0)
-						if(memory["exterior_status"] != "open")
-							var/datum/signal/signal = new
-							signal.data["tag"] = tag_exterior_door
-							signal.data["command"] = "secure_open"
-							post_signal(signal)
-					else if(target_state < 0)
-						if(memory["interior_status"] != "open")
-							var/datum/signal/signal = new
-							signal.data["tag"] = tag_interior_door
-							signal.data["command"] = "secure_open"
-							post_signal(signal)
+					if(target_state != AIRLOCK_TARGET_LOCKDOWN)
+						if(target_state > 0)
+							if(memory["exterior_status"] != "open")
+								var/datum/signal/signal = new
+								signal.data["tag"] = tag_exterior_door
+								signal.data["command"] = "secure_open"
+								post_signal(signal)
+						else if(target_state < 0)
+							if(memory["interior_status"] != "open")
+								var/datum/signal/signal = new
+								signal.data["tag"] = tag_interior_door
+								signal.data["command"] = "secure_open"
+								post_signal(signal)
 					state = AIRLOCK_STATE_WAIT
 					target_state = AIRLOCK_TARGET_NONE
 
@@ -355,58 +363,6 @@ obj/machinery/embedded_controller/radio/smart_airlock_controller
 			<li>[format_tag("Exterior","tag_exterior_sensor")]</li>
 		</ul>"}
 
-	Topic(href, href_list)
-		if(..())
-			return
-
-		if(!issilicon(usr))
-			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				return
-
-		var/obj/item/device/multitool/P = get_multitool(usr)
-
-		if("set_id" in href_list)
-			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
-			if(newid)
-				id_tag = newid
-
-		if("set_tag" in href_list)
-			if(!(href_list["set_tag"] in vars))
-				usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
-				return 1
-			var/current_tag = src.vars[href_list["set_tag"]]
-			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
-			if(newid)
-				vars[href_list["set_tag"]] = newid
-		if("set_freq" in href_list)
-			var/newfreq=frequency
-			if(href_list["set_freq"]!="-1")
-				newfreq=text2num(href_list["set_freq"])
-			else
-				newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
-			if(newfreq)
-				if(findtext(num2text(newfreq), "."))
-					newfreq *= 10 // shift the decimal one place
-				if(newfreq < 10000)
-					frequency = newfreq
-					initialize()
-
-		if(href_list["unlink"])
-			P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-		if(href_list["link"])
-			P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-		if(href_list["buffer"])
-			P.buffer = src
-
-		if(href_list["flush"])
-			P.buffer = null
-
-		usr.set_machine(src)
-		update_multitool_menu(usr)
-
-
 	return_text()
 		var/state_options = ""
 
@@ -464,7 +420,7 @@ obj/machinery/embedded_controller/radio/smart_airlock_controller
 			state_options += "<BR>"
 
 		state_options += "<br>"
-		state_options += "<B>Chamber Pressure:</B> [chamber_sensor_pressure] kPa<BR>"
+		state_options += "<B>Chamber Pressure:</B> [chamber_sensor_pressure] kPa <a href=\"?src=\ref[src];command=depressurize\" style=\"color:red;font-weight:bold;\">DEPRESSURIZE</a><BR>"
 		state_options += "<B>Target Chamber Pressure:</B> [target_pressure] kPa<BR>"
 		state_options += "<B>Control Pump: </B> [pump_status]<BR>"
 		if(state)

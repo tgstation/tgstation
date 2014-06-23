@@ -4,7 +4,7 @@
 	icon_state = "igniter"
 	m_amt = 500
 	g_amt = 50
-	w_amt = 10
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
 	secured = 1

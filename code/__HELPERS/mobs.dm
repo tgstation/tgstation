@@ -37,9 +37,9 @@ proc/random_facial_hair_style(gender, species = "Human")
 
 		return f_style
 
-proc/random_name(gender, species = "Human")
-	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
-	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+proc/random_name(gender, speciesName = "Human")
+	var/datum/species/S = all_species[speciesName]
+	return S.makeName(gender)
 
 proc/random_skin_tone()
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
@@ -75,6 +75,28 @@ proc/age2agedescription(age)
 		if(60 to 70)		return "aging"
 		if(70 to INFINITY)	return "elderly"
 		else				return "unknown"
+
+proc/RoundHealth(health)
+	switch(health)
+		if(100 to INFINITY)
+			return "health100"
+		if(70 to 100)
+			return "health80"
+		if(50 to 70)
+			return "health60"
+		if(30 to 50)
+			return "health40"
+		if(18 to 30)
+			return "health25"
+		if(5 to 18)
+			return "health10"
+		if(1 to 5)
+			return "health1"
+		if(-99 to 0)
+			return "health0"
+		else
+			return "health-100"
+	return "0"
 
 /*
 Proc for attack log creation, because really why not
@@ -119,7 +141,7 @@ proc/add_ghostlogs(var/mob/user, var/obj/target, var/what_done, var/admin=1, var
 		var/mob/M=target
 		M.attack_log += "\[[time_stamp()]\] GHOST: <font color='orange'>Has been [what_done] by [subject_text] [addition]</font>"
 	if(admin)
-		message_admins("GHOST: [subject_text] [what_done] [target_text] [addition]")
+		//message_admins("GHOST: [subject_text] [what_done] [target_text] [addition]")
 		if(isAdminGhost(user))
 			log_adminghost("[subject_text] [what_done] [target_text] [addition]")
 		else

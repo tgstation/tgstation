@@ -112,10 +112,10 @@
 					stack=stacks["[O.type]"]
 					stack.amount += O:amount
 				stacks["[O.type]"]=stack
-				del(O)
+				qdel(O)
 				continue
 			if (istype(O,/obj/item/weapon/ore/slag))
-				del(O)
+				qdel(O)
 				continue
 			O.loc = src.output.loc
 		for(var/typepath in stacks)

@@ -65,7 +65,7 @@
 						"You hear ratchet.")
 					src.anchored = 0
 
-					// From Del()
+					// From Destroy()
 					// Disconnect
 					if(node)
 						node.disconnect(src)
@@ -259,7 +259,7 @@
 						"You hear ratchet.")
 					src.anchored = 0
 
-					// From Del()
+					// From Destroy()
 					// Disconnect
 					if(node)
 						node.disconnect(src)

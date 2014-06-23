@@ -2,17 +2,20 @@ mob/living/carbon/proc/dream()
 	dreaming = 1
 	var/list/dreams = list(
 		"an ID card","a bottle","a familiar face","a crewmember","a toolbox","a security officer","the captain",
-		"voices from all around","deep space","a doctor","the engine","a traitor","an ally","darkness",
-		"light","a scientist","a monkey","a catastrophe","a loved one","a gun","warmth","freezing","the sun",
-		"a hat","the Luna","a ruined station","a planet","plasma","air","the medical bay","the bridge","blinking lights",
-		"a blue light","an abandoned laboratory","Nanotrasen","The Syndicate","blood","healing","power","respect",
-		"riches","space","a crash","happiness","pride","a fall","water","flames","ice","melons","flying","the eggs","money",
-		"the head of personnel","the head of security","a chief engineer","a research director","a chief medical officer",
-		"the detective","the warden","a member of the internal affairs","a station engineer","the janitor","atmospheric technician",
-		"the quartermaster","a cargo technician","the botanist","a shaft miner","the psychologist","the chemist","the geneticist",
-		"the virologist","the roboticist","the chef","the bartender","the chaplain","the librarian","a mouse","an ert member",
-		"a beach","the holodeck","a smokey room","a voice","the cold","a mouse","an operating table","the bar","the rain","a skrell",
-		"a unathi","a tajaran","the ai core","the mining station","the research station","a beaker of strange liquid",
+		"deep space","a doctor","the engine","a traitor","an ally","darkness","light","a scientist","a monkey",
+		"a loved one","warmth","the sun","a hat","the Luna","a planet","plasma","air","the medical bay","the bridge",
+		"blinking lights","a blue light","Nanotrasen","healing","power","respect","riches","space","happiness","pride",
+		"water","melons","flying","the eggs","money","the head of personnel","the head of security","a chief engineer",
+		"a research director","a chief medical officer","the detective","the warden","a member of the internal affairs",
+		"a station engineer","the janitor","atmospheric technician","the quartermaster","a cargo technician","the botanist",
+		"a shaft miner","a psychologist","the chemist","the geneticist","the virologist","the roboticist","the chef","the bartender",
+		"the chaplain","the librarian","a mouse","an ert member","a beach","the holodeck","a smokey room","a mouse","the bar",
+		"the rain","the ai core","the mining station","the research station","a beaker of strange liquid","a team","a man with a bad haircut",
+		"the moons of jupiter","an old malfunctioning AI","a ship full of spiders","bork","a chicken","a supernova","lockers","ninjas",
+		"chickens","the oven","euphoria","space god","farting","bones burning","flesh evaporating","distant worlds","skeletons",
+		"voices everywhere","death","a traitor","dark allyways","darkness","a catastrophe","a gun","freezing","a ruined station","plasma fires",
+		"an abandoned laboratory","The Syndicate","blood","falling","flames","ice","the cold","an operating table","a war","red men","malfunctioning robots",
+		"a ship full of spiders","valids","hardcore","your mom","lewd","explosions","broken bones","clowns everywhere","features","a crash","a skrell","a unathi","a tajaran"
 		)
 	spawn(0)
 		for(var/i = rand(1,4),i > 0, i--)

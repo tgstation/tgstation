@@ -71,7 +71,7 @@
 
 /datum/medical_effect/headache/cure(mob/living/carbon/human/H)
 	if(H.reagents.has_reagent("alkysine") || H.reagents.has_reagent("tramadol"))
-		H << "\red Your head stops throbbing.."
+		//H << "\red Your head stops throbbing.." // Halt spam.
 		return 1
 	return 0
 

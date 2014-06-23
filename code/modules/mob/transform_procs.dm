@@ -31,6 +31,7 @@
 
 	O.dna = dna.Clone()
 	O.dna.SetSEState(MONKEYBLOCK,1)
+	O.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
 	O.loc = loc
 	O.viruses = viruses
 	viruses = list()
@@ -46,6 +47,8 @@
 
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
+	del(animation)
+
 	return O
 
 /mob/new_player/AIize()
@@ -155,10 +158,8 @@
 	O.cell.maxcharge = 7500
 	O.cell.charge = 7500
 
-
 	O.gender = gender
 	O.invisibility = 0
-
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
@@ -197,10 +198,10 @@
 
 	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi( loc )
 
-	// cyborgs produced by Robotize get an automatic power cell
+	// MoMMIs produced by Robotize get an automatic power cell
 	O.cell = new(O)
-	O.cell.maxcharge = 7500
-	O.cell.charge = 7500
+	O.cell.maxcharge = 15000
+	O.cell.charge = 15000
 
 
 	O.gender = gender
@@ -405,7 +406,7 @@
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/mushroom))
+	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/shade))
 		return 1

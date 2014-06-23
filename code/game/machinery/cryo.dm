@@ -28,7 +28,7 @@
 
 	initialize_directions = dir
 
-/obj/machinery/atmospherics/unary/cryo_cell/Del()
+/obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	go_out()
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
@@ -74,6 +74,8 @@
 			visible_message("[user] climbs into the cryo cell.", 3)
 		else
 			visible_message("[user] puts [L.name] into the cryo cell.", 3)
+			if(user.pulling == L)
+				user.pulling = null
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
@@ -320,7 +322,7 @@
 		var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
 		var/has_cryo_medicine = has_cryo || has_clonexa
 		if(beaker && !has_cryo_medicine)
-			beaker.reagents.trans_to(occupant, 1, 10)
+			beaker.reagents.trans_to(occupant, 1, 1)
 			beaker.reagents.reaction(occupant)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
@@ -398,7 +400,7 @@
 			return
 		go_out()//and release him from the eternal prison.
 	else
-		if (usr.stat != 0)
+		if (usr.stat != 0 || istype(usr, /mob/living/simple_animal))
 			return
 		go_out()
 	add_fingerprint(usr)

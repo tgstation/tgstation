@@ -18,7 +18,7 @@
 	dead_mob_list -= src
 	if(src.module && istype(src.module))
 		var/obj/item/found = locate(tool_state) in src.module.modules
-		if(!found)
+		if(!found && tool_state != src.module.emag)
 			var/obj/item/TS = tool_state
 			drop_item()
 			if(TS && TS.loc)

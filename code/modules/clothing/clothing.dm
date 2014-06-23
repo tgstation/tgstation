@@ -28,19 +28,42 @@
 
 	return ..()
 
-//Ears: currently only used for headsets and earmuffs
+//Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
 	w_class = 1.0
 	throwforce = 2
 	slot_flags = SLOT_EARS
 
+/obj/item/clothing/ears/attack_hand(mob/user as mob)
+	if (!user) return
+
+	if (src.loc != user || !istype(user,/mob/living/carbon/human))
+		..()
+		return
+
+	var/mob/living/carbon/human/H = user
+	if(H.ears != src)
+		..()
+		return
+
+	if(!canremove)
+		return
+
+	var/obj/item/clothing/ears/O = src
+
+	user.u_equip(src)
+
+	if (O)
+		user.put_in_hands(O)
+		O.add_fingerprint(user)
+
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
-
+	slot_flags = SLOT_EARS
 
 //Glasses
 /obj/item/clothing/glasses
@@ -52,6 +75,7 @@
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
+	var/cover_hair = 0
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -73,6 +97,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.50
 	var/wired = 0
 	var/obj/item/weapon/cell/cell = 0
+	var/clipped = 0
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
@@ -93,6 +118,9 @@ BLIND     // can't see anything
 			cell.reliability -= 10 / severity
 	..()
 
+// Called just before an attack_hand(), in mob/UnarmedAttack()
+/obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
+	return 0 // return 1 to cancel attack_hand()
 
 //Head
 /obj/item/clothing/head
@@ -131,7 +159,7 @@ BLIND     // can't see anything
 	name = "suit"
 	var/fire_resist = T0C+100
 	flags = FPRINT | TABLEPASS
-	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
@@ -164,7 +192,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.02
 	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
 	slowdown = 3
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -191,6 +219,13 @@ BLIND     // can't see anything
 		*/
 	var/obj/item/clothing/tie/hastie = null
 	var/displays_id = 1
+
+/obj/item/clothing/under/Destroy()
+	for(var/obj/machinery/computer/crew/C in machines)
+		if(C && src in C.tracked)
+			C.tracked -= src
+
+	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	if(!hastie && istype(I, /obj/item/clothing/tie))
@@ -263,9 +298,6 @@ BLIND     // can't see anything
 	if(usr.stat) return
 
 	if(hastie)
-		usr.put_in_hands(hastie)
-		hastie = null
-
 		if (istype(hastie,/obj/item/clothing/tie/holster))
 			verbs -= /obj/item/clothing/under/proc/holster
 
@@ -273,15 +305,18 @@ BLIND     // can't see anything
 			verbs -= /obj/item/clothing/under/proc/storage
 			var/obj/item/clothing/tie/storage/W = hastie
 			if (W.hold)
-				W.hold.loc = hastie
+				W.hold.close(usr)
+
+		usr.put_in_hands(hastie)
+		hastie = null
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform()
 
 /obj/item/clothing/under/rank/New()
-	sensor_mode = pick(0,1,2,3)
-	..()
+	. = ..()
+	sensor_mode = pick(0, 1, 2, 3)
 
 /obj/item/clothing/under/proc/holster()
 	set name = "Holster"

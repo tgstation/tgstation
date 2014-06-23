@@ -2,6 +2,15 @@
 	name = "\improper Central Atmospherics Computer Circuitboard"
 	build_path = /obj/machinery/computer/atmoscontrol
 
+/datum/design/atmoscontrol
+	name = "Circuit Design (Central Atmosherics Computer)"
+	desc = "Allows for the construction of circuit boards used to build an Atmos Control Console."
+	id = "atmoscontrol"
+	req_tech = list("programming" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/atmoscontrol
+
 /obj/machinery/computer/atmoscontrol
 	name = "\improper Central Atmospherics Computer"
 	icon = 'icons/obj/computer.dmi'
@@ -18,12 +27,12 @@
 /obj/machinery/computer/atmoscontrol/xeno
 	name = "\improper Xenobiology Atmospherics Computer"
 	filter=list(
-		/area/toxins/xenobiology/specimen_1,
-		/area/toxins/xenobiology/specimen_2,
-		/area/toxins/xenobiology/specimen_3,
-		/area/toxins/xenobiology/specimen_4,
-		/area/toxins/xenobiology/specimen_5,
-		/area/toxins/xenobiology/specimen_6
+		/area/science/xenobiology/specimen_1,
+		/area/science/xenobiology/specimen_2,
+		/area/science/xenobiology/specimen_3,
+		/area/science/xenobiology/specimen_4,
+		/area/science/xenobiology/specimen_5,
+		/area/science/xenobiology/specimen_6
 	)
 	req_one_access = list(access_xenobiology,access_ce)
 
@@ -79,13 +88,13 @@
 		data["alarm"] = "\ref[current]"
 
 	var/list/alarms=list()
-	for(var/obj/machinery/alarm/alarm in sortAtom(machines))
-		if(!is_in_filter(alarm.alarm_area.type))
+	for(var/obj/machinery/alarm/alarm in (machines)) // removing sortAtom because nano updates it just enough for the lag to happen
+		if(!is_in_filter(alarm.areaMaster.type))
 			continue // NO ACCESS 4 U
 
 		var/list/alarm_data=list()
 		alarm_data["ID"]="\ref[alarm]"
-		alarm_data["danger"] = max(alarm.local_danger_level, alarm.alarm_area.atmosalm-1)
+		alarm_data["danger"] = max(alarm.local_danger_level, alarm.areaMaster.atmosalm-1)
 		alarm_data["name"] = "[alarm]"
 		alarms+=list(alarm_data)
 	data["alarms"]=alarms
@@ -226,14 +235,14 @@
 
 		if(href_list["atmos_alarm"])
 			current.alarmActivated=1
-			current.alarm_area.updateDangerLevel()
+			current.areaMaster.updateDangerLevel()
 			spawn(1)
 				src.updateUsrDialog()
 			current.update_icon()
 			return
 		if(href_list["atmos_reset"])
 			current.alarmActivated=0
-			current.alarm_area.updateDangerLevel()
+			current.areaMaster.updateDangerLevel()
 			spawn(1)
 				src.updateUsrDialog()
 			current.update_icon()

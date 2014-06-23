@@ -19,6 +19,7 @@ RCD
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
@@ -80,6 +81,8 @@ RCD
 
 	afterattack(atom/A, mob/user)
 		if(disabled && !isrobot(user))
+			return 0
+		if(get_dist(user,A)>1)
 			return 0
 		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 			return 0
@@ -165,7 +168,7 @@ RCD
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "An RCD. It currently holds [matter]/30 matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
@@ -197,3 +200,4 @@ RCD
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000
+	w_type = RECYK_ELECTRONIC

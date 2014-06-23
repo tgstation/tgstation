@@ -17,6 +17,7 @@
 	proc/activate()
 		return
 
+
 	// What does the implant do upon injection?
 	// return 0 if the implant fails (ex. Revhead and loyalty implant.)
 	// return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
@@ -44,7 +45,7 @@
 		icon_state = "implant_melted"
 		malfunction = MALFUNCTION_PERMANENT
 
-	Del()
+	Destroy()
 		if(part)
 			part.implants.Remove(src)
 		..()
@@ -335,6 +336,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(!ishuman(M)) return 0
 		if(!M.mind) return 0
 		var/mob/living/carbon/human/H = M
+		if(M == user)
+			user << "<span class='notice'>You feel quite stupid for doing that.</span>"
+			if(isliving(user))
+				user:brainloss += 10
+			return
 		if(locate(/obj/item/weapon/implant/traitor) in H.contents || locate(/obj/item/weapon/implant/traitor) in H.contents)
 			H.visible_message("[H] seems to resist the implant!", "You feel a strange sensation in your head that quickly dissipates.")
 			return 0
@@ -523,3 +529,48 @@ the implant may become unstable and either pre-maturely inject the subject or si
 /obj/item/weapon/implant/cortical
 	name = "cortical stack"
 	desc = "A fist-sized mass of biocircuits and chips."
+
+
+
+
+/obj/item/weapon/implant/cancer
+	name = "malignant tumor"
+	desc = "A mass of cancerous cells"
+	icon_state = "cancer"
+	var/activation_emote = "cough"
+	var/is_dead = 0
+	w_class = 3
+	trigger(emote, mob/source as mob)
+		if(!istype(source, /mob/living/carbon/human) || is_dead)
+			return
+		if (emote)
+			if(prob(5))
+				source:havecancer = 1
+	OnMobLife(mob/source as mob)
+		if(!istype(source, /mob/living/carbon/human) || is_dead)
+			return
+		if(prob(2) && source:havecancer == 1)
+			var/thisdmg = pick(1, 5, 10)
+			if(pick(0,1))
+				if (part)
+					part.take_damage(brute = thisdmg, used_weapon = "cancer")
+				else
+					var/mob/living/M = imp_in
+					M.apply_damage(thisdmg,BRUTE)
+			else
+				var/mob/living/M = imp_in
+				thisdmg = pick(1, 3)
+				M.apply_damage(thisdmg,CLONE)
+
+			if(prob(30))
+				var/painword = pick("stabbing", "throbbing", "stinging", "sticking", "burning", "terrible")
+				source << "\red You feel a [painword] pain inside [part ? "your [part.display_name]" : "you"]!"
+
+
+
+
+	implanted(mob/source as mob)
+		return 1
+
+	islegal()
+		return 1

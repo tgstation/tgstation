@@ -78,6 +78,7 @@
 
 
 		slime
+			time=0//It's painful enough
 
 			process(loc, what)
 

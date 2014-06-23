@@ -1,6 +1,6 @@
-/obj/item/weapon/melee/defibrilator
-	name = "emergency defibrilator"
-	desc = "A handheld emergency defibrilator, used to bring people back from the brink of death or put them there."
+/obj/item/weapon/melee/defibrillator
+	name = "emergency defibrillator"
+	desc = "A handheld emergency defibrillator, used to bring people back from the brink of death or put them there."
 	icon_state = "defib_full"
 	item_state = "defib"
 	flags = FPRINT | TABLEPASS
@@ -18,7 +18,7 @@
 		viewers(user) << "\red <b>[user] is putting the live paddles on \his chest! It looks like \he's trying to commit suicide.</b>"
 		return (OXYLOSS)
 
-/obj/item/weapon/melee/defibrilator/update_icon()
+/obj/item/weapon/melee/defibrillator/update_icon()
 	if(!status)
 		if(charges >= 7)
 			icon_state = "defib_full"
@@ -36,8 +36,8 @@
 		if(charges <= 3 && charges >= 1)
 			icon_state = "defibpaddleout_low"
 
-/obj/item/weapon/melee/defibrilator/attack_self(mob/user as mob)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+/obj/item/weapon/melee/defibrillator/attack_self(mob/user as mob)
+	if(status && (M_CLUMSY in user.mutations) && prob(50))
 		spark_system.attach(user)
 		spark_system.set_up(5, 0, src)
 		spark_system.start()
@@ -58,7 +58,7 @@
 		user << "<span class='warning'>\The [src] is out of charge.</span>"
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/defibrilator/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/melee/defibrillator/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/card/emag))
 		var/image/I = image("icon" = "icons/obj/weapons.dmi", "icon_state" = "defib_emag")
@@ -71,7 +71,7 @@
 			usr << "\blue [W] sets [src]'s safety protocols"
 			overlays -= I
 
-/obj/item/weapon/melee/defibrilator/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/melee/defibrillator/attack(mob/M as mob, mob/user as mob)
 	var/tobehealed
 	var/threshhold = -config.health_threshold_dead
 	var/mob/living/carbon/human/H = M
@@ -80,7 +80,7 @@
 		return
 	if(status)
 		if(user.a_intent == "hurt" && emagged)
-			H.visible_message("<span class='danger'>[M.name] has been touched by the defibrilator paddles by [user]!</span>")
+			H.visible_message("<span class='danger'>[M.name] has been touched by the defibrillator paddles by [user]!</span>")
 			if(charges >= 2)
 				H.Weaken(10)
 				H.adjustOxyLoss(10)
@@ -98,15 +98,15 @@
 				status = 0
 			update_icon()
 			playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> Defibrilated [H.name] ([H.ckey]) with [src.name]</font>"
-			H.attack_log += "\[[time_stamp()]\]<font color='orange'> Defibrilated by [user.name] ([user.ckey]) with [src.name]</font>"
-			log_attack("<font color='red'>[user.name] ([user.ckey]) defibrilated [H.name] ([H.ckey]) with [src.name]</font>" )
+			user.attack_log += "\[[time_stamp()]\]<font color='red'> Defibrillated [H.name] ([H.ckey]) with [src.name]</font>"
+			H.attack_log += "\[[time_stamp()]\]<font color='orange'> Defibrillated by [user.name] ([user.ckey]) with [src.name]</font>"
+			log_attack("<font color='red'>[user.name] ([user.ckey]) defibrillated [H.name] ([H.ckey]) with [src.name]</font>" )
 			if(!iscarbon(user))
 				M.LAssailant = null
 			else
 				M.LAssailant = user
 			return
-		H.visible_message("\blue [user] places the defibrilator paddles on [M.name]'s chest.", "\blue You place the defibrilator paddles on [M.name]'s chest.")
+		H.visible_message("\blue [user] places the defibrillator paddles on [M.name]'s chest.", "\blue You place the defibrillator paddles on [M.name]'s chest.")
 		if(do_after(user, 10))
 			if(H.stat == 2 || H.stat == DEAD)
 				var/uni = 0
@@ -123,7 +123,7 @@
 						spark_system.start()
 					if(prob(30))
 						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
+						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
 						H.adjustOxyLoss(tobehealed)
 				else if(uni || armor)
 					if(prob(30))
@@ -131,17 +131,17 @@
 						spark_system.start()
 					if(prob(60))
 						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
+						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
 						H.adjustOxyLoss(tobehealed)
 				else
 					if(prob(90))
 						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabalizers
+						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
 						H.adjustOxyLoss(tobehealed)
 				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
 				M.visible_message("\red [M]'s body convulses a bit.")
 				var/datum/organ/external/temp = H.get_organ("head")
-				if(H.health > -100 && !(temp.status & ORGAN_DESTROYED) && !(NOCLONE in H.mutations) && !H.suiciding)
+				if(H.health > -100 && !(temp.status & ORGAN_DESTROYED) && !(M_NOCLONE in H.mutations) && !H.suiciding && (H.brain_op_stage < 4))
 					viewers(M) << "\blue [src] beeps: Resuscitation successful."
 					spawn(0)
 						H.stat = 1

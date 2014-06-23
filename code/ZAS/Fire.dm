@@ -36,10 +36,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 		if(! (locate(/obj/fire) in src))
 
-			new /obj/fire(src,1000)
-
-		//active_hotspot.just_spawned = (current_cycle < air_master.current_cycle)
-		//remove just_spawned protection if no longer processing this cell
+			new /obj/fire(src)
 
 	return igniting
 
@@ -53,22 +50,21 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
-
 	layer = TURF_LAYER
-
-	var/firelevel = 10000 //Calculated by gas_mixture.calculate_firelevel()
 
 /obj/fire/process()
 	. = 1
 
-	//get location and check if it is in a proper ZAS zone
-	var/turf/simulated/S = loc
+	// Get location and check if it is in a proper ZAS zone.
+	var/turf/simulated/S = get_turf(loc)
 
-	if(!istype(S))
-		del src
+	if (!istype(S))
+		qdel(src)
+		return
 
-	if(!S.zone)
-		del src
+	if (isnull(S.zone))
+		qdel(src)
+		return
 
 	var/datum/gas_mixture/air_contents = S.return_air()
 	//get liquid fuels on the ground.
@@ -78,21 +74,21 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 	//since the air is processed in fractions, we need to make sure not to have any minuscle residue or
 	//the amount of moles might get to low for some functions to catch them and thus result in wonky behaviour
-	if(air_contents.oxygen < 0.001)
+	if(air_contents.oxygen < 0.1)
 		air_contents.oxygen = 0
-	if(air_contents.toxins < 0.001)
+	if(air_contents.toxins < 0.1)
 		air_contents.toxins = 0
 	if(fuel)
-		if(fuel.moles < 0.001)
+		if(fuel.moles < 0.1)
 			air_contents.trace_gases.Remove(fuel)
 
-	//check if there is something to combust
-	if(!air_contents.check_recombustability(liquid))
-		//del src
-		RemoveFire()
+	// Check if there is something to combust.
+	if (!air_contents.check_recombustability(liquid))
+		qdel(src)
+		return
 
 	//get a firelevel and set the icon
-	firelevel = air_contents.calculate_firelevel(liquid)
+	var/firelevel = air_contents.calculate_firelevel(liquid)
 
 	if(firelevel > 6)
 		icon_state = "3"
@@ -111,7 +107,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
 	//spread
 	for(var/direction in cardinal)
-		if(S.air_check_directions&direction) //Grab all valid bordering tiles
+		if(S.open_directions & direction) //Grab all valid bordering tiles
 
 			var/turf/simulated/enemy_tile = get_step(S, direction)
 
@@ -129,7 +125,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 				//Spread the fire.
 				if(!(locate(/obj/fire) in enemy_tile))
 					if( prob( 50 + 50 * (firelevel/zas_settings.Get(/datum/ZAS_Setting/fire_firelevel_multiplier)) ) && S.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, S, 0,0))
-						new/obj/fire(enemy_tile,firelevel)
+						new/obj/fire(enemy_tile)
 
 	//seperate part of the present gas
 	//this is done to prevent the fire burning all gases in a single pass
@@ -153,34 +149,16 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 ///////////////////////////////// FLOW HAS BEEN REMERGED /// feel free to delete the fire again from here on //////////////////////////////////////////////////////////////////
 
 
-/obj/fire/New(newLoc,fl)
-	..()
-
-	if(!istype(loc, /turf))
-		del src
-
+/obj/fire/New()
+	. = ..()
 	dir = pick(cardinal)
 	SetLuminosity(3)
-	firelevel = fl
 	air_master.active_hotspots.Add(src)
 
-
-/obj/fire/Del()
-	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
-
-		loc = null
+/obj/fire/Destroy()
 	air_master.active_hotspots.Remove(src)
-
+	SetLuminosity(0)
 	..()
-
-/obj/fire/proc/RemoveFire()
-	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
-		loc = null
-	air_master.active_hotspots.Remove(src)
-
-
 
 turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
 turf/proc/apply_fire_protection()
@@ -203,10 +181,13 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, forc
 
 		if(liquid)
 		//Liquid Fuel
-			if(liquid.amount <= 0)
+			if(liquid.amount <= 0.1)
 				del liquid
 			else
 				total_fuel += liquid.amount
+
+		if (0 == total_fuel) // Fix zburn /0 runtime
+			return 0
 
 		//Calculate the firelevel.
 		var/firelevel = calculate_firelevel(liquid)
@@ -256,34 +237,31 @@ datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_
 	//this is a copy proc to continue a fire after its been started.
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
-	var/value = 0
 
 	if(oxygen && (toxins || fuel || liquid))
 		if(liquid)
-			value = 1
-		else if (toxins && !value)
-			value = 1
-		else if(fuel && !value)
-			value = 1
+			return 1
+		if(toxins >= 0.1)
+			return 1
+		if(fuel && fuel.moles >= 0.1)
+			return 1
 
-	return value
+	return 0
 
 datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//this check comes up very often and is thus centralized here to ease adding stuff
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
-	var/value = 0
 
 	if(oxygen && (toxins || fuel || liquid))
 		if(liquid)
-			value = 1
-		else if (toxins >= 0.7 && !value)
-			value = 1
-		else if(fuel && !value)
-			if(fuel.moles >= 1.4)
-				value = 1
+			return 1
+		if (toxins >= MOLES_PLASMA_VISIBLE)
+			return 1
+		if(fuel && fuel.moles >= 0.1)
+			return 1
 
-	return value
+	return 0
 
 datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
@@ -316,24 +294,23 @@ datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fue
 	return max( 0, firelevel)
 
 
-/mob/living/carbon/human/proc/FireBurn(var/firelevel, var/last_temperature, var/pressure)
-// mostly using the old proc from Sky until I can think of something better
+/mob/living/proc/FireBurn(var/firelevel, var/last_temperature, var/pressure)
+	var/mx = 5 * firelevel/zas_settings.Get(/datum/ZAS_Setting/fire_firelevel_multiplier) * min(pressure / ONE_ATMOSPHERE, 1)
+	apply_damage(2.5*mx, BURN)
+
+
+/mob/living/carbon/human/FireBurn(var/firelevel, var/last_temperature, var/pressure)
 	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.
 	//Due to TG reworking how fireprotection works, this is kinda less meaningful.
 
-	var
-		head_exposure = 1
-		chest_exposure = 1
-		groin_exposure = 1
-		legs_exposure = 1
-		arms_exposure = 1
-
-	//determine the multiplier
-	//minimize this for low-pressure enviroments
-	var/mx = 5 * firelevel/zas_settings.Get(/datum/ZAS_Setting/fire_firelevel_multiplier) * min(pressure / ONE_ATMOSPHERE, 1)
+	var/head_exposure = 1
+	var/chest_exposure = 1
+	var/groin_exposure = 1
+	var/legs_exposure = 1
+	var/arms_exposure = 1
 
 	//Get heat transfer coefficients for clothing.
-	//skytodo: kill anyone who breaks things then orders me to fix them
+
 	for(var/obj/item/clothing/C in src)
 		if(l_hand == C || r_hand == C)
 			continue
@@ -349,6 +326,8 @@ datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fue
 				legs_exposure = 0
 			if(C.body_parts_covered & ARMS)
 				arms_exposure = 0
+	//minimize this for low-pressure enviroments
+	var/mx = 5 * firelevel/zas_settings.Get(/datum/ZAS_Setting/fire_firelevel_multiplier) * min(pressure / ONE_ATMOSPHERE, 1)
 
 	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 
@@ -359,5 +338,3 @@ datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fue
 	apply_damage(0.6*mx*legs_exposure, BURN, "r_leg", 0, 0, "Fire")
 	apply_damage(0.4*mx*arms_exposure, BURN, "l_arm", 0, 0, "Fire")
 	apply_damage(0.4*mx*arms_exposure, BURN, "r_arm", 0, 0, "Fire")
-
-	//flash_pain()

@@ -24,21 +24,21 @@
 /proc/randmutb(var/mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
-	var/block = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK)
+	var/block = pick(bad_blocks)
 	M.dna.SetSEState(block, 1)
 
 // Give Random Good Mutation to M
 /proc/randmutg(var/mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
-	var/block = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,COLDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
+	var/block = pick(good_blocks)
 	M.dna.SetSEState(block, 1)
 
 // Random Appearance Mutation
 /proc/randmuti(var/mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
-	M.dna.SetUIValue(rand(1,UNIDNASIZE),rand(1,4095))
+	M.dna.SetUIValue(rand(1,DNA_UI_LENGTH),rand(1,4095))
 
 // Scramble UI or SE.
 /proc/scramble(var/UI, var/mob/M, var/prob)
@@ -52,7 +52,7 @@
 		M.UpdateAppearance()
 
 	else
-		for(var/i = 1, i <= STRUCDNASIZE-1, i++)
+		for(var/i = 1, i <= DNA_SE_LENGTH-1, i++)
 			if(prob(prob))
 				M.dna.SetSEValue(i,rand(1,4095),1)
 		M.dna.UpdateSE()
@@ -170,3 +170,13 @@
 // Used below, simple injection modifier.
 /proc/probinj(var/pr, var/inj)
 	return prob(pr+inj*pr)
+
+
+/proc/query_genes(var/notflags = 0, var/flags = 0, var/genetype = -1)
+	. = list()
+	for(var/datum/dna/gene/gene in dna_genes)
+		if(!gene.block) continue
+		if(genetype>-1 && gene.genetype!=genetype) continue
+		if(flags!=0 && !(gene.flags & flags)) continue
+		if(notflags!=0 && (gene.flags & notflags)) continue
+		. += gene.block

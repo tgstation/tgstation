@@ -1,5 +1,12 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+var/list/potential_theft_objectives=list(
+	"traitor" = typesof(/datum/theft_objective/traitor) - /datum/theft_objective/traitor,
+	"special" = typesof(/datum/theft_objective/special) - /datum/theft_objective/special,
+	"heist"   = typesof(/datum/theft_objective/heist) + typesof(/datum/theft_objective/number/heist) - /datum/theft_objective/heist - /datum/theft_objective/number/heist,
+	"salvage" = typesof(/datum/theft_objective/number/salvage) - /datum/theft_objective/number/salvage
+)
+
 datum/objective
 	var/datum/mind/owner = null			//Who owns the objective.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
@@ -301,7 +308,6 @@ datum/objective/hijack
 datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 
-
 	check_completion()
 		if(!istype(owner.current, /mob/living/silicon))
 			return 0
@@ -342,7 +348,6 @@ datum/objective/silence
 datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and free."
 
-
 	check_completion()
 		if(issilicon(owner.current))
 			return 0
@@ -376,6 +381,16 @@ datum/objective/escape
 			return 1
 		else
 			return 0
+
+datum/objective/die
+	explanation_text = "Die a glorious death."
+
+	check_completion()
+		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
+			return 1		//Brains no longer win survive objectives. --NEO
+		if(issilicon(owner.current) && owner.current != owner.original)
+			return 1
+		return 0
 
 
 
@@ -473,135 +488,49 @@ datum/objective/nuclear
 
 
 
-datum/objective/steal
-	var/obj/item/steal_target
-	var/target_name
-
-	var/global/possible_items[] = list(
-		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/captain,
-		"a hand teleporter" = /obj/item/weapon/hand_tele,
-		"an RCD" = /obj/item/weapon/rcd,
-		"an RPD" = /obj/item/weapon/pipe_dispenser,
-		"a jetpack" = /obj/item/weapon/tank/jetpack,
-		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
-		"a functional AI" = /obj/item/device/aicard,
-		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
-		"the station blueprints" = /obj/item/blueprints,
-		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
-		"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
-		"a sample of slime extract" = /obj/item/slime_extract,
-		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-		"a research director's jumpsuit" = /obj/item/clothing/under/rank/research_director,
-		"a chief engineer's jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
-		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
-		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
-		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
-		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
-		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
-		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
-	)
-
-	var/global/possible_items_special[] = list(
-		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
-		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
-		"diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
-		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
-		"hyper-capacity cell" = /obj/item/weapon/cell/hyper,
-		"10 diamonds" = /obj/item/stack/sheet/mineral/diamond,
-		"50 gold bars" = /obj/item/stack/sheet/mineral/gold,
-		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
-	)
-
-
-	proc/set_target(item_name)
-		target_name = item_name
-		steal_target = possible_items[target_name]
-		if (!steal_target )
-			steal_target = possible_items_special[target_name]
-		explanation_text = "Steal [target_name]."
-		return steal_target
-
+/datum/objective/steal
+	var/target_category = "traitor"
+	var/datum/theft_objective/steal_target
 
 	find_target()
-		return set_target(pick(possible_items))
+		var/loop=50
+		while(!steal_target && loop > 0)
+			loop--
+			var/thefttype = pick(potential_theft_objectives[target_category])
+			var/datum/theft_objective/O = new thefttype
+			if(owner.assigned_role in O.protected_jobs)
+				continue
+			steal_target=O
+			explanation_text = format_explanation()
+			return
+		explanation_text = "Free Objective."
 
+	proc/format_explanation()
+		return "Steal [steal_target.name]."
 
 	proc/select_target()
-		var/list/possible_items_all = possible_items+possible_items_special+"custom"
-		var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
+		var/list/possible_items_all = potential_theft_objectives[target_category]+"custom"
+		var/new_target = input("Select target:", "Objective target", null) as null|anything in possible_items_all
 		if (!new_target) return
 		if (new_target == "custom")
-			var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
-			if (!custom_target) return
-			var/tmp_obj = new custom_target
+			var/datum/theft_objective/O=new
+			O.typepath = input("Select type:","Type") as null|anything in typesof(/obj/item)
+			if (!O.typepath) return
+			var/tmp_obj = new O.typepath
 			var/custom_name = tmp_obj:name
 			del(tmp_obj)
-			custom_name = copytext(sanitize(input("Enter target name:", "Objective target", custom_name) as text|null),1,MAX_MESSAGE_LEN)
-			if (!custom_name) return
-			target_name = custom_name
-			steal_target = custom_target
-			explanation_text = "Steal [target_name]."
+			O.name = copytext(sanitize(input("Enter target name:", "Objective target", custom_name) as text|null),1,MAX_NAME_LEN)
+			if (!O.name) return
+			steal_target = O
+			explanation_text = format_explanation()
 		else
-			set_target(new_target)
+			steal_target = new new_target
+			explanation_text = format_explanation()
 		return steal_target
 
 	check_completion()
-		if(!steal_target || !owner.current)	return 0
-		if(!isliving(owner.current))	return 0
-		var/list/all_items = owner.current.get_contents()
-		switch (target_name)
-			if("28 moles of plasma (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
-				var/target_amount = text2num(target_name)//Non-numbers are ignored.
-				var/found_amount = 0.0//Always starts as zero.
-
-				for(var/obj/item/I in all_items) //Check for plasma tanks
-					if(istype(I, steal_target))
-						found_amount += (target_name=="28 moles of plasma (full tank)" ? (I:air_contents:toxins) : (I:amount))
-				return found_amount>=target_amount
-
-			if("50 coins (in bag)")
-				var/obj/item/weapon/moneybag/B = locate() in all_items
-
-				if(B)
-					var/target = text2num(target_name)
-					var/found_amount = 0.0
-					for(var/obj/item/weapon/coin/C in B)
-						found_amount++
-					return found_amount>=target
-
-			if("a functional AI")
-				for(var/obj/item/device/aicard/C in all_items) //Check for ai card
-					for(var/mob/living/silicon/ai/M in C)
-						if(istype(M, /mob/living/silicon/ai) && M.stat != 2) //See if any AI's are alive inside that card.
-							return 1
-
-				for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
-					if(S.AI && S.AI.stat != 2)
-						return 1
-				for(var/mob/living/silicon/ai/ai in world)
-					if(istype(ai.loc, /turf))
-						var/area/check_area = get_area(ai)
-						if(istype(check_area, /area/shuttle/escape/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod1/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod2/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod3/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod5/centcom))
-							return 1
-			else
-
-				for(var/obj/I in all_items) //Check for items
-					if(istype(I, steal_target))
-						//Stealing the cheap autoinjector doesn't count
-						if(istype(I, /obj/item/weapon/reagent_containers/hypospray/autoinjector))
-							continue
-						return 1
-		return 0
-
-
+		if(!steal_target) return 1 // Free Objective
+		return steal_target.check_completion(owner)
 
 datum/objective/download
 	proc/gen_amount_goal()
@@ -762,7 +691,7 @@ datum/objective/absorb
 */
 
 // /vg/; Vox Inviolate for humans :V
-datum/objective/minimize_casualties
+/datum/objective/minimize_casualties
 	explanation_text = "Minimise casualties."
 	check_completion()
 		if(owner.kills.len>5) return 0

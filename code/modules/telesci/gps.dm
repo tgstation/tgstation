@@ -7,7 +7,7 @@ var/list/GPS_list = list()
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
-	origin_tech = "programming=2;engineering=2"
+	origin_tech = "bluespace=2;magnets=2"
 	var/gpstag = "COM0"
 	var/emped = 0
 
@@ -16,7 +16,7 @@ var/list/GPS_list = list()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
 	overlays += "working"
-/obj/item/device/gps/Del()
+/obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
 	..()
 /obj/item/device/gps/emp_act(severity)
@@ -43,7 +43,7 @@ var/list/GPS_list = list()
 			if(G.emped == 1)
 				t += "<BR>[tracked_gpstag]: ERROR"
 			else
-				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x+WORLD_X_OFFSET], [pos.y+WORLD_Y_OFFSET], [pos.z])"
+				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x-WORLD_X_OFFSET], [pos.y-WORLD_Y_OFFSET], [pos.z])"
 
 	var/datum/browser/popup = new(user, "GPS", name, 600, 450)
 	popup.set_content(t)
@@ -70,3 +70,12 @@ var/list/GPS_list = list()
 /obj/item/device/gps/engineering
 	icon_state = "gps-e"
 	gpstag = "ENG0"
+
+/obj/item/device/gps/paramedic
+	icon_state = "gps-p"
+	gpstag = "PMD0"
+
+/obj/item/device/gps/mining
+	desc = "A more rugged looking GPS device. Useful for finding miners. Or their corpses."
+	icon_state = "gps-m"
+	gpstag = "MIN0"

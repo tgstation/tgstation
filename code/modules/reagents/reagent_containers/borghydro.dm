@@ -26,7 +26,7 @@
 	processing_objects.Add(src)
 
 
-/obj/item/weapon/reagent_containers/borghypo/Del()
+/obj/item/weapon/reagent_containers/borghypo/Destroy()
 	processing_objects.Remove(src)
 	..()
 
@@ -55,12 +55,12 @@
 // Use this to add more chemicals for the borghypo to produce.
 /obj/item/weapon/reagent_containers/borghypo/proc/add_reagent(var/reagent)
 	reagent_ids |= reagent
-	var/datum/reagents/RG = new(30)
+	var/datum/reagents/RG = new(volume)
 	RG.my_atom = src
 	reagent_list += RG
 
 	var/datum/reagents/R = reagent_list[reagent_list.len]
-	R.add_reagent(reagent, 30)
+	R.add_reagent(reagent, volume)
 
 /obj/item/weapon/reagent_containers/borghypo/attack(mob/M as mob, mob/user as mob)
 	var/datum/reagents/R = reagent_list[mode]
@@ -105,3 +105,13 @@
 
 	if(empty)
 		usr << "\blue It is currently empty. Allow some time for the internal syntheszier to produce more."
+
+	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
+	usr << "\blue It is currently producing '[R.name]'."
+
+/obj/item/weapon/reagent_containers/borghypo/upgraded
+	name = "Upgraded Cyborg Hypospray"
+	desc = "An upgraded hypospray with more potent chemicals and a larger storage capacity."
+	reagent_ids = list("doctorsdelight", "dexalinp", "spaceacillin")
+	volume = 50
+	recharge_time = 3 //Time it takes for shots to recharge (in seconds)

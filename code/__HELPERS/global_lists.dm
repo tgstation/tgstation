@@ -23,7 +23,7 @@ var/global/list/all_languages[0]
 var/global/list/whitelisted_species = list("Human")
 
 // Posters
-var/global/list/datum/poster/poster_designs = typesof(/datum/poster) - /datum/poster
+var/global/list/datum/poster/poster_designs = typesof(/datum/poster) - /datum/poster - /datum/poster/goldstar
 
 //Preferences stuff
 	//Hairstyles

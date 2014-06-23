@@ -1,8 +1,15 @@
-// Credits to Nickr5 for the useful procs I've taken from his library resource.
+/**
+ * Credits to Nickr5 for the useful procs I've taken from his library resource.
+ */
 
 var/const/E		= 2.71828183
 var/const/Sqrt2	= 1.41421356
 
+// List of square roots for the numbers 1-100.
+var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+                          5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7,
+                          7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+                          8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10)
 
 /proc/Atan2(x, y)
 	if(!x && !y) return 0
@@ -12,8 +19,14 @@ var/const/Sqrt2	= 1.41421356
 /proc/Ceiling(x)
 	return -round(-x)
 
-/proc/Clamp(val, min, max)
-	return max(min, min(val, max))
+/proc/Clamp(const/val, const/min, const/max)
+	if (val <= min)
+		return min
+
+	if (val >= max)
+		return max
+
+	return val
 
 // cotangent
 /proc/Cot(x)
@@ -74,12 +87,16 @@ var/const/Sqrt2	= 1.41421356
 	return sum / values
 
 
-// Returns the nth root of x.
-/proc/Root(n, x)
+/*
+ * Returns the nth root of x.
+ */
+/proc/Root(const/n, const/x)
 	return x ** (1 / n)
 
-// secant
-/proc/Sec(x)
+/*
+ * Secant.
+ */
+/proc/Sec(const/x)
 	return 1 / cos(x)
 
 // The quadratic formula. Returns a list with the solutions, or an empty list
@@ -95,16 +112,18 @@ var/const/Sqrt2	= 1.41421356
 	if(!d) return
 	. += (-b - root) / bottom
 
-// tangent
-/proc/Tan(x)
+/*
+ * Tangent.
+ */
+/proc/Tan(const/x)
 	return sin(x) / cos(x)
 
-/proc/ToDegrees(radians)
-				  // 180 / Pi
+/proc/ToDegrees(const/radians)
+					// 180 / Pi
 	return radians * 57.2957795
 
-/proc/ToRadians(degrees)
-				  // Pi / 180
+/proc/ToRadians(const/degrees)
+					// Pi / 180
 	return degrees * 0.0174532925
 
 // min is inclusive, max is exclusive
@@ -112,3 +131,32 @@ var/const/Sqrt2	= 1.41421356
 	var/d = max - min
 	var/t = Floor((val - min) / d)
 	return val - (t * d)
+
+/*
+ * A very crude linear approximatiaon of pythagoras theorem.
+ */
+/proc/cheap_pythag(const/Ax, const/Ay)
+	var/dx = abs(Ax)
+	var/dy = abs(Ay)
+
+	if (dx >= dy)
+		return dx + (0.5 * dy) // The longest side add half the shortest side approximates the hypotenuse.
+	else
+		return dy + (0.5 * dx)
+
+/*
+ * Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
+ * They should approximate pythagoras theorem well enough for our needs.
+ */
+#define k1 0.934
+#define k2 0.427
+/proc/cheap_hypotenuse(const/Ax, const/Ay, const/Bx, const/By)
+	var/dx = abs(Ax - Bx) // Sides of right-angled triangle.
+	var/dy = abs(Ay - By)
+
+	if (dx >= dy)
+		return (k1*dx) + (k2*dy) // No sqrt or powers :).
+	else
+		return (k2*dx) + (k1*dy)
+#undef k1
+#undef k2

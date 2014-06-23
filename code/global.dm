@@ -1,6 +1,9 @@
 //#define TESTING
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+// List of types and how many instances of each type there are.
+var/global/list/type_instances[0]
+
 var/global/obj/effect/datacore/data_core = null
 var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null
@@ -47,7 +50,7 @@ var/GLASSESBLOCK = 0
 var/EPILEPSYBLOCK = 0
 var/TWITCHBLOCK = 0
 var/NERVOUSBLOCK = 0
-var/MONKEYBLOCK = 27
+var/MONKEYBLOCK = 50 // Monkey block will always be the DNA_SE_LENGTH
 
 var/BLOCKADD = 0
 var/DIFFMUT = 0
@@ -64,6 +67,47 @@ var/HALLUCINATIONBLOCK = 0
 var/NOPRINTSBLOCK = 0
 var/SHOCKIMMUNITYBLOCK = 0
 var/SMALLSIZEBLOCK = 0
+
+///////////////////////////////
+// Goon Stuff
+///////////////////////////////
+// Disabilities
+var/LISPBLOCK = 0
+var/MUTEBLOCK = 0
+var/RADBLOCK = 0
+var/FATBLOCK = 0
+var/CHAVBLOCK = 0
+var/SWEDEBLOCK = 0
+var/SCRAMBLEBLOCK = 0
+var/TOXICFARTBLOCK = 0
+var/STRONGBLOCK = 0
+var/HORNSBLOCK = 0
+var/SMILEBLOCK = 0
+var/ELVISBLOCK = 0
+
+// Powers
+var/SOBERBLOCK = 0
+var/PSYRESISTBLOCK = 0
+var/SHADOWBLOCK = 0
+var/CHAMELEONBLOCK = 0
+var/CRYOBLOCK = 0
+var/EATBLOCK = 0
+var/JUMPBLOCK = 0
+var/MELTBLOCK = 0
+var/EMPATHBLOCK = 0
+var/SUPERFARTBLOCK = 0
+var/IMMOLATEBLOCK = 0
+var/POLYMORPHBLOCK = 0
+
+///////////////////////////////
+// /vg/ Mutations
+///////////////////////////////
+var/LOUDBLOCK = 0
+var/WHISPERBLOCK = 0
+var/DIZZYBLOCK = 0
+
+
+
 
 var/skipupdate = 0
 	///////////////
@@ -238,3 +282,6 @@ var/DBConnection/dbcon = new()	//Feedback database (New database)
 var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the files in the SQL folder for information what goes where.
 
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
+
+// Recall time limit:  2 hours
+var/recall_time_limit=72000

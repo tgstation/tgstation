@@ -170,6 +170,28 @@ obj/machinery/gibber/New()
 		del(G)
 		update_icon()
 
+/obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
+	if(target != user || !istype(user, /mob/living/carbon/human) || user.stat || user.weakened || user.stunned || user.paralysis || user.buckled || get_dist(user, src) > 1)
+		return
+	if(src.occupant)
+		user << "\red The gibber is full, empty it first!"
+		return
+	if(user.abiotic(1))
+		user << "\red Subject may not have abiotic items on."
+		return
+
+	src.add_fingerprint(user)
+	user.visible_message("\red [user.name] starts climbing into the [src].", "\red You start climbing into the [src].")
+
+	if(do_after(user, 30) && user && !occupant)
+		user.visible_message("\red [user] climbs into the [src]", "\red You climb into the [src].")
+		if(user.client)
+			user.client.perspective = EYE_PERSPECTIVE
+			user.client.eye = src
+		user.loc = src
+		src.occupant = user
+		update_icon()
+
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
 	set name = "Empty Gibber"
@@ -294,7 +316,7 @@ obj/machinery/gibber/New()
 		B.loc = src.loc
 		B.throw_at(Tx,2,3)
 		if(isalien(victim))
-			new /obj/effect/decal/cleanable/blood/xeno/xgibs(Tx,2)
+			new /obj/effect/decal/cleanable/blood/gibs/xeno(Tx,2)
 		else
 			new /obj/effect/decal/cleanable/blood/gibs(Tx,2)
 	del(victim)

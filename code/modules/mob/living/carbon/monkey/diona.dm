@@ -2,13 +2,67 @@
   Tiny babby plant critter plus procs.
 */
 
+//Helper object for picking dionaea (and other creatures) up.
+/obj/item/weapon/holder
+	name = "holder"
+	desc = "You shouldn't ever see this."
+
+/obj/item/weapon/holder/diona
+
+	name = "diona nymph"
+	desc = "It's a tiny plant critter."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "nymph"
+	slot_flags = SLOT_HEAD
+	origin_tech = "magnets=3;biotech=5"
+
+/obj/item/weapon/holder/New()
+	..()
+	processing_objects.Add(src)
+
+/obj/item/weapon/holder/Destroy()
+	//Hopefully this will stop the icon from remaining on human mobs.
+	if(istype(loc,/mob/living))
+		var/mob/living/A = src.loc
+		src.loc = null
+		A.update_icons()
+	processing_objects.Remove(src)
+	..()
+
+/obj/item/weapon/holder/process()
+	if(!loc) del(src)
+
+	if(istype(loc,/turf) || !(contents.len))
+		for(var/mob/M in contents)
+			M.loc = get_turf(src)
+		del(src)
+
+/obj/item/weapon/holder/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	for(var/mob/M in src.contents)
+		M.attackby(W,user)
+
+//Mob defines.
 /mob/living/carbon/monkey/diona
 	name = "diona nymph"
 	voice_name = "diona nymph"
 	speak_emote = list("chirrups")
-	ico = "nymph"
+	icon_state = "nymph1"
 	var/list/donors = list()
 	var/ready_evolve = 0
+
+/mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M as mob)
+
+	//Let people pick the little buggers up.
+	if(M.a_intent == "help")
+		var/obj/item/weapon/holder/diona/D = new(loc)
+		src.loc = D
+		D.name = loc.name
+		D.attack_hand(M)
+		M << "You scoop up [src]."
+		src << "[M] scoops you up."
+		return
+
+	..()
 
 /mob/living/carbon/monkey/diona/New()
 
@@ -64,17 +118,28 @@
 	set name = "Evolve"
 	set desc = "Grow to a more complex form."
 
+	if(!is_alien_whitelisted(src, "Diona") && config.usealienwhitelist)
+		src << alert("You are currently not whitelisted to play an adult Diona.")
+		return 0
+
 	if(donors.len < 5)
 		src << "You are not yet ready for your growth..."
 		return
 
-	if(reagents.get_reagent_amount("nutriment") < 5)
+	if(nutrition < 400)
 		src << "You have not yet consumed enough to grow..."
 		return
 
 	src.visible_message("\red [src] begins to shift and quiver, and erupts in a shower of shed bark and twigs!","\red You begin to shift and quiver, then erupt in a shower of shed bark and twigs, attaining your adult form!")
-	var/mob/living/carbon/human/adult = new(loc)
+
+	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
 	adult.set_species("Diona")
+
+	if(istype(loc,/obj/item/weapon/holder/diona))
+		var/obj/item/weapon/holder/diona/L = loc
+		src.loc = L.loc
+		del(L)
+
 	for(var/datum/language/L in languages)
 		adult.add_language(L.name)
 	adult.regenerate_icons()
@@ -82,15 +147,18 @@
 	adult.name = src.name
 	adult.real_name = src.real_name
 	adult.ckey = src.ckey
+
+	for (var/obj/item/W in src.contents)
+		src.drop_from_inventory(W)
 	del(src)
 
 /mob/living/carbon/monkey/diona/verb/steal_blood()
 	set category = "Diona"
-	set name = "Steal Blood"
-	set desc = "Take a blood sample from a suitable donor."
+	set name = "Take Blood Sample"
+	set desc = "Take a blood sample from a suitable donor to help understand those around you and evolve."
 
 	var/list/choices = list()
-	for(var/mob/living/C in view(1,src))
+	for(var/mob/living/carbon/C in view(1,src))
 		if(C.real_name != real_name)
 			choices += C
 
@@ -115,8 +183,13 @@
 	if(donors.len == 5)
 		ready_evolve = 1
 		src << "\green You feel ready to move on to your next stage of growth."
-	else if(donors.len == 3)
+	else if(donors.len == 2)
+		universal_understand = 1
+		src << "\green You feel your awareness expand, and realize you know how to understand the creatures around you."
+	else if(donors.len == 4)
 		universal_speak = 1
-		src << "\green You feel your awareness expand, and realize you know how to speak to the meat-creatures around you."
+		src << "\green You feel your vocal range expand, and realize you know how to speak with the creatures around you."
+	else if(donors.len == 3)
+		src << "\green More blood seeps into you, continuing to expand your growing collection of memories."
 	else
 		src << "\green The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind."

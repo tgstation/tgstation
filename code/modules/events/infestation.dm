@@ -32,7 +32,7 @@
 			spawn_area_type = /area/crew_quarters/kitchen
 			locstring = "the kitchen"
 		if(LOC_ATMOS)
-			spawn_area_type = /area/atmos
+			spawn_area_type = /area/engineering/atmos
 			locstring = "atmospherics"
 		if(LOC_INCIN)
 			spawn_area_type = /area/maintenance/incinerator
@@ -47,7 +47,7 @@
 			spawn_area_type = /area/hydroponics
 			locstring = "hydroponics"
 		if(LOC_VAULT)
-			spawn_area_type = /area/security/nuke_storage
+			spawn_area_type = /area/storage/nuke_storage
 			locstring = "the vault"
 		if(LOC_CONSTR)
 			spawn_area_type = /area/construction
@@ -80,7 +80,7 @@
 			max_number = 6
 			vermstring = "lizards"
 		if(VERM_SPIDERS)
-			spawn_types = list(/obj/effect/spider/spiderling)
+			spawn_types = list(/mob/living/simple_animal/hostile/giant_spider/spiderling)
 			vermstring = "spiders"
 		if(VERM_SLIMES)
 			spawn_types = typesof(/mob/living/carbon/slime) - /mob/living/carbon/slime - typesof(/mob/living/carbon/slime/adult)
@@ -98,8 +98,8 @@
 
 
 			if(vermin == VERM_SPIDERS)
-				var/obj/effect/spider/spiderling/S = new(T)
-				S.amount_grown = -1
+				var/mob/living/simple_animal/hostile/giant_spider/spiderling/S = new(T)
+				S.amount_grown = 0
 			else
 				var/spawn_type = pick(spawn_types)
 				new spawn_type(T)

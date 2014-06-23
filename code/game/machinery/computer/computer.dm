@@ -27,7 +27,7 @@
 	for(var/x in verbs)
 		verbs -= x
 	set_broken()
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 	smoke.set_up(5, 0, src)
 	smoke.start()
 	return
@@ -41,11 +41,11 @@
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 			if (prob(50))
 				for(var/x in verbs)
@@ -108,7 +108,7 @@
 				C.loc = src.loc
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				A.state = 3
 				A.icon_state = "3"
 			else
@@ -119,9 +119,3 @@
 	else
 		src.attack_hand(user)
 	return
-
-
-
-
-
-

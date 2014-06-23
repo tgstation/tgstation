@@ -43,9 +43,12 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/space_oddity.ogg',\
 	'sound/music/title1.ogg',\
 	'sound/music/title2.ogg',\
-	'sound/music/clown.ogg')
+	'sound/music/clown.ogg',\
+	'sound/music/robocop.ogg',\
+	'sound/music/gaytony.ogg',\
+	'sound/music/rocketman.ogg')
 	do
-		pregame_timeleft = 180
+		pregame_timeleft = 300
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
 		while(current_state == GAME_STATE_PREGAME)
@@ -137,8 +140,30 @@ var/global/datum/controller/gameticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				del(S)
+		var/list/obj/effect/landmark/spacepod/random/L = list()
+		for(var/obj/effect/landmark/spacepod/random/SS in landmarks_list)
+			if(istype(SS))
+				L += SS
+		var/obj/effect/landmark/spacepod/random/S = pick(L)
+		new /obj/spacepod/random(S.loc)
+		for(var/obj in L)
+			if(istype(obj, /obj/effect/landmark/spacepod/random))
+				del(obj)
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
-		world << sound('sound/AI/welcome.ogg') // Skie
+		//world << sound('sound/AI/welcome.ogg') // Skie //Out with the old, in with the new. - N3X15
+		var/welcome_sentence=list('sound/AI/vox_login.ogg')
+		welcome_sentence += pick(
+			'sound/AI/vox_reminder1.ogg',
+			'sound/AI/vox_reminder2.ogg',
+			'sound/AI/vox_reminder3.ogg',
+			'sound/AI/vox_reminder4.ogg',
+			'sound/AI/vox_reminder5.ogg',
+			'sound/AI/vox_reminder6.ogg',
+			'sound/AI/vox_reminder7.ogg',
+			'sound/AI/vox_reminder8.ogg',
+			'sound/AI/vox_reminder9.ogg')
+		for(var/sound in welcome_sentence)
+			play_vox_sound(sound,STATION_Z,null)
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
 
@@ -155,6 +180,7 @@ var/global/datum/controller/gameticker/ticker
 	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
 	master_controller.process()		//Start master_controller.process()
 	lighting_controller.process()	//Start processing DynamicAreaLighting updates
+	garbage.process()
 
 
 	if(config.sql_enabled)
@@ -276,7 +302,7 @@ var/global/datum/controller/gameticker/ticker
 				else if(!player.mind.assigned_role)
 					continue
 				else
-					player.create_character()
+					player.FuckUpGenes(player.create_character())
 					del(player)
 
 
@@ -306,7 +332,6 @@ var/global/datum/controller/gameticker/ticker
 			return 0
 
 		mode.process()
-		mode.process_job_tasks()
 
 		emergency_shuttle.process()
 		watchdog.check_for_update()
@@ -359,16 +384,16 @@ var/global/datum/controller/gameticker/ticker
 
 /datum/controller/gameticker/proc/declare_completion()
 
-	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
-		if (aiPlayer.stat != 2)
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</b>"
+	for(var/mob/living/silicon/ai/ai in mob_list)
+		if(ai.stat != 2)
+			world << "<b>[ai.name] (Played by: [ai.key])'s laws at the end of the game were:</b>"
 		else
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</b>"
-		aiPlayer.show_laws(1)
+			world << "<b>[ai.name] (Played by: [ai.key])'s laws when it was deactivated were:</b>"
+		ai.show_laws(1)
 
-		if (aiPlayer.connected_robots.len)
+		if (ai.connected_robots.len)
 			var/robolist = "<b>The AI's loyal minions were:</b> "
-			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
+			for(var/mob/living/silicon/robot/robo in ai.connected_robots)
 				if (!robo.connected_ai || !isMoMMI(robo)) // Don't report MoMMIs or unslaved robutts
 					continue
 				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
@@ -387,9 +412,6 @@ var/global/datum/controller/gameticker/ticker
 		robo.laws.show_laws(world)
 
 	mode.declare_completion()//To declare normal completion.
-
-	mode.declare_job_completion() // /vg/ stuff
-
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))

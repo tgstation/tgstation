@@ -26,7 +26,6 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		for(var/i=2, i<=List.len, i++)
 			switch(ckey(List[i]))
 				if("@","prev")					rights |= previous_rights
-				if("buildmode","build")			rights |= R_BUILDMODE
 				if("admin")						rights |= R_ADMIN
 				if("ban")						rights |= R_BAN
 				if("fun")						rights |= R_FUN

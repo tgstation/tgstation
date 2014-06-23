@@ -8,24 +8,30 @@
 	var/flipped = 0
 	siemens_coefficient = 0.9
 
+	proc/flip(var/mob/user as mob)
+		if(user.canmove && !user.stat && !user.restrained())
+			src.flipped = !src.flipped
+			if(src.flipped)
+				icon_state = "[_color]soft_flipped"
+				user << "You flip the hat backwards."
+			else
+				icon_state = "[_color]soft"
+				user << "You flip the hat back in normal position."
+			user.update_inv_head()	//so our mob-overlays update
+
+	attack_self(var/mob/user as mob)
+		flip(user)
+
+	verb/flip_cap()
+		set category = "Object"
+		set name = "Flip cap"
+		set src in usr
+		flip(usr)
+
 	dropped()
 		src.icon_state = "[_color]soft"
 		src.flipped=0
 		..()
-
-	verb/flip()
-		set category = "Object"
-		set name = "Flip cap"
-		set src in usr
-		if(usr.canmove && !usr.stat && !usr.restrained())
-			src.flipped = !src.flipped
-			if(src.flipped)
-				icon_state = "[_color]soft_flipped"
-				usr << "You flip the hat backwards."
-			else
-				icon_state = "[_color]soft"
-				usr << "You flip the hat back in normal position."
-			usr.update_inv_head()	//so our mob-overlays update
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"

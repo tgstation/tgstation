@@ -127,6 +127,7 @@
 	w_class = 3.0
 	g_amt = 10
 	m_amt = 10
+	w_type = RECYK_MISC
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -373,6 +374,39 @@
 		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS|OXYLOSS)
 
+
+
+
+/*
+ * Snap pops viral shit
+ */
+/obj/item/toy/snappop/virus
+	name = "unstable goo"
+	desc = "Your palm is oozing this stuff!"
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "red slime extract"
+	throwforce = 30.0
+	throw_speed = 10
+	throw_range = 30
+	w_class = 1
+
+
+	throw_impact(atom/hit_atom)
+		..()
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
+		new /obj/effect/decal/cleanable/ash(src.loc)
+		src.visible_message("\red The [src.name] explodes!","\red You hear a bang!")
+
+
+		playsound(src, 'sound/effects/snap.ogg', 50, 1)
+		del(src)
+
+
+
+
+
 /*
  * Snap pops
  */
@@ -577,3 +611,64 @@
 	force = 5
 	w_class = 4.0
 	slot_flags = SLOT_BACK
+
+
+/*
+ * OMG THEIF
+ */
+/obj/item/toy/gooncode
+	name = "Goonecode"
+	desc = "The holy grail of all programmers."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "gooncode"
+	
+	
+	
+
+/obj/item/toy/minimeteor
+	name = "Mini Meteor"
+	desc = "Relive the horror of a meteor shower! SweetMeat-eor. Co is not responsible for any injury caused by Mini Meteor"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "flaming"
+
+	attack_self(mob/user as mob)
+		playsound(user, 'sound/effects/bamf.ogg', 20, 1)
+
+/obj/item/device/whisperphone
+	name = "whipserphone"
+	desc = "A device used to project your voice. Quietly."
+	icon_state = "megaphone"
+	item_state = "radio"
+	w_class = 1.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+
+	var/spamcheck = 0
+
+/obj/item/device/whisperphone/attack_self(mob/living/user as mob)
+	if (user.client)
+		if(user.client.prefs.muted & MUTE_IC)
+			src << "\red You cannot speak in IC (muted)."
+			return
+	if(!ishuman(user))
+		user << "\red You don't know how to use this!"
+		return
+	if(user:miming || user.silent)
+		user << "\red You find yourself unable to speak at all."
+		return
+	if(spamcheck)
+		user << "\red \The [src] needs to recharge!"
+		return
+
+	var/message = copytext(sanitize(input(user, "'Shout' a message?", "Whisperphone", null)  as text),1,MAX_MESSAGE_LEN)
+	if(!message)
+		return
+	message = capitalize(message)
+	if ((src.loc == user && usr.stat == 0))
+
+		for(var/mob/O in (viewers(user)))
+			O.show_message("<B>[user]</B> broadcasts, <i>\"[message]\"</i>",2) 
+		spamcheck = 1
+		spawn(20)
+			spamcheck = 0
+		return
+

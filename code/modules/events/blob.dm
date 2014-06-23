@@ -97,8 +97,7 @@
 					infected_crew += core.overmind.mind
 
 		sleep(100) // 10s
-		command_alert("Confirmed outbreak of level 7 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-		world << sound('sound/AI/outbreak7.ogg')
+		biohazard_alert()
 
 /datum/event/blob/proc/greetblob(user)
 	user << {"<B>\red You are infected by the Blob!</B>

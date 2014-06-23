@@ -9,6 +9,7 @@
 
 	m_amt = 50
 	g_amt = 50
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=1"
 
 	flags = FPRINT | TABLEPASS| CONDUCT

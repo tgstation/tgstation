@@ -9,6 +9,7 @@
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
 
 	var/list/speak = list()
+	//var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
 	var/speak_chance = 0
 	var/list/emote_hear = list()	//Hearable emotes
 	var/list/emote_see = list()		//Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
@@ -23,9 +24,9 @@
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
 
 	//Interaction
-	var/response_help   = "You try to help"
-	var/response_disarm = "You try to disarm"
-	var/response_harm   = "You try to hurt"
+	var/response_help   = "pokes"
+	var/response_disarm = "shoves"
+	var/response_harm   = "hits"
 	var/harm_intent_damage = 3
 
 	//Temperature effect
@@ -52,13 +53,20 @@
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
-	var/wall_smash = 0 //if they can smash walls
+	var/environment_smash = 0 //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
+
+	//Hot simple_animal baby making vars
+	var/childtype = null
+	var/scan_ready = 1
+	var/species //Sorry, no spider+corgi buttbabies.
 
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
+	if(!real_name)
+		real_name = name
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -78,10 +86,11 @@
 			living_mob_list += src
 			stat = CONSCIOUS
 			density = 1
+			update_canmove()
 		return 0
 
 
-	if(health < 1)
+	if(health < 1 && stat != DEAD)
 		Die()
 
 	if(health > maxHealth)
@@ -208,7 +217,7 @@
 		else
 			..()
 
-/mob/living/simple_animal/gib()
+/mob/living/simple_animal/gib(var/animation = 0)
 	if(icon_gib)
 		flick(icon_gib, src)
 	if(meat_amount && meat_type)
@@ -229,6 +238,8 @@
 	return "says, \"[text]\"";
 
 /mob/living/simple_animal/emote(var/act, var/type, var/desc)
+	if(stat)
+		return
 	if(act)
 		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
 		..(act, type, desc)
@@ -241,8 +252,7 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>\The [M]</B> [M.attacktext] [src]!", 1)
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 
@@ -255,6 +265,7 @@
 		M.splat()
 		return 0
 	adjustBruteLoss(Proj.damage)
+	Proj.on_hit(src, 0)
 	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
@@ -266,7 +277,7 @@
 			if (health > 0)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message("\blue [M] [response_help] [src]")
+						O.show_message("\blue [M] [response_help] [src].")
 
 		if("grab")
 			if (M == src || anchored)
@@ -280,7 +291,7 @@
 
 			grabbed_by += G
 			G.synch()
-
+			G.affecting = src
 			LAssailant = M
 
 			for(var/mob/O in viewers(src, null))
@@ -291,7 +302,7 @@
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message("\red [M] [response_harm] [src]")
+					O.show_message("\red [M] [response_harm] [src]!")
 
 	return
 
@@ -316,6 +327,7 @@
 
 			grabbed_by += G
 			G.synch()
+			G.affecting = src
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -323,7 +335,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if("harm", "disarm")
+		if("hurt", "disarm")
 			var/damage = rand(15, 30)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 			adjustBruteLoss(damage)
@@ -354,11 +366,11 @@
 
 	if(M.Victim) return // can't attack while eating!
 
-	visible_message("\red <B>\The [M.name] glomps [src]!</B>")
+	visible_message("\red <B>[M.name] glomps [src]!</B>")
 
 	var/damage = rand(1, 3)
 
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(istype(M,/mob/living/carbon/slime/adult))
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
@@ -371,7 +383,7 @@
 
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
-
+		user.changeNext_move(4)
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
@@ -387,12 +399,9 @@
 			user << "\blue this [src] is dead, medical items won't bring it back to life."
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
-			new meat_type (get_turf(src))
-			if(prob(95))
-				del(src)
-				return
-			gib()
+			harvest()
 	else
+		user.changeNext_move(8)
 		if(O.force)
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
@@ -423,6 +432,7 @@
 	stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
+	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them
 	living_mob_list -= src
 	dead_mob_list += src
 	icon_state = icon_dead
@@ -430,9 +440,17 @@
 	density = 0
 	return
 
+/mob/living/simple_animal/death(gibbed)
+	if(stat == DEAD)
+		return
+
+	if(!gibbed)
+		visible_message("<span class='danger'>\the [src] stops moving...</span>")
+
+	Die()
+
 /mob/living/simple_animal/ex_act(severity)
-	if(!blinded)
-		flick("flash", flash)
+	..()
 	switch (severity)
 		if (1.0)
 			adjustBruteLoss(500)
@@ -448,20 +466,25 @@
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health = Clamp(health - damage, 0, maxHealth)
-	if(health < 1)
+	if(health < 1 && stat != DEAD)
 		Die()
 
-/mob/living/simple_animal/proc/SA_attackable(target_mob)
-	if (isliving(target_mob))
-		var/mob/living/L = target_mob
+/mob/living/simple_animal/proc/SA_attackable(target)
+	return CanAttack(target)
+
+/mob/living/simple_animal/proc/CanAttack(var/atom/target)
+	if(see_invisible < target.invisibility)
+		return 0
+	if (isliving(target))
+		var/mob/living/L = target
 		if(!L.stat && L.health >= 0)
 			return (0)
-	if (istype(target_mob,/obj/mecha))
-		var/obj/mecha/M = target_mob
+	if (istype(target,/obj/mecha))
+		var/obj/mecha/M = target
 		if (M.occupant)
 			return (0)
-	if (istype(target_mob,/obj/machinery/bot))
-		var/obj/machinery/bot/B = target_mob
+	if (istype(target,/obj/machinery/bot))
+		var/obj/machinery/bot/B = target
 		if(B.health > 0)
 			return (0)
 	return (1)
@@ -481,4 +504,42 @@
 /mob/living/simple_animal/IgniteMob()
 	return
 /mob/living/simple_animal/ExtinguishMob()
+	return
+
+/mob/living/simple_animal/revive()
+	health = maxHealth
+	..()
+
+/mob/living/simple_animal/proc/make_babies() // <3 <3 <3
+	if(gender != FEMALE || stat || !scan_ready || !childtype || !species)
+		return
+	scan_ready = 0
+	spawn(400)
+		scan_ready = 1
+	var/alone = 1
+	var/mob/living/simple_animal/partner
+	var/children = 0
+	for(var/mob/M in oview(7, src))
+		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+			continue
+		else if(istype(M, childtype)) //Check for children FIRST.
+			children++
+		else if(istype(M, species))
+			if(M.client)
+				continue
+			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
+				partner = M
+		else if(istype(M, /mob/))
+			alone = 0
+			continue
+	if(alone && partner && children < 3)
+		new childtype(loc)
+
+// Harvest an animal's delicious byproducts
+/mob/living/simple_animal/proc/harvest()
+	new meat_type (get_turf(src))
+	if(prob(95))
+		del(src)
+		return
+	gib()
 	return

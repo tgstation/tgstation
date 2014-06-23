@@ -17,7 +17,10 @@ class RedminePlugin(IPlugin):
         IPlugin.__init__(self, bot)
         
         self.data = {
-            'last-bug-created': 0
+            'last-bug-created': 0,
+            'ignored-names': [
+                '/^Not\-[0-9]+/' # Notifico bots
+            ]
         }
         
         self.LoadPluginData()
@@ -26,6 +29,12 @@ class RedminePlugin(IPlugin):
         if self.url is None:
             logging.error('Redmine: Disabled.') 
             return
+        self.ignored = []
+        for ignoretok in self.data.get('ignored-names',['/^Not\-[0-9]/']):
+            if ignoretok.startwith('/') and ignoretok.endwith('/'):
+                self.ignored+=[re.compile(ignoretok[1:-1])]
+            else:
+                self.ignored+=[re.compile('^'+re.escape(ignoretok)+'$')]
         self.auth = BasicAuth(globalConfig.get('plugins.redmine.apikey', None), str(random.random()))
         self.project_id = globalConfig.get('plugins.redmine.project', None)
         if self.project_id is None: logging.warning('Redmine: Not going to check for bug updates.')
@@ -37,9 +46,17 @@ class RedminePlugin(IPlugin):
         
         self.lastCheck = 0
         
+    def checkIgnore(self, nick):
+        for ignored in self.ignored:
+            m = ignored.search(nick)
+            if m is not None:
+                return True
+        return False
+        
     def OnChannelMessage(self, connection, event):
         if self.url is None: return
         channel = event.target
+        if self.checkIgnore(event.source.nick): return
         matches = self.bug_regex.finditer(event.arguments[0])
         ids = []
         for match in matches:

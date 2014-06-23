@@ -10,9 +10,11 @@
 	var/anyai = 1
 	var/circuitry_installed=1
 	var/mob/living/silicon/ai/ai = list()
+	var/last_tick //used to delay the powercheck
 
 /obj/item/device/radio/intercom/New(turf/loc, var/ndir, var/building=0)
 	..()
+	processing_objects += src
 
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
@@ -23,20 +25,17 @@
 
 		dir=SOUTH
 
-	if (building==0)
-		init()
-	else
+	if (building!=0)
 		b_stat=1
 		on = 0
 		circuitry_installed=0
 		installed=0
 		b_stat=1
-		src.update_icon()
+	src.update_icon()
 
-/obj/item/device/radio/intercom/proc/init()
-	spawn(5)
-		src.update_icon()
-		checkpower()
+/obj/item/device/radio/intercom/Destroy()
+	processing_objects -= src
+	..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -141,23 +140,12 @@
 		return
 	icon_state = "intercom[!on?"-p":""][b_stat ? "-open":""]"
 
-/obj/item/device/radio/intercom/proc/checkpower()
+/obj/item/device/radio/intercom/process()
+	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
+		last_tick = world.timeofday
 
-	// Simple loop, checks for power. Strictly for intercoms
-	while(src)
-
-		if(!src.loc)
-			on = 0
-		else
-			var/area/A = src.loc.loc
-			if(!A || !isarea(A) || !A.master)
-				on = 0
-			else
-				on = A.master.powered(EQUIP) // set "on" to the power status
+		on = areaMaster.powered(EQUIP) // set "on" to the power status
 		update_icon()
-
-		sleep(30)
-
 
 /obj/item/weapon/intercom_electronics
 	name = "intercom electronics"
@@ -167,3 +155,4 @@
 	w_class = 2.0
 	m_amt = 50
 	g_amt = 50
+	w_type = RECYK_ELECTRONIC

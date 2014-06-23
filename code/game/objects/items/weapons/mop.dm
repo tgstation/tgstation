@@ -25,7 +25,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 	A.clean_blood()
 	for(var/obj/effect/O in A)
 		if( istype(O,/obj/effect/rune) || istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay) )
-			del(O)
+			qdel(O)
 
 
 /obj/effect/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -35,6 +35,8 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 
 
 /obj/item/weapon/mop/afterattack(atom/A, mob/user as mob)
+	if(!user.Adjacent(A))
+		return
 	if(reagents.total_volume < 1 || mopcount >= 5)
 		user << "<span class='notice'>Your mop is dry!</span>"
 		return

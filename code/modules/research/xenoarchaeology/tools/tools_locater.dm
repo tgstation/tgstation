@@ -16,7 +16,7 @@
 	..()
 	processing_objects.Add(src)
 
-/obj/item/device/beacon_locator/Del()
+/obj/item/device/beacon_locator/Destroy()
 	processing_objects.Remove(src)
 	..()
 

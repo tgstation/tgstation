@@ -127,8 +127,13 @@
 						/obj/item/borg/upgrade/tasercooler,
 						/obj/item/borg/upgrade/jetpack
 						),
+
+	"Space Pod" = list(
+						/obj/item/pod_parts/core
+						),
 	"Misc"=list(
-						/obj/item/mecha_parts/mecha_tracking
+						/obj/item/mecha_parts/mecha_tracking,
+						/obj/item/mecha_parts/janicart_upgrade
 						)
 	)
 
@@ -189,7 +194,7 @@
 	if(time_coeff!=diff)
 		time_coeff = diff
 
-/obj/machinery/mecha_part_fabricator/Del()
+/obj/machinery/mecha_part_fabricator/Destroy()
 	for(var/atom/A in src)
 		del A
 	..()
@@ -355,6 +360,11 @@
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(var/obj/item/part)
 	if(!part) return
+
+	 // critical exploit prevention, do not remove unless you replace it -walter0o
+	if( !(locate(part, src.contents)) || !(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
+		return
+
 	src.being_built = new part.type(src)
 	src.desc = "It's building [src.being_built]."
 	src.remove_resources(part)
@@ -366,8 +376,13 @@
 	src.overlays -= "fab-active"
 	src.desc = initial(src.desc)
 	if(being_built)
-		src.being_built.Move(get_turf(output))
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"The following has been completed: [src.being_built] is built\".")
+		if(istype(being_built,/obj/item/mecha_parts/mecha_equipment/weapon)&&!istype(being_built,/obj/item/mecha_parts/mecha_equipment/weapon/honker)&&!istype(being_built,/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar)&&!istype(being_built,/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar))//Check if it's a mech weapon that's not clown gear
+			var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox //Make a lockbox
+			being_built.loc = L //Put the thing in the lockbox
+			L.name += " ([being_built.name])"
+			being_built = L //Building the lockbox now, with the thing in it
+		src.being_built.Move(get_turf(output))
 		src.being_built = null
 	src.updateUsrDialog()
 	return 1
@@ -489,17 +504,19 @@
 
 
 /obj/machinery/mecha_part_fabricator/proc/sync(silent=null)
-	if(!silent)
-		temp = "Updating local R&D database..."
-		src.updateUsrDialog()
-		sleep(30) //only sleep if called by user
-	for(var/obj/machinery/computer/rdconsole/RDC in get_area(src))
+	var/new_data=0
+	var/found = 0
+	for(var/obj/machinery/computer/rdconsole/RDC in area_contents(areaMaster))
+		if(!RDC) continue
 		if(!RDC.sync)
 			continue
+		found = 1
 		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
+			if(T)
+				files.AddTech2Known(T)
 		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
+			if(D)
+				files.AddDesign2Known(D)
 		files.RefreshResearch()
 		var/i = src.convert_designs()
 		var/tech_output = update_tech()
@@ -509,8 +526,13 @@
 			temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
 			src.updateUsrDialog()
 		if(i || tech_output)
-			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
-	return
+			new_data=1
+	if(new_data)
+		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
+	if(!silent && !found)
+		temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
+		src.updateUsrDialog()
+
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
 	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
@@ -588,9 +610,26 @@
 	onclose(user, "mecha_fabricator")
 	return
 
+/obj/machinery/mecha_part_fabricator/proc/exploit_prevention(var/obj/Part, mob/user as mob, var/desc_exploit)
+// critical exploit prevention, feel free to improve or replace this, but do not remove it -walter0o
+
+	if(!Part || !user || !istype(Part) || !istype(user)) // sanity
+		return 1
+
+	if( !(locate(Part, src.contents)) || !(Part.vars.Find("construction_time")) || !(Part.vars.Find("construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
+
+		var/turf/LOC = get_turf(user)
+		message_admins("[key_name_admin(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] <a href='?_src_=vars;Vars=\ref[Part]'>[Part]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
+		log_admin("EXPLOIT : [key_name(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] [Part] !")
+		return 1
+
+	return null
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
-	..()
+
+	if(..()) // critical exploit prevention, do not remove unless you replace it -walter0o
+		return
+
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 	if(href_list["part_set"])
 		var/tpart_set = filter.getStr("part_set")
@@ -601,13 +640,25 @@
 				src.part_set = tpart_set
 				screen = "parts"
 	if(href_list["part"])
-		var/list/part = filter.getObj("part")
+		var/obj/part = filter.getObj("part")
+
+		// critical exploit prevention, do not remove unless you replace it -walter0o
+		if(src.exploit_prevention(part, usr))
+			return
+
 		if(!processing_queue)
 			build_part(part)
 		else
 			add_to_queue(part)
 	if(href_list["add_to_queue"])
-		add_to_queue(filter.getObj("add_to_queue"))
+		var/obj/part = filter.getObj("add_to_queue")
+
+		// critical exploit prevention, do not remove unless you replace it -walter0o
+		if(src.exploit_prevention(part, usr))
+			return
+
+		add_to_queue(part)
+
 		return update_queue_on_page()
 	if(href_list["remove_from_queue"])
 		remove_from_queue(filter.getNum("remove_from_queue"))
@@ -642,10 +693,18 @@
 		return update_queue_on_page()
 	if(href_list["sync"])
 		queue = list()
-		src.sync()
+		temp = "Updating local R&D database..."
+		src.updateUsrDialog()
+		spawn(30)
+			src.sync()
 		return update_queue_on_page()
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")
+
+		// critical exploit prevention, do not remove unless you replace it -walter0o
+		if(src.exploit_prevention(part, usr, 1))
+			return
+
 		if(part)
 			temp = {"<h1>[part] description:</h1>
 						[part.desc]<br>
@@ -751,6 +810,10 @@
 		sleep(10)
 		if(stack && stack.amount)
 			while(material.stored < res_max_amount && stack)
+				if(stack.amount < 0 || !stack)
+					user.drop_item(stack)
+					qdel(stack)
+					break
 				material.stored += amnt
 				stack.use(1)
 				count++

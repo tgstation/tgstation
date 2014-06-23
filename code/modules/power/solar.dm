@@ -26,7 +26,7 @@ var/list/solars_list = list()
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
-	var/id = 0
+	var/id_tag = 0
 	var/health = 10
 	var/obscured = 0
 	var/sunfrac = 0
@@ -92,8 +92,8 @@ var/list/solars_list = list()
 		if(!(stat & BROKEN))
 			broken()
 		else
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
+			getFromPool(/obj/item/weapon/shard, loc)
+			getFromPool(/obj/item/weapon/shard, loc)
 			del(src)
 			return
 	return
@@ -157,14 +157,14 @@ var/list/solars_list = list()
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			if(prob(15))
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 			return
 		if(2.0)
 			if (prob(25))
-				new /obj/item/weapon/shard( src.loc )
-				del(src)
+				getFromPool(/obj/item/weapon/shard, loc)
+				qdel(src)
 				return
 			if (prob(50))
 				broken()
@@ -187,6 +187,14 @@ var/list/solars_list = list()
 	. = PROCESS_KILL
 	return
 
+/obj/machinery/power/solar/Destroy()
+	if (src in solars_list)
+		solars_list -= src
+
+	if (control)
+		control = null
+
+	..()
 
 //
 // Solar Assembly - For construction of solar arrays.
@@ -273,7 +281,7 @@ var/list/solars_list = list()
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 20
-	var/id = 0
+	var/id_tag = 0
 	var/cdir = 0
 	var/gen = 0
 	var/lastgen = 0
@@ -339,7 +347,7 @@ var/list/solars_list = list()
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
@@ -470,7 +478,7 @@ Manual Tracking Direction:"}
 		if(src.trackrate) nexttime = world.time + 6000/trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
-			if(!solars_list.Find(src,1,0))
+			if(!solars_list.Find(src,1,0) || !(locate(src) in solars_list) || !(src in solars_list))
 				solars_list.Add(src)
 			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
 				if(powernet.nodes[T])
@@ -520,7 +528,7 @@ Manual Tracking Direction:"}
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))

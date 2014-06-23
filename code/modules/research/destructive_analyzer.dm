@@ -84,7 +84,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return
 	if (istype(O, /obj/item) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
-			return
+			if(isMoMMI(user))
+				var/mob/living/silicon/robot/mommi/mommi = user
+				if(mommi.is_in_modules(O,permit_sheets=1))
+					user << "\red You cannot insert something that is part of you."
+					return
+			else
+				return
 		if(!O.origin_tech)
 			user << "\red This doesn't seem to have a tech origin!"
 			return
@@ -92,9 +98,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if (temp_tech.len == 0)
 			user << "\red You cannot deconstruct this item!"
 			return
-		if(O.reliability < 90 && O.crit_fail == 0)
+		/*if(O.reliability < 90 && O.crit_fail == 0)
 			usr << "\red Item is neither reliable enough or broken enough to learn from."
-			return
+			return*/
 		busy = 1
 		loaded_item = O
 		user.drop_item()
