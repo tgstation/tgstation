@@ -180,6 +180,8 @@ var/list/beam_master = list()
 /obj/item/projectile/beam
 	name = "laser"
 	icon_state = "laser"
+	invisibility = 101
+
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 30
 	damage_type = BURN
@@ -191,18 +193,25 @@ var/list/beam_master = list()
 	var/reference = "\ref[src]"
 
 	spawn(0)
-		var/nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 		var/target_dir
+		var/nextLoc
 
 		while(src && --kill_count >= 0)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				returnToPool(src)
-				return
+				break
 
-			if(loc == nextLoc)
-				nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
+			nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 
 			step_towards(src, nextLoc, 0)
+
+			if(bumped)
+				break
+
+			if(get_turf(original) == loc)
+				if(!isturf(original) && !(original in permutated))
+					Bump(original)
+					break
+
 			target_dir = get_dir(src, nextLoc)
 
 			if(!("[icon_state][target_dir]" in beam_master))
@@ -223,28 +232,24 @@ var/list/beam_master = list()
 				turfs["[icon_state][target_dir]"] = list(loc)
 				beam_master[reference] = turfs
 
+		returnToPool(src)
+
 	cleanup(reference)
 
-/obj/item/projectile/beam/dumbfire(const/dir)
-	if(!(dir in alldirs))
-		returnToPool(src)
-		return
-
+/obj/item/projectile/beam/dumbfire()
 	var/reference = "\ref[src]"
 
 	spawn(0)
-		var/nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 		var/target_dir = dir
 
 		while(src && --kill_count >= 0)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				returnToPool(src)
-				return
+				break
 
-			if(loc == nextLoc)
-				nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
+			step(src, target_dir)
 
-			step_towards(src, nextLoc, 0)
+			if(bumped)
+				break
 
 			if(!("[icon_state][target_dir]" in beam_master))
 				beam_master["[icon_state][target_dir]"] = image(icon, icon_state, 10, target_dir)
@@ -264,6 +269,8 @@ var/list/beam_master = list()
 				turfs["[icon_state][target_dir]"] = list(loc)
 				beam_master[reference] = turfs
 
+		returnToPool(src)
+
 	cleanup(reference)
 
 /obj/item/projectile/beam/Destroy()
@@ -280,8 +287,6 @@ var/list/beam_master = list()
 			for(var/atom/A in turfs)
 				A.overlays -= beam_master[laser_state]
 				turfs -= A
-
-		returnToPool(src)
 
 /obj/item/projectile/beam/practice
 	name = "laser"

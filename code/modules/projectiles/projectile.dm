@@ -77,6 +77,54 @@
 		returnToPool(in_chamber)
 		return output //Send it back to the gun!
 
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if(air_group || (height==0)) return 1
+
+		if(istype(mover, /obj/item/projectile))
+			return prob(95)
+		else
+			return 1
+
+	process()
+		if(kill_count < 1)
+			//del(src)
+			returnToPool(src)
+			return
+		kill_count--
+		spawn while(loc)
+			if((!( current ) || loc == current))
+				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
+			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
+				//del(src)
+				returnToPool(src)
+				return
+			step_towards(src, current)
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
+						sleep(1)
+			sleep(1)
+		return
+	proc/dumbfire(var/dir) // for spacepods, go snowflake go
+		if(!dir)
+			//del(src)
+			returnToPool(src)
+		if(kill_count < 1)
+			//del(src)
+			returnToPool(src)
+		kill_count--
+		spawn while(loc)
+			var/turf/T = get_step(src, dir)
+			step_towards(src, T)
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
+						sleep(1)
+			sleep(1)
+		return
+
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)
 			loc = A.loc
@@ -165,62 +213,7 @@
 					O.bullet_act(src)
 				for(var/mob/M in A)
 					M.bullet_act(src, def_zone)
-			spawn()//if(!istype(src, /obj/item/projectile/beam/lightning))
-				density = 0
-				invisibility = 101
-			//del(src)
-				returnToPool(src)
 		return 1
-
-
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if(air_group || (height==0)) return 1
-
-		if(istype(mover, /obj/item/projectile))
-			return prob(95)
-		else
-			return 1
-
-
-	process()
-		if(kill_count < 1)
-			//del(src)
-			returnToPool(src)
-			return
-		kill_count--
-		spawn while(loc)
-			if((!( current ) || loc == current))
-				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				//del(src)
-				returnToPool(src)
-				return
-			step_towards(src, current)
-			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original)
-						sleep(1)
-			sleep(1)
-		return
-	proc/dumbfire(var/dir) // for spacepods, go snowflake go
-		if(!dir)
-			//del(src)
-			returnToPool(src)
-		if(kill_count < 1)
-			//del(src)
-			returnToPool(src)
-		kill_count--
-		spawn while(loc)
-			var/turf/T = get_step(src, dir)
-			step_towards(src, T)
-			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original)
-						sleep(1)
-			sleep(1)
-		return
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!
