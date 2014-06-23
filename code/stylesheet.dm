@@ -36,6 +36,7 @@ em						{font-style: normal;	font-weight: bold;}
 .medradio				{color: #008160;}
 .sciradio				{color: #993399;}
 .supradio				{color: #5F4519;}
+.serradio				{color: #3399CC;}
 
 .mommi					{color: navy;}
 
