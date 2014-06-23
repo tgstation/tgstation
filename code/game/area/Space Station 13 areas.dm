@@ -1185,7 +1185,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "exam_room"
 
 /area/medical/paramedics
-	name = "\improper Paramedical office"
+	name = "\improper Paramedic Station"
 	icon_state = "paramedics"
 
 //Security
