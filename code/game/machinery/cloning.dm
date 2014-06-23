@@ -185,6 +185,9 @@
 		R.dna.real_name = "clone ([rand(0,999)])"
 	H.real_name = R.dna.real_name
 
+ if (R.dna.mutantrace == "adamantine")
+ 	H.dna.mutantrace = "adamantine"
+
 	src.icon_state = "pod_1"
 	//Get the clone body ready
 	H.adjustCloneLoss(150) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
@@ -234,6 +237,7 @@
 	H.suiciding = 0
 	src.attempting = 0
 	return 1
+
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
