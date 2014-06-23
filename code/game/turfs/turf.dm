@@ -146,9 +146,8 @@
 /turf/proc/inertial_drift(atom/movable/A as mob|obj)
 	if(!(A.last_move))
 		return
-	for(var/mob/M in range(A, 1))
-		if(M.pulling == A)
-			return
+	if (A.pulledby)
+		return
 	if((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
 		var/mob/M = A
 		if(M.Process_Spacemove(1))
