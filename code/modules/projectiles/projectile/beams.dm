@@ -225,6 +225,51 @@ var/list/beam_master = list()
 
 	cleanup(reference)
 
+/obj/item/projectile/beam/dumbfire(const/dir)
+	if(!isnum(dir))
+		returnToPool(src)
+		return
+
+	var/reference = "\ref[src]"
+
+	spawn(0)
+		var/current1 = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
+		var/target_dir = dir
+
+		while(src && --kill_count >= 0)
+			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
+				returnToPool(src)
+				return
+
+			if(loc == current1)
+				current1 = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
+
+			step_towards(src, current1, 0)
+
+			if(!("[icon_state][target_dir]" in beam_master))
+				beam_master["[icon_state][target_dir]"] = image(icon, icon_state, 10, target_dir)
+
+			loc.overlays += beam_master["[icon_state][target_dir]"]
+
+			if(reference in beam_master)
+				var/list/turf_master = beam_master[reference]
+
+				if("[icon_state][target_dir]" in turf_master)
+					var/list/turfs = turf_master["[icon_state][target_dir]"]
+					turfs += loc
+				else
+					turf_master["[icon_state][target_dir]"] = list(loc)
+			else
+				var/list/turfs = new
+				turfs["[icon_state][target_dir]"] = list(loc)
+				beam_master[reference] = turfs
+
+	cleanup(reference)
+
+/obj/item/projectile/beam/Destroy()
+	cleanup("\ref[src]")
+	..()
+
 /obj/item/projectile/beam/proc/cleanup(const/reference)
 	spawn(3)
 		var/list/turf_master = beam_master[reference]
