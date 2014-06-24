@@ -36,6 +36,16 @@ RPD
 /datum/pipe_info/meter/Render(var/dispenser,var/label)
 	return "<li><a href='?src=\ref[dispenser];makemeter=1;type=3'>[label]</a></li>"
 
+/datum/pipe_info/gsensor
+	icon = 'icons/obj/meter.dmi'
+	icon_state = "meterX"
+
+/datum/pipe_info/gsensor/New()
+	return
+
+/datum/pipe_info/gsensor/Render(var/dispenser,var/label)
+	return "<li><a href='?src=\ref[dispenser];makegsensor=1;type=3'>[label]</a></li>"
+
 var/global/list/disposalpipeID2State=list(
 	"pipe-s",
 	"pipe-c",
@@ -84,6 +94,7 @@ var/global/list/RPD_recipes=list(
 		"Volume Pump"    = new /datum/pipe_info(16,1, PIPE_UNARY),
 		"Scrubber"       = new /datum/pipe_info(10,1, PIPE_UNARY),
 		"Meter"          = new /datum/pipe_info/meter(),
+		"Gas Sensor"     = new /datum/pipe_info/gsensor(),
 		"Gas Filter"     = new /datum/pipe_info(13,1, PIPE_TRINARY),
 		"Gas Mixer"      = new /datum/pipe_info(14,1, PIPE_TRINARY),
 		"Thermal Plate"  = new /datum/pipe_info(PIPE_THERMAL_PLATE,1, PIPE_UNARY),
@@ -389,6 +400,14 @@ var/global/list/RPD_recipes=list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
+	if(href_list["makegsensor"])
+		p_class = 3
+		p_conntype=-1
+		p_dir=1
+		src.spark_system.start()
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+		show_menu(usr)
+
 	if(href_list["dmake"])
 		p_type = text2num(href_list["dmake"])
 		p_conntype = text2num(href_list["type"])
@@ -426,7 +445,7 @@ var/global/list/RPD_recipes=list(
 			return 1
 		if(-1) // Eating pipes
 			// Must click on an actual pipe or meter.
-			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct))
+			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct) || istype(A,/obj/item/pipe_gsensor))
 				user << "Destroying Pipe..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5))
@@ -495,6 +514,16 @@ var/global/list/RPD_recipes=list(
 						C.density = 1
 				C.add_fingerprint(usr)
 				C.update()
+				return 1
+			return 0
+		if(3)
+			if(!(istype(A, /turf)))
+				return 0
+			user << "Building Sensor..."
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+			if(do_after(user, 20))
+				activate()
+				new /obj/item/pipe_gsensor(A)
 				return 1
 			return 0
 		else
