@@ -38,6 +38,16 @@
 		if(istype(W, /obj/item/device/multitool))
 			update_multitool_menu(user)
 			return 1
+		if(istype(W, /obj/item/weapon/wrench))
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+			user << "\blue You begin to unfasten \the [src]..."
+			if (do_after(user, 40))
+				user.visible_message( \
+					"[user] unfastens \the [src].", \
+					"\blue You have unfastened \the [src].", \
+					"You hear ratchet.")
+				new /obj/item/pipe_gsensor(src.loc)
+				del(src)
 		..()
 
 	process()
