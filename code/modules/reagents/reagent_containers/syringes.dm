@@ -17,6 +17,10 @@
 	g_amt = 1000
 	var/mode = SYRINGE_DRAW
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] appears to be injecting an air bubble using a [src.name]! It looks like \he's trying to commit suicide.</b>"
+		return(OXYLOSS)
+
 	on_reagent_change()
 		update_icon()
 
