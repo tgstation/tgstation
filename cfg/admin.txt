@@ -1,4 +1,4 @@
-###################################################################################
+####################################################################################
 # This is a list of ckeys authorized to use client-side debug options:            #
 # Profile, Reboot, Resume, Status, and Trace-client                               #
 # Of these, Profile is the most relevant as it allows you to easily               #
