@@ -99,7 +99,7 @@
 	if(stat & BROKEN)
 		return
 
-	if(src.state != 2 || (!powernet && active_power_usage))
+	if(state != 2 || (!powernet && active_power_usage))
 		active = 0
 		update_icon()
 		return
@@ -122,7 +122,7 @@
 
 		last_shot = world.time
 
-		if(src.shot_number < 3)
+		if(shot_number < 3)
 			fire_delay = 2
 			shot_number ++
 		else
@@ -132,20 +132,6 @@
 		var/obj/item/projectile/beam/emitter/A = getFromPool(/obj/item/projectile/beam/emitter, loc)
 		A.dir = dir
 
-		switch(dir)
-			if(NORTH)
-				A.yo = 1
-				A.xo = 0
-			if(EAST)
-				A.yo = 0
-				A.xo = 1
-			if(WEST)
-				A.yo = 0
-				A.xo = -1
-			else // Any other
-				A.yo = -1
-				A.xo = 0
-
 		if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
@@ -154,9 +140,7 @@
 		playsound(get_turf(src), 'sound/weapons/emitter.ogg', 25, 1)
 		A.dumbfire()
 
-
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
-
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
 			user << "Turn off the [src] first."

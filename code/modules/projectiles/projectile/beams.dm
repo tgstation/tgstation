@@ -220,7 +220,7 @@ var/list/beam_master = list()
 			if(reference in beam_master)
 				var/list/turf_master = beam_master[reference]
 
-				if("[icon_state][target_dir]" in beam_master[reference])
+				if("[icon_state][target_dir]" in turf_master)
 					var/list/turfs = turf_master["[icon_state][target_dir]"]
 					turfs += loc
 				else
@@ -238,7 +238,6 @@ var/list/beam_master = list()
 	var/reference = "\ref[src]"
 
 	spawn(0)
-		//var/nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 		var/target_dir = dir
 
 		while(src && --kill_count >= 0)
