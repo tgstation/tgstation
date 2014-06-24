@@ -1184,6 +1184,10 @@ proc/process_ghost_teleport_locs()
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
 
+/area/medical/paramedics
+	name = "\improper Paramedic Station"
+	icon_state = "paramedics"
+
 //Security
 
 /area/security/main
