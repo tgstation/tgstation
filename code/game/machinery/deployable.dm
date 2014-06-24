@@ -89,6 +89,8 @@ for reference:
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				new /obj/item/stack/sheet/wood(get_turf(src))
+				new /obj/item/stack/sheet/wood(get_turf(src))
+				new /obj/item/stack/sheet/wood(get_turf(src))
 				del(src)
 			..()
 
