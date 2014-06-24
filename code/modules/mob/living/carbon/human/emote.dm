@@ -18,6 +18,15 @@
 
 	if(src.stat == 2.0 && (act != "deathgasp"))
 		return
+
+	if(act == "oath" && src.miming)
+		src.miming = 0
+		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/s in src.spell_list)
+			del(s)
+		message_admins("[src.name] ([src.ckey]) has broken their oath of silence. (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</a>)")
+		src << "\red An unsettling feeling surrounds you..."
+		return
+
 	switch(act)
 		if ("airguitar")
 			if (!src.restrained())
