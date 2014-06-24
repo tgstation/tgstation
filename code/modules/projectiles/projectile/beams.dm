@@ -180,6 +180,8 @@ var/list/beam_master = list()
 /obj/item/projectile/beam
 	name = "laser"
 	icon_state = "laser"
+	invisibility = 101
+
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 30
 	damage_type = BURN

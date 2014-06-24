@@ -126,11 +126,11 @@
 			fire_delay = 2
 			shot_number ++
 		else
-			fire_delay = rand(20,100)
+			fire_delay = rand(20, 100)
 			shot_number = 0
 
-		var/obj/item/projectile/beam/emitter/A = getFromPool(/obj/item/projectile/beam/emitter, loc)
-		A.dir = dir
+		var/obj/item/projectile/P = getFromPool(/obj/item/projectile/beam/emitter, loc)
+		P.dir = dir
 
 		if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -138,7 +138,7 @@
 			s.start()
 
 		playsound(get_turf(src), 'sound/weapons/emitter.ogg', 25, 1)
-		A.dumbfire()
+		P.dumbfire()
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
