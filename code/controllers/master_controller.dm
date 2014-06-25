@@ -9,6 +9,7 @@ var/global/pipe_processing_killed = 0
 
 datum/controller/game_controller
 	var/minimum_ticks = 20
+	var/breather = 2
 
 datum/controller/game_controller/New()
 	. = ..()
@@ -122,14 +123,15 @@ datum/controller/game_controller/proc/setup_objects()
 							air_processing_killed = 1
 							air_master.failed_ticks = 0
 
-				sun.calc_position()
-				processMobs()
-				processDiseases()
-				processMachines()
-				processObjects()
+				sun.calc_position(); sleep(breather);
+				processMobs();		sleep(breather)
+				processDiseases();	sleep(breather)
+				processMachines();	sleep(breather)
+				processObjects();	sleep(breather)
 				if(!pipe_processing_killed)
 					processPipenets()
-				processPowernets()
+					sleep(breather)
+				processPowernets();	sleep(breather)
 				processNano()
 				processEvents()
 				ticker.process()
