@@ -34,6 +34,11 @@
 
 /obj/item/device/radio/headset/syndicate
 	origin_tech = "syndicate=3"
+	name = "tactical headset"
+	desc = "A robust combat headset equipped with an encrypted frequency that can be accessed using ;."
+	icon_state = "syndie_headset"
+	item_state = "null"
+
 /obj/item/device/radio/headset/syndicate/New()
 	..()
 	qdel(keyslot1)
@@ -64,7 +69,7 @@
 	keyslot2 = new /obj/item/device/encryptionkey/headset_eng
 
 /obj/item/device/radio/headset/headset_rob
-	name = "robotics radio headset"
+	name = "robotics radio headset" //old
 	desc = "Made specifically for the roboticists, who cannot decide between departments. To access the engineering channel, use :e. For research, use :n."
 	icon_state = "rob_headset"
 	item_state = "headset"
@@ -160,6 +165,20 @@
 	icon_state = "cent_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
+
+/obj/item/device/radio/headset/headset_sec_alt
+	name = "security bowman headset"
+	desc = "A tactical version of the classic radio headset with secured straps used by security. To access the security channel, use :s."
+	icon_state = "sec_headset_alt"
+	item_state = "null"
+	keyslot2 = new /obj/item/device/encryptionkey/headset_sec
+
+/obj/item/device/radio/headset/heads/hos_alt
+	name = "\proper the head of security's bowman headset"
+	desc = "A tactical version of the classic radio headset for the man in charge of keeping the station secure. To access the security channel, use :s. For command, use :c."
+	icon_state = "com_headset_alt"
+	item_state = "null"
+	keyslot2 = new /obj/item/device/encryptionkey/heads/hos
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()

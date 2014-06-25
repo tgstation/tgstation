@@ -1704,13 +1704,22 @@ datum/design/mag_smg
 	materials = list("$metal" = 2000)
 	build_path = /obj/item/ammo_box/magazine/msmg9mm
 
-datum/design/stunshell
-	name = "Stun Shell"
-	desc = "A stunning shell for a shotgun."
-	id = "stunshell"
+datum/design/stunslug
+	name = "Stun Slug"
+	desc = "An electrified taser slug for a shotgun."
+	id = "stunslug"
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200)
+	build_path = /obj/item/ammo_casing/shotgun/stunslug
+
+datum/design/stunshell
+	name = "Stun Shell"
+	desc = "A shotgun shell with multiple small rubber pellets for riot control."
+	id = "stunslug"
+	req_tech = list("combat" = 5, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 500)
 	build_path = /obj/item/ammo_casing/shotgun/stunshell
 
 /////////////////////////////////////////
@@ -1827,7 +1836,7 @@ datum/design/security_hud
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
-	
+
 datum/design/security_hud_night
 	name = "Night Vision Security HUD"
 	desc = "A heads-up display which provides id data and vision in complete darkness."
