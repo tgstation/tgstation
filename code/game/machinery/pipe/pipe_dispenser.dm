@@ -52,6 +52,7 @@
 	<li><a href='?src=\ref[src];make=16;dir=1'>Volume Pump</a></li>
 	<li><a href='?src=\ref[src];make=10;dir=1'>Scrubber</a></li>
 	<li><a href='?src=\ref[src];makemeter=1'>Meter</a></li>
+	<li><a href='?src=\ref[src];makegsensor=1'>Gas Sensor</a></li>
 	<li><a href='?src=\ref[src];make=13;dir=1'>Gas Filter</a></li>
 	<li><a href='?src=\ref[src];make=14;dir=1'>Gas Mixer</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_THERMAL_PLATE];dir=1'>Thermal Plate</a></li>
@@ -100,11 +101,17 @@
 			wait = 1
 			spawn(15)
 				wait = 0
+	if(href_list["makegsensor"])
+		if(!wait)
+			new /obj/item/pipe_gsensor(/*usr.loc*/ src.loc)
+			wait = 1
+			spawn(15)
+				wait = 0
 	return
 
 /obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	src.add_fingerprint(usr)
-	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
+	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter) || istype(W, /obj/item/pipe_gsensor))
 		usr << "\blue You put [W] back to [src]."
 		user.drop_item()
 		del(W)
