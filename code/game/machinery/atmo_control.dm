@@ -171,7 +171,6 @@
 
 		sensor_information[id_tag] = signal.data
 
-
 	proc/return_text()
 		var/sensor_data
 		if(sensors.len)
@@ -395,7 +394,6 @@ legend {
 			else
 				src.attack_hand(user)
 			return
-		
 
 		multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 			var/dat= {"
@@ -410,7 +408,6 @@ legend {
 				dat += {"<li><a href="?src=\ref[src];edit_sensor=[id_tag]">[sensors[id_tag]]</a></li>"}
 			dat += {"<li><a href="?src=\ref[src];add_sensor=1">\[+\]</a></li></ul>"}
 			return dat
-
 
 		linkWith(var/mob/user, var/obj/O, var/list/context)
 			if(context["slot"]=="input" && is_type_in_list(O,input_linkable))
@@ -518,7 +515,6 @@ legend {
 					output += "<FONT color='red'>ERROR: Can not find output port</FONT> <A href='?src=\ref[src];out_refresh_status=1'>Search</A><BR>"
 
 			return output
-
 
 		receive_signal(datum/signal/signal)
 			if(!signal || signal.encryption) return
