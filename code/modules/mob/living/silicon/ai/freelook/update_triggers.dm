@@ -11,7 +11,7 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
-/turf/simulated/Del()
+/turf/simulated/Destroy()
 	visibilityChanged()
 	..()
 
