@@ -27,7 +27,7 @@ RPD
 	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
 
 /datum/pipe_info/meter
-	icon = 'icons/obj/meter.dmi'
+	icon = 'icons/obj/pipes.dmi'
 	icon_state = "meterX"
 
 /datum/pipe_info/meter/New()
@@ -37,8 +37,8 @@ RPD
 	return "<li><a href='?src=\ref[dispenser];makemeter=1;type=3'>[label]</a></li>"
 
 /datum/pipe_info/gsensor
-	icon = 'icons/obj/meter.dmi'
-	icon_state = "meterX"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "gsensor1"
 
 /datum/pipe_info/gsensor/New()
 	return
@@ -459,6 +459,7 @@ var/global/list/RPD_recipes=list(
 			return 0
 		if(0)
 			if(!(istype(A, /turf)))
+				user << "The [src]'s error light flickers."
 				return 0
 			user << "Building Pipes ..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -472,6 +473,7 @@ var/global/list/RPD_recipes=list(
 
 		if(1)
 			if(!(istype(A, /turf)))
+				user << "The [src]'s error light flickers."
 				return 0
 			user << "Building Meter..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -483,6 +485,7 @@ var/global/list/RPD_recipes=list(
 
 		if(2)
 			if(!(istype(A, /turf)))
+				user << "The [src]'s error light flickers."
 				return 0
 			user << "Building Pipes..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -518,6 +521,7 @@ var/global/list/RPD_recipes=list(
 			return 0
 		if(3)
 			if(!(istype(A, /turf)))
+				user << "The [src]'s error light flickers."
 				return 0
 			user << "Building Sensor..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
