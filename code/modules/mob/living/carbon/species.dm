@@ -224,32 +224,25 @@
 	filter.addReplacement("fuck","yiff")
 	filter.addReplacement("shit","scat")
 	filter.addReplacement("scratch","scritch")
-	filter.addWordReplacement("(help|assist|save)\\bme(ow)?","kill meow") // help me(ow) -> kill meow
-	// help in (blah blah blah) -> FINALLY, MY RELEASE HAS COME
-	filter.addWordReplacement("help\\bin.*$","FINALLY, I CAN BE FREE OF THIS SUFFERING") // help me(ow) -> kill meow
+	filter.addWordReplacement("(help|assist)\\bmeow","kill meow") // help me(ow) -> kill meow
 	filter.addReplacement("god","gosh")
-	filter.addReplacement("damn","darn")
-	filter.addWordReplacement("(ass|butt|booty)", "rump")
-
-/datum/species/tajaran/proc/make_taunt()
-	var/message = ""
-	if(prob(50))
-		message = pick(
-			"GOD, PLEASE",
-			"NO, GOD",
-			"AGGGGGGGH",
-		)+" "
-	message += pick(
-		"KILL ME",
-		"END MY SUFFERING",
-		"I CAN'T DO THIS ANYMORE",
-	)
-	return message
+	filter.addWordReplacement("(ass|butt)", "rump")
 
 /datum/species/tajaran/say_filter(mob/M, message, datum/language/speaking)
-	if(prob(25))
-		var/mob/living/human/tajaran/cb = M
-		return make_taunt()
+	if(prob(15))
+		message = ""
+		if(prob(50))
+			message = pick(
+				"GOD, PLEASE",
+				"NO, GOD",
+				"AGGGGGGGH",
+			)+" "
+		message += pick(
+			"KILL ME",
+			"END MY SUFFERING",
+			"I CAN'T DO THIS ANYMORE",
+		)
+		return message
 	if(copytext(message, 1, 2) != "*")
 		message = filter.FilterSpeech(message)
 	return message
