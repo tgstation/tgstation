@@ -1125,21 +1125,6 @@ Pressure: [env.return_pressure()]"}
 
 	usr << "\blue Dumped to instances.csv."
 
-#ifdef PROFILE_MACHINES
-/client/proc/cmd_admin_dump_macprofile()
-	set category = "Debug"
-	set name = "Dump Machine Profiling"
-
-	var/F = file("machine_profiling.csv")
-	fdel(F)
-	F << "type,nanoseconds"
-	for(var/typepath in machine_profiling)
-		var/ns = machine_profiling[typepath]
-		F << "[typepath],[ns]"
-
-	usr << "\blue Dumped to machine_profiling.csv."
-#endif
-
 /client/proc/gib_money()
 	set category = "Fun"
 	set name = "Dispense Money"

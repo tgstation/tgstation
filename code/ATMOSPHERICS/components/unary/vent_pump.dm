@@ -75,10 +75,9 @@
 
 	process()
 		..()
-		CHECK_DISABLED(vents)
 		if(stat & (NOPOWER|BROKEN))
 			return
-		if (!node)
+		if(!node)
 			on = 0
 		//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 		if(!on)

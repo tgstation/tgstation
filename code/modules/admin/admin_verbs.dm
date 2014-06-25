@@ -152,9 +152,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/qdel_toggle,              // /vg/
 	/client/proc/cmd_admin_dump_instances, // /vg/
 	/client/proc/disable_bloodvirii,       // /vg/
-#ifdef PROFILE_MACHINES
-	/client/proc/cmd_admin_dump_macprofile,
-#endif
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
