@@ -45,7 +45,7 @@
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
 					"\blue You have unfastened \the [src].", \
-					"You hear ratchet.")
+					"You hear a ratchet.")
 				new /obj/item/pipe_gsensor(src.loc)
 				del(src)
 		..()
