@@ -171,6 +171,7 @@
 
 		sensor_information[id_tag] = signal.data
 
+
 	proc/return_text()
 		var/sensor_data
 		if(sensors.len)
@@ -279,6 +280,8 @@ legend {
 		. = ..()
 		if(.) return .
 		if("add_sensor" in href_list)
+		
+			// Make a list of all available sensors on the same frequency
 			var/list/sensor_list = list()
 			for(var/obj/machinery/air_sensor/G in machines)
 				if(!isnull(G.id_tag) && G.frequency == frequency)
@@ -286,14 +289,19 @@ legend {
 			if(!sensor_list.len)
 				user << "<span class=\"warning\">No sensors on this frequency.</span>"
 				return MT_ERROR
+				
+			// Have the user pick one of them and name its label
 			var/sensor = input(user, "Select a sensor:", "Sensor Data") as null|anything in sensor_list
 			if(!sensor)
 				return MT_ERROR
 			var/label = reject_bad_name( input(user, "Choose a sensor label:", "Sensor Label")  as text|null, allow_numbers=1)
 			if(!label)
 				return MT_ERROR
+				
+			// Add the sensor's information to general_air_controler
 			sensors[sensor] = label
 			return MT_UPDATE
+			
 		if("edit_sensor" in href_list)
 			var/list/sensor_list = list()
 			for(var/obj/machinery/air_sensor/G in machines)
@@ -351,6 +359,43 @@ legend {
 		)
 
 		var/pressure_setting = ONE_ATMOSPHERE * 45
+		
+		
+		attackby(I as obj, user as mob)
+			if(istype(I, /obj/item/device/multitool))
+				update_multitool_menu(user)
+			if(istype(I, /obj/item/weapon/screwdriver))
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+				if(do_after(user, 20))
+					if (src.stat & BROKEN)
+						user << "\blue The broken glass falls out."
+						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+						getFromPool(/obj/item/weapon/shard, loc)
+						var/obj/item/weapon/circuitboard/large_tank_control/M = new /obj/item/weapon/circuitboard/large_tank_control( A )
+						for (var/obj/C in src)
+							C.loc = src.loc
+						M.frequency = src.frequency
+						A.circuit = M
+						A.state = 3
+						A.icon_state = "3"
+						A.anchored = 1
+						del(src)
+					else
+						user << "\blue You disconnect the monitor."
+						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+						var/obj/item/weapon/circuitboard/large_tank_control/M = new /obj/item/weapon/circuitboard/large_tank_control( A )
+						for (var/obj/C in src)
+							C.loc = src.loc
+						M.frequency = src.frequency
+						A.circuit = M
+						A.state = 4
+						A.icon_state = "4"
+						A.anchored = 1
+						del(src)
+			else
+				src.attack_hand(user)
+			return
+		
 
 		multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 			var/dat= {"
@@ -366,22 +411,23 @@ legend {
 			dat += {"<li><a href="?src=\ref[src];add_sensor=1">\[+\]</a></li></ul>"}
 			return dat
 
+
 		linkWith(var/mob/user, var/obj/O, var/list/context)
 			if(context["slot"]=="input" && is_type_in_list(O,input_linkable))
 				input_tag = O:id_tag
 				input_info = null
 				if(istype(O,/obj/machinery/atmospherics/unary/vent_pump))
 					send_signal("tag"=input_tag,
-						"direction"="1", // Release
-						"checks"   ="0"  // No pressure checks.
+						"direction"=1, // Release
+						"checks"   =0  // No pressure checks.
 						)
-			if(context["slot"]=="output" && is_type_in_list(O,input_linkable))
-				input_tag = O:id_tag
-				input_info = null
+			if(context["slot"]=="output" && is_type_in_list(O,output_linkable))
+				output_tag = O:id_tag
+				output_info = null
 				if(istype(O,/obj/machinery/atmospherics/unary/vent_pump))
-					send_signal("tag"=input_tag,
-						"direction"="0", // Suck
-						"checks"   ="2", // Internal pressure checks.
+					send_signal("tag"=output_tag,
+						"direction"=0, // Siphon
+						"checks"   =2  // Internal pressure checks.
 						)
 
 		unlinkFrom(var/mob/user, var/obj/O)
@@ -473,6 +519,7 @@ legend {
 
 			return output
 
+
 		receive_signal(datum/signal/signal)
 			if(!signal || signal.encryption) return
 
@@ -535,13 +582,14 @@ legend {
 
 			else if(href_list["out_toggle_power"])
 				output_info = null
-				signal.data = list ("tag" = output_tag, "power_toggle")
+				signal.data = list ("tag" = output_tag, "power_toggle", "direction" = 0, "checks" = 2)
+				// Vents need to be set to siphon. Manualy inputting the id won't set the uvent correctly
 
 			else if(href_list["out_set_pressure"])
 				output_info = null
 				signal.data = list ("tag" = output_tag, "set_internal_pressure" = "[pressure_setting]")
 			else
-				testing("Bad Topic() to GAC \"[src.name]\": [href]")
+				testing("Bad Topic() to large_tank_control \"[src.name]\": [href]")
 				return // NOPE.
 
 			signal.data["sigtype"]="command"
