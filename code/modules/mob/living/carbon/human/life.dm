@@ -195,6 +195,7 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 /mob/living/carbon/human
 
 	proc/handle_disabilities()
+		var/said_thing=0
 		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 1))
 				src << "\red You have a seizure!"
@@ -211,13 +212,15 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 				hallucination += 20
 
 		if (disabilities & COUGHING)
-			if ((prob(5) && paralysis <= 1))
+			if (!said_thing && (prob(5) && paralysis <= 1))
+				said_thing=1
 				drop_item()
 				spawn( 0 )
 					emote("cough")
 					return
 		if (disabilities & TOURETTES)
-			if ((prob(10) && paralysis <= 1))
+			if (!said_thing && (prob(10) && paralysis <= 1))
+				said_thing=1
 				Stun(10)
 				spawn( 0 )
 					switch(rand(1, 3))
@@ -237,7 +240,8 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 			if (prob(10))
 				stuttering = max(10, stuttering)
 		if (getBrainLoss() >= 60 && stat != 2)
-			if (prob(3))
+			if (!said_thing && prob(3))
+				said_thing=1
 				switch(pick(1,2,3))
 					if(1)
 						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
@@ -247,8 +251,15 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 						emote("drool")
 
 		if(species.name == "Tajaran")
-			if(prob(1)) // WAS: 3
+			if(!said_thing && prob(1)) // WAS: 3
+				said_thing=1
 				vomit(1) // Hairball
+			if(!said_thing && prob(3))
+				said_thing=1
+				var/message = prob(50) ? ";":""
+				// SHHHH.  (Typechecked above)
+				message += species:make_taunt()
+				say(message)
 
 		if(stat != 2)
 			var/rn = rand(0, 200)
