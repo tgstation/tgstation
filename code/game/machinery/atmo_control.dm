@@ -102,6 +102,7 @@
 /obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
+	circuit = "/obj/item/weapon/circuitboard/air_management"
 
 	name = "Computer"
 
@@ -131,36 +132,7 @@
 	attackby(I as obj, user as mob)
 		if(istype(I, /obj/item/device/multitool))
 			update_multitool_menu(user)
-		else if(istype(I, /obj/item/weapon/screwdriver))
-			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-			if(do_after(user, 20))
-				if (src.stat & BROKEN)
-					user << "\blue The broken glass falls out."
-					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					getFromPool(/obj/item/weapon/shard, loc)
-					var/obj/item/weapon/circuitboard/air_management/M = new /obj/item/weapon/circuitboard/air_management( A )
-					for (var/obj/C in src)
-						C.loc = src.loc
-					M.frequency = src.frequency
-					A.circuit = M
-					A.state = 3
-					A.icon_state = "3"
-					A.anchored = 1
-					del(src)
-				else
-					user << "\blue You disconnect the monitor."
-					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					var/obj/item/weapon/circuitboard/air_management/M = new /obj/item/weapon/circuitboard/air_management( A )
-					for (var/obj/C in src)
-						C.loc = src.loc
-					M.frequency = src.frequency
-					A.circuit = M
-					A.state = 4
-					A.icon_state = "4"
-					A.anchored = 1
-					del(src)
-		else
-			src.attack_hand(user)
+		..() // Call /machinery/computer's attackby()
 		return
 
 	receive_signal(datum/signal/signal)
@@ -170,6 +142,7 @@
 		if(!id_tag || !sensors || !sensors.Find(id_tag)) return
 
 		sensor_information[id_tag] = signal.data
+
 
 	proc/return_text()
 		var/sensor_data
@@ -279,7 +252,7 @@ legend {
 		. = ..()
 		if(.) return .
 		if("add_sensor" in href_list)
-		
+
 			// Make a list of all available sensors on the same frequency
 			var/list/sensor_list = list()
 			for(var/obj/machinery/air_sensor/G in machines)
@@ -288,7 +261,7 @@ legend {
 			if(!sensor_list.len)
 				user << "<span class=\"warning\">No sensors on this frequency.</span>"
 				return MT_ERROR
-				
+
 			// Have the user pick one of them and name its label
 			var/sensor = input(user, "Select a sensor:", "Sensor Data") as null|anything in sensor_list
 			if(!sensor)
@@ -296,11 +269,11 @@ legend {
 			var/label = reject_bad_name( input(user, "Choose a sensor label:", "Sensor Label")  as text|null, allow_numbers=1)
 			if(!label)
 				return MT_ERROR
-				
+
 			// Add the sensor's information to general_air_controler
 			sensors[sensor] = label
 			return MT_UPDATE
-			
+
 		if("edit_sensor" in href_list)
 			var/list/sensor_list = list()
 			for(var/obj/machinery/air_sensor/G in machines)
@@ -341,6 +314,7 @@ legend {
 	large_tank_control
 		icon = 'icons/obj/computer.dmi'
 		icon_state = "tank"
+		circuit = "/obj/item/weapon/circuitboard/large_tank_control"
 
 		var/input_tag
 		var/output_tag
@@ -358,42 +332,7 @@ legend {
 		)
 
 		var/pressure_setting = ONE_ATMOSPHERE * 45
-		
-		
-		attackby(I as obj, user as mob)
-			if(istype(I, /obj/item/device/multitool))
-				update_multitool_menu(user)
-			if(istype(I, /obj/item/weapon/screwdriver))
-				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				if(do_after(user, 20))
-					if (src.stat & BROKEN)
-						user << "\blue The broken glass falls out."
-						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-						getFromPool(/obj/item/weapon/shard, loc)
-						var/obj/item/weapon/circuitboard/large_tank_control/M = new /obj/item/weapon/circuitboard/large_tank_control( A )
-						for (var/obj/C in src)
-							C.loc = src.loc
-						M.frequency = src.frequency
-						A.circuit = M
-						A.state = 3
-						A.icon_state = "3"
-						A.anchored = 1
-						del(src)
-					else
-						user << "\blue You disconnect the monitor."
-						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-						var/obj/item/weapon/circuitboard/large_tank_control/M = new /obj/item/weapon/circuitboard/large_tank_control( A )
-						for (var/obj/C in src)
-							C.loc = src.loc
-						M.frequency = src.frequency
-						A.circuit = M
-						A.state = 4
-						A.icon_state = "4"
-						A.anchored = 1
-						del(src)
-			else
-				src.attack_hand(user)
-			return
+
 
 		multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 			var/dat= {"
@@ -408,6 +347,7 @@ legend {
 				dat += {"<li><a href="?src=\ref[src];edit_sensor=[id_tag]">[sensors[id_tag]]</a></li>"}
 			dat += {"<li><a href="?src=\ref[src];add_sensor=1">\[+\]</a></li></ul>"}
 			return dat
+
 
 		linkWith(var/mob/user, var/obj/O, var/list/context)
 			if(context["slot"]=="input" && is_type_in_list(O,input_linkable))
@@ -516,6 +456,7 @@ legend {
 
 			return output
 
+
 		receive_signal(datum/signal/signal)
 			if(!signal || signal.encryption) return
 
@@ -595,6 +536,7 @@ legend {
 	fuel_injection
 		icon = 'icons/obj/computer.dmi'
 		icon_state = "atmos"
+		circuit = "/obj/item/weapon/circuitboard/injector_control"
 
 		var/device_tag
 		var/list/device_info
@@ -603,39 +545,6 @@ legend {
 
 		var/cutoff_temperature = 2000
 		var/on_temperature = 1200
-
-		attackby(I as obj, user as mob)
-			if(istype(I, /obj/item/weapon/screwdriver))
-				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				if(do_after(user, 20))
-					if (src.stat & BROKEN)
-						user << "\blue The broken glass falls out."
-						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-						getFromPool(/obj/item/weapon/shard, loc)
-						var/obj/item/weapon/circuitboard/injector_control/M = new /obj/item/weapon/circuitboard/injector_control( A )
-						for (var/obj/C in src)
-							C.loc = src.loc
-						M.frequency = src.frequency
-						A.circuit = M
-						A.state = 3
-						A.icon_state = "3"
-						A.anchored = 1
-						del(src)
-					else
-						user << "\blue You disconnect the monitor."
-						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-						var/obj/item/weapon/circuitboard/injector_control/M = new /obj/item/weapon/circuitboard/injector_control( A )
-						for (var/obj/C in src)
-							C.loc = src.loc
-						M.frequency = src.frequency
-						A.circuit = M
-						A.state = 4
-						A.icon_state = "4"
-						A.anchored = 1
-						del(src)
-			else
-				src.attack_hand(user)
-			return
 
 		process()
 			if(automation)
@@ -774,3 +683,5 @@ legend {
 				)
 
 				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+				
+
