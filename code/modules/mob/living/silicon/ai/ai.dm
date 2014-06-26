@@ -638,7 +638,7 @@ var/list/ai_list = list()
 				if("xeno queen")
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo3"))
 				if("space carp")
-					holo_icon = getHologramIcon(icon('icons/mob/animal.dmi',"holocarp"))
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
 	return
 
 /mob/living/silicon/ai/proc/corereturn()
