@@ -26,6 +26,9 @@
 	var/datum/artifact_find/artifact_find
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 
+/turf/unsimulated/mineral/Destroy()
+	return
+
 /turf/unsimulated/mineral/New()
 	. = ..()
 	MineralSpread()
@@ -665,6 +668,9 @@
 		"Clown"   = 15,
 		"Phazon"  = 10
 	)
+
+/turf/unsimulated/mineral/random/Destroy()
+	return
 
 /turf/unsimulated/mineral/uranium
 	name = "Uranium deposit"
