@@ -152,6 +152,9 @@ var/list/admin_verbs_debug = list(
 	/client/proc/qdel_toggle,              // /vg/
 	/client/proc/cmd_admin_dump_instances, // /vg/
 	/client/proc/disable_bloodvirii,       // /vg/
+#ifdef PROFILE_MACHINES
+	/client/proc/cmd_admin_dump_macprofile,
+#endif
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -252,6 +255,7 @@ var/list/admin_verbs_mod = list(
 /client/proc/add_admin_verbs()
 	if(holder)
 		verbs += admin_verbs_default
+		if(holder.rights & R_BUILDMODE)		verbs += /client/proc/togglebuildmodeself
 		if(holder.rights & R_ADMIN)			verbs += admin_verbs_admin
 		if(holder.rights & R_BAN)			verbs += admin_verbs_ban
 		if(holder.rights & R_FUN)			verbs += admin_verbs_fun
@@ -268,6 +272,7 @@ var/list/admin_verbs_mod = list(
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
 		admin_verbs_default,
+		/client/proc/togglebuildmodeself,
 		admin_verbs_admin,
 		admin_verbs_ban,
 		admin_verbs_fun,
@@ -610,6 +615,14 @@ var/list/admin_verbs_mod = list(
 		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
 		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound", 1)
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+/client/proc/togglebuildmodeself()
+	set name = "Toggle Build Mode Self"
+	set category = "Special Verbs"
+	if(src.mob)
+		togglebuildmode(src.mob)
+	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/object_talk(var/msg as text) // -- TLE
 	set category = "Special Verbs"

@@ -255,6 +255,7 @@ client
 			body += {"<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>
 				<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>
 				<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>
+				<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>
 				<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>
 				<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>
 				<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>
@@ -570,6 +571,17 @@ client
 			return
 
 		src.cmd_admin_gib(M)
+
+	else if(href_list["build_mode"])
+		if(!check_rights(R_BUILDMODE))	return
+
+		var/mob/M = locate(href_list["build_mode"])
+		if(!istype(M))
+			usr << "This can only be used on instances of type /mob"
+			return
+
+		togglebuildmode(M)
+		href_list["datumrefresh"] = href_list["build_mode"]
 
 	else if(href_list["drop_everything"])
 		if(!check_rights(R_DEBUG|R_ADMIN))	return
