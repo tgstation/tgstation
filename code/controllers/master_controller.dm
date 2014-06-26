@@ -9,7 +9,7 @@ var/global/pipe_processing_killed = 0
 
 datum/controller/game_controller
 	var/minimum_ticks = 20
-	var/breather = 2
+	var/breather = 3
 	var/airt = 0
 	var/sunt = 0
 	var/mobt = 0
