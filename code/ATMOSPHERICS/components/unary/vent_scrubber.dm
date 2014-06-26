@@ -98,9 +98,10 @@
 
 	process()
 		..()
+		CHECK_DISABLED(scrubbers)
 		if(stat & (NOPOWER|BROKEN))
 			return
-		if(!node)
+		if (!node)
 			on = 0
 		//broadcast_status()
 		if(!on)

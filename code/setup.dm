@@ -1,6 +1,16 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 #define DEBUG
+#define PROFILE_MACHINES // Disable when not debugging.
+
+#ifdef PROFILE_MACHINES
+#define CHECK_DISABLED(TYPE) if(disable_##TYPE) return
+var/global/disable_scrubbers = 0
+var/global/disable_vents     = 0
+#else
+#define CHECK_DISABLED(TYPE) /* DO NOTHINK */
+#endif
+
 #define PI 3.1415
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
@@ -435,7 +445,7 @@ var/MAX_EXPLOSION_RANGE = 14
 
 var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" = 60)
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
-//(Exceptions: extended and nuke) -Errorage
+//(Exceptions: extended, sandbox and nuke) -Errorage
 //Was list("3" = 30, "4" = 70).
 //Spacing should be a reliable method of getting rid of a body -- Urist.
 //Go away Urist, I'm restoring this to the longer list. ~Errorage
@@ -654,6 +664,7 @@ var/list/TAGGERLOCATIONS = list(
 
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
+#define R_BUILDMODE		1
 #define R_ADMIN			2
 #define R_BAN			4
 #define R_FUN			8
