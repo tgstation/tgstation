@@ -2001,7 +2001,7 @@
 "aMy" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/door/airlock/security{name = "Security Checkpoint"; req_access = null; req_access_txt = "1"},/turf/simulated/floor,/area/security/checkpoint2)
 "aMz" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/wall/r_wall,/area/gateway)
 "aMA" = (/obj/machinery/meter,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
-"aMB" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{dir = 4},/obj/structure/closet/fireaxecabinet{pixel_y = -32},/obj/machinery/atmospherics/unary/vent_scrubber{on = 1},/obj/machinery/portable_atmospherics/scrubber,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/engineering/atmos)
+"aMB" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{dir = 4},/obj/structure/closet/fireaxecabinet{pixel_y = -32},/obj/machinery/atmospherics/unary/vent_scrubber{on = 1},/obj/machinery/suit_storage_unit/atmos,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/engineering/atmos)
 "aMC" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,/turf/simulated/wall,/area/maintenance/fpmaint2)
 "aMD" = (/obj/machinery/firealarm{dir = 4; pixel_x = 24},/turf/simulated/floor,/area/engineering/engine)
 "aME" = (/obj/machinery/door/firedoor/border_only{dir = 1; name = "Firelock North"},/turf/simulated/floor{dir = 8; icon_state = "bluecorner"},/area/hallway/primary/central)
