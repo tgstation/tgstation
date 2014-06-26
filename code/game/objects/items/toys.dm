@@ -614,9 +614,6 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "gooncode"
 
-
-
-
 /obj/item/toy/minimeteor
 	name = "Mini Meteor"
 	desc = "Relive the horror of a meteor shower! SweetMeat-eor. Co is not responsible for any injury caused by Mini Meteor"
