@@ -66,7 +66,7 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		if(!exchange_blue && traitors.len >= 6) //Set up an exchange if there are enough traitors
+		if(!exchange_blue && traitors.len >= 5) //Set up an exchange if there are enough traitors
 			if(!exchange_red)
 				exchange_red = traitor
 			else
