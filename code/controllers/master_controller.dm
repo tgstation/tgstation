@@ -10,6 +10,16 @@ var/global/pipe_processing_killed = 0
 datum/controller/game_controller
 	var/minimum_ticks = 20
 	var/breather = 2
+	var/airt = 0
+	var/sunt = 0
+	var/mobt = 0
+	var/dist = 0
+	var/mcht = 0
+	var/objt = 0
+	var/pipet = 0
+	var/powt = 0
+	var/nanot = 0
+	var/tikt = 0
 
 datum/controller/game_controller/New()
 	. = ..()
@@ -122,19 +132,19 @@ datum/controller/game_controller/proc/setup_objects()
 							log_admin("ZASALERT: unable run zone/process() -- [air_master.tick_progress]")
 							air_processing_killed = 1
 							air_master.failed_ticks = 0
+					airt++; 
 
-				sun.calc_position(); sleep(breather);
-				processMobs();		sleep(breather)
-				processDiseases();	sleep(breather)
-				processMachines();	sleep(breather)
-				processObjects();	sleep(breather)
+				sun.calc_position(); sunt++; sleep(breather)
+				processMobs(); mobt++; sleep(breather)
+				processDiseases(); dist++; sleep(breather)
+				processMachines(); mcht++; sleep(breather)
+				processObjects(); objt++; sleep(breather)
 				if(!pipe_processing_killed)
-					processPipenets()
-					sleep(breather)
-				processPowernets();	sleep(breather)
-				processNano()
+					processPipenets(); pipet++; sleep(breather)
+				processPowernets(); powt++; sleep(breather)
+				processNano(); nanot++
 				processEvents()
-				ticker.process()
+				ticker.process(); tikt++
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)

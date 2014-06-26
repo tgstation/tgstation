@@ -1173,6 +1173,16 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 			if (master_controller)
 				stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[master_controller.iteration])")
+				stat(null, "Air-[master_controller.airt]")
+				stat(null, "Sun-[master_controller.sunt]")
+				stat(null, "Mob-[master_controller.mobt]\t#[mob_list.len]")
+				stat(null, "Dis-[master_controller.dist]\t#[active_diseases.len]")
+				stat(null, "Mch-[master_controller.mcht]\t#[machines.len]")
+				stat(null, "Obj-[master_controller.objt]\t#[processing_objects.len]")
+				stat(null, "Pip-[master_controller.pipet]\t#[pipe_networks.len]")
+				stat(null, "Pow-[master_controller.powt]\t#[powernets.len]")
+				stat(null, "NUI-[master_controller.nanot]\t#[nanomanager.processing_uis.len]")
+				stat(null, "Tik-[master_controller.tikt]")
 			else
 				stat(null, "master controller - ERROR")
 
