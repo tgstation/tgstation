@@ -362,6 +362,14 @@
 		if(M == src)
 			yes = 1
 	usr << "[yes ? "\blue" : "\red"] You are [yes ? "" : "not "]in the mob list"
+	yes = 0
+	if(src in living_mob_list)
+		yes = 1
+	else
+		var/mob/M = locate(src) in living_mob_list
+		if(M == src)
+			yes = 1
+	usr << "[yes ? "\blue" : "\red"] You are [yes ? "" : "not "]in the living mob list"
 
 /mob/proc/changeling_returntolife()
 	set category = "Changeling"
@@ -373,7 +381,7 @@
 	if(changeling_power(20,1,100,DEAD))
 		changeling.chem_charges -= 20
 		dead_mob_list -= C
-		living_mob_list |= C
+		living_mob_list |= list(C)
 		C.stat = CONSCIOUS
 		C.tod = null
 		C.setToxLoss(0)
