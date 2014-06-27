@@ -116,8 +116,8 @@ Class Procs:
 	var/inMachineList = 1 // For debugging.
 
 /obj/machinery/New()
-	. = ..()
 	machines += src
+	return ..()
 
 /obj/machinery/Destroy()
 	if(src in machines)
