@@ -344,29 +344,35 @@ datum/objective/steal/special/find_target()
 
 datum/objective/steal/exchange
 	dangerrating = 10
-	var/faction //Exchange objectives: Which side are we on?
-	var/datum/mind/otheragent //Exchange objectives: The mind of the other party
 
-datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
+datum/objective/steal/exchange/proc/set_faction(var/faction,var/otheragent)
+	target = otheragent
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_blue
 	else if(faction == "blue")
 		targetinfo = new/datum/objective_item/unique/docs_red
-	explanation_text = "Acquire [targetinfo.name] held by [otheragent], the Syndicate Agent"
+	explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
 	steal_target = targetinfo.targetitem
+
+
+datum/objective/steal/exchange/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
+	else
+		explanation_text = "Free Objective"
 
 
 datum/objective/steal/exchange/backstab
 	dangerrating = 3
 
-datum/objective/steal/exchange/backstab/set_faction(faction)
+datum/objective/steal/exchange/backstab/set_faction(var/faction)
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_red
 	else if(faction == "blue")
 		targetinfo = new/datum/objective_item/unique/docs_blue
 	explanation_text = "Do not give up or lose [targetinfo.name]."
 	steal_target = targetinfo.targetitem
-
 
 
 datum/objective/download
