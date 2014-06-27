@@ -593,7 +593,7 @@
 		threatcount += 2
 
 	//Check for nonhuman scum
-	if(dna && dna.mutantrace && dna.mutantrace != "none")
+	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
 	//Loyalty implants imply trustworthyness
