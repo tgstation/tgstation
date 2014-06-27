@@ -482,8 +482,4 @@ var/const/GALOSHES_DONT_HELP = 8
 	loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 /mob/living/carbon/fall(var/forced)
-    loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
-
-
-/mob/living/carbon/proc/assess_threat()
-	return
+	loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing

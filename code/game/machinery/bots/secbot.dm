@@ -207,8 +207,11 @@ Auto Patrol: []"},
 	else
 		..()
 		if(!istype(W, /obj/item/weapon/screwdriver) && !istype(W, /obj/item/weapon/weldingtool) && (W.force) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
-			src.target = user
-			src.mode = SECBOT_HUNT
+			threatlevel = user.assess_threat(src)
+			threatlevel += 6
+			if(threatlevel > 0)
+				src.target = user
+				src.mode = SECBOT_HUNT
 
 /obj/machinery/bot/secbot/Emag(mob/user as mob)
 	..()
@@ -775,6 +778,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/proc/declare_arrest()
 	var/area/location = get_area(src)
-	for(var/mob/living/carbon/human/human in world)
-		if((human.z == src.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security) && !human.blinded)
-			human << "<span class='info'>\icon[human.glasses] [src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>"
+	for(var/mob/living/carbon/human/human in mob_list)
+		var/turf/humanturf = get_turf(human)
+		if((humanturf.z == src.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security))
+			human.show_message("<span class='info'>\icon[human.glasses] [src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>", 1)

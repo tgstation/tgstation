@@ -149,7 +149,7 @@ Auto Patrol: []"},
 "<A href='?src=\ref[src];operation=declarearrests'>[src.declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
-	var/datum/browser/popup = new(user, "autosec", "Securitron v2.6 controls")
+	var/datum/browser/popup = new(user, "autosec", "Securitron v2.09 controls")
 	popup.set_content(dat)
 	popup.open()
 	return
@@ -221,10 +221,13 @@ Auto Patrol: []"},
 		..()
 		if (!istype(W, /obj/item/weapon/screwdriver) && !istype(W, /obj/item/weapon/weldingtool) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 			if(hasvar(W,"force") && W.force)//If force is defined and non-zero
-				src.target = user
-				if(lasercolor)//To make up for the fact that lasertag bots don't hunt
-					src.shootAt(user)
-				src.mode = SECBOT_HUNT
+				threatlevel = user.assess_threat(src)
+				threatlevel += 6
+				if(threatlevel > 0)
+					src.target = user
+					if(lasercolor)//To make up for the fact that lasertag bots don't hunt
+						src.shootAt(user)
+					src.mode = SECBOT_HUNT
 
 /obj/machinery/bot/ed209/Emag(mob/user as mob)
 	..()
@@ -1014,6 +1017,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/proc/declare_arrest()
 	var/area/location = get_area(src)
-	for(var/mob/living/carbon/human/human in world)
-		if((human.z == src.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security) && !human.blinded)
-			human << "<span class='info'>\icon[human.glasses] [src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>"
+	for(var/mob/living/carbon/human/human in mob_list)
+		var/turf/humanturf = get_turf(human)
+		if((humanturf.z == src.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security))
+			human.show_message("<span class='info'>\icon[human.glasses] [src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>", 1)
