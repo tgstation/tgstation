@@ -155,6 +155,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(!S["species"] || !config.mutant_races)
 		S["species"]		<< new /datum/species/human()
+	if(!S["mutant_color"] || S["mutant_color"] == "#000")
+		S["mutant_color"]	<< "#FFF"
 
 	//Character
 	S["OOC_Notes"]			>> metadata
@@ -194,6 +196,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	real_name		= reject_bad_name(real_name)
 	if(!(pref_species in species_list))
 		pref_species = new /datum/species/human()
+	if(!mutant_color || mutant_color == "#000")
+		mutant_color = "#FFF"
 	if(!real_name)	real_name = random_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
