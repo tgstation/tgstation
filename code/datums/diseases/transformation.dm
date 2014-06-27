@@ -139,15 +139,14 @@
 	..()
 	switch(stage)
 		if(1)
-			if(ishuman(affected_mob) && affected_mob.dna && affected_mob.dna.mutantrace == "slime")
+			if(ishuman(affected_mob) && affected_mob.dna && affected_mob.dna.species.id == "slime")
 				stage = 5
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna && !human.dna.mutantrace)
-					human.dna.mutantrace = "slime"
-					human.update_body()
-
+				if(human.dna && human.dna.species.id != "slime")
+					human.dna.species = new /datum/species/slime()
+					human.update_icons()
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"

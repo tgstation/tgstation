@@ -59,8 +59,11 @@
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = W
 				if(C.use(2))
-					user << "You add wires to the assembly."
+					user << "<span class='notice'>You add wires to the assembly.</span>"
 					state = 3
+				else
+					user << "<span class='warning'>You need two lengths of cable to wire a camera.</span>"
+					return
 				return
 
 			else if(istype(W, /obj/item/weapon/weldingtool))

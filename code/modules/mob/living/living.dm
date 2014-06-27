@@ -431,11 +431,11 @@
 	qdel(I)
 
 	if(C.handcuffed)
-		C.update_inv_handcuffed(0)
 		C.handcuffed = null
+		C.update_inv_handcuffed(0)
 	else
-		C.update_inv_legcuffed(0)
 		C.legcuffed = null
+		C.update_inv_legcuffed(0)
 
 
 /mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)

@@ -963,6 +963,8 @@
 #include "code\modules\mob\living\carbon\human\life.dm"
 #include "code\modules\mob\living\carbon\human\login.dm"
 #include "code\modules\mob\living\carbon\human\say.dm"
+#include "code\modules\mob\living\carbon\human\species.dm"
+#include "code\modules\mob\living\carbon\human\species_types.dm"
 #include "code\modules\mob\living\carbon\human\update_icons.dm"
 #include "code\modules\mob\living\carbon\human\whisper.dm"
 #include "code\modules\mob\living\carbon\metroid\death.dm"
