@@ -424,6 +424,8 @@ area
 						//world << "Setting the alpha to max... color_light [color_light]."
 						color_overlay.alpha = 180
 
+			color_overlay.blend_mode = BLEND_ADD
+
 			if (color_overlay.color)
 				overlays.Add(color_overlay)
 
