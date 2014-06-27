@@ -149,7 +149,7 @@ Auto Patrol: []"},
 "<A href='?src=\ref[src];operation=declarearrests'>[src.declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
-	var/datum/browser/popup = new(user, "autosec", "Securitron v2.09 controls")
+	var/datum/browser/popup = new(user, "autosec", "Securitron v2.0.9 controls")
 	popup.set_content(dat)
 	popup.open()
 	return
