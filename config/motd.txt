@@ -1,5 +1,7 @@
 <!-- Most valid html will work in here, excluding images. -->
 
-<h1>Welcome to Space Station 13!</h1>
+<h1>Welcome to Zebra 13!</h1>
 
-<i>This server is running a /tg/station 13 Git build.</i>
+<i>This server is running a /tg/station 13 Git build, with the Ministation Map</i>
+
+<i>Make sure to set your Traitor settings if you want to be traitor</i>
