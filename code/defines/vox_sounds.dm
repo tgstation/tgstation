@@ -1,6 +1,6 @@
+// AUTOMATICALLY GENERATED, DO NOT EDIT.
 // List is required to compile the resources into the game when it loads.
 // Dynamically loading it has bad results with sounds overtaking each other, even with the wait variable.
-
 var/list/vox_sounds = list(
 	"," = 'sound/vox/,.wav',
 	"." = 'sound/vox/..wav',
@@ -254,6 +254,7 @@ var/list/vox_sounds = list(
 	"escape" = 'sound/vox_fem/escape.ogg',
 	"evacuate" = 'sound/vox_fem/evacuate.ogg',
 	"every" = 'sound/vox_fem/every.ogg',
+	"everywhere" = 'sound/vox_fem/everywhere.ogg',
 	"exchange" = 'sound/vox_fem/exchange.ogg',
 	"execution" = 'sound/vox_fem/execution.ogg',
 	"exit" = 'sound/vox_fem/exit.ogg',
@@ -332,6 +333,7 @@ var/list/vox_sounds = list(
 	"hacking" = 'sound/vox_fem/hacking.ogg',
 	"handling" = 'sound/vox_fem/handling.ogg',
 	"hangar" = 'sound/vox_fem/hangar.ogg',
+	"happening" = 'sound/vox_fem/happening.ogg',
 	"harm" = 'sound/vox_fem/harm.ogg',
 	"has" = 'sound/vox_fem/has.ogg',
 	"have" = 'sound/vox_fem/have.ogg',
@@ -388,6 +390,8 @@ var/list/vox_sounds = list(
 	"k" = 'sound/vox_fem/k.ogg',
 	"key" = 'sound/vox_fem/key.ogg',
 	"kill" = 'sound/vox_fem/kill.ogg',
+	"killed" = 'sound/vox_fem/killed.ogg',
+	"killing" = 'sound/vox_fem/killing.ogg',
 	"kilo" = 'sound/vox_fem/kilo.ogg',
 	"kit" = 'sound/vox_fem/kit.ogg',
 	"kitchen" = 'sound/vox_fem/kitchen.ogg',
@@ -429,7 +433,9 @@ var/list/vox_sounds = list(
 	"magnetic" = 'sound/vox_fem/magnetic.ogg',
 	"main" = 'sound/vox_fem/main.ogg',
 	"maintenance" = 'sound/vox_fem/maintenance.ogg',
+	"malf" = 'sound/vox_fem/malf.ogg',
 	"malfunction" = 'sound/vox_fem/malfunction.ogg',
+	"malfunctioning" = 'sound/vox_fem/malfunctioning.ogg',
 	"man" = 'sound/vox_fem/man.ogg',
 	"mass" = 'sound/vox_fem/mass.ogg',
 	"materials" = 'sound/vox_fem/materials.ogg',
@@ -717,6 +723,7 @@ var/list/vox_sounds = list(
 	"traitor" = 'sound/vox_fem/traitor.ogg',
 	"traitors" = 'sound/vox_fem/traitors.ogg',
 	"transportation" = 'sound/vox_fem/transportation.ogg',
+	"triggering" = 'sound/vox_fem/triggering.ogg',
 	"truck" = 'sound/vox_fem/truck.ogg',
 	"tunnel" = 'sound/vox_fem/tunnel.ogg',
 	"turn" = 'sound/vox_fem/turn.ogg',
@@ -807,4 +814,21 @@ var/list/vox_sounds = list(
 	"zero" = 'sound/vox_fem/zero.ogg',
 	"zone" = 'sound/vox_fem/zone.ogg',
 	"zulu" = 'sound/vox_fem/zulu.ogg',
+)
+
+// How long each "word" really is (in words).  Single-word phrases are skipped for brevity.
+var/list/vox_wordlen = list(
+	"ce" = 2,
+	"cmo" = 3,
+	"hop" = 3,
+	"hos" = 3,
+	"iaa" = 3,
+	"rd" = 2,
+	"shitlord" = 2,
+	"ss13" = 3,
+	"vox_420" = 4,
+	"voxtest" = 3,
+	"voxtest2" = 42,
+	"voxtest3" = 22,
+	"woody" = 2,
 )
