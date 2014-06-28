@@ -20,7 +20,7 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS * 3
+	var/biomass = CLONE_BIOMASS // * 3 - N3X
 	var/opened = 0
 
 /********************************************************************
@@ -335,14 +335,12 @@
 				I.loc = src.loc
 			del(src)
 			return
-/*Removing cloning pod biomass
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "\blue \The [src] processes \the [W]."
 		biomass += 50
 		user.drop_item()
 		del(W)
 		return
-*/
 	else
 		..()
 
@@ -401,7 +399,7 @@
 	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
 
-	//src.biomass -= CLONE_BIOMASS
+	src.biomass -= CLONE_BIOMASS
 
 	return
 
