@@ -1019,7 +1019,8 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/proc/declare_arrest()
 	var/area/location = get_area(src)
+	var/area/myturf = get_turf(src)
 	for(var/mob/living/carbon/human/human in mob_list)
 		var/turf/humanturf = get_turf(human)
-		if((humanturf.z == src.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security))
+		if((humanturf.z == myturf.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security))
 			human.show_message("<span class='info'>\icon[human.glasses] [src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>", 1)
