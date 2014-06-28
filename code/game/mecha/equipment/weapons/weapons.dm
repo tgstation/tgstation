@@ -61,7 +61,7 @@
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/ion.ogg'
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
@@ -194,7 +194,7 @@
 	icon_state = "mecha_scatter"
 	equip_cooldown = 20
 	projectile = /obj/item/projectile/bullet/midbullet
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/shotgun.ogg'
 	projectiles = 40
 	projectile_energy_cost = 25
 	var/projectiles_per_shot = 4
@@ -311,7 +311,7 @@
 	name = "SGL-6 Grenade Launcher"
 	icon_state = "mecha_grenadelnchr"
 	projectile = /obj/item/weapon/grenade/flashbang
-	fire_sound = 'sound/effects/bang.ogg'
+	fire_sound = 'sound/weapons/grenadelauncher.ogg'
 	projectiles = 6
 	missile_speed = 1.5
 	projectile_energy_cost = 800

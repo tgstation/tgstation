@@ -79,6 +79,7 @@
 			else
 				M.LAssailant = user
 		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
+		playsound(get_turf(src), 'sound/weapons/c4armed.ogg', 75, 1, -1)
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
 			explode(get_turf(target))
