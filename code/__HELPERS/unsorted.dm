@@ -1305,7 +1305,7 @@ var/list/WALLITEMS = list(
 		user << "\blue [target] is empty!"
 	return
 
-proc/check_target_facings(mob/living/initator, mob/living/target)
+/proc/check_target_facings(mob/living/initator, mob/living/target)
 	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
 	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
 	That said, this proc should not be used if the change facing proc of the click code is overriden at the same time*/
@@ -1318,3 +1318,11 @@ proc/check_target_facings(mob/living/initator, mob/living/target)
 		return 2
 	if(initator.dir + 2 == target.dir || initator.dir - 2 == target.dir || initator.dir + 6 == target.dir || initator.dir - 6 == target.dir) //Initating mob is looking at the target, while the target mob is looking in a direction perpendicular to the 1st
 		return 3
+		
+/proc/random_step(atom/movable/AM, steps, chance)
+	var/initial_chance = chance
+	while(steps > 0)
+		if(prob(chance))
+			step(AM, pick(alldirs))
+		chance = max(chance - (initial_chance / steps), 0)
+		steps--
