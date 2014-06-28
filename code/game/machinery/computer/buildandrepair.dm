@@ -93,8 +93,11 @@
 	name = "Circuit board (Atmosphere siphon control)"
 	build_path = "/obj/machinery/computer/atmosphere/siphonswitch"
 /obj/item/weapon/circuitboard/air_management
-	name = "Circuit board (Atmospheric monitor)"
+	name = "Circuit board (Atmospheric General Monitor)"
 	build_path = "/obj/machinery/computer/general_air_control"
+/obj/item/weapon/circuitboard/large_tank_control
+	name = "Circuit board (Atmospheric Tank Control)"
+	build_path = "/obj/machinery/computer/general_air_control/large_tank_control"
 /obj/item/weapon/circuitboard/injector_control
 	name = "Circuit board (Injector control)"
 	build_path = "/obj/machinery/computer/general_air_control/fuel_injection"
