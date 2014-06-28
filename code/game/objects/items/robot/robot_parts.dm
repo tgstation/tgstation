@@ -104,14 +104,18 @@
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
-		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
-		B.loc = get_turf(src)
-		user << "You armed the robot frame"
-		W:use(1)
-		if (user.get_inactive_hand()==src)
-			user.unEquip(src)
-			user.put_in_inactive_hand(B)
-		qdel(src)
+		var/obj/item/stack/sheet/metal/M = W
+		if (M.use(1))
+			var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
+			B.loc = get_turf(src)
+			user << "<span class='notice'>You armed the robot frame.</span>"
+			if (user.get_inactive_hand()==src)
+				user.unEquip(src)
+				user.put_in_inactive_hand(B)
+			qdel(src)
+		else
+			user << "<span class='warning'>You need one sheet of metal to start building ED-209.</span>"
+			return
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return
 		user.drop_item()
@@ -313,13 +317,14 @@
 			user << "\blue You insert the cell!"
 	if(istype(W, /obj/item/stack/cable_coil))
 		if(src.wires)
-			user << "\blue You have already inserted wire!"
+			user << "<span class='warning'>You have already inserted wire.</span>"
 			return
-		else
-			var/obj/item/stack/cable_coil/coil = W
-			coil.use(1)
+		var/obj/item/stack/cable_coil/coil = W
+		if (coil.use(1))
 			src.wires = 1.0
-			user << "\blue You insert the wire!"
+			user << "<span class='notice'>You insert the wire.</span>"
+		else
+			user << "<span class='warning'>You need one length of coil to wire it.</span>"
 	return
 
 /obj/item/robot_parts/head/attackby(obj/item/W as obj, mob/user as mob)

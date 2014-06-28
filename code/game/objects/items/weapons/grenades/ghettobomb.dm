@@ -54,20 +54,23 @@
 	if(istype(I, /obj/item/stack/cable_coil))
 		if(assembled == 1)
 			var/obj/item/stack/cable_coil/C = I
-			times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)	// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
-			C.use(1)
-			assembled = 2
-			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
-			desc = "A weak, improvised incendiary device."
-			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
-			name = "improvised firebomb"
-			active = 0
-			det_time = text2num(pickweight(times))
-			if(det_time < 0) //checking for 'duds'
-				range = 1
-				det_time = rand(30,80)
+			if (C.use(1))
+				times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)	// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
+				assembled = 2
+				user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
+				desc = "A weak, improvised incendiary device."
+				overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
+				name = "improvised firebomb"
+				active = 0
+				det_time = text2num(pickweight(times))
+				if(det_time < 0) //checking for 'duds'
+					range = 1
+					det_time = rand(30,80)
+				else
+					range = pick(2,2,2,3,3,3,4)
 			else
-				range = pick(2,2,2,3,3,3,4)
+				user <<"span class='warning'>You need one length of cable to add an igniter.</span>"
+				return
 
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //
 	if(!active)

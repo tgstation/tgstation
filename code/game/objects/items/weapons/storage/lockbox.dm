@@ -18,7 +18,7 @@
 
 
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/card/id))
+	if (W.GetID())
 		if(src.broken)
 			user << "\red It appears to be broken."
 			return

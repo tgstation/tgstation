@@ -338,10 +338,12 @@
 		if(rigged)
 			user << "<span class='notice'>[src] is already rigged!</span>"
 			return
-		user  << "<span class='notice'>You rig [src].</span>"
-		user.drop_item()
-		qdel(W)
-		rigged = 1
+		var/obj/item/stack/cable_coil/C = W
+		if (C.use(5))
+			user << "<span class='notice'>You rig [src].</span>"
+			rigged = 1
+		else
+			user << "<span class='warning'>You need 5 lengths of cable to rig [src].</span>"
 		return
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)

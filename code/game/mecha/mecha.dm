@@ -703,12 +703,11 @@
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 			var/obj/item/stack/cable_coil/CC = W
-			if(CC.amount > 1)
-				CC.use(2)
+			if(CC.use(2))
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
-				user << "You replace the fused wires."
+				user << "<span class='notice'>You replace the fused wires.</span>"
 			else
-				user << "There's not enough wire to finish the task."
+				user << "<span class='warning'>You need two lengths of cable to fix this mecha.</span>"
 		return
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
@@ -933,50 +932,40 @@
 	return
 
 
-/obj/mecha/verb/move_inside()
-	set category = "Object"
-	set name = "Enter Exosuit"
-	set src in oview(1)
-
-	if (usr.stat || !ishuman(usr) || usr.restrained() || !usr.Adjacent(src))
+/obj/mecha/MouseDrop_T(mob/M as mob, mob/user as mob)
+	if (!user.canUseTopic(src) || (user != M))
 		return
-	src.log_message("[usr] tries to move in.")
+	src.log_message("[user] tries to move in.")
 	if (src.occupant)
-		usr << "\blue <B>The [src.name] is already occupied!</B>"
+		usr << "<span class='warning'>The [src.name] is already occupied!</span>"
 		src.log_append_to_last("Permission denied.")
 		return
-/*
-	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
-		return
-*/
 	var/passed
 	if(src.dna)
-		if(check_dna_integrity(usr))
-			var/mob/living/carbon/C = usr
+		if(check_dna_integrity(user))
+			var/mob/living/carbon/C = user
 			if(C.dna.unique_enzymes==src.dna)
 				passed = 1
-	else if(src.operation_allowed(usr))
+	else if(src.operation_allowed(user))
 		passed = 1
 	if(!passed)
-		usr << "\red Access denied"
+		user << "<span class='warning'>Access denied.</span>"
 		src.log_append_to_last("Permission denied.")
 		return
-	for(var/mob/living/carbon/slime/M in range(1,usr))
-		if(M.Victim == usr)
-			usr << "You're too busy getting your life sucked out of you."
+	for(var/mob/living/carbon/slime/S in range(1,user))
+		if(S.Victim == user)
+			user << "You're too busy getting your life sucked out of you."
 			return
-//	usr << "You start climbing into [src.name]"
 
-	visible_message("\blue [usr] starts to climb into [src.name]")
+	visible_message("<span class='notice'>[user] starts to climb into [src.name]")
 
-	if(enter_after(40,usr))
+	if(enter_after(40,user))
 		if(!src.occupant)
-			moved_inside(usr)
-		else if(src.occupant!=usr)
-			usr << "[src.occupant] was faster. Try better next time, loser."
+			moved_inside(user)
+		else if(src.occupant!=user)
+			user << "[src.occupant] was faster. Try better next time, loser."
 	else
-		usr << "You stop entering the exosuit."
+		user << "You stop entering the exosuit."
 	return
 
 /obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
