@@ -154,8 +154,8 @@
 			dat += "</div>"
 			dat += "<h3>Botany Sprays:</h3>"
 			dat += "<div class='statusDisplay'>"
-			dat += "Pest Spray: <A href='?src=\ref[src];action=create;item=pest'>Make</A><A href='?src=\ref[src];action=create;item=pest5'>x5</A> ([20/efficiency])<BR>"
-			dat += "Plant-B-Gone: <A href='?src=\ref[src];action=create;item=plant'>Make</A><A href='?src=\ref[src];action=create;item=plant5'>x5</A> ([100/efficiency])<BR>"
+			dat += "Pest Spray: <A href='?src=\ref[src];action=create;item=pest'>Make</A><A href='?src=\ref[src];action=create;item=pest5'>x5</A> ([10/efficiency])<BR>"
+			dat += "Plant-B-Gone: <A href='?src=\ref[src];action=create;item=plant'>Make</A><A href='?src=\ref[src];action=create;item=plant5'>x5</A> ([50/efficiency])<BR>"
 			dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -288,27 +288,27 @@
 			if (check_cost(400/efficiency)) return 0
 			else new/obj/item/weapon/storage/backpack/satchel(src.loc)
 		if("pest")
-			if (check_cost(20/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/spray/pestspray(src.loc)
+			if (check_cost(10/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
 		if("plant")
-			if (check_cost(100/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/spray/plantbgone(src.loc)
+			if (check_cost(50/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
 		if("pest5")
-			if (check_cost(100/efficiency)) return 0
+			if (check_cost(50/efficiency)) return 0
 			else
-				new/obj/item/weapon/reagent_containers/spray/pestspray(src.loc)
-				new/obj/item/weapon/reagent_containers/spray/pestspray(src.loc)
-				new/obj/item/weapon/reagent_containers/spray/pestspray(src.loc)
-				new/obj/item/weapon/reagent_containers/spray/pestspray(src.loc)
-				new/obj/item/weapon/reagent_containers/spray/pestspray(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
 		if("plant5")
-			if (check_cost(500/efficiency)) return 0
+			if (check_cost(250/efficiency)) return 0
 			else
-				new/obj/item/weapon/reagent_containers/spray/plantbgone(src.loc)
-				new/obj/item/weapon/reagent_containers/spray/plantbgone(src.loc)
-				new/obj/item/weapon/reagent_containers/spray/plantbgone(src.loc)
-				new/obj/item/weapon/reagent_containers/spray/plantbgone(src.loc)
-				new/obj/item/weapon/reagent_containers/spray/plantbgone(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
 		//if("monkey")
 		//	if (check_cost(500)) return 0
 		//	else new/mob/living/carbon/monkey(src.loc)
