@@ -7,9 +7,6 @@
 	flags = FPRINT
 
 /obj/structure/largecrate/attack_hand(mob/user as mob)
-	. = ..()
-	if(!.)
-		return 0
 	user << "<span class='notice'>You need a crowbar to pry this open!</span>"
 	return
 

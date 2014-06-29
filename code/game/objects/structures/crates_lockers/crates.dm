@@ -397,9 +397,6 @@
 	return 1
 
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
-	. = ..()
-	if(!.)
-		return 0
 	if(opened)
 		close()
 	else
@@ -415,9 +412,6 @@
 	return
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
-	. = ..()
-	if(!.)
-		return 0
 	if(locked && !broken)
 		if (allowed(user))
 			user << "<span class='notice'>You unlock [src].</span>"

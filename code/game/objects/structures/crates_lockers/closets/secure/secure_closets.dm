@@ -126,9 +126,6 @@
 	return
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user as mob)
-	. = ..()
-	if(!.)
-		return 0
 	src.add_fingerprint(user)
 
 	if(!src.toggle())
