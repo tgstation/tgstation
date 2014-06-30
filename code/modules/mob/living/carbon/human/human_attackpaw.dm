@@ -3,7 +3,7 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+		if (is_muzzled())
 			return
 
 		visible_message("<span class='danger'>[M.name] bites [src]!</span>", \

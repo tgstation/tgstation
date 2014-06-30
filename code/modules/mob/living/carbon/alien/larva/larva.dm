@@ -142,7 +142,7 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+			if (is_muzzled())
 				return
 			if (health > 0)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)

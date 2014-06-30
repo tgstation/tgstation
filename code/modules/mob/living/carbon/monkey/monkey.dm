@@ -74,7 +74,7 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if ((M.a_intent == "harm" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
+		if (M.a_intent == "harm" && !is_muzzled())
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M.name] bites [name]!</span>", \
