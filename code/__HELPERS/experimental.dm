@@ -92,8 +92,6 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
 	if(isnull(AM))
 		return -1
 
-	AM.resetVariables()
-
 	switch(length(masterPool[AM.type]))
 		if(MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
 			#ifdef DEBUG_OBJECT_POOL
@@ -110,6 +108,7 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
 
 			masterPool[AM.type] = list()
 
+	AM.resetVariables()
 	masterPool[AM.type] += AM
 
 	#ifdef DEBUG_OBJECT_POOL

@@ -317,7 +317,7 @@
 
 /obj/structure/closet/attack_hand(mob/user as mob)
 	if(!Adjacent(user))
-		return 0
+		return
 	src.add_fingerprint(user)
 
 	if(!src.toggle())
