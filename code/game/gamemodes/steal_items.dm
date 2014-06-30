@@ -92,11 +92,11 @@
 	name = "a functional AI"
 	typepath = /obj/item/device/aicard
 
-//Became way too easy with the number of magboots we have now
-/*/datum/theft_objective/traitor/magboots
-	name = "a pair of magboots"
-	typepath = /obj/item/clothing/shoes/magboots
-	protected_jobs = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")*/
+
+/datum/theft_objective/traitor/magboots
+	name = "a pair of advanced magboots"
+	typepath = /obj/item/clothing/shoes/magboots/elite
+	protected_jobs = list("Chief Engineer")
 
 /datum/theft_objective/traitor/blueprints
 	name = "the station blueprints"
