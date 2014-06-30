@@ -517,7 +517,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/cancel_camera()
 	set category = "AI Commands"
-	set name = "AI Core"
+	set name = "Cancel Camera View"
 
 	//src.cameraFollow = null
 	src.view_core()
