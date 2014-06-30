@@ -157,6 +157,10 @@
 			dat += "Pest Spray: <A href='?src=\ref[src];action=create;item=pest'>Make</A><A href='?src=\ref[src];action=create;item=pest5'>x5</A> ([10/efficiency])<BR>"
 			dat += "Plant-B-Gone: <A href='?src=\ref[src];action=create;item=plant'>Make</A><A href='?src=\ref[src];action=create;item=plant5'>x5</A> ([50/efficiency])<BR>"
 			dat += "</div>"
+			dat += "<h3>Cosmetic:</h3>"
+			dat += "<div class='statusDisplay'>"
+			dat += "Carpeting: <A href='?src=\ref[src];action=create;item=carpet'>Make</A><A href='?src=\ref[src];action=create;item=carpet10'>x10</A><A href='?src=\ref[src];action=create;item=carpet30'>x30</A><A href='?src=\ref[src];action=create;item=carpet50'>x50</A> ([10/efficiency])<BR>"
+			dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
 
@@ -309,6 +313,18 @@
 				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+		if("carpet")
+			if (check_cost(10/efficiency)) return 0
+			else new/obj/item/stack/tile/carpet(src.loc)
+		if("carpet10")
+			if (check_cost(100/efficiency)) return 0
+			else new/obj/item/stack/tile/carpet{amount=10}(src.loc)
+		if("carpet30")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/stack/tile/carpet{amount=30}(src.loc)
+		if("carpet50")
+			if (check_cost(500/efficiency)) return 0
+			else new/obj/item/stack/tile/carpet{amount=50}(src.loc)
 		//if("monkey")
 		//	if (check_cost(500)) return 0
 		//	else new/mob/living/carbon/monkey(src.loc)
