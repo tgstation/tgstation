@@ -12,6 +12,10 @@
 	attack_verb = list("called", "rang")
 	hitsound = 'sound/weapons/ring.ogg'
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
+		return(OXYLOSS)
+
 /obj/item/weapon/rsp
 	name = "\improper Rapid-Seed-Producer (RSP)"
 	desc = "A device used to rapidly deploy seeds."
@@ -35,6 +39,10 @@
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
+
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] drops the [src.name] on the ground and steps on it causing \him to crash to the floor, bashing \his head wide open. </b>"
+		return(OXYLOSS)
 
 /obj/item/weapon/corncob
 	name = "corn cob"
@@ -606,9 +614,11 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = 2.0
 	var/rating = 1
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/stock_parts/New()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 //Rank 1
 

@@ -200,7 +200,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //AI verb and proc for sending PDA messages.
 /obj/item/device/pda/ai/verb/cmd_send_pdamesg()
-	set category = "AI IM"
+	set category = "AI Commands"
 	set name = "Send Message"
 	set src in usr
 	if(usr.stat == 2)
@@ -216,7 +216,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 /obj/item/device/pda/ai/verb/cmd_toggle_pda_receiver()
-	set category = "AI IM"
+	set category = "AI Commands"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
 	if(usr.stat == 2)
@@ -227,7 +227,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 /obj/item/device/pda/ai/verb/cmd_toggle_pda_silent()
-	set category = "AI IM"
+	set category = "AI Commands"
 	set name = "Toggle Ringer"
 	set src in usr
 	if(usr.stat == 2)
@@ -238,7 +238,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 /obj/item/device/pda/ai/verb/cmd_show_message_log()
-	set category = "AI IM"
+	set category = "AI Commands"
 	set name = "Show Message Log"
 	set src in usr
 	if(usr.stat == 2)

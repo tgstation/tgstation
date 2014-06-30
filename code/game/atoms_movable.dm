@@ -17,6 +17,15 @@
 	var/mob/pulledby = null
 
 	var/area/areaMaster
+	var/global/guid = 0
+
+	// Garbage collection (controller).
+	var/timeDestroyed
+
+/atom/movable/New()
+	. = ..()
+	areaMaster = get_area_master(src)
+	tag = "[++guid]"
 
 /atom/movable/Move()
 	var/atom/A = src.loc
@@ -168,8 +177,8 @@
 	anchored = 1
 
 /atom/movable/overlay/New()
+	. = ..()
 	verbs.Cut()
-	return
 
 /atom/movable/overlay/attackby(a, b)
 	if (src.master)
@@ -186,9 +195,13 @@
 		return src.master.attack_hand(a, b, c)
 	return
 
+/atom/movable/Destroy()
+	areaMaster = null
+	loc = null
+	..()
+
 /////////////////////////////
 // SINGULOTH PULL REFACTOR
 /////////////////////////////
 /atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
 	return 1
-

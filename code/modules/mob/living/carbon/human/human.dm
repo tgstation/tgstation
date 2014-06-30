@@ -17,10 +17,6 @@
 	h_style = "Skrell Male Tentacles"
 	..(new_loc, "Skrell")
 
-/mob/living/carbon/human/tajaran/New(var/new_loc)
-	h_style = "Tajaran Ears"
-	..(new_loc, "Tajaran")
-
 /mob/living/carbon/human/unathi/New(var/new_loc)
 	h_style = "Unathi Horns"
 	..(new_loc, "Unathi")
@@ -1212,7 +1208,7 @@
 
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
-	set category = "Superpower"
+	set category = "Mutant Abilities"
 
 	if(stat!=CONSCIOUS)
 		reset_view(0)
@@ -1291,7 +1287,7 @@
 
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
-	set category = "Superpower"
+	set category = "Mutant Abilities"
 
 	if(stat!=CONSCIOUS)
 		reset_view(0)
@@ -1319,7 +1315,7 @@
 
 /mob/living/carbon/human/proc/remoteobserve()
 	set name = "Remote View"
-	set category = "Superpower"
+	set category = "Mutant Abilities"
 
 	if(stat!=CONSCIOUS)
 		remoteview_target = null

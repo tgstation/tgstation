@@ -116,14 +116,18 @@ Class Procs:
 	var/inMachineList = 1 // For debugging.
 
 /obj/machinery/New()
-	machines.Add(src)
+	machines += src
 	return ..()
 
 /obj/machinery/Destroy()
-	if (src in machines)
-		machines.Remove(src)
+	if(src in machines)
+		machines -= src
 
-	if (component_parts)
+	if(component_parts)
+		for(var/atom/movable/AM in component_parts)
+			AM.loc = loc
+			component_parts -= AM
+
 		component_parts = null
 
 	..()

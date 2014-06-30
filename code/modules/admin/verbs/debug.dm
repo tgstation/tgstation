@@ -1148,3 +1148,16 @@ Pressure: [env.return_pressure()]"}
 	var/response = input(src,"How much moneys?") as num
 	if( response < 1) return
 	dispense_cash(response, mob.loc)
+
+var/global/blood_virus_spreading_disabled = 0
+/client/proc/disable_bloodvirii()
+	set category = "Debug"
+	set name = "Disable Blood Virus Spreading"
+
+	//usr << "\red Proc disabled."
+
+	blood_virus_spreading_disabled = !blood_virus_spreading_disabled
+	if(blood_virus_spreading_disabled)
+		message_admins("[src.ckey] disabled findAirborneVirii.")
+	else
+		message_admins("[src.ckey] enabled findAirborneVirii.")

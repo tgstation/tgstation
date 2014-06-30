@@ -26,6 +26,7 @@ Here it is: Buttbot.
 	if (.)
 		return
 	speak("butt")
+	playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
 
 
 
@@ -62,6 +63,7 @@ Here it is: Buttbot.
 /obj/machinery/bot/buttbot/explode()
 	src.on = 0
 	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	playsound(get_turf(src), 'sound/effects/superfart.ogg', 50, 1) //A fitting end
 	var/turf/Tsec = get_turf(src)
 	new /obj/item/clothing/head/butt(Tsec)
 
@@ -75,14 +77,23 @@ Here it is: Buttbot.
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	del(src)
 
+
 /obj/item/clothing/head/butt/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		var/obj/machinery/bot/buttbot/A = new /obj/machinery/bot/buttbot
-		if(user.r_hand == src || user.l_hand == src)
-			A.loc = user.loc
-		else
-			A.loc = src.loc
-		user << "You add the robot arm to the butt! Beep boop!"
 		del(W)
-		loc = A
+		var/turf/T = get_turf(user.loc)
+		var/obj/machinery/bot/buttbot/A = new /obj/machinery/bot/buttbot(T)
+		A.name = src.created_name
+		user << "<span class='notice'>You roughly shove the robot arm into the ass! Butt Butt!</span>" //I don't even.
+		user.drop_from_inventory(src)
+		del(src)
+	else if (istype(W, /obj/item/weapon/pen))
+		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
+
+		if (!t)
+			return
+		if (!in_range(src, usr) && src.loc != usr)
+			return
+
+		src.created_name = t

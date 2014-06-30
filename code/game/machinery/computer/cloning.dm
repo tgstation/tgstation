@@ -126,9 +126,9 @@
 
 				dat += "Lock status: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Locked" : "Unlocked"]</a><br>"
 
-/*			if (!isnull(src.pod1))
+			if (!isnull(src.pod1))
 				dat += "Biomass: <i>[src.pod1.biomass]</i><br>"
-*/
+
 			// Database
 
 			// AUTOFIXED BY fix_string_idiocy.py
@@ -190,8 +190,10 @@
 				dat += {"<b>UI:</b> [src.active_record.dna.uni_identity]<br>
 				<b>SE:</b> [src.active_record.dna.struc_enzymes]<br><br>"}
 
-				if(pod1)
+				if(pod1 && pod1.biomass >= CLONE_BIOMASS)
 					dat += {"<a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Clone</a><br>"}
+				else
+					dat += {"<b>Insufficient biomass</b><br>"}
 
 		if(4)
 			if (!src.active_record)
@@ -317,6 +319,8 @@
 				temp = "Error: No Clonepod detected."
 			else if(pod1.occupant)
 				temp = "Error: Clonepod is currently occupied."
+			else if(pod1.biomass < CLONE_BIOMASS)
+				temp = "Error: Not enough biomass."
 			else if(pod1.mess)
 				temp = "Error: Clonepod malfunction."
 			else if(!config.revival_cloning)

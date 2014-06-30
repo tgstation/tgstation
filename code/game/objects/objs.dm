@@ -5,7 +5,7 @@
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
 	var/throwforce = 1
-	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
+	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/sharp = 0 // whether this object cuts
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 	var/list/mob/_using = list() // All mobs dicking with us.
@@ -18,8 +18,14 @@
 	var/list/reagents_to_log=list()
 
 /obj/Destroy()
-	if (src in processing_objects)
-		processing_objects.Remove(src)
+	if(src in processing_objects)
+		processing_objects -= src
+
+	if(attack_verb)
+		for(var/text in attack_verb)
+			attack_verb -= text
+
+		attack_verb = null
 
 	..()
 
@@ -205,11 +211,17 @@ a {
 		machine = null
 
 /mob/proc/set_machine(var/obj/O)
-	if(src.machine)
+	if (src.machine)
 		unset_machine()
+
 	src.machine = O
-	if(istype(O))
+
+	if (istype(O))
 		O.in_use = 1
+
+		if (src in O._using)
+			return
+
 		O._using += src
 
 /obj/item/proc/updateSelfDialog()

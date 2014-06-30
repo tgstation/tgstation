@@ -388,6 +388,21 @@ datum
 				..()
 				return
 
+		phalanximine
+			name = "Phalanximine"
+			id = "phalanximine"
+			description = "Phalanximine is a powerful chemotherapy agent."
+			reagent_state = LIQUID
+			color = "#1A1A1A" // rgb:idk
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.adjustToxLoss(-2*REM)
+				M.apply_effect(4*REM,IRRADIATE,0)
+				..()
+				return
+
+
 		toxin
 			name = "Toxin"
 			id = "toxin"
@@ -2151,9 +2166,9 @@ datum
 					if(1)
 						M.confused += 2
 						M.drowsyness += 2
-					if(2 to 50)
+					if(2 to 80)
 						M.sleeping += 1
-					if(51 to INFINITY)
+					if(81 to INFINITY)
 						M.sleeping += 1
 						M:toxloss += (data - 50)
 				..()

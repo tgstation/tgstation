@@ -11,6 +11,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	New(var/K,var/datum/design/D)
 		key=K
 		thing=D
+
+#define IMPRINTER_MAX_Q_LEN 30
 /obj/machinery/r_n_d/circuit_imprinter
 	name = "Circuit Imprinter"
 	icon_state = "circuit_imprinter"
@@ -201,8 +203,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	src.updateUsrDialog()
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/enqueue(var/key, var/datum/design/thing_to_build)
+	if(production_queue.len>=IMPRINTER_MAX_Q_LEN)
+		return 0
 	production_queue.Add(new /datum/circuitimprinter_queue_item(key,thing_to_build))
-	//stopped=0
+	//stopped=1
+	return 1
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/queue_pop()
 	var/datum/circuitimprinter_queue_item/I = production_queue[1]

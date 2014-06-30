@@ -7,8 +7,7 @@
 	w_type=NOT_RECYCLABLE
 
 /obj/effect/landmark/New()
-
-	..()
+	. = ..()
 	tag = text("landmark*[]", name)
 	invisibility = 101
 

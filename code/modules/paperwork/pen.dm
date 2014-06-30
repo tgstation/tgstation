@@ -26,6 +26,9 @@
 	var/colour = "black"	//what colour the ink is!
 	pressure_resistance = 2
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user]is jamming the [src.name]into \his ear! It looks like \he's trying to commit suicide.</b>"
+		return(OXYLOSS)
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."

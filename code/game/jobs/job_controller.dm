@@ -60,16 +60,6 @@ var/global/datum/controller/occupations/job_master
 				player.mind.assigned_role = rank
 				player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 
-				// JOB OBJECTIVES OH SHIT
-				player.mind.job_objectives.Cut()
-				for(var/objectiveType in job.required_objectives)
-					new objectiveType(player.mind)
-
-				// 50/50 chance of getting optional objectives.
-				for(var/objectiveType in job.optional_objectives)
-					if(prob(50))
-						new objectiveType(player.mind)
-
 				unassigned -= player
 				job.current_positions++
 				return 1

@@ -604,14 +604,6 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
-/obj/item/weapon/toddler
-	icon_state = "toddler"
-	name = "toddler"
-	desc = "This baby looks almost real. Wait, did it just burp?"
-	force = 5
-	w_class = 4.0
-	slot_flags = SLOT_BACK
-
 
 /*
  * OMG THEIF
@@ -621,9 +613,6 @@
 	desc = "The holy grail of all programmers."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "gooncode"
-	
-	
-	
 
 /obj/item/toy/minimeteor
 	name = "Mini Meteor"
@@ -666,7 +655,7 @@
 	if ((src.loc == user && usr.stat == 0))
 
 		for(var/mob/O in (viewers(user)))
-			O.show_message("<B>[user]</B> broadcasts, <i>\"[message]\"</i>",2) 
+			O.show_message("<B>[user]</B> broadcasts, <i>\"[message]\"</i>",2)
 		spamcheck = 1
 		spawn(20)
 			spamcheck = 0

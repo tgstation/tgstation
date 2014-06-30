@@ -9,14 +9,13 @@
 	..()
 
 /mob/New()
-	mob_list.Add(src)
+	. = ..()
+	mob_list += src
 
-	if (DEAD == stat)
-		dead_mob_list.Add(src)
+	if(DEAD == stat)
+		dead_mob_list += src
 	else
-		living_mob_list.Add(src)
-
-	..()
+		living_mob_list += src
 
 /mob/proc/generate_name()
 	return name
@@ -1167,13 +1166,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(client && client.holder)
 
-		if(statpanel("Status"))	//not looking at that panel
+		if (statpanel("Status"))	//not looking at that panel
 			stat(null, "Location:\t([x], [y], [z])")
 			stat(null, "CPU:\t[world.cpu]")
 			stat(null, "Instances:\t[world.contents.len]")
 
-			if(master_controller)
-				stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
+			if (master_controller)
+				stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[master_controller.iteration])")
 				stat(null, "Air-[master_controller.air_cost]")
 				stat(null, "Sun-[master_controller.sun_cost]")
 				stat(null, "Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
@@ -1183,11 +1182,20 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null, "PiNet-[master_controller.networks_cost]\t#[pipe_networks.len]")
 				stat(null, "Ponet-[master_controller.powernets_cost]\t#[powernets.len]")
 				stat(null, "NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-				stat(null, "GC-[master_controller.gc_cost]\t#[garbage.queue.len]")
 				stat(null, "Tick-[master_controller.ticker_cost]")
 				stat(null, "ALL-[master_controller.total_cost]")
 			else
-				stat(null, "MasterController-ERROR")
+				stat(null, "master controller - ERROR")
+
+			if (garbage)
+				stat(null, "/garbage controller ([garbage.processing ? "on" : "off"] - [garbage.iteration])")
+				stat(null, "qdel - [garbage.del_everything ? "off" : "on"]")
+				stat(null, "on queue - [garbage.queue.len]")
+				stat(null, "total delete - [garbage.dels_count]")
+				stat(null, "soft delete - [garbage.dels_count - garbage.hard_dels]")
+				stat(null, "hard delete - [garbage.hard_dels]")
+			else
+				stat(null, "garbage collector controller - ERROR")
 
 	if(listed_turf && client)
 		if(get_dist(listed_turf,src) > 1)
@@ -1248,11 +1256,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 		canmove = has_limbs
 
 	if(lying)
+		layer = 3.9
 		density = 0
 		drop_l_hand()
 		drop_r_hand()
 	else
 		density = 1
+		layer = 4
 
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.

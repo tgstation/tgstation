@@ -180,6 +180,7 @@ var/global/datum/controller/gameticker/ticker
 	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
 	master_controller.process()		//Start master_controller.process()
 	lighting_controller.process()	//Start processing DynamicAreaLighting updates
+	garbage.process()
 
 
 	if(config.sql_enabled)
@@ -331,7 +332,6 @@ var/global/datum/controller/gameticker/ticker
 			return 0
 
 		mode.process()
-		mode.process_job_tasks()
 
 		emergency_shuttle.process()
 		watchdog.check_for_update()
@@ -384,16 +384,16 @@ var/global/datum/controller/gameticker/ticker
 
 /datum/controller/gameticker/proc/declare_completion()
 
-	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
-		if (aiPlayer.stat != 2)
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</b>"
+	for(var/mob/living/silicon/ai/ai in mob_list)
+		if(ai.stat != 2)
+			world << "<b>[ai.name] (Played by: [ai.key])'s laws at the end of the game were:</b>"
 		else
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</b>"
-		aiPlayer.show_laws(1)
+			world << "<b>[ai.name] (Played by: [ai.key])'s laws when it was deactivated were:</b>"
+		ai.show_laws(1)
 
-		if (aiPlayer.connected_robots.len)
+		if (ai.connected_robots.len)
 			var/robolist = "<b>The AI's loyal minions were:</b> "
-			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
+			for(var/mob/living/silicon/robot/robo in ai.connected_robots)
 				if (!robo.connected_ai || !isMoMMI(robo)) // Don't report MoMMIs or unslaved robutts
 					continue
 				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
@@ -412,9 +412,6 @@ var/global/datum/controller/gameticker/ticker
 		robo.laws.show_laws(world)
 
 	mode.declare_completion()//To declare normal completion.
-
-	mode.declare_job_completion() // /vg/ stuff
-
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))

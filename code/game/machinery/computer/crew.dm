@@ -6,20 +6,19 @@
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = "/obj/item/weapon/circuitboard/crew"
-	var/list/tracked = list(  )
-	var/track_special_role=null
+	var/track_special_role
+	var/list/tracked
 
+/obj/machinery/computer/crew/Destroy()
+	if(tracked)
+		tracked = null
 
-/obj/machinery/computer/crew/New()
-	tracked = list()
 	..()
-
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	src.add_hiddenprint(user)
 	attack_hand(user)
 	interact(user)
-
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -27,9 +26,7 @@
 		return
 	interact(user)
 
-
 /obj/machinery/computer/crew/update_icon()
-
 	if(stat & BROKEN)
 		icon_state = "crewb"
 	else
@@ -39,7 +36,6 @@
 		else
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
-
 
 /obj/machinery/computer/crew/Topic(href, href_list)
 	if(..()) return
@@ -54,7 +50,6 @@
 		src.updateDialog()
 		return
 
-
 /obj/machinery/computer/crew/interact(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
@@ -63,7 +58,6 @@
 		user << browse(null, "window=powcomp")
 		return
 	user.set_machine(src)
-	src.scan()
 	var/t = "<TT><B>Crew Monitoring</B><HR>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
@@ -73,9 +67,12 @@
 		<table><tr><td width='40%'>Name</td><td width='20%'>Vitals</td><td width='40%'>Position</td></tr>"}
 	// END AUTOFIX
 	var/list/logs = list()
-	for(var/obj/item/clothing/under/C in src.tracked)
+	scan()
+
+	for(var/obj/item/clothing/under/C in tracked)
 		var/log = ""
 		var/turf/pos = get_turf(C)
+
 		if((C) && (C.has_sensor) && (pos) && (pos.z == src.z) && C.sensor_mode)
 			if(istype(C.loc, /mob/living/carbon/human))
 
@@ -115,22 +112,22 @@
 	user << browse(t, "window=crewcomp;size=900x600")
 	onclose(user, "crewcomp")
 
-/obj/machinery/computer/crew/proc/is_scannable(var/obj/item/clothing/under/C,var/mob/living/carbon/human/H)
+/obj/machinery/computer/crew/proc/is_scannable(const/obj/item/clothing/under/C, const/mob/living/carbon/human/H)
 	if(!istype(H))
 		return 0
-	if(track_special_role==null)
+
+	if(isnull(track_special_role))
 		return C.has_sensor
+
 	return H.mind.special_role == track_special_role
 
-
 /obj/machinery/computer/crew/proc/scan()
-	for(var/obj/item/clothing/under/C in world)
-		if(is_scannable(C,C.loc))
-			var/check = 0
-			for(var/O in src.tracked)
-				if(O == C)
-					check = 1
-					break
-			if(!check)
-				src.tracked.Add(C)
-	return 1
+	tracked = new
+
+	for(var/mob/living/carbon/human/H in mob_list)
+		if(istype(H.w_uniform, /obj/item/clothing/under))
+			var/obj/item/clothing/under/U = H.w_uniform
+
+			if(is_scannable(U, H))
+				if(!(U in tracked))
+					tracked += U

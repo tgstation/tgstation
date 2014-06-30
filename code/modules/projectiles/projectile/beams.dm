@@ -1,3 +1,4 @@
+
 /*
  * Use: Caches beam state images and holds turfs that had these images overlaid.
  * Structure:

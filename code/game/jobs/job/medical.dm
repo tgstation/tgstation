@@ -17,6 +17,7 @@
 			access_keycard_auth, access_sec_doors, access_paramedic)
 	minimal_player_age = 7
 
+
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/heads/cmo
 
@@ -39,7 +40,7 @@
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/job/doctor
 	title = "Medical Doctor"
@@ -81,6 +82,7 @@
 				if("Medical Doctor")
 					H.equip_or_collect(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 					H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
+
 				if("Nurse")
 					if(H.gender == FEMALE)
 						if(prob(50))
@@ -135,8 +137,6 @@
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
-
-
 
 /datum/job/geneticist
 	title = "Geneticist"

@@ -35,11 +35,32 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	speed = 3
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+
+	wanted_objects = list(
+		/obj/machinery/bot,          // Beepsky and friends
+		/obj/machinery/light,        // Bust out lights
+	)
+	search_objects = 1 // Consider objects when searching.  Set to 0 when attacked
+	wander = 1
+	ranged = 0
+	//minimum_distance = 1
 
 	var/icon_aggro = null // for swapping to when we get aggressive
 	var/busy = 0
 	var/poison_per_bite = 5
 	var/poison_type = "toxin"
+
+	//Spider aren't affected by atmos.
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
 
 // Checks pressure here vs. around us.
 /mob/living/simple_animal/hostile/giant_spider/proc/performPressureCheck(var/turf/loc)
@@ -57,12 +78,17 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 			if(pdiff > SPIDER_MAX_PRESSURE_DIFF)
 				return pdiff
 	return 0
+
 //Can we actually attack a possible target?
 /mob/living/simple_animal/hostile/giant_spider/CanAttack(var/atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal/hostile/giant_spider))
 		return 0
 	if(istype(the_target,/obj/machinery/door))
 		return CanOpenDoor(the_target)
+	if(istype(the_target,/obj/machinery/light))
+		var/obj/machinery/light/L = the_target
+		// Not empty or broken
+		return L.status != 1 && L.status != 2
 	return ..(the_target)
 
 /mob/living/simple_animal/hostile/giant_spider/proc/CanOpenDoor(var/obj/machinery/door/D)
@@ -86,7 +112,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	var/turf/T = get_turf(D)
 
 	// Don't kill ourselves
-	if(performPressureCheck(T))
+	if(!performPressureCheck(T))
 		return 0
 
 	return 1

@@ -66,7 +66,11 @@
 		return
 
 	bullet_act(var/obj/item/projectile/Proj)
-		health -= Proj.damage
+		// WHY MUST WE DO THIS
+		// WHY
+		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+			if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+				health -= Proj.damage
 		..()
 		if(health <= 0)
 			for(var/atom/movable/A as mob|obj in src)

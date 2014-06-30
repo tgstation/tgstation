@@ -26,7 +26,6 @@
 			del(overmind)
 		processing_objects.Remove(src)
 		..()
-		return
 
 	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		return

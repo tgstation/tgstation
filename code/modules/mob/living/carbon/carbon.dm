@@ -390,7 +390,7 @@
 					M.LAssailant = null
 				else
 					M.LAssailant = usr
-
+				del(G)
 	if(!item) return //Grab processing has a chance of returning null
 
 	//item.layer = initial(item.layer)

@@ -57,6 +57,13 @@ REAGENT SCANNER
 						var/turf/U = O.loc
 						if(U.intact)
 							O.invisibility = 101
+		for(var/mob/living/M in T.contents)
+			var/oldalpha = M.alpha
+			if(M.alpha < 255 && istype(M))
+				M.alpha = 255
+				spawn(10)
+					if(M)
+						M.alpha = oldalpha
 
 		var/mob/living/M = locate() in T
 		if(M && M.invisibility == 2)

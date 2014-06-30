@@ -33,10 +33,10 @@
 	// Mute disability
 	if (src.sdisabilities & MUTE)
 		return
-		
+
 	if(M_WHISPER in src.mutations)
 		src.say(message)
-	
+
 	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 
@@ -152,7 +152,7 @@
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message]\"</span>[and_passes_on]</span>"
 
 	for (var/mob/M in dead_mob_list)
-		if (!(M.client))
+		if (!(M.client) || istype(M, /mob/new_player))
 			continue
 		if (M.stat > 1 && !(M in heard_a) && (M.client.prefs.toggles & CHAT_GHOSTEARS))
 			M.show_message(rendered, 2)

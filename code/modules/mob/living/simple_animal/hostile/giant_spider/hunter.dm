@@ -14,7 +14,8 @@
 	// Hunters attack doors (jam them open)
 	wanted_objects = list(
 		/obj/machinery/door/airlock,
-		/obj/machinery/bot // Beepsky and friends
+		/obj/machinery/bot,          // Beepsky and friends
+		/obj/machinery/light,        // Bust out lights
 	)
 	idle_vision_range = 7
 	search_objects = 1 // Consider objects when searching.  Set to 0 when attacked

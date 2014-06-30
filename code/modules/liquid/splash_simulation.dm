@@ -29,6 +29,7 @@ datum/puddle/Del()
 	..()
 
 client/proc/splash()
+	set category = "Debug"
 	var/volume = input("Volume?","Volume?", 0 ) as num
 	if(!isnum(volume)) return
 	if(volume <= LIQUID_TRANSFER_THRESHOLD) return

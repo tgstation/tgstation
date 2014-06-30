@@ -53,7 +53,8 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 	var/temperature_alert = 0
 	var/in_stasis = 0
 	var/do_deferred_species_setup=0
-
+	var/exposedtimenow = 0
+	var/firstexposed = 0
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
 	var/mut_update=0
@@ -1495,6 +1496,12 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 			if (getToxLoss() >= 45 && nutrition > 20)
 				vomit()
 
+			// No hair for radroaches
+			if(src.radiation >= 50)
+				src.h_style = "Bald"
+				src.f_style = "Shaved"
+				src.update_hair()
+
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
 			var/turf/currentTurf = loc
@@ -1656,6 +1663,19 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 					break
 
 		return temp
+
+/mob/living/carbon/human/proc/randorgan()
+	var/randorgan = pick("head","chest","l_arm","r_arm","l_hand","r_hand","groin","l_leg","r_leg","l_foot","r_foot")
+	//var/randorgan = pick("head","chest","groin")
+	return randorgan
+
+
+
+
+
+
+
+
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
