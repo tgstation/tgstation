@@ -128,9 +128,9 @@
 					else
 						M.LAssailant = firer
 				else
-					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (no longer exists)</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
-					msg_admin_attack("UNKNOWN shot [key_name(M)] with a [type] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
-					log_attack("<font color='red'>UNKNOWN shot [key_name(M)] with a [type]</font>")
+					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
+					msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(M)] with a [type] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+					log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(M)] with a [type]</font>")
 
 		if(A)
 			if(firer && istype(A, /obj/structure/stool/bed/chair/vehicle))//This is very sloppy but there's no way to get the firer after its passed to bullet_act, we'll just have to assume the admins will use their judgement
@@ -138,18 +138,18 @@
 				if(JC.buckled_mob)
 					var/mob/BM = JC.buckled_mob
 					if(istype(firer, /mob))
-						BM.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src.type]</b>"
-						firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src.type]</b>"
-						log_attack("<font color='red'>[firer] ([firer.ckey]) shot [BM] ([BM.ckey]) with a [src.type]</font>")
-						msg_admin_attack("ATTACK: [firer] ([firer.ckey]) shot [BM] ([BM.ckey]) with a [src]") //BS12 EDIT ALG
+						BM.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
+						firer.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
+						log_attack("<font color='red'>[key_name(firer)] shot [key_name(BM)] with a [type]</font>")
+						msg_admin_attack("[key_name(firer)] shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
 						if(!iscarbon(firer))
 							BM.LAssailant = null
 						else
 							BM.LAssailant = firer
 					else
-						BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src]</b>"
-						log_attack("<font color='red'>UNKNOWN shot [BM] ([BM.ckey]) with a [src.type]</font>")
-						msg_admin_attack("ATTACK: UNKNOWN shot [BM] ([BM.ckey]) with a [src]") //BS12 EDIT ALG
+						BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
+						log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]</font>")
+						msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
 			if (!forcedodge)
 				forcedodge = A.bullet_act(src, def_zone) // searches for return value
 			if(forcedodge == -1) // the bullet passes through a dense object!
