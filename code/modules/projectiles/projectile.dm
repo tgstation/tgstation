@@ -77,54 +77,6 @@
 		returnToPool(in_chamber)
 		return output //Send it back to the gun!
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if(air_group || (height==0)) return 1
-
-		if(istype(mover, /obj/item/projectile))
-			return prob(95)
-		else
-			return 1
-
-	process()
-		if(kill_count < 1)
-			//del(src)
-			returnToPool(src)
-			return
-		kill_count--
-		spawn while(loc)
-			if((!( current ) || loc == current))
-				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				//del(src)
-				returnToPool(src)
-				return
-			step_towards(src, current)
-			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original)
-						sleep(1)
-			sleep(1)
-		return
-	proc/dumbfire(var/dir) // for spacepods, go snowflake go
-		if(!dir)
-			//del(src)
-			returnToPool(src)
-		if(kill_count < 1)
-			//del(src)
-			returnToPool(src)
-		kill_count--
-		spawn while(loc)
-			var/turf/T = get_step(src, dir)
-			step_towards(src, T)
-			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original)
-						sleep(1)
-			sleep(1)
-		return
-
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)
 			loc = A.loc
@@ -167,18 +119,18 @@
 				else
 					visible_message("\red [A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 				if(istype(firer, /mob))
-					log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src.type]</font>")
-					M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-					firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-					msg_admin_attack("[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+					log_attack("<font color='red'>[key_name(firer)] shot [key_name(M)] with a [type]</font>")
+					M.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
+					firer.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
+					msg_admin_attack("[key_name(firer)] shot [key_name(M)] with a [type] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
 					if(!iscarbon(firer))
 						M.LAssailant = null
 					else
 						M.LAssailant = firer
 				else
-					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-					msg_admin_attack("UNKNOWN shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
-					log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src.type]</font>")
+					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
+					msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(M)] with a [type] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+					log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(M)] with a [type]</font>")
 
 		if(A)
 			if(firer && istype(A, /obj/structure/stool/bed/chair/vehicle))//This is very sloppy but there's no way to get the firer after its passed to bullet_act, we'll just have to assume the admins will use their judgement
@@ -186,18 +138,18 @@
 				if(JC.buckled_mob)
 					var/mob/BM = JC.buckled_mob
 					if(istype(firer, /mob))
-						BM.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src.type]</b>"
-						firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src.type]</b>"
-						log_attack("<font color='red'>[firer] ([firer.ckey]) shot [BM] ([BM.ckey]) with a [src.type]</font>")
-						msg_admin_attack("ATTACK: [firer] ([firer.ckey]) shot [BM] ([BM.ckey]) with a [src]") //BS12 EDIT ALG
+						BM.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
+						firer.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
+						log_attack("<font color='red'>[key_name(firer)] shot [key_name(BM)] with a [type]</font>")
+						msg_admin_attack("[key_name(firer)] shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
 						if(!iscarbon(firer))
 							BM.LAssailant = null
 						else
 							BM.LAssailant = firer
 					else
-						BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[BM]/[BM.ckey]</b> with a <b>[src]</b>"
-						log_attack("<font color='red'>UNKNOWN shot [BM] ([BM.ckey]) with a [src.type]</font>")
-						msg_admin_attack("ATTACK: UNKNOWN shot [BM] ([BM.ckey]) with a [src]") //BS12 EDIT ALG
+						BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
+						log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]</font>")
+						msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
 			if (!forcedodge)
 				forcedodge = A.bullet_act(src, def_zone) // searches for return value
 			if(forcedodge == -1) // the bullet passes through a dense object!
@@ -213,7 +165,62 @@
 					O.bullet_act(src)
 				for(var/mob/M in A)
 					M.bullet_act(src, def_zone)
+			spawn()//if(!istype(src, /obj/item/projectile/beam/lightning))
+				density = 0
+				invisibility = 101
+			//del(src)
+				returnToPool(src)
 		return 1
+
+
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if(air_group || (height==0)) return 1
+
+		if(istype(mover, /obj/item/projectile))
+			return prob(95)
+		else
+			return 1
+
+
+	process()
+		if(kill_count < 1)
+			//del(src)
+			returnToPool(src)
+			return
+		kill_count--
+		spawn while(loc)
+			if((!( current ) || loc == current))
+				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
+			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
+				//del(src)
+				returnToPool(src)
+				return
+			step_towards(src, current)
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
+						sleep(1)
+			sleep(1)
+		return
+	proc/dumbfire(var/dir) // for spacepods, go snowflake go
+		if(!dir)
+			//del(src)
+			returnToPool(src)
+		if(kill_count < 1)
+			//del(src)
+			returnToPool(src)
+		kill_count--
+		spawn while(loc)
+			var/turf/T = get_step(src, dir)
+			step_towards(src, T)
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
+						sleep(1)
+			sleep(1)
+		return
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!

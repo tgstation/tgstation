@@ -146,7 +146,7 @@
 					spawn(0)
 						H.stat = 1
 						dead_mob_list -= H
-						living_mob_list |= H
+						living_mob_list |= list(H)
 						H.emote("gasp")
 				else
 					viewers(M) << "\blue [src] beeps: Resuscitation failed."

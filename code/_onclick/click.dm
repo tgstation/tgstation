@@ -22,7 +22,7 @@
 
 /*
 	Standard mob ClickOn()
-	Handles exceptions: middle click, modified clicks, mech actions
+	Handles exceptions: Buildmode, middle click, modified clicks, mech actions
 
 	After that, mostly just check your state, check whether you're holding an item,
 	check whether you're adjacent to the target, then pass off the click to whoever
@@ -37,6 +37,10 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
+
+	if(client.buildmode)
+		build_click(src, client.buildmode, params, A)
+		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"])

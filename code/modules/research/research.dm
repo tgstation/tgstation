@@ -80,7 +80,6 @@ research holder datum.
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
 /datum/research/proc/DesignHasReqs(var/datum/design/D)
-	return 1 // N3X:  Killing this.
 	if(D.req_tech.len == 0)
 		return 1
 	var/matches = 0

@@ -26,7 +26,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/human_req = 0 //spell can only be cast by humans
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
-	var/invocation_type = "none" //can be none, whisper and shout
+	var/invocation_type = "none" //can be none, whisper, shout, and emote
 	var/range = 7 //the range of the spell; outer radius for aoe spells
 	var/message = "" //whatever it says to the guy affected by it
 	var/selection_type = "view" //can be "range" or "view"
@@ -114,8 +114,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				user.whisper(invocation)
 			else
 				user.whisper(replacetext(invocation," ","`"))
-		//if("emote")
-		//	user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
+		if("emote")
+			user.visible_message(invocation)
 
 /obj/effect/proc_holder/spell/New()
 	..()

@@ -369,6 +369,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
 		if(linked_imprinter)
 			var/datum/design/being_built = null
+
+			if(linked_imprinter.production_queue.len >= IMPRINTER_MAX_Q_LEN)
+				usr << "<span class=\"warning\">Maximum number of items in production queue exceeded.</span>"
+				return
+
 			for(var/datum/design/D in files.known_designs)
 				if(D.id == href_list["imprint"])
 					being_built = D
@@ -384,8 +389,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(n<1)
 					n=1
 				for(var/i=1;i<=n;i++)
-					use_power(power)
-					linked_imprinter.enqueue(usr.key,being_built)
+					if(linked_imprinter.enqueue(usr.key,being_built))
+						use_power(power)
+					else
+						usr << "<span class=\"warning\">Maximum number of items in production queue exceeded.</span>"
+						break
 				if(href_list["now"]=="1")
 					linked_imprinter.stopped=0
 				updateUsrDialog()

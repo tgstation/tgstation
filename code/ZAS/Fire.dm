@@ -52,6 +52,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	icon_state = "1"
 	layer = TURF_LAYER
 
+	l_color = "#ED9200"
 /obj/fire/process()
 	. = 1
 

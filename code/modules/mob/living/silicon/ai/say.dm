@@ -91,6 +91,7 @@ var/const/VOX_DELAY = 600
 	if(words.len > 30)
 		words.len = 30
 
+	var/total_word_len=0
 	for(var/word in words)
 		word = lowertext(trim(word))
 		if(!word)
@@ -98,6 +99,14 @@ var/const/VOX_DELAY = 600
 			continue
 		if(!vox_sounds[word])
 			incorrect_words += word
+		// Thank Rippetoe for this!
+		var/wordlen = 1
+		if(word in vox_wordlen)
+			wordlen=vox_wordlen[word]
+		if(total_word_len+wordlen>50)
+			src << "<span class='notice'>There are too many words in this announcement.</span>"
+			return
+		total_word_len+=wordlen
 
 	if(incorrect_words.len)
 		src << "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>"

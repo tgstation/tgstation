@@ -433,3 +433,22 @@ var/global/list/pipeID2State = list(
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	user << "\blue You have fastened the meter to the pipe"
 	del(src)
+
+
+/obj/item/pipe_gsensor
+	name = "gas sensor"
+	desc = "A sensor that can be hooked to a computer"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "gsensor0"
+	item_state = "buildpipe"
+	flags = TABLEPASS|FPRINT
+	w_class = 4
+
+/obj/item/pipe_gsensor/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	..()
+	if (!istype(W, /obj/item/weapon/wrench))
+		return ..()
+	new/obj/machinery/air_sensor( src.loc )
+	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+	user << "\blue You have fastened the gas sensor"
+	del(src)

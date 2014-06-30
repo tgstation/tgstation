@@ -197,9 +197,6 @@
 					if(worm.controlling)
 						target.release_control()
 					worm.detatch()
-				if(istype(obj,/obj/item/weapon/implant/cancer))
-					var/obj/item/weapon/implant/cancer/ourobj = obj
-					ourobj.is_dead = 1
 
 				obj.loc = get_turf(target)
 				if(istype(obj,/obj/item/weapon/implant))

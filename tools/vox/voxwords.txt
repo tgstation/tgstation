@@ -687,6 +687,7 @@ engineer
 engineering
 engineers
 every
+everywhere
 execution
 fire
 fore
@@ -696,6 +697,7 @@ gray
 hacker
 hackers
 hacking
+happening
 harm
 hop = Head of Personnel
 hos = Head of Security
@@ -705,12 +707,16 @@ hunger
 hydroponics
 iaa = internal affairs agent
 kitchen
+killed
+killing
 law
 laws
 lawyer
 lizard
 loose
 love
+malfunctioning
+malf
 me
 medbay
 mommi = mommy
@@ -768,6 +774,7 @@ tide
 toxins
 traitor
 traitors
+triggering
 update
 updated
 updating

@@ -36,12 +36,12 @@ THE SOFTWARE.
 ##Voice you want to use 
 #VOICE='rab_diphone'
 # This is the nitech-made ARCTIC voice, tut on how to install: 
-# http://ubuntuforums.org/showthread.php?t=751169 ("Installing the enhanced CMU Arctic voices" section)
+# http://ubuntuforums.org/showthread.php?t=751169 ("Installing the enhanced Nitech HTS voices" section)
 #VOICE='nitech_us_bdl_arctic_hts'
 #VOICE='nitech_us_jmk_arctic_hts'
 #VOICE='nitech_us_awb_arctic_hts'
-VOICE='nitech_us_slt_arctic_hts' # DEFAULT, less bored US female
-#VOICE='nitech_us_clb_arctic_hts' # OLD default: bored US female (occasionally comes up with british pronunciations?!)
+VOICE='nitech_us_slt_arctic_hts' # less bored US female
+#VOICE='nitech_us_clb_arctic_hts' # DEFAULT, bored US female (occasionally comes up with british pronunciations?!)
 #VOICE='nitech_us_rms_arctic_hts'
 
 #PHONESET='mrpa'
@@ -49,34 +49,34 @@ PHONESET=''
 
 # What we do with SoX:
 SOX_ARGS  = '' 
-SOX_ARGS += ' pitch -500'  # Lol I male now
+SOX_ARGS += ' pitch -500'
 SOX_ARGS += ' stretch 1.2' # Starts the gravelly sound, lowers pitch a bit.
 #SOX_ARGS += ' synth tri fmod 60'
-SOX_ARGS += ' synth sine amod 60' # Now REALLY gravelly.
+SOX_ARGS += ' synth sine amod 60'
 #SOX_ARGS += ' synth tri amod 60'
 SOX_ARGS += ' chorus 0.7 0.9 55 0.4 0.25 2 -t'
 SOX_ARGS += ' phaser 0.9 0.85 4 0.23 1.3 -s'
-SOX_ARGS += ' compand 0.01,1 -90,-90,-70,-70,-60,-20,0,0 -5 -20' # Dynamic range compression.
-SOX_ARGS += ' echos 0.8 0.5 100 0.25 10 0.25' # Good with stretch, otherwise sounds like bees.
 SOX_ARGS += ' bass -40'
 SOX_ARGS += ' highpass 22 highpass 22'
+SOX_ARGS += ' compand 0.01,1 -90,-90,-70,-70,-60,-20,0,0 -5 -20' # Dynamic range compression.
+SOX_ARGS += ' echos 0.8 0.5 100 0.25 10 0.25' # Good with stretch, otherwise sounds like bees.
 #SOX_ARGS += ' delay 0.5'
 SOX_ARGS += ' norm'
 
 # Have to do the trimming seperately.
-PRE_SOX_ARGS = 'trim 0 -0.1' # Trim off last 0.1s.
+PRE_SOX_ARGS = 'trim 0 -0.1' # Trim off last 0.2s.
 
 # Shit we shouldn't change or overwrite. (Boops, pauses, etc)
-preexisting=[
-	'.',
-	',',
-	'bloop',
-	'bizwarn', # Is this a misspelling of the below?
-	'buzwarn',
-	'doop',
-	'dadeda',
-	'woop',
-]
+preexisting = {
+	'.':1,
+	',':1,
+	'bloop':1,
+	'bizwarn':1, # Is this a misspelling of the below?
+	'buzwarn':1,
+	'doop':1,
+	'dadeda':1,
+	'woop':1,
+}
 
 ################################################
 ## ROB'S AWFUL CODE BELOW (cleanup planned)
@@ -84,10 +84,10 @@ preexisting=[
 
 REGEX_SEARCH_STRINGS = re.compile(r'(\'|")(.*?)(?:\1)')
 
-wordlist=[]+preexisting
 othersounds=[]
 
 known_phonemes={}
+wordlist = dict(preexisting.items())
 
 def md5sum(filename):
     md5 = hashlib.md5()
@@ -208,7 +208,7 @@ def GenerateForWord(word,wordfile):
 		logging.info('Skipping {0}.ogg (Marked as PRE_EXISTING)'.format(wordfile))
 		return
 	if '/' not in wordfile:
-		wordlist += [wordfile]
+		wordlist[wordfile] = len(word.split(' '))
 	else:
 		othersounds += [wordfile]
 	md5=hashlib.md5(word).hexdigest()
@@ -312,11 +312,11 @@ soundsToKeep=set()
 for sound in othersounds:
 	soundsToKeep.add(sound+'.ogg')
 with open(os.path.join(CODE_BASE,'vox_sounds.dm'),'w') as w:
+	w.write("// AUTOMATICALLY GENERATED, DO NOT EDIT.\n")
 	w.write("// List is required to compile the resources into the game when it loads.\n")
 	w.write("// Dynamically loading it has bad results with sounds overtaking each other, even with the wait variable.\n")
-	w.write("\n")
 	w.write("var/list/vox_sounds = list(\n")
-	for word in sorted(wordlist):
+	for word,wordlen in sorted(wordlist.items()):
 		if '/' in word:
 			continue
 		filename=''
@@ -327,6 +327,15 @@ with open(os.path.join(CODE_BASE,'vox_sounds.dm'),'w') as w:
 		w.write('\t"{0}" = \'{1}\',\n'.format(word,filename))
 		soundsToKeep.add(filename)
 	w.write(')')
+	w.write('\n\n// How long each "word" really is (in words).  Single-word phrases are skipped for brevity.')
+	w.write('\nvar/list/vox_wordlen = list(\n')
+	for word,wordlen in sorted(wordlist.items()):
+		if wordlen == 1: continue
+		if '/' in word:
+			continue
+		w.write('\t"{0}" = {1},\n'.format(word,wordlen))
+	w.write(')')
+
 
 for root, dirs, files in os.walk('sound/', topdown=False):
     for name in files:
