@@ -77,7 +77,7 @@
 /datum/theft_objective/traitor/rpd
 	name = "an RPD"
 	typepath = /obj/item/weapon/pipe_dispenser
-	protected_jobs = list("Chief Engineer")
+	protected_jobs = list("Chief Engineer", "Atmospherics Technician")
 
 /datum/theft_objective/traitor/jetpack
 	name = "a jetpack"
@@ -92,10 +92,11 @@
 	name = "a functional AI"
 	typepath = /obj/item/device/aicard
 
-/datum/theft_objective/traitor/magboots
+//Became way too easy with the number of magboots we have now
+/*/datum/theft_objective/traitor/magboots
 	name = "a pair of magboots"
 	typepath = /obj/item/clothing/shoes/magboots
-	protected_jobs = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
+	protected_jobs = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")*/
 
 /datum/theft_objective/traitor/blueprints
 	name = "the station blueprints"
@@ -110,6 +111,7 @@
 /datum/theft_objective/traitor/slime_extract
 	name = "a sample of slime extract"
 	typepath = /obj/item/slime_extract
+	protected_jobs = list("Research Director", "Scientist")
 
 /datum/theft_objective/traitor/corgi
 	name = "a piece of corgi meat"
@@ -153,6 +155,7 @@
 /datum/theft_objective/traitor/ablative
 	name = "an ablative armor vest"
 	typepath = /obj/item/clothing/suit/armor/laserproof
+	protected_jobs = list("Head of Security", "Warden")
 
 /datum/theft_objective/number
 	var/min=0
