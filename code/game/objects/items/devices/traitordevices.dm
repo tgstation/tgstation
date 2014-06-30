@@ -95,12 +95,9 @@ effective or pretty fucking useless.
 		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
 		spawn((wavelength+(intensity*4))*10)
 			if(M)
-				if(M.reagents.get_reagent_amount("anti_toxin") >= 30 || M.reagents.get_reagent_amount("hyronalin") >= 20 || M.reagents.get_reagent_amount("arithrazine") >= 10)
-					M.apply_effect((intensity/2)*10, IRRADIATE)
-				else
-					if(intensity >= 5)
-						M.apply_effect(round(intensity/1.5), PARALYZE)
-					M.apply_effect(intensity*10, IRRADIATE)
+				if(intensity >= 5)
+					M.apply_effect(round(intensity/1.5), PARALYZE)
+				M.apply_effect(intensity*10, IRRADIATE)
 	else
 		user << "<span class='danger'>The radioactive microlaser is still recharging.</span>"
 
