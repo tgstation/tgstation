@@ -99,14 +99,13 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
 			#endif
 
 			qdel(AM)
-
 			return
 		if(0) // In a numeric context (like a mathematical operation), null evaluates to 0.
 			#ifdef DEBUG_OBJECT_POOL
 			world << "DEBUG_OBJECT_POOL: [AM.type] pool is empty, recreating pool."
 			#endif
 
-			masterPool[AM.type] = list()
+			masterPool[AM.type] = new
 
 	AM.resetVariables()
 	masterPool[AM.type] += AM
