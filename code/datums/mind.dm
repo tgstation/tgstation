@@ -249,7 +249,7 @@ datum/mind
 			else if (istype(current, /mob/living/carbon/monkey))
 				var/found = 0
 				for(var/datum/disease/D in current.viruses)
-					if(istype(D, /datum/disease/jungle_fever)) found = 1
+					if(istype(D, /datum/disease/transformation/jungle_fever)) found = 1
 
 				if(found)
 					text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<b>INFECTED</b>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
@@ -799,16 +799,16 @@ datum/mind
 							src = null
 							M = H.monkeyize()
 							src = M.mind
-							current.contract_disease(new /datum/disease/jungle_fever,1,0)
+							current.contract_disease(new /datum/disease/transformation/jungle_fever,1,0)
 						else if (istype(M))
-							current.contract_disease(new /datum/disease/jungle_fever,1,0)
+							current.contract_disease(new /datum/disease/transformation/jungle_fever,1,0)
 				if("human")
 					if (check_rights(R_ADMIN, 0))
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(M))
 							for(var/datum/disease/D in M.viruses)
-								if (istype(D,/datum/disease/jungle_fever))
+								if (istype(D,/datum/disease/transformation/jungle_fever))
 									D.cure(0)
 									sleep(0) //because deleting of virus is doing throught spawn(0)
 							log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")

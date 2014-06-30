@@ -81,8 +81,7 @@
 			O.show_message("<span class='danger'>[name] bites [ML]!</span>", 1)
 		if(armor >= 2) return
 		for(var/datum/disease/D in viruses)
-			if(istype(D, /datum/disease/jungle_fever))
-				ML.contract_disease(D,1,0)
+			ML.contract_disease(D,1,0)
 	else
 		for(var/mob/O in viewers(ML, null))
 			O.show_message("\red <B>[src] has attempted to bite [ML]!</B>", 1)

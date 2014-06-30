@@ -83,8 +83,7 @@
 				adjustBruteLoss(damage)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 				for(var/datum/disease/D in M.viruses)
-					if(istype(D, /datum/disease/jungle_fever))
-						contract_disease(D,1,0)
+					contract_disease(D,1,0)
 			else
 				visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>", \
 						"<span class='userdanger'>[M.name] has attempted to bite [name]!</span>")
