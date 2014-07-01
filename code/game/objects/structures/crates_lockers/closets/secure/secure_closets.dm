@@ -105,7 +105,7 @@
 	if(user.stat || !isturf(src.loc))
 		return
 
-	if(!(src.locked))
+	if(!(src.locked) && !(src.welded))
 		for(var/obj/item/I in src)
 			I.loc = src.loc
 		for(var/mob/M in src)
@@ -118,7 +118,10 @@
 		src.density = 0
 		playsound(get_turf(src), 'sound/machines/click.ogg', 15, 1, -3)
 	else
-		user << "<span class='notice'>The locker is locked!</span>"
+		if(!can_open())
+			user << "<span class='notice'>It won't budge!</span>"
+		else
+			user << "<span class='notice'>The locker is locked!</span>"
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in hearers(src, null))
