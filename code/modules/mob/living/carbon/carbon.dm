@@ -452,12 +452,6 @@
 	..()
 
 
-/mob/living/carbon/say(var/message, var/bubble_type)
-	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
-		return
-
-	..(message, bubble_type)
-
 /mob/living/carbon/getTrail()
 	if(getBruteLoss() < 300)
 		if(prob(50))
@@ -475,4 +469,7 @@ var/const/GALOSHES_DONT_HELP = 8
 	loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 /mob/living/carbon/fall(var/forced)
-	loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
+    loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
+
+/mob/living/carbon/is_muzzled()
+	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
