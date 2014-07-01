@@ -50,7 +50,7 @@
 	var/lastattacked = null
 	var/attack_log = list( )
 	var/already_placed = 0.0
-	var/obj/machinery/machine = null
+	var/obj/machine
 	var/other_mobs = null
 	var/memory = ""
 	var/poll_answer = 0.0

@@ -8,16 +8,26 @@
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/sharp = 0 // whether this object cuts
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
-	var/list/mob/_using = list() // All mobs dicking with us.
 
 	var/damtype = "brute"
 	var/force = 0
 
 	// What reagents should be logged when transferred TO this object?
 	// Reagent ID => friendly name
-	var/list/reagents_to_log=list()
+	var/global/list/reagents_to_log = list(
+		"fuel"  =  "welder fuel",
+		"plasma"=  "plasma",
+		"pacid" =  "polytrinic acid",
+		"sacid" =  "sulphuric acid"
+	)
+
+	var/list/mob/_using // All mobs dicking with us.
 
 /obj/Destroy()
+	if(_using)
+		for(var/mob/M in _using)
+			M.unset_machine()
+
 	if(src in processing_objects)
 		processing_objects -= src
 
@@ -206,23 +216,25 @@ a {
 	return
 
 /mob/proc/unset_machine()
-	if(machine && istype(machine, /obj/machinery))
+	if(machine._using)
 		machine._using -= src
-		machine = null
 
-/mob/proc/set_machine(var/obj/O)
-	if (src.machine)
-		unset_machine()
+		if(!machine._using.len)
+			machine._using = null
 
-	src.machine = O
+	machine = null
 
-	if (istype(O))
-		O.in_use = 1
+/mob/proc/set_machine(const/obj/O)
+	unset_machine()
 
-		if (src in O._using)
-			return
+	if(istype(O))
+		machine = O
 
-		O._using += src
+		if(!machine._using)
+			machine._using = new
+
+		machine._using += src
+		machine.in_use = 1
 
 /obj/item/proc/updateSelfDialog()
 	var/mob/M = src.loc
