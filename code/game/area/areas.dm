@@ -319,10 +319,8 @@
 				living_mob.Paralyse(10)
 				living_mob.take_organ_damage(80)
 			//Anything not bolted down is moved, everything else is destroyed
-			if(!AM.anchored)
-				AM.Move(D)
-			else
-				qdel(AM)
+			AM.anchored = 0
+			AM.Move(D)
 		if(istype(T, /turf/simulated))
 			del(T)
 
