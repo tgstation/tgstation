@@ -141,7 +141,8 @@
 // mouse drop another mob or self
 //
 /obj/machinery/disposal/MouseDrop_T(mob/target, mob/user)
-	stuff_mob_in(target, user)
+	if(istype(target))
+		stuff_mob_in(target, user)
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/target, mob/user)
 	if (!user.canUseTopic(target) || istype(user, /mob/living/silicon/ai))
