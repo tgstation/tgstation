@@ -95,3 +95,13 @@
 	w_class = 2
 	var/voicechange = 0
 	siemens_coefficient = 0.9
+
+/obj/item/clothing/mask/chapmask
+	name = "venetian mask"
+	desc = "A plain porcelain mask that covers the entire face. Standard attire for particularly unspeakable religions. The eyes are wide shut."
+	icon_state = "chapmask"
+	item_state = "chapmask"
+	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
+	flags_inv = HIDEFACE
+	w_class = 2
+	gas_transfer_coefficient = 0.90
