@@ -9,7 +9,7 @@
 	var/resource_delay = 0
 	var/point_rate = 2
 
-/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2)
+/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 1)
 	blob_cores += src
 	processing_objects.Add(src)
 	if(!overmind)

@@ -104,7 +104,7 @@ var/global/floorIsLava = 0
 				body += "<A href='?_src_=holder;makerobot=\ref[M]'>Make Robot</A> | "
 				body += "<A href='?_src_=holder;makealien=\ref[M]'>Make Alien</A> | "
 				body += "<A href='?_src_=holder;makeslime=\ref[M]'>Make Slime</A> | "
-				body += "<A href='?_src_=holder;makeblob=\ref[M]'>Make Blob</A> | "
+				body += "<A href='?_src_=holder;makeblob=\ref[M]'>Make Minor Blob</A> | "
 
 			//Simple Animals
 			if(isanimal(M))
@@ -441,7 +441,7 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=energeticflux'>Spawn a flux wave anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=bluespaceanomaly'>Spawn a bluespace anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes</A><BR>
-			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob</A><BR>
+			<A href='?src=\ref[src];secretsfun=goblob'>Spawn minor blob</A><BR>
 			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
 			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>

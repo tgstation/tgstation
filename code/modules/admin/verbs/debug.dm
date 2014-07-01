@@ -168,13 +168,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 /client/proc/cmd_admin_blobize(var/mob/M in mob_list)
 	set category = "Fun"
-	set name = "Make Blob"
+	set name = "Make Minor Blob"
 
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon/human))
-		log_admin("[key_name(src)] has blobized [M.key].")
+		log_admin("[key_name(src)] has minor-blobized [M.key].")
 		var/mob/living/carbon/human/H = M
 		spawn(10)
 			H.Blobize()
