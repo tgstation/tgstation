@@ -1019,7 +1019,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/proc/declare_arrest()
 	var/area/location = get_area(src)
-	var/area/myturf = get_turf(src)
+	var/turf/myturf = get_turf(src)
 	for(var/mob/living/carbon/human/human in mob_list)
 		var/turf/humanturf = get_turf(human)
 		if((humanturf.z == myturf.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security))
