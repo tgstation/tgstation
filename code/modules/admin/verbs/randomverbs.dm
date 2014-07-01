@@ -59,10 +59,7 @@
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				if(M.mind.assigned_role == "Chaplain")
-					M << "\bold You hear the voice of [ticker.Bible_deity_name] in your head... \italic [msg]"
-				else
-					M << "\bold You hear a voice in your head... \italic [msg]"
+				M << "\bold You hear a voice in your head... \italic [msg]"
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("\blue \bold SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]", 1)
