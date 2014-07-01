@@ -253,7 +253,7 @@
 				msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 		if(digitalcamo)
-			msg += "[t_He] [t_is] repulsively uncanny!\n"
+			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
 
 	if(istype(usr, /mob/living/carbon/human))

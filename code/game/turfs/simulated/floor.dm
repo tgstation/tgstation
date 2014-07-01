@@ -199,13 +199,13 @@ turf/simulated/floor/proc/update_icon()
 	break_tile()
 
 /turf/simulated/floor/is_plasteel_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/plasteel))
+	if(istype(floor_tile, /obj/item/stack/tile/plasteel))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_light_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/light))
+	if(istype(floor_tile, /obj/item/stack/tile/light))
 		return 1
 	else
 		return 0
@@ -324,7 +324,7 @@ turf/simulated/floor/proc/update_icon()
 	intact = 1
 	SetLuminosity(0)
 	if(T)
-		if(istype(T,/obj/item/stack/tile/plasteel))
+		if(istype(T, /obj/item/stack/tile/plasteel))
 			floor_tile = T
 			if (icon_regular_floor)
 				icon_state = icon_regular_floor
@@ -463,24 +463,30 @@ turf/simulated/floor/proc/update_icon()
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
-			if (R.amount >= 2)
-				user << "\blue Reinforcing the floor..."
-				if(do_after(user, 30) && R && R.amount >= 2 && is_plating())
-					ChangeTurf(/turf/simulated/floor/engine)
-					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
-					R.use(2)
-					return
+			if (R.get_amount() < 2)
+				user << "<span class='warning'>You need two rods to make a reinforced floor.</span>"
+				return
 			else
-				user << "\red You need more rods."
+				user << "<span class='notice'>Reinforcing the floor...</span>"
+				if(do_after(user, 30))
+					if (R.get_amount() >= 2 && is_plating())
+						ChangeTurf(/turf/simulated/floor/engine)
+						playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
+						R.use(2)
+						user << "<span class='notice'>You have reinforced the floor.</span>"
+					return
 		else
-			user << "\red You must remove the plating first."
+			user << "<span class='warning'>You must remove the plating first.</span>"
 		return
 
 	if(istype(C, /obj/item/stack/tile))
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
-				floor_tile = new T.type
+				if(istype(T, /obj/item/stack/tile/plasteel/cyborg))
+					floor_tile = new /obj/item/stack/tile/plasteel
+				else
+					floor_tile = new T.type
 				intact = 1
 				if(istype(T,/obj/item/stack/tile/light))
 					var/obj/item/stack/tile/light/L = T
@@ -514,7 +520,7 @@ turf/simulated/floor/proc/update_icon()
 					return
 			coil.turf_place(src, user)
 		else
-			user << "\red You must remove the plating first."
+			user << "<span class='warning'>You must remove the plating first.</span>"
 
 	if(istype(C, /obj/item/weapon/shovel))
 		if(is_grass_floor())
