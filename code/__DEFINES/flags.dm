@@ -50,15 +50,17 @@
 
 //flags for species
 
-#define MUTCOLORS	1
-#define HAIR		2
-#define FACEHAIR	4
-#define EYECOLOR	8
-#define LIPS		16
-#define COLDRES		32
-#define HEATRES		64
-#define RADIMMUNE	128
-#define NOBREATH	256
-#define NOGUNS		512
-#define NOBLOOD		1024
-#define NOFIRE		2048
+#define MUTCOLORS	1	// Allows custom skin colors
+#define HAIR		2	// Allows hair
+#define FACEHAIR	4	// Allows facial hair
+#define EYECOLOR	8	// Allows unique eye sprites & eye color
+#define LIPS		16	// Allows lipstick
+#define COLDRES		32	// Provides immunity against coldness and low pressure
+#define HEATRES		64	// Provides immunity against heat and high pressure
+#define RADIMMUNE	128	// Provides immunity to the effects of radiation (but not toxins)
+#define NOBREATH	256	// The species does not need to breathe, and atmos does not effect it
+#define NOGUNS		512	// The species cannot use guns
+#define NOBLOOD		1024// The species does not bleed
+#define NOFIRE		2048// The species cannot be set on fire
+#define MUTSLIP		4096// The species cannot slip
+#define GLASSIMMUNE	8192// The species cannot be hurt by glass
