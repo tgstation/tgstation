@@ -174,7 +174,7 @@
 		H.update_mutations()
 	if(dose == 3)
 		for (var/mob/V in viewers(H))
-			V.show_message("<span class='danger'>[H] begin to split all over, plants pouring out of [H]!</span>",3, "<span class='danger'>You hear a sickening pop.</span>", 2)
+			V.show_message("<span class='danger'>[H] begins to split all over, plants pouring out of [H]!</span>",3, "<span class='danger'>You hear a sickening pop.</span>", 2)
 		H.take_organ_damage(10,0)
 		H.adjustOxyLoss(10)
 		H.dizziness = H.dizziness + 15
