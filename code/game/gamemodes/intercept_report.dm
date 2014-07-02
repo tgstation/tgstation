@@ -282,4 +282,4 @@
 
 	src.text += "<BR><BR>We have received a report that a valuable and rare species has boarded the station."
 	src.text += "The aforementioned species is extremely rare and worth a lot of credits; And thus a lot of people will be after it."
-	src.text += "Please take care not to alarm the crew, as knowledge of it cause a riot."
+	src.text += "Please take care not to alarm the crew, as knowledge of it could cause a riot."
