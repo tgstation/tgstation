@@ -111,7 +111,7 @@ SHUTTLE_REFUEL_DELAY 7000
 ## Variables calculate how number of antagonists will scale to population.
 ## Used as (Antagonists = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
-TRAITOR_SCALING_COEFF 6
+TRAITOR_SCALING_COEFF 4
 CHANGELING_SCALING_COEFF 7
 
 # The number of objectives traitors get.
