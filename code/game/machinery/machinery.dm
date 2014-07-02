@@ -115,11 +115,17 @@ Class Procs:
 
 	var/inMachineList = 1 // For debugging.
 
+	var/list/mob/_using // All mobs dicking with us.
+
 /obj/machinery/New()
 	machines += src
 	return ..()
 
 /obj/machinery/Destroy()
+	if(_using)
+		for(var/mob/M in _using)
+			M.unset_machine()
+
 	if(src in machines)
 		machines -= src
 
