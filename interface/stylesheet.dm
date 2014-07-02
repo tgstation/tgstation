@@ -43,7 +43,6 @@ h1.alert, h2.alert		{color: #000000;}
 .selecteddna			{color: #FFFFFF; 	background-color: #001B1B}
 
 .attack					{color: #ff0000;}
-.moderate				{color: #CC0000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
 
@@ -59,6 +58,7 @@ h1.alert, h2.alert		{color: #000000;}
 
 .alien					{color: #543354;}
 .newscaster				{color: #800000;}
+.ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}
 
 .interface				{color: #330033;}
 

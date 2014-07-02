@@ -183,8 +183,17 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+
 /obj/item/weapon/grown/bananapeel/New(var/loc, var/potency = 10)
 	..()
+
+/obj/item/weapon/grown/bananapeel/Crossed(AM as mob|obj)
+	if (istype(AM, /mob/living/carbon))
+		var/mob/living/carbon/M = AM
+		var/stun = Clamp(potency / 10, 1, 10)
+		var/weaken = Clamp(potency / 20, 0.5, 5)
+		M.slip(stun, weaken, src)
+
 
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
