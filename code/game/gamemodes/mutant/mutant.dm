@@ -137,11 +137,11 @@
 /datum/game_mode/proc/greet_mutant(var/datum/mind/mutant, var/you_are=1)
 	if (you_are)
 		if(mutant.special_role == "mutanthunter")
-			mutant.current << "<b>\red You are a Mutant Hunter! There are Mutants on this station and they are highly valued.</b>"
+			mutant.current << "<span class='danger'> You are a Mutant Hunter! There are Mutants on this station and they are highly valued.</span>"
 		else
-			mutant.current << "<b>\red You are a Mutant! There are Mutant Hunters on this station, and some of them are out to get you!.</b>"
-			mutant.current << "<b>\red You are a [mutant.mutant.mutant_race.name], a highly valued species.</b>"
-			mutant.current << "<b>\red You have the ability to transform into your species at will, be wary of who you show!</b>"
+			mutant.current << "<span class='danger'> You are a Mutant! There are Mutant Hunters on this station, and some of them are out to get you!.</span>"
+			mutant.current << "<span class='danger'> You are a [mutant.mutant.mutant_race.name], a highly valued species.</span>"
+			mutant.current << "<span class='danger'> You have the ability to transform into your species at will, be wary of who you show!</span>"
 	mutant.current << "<b>You must complete the following tasks:</b>"
 
 	var/obj_count = 1
