@@ -12,37 +12,37 @@
 				message_admins("[key_name_admin(usr)] created traitors.")
 				log_admin("[key_name(usr)] created traitors.")
 				if(!src.makeTraitors())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there were no candidates available"
 			if("2")
 				message_admins("[key_name(usr)] created changelings.")
 				log_admin("[key_name(usr)] created changelings.")
 				if(!src.makeChanglings())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there were no candidates available"
 			if("3")
 				message_admins("[key_name(usr)] started a revolution.")
 				log_admin("[key_name(usr)] started a revolution.")
 				if(!src.makeRevs())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there were no candidates available"
 			if("4")
 				message_admins("[key_name(usr)] created cultists.")
 				log_admin("[key_name(usr)] created cultists.")
 				if(!src.makeCult())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there were no candidates available"
 			if("5")
 				message_admins("[key_name(usr)] caused an AI to malfunction.")
 				log_admin("[key_name(usr)] caused an AI to malfunction.")
 				if(!src.makeMalfAImode())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there were no candidates available"
 			if("6")
 				message_admins("[key_name(usr)] created a wizard.")
 				log_admin("[key_name(usr)] created a wizard.")
 				if(!src.makeWizard())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there were no candidates available"
 			if("7")
 				message_admins("[key_name(usr)] created a nuke team.")
 				log_admin("[key_name(usr)] created a nuke team.")
 				if(!src.makeNukeTeam())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there were no candidates available"
 			if("8")
 				message_admins("[key_name(usr)] spawned a ninja.")
 				log_admin("[key_name(usr)] spawned a ninja.")
@@ -55,13 +55,13 @@
 				message_admins("[key_name(usr)] created mutants.")
 				log_admin("[key_name(usr)] created mutants.")
 				if(!src.makeMutants())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there were no candidates available"
 /* DEATH SQUADS
 			if("10")
 				message_admins("[key_name(usr)] created a death squad.")
 				log_admin("[key_name(usr)] created a death squad.")
 				if(!src.makeDeathsquad())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately there were no candidates available"
 */
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
