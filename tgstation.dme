@@ -13,7 +13,8 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\tgstation2.dm"
+#include "_maps\uterusstation.dm"
+#include "_maps\map_files\trunkmap.dmm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
