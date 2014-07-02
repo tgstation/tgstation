@@ -16,7 +16,13 @@
 	// Reagent ID => friendly name
 	var/list/reagents_to_log=list()
 
+	var/list/mob/_using // All mobs dicking with us.
+
 /obj/Destroy()
+	if(_using)
+		for(var/mob/M in _using)
+			M.unset_machine()
+
 	if(src in processing_objects)
 		processing_objects -= src
 
