@@ -198,13 +198,18 @@
 		return
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(!WT.remove_fuel(0,user))
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
-			return
-		src.welded =! src.welded
-		src.update_icon()
-		for(var/mob/M in viewers(src))
-			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
+		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the [src]...</span>"
+		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+		if(do_after(user,40,5,1))
+			if(WT.remove_fuel(0,user))
+				playsound(loc, 'sound/items/welder.ogg', 50, 1)
+				welded = !welded
+				user << "<span class='notice'>You [welded ? "welded the [src] shut":"unwelded the [src]"]</span>"
+				update_icon()
+				user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
+			else
+				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+		return
 	else if(!place(user, W))
 		src.attack_hand(user)
 	return
