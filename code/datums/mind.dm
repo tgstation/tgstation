@@ -663,7 +663,7 @@ datum/mind
 					ticker.mode.name_wizard(current)
 				if("autoobjectives")
 					ticker.mode.forge_wizard_objectives(src)
-					usr << "\blue The objectives for wizard [key] have been generated. You can edit them and anounce manually."
+					usr << "\blue The objectives for wizard [key] have been generated. You can edit them and announce manually."
 
 		else if (href_list["changeling"])
 			switch(href_list["changeling"])
@@ -687,7 +687,7 @@ datum/mind
 						log_admin("[key_name(usr)] has changeling'ed [current].")
 				if("autoobjectives")
 					ticker.mode.forge_changeling_objectives(src)
-					usr << "\blue The objectives for changeling [key] have been generated. You can edit them and anounce manually."
+					usr << "\blue The objectives for changeling [key] have been generated. You can edit them and announce manually."
 
 				if("initialdna")
 					if( !changeling || !changeling.absorbed_dna.len || !istype(current, /mob/living/carbon))
@@ -718,7 +718,7 @@ datum/mind
 						log_admin("[key_name(usr)] has mutant'ed [current].")
 				if("autoobjectives")
 					ticker.mode.forge_mutant_objectives(src)
-					usr << "\blue The objectives for mutant [key] have been generated. You can edit them and anounce manually."
+					usr << "\blue The objectives for mutant [key] have been generated. You can edit them and announce manually."
 
 		else if (href_list["nuclear"])
 			switch(href_list["nuclear"])
@@ -803,7 +803,7 @@ datum/mind
 
 				if("autoobjectives")
 					ticker.mode.forge_traitor_objectives(src)
-					usr << "\blue The objectives for traitor [key] have been generated. You can edit them and anounce manually."
+					usr << "\blue The objectives for traitor [key] have been generated. You can edit them and announce manually."
 
 		else if (href_list["monkey"])
 			var/mob/living/L = current
