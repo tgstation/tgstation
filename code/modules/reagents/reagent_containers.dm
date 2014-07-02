@@ -8,15 +8,6 @@
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/volume = 30
 
-	// What reagents should be logged when transferred TO this object?
-	// Reagent ID => friendly name
-	var/global/list/reagents_to_log = list(
-		"fuel"  =  "welder fuel",
-		"plasma"=  "plasma",
-		"pacid" =  "polytrinic acid",
-		"sacid" =  "sulphuric acid"
-	)
-
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
 	set category = "Object"
