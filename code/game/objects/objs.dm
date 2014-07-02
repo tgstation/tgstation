@@ -14,7 +14,12 @@
 
 	// What reagents should be logged when transferred TO this object?
 	// Reagent ID => friendly name
-	var/list/reagents_to_log=list()
+	var/global/list/reagents_to_log = list(
+		"fuel"  =  "welder fuel",
+		"plasma"=  "plasma",
+		"pacid" =  "polytrinic acid",
+		"sacid" =  "sulphuric acid"
+	)
 
 	var/list/mob/_using // All mobs dicking with us.
 
@@ -219,11 +224,11 @@ a {
 
 	machine = null
 
-/mob/proc/set_machine(const/obj/machinery/OM)
+/mob/proc/set_machine(const/obj/O)
 	unset_machine()
 
-	if(istype(OM))
-		machine = OM
+	if(istype(O))
+		machine = O
 
 		if(!machine._using)
 			machine._using = new

@@ -20,13 +20,6 @@
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
 
-	reagents_to_log=list(
-		"fuel"  =  "welder fuel",
-		"plasma"=  "plasma",
-		"pacid" =  "polytrinic acid",
-		"sacid" =  "sulphuric acid"
-	)
-
 /obj/item/weapon/extinguisher/mini
 	name = "fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
