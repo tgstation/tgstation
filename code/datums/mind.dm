@@ -52,6 +52,7 @@ datum/mind
 
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
+	var/datum/mutant/mutant	//mutant holder
 
 	var/miming = 0 // Mime's vow of silence
 
@@ -116,6 +117,7 @@ datum/mind
 			"cult",
 			"wizard",
 			"changeling",
+			"mutant",
 			"nuclear",
 			"traitor", // "traitorchan",
 			"monkey",
@@ -205,6 +207,19 @@ datum/mind
 //			if (istype(changeling) && changeling.changelingdeath)
 //				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
 			sections["changeling"] = text
+
+			/** MUTANT ***/
+			text = "mutant"
+			if (ticker.mode.config_tag=="mutant")
+				text = uppertext(text)
+			text = "<i><b>[text]</b></i>: "
+			if (src in ticker.mode.mutants)
+				text += "<b>YES</b>|<a href='?src=\ref[src];mutant=clear'>no</a>"
+				if (objectives.len==0)
+					text += "<br>Objectives are empty! <a href='?src=\ref[src];mutant=autoobjectives'>Randomize!</a>"
+			else
+				text += "<a href='?src=\ref[src];mutant=mutant'>yes</a>|<b>NO</b>"
+			sections["mutant"] = text
 
 			/** NUCLEAR ***/
 			text = "nuclear"
@@ -683,6 +698,27 @@ datum/mind
 						C.real_name = C.dna.real_name
 						updateappearance(C)
 						domutcheck(C, null)
+		else if (href_list["mutant"])
+			switch(href_list["mutant"])
+				if("clear")
+					if(src in ticker.mode.mutants)
+						ticker.mode.mutants -= src
+						special_role = null
+						if(mutant)
+							del(mutant)
+						message_admins("[key_name_admin(usr)] has de-mutant'ed [current].")
+						log_admin("[key_name(usr)] has de-mutant'ed [current].")
+				if("mutant")
+					if(!(src in ticker.mode.mutants))
+						ticker.mode.mutants += src
+						current.make_mutant()
+						special_role = "mutant"
+						current << "<B><font color='red'>You have become one of the Mutant Elite!</font></B>"
+						message_admins("[key_name_admin(usr)] has mutant'ed [current].")
+						log_admin("[key_name(usr)] has mutant'ed [current].")
+				if("autoobjectives")
+					ticker.mode.forge_mutant_objectives(src)
+					usr << "\blue The objectives for mutant [key] have been generated. You can edit them and anounce manually."
 
 		else if (href_list["nuclear"])
 			switch(href_list["nuclear"])
@@ -996,6 +1032,14 @@ datum/mind
 			special_role = "Changeling"
 			ticker.mode.forge_changeling_objectives(src)
 			ticker.mode.greet_changeling(src)
+
+	proc/make_Mutant()
+		if(!(src in ticker.mode.mutants))
+			ticker.mode.mutants += src
+			current.make_mutant()
+			special_role = "mutant"
+			ticker.mode.forge_mutant_objectives(src)
+			ticker.mode.greet_mutant(src)
 
 	proc/make_Wizard()
 		if(!(src in ticker.mode.wizards))

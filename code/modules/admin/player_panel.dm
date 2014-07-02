@@ -442,6 +442,18 @@
 					dat += "<tr><td><i>Changeling not found!</i></td></tr>"
 			dat += "</table>"
 
+		if(ticker.mode.mutants.len > 0)
+			dat += "<br><table cellspacing=5><tr><td><B>Mutants</B></td><td></td><td></td></tr>"
+			for(var/datum/mind/mutant in ticker.mode.mutants)
+				var/mob/M = mutant.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+				else
+					dat += "<tr><td><i>Mutant not found!</i></td></tr>"
+			dat += "</table>"
+
 		if(ticker.mode.wizards.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Wizards</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/wizard in ticker.mode.wizards)

@@ -76,6 +76,7 @@
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
+	var/mutant_scaling_coeff = 5		//how much does the amount of players get divided by to determine mutants
 
 	var/traitor_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
@@ -346,6 +347,8 @@
 					config.traitor_scaling_coeff	= text2num(value)
 				if("changeling_scaling_coeff")
 					config.changeling_scaling_coeff	= text2num(value)
+				if("mutant_scaling_coeff")
+					config.mutant_scaling_coeff	= text2num(value)
 				if("traitor_objectives_amount")
 					config.traitor_objectives_amount = text2num(value)
 				if("probability")

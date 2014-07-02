@@ -51,6 +51,11 @@
 				message_admins("[key_name(usr)] started an alien infestation.")
 				log_admin("[key_name(usr)] started an alien infestation.")
 				src.makeAliens()
+			if("10")
+				message_admins("[key_name(usr)] created mutants.")
+				log_admin("[key_name(usr)] created mutants.")
+				if(!src.makeMutants())
+					usr << "\red Unfortunatly there were no candidates available"
 /* DEATH SQUADS
 			if("10")
 				message_admins("[key_name(usr)] created a death squad.")
@@ -546,6 +551,12 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=changeling;jobban4=\ref[M]'><font color=red>[replacetext("Changeling", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=changeling;jobban4=\ref[M]'>[replacetext("Changeling", " ", "&nbsp")]</a></td>"
+
+		//Mutant
+		if(jobban_isbanned(M, "mutant") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=mutant;jobban4=\ref[M]'><font color=red>[replacetext("Mutant", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=mutant;jobban4=\ref[M]'>[replacetext("Mutant", " ", "&nbsp")]</a></td>"
 
 		//Nuke Operative
 		if(jobban_isbanned(M, "operative") || isbanned_dept)

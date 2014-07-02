@@ -404,6 +404,9 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			if("changeling")
 				if(M.mind in ticker.mode.changelings)
 					return 2
+			if("mutant")
+				if(M.mind in ticker.mode.mutants)
+					return 2
 			if("wizard")
 				if(M.mind in ticker.mode.wizards)
 					return 2

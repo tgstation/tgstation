@@ -202,7 +202,42 @@ datum/objective/block/check_completion()
 					return 0
 	return 1
 
+datum/objective/escape_other
+	var/target_role_type = 0
+	dangerrating = 10
 
+datum/objective/escape_other/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Ensure [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role] escapes on the Shuttle or Escape pod alive."
+	else
+		explanation_text = "Free Objective"
+
+datum/objective/escape_other/check_completion()
+	if(issilicon(target.current))
+		return 0
+	if(isbrain(target.current))
+		return 0
+	if(emergency_shuttle.location < 2)
+		return 0
+	if(!target.current || target.current.stat == 2)
+		return 0
+	var/turf/location = get_turf(target.current.loc)
+	if(!location)
+		return 0
+	var/area/check_area = location.loc
+	if(istype(check_area, /area/shuttle/escape/centcom))
+		return 1
+	if(istype(check_area, /area/shuttle/escape_pod1/centcom))
+		return 1
+	if(istype(check_area, /area/shuttle/escape_pod2/centcom))
+		return 1
+	if(istype(check_area, /area/shuttle/escape_pod3/centcom))
+		return 1
+	if(istype(check_area, /area/shuttle/escape_pod4/centcom))
+		return 1
+	else
+		return 0
 
 datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive."

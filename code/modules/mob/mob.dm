@@ -84,6 +84,24 @@ var/next_mob_id = 0
 			msg = self_message
 		M.show_message( msg, 1, blind_message, 2)
 
+// Rudimentary "smell" function for the Mutant hunt game mode.
+// Shows a "smell" to people in the vicinity if they pass certain checks.
+// There could be more things added in the future, i.e vents wafting smell
+// but for now, it just checks for people in range, if they are in space/not a robot
+// and whether their face is covered.
+/mob/proc/smell_message(var/message)
+	if(!client)	return
+	message = copytext(message, 1, MAX_MESSAGE_LEN)
+	for(var/mob/M in range(src))
+		if(!(issilicon(M)) && ishuman(M))
+			var/covered = 0
+			if(istype(get_turf(M),/turf/space)) continue
+			for(var/obj/item/clothing/C in M.get_equipped_items())
+				if(C.flags & HIDEFACE || C.flags & MASKCOVERSMOUTH)
+					covered = 1
+			if(!covered)
+				M << message
+
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
@@ -610,7 +628,13 @@ var/list/slot_equipment_priority = list( \
 		add_spells_to_statpanel(mind.spell_list)
 		if(mind.changeling)
 			add_stings_to_statpanel(mind.changeling.purchasedpowers)
+		if(mind.mutant && mind.special_role == "mutant") //mutant, not hunter
+			add_mutant_powers_to_statpanel(mind.mutant.mutant_powers)
 	add_spells_to_statpanel(mob_spell_list)
+
+/mob/proc/add_mutant_powers_to_statpanel(var/list/powers)
+	for(var/obj/effect/proc_holder/mutant/power in powers)
+		statpanel("[power.panel]","",power)
 
 /mob/proc/add_spells_to_statpanel(var/list/spells)
 	for(var/obj/effect/proc_holder/spell/S in spells)

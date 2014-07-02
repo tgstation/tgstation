@@ -85,6 +85,9 @@
 			src.text = ""
 			src.build_changeling(correct_person)
 			return src.text
+		if("mutant")
+			src.text = ""
+			src.build_mutant(correct_person)
 		else
 			return null
 
@@ -274,3 +277,9 @@
 	*/
 	src.text += "These lifeforms are assosciated with the [orgname1] [orgname2] and may be attempting to acquire sensitive materials on their behalf.  "
 	src.text += "Please take care not to alarm the crew, as [cname] may take advantage of a panic situation. Remember, they can be anybody, suspect everybody!"
+
+/datum/intercept_text/proc/build_mutant(datum/mind/correct_person)
+
+	src.text += "<BR><BR>We have received a report that a valuable and rare species has boarded the station."
+	src.text += "The aforementioned species is extremely rare and worth a lot of credits; And thus a lot of people will be after it."
+	src.text += "Please take care not to alarm the crew, as knowledge of it cause a riot."

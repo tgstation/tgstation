@@ -174,7 +174,7 @@
 	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
 
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling","mutant", "cult")
 	possible_modes -= "[ticker.mode]" //remove current gamemode to prevent it from being randomly deleted, it will be readded later
 
 	var/number = pick(1, 2)
@@ -216,6 +216,7 @@
 	var/roletext
 	switch(role)
 		if(BE_CHANGELING)	roletext="changeling"
+		if(BE_MUTANT)		roletext="mutant"
 		if(BE_TRAITOR)		roletext="traitor"
 		if(BE_OPERATIVE)	roletext="operative"
 		if(BE_WIZARD)		roletext="wizard"
