@@ -798,6 +798,7 @@
 	icon_state = "angel"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
 	New(var/loc, var/potency = 35)
+		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 			reagents.add_reagent("amatoxin", 13+round(potency / 3, 1))

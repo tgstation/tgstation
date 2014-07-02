@@ -14,7 +14,10 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
-	if(usr)
+	if(usr && usr.mind)
+		if(!usr.mind.miming)
+			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
+			return
 		invocation = "<B>[usr.real_name]</B> looks as if a wall is in front of them."
 	else
 		invocation_type ="none"

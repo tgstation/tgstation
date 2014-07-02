@@ -299,3 +299,31 @@
 		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
 			return 1
 	return 0
+
+/area/proc/clear_docking_area()
+	var/list/dstturfs = list()
+	var/throwy = world.maxy
+
+	for(var/turf/T in src)
+		dstturfs += T
+		if(T.y < throwy)
+			throwy = T.y
+
+	// hey you, get out of the way!
+	for(var/turf/T in dstturfs)
+		// find the turf to move things to
+		var/turf/D = locate(T.x, throwy - 1, T.z)
+		for(var/atom/movable/AM as mob|obj in T)
+			//mobs take damage
+			if(istype(AM, /mob/living))
+				var/mob/living/living_mob = AM
+				living_mob.Paralyse(10)
+				living_mob.take_organ_damage(80)
+			//Anything not bolted down is moved, everything else is destroyed
+			AM.anchored = 0
+			AM.Move(D)
+		if(istype(T, /turf/simulated))
+			del(T)
+
+	for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
+		qdel(bug)
