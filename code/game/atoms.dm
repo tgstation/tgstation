@@ -70,6 +70,8 @@
 
 	//world << "[type] - [tag] - [x].[y].[z]"
 
+	density = 0
+
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
 
