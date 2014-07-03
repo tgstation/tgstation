@@ -112,6 +112,11 @@
 	desc = "\"Singulo\" brand spinning toy."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is putting his head into the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /*
  * Toy gun: Why isnt this an /obj/item/weapon/gun?
@@ -613,6 +618,11 @@
 	desc = "The holy grail of all programmers."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "gooncode"
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</b>"
+		return (BRUTELOSS|BURNLOSS|TOXLOSS|OXYLOSS)
+
 
 /obj/item/toy/minimeteor
 	name = "Mini Meteor"
