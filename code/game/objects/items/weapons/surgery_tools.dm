@@ -826,7 +826,7 @@ LOOK FOR SURGERY.DM*/
 	
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is eating the [src.name]! It looks like \he's  trying to commit suicide!</b>" //Don't eat glue kids.
-		return (BRUTELOSS)
+		return (TOXLOSS)
 
 
 /obj/item/weapon/FixOVein
