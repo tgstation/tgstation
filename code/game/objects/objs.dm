@@ -216,13 +216,14 @@ a {
 	return
 
 /mob/proc/unset_machine()
-	if(machine._using)
-		machine._using -= src
+	if(machine)
+		if(machine._using)
+			machine._using -= src
 
-		if(!machine._using.len)
-			machine._using = null
+			if(!machine._using.len)
+				machine._using = null
 
-	machine = null
+		machine = null
 
 /mob/proc/set_machine(const/obj/O)
 	unset_machine()

@@ -28,7 +28,7 @@
 	return
 
 
-/client/proc/debug_controller(controller in list("Air", "Cameras", "Configuration", "Emergency Shuttle", "failsafe", "garbage", "Jobs", "lighting", "master", "pAI", "Radio", "Sun", "Supply Shuttle", "Ticker"))
+/client/proc/debug_controller(controller in list("Air", "Cameras", "Configuration", "Emergency Shuttle", "failsafe", "Jobs", "lighting", "master", "pAI", "Radio", "Sun", "Supply Shuttle", "Ticker"))
 	set category = "Debug"
 	set name = "debug controller"
 	set desc = "debug the various periodic loop controllers for the game (be careful!)."
@@ -49,9 +49,6 @@
 		if ("lighting")
 			debug_variables(lighting_controller)
 			feedback_add_details("admin_verb", "dlighting")
-		if ("garbage")
-			debug_variables(garbage)
-			feedback_add_details("admin_verb", "dgarbage")
 		if("Air")
 			debug_variables(air_master)
 			feedback_add_details("admin_verb","DAir")

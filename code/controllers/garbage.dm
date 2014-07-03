@@ -2,41 +2,38 @@
 #define GC_COLLECTION_TIMEOUT (10 SECONDS)
 #define GC_FORCE_DEL_PER_TICK 20
 //#define GC_DEBUG
+var/list/meowww = new
+var/datum/garbage_collector/garbageCollector
 
-var/global/datum/controller/garbage_collector/garbage
+/client/verb/bwoink()
+	set name = "bwoink"
+	set desc = "bwoink"
+	set category = "Debug"
 
-/datum/controller/garbage_collector
-	processing_interval = GC_COLLECTION_TIMEOUT
+	for(var/A in meowww)
+		usr << A
 
-	var/list/queue = list()
+/datum/garbage_collector
+	var/list/queue = new
 	var/del_everything = 0
 
 	// To let them know how hardworking am I :^).
 	var/dels_count = 0
 	var/hard_dels = 0
+	var/processing = 1
 
-/datum/controller/garbage_collector/New()
-	. = ..()
-
-	if (garbage != src)
-		if (istype(garbage))
-			recover()
-			qdel(garbage)
-
-		garbage = src
-
-/datum/controller/garbage_collector/proc/addTrash(const/datum/D)
-	if (isnull(D))
+/datum/garbage_collector/proc/addTrash(const/datum/D)
+	if(!D)
 		return
 
-	if (del_everything)
-		del D
+	if(del_everything)
+		del(D)
 		hard_dels++
 		dels_count++
 		return
 
 	if(!istype(D, /atom/movable))
-		del D
+		del(D)
 		hard_dels++
 		dels_count++
 		return
@@ -47,79 +44,60 @@ var/global/datum/controller/garbage_collector/garbage
 	queue -= "\ref[AM]"
 	queue["\ref[AM]"] = timeofday
 
-/datum/controller/garbage_collector/proc/process()
-	processing = 1
+/datum/garbage_collector/proc/process()
+	if(processing)
+		var/remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
+		var/remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
+		var/collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
 
-	spawn(0)
-		var/remainingCollectionPerTick
-		var/remainingForceDelPerTick
-		var/collectionTimeScope
+		while(queue.len && --remainingCollectionPerTick >= 0)
+			var/refID = queue[1]
+			var/destroyedAtTime = queue[refID]
 
-		while(1)
-			iteration++
+			if(destroyedAtTime > collectionTimeScope)
+				break
 
-			if(processing)
-				remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
-				remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
-				collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
+			var/atom/movable/A = locate(refID)
 
-				while(queue.len && --remainingCollectionPerTick >= 0)
-					var/refID = queue[1]
-					var/destroyedAtTime = queue[refID]
+			// Something's still referring to the qdel'd object. Kill it.
+			if(A && A.timeDestroyed == destroyedAtTime)
+				if(remainingForceDelPerTick <= 0)
+					break
 
-					if(destroyedAtTime > collectionTimeScope)
-						break
+				#ifdef GC_DEBUG
+				WARNING("gc process force delete [A.type]")
+				#endif
 
-					var/atom/movable/A = locate(refID)
+				meowww |= "[A.type]"
 
-					// Something's still referring to the qdel'd object. Kill it.
-					if(A && A.timeDestroyed == destroyedAtTime)
-						if(remainingForceDelPerTick <= 0)
-							break
+				del(A)
 
-						#ifdef GC_DEBUG
-						WARNING("gc process force delete [A.type]")
-						#endif
+				hard_dels++
+				remainingForceDelPerTick--
 
-						del A
-
-						hard_dels++
-						remainingForceDelPerTick--
-
-					queue.Cut(1, 2)
-					dels_count++
-
-			sleep(processing_interval)
+			queue.Cut(1, 2)
+			dels_count++
 
 #ifdef GC_DEBUG
 #undef GC_DEBUG
 #endif
-
-/datum/controller/garbage_collector/recover()
-	. = ..()
-	iteration = garbage.iteration
-	del_everything = garbage.del_everything
-	queue = garbage.queue.Copy()
-	dels_count = garbage.dels_count
-	hard_dels = garbage.hard_dels
-	processing_interval = garbage.processing_interval
 
 #undef GC_FORCE_DEL_PER_TICK
 #undef GC_COLLECTION_TIMEOUT
 #undef GC_COLLECTIONS_PER_TICK
 
 /proc/qdel(const/O)
-	if (isnull(O))
+	if (!O)
 		return
 
-	if (isnull(garbage))
-		del O
+	if (!garbageCollector)
+		del(O)
 		return
 
 	if (!istype(O, /datum))
-		del O
-		garbage.hard_dels++
-		garbage.dels_count++
+		del(O)
+		garbageCollector.hard_dels++
+		garbageCollector.dels_count++
 		return
 
 	var/datum/D = O
@@ -128,7 +106,7 @@ var/global/datum/controller/garbage_collector/garbage
 		// Let our friend know they're about to get fucked up.
 		D.Destroy()
 
-		garbage.addTrash(D)
+		garbageCollector.addTrash(D)
 
 /datum
 	// Garbage collection (qdel).
@@ -166,7 +144,7 @@ var/global/datum/controller/garbage_collector/garbage
 	set desc = "Toggle qdel usage between normal and force del()."
 	set category = "Debug"
 
-	garbage.del_everything = !garbage.del_everything
-	world << "<b>GC: qdel turned [garbage.del_everything?"off":"on"].</b>"
-	log_admin("[key_name(usr)] turned qdel [garbage.del_everything?"off":"on"].")
-	message_admins("\blue [key_name(usr)] turned qdel [garbage.del_everything?"off":"on"].", 1)
+	garbageCollector.del_everything = !garbageCollector.del_everything
+	world << "<b>GC: qdel turned [garbageCollector.del_everything ? "off" : "on"].</b>"
+	log_admin("[key_name(usr)] turned qdel [garbageCollector.del_everything ? "off" : "on"].")
+	message_admins("\blue [key_name(usr)] turned qdel [garbageCollector.del_everything ? "off" : "on"].", 1)

@@ -2,6 +2,7 @@
 	return RECYK_BIOLOGICAL
 
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
+	unset_machine()
 	mob_list.Remove(src)
 	dead_mob_list.Remove(src)
 	living_mob_list.Remove(src)
@@ -1183,19 +1184,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null, "Ponet-[master_controller.powernets_cost]\t#[powernets.len]")
 				stat(null, "NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
 				stat(null, "Tick-[master_controller.ticker_cost]")
-				stat(null, "ALL-[master_controller.total_cost]")
+				stat(null, "garbage collector - [master_controller.garbageCollectorCost]")
+				stat(null, "\tqdel - [garbageCollector.del_everything ? "off" : "on"]")
+				stat(null, "\ton queue - [garbageCollector.queue.len]")
+				stat(null, "\ttotal delete - [garbageCollector.dels_count]")
+				stat(null, "\tsoft delete - [garbageCollector.dels_count - garbageCollector.hard_dels]")
+				stat(null, "\thard delete - [garbageCollector.hard_dels]")
+				stat(null, "ALL - [master_controller.total_cost]")
 			else
 				stat(null, "master controller - ERROR")
-
-			if (garbage)
-				stat(null, "/garbage controller ([garbage.processing ? "on" : "off"] - [garbage.iteration])")
-				stat(null, "qdel - [garbage.del_everything ? "off" : "on"]")
-				stat(null, "on queue - [garbage.queue.len]")
-				stat(null, "total delete - [garbage.dels_count]")
-				stat(null, "soft delete - [garbage.dels_count - garbage.hard_dels]")
-				stat(null, "hard delete - [garbage.hard_dels]")
-			else
-				stat(null, "garbage collector controller - ERROR")
 
 	if(listed_turf && client)
 		if(get_dist(listed_turf,src) > 1)
