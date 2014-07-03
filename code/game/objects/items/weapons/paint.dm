@@ -19,7 +19,7 @@ var/global/list/cached_icons = list()
 	var/paint_type = ""
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is taking his hand and eating the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		viewers(user) << "\red <b>[user] is taking \his hand and eating the [src.name]! It looks like \he's  trying to commit suicide!</b>"
 		return (TOXLOSS|OXYLOSS)
 
 
