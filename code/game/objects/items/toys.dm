@@ -114,8 +114,8 @@
 	icon_state = "singularity_s1"
 	
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting his head into the [src.name]! It looks like \he's  trying to commit suicide!</b>"
-		return (BRUTELOSS)
+		viewers(user) << "\red <b>[user] is putting \his head into the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS|TOXLOSS|OXYLOSS)
 
 
 /*
@@ -621,7 +621,7 @@
 	
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</b>"
-		return (BRUTELOSS|BURNLOSS|TOXLOSS|OXYLOSS)
+		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 
 /obj/item/toy/minimeteor
