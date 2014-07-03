@@ -342,6 +342,7 @@
 #include "code\game\machinery\robot_fabricator.dm"
 #include "code\game\machinery\shieldgen.dm"
 #include "code\game\machinery\Sleeper.dm"
+#include "code\game\machinery\slotmachine.dm"
 #include "code\game\machinery\spaceheater.dm"
 #include "code\game\machinery\status_display.dm"
 #include "code\game\machinery\suit_storage_unit.dm"

@@ -427,6 +427,7 @@ var/global/floorIsLava = 0
 			<BR>
 			<A href='?src=\ref[src];secretsadmin=moveferry'>Move Ferry</A><BR>
 			<A href='?src=\ref[src];secretsadmin=moveminingshuttle'>Move Mining Shuttle</A><BR>
+			<A href='?src=\ref[src];secretsadmin=movelaborshuttle'>Move Labor Shuttle</A><BR>
 			<BR>
 			"}
 
