@@ -92,14 +92,6 @@
 
 
 // Return to the Core.
-
-/mob/living/silicon/ai/verb/core()
-	set category = "AI Commands"
-	set name = "AI Core"
-
-	view_core()
-
-
 /mob/living/silicon/ai/proc/view_core()
 
 	current = null

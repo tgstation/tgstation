@@ -63,12 +63,7 @@ var/const/VOX_DELAY = 600
 	popup.open()
 
 
-/mob/living/silicon/ai/verb/announcement()
-
-	set name = "Announcement"
-	set desc = "Create a vocal announcement by typing in the available words to create a sentence."
-	set category = "AI Commands"
-
+/mob/living/silicon/ai/proc/announcement()
 	if(announcing_vox > world.time)
 		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
 		return

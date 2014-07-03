@@ -972,9 +972,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //AI verb and proc for sending PDA messages.
 
-/mob/living/silicon/ai/verb/cmd_send_pdamesg()
-	set category = "AI Commands"
-	set name = "PDA - Send Message"
+/mob/living/silicon/ai/proc/cmd_send_pdamesg()
 	var/list/names = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
@@ -1037,9 +1035,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		usr << "You do not have a PDA. You should make an issue report about this."
 
-/mob/living/silicon/ai/verb/cmd_show_message_log()
-	set category = "AI Commands"
-	set name = "PDA - Show Message Log"
+/mob/living/silicon/ai/proc/cmd_show_message_log()
 	if(usr.stat == 2)
 		usr << "You can't do that because you are dead!"
 		return
