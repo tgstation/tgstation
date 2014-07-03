@@ -30,7 +30,7 @@ RCD
 
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is using the deconstruct function on the [src.name] on \himself! It looks like \he's  trying to commit suicide!</b>"
-		return (death(1)) 
+		return (user.death(1)) 
 
 	New()
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
