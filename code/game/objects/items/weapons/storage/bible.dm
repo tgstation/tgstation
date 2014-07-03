@@ -8,6 +8,11 @@
 	flags = FPRINT | TABLEPASS
 	var/mob/affecting = null
 	var/deity_name = "Christ"
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is farting lightly on the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (gib(user))
+
 
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
