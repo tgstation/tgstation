@@ -55,6 +55,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.25
 	heatmod = 1.5
+	roundstart = 1 // SHINE
 
 /datum/species/plant/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
@@ -91,6 +92,7 @@
 	// A mutation caused by a human being ressurected in a revival pod. These regain health in light, and begin to wither in darkness.
 	name = "Podperson"
 	id = "pod"
+	roundstart = 0 // SHINE
 
 /datum/species/plant/pod/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -117,11 +119,16 @@
 
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
-	name = "???"
+	name = "Shadow" // SHINE changed ??? to Shadow
 	id = "shadow"
 	darksight = 8
 	sexes = 0
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
+	roundstart = 1 // SHINE
+	invis_sight = SEE_INVISIBLE_MINIMUM // SHINE
+	burnmod = 1.25 // SHINE
+	heatmod = 1.5 // SHINE
+	armor = -10 //shine
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -151,6 +158,7 @@
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	ignored_by = list(/mob/living/carbon/slime)
+	roundstart = 1 // SHINE ADD
 
 /*
  JELLYPEOPLE
@@ -179,6 +187,7 @@
 	punchmod = 5
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_head, slot_w_uniform)
 	nojumpsuit = 1
+	roundstart = 1 // SHINE
 
 /*
  ADAMANTINE GOLEMS
@@ -187,6 +196,7 @@
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
 	id = "adamantine"
+	roundstart = 0
 
 /*
  FLIES
@@ -194,9 +204,10 @@
 
 /datum/species/fly
 	// Humans turned into fly-like abominations in teleporter accidents.
-	name = "Human?"
+	name = "Human?" // SHINE changed Human? to Flyperson
 	id = "fly"
 	say_mod = "buzzes"
+	roundstart = 0 // SHINE
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
