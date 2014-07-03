@@ -246,6 +246,9 @@ var/list/ai_list = list()
 
 	return
 
+/mob/living/silicon/ai/cancel_camera()
+	src.view_core()
+
 /mob/living/silicon/ai/verb/toggle_anchor()
         set category = "AI Commands"
         set name = "Toggle Floor Bolts"
