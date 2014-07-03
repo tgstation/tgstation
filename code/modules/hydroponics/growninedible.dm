@@ -47,10 +47,10 @@
 	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
 
 /obj/item/weapon/grown/log/New(var/loc, var/potency = 10)
