@@ -1148,7 +1148,7 @@
 					if(prob(20))
 						spawn(0) H.emote(pick("giggle", "laugh"))
 
-		handle_temperature(breath)
+		handle_temperature(breath, H)
 
 		return 1
 
