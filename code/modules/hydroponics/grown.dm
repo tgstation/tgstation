@@ -128,7 +128,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = "obj/item/seeds/harebellseed"
 	name = "harebell"
-	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweetenï¿½d not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = SLOT_HEAD
 
@@ -301,6 +301,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris
 	name = "ambrosia vulgaris branch"
+	desc = "This is a plant containing various healing chemicals."
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris/add_juice()
 	if(..())
