@@ -572,28 +572,35 @@
 			reagents.add_reagent("moonshine", 1+round((potency / 10), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+//tomaters
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	seed = "/obj/item/seeds/tomatoseed"
 	name = "tomato"
 	desc = "I say to-mah-to, you say tom-mae-to."
 	icon_state = "tomato"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
-	New(var/loc, var/potency = 10)
-		..()
-		if(reagents)
-			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
-			bitesize = 1+round(reagents.total_volume / 2, 1)
+	var/splat = /obj/effect/decal/cleanable/tomato_smudge
 
-	throw_impact(atom/hit_atom)
-		..()
-		new/obj/effect/decal/cleanable/tomato_smudge(src.loc)
-		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-		for(var/atom/A in get_turf(hit_atom))
-			src.reagents.reaction(A)
-		del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
-		return
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/New(var/loc, var/potency = 10)
+	..()
+	if(reagents)
+		reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/proc/squish(atom/target)
+	new splat(src.loc)
+	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
+	for(var/atom/A in get_turf(target))
+		src.reagents.reaction(A)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom)
+	..()
+	squish(hit_atom)
+	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
+	return
+
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer
 	seed = "/obj/item/seeds/killertomatoseed"
 	name = "killer-tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
@@ -604,7 +611,7 @@
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
 	new /mob/living/simple_animal/tomato(user.loc)
@@ -612,12 +619,15 @@
 
 	user << "<span class='notice'>You plant the killer-tomato.</span>"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood
 	seed = "/obj/item/seeds/bloodtomatoseed"
 	name = "blood-tomato"
 	desc = "So bloody...so...very...bloody....AHHHH!!!!"
 	icon_state = "bloodtomato"
-	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood
+	splat = /obj/effect/decal/cleanable/blood/splatter
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -625,22 +635,15 @@
 			reagents.add_reagent("blood", 1+round((potency / 5), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom)
-	..()
-	new/obj/effect/decal/cleanable/blood/splatter(src.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-	src.reagents.reaction(get_turf(hit_atom))
-	for(var/atom/A in get_turf(hit_atom))
-		src.reagents.reaction(A)
-	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
-	return
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
 	seed = "/obj/item/seeds/bluetomatoseed"
 	name = "blue-tomato"
 	desc = "I say blue-mah-to, you say blue-mae-to."
 	icon_state = "bluetomato"
-	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
+	splat = /obj/effect/decal/cleanable/oil
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -648,27 +651,40 @@
 			reagents.add_reagent("lube", 1+round((potency / 5), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom)
-	..()
-	new/obj/effect/decal/cleanable/oil(src.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-	src.reagents.reaction(get_turf(hit_atom))
-	for(var/atom/A in get_turf(hit_atom))
-		src.reagents.reaction(A)
-	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
-	return
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM as mob|obj)
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
-			return
+		var/mob/living/carbon/M = AM
+		var/stun = Clamp(potency / 10, 1, 10)
+		var/weaken = Clamp(potency / 20, 0.5, 5)
+		M.slip(stun, weaken, src)
 
-		M.stop_pulling()
-		M << "\blue You slipped on the [name]!"
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(8)
-		M.Weaken(5)
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
+	seed = "/obj/item/seeds/bluespacetomatoseed"
+	name = "blue-space tomato"
+	desc = "So lubricated, you might slip through space-time."
+	icon_state = "bluespacetomato"
+	origin_tech = "bluespace=3"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
+	New(var/loc, var/potency = 20)
+		..()
+		if(reagents)
+			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+			reagents.add_reagent("singulo", 1+round((potency / 5), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/attack_self(var/mob/user)
+	squish(user)
+	user.drop_item()
+	src.visible_message("<span class='notice'>[user] squashes the [src.name].</span>","<span class='notice'>You hear a smack.</span>")
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/squish(atom/squishee)
+	..()
+	var/teleport_radius = potency/10
+	if(isliving(squishee))
+		new /obj/effect/decal/cleanable/molten_item(squishee.loc) //Leave a pile of goo behind for dramatic effect...
+		do_teleport(squishee, get_turf(squishee), teleport_radius)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed = "/obj/item/seeds/wheatseed"
@@ -954,20 +970,6 @@
 				new/obj/item/weapon/spacecash/c1000(src.loc)
 		spawn(5) //Workaround to keep harvesting from working weirdly.
 			qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
-	seed = "/obj/item/seeds/bluespacetomatoseed"
-	name = "blue-space tomato"
-	desc = "So lubricated, you might slip through space-time."
-	icon_state = "bluespacetomato"
-	origin_tech = "bluespace=3"
-	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
-	New(var/loc, var/potency = 20)
-		..()
-		if(reagents)
-			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
-			reagents.add_reagent("singulo", 1+round((potency / 5), 1))
-			bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
 	seed = "/obj/item/seeds/gatfruit"

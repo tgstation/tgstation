@@ -490,6 +490,11 @@
 	..()
 	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
 	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
+
+	var/area/A = get_area(src)
+	if(A)
+		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
+
 	if(emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall
 
