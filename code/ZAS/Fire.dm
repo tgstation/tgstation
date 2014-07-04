@@ -242,9 +242,9 @@ datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_
 	if(oxygen && (toxins || fuel || liquid))
 		if(liquid)
 			return 1
-		if(toxins >= 0.1)
+		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
 			return 1
-		if(fuel && fuel.moles >= 0.1)
+		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
 			return 1
 
 	return 0
@@ -257,9 +257,9 @@ datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fu
 	if(oxygen && (toxins || fuel || liquid))
 		if(liquid)
 			return 1
-		if (toxins >= MOLES_PLASMA_VISIBLE)
+		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= MOLES_PLASMA_VISIBLE)
 			return 1
-		if(fuel && fuel.moles >= 0.1)
+		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
 			return 1
 
 	return 0
