@@ -132,9 +132,9 @@
 			dat += "<A href='?src=\ref[src];action=activate'>Activate</A><A href='?src=\ref[src];action=detach'>Detach Container</A>"
 			dat += "<h3>Food:</h3>"
 			dat += "<div class='statusDisplay'>"
-			dat += "10 milk: <A href='?src=\ref[src];action=create;item=milk'>Make</A> ([20/efficiency])<BR>"
-			dat += "10 cream: <A href='?src=\ref[src];action=create;item=cream'>Make</A> ([30/efficiency])<BR>"
-			dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=meat'>Make</A> ([250/efficiency])"
+			dat += "10 milk: <A href='?src=\ref[src];action=create;item=milk'>Make</A><A href='?src=\ref[src];action=create;item=milk5'>x5</A> ([20/efficiency])<BR>"
+			dat += "10 cream: <A href='?src=\ref[src];action=create;item=cream'>Make</A><A href ='?src=\ref[src];action=create;item=cream5'>x5</A> ([30/efficiency])<BR>"
+			dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=meat'>Make</A><A href ='?src=\ref[src];action=create;item=meat5'>x5</A>([250/efficiency])"
 			dat += "</div>"
 			dat += "<h3>Nutrients:</h3>"
 			dat += "<div class='statusDisplay'>"
@@ -151,6 +151,15 @@
 			dat += "Botanical gloves: <A href='?src=\ref[src];action=create;item=gloves'>Make</A> ([250/efficiency])<BR>"
 			dat += "Utility belt: <A href='?src=\ref[src];action=create;item=tbelt'>Make</A> ([300/efficiency])<BR>"
 			dat += "Leather Satchel: <A href='?src=\ref[src];action=create;item=satchel'>Make</A> ([400/efficiency])<BR>"
+			dat += "</div>"
+			dat += "<h3>Botany Sprays:</h3>"
+			dat += "<div class='statusDisplay'>"
+			dat += "Pest Spray: <A href='?src=\ref[src];action=create;item=pest'>Make</A><A href='?src=\ref[src];action=create;item=pest5'>x5</A> ([10/efficiency])<BR>"
+			dat += "Plant-B-Gone: <A href='?src=\ref[src];action=create;item=plant'>Make</A><A href='?src=\ref[src];action=create;item=plant5'>x5</A> ([50/efficiency])<BR>"
+			dat += "</div>"
+			dat += "<h3>Cosmetic:</h3>"
+			dat += "<div class='statusDisplay'>"
+			dat += "Carpeting: <A href='?src=\ref[src];action=create;item=carpet'>Make</A><A href='?src=\ref[src];action=create;item=carpet10'>x10</A><A href='?src=\ref[src];action=create;item=carpet30'>x30</A><A href='?src=\ref[src];action=create;item=carpet50'>x50</A> ([10/efficiency])<BR>"
 			dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -214,6 +223,20 @@
 		if("meat")
 			if (check_cost(250/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+		if("milk5")
+			if (check_cost(100/efficiency)) return 0
+			else beaker.reagents.add_reagent("milk",50)
+		if("cream5")
+			if (check_cost(150/efficiency)) return 0
+			else beaker.reagents.add_reagent("cream",50)
+		if("meat5")
+			if (check_cost(1250/efficiency)) return 0
+			else
+				new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
 		if("ez")
 			if (check_cost(10/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
@@ -229,15 +252,21 @@
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
 		if("l4z5")
 			if (check_cost(100/efficiency)) return 0
 			else
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
 		if("rh5")
 			if (check_cost(125/efficiency)) return 0
 			else
+				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
 				new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
@@ -262,6 +291,40 @@
 		if("satchel")
 			if (check_cost(400/efficiency)) return 0
 			else new/obj/item/weapon/storage/backpack/satchel(src.loc)
+		if("pest")
+			if (check_cost(10/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
+		if("plant")
+			if (check_cost(50/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+		if("pest5")
+			if (check_cost(50/efficiency)) return 0
+			else
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/pestkiller(src.loc)
+		if("plant5")
+			if (check_cost(250/efficiency)) return 0
+			else
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+				new/obj/item/weapon/reagent_containers/glass/bottle/pestplant/plantkiller(src.loc)
+		if("carpet")
+			if (check_cost(10/efficiency)) return 0
+			else new/obj/item/stack/tile/carpet(src.loc)
+		if("carpet10")
+			if (check_cost(100/efficiency)) return 0
+			else new/obj/item/stack/tile/carpet{amount=10}(src.loc)
+		if("carpet30")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/stack/tile/carpet{amount=30}(src.loc)
+		if("carpet50")
+			if (check_cost(500/efficiency)) return 0
+			else new/obj/item/stack/tile/carpet{amount=50}(src.loc)
 		//if("monkey")
 		//	if (check_cost(500)) return 0
 		//	else new/mob/living/carbon/monkey(src.loc)
