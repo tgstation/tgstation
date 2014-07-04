@@ -30,3 +30,7 @@
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
+
+
+#define BE_CLOSE 1
+//used by canUseTopic(), in the case of a silicon, to select if they need to be next to the atom

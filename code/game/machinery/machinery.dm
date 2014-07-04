@@ -227,13 +227,17 @@ Class Procs:
 		return
 	return 1
 
-/mob/living/silicon/ai/canUseTopic()
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat)
+		return
+	if(be_close && !in_range(M, src))
 		return
 	return 1
 
-/mob/living/silicon/robot/canUseTopic()
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat || lockcharge || stunned || weakened)
+		return
+	if(be_close && !in_range(M, src))
 		return
 	return 1
 

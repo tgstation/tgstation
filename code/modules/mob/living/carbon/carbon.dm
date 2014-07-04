@@ -420,7 +420,7 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 	//strip panel
-	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+	if(usr.canUseTopic(src, BE_CLOSE))
 		if(href_list["internal"])
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
