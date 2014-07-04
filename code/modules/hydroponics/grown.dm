@@ -289,7 +289,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia //abstract type
 	seed = "/obj/item/seeds/ambrosiavulgaris"
 	name = "ambrosia branch"
-	desc = "This is a plant. "
+	desc = "This is a plant."
 	icon_state = "ambrosiavulgaris"
 	slot_flags = SLOT_HEAD
 
@@ -301,6 +301,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris
 	name = "ambrosia vulgaris branch"
+	desc = "This is a plant containing various healing chemicals."
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris/add_juice()
 	if(..())
