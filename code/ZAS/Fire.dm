@@ -134,16 +134,8 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 ///////////////////////////////// FLOW HAS BEEN CREATED /// DONT DELETE THE FIRE UNTIL IT IS MERGED BACK OR YOU WILL DELETE AIR ///////////////////////////////////////////////
 
 	if(flow)
+		flow.zburn(liquid, 1)
 
-		if(flow.check_recombustability(liquid))
-			//Ensure flow temperature is higher than minimum fire temperatures.
-				//this creates some energy ex nihilo but is necessary to get a fire started
-				//lets just pretend this energy comes from the ignition source and dont mention this again
-			//flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
-
-			//burn baby burn!
-
-			flow.zburn(liquid,1)
 		//merge the air back
 		S.assume_air(flow)
 
