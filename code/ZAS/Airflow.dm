@@ -389,8 +389,10 @@ mob/living/carbon/human/airflow_hit(atom/A)
 //	for(var/mob/M in hearers(src))
 //		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
 	//playsound(get_turf(src), "punch", 25, 1, -1)
-	loc:add_blood(src)
-	bloody_body(src)
+	if(prob(33))
+		loc:add_blood(src)
+		bloody_body(src)
+
 	var/b_loss = airflow_speed * zas_settings.Get(/datum/ZAS_Setting/airflow_damage)
 
 	var/blocked = run_armor_check("head","melee")
