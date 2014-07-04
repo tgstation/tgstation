@@ -363,7 +363,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/borgs = list()
 
 	for(var/mob/living/silicon/robot/A in player_list)
-		if(A.stat == 2 || A.connected_ai || A.scrambledcodes)
+		if(DEAD == A.stat || A.connected_ai || A.scrambledcodes)
 			continue
 
 		var/name = "[A.real_name] ([A.modtype] [A.braintype])"
