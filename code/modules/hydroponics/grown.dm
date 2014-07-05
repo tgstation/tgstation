@@ -614,7 +614,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(user.loc)
+	user << "<span class='notice'>You begin to awaken the Killer Tomato.</span>"
+	sleep(30)
+	var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(src.loc)
 	K.maxHealth += round(endurance / 3)
 	K.melee_damage_lower += round(potency / 10)
 	K.melee_damage_upper += round(potency / 10)
@@ -622,7 +624,7 @@
 	K.health = K.maxHealth
 	qdel(src)
 
-	user << "<span class='notice'>You plant the killer-tomato.</span>"
+	K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood
