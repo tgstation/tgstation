@@ -633,7 +633,8 @@
 	desc = "So bloody...so...very...bloody....AHHHH!!!!"
 	icon_state = "bloodtomato"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood
-	splat = /obj/effect/decal/cleanable/blood/splatter
+
+	splat = /obj/effect/gibspawner/generic
 
 	New(var/loc, var/potency = 10)
 		..()
