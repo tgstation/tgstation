@@ -279,7 +279,7 @@
 			if(prob(25)) qdel(src)
 
 		else //weapons with subtypes
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
+			if(istype(W, /obj/item/weapon/melee/energy/sword/saber)) qdel(src)
 			else if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0, user)) qdel(src)

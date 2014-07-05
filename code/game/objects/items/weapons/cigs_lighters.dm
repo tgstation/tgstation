@@ -117,8 +117,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(M.lit == 1) //checking for lit = 1 instead of just lit prevents cigarettes being lit by used matches
 			light("<span class='notice'>[user] lights their [name] with [W].</span>")
 
-	else if(istype(W, /obj/item/weapon/melee/energy/sword))
-		var/obj/item/weapon/melee/energy/sword/S = W
+	else if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
+		var/obj/item/weapon/melee/energy/sword/saber/S = W
 		if(S.active)
 			light("<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>")
 
