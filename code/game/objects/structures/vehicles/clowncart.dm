@@ -6,8 +6,9 @@
 	anchored = 1
 	density = 1
 	nick = "honkin' ride"
+	flags = OPENCONTAINER
 	var/activated = 0 //honk to activate, it stays active while you sit in it, and will deactivate when you unbuckle
-	var/fuel = 0 //banana-type items add fuel, you can't ride without fuel
+	//var/fuel = 0 //banana-type items add fuel, you can't ride without fuel
 	var/mode = 0 	//0 - normal, 1 - leave grafitti behind, 2 - leave banana peels behind
 					//modes 1 and 2 consume extra fuel
 					//use bananium coins to cycle between modes
@@ -17,7 +18,7 @@
 	var/trail //trail from banana pie
 	var/colour1 = "#000000" //change it by using stamps
 	var/colour2 = "#3D3D3D" //default is boring black
-	var/emagged = 0			//does nothing yet
+	var/emagged = 0			//does something maybe
 	var/honk				//timer to prevent spamming honk
 /obj/structure/stool/bed/chair/vehicle/clowncart/process()
 	icon_state = "clowncart0"
@@ -29,13 +30,17 @@
 		if(!buckled_mob)
 			activated = 0
 			icon_state = "clowncart0"
-	if(fuel < 0)
-		fuel = 0
+	//if(fuel < 0)
+	//	fuel = 0
 	if(trail < 0)
 		trail = 0
 
 /obj/structure/stool/bed/chair/vehicle/clowncart/New()
-	fuel = 0
+	//fuel = 0
+	var/datum/reagents/R = new/datum/reagents(5000)
+	reagents = R
+	R.my_atom = src
+	reagents.add_reagent("banana",175)
 
 	processing_objects |= src
 	handle_rotation()
@@ -43,7 +48,8 @@
 /obj/structure/stool/bed/chair/vehicle/clowncart/examine()
 	set src in usr
 	usr << "\icon[src] [desc]"
-	usr << "This [nick] contains [fuel] unit\s of banana essence!"
+	var/tmp/difference = reagents.total_volume - reagents.get_reagent_amount("banana")
+	usr << "This [nick] contains [reagents.get_reagent_amount("banana")] unit\s of banana juice[(difference != 0 ? ", and [difference] unit\s of something else!" : "!")]" //yeah
 	if(maximum_health > 100)
 		usr << "It is reinforced with [(maximum_health-100)/20] bananium sheets."
 	switch(health)
@@ -64,14 +70,14 @@
 		add_fingerprint(user)
 		user.visible_message("\blue [user] honks at the [src].", "\blue You honk at \the [src]")
 		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, 1)
-		if(fuel <= 5)
+		if(reagents.get_reagent_amount("banana") <= 5)
 			if(activated)
 				src.visible_message("\red The [nick] lets out a last honk before running out of fuel.")
 				playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, 1)
 				activated = 0
-				fuel = 0
+				reagents.remove_reagent("banana", 5)
 			else
-				user << "\red The [src.name] doesn't have enough banana essence!"
+				user << "\red The [src.name] doesn't have enough banana juice!"
 		else
 			spawn(5)
 				activated = 1
@@ -81,19 +87,19 @@
 	//banana type items add fuel to the ride
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice))
 		user.visible_message("\blue [user] puts the [W.name] in the [src].", "\blue You put the [W.name] in the [src].")
-		fuel += 75
+		reagents.add_reagent("banana", 75)
 		del(W)
 	else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown/banana))
 		user.visible_message("\blue [user] puts the [W.name] in the [src].", "\blue You put the [W.name] in the [src].")
-		fuel += 100
+		reagents.add_reagent("banana", 100)
 		del(W)
 	else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread))
 		user.visible_message("\blue [user] puts the [W.name] in the [src].", "\blue You put the [W.name] in the [src].")
-		fuel += 375
+		reagents.add_reagent("banana", 375)
 		del(W)
 	else if(istype(W, /obj/item/weapon/bananapeel)) //banana peels
 		user.visible_message("\blue [user] puts the [W.name] in the [src].", "\blue You put the [W.name] in the [src].")
-		fuel += 5
+		reagents.add_reagent("banana", 10)
 		health += 5 //banana peels repair some of the damage
 		if(health > maximum_health) health = maximum_health
 		empstun = 0 //and disable emp stun
@@ -105,7 +111,6 @@
 		del(W)
 	else if(istype(W, /obj/item/stack/sheet/mineral/clown)) //bananium
 		user << "\blue You reinforce the [src] with [W.name]."
-		fuel += 10
 		maximum_health += 20
 		health += 20
 
@@ -115,7 +120,7 @@
 		user.visible_message("\blue [user] puts the [W.name] in the [src].", "\blue You put the [W.name] in the [src].")
 		playsound(get_turf(src), 'sound/effects/bubbles.ogg', 50, 1)
 		usr << "\red The [W.name] starts boiling inside the [src]!"
-		fuel += 175
+		reagents.add_reagent("banana", 175)
 		trail += 5
 		del(W)
 	else if(istype(W, /obj/item/weapon/coin/clown)) //bananium coin
@@ -138,7 +143,7 @@
 				user << "\red SmartCrayon II disappears in a puff of art!"
 				spawn(5)
 					playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 1)
-					user << "\blue You hear a ping as the SynthPeel Generator starts transforming banana essence into slippery peels."
+					user << "\blue You hear a ping as the SynthPeel Generator starts transforming banana juice into slippery peels."
 		del(W)
 	else if(istype(W, /obj/item/toy/crayon/)) //any crayon
 		if(mode == 1)
@@ -155,6 +160,21 @@
 					user << "\blue Painting the floor!"
 				else
 					user << "\blue Printing the following text: [printing_text]."
+	else if(istype(W, /obj/item/toy/waterflower)) //water flower
+		user << "You plug the [W] into the [src]!"//using it on the clown cart will transfer anything in the fuel tank (other than banana juice) into the flower
+		if(maximum_health >= 120)
+			if(do_after(user, 5))
+				W.reagents.remove_any(10)
+				var/tmp/bananas = reagents.get_reagent_amount("banana")
+				reagents.remove_reagent("banana", bananas) //removing banan so it doesn't get transferred into the water flower
+				if(reagents.total_volume >= 10)
+					user << "The HONKtechs pump starts recharging the [W]."
+					reagents.trans_to(W, 10)
+				else
+					user << "\red There doesn't seem to be anything other than banana juice in the [src]!"
+				reagents.add_reagent("banana", bananas) //adding banan back
+		else
+			user << "\red The HONKtechs pump is not strong enough to do that yet. Reinforce it with bananium first."
 	else if(istype(W, /obj/item/weapon/card/emag)) //emag
 		if(!emagged)
 			emagged = 1
@@ -205,7 +225,7 @@
 		if(user)
 			user << "\red \the [src] is unresponsive."
 		return
-	if(fuel <= 0) //no fuel
+	if(reagents.total_volume <= 0) //no fuel
 		if(user)
 			user << "\red \the [src] has no fuel!"
 			activated = 0
@@ -216,7 +236,7 @@
 		update_mob()
 		handle_rotation()
 		if(get_turf(src) <> old_pos) //if we actually moved
-			if(maximum_health < 300) fuel -= 1 //10 sheets of bananium required to drive without using fuel
+			if(maximum_health < 300) reagents.remove_reagent("banana", 1) //10 sheets of bananium required to drive without using fuel
 			if(trail > 0)
 				new /obj/effect/decal/cleanable/pie_smudge/(old_pos)
 				trail--
@@ -231,7 +251,7 @@
 				if(!istype(old_pos,/turf/simulated/floor)) //no drawing in open space
 					return
 				if(printing_text != "nothing" && printing_text != "")	//"nothing" and "" won't draw anything
-					fuel -= 2											//"graffiti" and "rune" will draw graffiti and runes
+					reagents.remove_reagent("banana", 2)											//"graffiti" and "rune" will draw graffiti and runes
 					if(printing_text == "graffiti" || printing_text == "rune") //"paint" will paint floor tiles with selected colour
 						new /obj/effect/decal/cleanable/crayon(old_pos, colour1, colour2, printing_text)
 					else
@@ -259,10 +279,10 @@
 			if(mode == 2) //peel
 				if(!emagged)
 					new /obj/item/weapon/bananapeel/(old_pos)
-					fuel -= 4
+					reagents.remove_reagent("banana",4)
 				else
 					new /obj/item/weapon/bananapeel/traitorpeel/(old_pos)
-					fuel -= 2
+					reagents.remove_reagent("banana",2)
 		/*
 		if(istype(src.loc, /turf/space) && (!src.Process_Spacemove(0, user)))
 			var/turf/space/S = src.loc
@@ -278,6 +298,6 @@
 	visible_message("<span class='warning'>The honkin' ride explodes in a puff of potassium!</span>")
 	playsound(get_turf(src), 'sound/items/bikehorn.ogg', 75, 1)
 	explosion(src.loc,-1,0,3,7,10)
-	for(var/a=0, a<(fuel*0.25), a++) //spawn banana peels in place of the cart
+	for(var/a=0, a<round(reagents.total_volume*0.25), a++) //spawn banana peels in place of the cart
 		new /obj/item/weapon/bananapeel/traitorpeel( get_turf(src) )
 	del(src)
