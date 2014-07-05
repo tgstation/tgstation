@@ -205,7 +205,7 @@
 	icon_state = "seed-eggy"
 	species = "eggy"
 	plantname = "Eggplants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/egg
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/eggy
 	lifespan = 75
 	endurance = 15
 	maturation = 6
@@ -907,7 +907,7 @@
 	icon_state = "seed-cash"
 	species = "cashtree"
 	plantname = "Money Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/money
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/moneyfruit
 	lifespan = 55
 	endurance = 45
 	maturation = 6

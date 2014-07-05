@@ -854,15 +854,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	parent.update_tray()
 
-/obj/item/seeds/eggyseed/harvest(mob/user = usr)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
-	var/t_amount = 0
-
-	while(t_amount < getYield())
-		new product(user.loc)
-		t_amount++
-
-	parent.update_tray()
 
 /obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc

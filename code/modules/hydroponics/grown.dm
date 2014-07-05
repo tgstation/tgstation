@@ -533,6 +533,21 @@
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+obj/item/weapon/reagent_containers/food/snacks/grown/eggy
+	seed = "/obj/item/seeds/eggyseed"
+	name = "Egg-plant"
+	desc = "There MUST be a chicken inside."
+	icon_state = "eggplant"
+	New(var/loc, var/potency = 10)
+		..()
+		if(reagents)
+			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
+obj/item/weapon/reagent_containers/food/snacks/grown/eggy/attack_self(mob/user as mob)
+	new /obj/item/weapon/reagent_containers/food/snacks/egg(user.loc)
+	qdel(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	seed = "/obj/item/seeds/soyaseed"
 	name = "soybeans"
@@ -951,33 +966,37 @@
 	user.AddLuminosity(round(-potency/10,1))
 	SetLuminosity(round(potency/10,1))
 
-//This object is just a transition object. All it does is make dosh and delete itself. -Cheridan
-/obj/item/weapon/reagent_containers/food/snacks/grown/money
+/obj/item/weapon/reagent_containers/food/snacks/grown/moneyfruit
 	seed = "/obj/item/seeds/cashseed"
-	name = "dosh"
-	desc = "Green and lush."
-	icon_state = "spawner"
+	name = "Money Fruit"
+	desc = "Looks like a lemon with someone buldging from the inside."
+	icon_state = "lemon"
 	New(var/loc, var/potency = 10)
 		..()
-		switch(potency)
-			if(0 to 10)
-				new/obj/item/weapon/spacecash/(src.loc)
-			if(11 to 20)
-				new/obj/item/weapon/spacecash/c10(src.loc)
-			if(21 to 30)
-				new/obj/item/weapon/spacecash/c20(src.loc)
-			if(31 to 40)
-				new/obj/item/weapon/spacecash/c50(src.loc)
-			if(41 to 50)
-				new/obj/item/weapon/spacecash/c100(src.loc)
-			if(51 to 60)
-				new/obj/item/weapon/spacecash/c200(src.loc)
-			if(61 to 80)
-				new/obj/item/weapon/spacecash/c500(src.loc)
-			else
-				new/obj/item/weapon/spacecash/c1000(src.loc)
-		spawn(5) //Workaround to keep harvesting from working weirdly.
-			qdel(src)
+		if(reagents)
+			reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/moneyfruit/attack_self(mob/user as mob)
+	switch(potency)
+		if(0 to 10)
+			new/obj/item/weapon/spacecash/(user.loc)
+		if(11 to 20)
+			new/obj/item/weapon/spacecash/c10(user.loc)
+		if(21 to 30)
+			new/obj/item/weapon/spacecash/c20(user.loc)
+		if(31 to 40)
+			new/obj/item/weapon/spacecash/c50(user.loc)
+		if(41 to 50)
+			new/obj/item/weapon/spacecash/c100(user.loc)
+		if(51 to 60)
+			new/obj/item/weapon/spacecash/c200(user.loc)
+		if(61 to 80)
+			new/obj/item/weapon/spacecash/c500(user.loc)
+		else
+			new/obj/item/weapon/spacecash/c1000(user.loc)
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
 	seed = "/obj/item/seeds/gatfruit"
