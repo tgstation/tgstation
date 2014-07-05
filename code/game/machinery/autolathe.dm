@@ -378,14 +378,17 @@ var/global/list/autolathe_recipes_hidden = list( \
 		max_g_amount = tot_rating
 
 	New()
-		..()
-		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/autolathe(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-		component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+		. = ..()
+
+		component_parts = newlist(
+			/obj/item/weapon/circuitboard/autolathe,
+			/obj/item/weapon/stock_parts/matter_bin,
+			/obj/item/weapon/stock_parts/matter_bin,
+			/obj/item/weapon/stock_parts/matter_bin,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/console_screen
+		)
+
 		RefreshParts()
 
 		src.L = autolathe_recipes
