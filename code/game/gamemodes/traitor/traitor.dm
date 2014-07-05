@@ -250,7 +250,10 @@
 
 			text += "<br>"
 
+		text += "<br><b>The code phrases were:</b> <font color='red'>[syndicate_code_phrase]</font><br>\
+		<b>The code responses were:</b> <font color='red'>[syndicate_code_response]</font><br>"
 		world << text
+
 	return 1
 
 
