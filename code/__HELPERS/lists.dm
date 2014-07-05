@@ -154,17 +154,25 @@ proc/listclearnulls(list/list)
 			output += L[i]
 	return output
 
-//Randomize: Return the list in a random order
-/proc/shuffle(var/list/shufflelist)
-	if(!shufflelist)
-		return
-	var/list/new_list = list()
-	var/list/old_list = shufflelist.Copy()
-	while(old_list.len)
-		var/item = pick(old_list)
-		new_list += item
-		old_list -= item
-	return new_list
+/*
+ * Using Fisher-Yates shuffle modern algorithm.
+ * Stephen001 snippet at http://www.byond.com/forum/?post=1604987#comment10716726
+ */
+/proc/shuffle(var/list/L)
+	var/length = length(L)
+
+	if(length < 2)
+		return L
+
+	var/j
+
+	for (var/i in 1 to length)
+		j = rand(i, length)
+
+		if(i != j)
+			L.Swap(i, j)
+
+	return L
 
 //Return a list with no duplicate entries
 /proc/uniquelist(var/list/L)
