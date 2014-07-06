@@ -29,15 +29,15 @@
 		target.LAssailant = src
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-		visible_message("\red [src] has grabbed [target]!")
-		target << "\red <b>You feel something suddenly grab you around the neck from behind!</b> Everything goes black..."
+		visible_message("\red [src] snapped [target]'s neck !")
+		target << "\red <b>In the blink of an eye, something grabs you and snaps your neck!</b> Everything goes black..."
 
 		G.state = GRAB_KILL
 
 		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid. [G ? "\red The sculpture is holding [G.affecting] in a vice-like grip." : ""]"
-		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been grabbed by SCP-173, and is being strangled!</font>")
-		log_admin("[target] ([target.ckey]) has been grabbed and is being strangled by SCP-173.")
-		message_admins("Alert: [target.real_name] has been grabbed and is being strangled by SCP-173.") //Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.
+		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been grabbed by SCP-173, and had his neck snapped!</font>")
+		log_admin("[target] ([target.ckey]) has been grabbed and had his neck snapped.")
+		message_admins("Alert: [target.real_name] has been grabbed and had his neck snapped.") //Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.
 
 /mob/living/simple_animal/sculpture/proc/Escape()
 	var/list/turfs = new/list()
@@ -73,7 +73,7 @@
 	if(hibernate && G && G.state == GRAB_KILL)
 		if(G)
 			G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-			visible_message("\red [src] suddenly loosens it's grip due to hibernate!")
+			visible_message("\red [src] suddenly loosens it's grip and seems to hibernate!")
 			G.state = GRAB_AGGRESSIVE
 		return
 
@@ -88,8 +88,9 @@
 				Escape()
 		observed = 1
 
+	//space part removed to avoid mass driving
 	//can't do anything in space at all
-	if(istype(get_turf(src), /turf/space) || hibernate)
+	if(hibernate)
 		return
 
 	// Grabbing
@@ -102,28 +103,30 @@
 		var/xdif = M.x - src.x
 		var/ydif = M.y - src.y
 		if(abs(xdif) <  abs(ydif))
+			//testing with PERFECT line of sight (aka lined up)
 			//mob is either above or below src
-			if(ydif < 0 && M.dir == NORTH)
+			if(ydif < 0 && xdif == 0 || xdif == 1  && M.dir == NORTH)
 				//mob is below src and looking up
 				observed = 1
 				break
-			else if(ydif > 0 && M.dir == SOUTH)
+			else if(ydif > 0 && xdif == 0 || xdif == 1 && M.dir == SOUTH)
 				//mob is above src and looking down
 				observed = 1
 				break
 		else if(abs(xdif) >  abs(ydif))
 			//mob is either left or right of src
-			if(xdif < 0 && M.dir == EAST)
+			if(xdif < 0 && ydif== 0 || ydif == 1 && M.dir == EAST)
 				//mob is to the left of src and looking right
 				observed = 1
 				break
-			else if(xdif > 0 && M.dir == WEST)
+			else if(xdif > 0 && ydif == 0 || ydif == 1 && M.dir == WEST)
 				//mob is to the right of src and looking left
 				observed = 1
 				break
 		else if (xdif == 0 && ydif == 0)
 			//mob is on the same tile as src
-			observed = 1
+			observed = 0
+			//breaks the sculpture since it's target can observe it, changed to observed = 0
 			break
 
 	//account for darkness
@@ -148,16 +151,17 @@
 				if(G)
 					break
 
-			//find out what mobs we can see
-			var/list/incapacitated = list()
+			//find out what mobs we can see (-tried to- remove sight and doubled range)
+			//var/list/incapacitated = list()
 			var/list/conscious = list()
 			for(var/mob/living/carbon/M in view(7, src))
 				//this may not be quite the right test
 				if(M == src)
 					continue
-				if(M.stat == 1)
-					incapacitated.Add(M)
-				else if(!M.stat)
+				//if(M.stat == 1)
+					//incapacitated.Add(M)
+				//else if(!M.stat)
+				if (!M.stat)
 					conscious.Add(M)
 
 			//pick the nearest valid conscious target
@@ -166,11 +170,12 @@
 				if(!target || get_dist(src, M) < get_dist(src, target))
 					target = M
 
-			if(!target)
+			//Please stop raping incapped people
+			//if(!target)
 				//get an unconscious mob
-				for(var/mob/living/carbon/M in incapacitated)
-					if(!target || get_dist(src, M) < get_dist(src, target))
-						target = M
+				//for(var/mob/living/carbon/M in incapacitated)
+					//if(!target || get_dist(src, M) < get_dist(src, target))
+						//target = M
 			if(target)
 				var/turf/target_turf
 				if(in_darkness)
@@ -199,14 +204,19 @@
 
 				//if we reached them, knock them down and start strangling them
 				if(get_turf(src) == target_turf)
+					GrabMob(target)
 					target.Stun(1)
 					target.Paralyse(1)
-					GrabMob(target)
+					target.apply_damage(105)
+					G.dropped()
+					Escape()
+
+					//if code is fucked, try adding attack here next time (done)
 
 			//if we're not strangling anyone, take a stroll
-			if(!G && prob(10))
+			if(!G && prob(90)) //Changed from 10 to 90, sue me
 				var/list/turfs = new/list()
-				for(var/turf/thisturf in view(7,src))
+				for(var/turf/thisturf in view(20,src)) //You call that a teleport range ?
 					if(istype(thisturf, /turf/space))
 						continue
 					else if(istype(thisturf, /turf/simulated/wall))
@@ -220,6 +230,7 @@
 					turfs += thisturf
 				var/turf/target_turf = pick(turfs)
 
+				//MUH 6 QUADRILLION WINDOWS
 				//rampage along a path to get to it, in the blink of an eye
 				var/turf/next_turf = get_step_towards(src, target_turf)
 				var/num_turfs = get_dist(src,target_turf)
