@@ -713,6 +713,7 @@
 #include "code\game\objects\structures\stool_bed_chair_nest\bed.dm"
 #include "code\game\objects\structures\stool_bed_chair_nest\chairs.dm"
 #include "code\game\objects\structures\stool_bed_chair_nest\stools.dm"
+#include "code\game\objects\structures\vehicles\clowncart.dm"
 #include "code\game\objects\structures\vehicles\gokart.dm"
 #include "code\game\objects\structures\vehicles\vehicle.dm"
 #include "code\game\objects\structures\vehicles\wizmobile.dm"

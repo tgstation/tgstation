@@ -161,6 +161,10 @@
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is burning \his face off with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (FIRELOSS|OXYLOSS)
+
 /obj/item/weapon/weldingtool/New()
 	. = ..()
 //	var/random_fuel = min(rand(10,20),max_fuel)
@@ -451,10 +455,20 @@
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is smashing \his head in with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 /obj/item/weapon/crowbar/red
+	desc = "Rise and shine."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is smashing \his head in with the [src.name]! It looks like \he's done waiting for half life three!</b>"
+		return (BRUTELOSS)
+
 
 /obj/item/weapon/weldingtool/attack(mob/M as mob, mob/user as mob)
 	if(hasorgans(M))

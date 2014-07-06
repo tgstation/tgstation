@@ -154,24 +154,26 @@
 	var/list/recipe_categories[0]
 
 	New()
-		..()
+		. = ..()
 		var/datum/reagents/R = new/datum/reagents(1000)
 		reagents = R
 		R.my_atom = src
 		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/biogenerator
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin
-		component_parts += new /obj/item/weapon/stock_parts/micro_laser
-		component_parts += new /obj/item/weapon/stock_parts/micro_laser
-		component_parts += new /obj/item/weapon/stock_parts/micro_laser
-		component_parts += new /obj/item/weapon/stock_parts/scanning_module
-		component_parts += new /obj/item/weapon/stock_parts/scanning_module
-		component_parts += new /obj/item/weapon/stock_parts/console_screen
-		component_parts += new /obj/item/weapon/stock_parts/console_screen
+
+		component_parts = newlist(
+			/obj/item/weapon/circuitboard/biogenerator,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/matter_bin,
+			/obj/item/weapon/stock_parts/matter_bin,
+			/obj/item/weapon/stock_parts/micro_laser,
+			/obj/item/weapon/stock_parts/micro_laser,
+			/obj/item/weapon/stock_parts/micro_laser,
+			/obj/item/weapon/stock_parts/scanning_module,
+			/obj/item/weapon/stock_parts/scanning_module,
+			/obj/item/weapon/stock_parts/console_screen,
+			/obj/item/weapon/stock_parts/console_screen
+		)
 
 		RefreshParts()
 

@@ -64,6 +64,7 @@
 
 
 /obj/machinery/suit_storage_unit/New()
+	. = ..()
 	src.update_icon()
 	if(SUIT_TYPE)
 		SUIT = new SUIT_TYPE(src)

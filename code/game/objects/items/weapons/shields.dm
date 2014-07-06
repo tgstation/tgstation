@@ -19,6 +19,10 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 	IsShield()
 		return 1
 
@@ -64,6 +68,11 @@
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /obj/item/weapon/cloaking_device
 	name = "cloaking device"

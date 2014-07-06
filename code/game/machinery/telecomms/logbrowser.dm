@@ -1,8 +1,17 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+/obj/machinery/computer/telecomms
+	l_color = "#50A900"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(3)
+		else
+			SetLuminosity(0)
 
 /obj/machinery/computer/telecomms/server
 	name = "Telecommunications Server Monitor"
 	icon_state = "comm_logs"
+
 
 	var/screen = 0				// the screen number:
 	var/list/servers = list()	// the servers located by the computer
@@ -14,6 +23,7 @@
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
 	req_access = list(access_tcomsat)
+
 
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))

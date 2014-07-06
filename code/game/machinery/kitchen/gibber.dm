@@ -19,23 +19,26 @@
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 obj/machinery/gibber/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/gibber
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/capacitor
-	component_parts += new /obj/item/weapon/stock_parts/capacitor
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/gibber,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/micro_laser/high,
+		/obj/item/weapon/stock_parts/micro_laser/high,
+		/obj/item/weapon/stock_parts/micro_laser/high,
+		/obj/item/weapon/stock_parts/micro_laser/high
+	)
+
 	RefreshParts()
 
 /obj/machinery/gibber/attackby(var/obj/item/O as obj, var/mob/user as mob)

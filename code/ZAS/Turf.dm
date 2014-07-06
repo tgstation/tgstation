@@ -41,11 +41,14 @@
 	#ifdef ZLEVELS
 	for(var/d = 1, d < 64, d *= 2)
 	#else
-	//for(var/d = 1, d < 16, d *= 2)
-	for(var/d = 1, d < 10, d *= 2)
+	for(var/d = 1, d < 16, d *= 2)
 	#endif
 
 		var/turf/unsim = get_step(src, d)
+
+		if(!unsim) // Edge of map.
+			continue
+
 		block = unsim.c_airblock(src)
 
 		if(block & AIR_BLOCKED)
@@ -91,11 +94,14 @@
 	#ifdef ZLEVELS
 	for(var/d = 1, d < 64, d *= 2)
 	#else
-	//for(var/d = 1, d < 16, d *= 2)
-	for(var/d = 1, d < 10, d *= 2)
+	for(var/d = 1, d < 16, d *= 2)
 	#endif
 
 		var/turf/unsim = get_step(src, d)
+
+		if(!unsim) // Edge of map.
+			continue
+
 		var/block = unsim.c_airblock(src)
 		if(block & AIR_BLOCKED)
 

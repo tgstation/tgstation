@@ -25,17 +25,20 @@
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 /obj/machinery/chem_dispenser/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/chem_dispenser,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
 	RefreshParts()
 
 /obj/machinery/chem_dispenser/proc/recharge()
@@ -266,23 +269,29 @@
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 /obj/machinery/chem_master/New()
+	. = ..()
+
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	..()
-	component_parts = list()
+
+	component_parts = newlist(
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
 	if(istype(src, /obj/machinery/chem_master/condimaster))
-		component_parts += new /obj/item/weapon/circuitboard/condimaster
+		component_parts += new /obj/item/weapon/circuitboard/condimaster()
 	else
-		component_parts += new /obj/item/weapon/circuitboard/chemmaster3000
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
+		component_parts += new /obj/item/weapon/circuitboard/chemmaster3000()
+
+
 	RefreshParts()
 
 	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
@@ -673,9 +682,12 @@
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 /obj/machinery/computer/pandemic/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/pandemic
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/pandemic
+	)
+
 	RefreshParts()
 
 
@@ -1027,14 +1039,17 @@
 ********************************************************************/
 //Leaving large beakers out of the component part list to try and dodge beaker cloning.
 /obj/machinery/reagentgrinder/New()
-	..()
+	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/reagentgrinder
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/reagentgrinder,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/scanning_module
+	)
+
 	RefreshParts()
 
 	return
