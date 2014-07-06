@@ -1,4 +1,7 @@
 // honk
+#define DAMAGE			1
+#define FIRE			2
+
 /obj/spacepod
 	name = "\improper space pod"
 	desc = "A space pod meant for space travel."
@@ -21,9 +24,15 @@
 	var/inertia_dir = 0
 	var/hatch_open = 0
 	var/next_firetime = 0
+	var/list/pod_overlays
+	var/health = 400
 
 /obj/spacepod/New()
 	. = ..()
+	if(!pod_overlays)
+		pod_overlays = new/list(2)
+		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
+		pod_overlays[FIRE] = image(icon, icon_state="pod_fire")
 	bound_width = 64
 	bound_height = 64
 	dir = EAST
@@ -37,6 +46,70 @@
 	pr_int_temp_processor = new /datum/global_iterator/pod_preserve_temp(list(src))
 	pr_give_air = new /datum/global_iterator/pod_tank_give_air(list(src))
 	equipment_system = new(src)
+
+/obj/spacepod/proc/update_icons()
+	if(!pod_overlays)
+		pod_overlays = new/list(2)
+		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
+		pod_overlays[FIRE] = image(icon, icon_state="pod_fire")
+
+	if(health <= round(initial(health)/2))
+		overlays += pod_overlays[DAMAGE]
+		if(health <= round(initial(health)/4))
+			overlays += pod_overlays[FIRE]
+		else
+			overlays -= pod_overlays[FIRE]
+	else
+		overlays -= pod_overlays[DAMAGE]
+
+/obj/spacepod/bullet_act(var/obj/item/projectile/P)
+	if(P.damage && !P.nodamage)
+		deal_damage(P.damage)
+
+/obj/spacepod/proc/deal_damage(var/damage)
+	var/oldhealth = health
+	health = max(0, health - damage)
+	var/percentage = (health / initial(health)) * 100
+	if(occupant && oldhealth > health && percentage <= 25 && percentage > 0)
+		var/sound/S = sound('sound/effects/engine_alert2.ogg')
+		S.wait = 0 //No queue
+		S.channel = 0 //Any channel
+		S.volume = 50
+		occupant << S
+	if(occupant && oldhealth > health && !health)
+		var/sound/S = sound('sound/effects/engine_alert1.ogg')
+		S.wait = 0
+		S.channel = 0
+		S.volume = 50
+		occupant << S
+	if(!health)
+		spawn(0)
+			if(occupant)
+				occupant << "<big><span class='warning'>Critical damage to the vessel detected, core explosion imminent!</span></big>"
+				for(var/i = 10, i >= 0; --i)
+					if(occupant)
+						occupant << "<span class='warning'>[i]</span>"
+					if(i == 0)
+						explosion(loc, 2, 4, 8)
+					sleep(10)
+
+	update_icons()
+
+/obj/spacepod/ex_act(severity)
+	switch(severity)
+		if(1)
+			var/mob/living/carbon/human/H = occupant
+			if(H)
+				H.loc = get_turf(src)
+				H.ex_act(severity + 1)
+				H << "<span class='warning'>You are forcefully thrown from \the [src]!</span>"
+			del(ion_trail)
+			del(src)
+		if(2)
+			deal_damage(100)
+		if(3)
+			if(prob(40))
+				deal_damage(50)
 
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob)
 	if(iscrowbar(W))
@@ -67,8 +140,12 @@
 				user.drop_item(W)
 				W.loc = equipment_system
 				equipment_system.weapon_system = W
-				verbs += /obj/spacepod/proc/fire_weapons
+				equipment_system.weapon_system.my_atom = src
+				var/path = text2path("[W.type]/proc/fire_weapon_system")
+				if(path)
+					verbs += path//obj/spacepod/proc/fire_weapons
 				return
+
 
 /obj/spacepod/attack_hand(mob/user as mob)
 	if(!hatch_open)
@@ -97,6 +174,7 @@
 			SPE = equipment_system.weapon_system
 			if(user.put_in_any_hand_if_possible(SPE))
 				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
+				SPE.my_atom = null
 				equipment_system.weapon_system = null
 			else
 				user << "<span class='warning'>You need an open hand to do that.</span>"
@@ -228,56 +306,6 @@
 		return
 	move_inside(M, user)
 
-/obj/spacepod/proc/fire_weapons()
-	set category = "Spacepod"
-	set name = "Fire Weapon System"
-	set desc = "Fire ze missiles(or lasers)"
-	set src = usr.loc
-
-	if(next_firetime > world.time)
-		usr << "<span class='warning'>Your weapons are recharging.</span>"
-		return
-	var/turf/firstloc
-	var/turf/secondloc
-	if(!equipment_system || !equipment_system.weapon_system)
-		usr << "<span class='warning'>Missing equipment or weapons.</span>"
-		src.verbs -= /obj/spacepod/proc/fire_weapons
-		return
-	battery.use(equipment_system.weapon_system.shot_cost)
-	var/olddir
-	for(var/i = 0; i < equipment_system.weapon_system.shots_per; i++)
-		if(olddir != dir)
-			switch(dir)
-				if(NORTH)
-					firstloc = get_step(src, NORTH)
-					secondloc = get_step(firstloc,EAST)
-				if(SOUTH)
-					firstloc = get_turf(src)
-					secondloc = get_step(firstloc,EAST)
-				if(EAST)
-					firstloc = get_turf(src)
-					firstloc = get_step(firstloc, EAST)
-					secondloc = get_step(firstloc,NORTH)
-				if(WEST)
-					firstloc = get_turf(src)
-					secondloc = get_step(firstloc,NORTH)
-		olddir = dir
-		var/obj/item/projectile/projone = new equipment_system.weapon_system.projectile_type(firstloc)
-		var/obj/item/projectile/projtwo = new equipment_system.weapon_system.projectile_type(secondloc)
-		projone.starting = get_turf(src)
-		projone.shot_from = src
-		projone.firer = usr
-		projone.def_zone = "chest"
-		projtwo.starting = get_turf(src)
-		projtwo.shot_from = src
-		projtwo.firer = usr
-		projtwo.def_zone = "chest"
-		spawn()
-			playsound(src, equipment_system.weapon_system.fire_sound, 50, 1)
-			projone.dumbfire(dir)
-			projtwo.dumbfire(dir)
-		sleep(1)
-	next_firetime = world.time + equipment_system.weapon_system.fire_delay
 /obj/spacepod/verb/move_inside()
 	set category = "Object"
 	set name = "Enter Pod"
@@ -398,7 +426,7 @@
 	return 1
 
 /obj/spacepod/relaymove(mob/user, direction)
-	if(battery && battery.charge)
+	if(battery && battery.charge && health)
 		src.dir = direction
 		switch(direction)
 			if(1)
@@ -421,7 +449,14 @@
 		if(istype(src.loc, /turf/space))
 			inertia_dir = direction
 	else
-		user << "<span class='warning'>She's dead, Jim</span>"
+		if(!battery)
+			user << "<span class='warning'>No energy cell detected.</span>"
+		else if(battery.charge < 3)
+			user << "<span class='warning'>Not enough charge left.</span>"
+		else if(!health)
+			user << "<span class='warning'>She's dead, Jim</span>"
+		else
+			user << "<span class='warning'>Unknown error has occurred, yell at pomf.</span>"
 		return 0
 	battery.use(3)
 
@@ -434,3 +469,6 @@
 
 /obj/effect/landmark/spacepod/random/New()
 	..()
+
+#undef DAMAGE
+#undef FIRE
