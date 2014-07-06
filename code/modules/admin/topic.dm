@@ -1540,6 +1540,11 @@
 								if(istype(O,/mob))
 									var/mob/M = O
 									M.real_name = obj_name
+							if(ishuman(O))
+								var/mob/living/carbon/human/H = O
+								create_dna(H)
+								ready_dna(H)
+								randomize_human(H)
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")
