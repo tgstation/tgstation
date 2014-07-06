@@ -111,7 +111,7 @@ effective or pretty fucking useless.
 	interact(user)
 
 /obj/item/device/rad_laser/interact(mob/user as mob)
-	set_machine(src)
+	user.set_machine(src)
 
 	var/cooldown = round(max(10,((intensity*8)-(wavelength/2))+(intensity*2)))
 	var/dat = {"
@@ -128,7 +128,7 @@ effective or pretty fucking useless.
 	if(..())
 		return 1
 
-	set_machine(src)
+	usr.set_machine(src)
 
 	if(href_list["radint"])
 		var/amount = text2num(href_list["radint"])
