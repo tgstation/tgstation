@@ -231,8 +231,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.loc = T
 			else
 				A << "This mob is not located in the game world."
-/*
-/mob/dead/observer/verb/boo()
+
+/mob/dead/observer/verb/boo() // SHINE UNCOMMENTED
 	set category = "Ghost"
 	set name = "Boo!"
 	set desc= "Scare your crew members because of boredom!"
@@ -242,10 +242,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(L)
 		L.flicker()
 		bootime = world.time + 600
+		playsound(src.loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
 		return
 	//Maybe in the future we can add more <i>spooky</i> code here!
 	return
-*/
+
 
 /mob/dead/observer/memory()
 	set hidden = 1

@@ -10,7 +10,7 @@
 	var/health = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
-	var/fire_resist = 1
+	var/fire_resist = 0 // SHINE reduced 1 to 0
 
 
 /obj/effect/blob/New(loc)
