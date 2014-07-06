@@ -1,14 +1,10 @@
 // This is the window/UI manager for Nano UI
 // There should only ever be one (global) instance of nanomanger
 /datum/nanomanager
-	// A list of current open /nanoui UIs, grouped by src_object and ui_key.
+	// a list of current open /nanoui UIs, grouped by src_object and ui_key
 	var/open_uis[0]
-
-	// A list of current open /nanoui UIs, not grouped, for use in processing.
+	// a list of current open /nanoui UIs, not grouped, for use in processing
 	var/list/processing_uis = list()
-
-	// A list of asset filenames which are to be sent to the client on user logon.
-	var/list/asset_files = list()
 
  /**
   * Create a new nanomanager instance.
@@ -16,23 +12,7 @@
   * @return /nanomanager new nanomanager object
   */
 /datum/nanomanager/New()
-	. = ..()
-
-	var/list/nano_asset_dirs = list(\
-		"nano/css/",\
-		"nano/images/",\
-		"nano/js/",\
-		"nano/templates/"\
-	)
-
-	var/list/filenames
-
-	for(var/path in nano_asset_dirs)
-		filenames = flist(path)
-
-		for(var/filename in filenames)
-			if(copytext(filename, length(filename)) != "/") // Filenames which end in "/" are actually directories, which we want to ignore.
-				asset_files += file(path + filename) // Add this file to asset_files for sending to clients when they connect.
+	return
 
  /**
   * Get an open /nanoui ui for the current user, src_object and ui_key and try to update it with data
@@ -226,6 +206,19 @@
   *
   * @return nothing
   */
-/datum/nanomanager/proc/send_resources(const/client)
-	for(var/file in asset_files)
-		client << browse_rsc(file)	// Send the file to the client.
+
+/datum/nanomanager/proc/send_resources(client)
+	var/list/nano_asset_dirs = list(\
+		"nano/css/",\
+		"nano/images/",\
+		"nano/js/",\
+		"nano/templates/"\
+	)
+
+	var/list/files = null
+	for (var/path in nano_asset_dirs)
+		files = flist(path)
+		for(var/file in files)
+			if(copytext(file, length(file)) != "/") // files which end in "/" are actually directories, which we want to ignore
+				client << browse_rsc(file(path + file))	// send the file to the client
+
