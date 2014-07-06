@@ -216,7 +216,7 @@
 			//if we're not strangling anyone, take a stroll
 			if(!G && prob(90)) //Changed from 10 to 90, sue me
 				var/list/turfs = new/list()
-				for(var/turf/thisturf in view (20,src)) //You call that a teleport range ?
+				for(var/turf/thisturf in view(20,src)) //You call that a teleport range ?
 					if(istype(thisturf, /turf/space))
 						continue
 					else if(istype(thisturf, /turf/simulated/wall))
