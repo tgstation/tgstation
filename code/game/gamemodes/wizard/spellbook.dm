@@ -69,8 +69,11 @@
 			<I>This spell will curse a person to wear an unremovable horse mask (it has glue on the inside) and speak like a horse. It does not require wizard garb.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>
 			<I>This spell will curse a person to immediately turn into an unmoving statue. The effect will eventually wear off if the statue is not destroyed.</I><BR>
+			<A href='byond://?src=\ref[src];spell_choice=arsenath'>Butt-Bot's Revenge</A> (50)<BR>
+			<I>Summon the power of the butt gods to remove the anus of your enemy.</I><BR>
 			[!istype(ticker.mode, /datum/game_mode/wizard/raginmages) ? "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR><I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!</I><BR>" : ""]
 			<A href='byond://?src=\ref[src];spell_choice=chariot'>Summon Chariot</A> (60)<BR>
+			<I>Summon the most badass ride in all of wizardry. It can phase through walls, and is just badass.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=noclothes'>Remove Clothes Requirement</A> <b>Warning: this takes away 2 spell choices.</b><BR>
 			<HR>
 			<B>Artefacts:</B><BR>
@@ -137,7 +140,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", summonguns = "Summon Guns", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes",fleshtostone = "Flesh to Stone",)
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", summonguns = "Summon Guns", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes",fleshtostone = "Flesh to Stone", arsenath = "Butt-Bot's Revenge",)
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -240,6 +243,10 @@
 							feedback_add_details("wizard_spell_learned","FS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone(H)
 							temp = "You have learned flesh to stone."
+						if("arsenath")
+							feedback_add_details("wizard_spell_learned","AN") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/arsenath(H)
+							temp = "You have learned butt-bot's revenge."
 						if("summonguns")
 							if(!istype(ticker.mode, /datum/game_mode/wizard/raginmages))
 								feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
