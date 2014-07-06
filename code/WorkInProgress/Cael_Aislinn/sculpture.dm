@@ -88,10 +88,10 @@
 				Escape()
 		observed = 1
 
-	//commented out because "muh mass drive the sculpture"
+	//space part removed to avoid mass driving
 	//can't do anything in space at all
-	//if(istype(get_turf(src), /turf/space) || hibernate)
-		//return
+	if(hibernate)
+		return
 
 	// Grabbing
 	if(G)
@@ -154,7 +154,7 @@
 			//find out what mobs we can see (-tried to- remove sight and doubled range)
 			//var/list/incapacitated = list()
 			var/list/conscious = list()
-			for(var/mob/living/carbon/M in view (7, src)) //Reduced back to 7
+			for(var/mob/living/carbon/M in view(7, src))
 				//this may not be quite the right test
 				if(M == src)
 					continue
