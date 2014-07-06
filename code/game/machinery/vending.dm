@@ -405,8 +405,8 @@
 		return
 	if(!message)
 		return
-
-	visible_message("<span class='name'>[src]</span> <span class='game say'>beeps, \"[message]\"</span>")
+	for(var/mob/O in hearers(src, null))
+		O.show_message("<span class='name'>[src]</span> <span class='game say'>beeps, \"[message]\"</span>",2)
 
 
 /obj/machinery/vending/power_change()
