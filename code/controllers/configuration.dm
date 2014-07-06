@@ -54,7 +54,8 @@
 	var/server
 	var/banappeals
 	var/wikiurl = "http://www.tgstation13.org/wiki" // Default wiki link.
-	var/forumurl
+	var/forumurl = "http://tgstation13.org/phpBB/index.php" //default forums
+	var/rulesurl = "http://www.tgstation13.org/wiki/Rules" // default rules
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
@@ -243,6 +244,8 @@
 					config.wikiurl = value
 				if("forumurl")
 					config.forumurl = value
+				if("rulesurl")
+					config.rulesurl = value
 				if("guest_jobban")
 					config.guest_jobban = 1
 				if("guest_ban")
