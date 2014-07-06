@@ -537,7 +537,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/eggy
 	seed = "/obj/item/seeds/eggyseed"
 	name = "Egg-plant"
 	desc = "There MUST be a chicken inside."
-	icon_state = "eggplant"
+	icon_state = "eggyplant"
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -970,7 +970,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/eggy/attack_self(mob/user a
 	seed = "/obj/item/seeds/cashseed"
 	name = "Money Fruit"
 	desc = "Looks like a lemon with someone buldging from the inside."
-	icon_state = "lemon"
+	icon_state = "moneyfruit"
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
