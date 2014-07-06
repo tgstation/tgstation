@@ -345,12 +345,12 @@
 		if("PDA - Send Message")
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
-				AI.cmd_send_pdamesg()
+				AI.cmd_send_pdamesg(usr)
 
 		if("PDA - Show Message Log")
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
-				AI.cmd_show_message_log()
+				AI.cmd_show_message_log(usr)
 
 		if("Take Image")
 			if(isAI(usr))
