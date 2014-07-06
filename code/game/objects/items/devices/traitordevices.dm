@@ -88,6 +88,7 @@ effective or pretty fucking useless.
 
 /obj/item/device/rad_laser/attack(mob/living/M as mob, mob/living/user as mob)
 	if(!used)
+		..()
 		user.visible_message(text("<span class='notice'>[] has analyzed []'s vitals.</span>", user, M))
 		var/cooldown = round(max(100,(((intensity*8)-(wavelength/2))+(intensity*2))*10))
 		used = 1
@@ -110,7 +111,7 @@ effective or pretty fucking useless.
 	interact(user)
 
 /obj/item/device/rad_laser/interact(mob/user as mob)
-	usr.set_machine(src)
+	set_machine(src)
 
 	var/cooldown = round(max(10,((intensity*8)-(wavelength/2))+(intensity*2)))
 	var/dat = {"
@@ -127,7 +128,7 @@ effective or pretty fucking useless.
 	if(..())
 		return 1
 
-	usr.set_machine(src)
+	set_machine(src)
 
 	if(href_list["radint"])
 		var/amount = text2num(href_list["radint"])
@@ -139,6 +140,6 @@ effective or pretty fucking useless.
 		amount += wavelength
 		wavelength = max(1,(min(120,amount)))
 
-	interact(usr)
+	updateUsrDialog()
 	add_fingerprint(usr)
 	return
