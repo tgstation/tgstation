@@ -59,10 +59,10 @@
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of the [src]!</span>", 1)
-		for(var/i=0,i<2,i++)
+		for(var/i = 0,i < 2,i++)
 			var/obj/item/stack/sheet/mineral/wood/NG = new (user.loc)
 			for (var/obj/item/stack/sheet/mineral/wood/G in user.loc)
-				if(G==NG)
+				if(G == NG)
 					continue
 				if(G.amount >= G.max_amount)
 					continue
@@ -122,7 +122,7 @@
 	if(reagents)
 		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("capsaicin", round(potency, 1))
-	force = round((5+potency/5), 1)
+	force = round((5 + potency / 5), 1)
 
 /obj/item/weapon/grown/nettle // -- Skie
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
@@ -144,7 +144,7 @@
 	if(reagents)
 		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("sacid", round(potency, 1))
-	force = round((5+potency/5), 1)
+	force = round((5 + potency / 5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	desc = "The \red glowing \black nettle incites \red<B> rage</B>\black in you just from looking at it!"
@@ -167,7 +167,7 @@
 	if(reagents)
 		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("pacid", round(potency, 1))
-	force = round((5+potency/2.5), 1)
+	force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
