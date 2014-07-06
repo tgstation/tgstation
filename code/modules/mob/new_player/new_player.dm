@@ -28,6 +28,7 @@
 
 		else
 			output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
+			output += "<p><a href='byond://?src=\ref[src];manifest=1'>Crew Manifest</A></p>" // SHINE ADD
 
 		output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
@@ -128,6 +129,9 @@
 				usr << "\red The round is either not ready, or has already finished..."
 				return
 			LateChoices()
+
+		if(href_list["manifest"]) // SHINE ADD
+			ViewManifest()
 
 		if(href_list["SelectedJob"])
 
@@ -351,6 +355,12 @@
 
 		return new_character
 
+	proc/ViewManifest() // SHINE ADD
+		var/dat = "<html><body>"
+		dat += "<h4>Crew Manifest</h4>"
+		dat += data_core.get_manifest(OOC = 1)
+
+		src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 	Move()
 		return 0
