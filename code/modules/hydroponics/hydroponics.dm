@@ -71,7 +71,7 @@
 
 		for(var/step_dir in cardinal)
 			var/obj/machinery/hydroponics/h = locate() in get_step(a, step_dir)
-			if(h && h.anchored==2 && !(h in connected) && !(h in processing_atoms))
+			if(h && h.anchored==1 && h.density && !(h in connected) && !(h in processing_atoms)) // Soil plots aren't dense, and don't get this feature.
 				processing_atoms += h
 
 		processing_atoms -= a
@@ -597,9 +597,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe/))
 				var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
 				visi_msg="[user] injects [target] with [syr]"
-				if(syr.reagents.total_volume <= 0)
+				if(syr.reagents.total_volume <= syr.amount_per_transfer_from_this)
 					syr.mode = 0
-					syr.update_icon()
 			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray/))
 				visi_msg="[user] sprays [target] with [reagent_source]"
 				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
@@ -611,10 +610,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
-		if(irrigate && reagent_source.amount_per_transfer_from_this > 30 && reagent_source.reagents.total_volume >= reagent_source.amount_per_transfer_from_this)
+		if(irrigate && reagent_source.amount_per_transfer_from_this > 30 && reagent_source.reagents.total_volume >= 30)
 			trays = FindConnected()
 			if (trays.len > 1)
-				visi_msg += " setting off the irrigation system"
+				visi_msg += ", setting off the irrigation system"
 
 		if(visi_msg)
 			visible_message("<span class='notice'>[visi_msg].</span>")
@@ -636,6 +635,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			S.clear_reagents()
 			del(S)
 			H.update_icon()
+		if(reagent_source) // If the source wasn't composted and destroyed
+			reagent_source.update_icon()
 		return 1
 
 	else if(istype(O, /obj/item/seeds/))

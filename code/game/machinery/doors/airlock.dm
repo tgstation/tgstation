@@ -868,7 +868,6 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
-	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
 	if(!istype(usr, /mob/living/silicon))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
@@ -879,15 +878,18 @@ About the new airlock wires panel:
 	src.add_fingerprint(user)
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
-		if(W.remove_fuel(0,user))
-			if(!src.welded)
-				src.welded = 1
+		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>"
+		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+		if(do_after(user,40,5,1))
+			if(W.remove_fuel(0,user))
+				playsound(loc, 'sound/items/welder.ogg', 50, 1)
+				welded = !welded
+				user << "<span class='notice'>You [welded ? "welded the airlock shut":"unwelded the airlock"]</span>"
+				update_icon()
+				user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
 			else
-				src.welded = null
-			src.update_icon()
-			return
-		else
-			return
+				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+		return
 	else if(istype(C, /obj/item/weapon/screwdriver))
 		src.p_open = !( src.p_open )
 		user << "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the airlock.</span>"

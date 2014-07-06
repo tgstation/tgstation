@@ -919,8 +919,8 @@
 /datum/recipe/bloodsoup
 	reagents = list("blood" = 10)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
 
