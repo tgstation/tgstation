@@ -9,7 +9,6 @@
 	var/anchored = 0
 	var/move_speed = 10
 	var/l_move_time = 1
-	var/m_flag = 1
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
@@ -17,6 +16,7 @@
 	var/mob/pulledby = null
 
 	var/area/areaMaster
+	var/area/lastarea
 	var/global/guid = 0
 
 	// Garbage collection (controller).
@@ -27,15 +27,10 @@
 	areaMaster = get_area_master(src)
 	tag = "[++guid]"
 
-/atom/movable/Move()
-	var/atom/A = src.loc
+/atom/movable/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
-	src.move_speed = world.timeofday - src.l_move_time
-	src.l_move_time = world.timeofday
-	src.m_flag = 1
-	if ((A != src.loc && A && A.z == src.z))
-		src.last_move = get_dir(A, src.loc)
-	return
+	move_speed = world.timeofday - l_move_time
+	l_move_time = world.timeofday
 
 /atom/movable/proc/recycle(var/datum/materials/rec)
 	return 0
@@ -205,3 +200,15 @@
 /////////////////////////////
 /atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
 	return 1
+
+/atom/movable/Enter(atom/movable/O, atom/oldloc)
+	. = ..()
+
+	if(2 == .) // observer
+		return 1
+
+/atom/movable/Entered(atom/movable/Obj,atom/OldLoc)
+	. = ..()
+
+	if(2 == .) // observer
+		return 1
