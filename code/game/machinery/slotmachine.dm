@@ -28,7 +28,7 @@
 	var/jackpots = 0
 	var/list/coinvalues = list()
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
-	var/list/symbols = list("7", "&", "@", "$", "?", "#") //Six symbols, all weighted equally. Chance for 7 sevens is one in 7776. Remember that you influence the chances when adding more symbols!
+	var/list/symbols = list("7" = 1, "&" = 2, "@" = 2, "$" = 2, "?" = 2, "#" = 2, "!" = 2, "%" = 2, "~" = 2, "*" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
 /obj/machinery/computer/slot_machine/New()
 	..()
@@ -247,9 +247,9 @@
 		give_money(SMALL_PRIZE)
 					
 	else if(linelength == 3)
-		user << "<span class='notice'>You win six free games!</span>"
-		balance += SPIN_PRICE * 7
-		money = max(money - SPIN_PRICE * 7, money)
+		user << "<span class='notice'>You win three free games!</span>"
+		balance += SPIN_PRICE * 4
+		money = max(money - SPIN_PRICE * 4, money)
 					
 	else
 		user << "<span class='warning'>No luck!</span>"
