@@ -6,15 +6,6 @@
 	var/list/disabilities = list()
 	var/list/conditions = list()
 	var/duration = 100 //deciseconds
-	/*
-		Disabilities
-			1st bit - ?
-			2nd bit - ?
-			3rd bit - ?
-			4th bit - ?
-			5th bit - ?
-			6th bit - ?
-	*/
 
 /obj/effect/proc_holder/spell/targeted/genetic/cast(list/targets)
 
