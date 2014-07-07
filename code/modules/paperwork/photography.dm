@@ -113,21 +113,6 @@
 	name = "AI photo camera"
 	var/in_camera_mode = 0
 
-	verb/picture()
-		set category ="AI Commands"
-		set name = "Take Image"
-		set src in usr
-
-		toggle_camera_mode()
-
-	verb/viewpicture()
-		set category ="AI Commands"
-		set name = "View Images"
-		set src in usr
-
-		viewpictures()
-
-
 /obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 

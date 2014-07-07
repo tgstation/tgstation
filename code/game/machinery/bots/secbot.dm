@@ -206,7 +206,9 @@ Auto Patrol: []"},
 				user << "\red Access denied."
 	else
 		..()
-		if(!istype(W, /obj/item/weapon/screwdriver) && !istype(W, /obj/item/weapon/weldingtool) && (W.force) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
+			return
+		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 			threatlevel = user.assess_threat(src)
 			threatlevel += 6
 			if(threatlevel > 0)
