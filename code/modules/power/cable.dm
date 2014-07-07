@@ -321,10 +321,14 @@ obj/structure/cable/proc/avail()
 
 // merge with the powernets of power objects in the source turf
 /obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
+	var/list/to_connect = list()
+
 	if(!powernet) //if we somehow have no powernet, make one (should not happen for cables)
 		var/datum/powernet/newPN = new()
 		newPN.add_cable(src)
 
+	//first let's add turf cables to our powernet
+	//then we'll connect machines on turf with a node cable is present
 	for(var/AM in loc)
 		if(istype(AM,/obj/structure/cable))
 			var/obj/structure/cable/C = AM
@@ -338,18 +342,24 @@ obj/structure/cable/proc/avail()
 		else if(istype(AM,/obj/machinery/power/apc))
 			var/obj/machinery/power/apc/N = AM
 			if(!N.terminal)	continue // APC are connected through their terminal
-			if(N.terminal.powernet)
-				merge_powernets(powernet, N.terminal.powernet)
-			else
-				powernet.add_machine(N.terminal)
+
+			if(N.terminal.powernet == powernet)
+				continue
+
+			to_connect += N.terminal //we'll connect the machines after all cables are merged
 
 		else if(istype(AM,/obj/machinery/power)) //other power machines
 			var/obj/machinery/power/M = AM
-			if(M.powernet == powernet)	continue
-			if(M.powernet)
-				merge_powernets(powernet, M.powernet)
-			else
-				powernet.add_machine(M)
+
+			if(M.powernet == powernet)
+				continue
+
+			to_connect += M //we'll connect the machines after all cables are merged
+
+	//now that cables are done, let's connect found machines
+	for(var/obj/machinery/power/PM in to_connect)
+		if(!PM.connect_to_network())
+			PM.disconnect_from_network() //if we somehow can't connect the machine to the new powernet, remove it from the old nonetheless
 
 //////////////////////////////////////////////
 // Powernets handling helpers
