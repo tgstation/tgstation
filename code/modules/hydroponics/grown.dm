@@ -95,6 +95,7 @@
 	icon_state = "cherry"
 	gender = PLURAL
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cherries
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -109,6 +110,7 @@
 	icon_state = "poppy"
 	slot_flags = SLOT_HEAD
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
+
 	New(var/loc, var/potency = 30)
 		..()
 		if(reagents)
@@ -123,6 +125,7 @@
 	icon_state = "harebell"
 	slot_flags = SLOT_HEAD
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
+
 	New(var/loc, var/potency = 1)
 		..()
 		if(reagents)
@@ -135,6 +138,7 @@
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
 	icon_state = "potato"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
+
 	New(var/loc, var/potency = 25)
 		..()
 		if(reagents)
@@ -162,6 +166,7 @@
 	desc = "Nutritious!"
 	icon_state = "grapes"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/no_raisin
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -175,6 +180,7 @@
 	desc = "Nutritious!"
 	icon_state = "greengrapes"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/no_raisin
+
 	New(var/loc, var/potency = 25)
 		..()
 		if(reagents)
@@ -188,6 +194,7 @@
 	desc = "Ewwwwwwwwww. Cabbage."
 	icon_state = "cabbage"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage
+
 	New(var/loc, var/potency = 25)
 		..()
 		if(reagents)
@@ -200,6 +207,7 @@
 	desc = "Nutritious!"
 	icon_state = "berrypile"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/berries
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -214,6 +222,7 @@
 	var/brightness_on = 2 //luminosity when on
 	icon_state = "glowberrypile"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -240,6 +249,7 @@
 	desc = "Fattening... Mmmmm... chucklate."
 	icon_state = "cocoapod"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
+
 	New(var/loc, var/potency = 50)
 		..()
 		if(reagents)
@@ -253,6 +263,7 @@
 	desc = "Sickly sweet."
 	icon_state = "sugarcane"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
+
 	New(var/loc, var/potency = 50)
 		..()
 		if(reagents)
@@ -265,6 +276,7 @@
 	icon_state = "poisonberrypile"
 	gender = PLURAL
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries
+
 	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
@@ -279,6 +291,7 @@
 	icon_state = "deathberrypile"
 	gender = PLURAL
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/deathberries
+
 	New(var/loc, var/potency = 50)
 		..()
 		if(reagents)
@@ -294,6 +307,7 @@
 	icon_state = "ambrosiavulgaris"
 	slot_flags = SLOT_HEAD
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -311,6 +325,7 @@
 	icon_state = "ambrosiadeus"
 	slot_flags = SLOT_HEAD
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -327,6 +342,7 @@
 	desc = "It's a little piece of Eden."
 	icon_state = "apple"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/apple
+
 	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
@@ -340,6 +356,7 @@
 	desc = "It's a little piece of Eden."
 	icon_state = "apple"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
+
 	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
@@ -353,6 +370,7 @@
 	desc = "Emblazoned upon the apple is the word 'Kallisti'."
 	icon_state = "goldapple"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
+
 	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
@@ -373,6 +391,7 @@
 	icon_state = "watermelon"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
 	slices_num = 5
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -385,6 +404,7 @@
 	desc = "It's large and scary."
 	icon_state = "pumpkin"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -406,6 +426,7 @@
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/lime
+
 	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
@@ -418,6 +439,7 @@
 	desc = "When life gives you lemons, be grateful they aren't limes."
 	icon_state = "lemon"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/lemon
+
 	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
@@ -430,6 +452,7 @@
 	desc = "It's an tangy fruit."
 	icon_state = "orange"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/orange
+
 	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
@@ -442,6 +465,7 @@
 	desc = "You can't beat white-beet."
 	icon_state = "whitebeet"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
+
 	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
@@ -471,6 +495,7 @@
 	desc = "It's spicy! Wait... IT'S BURNING ME!!"
 	icon_state = "chilipepper"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/chili
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -490,6 +515,7 @@
 	icon_state = "ghostchilipepper"
 	var/mob/held_mob
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -527,6 +553,7 @@
 	desc = "Maybe there's a chicken inside?"
 	icon_state = "eggplant"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -546,12 +573,13 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	name = "Egg-plant"
 	desc = "There MUST be a chicken inside."
 	icon_state = "eggyplant"
+	inside_type = /obj/item/weapon/reagent_containers/food/snacks/egg
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
 			bitesize = 1 + round(reagents.total_volume / 2, 1)
-	inside_type = /obj/item/weapon/reagent_containers/food/snacks/egg
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	seed = "/obj/item/seeds/soyaseed"
@@ -560,6 +588,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	gender = PLURAL
 	icon_state = "soybeans"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -572,6 +601,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "Something about these seems fishy."
 	icon_state = "koibeans"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -585,6 +615,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "Store in a location at least 50 yards away from werewolves."
 	icon_state = "moonflower"
 	slot_flags = SLOT_HEAD
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -625,6 +656,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	name = "killer-tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
 	icon_state = "killertomato"
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -653,7 +685,6 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "So bloody...so...very...bloody....AHHHH!!!!"
 	icon_state = "bloodtomato"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood
-
 	splat = /obj/effect/gibspawner/generic
 
 	New(var/loc, var/potency = 10)
@@ -693,6 +724,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	icon_state = "bluespacetomato"
 	origin_tech = "bluespace=3"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
+
 	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
@@ -721,6 +753,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	gender = PLURAL
 	icon_state = "wheat"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -732,6 +765,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	name = "grass"
 	desc = "Green and lush."
 	icon_state = "grassclump"
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -770,6 +804,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "It's a mutant strain of chili"
 	icon_state = "icepepper"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
+
 	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
@@ -788,6 +823,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "It's good for the eyes!"
 	icon_state = "carrot"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -801,6 +837,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -821,6 +858,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
 	icon_state = "amanita"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -841,6 +879,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
+
 	New(var/loc, var/potency = 35)
 		..()
 		if(reagents)
@@ -861,6 +900,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
+
 	New(var/loc, var/potency = 15)
 		..()
 		if(reagents)
@@ -879,6 +919,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -890,6 +931,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	name = "walking mushroom"
 	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -915,6 +957,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(reagents)
@@ -927,6 +970,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "<I>Mycena Bregprox</I>: This species of mushroom glows in the dark."
 	icon_state = "glowshroom"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
+
 	New(var/loc, var/potency = 10)
 		..()
 		if(lifespan == 0) //basically, if you're spawning these via admin or on the map, then set up some default stats.
@@ -977,6 +1021,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "Looks like a lemon with someone buldging from the inside."
 	icon_state = "moneyfruit"
 	inside_type = null
+
 	New()
 		..()
 		if(reagents)
@@ -1007,6 +1052,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	icon_state = "gatfruit"
 	origin_tech = "combat=3"
 	trash = /obj/item/weapon/gun/projectile/revolver
+
 	New(var/loc, var/potency = 60)
 		..()
 		if(reagents)
@@ -1023,6 +1069,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_arabica"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica
+
 	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
@@ -1034,6 +1081,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_robusta"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta
+
 	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
@@ -1046,6 +1094,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "Dry them out to make some smokes."
 	icon_state = "tobacco_leaves"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
+
 	New(vat/loc, var/potency = 20)
 		..()
 
@@ -1057,6 +1106,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	icon_state = "stobacco_leaves"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
 	New(var/loc, var/potency = 20)
+
 		..()
 		if(reagents)
 			reagents.add_reagent("dexalin", 1 + round((potency / 20), 1))
@@ -1068,6 +1118,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_aspera_leaves"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera
+
 	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
@@ -1080,6 +1131,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_astra_leaves"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra
+
 	New(var/loc, var/potency = 20)
 		..()
 		if(reagents)
