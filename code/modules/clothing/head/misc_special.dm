@@ -194,7 +194,7 @@
 	wizard_garb = 1
 
 	var/s_tone = 0.0
-	var/created_name = null
+	var/created_name = "Buttbot"
 
 	proc
 		transfer_buttdentity(var/mob/living/carbon/H)
