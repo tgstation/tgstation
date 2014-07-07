@@ -204,11 +204,11 @@
 /atom/movable/Enter(atom/movable/O, atom/oldloc)
 	. = ..()
 
-	if(2 == .) // observer
-		return 1
+	if(2 == . || 0 == .) // observer || denied
+		return
 
 /atom/movable/Entered(atom/movable/Obj,atom/OldLoc)
 	. = ..()
 
-	if(2 == .) // observer
-		return 1
+	if(2 == . || 0 == .) // observer || denied
+		return
