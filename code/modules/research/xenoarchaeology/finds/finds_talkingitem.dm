@@ -5,7 +5,7 @@
 // I genuinely tried to Add and Remove them from var and proc lists, but just couldn't get it working
 
 /obj/item/weapon
-	var/list/heard_words = list()
+	var/list/heard_words
 	var/lastsaid
 	var/listening_to_players = 0
 	var/speaking_to_players = 0
