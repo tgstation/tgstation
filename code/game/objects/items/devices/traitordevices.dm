@@ -108,6 +108,7 @@ effective or pretty fucking useless.
 		icon_state = "health"
 
 /obj/item/device/rad_laser/attack_self(mob/user as mob)
+	..()
 	interact(user)
 
 /obj/item/device/rad_laser/interact(mob/user as mob)
@@ -125,7 +126,7 @@ effective or pretty fucking useless.
 	popup.open()
 
 /obj/item/device/rad_laser/Topic(href, href_list)
-	if(..())
+	if(!usr.canUseTopic(src))
 		return 1
 
 	usr.set_machine(src)
