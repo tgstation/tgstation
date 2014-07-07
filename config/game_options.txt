@@ -114,6 +114,11 @@ SHUTTLE_REFUEL_DELAY 7000
 TRAITOR_SCALING_COEFF 4
 CHANGELING_SCALING_COEFF 7
 
+## Variables calculate how number of open security officer positions will scale to population.
+## Used as (Officers = Population / Coeff)
+## Set to 0 to disable scaling and use default numbers instead.
+SECURITY_SCALING_COEFF 8
+
 # The number of objectives traitors get.
 # Not including escaping/hijacking.
 TRAITOR_OBJECTIVES_AMOUNT 2

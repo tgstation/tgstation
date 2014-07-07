@@ -72,8 +72,8 @@
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
 	icon_state = "rock"
-	var/mineralSpawnChanceList = list("Uranium" = 1, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Plasma" = 1, "Iron" = 50, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
-	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
+	var/mineralSpawnChanceList = list("Uranium" = 18, "Diamond" = 3, "Gold" = 12, "Silver" = 16, "Plasma" = 25, "Iron" = 40, "Gibtonite" = 2/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralChance = 16
 
 /turf/simulated/mineral/random/New()
 	..()
@@ -99,6 +99,8 @@
 					new/turf/simulated/floor/plating/asteroid/airless/cave(src)
 				if("Gibtonite")
 					M = new/turf/simulated/mineral/gibtonite(src)
+				if("Clown")
+					M = new/turf/simulated/mineral/clown(src)
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
@@ -109,7 +111,7 @@
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 35, "Diamond" = 10, "Gold" = 35, "Silver" = 35, "Plasma" = 35, "Iron" = 50)
+	mineralSpawnChanceList = list("Uranium" = 35, "Diamond" = 30, "Gold" = 45, "Silver" = 50, "Plasma" = 30)
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
@@ -117,8 +119,8 @@
 
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
-	mineralChance = 5
-	mineralSpawnChanceList = list("Uranium" = 1, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Plasma" = 1, "Iron" = 50, "Gibtonite" = 4)
+	mineralChance = 8
+	mineralSpawnChanceList = list("Uranium" = 8, "Diamond" = 2, "Gold" = 4, "Silver" = 6, "Plasma" = 20, "Iron" = 40, "Gibtonite" = 1)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
@@ -168,7 +170,7 @@
 	name = "Plasma deposit"
 	icon_state = "rock_Plasma"
 	mineralName = "Plasma"
-	spreadChance = 5
+	spreadChance = 8
 	spread = 1
 	hidden = 1
 	scan_state = "rock_Plasma"
@@ -353,7 +355,7 @@
 	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
-		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
+		for(var/atom/A in range(20,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)
