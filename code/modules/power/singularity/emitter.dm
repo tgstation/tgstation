@@ -37,7 +37,6 @@
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
-		src.directwired = 1
 
 /obj/machinery/power/emitter/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
@@ -185,7 +184,6 @@
 						state = 2
 						user << "You weld the [src] to the floor."
 						connect_to_network()
-						src.directwired = 1
 				else
 					user << "\red You need more welding fuel to complete this task."
 			if(2)
@@ -199,7 +197,6 @@
 						state = 1
 						user << "You cut the [src] free from the floor."
 						disconnect_from_network()
-						src.directwired = 0
 				else
 					user << "\red You need more welding fuel to complete this task."
 		return
