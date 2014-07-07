@@ -30,6 +30,11 @@
 	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
 		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
 
+	// for spawned humans; overwritten by other code
+	create_dna(src)
+	ready_dna(src)
+	randomize_human(src)
+
 	..()
 
 /mob/living/carbon/human/Destroy()
