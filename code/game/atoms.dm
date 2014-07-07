@@ -70,6 +70,8 @@
 
 	//world << "[type] - [tag] - [x].[y].[z]"
 
+	density = 0
+
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
 
@@ -543,3 +545,33 @@ its easier to just keep the beam vertical.
 
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
+
+/atom/Enter(atom/movable/O, atom/oldloc)
+	. = ..()
+
+	if(movement_disabled)
+		if(ismob(O))
+			var/mob/mob = O
+
+			if(mob.client && mob.client.ckey != movement_disabled_exception)
+				mob << "\red movement is admin disabled." // this is to identify lag problems
+
+		return 0
+
+	if(istype(O, /mob/dead/observer))
+		return 2
+
+/atom/Entered(atom/movable/Obj,atom/OldLoc)
+	. = ..()
+
+	if(movement_disabled)
+		if(ismob(Obj))
+			var/mob/mob = Obj
+
+			if(mob.client && mob.client.ckey != movement_disabled_exception)
+				mob << "\red movement is admin disabled." // this is to identify lag problems
+
+		return 0
+
+	if(istype(Obj, /mob/dead/observer))
+		return 2

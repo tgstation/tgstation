@@ -10,6 +10,9 @@
 	var/filled = 0
 
 	afterattack(obj/target, mob/user , flag)
+		if(!user.Adjacent(target))
+			return
+
 		if(!target.reagents) return
 
 		if(filled)

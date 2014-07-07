@@ -50,7 +50,7 @@
 	var/lastattacked = null
 	var/attack_log = list( )
 	var/already_placed = 0.0
-	var/obj/machinery/machine = null
+	var/obj/machine
 	var/other_mobs = null
 	var/memory = ""
 	var/poll_answer = 0.0
@@ -199,8 +199,6 @@
 	var/update_icon = 1 //Set to 1 to trigger update_icons() at the next life() call
 
 	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
-
-	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 

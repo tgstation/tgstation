@@ -11,14 +11,17 @@
 	var/opened = 0.0
 
 	New()
-		..()
+		. = ..()
 		build_icon()
-		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/recharge_station
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin
+
+		component_parts = newlist(
+			/obj/item/weapon/circuitboard/recharge_station,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/matter_bin,
+			/obj/item/weapon/stock_parts/matter_bin
+		)
+
 		RefreshParts()
 
 	Destroy()
