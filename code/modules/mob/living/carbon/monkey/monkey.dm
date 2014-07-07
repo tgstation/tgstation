@@ -83,10 +83,10 @@
 				adjustBruteLoss(damage)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 				for(var/datum/disease/D in M.viruses)
-						contract_disease(D,1,0)
+					contract_disease(D,1,0)
 			else
 				visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>", \
-						"<span class='userdanger'>[M.name] has attempted to bite [name]!</span>")
+					"<span class='userdanger'>[M.name] has attempted to bite [name]!</span>")
 	return
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
@@ -347,38 +347,6 @@
 
 /mob/living/carbon/monkey/canBeHandcuffed()
 	return 1
-
-
-/mob/living/carbon/monkey/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
-	if(judgebot.emagged == 2)
-		return 10 //Everyone is a criminal!
-	var/threatcount = 0
-
-	//Lasertag bullshit
-	if(lasercolor)
-		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
-				threatcount += 4
-
-		if(lasercolor == "r")
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
-				threatcount += 4
-
-		return threatcount
-
-	//Check for weapons
-	if(judgebot.weaponscheck)
-		if(judgebot.check_for_weapons(l_hand))
-			threatcount += 4
-		if(judgebot.check_for_weapons(r_hand))
-			threatcount += 4
-
-	//Loyalty implants imply trustworthyness
-	if(isloyal(src))
-		threatcount -= 1
-
-	return threatcount
-
 
 /mob/living/carbon/monkey/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
 	if(judgebot.emagged == 2)
