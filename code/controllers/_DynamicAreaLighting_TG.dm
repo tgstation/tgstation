@@ -301,23 +301,22 @@ turf/proc/shift_to_subarea()
 
 	if(!istype(Area) || !Area.lighting_use_dynamic) return
 
-	var/level = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
+	var/level = Clamp(round(lighting_lumcount, 1), 0, lighting_controller.lighting_states)
 	var/new_tag = lighting_tag(level)
 
 	// pomf - If we have a lighting color that is not null, apply the new tag to seperate the areas.
 	if (l_color)
 		// pomf - We append the (rounded!) color lighting lumcount so we can have colored lights.
-		new_tag += "[l_color][Clamp(0, round(color_lighting_lumcount, 1), lighting_controller.lighting_states)]"
+		new_tag += "[l_color][Clamp(round(color_lighting_lumcount, 1), 0, lighting_controller.lighting_states)]"
 
-	if(Area.tag!=new_tag)	//skip if already in this area
+	if(Area.tag != new_tag)	//skip if already in this area
 		var/area/A = locate(new_tag)	// find an appropriate area
-		var/color_light = min(max(round(color_lighting_lumcount,1),0),lighting_controller.lighting_states)
+		var/color_light = Clamp(round(color_lighting_lumcount, 1), 0, lighting_controller.lighting_states)
 
-		if (!A)
+		if(!A)
 			A = build_lighting_area(new_tag, level, color_light)
-		else if (l_color != A.l_color)
+		else if(l_color != A.l_color)
 			A.l_color = l_color
-			//color_light = min(max(round(color_lighting_lumcount, 1), 0), lighting_controller.lighting_states)
 			A.SetLightLevel(level, color_light)
 
 		A.contents += src	// move the turf into the area
