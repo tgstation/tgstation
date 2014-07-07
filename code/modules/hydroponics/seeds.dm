@@ -105,7 +105,7 @@
 	icon_state = "seed-greengrapes"
 	species = "greengrape"
 	plantname = "Green-Grape Vine"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -155,7 +155,7 @@
 	icon_state = "seed-glowberry"
 	species = "glowberry"
 	plantname = "Glow-Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow
 	lifespan = 30
 	endurance = 25
 	maturation = 5
@@ -758,7 +758,7 @@
 	icon_state = "seed-goldapple"
 	species = "goldapple"
 	plantname = "Golden Apple Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold
 	lifespan = 55
 	endurance = 35
 	maturation = 10
@@ -775,7 +775,7 @@
 	icon_state = "seed-ambrosiavulgaris"
 	species = "ambrosiavulgaris"
 	plantname = "Ambrosia Vulgaris"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris
 	lifespan = 60
 	endurance = 25
 	maturation = 6
@@ -792,7 +792,7 @@
 	icon_state = "seed-ambrosiadeus"
 	species = "ambrosiadeus"
 	plantname = "Ambrosia Deus"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus
 	lifespan = 60
 	endurance = 25
 	maturation = 6
@@ -874,7 +874,7 @@
 	icon_state = "seed-lime"
 	species = "lime"
 	plantname = "Lime Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/lime
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime
 	lifespan = 55
 	endurance = 50
 	maturation = 6
@@ -890,7 +890,7 @@
 	icon_state = "seed-lemon"
 	species = "lemon"
 	plantname = "Lemon Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/lemon
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
 	lifespan = 55
 	endurance = 45
 	maturation = 6
@@ -924,7 +924,7 @@
 	icon_state = "seed-orange"
 	species = "orange"
 	plantname = "Orange Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/orange
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange
 	lifespan = 60
 	endurance = 50
 	maturation = 6
@@ -940,7 +940,7 @@
 	icon_state = "seed-poisonberry"
 	species = "poisonberry"
 	plantname = "Poison-Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -958,7 +958,7 @@
 	icon_state = "seed-deathberry"
 	species = "deathberry"
 	plantname = "Death Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/deathberries
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/death
 	lifespan = 30
 	endurance = 20
 	maturation = 5
@@ -1095,7 +1095,7 @@
 	icon_state = "seed-coffeea"
 	species = "coffeea"
 	plantname = "Coffee Arabica Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica
 	lifespan = 30
 	endurance = 20
 	maturation = 5
@@ -1112,7 +1112,7 @@
 	icon_state = "seed-coffeer"
 	species = "coffeer"
 	plantname = "Coffee Robusta Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -1147,7 +1147,7 @@
 	icon_state = "seed-stobacco"
 	species = "stobacco"
 	plantname = "Space Tobacco Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -1165,7 +1165,7 @@
 	icon_state = "seed-teaaspera"
 	species = "teaaspera"
 	plantname = "Tea Aspera Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -1182,7 +1182,7 @@
 	icon_state = "seed-teaastra"
 	species = "teaastra"
 	plantname = "Tea Astra Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
 	lifespan = 20
 	endurance = 15
 	maturation = 5

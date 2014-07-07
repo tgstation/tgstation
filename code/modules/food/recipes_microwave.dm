@@ -878,8 +878,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/orange,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/orange,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/orangecake
 
@@ -889,8 +889,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lime,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lime,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/limecake
 
@@ -900,8 +900,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/lemoncake
 
@@ -1023,15 +1023,15 @@
 	reagents = list("sugar" = 5, "milk" = 5, "flour" = 15)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/appletart
 
 /datum/recipe/herbsalad
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/herbsalad
@@ -1042,18 +1042,18 @@
 
 /datum/recipe/aesirsalad
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/aesirsalad
 
 /datum/recipe/validsalad
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 	)
