@@ -312,8 +312,8 @@
 		return W
 
 /turf/proc/AddDecal(const/image/decal)
-	if(!decal)
-		decal = new
+	if(!decals)
+		decals = new
 
 	decals += decal
 	overlays += decal
