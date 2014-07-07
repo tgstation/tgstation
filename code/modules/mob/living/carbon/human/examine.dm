@@ -2,7 +2,7 @@
 	set src in view()
 
 	if(!usr || !src)	return
-	if( usr.sdisabilities & BLIND || usr.blinded || usr.stat==UNCONSCIOUS )
+	if(usr.mutations.has_disability(BLIND) || usr.blinded || usr.stat == UNCONSCIOUS)
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 

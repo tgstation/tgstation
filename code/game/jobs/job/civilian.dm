@@ -227,7 +227,7 @@ Clown
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_l_store)
 	H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_r_store)
 
-	H.mutations.Add(CLUMSY)
+	H.mutations.add_mutation(CLUMSY)
 	H.rename_self("clown")
 
 /*

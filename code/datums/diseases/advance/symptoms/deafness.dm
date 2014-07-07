@@ -32,10 +32,10 @@ Bonus
 			if(3, 4)
 				M << "<span class='notice'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>"
 			if(5)
-				if(!(M.sdisabilities & DEAF))
+				if(!(M.mutations.has_disability(DEAF)))
 					M << "<span class='danger'>Your ears pop and begin ringing loudly!</span>"
-					M.sdisabilities |= DEAF
+					M.mutations.add_disability(DEAF)
 					spawn(200)
 						if(M)
-							M.sdisabilities &= ~DEAF
+							M.mutations.remove_disability(DEAF)
 	return

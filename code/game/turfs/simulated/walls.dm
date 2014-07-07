@@ -94,7 +94,7 @@
 
 /turf/simulated/wall/attack_paw(mob/user as mob)
 	user.changeNext_move(8)
-	if ((HULK in user.mutations))
+	if ((user.mutations.has_mutation(HULK)))
 		if (prob(hardness))
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			usr << text("<span class='notice'>You smash through the wall.</span>")
@@ -126,7 +126,7 @@
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	user.changeNext_move(8)
-	if (HULK in user.mutations)
+	if (user.mutations.has_mutation(HULK))
 		if (prob(hardness))
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			usr << text("<span class='notice'>You smash through the wall.</span>")

@@ -492,9 +492,9 @@
 		else
 			prot = 1
 
-		if(prot > 0 || (COLD_RESISTANCE in user.mutations))
+		if(prot > 0 || (user.mutations.has_mutation(COLD_RESISTANCE)))
 			user << "You remove the light [fitting]"
-		else if(TK in user.mutations)
+		else if(user.mutations.has_mutation(TK))
 			user << "You telekinetically remove the light [fitting]."
 		else
 			user << "You try to remove the light [fitting], but you burn your hand on it!"

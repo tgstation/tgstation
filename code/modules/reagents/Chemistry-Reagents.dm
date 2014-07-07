@@ -614,16 +614,8 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 
-				var/needs_update = M.mutations.len > 0
-
-				M.mutations = list()
-				M.disabilities = 0
-				M.sdisabilities = 0
-
-				// Might need to update appearance for hulk etc.
-				if(needs_update && ishuman(M))
-					var/mob/living/carbon/human/H = M
-					H.update_mutations()
+				M.mutations.clear_mutations()
+				M.mutations.clear_disabilities()
 
 				..()
 				return
@@ -979,8 +971,7 @@ datum
 				M.adjustToxLoss(-5)
 				M.hallucination = 0
 				M.setBrainLoss(0)
-				M.disabilities = 0
-				M.sdisabilities = 0
+				M.mutations.clear_disabilities()
 				M.eye_blurry = 0
 				M.eye_blind = 0
 				M.SetWeakened(0)
@@ -1092,7 +1083,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.eye_blurry = max(M.eye_blurry-5 , 0)
 				M.eye_blind = max(M.eye_blind-5 , 0)
-				M.disabilities &= ~NEARSIGHTED
+				M.mutations.remove_disability(NEARSIGHTED)
 				M.eye_stat = max(M.eye_stat-5, 0)
 //				M.sdisabilities &= ~1		Replaced by eye surgery
 				..()
@@ -1419,7 +1410,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if (FAT in M.mutations)
+				if (M.mutations.has_condition(FAT))
 					M.gib()
 				..()
 				return
@@ -2250,7 +2241,7 @@ datum
 						//nothing
 					if(21 to INFINITY)
 						if (prob(data-10))
-							M.disabilities &= ~NEARSIGHTED
+							M.mutations.remove_disability(NEARSIGHTED)
 				data++
 				..()
 				return

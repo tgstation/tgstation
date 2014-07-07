@@ -127,7 +127,7 @@
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !issilicon(M))
-				if(!M.blinded && !(sdisabilities & BLIND))
+				if(!M.blinded && !(mutations.has_disability(BLIND)))
 					return M
 	return null
 

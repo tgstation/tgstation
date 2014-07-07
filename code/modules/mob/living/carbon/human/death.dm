@@ -52,8 +52,8 @@
 	return 1
 
 /mob/living/carbon/proc/ChangeToHusk()
-	if(HUSK in mutations)	return
-	mutations.Add(HUSK)
+	if(mutations.has_condition(HUSK))	return
+	mutations.add_condition(HUSK)
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	return 1
 
@@ -65,5 +65,5 @@
 
 /mob/living/carbon/proc/Drain()
 	ChangeToHusk()
-	mutations |= NOCLONE
+	mutations.add_condition(NOCLONE)
 	return 1

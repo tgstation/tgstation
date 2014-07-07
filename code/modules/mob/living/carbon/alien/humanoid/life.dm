@@ -70,23 +70,23 @@
 
 /mob/living/carbon/alien/humanoid
 	proc/handle_disabilities()
-		if (disabilities & EPILEPSY)
+		if (mutations.has_disability(EPILEPSY))
 			if ((prob(1) && paralysis < 10))
 				src << "\red You have a seizure!"
 				Paralyse(10)
-		if (disabilities & COUGHING)
+		if (mutations.has_disability(COUGHING))
 			if ((prob(5) && paralysis <= 1))
 				drop_item()
 				spawn( 0 )
 					emote("cough")
 					return
-		if (disabilities & TOURETTES)
+		if (mutations.has_disability(TOURETTES))
 			if ((prob(10) && paralysis <= 1))
 				Stun(10)
 				spawn( 0 )
 					emote("twitch")
 					return
-		if (disabilities & NERVOUS)
+		if (mutations.has_disability(NERVOUS))
 			if (prob(10))
 				stuttering = max(10, stuttering)
 
@@ -193,7 +193,7 @@
 		breath.toxins -= toxins_used
 		breath.oxygen += toxins_used
 
-		if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
+		if(breath.temperature > (T0C+66) && !(mutations.has_mutation(COLD_RESISTANCE))) // Hot air hurts :(
 			if(prob(20))
 				src << "\red You feel a searing heat in your lungs!"
 			fire_alert = max(fire_alert, 1)
@@ -239,7 +239,7 @@
 			thermal_protection += 0.2
 		if(wear_suit && (wear_suit.flags & SUITSPACE))
 			thermal_protection += 3
-		if(COLD_RESISTANCE in mutations)
+		if(mutations.has_mutation(COLD_RESISTANCE))
 			thermal_protection += 5
 
 		return thermal_protection
@@ -264,16 +264,14 @@
 
 		if(reagents) reagents.metabolize(src)
 
-		if(FAT in mutations)
+		if(mutations.has_condition(FAT))
 			if(nutrition < 100)
 				if(prob(round((50 - nutrition) / 100)))
-					src << "\blue You feel fit again!"
-					mutations.Remove(FAT)
+					mutations.remove_condition(FAT)
 		else
 			if(nutrition > 500)
 				if(prob(5 + round((nutrition - 200) / 2)))
-					src << "\red You suddenly feel blubbery!"
-					mutations.Add(FAT)
+					mutations.add_condition(FAT)
 
 		if (nutrition > 0)
 			nutrition -= HUNGER_FACTOR
@@ -342,7 +340,7 @@
 				move_delay_add = max(0, move_delay_add - rand(1, 2))
 
 			//Eyes
-			if(sdisabilities & BLIND)		//disabled-blind, doesn't get better on its own
+			if(mutations.has_disability(BLIND))		//disabled-blind, doesn't get better on its own
 				blinded = 1
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
@@ -351,7 +349,7 @@
 				eye_blurry = max(eye_blurry-1, 0)
 
 			//Ears
-			if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
+			if(mutations.has_disability(DEAF))		//disabled-deaf, doesn't get better on its own
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_deaf)			//deafness, heals slowly over time
 				ear_deaf = max(ear_deaf-1, 0)
@@ -380,7 +378,7 @@
 
 	proc/handle_regular_hud_updates()
 
-		if (stat == 2 || (XRAY in mutations))
+		if (stat == 2 || (mutations.has_mutation(XRAY)))
 			sight |= SEE_TURFS
 			sight |= SEE_MOBS
 			sight |= SEE_OBJS
@@ -434,7 +432,7 @@
 			else
 				blind.layer = 0
 
-				if (disabilities & NEARSIGHTED)
+				if (mutations.has_disability(NEARSIGHTED))
 					client.screen += global_hud.vimpaired
 
 				if (eye_blurry)

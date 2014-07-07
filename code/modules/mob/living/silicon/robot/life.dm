@@ -122,9 +122,9 @@
 
 	src.density = !( src.lying )
 
-	if ((src.sdisabilities & BLIND))
+	if ((src.mutations.has_disability(BLIND)))
 		src.blinded = 1
-	if ((src.sdisabilities & DEAF))
+	if ((src.mutations.has_disability(DEAF)))
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
@@ -139,7 +139,7 @@
 
 /mob/living/silicon/robot/proc/handle_regular_hud_updates()
 
-	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == 2 || mutations.has_mutation(XRAY) || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
@@ -251,7 +251,7 @@
 			src.blind.layer = 18
 		else
 			src.blind.layer = 0
-			if (src.disabilities & NEARSIGHTED)
+			if (src.mutations.has_disability(NEARSIGHTED))
 				src.client.screen += global_hud.vimpaired
 
 			if (src.eye_blurry)

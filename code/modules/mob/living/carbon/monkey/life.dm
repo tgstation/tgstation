@@ -80,39 +80,38 @@
 
 	proc/handle_disabilities()
 
-		if (disabilities & EPILEPSY)
+		if (mutations.has_disability(EPILEPSY))
 			if ((prob(1) && paralysis < 10))
 				src << "\red You have a seizure!"
 				Paralyse(10)
-		if (disabilities & COUGHING)
+		if (mutations.has_disability(COUGHING))
 			if ((prob(5) && paralysis <= 1))
 				drop_item()
 				spawn( 0 )
 					emote("cough")
 					return
-		if (disabilities & TOURETTES)
+		if (mutations.has_disability(TOURETTES))
 			if ((prob(10) && paralysis <= 1))
 				Stun(10)
 				spawn( 0 )
 					emote("twitch")
 					return
-		if (disabilities & NERVOUS)
+		if (mutations.has_disability(NERVOUS))
 			if (prob(10))
 				stuttering = max(10, stuttering)
 
 	proc/handle_mutations_and_radiation()
 
 		if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) && prob(50))
+			if((mutations.has_mutation(COLD_RESISTANCE)) && prob(50))
 				switch(getFireLoss())
 					if(1 to 50)
 						adjustFireLoss(-1)
 					if(51 to 100)
 						adjustFireLoss(-5)
 
-		if ((HULK in mutations) && health <= 25)
-			mutations.Remove(HULK)
-			src << "\red You suddenly feel very weak."
+		if ((mutations.has_mutation(HULK)) && health <= 25)
+			mutations.remove_mutation(HULK)
 			Weaken(3)
 			emote("collapse")
 
@@ -354,7 +353,7 @@
 			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 				pressure_alert = -1
 			else
-				if( !(COLD_RESISTANCE in mutations) )
+				if( !(mutations.has_mutation(COLD_RESISTANCE)) )
 					adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 					pressure_alert = -2
 				else
@@ -434,7 +433,7 @@
 				stat = CONSCIOUS
 
 			//Eyes
-			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
+			if(mutations.has_disability(BLIND))	//disabled-blind, doesn't get better on its own
 				blinded = 1
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
@@ -443,7 +442,7 @@
 				eye_blurry = max(eye_blurry-1, 0)
 
 			//Ears
-			if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
+			if(mutations.has_disability(DEAF))		//disabled-deaf, doesn't get better on its own
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_deaf)			//deafness, heals slowly over time
 				ear_deaf = max(ear_deaf-1, 0)
@@ -472,7 +471,7 @@
 
 	proc/handle_regular_hud_updates()
 
-		if (stat == 2 || (XRAY in mutations))
+		if (stat == 2 || (mutations.has_mutation(XRAY)))
 			sight |= SEE_TURFS
 			sight |= SEE_MOBS
 			sight |= SEE_OBJS
@@ -552,7 +551,7 @@
 			else
 				blind.layer = 0
 
-				if(disabilities & NEARSIGHTED)
+				if(mutations.has_disability(NEARSIGHTED))
 					client.screen += global_hud.vimpaired
 
 				if(eye_blurry)

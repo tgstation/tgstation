@@ -162,12 +162,11 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(var/atom/A, var/params)
-	if(!mutations.len) return
-	if((LASER in mutations) && a_intent == "harm")
+	if((mutations.has_mutation(LASER)) && a_intent == "harm")
 		LaserEyes(A) // moved into a proc below
-	else
-		if(TK in mutations)
-			A.attack_tk(src)
+	else if(mutations.has_mutation(TK))
+		A.attack_tk(src)
+	return
 /*
 	Restrained ClickOn
 

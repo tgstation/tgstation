@@ -30,7 +30,7 @@
 	if (src.name != GetVoice())
 		alt_name = " (as [get_id_name("Unknown")])"
 	// Mute disability
-	if (src.sdisabilities & MUTE)
+	if (src.mutations.has_disability(MUTE))
 		return
 
 	if (is_muzzled())

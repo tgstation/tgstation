@@ -43,15 +43,15 @@
 		heal_overall_damage(0, -amount)
 
 /mob/living/carbon/human/Stun(amount)
-	if(HULK in mutations)	return
+	if(mutations.has_mutation(HULK))	return
 	..()
 
 /mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)	return
+	if(mutations.has_mutation(HULK))	return
 	..()
 
 /mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)	return
+	if(mutations.has_mutation(HULK))	return
 	..()
 
 mob/living/carbon/human/proc/hat_fall_prob()

@@ -34,7 +34,7 @@
 
 	if(shock(user, 70))
 		return
-	if(HULK in user.mutations)
+	if(user.mutations.has_mutation(HULK))
 		health -= 5
 	else
 		health -= 3

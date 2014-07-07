@@ -36,26 +36,17 @@
 		charges--
 		insisting = 0
 
-		if (!(HULK in user.mutations))
-			user.mutations.Add(HULK)
+		user.mutations.add_mutation(HULK)
 
-		if (!(LASER in user.mutations))
-			user.mutations.Add(LASER)
+		user.mutations.add_mutation(LASER)
 
-		if (!(XRAY in user.mutations))
-			user.mutations.Add(XRAY)
-			user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-			user.see_in_dark = 8
-			user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		user.mutations.add_mutation(XRAY)
 
-		if (!(COLD_RESISTANCE in user.mutations))
-			user.mutations.Add(COLD_RESISTANCE)
+		user.mutations.add_mutation(COLD_RESISTANCE)
 
-		if (!(TK in user.mutations))
-			user.mutations.Add(TK)
+		user.mutations.add_mutation(TK)
 
-		if(!(HEAL in user.mutations))
-			user.mutations.Add(HEAL)
+		user.mutations.add_mutation(HEAL)
 
 		user.update_mutations()
 
