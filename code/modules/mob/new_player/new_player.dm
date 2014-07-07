@@ -275,6 +275,13 @@
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
+			if(character.mind)
+				if((character.mind.assigned_role != "Cyborg") && (character.mind.special_role != "MODE"))
+					world << "A new crew member has arrived on the station."
+
+/* // SHINE HIDING THIS, MAKING NEW ONE THAT DOESNT RELY ON AI
+	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+		if (ticker.current_state == GAME_STATE_PLAYING)
 			var/ailist[] = list()
 			for (var/mob/living/silicon/ai/A in living_mob_list)
 				ailist += A
@@ -283,7 +290,7 @@
 				if(character.mind)
 					if((character.mind.assigned_role != "Cyborg") && (character.mind.special_role != "MODE"))
 						announcer.say("[character.real_name] has signed up as [rank].")
-
+*/
 	proc/LateChoices()
 		var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
 		//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
