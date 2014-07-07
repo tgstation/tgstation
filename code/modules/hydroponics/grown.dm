@@ -533,6 +533,14 @@
 			reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
 			bitesize = 1 + round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/
+	var/inside_type = null
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user as mob)
+	new inside_type(user.loc)
+	user.unEquip(src)
+	qdel(src)
+
 obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	seed = "/obj/item/seeds/eggyseed"
 	name = "Egg-plant"
@@ -543,12 +551,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 		if(reagents)
 			reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
 			bitesize = 1 + round(reagents.total_volume / 2, 1)
-
-obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/attack_self(mob/user as mob)
-	var/obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/E
-	new /obj/item/weapon/reagent_containers/food/snacks/egg(user.loc)
-	usr.unEquip(E)
-	qdel(src)
+	inside_type = /obj/item/weapon/reagent_containers/food/snacks/egg
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	seed = "/obj/item/seeds/soyaseed"
@@ -973,34 +976,29 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/attack_self(mob/
 	name = "Money Fruit"
 	desc = "Looks like a lemon with someone buldging from the inside."
 	icon_state = "moneyfruit"
-	New(var/loc, var/potency = 10)
+	inside_type = null
+	New()
 		..()
 		if(reagents)
 			reagents.add_reagent("nutriment", 1 + round((potency / 20), 1))
 			bitesize = 1 + round(reagents.total_volume / 2, 1)
-
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit/attack_self(mob/user as mob)
-	var/obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit/M
-	switch(potency)
-		if(0 to 10)
-			new/obj/item/weapon/spacecash/(user.loc)
-		if(11 to 20)
-			new/obj/item/weapon/spacecash/c10(user.loc)
-		if(21 to 30)
-			new/obj/item/weapon/spacecash/c20(user.loc)
-		if(31 to 40)
-			new/obj/item/weapon/spacecash/c50(user.loc)
-		if(41 to 50)
-			new/obj/item/weapon/spacecash/c100(user.loc)
-		if(51 to 60)
-			new/obj/item/weapon/spacecash/c200(user.loc)
-		if(61 to 80)
-			new/obj/item/weapon/spacecash/c500(user.loc)
-		else
-			new/obj/item/weapon/spacecash/c1000(user.loc)
-	usr.unEquip(M)
-	qdel(src)
+		switch(potency)
+			if(0 to 10)
+				inside_type = /obj/item/weapon/spacecash/
+			if(11 to 20)
+				inside_type = /obj/item/weapon/spacecash/c10
+			if(21 to 30)
+				inside_type = /obj/item/weapon/spacecash/c20
+			if(31 to 40)
+				inside_type = /obj/item/weapon/spacecash/c50
+			if(41 to 50)
+				inside_type = /obj/item/weapon/spacecash/c100
+			if(51 to 60)
+				inside_type = /obj/item/weapon/spacecash/c200
+			if(61 to 80)
+				inside_type = /obj/item/weapon/spacecash/c500
+			else
+				inside_type = /obj/item/weapon/spacecash/c1000
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
 	seed = "/obj/item/seeds/gatfruit"
