@@ -331,7 +331,7 @@
 //wedding stuff
 
 /obj/item/clothing/under/wedding/bride_orange
-	name = "orange wedding dress"
+	name = "white wedding dress"
 	desc = "A big and puffy orange dress."
 	icon_state = "bride_orange"
 	_color = "bride_orange"
