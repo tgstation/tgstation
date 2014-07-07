@@ -37,19 +37,24 @@ datum/light_source
 	var/atom/owner
 	var/changed = 1
 	var/list/effect = list()
-	var/__x = 0		//x coordinate at last update
-	var/__y = 0		//y coordinate at last update
-	var/l_color
+	var/__x = 0		// x coordinate at last update
+	var/__y = 0		// y coordinate at last update
+	var/__z = 0		// z coordinate at last update
 
+	var/_l_color // do not use directly, only used as reference for updating
+	var/col_r
+	var/col_g
+	var/col_b
 
 	New(atom/A)
 		if(!istype(A))
 			CRASH("The first argument to the light object's constructor must be the atom that is the light source. Expected atom, received '[A]' instead.")
 		..()
 		owner = A
-		l_color = owner.l_color
+		readrgb(owner.l_color)
 		__x = owner.x
 		__y = owner.y
+		__z = owner.z
 		// the lighting object maintains a list of all light sources
 		lighting_controller.lights += src
 
@@ -61,12 +66,13 @@ datum/light_source
 			return 1	//causes it to be removed from our list of lights. The garbage collector will then destroy it.
 
 		// check to see if we've moved since last update
-		if(owner.x != __x || owner.y != __y)
+		if(owner.x != __x || owner.y != __y || owner.z != __z)
 			__x = owner.x
 			__y = owner.y
+			__z = owner.z
 			changed = 1
 
-		if (owner.l_color != l_color)
+		if (owner.l_color != _l_color)
 			changed = 1
 
 		if(changed)
@@ -75,23 +81,22 @@ datum/light_source
 			return add_effect()
 		return 0
 
-
 	proc/remove_effect()
 		// before we apply the effect we remove the light's current effect.
 		for(var/turf/T in effect)	// negate the effect of this light source
-			T.update_lumcount(-effect[T], l_color, 1)
+			T.update_lumcount(-effect[T], col_r, col_g, col_b, 1)
 		effect.Cut()					// clear the effect list
 
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map
 		if(owner.loc && owner.luminosity > 0)
-			l_color = owner.l_color
+			readrgb(owner.l_color)
 			effect = list()
 			for(var/turf/T in view(owner.get_light_range(),owner))
 				var/delta_lumen = lum(T)
 				if(delta_lumen > 0)
 					effect[T] = delta_lumen
-					T.update_lumcount(delta_lumen, l_color, 0)
+					T.update_lumcount(delta_lumen, col_r, col_g, col_b, 0)
 
 			return 0
 		else
@@ -115,6 +120,16 @@ datum/light_source
 			return sqrt(owner.trueLuminosity) - dist
 		else
 			return sqrtTable[owner.trueLuminosity] - dist
+
+	proc/readrgb(const/col)
+		_l_color = col
+
+		if(col)
+			col_r = GetRedPart(col)
+			col_g = GetGreenPart(col)
+			col_b = GetBluePart(col)
+		else
+			col_r = null
 
 atom
 	var/datum/light_source/light
@@ -214,63 +229,38 @@ turf
 	var/lighting_lumcount = 0
 	var/lighting_changed = 0
 	var/color_lighting_lumcount = 0
-	var/list/colors = list()
+
+	var/lumcount_r = 0
+	var/lumcount_g = 0
+	var/lumcount_b = 0
+	var/light_col_sources = 0
 
 turf/space
 	lighting_lumcount = 4		//starlight
 
-turf/proc/update_lumcount(amount, _lcolor, removing = 0)
+turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
 	lighting_lumcount += amount
-	var/blended
 
-	if (_lcolor)
-		if (l_color && _lcolor && l_color != _lcolor && !removing) // Blend colors.
-			var/redblend = min((GetRedPart(l_color)) + (GetRedPart(_lcolor)), 255)
-			var/greenblend = min((GetGreenPart(l_color)) + (GetGreenPart(_lcolor)), 255)
-			var/blueblend = min((GetBluePart(l_color)) + (GetBluePart(_lcolor)), 255)
-			blended = "#[add_zero2(num2hex(redblend), 2)][add_zero2(num2hex(greenblend),2)][add_zero2(num2hex(blueblend),2)]"
+	if(!isnull(col_r)) //col_r is the "key" var, if it's null so will the rest
+		if(removing)
+			light_col_sources--
+			lumcount_r -= col_r
+			lumcount_g -= col_g
+			lumcount_b -= col_b
+		else
+			light_col_sources++
+			lumcount_r += col_r
+			lumcount_g += col_g
+			lumcount_b += col_b
 
-		if (removing)
-			colors.Remove(_lcolor) // Remove the color that's leaving us from our list.
+		if(light_col_sources)
+			var/r_avg = max(0, min(255, round(lumcount_r / light_col_sources, 16) + 15))
+			var/g_avg = max(0, min(255, round(lumcount_g / light_col_sources, 16) + 15))
+			var/b_avg = max(0, min(255, round(lumcount_b / light_col_sources, 16) + 15))
+			l_color = rgb(r_avg, g_avg, b_avg)
+		else
+			l_color = null
 
-			if (colors && !colors.len)
-				l_color = null // All our color is gone, no color for us.
-			else if (colors && colors.len > 1)
-				var/maxdepth = 3 // Will blend 3 colors, anymore than that and it looks bad or we will get lag on every tile update.
-				var/currentblended
-
-				for (var/i = 0, ++i <= colors.len)
-					if (i > maxdepth)
-						//world << "Maxdepth reached, breaking loop."
-						break
-
-					if (!currentblended)
-						//world << "First iteration, currentblended = [colors[i]]."
-						currentblended = colors[i] // Start with the first of the remaining colors.
-						continue
-
-					var/redblend = min((GetRedPart(currentblended)) + (GetRedPart(colors[i])), 255)
-					var/greenblend = min((GetGreenPart(currentblended)) + (GetGreenPart(colors[i])), 255)
-					var/blueblend = min((GetBluePart(currentblended)) + (GetBluePart(colors[i])), 255)
-					currentblended = "#[add_zero2(num2hex(redblend), 2)][add_zero2(num2hex(greenblend), 2)][add_zero2(num2hex(blueblend), 2)]"
-					//world << "Finished [i] [currentblended]."
-
-				if (currentblended)
-					//world << "Ended up with [currentblended]"
-					l_color = currentblended // blended the remaining colors so apply it.
-				else
-					l_color = null // Something went wrong, no color for you.
-			else
-				l_color = colors[colors.len]
-		else // we added a color.
-			colors.Add(_lcolor) // Add the base color to the list.
-
-			if (blended)
-				l_color = blended // If we had a blended color, this is what we get otherwise.
-			else
-				l_color = _lcolor // Basecolor is our color.
-
-		// if ((l_color != LIGHT_WHITE && l_color != "#FFF") || removing)
 		color_lighting_lumcount = max(color_lighting_lumcount + amount, 0) // Minimum of 0.
 
 	if(!lighting_changed)
@@ -316,7 +306,8 @@ turf/proc/shift_to_subarea()
 
 	// pomf - If we have a lighting color that is not null, apply the new tag to seperate the areas.
 	if (l_color)
-		new_tag += "[l_color][color_lighting_lumcount]" // pomf - We append the color lighting lumcount so we can have colored lights.
+		// pomf - We append the (rounded!) color lighting lumcount so we can have colored lights.
+		new_tag += "[l_color][Clamp(0, round(color_lighting_lumcount, 1), lighting_controller.lighting_states)]"
 
 	if(Area.tag!=new_tag)	//skip if already in this area
 		var/area/A = locate(new_tag)	// find an appropriate area

@@ -457,33 +457,61 @@ var/list/DummyCache = list()
 	return mobs_found
 
 /proc/GetRedPart(const/hexa)
-	var/hex = uppertext(hexa)
-	var/hi = text2ascii(hex, 2)
-	var/lo = text2ascii(hex, 3)
-	return (((hi >= 65 ? hi - 55 : hi - 48) << 4) | (lo >= 65 ? lo - 55 : lo - 48))
+	return hex2num(copytext(hexa, 2, 4))
 
 /proc/GetGreenPart(const/hexa)
-	var/hex = uppertext(hexa)
-	var/hi = text2ascii(hex, 4)
-	var/lo = text2ascii(hex, 5)
-	return (((hi >= 65 ? hi - 55 : hi - 48) << 4) | (lo >= 65 ? lo - 55 : lo - 48))
+	return hex2num(copytext(hexa, 4, 6))
 
 /proc/GetBluePart(const/hexa)
-	var/hex = uppertext(hexa)
-	var/hi = text2ascii(hex, 6)
-	var/lo = text2ascii(hex, 7)
-	return (((hi >= 65 ? hi - 55 : hi - 48) << 4) | (lo >= 65 ? lo - 55 : lo - 48))
+	return hex2num(copytext(hexa, 6, 8))
 
 /proc/GetHexColors(const/hexa)
-	var/hex = uppertext(hexa)
-	var/hi1 = text2ascii(hex, 2)
-	var/lo1 = text2ascii(hex, 3)
-	var/hi2 = text2ascii(hex, 4)
-	var/lo2 = text2ascii(hex, 5)
-	var/hi3 = text2ascii(hex, 6)
-	var/lo3 = text2ascii(hex, 7)
-	return list(
-		((hi1 >= 65 ? hi1 - 55 : hi1 - 48) << 4) | (lo1 >= 65 ? lo1 - 55 : lo1 - 48),
-		((hi2 >= 65 ? hi2 - 55 : hi2 - 48) << 4) | (lo2 >= 65 ? lo2 - 55 : lo2 - 48),
-		((hi3 >= 65 ? hi3 - 55 : hi3 - 48) << 4) | (lo3 >= 65 ? lo3 - 55 : lo3 - 48)
-		)
+	return list(\
+		GetRedPart(hexa),\
+		GetGreenPart(hexa),\
+		GetBluePart(hexa)\
+	)
+
+/proc/MixColors(const/list/colors)
+	var/list/reds = new
+	var/list/blues = new
+	var/list/greens = new
+	var/list/weights = new
+
+	for (var/i = 0, ++i <= colors.len)
+		reds.Add(GetRedPart(colors[i]))
+		blues.Add(GetBluePart(colors[i]))
+		greens.Add(GetGreenPart(colors[i]))
+		weights.Add(1)
+
+	var/r = mixOneColor(weights, reds)
+	var/g = mixOneColor(weights, greens)
+	var/b = mixOneColor(weights, blues)
+	return rgb(r,g,b)
+
+/proc/mixOneColor(var/list/weight, var/list/color)
+	if(!weight || !color || length(weight) != length(color))
+		return 0
+
+	var/contents = length(weight)
+
+	// normalize weights
+	var/listsum = 0
+
+	for(var/i = 1, i <= contents, i++)
+		listsum += weight[i]
+
+	for(var/i = 1, i <= contents, i++)
+		weight[i] /= listsum
+
+	// mix them
+	var/mixedcolor = 0
+
+	for(var/i = 1, i <= contents, i++)
+		mixedcolor += weight[i] * color[i]
+
+	// until someone writes a formal proof for this algorithm, let's keep this in
+	//if(mixedcolor<0x00 || mixedcolor>0xFF)
+	//	return 0
+	// that's not the kind of operation we are running here, nerd
+	return Clamp(round(mixedcolor), 0, 255)
