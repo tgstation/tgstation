@@ -90,7 +90,7 @@
 		if(myseed.yield == 0)//Oh god don't divide by zero you'll doom us all.
 			adjustSYield(1)
 			//world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
-		else if(prob(1/(myseed.yield * myseed.yield) *100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+		else if(prob(1/(myseed.yield * myseed.yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjustSYield(1)
 			//world << "Yield increased by 1, to a total of [myseed.yield]"
 	else
@@ -233,7 +233,7 @@ obj/machinery/hydroponics/update_icon()
 	for(var/Dir in cardinal)
 
 		var/obj/machinery/hydroponics/t = locate() in get_step(src,Dir)
-		if(t && t.anchored==2 && src.anchored==2)
+		if(t && t.anchored == 2 && src.anchored == 2)
 			n += Dir
 
 	icon_state = "hoses-[n]"
@@ -242,29 +242,29 @@ obj/machinery/hydroponics/update_icon()
 
 	if(planted)
 		if(dead)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-dead")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-dead")
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
+				overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
 			else
-				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-harvest")
+				overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-harvest")
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages ) // Make sure it won't crap out due to HERPDERP 6 stages only
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[round(t_growthstate)]")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
 			lastproduce = age //Cheating by putting this here, it means that it isn't instantly ready to harvest
 		else
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]") // Same
+			overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
 
 		if(waterlevel <= 10)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="over_lowwater3")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state =" over_lowwater3")
 		if(nutrilevel <= 2)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="over_lownutri3")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_lownutri3")
 		if(health <= (myseed.endurance / 2))
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="over_lowhealth3")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_lowhealth3")
 		if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="over_alert3")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_alert3")
 		if(harvest)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="over_harvest3")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_harvest3")
 
 	if(istype(myseed,/obj/item/seeds/glowshroom))
 		SetLuminosity(round(myseed.potency / 10))
@@ -318,7 +318,7 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	visible_message("<span class='info'>[oldPlantName] overtaken by [myseed.plantname].</span>")
 
 
-obj/machinery/hydroponics/proc/mutate(var/lifemut=2, var/endmut=5, var/productmut=1, var/yieldmut=2, var/potmut=25) // Mutates the current seed
+obj/machinery/hydroponics/proc/mutate(var/lifemut = 2, var/endmut = 5, var/productmut = 1, var/yieldmut = 2, var/potmut = 25) // Mutates the current seed
 	if(!planted)
 		return
 	adjustSLife(rand(-lifemut,lifemut))
@@ -421,146 +421,146 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 
 	// After handling the mutating, we now handle the damage from adding crude radioactives...
 	if(S.has_reagent("uranium", 1))
-		adjustHealth(-round(S.get_reagent_amount("uranium")*1))
-		adjustToxic(round(S.get_reagent_amount("uranium")*2))
+		adjustHealth(-round(S.get_reagent_amount("uranium") * 1))
+		adjustToxic(round(S.get_reagent_amount("uranium") * 2))
 	if(S.has_reagent("radium", 1))
-		adjustHealth(-round(S.get_reagent_amount("radium")*1))
-		adjustToxic(round(S.get_reagent_amount("radium")*3)) // Radium is harsher (OOC: also easier to produce)
+		adjustHealth(-round(S.get_reagent_amount("radium") * 1))
+		adjustToxic(round(S.get_reagent_amount("radium") * 3)) // Radium is harsher (OOC: also easier to produce)
 
 	// Nutriments
 	if(S.has_reagent("eznutriment", 1))
 		yieldmod = 1
 		mutmod = 1
-		adjustNutri(round(S.get_reagent_amount("eznutriment")*1))
+		adjustNutri(round(S.get_reagent_amount("eznutriment") * 1))
 
 	if(S.has_reagent("left4zednutriment", 1))
 		yieldmod = 0
 		mutmod = 2
-		adjustNutri(round(S.get_reagent_amount("left4zednutriment")*1))
+		adjustNutri(round(S.get_reagent_amount("left4zednutriment") * 1))
 
 	if(S.has_reagent("robustharvestnutriment", 1))
 		yieldmod = 2
 		mutmod = 0
-		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment")*1))
+		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
 	if(S.has_reagent("anti_toxin", 1))
-		adjustToxic(-round(S.get_reagent_amount("anti_toxin")*2))
+		adjustToxic(-round(S.get_reagent_amount("anti_toxin") * 2))
 
 	// NIGGA, YOU JUST WENT ON FULL RETARD.
 	if(S.has_reagent("toxin", 1))
-		adjustToxic(round(S.get_reagent_amount("toxin")*2))
+		adjustToxic(round(S.get_reagent_amount("toxin") * 2))
 
 	// Milk is good for humans, but bad for plants. The sugars canot be used by plants, and the milk fat fucks up growth. Not shrooms though. I can't deal with this now...
 	if(S.has_reagent("milk", 1))
-		adjustNutri(round(S.get_reagent_amount("milk")*0.1))
-		adjustWater(round(S.get_reagent_amount("milk")*0.9))
+		adjustNutri(round(S.get_reagent_amount("milk") * 0.1))
+		adjustWater(round(S.get_reagent_amount("milk") * 0.9))
 
 	// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
 	if(S.has_reagent("beer", 1))
-		adjustHealth(-round(S.get_reagent_amount("beer")*0.05))
-		adjustNutri(round(S.get_reagent_amount("beer")*0.25))
-		adjustWater(round(S.get_reagent_amount("beer")*0.7))
+		adjustHealth(-round(S.get_reagent_amount("beer") * 0.05))
+		adjustNutri(round(S.get_reagent_amount("beer") * 0.25))
+		adjustWater(round(S.get_reagent_amount("beer") * 0.7))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 	if(S.has_reagent("fluorine", 1))
-		adjustHealth(-round(S.get_reagent_amount("fluorine")*2))
-		adjustToxic(round(S.get_reagent_amount("flourine")*2.5))
-		adjustWater(-round(S.get_reagent_amount("flourine")*0.5))
+		adjustHealth(-round(S.get_reagent_amount("fluorine") * 2))
+		adjustToxic(round(S.get_reagent_amount("flourine") * 2.5))
+		adjustWater(-round(S.get_reagent_amount("flourine") * 0.5))
 		adjustWeeds(-rand(1,4))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 	if(S.has_reagent("chlorine", 1))
-		adjustHealth(-round(S.get_reagent_amount("chlorine")*1))
-		adjustToxic(round(S.get_reagent_amount("chlorine")*1.5))
-		adjustWater(-round(S.get_reagent_amount("chlorine")*0.5))
+		adjustHealth(-round(S.get_reagent_amount("chlorine") * 1))
+		adjustToxic(round(S.get_reagent_amount("chlorine") * 1.5))
+		adjustWater(-round(S.get_reagent_amount("chlorine") * 0.5))
 		adjustWeeds(-rand(1,3))
 
 	// White Phosphorous + water -> phosphoric acid. That's not a good thing really. Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
 	if(S.has_reagent("phosphorus", 1))
-		adjustHealth(-round(S.get_reagent_amount("phosphorus")*0.75))
-		adjustNutri(round(S.get_reagent_amount("phosphorus")*0.1))
-		adjustWater(-round(S.get_reagent_amount("phosphorus")*0.5))
+		adjustHealth(-round(S.get_reagent_amount("phosphorus") * 0.75))
+		adjustNutri(round(S.get_reagent_amount("phosphorus") * 0.1))
+		adjustWater(-round(S.get_reagent_amount("phosphorus") * 0.5))
 		adjustWeeds(-rand(1,2))
 
 	// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 	if(S.has_reagent("sugar", 1))
 		adjustWeeds(rand(1,2))
 		adjustPests(rand(1,2))
-		adjustNutri(round(S.get_reagent_amount("sugar")*0.1))
+		adjustNutri(round(S.get_reagent_amount("sugar") * 0.1))
 
 	// It is water!
 	if(S.has_reagent("water", 1))
-		adjustWater(round(S.get_reagent_amount("water")*1))
+		adjustWater(round(S.get_reagent_amount("water") * 1))
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits~
 	if(S.has_reagent("holywater", 1))
-		adjustWater(round(S.get_reagent_amount("holywater")*1))
-		adjustHealth(round(S.get_reagent_amount("holywater")*0.1))
+		adjustWater(round(S.get_reagent_amount("holywater") * 1))
+		adjustHealth(round(S.get_reagent_amount("holywater") * 0.1))
 
 	// A variety of nutrients are dissolved in club soda, without sugar. These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
 	if(S.has_reagent("sodawater", 1))
-		adjustWater(round(S.get_reagent_amount("sodawater")*1))
-		adjustHealth(round(S.get_reagent_amount("sodawater")*0.1))
-		adjustNutri(round(S.get_reagent_amount("sodawater")*0.1))
+		adjustWater(round(S.get_reagent_amount("sodawater") * 1))
+		adjustHealth(round(S.get_reagent_amount("sodawater") * 0.1))
+		adjustNutri(round(S.get_reagent_amount("sodawater") * 0.1))
 
 	// Man, you guys are retards
 	if(S.has_reagent("sacid", 1))
-		adjustHealth(-round(S.get_reagent_amount("sacid")*1))
-		adjustToxic(round(S.get_reagent_amount("sacid")*1.5))
+		adjustHealth(-round(S.get_reagent_amount("sacid") * 1))
+		adjustToxic(round(S.get_reagent_amount("sacid") * 1.5))
 		adjustWeeds(-rand(1,2))
 
 	// SERIOUSLY
 	if(S.has_reagent("pacid", 1))
-		adjustHealth(-round(S.get_reagent_amount("pacid")*2))
-		adjustToxic(round(S.get_reagent_amount("pacid")*3))
+		adjustHealth(-round(S.get_reagent_amount("pacid") * 2))
+		adjustToxic(round(S.get_reagent_amount("pacid") * 3))
 		adjustWeeds(-rand(1,4))
 
 	// Plant-B-Gone is just as bad
 	if(S.has_reagent("plantbgone", 1))
-		adjustHealth(-round(S.get_reagent_amount("plantbgone")*2))
-		adjustToxic(-round(S.get_reagent_amount("plantbgone")*3))
+		adjustHealth(-round(S.get_reagent_amount("plantbgone") * 5))
+		adjustToxic(-round(S.get_reagent_amount("plantbgone") * 6))
 		adjustWeeds(-rand(4,8))
 
 	//Weed Spray
 	if(S.has_reagent("weedkiller", 1))
-		adjustToxic(round(S.get_reagent_amount("weedkiller")*0.5))
+		adjustToxic(round(S.get_reagent_amount("weedkiller") * 0.5))
 		//old toxicity was 4, each spray is default 10 (minimal of 5) so 5 and 2.5 are the new ammounts
 		adjustWeeds(-rand(1,2))
 
 	//Pest Spray
 	if(S.has_reagent("pestkiller", 1))
-		adjustToxic(round(S.get_reagent_amount("pestkiller")*0.5))
+		adjustToxic(round(S.get_reagent_amount("pestkiller") * 0.5))
 		adjustPests(-rand(1,2))
 
 	// Healing
 	if(S.has_reagent("cryoxadone", 1))
-		adjustHealth(round(S.get_reagent_amount("cryoxadone")*3))
-		adjustToxic(-round(S.get_reagent_amount("cryoxadone")*3))
+		adjustHealth(round(S.get_reagent_amount("cryoxadone") * 3))
+		adjustToxic(-round(S.get_reagent_amount("cryoxadone") * 3))
 
 	// Ammonia is bad ass.
 	if(S.has_reagent("ammonia", 1))
-		adjustHealth(round(S.get_reagent_amount("ammonia")*0.5))
-		adjustNutri(round(S.get_reagent_amount("ammonia")*1))
-		adjustSYield(round(S.get_reagent_amount("ammonia")*0.01))
+		adjustHealth(round(S.get_reagent_amount("ammonia") * 0.5))
+		adjustNutri(round(S.get_reagent_amount("ammonia") * 1))
+		adjustSYield(round(S.get_reagent_amount("ammonia") * 0.01))
 
 	// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
 	if(S.has_reagent("diethylamine", 1))
-		adjustHealth(round(S.get_reagent_amount("diethylamine")*1))
-		adjustNutri(round(S.get_reagent_amount("diethylamine")*2))
-		adjustSYield(round(S.get_reagent_amount("diethylamine")*0.02))
+		adjustHealth(round(S.get_reagent_amount("diethylamine") * 1))
+		adjustNutri(round(S.get_reagent_amount("diethylamine") * 2))
+		adjustSYield(round(S.get_reagent_amount("diethylamine") * 0.02))
 		adjustPests(-rand(1,2))
 
 	// Compost, effectively
 	if(S.has_reagent("nutriment", 1))
-		adjustHealth(round(S.get_reagent_amount("nutriment")*0.5))
-		adjustNutri(round(S.get_reagent_amount("nutriment")*1))
+		adjustHealth(round(S.get_reagent_amount("nutriment") * 0.5))
+		adjustNutri(round(S.get_reagent_amount("nutriment") * 1))
 
 	// The best stuff there is. For testing/debugging.
 	if(S.has_reagent("adminordrazine", 1))
-		adjustWater(round(S.get_reagent_amount("adminordrazine")*1))
-		adjustHealth(round(S.get_reagent_amount("adminordrazine")*1))
-		adjustNutri(round(S.get_reagent_amount("adminordrazine")*1))
+		adjustWater(round(S.get_reagent_amount("adminordrazine") * 1))
+		adjustHealth(round(S.get_reagent_amount("adminordrazine") * 1))
+		adjustNutri(round(S.get_reagent_amount("adminordrazine") * 1))
 		adjustPests(-rand(1,5))
 		adjustWeeds(-rand(1,5))
 	if(S.has_reagent("adminordrazine", 5))
@@ -669,19 +669,19 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "-Plant Production: <span class='notice'> [myseed.production]</span>"
 			if(myseed.potency != -1)
 				user << "-Plant Potency: <span class='notice'> [myseed.potency]</span>"
-			user << "-Weed level: <span class='notice'> [weedlevel]/10</span>"
-			user << "-Pest level: <span class='notice'> [pestlevel]/10</span>"
-			user << "-Toxicity level: <span class='notice'> [toxic]/100</span>"
-			user << "-Water level: <span class='notice'> [waterlevel]/[maxwater]</span>"
-			user << "-Nutrition level: <span class='notice'> [nutrilevel]/[maxnutri]</span>"
+			user << "-Weed level: <span class='notice'> [weedlevel] / 10</span>"
+			user << "-Pest level: <span class='notice'> [pestlevel] / 10</span>"
+			user << "-Toxicity level: <span class='notice'> [toxic] / 100</span>"
+			user << "-Water level: <span class='notice'> [waterlevel] / [maxwater]</span>"
+			user << "-Nutrition level: <span class='notice'> [nutrilevel] / [maxnutri]</span>"
 			user << ""
 		else
 			user << "<B>No plant found.</B>"
-			user << "-Weed level: <span class='notice'> [weedlevel]/10</span>"
-			user << "-Pest level: <span class='notice'> [pestlevel]/10</span>"
-			user << "-Toxicity level: <span class='notice'> [toxic]/100</span>"
-			user << "-Water level: <span class='notice'> [waterlevel]/[maxwater]</span>"
-			user << "-Nutrition level: <span class='notice'> [nutrilevel]/[maxnutri]</span>"
+			user << "-Weed level: <span class='notice'> [weedlevel] / 10</span>"
+			user << "-Pest level: <span class='notice'> [pestlevel] / 10</span>"
+			user << "-Toxicity level: <span class='notice'> [toxic] / 100</span>"
+			user << "-Water level: <span class='notice'> [waterlevel] / [maxwater]</span>"
+			user << "-Nutrition level: <span class='notice'> [nutrilevel] / [maxnutri]</span>"
 			user << ""
 
 	else if(istype(O, /obj/item/weapon/minihoe))
@@ -1044,18 +1044,18 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	if(planted)
 		if(dead)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-dead")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-dead")
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
+				overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-grow[myseed.growthstages]")
 			else
-				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-harvest")
+				overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-harvest")
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages )
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[round(t_growthstate)]")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-grow[round(t_growthstate)]")
 			lastproduce = age
 		else
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-grow[myseed.growthstages]")
 
 	if(!luminosity)
 		if(istype(myseed,/obj/item/seeds/glowshroom))
