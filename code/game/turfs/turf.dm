@@ -26,7 +26,7 @@
 	var/targetted_by=null
 
 	// Decal shit.
-	var/list/decals[0]
+	var/list/decals
 
 /turf/New()
 	..()
@@ -109,8 +109,8 @@
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	. = ..()
 
-	if(2 == .) // observer
-		return 1
+	if(2 == . || 0 == .) // observer || denied
+		return
 
 //vvvvv Infared beam stuff vvvvv
 
@@ -311,10 +311,12 @@
 		W.levelupdate()
 		return W
 
-/turf/proc/AddDecal(var/image/decal)
+/turf/proc/AddDecal(const/image/decal)
+	if(!decals)
+		decals = new
+
 	decals += decal
 	overlays += decal
-
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
 //  If you are replacing a wall, you have increased the volume of the room without increasing the amount of gas in it.
