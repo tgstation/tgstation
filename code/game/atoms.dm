@@ -555,7 +555,7 @@ its easier to just keep the beam vertical.
 
 			if(mob.client && mob.client.ckey != movement_disabled_exception)
 				mob << "\red movement is admin disabled."
-				return 0
+				return 3
 
 	if(isobserver(O))
 		return 2
@@ -569,7 +569,7 @@ its easier to just keep the beam vertical.
 
 			if(mob.client && mob.client.ckey != movement_disabled_exception)
 				mob << "\red movement is admin disabled."
-				return 0
+				return 3
 
 	if(isobserver(Obj))
 		return 2

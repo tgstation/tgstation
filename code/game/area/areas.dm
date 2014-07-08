@@ -367,13 +367,16 @@
 /area/Enter(atom/movable/O, atom/oldloc)
 	. = ..()
 
-	if(2 == . || 0 == .) // observer || denied
-		return
+	if(3 == .) // movement_disabled
+		return 0
+
+	if(2 == .) // observer
+		return 1
 
 /area/Entered(atom/movable/Obj,atom/OldLoc)
 	. = ..()
 
-	if(2 == . || 0 == .) // observer || denied
+	if(2 == .) // observer
 		return
 
 	Obj.lastarea = Obj.areaMaster

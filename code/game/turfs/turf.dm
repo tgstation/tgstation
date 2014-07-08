@@ -66,6 +66,9 @@
 /turf/Enter(atom/movable/O, atom/oldloc)
 	. = ..()
 
+	if(3 == .) // movement_disabled
+		return 0
+
 	if(2 == .) // observer
 		return 1
 
@@ -104,12 +107,15 @@
 			if(!obstacle.CanPass(O, O.loc, 1, 0) && (oldloc != obstacle))
 				O.Bump(obstacle, 1)
 				return 0
-	return 1 //Nothing found to block so return success!
+
+//	return 1
 
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	. = ..()
 
-	if(2 == . || 0 == .) // observer || denied
+	Obj.last_move = dir
+
+	if(2 == .) // observer
 		return
 
 //vvvvv Infared beam stuff vvvvv
@@ -179,7 +185,6 @@
 	return 0
 
 /turf/proc/inertial_drift(atom/movable/A as mob|obj)
-	if(!(A.last_move))	return
 	if(istype(A, /obj/spacepod) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
 		var/obj/spacepod/SP = A
 		if(SP.Process_Spacemove(1))
@@ -205,13 +210,14 @@
 	if((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
 		var/mob/M = A
 		if(M.Process_Spacemove(1))
-			M.inertia_dir  = 0
+			M.inertia_dir = 0
 			return
 		spawn(5)
 			if((M && !(M.anchored) && !(M.pulledby) && (M.loc == src)))
 				if(M.inertia_dir)
 					step(M, M.inertia_dir)
 					return
+
 				M.inertia_dir = M.last_move
 				step(M, M.inertia_dir)
 	return

@@ -200,15 +200,3 @@
 /////////////////////////////
 /atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
 	return 1
-
-/atom/movable/Enter(atom/movable/O, atom/oldloc)
-	. = ..()
-
-	if(2 == . || 0 == .) // observer || denied
-		return
-
-/atom/movable/Entered(atom/movable/Obj,atom/OldLoc)
-	. = ..()
-
-	if(2 == . || 0 == .) // observer || denied
-		return
