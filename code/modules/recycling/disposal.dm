@@ -1295,11 +1295,11 @@
 		spawn(1)
 			target = get_ranged_target_turf(src, dir, 10)
 
-
 			trunk = locate() in loc
 
 			if(trunk)
-				trunk.linked = src	// link the pipe trunk to self
+				if(trunk.linked != src)
+					trunk.linked = src
 
 	Destroy()
 		if(trunk)
