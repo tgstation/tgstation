@@ -28,16 +28,27 @@
 	New()
 		..()
 		spawn(5)
-			trunk = locate() in src.loc
-			if(!trunk)
+			trunk = locate() in loc
+
+			if(trunk)
+				if(trunk.linked != src)
+					trunk.linked = src
+			else
 				mode = 0
 				flush = 0
-			else
-				trunk.linked = src	// link the pipe trunk to self
 
 			air_contents = new/datum/gas_mixture()
 			//gas.volume = 1.05 * CELLSTANDARD
-			update()
+		update()
+
+	Destroy()
+		if(trunk)
+			if(trunk.linked)
+				trunk.linked = null
+
+			trunk = null
+
+		..()
 
 	MouseDrop_T(var/obj/item/target, mob/user)
 		src.attackby(target,user)
@@ -1133,28 +1144,41 @@
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
 /obj/structure/disposalpipe/trunk/New()
-	..()
+	. = ..()
 	dpdir = dir
+
 	spawn(1)
 		getlinked()
 
 	update()
-	return
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
-	linked = null
-	var/obj/machinery/disposal/D = locate() in src.loc
-	if(D)
-		linked = D
-		if (!D.trunk)
-			D.trunk = src
+	var/obj/machinery/disposal/disposal = locate() in loc
 
-	var/obj/structure/disposaloutlet/O = locate() in src.loc
-	if(O)
-		linked = O
+	if(disposal)
+		linked = disposal
 
-	update()
-	return
+		if(!linked.trunk)
+			linked.trunk = src
+
+		return
+
+	var/obj/structure/disposaloutlet/disposaloutlet = locate() in loc
+
+	if(disposaloutlet)
+		linked = disposaloutlet
+
+		if(!linked.trunk)
+			linked.trunk = src
+
+/obj/structure/disposalpipe/trunk/Destroy()
+	if(linked)
+		if(linked.trunk)
+			linked.trunk = null
+
+		linked = null
+
+	..()
 
 	// Override attackby so we disallow trunkremoval when somethings ontop
 /obj/structure/disposalpipe/trunk/attackby(var/obj/item/I, var/mob/user)
@@ -1262,17 +1286,28 @@
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
+	var/obj/structure/disposalpipe/trunk/trunk
 
 	New()
-		..()
+		. = ..()
 
 		spawn(1)
 			target = get_ranged_target_turf(src, dir, 10)
 
 
-			var/obj/structure/disposalpipe/trunk/trunk = locate() in src.loc
+			trunk = locate() in loc
+
 			if(trunk)
 				trunk.linked = src	// link the pipe trunk to self
+
+	Destroy()
+		if(trunk)
+			if(trunk.linked)
+				trunk.linked = null
+
+			trunk = null
+
+		..()
 
 	// expel the contents of the holder object, then delete it
 	// called when the holder exits the outlet
