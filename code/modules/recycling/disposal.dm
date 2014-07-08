@@ -1141,7 +1141,8 @@
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
-	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
+	var/obj/machinery/disposal
+	var/obj/structure/disposaloutlet
 
 /obj/structure/disposalpipe/trunk/New()
 	. = ..()
@@ -1153,30 +1154,30 @@
 	update()
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
-	var/obj/machinery/disposal/disposal = locate() in loc
+	disposal = locate() in loc
 
 	if(disposal)
-		linked = disposal
+		if(disposal.trunk != src)
+			disposal.trunk = src
 
-		if(!linked.trunk)
-			linked.trunk = src
-
-		return
-
-	var/obj/structure/disposaloutlet/disposaloutlet = locate() in loc
+	disposaloutlet = locate() in loc
 
 	if(disposaloutlet)
-		linked = disposaloutlet
-
-		if(!linked.trunk)
-			linked.trunk = src
+		if(disposaloutlet.trunk != src)
+			disposal.trunk = src
 
 /obj/structure/disposalpipe/trunk/Destroy()
-	if(linked)
-		if(linked.trunk)
-			linked.trunk = null
+	if(disposal)
+		if(disposal.trunk)
+			disposal.trunk = null
 
-		linked = null
+		disposal = null
+
+	if(disposaloutlet)
+		if(disposaloutlet.trunk)
+			disposaloutlet.trunk = null
+
+		disposaloutlet = null
 
 	..()
 
