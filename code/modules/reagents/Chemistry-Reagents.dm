@@ -1598,8 +1598,9 @@ datum
 						M.sleeping += 1
 					if(51 to INFINITY)
 						M.sleeping += 1
-						M.adjustToxLoss(data - 50)
+						M.adjustToxLoss((data - 50)*REM)
 				data++
+				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				..()
 				return
 
