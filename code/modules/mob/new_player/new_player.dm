@@ -277,7 +277,7 @@
 		if (ticker.current_state == GAME_STATE_PLAYING)
 			if(character.mind)
 				if((character.mind.assigned_role != "Cyborg") && (character.mind.special_role != "MODE"))
-					world << "A new crew member has arrived on the station."
+					world << "<b>A new crew member has arrived on the station.</b>"
 
 /* // SHINE HIDING THIS, MAKING NEW ONE THAT DOESNT RELY ON AI
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
