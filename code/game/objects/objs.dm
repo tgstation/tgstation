@@ -25,8 +25,8 @@
 
 /obj/Destroy()
 	if(_using)
-		for(var/mob/M in _using)
-			M.unset_machine()
+		for(var/mob/mob in _using)
+			mob.unset_machine()
 
 	if(src in processing_objects)
 		processing_objects -= src
@@ -87,7 +87,7 @@
 		var/is_in_use = 0
 		if(_using.len)
 			var/list/nearby = viewers(1, src)
-			for(var/mob/M in _using.Copy()) // Only check things actually messing with us.
+			for(var/mob/M in _using) // Only check things actually messing with us.
 				if (!M || !M.client || M.machine != src)
 					_using.Remove(M)
 					continue
