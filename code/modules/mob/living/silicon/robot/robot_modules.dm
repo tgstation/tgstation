@@ -173,7 +173,7 @@
 
 	New()
 		..()
-		modules += new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
+		modules += new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(src)
 		modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 		modules += new /obj/item/weapon/pen(src)
 		modules += new /obj/item/weapon/razor(src)
@@ -191,13 +191,7 @@
 
 		modules += new /obj/item/weapon/storage/bag/tray(src)
 		modules += new /obj/item/weapon/reagent_containers/borghypo/borgshaker(src)
-		emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-
-		var/datum/reagents/R = new/datum/reagents(50)
-		emag.reagents = R
-		R.my_atom = emag
-		R.add_reagent("beer2", 50)
-		emag.name = "Mickey Finn's Special Brew"
+		emag = new /obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked(src)
 
 
 /obj/item/weapon/robot_module/miner
