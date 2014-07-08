@@ -141,15 +141,23 @@ var/global/list/protected_objects = list(
 	var/mob/living/creator = null // the creator
 	var/destroy_objects = 0
 	var/knockdown_people = 0
+	var/time_to_die=0 // The world.time after which we expire. (0 = no time limit)
 
-/mob/living/simple_animal/hostile/mimic/copy/New(loc, var/obj/copy, var/mob/living/creator, var/destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/New(loc, var/obj/copy, var/mob/living/creator, var/destroy_original = 0, var/duration=0)
 	..(loc)
 	CopyObject(copy, creator, destroy_original)
+	if(duration)
+		time_to_die=world.time+duration
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
+	// Die after a specified time limit
+	if(time_to_die && world.time >= time_to_die)
+		Die()
+		return
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
 		Die()
+		return
 
 /mob/living/simple_animal/hostile/mimic/copy/Die()
 

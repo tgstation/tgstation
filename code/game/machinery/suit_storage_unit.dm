@@ -54,7 +54,7 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/elite
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/elite
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	BOOT_TYPE = /obj/item/clothing/shoes/magboots
+	BOOT_TYPE = /obj/item/clothing/shoes/magboots/elite
 
 /obj/machinery/suit_storage_unit/mining
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/mining
@@ -64,6 +64,7 @@
 
 
 /obj/machinery/suit_storage_unit/New()
+	. = ..()
 	src.update_icon()
 	if(SUIT_TYPE)
 		SUIT = new SUIT_TYPE(src)

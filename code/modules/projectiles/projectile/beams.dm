@@ -181,6 +181,8 @@ var/list/beam_master = list()
 /obj/item/projectile/beam
 	name = "laser"
 	icon_state = "laser"
+	invisibility = 101
+
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 30
 	damage_type = BURN
@@ -244,78 +246,73 @@ var/list/beam_master = list()
 				first = 0
 		cleanup(reference)
 		return
-	dumbfire(var/dir)
+
+/obj/item/projectile/beam/dumbfire(var/dir)
+	spawn(0)
+		var/reference = "\ref[src]" // So we do not have to recalculate it a ton.
 		var/lastposition = loc
-		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
-		var/first = 1 //So we don't make the overlay in the same tile as the firer
-		if(!dir)
-			//del(src)
-			returnToPool(src)
-		spawn while(loc) //Move until we hit something
+		var/target_dir = src.dir // TODO: remove dir arg.
+
+		while(loc) // Move until we hit something.
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				//del(src) //Delete if it passes the world edge
 				returnToPool(src)
-				return
-			var/turf/T = get_step(src, dir)
-			step_towards(src, T) //Move~
+				break
+
+			step(src, target_dir) // Move.
+
 			if(isnull(loc))
-				return
+				break
+
 			if(lastposition == loc)
 				kill_count = 0
+
 			lastposition = loc
+
 			if(kill_count < 1)
-				//del(src)
 				returnToPool(src)
+				break
+
 			kill_count--
 
-			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original)
+			// Add the overlay as we pass over tiles.
 
-			if(!first) //Add the overlay as we pass over tiles
-				var/target_dir = dir //So we don't call this too much
+			// If the icon has not been added yet.
+			if(!("[icon_state][target_dir]" in beam_master) )
+				beam_master["[icon_state][target_dir]"] = image(icon, icon_state, 10, target_dir) // Generate, and cache it!
 
-				//If the icon has not been added yet
-				if( !("[icon_state][target_dir]" in beam_master) )
-					var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
-					beam_master["[icon_state][target_dir]"] = I //And cache it!
+			// Finally add the overlay
+			loc.overlays += beam_master["[icon_state][target_dir]"]
 
-				//Finally add the overlay
-				src.loc.overlays += beam_master["[icon_state][target_dir]"]
+			// Add the turf to a list in the beam master so they can be cleaned up easily.
+			if(reference in beam_master)
+				var/list/turf_master = beam_master[reference]
 
-				//Add the turf to a list in the beam master so they can be cleaned up easily.
-				if(reference in beam_master)
-					var/list/turf_master = beam_master[reference]
-					if("[icon_state][target_dir]" in turf_master)
-						var/list/turfs = turf_master["[icon_state][target_dir]"]
-						turfs += loc
-					else
-						turf_master["[icon_state][target_dir]"] = list(loc)
+				if("[icon_state][target_dir]" in turf_master)
+					turf_master["[icon_state][target_dir]"] += loc
 				else
-					var/list/turfs = list()
-					turfs["[icon_state][target_dir]"] = list(loc)
-					beam_master[reference] = turfs
+					turf_master["[icon_state][target_dir]"] = list(loc)
 			else
-				first = 0
+				var/list/turfs = new
+				turfs["[icon_state][target_dir]"] = list(loc)
+				beam_master[reference] = turfs
+
 		cleanup(reference)
-		return
 
+/obj/item/projectile/beam/proc/cleanup(const/reference)
+	src = null // Redundant.
+				// No, if it's not set to null this proc will be silently killed.
 
-	Destroy()
-		cleanup("\ref[src]")
-		..()
+	spawn(3) // Waits .3 seconds then removes the overlay.
+		var/list/turf_master = beam_master[reference]
 
-	proc/cleanup(reference) //Waits .3 seconds then removes the overlay.
-		src = null // Redundant.
-		spawn(3)
-			var/list/turf_master = beam_master[reference]
-			for(var/laser_state in turf_master)
-				var/list/turfs = turf_master[laser_state]
-				for(var/turf/T in turfs)
-					T.overlays -= beam_master[laser_state]
-				turfs.Cut()
-		return
+		for(var/laser_state in turf_master)
+			var/list/turfs = turf_master[laser_state]
+
+			for(var/turf/T in turfs)
+				T.overlays -= beam_master[laser_state]
+				T = null
+
+			turfs.Cut()
 
 /obj/item/projectile/beam/practice
 	name = "laser"

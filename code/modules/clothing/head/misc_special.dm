@@ -181,7 +181,7 @@
 
 /obj/item/clothing/head/butt
 	name = "butt"
-	desc = "What?"
+	desc = "So many butts, so little time."
 	icon_state = "butt"
 	item_state = "butt"
 	flags = TABLEPASS
@@ -192,17 +192,8 @@
 	throw_range = 5
 	var/s_tone = 0.0
 
-	var/mob/living/carbon/human/owner = null
 
-/obj/item/clothing/head/butt/New()
-	..()
-	spawn(5)
-		if(src.owner)
-			var/icon/new_icon = icon('icons/obj/clothing/hats.dmi', "butt")
-			src.s_tone = src.owner.s_tone
-			if (src.s_tone >= 0)
-				new_icon.Blend(rgb(src.s_tone, src.s_tone, src.s_tone), ICON_ADD)
-			else
-				new_icon.Blend(rgb(-src.s_tone,  -src.s_tone,  -src.s_tone), ICON_SUBTRACT)
-			src.icon = new_icon
-			src.name = "[src.owner]'s butt"
+	proc
+		transfer_buttdentity(var/mob/living/carbon/H)
+			name = "[H]'s butt"
+			return
