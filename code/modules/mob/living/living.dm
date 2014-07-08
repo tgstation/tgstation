@@ -470,12 +470,12 @@
 
 				if(C.handcuffed)
 					C.handcuffed.loc = usr.loc
-					C.update_inv_handcuffed(0)
 					C.handcuffed = null
+					C.update_inv_handcuffed(0)
 				else
 					C.legcuffed.loc = usr.loc
-					C.update_inv_legcuffed(0)
-					C.legcuffed = null
+					C.handcuffed = null
+					C.update_inv_handcuffed(0)
 
 /mob/living/verb/resist()
 	set name = "Resist"
