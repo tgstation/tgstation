@@ -80,8 +80,6 @@
 /atom/New()
 	. = ..()
 	AddToProfiler()
-	overlays = 0
-	underlays = 0
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null
