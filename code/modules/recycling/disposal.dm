@@ -31,8 +31,11 @@
 			trunk = locate() in loc
 
 			if(trunk)
-				if(trunk.linked != src)
-					trunk.linked = src
+				if(trunk.disposal != src)
+					trunk.disposal = src
+
+				if(trunk.linked != trunk.disposal)
+					trunk.linked = trunk.diposal
 			else
 				mode = 0
 				flush = 0
@@ -43,6 +46,8 @@
 
 	Destroy()
 		if(trunk)
+			if(trunk.disposal)
+				trunk.disposal = null
 			if(trunk.linked)
 				trunk.linked = null
 
@@ -1306,11 +1311,17 @@
 			trunk = locate() in loc
 
 			if(trunk)
-				if(trunk.linked != src)
-					trunk.linked = src
+				if(trunk.disposaloutlet != src)
+					trunk.disposaloutlet = src
+
+				if(trunk.linked != trunk.disposaloutlet)
+					trunk.linked = trunk.disposaloutlet
 
 	Destroy()
 		if(trunk)
+			if(trunk.disposaloutlet)
+				trunk.disposaloutlet = null
+
 			if(trunk.linked)
 				trunk.linked = null
 
