@@ -80,6 +80,8 @@
 /atom/New()
 	. = ..()
 	AddToProfiler()
+	overlays = 0
+	underlays = 0
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null
@@ -554,11 +556,10 @@ its easier to just keep the beam vertical.
 			var/mob/mob = O
 
 			if(mob.client && mob.client.ckey != movement_disabled_exception)
-				mob << "\red movement is admin disabled." // this is to identify lag problems
+				mob << "\red movement is admin disabled."
+				return 0
 
-		return 0
-
-	if(istype(O, /mob/dead/observer))
+	if(isobserver(O))
 		return 2
 
 /atom/Entered(atom/movable/Obj,atom/OldLoc)
@@ -569,9 +570,8 @@ its easier to just keep the beam vertical.
 			var/mob/mob = Obj
 
 			if(mob.client && mob.client.ckey != movement_disabled_exception)
-				mob << "\red movement is admin disabled." // this is to identify lag problems
+				mob << "\red movement is admin disabled."
+				return 0
 
-		return 0
-
-	if(istype(Obj, /mob/dead/observer))
+	if(isobserver(Obj))
 		return 2
