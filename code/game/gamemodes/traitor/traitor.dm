@@ -131,7 +131,7 @@
 				steal_objective.find_target()
 				traitor.objectives += steal_objective
 
-		if(is_hijacker && objective_count > config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
+		if(is_hijacker && objective_count <= config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
 			if (!(locate(/datum/objective/hijack) in traitor.objectives))
 				var/datum/objective/hijack/hijack_objective = new
 				hijack_objective.owner = traitor
