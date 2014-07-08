@@ -364,10 +364,13 @@
 		if(ENVIRON)
 			master.used_environ += amount
 
+/area/Exited(atom/movable/Obj)
+	. = ..()
+	Obj.lastarea = master
+
 /area/Entered(atom/movable/Obj,atom/OldLoc)
 	. = ..()
 
-	Obj.lastarea = Obj.areaMaster
 	Obj.areaMaster = master
 
 	if (!ismob(Obj))
