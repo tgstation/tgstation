@@ -1143,6 +1143,7 @@
 	icon_state = "pipe-t"
 	var/obj/machinery/disposal/disposal
 	var/obj/structure/disposaloutlet/disposaloutlet
+	var/obj/linked
 
 /obj/structure/disposalpipe/trunk/New()
 	. = ..()
@@ -1160,11 +1161,15 @@
 		if(disposal.trunk != src)
 			disposal.trunk = src
 
+		linked = disposal
+
 	disposaloutlet = locate() in loc
 
 	if(disposaloutlet)
 		if(disposaloutlet.trunk != src)
 			disposal.trunk = src
+
+		linked = disposaloutlet
 
 /obj/structure/disposalpipe/trunk/Destroy()
 	if(disposal)
