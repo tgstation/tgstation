@@ -1141,8 +1141,8 @@
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
-	var/obj/machinery/disposal
-	var/obj/structure/disposaloutlet
+	var/obj/machinery/disposal/disposal
+	var/obj/structure/disposaloutlet/disposaloutlet
 
 /obj/structure/disposalpipe/trunk/New()
 	. = ..()
