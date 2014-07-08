@@ -35,7 +35,7 @@
 					trunk.disposal = src
 
 				if(trunk.linked != trunk.disposal)
-					trunk.linked = trunk.diposal
+					trunk.linked = trunk.disposal
 			else
 				mode = 0
 				flush = 0
