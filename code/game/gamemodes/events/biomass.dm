@@ -154,8 +154,8 @@
 				return
 	return
 
-/obj/effect/biomass/temperature_expose(null, temp, volume) //hotspots kill biomass
-	del src
+/obj/effect/biomass/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume) //hotspots kill biomass
+	qdel(src)
 
 
 /proc/biomass_infestation()

@@ -239,8 +239,8 @@
 				return
 	return
 
-/obj/effect/spacevine/temperature_expose(null, temp, volume) //hotspots kill vines
-	del src
+/obj/effect/spacevine/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume) //hotspots kill vines
+	qdel(src)
 
 //Carn: Spacevines random event.
 /proc/spacevine_infestation()
