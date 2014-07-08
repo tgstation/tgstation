@@ -117,7 +117,7 @@ CHANGELING_SCALING_COEFF 7
 ## Variables calculate how number of open security officer positions will scale to population.
 ## Used as (Officers = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
-SECURITY_SCALING_COEFF 8
+SECURITY_SCALING_COEFF 0
 
 # The number of objectives traitors get.
 # Not including escaping/hijacking.

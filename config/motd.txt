@@ -1,9 +1,11 @@
 <!-- Most valid html will work in here, excluding images. -->
 
-<h1>Welcome to Zebra 13!</h1>
+<h1>Welcome to Space Station Zebra!</h1>
 
-<i>This server is running a /tg/station 13 Git build, with the Ministation Map</i>
+<i>This server is running a /tg/station 13 Git build, with the Ministation Map, including some personal changes.</i>
 <i>This is a roleplay server, and roleplay comes before gameplay. The rules apply, and failure to follow them may result in bans</i>
 
-<i>Make sure to set your Traitor settings if you want to be traitor.</i>
-<i>The mode is always Traitor. If you end up playing traitor, actually perform your objectives.</i>
+<i>Make sure to set your Special Role/Antagonist settings if you want to be traitor or other badguy roles.</i>
+<i>If you end up playing traitor, actually perform your objectives.</i>
+
+<i>Note about Species: Make sure to check them each game as they're not saved yet</i>
