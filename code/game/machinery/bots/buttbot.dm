@@ -19,7 +19,7 @@ Here it is: Buttbot.
 	//weight = 1.0E7
 	health = 25
 	maxhealth = 25
-	var/buttchance = 10
+	var/buttchance = 80 //Like an 80% chance of it working. It's just a butt with an arm in it.
 
 /obj/machinery/bot/buttbot/attack_hand(mob/user as mob)
 	. = ..()

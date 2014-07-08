@@ -29,8 +29,10 @@
 
 /atom/movable/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
-	move_speed = world.timeofday - l_move_time
-	l_move_time = world.timeofday
+
+	if(.) // update on success
+		move_speed = world.timeofday - l_move_time
+		l_move_time = world.timeofday
 
 /atom/movable/proc/recycle(var/datum/materials/rec)
 	return 0
@@ -200,15 +202,3 @@
 /////////////////////////////
 /atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
 	return 1
-
-/atom/movable/Enter(atom/movable/O, atom/oldloc)
-	. = ..()
-
-	if(2 == .) // observer
-		return 1
-
-/atom/movable/Entered(atom/movable/Obj,atom/OldLoc)
-	. = ..()
-
-	if(2 == .) // observer
-		return 1

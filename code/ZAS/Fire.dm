@@ -10,11 +10,7 @@ Attach to transfer valve and open. BOOM.
 
 */
 
-
-//Some legacy definitions so fires can be started.
-atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return null
-
+/atom/proc/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 
 turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 
