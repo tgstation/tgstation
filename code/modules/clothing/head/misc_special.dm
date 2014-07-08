@@ -190,6 +190,9 @@
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 5
+
+	wizard_garb = 1
+
 	var/s_tone = 0.0
 	var/created_name = "Buttbot"
 

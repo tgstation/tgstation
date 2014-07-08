@@ -448,7 +448,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 
 		src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
-	Move()
+	Move(NewLoc,Dir=0,step_x=0,step_y=0)
 		return 0
 
 

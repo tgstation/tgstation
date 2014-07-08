@@ -59,6 +59,13 @@
 	item_state = "clown_hat"
 	species_fit = list("Vox")
 
+/obj/item/clothing/mask/gas/clown_hat/wiz
+	name = "clown wig and mask"
+	desc = "Some pranksters are truly magical."
+	icon_state = "wizzclown"
+	item_state = "wizzclown"
+	//TODO species_fit = list("Vox")
+
 /obj/item/clothing/mask/gas/virusclown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."

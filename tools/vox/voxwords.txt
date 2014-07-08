@@ -652,6 +652,7 @@ brawl
 bridge
 brig
 cage
+can
 cargo
 catbeast
 ce = Chief Engineer
