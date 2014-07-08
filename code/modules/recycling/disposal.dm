@@ -1184,6 +1184,9 @@
 
 		disposaloutlet = null
 
+	if(linked)
+		linked = null
+
 	..()
 
 	// Override attackby so we disallow trunkremoval when somethings ontop
