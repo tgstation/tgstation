@@ -18,7 +18,7 @@
 	var/observed = 0
 	var/allow_escape = 0	//set this to 1 for src to drop it's target next Life() call and try to escape
 	var/hibernate = 0
-	var/random_escape_chance = 0.5
+	var/random_escape_chance = 5 //5 times out of 100 he'll just yakkety sax away, pretty powerful, think of it as blinking
 
 /mob/living/simple_animal/sculpture/proc/GrabMob(var/mob/living/target)
 	if(target && target != src && ishuman(target))
@@ -73,7 +73,7 @@
 	if(hibernate && G && G.state == GRAB_KILL)
 		if(G)
 			G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-			visible_message("\red [src] suddenly loosens it's grip and seems to hibernate!")
+			visible_message("\red [src] suddenly loosens it's grip and seems to calm down!")
 			G.state = GRAB_AGGRESSIVE
 		return
 
@@ -105,21 +105,21 @@
 		if(abs(xdif) <  abs(ydif))
 			//testing with PERFECT line of sight (aka lined up)
 			//mob is either above or below src
-			if(ydif < 0 && xdif == 0 || xdif == 1  && M.dir == NORTH)
+			if(ydif < 0 && M.dir == NORTH)
 				//mob is below src and looking up
 				observed = 1
 				break
-			else if(ydif > 0 && xdif == 0 || xdif == 1 && M.dir == SOUTH)
+			else if(ydif > 0 && M.dir == SOUTH)
 				//mob is above src and looking down
 				observed = 1
 				break
 		else if(abs(xdif) >  abs(ydif))
 			//mob is either left or right of src
-			if(xdif < 0 && ydif== 0 || ydif == 1 && M.dir == EAST)
+			if(xdif < 0 && M.dir == EAST)
 				//mob is to the left of src and looking right
 				observed = 1
 				break
-			else if(xdif > 0 && ydif == 0 || ydif == 1 && M.dir == WEST)
+			else if(xdif > 0 && M.dir == WEST)
 				//mob is to the right of src and looking left
 				observed = 1
 				break
@@ -143,13 +143,14 @@
 				allow_escape = 1
 			if(G.affecting.stat == 2)
 				del G
+				// For some reason I can't remove the next thing, consider it cursed
 		else if(!G)
 			//see if we're able to strangle anyone
 			var/turf/myTurf = get_turf(src)
 			for(var/mob/living/M in myTurf)
 				GrabMob(M)
-				if(G)
-					break
+				break
+				// The curse ends there
 
 			//find out what mobs we can see (-tried to- remove sight and doubled range)
 			//var/list/incapacitated = list()
@@ -190,11 +191,13 @@
 				var/num_turfs = get_dist(src,target)
 				while(get_turf(src) != target_turf && num_turfs > 0)
 					for(var/obj/structure/window/W in next_turf)
-						W.destroy()
+						spawn(5) W.destroy()
 					for(var/obj/structure/table/O in next_turf)
-						O.ex_act(1)
+						spawn(5) O.ex_act(1)
 					for(var/obj/structure/grille/G in next_turf)
-						G.ex_act(1)
+						spawn(5) G.ex_act(1)
+					for(var/obj/machinery/door/D in next_turf)
+						spawn(5) D.open()
 					if(!next_turf.CanPass(src, next_turf))
 						break
 					src.loc = next_turf
@@ -207,16 +210,14 @@
 					GrabMob(target)
 					target.Stun(1)
 					target.Paralyse(1)
-					target.apply_damage(105)
-					G.dropped()
-					Escape()
+					target.apply_damage(150, BRUTE, "head")
 
-					//if code is fucked, try adding attack here next time (done)
+					//Should be better now
 
 			//if we're not strangling anyone, take a stroll
-			if(!G && prob(90)) //Changed from 10 to 90, sue me
+			if(!G && prob(50)) //Half chance out of whatever
 				var/list/turfs = new/list()
-				for(var/turf/thisturf in view(20,src)) //You call that a teleport range ?
+				for(var/turf/thisturf in view(7,src))
 					if(istype(thisturf, /turf/space))
 						continue
 					else if(istype(thisturf, /turf/simulated/wall))
@@ -236,17 +237,21 @@
 				var/num_turfs = get_dist(src,target_turf)
 				while(get_turf(src) != target_turf && num_turfs > 0)
 					for(var/obj/structure/window/W in next_turf)
-						W.destroy()
+						spawn(5) W.destroy()
 					for(var/obj/structure/table/O in next_turf)
-						O.ex_act(1)
+						spawn(5) O.ex_act(1)
 					for(var/obj/structure/grille/G in next_turf)
-						G.ex_act(1)
+						spawn(5) G.ex_act(1)
+					for(var/obj/machinery/door/D in next_turf)
+						spawn(5) D.open()
 					if(!next_turf.CanPass(src, next_turf))
 						break
 					src.loc = next_turf
 					src.dir = get_dir(src, target)
 					next_turf = get_step(src, get_dir(next_turf,target_turf))
 					num_turfs--
+
+		//if(!istype(src.loc, /turf)) // Is SCP-173 in a container/closet/pod/tray etc? Well fuck it
 
 //	else if(G)
 //		//we can't move while observed, so we can't effectively strangle any more //since victim is observer this means no strangling
