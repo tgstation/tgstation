@@ -1172,7 +1172,7 @@
 
 	if(disposaloutlet)
 		if(disposaloutlet.trunk != src)
-			disposal.trunk = src
+			disposaloutlet.trunk = src
 
 		linked = disposaloutlet
 
