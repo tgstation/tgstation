@@ -856,7 +856,6 @@
 #include "code\modules\hydroponics\biogenerator.dm"
 #include "code\modules\hydroponics\grown.dm"
 #include "code\modules\hydroponics\growninedible.dm"
-#include "code\modules\hydroponics\hydroitemcode.dm"
 #include "code\modules\hydroponics\hydroitemdefines.dm"
 #include "code\modules\hydroponics\hydroponics.dm"
 #include "code\modules\hydroponics\seed_extractor.dm"
