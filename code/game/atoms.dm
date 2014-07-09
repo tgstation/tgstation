@@ -545,31 +545,3 @@ its easier to just keep the beam vertical.
 
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
-
-/atom/Enter(atom/movable/O, atom/oldloc)
-	. = ..()
-
-	if(movement_disabled)
-		if(ismob(O))
-			var/mob/mob = O
-
-			if(mob.client && mob.client.ckey != movement_disabled_exception)
-				mob << "\red movement is admin disabled."
-				return 3
-
-	if(isobserver(O))
-		return 2
-
-/atom/Entered(atom/movable/Obj,atom/OldLoc)
-	. = ..()
-
-	if(movement_disabled)
-		if(ismob(Obj))
-			var/mob/mob = Obj
-
-			if(mob.client && mob.client.ckey != movement_disabled_exception)
-				mob << "\red movement is admin disabled."
-				return 3
-
-	if(isobserver(Obj))
-		return 2

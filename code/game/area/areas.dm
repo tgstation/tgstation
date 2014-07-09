@@ -364,20 +364,8 @@
 		if(ENVIRON)
 			master.used_environ += amount
 
-/area/Enter(atom/movable/O, atom/oldloc)
-	. = ..()
-
-	if(3 == .) // movement_disabled
-		return 0
-
-	if(2 == .) // observer
-		return 1
-
 /area/Entered(atom/movable/Obj,atom/OldLoc)
 	. = ..()
-
-	if(2 == .) // observer
-		return
 
 	Obj.lastarea = Obj.areaMaster
 	Obj.areaMaster = master

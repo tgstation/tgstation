@@ -28,9 +28,9 @@
 	tag = "[++guid]"
 
 /atom/movable/Move(NewLoc,Dir=0,step_x=0,step_y=0)
-	. = ..()
-	move_speed = world.timeofday - l_move_time
-	l_move_time = world.timeofday
+	if(..()) // update on success
+		move_speed = world.timeofday - l_move_time
+		l_move_time = world.timeofday
 
 /atom/movable/proc/recycle(var/datum/materials/rec)
 	return 0

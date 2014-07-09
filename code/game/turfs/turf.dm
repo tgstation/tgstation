@@ -66,10 +66,15 @@
 /turf/Enter(atom/movable/O, atom/oldloc)
 	. = ..()
 
-	if(3 == .) // movement_disabled
-		return 0
+	if(movement_disabled)
+		if(ismob(O))
+			var/mob/mob = O
 
-	if(2 == .) // observer
+			if(mob.client && mob.client.ckey != movement_disabled_exception)
+				mob << "\red movement is admin disabled."
+				return 0
+
+	if(isobserver(O))
 		return 1
 
 	if (!O || !isturf(O.loc))
@@ -112,11 +117,10 @@
 
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	. = ..()
-
 	Obj.last_move = dir
 
-	if(2 == .) // observer
-		return
+	if(isobserver(Obj))
+		return 1
 
 //vvvvv Infared beam stuff vvvvv
 

@@ -75,9 +75,6 @@
 /turf/space/Entered(atom/movable/A as mob|obj)
 	. = ..()
 
-	if(2 == .) // observer
-		return
-
 	if ((!(A) || src != A.loc))	return
 
 	inertial_drift(A)
