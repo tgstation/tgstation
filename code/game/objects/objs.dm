@@ -85,7 +85,7 @@
 /obj/proc/updateUsrDialog()
 	if(in_use)
 		var/is_in_use = 0
-		if(_using.len)
+		if(_using && _using.len)
 			var/list/nearby = viewers(1, src)
 			for(var/mob/M in _using) // Only check things actually messing with us.
 				if (!M || !M.client || M.machine != src)
