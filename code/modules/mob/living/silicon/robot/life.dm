@@ -307,7 +307,7 @@
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()
-	if(..())
+	if(..())walls_mineral.dm
 		return
 	adjustFireLoss(3)
 	return
