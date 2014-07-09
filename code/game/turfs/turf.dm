@@ -113,11 +113,11 @@
 				O.Bump(obstacle, 1)
 				return 0
 
-//	return 1
+	return 1
 
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	. = ..()
-	Obj.last_move = dir
+	Obj.last_move = Obj.dir
 
 	if(isobserver(Obj))
 		return 1
