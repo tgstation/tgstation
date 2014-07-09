@@ -186,8 +186,6 @@
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
-
-//client/Move(n, direct)
 /client/Move(loc,dir)
 	if(mob.control_object)	Move_object(dir)
 
