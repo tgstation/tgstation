@@ -28,8 +28,6 @@
 		for(var/mob/mob in _using)
 			mob.unset_machine()
 
-		_using = null
-
 	if(src in processing_objects)
 		processing_objects -= src
 
