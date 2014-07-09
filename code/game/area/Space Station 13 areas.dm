@@ -1134,8 +1134,18 @@ proc/process_ghost_teleport_locs()
 	icon_state = "medbay2"
 	music = 'sound/ambience/signal.ogg'
 
+/area/medical/surgery_ghetto
+	name = "Ghetto Surgery"
+	icon_state = "medbay2"
+	music = 'sound/ambience/signal.ogg'
+
 /area/medical/medbay3
 	name = "Medbay"
+	icon_state = "medbay3"
+	music = 'sound/ambience/signal.ogg'
+
+/area/medical/break_room
+	name = "Medbay Break Room"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
@@ -1143,14 +1153,30 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Patient's Rooms"
 	icon_state = "patients"
 
+/area/medical/patient_room1
+	name = "\improper Patient Room 1"
+	icon_state = "patients"
+
+/area/medical/patient_room2
+	name = "\improper Patient Room 2"
+	icon_state = "patients"
+
 /area/medical/cmo
-	name = "\improper Chief Medical Officer's office"
+	name = "\improper Chief Medical Officer's Office"
 	icon_state = "CMO"
 	jammed=1
 
 /area/medical/virology
 	name = "Virology"
 	icon_state = "virology"
+
+/area/medical/virology_break
+	name = "Virology Break Room"
+	icon_state = "virology"
+
+/area/medical/virology_maint
+	name = "Virology Maintenance"
+	icon_state = "asmaint"
 
 /area/medical/morgue
 	name = "\improper Morgue"

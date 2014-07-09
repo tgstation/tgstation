@@ -38,8 +38,8 @@
 /obj/item/latexballon/bullet_act()
 	burst()
 
-/obj/item/latexballon/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if(temperature > T0C+100)
+/obj/item/latexballon/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > T0C+100)
 		burst()
 	return
 
