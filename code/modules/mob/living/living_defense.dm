@@ -171,7 +171,7 @@
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1)
 
-/mob/living/fire_act()
+/mob/living/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	adjust_fire_stacks(0.5)
 	IgniteMob()
 
