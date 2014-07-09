@@ -489,6 +489,20 @@
 					dat += "<tr><td><i>Blob not found!</i></td></tr>"
 			dat += "</table>"
 
+		if(istype(ticker.mode, /datum/game_mode/monkey))
+			var/datum/game_mode/monkey/mode = ticker.mode
+			dat += "<br><table cellspacing=5><tr><td><B>Monkey</B></td><td></td><td></td></tr>"
+
+			for(var/datum/mind/eek in mode.ape_infectees)
+				var/mob/M = eek.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+				else
+					dat += "<tr><td><i>Monkey not found!</i></td></tr>"
+			dat += "</table>"
+
+
 		dat += "</body></html>"
 		usr << browse(dat, "window=roundstatus;size=400x500")
 	else
