@@ -187,11 +187,11 @@
 	return
 
 
-/client/Move(n, direct)
+//client/Move(n, direct)
+/client/Move(loc,dir)
+	if(mob.control_object)	Move_object(dir)
 
-	if(mob.control_object)	Move_object(direct)
-
-	if(isobserver(mob))	return mob.Move(n,direct)
+	if(isobserver(mob))	return mob.Move(loc, dir)
 
 	if(moving)	return 0
 
@@ -206,20 +206,20 @@
 
 	if(mob.stat==2)	return
 
-	if(isAI(mob))	return AIMove(n,direct,mob)
+	if(isAI(mob))	return AIMove(loc,dir,mob)
 
 	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
 
 	if(isliving(mob))
 		var/mob/living/L = mob
 		if(L.incorporeal_move)//Move though walls
-			Process_Incorpmove(direct)
+			Process_Incorpmove(dir)
 			return
 
 	if(Process_Grab())	return
 
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
-		return mob.buckled.relaymove(mob, direct)
+		return mob.buckled.relaymove(mob, dir)
 
 	if(!mob.canmove)	return
 
@@ -235,7 +235,7 @@
 
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
 		var/atom/O = mob.loc
-		return O.relaymove(mob, direct)
+		return O.relaymove(mob, dir)
 
 	if(isturf(mob.loc))
 
@@ -299,7 +299,7 @@
 							M.animate_movement = 3
 					for(var/mob/M in L)
 						spawn( 0 )
-							step(M, direct)
+							step(M, dir)
 							return
 						spawn( 1 )
 							M.other_mobs = null
@@ -307,7 +307,7 @@
 							return
 
 		else if(mob.confused)
-			step(mob, pick(cardinal))
+			step_rand(mob)
 			mob.last_movement=world.time
 		else
 			. = ..()
