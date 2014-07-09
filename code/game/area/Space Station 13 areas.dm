@@ -1221,7 +1221,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "security"
 
 /area/security/lobby
-	name = "\improper Security lobby"
+	name = "\improper Security Lobby"
 	icon_state = "security"
 
 /area/security/brig
@@ -1237,6 +1237,17 @@ proc/process_ghost_teleport_locs()
 	icon_state = "bar" // Because it's all parties from here on.
 	jammed=1
 
+/area/security/medical
+	name = "\improper Brig Medbay"
+	icon_state = "medbay"
+
+/area/security/rec_room
+	name = "\improper Brig Recording Room"
+	icon_state = "green"
+
+/area/security/interrogation
+	name = "\improper Interrogation Room"
+	icon_state = "security"
 
 /obj/item/weapon/paper/Gaschamber
 	name = "paper - 'Gas Chambers for Idiots'"
