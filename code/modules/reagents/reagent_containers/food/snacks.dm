@@ -1040,7 +1040,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spaghetti
 	name = "spaghetti"
-	desc = "Now thats a nice pasta!"
+	desc = "Now that's a nic'e pasta!"
 	icon_state = "spaghetti"
 	New()
 		..()
@@ -1557,7 +1557,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
 	name = "spaghetti and meatballs"
-	desc = "Now thats a nic'e meatball!"
+	desc = "Now that's a nic'e meatball!"
 	icon_state = "meatballspaghetti"
 	trash = /obj/item/trash/plate
 	New()
