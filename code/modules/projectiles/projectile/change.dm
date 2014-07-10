@@ -1,3 +1,5 @@
+
+
 /obj/item/projectile/change
 	name = "bolt of change"
 	icon_state = "ice_1"
@@ -5,6 +7,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
+	var/changetype=null
 
 	on_hit(var/atom/change)
 		wabbajack(change)
@@ -34,7 +37,7 @@
 
 		var/mob/living/new_mob
 
-		var/randomize = pick("monkey","robot","slime","xeno","human")
+		var/randomize = changetype==null?pick(available_staff_transforms):changetype
 
 		switch(randomize)
 			if("monkey")
