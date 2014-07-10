@@ -187,6 +187,14 @@
 	return
 
 /client/Move(loc,dir)
+	if(!mob)
+		return // Moved here to avoid nullrefs below. - N3X
+
+	// /vg/ - Deny clients from moving certain mobs. (Like cluwnes :^)
+	if(mob.deny_client_move)
+		src << "<span class='warning'>You cannot move this mob.</span>"
+		return
+
 	if(mob.control_object)	Move_object(dir)
 
 	if(isobserver(mob))	return mob.Move(loc, dir)
@@ -194,8 +202,6 @@
 	if(moving)	return 0
 
 	if(world.time < move_delay)	return
-
-	if(!mob)	return
 
 	if(locate(/obj/effect/stop/, mob.loc))
 		for(var/obj/effect/stop/S in mob.loc)

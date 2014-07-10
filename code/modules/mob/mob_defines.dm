@@ -226,3 +226,6 @@
 	var/kills=0
 
 	var/last_movement = -100 // Last world.time the mob actually moved of its own accord.
+
+	// /vg/ - Prevent mobs from being moved by a client.
+	var/deny_client_move = 0

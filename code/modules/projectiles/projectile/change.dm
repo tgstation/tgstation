@@ -107,6 +107,15 @@
 				var/newspecies = pick(all_species)
 				H.set_species(newspecies)
 				H.generate_name()
+			if("cluwne")
+				new_mob = new /mob/living/simple_animal/hostile/retaliate/cluwne(M.loc)
+				new_mob.universal_speak = 1
+				new_mob.gender=src.gender
+				new_mob.name = pick(clown_names)
+				new_mob.real_name = new_mob.name
+				new_mob.mutations += M_CLUMSY
+				new_mob.mutations += M_FAT
+				new_mob.setBrainLoss(100)
 			else
 				return
 
