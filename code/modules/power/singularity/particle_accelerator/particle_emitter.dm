@@ -43,6 +43,8 @@
 				A = new/obj/effect/accelerated_particle(T, dir)
 			if(2)
 				A = new/obj/effect/accelerated_particle/strong(T, dir)
+			if(3)
+				A = new/obj/effect/accelerated_particle/powerful(T, dir)
 		if(A)
 			A.dir = src.dir
 			return 1

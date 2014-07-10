@@ -3,8 +3,21 @@
 	desc = "Why it no open!!!"
 	icon = 'icons/obj/doors/rapid_pdoor.dmi'
 	icon_state = "pdoor1"
-	var/id = 1.0
 	explosion_resistance = 25
+
+	var/id_tag = 1.0
+
+	prefix = "r_"
+	animation_delay = 18
+	animation_delay_2 = 5
+
+/obj/machinery/door/poddoor/New()
+	. = ..()
+	if(density)
+		layer = 3.3		//to override door.New() proc
+	else
+		layer = initial(layer)
+	return
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)
@@ -39,6 +52,7 @@
 	src.icon_state = "pdoor0"
 	src.SetOpacity(0)
 	sleep(10)
+	layer = initial(layer)
 	src.density = 0
 	update_nearby_tiles()
 
@@ -53,6 +67,7 @@
 	if (src.operating)
 		return
 	src.operating = 1
+	layer = 3.3
 	flick("pdoorc1", src)
 	src.icon_state = "pdoor1"
 	src.density = 1
@@ -289,7 +304,7 @@
 		f1.sd_SetOpacity(opacity)
 		f2.sd_SetOpacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		..()
@@ -308,7 +323,7 @@
 		f1.sd_SetOpacity(opacity)
 		f2.sd_SetOpacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		..()
@@ -335,7 +350,7 @@
 		f4.sd_SetOpacity(opacity)
 		f3.sd_SetOpacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		del f3
@@ -364,7 +379,7 @@
 		f4.sd_SetOpacity(opacity)
 		f3.sd_SetOpacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		del f3

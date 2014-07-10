@@ -61,9 +61,7 @@ obj/machinery/atmospherics/binary
 
 		return null
 
-	Del()
-		loc = null
-
+	Destroy()
 		if(node1)
 			node1.disconnect(src)
 			del(network1)

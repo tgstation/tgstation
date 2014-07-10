@@ -52,7 +52,10 @@
 /turf/simulated/var/tmp/was_icy=0
 
 /turf/simulated/proc/update_visuals()
-	overlays.Cut()
+	overlays = 0
+
+	if(decals.len)
+		overlays += decals
 
 	var/siding_icon_state = return_siding_icon_state()
 	if(siding_icon_state)
@@ -132,7 +135,7 @@
 				if(istype(target))
 					air_master.tiles_to_update |= target
 
-/turf/simulated/Del()
+/turf/simulated/Destroy()
 	if(active_hotspot)
 		del(active_hotspot)
 	if(blocks_air)
@@ -150,7 +153,7 @@
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
 	if(!giver)	return 0
-	if(zone)
+	if(zone && zone.air && !iscatwalk(src))
 		zone.air.merge(giver)
 		return 1
 	else
@@ -219,7 +222,7 @@
 		for(var/connection/C in air_master.turfs_with_connections["\ref[src]"])
 			air_master.connections_to_check |= C
 
-	if(zone && !zone.rebuild)
+	if(zone && istype(zone.air) && !zone.rebuild)
 		if(zone.air.check_tile_graphic())
 			update_visuals(zone.air)
 		for(var/direction in cardinal)

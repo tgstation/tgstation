@@ -14,12 +14,15 @@
 	//should have format of list("emagged" = 1,"name" = "Wizard's Justicebot"), for example
 	var/delay = 1//Go Go Gadget Inheritance
 
+	var/cast_sound = 'sound/items/welder.ogg'
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/cast(list/targets)
 
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-	playsound(get_turf(src), 'sound/items/welder.ogg', 50, 1)
+
+	playsound(get_turf(src), cast_sound, 50, 1)
 
 	if(do_after(usr,delay))
 		for(var/i=0,i<summon_amt,i++)
@@ -30,8 +33,11 @@
 			if(summon_ignore_prev_spawn_points)
 				targets -= spawn_place
 			if(ispath(summoned_object_type,/turf))
+				if(istype(get_turf(usr),/turf/simulated/shuttle))
+					usr << "\red You can't build things on shuttles!"
+					break
 				var/turf/O = spawn_place
-				var/turf/N = summoned_object_type
+				var/N = summoned_object_type
 				O.ChangeTurf(N)
 			else
 				var/atom/summoned_object = new summoned_object_type(spawn_place)

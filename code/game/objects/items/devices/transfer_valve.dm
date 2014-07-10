@@ -40,7 +40,7 @@
 			user << "<span class='notice'>The device is secured.</span>"
 			return
 		if(attached_device)
-			user << "<span class='warning'>There is already an device attached to the valve, remove it first.</span>"
+			user << "<span class='warning'>There is already a device attached to the valve, remove it first.</span>"
 			return
 		user.remove_from_mob(item)
 		attached_device = A
@@ -180,16 +180,35 @@
 		message_admins(log_str, 0, 1)
 		log_game(log_str)
 		merge_gases()
-		spawn(20) // In case one tank bursts
-			for (var/i=0,i<5,i++)
-				src.update_icon()
-				sleep(10)
-			src.update_icon()
-
 	else if(valve_open==1 && (tank_one && tank_two))
 		split_gases()
 		valve_open = 0
 		src.update_icon()
+
+/**
+ * Handles child tanks exploding.
+ *
+ * Previously handled by a stupid fucking spawn() and sleep(10) loop.
+ *
+ * We destroy any item we're inside of
+ */
+/obj/item/device/transfer_valve/proc/child_ruptured(var/obj/item/weapon/tank/tank, var/range)
+	// Old behavior.
+	if(tank_one == tank)
+		tank_one=null
+	if(tank_two == tank)
+		tank_two=null
+	update_icon()
+
+	// New behavior: Ensure deletion of valve assembly, send damage info up the chain.
+	if(range > 4) // Extreme damage is range/4, so any extreme damage will trip this.
+		// Send explosion up chain of custody.
+		if(src.loc && istype(src.loc,/obj))
+			src.loc.ex_act(1,src)
+
+		// Delete ourselves.
+		del(src)
+
 
 // this doesn't do anything but the timer etc. expects it to be here
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs

@@ -119,3 +119,4 @@ proc/sort_surgeries()
 	var/face	=	0
 	var/appendix =	0
 	var/ribcage =	0
+	var/butt	=	0

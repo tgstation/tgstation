@@ -30,12 +30,14 @@
 	new /obj/item/clothing/under/rank/miner(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/device/analyzer(src)
+	new /obj/item/device/mining_scanner(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/device/flashlight/lantern(src)
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/device/gps/mining(src)
+	new /obj/item/weapon/storage/belt/mining(src)
 
 
 /**********************Shuttle Computer**************************/
@@ -82,12 +84,16 @@ proc/move_mining_shuttle()
 
 			if(istype(T, /turf/simulated))
 				del(T)
-
-		for(var/mob/living/carbon/bug in toArea) // If someone somehow is still in the shuttle's docking area...
-			bug.gib()
-
-		for(var/mob/living/simple_animal/pest in toArea) // And for the other kind of bug...
-			pest.gib()
+		//Do I really need to explain this loop?
+		for(var/atom/A in toArea)
+			if(istype(A,/mob/living))
+				var/mob/living/unlucky_person = A
+				unlucky_person.gib()
+			// Weird things happen when this shit gets in the way.
+			if(istype(A,/obj/structure/lattice) \
+				|| istype(A, /obj/structure/window) \
+				|| istype(A, /obj/structure/grille))
+				qdel(A)
 
 		fromArea.move_contents_to(toArea)
 		if (mining_shuttle_location)
@@ -143,6 +149,8 @@ proc/move_mining_shuttle()
 		else
 			usr << "\blue Shuttle is already moving."
 
+	updateUsrDialog()
+
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/card/emag))
@@ -162,7 +170,7 @@ proc/move_mining_shuttle()
 
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				A.state = 3
 				A.icon_state = "3"
 			else
@@ -193,6 +201,7 @@ proc/move_mining_shuttle()
 	item_state = "pickaxe"
 	w_class = 4.0
 	m_amt = 3750 //one sheet, but where can you make them?
+	w_type = RECYK_METAL
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
@@ -285,6 +294,7 @@ proc/move_mining_shuttle()
 	item_state = "shovel"
 	w_class = 3.0
 	m_amt = 50
+	w_type = RECYK_MISC
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 

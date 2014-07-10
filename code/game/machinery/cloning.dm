@@ -20,21 +20,24 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS * 3
+	var/biomass = CLONE_BIOMASS // * 3 - N3X
 	var/opened = 0
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 /obj/machinery/clonepod/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonepod
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/clonepod,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
 	RefreshParts()
 
 
@@ -76,10 +79,10 @@
 		Initialize()
 		buf.types=DNA2_BUF_SE
 		var/list/new_SE=list(0x098,0x3E8,0x403,0x44C,0x39F,0x4B0,0x59D,0x514,0x5FC,0x578,0x5DC,0x640,0x6A4)
-		for(var/i=new_SE.len;i<=STRUCDNASIZE;i++)
+		for(var/i=new_SE.len;i<=DNA_SE_LENGTH;i++)
 			new_SE += rand(1,1024)
 		buf.dna.SE=new_SE
-		buf.dna.SetSEValue(MONKEYBLOCK,0xFFF)
+		buf.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
 
 
 //Find a dead mob with a brain and client.
@@ -184,6 +187,8 @@
 	if(!R.dna.real_name)	//to prevent null names
 		R.dna.real_name = "clone ([rand(0,999)])"
 	H.real_name = R.dna.real_name
+
+	H.dna.mutantrace = R.dna.mutantrace
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
@@ -333,14 +338,12 @@
 				I.loc = src.loc
 			del(src)
 			return
-/*Removing cloning pod biomass
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "\blue \The [src] processes \the [W]."
 		biomass += 50
 		user.drop_item()
 		del(W)
 		return
-*/
 	else
 		..()
 
@@ -399,7 +402,7 @@
 	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
 
-	//src.biomass -= CLONE_BIOMASS
+	src.biomass -= CLONE_BIOMASS
 
 	return
 
@@ -429,21 +432,21 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		else
 	return

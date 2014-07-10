@@ -30,7 +30,8 @@
 		for(var/area/A in world)
 			if(A.z != 1 || is_safe_zone(A))
 				continue
-			A.radiation_alert()
+			var/area/ma = get_area_master(A)
+			ma.radiation_alert()
 
 		make_maint_all_access()
 
@@ -75,7 +76,8 @@
 		for(var/area/A in world)
 			if(A.z != 1 || is_safe_zone(A))
 				continue
-			A.reset_radiation_alert()
+			var/area/ma = get_area_master(A)
+			ma.reset_radiation_alert()
 
 
 		sleep(600) // Want to give them time to get out of maintenance.

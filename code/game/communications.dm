@@ -74,7 +74,7 @@ Radio:
 1359 - Security
 1441 - death squad
 1443 - Confession Intercom
-1349 - Miners
+1349 - Botany, chef, bartender
 1347 - Cargo techs
 
 Devices:
@@ -104,10 +104,11 @@ var/list/radiochannels = list(
 	"Medical" = 1355,
 	"Engineering" = 1357,
 	"Security" = 1359,
-	"Response Team" = 1443,
-	"Deathsquad" = 1441,
+	"Response Team" = 1345,
+	"Deathsquad" = 1341,
 	"Syndicate" = 1213,
 	"Supply" = 1347,
+	"Service" = 1349
 )
 //depenging helpers
 var/list/DEPT_FREQS = list(
@@ -116,13 +117,14 @@ var/list/DEPT_FREQS = list(
 	1357,
 	1359,
 	1213,
-	1443,
-	1441,
-	1347
+	1345,
+	1341,
+	1347,
+	1349
 )
 
 // central command channels, i.e deathsquid & response teams
-var/list/CENT_FREQS = list(1441, 1443)
+var/list/CENT_FREQS = list(1345, 1341)
 
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213
@@ -133,6 +135,7 @@ var/const/ENG_FREQ = 1357
 var/const/SCI_FREQ = 1351
 var/const/MED_FREQ = 1355
 var/const/SUP_FREQ = 1347
+var/const/SER_FREQ = 1349
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1

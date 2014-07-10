@@ -8,6 +8,11 @@
 	flags = FPRINT | TABLEPASS
 	var/mob/affecting = null
 	var/deity_name = "Christ"
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is farting lightly on the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (user.death(1))
+
 
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
@@ -56,7 +61,7 @@
 		user.take_organ_damage(0,10)
 		return
 
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((M_CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.Paralyse(20)
@@ -69,7 +74,7 @@
 		if(M.mind && (M.mind.assigned_role == "Chaplain"))
 			user << "\red You can't heal yourself!"
 			return
-		if((M.mind in ticker.mode.cult) && (prob(20)))
+		if((M.mind in ticker.mode.cult && !(M.mind in ticker.mode.modePlayer)) && (prob(20))) // can't deconvert originals - Pomf
 			M << "\red The power of [src.deity_name] clears your mind of heresy!"
 			user << "\red You see how [M]'s eyes become clear, the cult no longer holds control over him!"
 			ticker.mode.remove_cultist(M.mind)

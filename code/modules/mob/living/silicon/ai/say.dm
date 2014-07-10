@@ -60,75 +60,85 @@ var/const/VOX_DELAY = 600
 
 
 /mob/living/silicon/ai/verb/announcement()
-
 	set name = "Announcement"
 	set desc = "Create a vocal announcement by typing in the available words to create a sentence."
 	set category = "AI Commands"
-	if(parent && istype(parent) && parent.stat != 2)
-		if(istype(usr,/mob/living/silicon/ai))
-			var/mob/living/silicon/ai/AI = parent
-			if(AI.control_disabled)
-				usr << "Wireless control is disabled!"
-				return
 
-		if(announcing_vox > world.time)
-			src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
+	// If we're in an APC, and APC is ded, ABORT
+	if(parent && istype(parent) && parent.stat)
+		return
+
+	if(istype(usr,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = usr
+		if(AI.control_disabled)
+			usr << "Wireless control is disabled!"
 			return
 
-		var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
+	if(announcing_vox > world.time)
+		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
+		return
 
-		last_announcement = message
+	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
 
-		if(!message || announcing_vox > world.time)
+	last_announcement = message
+
+	if(!message || announcing_vox > world.time)
+		return
+
+	var/list/words = stringsplit(trim(message), " ")
+	var/list/incorrect_words = list()
+
+	if(words.len > 30)
+		words.len = 30
+
+	var/total_word_len=0
+	for(var/word in words)
+		word = lowertext(trim(word))
+		if(!word)
+			words -= word
+			continue
+		if(!vox_sounds[word])
+			incorrect_words += word
+		// Thank Rippetoe for this!
+		var/wordlen = 1
+		if(word in vox_wordlen)
+			wordlen=vox_wordlen[word]
+		if(total_word_len+wordlen>50)
+			src << "<span class='notice'>There are too many words in this announcement.</span>"
 			return
+		total_word_len+=wordlen
 
-		var/list/words = stringsplit(trim(message), " ")
-		var/list/incorrect_words = list()
+	if(incorrect_words.len)
+		src << "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>"
+		return
 
-		if(words.len > 30)
-			words.len = 30
+	announcing_vox = world.time + VOX_DELAY
 
-		for(var/word in words)
-			word = lowertext(trim(word))
-			if(!word)
-				words -= word
-				continue
-			if(!vox_sounds[word])
-				incorrect_words += word
+	log_game("[key_name_admin(src)] made a vocal announcement with the following message: [message].")
 
-		if(incorrect_words.len)
-			src << "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>"
-			return
-
-		announcing_vox = world.time + VOX_DELAY
-
-		log_game("[key_name_admin(src)] made a vocal announcement with the following message: [message].")
-
-		for(var/word in words)
-			play_vox_word(word, src.z, null)
+	for(var/word in words)
+		play_vox_word(word, src.z, null)
 
 
 /proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
-
 	word = lowertext(word)
-
 	if(vox_sounds[word])
-
-		var/sound_file = vox_sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = VOX_CHANNEL)
-		voice.status = SOUND_STREAM
-
- 		// If there is no single listener, broadcast to everyone in the same z level
-		if(!only_listener)
-			// Play voice for all mobs in the z level
-			for(var/mob/M in player_list)
-				if(M.client)
-					var/turf/T = get_turf(M)
-					if(T.z == z_level)
-						M << voice
-		else
-			only_listener << voice
-		return 1
+		return play_vox_sound(vox_sounds[word],z_level,only_listener)
 	return 0
 
-// VOX sounds moved to /code/defines/vox_sounds.dm
+
+/proc/play_vox_sound(var/sound_file, var/z_level, var/mob/only_listener)
+	var/sound/voice = sound(sound_file, wait = 1, channel = VOX_CHANNEL)
+	voice.status = SOUND_STREAM
+
+	// If there is no single listener, broadcast to everyone in the same z level
+	if(!only_listener)
+		// Play voice for all mobs in the z level
+		for(var/mob/M in player_list)
+			if(M.client)
+				var/turf/T = get_turf(M)
+				if(T.z == z_level)
+					M << voice
+	else
+		only_listener << voice
+	return 1

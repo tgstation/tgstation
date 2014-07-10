@@ -4,6 +4,7 @@
 	icon_state = "shadow"
 
 	robot_talk_understand = 0
+	emote_type = 2		// pAIs emotes are heard, not seen, so they can be seen through a container (eg. person)
 
 	var/network = list("SS13")
 	var/obj/machinery/camera/current = null

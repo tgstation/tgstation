@@ -53,6 +53,8 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
+	ghost_read=0
+	ghost_write=0 // #430
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
@@ -66,7 +68,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	..()
 	return
 
-/obj/machinery/message_server/Del()
+/obj/machinery/message_server/Destroy()
 	message_servers -= src
 	..()
 	return
@@ -95,6 +97,8 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
 /obj/machinery/message_server/attack_hand(user as mob)
+	if(isobserver(user) && !isAdminGhost(user))
+		return 0
 //	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
 	user << "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]"
 	active = !active
@@ -191,7 +195,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/list/msg_security = list()
 	var/list/msg_deathsquad = list()
 	var/list/msg_syndicate = list()
-	var/list/msg_mining = list()
+	var/list/msg_service = list()
 	var/list/msg_cargo = list()
 
 	var/list/datum/feedback_variable/feedback = new()
@@ -203,7 +207,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 			del(src)
 	blackbox = src
 
-/obj/machinery/blackbox_recorder/Del()
+/obj/machinery/blackbox_recorder/Destroy()
 	var/turf/T = locate(1,1,2)
 	if(T)
 		blackbox = null
@@ -216,7 +220,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 		BR.msg_security = msg_security
 		BR.msg_deathsquad = msg_deathsquad
 		BR.msg_syndicate = msg_syndicate
-		BR.msg_mining = msg_mining
+		BR.msg_service = msg_service
 		BR.msg_cargo = msg_cargo
 		BR.feedback = feedback
 		BR.messages = messages
@@ -257,7 +261,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	feedback_add_details("radio_usage","SEC-[msg_security.len]")
 	feedback_add_details("radio_usage","DTH-[msg_deathsquad.len]")
 	feedback_add_details("radio_usage","SYN-[msg_syndicate.len]")
-	feedback_add_details("radio_usage","MIN-[msg_mining.len]")
+	feedback_add_details("radio_usage","SER-[msg_service.len]")
 	feedback_add_details("radio_usage","CAR-[msg_cargo.len]")
 	feedback_add_details("radio_usage","OTH-[messages.len]")
 	feedback_add_details("radio_usage","PDA-[pda_msg_amt]")

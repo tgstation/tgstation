@@ -378,7 +378,7 @@ not
 november
 now
 number
-o = oh
+o = O.
 objective
 observation
 of
@@ -652,9 +652,13 @@ brawl
 bridge
 brig
 cage
+can
 cargo
 catbeast
+ce = Chief Engineer
 centcomm
+chemist
+chemists
 changed
 changeling
 changelings
@@ -667,16 +671,24 @@ comdom
 come
 conflict
 connor
+cmo = C. M. O.
 contraband
 court
 cyborg
 cyborgs
 dead
+desk
+department
+departments
+death
+doctor
+doctors
 dorms
 engineer
 engineering
 engineers
 every
+everywhere
 execution
 fire
 fore
@@ -686,19 +698,26 @@ gray
 hacker
 hackers
 hacking
+happening
 harm
+hop = Head of Personnel
+hos = Head of Security
 human
 humans
 hunger
 hydroponics
 iaa = internal affairs agent
 kitchen
+killed
+killing
 law
 laws
 lawyer
 lizard
 loose
 love
+malfunctioning
+malf
 me
 medbay
 mommi = mommy
@@ -720,7 +739,10 @@ queen
 rage
 raider
 raiders
+rd = Research Director
 removal
+recommend
+request
 requested
 respond
 rest
@@ -753,6 +775,7 @@ tide
 toxins
 traitor
 traitors
+triggering
 update
 updated
 updating
@@ -794,22 +817,5 @@ wiggle
 voxtest = Ass Blast U.S.A.
 # Beepsky's famous emag line:
 voxtest2 = Fuck your cunt you shit eating cocksucker. Man, eat a dong, fucking ass-ramming shit-fuck. Eat penises in your fuck face, and shit out abortions of fuck, and do shit in your ass, you cockfuck shit monkey ass-wanker from the depths of shit!
-# Out with the old, in with the new:
-#vox_login = Hello! The automatic diagnostic and announcement system welcomes you to the Black Mesa research facility.  Remember: Have a secure day.
-vox_login = Hello! The automatic diagnostic and announcement system welcomes you to the station.  Remember: Have a secure day.
 vox_420 = Smoke weed every day.
-
-########################
-## AI REPLACEMENT LINES
-########################
-#sound/AI/aliens = Unidentified lifesigns detected.  Secure any exterior access, including ducting and ventilation.
-#sound/AI/animes = Wow!  This is just like one of those japanese animes.
-#sound/AI/command_report = Attention: New command report created.
-#sound/AI/gravanomalies = Attention: Gravitational anomalies detected on the station.  There is no additional data.
-#sound/AI/intercept = Attention: Enemy communication intercepted.  Security level elevated.
-#sound/AI/ion_storm = Ion storm detected on collision course with the station.  Please check all A.I. controlled equipment for errors.
-#sound/AI/meteors = Meteors detected on collision course with the station.
-#sound/AI/newroundsexy = You want to put a banging donk on it.
-#sound/AI/outbreak5 = Confirmed outbreak of level 5 biohazard aboard the station.  All personnel must contain the outbreak.
-#sound/AI/radiation = High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.
-#sound/AI/outbreak7 = Confirmed outbreak of level 7 viral biohazard aboard this station. All personnel must contain the outbreak.
+voxtest3 = You.  You got what I neeeeeeeed.  But you say he's just a friend. But you say he's just a friend.

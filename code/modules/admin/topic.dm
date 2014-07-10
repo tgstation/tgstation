@@ -45,11 +45,64 @@
 			if("10")
 				log_admin("[key_name(usr)] has spawned a death squad.")
 				if(!makeDeathsquad())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunately, there were no candidates available"
 			if("11")
 				log_admin("[key_name(usr)] has spawned vox raiders.")
 				if(!src.makeVoxRaiders())
-					usr << "\red Unfortunately there weren't enough candidates available."
+					usr << "\red Unfortunately, there weren't enough candidates available."
+
+	else if("announce_laws" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+
+		log_admin("[key_name(usr)] has notified [key_name(S)] of a change to their laws.")
+		message_admins("[usr.key] has notified [key_name(S)] of a change to their laws.")
+
+		S << "____________________________________"
+		S << "<span style=\"color:red;font-weight:bold;\">LAW CHANGE NOTICE</span>"
+		if(S.laws)
+			S << "<b>Your new laws are as follows:</b>"
+			S.laws.show_laws(S)
+		else
+			S << "<b>Your laws are null.</b> Contact a coder immediately."
+		S << "____________________________________"
+
+	else if("add_law" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+		var/lawtypes = list(
+			"Law Zero"= LAW_ZERO,
+			"Ion"     = LAW_IONIC,
+			"Core"    = LAW_INHERENT,
+			"Standard"= 1
+		)
+		var/lawtype = input("Select a law type.","Law Type",1) as anything in lawtypes
+		lawtype=lawtypes[lawtype]
+		if(lawtype == null)
+			return
+		testing("Lawtype: [lawtype]")
+		if(lawtype==1)
+			lawtype=text2num(input("Enter desired law priority. (15-50)","Priority", 15) as num)
+			lawtype=Clamp(lawtype,15,50)
+		var/newlaw = copytext(sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", "")),1,MAX_MESSAGE_LEN)
+		if(newlaw=="")
+			return
+		S.laws.add_law(lawtype,newlaw)
+
+		log_admin("[key_name(usr)] has added a law to [key_name(S)]: \"[newlaw]\"")
+		message_admins("[usr.key] has added a law to [key_name(S)]: \"[newlaw]\"")
+
+	else if("clear_laws" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+		S.laws.clear_inherent_laws()
+		S.laws.clear_supplied_laws()
+		S.laws.clear_ion_laws()
+
+		if(S.laws.zeroth || S.laws.zeroth_borg)
+			if(alert(src,"Do you also wish to clear law zero?","Yes","No") == "Yes")
+				S.laws.set_zeroth_law("","")
+
+		log_admin("[key_name(usr)] has purged [key_name(S)]")
+		message_admins("[usr.key] has purged [key_name(S)]")
+
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
@@ -317,6 +370,9 @@
 	else if(href_list["warn"])
 		usr.client.warn(href_list["warn"])
 
+	else if(href_list["unwarn"])
+		usr.client.unwarn(href_list["unwarn"])
+
 	else if(href_list["unbane"])
 		if(!check_rights(R_BAN))	return
 
@@ -568,10 +624,10 @@
 				jobs += "</tr><tr align='center'>"
 				counter = 0
 
-		if(jobban_isbanned(M, "Internal Affairs Agent"))  
+		if(jobban_isbanned(M, "Internal Affairs Agent"))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'><font color=red>Internal Affairs Agent</font></a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'>Internal Affairs Agent</a></td>"	
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'>Internal Affairs Agent</a></td>"
 
 		jobs += "</tr></table>"
 
@@ -596,7 +652,7 @@
 				counter = 0
 
 		//pAI isn't technically a job, but it goes in here.
-		
+
 		if(jobban_isbanned(M, "pAI"))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a></td>"
 		else
@@ -1286,6 +1342,16 @@
 
 		usr.client.cmd_admin_slimeize(H)
 
+	else if(href_list["makecluwne"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["makecluwne"])
+		if(!istype(H))
+			usr << "This can only be used on instances of type /mob/living/carbon/human"
+			return
+
+		usr.client.cmd_admin_cluwneize(H)
+
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))	return
 
@@ -1622,6 +1688,22 @@
 		var/mob/M = locate(href_list["subtlemessage"])
 		usr.client.cmd_admin_subtle_message(M)
 
+	else if(href_list["rapsheet"])
+		checkSessionKey()
+		// build the link
+		//var/dat = "[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]"
+		//if(href_list["rsckey"])
+		//.	dat += "&ckey=[href_list["rsckey"]]"
+		// usr << link(dat)
+		usr << link(getVGPanel("rapsheet",admin=1,query=list("ckey"=href_list["rsckey"])))
+		return
+
+	else if(href_list["bansheet"])
+		//checkSessionKey()
+		//usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]")
+		usr << link(getVGPanel("rapsheet",admin=1))
+		return
+
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN|R_MOD))	return
 
@@ -1634,6 +1716,26 @@
 			usr << "This can only be used on instances of type /mob."
 			return
 		show_traitor_panel(M)
+
+	// /vg/
+	else if(href_list["set_base_laws"])
+		if(!check_rights(R_FUN))
+			usr << "\red You don't have +FUN. Go away."
+			return
+		var/lawtypes = typesof(/datum/ai_laws) - /datum/ai_laws
+		var/selected_law = input("Select the default lawset desired.","Lawset Selection",null) as null|anything in lawtypes
+		if(!selected_law) return
+		var/subject="Unknown"
+		switch(href_list["set_base_laws"])
+			if("ai")
+				base_law_type = selected_law
+				subject = "AIs and Cyborgs"
+			if("mommi")
+				mommi_base_law_type = selected_law
+				subject = "MoMMIs"
+		usr << "\blue New [subject] will spawn with the [selected_law] lawset."
+		log_admin("[key_name(src.owner)] set the default laws of [subject] to: [selected_law]")
+		message_admins("[key_name_admin(src.owner)] set the default laws of [subject] to: [selected_law]", 1)
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return

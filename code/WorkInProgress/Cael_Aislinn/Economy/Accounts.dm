@@ -62,7 +62,7 @@ var/global/list/all_money_accounts = list()
 	//create a new account
 	var/datum/money_account/M = new()
 	M.owner_name = new_owner_name
-	M.remote_access_pin = rand(1111, 111111)
+	M.remote_access_pin = rand(1000, 9999)
 	M.money = starting_funds
 
 	//create an entry in the account transaction log for when it was created
@@ -169,7 +169,7 @@ var/global/list/all_money_accounts = list()
 	machine_id = "[station_name()] Acc. DB #[num_financial_terminals++]"
 
 /obj/machinery/account_database/attack_hand(mob/user as mob)
-	if(get_dist(src,user) <= 1)
+	if(ishuman(user) && !user.stat && get_dist(src,user) <= 1)
 		var/dat = "<b>Accounts Database</b><br>"
 
 		// AUTOFIXED BY fix_string_idiocy.py
@@ -273,7 +273,7 @@ var/global/list/all_money_accounts = list()
 		..()
 
 /obj/machinery/account_database/Topic(var/href, var/href_list)
-
+	..()
 	if(href_list["toggle_activated"])
 		activated = !activated
 

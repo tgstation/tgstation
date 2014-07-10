@@ -11,7 +11,6 @@
 	var/localopened = 0 //Setting this to keep it from behaviouring like a normal closet and obstructing movement in the map. -Agouri
 	opened = 1
 	var/hitstaken = 0
-	var/locked = 1
 	var/smashed = 0
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri

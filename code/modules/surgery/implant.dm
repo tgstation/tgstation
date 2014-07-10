@@ -134,6 +134,11 @@
 		user.drop_item()
 		affected.hidden = tool
 		tool.loc = target
+
+		if(istype(tool, /obj/item/weapon/implant))
+			var/obj/item/weapon/implant/disobj = tool
+			disobj.part = affected
+			affected.implants += disobj
 		affected.cavity = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -198,6 +203,8 @@
 					var/obj/item/weapon/implant/imp = obj
 					imp.imp_in = null
 					imp.implanted = 0
+					affected.implants -= imp
+					target.contents -= imp
 			else
 				user.visible_message("\blue [user] removes \the [tool] from [target]'s [affected.display_name].", \
 				"\blue There's something inside [target]'s [affected.display_name], but you just missed it this time." )

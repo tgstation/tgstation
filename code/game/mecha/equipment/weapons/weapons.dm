@@ -16,27 +16,27 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "General Energy Weapon"
 
-	action(target)
-		if(!action_checks(target)) return
-		var/turf/curloc = chassis.loc
-		var/atom/targloc = get_turf(target)
-		if (!targloc || !istype(targloc, /turf) || !curloc)
-			return
-		if (targloc == curloc)
-			return
-		set_ready_state(0)
-		playsound(chassis, fire_sound, 50, 1)
-		var/obj/item/projectile/A = new projectile(curloc)
-		A.firer = chassis.occupant
-		A.original = target
-		A.current = curloc
-		A.yo = targloc.y - curloc.y
-		A.xo = targloc.x - curloc.x
-		chassis.use_power(energy_drain)
-		A.process()
-		chassis.log_message("Fired from [src.name], targeting [target].")
-		do_after_cooldown()
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/action(atom/target)
+	if(!action_checks(target)) return
+	var/turf/curloc = chassis.loc
+	var/atom/targloc = get_turf(target)
+	if (!targloc || !istype(targloc, /turf) || !curloc)
 		return
+	if (targloc == curloc)
+		return
+	set_ready_state(0)
+	playsound(chassis, fire_sound, 50, 1)
+	var/obj/item/projectile/A = new projectile(curloc)
+	A.firer = chassis.occupant
+	A.original = target
+	A.current = curloc
+	A.yo = targloc.y - curloc.y
+	A.xo = targloc.x - curloc.x
+	chassis.use_power(energy_drain)
+	A.process()
+	chassis.log_message("Fired from [src.name], targeting [target].")
+	do_after_cooldown()
+	return
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
@@ -66,7 +66,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
-	name = "eZ-13 mk2 Heavy pulse rifle"
+	name = "eZ-13 MK2 heavy pulse rifle"
 	icon_state = "mecha_pulse"
 	energy_drain = 120
 	origin_tech = "materials=3;combat=6;powerstorage=4"
@@ -79,29 +79,18 @@
 	icon_state = "pulse1_bl"
 	var/life = 20
 
-
 	Bump(atom/A) //this is just awful
 		A.bullet_act(src, def_zone)
 		src.life -= 10
 		if(ismob(A))
 			var/mob/M = A
-			if(istype(firer, /mob))
-				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]</font>")
-				if(!iscarbon(firer))
-					M.LAssailant = null
-				else
-					M.LAssailant = firer
-			else
-				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src]</font>")
+			add_logs(firer, M, "shot", object="[src]")
 		if(life <= 0)
 			del(src)
 		return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
-	name = "PBT \"Pacifier\" Mounted Taser"
+	name = "\improper PBT \"Pacifier\" mounted taser"
 	icon_state = "mecha_taser"
 	energy_drain = 20
 	equip_cooldown = 8
@@ -110,7 +99,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker
-	name = "HoNkER BlAsT 5000"
+	name = "\improper HoNkER BlAsT 5000"
 	icon_state = "mecha_honker"
 	energy_drain = 200
 	equip_cooldown = 150
@@ -118,52 +107,55 @@
 	construction_time = 500
 	construction_cost = list("iron"=20000,"clown"=10000)
 
-	can_attach(obj/mecha/combat/honker/M as obj)
-		if(..())
-			if(istype(M))
-				return 1
+/obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M as obj)
+	if(..())
+		if(istype(M))
+			return 1
+	return 0
+
+/obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target)
+	if(!chassis)
+		return 0
+	if(energy_drain && chassis.get_charge() < energy_drain)
+		return 0
+	if(!equip_ready)
 		return 0
 
-	action(target)
-		if(!chassis)
-			return 0
-		if(energy_drain && chassis.get_charge() < energy_drain)
-			return 0
-		if(!equip_ready)
-			return 0
-
-		playsound(chassis, 'sound/items/AirHorn.ogg', 100, 1)
-		chassis.occupant_message("<font color='red' size='5'>HONK</font>")
-		for(var/mob/living/carbon/M in ohearers(6, chassis))
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-					continue
-			M << "<font color='red' size='7'>HONK</font>"
-			M.sleeping = 0
-			M.stuttering += 20
-			M.ear_deaf += 30
-			M.Weaken(3)
-			if(prob(30))
-				M.Stun(10)
-				M.Paralyse(4)
-			else
-				M.make_jittery(500)
-			/* //else the mousetraps are useless
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(isobj(H.shoes))
-					var/thingy = H.shoes
-					H.drop_from_inventory(H.shoes)
-					walk_away(thingy,chassis,15,2)
-					spawn(20)
-						if(thingy)
-							walk(thingy,0)
-			*/
-		chassis.use_power(energy_drain)
-		log_message("Honked from [src.name]. HONK!")
-		do_after_cooldown()
-		return
+	playsound(chassis, 'sound/items/AirHorn.ogg', 100, 1)
+	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
+	for(var/mob/living/carbon/M in ohearers(6, chassis))
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+				continue
+		M << "<font color='red' size='7'>HONK</font>"
+		M.sleeping = 0
+		M.stuttering += 20
+		M.ear_deaf += 30
+		M.Weaken(3)
+		if(prob(30))
+			M.Stun(10)
+			M.Paralyse(4)
+		else
+			M.make_jittery(500)
+		/* //else the mousetraps are useless
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(isobj(H.shoes))
+				var/thingy = H.shoes
+				H.drop_from_inventory(H.shoes)
+				walk_away(thingy,chassis,15,2)
+				spawn(20)
+					if(thingy)
+						walk(thingy,0)
+		*/
+	chassis.use_power(energy_drain)
+	log_message("Honked from [src.name]. HONK!")
+	var/turf/T = get_turf(src)
+	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) used a Mecha Honker in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+	log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Mecha Honker in ([T.x],[T.y],[T.z])")
+	do_after_cooldown()
+	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
 	name = "General Ballisic Weapon"

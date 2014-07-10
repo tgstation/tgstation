@@ -19,6 +19,10 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 	IsShield()
 		return 1
 
@@ -30,10 +34,25 @@
 				cooldown = world.time
 		else
 			..()
+			
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
+
+	IsShield()
+		return 1
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/twohanded/spear))
+			if(cooldown < world.time - 25)
+				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+				cooldown = world.time
+		else
+			..()
+
+
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
@@ -49,6 +68,11 @@
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /obj/item/weapon/cloaking_device
 	name = "cloaking device"

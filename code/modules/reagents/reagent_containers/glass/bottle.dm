@@ -45,6 +45,16 @@
 		..()
 		reagents.add_reagent("toxin", 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/charcoal
+	name = "activated charcoal bottle"
+	desc = "A small bottle of activated charcoal. Used for treatment of overdoses."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle-charcoal"
+
+	New()
+		..()
+		reagents.add_reagent("charcoal", 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/cyanide
 	name = "cyanide bottle"
 	desc = "A small bottle of cyanide. Bitter almonds?"

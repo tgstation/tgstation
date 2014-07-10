@@ -1,3 +1,6 @@
+#define TANK_MAX_RELEASE_PRESSURE (3*ONE_ATMOSPHERE)
+#define TANK_DEFAULT_RELEASE_PRESSURE 24
+
 /obj/item/weapon/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
@@ -15,7 +18,8 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
-
+	var/manipulated_by = null		//Used by _onclick/hud/screen_objects.dm internals to determine if someone has messed with our tank or not.
+						//If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
 /obj/item/weapon/tank/New()
 	..()
 
@@ -24,10 +28,9 @@
 	src.air_contents.temperature = T20C
 
 	processing_objects.Add(src)
-
 	return
 
-/obj/item/weapon/tank/Del()
+/obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		del(air_contents)
 
@@ -86,7 +89,7 @@
 			O << "\red [user] has used [W] on \icon[icon] [src]"
 
 		var/pressure = air_contents.return_pressure()
-
+		manipulated_by = user.real_name			//This person is aware of the contents of the tank.
 		var/total_moles = air_contents.total_moles()
 
 		user << "\blue Results of analysis of \icon[icon]"
@@ -120,7 +123,10 @@
 /obj/item/weapon/tank/attack_self(mob/user as mob)
 	if (!(src.air_contents))
 		return
-	user.set_machine(src)
+
+	ui_interact(user)
+
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 
 	var/using_internal
 	if(istype(loc,/mob/living/carbon))
@@ -128,57 +134,69 @@
 		if(location.internal==src)
 			using_internal = 1
 
-	var/message = {"
-<b>Tank</b><BR>
-<FONT color='blue'><b>Tank Pressure:</b> [air_contents.return_pressure()]</FONT><BR>
-<BR>
-<b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> [distribute_pressure] <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A><BR>
-<b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
-"}
-	user << browse(message, "window=tank;size=600x300")
-	onclose(user, "tank")
-	return
+	// this is the data which will be sent to the ui
+	var/data[0]
+	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
+	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
+	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
+	data["valveOpen"] = using_internal ? 1 : 0
+
+	data["maskConnected"] = 0
+	if(istype(loc,/mob/living/carbon))
+		var/mob/living/carbon/location = loc
+		if(location.internal == src || (location.wear_mask && (location.wear_mask.flags & MASKINTERNALS)))
+			data["maskConnected"] = 1
+
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
+	if (!ui)
+		// the ui does not exist, so we'll create a new() one
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+		ui = new(user, src, ui_key, "tanks.tmpl", "Tank", 500, 300)
+		// when the ui is first opened this is the data it will use
+		ui.set_initial_data(data)
+		// open the new ui window
+		ui.open()
+		// auto update every Master Controller tick
+		ui.set_auto_update(1)
 
 /obj/item/weapon/tank/Topic(href, href_list)
 	..()
 	if (usr.stat|| usr.restrained())
-		return
-	if (src.loc == usr)
-		usr.set_machine(src)
-		if (href_list["dist_p"])
+		return 0
+	if (src.loc != usr)
+		return 0
+
+	if (href_list["dist_p"])
+		if (href_list["dist_p"] == "reset")
+			src.distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+		else if (href_list["dist_p"] == "max")
+			src.distribute_pressure = TANK_MAX_RELEASE_PRESSURE
+		else
 			var/cp = text2num(href_list["dist_p"])
 			src.distribute_pressure += cp
-			src.distribute_pressure = min(max(round(src.distribute_pressure), 0), 3*ONE_ATMOSPHERE)
-		if (href_list["stat"])
-			if(istype(loc,/mob/living/carbon))
-				var/mob/living/carbon/location = loc
-				if(location.internal == src)
-					location.internal = null
+		src.distribute_pressure = min(max(round(src.distribute_pressure), 0), TANK_MAX_RELEASE_PRESSURE)
+	if (href_list["stat"])
+		if(istype(loc,/mob/living/carbon))
+			var/mob/living/carbon/location = loc
+			if(location.internal == src)
+				location.internal = null
+				location.internals.icon_state = "internal0"
+				usr << "\blue You close the tank release valve."
+				if (location.internals)
 					location.internals.icon_state = "internal0"
-					usr << "\blue You close the tank release valve."
+			else
+				if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
+					location.internal = src
+					usr << "\blue You open \the [src] valve."
 					if (location.internals)
-						location.internals.icon_state = "internal0"
+						location.internals.icon_state = "internal1"
 				else
-					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
-						location.internal = src
-						usr << "\blue You open \the [src] valve."
-						if (location.internals)
-							location.internals.icon_state = "internal1"
-					else
-						usr << "\blue You need something to connect to \the [src]."
+					usr << "\blue You need something to connect to \the [src]."
 
-		src.add_fingerprint(usr)
-/*
- * the following is needed for a tank lying on the floor. But currently we restrict players to use not weared tanks as intrals. --rastaf
-		for(var/mob/M in viewers(1, src.loc))
-			if ((M.client && M.machine == src))
-				src.attack_self(M)
-*/
-		src.attack_self(usr)
-	else
-		usr << browse(null, "window=tank")
-		return
-	return
+	src.add_fingerprint(usr)
+	return 1
 
 
 /obj/item/weapon/tank/remove_air(amount)
@@ -243,6 +261,11 @@
 			for(var/obj/machinery/computer/bhangmeter/bhangmeter in doppler_arrays)
 				if(bhangmeter)
 					bhangmeter.sense_explosion(epicenter.x,epicenter.y,epicenter.z,round(uncapped*0.25), round(uncapped*0.5), round(uncapped),"???", cap)
+
+		if(istype(src.loc,/obj/item/device/transfer_valve))
+			var/obj/item/device/transfer_valve/TV = src.loc
+			TV.child_ruptured(src, range)
+
 		del(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)

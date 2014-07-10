@@ -21,7 +21,10 @@
 
 	var/destroys = "none" //can be "none", "gib" or "disintegrate"
 
+	var/summon_type = null //this will put an obj at the target's location
+
 /obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets)
+
 	for(var/mob/living/target in targets)
 		switch(destroys)
 			if("gib")
@@ -35,6 +38,27 @@
 				target.gib()
 			if("disintegrate")
 				target.dust()
+				
+			if("butt")
+				if(ishuman(target) || ismonkey(target))
+					var/mob/living/carbon/C = target
+					if(C.op_stage.butt != 4) // does the target have an ass
+						playsound(get_turf(src), 'sound/effects/superfart.ogg', 50, 1)
+						var/obj/item/clothing/head/butt/B = new(C.loc)
+						B.transfer_buttdentity(C)
+						C.op_stage.butt = 4 //No having two butts.
+						C.apply_damage(40, BRUTE, "groin")
+						C.apply_damage(10, BURN, "groin")
+						C.Stun(8)
+						C.Weaken(8)
+						C << "\red Your ass just blew up!"
+					else
+						playsound(get_turf(src), 'sound/effects/superfart.ogg', 50, 1)
+						C.apply_damage(40, BRUTE, "groin")
+						C.apply_damage(10, BURN, "groin")
+						C.Stun(8)
+						C.Weaken(8)
+
 
 		if(!target)
 			continue
@@ -65,3 +89,6 @@
 		target.dizziness += amt_dizziness
 		target.confused += amt_confused
 		target.stuttering += amt_stuttering
+		//summoning
+		if(summon_type)
+			new summon_type(target.loc, target)

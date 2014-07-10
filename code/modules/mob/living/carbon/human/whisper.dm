@@ -34,6 +34,9 @@
 	if (src.sdisabilities & MUTE)
 		return
 
+	if(M_WHISPER in src.mutations)
+		src.say(message)
+
 	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 
@@ -52,12 +55,12 @@
 				temp_message[H] = ninjaspeak(temp_message[H])
 				pick_list -= H
 			message = dd_list2text(temp_message, " ")
-			message = replacetext(message, "o", "¤")
-			message = replacetext(message, "p", "þ")
-			message = replacetext(message, "l", "£")
-			message = replacetext(message, "s", "§")
-			message = replacetext(message, "u", "µ")
-			message = replacetext(message, "b", "ß")
+			message = replacetext(message, "o", "ï¿½")
+			message = replacetext(message, "p", "ï¿½")
+			message = replacetext(message, "l", "ï¿½")
+			message = replacetext(message, "s", "ï¿½")
+			message = replacetext(message, "u", "ï¿½")
+			message = replacetext(message, "b", "ï¿½")
 
 	if (src.stuttering)
 		message = stutter(message)
@@ -104,6 +107,8 @@
 	var/rendered = null
 
 	for (var/mob/M in watching)
+		if (!(M.client) || istype(M, /mob/new_player))
+			continue
 		if (M.say_understands(src))
 			rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something[and_passes_on].</span>"
 		else
@@ -119,6 +124,8 @@
 		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message_a]\"</span>[and_passes_on]</span>"
 
 		for (var/mob/M in heard_a)
+			if (!(M.client) || istype(M, /mob/new_player))
+				continue
 			M.show_message(rendered, 2)
 
 	if (length(heard_b))
@@ -132,9 +139,13 @@
 		rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers, <span class='message'>\"[message_b]\"</span>[and_passes_on]</span>"
 
 		for (var/mob/M in heard_b)
+			if (!(M.client) || istype(M, /mob/new_player))
+				continue
 			M.show_message(rendered, 2)
 
 	for (var/mob/M in eavesdropping)
+		if (!(M.client) || istype(M, /mob/new_player))
+			continue
 		if (M.say_understands(src))
 			var/message_c
 			message_c = stars(message)
@@ -149,7 +160,7 @@
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message]\"</span>[and_passes_on]</span>"
 
 	for (var/mob/M in dead_mob_list)
-		if (!(M.client))
+		if (!(M.client) || istype(M, /mob/new_player))
 			continue
 		if (M.stat > 1 && !(M in heard_a) && (M.client.prefs.toggles & CHAT_GHOSTEARS))
 			M.show_message(rendered, 2)

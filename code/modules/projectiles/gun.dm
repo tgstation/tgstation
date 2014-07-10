@@ -7,6 +7,7 @@
 	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY
 	slot_flags = SLOT_BELT
 	m_amt = 2000
+	w_type = RECYK_METAL
 	w_class = 3.0
 	throwforce = 5
 	throw_speed = 4
@@ -62,23 +63,23 @@
 	return 1
 
 /obj/item/weapon/gun/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)//TODO: go over this
-	//Exclude lasertag guns from the CLUMSY check.
+	//Exclude lasertag guns from the M_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
-			if ((CLUMSY in M.mutations) && prob(50))
+			if ((M_CLUMSY in M.mutations) && prob(50))
 				M << "<span class='danger'>[src] blows up in your face.</span>"
 				M.take_organ_damage(0,20)
 				M.drop_item()
 				del(src)
 				return
 
-	if (!user.IsAdvancedToolUser() || isMoMMI(user))
+	if (!user.IsAdvancedToolUser() || isMoMMI(user) || istype(user, /mob/living/carbon/monkey/diona))
 		user << "\red You don't have the dexterity to do this!"
 		return
 	if(istype(user, /mob/living))
 		var/mob/living/M = user
-		if (HULK in M.mutations)
+		if (M_HULK in M.mutations)
 			M << "\red Your meaty finger is much too large for the trigger guard!"
 			return
 	if(ishuman(user))
@@ -180,6 +181,9 @@
 /obj/item/weapon/gun/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	//Suicide handling.
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
+		if(istype(M.wear_mask, /obj/item/clothing/mask/happy))
+			M << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
+			return
 		mouthshoot = 1
 		M.visible_message("\red [user] sticks their gun in their mouth, ready to pull the trigger...")
 		if(!do_after(user, 40))
@@ -195,6 +199,7 @@
 			in_chamber.on_hit(M)
 			if (!in_chamber.nodamage)
 				user.apply_damage(in_chamber.damage*2.5, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")
+				user.stat=2 // Just to be sure
 				user.death()
 			else
 				user << "<span class = 'notice'>Ow...</span>"

@@ -1,7 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	var/icon/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
+	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
 	var/item_state = null
 	var/r_speed = 1.0
@@ -39,6 +39,21 @@
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
+	var/list/species_fit = null //This object has a different appearance when worn by these species
+
+/obj/item/Destroy()
+	if(istype(src.loc, /mob))
+		var/mob/H = src.loc
+		H.drop_from_inventory(src) // items at the very least get unequipped from their mob before being deleted
+	if(reagents && istype(reagents))
+		reagents.my_atom = null
+		reagents.delete()
+	if(hasvar(src, "holder"))
+		src:holder = null
+	/*  BROKEN, FUCK BYOND
+	if(hasvar(src, "my_atom"))
+		src:my_atom = null*/
+	..()
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
@@ -46,15 +61,15 @@
 /obj/item/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -102,7 +117,7 @@
 		if(5.0)
 			size = "huge"
 		else
-	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
+	//if ((M_CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
 	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
 	if(src.desc)
 		usr << src.desc
@@ -141,8 +156,7 @@
 	else
 		if(isliving(src.loc))
 			return
-		user.lastDblClick = world.time + 2
-		user.next_move = world.time + 2
+		//user.next_move = max(user.next_move+2,world.time + 2)
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -176,8 +190,7 @@
 		if(istype(src.loc, /mob/living))
 			return
 		src.pickup(user)
-		user.lastDblClick = world.time + 2
-		user.next_move = world.time + 2
+		//user.next_move = max(user.next_move+2,world.time + 2)
 
 	user.put_in_active_hand(src)
 	return
@@ -215,162 +228,7 @@
 
 	return
 
-/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
-
-	if (!istype(M)) // not sure if this is the right thing...
-		return
-
-	if (can_operate(M))	//Checks if mob is lying down on table for surgery
-		if (do_surgery(M,user,src))
-			return
-
-	var/messagesource = M
-
-	if (istype(M,/mob/living/carbon/brain))
-		messagesource = M:container
-	if (src.hitsound)
-		playsound(get_turf(src), hitsound, 50, 1, -1)
-	/////////////////////////
-	user.lastattacked = M
-	M.lastattacker = user
-
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
-	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
-	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
-	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
-	if(!iscarbon(user))
-		M.LAssailant = null
-	else
-		M.LAssailant = user
-
-	//spawn(1800)			// this wont work right
-	//	M.lastattacker = null
-	/////////////////////////
-
-	var/power = src.force
-	if(HULK in user.mutations)
-		power *= 2
-
-	if(!istype(M, /mob/living/carbon/human))
-		if(istype(M, /mob/living/carbon/slime))
-			var/mob/living/carbon/slime/slime = M
-			if(prob(25))
-				user << "\red [src] passes right through [M]!"
-				return
-
-			if(power > 0)
-				slime.attacked += 10
-
-			if(slime.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
-				slime.Discipline = 0
-
-			if(power >= 3)
-				if(istype(slime, /mob/living/carbon/slime/adult))
-					if(prob(5 + round(power/2)))
-
-						if(slime.Victim)
-							if(prob(80) && !slime.client)
-								slime.Discipline++
-						slime.Victim = null
-						slime.anchored = 0
-
-						spawn()
-							if(slime)
-								slime.SStun = 1
-								sleep(rand(5,20))
-								if(slime)
-									slime.SStun = 0
-
-						spawn(0)
-							if(slime)
-								slime.canmove = 0
-								step_away(slime, user)
-								if(prob(25 + power))
-									sleep(2)
-									if(slime && user)
-										step_away(slime, user)
-								slime.canmove = 1
-
-				else
-					if(prob(10 + power*2))
-						if(slime)
-							if(slime.Victim)
-								if(prob(80) && !slime.client)
-									slime.Discipline++
-
-									if(slime.Discipline == 1)
-										slime.attacked = 0
-
-								spawn()
-									if(slime)
-										slime.SStun = 1
-										sleep(rand(5,20))
-										if(slime)
-											slime.SStun = 0
-
-							slime.Victim = null
-							slime.anchored = 0
-
-
-						spawn(0)
-							if(slime && user)
-								step_away(slime, user)
-								slime.canmove = 0
-								if(prob(25 + power*4))
-									sleep(2)
-									if(slime && user)
-										step_away(slime, user)
-								slime.canmove = 1
-
-
-		var/showname = "."
-		if(user)
-			showname = " by [user]."
-		if(!(user in viewers(M, null)))
-			showname = "."
-
-		for(var/mob/O in viewers(messagesource, null))
-			if(src.attack_verb.len)
-				O.show_message("\red <B>[M] has been [pick(src.attack_verb)] with [src][showname] </B>", 1)
-			else
-				O.show_message("\red <B>[M] has been attacked with [src][showname] </B>", 1)
-
-		if(!showname && user)
-			if(user.client)
-				user << "\red <B>You attack [M] with [src]. </B>"
-
-
-
-	if(istype(M, /mob/living/carbon/human))
-		M:attacked_by(src, user, def_zone)
-	else
-		switch(src.damtype)
-			if("brute")
-				if(istype(src, /mob/living/carbon/slime))
-					M.adjustBrainLoss(power)
-
-				else
-
-					M.take_organ_damage(power)
-					if (prob(33)) // Added blood for whacking non-humans too
-						var/turf/simulated/location = M.loc
-						if (istype(location))
-							location.add_blood_floor(M)
-			if("fire")
-				if (!(mHeatres in M.mutations))
-					M.take_organ_damage(0, power)
-					M << "Aargh it burns!"
-		M.updatehealth()
-	src.add_fingerprint(user)
-	return 1
-
-/obj/item/proc/attack_self()
-	return
-
-/obj/item/proc/afterattack()
-	return
-
-/obj/item/proc/talk_into(mob/M as mob, text)
+/obj/item/proc/talk_into(mob/M as mob, var/text, var/channel=null)
 	return
 
 /obj/item/proc/moved(mob/user as mob, old_loc as turf)
@@ -415,7 +273,7 @@
 		var/mob/living/carbon/human/H = M
 
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
+			if(M_FAT in H.mutations)
 				testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
@@ -531,6 +389,7 @@
 					else
 						return 0
 				return 1
+
 			if(slot_ears)
 				if( !(slot_flags & SLOT_EARS) )
 					return 0
@@ -543,6 +402,40 @@
 					else
 						return 0
 				return 1
+			/* In case it's ever unfucked.
+			if(slot_ears)
+				if( !(slot_flags & SLOT_EARS) )
+					return 0
+				if( (slot_flags & SLOT_TWOEARS) && H.r_ear )
+					return 0
+				if(H.l_ear)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
+					if(H.l_ear.canremove)
+						return 2
+					else
+						return 0
+				if( w_class < 2	)
+					return 1
+				return 1
+			if(slot_r_ear)
+				if( !(slot_flags & SLOT_EARS) )
+					return 0
+				if( (slot_flags & SLOT_TWOEARS) && H.l_ear )
+					return 0
+				if(H.r_ear)
+					if(automatic)
+						if(H.check_for_open_slot(src))
+							return 0
+					if(H.r_ear.canremove)
+						return 2
+					else
+						return 0
+				if( w_class < 2 )
+					return 1
+				return 1
+			*/
 			if(slot_w_uniform)
 				if( !(slot_flags & SLOT_ICLOTHING) )
 					return 0
@@ -686,6 +579,8 @@
 
 	if(!(usr)) //BS12 EDIT
 		return
+	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
+		return
 	if(!istype(usr, /mob/living/carbon) && !isMoMMI(usr))//Is not a carbon being or MoMMI
 		usr << "You can't pick things up!"
 	if(istype(usr, /mob/living/carbon/brain))//Is a brain
@@ -693,7 +588,7 @@
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
 		usr << "\red You can't pick things up!"
 		return
-	if(src.anchored || !Adjacent(usr)) //Object isn't anchored
+	if(src.anchored) //Object isn't anchored
 		usr << "\red You can't pick that up!"
 		return
 	if(!usr.hand && usr.r_hand) //Right hand is not full
@@ -767,7 +662,7 @@
 		M.LAssailant = user
 
 	src.add_fingerprint(user)
-	//if((CLUMSY in user.mutations) && prob(50))
+	//if((M_CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*
 		M << "\red You stab yourself in the eye."
@@ -786,29 +681,28 @@
 			"\red You stab yourself in the eyes with [src]!" \
 		)
 	if(istype(M, /mob/living/carbon/human))
+		var/datum/organ/internal/eyes/eyes = H.internal_organs["eyes"]
+		eyes.damage += rand(3,4)
+		if(eyes.damage >= eyes.min_bruised_damage)
+			if(M.stat != 2)
+				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
+					M << "\red Your eyes start to bleed profusely!"
+			if(prob(50))
+				if(M.stat != 2)
+					M << "\red You drop what you're holding and clutch at your eyes!"
+					M.drop_item()
+				M.eye_blurry += 10
+				M.Paralyse(1)
+				M.Weaken(4)
+			if (eyes.damage >= eyes.min_broken_damage)
+				if(M.stat != 2)
+					M << "\red You go blind!"
 		var/datum/organ/external/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
 			M:UpdateDamageIcon()
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)
-	M.eye_stat += rand(2,4)
-	if (M.eye_stat >= 10)
-		M.eye_blurry += 15+(0.1*M.eye_blurry)
-		M.disabilities |= NEARSIGHTED
-		if(M.stat != 2)
-			M << "\red Your eyes start to bleed profusely!"
-		if(prob(50))
-			if(M.stat != 2)
-				M << "\red You drop what you're holding and clutch at your eyes!"
-				M.drop_item()
-			M.eye_blurry += 10
-			M.Paralyse(1)
-			M.Weaken(4)
-		if (prob(M.eye_stat - 10 + 1))
-			if(M.stat != 2)
-				M << "\red You go blind!"
-			M.sdisabilities |= BLIND
 	return
 
 /obj/item/clean_blood()
@@ -833,6 +727,7 @@
 
 	//apply the blood-splatter overlay if it isn't already in there
 	if(!blood_DNA.len)
+		blood_overlay.color = blood_color
 		overlays += blood_overlay
 
 	//if this blood isn't already in the list, add it
@@ -853,4 +748,23 @@
 	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
 	for(var/obj/item/A in world)
 		if(A.type == type && !A.blood_overlay)
-			A.blood_overlay = I
+			A.blood_overlay = image(I)
+
+/obj/item/proc/showoff(mob/user)
+	for (var/mob/M in view(user))
+		M.show_message("[user] holds up [src]. <a HREF=?src=\ref[M];lookitem=\ref[src]>Take a closer look.</a>",1)
+
+/mob/living/carbon/verb/showoff()
+	set name = "Show Held Item"
+	set category = "Object"
+
+	var/obj/item/I = get_active_hand()
+	if(I && !I.abstract)
+		I.showoff(src)
+
+// /vg/ Affects wearers.
+/obj/item/proc/OnMobLife(var/mob/holder)
+	return
+
+/obj/item/proc/OnMobDeath(var/mob/holder)
+	return

@@ -9,6 +9,7 @@
 
 	//Bitflags for the job
 	var/flag = 0
+	var/info_flag = 0
 	var/department_flag = 0
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
@@ -41,11 +42,8 @@
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
-	/////////////////////////////////
-	// /vg/ feature: Job Objectives!
-	/////////////////////////////////
-	var/required_objectives=list() // Objectives that are ALWAYS added.
-	var/optional_objectives=list() // Objectives that are SOMETIMES added.
+	var/pdatype=/obj/item/device/pda
+	var/pdaslot=slot_belt
 
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1

@@ -69,10 +69,11 @@
 	return L
 
 /obj/item/weapon/storage/proc/show_to(mob/user as mob)
-	if(user.s_active != src)
-		for(var/obj/item/I in src)
-			if(I.on_found(user))
-				return
+	if(isliving(user))
+		if(user.s_active != src)
+			for(var/obj/item/I in src)
+				if(I.on_found(user))
+					return
 	if(user.s_active)
 		user.s_active.hide_from(user)
 	user.client.screen -= src.boxes
@@ -322,8 +323,8 @@
 	..()
 
 	// /vg/ #11: Recursion.
-	if(istype(W,/obj/item/weapon/implanter/compressed))
-		return
+	/*if(istype(W,/obj/item/weapon/implanter/compressed))
+		return*/
 
 	if(isrobot(user) && !isMoMMI(user))
 		user << "\blue You're a robot. No."
@@ -412,6 +413,7 @@
 		remove_from_storage(I, T)
 
 /obj/item/weapon/storage/New()
+	. = ..()
 
 	if(allow_quick_empty)
 		verbs += /obj/item/weapon/storage/verb/quick_empty
@@ -434,12 +436,17 @@
 	src.closer.icon_state = "x"
 	src.closer.layer = 20
 	orient2hud()
-	return
 
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
 		for(var/obj/O in contents)
 			O.emp_act(severity)
+	..()
+
+/obj/item/weapon/storage/ex_act(var/severity,var/child=null)
+	if(!istype(src.loc, /mob/living))
+		for(var/obj/O in contents)
+			O.ex_act(severity)
 	..()
 
 // BubbleWrap - A box can be folded up to make card

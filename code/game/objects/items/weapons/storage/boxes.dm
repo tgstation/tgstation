@@ -183,6 +183,20 @@
 		new /obj/item/weapon/grenade/flashbang(src)
 		new /obj/item/weapon/grenade/flashbang(src)
 
+/obj/item/weapon/storage/box/smokebombs
+	name = "box of smokebombs"
+	icon_state = "smokebomb"
+
+	New()
+		..()
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+
 /obj/item/weapon/storage/box/emps
 	name = "emp grenades"
 	desc = "A box with 5 emp grenades."
@@ -426,6 +440,93 @@
 		new /obj/item/weapon/storage/pill_bottle( src )
 		new /obj/item/weapon/storage/pill_bottle( src )
 
+/obj/item/weapon/storage/box/lethalshells
+	name = "lethal shells"
+	icon_state = "lethal shells"
+
+	New()
+		..()
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+		new /obj/item/ammo_casing/shotgun(src)
+
+/obj/item/weapon/storage/box/beanbagshells
+	name = "bean bag shells"
+	icon_state = "bean bag shells"
+
+	New()
+		..()
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+/obj/item/weapon/storage/box/stunshells
+	name = "stun shells"
+	icon_state = "stun shells"
+
+	New()
+		..()
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		new /obj/item/ammo_casing/shotgun/stunshell(src)
+
+/obj/item/weapon/storage/box/dartshells
+	name = "shotgun darts"
+	icon_state = "dart shells"
+
+	New()
+		..()
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
 
 /obj/item/weapon/storage/box/snappops
 	name = "snap pop box"

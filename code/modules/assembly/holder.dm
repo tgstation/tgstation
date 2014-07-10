@@ -30,6 +30,12 @@
 	IsAssemblyHolder()
 		return 1
 
+	Destroy()
+		if(a_left)
+			a_left.holder = null
+		if(a_right)
+			a_right.holder = null
+		..()
 
 	attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
 		if((!D)||(!D2))	return 0

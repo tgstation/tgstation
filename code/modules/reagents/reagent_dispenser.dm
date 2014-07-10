@@ -49,17 +49,17 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(50))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			if(3.0)
 				if (prob(5))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			else
 		return
@@ -67,7 +67,7 @@
 	blob_act()
 		if(prob(50))
 			new /obj/effect/effect/water(src.loc)
-			del(src)
+			qdel(src)
 
 
 
@@ -161,7 +161,7 @@
 	ex_act()
 		explode()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		if(exposed_temperature >= AUTOIGNITION_WELDERFUEL)
 			explode()
 

@@ -67,6 +67,18 @@
 			if(!target.reagents.total_volume)
 				user << "\red [target] is empty. Cant dissolve pill."
 				return
+
+			// /vg/: Logging transfers of bad things
+			if(target.reagents_to_log.len)
+				var/list/badshit=list()
+				for(var/bad_reagent in target.reagents_to_log)
+					if(reagents.has_reagent(bad_reagent))
+						badshit += reagents_to_log[bad_reagent]
+				if(badshit.len)
+					var/hl="\red <b>([english_list(badshit)])</b> \black"
+					message_admins("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					log_game("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].")
+
 			user << "\blue You dissolve the pill in [target]"
 			reagents.trans_to(target, reagents.total_volume)
 			for(var/mob/O in viewers(2, user))

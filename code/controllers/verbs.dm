@@ -28,25 +28,27 @@
 	return
 
 
-/client/proc/debug_controller(controller in list("Master","Failsafe","Ticker","Lighting","Air","Jobs","Sun","Radio","Supply Shuttle","Emergency Shuttle","Configuration","pAI", "Cameras"))
+/client/proc/debug_controller(controller in list("Air", "Cameras", "Configuration", "Emergency Shuttle", "failsafe", "Jobs", "lighting", "master", "pAI", "Radio", "Sun", "Supply Shuttle", "Ticker"))
 	set category = "Debug"
-	set name = "Debug Controller"
-	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
+	set name = "debug controller"
+	set desc = "debug the various periodic loop controllers for the game (be careful!)."
 
-	if(!holder)	return
-	switch(controller)
-		if("Master")
+	if (!holder)
+		return
+
+	switch (controller)
+		if ("master")
 			debug_variables(master_controller)
-			feedback_add_details("admin_verb","DMC")
-		if("Failsafe")
-			debug_variables(Failsafe)
-			feedback_add_details("admin_verb","DFailsafe")
+			feedback_add_details("admin_verb", "dmaster")
+		if ("failsafe")
+			debug_variables(failsafe)
+			feedback_add_details("admin_verb", "dfailsafe")
 		if("Ticker")
 			debug_variables(ticker)
 			feedback_add_details("admin_verb","DTicker")
-		if("Lighting")
+		if ("lighting")
 			debug_variables(lighting_controller)
-			feedback_add_details("admin_verb","DLighting")
+			feedback_add_details("admin_verb", "dlighting")
 		if("Air")
 			debug_variables(air_master)
 			feedback_add_details("admin_verb","DAir")

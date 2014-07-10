@@ -1,8 +1,11 @@
+
+
 /* Two-handed Weapons
  * Contains:
  * 		Twohanded
  *		Fireaxe
  *		Double-Bladed Energy Swords
+ *		Spears
  */
 
 /*##################################################################
@@ -11,11 +14,16 @@
 
 //Rewrote TwoHanded weapons stuff and put it all here. Just copypasta fireaxe to make new ones ~Carn
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
-//It also tidies stuff up elsewhere.
+//It also tidies stuff up elsewhere. also derp.
+
+
 
 /*
  * Twohanded
  */
+
+
+
 /obj/item/weapon/twohanded
 	var/wielded = 0
 	var/force_unwielded = 0
@@ -27,13 +35,39 @@
 	wielded = 0
 	force = force_unwielded
 	name = "[initial(name)]"
-	update_icon()
+	set_icon()
+
 
 /obj/item/weapon/twohanded/proc/wield()
 	wielded = 1
 	force = force_wielded
 	name = "[initial(name)] (Wielded)"
+	set_icon()
+
+
+
+/obj/item/weapon/twohanded/proc/set_icon()
+	set src in usr
+
+	if(findtext(icon_state, "fireaxe"))
+		item_state = "fireaxe[wielded]"
+
+
+	else if(findtext(icon_state, "dualsaber"))
+		item_state = "dualsaber[wielded]"
+
+
+	else if(findtext(icon_state, "hfrequency"))
+		item_state = "hfrequency[wielded]"
+
+	else
+		item_state = "spearglass[wielded]"
+
+
+	usr.update_inv_l_hand()
+	usr.update_inv_r_hand()
 	update_icon()
+
 
 /obj/item/weapon/twohanded/mob_can_equip(M as mob, slot)
 	//Cannot equip wielded items.
@@ -51,18 +85,20 @@
 			O.unwield()
 	return	unwield()
 
-/obj/item/weapon/twohanded/update_icon()
-	return
+//obj/item/weapon/twohanded/update_icon()
+//	return
 
 /obj/item/weapon/twohanded/pickup(mob/user)
-	unwield()
+	wielded = 0
+	set_icon()
+	wielded = 0
 
 /obj/item/weapon/twohanded/attack_self(mob/user as mob)
 	if( istype(user,/mob/living/carbon/monkey) )
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
 
-	..()
+	//..()
 	if(wielded) //Trying to unwield it
 		unwield()
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
@@ -72,6 +108,7 @@
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(O && istype(O))
 			O.unwield()
+		//world << "<span class='warning'>[icon_state]</span>" // debugging
 		return
 
 	else //Trying to wield it
@@ -87,6 +124,7 @@
 		O.name = "[initial(name)] - offhand"
 		O.desc = "Your second grip on the [initial(name)]"
 		user.put_in_inactive_hand(O)
+		//world << "<span class='warning'>[icon_state]</span>" // debugging
 		return
 
 ///////////OFFHAND///////////////
@@ -94,12 +132,48 @@
 	w_class = 5.0
 	icon_state = "offhand"
 	name = "offhand"
+	//flags = ABSTRACT
 
-	unwield()
-		del(src)
+/obj/item/weapon/twohanded/offhand/unwield()
+	del(src)
 
-	wield()
-		del(src)
+/obj/item/weapon/twohanded/offhand/wield()
+	del(src)
+
+/obj/item/weapon/twohanded/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
+	var/mob/user = loc
+	if(!istype(user)) return 0
+	var/obj/item/I = user.get_active_hand()
+	if(I == src) I = user.get_inactive_hand()
+	if(!I) return 0
+	return I.IsShield()
+
+///////////Two hand required objects///////////////
+//This is for objects that require two hands to even pick up
+/obj/item/weapon/twohanded/required/
+	w_class = 5.0
+
+/obj/item/weapon/twohanded/required/attack_self()
+	return
+
+/obj/item/weapon/twohanded/required/mob_can_equip(M as mob, slot)
+	if(wielded)
+		M << "<span class='warning'>[src.name] is too cumbersome to carry with anything but your hands!</span>"
+		return 0
+	return ..()
+
+/obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
+	var/obj/item/weapon/twohanded/required/H = user.get_inactive_hand()
+	if(H != null)
+		user.visible_message("<span class='notice'>[src.name] is too cumbersome to carry in one hand!</span>")
+		return
+	var/obj/item/weapon/twohanded/offhand/O = new(user)
+	user.put_in_inactive_hand(O)
+	..()
+	wielded = 1
+
+
+//obj/item/weapon/twohanded/
 
 /*
  * Fireaxe
@@ -115,27 +189,23 @@
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
-/obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
-	icon_state = "fireaxe[wielded]"
-	return
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is smashing \himself in the head with the [src.name]! It looks like \he's commit suicide!</b>"
+		return (BRUTELOSS)
 
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+	if(!proximity) return
 	..()
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
+		if(istype(A,/obj/structure/window))
 			var/pdiff=performWallPressureCheck(A.loc)
 			if(pdiff>0)
 				message_admins("[A] with pdiff [pdiff] fire-axed by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(A.loc)]!")
 				log_admin("[A] with pdiff [pdiff] fire-axed by [user.real_name] ([user.ckey]) at [A.loc]!")
 			var/obj/structure/window/W = A
-
-			new /obj/item/weapon/shard( W.loc )
-			if(W.reinf) new /obj/item/stack/rods( W.loc)
-
-			if (W.dir == SOUTHWEST)
-				new /obj/item/weapon/shard( W.loc )
-				if(W.reinf) new /obj/item/stack/rods( W.loc)
-		del(A)
+			W.destroy()
+		else
+			del(A)
 
 
 /*
@@ -164,7 +234,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
 	..()
-	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
+	if((M_CLUMSY in user.mutations) && (wielded) &&prob(40))
 		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
 		user.take_organ_damage(20,25)
 		return
@@ -182,13 +252,12 @@
 
 
 
-
-
 /*
  * High-Frequency Blade
  */
 /obj/item/weapon/twohanded/hfrequency
 	icon_state = "hfrequency0"
+	item_state = "hfrequency0"
 	name = "high-frequency blade"
 	desc = "Keep hands off blade at all times."
 	slot_flags = SLOT_BACK
@@ -225,4 +294,3 @@
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 	return
-

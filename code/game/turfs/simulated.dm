@@ -8,7 +8,7 @@
 	nitrogen = MOLES_N2STANDARD
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
-
+	var/drying = 0 // tracking if something is currently drying
 /turf/simulated/New()
 	..()
 	levelupdate()
@@ -74,6 +74,16 @@
 						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 						H.Stun(4)
 						H.Weaken(5)
+		else if(iscluwne(M))
+			var/mob/living/simple_animal/hostile/retaliate/cluwne/C=M
+			if(C.m_intent == "run")
+				if(C.footstep >= 2)
+					C.footstep = 0
+					playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
+				else
+					C.footstep++
+			else
+				playsound(src, "clownstep", 20, 1)
 
 		switch (src.wet)
 			if(1)

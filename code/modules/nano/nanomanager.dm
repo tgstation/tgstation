@@ -1,10 +1,14 @@
 // This is the window/UI manager for Nano UI
 // There should only ever be one (global) instance of nanomanger
 /datum/nanomanager
-	// a list of current open /nanoui UIs, grouped by src_object and ui_key
+	// A list of current open /nanoui UIs, grouped by src_object and ui_key.
 	var/open_uis[0]
-	// a list of current open /nanoui UIs, not grouped, for use in processing
+
+	// A list of current open /nanoui UIs, not grouped, for use in processing.
 	var/list/processing_uis = list()
+
+	// A list of asset filenames which are to be sent to the client on user logon.
+	var/list/asset_files = list()
 
  /**
   * Create a new nanomanager instance.
@@ -12,7 +16,23 @@
   * @return /nanomanager new nanomanager object
   */
 /datum/nanomanager/New()
-	return
+	. = ..()
+
+	var/list/nano_asset_dirs = list(\
+		"nano/css/",\
+		"nano/images/",\
+		"nano/js/",\
+		"nano/templates/"\
+	)
+
+	var/list/filenames
+
+	for(var/path in nano_asset_dirs)
+		filenames = flist(path)
+
+		for(var/filename in filenames)
+			if(copytext(filename, length(filename)) != "/") // Filenames which end in "/" are actually directories, which we want to ignore.
+				asset_files += file(path + filename) // Add this file to asset_files for sending to clients when they connect.
 
  /**
   * Get an open /nanoui ui for the current user, src_object and ui_key and try to update it with data
@@ -30,11 +50,11 @@
 	{
 		ui = get_open_ui(user, src_object, ui_key)
 	}
-	if (!isnull(ui))		
+	if (!isnull(ui))
 		// The UI is already open so push the data to it
 		ui.push_data(data)
 		return ui
-		
+
 	return null
 
  /**
@@ -69,18 +89,18 @@
 /datum/nanomanager/proc/update_uis(src_object)
 	var/src_object_key = "\ref[src_object]"
 	if (isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
-		return 0	
+		return 0
 
 	var/update_count = 0
-	for (var/ui_key in open_uis[src_object_key])			
+	for (var/ui_key in open_uis[src_object_key])
 		for (var/datum/nanoui/ui in open_uis[src_object_key][ui_key])
 			if(ui && ui.src_object && ui.user)
 				ui.process(1)
 				update_count++
 	return update_count
-	
+
  /**
-  * Update /nanoui uis belonging to user 
+  * Update /nanoui uis belonging to user
   *
   * @param user /mob The mob who owns the uis
   * @param src_object /obj|/mob If src_object is provided, only update uis which are attached to src_object (optional)
@@ -93,15 +113,15 @@
 		return 0 // has no open uis
 
 	var/update_count = 0
-	for (var/datum/nanoui/ui in user.open_uis)		
+	for (var/datum/nanoui/ui in user.open_uis)
 		if ((isnull(src_object) || !isnull(src_object) && ui.src_object == src_object) && (isnull(ui_key) || !isnull(ui_key) && ui.ui_key == ui_key))
 			ui.process(1)
 			update_count++
-			
+
 	return update_count
-	
+
  /**
-  * Close /nanoui uis belonging to user 
+  * Close /nanoui uis belonging to user
   *
   * @param user /mob The mob who owns the uis
   * @param src_object /obj|/mob If src_object is provided, only close uis which are attached to src_object (optional)
@@ -114,11 +134,11 @@
 		return 0 // has no open uis
 
 	var/close_count = 0
-	for (var/datum/nanoui/ui in user.open_uis)		
+	for (var/datum/nanoui/ui in user.open_uis)
 		if ((isnull(src_object) || !isnull(src_object) && ui.src_object == src_object) && (isnull(ui_key) || !isnull(ui_key) && ui.ui_key == ui_key))
 			ui.close()
 			close_count++
-			
+
 	return close_count
 
  /**
@@ -160,7 +180,7 @@
 	ui.user.open_uis.Remove(ui)
 	var/list/uis = open_uis[src_object_key][ui.ui_key]
 	return uis.Remove(ui)
-	
+
  /**
   * This is called on user logout
   * Closes/clears all uis attached to the user's /mob
@@ -170,7 +190,7 @@
   * @return nothing
   */
 
-// 
+//
 /datum/nanomanager/proc/user_logout(var/mob/user)
 	return close_user_uis(user)
 
@@ -184,7 +204,7 @@
   * @return nothing
   */
 /datum/nanomanager/proc/user_transferred(var/mob/oldMob, var/mob/newMob)
-	if (isnull(oldMob.open_uis) || !istype(oldMob.open_uis, /list) || open_uis.len == 0)
+	if (!oldMob || isnull(oldMob.open_uis) || !istype(oldMob.open_uis, /list) || open_uis.len == 0)
 		return 0 // has no open uis
 
 	if (isnull(newMob.open_uis) || !istype(newMob.open_uis, /list))
@@ -195,6 +215,17 @@
 		newMob.open_uis.Add(ui)
 
 	oldMob.open_uis.Cut()
-	
+
 	return 1 // success
 
+ /**
+  * Sends all nano assets to the client
+  * This is called on user login
+  *
+  * @param client /client The user's client
+  *
+  * @return nothing
+  */
+/datum/nanomanager/proc/send_resources(const/client)
+	for(var/file in asset_files)
+		client << browse_rsc(file)	// Send the file to the client.

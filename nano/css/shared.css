@@ -513,3 +513,18 @@ th.misc
 	color: #ffffff;
 }
 
+.fixed {
+	float: none;
+	display: inline; /* inline-block */
+	padding: 0px 3px 3px 0px;
+	line-height: 50%;
+	height: 16px;
+	vertical-align: middle;
+	margin: 0;
+}
+
+.fixed .uiIcon16 {
+	float: none;
+	display: inline; /* inline-block */
+	vertical-align: middle;
+}

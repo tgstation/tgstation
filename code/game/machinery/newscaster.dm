@@ -57,6 +57,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	// Allow ghosts to send Topic()s.
 	ghost_write=1
+	custom_aghost_alerts=1 // We handle our own logging.
 
 	var/isbroken = 0  //1 if someone banged it with something heavy
 	var/ispowered = 1 //starts powered, changes with power_change()
@@ -90,12 +91,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		// 0 = there hasn't been a news/wanted update in the last alert_delay
 		// 1 = there has
 	var/scanned_user = "Unknown" //Will contain the name of the person who currently uses the newscaster
+	var/mob/masterController = null // Mob with control over the newscaster.
 	var/msg = "";                //Feed message
 	var/obj/item/weapon/photo/photo = null
 	var/channel_name = ""; //the feed channel which will be receiving the feed, or being created
 	var/c_locked=0;        //Will our new channel be locked to public submissions?
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
-	var/datum/feed_channel/viewing_channel = null
+	var/datum/feed_channel/viewing_channel = list()
 	luminosity = 0
 	anchored = 1
 
@@ -112,7 +114,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	src.update_icon() //for any custom ones on the map...
 	..()                                //I just realised the newscasters weren't in the global machines list. The superconstructor call will tend to that
 
-/obj/machinery/newscaster/Del()
+/obj/machinery/newscaster/Destroy()
 	allCasters -= src
 	..()
 
@@ -156,12 +158,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			src.isbroken=1
 			if(prob(50))
-				del(src)
+				qdel(src)
 			else
 				src.update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(prob(50)) goes in.
 			return
@@ -259,7 +261,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\newscaster.dm:234: dat+="Creating new Feed Message..."
 				dat += {"Creating new Feed Message...
-					<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [src.channel_name]<BR>" //MAR
+					<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [src.channel_name]<BR>"
 					<B>Message Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>
 					<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> [src.msg] <BR>
 					<B><A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>:</B>  [(src.photo ? "Photo Attached" : "No Photo")]</BR>
@@ -530,6 +532,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
+		return
+	if(masterController && !isobserver(masterController) && get_dist(masterController,src)<=1 && usr!=masterController)
+		usr << "\red You must wait for [masterController] to finish and move away."
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon) || isobserver(usr)))
 		usr.set_machine(src)
@@ -1103,6 +1108,12 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 
 /obj/machinery/newscaster/proc/scan_user(mob/user)
+	if(masterController)
+		if(masterController != user)
+			if(get_dist(masterController,src)<=1)
+				if(!isobserver(masterController))
+					user << "\red Wait for [masterController] to finish and move away."
+					return
 	if(istype(user,/mob/living/carbon/human))                       //User is a human
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)                                      //Newscaster scans you
@@ -1125,8 +1136,11 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	else if (isAdminGhost(user))
 		src.scanned_user = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	else if (isobserver(user))
-		src.scanned_user = "Anomaly"
-
+		src.scanned_user = "Space-Time Anomaly #[rand(0,9)][rand(0,9)][rand(0,9)]"
+//	if(masterController && masterController.client && get_dist(masterController,src)<=1)
+//		masterController << "\red You were booted from \the [src] by [scanned_user]."
+	masterController = user
+//	masterController << "\icon[src] \blue Welcome back, [scanned_user]!"
 
 /obj/machinery/newscaster/proc/print_paper()
 	feedback_inc("newscaster_newspapers_printed",1)

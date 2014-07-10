@@ -10,6 +10,7 @@
 	w_class = 4.0
 
 /obj/item/weapon/moneybag/attack_hand(user as mob)
+	var/credits=0
 	var/list/ore=list()
 	for(var/oredata in typesof(/datum/material) - /datum/material)
 		var/datum/material/ore_datum = new oredata
@@ -20,12 +21,14 @@
 			var/datum/material/ore_info=ore[C.material]
 			ore_info.stored++
 			ore[C.material]=ore_info
+			credits += C.credits
 
-	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
+	var/dat = "<b>The contents of the moneybag reveal...</b><ul>"
 	for(var/ore_id in ore)
 		var/datum/material/ore_info=ore[ore_id]
 		if(ore_info.stored)
-			dat += "[ore_info.processed_name] coins: [ore_info.stored] <A href='?src=\ref[src];remove=[ore_id]'>Remove one</A><br>"
+			dat += "<li>[ore_info.processed_name] coins: [ore_info.stored] <A href='?src=\ref[src];remove=[ore_id]'>Remove one</A></li>"
+	dat += "</ul><b>Total haul:</b> $[credits]"
 	user << browse("[dat]", "window=moneybag")
 
 /obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -55,6 +58,11 @@
 		COIN.loc = src.loc
 	return
 
+/obj/item/weapon/moneybag/MouseDrop(obj/over_object as obj)
+	if(ishuman(usr))
+		if(over_object == usr)
+			var/mob/living/carbon/human/H = usr
+			H.put_in_hands(src)
 
 
 /obj/item/weapon/moneybag/vault

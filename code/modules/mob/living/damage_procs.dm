@@ -14,7 +14,7 @@
 		if(BRUTE)
 			adjustBruteLoss(damage/(blocked+1))
 		if(BURN)
-			if(mHeatres in mutations)	damage = 0
+			if(M_RESIST_HEAT in mutations)	damage = 0
 			adjustFireLoss(damage/(blocked+1))
 		if(TOX)
 			adjustToxLoss(damage/(blocked+1))

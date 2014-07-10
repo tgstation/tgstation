@@ -5,9 +5,8 @@
 	icon_state = "secure1"
 	density = 1
 	opened = 0
-	var/locked = 1
-	var/broken = 0
-	var/large = 1
+	large = 1
+	locked = 1
 	icon_closed = "secure"
 	var/icon_locked = "secure1"
 	icon_opened = "secureopen"
@@ -106,7 +105,7 @@
 	if(user.stat || !isturf(src.loc))
 		return
 
-	if(!(src.locked))
+	if(!(src.locked) && !(src.welded))
 		for(var/obj/item/I in src)
 			I.loc = src.loc
 		for(var/mob/M in src)
@@ -119,7 +118,10 @@
 		src.density = 0
 		playsound(get_turf(src), 'sound/machines/click.ogg', 15, 1, -3)
 	else
-		user << "<span class='notice'>The locker is locked!</span>"
+		if(!can_open())
+			user << "<span class='notice'>It won't budge!</span>"
+		else
+			user << "<span class='notice'>The locker is locked!</span>"
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in hearers(src, null))
@@ -127,6 +129,8 @@
 	return
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user as mob)
+	if(!Adjacent(user))
+		return
 	src.add_fingerprint(user)
 
 	if(!src.toggle())

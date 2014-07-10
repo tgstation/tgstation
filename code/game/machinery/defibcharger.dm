@@ -1,6 +1,6 @@
 obj/machinery/recharger/defibcharger/wallcharger
 	name = "defib recharger"
-	desc = "A special wall mounted recharger meant for emergency defibrilators"
+	desc = "A special wall mounted recharger meant for emergency defibrillators"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "wrecharger0"
 	anchored = 1
@@ -12,18 +12,20 @@ obj/machinery/recharger/defibcharger/wallcharger
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
-obj/machinery/recharger/defibcharger/wallcharger/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/defib_recharger
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
-	RefreshParts()
+/obj/machinery/recharger/defibcharger/wallcharger/New()
+	. = ..()
 
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/defib_recharger,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
+	RefreshParts()
 
 obj/machinery/recharger/defibcharger/wallcharger/attack_hand(mob/user as mob)
 	add_fingerprint(user)
@@ -43,8 +45,8 @@ obj/machinery/recharger/defibcharger/wallcharger/emp_act(severity)
 		..(severity)
 		return
 
-	if(istype(charging, /obj/item/weapon/melee/defibrilator))
-		var/obj/item/weapon/melee/defibrilator/B = charging
+	if(istype(charging, /obj/item/weapon/melee/defibrillator))
+		var/obj/item/weapon/melee/defibrillator/B = charging
 		B.charges = 0
 	..(severity)
 
@@ -61,8 +63,8 @@ obj/machinery/recharger/defibcharger/wallcharger/process()
 		return
 
 	if(charging)
-		if(istype(charging, /obj/item/weapon/melee/defibrilator))
-			var/obj/item/weapon/melee/defibrilator/B = charging
+		if(istype(charging, /obj/item/weapon/melee/defibrillator))
+			var/obj/item/weapon/melee/defibrillator/B = charging
 			if(B.charges < initial(B.charges))
 				B.charges++
 				icon_state = "wrecharger1"
@@ -73,7 +75,7 @@ obj/machinery/recharger/defibcharger/wallcharger/process()
 obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/melee/defibrilator))
+	if(istype(G, /obj/item/weapon/melee/defibrillator))
 		if(charging)
 			return
 		// Checks to make sure he's not in space doing it, and that the area got proper power.
@@ -91,7 +93,7 @@ obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as o
 		update_icon()
 	/*if(istype(G, /obj/item/weapon/wrench)) If you want the defibrillator's to be ananchorable, uncomment this
 		if(charging)
-			user << "\red Remove the defibrilator first!"
+			user << "\red Remove the defibrillator first!"
 			return
 		anchored = !anchored
 		user << "You [anchored ? "attached" : "detached"] the recharger."

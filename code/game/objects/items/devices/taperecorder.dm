@@ -6,6 +6,7 @@
 	w_class = 1.0
 	m_amt = 60
 	g_amt = 30
+	w_type = RECYK_ELECTRONIC
 	var/emagged = 0.0
 	var/recording = 0.0
 	var/playing = 0.0

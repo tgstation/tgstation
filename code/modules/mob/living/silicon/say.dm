@@ -1,3 +1,13 @@
+/mob/living/silicon/say_quote(var/text)
+	var/ending = copytext(text, length(text))
+
+	if (ending == "?")
+		return "queries, \"[text]\"";
+	else if (ending == "!")
+		return "declares, \"[text]\"";
+
+	return "states, \"[text]\"";
+
 /mob/living/silicon/say(var/message)
 	if (!message)
 		return
@@ -24,6 +34,9 @@
 				return ..(message)
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			/*if(istype(src, /mob/living/silicon/robot/mommi))
+				src << "Your binary communication device can only receive data, it is not meant to send any."
+				return*/
 
 			// TODO: move the component system up to silicon so we don't have to use this ugly hack..
 			if(istype(src, /mob/living/silicon/robot))
@@ -109,7 +122,7 @@
 
 	for (var/mob/living/S in living_mob_list)
 		if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
-			if(istype(S , /mob/living/silicon/ai))
+			if(istype(S , /mob/living/silicon/ai) && !isMoMMI(src))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
 				S.show_message(renderedAI, 2)
 			else if(istype(S , /mob/dead/observer) && S.stat == DEAD)

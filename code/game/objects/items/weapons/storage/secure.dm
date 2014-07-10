@@ -176,7 +176,7 @@
 
 	//I consider this worthless but it isn't my code so whatever.  Remove or uncomment.
 	/*attack(mob/M as mob, mob/living/user as mob)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if ((M_CLUMSY in user.mutations) && prob(50))
 			user << "\red The [src] slips out of your hand and hits your head."
 			user.take_organ_damage(10)
 			user.Paralyse(2)

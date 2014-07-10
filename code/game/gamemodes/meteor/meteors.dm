@@ -120,14 +120,14 @@
 
 				explosion(src.loc, 4, 5, 6, 7, 0)
 				playsound(get_turf(src), "explosion", 50, 1)
-			del(src)
+			qdel(src)
 	return
 
 
 /obj/effect/meteor/ex_act(severity)
 
 	if (severity < 4)
-		del(src)
+		qdel(src)
 	return
 
 /obj/effect/meteor/big
@@ -144,7 +144,7 @@
 			if(!istype(A,/obj/machinery/power/emitter) && \
 				!istype(A,/obj/machinery/field_generator))
 				if(--src.hits <= 0)
-					del(src) //Dont blow up singularity containment if we get stuck there.
+					qdel(src) //Dont blow up singularity containment if we get stuck there.
 
 			for(var/mob/M in range(10, src))
 				if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
@@ -156,11 +156,11 @@
 				if(prob(15) && !istype(A, /obj/structure/grille))
 					explosion(src.loc, 1, 2, 3, 4, 0)
 					playsound(get_turf(src), "explosion", 50, 1)
-				del(src)
+				qdel(src)
 		return
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pickaxe))
-		del(src)
+		qdel(src)
 		return
 	..()

@@ -19,6 +19,7 @@
 
 
 /obj/structure/dispenser/New()
+	. = ..()
 	update_icon()
 
 
@@ -86,7 +87,7 @@
 /obj/structure/dispenser/Topic(href, href_list)
 	if(usr.stat || usr.restrained())
 		return
-	if(get_dist(src, usr) <= 1)
+	if(Adjacent(usr))
 		usr.set_machine(src)
 		if(href_list["oxygen"])
 			if(oxygentanks > 0)

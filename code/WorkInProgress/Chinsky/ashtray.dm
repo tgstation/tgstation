@@ -84,8 +84,9 @@
 	icon_broken  = "ashtray_bork_bl"
 	max_butts = 14
 	health = 24.0
-	g_amt = 30
-	m_amt = 30
+	g_amt = 0
+	m_amt = 0
+	w_type = RECYK_MISC
 	empty_desc = "Cheap plastic ashtray."
 	throwforce = 3.0
 	die()
@@ -106,6 +107,7 @@
 	max_butts = 10
 	health = 72.0
 	m_amt = 80
+	w_type = RECYK_METAL
 	empty_desc = "Massive bronze ashtray."
 	throwforce = 10.0
 

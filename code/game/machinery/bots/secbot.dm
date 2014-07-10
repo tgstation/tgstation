@@ -67,8 +67,6 @@
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 
-
-
 /obj/machinery/bot/secbot
 	New()
 		..()
@@ -230,7 +228,7 @@ Auto Patrol: []"},
 						var/mob/living/carbon/M = src.target
 						var/maxstuns = 4
 						if(istype(M, /mob/living/carbon/human))
-							if(M.stuttering < 10 && (!(HULK in M.mutations)))
+							if(M.stuttering < 10 && (!(M_HULK in M.mutations)))
 								M.stuttering = 10
 							M.Stun(10)
 							M.Weaken(10)
@@ -353,7 +351,6 @@ Auto Patrol: []"},
 
 
 		if(SECBOT_PATROL)		// patrol mode
-
 			patrol_step()
 			spawn(5)
 				if(mode == SECBOT_PATROL)
@@ -608,11 +605,18 @@ Auto Patrol: []"},
 			else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
 				src.threatlevel = 4
 
+		/*
 		else if(istype(M, /mob/living/simple_animal/hostile))
 			if(M.stat == DEAD)
 				continue
-			else
-				src.threatlevel = 4
+			// Ignore lazarus-injected mobs.
+			if(M.faction == "lazarus")
+				continue
+			// Minebots only, I hope.
+			if(M.faction == "neutral")
+				continue
+			src.threatlevel = 4
+		*/
 
 		if(!src.threatlevel)
 			continue

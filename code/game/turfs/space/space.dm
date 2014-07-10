@@ -1,6 +1,7 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
+	desc = "The final frontier."
 	icon_state = "0"
 
 	temperature = TCMB
@@ -45,8 +46,8 @@
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				user << "\blue You build a catwalk!"
 				R.use(2)
-				ChangeTurf(/turf/unsimulated/floor/airless/catwalk)
-				del(L)
+				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
+				qdel(L)
 				return
 
 		user << "\blue Constructing support lattice ..."
@@ -59,7 +60,7 @@
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
-			del(L)
+			qdel(L)
 			playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
 			S.use(1)
@@ -87,11 +88,11 @@
 		if(A.z > 6) return
 		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
 			if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-				del(A)
+				qdel(A)
 				return
 
 			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-				del(A) //The disk's Del() proc ensures a new one is created
+				del(A) //The disk's Destroy() proc ensures a new one is created
 				return
 
 			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)

@@ -9,10 +9,12 @@ var/list/doppler_arrays = list()
 	var/list/bangs = list()
 
 /obj/machinery/computer/bhangmeter/New()
+	..()
 	doppler_arrays += src
 
-/obj/machinery/computer/bhangmeter/Del()
+/obj/machinery/computer/bhangmeter/Destroy()
 	doppler_arrays -= src
+	..()
 
 /obj/machinery/computer/bhangmeter/process()
 	return PROCESS_KILL
@@ -75,10 +77,10 @@ var/list/doppler_arrays = list()
 	if(!(direct & dir))	return
 	*/
 
-	var/message = "Explosive disturbance detected - Epicenter at: grid ([x0+WORLD_X_OFFSET],[y0+WORLD_Y_OFFSET]). [cap ? "\[Theoretical Results\] " : ""]Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range]. Temporal displacement of tachyons: [took]seconds.  Data logged."
+	var/message = "Explosive disturbance detected - Epicenter at: grid ([x0-WORLD_X_OFFSET],[y0-WORLD_Y_OFFSET]). [cap ? "\[Theoretical Results\] " : ""]Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range]. Temporal displacement of tachyons: [took]seconds.  Data logged."
 	src.visible_message( \
 		"<span class='game say'><span class='name'>[src]</span> states coldly, \"[message]\"</span>", \
 		"You hear muffled speech." \
 	)
-	var/bang = "<tr><td>([x0+WORLD_X_OFFSET],[y0+WORLD_Y_OFFSET])</td><td>([cap ? "\[Theoretical Results\] " : ""][devastation_range],[heavy_impact_range],[light_impact_range])</td><td>[took]s</td></tr>"
+	var/bang = "<tr><td>([x0-WORLD_X_OFFSET],[y0-WORLD_Y_OFFSET])</td><td>([cap ? "\[Theoretical Results\] " : ""][devastation_range],[heavy_impact_range],[light_impact_range])</td><td>[took]s</td></tr>"
 	bangs+=bang

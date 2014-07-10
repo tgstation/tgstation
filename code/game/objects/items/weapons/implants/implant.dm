@@ -17,6 +17,7 @@
 	proc/activate()
 		return
 
+
 	// What does the implant do upon injection?
 	// return 0 if the implant fails (ex. Revhead and loyalty implant.)
 	// return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
@@ -44,7 +45,7 @@
 		icon_state = "implant_melted"
 		malfunction = MALFUNCTION_PERMANENT
 
-	Del()
+	Destroy()
 		if(part)
 			part.implants.Remove(src)
 		..()
@@ -335,6 +336,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(!ishuman(M)) return 0
 		if(!M.mind) return 0
 		var/mob/living/carbon/human/H = M
+		if(M == user)
+			user << "<span class='notice'>You feel quite stupid for doing that.</span>"
+			if(isliving(user))
+				user:brainloss += 10
+			return
 		if(locate(/obj/item/weapon/implant/traitor) in H.contents || locate(/obj/item/weapon/implant/traitor) in H.contents)
 			H.visible_message("[H] seems to resist the implant!", "You feel a strange sensation in your head that quickly dissipates.")
 			return 0

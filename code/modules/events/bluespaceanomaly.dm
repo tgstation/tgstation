@@ -11,7 +11,7 @@
 	var/list/safe_areas = list(
 	/area/turret_protected/ai,
 	/area/turret_protected/ai_upload,
-	/area/engine,
+	/area/engineering,
 	/area/solar,
 	/area/holodeck,
 	/area/shuttle/arrival,
@@ -26,8 +26,8 @@
 
 	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
 	var/list/danger_areas = list(
-	/area/engine/break_room,
-	/area/engine/chiefs_office)
+	/area/engineering/break_room,
+	/area/engineering/ce)
 
 
 	impact_area = locate(pick((the_station_areas - safe_areas) + danger_areas))	//need to locate() as it's just a list of paths.

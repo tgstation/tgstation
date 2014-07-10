@@ -77,9 +77,7 @@ obj/machinery/atmospherics/valve
 
 		return null
 
-	Del()
-		loc = null
-
+	Destroy()
 		if(node1)
 			node1.disconnect(src)
 			del(network_node1)
@@ -253,7 +251,7 @@ obj/machinery/atmospherics/valve
 					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 		var/frequency = 0
-		var/id = null
+		var/id_tag = null
 		var/datum/radio_frequency/radio_connection
 
 		initialize()
@@ -261,8 +259,46 @@ obj/machinery/atmospherics/valve
 			if(frequency)
 				set_frequency(frequency)
 
+
+
+		multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+			return {"
+			<ul>
+				<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
+				<li>[format_tag("ID Tag","id_tag","set_id")]</a></li>
+			</ul>
+			"}
+
+		Topic(href, href_list)
+			if(..())
+				return
+
+			if(!issilicon(usr))
+				if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+					return
+
+			if("set_id" in href_list)
+				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, id_tag) as null|text),1,MAX_MESSAGE_LEN)
+				if(newid)
+					id_tag = newid
+					initialize()
+			if("set_freq" in href_list)
+				var/newfreq=frequency
+				if(href_list["set_freq"]!="-1")
+					newfreq=text2num(href_list["set_freq"])
+				else
+					newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+				if(newfreq)
+					if(findtext(num2text(newfreq), "."))
+						newfreq *= 10 // shift the decimal one place
+					if(newfreq < 10000)
+						frequency = newfreq
+						initialize()
+
+			update_multitool_menu(usr)
+
 		receive_signal(datum/signal/signal)
-			if(!signal.data["tag"] || (signal.data["tag"] != id))
+			if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 				return 0
 
 			switch(signal.data["command"])
@@ -274,11 +310,27 @@ obj/machinery/atmospherics/valve
 					if(open)
 						close()
 
+				if("valve_set")
+					if(signal.data["state"])
+						if(!open)
+							open()
+					else
+						if(open)
+							close()
+
 				if("valve_toggle")
 					if(open)
 						close()
 					else
 						open()
+
+		// Just for digital valves.
+		attackby(var/obj/item/W as obj, var/mob/user as mob)
+			if(istype(W, /obj/item/device/multitool))
+				update_multitool_menu(user)
+				return 1
+			// Pass to the method below (does stuff ALL valves should do)
+			..()
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if (!istype(W, /obj/item/weapon/wrench))

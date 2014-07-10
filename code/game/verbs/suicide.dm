@@ -11,6 +11,9 @@
 		src << "You can't commit suicide before the game starts!"
 		return
 
+	if(istype(wear_mask, /obj/item/clothing/mask/happy))
+		src << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
+		return
 
 	var/permitted = 1
 	var/list/allowed = list("Syndicate","traitor","Wizard","Head Revolutionary","Cultist","Changeling")
