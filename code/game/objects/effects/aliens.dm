@@ -221,11 +221,11 @@
 	if(istype(loc, /turf/space))
 		qdel(src)
 		return
-	
+
 	linked_node = N
 	if(linked_node)
 		linked_node.connected_weeds.Add(src)
-	
+
 	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
 	spawn(rand(150, 200))
 		if(src)
@@ -251,13 +251,13 @@ Alien plants should do something if theres a lot of poison
 	if (istype(U, /turf/space))
 		del(src)
 		return
-	
+
 	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
 		return
-	
+
 	direction_loop:
 		for(var/dirn in cardinal)
-			
+
 			var/turf/T = get_step(src, dirn)
 
 			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
@@ -309,7 +309,7 @@ Alien plants should do something if theres a lot of poison
 		qdel(src)
 
 
-/obj/effect/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effect/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		health -= 5
 		healthcheck()
@@ -496,7 +496,7 @@ Alien plants should do something if theres a lot of poison
 	if(health <= 0)
 		Burst()
 
-/obj/effect/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effect/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)
 		health -= 5
 		healthcheck()

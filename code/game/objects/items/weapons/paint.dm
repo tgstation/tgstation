@@ -18,6 +18,11 @@ var/global/list/cached_icons = list()
 	flags = FPRINT | OPENCONTAINER
 	var/paint_type = ""
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is taking \his hand and eating the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (TOXLOSS|OXYLOSS)
+
+
 	afterattack(turf/simulated/target, mob/user , flag)
 		if(istype(target) && reagents.total_volume > 5)
 			for(var/mob/O in viewers(user))

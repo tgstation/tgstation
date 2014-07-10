@@ -449,7 +449,7 @@
 						var/atom/movable/t = M.pulling
 						M.stop_pulling()
 
-						//this is the gay blood on floor shit -- Added back -- Skie
+						/*//this is the gay blood on floor shit -- Added back -- Skie
 						if (M.lying && (prob(M.getBruteLoss() / 6)))
 							var/turf/location = M.loc
 							if (istype(location, /turf/simulated))
@@ -469,7 +469,7 @@
 										var/mob/living/carbon/H = M
 										var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
 										if(blood_volume > 0)
-											H:vessel.remove_reagent("blood",1)
+											H:vessel.remove_reagent("blood",1)*/
 
 
 						step(pulling, get_dir(pulling.loc, T))
@@ -589,7 +589,7 @@
 			L.buckled.manual_unbuckle(L)
 
 	//Breaking out of a locker?
-	else if( src.loc && (istype(src.loc, /obj/structure/closet)) )
+	if( src.loc && (istype(src.loc, /obj/structure/closet)) )
 		var/breakout_time = 2 //2 minutes by default
 
 		var/obj/structure/closet/C = L.loc
@@ -614,7 +614,7 @@
 
 
 		spawn(0)
-			if(do_after(usr,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+			if(do_after(usr,breakout_time * 60 * 10)) //minutes * 60seconds * 10deciseconds
 				if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened) //closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
 					return
 
@@ -636,8 +636,9 @@
 					sleep(10)
 					flick(SC.icon_broken, SC)
 					sleep(10)
-					SC.broken = 1
+					SC.broken = SC.locked // If it's only welded just break the welding, dont break the lock.
 					SC.locked = 0
+					SC.welded = 0
 					usr << "\red You successfully break out!"
 					for(var/mob/O in viewers(L.loc))
 						O.show_message("\red <B>\the [usr] successfully broke out of \the [SC]!</B>", 1)

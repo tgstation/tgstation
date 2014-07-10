@@ -139,7 +139,7 @@ var/global/datum/controller/gameticker/ticker
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
-				del(S)
+				qdel(S)
 		var/list/obj/effect/landmark/spacepod/random/L = list()
 		for(var/obj/effect/landmark/spacepod/random/SS in landmarks_list)
 			if(istype(SS))
@@ -148,7 +148,7 @@ var/global/datum/controller/gameticker/ticker
 		new /obj/spacepod/random(S.loc)
 		for(var/obj in L)
 			if(istype(obj, /obj/effect/landmark/spacepod/random))
-				del(obj)
+				qdel(obj)
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 		//world << sound('sound/AI/welcome.ogg') // Skie //Out with the old, in with the new. - N3X15
 		var/welcome_sentence=list('sound/AI/vox_login.ogg')
@@ -170,18 +170,12 @@ var/global/datum/controller/gameticker/ticker
 	//start_events() //handles random events and space dust.
 	//new random event system is handled from the MC.
 
-	var/admins_number = 0
-	for(var/client/C)
-		if(C.holder)
-			admins_number++
-	if(admins_number == 0)
+	if(0 == admins.len)
 		send2adminirc("Round has started with no admins online.")
 
 	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
 	master_controller.process()		//Start master_controller.process()
 	lighting_controller.process()	//Start processing DynamicAreaLighting updates
-	garbage.process()
-
 
 	if(config.sql_enabled)
 		spawn(3000)

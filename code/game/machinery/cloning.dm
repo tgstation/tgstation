@@ -20,21 +20,24 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS * 3
+	var/biomass = CLONE_BIOMASS // * 3 - N3X
 	var/opened = 0
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 /obj/machinery/clonepod/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonepod
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/clonepod,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
 	RefreshParts()
 
 
@@ -335,14 +338,12 @@
 				I.loc = src.loc
 			del(src)
 			return
-/*Removing cloning pod biomass
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "\blue \The [src] processes \the [W]."
 		biomass += 50
 		user.drop_item()
 		del(W)
 		return
-*/
 	else
 		..()
 
@@ -401,7 +402,7 @@
 	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
 
-	//src.biomass -= CLONE_BIOMASS
+	src.biomass -= CLONE_BIOMASS
 
 	return
 

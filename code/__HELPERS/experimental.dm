@@ -92,8 +92,6 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
 	if(isnull(AM))
 		return -1
 
-	AM.resetVariables()
-
 	switch(length(masterPool[AM.type]))
 		if(MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
 			#ifdef DEBUG_OBJECT_POOL
@@ -101,15 +99,15 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
 			#endif
 
 			qdel(AM)
-
 			return
 		if(0) // In a numeric context (like a mathematical operation), null evaluates to 0.
 			#ifdef DEBUG_OBJECT_POOL
 			world << "DEBUG_OBJECT_POOL: [AM.type] pool is empty, recreating pool."
 			#endif
 
-			masterPool[AM.type] = list()
+			masterPool[AM.type] = new
 
+	AM.resetVariables()
 	masterPool[AM.type] += AM
 
 	#ifdef DEBUG_OBJECT_POOL

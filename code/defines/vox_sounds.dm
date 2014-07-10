@@ -115,6 +115,7 @@ var/list/vox_sounds = list(
 	"cage" = 'sound/vox_fem/cage.ogg',
 	"call" = 'sound/vox_fem/call.ogg',
 	"called" = 'sound/vox_fem/called.ogg',
+	"can" = 'sound/vox_fem/can.ogg',
 	"canal" = 'sound/vox_fem/canal.ogg',
 	"cancer" = 'sound/vox_fem/cancer.ogg',
 	"cap" = 'sound/vox_fem/cap.ogg',

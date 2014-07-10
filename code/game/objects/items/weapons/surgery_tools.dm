@@ -22,6 +22,11 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /*HAHA, SUCK IT, 2000 LINES OF SPAGHETTI CODE!
 
@@ -138,6 +143,11 @@ LOOK FOR SURGERY.DM*/
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /*
 /obj/item/weapon/hemostat/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -274,6 +284,10 @@ LOOK FOR SURGERY.DM*/
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is burning \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
 
 /*
 /obj/item/weapon/cautery/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -646,6 +660,11 @@ LOOK FOR SURGERY.DM*/
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is sawing \his head in two with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /*
 /obj/item/weapon/circular_saw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -805,6 +824,11 @@ LOOK FOR SURGERY.DM*/
 	icon_state = "bone-gel"
 	force = 0
 	throwforce = 1.0
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is eating the [src.name]! It looks like \he's  trying to commit suicide!</b>" //Don't eat glue kids.
+		return (TOXLOSS)
+
 
 /obj/item/weapon/FixOVein
 	name = "FixOVein"

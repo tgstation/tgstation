@@ -19,15 +19,19 @@ Here it is: Buttbot.
 	//weight = 1.0E7
 	health = 25
 	maxhealth = 25
-	var/buttchance = 10
+	var/buttchance = 80 //Like an 80% chance of it working. It's just a butt with an arm in it.
+	var/sincelastfart = 0
 
-/obj/machinery/bot/buttbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/buttbot/attack_hand(mob/living/user as mob)
 	. = ..()
 	if (.)
 		return
-	speak("butt")
-	playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
+	if(sincelastfart + 5 < world.timeofday)
+		speak("butt")
+		playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
+		sincelastfart = world.timeofday
 
+		
 
 
 /obj/machinery/bot/buttbot/proc/speak(var/message)

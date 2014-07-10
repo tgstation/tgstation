@@ -14,7 +14,6 @@
 	var/singular_name
 	var/amount = 1
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
-	var/list/canCombineWith=list()
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()

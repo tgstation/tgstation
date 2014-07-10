@@ -78,13 +78,15 @@
 			testing("Got unknown command \"[signal.data["command"]]\" from [src]!")
 
 
-	// create a conveyor
-/obj/machinery/conveyor/New(loc, newdir=null, building=0)
-	..(loc)
+/*
+ * Create a conveyor.
+ */
+/obj/machinery/conveyor/New(loc, newdir = null, building = 0)
+	. = ..(loc)
+
 	if(newdir)
 		dir = newdir
-	component_parts = list()
-	RefreshParts()
+
 	updateConfig(!building)
 
 /obj/machinery/conveyor/proc/updateConfig(var/startup=0)

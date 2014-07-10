@@ -9,6 +9,11 @@
 	w_class = 4.0
 	max_w_class = 3
 	max_combined_w_class = 16
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is smashing \his head inside the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /obj/item/weapon/storage/briefcase/New()
 	new /obj/item/weapon/paper/demotion_key(src)

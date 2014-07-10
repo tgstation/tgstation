@@ -70,6 +70,8 @@
 
 	//world << "[type] - [tag] - [x].[y].[z]"
 
+	density = 0
+
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
 
@@ -293,8 +295,6 @@ its easier to just keep the beam vertical.
 /atom/proc/blob_act()
 	return
 
-/atom/proc/fire_act()
-	return
 /*
 /atom/proc/attack_hand(mob/user as mob)
 	return

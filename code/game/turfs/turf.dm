@@ -26,7 +26,7 @@
 	var/targetted_by=null
 
 	// Decal shit.
-	var/list/decals[0]
+	var/list/decals
 
 /turf/New()
 	..()
@@ -314,7 +314,10 @@
 		W.levelupdate()
 		return W
 
-/turf/proc/AddDecal(var/image/decal)
+/turf/proc/AddDecal(const/image/decal)
+	if(!decals)
+		decals = new
+
 	decals += decal
 	overlays += decal
 

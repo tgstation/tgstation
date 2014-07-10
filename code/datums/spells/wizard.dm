@@ -296,3 +296,20 @@
 	summon_type = list("/obj/structure/stool/bed/chair/vehicle/wizmobile")
 	summon_lifespan = 0
 	centcomm_cancast = 0 //Stop people from getting to centcomm
+	
+/obj/effect/proc_holder/spell/targeted/inflict_handler/arsenath
+	name = "Butt-Bot's Revenge"
+	desc = "This spell removes the target's ass in a firey explosion."
+
+	school = "evocation"
+	charge_max = 500
+	clothes_req = 1
+	invocation = "ARSE NATH"
+	invocation_type = "shout"
+	range = 1
+	cooldown_min = 200 //100 deciseconds reduction per rank
+
+	destroys = "butt"
+
+	sparks_spread = 1
+	sparks_amt = 4

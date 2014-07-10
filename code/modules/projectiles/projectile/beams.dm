@@ -1,3 +1,4 @@
+
 /*
  * Use: Caches beam state images and holds turfs that had these images overlaid.
  * Structure:
@@ -180,6 +181,8 @@ var/list/beam_master = list()
 /obj/item/projectile/beam
 	name = "laser"
 	icon_state = "laser"
+	invisibility = 101
+
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 30
 	damage_type = BURN
@@ -187,76 +190,105 @@ var/list/beam_master = list()
 	eyeblur = 4
 	var/frequency = 1
 
-/obj/item/projectile/beam/process()
-	var/reference = "\ref[src]"
-
-	spawn(0)
-		var/nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
-		var/target_dir
-
-		while(src && --kill_count >= 0)
+	process()
+		var/lastposition = loc
+		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
+		var/first = 1 //So we don't make the overlay in the same tile as the firer
+		spawn while(loc) //Move until we hit something
+			if((!( current ) || loc == current)) //If we pass our target
+				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
+				//del(src) //Delete if it passes the world edge
 				returnToPool(src)
 				return
+			step_towards(src, current) //Move~
 
-			if(loc == nextLoc)
-				nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
+			if(isnull(loc))
+				return
+			if(lastposition == loc)
+				kill_count = 0
+			lastposition = loc
+			if(kill_count < 1)
+				//del(src)
+				returnToPool(src)
+				return
+			kill_count--
 
-			step_towards(src, nextLoc, 0)
-			target_dir = get_dir(src, nextLoc)
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
 
-			if(!("[icon_state][target_dir]" in beam_master))
-				beam_master["[icon_state][target_dir]"] = image(icon, icon_state, 10, target_dir)
+			if(!first) //Add the overlay as we pass over tiles
+				var/target_dir = get_dir(src, current) //So we don't call this too much
 
-			loc.overlays += beam_master["[icon_state][target_dir]"]
+				//If the icon has not been added yet
+				if( !("[icon_state][target_dir]" in beam_master) )
+					var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
+					beam_master["[icon_state][target_dir]"] = I //And cache it!
 
-			if(reference in beam_master)
-				var/list/turf_master = beam_master[reference]
+				//Finally add the overlay
+				src.loc.overlays += beam_master["[icon_state][target_dir]"]
 
-				if("[icon_state][target_dir]" in turf_master)
-					var/list/turfs = turf_master["[icon_state][target_dir]"]
-					turfs += loc
+				//Add the turf to a list in the beam master so they can be cleaned up easily.
+				if(reference in beam_master)
+					var/list/turf_master = beam_master[reference]
+					if("[icon_state][target_dir]" in turf_master)
+						var/list/turfs = turf_master["[icon_state][target_dir]"]
+						turfs += loc
+					else
+						turf_master["[icon_state][target_dir]"] = list(loc)
 				else
-					turf_master["[icon_state][target_dir]"] = list(loc)
+					var/list/turfs = list()
+					turfs["[icon_state][target_dir]"] = list(loc)
+					beam_master[reference] = turfs
 			else
-				var/list/turfs = new
-				turfs["[icon_state][target_dir]"] = list(loc)
-				beam_master[reference] = turfs
-
-	cleanup(reference)
-
-/obj/item/projectile/beam/dumbfire(const/dir)
-	if(!(dir in alldirs))
-		returnToPool(src)
+				first = 0
+		cleanup(reference)
 		return
 
-	var/reference = "\ref[src]"
-
+/obj/item/projectile/beam/dumbfire(var/dir)
 	spawn(0)
-		var/nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
-		var/target_dir = dir
+		var/reference = "\ref[src]" // So we do not have to recalculate it a ton.
+		var/lastposition = loc
+		var/target_dir = src.dir // TODO: remove dir arg.
 
-		while(src && --kill_count >= 0)
+		while(loc) // Move until we hit something.
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 				returnToPool(src)
-				return
+				break
 
-			if(loc == nextLoc)
-				nextLoc = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
+			step(src, target_dir) // Move.
 
-			step_towards(src, nextLoc, 0)
+			if(isnull(loc))
+				break
 
-			if(!("[icon_state][target_dir]" in beam_master))
-				beam_master["[icon_state][target_dir]"] = image(icon, icon_state, 10, target_dir)
+			if(lastposition == loc)
+				kill_count = 0
 
+			lastposition = loc
+
+			if(kill_count < 1)
+				returnToPool(src)
+				break
+
+			kill_count--
+
+			// Add the overlay as we pass over tiles.
+
+			// If the icon has not been added yet.
+			if(!("[icon_state][target_dir]" in beam_master) )
+				beam_master["[icon_state][target_dir]"] = image(icon, icon_state, 10, target_dir) // Generate, and cache it!
+
+			// Finally add the overlay
 			loc.overlays += beam_master["[icon_state][target_dir]"]
 
+			// Add the turf to a list in the beam master so they can be cleaned up easily.
 			if(reference in beam_master)
 				var/list/turf_master = beam_master[reference]
 
 				if("[icon_state][target_dir]" in turf_master)
-					var/list/turfs = turf_master["[icon_state][target_dir]"]
-					turfs += loc
+					turf_master["[icon_state][target_dir]"] += loc
 				else
 					turf_master["[icon_state][target_dir]"] = list(loc)
 			else
@@ -264,24 +296,23 @@ var/list/beam_master = list()
 				turfs["[icon_state][target_dir]"] = list(loc)
 				beam_master[reference] = turfs
 
-	cleanup(reference)
-
-/obj/item/projectile/beam/Destroy()
-	// don't use qdel when deleting this, returnToPool will handle it.
-	..()
+		cleanup(reference)
 
 /obj/item/projectile/beam/proc/cleanup(const/reference)
-	spawn(3)
+	src = null // Redundant.
+				// No, if it's not set to null this proc will be silently killed.
+
+	spawn(3) // Waits .3 seconds then removes the overlay.
 		var/list/turf_master = beam_master[reference]
 
 		for(var/laser_state in turf_master)
 			var/list/turfs = turf_master[laser_state]
 
-			for(var/atom/A in turfs)
-				A.overlays -= beam_master[laser_state]
-				turfs -= A
+			for(var/turf/T in turfs)
+				T.overlays -= beam_master[laser_state]
+				T = null
 
-		returnToPool(src)
+			turfs.Cut()
 
 /obj/item/projectile/beam/practice
 	name = "laser"
