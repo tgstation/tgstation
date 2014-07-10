@@ -1134,8 +1134,18 @@ proc/process_ghost_teleport_locs()
 	icon_state = "medbay2"
 	music = 'sound/ambience/signal.ogg'
 
+/area/medical/surgery_ghetto
+	name = "Ghetto Surgery"
+	icon_state = "medbay2"
+	music = 'sound/ambience/signal.ogg'
+
 /area/medical/medbay3
 	name = "Medbay"
+	icon_state = "medbay3"
+	music = 'sound/ambience/signal.ogg'
+
+/area/medical/break_room
+	name = "Medbay Break Room"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
@@ -1143,14 +1153,30 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Patient's Rooms"
 	icon_state = "patients"
 
+/area/medical/patient_room1
+	name = "\improper Patient Room 1"
+	icon_state = "patients"
+
+/area/medical/patient_room2
+	name = "\improper Patient Room 2"
+	icon_state = "patients"
+
 /area/medical/cmo
-	name = "\improper Chief Medical Officer's office"
+	name = "\improper Chief Medical Officer's Office"
 	icon_state = "CMO"
 	jammed=1
 
 /area/medical/virology
 	name = "Virology"
 	icon_state = "virology"
+
+/area/medical/virology_break
+	name = "Virology Break Room"
+	icon_state = "virology"
+
+/area/medical/virology_maint
+	name = "Virology Maintenance"
+	icon_state = "asmaint"
 
 /area/medical/morgue
 	name = "\improper Morgue"
@@ -1195,7 +1221,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "security"
 
 /area/security/lobby
-	name = "\improper Security lobby"
+	name = "\improper Security Lobby"
 	icon_state = "security"
 
 /area/security/brig
@@ -1211,6 +1237,17 @@ proc/process_ghost_teleport_locs()
 	icon_state = "bar" // Because it's all parties from here on.
 	jammed=1
 
+/area/security/medical
+	name = "\improper Brig Medbay"
+	icon_state = "medbay"
+
+/area/security/rec_room
+	name = "\improper Brig Recording Room"
+	icon_state = "green"
+
+/area/security/interrogation
+	name = "\improper Interrogation Room"
+	icon_state = "security"
 
 /obj/item/weapon/paper/Gaschamber
 	name = "paper - 'Gas Chambers for Idiots'"

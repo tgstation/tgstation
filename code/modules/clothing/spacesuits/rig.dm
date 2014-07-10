@@ -132,6 +132,8 @@
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.7
 
+	wizard_garb = 1
+
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
 	name = "gem-encrusted hardsuit"
@@ -143,6 +145,7 @@
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.7
 
+	wizard_garb = 1
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical

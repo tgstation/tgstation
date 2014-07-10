@@ -16,16 +16,6 @@
 		..()
 
 
-	New()
-		..()
-		if(cell_type)
-			power_supply = new cell_type(src)
-		else
-			power_supply = new(src)
-		power_supply.give(power_supply.maxcharge)
-		return
-
-
 	load_into_chamber()
 		if(in_chamber)	return 1
 		if(!power_supply)	return 0
@@ -42,3 +32,20 @@
 			icon_state = "[modifystate][ratio]"
 		else
 			icon_state = "[initial(icon_state)][ratio]"
+
+/obj/item/weapon/gun/energy/New()
+	. = ..()
+
+	if(cell_type)
+		power_supply = new cell_type(src)
+	else
+		power_supply = new(src)
+
+	power_supply.give(power_supply.maxcharge)
+
+/obj/item/weapon/gun/energy/Destroy()
+	if(power_supply)
+		power_supply.loc = get_turf(src)
+		power_supply = null
+
+	..()

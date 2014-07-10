@@ -203,7 +203,7 @@
 				TemperatureAct(100)
 		..()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		if(exposed_temperature > 300)
 			TemperatureAct(exposed_temperature)
 

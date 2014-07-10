@@ -1,6 +1,7 @@
 /obj/item/clothing
 	name = "clothing"
 	var/list/species_restricted = null //Only these species can wear this kit.
+	var/wizard_garb = 0 // Wearing this empowers a wizard.
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M as mob, slot)

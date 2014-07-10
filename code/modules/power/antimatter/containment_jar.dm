@@ -16,7 +16,10 @@
 	var/exploded = 0
 
 /obj/item/weapon/am_containment/proc/boom()
-	if(!exploded)
+	var/percent = 0
+	if(fuel)
+		percent = (fuel / fuel_max) * 100
+	if(!exploded && percent >= 10)
 		explosion(get_turf(src), 1, 2, 3, 5)//Should likely be larger but this works fine for now I guess
 		exploded=1
 	if(src) qdel(src)

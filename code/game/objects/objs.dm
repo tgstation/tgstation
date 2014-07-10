@@ -8,16 +8,26 @@
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/sharp = 0 // whether this object cuts
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
-	var/list/mob/_using = list() // All mobs dicking with us.
 
 	var/damtype = "brute"
 	var/force = 0
 
 	// What reagents should be logged when transferred TO this object?
 	// Reagent ID => friendly name
-	var/list/reagents_to_log=list()
+	var/global/list/reagents_to_log = list(
+		"fuel"  =  "welder fuel",
+		"plasma"=  "plasma",
+		"pacid" =  "polytrinic acid",
+		"sacid" =  "sulphuric acid"
+	)
+
+	var/list/mob/_using // All mobs dicking with us.
 
 /obj/Destroy()
+	if(_using)
+		for(var/mob/mob in _using)
+			mob.unset_machine()
+
 	if(src in processing_objects)
 		processing_objects -= src
 
@@ -75,9 +85,9 @@
 /obj/proc/updateUsrDialog()
 	if(in_use)
 		var/is_in_use = 0
-		if(_using.len)
+		if(_using && _using.len)
 			var/list/nearby = viewers(1, src)
-			for(var/mob/M in _using.Copy()) // Only check things actually messing with us.
+			for(var/mob/M in _using) // Only check things actually messing with us.
 				if (!M || !M.client || M.machine != src)
 					_using.Remove(M)
 					continue
@@ -206,23 +216,26 @@ a {
 	return
 
 /mob/proc/unset_machine()
-	if(machine && istype(machine, /obj/machinery))
-		machine._using -= src
+	if(machine)
+		if(machine._using)
+			machine._using -= src
+
+			if(!machine._using.len)
+				machine._using = null
+
 		machine = null
 
-/mob/proc/set_machine(var/obj/O)
-	if (src.machine)
-		unset_machine()
+/mob/proc/set_machine(const/obj/O)
+	unset_machine()
 
-	src.machine = O
+	if(istype(O))
+		machine = O
 
-	if (istype(O))
-		O.in_use = 1
+		if(!machine._using)
+			machine._using = new
 
-		if (src in O._using)
-			return
-
-		O._using += src
+		machine._using += src
+		machine.in_use = 1
 
 /obj/item/proc/updateSelfDialog()
 	var/mob/M = src.loc

@@ -289,18 +289,39 @@
 	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
 		del(spell_to_remove)
 
-/*Checks if the wizard can cast spells.
+// Does this clothing slot count as wizard garb? (Combines a few checks)
+/proc/is_wiz_garb(var/obj/item/clothing/C)
+	return C && C.wizard_garb
+
+/*Checks if the wizard is wearing the proper attire.
 Made a proc so this is not repeated 14 (or more) times.*/
-/mob/proc/casting()
-//Removed the stat check because not all spells require clothing now.
-	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
-		usr << "I don't feel strong enough without my robe."
+/mob/proc/wearing_wiz_garb()
+	return 0
+
+// Humans can wear clothes.
+/mob/living/carbon/human/wearing_wiz_garb()
+	if(!is_wiz_garb(src.wear_suit))
+		src << "<span class='warning'>I don't feel strong enough without my robe.</span>"
 		return 0
-	if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-		usr << "I don't feel strong enough without my sandals."
+	if(!is_wiz_garb(src.shoes))
+		src << "<span class='warning'>I don't feel strong enough without my sandals.</span>"
 		return 0
-	if(!istype(usr:head, /obj/item/clothing/head/wizard))
-		usr << "I don't feel strong enough without my hat."
+	if(!is_wiz_garb(src.head))
+		src << "<span class='warning'>I don't feel strong enough without my hat.</span>"
 		return 0
-	else
-		return 1
+	return 1
+
+// So can monkeys (FIXME)
+/*
+/mob/living/carbon/monkey/wearing_wiz_garb()
+	if(!is_wiz_garb(src.wear_suit))
+		src << "<span class='warning'>I don't feel strong enough without my robe.</span>"
+		return 0
+	if(!is_wiz_garb(src.shoes))
+		src << "<span class='warning'>I don't feel strong enough without my sandals.</span>"
+		return 0
+	if(!is_wiz_garb(src.head))
+		src << "<span class='warning'>I don't feel strong enough without my hat.</span>"
+		return 0
+	return 1
+*/

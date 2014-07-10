@@ -10,11 +10,7 @@ Attach to transfer valve and open. BOOM.
 
 */
 
-
-//Some legacy definitions so fires can be started.
-atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return null
-
+/atom/proc/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 
 turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 
@@ -134,16 +130,8 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 ///////////////////////////////// FLOW HAS BEEN CREATED /// DONT DELETE THE FIRE UNTIL IT IS MERGED BACK OR YOU WILL DELETE AIR ///////////////////////////////////////////////
 
 	if(flow)
+		flow.zburn(liquid, 1)
 
-		if(flow.check_recombustability(liquid))
-			//Ensure flow temperature is higher than minimum fire temperatures.
-				//this creates some energy ex nihilo but is necessary to get a fire started
-				//lets just pretend this energy comes from the ignition source and dont mention this again
-			//flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
-
-			//burn baby burn!
-
-			flow.zburn(liquid,1)
 		//merge the air back
 		S.assume_air(flow)
 
@@ -242,9 +230,9 @@ datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_
 	if(oxygen && (toxins || fuel || liquid))
 		if(liquid)
 			return 1
-		if(toxins >= 0.1)
+		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
 			return 1
-		if(fuel && fuel.moles >= 0.1)
+		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
 			return 1
 
 	return 0
@@ -257,9 +245,9 @@ datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fu
 	if(oxygen && (toxins || fuel || liquid))
 		if(liquid)
 			return 1
-		if (toxins >= MOLES_PLASMA_VISIBLE)
+		if(QUANTIZE(toxins * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= MOLES_PLASMA_VISIBLE)
 			return 1
-		if(fuel && fuel.moles >= 0.1)
+		if(fuel && QUANTIZE(fuel.moles * zas_settings.Get(/datum/ZAS_Setting/fire_consumption_rate)) >= 0.1)
 			return 1
 
 	return 0

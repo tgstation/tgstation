@@ -344,7 +344,7 @@
 							return
 
 		else if(mob.confused)
-			step(mob, pick(cardinal))
+			step_rand(mob)
 			mob.last_movement=world.time
 		else
 			. = ..()
@@ -465,7 +465,7 @@
 
 
 		else
-			if((istype(turf,/turf/simulated/floor)) && (src.lastarea.has_gravity == 0)) // No one else gets a chance.
+			if((istype(turf,/turf/simulated/floor)) && (lastarea && lastarea.has_gravity == 0)) // No one else gets a chance.
 				continue
 
 

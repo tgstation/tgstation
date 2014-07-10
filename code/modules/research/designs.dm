@@ -221,13 +221,22 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/atmos_alert
 
 /datum/design/air_management
-	name = "Circuit Design (Atmospheric Monitor)"
-	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
+	name = "Circuit Design (Atmospheric General Monitor)"
+	desc = "Allows for the construction of circuit boards used to build an Atmospheric General Monitor."
 	id = "air_management"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/air_management
+	
+/datum/design/large_tank_control
+	name = "Circuit Design (Atmospheric Tank Control)"
+	desc = "Allows for the construction of circuit boards used to build an Atmospheric Tank Control."
+	id = "large_tank_control"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/large_tank_control
 
 /* Uncomment if someone makes these buildable
 /datum/design/general_alert

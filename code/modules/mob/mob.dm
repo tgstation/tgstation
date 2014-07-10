@@ -2,6 +2,7 @@
 	return RECYK_BIOLOGICAL
 
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
+	unset_machine()
 	mob_list.Remove(src)
 	dead_mob_list.Remove(src)
 	living_mob_list.Remove(src)
@@ -793,17 +794,18 @@ var/list/slot_equipment_priority = list( \
 		flavor_text = msg
 
 /mob/proc/warn_flavor_changed()
-	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
+	if(flavor_text) // Don't spam people that don't use it!
 		src << "<h2 class='alert'>OOC Warning:</h2>"
-		src << "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>"
+		src << "<span class='alert'>Your flavor text is likely out of date! <a href='?src=\ref[src];flavor_text=change'>Change</a></span>"
 
 /mob/proc/print_flavor_text()
-	if (flavor_text && flavor_text != "")
-		var/msg = replacetext(flavor_text, "\n", " ")
-		if(lentext(msg) <= 40)
+	if(flavor_text)
+		var/msg = replacetext(flavor_text, "\n", "<br />")
+
+		if(lentext(msg) <= 32)
 			return "<font color='#ffa000'><b>[msg]</b></font>"
 		else
-			return "<font color='#ffa000'><b>[copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a></b></font>"
+			return "<font color='#ffa000'><b>[copytext(msg, 1, 32)]...<a href='?src=\ref[src];flavor_text=more'>More</a></b></font>"
 
 /*
 /mob/verb/help()
@@ -992,20 +994,18 @@ var/list/slot_equipment_priority = list( \
 		if(src:cameraFollow)
 			src:cameraFollow = null
 
-/mob/Topic(href, href_list)
+/mob/Topic(href,href_list[])
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
 		src << browse(null, t1)
 
-	if(href_list["flavor_more"])
-		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
-		onclose(usr, "[name]")
-	if(href_list["flavor_change"])
-		update_flavor_text()
-//	..()
-	return
-
+	switch(href_list["flavor_text"])
+		if("more")
+			usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
+			onclose(usr, "[name]")
+		if("change")
+			update_flavor_text()
 
 /mob/proc/pull_damage()
 	if(ishuman(src))
@@ -1183,19 +1183,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null, "Ponet-[master_controller.powernets_cost]\t#[powernets.len]")
 				stat(null, "NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
 				stat(null, "Tick-[master_controller.ticker_cost]")
-				stat(null, "ALL-[master_controller.total_cost]")
+				stat(null, "garbage collector - [master_controller.garbageCollectorCost]")
+				stat(null, "\tqdel - [garbageCollector.del_everything ? "off" : "on"]")
+				stat(null, "\ton queue - [garbageCollector.queue.len]")
+				stat(null, "\ttotal delete - [garbageCollector.dels_count]")
+				stat(null, "\tsoft delete - [garbageCollector.dels_count - garbageCollector.hard_dels]")
+				stat(null, "\thard delete - [garbageCollector.hard_dels]")
+				stat(null, "ALL - [master_controller.total_cost]")
 			else
 				stat(null, "master controller - ERROR")
-
-			if (garbage)
-				stat(null, "/garbage controller ([garbage.processing ? "on" : "off"] - [garbage.iteration])")
-				stat(null, "qdel - [garbage.del_everything ? "off" : "on"]")
-				stat(null, "on queue - [garbage.queue.len]")
-				stat(null, "total delete - [garbage.dels_count]")
-				stat(null, "soft delete - [garbage.dels_count - garbage.hard_dels]")
-				stat(null, "hard delete - [garbage.hard_dels]")
-			else
-				stat(null, "garbage collector controller - ERROR")
 
 	if(listed_turf && client)
 		if(get_dist(listed_turf,src) > 1)

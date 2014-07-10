@@ -18,10 +18,6 @@ var/global/datum/controller/failsafe/failsafe
 	var/lightingControllerIteration = 0
 	var/lightingControllerAlertLevel = 0
 
-	// garbage collector
-	var/garbageCollectorControllerIteration = 0
-	var/garbageCollectorControllerAlertLevel = 0
-
 /datum/controller/failsafe/New()
 	. = ..()
 
@@ -38,22 +34,22 @@ var/global/datum/controller/failsafe/failsafe
 /datum/controller/failsafe/proc/process()
 	processing = 1
 
-	spawn (0)
+	spawn(0)
 		set background = BACKGROUND_ENABLED
 
-		while (1) // More efficient than recursivly calling ourself over and over. background = 1 ensures we do not trigger an infinite loop.
+		while(1) // More efficient than recursivly calling ourself over and over. background = 1 ensures we do not trigger an infinite loop.
 			iteration++
 
-			if (processing)
-				if (master_controller.processing) // Only poke if these overrides aren't in effect
-					if (masterControllerIteration == master_controller.iteration) // Master controller hasn't finished processing in the defined interval.
-						switch (masterControllerAlertLevel)
-							if (0 to 3)
+			if(processing)
+				if(master_controller.processing) // Only poke if these overrides aren't in effect
+					if(masterControllerIteration == master_controller.iteration) // Master controller hasn't finished processing in the defined interval.
+						switch(masterControllerAlertLevel)
+							if(0 to 3)
 								masterControllerAlertLevel++
-							if (4)
+							if(4)
 								admins << "<font color='red' size='2'><b>Warning. The master Controller has not fired in the last [masterControllerAlertLevel * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
 								masterControllerAlertLevel = 5
-							if (5)
+							if(5)
 								admins << "<font color='red' size='2'><b>Warning. The master Controller has still not fired within the last [masterControllerAlertLevel * processing_interval] ticks. Killing and restarting...</b></font>"
 								new /datum/controller/game_controller() // Replace the old master controller (hence killing the old one's process).
 								master_controller.process() // Start it rolling again.
@@ -62,15 +58,15 @@ var/global/datum/controller/failsafe/failsafe
 						masterControllerAlertLevel = 0
 						masterControllerIteration = master_controller.iteration
 
-				if (lighting_controller.processing)
-					if (lightingControllerIteration == lighting_controller.iteration) // Lighting controller hasn't finished processing in the defined interval.
-						switch (lightingControllerAlertLevel)
-							if (0 to 3)
+				if(lighting_controller.processing)
+					if(lightingControllerIteration == lighting_controller.iteration) // Lighting controller hasn't finished processing in the defined interval.
+						switch(lightingControllerAlertLevel)
+							if(0 to 3)
 								lightingControllerAlertLevel++
-							if (4)
+							if(4)
 								admins << "<font color='red' size='2'><b>Warning. The lighting_controller controller has not fired in the last [lightingControllerAlertLevel * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
 								lightingControllerAlertLevel = 5
-							if (5)
+							if(5)
 								admins << "<font color='red' size='2'><b>Warning. The lighting_controller controller has still not fired within the last [lightingControllerAlertLevel * processing_interval] ticks. Killing and restarting...</b></font>"
 								new /datum/controller/lighting() // Replace the old lighting_controller (hence killing the old one's process).
 								lighting_controller.process() // Start it rolling again.
@@ -78,22 +74,5 @@ var/global/datum/controller/failsafe/failsafe
 					else
 						lightingControllerAlertLevel = 0
 						lightingControllerIteration = lighting_controller.iteration
-
-				if (garbage.processing)
-					if (garbageCollectorControllerIteration == garbage.iteration) // Lighting controller hasn't finished processing in the defined interval.
-						switch (garbageCollectorControllerAlertLevel)
-							if (0 to 3)
-								garbageCollectorControllerAlertLevel++
-							if (4)
-								admins << "<font color='red' size='2'><b>WARNING: The garbage_collector controller has not fired in the last [garbageCollectorControllerAlertLevel * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
-								garbageCollectorControllerAlertLevel = 5
-							if (5)
-								admins << "<font color='red' size='2'><b>WARNING: The garbage_collector controller has still not fired within the last [garbageCollectorControllerAlertLevel * processing_interval] ticks. Killing and restarting...</b></font>"
-								new /datum/controller/garbage_collector() // Replace the old garbage_conllector controller (hence killing the old one's process).
-								garbage.process() // Start it rolling again.
-								garbageCollectorControllerAlertLevel = 0
-					else
-						garbageCollectorControllerAlertLevel = 0
-						garbageCollectorControllerIteration = garbage.iteration
 
 			sleep(processing_interval)

@@ -77,6 +77,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				return 0
 	var/obj/effect/proc_holder/spell/noclothes/spell = locate() in user.spell_list
 	if(clothes_req && !(spell && istype(spell)))//clothes check
+		if(usr.wearing_wiz_garb())
+			return 0
+		/*  This is all rendered obsolete.  Use mob.wearing_wiz_garb() instead.
 		if(!istype(usr, /mob/living/carbon/human))
 			usr << "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans."
 			return 0
@@ -89,6 +92,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(!istype(usr:head, /obj/item/clothing/head/wizard) && !istype(user:head, /obj/item/clothing/head/helmet/space/rig/wizard))
 			usr << "I don't feel strong enough without my hat."
 			return 0
+		*/
 
 	if(!skipcharge)
 		switch(charge_type)

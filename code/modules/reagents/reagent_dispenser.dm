@@ -161,7 +161,7 @@
 	ex_act()
 		explode()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		if(exposed_temperature >= AUTOIGNITION_WELDERFUEL)
 			explode()
 

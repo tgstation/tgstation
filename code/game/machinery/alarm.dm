@@ -1011,9 +1011,9 @@ FIRE ALARM
 	else
 		icon_state = "fire0"
 
-/obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
+/obj/machinery/firealarm/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(src.detecting)
-		if(temperature > T0C+200)
+		if(exposed_temperature > T0C+200)
 			src.alarm()			// added check of detector status here
 	return
 

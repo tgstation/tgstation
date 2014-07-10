@@ -337,6 +337,8 @@
 
 	var/obj/item/weapon/ore/O = new mineral.ore (src)
 	if(istype(O))
+		if(!geologic_data)
+			geologic_data = new/datum/geosample(src)
 		geologic_data.UpdateNearbyArtifactInfo(src)
 		O.geologic_data = geologic_data
 	return O
