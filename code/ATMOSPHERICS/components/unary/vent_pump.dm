@@ -192,37 +192,37 @@
 			return 0
 
 		var/handled=0
-		if("purge" in signal.data)
+		if(signal.data["purge"])
 			pressure_checks &= ~1
 			pump_direction = 0
 			handled=1
 
-		if("stabilize" in signal.data)
+		if(signal.data["stabilize"])
 			pressure_checks |= 1
 			pump_direction = 1
 			handled=1
 
-		if("power" in signal.data)
+		if(signal.data["power"])
 			on = text2num(signal.data["power"])
 			handled=1
 
-		if("power_toggle" in signal.data)
+		if(signal.data["power_toggle"])
 			on = !on
 			handled=1
 
-		if("checks" in signal.data)
+		if(signal.data["checks"])
 			pressure_checks = text2num(signal.data["checks"])
 			handled=1
 
-		if("checks_toggle" in signal.data)
+		if(signal.data["checks_toggle"])
 			pressure_checks = (pressure_checks?0:3)
 			handled=1
 
-		if("direction" in signal.data)
+		if(signal.data["direction"])
 			pump_direction = text2num(signal.data["direction"])
 			handled=1
 
-		if("set_internal_pressure" in signal.data)
+		if(signal.data["set_internal_pressure"])
 			internal_pressure_bound = between(
 				0,
 				text2num(signal.data["set_internal_pressure"]),
@@ -230,7 +230,7 @@
 			)
 			handled=1
 
-		if("set_external_pressure" in signal.data)
+		if(signal.data["set_external_pressure"])
 			external_pressure_bound = between(
 				0,
 				text2num(signal.data["set_external_pressure"]),
@@ -238,7 +238,7 @@
 			)
 			handled=1
 
-		if("adjust_internal_pressure" in signal.data)
+		if(signal.data["adjust_internal_pressure"])
 			internal_pressure_bound = between(
 				0,
 				internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),
@@ -246,7 +246,7 @@
 			)
 			handled=1
 
-		if("adjust_external_pressure" in signal.data)
+		if(signal.data["adjust_external_pressure"])
 			external_pressure_bound = between(
 				0,
 				external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),
@@ -254,11 +254,11 @@
 			)
 			handled=1
 
-		if("init" in signal.data)
+		if(signal.data["init"])
 			name = signal.data["init"]
 			return
 
-		if("status" in signal.data)
+		if(signal.data["status"])
 			spawn(2)
 				broadcast_status()
 			return //do not update_icon
