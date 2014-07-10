@@ -47,7 +47,7 @@
 /obj/machinery/computer/cloning/proc/findcloner()
 	var/obj/machinery/clonepod/podf = null
 
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in cardinal)
 
 		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
 
