@@ -300,6 +300,8 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		if(H.dna && (GLASSIMMUNE in H.dna.species.specflags))
+			return
 		if(!H.gloves)
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
@@ -332,6 +334,8 @@
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
+			if(H.dna && (GLASSIMMUNE in H.dna.species.specflags))
+				return
 			if(!H.shoes)
 				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
 				H.Weaken(3)

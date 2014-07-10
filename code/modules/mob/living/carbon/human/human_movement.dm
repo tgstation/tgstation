@@ -26,7 +26,7 @@
 		prob_slip = 0 // Changing this to zero to make it line up with the comment, and also, make more sense.
 
 	//Do we have magboots or such on if so no slip
-	if(istype(shoes, /obj/item/clothing/shoes/magboots) && (shoes.flags & NOSLIP))
+	if((istype(shoes, /obj/item/clothing/shoes/magboots) && (shoes.flags & NOSLIP)) || (dna && (MUTSLIP in dna.species.specflags)))
 		prob_slip = 0
 
 	//Check hands and mod slip
@@ -40,7 +40,7 @@
 
 
 /mob/living/carbon/human/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
-	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
+	if((isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP)) || (dna && (MUTSLIP in dna.species.specflags)))
 		return 0
 	.=..()
 
