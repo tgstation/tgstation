@@ -154,7 +154,7 @@ var/list/ai_list = list()
 	var/icontype = ""
 	/* Nuked your hidden shit.*/
 	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
-	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Broken Output", "Triumvirate", "Triumvirate Static", "Searif", "Ravensdale", "Serithi", "Static")
+	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Broken Output", "Triumvirate", "Triumvirate Static", "Searif", "Ravensdale", "Serithi", "Static", "Wasp", "Robert House", "Red October", "Fabulous")
 	switch(icontype)
 		if("Custom") icon_state = "[src.ckey]-ai"
 		if("Clown") icon_state = "ai-clown2"
@@ -176,6 +176,10 @@ var/list/ai_list = list()
 		if("Ravensdale") icon_state = "ai-ravensdale"
 		if("Serithi") icon_state = "ai-serithi"
 		if("Static") icon_state = "ai-fuzz"
+		if("Wasp") icon_state = "ai-wasp"
+		if("Robert House") icon_state = "ai-president"
+		if("Red October") icon_state = "ai-soviet"
+		if("Fabulous") icon_state = "ai-fabulous"
 		else icon_state = "ai"
 	//else
 			//usr <<"You can only change your display once!"
