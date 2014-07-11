@@ -27,7 +27,7 @@
 		explosion_resistance = 0
 	update_freelook_sight()
 	air_update_turf(1)
-	portals += src
+	airlocks += src
 	return
 
 
@@ -35,7 +35,7 @@
 	density = 0
 	air_update_turf(1)
 	update_freelook_sight()
-	portals -= src
+	airlocks -= src
 	..()
 	return
 
