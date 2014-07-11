@@ -10,6 +10,7 @@
 #define JACKPOT 10000
 #define SPIN_TIME 65 //As always, deciseconds.
 #define REEL_DEACTIVATE_DELAY 7
+#define SEVEN "<font color='red'>7</font>"
 
 /obj/machinery/computer/slot_machine
 	name = "slot machine"
@@ -28,7 +29,7 @@
 	var/jackpots = 0
 	var/list/coinvalues = list()
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
-	var/list/symbols = list("7", "&", "@", "$", "?", "#") //Six symbols, all weighted equally. Chance for 7 sevens is one in 7776. Remember that you influence the chances when adding more symbols!
+	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
 /obj/machinery/computer/slot_machine/New()
 	..()
@@ -226,7 +227,7 @@
 /obj/machinery/computer/slot_machine/proc/give_prizes(usrname, mob/user)
 	var/linelength = get_lines()
 	
-	if(reels[1][2] + reels[2][2] + reels[3][2] + reels[4][2] + reels[5][2] == "77777")
+	if(reels[1][2] + reels[2][2] + reels[3][2] + reels[4][2] + reels[5][2] == "[SEVEN][SEVEN][SEVEN][SEVEN][SEVEN]")
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [money] credits worth of coins!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
 		jackpots += 1
@@ -247,9 +248,9 @@
 		give_money(SMALL_PRIZE)
 					
 	else if(linelength == 3)
-		user << "<span class='notice'>You win six free games!</span>"
-		balance += SPIN_PRICE * 7
-		money = max(money - SPIN_PRICE * 7, money)
+		user << "<span class='notice'>You win three free games!</span>"
+		balance += SPIN_PRICE * 4
+		money = max(money - SPIN_PRICE * 4, money)
 					
 	else
 		user << "<span class='warning'>No luck!</span>"
@@ -306,6 +307,7 @@
 
 	return amount
 
+#undef SEVEN
 #undef SPIN_TIME
 #undef JACKPOT
 #undef BIG_PRIZE
