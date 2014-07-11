@@ -472,7 +472,7 @@
 					C.handcuffed.loc = usr.loc
 					C.handcuffed = null
 					C.update_inv_handcuffed(0)
-				else
+				if(C.legcuffed)
 					C.legcuffed.loc = usr.loc
 					C.legcuffed = null
 					C.update_inv_legcuffed(0)
