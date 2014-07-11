@@ -137,7 +137,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_hud()		//TODO: remove the need for this
 
 	if(overlays.len != overlays_standing.len)
-		overlays.Cut()
+		overlays.len = 0
+		overlays.len = overlays_standing.len
 
 		for(var/overlay in overlays_standing)
 			if(overlay)
