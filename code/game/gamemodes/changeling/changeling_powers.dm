@@ -351,8 +351,8 @@
 
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
-/mob/verb/honk()
-	set name = "OH HOLY FUCK"
+/mob/verb/check_mob_list()
+	set name = "(Mobs) Check Mob List"
 	set category = "Debug"
 	var/yes = 0
 	if(src in mob_list)
