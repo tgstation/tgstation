@@ -13,7 +13,7 @@
 
 	// Otherwise jump
 	else
-		Move(get_turf(A))
+		loc = get_turf(A)
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
 	if(client.buildmode)

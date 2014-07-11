@@ -200,6 +200,8 @@
 
 	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
+	var/area/lastarea = null
+
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 
 	var/list/radar_blips = list() // list of screen objects, radar blips
@@ -226,3 +228,6 @@
 	var/kills=0
 
 	var/last_movement = -100 // Last world.time the mob actually moved of its own accord.
+
+	// /vg/ - Prevent mobs from being moved by a client.
+	var/deny_client_move = 0

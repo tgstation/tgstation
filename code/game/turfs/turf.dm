@@ -63,68 +63,57 @@
 	..()
 	return 0
 
-/turf/Enter(atom/movable/O, atom/oldloc)
-	. = ..()
-
-	if(movement_disabled)
-		if(ismob(O))
-			var/mob/mob = O
-
-			if(mob.client && mob.client.ckey != movement_disabled_exception)
-				mob << "\red movement is admin disabled."
-				return 0
-
-	if(isobserver(O))
+/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+	if(movement_disabled && usr.ckey != movement_disabled_exception)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
+	if (!mover || !isturf(mover.loc))
 		return 1
 
-	if (!O || !isturf(O.loc))
-		return 1
 
 	//First, check objects to block exit that are not on the border
-	for(var/obj/obstacle in O.loc)
-		if(!(obstacle.flags & ON_BORDER) && (O != obstacle) && (oldloc != obstacle))
-			if(!obstacle.CheckExit(O, src))
-				O.Bump(obstacle, 1)
+	for(var/obj/obstacle in mover.loc)
+		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
+			if(!obstacle.CheckExit(mover, src))
+				mover.Bump(obstacle, 1)
 				return 0
 
 	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle in O.loc)
-		if((border_obstacle.flags & ON_BORDER) && (O != border_obstacle) && (oldloc != border_obstacle))
-			if(!border_obstacle.CheckExit(O, src))
-				O.Bump(border_obstacle, 1)
+	for(var/obj/border_obstacle in mover.loc)
+		if((border_obstacle.flags & ON_BORDER) && (mover != border_obstacle) && (forget != border_obstacle))
+			if(!border_obstacle.CheckExit(mover, src))
+				mover.Bump(border_obstacle, 1)
 				return 0
 
 	//Next, check objects to block entry that are on the border
 	for(var/obj/border_obstacle in src)
 		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CanPass(O, O.loc, 1, 0) && (oldloc != border_obstacle))
-				O.Bump(border_obstacle, 1)
+			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
+				mover.Bump(border_obstacle, 1)
 				return 0
 
 	//Then, check the turf itself
-	if (!src.CanPass(O, src))
-		O.Bump(src, 1)
+	if (!src.CanPass(mover, src))
+		mover.Bump(src, 1)
 		return 0
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle in src)
 		if(obstacle.flags & ~ON_BORDER)
-			if(!obstacle.CanPass(O, O.loc, 1, 0) && (oldloc != obstacle))
-				O.Bump(obstacle, 1)
+			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
+				mover.Bump(obstacle, 1)
 				return 0
+	return 1 //Nothing found to block so return success!
 
-	return 1
 
-/turf/Entered(atom/movable/Obj,atom/OldLoc)
-	. = ..()
-	Obj.last_move = Obj.dir
-
-	if(isobserver(Obj))
-		return 1
-
+/turf/Entered(atom/atom as mob|obj)
+	if(movement_disabled)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
+	..()
 //vvvvv Infared beam stuff vvvvv
 
-	if ((Obj && Obj.density && !( istype(Obj, /obj/effect/beam) )))
+	if ((atom && atom.density && !( istype(atom, /obj/effect/beam) )))
 		for(var/obj/effect/beam/i_beam/I in src)
 			spawn( 0 )
 				if (I)
@@ -133,7 +122,10 @@
 
 //^^^^^ Infared beam stuff ^^^^^
 
-	var/atom/movable/M = Obj
+	if(!istype(atom, /atom/movable))
+		return
+
+	var/atom/movable/M = atom
 
 	var/loopsanity = 100
 	if(ismob(M))
@@ -148,9 +140,10 @@
 	*/
 
 
+
 		else if(!istype(src, /turf/space))
 			M:inertia_dir = 0
-
+	..()
 	var/objects = 0
 	for(var/atom/A as mob|obj|turf|area in src)
 		if(objects > loopsanity)	break
@@ -189,6 +182,7 @@
 	return 0
 
 /turf/proc/inertial_drift(atom/movable/A as mob|obj)
+	if(!(A.last_move))	return
 	if(istype(A, /obj/spacepod) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
 		var/obj/spacepod/SP = A
 		if(SP.Process_Spacemove(1))
@@ -214,14 +208,13 @@
 	if((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
 		var/mob/M = A
 		if(M.Process_Spacemove(1))
-			M.inertia_dir = 0
+			M.inertia_dir  = 0
 			return
 		spawn(5)
 			if((M && !(M.anchored) && !(M.pulledby) && (M.loc == src)))
 				if(M.inertia_dir)
 					step(M, M.inertia_dir)
 					return
-
 				M.inertia_dir = M.last_move
 				step(M, M.inertia_dir)
 	return
@@ -327,6 +320,7 @@
 
 	decals += decal
 	overlays += decal
+
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
 //  If you are replacing a wall, you have increased the volume of the room without increasing the amount of gas in it.

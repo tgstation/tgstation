@@ -51,6 +51,35 @@
 
 	return O
 
+/mob/living/carbon/human/proc/Cluwneize()
+	if (monkeyizing)
+		return
+	for(var/obj/item/W in src)
+		drop_from_inventory(W)
+	regenerate_icons()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	for(var/t in organs)	//this really should not be necessary
+		del(t)
+
+	var/mob/living/simple_animal/hostile/retaliate/cluwne/new_mob = new (src.loc)
+	new_mob.universal_speak = 1
+	new_mob.gender=src.gender
+	new_mob.name = pick(clown_names)
+	new_mob.real_name = new_mob.name
+	new_mob.mutations += M_CLUMSY
+	new_mob.mutations += M_FAT
+	new_mob.setBrainLoss(100)
+	new_mob.a_intent = "hurt"
+	new_mob.key = key
+
+	new_mob << "<B>You are now a cluwne. Enjoy your misery!</B>"
+	spawn(0)//To prevent the proc from returning null.
+		del(src)
+	return
+
 /mob/new_player/AIize()
 	spawning = 1
 	return ..()

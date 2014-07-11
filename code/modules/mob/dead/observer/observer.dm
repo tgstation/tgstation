@@ -288,11 +288,34 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/reset_poltergeist_cooldown()
 	next_poltergeist=0
 
-/mob/dead/observer/Move(NewLoc,Dir=0,step_x=0,step_y=0)
-	. = ..()
+/mob/dead/observer/Move(NewLoc, direct)
+	dir = direct
+	if(NewLoc)
+		loc = NewLoc
+		for(var/obj/effect/step_trigger/S in NewLoc)
+			S.HasEntered(src)
 
-	//for(var/obj/effect/step_trigger/step_trigger in loc)
-		//step_trigger.HasEntered(src)
+		var/area/A = get_area_master(src)
+		if(A)
+			A.Entered(src)
+
+		return
+	loc = get_turf(src) //Get out of closets and such as a ghost
+	if((direct & NORTH) && y < world.maxy)
+		y++
+	else if((direct & SOUTH) && y > 1)
+		y--
+	if((direct & EAST) && x < world.maxx)
+		x++
+	else if((direct & WEST) && x > 1)
+		x--
+
+	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
+		S.HasEntered(src)
+
+	var/area/A = get_area_master(src)
+	if(A)
+		A.Entered(src)
 
 /mob/dead/observer/examine()
 	if(usr)
