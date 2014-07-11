@@ -775,7 +775,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(user.loc, potency)
 		result.Add(t_prod) // User gets a consumable
 		if(!t_prod)	return
-		t_prod.seed = type
 		t_prod.lifespan = lifespan
 		t_prod.endurance = endurance
 		t_prod.maturation = maturation
@@ -788,71 +787,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	parent.update_tray()
 
 	return result
-/*
-/obj/item/seeds/grassseed/harvest(mob/user = usr)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
-	var/t_yield = round(yield*parent.yieldmod)
-
-	if(t_yield > 0)
-		var/obj/item/stack/tile/grass/new_grass = new/obj/item/stack/tile/grass(user.loc)
-		new_grass.amount = t_yield
-
-	parent.update_tray()
-
-/obj/item/seeds/gibtomato/harvest(mob/user = usr)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
-	var/t_amount = 0
-
-	while (t_amount < getYield())
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(user.loc, potency) // User gets a consumable
-
-		t_prod.seed = type
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.potency = potency
-		t_prod.plant_type = plant_type
-		t_amount++
-
-	parent.update_tray()
-*/
-/obj/item/seeds/nettleseed/harvest(mob/user = usr)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
-	var/t_amount = 0
-
-	while(t_amount < getYield())
-		var/obj/item/weapon/grown/t_prod = new product(user.loc, potency) // User gets a consumable -QualityVan
-		t_prod.seed = type
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.changePotency(potency) // -QualityVan
-		t_prod.plant_type = plant_type
-		t_amount++
-
-	parent.update_tray()
-
-/obj/item/seeds/deathnettleseed/harvest(mob/user = usr) //isn't a nettle subclass yet, so
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
-	var/t_amount = 0
-
-	while(t_amount < getYield())
-		var/obj/item/weapon/grown/t_prod = new product(user.loc, potency) // User gets a consumable -QualityVan
-		t_prod.seed = type
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.changePotency(potency) // -QualityVan
-		t_prod.plant_type = plant_type
-		t_amount++
-
-	parent.update_tray()
 
 
 /obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
@@ -917,34 +851,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			harvestseeds.potency = potency
 
 	parent.update_tray()
-
-/obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/reagent_containers))
-		if(ckey == null)
-			user << "You inject the contents of the syringe into the seeds."
-
-			for(var/datum/reagent/blood/bloodSample in W:reagents.reagent_list)
-				var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
-				if(!istype(source))
-					continue
-				//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
-				ui = source.dna.uni_identity
-				se = source.dna.struc_enzymes
-				if(source.ckey)
-					ckey = source.ckey
-				else if(source.mind)
-					ckey = ckey(source.mind.key)
-				realName = source.real_name
-				gender = source.gender
-
-				if(!isnull(source.mind))
-					mind = source.mind
-
-			W:reagents.clear_reagents()
-		else
-			user << "There is already a genetic sample in these seeds."
-	else
-		return ..()
 
 /obj/machinery/hydroponics/proc/update_tray(mob/user = usr)
 	harvest = 0
