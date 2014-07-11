@@ -18,6 +18,7 @@
 
 	var/area/areaMaster
 	var/global/guid = 0
+	var/area/lastarea
 
 	// Garbage collection (controller).
 	var/timeDestroyed
