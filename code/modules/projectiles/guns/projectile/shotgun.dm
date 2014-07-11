@@ -39,6 +39,7 @@
 	pumped = 0
 	if(chambered)//We have a shell in the chamber
 		chambered.loc = get_turf(src)//Eject casing
+		chambered.SpinAnimation(5, 1)
 		chambered = null
 	if(!magazine.ammo_count())	return 0
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.

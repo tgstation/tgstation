@@ -12,67 +12,58 @@
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
-	attack(mob/living/carbon/human/M as mob, mob/user as mob)
-		if(!istype(M, /mob/living/carbon/human))//If target is not a human.
-			return ..()
-		if(istype(M, /mob/living/carbon/human/dummy))
-			return..()
-		add_logs(user, M, "captured [M.name]'s soul", object=src)
+/obj/item/device/soulstone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
+		return ..()
+	if(istype(M, /mob/living/carbon/human/dummy))
+		return..()
+	add_logs(user, M, "captured [M.name]'s soul", object=src)
 
-		transfer_soul("VICTIM", M, user)
-		return
+	transfer_soul("VICTIM", M, user)
+	return
 
-	/*attack(mob/living/simple_animal/shade/M as mob, mob/user as mob)//APPARENTLY THEY NEED THEIR OWN SPECIAL SNOWFLAKE CODE IN THE LIVING ANIMAL DEFINES
-		if(!istype(M, /mob/living/simple_animal/shade))//If target is not a shade
-			return ..()
-		user.attack_log += text("\[[time_stamp()]\] <span class='danger'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</span>")
-
-		transfer_soul("SHADE", M, user)
-		return*/
 ///////////////////Options for using captured souls///////////////////////////////////////
 
-	attack_self(mob/user)
-		if (!in_range(src, user))
-			return
-		user.set_machine(src)
-		var/dat = "<TT><B>Soul Stone</B><BR>"
-		for(var/mob/living/simple_animal/shade/A in src)
-			dat += "Captured Soul: [A.name]<br>"
-			dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
-			dat += "<br>"
-			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
-		user << browse(dat, "window=aicard")
-		onclose(user, "aicard")
+/obj/item/device/soulstone/attack_self(mob/user)
+	if (!in_range(src, user))
+		return
+	user.set_machine(src)
+	var/dat = "<TT><B>Soul Stone</B><BR>"
+	for(var/mob/living/simple_animal/shade/A in src)
+		dat += "Captured Soul: [A.name]<br>"
+		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
+		dat += "<br>"
+		dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
+	user << browse(dat, "window=aicard")
+	onclose(user, "aicard")
+	return
+
+
+/obj/item/device/soulstone/Topic(href, href_list)
+	var/mob/U = usr
+	if (!in_range(src, U)||U.machine!=src)
+		U << browse(null, "window=aicard")
+		U.unset_machine()
 		return
 
+	add_fingerprint(U)
+	U.set_machine(src)
 
-
-
-	Topic(href, href_list)
-		var/mob/U = usr
-		if (!in_range(src, U)||U.machine!=src)
+	switch(href_list["choice"])//Now we switch based on choice.
+		if ("Close")
 			U << browse(null, "window=aicard")
 			U.unset_machine()
 			return
 
-		add_fingerprint(U)
-		U.set_machine(src)
-
-		switch(href_list["choice"])//Now we switch based on choice.
-			if ("Close")
-				U << browse(null, "window=aicard")
-				U.unset_machine()
-				return
-
-			if ("Summon")
-				for(var/mob/living/simple_animal/shade/A in src)
-					A.status_flags &= ~GODMODE
-					A.canmove = 1
-					A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
-					A.loc = U.loc
-					A.cancel_camera()
-					src.icon_state = "soulstone"
-		attack_self(U)
+		if ("Summon")
+			for(var/mob/living/simple_animal/shade/A in src)
+				A.status_flags &= ~GODMODE
+				A.canmove = 1
+				A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
+				A.loc = U.loc
+				A.cancel_camera()
+				src.icon_state = "soulstone"
+	attack_self(U)
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
@@ -83,13 +74,14 @@
 
 /obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/device/soulstone))
-		O.transfer_soul("CONSTRUCT",src,user)
+		var/obj/item/device/soulstone/SS = O
+		SS.transfer_soul("CONSTRUCT",src,user)
 
 
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
+/obj/item/device/soulstone/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
 	switch(choice)
 		if("FORCE")
 			if(!iscarbon(target))		//TO-DO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
@@ -159,54 +151,36 @@
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 				switch(construct_class)
 					if("Juggernaut")
-						var/mob/living/simple_animal/construct/armoured/Z = new /mob/living/simple_animal/construct/armoured (get_turf(T.loc))
-						Z.key = A.key
-						if(iscultist(U))
-							if(ticker.mode.name == "cult")
-								ticker.mode:add_cultist(Z.mind)
-							else
-								ticker.mode.cult+=Z.mind
-							ticker.mode.update_cult_icons_added(Z.mind)
-						qdel(T)
-						Z << "<B>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, create shield walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
-						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
-						Z.cancel_camera()
-						qdel(C)
+						makeNewConstruct(/mob/living/simple_animal/construct/armoured, A, U)
 
 					if("Wraith")
-						var/mob/living/simple_animal/construct/wraith/Z = new /mob/living/simple_animal/construct/wraith (get_turf(T.loc))
-						Z.key = A.key
-						if(iscultist(U))
-							if(ticker.mode.name == "cult")
-								ticker.mode:add_cultist(Z.mind)
-							else
-								ticker.mode.cult+=Z.mind
-							ticker.mode.update_cult_icons_added(Z.mind)
-						qdel(T)
-						Z << "<B>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
-						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
-						Z.cancel_camera()
-						qdel(C)
+						makeNewConstruct(/mob/living/simple_animal/construct/wraith, A, U)
 
 					if("Artificer")
-						var/mob/living/simple_animal/construct/builder/Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))
-						Z.key = A.key
-						if(iscultist(U))
-							if(ticker.mode.name == "cult")
-								ticker.mode:add_cultist(Z.mind)
-							else
-								ticker.mode.cult+=Z.mind
-							ticker.mode.update_cult_icons_added(Z.mind)
-						qdel(T)
-						Z << "<B>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, use magic missile, repair allied constructs (by clicking on them), </B><I>and most important of all create new constructs</I><B> (Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
-						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
-						Z.cancel_camera()
-						qdel(C)
+						makeNewConstruct(/mob/living/simple_animal/construct/builder, A, U)
+
+				qdel(T)
+				qdel(C)
 			else
 				U << "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!"
 	return
 
-obj/item/proc/init_shade(var/obj/item/device/soulstone/C, var/mob/living/carbon/human/T, var/mob/U as mob, var/vic = 0)
+
+proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/target, var/mob/stoner = null, cultoverride = 0)
+	var/mob/living/simple_animal/construct/newstruct = new ctype(get_turf(target))
+	newstruct.key = target.key
+	if(stoner && iscultist(stoner) || cultoverride)
+		if(ticker.mode.name == "cult")
+			ticker.mode:add_cultist(newstruct.mind)
+		else
+			ticker.mode.cult+=newstruct.mind
+		ticker.mode.update_cult_icons_added(newstruct.mind)
+	newstruct << newstruct.playstyle_string
+	newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
+	newstruct.cancel_camera()
+
+
+/obj/item/device/soulstone/proc/init_shade(var/obj/item/device/soulstone/C, var/mob/living/carbon/human/T, var/mob/U as mob, var/vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 	T.invisibility = 101
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )

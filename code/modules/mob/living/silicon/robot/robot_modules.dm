@@ -9,7 +9,7 @@
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/obj/item/borg/upgrade/jetpack = null
-
+	var/list/storages = list()
 
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
@@ -108,42 +108,38 @@
 		modules += new /obj/item/device/t_scanner(src)
 		modules += new /obj/item/device/analyzer(src)
 
+		var/datum/robot_energy_storage/metal/metstore = new /datum/robot_energy_storage/metal(src)
+		var/datum/robot_energy_storage/glass/glastore = new /datum/robot_energy_storage/glass(src)
+		var/datum/robot_energy_storage/wire/wirestore = new /datum/robot_energy_storage/wire(src)
+
 		var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
-		M.amount = 50
+		M.source = metstore
 		modules += M
 
+		var/obj/item/stack/sheet/glass/cyborg/Q = new /obj/item/stack/sheet/glass/cyborg(src)
+		Q.source = glastore
+		modules += Q
+
 		var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
-		G.amount = 50
+		G.metsource = metstore
+		G.glasource = glastore
 		modules += G
 
 		var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
-		R.amount = 50
+		R.source = metstore
 		modules += R
 
-		var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
-		W.amount = 50
+		var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src)
+		W.source = wirestore
 		modules += W
 
 		var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused - RR
-		F.amount = 50
-		modules += F //'F' for floor tile - RR
+		F.source = metstore
+		modules += F //'F' for floor tile - RR(src)
 
-
-	respawn_consumable(var/mob/living/silicon/robot/R)
-		var/list/what = list (
-			/obj/item/stack/sheet/metal,
-			/obj/item/stack/sheet/rglass,
-			/obj/item/stack/rods,
-			/obj/item/stack/cable_coil,
-			/obj/item/stack/tile/plasteel/cyborg,
-		)
-		for(var/T in what)
-			if(!(locate(T) in modules))
-				modules -= null
-				var/O = new T(src)
-				modules += O
-				O:amount = 1
-
+		storages += metstore
+		storages += glastore
+		storages += wirestore
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
@@ -177,7 +173,7 @@
 
 	New()
 		..()
-		modules += new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
+		modules += new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(src)
 		modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 		modules += new /obj/item/weapon/pen(src)
 		modules += new /obj/item/weapon/razor(src)
@@ -195,13 +191,7 @@
 
 		modules += new /obj/item/weapon/storage/bag/tray(src)
 		modules += new /obj/item/weapon/reagent_containers/borghypo/borgshaker(src)
-		emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-
-		var/datum/reagents/R = new/datum/reagents(50)
-		emag.reagents = R
-		R.my_atom = emag
-		R.add_reagent("beer2", 50)
-		emag.name = "Mickey Finn's Special Brew"
+		emag = new /obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked(src)
 
 
 /obj/item/weapon/robot_module/miner
@@ -240,3 +230,36 @@
 		modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 		modules += new /obj/item/weapon/crowbar(src)
 		emag = null
+
+/datum/robot_energy_storage
+	var/name = "Generic energy storage"
+	var/max_energy = 30000
+	var/recharge_rate = 1000
+	var/energy
+
+/datum/robot_energy_storage/New()
+	energy = max_energy
+	return
+
+/datum/robot_energy_storage/proc/use_charge(var/amount)
+	if (energy >= amount)
+		energy -= amount
+		if (energy == 0)
+			return 1
+		return 2
+	else
+		return 0
+
+/datum/robot_energy_storage/proc/add_charge(var/amount)
+	energy = min(energy + amount, max_energy)
+
+/datum/robot_energy_storage/metal
+	name = "Metal Synthesizer"
+
+/datum/robot_energy_storage/glass
+	name = "Glass Synthesizer"
+
+/datum/robot_energy_storage/wire
+	max_energy = 50
+	recharge_rate = 2
+	name = "Wire Synthesizer"

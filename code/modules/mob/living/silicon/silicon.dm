@@ -307,3 +307,7 @@
 // But the src mob is a silicon!!  Disable.
 /mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
 	return 0
+
+
+/mob/living/silicon/assess_threat() //Secbots won't hunt silicon units
+	return -10

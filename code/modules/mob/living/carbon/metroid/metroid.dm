@@ -225,7 +225,7 @@
 
 		//paralysis += 1
 
-	show_message("<span class='warning'> The blob attacks you!</span>")
+	show_message("<span class='userdanger'> The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 
@@ -248,10 +248,8 @@
 
 	if (health > -100)
 
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'> <B>The [M.name] has glomped []!</B></span>", src), 1)
-
+		visible_message("<span class='danger'> The [M.name] has glomped [src]!</span>", \
+				"<span class='userdanger'> The [M.name] has glomped [src]!</span>")
 		var/damage = rand(1, 3)
 		attacked += 5
 
@@ -271,8 +269,8 @@
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='warning'> <B>[M]</B> [M.attacktext] [src]!</span>", 1)
+		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
+				"<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		attacked += 10
@@ -298,14 +296,13 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+			if (is_muzzled())
 				return
 			if (health > 0)
 				attacked += 10
 				//playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[M.name] has attacked [src]!</B></span>"), 1)
+				visible_message("<span class='danger'>[M.name] has attacked [src]!</span>", \
+						"<span class='userdanger'>[M.name] has attacked [src]!</span>")
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -325,15 +322,11 @@
 	if(Victim)
 		if(Victim == M)
 			if(prob(60))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'> [M] attempts to wrestle \the [name] off!</span>", 1)
+				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'> [M] manages to wrestle \the [name] off!</span>", 1)
+				visible_message("<span class='warning'> [M] manages to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				if(prob(90) && !client)
@@ -353,15 +346,11 @@
 
 		else
 			if(prob(30))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'> [M] attempts to wrestle \the [name] off of [Victim]!</span>", 1)
+				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'> [M] manages to wrestle \the [name] off of [Victim]!</span>", 1)
+				visible_message("<span class='warning'> [M] manages to wrestle \the [name] off of [Victim]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				if(prob(80) && !client)
@@ -400,9 +389,7 @@
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='warning'> [] has grabbed [] passively!</span>", M, src), 1)
+			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 
 		else
 
@@ -426,17 +413,14 @@
 
 
 				playsound(loc, "punch", 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has punched []!</B></span>", M, src), 1)
+				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
+						"<span class='userdanger'>[M] has punched [src]!</span>")
 
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has attempted to punch []!</B></span>", M, src), 1)
+				visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
 	return
 
 
@@ -452,9 +436,7 @@
 
 	switch(M.a_intent)
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 
 		if ("harm")
 
@@ -464,20 +446,17 @@
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'> <B>[] has attacked [name]!</B></span>", M), 1)
+					visible_message("<span class='danger'>[M] has attacked [name]!</span>", \
+							"<span class='userdanger'>[M] has attacked [name]!</span>")
 				else
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'> <B>[] has wounded [name]!</B></span>", M), 1)
+					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
+							"<span class='userdanger'>)[M] has wounded [name]!</span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has attempted to lunge at [name]!</B></span>", M), 1)
+				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
+						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
 
 		if ("grab")
 			if (M == src || anchored)
@@ -491,8 +470,7 @@
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("<span class='warning'> [] has grabbed [name] passively!</span>", M), 1)
+			visible_message("<span class='warning'> [M] has grabbed [name] passively!</span>")
 
 		if ("disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
@@ -500,9 +478,8 @@
 			attacked += 10
 
 			if(prob(95))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has tackled [name]!</B></span>", M), 1)
+				visible_message("<span class='danger'>[M] has tackled [name]!</span>", \
+						"<span class='userdanger'>[M] has tackled [name]!</span>")
 
 				if(Victim || Target)
 					Victim = null
@@ -527,9 +504,8 @@
 
 			else
 				drop_item()
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'> <B>[] has disarmed [name]!</B></span>", M), 1)
+				visible_message("<span class='danger'>[M] has disarmed [name]!</span>",
+						"<span class='userdanger'>[M] has disarmed [name]!</span>")
 			adjustBruteLoss(damage)
 			updatehealth()
 	return
@@ -538,7 +514,7 @@
 	if(W.force > 0)
 		attacked += 10
 		if(prob(25))
-			user << "\red [W] passes right through [src]!"
+			user << "<span class='danger'>[W] passes right through [src]!</span>"
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
@@ -847,6 +823,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 ////////Adamantine Golem stuff I dunno where else to put it
 
+// This will eventually be removed.
+
 /obj/item/clothing/under/golem
 	name = "adamantine skin"
 	desc = "a golem's skin"
@@ -855,7 +833,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_color = "golem"
 	flags = ABSTRACT | NODROP
 	has_sensor = 0
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/golem
 	name = "adamantine shell"
@@ -866,14 +843,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = FULL_BODY
-	slowdown = 1.0
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
-	flags = STOPSPRESSUREDMAGE | ABSTRACT | NODROP
-	heat_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS | HEAD
-	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS | HEAD
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
+	flags = ABSTRACT | NODROP
 
 /obj/item/clothing/shoes/golem
 	name = "golem's feet"
@@ -881,7 +852,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	item_state = null
 	flags = NOSLIP | ABSTRACT | NODROP
-	slowdown = SHOES_SLOWDOWN+1
 
 
 /obj/item/clothing/mask/breath/golem
@@ -891,7 +861,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_state = "golem"
 	siemens_coefficient = 0
 	unacidable = 1
-	flags = ABSTRACT | NODROP | MASKINTERNALS | MASKCOVERSMOUTH
+	flags = ABSTRACT | NODROP
 
 
 /obj/item/clothing/gloves/golem
@@ -910,10 +880,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "golem's head"
 	desc = "a golem's head"
 	unacidable = 1
-	flags = STOPSPRESSUREDMAGE | ABSTRACT | NODROP
-	heat_protection = HEAD
-	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
+	flags = ABSTRACT | NODROP
 
 /obj/effect/golemrune
 	anchored = 1
@@ -952,26 +919,13 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			return
 		var/mob/living/carbon/human/G = new /mob/living/carbon/human
 		if(prob(50))	G.gender = "female"
-		hardset_dna(G, null, null, null, "adamantine")
+		hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
 		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
-		G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
-		G.equip_to_slot_or_del(new /obj/item/clothing/suit/golem(G), slot_wear_suit)
-		G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
-		G.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/golem(G), slot_wear_mask)
-		G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
-		//G.equip_to_slot_or_del(new /obj/item/clothing/head/space/golem(G), slot_head)
+		G.dna.species.auto_equip(G)
 		G.loc = src.loc
 		G.key = ghost.key
 		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 		qdel(src)
-
-
-	proc/announce_to_ghosts()
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client)
-				var/area/A = get_area(src)
-				if(A)
-					G << "Golem rune created in [A.name]."
 
 /mob/living/carbon/slime/getTrail()
 	return null
@@ -980,6 +934,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	if(lube>=2)
 		return 0
 	.=..()
+
+/mob/living/carbon/slime/stripPanelUnequip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
+
+/mob/living/carbon/slime/stripPanelEquip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
 
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
@@ -1047,9 +1009,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	processing_objects.Remove(src)
 	var/turf/T = get_turf(src)
-	src.visible_message("\blue The [name] pulsates and quivers!")
+	src.visible_message("<span class='warning'> The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("\blue The [name] bursts open!")
+		src.visible_message("<span class='warning'> The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		qdel(src)
 

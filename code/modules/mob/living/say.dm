@@ -132,7 +132,7 @@ var/list/department_radio_keys = list(
 		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
 		if (message_mode)
 			message = trim(copytext(message, 3))
-			if (!(ishuman(src) || istype(src, /mob/living/simple_animal/parrot) || isrobot(src) && (message_mode=="department" || (message_mode in radiochannels))))
+			if (!(ishuman(src) || istype(src, /mob/living/simple_animal/parrot) || isrobot(src)) && (message_mode=="department" || (message_mode in radiochannels))) // If they're not a human, parrot, or robot, and they're trying to use a radio channel
 				message_mode = null //only humans can use headsets
 			// Check changed so that parrots can use headsets. Other simple animals do not have ears and will cause runtimes.
 			// And borgs -Sieve
@@ -156,6 +156,24 @@ var/list/department_radio_keys = list(
 				for(var/i=0,i<bzz,i++)
 					message += "Z"
 */
+	
+	if(message_mode == "changeling")
+		if(mind && mind.changeling)
+			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
+			for(var/mob/Changeling in mob_list)
+				if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
+					Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+			return
+	
+	if (message_mode == "alientalk")
+		if(alien_talk_understand || hivecheck())
+		//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
+			alien_talk(message)
+		return
+
+	if(is_muzzled()) // Intentionally after changeling hivemind check
+		return
+	
 	var/list/obj/item/used_radios = new
 
 	switch (message_mode)
@@ -211,12 +229,6 @@ var/list/department_radio_keys = list(
 				robot_talk(message)
 			return
 
-		if ("alientalk")
-			if(alien_talk_understand || hivecheck())
-			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-				alien_talk(message)
-			return
-
 		if ("department")
 			if (src:ears)
 				src:ears.talk_into(src, message, message_mode)
@@ -231,13 +243,6 @@ var/list/department_radio_keys = list(
 			message_range = 1
 			italics = 1
 
-		if("changeling")
-			if(mind && mind.changeling)
-				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
-				for(var/mob/Changeling in mob_list)
-					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
-						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-				return
 ////SPECIAL HEADSETS START
 		else
 			//world << "SPECIAL HEADSETS"

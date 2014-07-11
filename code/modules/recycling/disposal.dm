@@ -121,17 +121,7 @@
 	var/obj/item/weapon/grab/G = I
 	if(istype(G))	// handle grabbed mob
 		if(ismob(G.affecting))
-			var/mob/GM = G.affecting
-			for (var/mob/V in viewers(usr))
-				V.show_message("[usr] starts putting [GM.name] into \the [src].", 3)
-			if(do_after(usr, 20))
-				if (GM.client)
-					GM.client.perspective = EYE_PERSPECTIVE
-					GM.client.eye = src
-				GM.loc = src
-				for (var/mob/C in viewers(src))
-					C.show_message("\red [GM.name] has been placed in \the [src] by [user].", 3)
-				qdel(G)
+			stuff_mob_in(G.affecting, usr)
 		return
 
 	if(!I)	return
@@ -151,43 +141,32 @@
 // mouse drop another mob or self
 //
 /obj/machinery/disposal/MouseDrop_T(mob/target, mob/user)
-	if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
+	if(istype(target))
+		stuff_mob_in(target, user)
+
+/obj/machinery/disposal/proc/stuff_mob_in(mob/target, mob/user)
+	if (!user.canUseTopic(target) || istype(user, /mob/living/silicon/ai))
 		return
 	src.add_fingerprint(user)
-	var/target_loc = target.loc
-	var/msg
-	for (var/mob/V in viewers(usr))
-		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			V.show_message("[usr] starts climbing into \the [src].", 3)
-		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			if(target.anchored) return
-			if(!ishuman(user) && !ismonkey(user)) return
-			V.show_message("[usr] starts stuffing [target.name] into \the [src].", 3)
-	if(!do_after(usr, 20))
-		return
-	if(target_loc != target.loc)
-		return
-	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
-											// must be awake, not stunned or whatever
-		msg = "[user.name] climbs into \the [src]."
-		user << "<span class='notice'>You climb into \the [src].</span>"
-	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-		msg = "[user.name] stuffs [target.name] into \the [src]!"
-		user << "<span class='notice'>You stuff [target.name] into \the [src]!</span>"
+	if(user == target)
+		user.visible_message("<span class='warning'>[user] starts climbing into [src].</span>", \
+								"<span class='notice'>[user] starts climbing into [src].</span>")
 	else
-		return
-	if (target.client)
-		target.client.perspective = EYE_PERSPECTIVE
-		target.client.eye = src
-	target.loc = src
-
-	for (var/mob/C in viewers(src))
-		if(C == user)
-			continue
-		C.show_message(msg, 3)
-
-	update()
-	return
+		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
+								"<span class='userdanger'>[user] starts putting [target] into [src].</span>")
+	if(do_mob(usr, target, 20))
+		if (target.client)
+			target.client.perspective = EYE_PERSPECTIVE
+			target.client.eye = src
+		target.loc = src
+		if(user == target)
+			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", \
+									"<span class='notice'>[user] climbs into [src].</span>")
+		else
+			target.visible_message("<span class='danger'>[target] has been placed in [src] by [user].</span>", \
+									"<span class='userdanger'>[target] has been placed in [src] by [user].</span>")
+			add_logs(user, target, "stuffed", addition="into [src]")
+		update()
 
 // can breath normally in the disposal
 /obj/machinery/disposal/alter_health()

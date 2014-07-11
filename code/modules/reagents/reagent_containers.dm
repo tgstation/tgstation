@@ -47,6 +47,8 @@
 	else return "No reagents"
 
 /obj/item/weapon/reagent_containers/proc/canconsume(mob/eater, mob/user)
+	if(!eater.SpeciesCanConsume())
+		return 0
 	//Check for covering mask
 	var/obj/item/clothing/cover = eater.get_item_by_slot(slot_wear_mask)
 
@@ -62,9 +64,9 @@
 			var/who = (isnull(user) || eater == user) ? "your" : "their"
 
 			if(istype(cover, /obj/item/clothing/mask/))
-				user << "<span class='notice'>You have to remove [who] mask first!</span>"
+				user << "<span class='warning'>You have to remove [who] mask first!</span>"
 			else
-				user << "<span class='notice'>You have to remove [who] helmet first!</span>"
+				user << "<span class='warning'>You have to remove [who] helmet first!</span>"
 
 			return 0
 	return 1

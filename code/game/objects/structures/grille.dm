@@ -101,14 +101,14 @@
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.changeNext_move(8)
+	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			if(destroyed)
-				new /obj/item/stack/rods(loc)
-			else
-				new /obj/item/stack/rods(loc)
-				new /obj/item/stack/rods(loc)
+			var/obj/item/stack/rods/newrods = new(loc)
+			transfer_fingerprints_to(newrods)
+			if(!destroyed)
+				newrods.amount = 2
 			qdel(src)
 	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
@@ -119,7 +119,11 @@
 			return
 
 //window placing begin
-	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
+	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/ST = W
+		if (ST.get_amount() < 1)
+			user << "<span class='warning'>You need at least one sheet of glass for that.</span>"
+			return
 		var/dir_to_set = 1
 		if(loc == user.loc)
 			dir_to_set = user.dir
@@ -150,7 +154,7 @@
 					user << "<span class='notice'>There is already a window facing this way there.</span>"
 					return
 			var/obj/structure/window/WD
-			if(istype(W,/obj/item/stack/sheet/rglass))
+			if(istype(W, /obj/item/stack/sheet/rglass))
 				WD = new/obj/structure/window(loc,1) //reinforced window
 			else
 				WD = new/obj/structure/window(loc,0) //normal window
@@ -158,7 +162,6 @@
 			WD.ini_dir = dir_to_set
 			WD.anchored = 0
 			WD.state = 0
-			var/obj/item/stack/ST = W
 			ST.use(1)
 			user << "<span class='notice'>You place the [WD] on [src].</span>"
 		return
@@ -181,15 +184,16 @@
 
 /obj/structure/grille/proc/healthcheck()
 	if(health <= 0)
+		var/obj/item/stack/rods/newrods = new(loc)
+		transfer_fingerprints_to(newrods)
+
 		if(!destroyed)
 			icon_state = "brokengrille"
 			density = 0
 			destroyed = 1
-			new /obj/item/stack/rods(loc)
 
 		else
 			if(health <= -6)
-				new /obj/item/stack/rods(loc)
 				qdel(src)
 				return
 	return

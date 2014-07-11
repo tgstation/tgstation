@@ -284,22 +284,6 @@
 			src << "<span class='notice'>Overcurrent applied to the powernet.</span>"
 		else src << "<span class='notice'>Out of uses.</span>"
 
-/datum/AI_Module/small/interhack
-	module_name = "Hack intercept"
-	mod_pick_name = "interhack"
-	description = "Hacks the status update from Centcom, removing any information about malfunctioning electrical systems."
-	cost = 15
-	one_time = 1
-
-	power_type = /mob/living/silicon/ai/proc/interhack
-
-/mob/living/silicon/ai/proc/interhack()
-	set category = "Malfunction"
-	set name = "Hack intercept"
-	src.verbs -= /mob/living/silicon/ai/proc/interhack
-	ticker.mode:hack_intercept()
-	src << "<span class='notice'>Status update intercepted and modified.</span>"
-
 /datum/AI_Module/small/reactivate_camera
 	module_name = "Reactivate camera"
 	mod_pick_name = "recam"
