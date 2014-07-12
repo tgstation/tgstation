@@ -568,7 +568,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	spawn(waittime)
 		src.wait = null
 		update_icon()
-		playsound(src.loc, 'sound/items/timer.ogg', 30, 1)
+		playsound(src.loc, 'sound/machines/ping.ogg', 30, 1)
 
 /obj/machinery/computer/pandemic/update_icon()
 	if(stat & BROKEN)
