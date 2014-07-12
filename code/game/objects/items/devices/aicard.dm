@@ -20,6 +20,8 @@
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])</font>")
 
 		transfer_ai("AICORE", "AICARD", M, user)
+
+		playsound(get_turf(src), 'sound/machines/paistartup.ogg', 50, 1)
 		return
 
 	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
