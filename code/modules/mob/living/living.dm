@@ -433,7 +433,7 @@
 	if(C.handcuffed)
 		C.handcuffed = null
 		C.update_inv_handcuffed(0)
-	if(C.legcuffed)
+	else
 		C.legcuffed = null
 		C.update_inv_legcuffed(0)
 
@@ -470,14 +470,12 @@
 
 				if(C.handcuffed)
 					C.handcuffed.loc = usr.loc
-					C.handcuffed = null  // SHINE put the null thing before the update_inv
+					C.handcuffed = null
 					C.update_inv_handcuffed(0)
-
 				if(C.legcuffed)
 					C.legcuffed.loc = usr.loc
 					C.legcuffed = null
 					C.update_inv_legcuffed(0)
-
 
 /mob/living/verb/resist()
 	set name = "Resist"
