@@ -219,6 +219,7 @@
 	H.UpdateAppearance()
 	H.set_species()
 	randmutb(H) // sometimes the clones come out wrong.
+	H.update_mutantrace()
 
 	H.suiciding = 0
 	src.attempting = 0
