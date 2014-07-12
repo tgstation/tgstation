@@ -237,9 +237,9 @@ var/list/uplink_items = list()
 	category = "Stealthy and Inconspicuous Weapons"
 
 /datum/uplink_item/stealthy_weapons/para_pen
-	name = "Paralysis Pen"
-	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. \
-	Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
+	name = "Sleepy Pen"
+	desc = "A syringe disguised as a functional pen, filled with a drug that temporarily blocks the vocal cords and sleeptoxin. \
+	The pen holds one dose of the mixture, and cannot be refilled."
 	item = /obj/item/weapon/pen/paralysis
 	cost = 3
 	excludefrom = list(/datum/game_mode/nuclear)
