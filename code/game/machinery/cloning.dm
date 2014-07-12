@@ -217,6 +217,7 @@
 	// -- End mode specific stuff
 
 	H.UpdateAppearance()
+	H.set_species()
 	randmutb(H) // sometimes the clones come out wrong.
 
 	H.suiciding = 0
