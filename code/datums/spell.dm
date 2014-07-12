@@ -77,7 +77,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				return 0
 	var/obj/effect/proc_holder/spell/noclothes/spell = locate() in user.spell_list
 	if(clothes_req && !(spell && istype(spell)))//clothes check
-		if(usr.wearing_wiz_garb())
+		if(!usr.wearing_wiz_garb())
 			return 0
 		/*  This is all rendered obsolete.  Use mob.wearing_wiz_garb() instead.
 		if(!istype(usr, /mob/living/carbon/human))

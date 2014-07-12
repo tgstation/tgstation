@@ -63,9 +63,31 @@
 	handle_rotation()
 	return
 
+
 /obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
-	buckle_mob(M, user)
+	var/mob/living/carbon/human/target = M
+	if(target.op_stage.butt == 4) //Butt surgery is at stage 4
+		if(!M.weakened)	//Spam prevention
+			if(M == usr)
+				M.visible_message(\
+					"\blue [M.name] has no butt, and slides right out of [src]!",\
+					"Having no butt, you slide right out of the [src]",\
+					"You hear metal clanking")
+
+			else
+				M.visible_message(\
+					"\blue [M.name] has no butt, and slides right out of [src]!",\
+					"Having no butt, you slide right out of the [src]",\
+					"You hear metal clanking")
+
+			M.Weaken(5)
+		else
+			user << "You can't buckle [M.name] to [src], They just fell out!"
+
+	else
+		buckle_mob(M, user)
+
 	return
 
 // Chair types

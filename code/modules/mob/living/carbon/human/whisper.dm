@@ -107,6 +107,8 @@
 	var/rendered = null
 
 	for (var/mob/M in watching)
+		if (!(M.client) || istype(M, /mob/new_player))
+			continue
 		if (M.say_understands(src))
 			rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something[and_passes_on].</span>"
 		else
@@ -122,6 +124,8 @@
 		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message_a]\"</span>[and_passes_on]</span>"
 
 		for (var/mob/M in heard_a)
+			if (!(M.client) || istype(M, /mob/new_player))
+				continue
 			M.show_message(rendered, 2)
 
 	if (length(heard_b))
@@ -135,9 +139,13 @@
 		rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers, <span class='message'>\"[message_b]\"</span>[and_passes_on]</span>"
 
 		for (var/mob/M in heard_b)
+			if (!(M.client) || istype(M, /mob/new_player))
+				continue
 			M.show_message(rendered, 2)
 
 	for (var/mob/M in eavesdropping)
+		if (!(M.client) || istype(M, /mob/new_player))
+			continue
 		if (M.say_understands(src))
 			var/message_c
 			message_c = stars(message)

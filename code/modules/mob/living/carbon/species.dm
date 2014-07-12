@@ -314,11 +314,14 @@
 		// Unequip existing suits and hats.
 		H.u_equip(H.wear_suit)
 		H.u_equip(H.head)
-		H.u_equip(H.wear_mask) // CLOOOOWN
+		if(H.mind.assigned_role!="Clown")
+			H.u_equip(H.wear_mask)
 
 		H.equip_or_collect(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
 		var/suit=/obj/item/clothing/suit/space/vox/casual
 		var/helm=/obj/item/clothing/head/helmet/space/vox/casual
+		var/tank_slot = slot_s_store
+		var/tank_slot_name = "suit storage"
 		switch(H.mind.assigned_role)
 			if("Research Director","Scientist","Geneticist","Roboticist")
 				suit=/obj/item/clothing/suit/space/vox/casual/science
@@ -332,11 +335,14 @@
 			if("Chief Medical Officer","Medical Doctor","Paramedic","Chemist")
 				suit=/obj/item/clothing/suit/space/vox/casual/medical
 				helm=/obj/item/clothing/head/helmet/space/vox/casual/medical
+			if("Clown","Mime")
+				tank_slot=slot_r_hand
+				tank_slot_name = "hand"
 		H.equip_or_collect(new suit(H), slot_wear_suit)
 		H.equip_or_collect(new helm(H), slot_head)
-		H.equip_or_collect(new/obj/item/weapon/tank/nitrogen(H), slot_s_store)
-		H << "\blue You are now running on nitrogen internals from the [H.s_store] in your suit storage. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only."
-		H.internal = H.s_store
+		H.equip_or_collect(new/obj/item/weapon/tank/nitrogen(H), tank_slot)
+		H << "\blue You are now running on nitrogen internals from the [H.s_store] in your [tank_slot_name]. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only."
+		H.internal = H.get_item_by_slot(tank_slot)
 		if (H.internals)
 			H.internals.icon_state = "internal1"
 

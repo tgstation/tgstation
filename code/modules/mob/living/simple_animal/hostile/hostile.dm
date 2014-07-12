@@ -35,7 +35,7 @@
 	if(!.)
 		walk(src, 0)
 		return 0
-	if(client)
+	if(client && !deny_client_move)
 		return 0
 	if(!stat)
 		switch(stance)

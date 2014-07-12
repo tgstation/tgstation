@@ -1161,3 +1161,17 @@ var/global/blood_virus_spreading_disabled = 0
 		message_admins("[src.ckey] disabled findAirborneVirii.")
 	else
 		message_admins("[src.ckey] enabled findAirborneVirii.")
+
+/client/proc/cmd_admin_cluwneize(var/mob/M in mob_list)
+	set category = "Fun"
+	set name = "Make Cluwne"
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+	if(ishuman(M))
+		M:Cluwneize()
+		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a cluwne.", 1)
+		feedback_add_details("admin_verb","MKCLU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(src)] has cluwne-ified [M.key].")
+	else
+		alert("Invalid mob, needs to be a human.")
