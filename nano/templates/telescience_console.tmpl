@@ -3,7 +3,12 @@ Title: Telescience Control UI
 Used In File(s): \code\modules\telesci\telesci_computer.dm
  -->
 <div class="item">
-	<div class="itemLabel">Coordinates:</div>
+	<div class="itemLabel">Offsets:</div>
+	<div class="itemContent">
+		{{:~link('X offset: ' + pOffsetX, 'gear', {'setPOffsetX': 1})}}
+		{{:~link('Y offset: ' + pOffsetY, 'gear', {'setPOffsetY': 1})}}
+	</div>
+	<div class="itemLabel">Coordinates:</div>	
 	<div class="itemContent">
 		{{:~link('X: ' + coordx, 'gear', {'setx': 1})}}
 		{{:~link('Y: ' + coordy, 'gear', {'sety': 1})}}
