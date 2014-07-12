@@ -574,7 +574,7 @@
 						message = "<b>[src]</b> [fart]."
 						playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
 					else
-						message = "<b>[src]</b> [mimefart]
+						message = "<b>[src]</b> [mimefart]"
 						//Mimes can't fart.
 					m_type = 2
 					var/turf/location = get_turf(src)
