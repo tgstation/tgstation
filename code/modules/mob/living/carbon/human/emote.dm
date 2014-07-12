@@ -222,7 +222,7 @@
 			else
 				message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
-			
+
 		if ("giggle")
 			if(miming)
 				message = "<B>[src]</B> giggles silently!"
@@ -559,10 +559,14 @@
 			if(world.time-lastFart >= 600)
 				var/list/farts = list("farts","passes wind","toots","tries to fart, but nothing happens.","farts with the force of one thousand suns")
 				var/fart = pick(farts)
+				for(var/mob/M in view(1))
+					if(M != src)
+						visible_message("\red <b>[src]</b> farts in <b>[M]</b>'s face!")
+					else
+						continue
 				message = "<b>[src]</b> [fart]."
 				playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
 				m_type = 2
-
 				var/turf/location = get_turf(src)
 				var/aoe_range=2 // Default
 				if(M_SUPER_FART in mutations)
