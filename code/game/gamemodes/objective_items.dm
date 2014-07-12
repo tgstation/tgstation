@@ -33,11 +33,11 @@ datum/objective_item/steal/jetpack
 	targetitem = /obj/item/weapon/tank/jetpack
 	difficulty = 3
 
-datum/objective_item/steal/magboots
-	name = "the chief engineer's advanced magnetic boots"
-	targetitem =  /obj/item/clothing/shoes/magboots/advance
+datum/objective_item/steal/magboots // SHINE changed from advanced to normal boots
+	name = "a pair of magboots"
+	targetitem =  /obj/item/clothing/shoes/magboots
 	difficulty = 5
-	excludefromjob = list("Chief Engineer")
+	excludefromjob = list("Chief Engineer", "Station Engineer") //SHINE added  station engineer
 
 datum/objective_item/steal/corgimeat
 	name = "a piece of corgi meat"
@@ -55,7 +55,7 @@ datum/objective_item/steal/hypo
 	name = "the hypospray"
 	targetitem = /obj/item/weapon/reagent_containers/hypospray
 	difficulty = 5
-	excludefromjob = list("Chief Medical Officer")
+	excludefromjob = list("Chief Medical Officer", "Medical Doctor", "Chemist") //SHINE added medical doctor and chemist
 
 datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk"
@@ -98,13 +98,13 @@ datum/objective_item/steal/functionalai
 	name = "a functional AI"
 	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
-
+/* SHINE we dont have AI on ministation so dead ones will do
 datum/objective_item/functionalai/check_special_completion(var/obj/item/device/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
 		if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
 			return 1
 	return 0
-
+*/
 datum/objective_item/steal/blueprints
 	name = "the station blueprints"
 	targetitem = /obj/item/blueprints

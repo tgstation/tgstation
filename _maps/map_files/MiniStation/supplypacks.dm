@@ -36,3 +36,12 @@
 	cost = 10
 	containertype = /obj/structure/largecrate
 	containername = "hydroponics tray crate"
+
+/datum/supply_packs/organic/pizza
+	name = "Pizza Delivery"
+	contains = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita,
+					/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza,
+					/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza,
+					/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza)
+	cost = 35
+	containername = "Pizza crate"

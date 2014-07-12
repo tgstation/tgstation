@@ -4,8 +4,9 @@
 
 <i>This server is running a /tg/station 13 Git build, with the Ministation Map, including some personal changes.</i>
 <i>This is a roleplay server, and roleplay comes before gameplay. The rules apply, and failure to follow them may result in bans</i>
+<i><b>Invite your friends! Anyone can join if they have Byond!</b></i>
 
 <i>Make sure to set your Special Role/Antagonist settings if you want to be traitor or other badguy roles.</i>
 <i>If you end up playing traitor, actually perform your objectives.</i>
 
-<i>Note about Species: Make sure to check them each game as they're not saved yet</i>
+<i>Note about Species: Make sure to check them each game as they do not save properly./i>
