@@ -743,8 +743,7 @@
 				var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
 				var/armor_block = H.run_armor_check(affecting, "melee")
 
-				if(HULK in M.mutations)
-					damage += 5
+				damage += M.mutations.bonus_damage()
 
 				if(M.dna)
 					playsound(H.loc, M.dna.species.attack_sound, 25, 1, -1)

@@ -268,7 +268,7 @@ Auto Patrol: []"},
 					var/mob/living/carbon/M = src.target
 					var/maxstuns = 4
 					if(istype(M, /mob/living/carbon/human))
-						if(M.stuttering < 5 && (!(M.mutations.has_mutation(HULK))))
+						if(M.stuttering < 5 && (!(M.mutations.stun_immune())))
 							M.stuttering = 5
 						M.Stun(5)
 						M.Weaken(5)

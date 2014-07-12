@@ -170,3 +170,91 @@
 /datum/mutations/proc/clear_conditions()
 	for (var/i in condition_list)
 		remove_condition(i)
+
+/datum/mutations/proc/RangedAttack(var/atom/A, var/params)
+	if((has_mutation(LASER)) && holder.a_intent == "harm")
+		holder.LaserEyes(A)
+	else if(has_mutation(TK))
+		A.attack_tk(holder)
+
+/datum/mutations/proc/thick_fingers()
+	if (has_mutation(HULK))
+		return 1
+	return 0
+
+/datum/mutations/proc/stun_immune()
+	if (has_mutation(HULK))
+		return 1
+	return 0
+
+/datum/mutations/proc/wall_smash(var/turf/simulated/wall/wall)
+	if (has_mutation(HULK))
+		if (prob(wall.hardness))
+			playsound(wall, 'sound/effects/meteorimpact.ogg', 100, 1)
+			holder << text("<span class='notice'>You smash through the wall.</span>")
+			holder.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+			wall.dismantle_wall(1)
+		else
+			playsound(wall, 'sound/effects/bang.ogg', 50, 1)
+			holder << text("<span class='notice'>You punch the wall.</span>")
+		return 1
+	return 0
+
+/datum/mutations/proc/table_smash(var/obj/structure/table/table)
+	if(has_mutation(HULK))
+		holder.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		table.visible_message("<span class='danger'>[holder] smashes the table apart!</span>")
+		if(istype(table, /obj/structure/table/reinforced))
+			new /obj/item/weapon/table_parts/reinforced(table.loc)
+		else if(istype(table, /obj/structure/table/woodentable))
+			new/obj/item/weapon/table_parts/wood(table.loc)
+		else
+			new /obj/item/weapon/table_parts(table.loc)
+		table.density = 0
+		qdel(table)
+		return 1
+	return 0
+
+/datum/mutations/proc/rack_smash(var/obj/structure/rack/rack)
+	if(has_mutation(HULK))
+		holder.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		rack.visible_message("<span class='danger'>[holder] smashes [rack] apart!</span>")
+		new /obj/item/weapon/rack_parts(rack.loc)
+		rack.density = 0
+		qdel(rack)
+
+/datum/mutations/proc/bonus_damage()
+	var/i = 0
+	if (has_mutation(HULK))
+		i += 5
+	return i
+
+/mob/proc/LaserEyes(atom/A)
+	return
+
+/mob/living/LaserEyes(atom/A)
+	changeNext_move(4)
+	var/turf/T = get_turf(src)
+	var/turf/U = get_turf(A)
+
+	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
+	LE.icon = 'icons/effects/genetics.dmi'
+	LE.icon_state = "eyelasers"
+	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
+
+	LE.firer = src
+	LE.def_zone = get_organ_target()
+	LE.original = A
+	LE.current = T
+	LE.yo = U.y - T.y
+	LE.xo = U.x - T.x
+	spawn( 1 )
+		LE.process()
+
+/mob/living/carbon/human/LaserEyes()
+	if(nutrition>0)
+		..()
+		nutrition = max(nutrition - rand(1,5),0)
+		handle_regular_hud_updates()
+	else
+		src << "\red You're out of energy!  You need food!"

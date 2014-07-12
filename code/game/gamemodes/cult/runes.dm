@@ -1031,7 +1031,7 @@ var/list/sacrificed = list()
 					if(iscarbon(L))
 						var/mob/living/carbon/C = L
 						flick("e_flash", C.flash)
-						if(C.stuttering < 1 && (!(C.mutations.has_mutation(HULK))))
+						if(C.stuttering < 1 && (!(C.mutations.stun_immune())))
 							C.stuttering = 1
 						C.Weaken(1)
 						C.Stun(1)
@@ -1058,7 +1058,7 @@ var/list/sacrificed = list()
 					else if(iscarbon(T))
 						var/mob/living/carbon/C = T
 						flick("e_flash", C.flash)
-						if (!(C.mutations.has_mutation(HULK)))
+						if (!(C.mutations.stun_immune()))
 							C.silent += 15
 						C.Weaken(10)
 						C.Stun(10)
