@@ -433,7 +433,7 @@
 	if(C.handcuffed)
 		C.handcuffed = null
 		C.update_inv_handcuffed(0)
-	else
+	if(C.legcuffed)
 		C.legcuffed = null
 		C.update_inv_legcuffed(0)
 
@@ -473,7 +473,7 @@
 					C.handcuffed = null  // SHINE put the null thing before the update_inv
 					C.update_inv_handcuffed(0)
 
-				else
+				if(C.legcuffed)
 					C.legcuffed.loc = usr.loc
 					C.legcuffed = null
 					C.update_inv_legcuffed(0)
