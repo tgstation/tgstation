@@ -448,7 +448,7 @@
 		breakouttime = LC.breakouttime
 	displaytime = breakouttime / 600
 
-	if(isalienadult(C) || usr.mutations.has_mutation(HULK))
+	if(isalienadult(C) || C.mutations.has_mutation(HULK))
 		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>", \
 				"<span class='warning'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>")
 		spawn(0)
@@ -458,7 +458,7 @@
 				cuff_break(I, C)
 	else
 
-		C.visible_message("<span class='warning'>[usr] attempts to remove [I]!</span>", \
+		C.visible_message("<span class='warning'>[C] attempts to remove [I]!</span>", \
 				"<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
 		spawn(0)
 			if(do_after(C, breakouttime))
@@ -468,11 +468,11 @@
 						"<span class='notice'>You successfully remove [I].</span>")
 
 				if(C.handcuffed)
-					C.handcuffed.loc = usr.loc
+					C.handcuffed.loc = C.loc
 					C.update_inv_handcuffed(0)
 					C.handcuffed = null
 				else
-					C.legcuffed.loc = usr.loc
+					C.legcuffed.loc = C.loc
 					C.update_inv_legcuffed(0)
 					C.legcuffed = null
 

@@ -112,7 +112,6 @@
 	var/radiation = 0//Carbon
 
 	var/datum/mutations/mutations = null
-	//var/list/mutations = list() //Carbon -- Doohl
 	//see: setup.dm for list of mutations
 
 	var/voice_name = "unidentifiable voice"
