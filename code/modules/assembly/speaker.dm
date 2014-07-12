@@ -24,7 +24,10 @@
 	..()
 	if(istype(W,/obj/item/weapon/pen)) //pen
 		var/tmp/new_name = sanitize(input(user,"Enter new name for the [src]","NanoSpeaker Settings",name))
-		name = "[real_name] ([new_name])"
+		if(new_name != "")
+			name = "[real_name] ([new_name])"
+		else
+			name = real_name
 
 /obj/item/device/assembly/speaker/proc/say(var/msg=message as text)
 	var/tmp/location = get_turf(src)
