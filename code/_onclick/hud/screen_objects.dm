@@ -276,7 +276,6 @@
 			if(isrobot(usr))
 				var/mob/living/silicon/robot/R = usr
 				R.uneq_active()
-				R.hud_used.update_robot_modules_display()
 
 		if("module1")
 			if(istype(usr, /mob/living/silicon/robot))

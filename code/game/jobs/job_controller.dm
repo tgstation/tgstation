@@ -315,7 +315,7 @@ var/global/datum/controller/occupations/job_master
 	var/officer_positions = 5 //Number of open security officer positions at round start
 
 	if(config.security_scaling_coeff > 0)
-		officer_positions = min(12, max(5, (unassigned.len/config.security_scaling_coeff))) //Scale between 5 and 12 officers
+		officer_positions = min(12, max(5, round(unassigned.len/config.security_scaling_coeff))) //Scale between 5 and 12 officers
 		var/datum/job/J = job_master.GetJob("Security Officer")
 		if(J  || J.spawn_positions > 0)
 			Debug("Setting open security officer positions to [officer_positions]")

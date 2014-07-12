@@ -30,6 +30,11 @@
 	for(var/i=0;i<7;i++) // 2 for medHUDs and 5 for secHUDs
 		hud_list += image('icons/mob/hud.dmi', src, "hudunknown")
 
+	// for spawned humans; overwritten by other code
+	create_dna(src)
+	ready_dna(src)
+	randomize_human(src)
+
 	..()
 
 /mob/living/carbon/human/Destroy()
@@ -305,17 +310,17 @@
 	dat += "<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags&ABSTRACT))		? head		: "<font color=grey>Empty</font>"]</A>"
 
 	if(slot_wear_mask in obscured)
-		dat += "<BR><font color=grey><B>Mask:</B> Obscured by [head]</font>"
+		dat += "<BR><font color=grey><B>Mask:</B> Obscured</font>"
 	else
 		dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "<font color=grey>Empty</font>"]</A>"
 
 	if(slot_glasses in obscured)
-		dat += "<BR><font color=grey><B>Eyes:</B> Obscured by [head]</font>"
+		dat += "<BR><font color=grey><B>Eyes:</B> Obscured</font>"
 	else
 		dat += "<BR><B>Eyes:</B> <A href='?src=\ref[src];item=[slot_glasses]'>			[(glasses && !(glasses.flags&ABSTRACT))	? glasses	: "<font color=grey>Empty</font>"]</A>"
 
 	if(slot_ears in obscured)
-		dat += "<BR><font color=grey><B>Ears:</B> Obscured by [head]</font>"
+		dat += "<BR><font color=grey><B>Ears:</B> Obscured</font>"
 	else
 		dat += "<BR><B>Ears:</B> <A href='?src=\ref[src];item=[slot_ears]'>				[(ears && !(ears.flags&ABSTRACT))		? ears		: "<font color=grey>Empty</font>"]</A>"
 
@@ -328,34 +333,26 @@
 			dat += "<BR>[TAB][TAB]&#8627;<A href='?src=\ref[src];internal=[slot_s_store]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
 	if(slot_shoes in obscured)
-		dat += "<BR><font color=grey><B>Shoes:</B> Obscured by [wear_suit]</font>"
+		dat += "<BR><font color=grey><B>Shoes:</B> Obscured</font>"
 	else
 		dat += "<BR><B>Shoes:</B> <A href='?src=\ref[src];item=[slot_shoes]'>			[(shoes && !(shoes.flags&ABSTRACT))		? shoes		: "<font color=grey>Empty</font>"]</A>"
 
 	if(slot_gloves in obscured)
-		dat += "<BR><font color=grey><B>Gloves:</B> Obscured by [wear_suit]</font>"
+		dat += "<BR><font color=grey><B>Gloves:</B> Obscured</font>"
 	else
 		dat += "<BR><B>Gloves:</B> <A href='?src=\ref[src];item=[slot_gloves]'>			[(gloves && !(gloves.flags&ABSTRACT))		? gloves	: "<font color=grey>Empty</font>"]</A>"
 
 	if(slot_w_uniform in obscured)
-		dat += "<BR><font color=grey><B>Uniform:</B> Obscured by [wear_suit]</font>"
+		dat += "<BR><font color=grey><B>Uniform:</B> Obscured</font>"
 	else
 		dat += "<BR><B>Uniform:</B> <A href='?src=\ref[src];item=[slot_w_uniform]'>	 [(w_uniform && !(w_uniform.flags&ABSTRACT)) ? w_uniform : "<font color=grey>Empty</font>"]</A>"
-	if(w_uniform || dna.species.nojumpsuit)
-		dat += "<BR>[TAB]&#8627;<B>Belt:</B> <A href='?src=\ref[src];item=[slot_belt]'> [(belt && !(belt.flags&ABSTRACT)) ? belt : "<font color=grey>Empty</font>"]</A>"
-		if(has_breathable_mask && istype(belt, /obj/item/weapon/tank))
-			dat += "<BR>[TAB][TAB]&#8627;<A href='?src=\ref[src];internal=[slot_belt]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
-		dat += "<BR>[TAB]&#8627;<B>Pockets:</B> <A href='?src=\ref[src];pockets=left'>[(l_store && !(l_store.flags&ABSTRACT)) ? "Left (Full)" : "<font color=grey>Left (Empty)</font>"]</A>"
-		dat += " <A href='?src=\ref[src];pockets=right'>[(r_store && !(r_store.flags&ABSTRACT)) ? "Right (Full)" : "<font color=grey>Right (Empty)</font>"]</A>"
-		dat += "<BR>[TAB]&#8627;<B>ID:</B> <A href='?src=\ref[src];item=[slot_wear_id]'>[(wear_id && !(wear_id.flags&ABSTRACT)) ? wear_id : "<font color=grey>Empty</font>"]</A>"
-
-	if(dna)
-		if(dna.species.nojumpsuit)
-			dat += "<BR><B>ID:</B> <A href='?src=\ref[src];item=[slot_wear_id]'>[(wear_id && !(wear_id.flags&ABSTRACT)) ? wear_id : "Nothing"]</A>"
-		else if(w_uniform)
-			dat += "<BR><B>ID:</B> <A href='?src=\ref[src];item=[slot_wear_id]'>[(wear_id && !(wear_id.flags&ABSTRACT)) ? wear_id : "Nothing"]</A>"
-	else if(w_uniform)
-		dat += "<BR><B>ID:</B> <A href='?src=\ref[src];item=[slot_wear_id]'>[(wear_id && !(wear_id.flags&ABSTRACT)) ? wear_id : "Nothing"]</A>"
+		if((w_uniform) || (dna && dna.species.nojumpsuit))
+			dat += "<BR>[TAB]&#8627;<B>Belt:</B> <A href='?src=\ref[src];item=[slot_belt]'> [(belt && !(belt.flags&ABSTRACT)) ? belt : "<font color=grey>Empty</font>"]</A>"
+			if(has_breathable_mask && istype(belt, /obj/item/weapon/tank))
+				dat += "<BR>[TAB][TAB]&#8627;<A href='?src=\ref[src];internal=[slot_belt]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+			dat += "<BR>[TAB]&#8627;<B>Pockets:</B> <A href='?src=\ref[src];pockets=left'>[(l_store && !(l_store.flags&ABSTRACT)) ? "Left (Full)" : "<font color=grey>Left (Empty)</font>"]</A>"
+			dat += " <A href='?src=\ref[src];pockets=right'>[(r_store && !(r_store.flags&ABSTRACT)) ? "Right (Full)" : "<font color=grey>Right (Empty)</font>"]</A>"
+			dat += "<BR>[TAB]&#8627;<B>ID:</B> <A href='?src=\ref[src];item=[slot_wear_id]'>[(wear_id && !(wear_id.flags&ABSTRACT)) ? wear_id : "<font color=grey>Empty</font>"]</A>"
 
 	dat += "<BR>"
 
@@ -363,17 +360,6 @@
 		dat += "<BR><B>Handcuffed:</B> <A href='?src=\ref[src];item=[slot_handcuffed]'>Remove</A>"
 	if(legcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
-
-	if(dna)
-		if(dna.species.nojumpsuit)
-			dat += "<BR><BR><A href='?src=\ref[src];pockets=left'>Left Pocket ([(l_store && !(l_store.flags&ABSTRACT)) ? "Full" : "Empty"])</A>"
-			dat += " - <A href='?src=\ref[src];pockets=right'>Right Pocket ([(r_store && !(r_store.flags&ABSTRACT)) ? "Full" : "Empty"])</A>"
-		else if(w_uniform)
-			dat += "<BR><BR><A href='?src=\ref[src];pockets=left'>Left Pocket ([(l_store && !(l_store.flags&ABSTRACT)) ? "Full" : "Empty"])</A>"
-			dat += " - <A href='?src=\ref[src];pockets=right'>Right Pocket ([(r_store && !(r_store.flags&ABSTRACT)) ? "Full" : "Empty"])</A>"
-	else if(w_uniform)
-		dat += "<BR><BR><A href='?src=\ref[src];pockets=left'>Left Pocket ([(l_store && !(l_store.flags&ABSTRACT)) ? "Full" : "Empty"])</A>"
-		dat += " - <A href='?src=\ref[src];pockets=right'>Right Pocket ([(r_store && !(r_store.flags&ABSTRACT)) ? "Full" : "Empty"])</A>"
 
 	dat += {"
 	<BR>

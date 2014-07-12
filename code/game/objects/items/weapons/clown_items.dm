@@ -8,7 +8,7 @@
  * Soap
  */
 
- /obj/item/weapon/soap
+/obj/item/weapon/soap
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
 	gender = PLURAL

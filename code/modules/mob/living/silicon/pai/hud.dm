@@ -26,7 +26,7 @@
 						if("Parolled")		holder.icon_state = "hudparolled"
 						if("Discharged")		holder.icon_state = "huddischarged"
 						else
-							return
+							continue
 					client.images += holder
 
 /mob/living/silicon/pai/proc/medicalHUD()
