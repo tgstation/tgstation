@@ -17,7 +17,6 @@
 	icon_state = "hoscap"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	flags = 0
-	flags_inv = 0
 	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/helmet/HoS/dermal
@@ -32,7 +31,6 @@
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "policehelm"
 	flags = 0
-	flags_inv = 0
 	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/helmet/riot
