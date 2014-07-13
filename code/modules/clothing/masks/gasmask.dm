@@ -103,7 +103,7 @@
 
 		switch(phrase)	//sets the properties of the chosen phrase
 			if(1)				// good cop
-				phrase_text = "HALT! HALT! HALT! HALT!"
+				phrase_text = "HALT! HALT! HALT!"
 				phrase_sound = "halt"
 			if(2)
 				phrase_text = "Stop in the name of the Law."
