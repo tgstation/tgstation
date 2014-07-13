@@ -47,8 +47,7 @@
 	if(reagents)
 		world << "added [reagents] to [src]"
 		return 1
-	else
-		return 0
+	return 0
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
