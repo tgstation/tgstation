@@ -1,0 +1,196 @@
+<html>
+<head>
+<title>IconProcs -- a BYOND library</title>
+<style>
+body {font: 11pt 'Trebuchet MS',Tahoma,Verdana,Arial,Helvetica,sans-serif;}
+h1 {margin-bottom: 0; text-align: center;}
+p.subtitle {margin: 0; text-align: center;}
+p.author {margin-top: 0; text-align: center; font-style: italic;}
+p.version {text-align: center; font-weight: bold;}
+</style>
+</head>
+<body>
+
+<h1>IconProcs</h1>
+<p class="subtitle">A BYOND library for manipulating icons and colors</p>
+<p class="author">by Lummox JR</p>
+<p class="version">version 1.0</p>
+
+
+<p>The IconProcs library was made to make a lot of common icon operations much
+easier. BYOND's icon manipulation routines are very capable but some of the
+advanced capabilities like using alpha transparency can be unintuitive to
+beginners.</p>
+
+
+
+<h2>Changing Icons</h2>
+
+<p>Several new procs have been added to the <tt>/icon</tt> datum to simplify
+working with icons. To use them, remember you first need to setup an
+<tt>/icon</tt> var like so:</p>
+
+<pre>var/icon/my_icon = new('iconfile.dmi')</pre>
+
+<dl>
+
+<dt><tt>icon/ChangeOpacity(amount = 1)</tt></dt>
+<dd>A very common operation in DM is to try to make an icon more or less
+transparent. Making an icon more transparent is usually much easier than making
+it less so, however. This proc basically is a frontend for <tt>MapColors()</tt>
+which can change opacity any way you like, in much the same way that
+<tt>SetIntensity()</tt> can make an icon lighter or darker. If <tt>amount</tt>
+is 0.5, the opacity of the icon will be cut in half. If <tt>amount</tt> is 2,
+opacity is doubled and anything more than half-opaque will become fully
+opaque.</dd>
+
+<dt><tt>icon/GrayScale()</tt></dt>
+<dd>Converts the icon to grayscale instead of a fully colored icon. Alpha
+values are left intact.</dd>
+
+<dt><tt>icon/ColorTone(tone)</tt></dt>
+<dd>Similar to <tt>GrayScale()</tt>, this proc converts the icon to a range of
+black -&gt; <tt>tone</tt> -&gt; white, where <tt>tone</tt> is an RGB color (its
+alpha is ignored). This can be used to create a sepia tone or similar effects.
+See also the global <tt>ColorTone()</tt> proc.</dd>
+
+<dt><tt>icon/MinColors(icon)</tt></dt>
+<dd>The icon is blended with a second icon where the minimum of each RGB pixel
+is the result. Transparency may increase, as if the icons were blended with
+<tt>ICON_ADD</tt>. You may supply a color in place of an icon.</dd>
+
+<dt><tt>icon/MaxColors(icon)</tt></dt>
+<dd>The icon is blended with a second icon where the maximum of each RGB pixel
+is the result. Opacity may increase, as if the icons were blended with
+<tt>ICON_OR</tt>. You may supply a color in place of an icon.</dd>
+
+<dt><tt>icon/Opaque(background = "#000000")</tt></dt>
+<dd>All alpha values are set to 255 throughout the icon. Transparent pixels
+become black, or whatever background color you specify.</dd>
+
+<dt><tt>icon/BecomeAlphaMask()</tt></dt>
+<dd>You can convert a simple grayscale icon into an alpha mask to use with other
+icons very easily with this proc. The black parts become transparent, the
+white parts stay white, and anything in between becomes a translucent shade of
+white.</dd>
+
+<dt><tt>icon/AddAlphaMask(mask)</tt></dt>
+<dd>The alpha values of the mask icon will be blended with the current icon.
+Anywhere the mask is opaque, the current icon is untouched. Anywhere the mask
+is transparent, the current icon becomes transparent. Where the mask is
+translucent, the current icon becomes more transparent.</dd>
+
+<dt><tt>icon/UseAlphaMask(mask, mode)</tt></dt>
+<dd>Sometimes you may want to take the alpha values from one icon and use them
+on a different icon. This proc will do that. Just supply the icon whose alpha
+mask you want to use, and <tt>src</tt> will change so it has the same colors
+as before but uses the mask for opacity.</dd>
+
+</dl>
+
+
+<h2>Color management and HSV</h2>
+
+<p>RGB isn't the only way to represent color. Sometimes it's more useful to
+work with a model called HSV, which stands for hue, saturation, and value.</p>
+
+<ul>
+  <li>The <b>hue</b> of a color describes where it is along the color wheel. It goes from red to yellow to green to cyan to blue to magenta and back to red.</li>
+  <li>The <b>saturation</b> of a color is how much color is in it. A color with low saturation will be more gray, and with no saturation at all it <i>is</i> a shade of gray.</li>
+  <li>The <b>value</b> of a color determines how bright it is. A high-value color is vivid, moderate value is dark, and no value at all is black.</li>
+</ul>
+
+<p>Just as BYOND uses <tt>"#rrggbb"</tt> to represent RGB values, a similar
+format is used for HSV: <tt>"#hhhssvv"</tt>. The hue is three hex digits
+because it ranges from 0 to 0x5FF.</p>
+
+<ul>
+  <li>0 to 0xFF - red to yellow</li>
+  <li>0x100 to 0x1FF - yellow to green</li>
+  <li>0x200 to 0x2FF - green to cyan</li>
+  <li>0x300 to 0x3FF - cyan to blue</li>
+  <li>0x400 to 0x4FF - blue to magenta</li>
+  <li>0x500 to 0x5FF - magenta to red</li>
+</ul>
+
+<p>Knowing this, you can figure out that red is <tt>"#000ffff"</tt> in HSV
+format, which is hue 0 (red), saturation 255 (as colorful as possible), value
+255 (as bright as possible). Green is <tt>"#200ffff"</tt> and blue is
+<tt>"#400ffff"</tt>.</p>
+
+<p>More than one HSV color can match the same RGB color.</p>
+
+<p>Here are some procs you can use for color management:</p>
+
+
+<dl>
+
+<dt><tt>ReadRGB(rgb)</tt></dt>
+<dd>Takes an RGB string like <tt>"#ffaa55"</tt> and converts it to a list such
+as <tt>list(255,170,85)</tt>. If an RGBA format is used that includes alpha,
+the list will have a fourth item for the alpha value.</dd>
+
+<dt><tt>hsv(hue, sat, val, apha)</tt></dt>
+<dd>Counterpart to <tt>rgb()</tt>, this takes the values you input and converts
+them to a string in <tt>"#hhhssvv"</tt> or <tt>"#hhhssvvaa"</tt> format. Alpha
+is not included in the result if null.</dd>
+
+<dt><tt>ReadHSV(rgb)</tt></dt>
+<dd>Takes an HSV string like <tt>"#100FF80"</tt> and converts it to a list such
+as <tt>list(256,255,128)</tt>. If an HSVA format is used that includes alpha,
+the list will have a fourth item for the alpha value.</dd>
+
+<dt><tt>RGBtoHSV(rgb)</tt></dt>
+<dd>Takes an RGB or RGBA string like <tt>"#ffaa55"</tt> and converts it into an
+HSV or HSVA color such as <tt>"#080aaff"</tt>.</dd>
+
+<dt><tt>HSVtoRGB(hsv)</tt></dt>
+<dd>Takes an HSV or HSVA string like <tt>"#080aaff"</tt> and converts it into
+an RGB or RGBA color such as <tt>"#ff55aa"</tt>.</dd>
+
+<dt><tt>BlendRGB(rgb1, rgb2, amount)</tt></dt>
+<dd>Blends between two RGB or RGBA colors using regular RGB blending. If
+<tt>amount</tt> is 0, the first color is the result; if 1, the second color is
+the result. 0.5 produces an average of the two. Values outside the 0 to 1 range
+are allowed as well. The returned value is an RGB or RGBA color.</dd>
+
+<dt><tt>BlendHSV(hsv1, hsv2, amount)</tt></dt>
+<dd>Blends between two HSV or HSVA colors using HSV blending, which tends to
+produce nicer results than regular RGB blending because the brightness of the
+color is left intact. If <tt>amount</tt> is 0, the first color is the result;
+if 1, the second color is the result. 0.5 produces an average of the two.
+Values outside the 0 to 1 range are allowed as well. The returned value is an
+HSV or HSVA color.</dd>
+
+<dt><tt>BlendRGBasHSV(rgb1, rgb2, amount)</tt></dt>
+<dd>Like <tt>BlendHSV()</tt>, but the colors used and the return value are RGB
+or RGBA colors. The blending is done in HSV form.</dd>
+
+<dt><tt>HueToAngle(hue)</tt></dt>
+<dd>Converts a hue to an angle range of 0 to 360. Angle 0 is red, 120 is green,
+and 240 is blue.</dd>
+
+<dt><tt>AngleToHue(hue)</tt></dt>
+<dd>Converts an angle to a hue in the valid range.</dd>
+
+<dt><tt>RotateHue(hsv, angle)</tt></dt>
+<dd>Takes an HSV or HSVA value and rotates the hue forward through red, green,
+and blue by an angle from 0 to 360. (Rotating red by 60&deg; produces yellow.)
+The result is another HSV or HSVA color with the same saturation and value as
+the original, but a different hue.</dd>
+
+<dt><tt>GrayScale(rgb)</tt></dt>
+<dd>Takes an RGB or RGBA color and converts it to grayscale. Returns an RGB or
+RGBA string.</dd>
+
+<dt><tt>ColorTone(rgb, tone)</tt></dt>
+<dd>Similar to <tt>GrayScale()</tt>, this proc converts an RGB or RGBA color to
+a range of black -&gt; <tt>tone</tt> -&gt; white instead of using strict shades
+of gray. The <tt>tone</tt> value is an RGB color; any alpha value is
+ignored.</dd>
+
+</dl>
+
+
+</body>
+</html>
