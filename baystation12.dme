@@ -6,6 +6,9 @@
 // BEGIN_FILE_DIR
 #define FILE_DIR .
 #define FILE_DIR "code"
+#define FILE_DIR "code/libs"
+#define FILE_DIR "code/libs/Get Flat Icon"
+#define FILE_DIR "code/libs/Get Flat Icon/demo"
 #define FILE_DIR "code/TriDimension"
 #define FILE_DIR "code/unused"
 #define FILE_DIR "code/unused/goonheist"
