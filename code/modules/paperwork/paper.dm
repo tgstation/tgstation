@@ -347,7 +347,7 @@
 
 /obj/item/weapon/paper/mining
 	name = "paper- Smelting Operations Closed"
-	info = "Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redeption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
+	info = "<B>**NOTICE**</B><BR><BR>Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redeption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
 
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"
