@@ -7,6 +7,6 @@
 <i><b>Invite your friends! Anyone can join if they have Byond!</b></i>
 
 <i>Make sure to set your Special Role/Antagonist settings if you want to be traitor or other badguy roles.</i>
-<i>If you end up playing traitor, actually perform your objectives.</i>
+<i>If you end up playing traitor, actually perform your objectives. If you can't or don't want to, use adminhelp.</i>
 
-<i>Note about Species: Make sure to check them each game as they do not save properly./i>
+<i>Note about Species: Make sure to check them each game as they do not save properly.</i>
