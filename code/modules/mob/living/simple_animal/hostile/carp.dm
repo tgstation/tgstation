@@ -35,7 +35,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 
-	faction = "carp"
+	faction = list("carp")
 
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(var/check_drift = 0)
 	return 1	//No drifting in space for space carp!	//original comments do not steal

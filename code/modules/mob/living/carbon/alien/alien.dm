@@ -10,7 +10,7 @@
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
-	faction = "alien"
+	faction = list("alien")
 	ventcrawler = 2
 
 	var/storedPlasma = 250

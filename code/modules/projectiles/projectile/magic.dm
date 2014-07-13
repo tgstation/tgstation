@@ -237,7 +237,7 @@ proc/wabbajack(mob/living/M)
 			for(var/mob/living/carbon/human/H in change.contents)
 				var/mob/living/simple_animal/hostile/statue/S = new /mob/living/simple_animal/hostile/statue(change.loc, firer)
 				S.name = "statue of [H.name]"
-				S.faction = "\ref[firer]"
+				S.faction = firer.faction
 				S.icon = change.icon
 				if(H.mind)
 					H.mind.transfer_to(S)

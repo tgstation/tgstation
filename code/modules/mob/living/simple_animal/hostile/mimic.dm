@@ -33,7 +33,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-	faction = "mimic"
+	faction = list("mimic")
 	move_to_delay = 9
 
 /mob/living/simple_animal/hostile/mimic/FindTarget()

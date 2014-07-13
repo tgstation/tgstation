@@ -9,7 +9,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
-	faction = "mining"
+	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
 	heat_damage_per_tick = 20

@@ -33,7 +33,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-	faction = "statue"
+	faction = list("statue")
 	move_to_delay = 0 // Very fast
 
 	animate_movement = NO_STEPS // Do not animate movement, you jump around as you're a scary statue.
