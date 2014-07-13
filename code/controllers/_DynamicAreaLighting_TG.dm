@@ -41,14 +41,17 @@ datum/light_source
 	var/__y = 0		// y coordinate at last update
 	var/__z = 0		// z coordinate at last update
 
-	var/list/_l_color // do not use directly, only used as reference for updating
+	var/_l_color // do not use directly, only used as reference for updating
+	var/col_r
+	var/col_g
+	var/col_b
 
 	New(atom/A)
 		if(!istype(A))
 			CRASH("The first argument to the light object's constructor must be the atom that is the light source. Expected atom, received '[A]' instead.")
 		..()
 		owner = A
-		_l_color = ReadRGB(owner.l_color)
+		readrgb(owner.l_color)
 		__x = owner.x
 		__y = owner.y
 		__z = owner.z
@@ -81,18 +84,19 @@ datum/light_source
 	proc/remove_effect()
 		// before we apply the effect we remove the light's current effect.
 		for(var/turf/T in effect)	// negate the effect of this light source
-			T.update_lumcount(-effect[T], _l_color, 1)
-		effect.len = 0					// clear the effect list
+			T.update_lumcount(-effect[T], col_r, col_g, col_b, 1)
+		effect.Cut()					// clear the effect list
 
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map
 		if(owner.loc && owner.luminosity > 0)
-			_l_color = ReadRGB(owner.l_color)
+			readrgb(owner.l_color)
+			effect = list()
 			for(var/turf/T in view(owner.get_light_range(),owner))
 				var/delta_lumen = lum(T)
 				if(delta_lumen > 0)
 					effect[T] = delta_lumen
-					T.update_lumcount(delta_lumen, _l_color, 0)
+					T.update_lumcount(delta_lumen, col_r, col_g, col_b, 0)
 
 			return 0
 		else
@@ -112,10 +116,20 @@ datum/light_source
 #else
 			dist = max(abs(A.x - __x), abs(A.y - __y))
 #endif
-		if (owner.trueLuminosity > sqrtTable.len) // This will never happen... right?
+		if (owner.trueLuminosity > 100) // This will never happen... right?
 			return sqrt(owner.trueLuminosity) - dist
 		else
 			return sqrtTable[owner.trueLuminosity] - dist
+
+	proc/readrgb(const/col)
+		_l_color = col
+
+		if(col)
+			col_r = GetRedPart(col)
+			col_g = GetGreenPart(col)
+			col_b = GetBluePart(col)
+		else
+			col_r = null
 
 atom
 	var/datum/light_source/light
@@ -224,20 +238,20 @@ turf
 turf/space
 	lighting_lumcount = 4		//starlight
 
-turf/proc/update_lumcount(amount, const/list/_l_color_rgb, removing = 0)
+turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
 	lighting_lumcount += amount
 
-	if(_l_color_rgb)
+	if(!isnull(col_r)) //col_r is the "key" var, if it's null so will the rest
 		if(removing)
 			light_col_sources--
-			lumcount_r -= _l_color_rgb[1]
-			lumcount_g -= _l_color_rgb[2]
-			lumcount_b -= _l_color_rgb[3]
+			lumcount_r -= col_r
+			lumcount_g -= col_g
+			lumcount_b -= col_b
 		else
 			light_col_sources++
-			lumcount_r += _l_color_rgb[1]
-			lumcount_g += _l_color_rgb[2]
-			lumcount_b += _l_color_rgb[3]
+			lumcount_r += col_r
+			lumcount_g += col_g
+			lumcount_b += col_b
 
 		if(light_col_sources)
 			var/r_avg = max(0, min(255, round(lumcount_r / light_col_sources, 16) + 15))
