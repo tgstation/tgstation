@@ -27,12 +27,12 @@ datum/objective_item/steal/rcd
 	name = "a rapid-construction-device"
 	targetitem = /obj/item/weapon/rcd
 	difficulty = 3
-
+/* SHINE too hard to hide
 datum/objective_item/steal/jetpack
 	name = "a jetpack"
 	targetitem = /obj/item/weapon/tank/jetpack
 	difficulty = 3
-
+*/
 datum/objective_item/steal/magboots // SHINE changed from advanced to normal boots
 	name = "a pair of magboots"
 	targetitem =  /obj/item/clothing/shoes/magboots
@@ -62,7 +62,7 @@ datum/objective_item/steal/nukedisc
 	targetitem = /obj/item/weapon/disk/nuclear
 	difficulty = 5
 	excludefromjob = list("Captain")
-
+/* SHINE removed, too hard to hide
 datum/objective_item/steal/ablative
 	name = "an ablative armor vest"
 	targetitem = /obj/item/clothing/suit/armor/laserproof
@@ -74,7 +74,7 @@ datum/objective_item/steal/reactive
 	targetitem = /obj/item/clothing/suit/armor/reactive
 	difficulty = 5
 	excludefromjob = list("Research Director")
-
+*/
 datum/objective_item/steal/documents
 	name = "a set of secret documents"
 	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's

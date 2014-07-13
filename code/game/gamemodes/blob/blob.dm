@@ -104,7 +104,7 @@ var/list/blob_nodes = list()
 
 	if(emergency_shuttle)
 		emergency_shuttle.always_fake_recall = 1
-
+/* SHINE remove due to compile errors?
 	// Disable the blob event for this round.
 	if(events)
 		var/datum/round_event_control/blob/B = locate() in events.control
@@ -112,7 +112,7 @@ var/list/blob_nodes = list()
 			B.max_occurrences = 0 // disable the event
 	else
 		ERROR("Events variable is null in blob gamemode post setup.")
-
+*/
 	spawn(10)
 		start_state = new /datum/station_state()
 		start_state.count()
