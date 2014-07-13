@@ -278,7 +278,6 @@ obj/machinery/gibber/New()
 		return
 	use_power(1000)
 	visible_message("\red You hear a loud squelchy grinding sound.")
-	playsound(src, get_sfx("gib"), 50, 1)
 	src.operating = 1
 	update_icon()
 	var/sourcename = victim.real_name
@@ -324,7 +323,7 @@ obj/machinery/gibber/New()
 			new /obj/effect/decal/cleanable/blood/gibs(Tx,2)
 	del(victim)
 	spawn(src.gibtime)
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/gib2.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
 			var/obj/item/meatslab = allmeat[i]

@@ -233,7 +233,7 @@
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/item/projectile/bullet/weakbullet
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	projectiles = 300
 	projectile_energy_cost = 20
 	var/projectiles_per_shot = 3
@@ -273,7 +273,7 @@
 	name = "SRM-8 Missile Rack"
 	icon_state = "mecha_missilerack"
 	projectile = /obj/item/missile
-	fire_sound = 'sound/effects/bang.ogg'
+	fire_sound = 'sound/weapons/rocket.ogg'
 	projectiles = 8
 	projectile_energy_cost = 1000
 	equip_cooldown = 60
