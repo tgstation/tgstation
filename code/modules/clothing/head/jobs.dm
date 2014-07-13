@@ -13,6 +13,7 @@
 	icon_state = "captain"
 	desc = "It's good being the king."
 	item_state = "that"
+	armor = list(melee = 50, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 //Captain: This probably shouldn't be space-worthy
 /obj/item/clothing/head/helmet/cap
@@ -30,6 +31,7 @@
 	name = "head of personnel's cap"
 	icon_state = "hopcap"
 	desc = "Glory to Nanotrasen."
+	armor = list(melee = 50, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 //Chaplain
 /obj/item/clothing/head/chaplain_hood
@@ -50,7 +52,7 @@
 	desc = "Someone who wears this will look very smart."
 	icon_state = "detective"
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
-	armor = list(melee = 50, bullet = 5, laser = 25,energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 //Mime
 /obj/item/clothing/head/beret
@@ -63,19 +65,18 @@
 	name = "security beret"
 	desc = "A beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
 	icon_state = "beret_badge"
-
+	armor = list(melee = 50, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/beret/sec/navyhos
 	name = "head of security's beret"
-	desc = "A beret with the security insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
+	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
 	icon_state = "hosberet"
-
 
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
-	desc = "A beret with the security insignia emblazoned on it. Not to be mixed with casual attire."
+	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
 	icon_state = "wardenberet"
 
-
 /obj/item/clothing/head/beret/sec/navyofficer
+	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
 	icon_state = "officerberet"
