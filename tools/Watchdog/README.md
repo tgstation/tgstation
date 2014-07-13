@@ -21,16 +21,16 @@ Setting Up
 1. Clone your server's code from github or another git repository to the directory you wish to run the server from.
 2. Install BYOND.
 3. Copy the config (or config-example, for /vg/-based servers) to a separate directory and edit as needed.  Moving configs elsewhere keeps them from being overwritten during updates.
-4. Edit server_controller.py to taste.
+4. Edit Watchdog.py to taste.  You will also need to edit the accompanying bash scripts to fit your environment.
 5. Create the necessary scripts.
-5. Optionally, edit your MOTD with the following macros (replaced when the config is copied over):
+6. Optionally, edit your MOTD with the following macros (replaced when the config is copied over):
   * {GIT_BRANCH}: The desired branch in your git repository.
   * {GIT_REMOTE}: The name of the remote.
   * {GIT_COMMIT}: Shortened version of the current commit.
 
 Usage
 -----
-Start server_controller.py with python 2.7.  (If you're on linux, your best option would be to run it in a screen session.)
+Start Watchdog.py with python 2.7.  (If you're on linux, your best option would be to run it in a screen session.)
 
 After starting, it will check if the repository requires an update.  If it does, it will 
 fetch and pull the update, then compile the project using the script specified.  After 

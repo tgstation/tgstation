@@ -742,7 +742,7 @@
 	var/hname = ""
 	var/job = null
 
-/obj/item/weapon/reagent_containers/food/snacks/human/burger
+
 	name = "-burger"
 	desc = "A bloody burger."
 	icon_state = "hburger"
@@ -2759,3 +2759,24 @@
 		reagents.add_reagent("toxin", 5)
 		bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/assburger
+	name = "assburger"
+	desc = "You better be REALLY nice to this burger, or it'll report you to the police!"
+	icon_state = "assburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("spiritbreaker", 10) // Screaming
+		reagents.add_reagent("mercury",       10) // Idiot
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/asspie
+	name = "asspie"
+	desc = "Please remember to check your privlidge, pie eating scum."
+	icon_state = "asspie"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("spiritbreaker", 10) // Screaming
+		reagents.add_reagent("mercury",       10) // Idiot
+		bitesize = 3

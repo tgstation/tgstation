@@ -473,3 +473,10 @@ proc/is_blind(A)
 	if(!istype(P))
 		return null
 	return P
+
+
+
+/proc/iscluwne(A)
+	if(A && istype(A, /mob/living/simple_animal/hostile/retaliate/cluwne))
+		return 1
+	return 0

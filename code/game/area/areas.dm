@@ -364,13 +364,8 @@
 		if(ENVIRON)
 			master.used_environ += amount
 
-/area/Exited(atom/movable/Obj)
-	. = ..()
-	Obj.lastarea = master
-
-/area/Entered(atom/movable/Obj,atom/OldLoc)
-	. = ..()
-
+/area/Entered(atom/movable/Obj, atom/OldLoc)
+	var/area/oldAreaMaster = Obj.areaMaster
 	Obj.areaMaster = master
 
 	if (!ismob(Obj))
@@ -379,10 +374,10 @@
 	var/mob/M = Obj
 
 	// /vg/ - EVENTS!
-	CallHook("MobAreaChange", list("mob" = M, "new" = M.areaMaster, "old" = M.lastarea))
+	CallHook("MobAreaChange", list("mob" = M, "new" = Obj.areaMaster, "old" = oldAreaMaster))
 
 	// Being ready when you change areas gives you a chance to avoid falling all together.
-	if (!M.lastarea.has_gravity && M.areaMaster.has_gravity && M.m_intent == "run")
+	if (!oldAreaMaster.has_gravity && M.areaMaster.has_gravity && M.m_intent == "run")
 		thunk(M)
 
 	if (isnull(M.client))
