@@ -205,7 +205,7 @@ datum/objective/block/check_completion()
 
 
 datum/objective/escape
-	explanation_text = "Escape on the shuttle or an escape pod alive."
+	explanation_text = "Sabotage the station and escape on the shuttle alive."
 	dangerrating = 5
 
 datum/objective/escape/check_completion()

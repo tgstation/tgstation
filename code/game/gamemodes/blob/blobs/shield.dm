@@ -3,8 +3,8 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_idle"
 	desc = "Some blob creature thingy"
-	health = 75
-	fire_resist = 2
+	health = 42 // SHINE 75 to 42
+	fire_resist = 1 // SHINE 2 to 1
 
 
 /obj/effect/blob/shield/update_icon()

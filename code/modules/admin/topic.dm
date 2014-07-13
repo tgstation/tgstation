@@ -1694,11 +1694,11 @@
 				feedback_add_details("admin_secrets_fun_used","STA")
 				message_admins("[key_name_admin(usr)] has made wormholes")
 				E = new /datum/round_event/wormholes()
-			if("goblob")
+/*			if("goblob") // SHINE remove
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BL")
 				message_admins("[key_name_admin(usr)] has spawned blob", 1)
-				E = new /datum/round_event/blob()
+				E = new /datum/round_event/blob()*/
 			if("aliens")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","AL")

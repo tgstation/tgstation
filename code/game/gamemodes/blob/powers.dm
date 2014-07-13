@@ -59,7 +59,7 @@
 	return
 
 
-
+/* // SHINE REMOEVED THIS
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
@@ -95,7 +95,7 @@
 		R.overmind = src
 
 	return
-
+*/
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
 	set name = "Create Node Blob (60)"
