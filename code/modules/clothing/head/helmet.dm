@@ -44,7 +44,7 @@
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
-	desc = "A robust helmet used by the SWAT branches of NanoTrasen's planetary security forces."
+	desc = "A robust helmet used by the SWAT branches planetary security forces."
 	icon_state = "swat"
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
