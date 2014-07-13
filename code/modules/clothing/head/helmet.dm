@@ -22,7 +22,7 @@
 
 /obj/item/clothing/head/helmet/HoS/dermal
 	name = "Dermal Armour Patch"
-	desc = "An armored implant that automatically integrates just below the scalp for robust protection and without sacrificing style."
+	desc = "An armored implant that automatically integrates just below the scalp for robust protection without sacrificing style."
 	icon_state = "dermal"
 	item_state = "dermal"
 	flags_inv = 0
