@@ -45,7 +45,6 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/proc/add_juice()
 	if(reagents)
-		world << "added [reagents] to [src]"
 		return 1
 	return 0
 
