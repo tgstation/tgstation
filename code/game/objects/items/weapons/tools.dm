@@ -20,6 +20,7 @@
 	desc = "A wrench with common uses. Can be found in your hand."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "wrench"
+	hitsound = "sound/weapons/smash.ogg"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5.0
@@ -39,6 +40,7 @@
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "screwdriver"
+	hitsound = 'sound/weapons/toolhit.ogg'
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5.0
@@ -101,6 +103,7 @@
 	desc = "This cuts wires."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "cutters"
+	hitsound = 'sound/weapons/toolhit.ogg'
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 	force = 6.0
@@ -138,6 +141,7 @@
 	name = "welding tool"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
+	hitsound = 'sound/weapons/toolhit.ogg'
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 
@@ -225,6 +229,7 @@
 				src.force = 3
 				src.damtype = "brute"
 				src.icon_state = "welder"
+				src.hitsound = "sound/weapons/toolhit.ogg"
 				src.welding = 0
 			processing_objects.Remove(src)
 			return
@@ -234,6 +239,7 @@
 				src.force = 15
 				src.damtype = "fire"
 				src.icon_state = "welder1"
+				src.hitsound = "sound/weapons/welderattack.ogg"
 			if(prob(5))
 				remove_fuel(1)
 
@@ -444,6 +450,7 @@
 	desc = "Used to hit floors"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "crowbar"
+	hitsound = "sound/weapons/toolhit.ogg"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5.0

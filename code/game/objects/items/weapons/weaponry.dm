@@ -90,6 +90,7 @@
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
 	item_state = "claymore"
+	hitsound = "sound/weapons/bloodyslice.ogg"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	force = 40
@@ -105,7 +106,7 @@
 		return(BRUTELOSS)
 
 /obj/item/weapon/claymore/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/bloodyslice.ogg', 50, 1, -1)
 	return ..()
 
 /obj/item/weapon/katana
@@ -113,6 +114,7 @@
 	desc = "Woefully underpowered in D20"
 	icon_state = "katana"
 	item_state = "katana"
+	hitsound = "sound/weapons/bloodyslice.ogg"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
@@ -128,7 +130,7 @@
 		return 1
 
 /obj/item/weapon/katana/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/bloodyslice.ogg', 50, 1, -1)
 	return ..()
 
 /obj/item/weapon/harpoon
@@ -137,6 +139,7 @@
 	desc = "Tharr she blows!"
 	icon_state = "harpoon"
 	item_state = "harpoon"
+	hitsound = "sound/weapons/bladeslice.ogg"
 	force = 20
 	throwforce = 15
 	w_class = 3
