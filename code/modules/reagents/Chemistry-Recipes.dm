@@ -408,6 +408,13 @@ silicate
 	required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
 	result_amount = 1
 
+/datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
+	name = "Mute toxin"
+	id = "mutetoxin"
+	result = "mutetoxin"
+	required_reagents = list("uranium" = 2, "water" = 1, "carbon" = 1)
+	result_amount = 2
+
 /datum/chemical_reaction/zombiepowder
 	name = "Zombie Powder"
 	id = "zombiepowder"
