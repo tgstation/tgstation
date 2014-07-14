@@ -43,7 +43,7 @@
 /mob/living/simple_animal/sculpture/proc/Escape()
 	observed = 0
 	var/list/turfs = new/list()
-	for(var/turf/thisturf in range(200,src))
+	for(var/turf/thisturf in range(100,src))
 		if(istype(thisturf, /turf/space))
 			continue
 		else if(istype(thisturf, /turf/simulated/wall))
@@ -197,15 +197,20 @@
 				//rampage along a path to get to them, in the blink of an eye
 				var/turf/next_turf = get_step_towards(src, target)
 				var/num_turfs = get_dist(src,target)
+				spawn(5)
 				while(get_turf(src) != target_turf && num_turfs > 0)
 					for(var/obj/structure/window/W in next_turf)
-						spawn(10) W.destroy()
+						W.destroy()
+						sleep(10)
 					for(var/obj/structure/table/O in next_turf)
-						spawn(10) O.ex_act(1)
+						O.ex_act(1)
+						sleep(10)
 					for(var/obj/structure/grille/G in next_turf)
-						spawn(10) G.ex_act(1)
+						G.ex_act(1)
+						sleep(10)
 					for(var/obj/machinery/door/D in next_turf)
-						spawn(10) D.open()
+						D.open()
+						sleep(10)
 					if(!next_turf.CanPass(src, next_turf))
 						break
 					src.loc = next_turf
@@ -246,15 +251,20 @@
 				//rampage along a path to get to it, in the blink of an eye
 				var/turf/next_turf = get_step_towards(src, target_turf)
 				var/num_turfs = get_dist(src,target_turf)
+				spawn(5)
 				while(get_turf(src) != target_turf && num_turfs > 0)
 					for(var/obj/structure/window/W in next_turf)
-						spawn(10) W.destroy()
+						W.destroy()
+						sleep(10)
 					for(var/obj/structure/table/O in next_turf)
-						spawn(10) O.ex_act(1)
+						O.ex_act(1)
+						sleep(10)
 					for(var/obj/structure/grille/G in next_turf)
-						spawn(10) G.ex_act(1)
+						G.ex_act(1)
+						sleep(10)
 					for(var/obj/machinery/door/D in next_turf)
-						spawn(10) D.open()
+						D.open()
+						sleep(10)
 					if(!next_turf.CanPass(src, next_turf))
 						break
 					src.loc = next_turf
