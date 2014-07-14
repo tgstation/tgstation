@@ -13,7 +13,6 @@
 	icon_state = "captain"
 	desc = "It's good being the king."
 	item_state = "that"
-	armor = list(melee = 50, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 //Captain: This probably shouldn't be space-worthy
 /obj/item/clothing/head/helmet/cap
@@ -31,7 +30,6 @@
 	name = "head of personnel's cap"
 	icon_state = "hopcap"
 	desc = "Glory to Nanotrasen."
-	armor = list(melee = 50, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 //Chaplain
 /obj/item/clothing/head/chaplain_hood
@@ -65,7 +63,6 @@
 	name = "security beret"
 	desc = "A beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
 	icon_state = "beret_badge"
-	armor = list(melee = 50, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/beret/sec/navyhos
 	name = "head of security's beret"
