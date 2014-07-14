@@ -238,7 +238,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/para_pen
 	name = "Sleepy Pen"
-	desc = "A syringe disguised as a functional pen, filled with a drug that temporarily blocks the vocal cords and sleeptoxin. \
+	desc = "A syringe disguised as a functional pen, filled with a potent mix of drugs, including a strong anaesthetic and a chemical that is capable of blocking the movement of the vocal chords. \
 	The pen holds one dose of the mixture, and cannot be refilled."
 	item = /obj/item/weapon/pen/paralysis
 	cost = 3
@@ -370,10 +370,10 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/plastic_explosives
 	name = "Composition C-4"
-	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, attach it to organisms to destroy them, or connect a signaler to its wiring to make it remotely detonable. \
+	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls or connect a signaler to its wiring to make it remotely detonable. \
 	It has a modifiable timer with a minimum setting of 10 seconds."
 	item = /obj/item/weapon/plastique
-	cost = 2
+	cost = 1
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power sink"
