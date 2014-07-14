@@ -10,7 +10,7 @@
 
 	update_icon()
 		if(health <= 0)
-			playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/effects/blobsplatspecial.ogg', 50, 1)
 			Delete()
 			return
 		return
@@ -38,7 +38,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	attacktext = "hits"
-	attack_sound = 'sound/weapons/genhit1.ogg'
+	attack_sound = 'sound/weapons/rapidslice.ogg'
 	var/obj/effect/blob/factory/factory = null
 	faction = "blob"
 	min_oxy = 0

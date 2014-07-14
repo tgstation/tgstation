@@ -871,6 +871,7 @@
 #include "code\modules\assembly\proximity.dm"
 #include "code\modules\assembly\shock_kit.dm"
 #include "code\modules\assembly\signaler.dm"
+#include "code\modules\assembly\speaker.dm"
 #include "code\modules\assembly\timer.dm"
 #include "code\modules\assembly\voice.dm"
 #include "code\modules\atmos_automation\console.dm"

@@ -16,6 +16,7 @@
 
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is putting the live paddles on \his chest! It looks like \he's trying to commit suicide.</b>"
+		playsound(get_turf(src), 'sound/items/defib.ogg', 50, 1)
 		return (OXYLOSS)
 
 /obj/item/weapon/melee/defibrillator/update_icon()
@@ -97,7 +98,7 @@
 			if(!charges)
 				status = 0
 			update_icon()
-			playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
+			playsound(get_turf(src), 'sound/items/defib.ogg', 50, 1)
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> Defibrillated [H.name] ([H.ckey]) with [src.name]</font>"
 			H.attack_log += "\[[time_stamp()]\]<font color='orange'> Defibrillated by [user.name] ([user.ckey]) with [src.name]</font>"
 			log_attack("<font color='red'>[user.name] ([user.ckey]) defibrillated [H.name] ([H.ckey]) with [src.name]</font>" )

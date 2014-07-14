@@ -234,6 +234,7 @@ var/bomb_set
 					src.anchored = !( src.anchored )
 					if(src.anchored)
 						visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring.")
+						playsound(src,'sound/effects/bolt.ogg', 70, 1)
 					else
 						visible_message("\red The anchoring bolts slide back into the depths of [src].")
 
