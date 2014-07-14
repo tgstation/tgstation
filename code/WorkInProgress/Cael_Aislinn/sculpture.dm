@@ -2,9 +2,9 @@
 //sculpture
 //SCP-173, nothing more need be said
 /mob/living/simple_animal/sculpture
-	name = "\improper sculpture"
+	name = "\improper SCP-173"
 	real_name = "sculpture"
-	desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid. "
+	desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid and even more dangerous. "
 	icon = 'code/WorkInProgress/Cael_Aislinn/unknown.dmi'
 	icon_state = "sculpture"
 	icon_living = "sculpture"
@@ -18,7 +18,7 @@
 	var/observed = 0
 	var/allow_escape = 0	//set this to 1 for src to drop it's target next Life() call and try to escape
 	var/hibernate = 0
-	var/random_escape_chance = 5 //5 times out of 100 he'll just yakkety sax away, pretty powerful, think of it as blinking
+	var/random_escape_chance = 10 //10 times out of 100 he'll just yakkety sax away, pretty powerful, think of it as blinking. Most likely not functional, hail the coder
 
 /mob/living/simple_animal/sculpture/proc/GrabMob(var/mob/living/target)
 	if(target && target != src && ishuman(target))
@@ -34,14 +34,16 @@
 
 		G.state = GRAB_KILL
 
-		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid. [G ? "\red The sculpture is holding [G.affecting] in a vice-like grip." : ""]"
+		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid and even more dangerous. [G ? "\red The sculpture is holding [G.affecting] in a vice-like grip." : ""]"
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been grabbed by SCP-173, and had his neck snapped!</font>")
-		log_admin("[target] ([target.ckey]) has been grabbed and had his neck snapped.")
-		message_admins("Alert: [target.real_name] has been grabbed and had his neck snapped.") //Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.
+		log_admin("[target] ([target.ckey]) has been grabbed and had his neck snapped by an active SCP-173.")
+		message_admins("Alert: [target.real_name] has been grabbed and had his neck snapped by an active SCP-173.") //Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.
 
+//Kept for manual calling, is being integrated into Life()
 /mob/living/simple_animal/sculpture/proc/Escape()
+	observed = 0
 	var/list/turfs = new/list()
-	for(var/turf/thisturf in view(50,src))
+	for(var/turf/thisturf in range(200,src))
 		if(istype(thisturf, /turf/space))
 			continue
 		else if(istype(thisturf, /turf/simulated/wall))
@@ -57,17 +59,23 @@
 	src.dir = get_dir(src, target_turf)
 	src.loc = target_turf
 
+	observed = 1
+
 	hibernate = 1
-	spawn(rand(20,35) * 10)
+	spawn(rand(20,35))
 		hibernate = 0
 
 /mob/living/simple_animal/sculpture/Life()
 
 	observed = 0
 
+	//SCP is not for unstoppable
+	// if(prob(5)) //If we're kinda lucky
+		// Escape() //Just get the fuck out of here. It's fine, we're supposed to be adminbus anyways
+
 	//update the desc
 	if(!G)
-		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid."
+		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid and even more dangerous."
 
 	//if we are sent into forced hibernation mode, allow our victim to escape
 	if(hibernate && G && G.state == GRAB_KILL)
@@ -191,13 +199,13 @@
 				var/num_turfs = get_dist(src,target)
 				while(get_turf(src) != target_turf && num_turfs > 0)
 					for(var/obj/structure/window/W in next_turf)
-						spawn(5) W.destroy()
+						spawn(10) W.destroy()
 					for(var/obj/structure/table/O in next_turf)
-						spawn(5) O.ex_act(1)
+						spawn(10) O.ex_act(1)
 					for(var/obj/structure/grille/G in next_turf)
-						spawn(5) G.ex_act(1)
+						spawn(10) G.ex_act(1)
 					for(var/obj/machinery/door/D in next_turf)
-						spawn(5) D.open()
+						spawn(10) D.open()
 					if(!next_turf.CanPass(src, next_turf))
 						break
 					src.loc = next_turf
@@ -213,6 +221,9 @@
 					target.apply_damage(150, BRUTE, "head")
 
 					//Should be better now
+
+			if(prob(5) && !observed)
+				Escape()
 
 			//if we're not strangling anyone, take a stroll
 			if(!G && prob(50)) //Half chance out of whatever
@@ -237,19 +248,20 @@
 				var/num_turfs = get_dist(src,target_turf)
 				while(get_turf(src) != target_turf && num_turfs > 0)
 					for(var/obj/structure/window/W in next_turf)
-						spawn(5) W.destroy()
+						spawn(10) W.destroy()
 					for(var/obj/structure/table/O in next_turf)
-						spawn(5) O.ex_act(1)
+						spawn(10) O.ex_act(1)
 					for(var/obj/structure/grille/G in next_turf)
-						spawn(5) G.ex_act(1)
+						spawn(10) G.ex_act(1)
 					for(var/obj/machinery/door/D in next_turf)
-						spawn(5) D.open()
+						spawn(10) D.open()
 					if(!next_turf.CanPass(src, next_turf))
 						break
 					src.loc = next_turf
 					src.dir = get_dir(src, target)
 					next_turf = get_step(src, get_dir(next_turf,target_turf))
 					num_turfs--
+
 
 		//if(!istype(src.loc, /turf)) // Is SCP-173 in a container/closet/pod/tray etc? Well fuck it
 
