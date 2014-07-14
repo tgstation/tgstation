@@ -197,26 +197,26 @@
 				//rampage along a path to get to them, in the blink of an eye
 				var/turf/next_turf = get_step_towards(src, target)
 				var/num_turfs = get_dist(src,target)
-				spawn(5)
-				while(get_turf(src) != target_turf && num_turfs > 0)
-					for(var/obj/structure/window/W in next_turf)
-						W.destroy()
-						sleep(10)
-					for(var/obj/structure/table/O in next_turf)
-						O.ex_act(1)
-						sleep(10)
-					for(var/obj/structure/grille/G in next_turf)
-						G.ex_act(1)
-						sleep(10)
-					for(var/obj/machinery/door/D in next_turf)
-						D.open()
-						sleep(10)
-					if(!next_turf.CanPass(src, next_turf))
-						break
-					src.loc = next_turf
-					src.dir = get_dir(src, target)
-					next_turf = get_step(src, get_dir(next_turf,target))
-					num_turfs--
+				spawn()
+					while(get_turf(src) != target_turf && num_turfs > 0)
+						for(var/obj/structure/window/W in next_turf)
+							W.destroy()
+							sleep(10)
+						for(var/obj/structure/table/O in next_turf)
+							O.ex_act(1)
+							sleep(10)
+						for(var/obj/structure/grille/G in next_turf)
+							G.ex_act(1)
+							sleep(10)
+						for(var/obj/machinery/door/D in next_turf)
+							D.open()
+							sleep(10)
+						if(!next_turf.CanPass(src, next_turf))
+							break
+						src.loc = next_turf
+						src.dir = get_dir(src, target)
+						next_turf = get_step(src, get_dir(next_turf,target))
+						num_turfs--
 
 				//if we reached them, knock them down and start strangling them
 				if(get_turf(src) == target_turf)
@@ -251,26 +251,26 @@
 				//rampage along a path to get to it, in the blink of an eye
 				var/turf/next_turf = get_step_towards(src, target_turf)
 				var/num_turfs = get_dist(src,target_turf)
-				spawn(5)
-				while(get_turf(src) != target_turf && num_turfs > 0)
-					for(var/obj/structure/window/W in next_turf)
-						W.destroy()
-						sleep(10)
-					for(var/obj/structure/table/O in next_turf)
-						O.ex_act(1)
-						sleep(10)
-					for(var/obj/structure/grille/G in next_turf)
-						G.ex_act(1)
-						sleep(10)
-					for(var/obj/machinery/door/D in next_turf)
-						D.open()
-						sleep(10)
-					if(!next_turf.CanPass(src, next_turf))
-						break
-					src.loc = next_turf
-					src.dir = get_dir(src, target)
-					next_turf = get_step(src, get_dir(next_turf,target_turf))
-					num_turfs--
+				spawn()
+					while(get_turf(src) != target_turf && num_turfs > 0)
+						for(var/obj/structure/window/W in next_turf)
+							W.destroy()
+							sleep(10)
+						for(var/obj/structure/table/O in next_turf)
+							O.ex_act(1)
+							sleep(10)
+						for(var/obj/structure/grille/G in next_turf)
+							G.ex_act(1)
+							sleep(10)
+						for(var/obj/machinery/door/D in next_turf)
+							D.open()
+							sleep(10)
+						if(!next_turf.CanPass(src, next_turf))
+							break
+						src.loc = next_turf
+						src.dir = get_dir(src, target)
+						next_turf = get_step(src, get_dir(next_turf,target_turf))
+						num_turfs--
 
 
 		//if(!istype(src.loc, /turf)) // Is SCP-173 in a container/closet/pod/tray etc? Well fuck it
