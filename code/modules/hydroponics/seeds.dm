@@ -82,6 +82,35 @@
 	var/datum/mind/mind = null
 	gender = MALE
 
+/obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/reagent_containers))
+		if(ckey == null)
+			user << "You inject the contents of the syringe into the seeds."
+
+			for(var/datum/reagent/blood/bloodSample in W:reagents.reagent_list)
+				var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
+				if(!istype(source))
+					continue
+				//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
+				ui = source.dna.uni_identity
+				se = source.dna.struc_enzymes
+				if(source.ckey)
+					ckey = source.ckey
+				else if(source.mind)
+					ckey = ckey(source.mind.key)
+				realName = source.real_name
+				gender = source.gender
+
+				if(!isnull(source.mind))
+					mind = source.mind
+
+			W:reagents.clear_reagents()
+		else
+			user << "There is already a genetic sample in these seeds."
+	else
+		return ..()
+
+
 /obj/item/seeds/grapeseed
 	name = "pack of grape seeds"
 	desc = "These seeds grow into grape vines."
@@ -602,7 +631,7 @@
 	icon_state = "seed-nettle"
 	species = "nettle"
 	plantname = "Nettles"
-	product = /obj/item/weapon/grown/nettle
+	product = /obj/item/weapon/grown/nettle/basic
 	lifespan = 30
 	endurance = 40 // tuff like a toiger
 	maturation = 6
@@ -620,7 +649,7 @@
 	icon_state = "seed-deathnettle"
 	species = "deathnettle"
 	plantname = "Death Nettles"
-	product = /obj/item/weapon/grown/deathnettle
+	product = /obj/item/weapon/grown/nettle/death
 	lifespan = 30
 	endurance = 25
 	maturation = 8

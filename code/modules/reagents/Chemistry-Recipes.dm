@@ -408,6 +408,13 @@ silicate
 	required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
 	result_amount = 1
 
+/datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
+	name = "Mute toxin"
+	id = "mutetoxin"
+	result = "mutetoxin"
+	required_reagents = list("uranium" = 2, "water" = 1, "carbon" = 1)
+	result_amount = 2
+
 /datum/chemical_reaction/zombiepowder
 	name = "Zombie Powder"
 	id = "zombiepowder"
@@ -1419,7 +1426,7 @@ datum/chemical_reaction/pestkiller
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 	var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 	Z.loc = get_turf(holder.my_atom)
-	notify_ghosts("Golem rune created in [Z.name]", 'sound/effects/ghost2.ogg')
+	notify_ghosts("Golem rune created in [get_area(Z)].", 'sound/effects/ghost2.ogg')
 
 //Bluespace
 

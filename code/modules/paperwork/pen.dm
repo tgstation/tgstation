@@ -55,7 +55,7 @@
 /*
  * Parapens
  */
- /obj/item/weapon/pen/paralysis
+/obj/item/weapon/pen/paralysis
 	origin_tech = "materials=2;syndicate=5"
 
 
@@ -69,8 +69,7 @@
 
 
 /obj/item/weapon/pen/paralysis/New()
-	create_reagents(50)
-	reagents.add_reagent("zombiepowder", 10)
-	reagents.add_reagent("impedrezene", 25)
-	reagents.add_reagent("cryptobiolin", 15)
+	create_reagents(60)
+	reagents.add_reagent("stoxin", 30)
+	reagents.add_reagent("mutetoxin", 30)
 	..()

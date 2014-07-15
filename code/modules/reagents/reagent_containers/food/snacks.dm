@@ -898,9 +898,9 @@
 		bitesize = 2
 
 
-/obj/item/weapon/reagent_containers/food/snacks/human/kabob
-	name = "-kabob"
-	icon_state = "kabob"
+/obj/item/weapon/reagent_containers/food/snacks/human/kebab
+	name = "-kebab"
+	icon_state = "kebab"
 	desc = "A human meat, on a stick."
 	trash = /obj/item/stack/rods
 	New()
@@ -908,9 +908,9 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeykabob
-	name = "meat-kabob"
-	icon_state = "kabob"
+/obj/item/weapon/reagent_containers/food/snacks/monkeykebab
+	name = "meat-kebab"
+	icon_state = "kebab"
 	desc = "Delicious meat, on a stick."
 	trash = /obj/item/stack/rods
 	New()
@@ -918,9 +918,9 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/tofukabob
-	name = "tofu-kabob"
-	icon_state = "kabob"
+/obj/item/weapon/reagent_containers/food/snacks/tofukebab
+	name = "tofu-kebab"
+	icon_state = "kebab"
 	desc = "Vegan meat, on a stick."
 	trash = /obj/item/stack/rods
 	New()
@@ -1038,10 +1038,10 @@
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/spagetti
-	name = "spagetti"
-	desc = "Now thats a nice pasta!"
-	icon_state = "spagetti"
+/obj/item/weapon/reagent_containers/food/snacks/spaghetti
+	name = "spaghetti"
+	desc = "Now that's a nic'e pasta!"
+	icon_state = "spaghetti"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
@@ -1523,10 +1523,10 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/boiledspagetti
-	name = "boiled spagetti"
+/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
+	name = "boiled spaghetti"
 	desc = "A plain dish of noodles, this sucks."
-	icon_state = "spagettiboiled"
+	icon_state = "spaghettiboiled"
 	trash = /obj/item/trash/plate
 	New()
 		..()
@@ -1534,7 +1534,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
-	name = "spagetti"
+	name = "spaghetti"
 	desc = "Spaghetti and crushed tomatoes. Just like your abusive father used to make!"
 	icon_state = "pastatomato"
 	trash = /obj/item/trash/plate
@@ -1555,10 +1555,10 @@
 		reagents.add_reagent("tomatojuice", 20)
 		bitesize = 1
 
-/obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
-	name = "spagetti and meatballs"
-	desc = "Now thats a nic'e meatball!"
-	icon_state = "meatballspagetti"
+/obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
+	name = "spaghetti and meatballs"
+	desc = "Now that's a nic'e meatball!"
+	icon_state = "meatballspaghetti"
 	trash = /obj/item/trash/plate
 	New()
 		..()
