@@ -1,3 +1,6 @@
+/datum/game_mode
+	var/list/ape_infectees = list()
+
 /datum/game_mode/monkey
 	name = "monkey"
 	config_tag = "monkey"
@@ -14,8 +17,6 @@
 
 	var/carriers_to_make = 1
 	var/list/carriers = list()
-
-	var/list/ape_infectees = list()
 
 	var/monkeys_to_win = 0
 	var/escaped_monkeys = 0
@@ -81,6 +82,14 @@
 		return 0
 	else
 		return 1
+
+/datum/game_mode/proc/add_monkey(datum/mind/monkey_mind)
+	ape_infectees |= monkey_mind
+	monkey_mind.special_role = "Infected Monkey"
+
+/datum/game_mode/proc/remove_monkey(datum/mind/monkey_mind)
+	ape_infectees.Remove(monkey_mind)
+	monkey_mind.special_role = null
 
 
 /datum/game_mode/monkey/declare_completion()
