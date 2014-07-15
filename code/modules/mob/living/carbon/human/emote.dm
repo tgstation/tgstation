@@ -560,7 +560,7 @@
 				if(world.time-lastFart >= 400)
 					var/list/farts = list("farts.","passes wind.","toots.","farts [pick("lightly", "tenderly", "softly", "with care")].","farts with the force of one thousand suns.")
 					if(miming)
-						var/list/farts = list("silently farts.", "acts out a fart.", "lets out a silent but deadly fart.")
+						farts = list("silently farts.", "acts out a fart.", "lets out a silent but deadly fart.")
 					var/fart = pick(farts)
 
 					for(var/mob/M in view(1))
@@ -575,7 +575,7 @@
 						message = "<b>[src]</b> [fart]."
 						playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
 					else
-						message = "<b>[src]</b> [mimefart]"
+						message = "<b>[src]</b> [fart]"
 						//Mimes can't fart.
 					m_type = 2
 					var/turf/location = get_turf(src)
