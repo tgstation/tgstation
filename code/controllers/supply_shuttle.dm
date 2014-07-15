@@ -711,7 +711,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		temp = "Invalid Request"
 		for(var/i=1, i<=supply_shuttle.requestlist.len, i++)
 			var/datum/supply_order/SO = supply_shuttle.requestlist[i]
-			if(SO.ordernum == ordernum)
+			if(SO && SO.ordernum == ordernum)
 				O = SO
 				P = O.object
 				if(supply_shuttle.points >= P.cost)
@@ -755,14 +755,13 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	else if (href_list["rreq"])
 		var/ordernum = text2num(href_list["rreq"])
 		temp = "Invalid Request.<BR>"
-		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 		for(var/i=1, i<=supply_shuttle.requestlist.len, i++)
 			var/datum/supply_order/SO = supply_shuttle.requestlist[i]
-			if(SO.ordernum == ordernum)
+			if(SO && SO.ordernum == ordernum)
 				supply_shuttle.requestlist.Cut(i,i+1)
 				temp = "Request removed.<BR>"
-				temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				break
+		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["clearreq"])
 		supply_shuttle.requestlist.Cut()
