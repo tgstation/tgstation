@@ -213,6 +213,8 @@
 			H.equip_or_collect(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 			H.equip_or_collect(new /obj/item/weapon/crowbar(H), slot_in_backpack)
 			H.equip_or_collect(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
+		if(prob(30)) //It was inevitable
+			H.mutations.Add(M_DWARF)
 		return 1
 
 /datum/job/clown
