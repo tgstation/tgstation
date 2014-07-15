@@ -35,7 +35,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	speed = 3
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/weapons/spiderlunge.ogg'
 
 	wanted_objects = list(
 		/obj/machinery/bot,          // Beepsky and friends

@@ -4,7 +4,7 @@
 	icon_state = "magboots0"
 	var/magpulse = 0
 //	flags = NOSLIP //disabled by default
-	icon_action_button = "action_magboots"
+	action_button_name = "Toggle Magboots"
 	species_fit = list("Vox")
 
 	verb/toggle()
@@ -44,8 +44,6 @@
 	desc = "Advanced magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
 	name = "advanced magboots"
 	icon_state = "CE-magboots0"
-	icon_action_button = "action_magboots"
-	species_fit = list("Vox")
 
 	toggle()
 		if(usr.stat)

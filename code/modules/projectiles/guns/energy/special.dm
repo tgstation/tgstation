@@ -2,7 +2,7 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
 	icon_state = "ionrifle"
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/ion.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
@@ -35,7 +35,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","clu
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
-	fire_sound = 'sound/weapons/emitter.ogg'
+	fire_sound = 'sound/weapons/radgun.ogg'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
 	w_class = 4.0
@@ -250,7 +250,7 @@ obj/item/weapon/gun/energy/staff/focus
 	name = "radgun"
 	desc = "An experimental energy gun that fires radioactive projectiles that deal toxin damage, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
 	icon_state = "radgun"
-	fire_sound = 'sound/weapons/pulse3.ogg'
+	fire_sound = 'sound/weapons/radgun.ogg'
 	charge_cost = 100
 	var/charge_tick = 0
 	projectile_type = "/obj/item/projectile/energy/rad"

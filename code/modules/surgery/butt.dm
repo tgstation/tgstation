@@ -142,6 +142,7 @@
 		user.visible_message("\red [target] lets out a small fart, which gets set alight with [user]'s [tool]!" , \
 		"\red [target] farts into the open flame, burning his anus!" )
 		target.apply_damage(max(10, tool.force), BURN, "groin")
+		playsound(get_turf(src), 'sound/effects/holler.ogg', 50, 1)
 
 
 

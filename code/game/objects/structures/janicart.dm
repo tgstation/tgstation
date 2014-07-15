@@ -24,11 +24,8 @@
 	var/upgraded = 0
 
 /obj/structure/stool/bed/chair/vehicle/janicart/New()
-	..()
-
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	. = ..()
+	create_reagents(100)
 
 /obj/structure/stool/bed/chair/vehicle/janicart/examine()
 	set src in usr
