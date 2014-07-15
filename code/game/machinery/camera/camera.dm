@@ -18,6 +18,7 @@
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
+	var/light_on = 0
 
 	//OTHER
 
@@ -339,3 +340,13 @@
 		return 1
 	busy = 0
 	return 0
+
+/obj/machinery/camera/proc/toggle_light()
+	light_on = !light_on
+	
+	if (light_on)
+		SetLuminosity(AI_CAMERA_LUMINOSITY)
+	else
+		SetLuminosity(0)
+
+	return light_on
