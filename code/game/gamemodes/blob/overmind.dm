@@ -30,7 +30,7 @@
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
-	src << "<span class='notice'>You are the overmind!</span>"
+	src << "<span class='blob'>You are the overmind!</span>"
 	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as..."
 	src << "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions."
 	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires."
