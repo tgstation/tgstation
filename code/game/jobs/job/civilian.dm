@@ -218,8 +218,6 @@
 			if(H.species.name == "Human" && !(H.f_style == "Dwarf Beard"))
 				H.h_style = "Dwarf Beard"
 				H.update_hair()
-			if(prob(50)) //Eh.
-				H.mutations.Add(M_CHAV)
 		return 1
 
 /datum/job/clown
