@@ -219,6 +219,8 @@
 				spawn(50)
 					H.h_style = "Dwarf Beard"
 					H.update_hair()
+			else
+				return
 			if(prob(50) //Eh.
 				H.mutations.Add(M_CHAV)
 		return 1
