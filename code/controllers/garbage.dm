@@ -2,15 +2,16 @@
 #define GC_COLLECTION_TIMEOUT (10 SECONDS)
 #define GC_FORCE_DEL_PER_TICK 20
 //#define GC_DEBUG
-var/list/meowww = new
+
+var/list/gc_hard_del_types = new
 var/datum/garbage_collector/garbageCollector
 
-/client/verb/bwoink()
-	set name = "bwoink"
-	set desc = "bwoink"
+/client/verb/gc_dump_hdl()
+	set name = "(GC) Hard Del List"
+	set desc = "List types that are hard del()'d by the GC."
 	set category = "Debug"
 
-	for(var/A in meowww)
+	for(var/A in gc_hard_del_types)
 		usr << A
 
 /datum/garbage_collector
@@ -68,7 +69,7 @@ var/datum/garbage_collector/garbageCollector
 				WARNING("gc process force delete [A.type]")
 				#endif
 
-				meowww |= "[A.type]"
+				gc_hard_del_types |= "[A.type]"
 
 				del(A)
 

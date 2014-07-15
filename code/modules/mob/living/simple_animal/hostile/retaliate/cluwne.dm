@@ -56,6 +56,7 @@
 	var/datum/speech_filter/filter
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/New()
+	..()
 	// Set up wordfilter
 	filter = new
 	filter.addPickReplacement("\b(asshole|comdom|shitter|shitler|retard|dipshit|dipshit|greyshirt|nigger|security|shitcurity)", list(

@@ -102,10 +102,12 @@
 			if(2)
 				src << "<span class='notice'>We extend a proboscis.</span>"
 				src.visible_message("<span class='warning'>[src] extends a proboscis!</span>")
+				playsound(get_turf(src), 'sound/effects/lingextends.ogg', 50, 1)
 			if(3)
 				src << "<span class='notice'>We stab [T] with the proboscis.</span>"
 				src.visible_message("<span class='danger'>[src] stabs [T] with the proboscis!</span>")
 				T << "<span class='danger'>You feel a sharp stabbing pain!</span>"
+				playsound(get_turf(src), 'sound/effects/lingstabs.ogg', 50, 1)
 				var/datum/organ/external/affecting = T.get_organ(src.zone_sel.selecting)
 				if(affecting.take_damage(39,0,1,"large organic needle"))
 					T:UpdateDamageIcon()
@@ -120,6 +122,7 @@
 	src << "<span class='notice'>We have absorbed [T]!</span>"
 	src.visible_message("<span class='danger'>[src] sucks the fluids from [T]!</span>")
 	T << "<span class='danger'>You have been absorbed by the changeling!</span>"
+	playsound(get_turf(src), 'sound/effects/lingabsorbs.ogg', 50, 1)
 
 	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
 	changeling.absorbed_dna |= T.dna
@@ -351,8 +354,8 @@
 
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
-/mob/verb/honk()
-	set name = "OH HOLY FUCK"
+/mob/verb/check_mob_list()
+	set name = "(Mobs) Check Mob List"
 	set category = "Debug"
 	var/yes = 0
 	if(src in mob_list)

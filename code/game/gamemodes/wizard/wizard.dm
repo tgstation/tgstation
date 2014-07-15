@@ -296,6 +296,7 @@
 /*Checks if the wizard is wearing the proper attire.
 Made a proc so this is not repeated 14 (or more) times.*/
 /mob/proc/wearing_wiz_garb()
+	src << "Silly creature, you're not a human. Only humans can cast this spell."
 	return 0
 
 // Humans can wear clothes.

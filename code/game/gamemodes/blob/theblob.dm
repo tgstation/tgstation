@@ -133,7 +133,7 @@
 		if("fire")
 			damage = (W.force / max(src.fire_resist,1))
 			if(istype(W, /obj/item/weapon/weldingtool))
-				playsound(get_turf(src), 'sound/items/Welder.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/effects/blobweld.ogg', 100, 1)
 		if("brute")
 			damage = (W.force / max(src.brute_resist,1))
 
@@ -165,7 +165,7 @@
 
 /obj/effect/blob/normal/update_icon()
 	if(health <= 0)
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/blobsplat.ogg', 50, 1)
 		Delete()
 		return
 	if(health <= 15)
