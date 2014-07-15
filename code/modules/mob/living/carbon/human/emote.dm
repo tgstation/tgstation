@@ -559,9 +559,10 @@
 			if(!src.op_stage.butt == 4)
 				if(world.time-lastFart >= 400)
 					var/list/farts = list("farts.","passes wind.","toots.","farts [pick("lightly", "tenderly", "softly", "with care")].","farts with the force of one thousand suns.")
+					if(miming)
+						var/list/farts = list("silently farts.", "acts out a fart.", "lets out a silent but deadly fart.")
 					var/fart = pick(farts)
-					var/list/mimefarts = list("silently farts.", "acts out a fart.", "lets out a silent but deadly fart.")
-					var/mimefart = pick(mimefarts)
+
 					for(var/mob/M in view(1))
 						if(M != src)
 							if(!miming)
