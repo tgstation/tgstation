@@ -392,11 +392,8 @@ steam.start() -- spawns the effect
 	icon = 'icons/effects/chemsmoke.dmi'
 
 /obj/effect/effect/smoke/chem/New()
-	..()
-	var/datum/reagents/R = new/datum/reagents(500)
-	reagents = R
-	R.my_atom = src
-	return
+	. = ..()
+	create_reagents(500)
 
 /obj/effect/effect/smoke/chem/Move()
 	..()

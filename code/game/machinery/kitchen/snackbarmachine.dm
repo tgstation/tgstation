@@ -16,27 +16,23 @@
 ********************************************************************/
 /obj/machinery/snackbar_machine/New()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(100)
 
-	component_parts = newlist(
-		/obj/item/weapon/circuitboard/snackbar_machine,
-		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/scanning_module,
-		/obj/item/weapon/stock_parts/scanning_module,
-		/obj/item/weapon/stock_parts/micro_laser,
-		/obj/item/weapon/stock_parts/micro_laser,
-		/obj/item/weapon/stock_parts/console_screen,
-		/obj/item/weapon/stock_parts/console_screen
+	component_parts = newlist(\
+		/obj/item/weapon/circuitboard/snackbar_machine,\
+		/obj/item/weapon/stock_parts/manipulator,\
+		/obj/item/weapon/stock_parts/manipulator,\
+		/obj/item/weapon/stock_parts/scanning_module,\
+		/obj/item/weapon/stock_parts/scanning_module,\
+		/obj/item/weapon/stock_parts/micro_laser,\
+		/obj/item/weapon/stock_parts/micro_laser,\
+		/obj/item/weapon/stock_parts/console_screen,\
+		/obj/item/weapon/stock_parts/console_screen\
 	)
 
 	RefreshParts()
 
-	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
-	overlays += overlay
-
+	overlays += image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
 
 /obj/machinery/snackbar_machine/ex_act(severity)
 	switch(severity)
