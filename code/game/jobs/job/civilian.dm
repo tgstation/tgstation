@@ -215,6 +215,12 @@
 			H.equip_or_collect(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
 		if(prob(30)) //It was inevitable
 			H.mutations.Add(M_DWARF)
+			if(H.species.name == "Human" && !(H.f_style == "Dwarf Beard"))
+				spawn(50)
+					H.h_style = "Dwarf Beard"
+					H.update_hair()
+			if(prob(50) //Eh.
+				H.mutations.Add(M_CHAV)
 		return 1
 
 /datum/job/clown
