@@ -74,6 +74,7 @@
 			var/mob/M=target
 			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
+			playsound(get_turf(src), 'sound/weapons/c4armed.ogg', 60, 1)
 			if(!iscarbon(user))
 				M.LAssailant = null
 			else
