@@ -215,6 +215,7 @@
 			H.equip_or_collect(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
 		if(prob(30)) //It was inevitable
 			H.mutations.Add(M_DWARF)
+			H.update_mutations()
 			if(H.species.name == "Human" && !(H.f_style == "Dwarf Beard"))
 				H.h_style = "Dwarf Beard"
 				H.update_hair()
