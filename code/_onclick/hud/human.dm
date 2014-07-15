@@ -491,7 +491,7 @@
 			A.icon = ui_style2icon(client.prefs.UI_style)
 			A.icon_state = "template"
 
-			A.overlays = list()
+			A.overlays.len = 0
 			var/image/img = image(I.icon, A, I.icon_state)
 			img.pixel_x = 0
 			img.pixel_y = 0
