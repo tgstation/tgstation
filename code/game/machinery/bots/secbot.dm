@@ -81,17 +81,16 @@
 
 
 
-/obj/machinery/bot/secbot
-	New()
-		..()
-		src.icon_state = "secbot[src.on]"
-		spawn(3)
-			src.botcard = new /obj/item/weapon/card/id(src)
-			var/datum/job/detective/J = new/datum/job/detective
-			src.botcard.access = J.get_access()
-			if(radio_controller)
-				radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
-				radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
+/obj/machinery/bot/secbot/New()
+	..()
+	src.icon_state = "secbot[src.on]"
+	spawn(3)
+		src.botcard = new /obj/item/weapon/card/id(src)
+		var/datum/job/detective/J = new /datum/job/detective
+		src.botcard.access = J.get_access()
+		if(radio_controller)
+			radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
+			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
 
 /obj/machinery/bot/secbot/turn_on()
@@ -256,7 +255,7 @@ Auto Patrol: []"},
 				src.target = null
 				src.last_found = world.time
 				src.frustration = 0
-				src.mode = 0
+				src.mode = SECBOT_IDLE
 				walk_to(src,0)
 
 			if(target)		// make sure target exists
@@ -386,7 +385,6 @@ Auto Patrol: []"},
 
 
 // perform a single patrol step
-
 /obj/machinery/bot/secbot/proc/patrol_step()
 
 	if(loc == patrol_target)		// reached target
