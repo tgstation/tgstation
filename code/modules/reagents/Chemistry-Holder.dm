@@ -603,11 +603,12 @@ datum
 						//world << "reagent data set ([reagent_id])"
 						D.data = new_data
 
-			delete()
-				for(var/datum/reagent/R in reagent_list)
-					R.holder = null
-				if(my_atom)
-					my_atom.reagents = null
+/datum/reagents/Destroy()
+	for(var/datum/reagent/reagent in reagent_list)
+		reagent.holder = null
+
+	if(my_atom)
+		my_atom = null
 
 
 ///////////////////////////////////////////////////////////////////////////////////

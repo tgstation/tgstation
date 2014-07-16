@@ -69,6 +69,9 @@
 	DeleteFromProfiler()
 
 	//world << "[type] - [tag] - [x].[y].[z]"
+	if(reagents)
+		reagents.Destroy()
+		reagents = null
 
 	density = 0
 

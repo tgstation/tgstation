@@ -20,12 +20,26 @@
 	var/global/guid = 0
 
 	// Garbage collection (controller).
+	var/gcDestroyed
 	var/timeDestroyed
 
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)
 	tag = "[++guid]"
+
+/atom/movable/Destroy()
+	areaMaster = null
+	gcDestroyed = "Bye world!"
+	loc = null
+	..()
+
+/atom/movable/Del()
+	// Pass to Destroy().
+	if(!gcDestroyed)
+		Destroy()
+
+	..()
 
 /atom/movable/Move()
 	var/atom/A = src.loc
@@ -194,11 +208,6 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
-
-/atom/movable/Destroy()
-	areaMaster = null
-	loc = null
-	..()
 
 /////////////////////////////
 // SINGULOTH PULL REFACTOR
