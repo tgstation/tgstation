@@ -2,15 +2,19 @@
 	..()
 	update_hud()
 	return
-/mob/living/carbon/Move(NewLoc, direct)
+
+/mob/living/carbon/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
+
 	if(.)
-		if(src.nutrition && src.stat != 2)
-			src.nutrition -= HUNGER_FACTOR/10
-			if(src.m_intent == "run")
-				src.nutrition -= HUNGER_FACTOR/10
-		if((M_FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
-			src.bodytemperature += 2
+		if(nutrition && stat != DEAD)
+			nutrition -= HUNGER_FACTOR / 10
+
+			if(m_intent == "run")
+				nutrition -= HUNGER_FACTOR / 10
+
+		if((M_FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
+			bodytemperature += 2
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
