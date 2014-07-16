@@ -863,20 +863,18 @@
 	name = "destroying angel"
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
-	potency = 35
+	potency = 15
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
-			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
-			reagents.add_reagent("amatoxin", 13+round(potency / 3, 1))
-			reagents.add_reagent("psilocybin", 1+round(potency / 25, 1))
+			reagents.add_reagent("nutriment", 1+round(potency / 50, 1))
+			reagents.add_reagent("amanatin", 1+round(potency / 3, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>"
-		user << "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>"
+		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amanatin")]%</i></span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	seed = "/obj/item/seeds/libertymycelium"

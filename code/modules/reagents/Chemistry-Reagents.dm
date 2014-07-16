@@ -2458,7 +2458,58 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1*REM)
+				M.adjustToxLoss(1.5)
+				..()
+				return
+
+		amanatin
+			name = "Alpha-Amanatin"
+			id = "amanatin"
+			description = "A deadly poison derived from certain species of Amanita. Sits in the victim's system for a long period of time, then ravages the body."
+			color = "#792300" // rgb: 121, 35, 0
+			custom_metabolism = 0.01
+			var/activated = 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				if(volume <= 3 && data >= 60 && !activated)	//minimum of 1 minute required to be useful
+					activated = 1
+				if(activated)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(prob(8))
+							H << "<span class = 'warning'>You feel violently ill.</span>"
+						if(prob(min(data / 10, 100)))	H.vomit()
+						var/datum/organ/internal/liver/L = H.internal_organs["liver"]
+						if (istype(L) && !L.is_broken())
+							L.take_damage(data * 0.01, 0)
+							H.adjustToxLoss(round(data / 20, 1))
+						else
+							H.adjustToxLoss(round(data / 10, 1))
+							data += 4
+					holder.remove_reagent(src.id, 0.02)
+				switch(data)
+					if(1 to 30)
+						M.druggy = max(M.druggy, 10)
+					if(540 to 600)	//start barfing violently after 9 minutes
+						if(ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if(prob(12))
+								H << "<span class = 'warning'>You feel violently ill.</span>"
+							H.adjustToxLoss(0.1)
+							if(prob(8)) H.vomit()
+					if(600 to INFINITY)	//ded in 10 minutes with a minimum of 6 units
+						if(ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if(prob(20))
+								H << "<span class = 'sinister'>You feel deathly ill.</span>"
+							var/datum/organ/internal/liver/L = H.internal_organs["liver"]
+							if (istype(L) && !L.is_broken())
+								L.take_damage(10, 0)
+							else
+								H.adjustToxLoss(60)
+				data++
 				..()
 				return
 

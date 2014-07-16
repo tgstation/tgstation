@@ -554,7 +554,7 @@
 
 /obj/item/seeds/angelmycelium
 	name = "pack of destroying angel mycelium"
-	desc = "This mycelium grows into something devestating."
+	desc = "This mycelium grows into something devastating."
 	icon_state = "mycelium-angel"
 	mypath = "/obj/item/seeds/angelmycelium"
 	species = "angel"
