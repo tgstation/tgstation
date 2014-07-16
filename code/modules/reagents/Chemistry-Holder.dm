@@ -605,17 +605,18 @@ datum
 
 /datum/reagents/Destroy()
 	for(var/datum/reagent/reagent in reagent_list)
-		reagent.holder = null
+		reagent.Destroy()
 
 	if(my_atom)
 		my_atom = null
 
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 
-// Convenience proc to create a reagents holder for an atom
-// Max vol is maximum volume of holder
-atom/proc/create_reagents(var/max_vol)
+/*
+ * Convenience proc to create a reagents holder for an atom
+ * max_vol is maximum volume of holder
+ */
+/atom/proc/create_reagents(const/max_vol)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src

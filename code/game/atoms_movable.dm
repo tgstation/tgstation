@@ -27,7 +27,7 @@
 	areaMaster = get_area_master(src)
 
 /atom/movable/Destroy()
-	gcDestroyed = "Bye world!"
+	gcDestroyed = "bye world!"
 	tag = null
 	loc = null
 	..()

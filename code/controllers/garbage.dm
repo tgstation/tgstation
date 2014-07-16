@@ -23,7 +23,7 @@ var/datum/garbage_collector/garbageCollector
 	var/hard_dels = 0
 
 /datum/garbage_collector/proc/addTrash(const/atom/movable/AM)
-	if(isnull(AM) || !istype(AM))
+	if(!istype(AM))
 		return
 
 	if(del_everything)

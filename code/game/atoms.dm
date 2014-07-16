@@ -70,6 +70,7 @@
 
 	if(reagents)
 		reagents.Destroy()
+		reagents = null
 
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
