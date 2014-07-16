@@ -19,6 +19,8 @@
 	var/value=0
 
 /obj/item/weapon/dnainjector/New()
+	. = ..()
+
 	if(datatype && block)
 		buf=new
 		buf.dna=new
