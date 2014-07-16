@@ -68,17 +68,11 @@
 	// Only call when we're actually deleted.
 	DeleteFromProfiler()
 
-	//world << "[type] - [tag] - [x].[y].[z]"
 	if(reagents)
 		reagents.Destroy()
-		reagents = null
-
-	density = 0
 
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
-
-	..()
 
 /atom/New()
 	. = ..()

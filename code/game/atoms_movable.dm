@@ -17,7 +17,6 @@
 	var/mob/pulledby = null
 
 	var/area/areaMaster
-	var/global/guid = 0
 
 	// Garbage collection (controller).
 	var/gcDestroyed
@@ -26,11 +25,10 @@
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)
-	tag = "[++guid]"
 
 /atom/movable/Destroy()
-	areaMaster = null
 	gcDestroyed = "Bye world!"
+	tag = null
 	loc = null
 	..()
 

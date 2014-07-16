@@ -110,16 +110,12 @@ var/datum/garbage_collector/garbageCollector
 
 /datum/controller/proc/recover() // If we are replacing an existing controller (due to a crash) we attempt to preserve as much as we can.
 
-/datum/controller/New()
-	. = ..()
-	tag = "[type]:NOGC"
-
 /*
  * Like Del(), but for qdel.
  * Called BEFORE qdel moves shit.
  */
 /datum/proc/Destroy()
-	tag = null
+	del(src)
 
 /client/proc/qdel_toggle()
 	set name = "Toggle qdel Behavior"
