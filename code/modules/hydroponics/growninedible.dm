@@ -202,8 +202,8 @@
 	name = "nettle"
 
 /obj/item/weapon/grown/nettle/basic/add_juice()
-	if(..())
-		reagents.add_reagent("sacid", round((potency / 2), 1))
+	..()
+	reagents.add_reagent("sacid", round((potency / 2), 1))
 	force = round((5 + potency / 5), 1)
 
 
@@ -217,8 +217,8 @@
 	origin_tech = "combat=3"
 
 /obj/item/weapon/grown/nettle/death/add_juice()
-	if(..())
-		reagents.add_reagent("pacid", round((potency / 2), 1))
+	..()
+	reagents.add_reagent("pacid", round((potency / 2), 1))
 	force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/human/user as mob)
