@@ -133,6 +133,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/obj/item/candle/C = W
 		if(C.lit)
 			light("<span class='notice'>[user] lights their [name] with [W].</span>")
+	else if(istype(W, /obj/item/device/flashlight/flare))
+		var/obj/item/device/flashlight/flare/F = W
+		if(F.on)
+			light("<span class='notice'>[user] lights their [name] with [W] like a real badass.</span>")
 	return
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user as mob, proximity)
