@@ -3841,3 +3841,8 @@ datum
 						M.confused = max(M.confused+15,15)
 					..()
 					return
+
+/datum/reagent/Destroy()
+	if(holder)
+		holder.reagent_list -= src
+		holder = null

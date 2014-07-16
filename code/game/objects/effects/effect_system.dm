@@ -10,60 +10,47 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	name = "effect"
 	icon = 'icons/effects/effects.dmi'
 	mouse_opacity = 0
-	unacidable = 1//So effect are not targeted by alien acid.
+	unacidable = 1 // so effect are not targeted by alien acid.
 	flags = TABLEPASS
 	w_type=NOT_RECYCLABLE
 
 /obj/effect/effect/water
 	name = "water"
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	var/life = 15.0
-	flags = TABLEPASS
-	mouse_opacity = 0
-
-/obj/effect/proc/delete()
-	loc = null
-	if(reagents)
-		reagents.my_atom = null
-		reagents.delete()
-	return
-
 
 /obj/effect/effect/water/New()
-	..()
+	. = ..()
 	//var/turf/T = src.loc
 	//if (istype(T, /turf))
 	//	T.firelevel = 0 //TODO: FIX
-	spawn( 70 )
-		delete()
-		return
-	return
+
+	spawn(70)
+		qdel(src)
 
 /obj/effect/effect/water/Destroy()
 	//var/turf/T = src.loc
 	//if (istype(T, /turf))
 	//	T.firelevel = 0 //TODO: FIX
-	src.delete()
-	..()
-	return
 
-/obj/effect/effect/water/Move(turf/newloc)
+	..()
+
+/obj/effect/effect/water/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	//var/turf/T = src.loc
 	//if (istype(T, /turf))
 	//	T.firelevel = 0 //TODO: FIX
-	if (--src.life < 1)
+
+	if (--life < 1)
 		//SN src = null
-		delete()
-	if(newloc.density)
+		qdel(src)
 		return 0
+
 	.=..()
 
 /obj/effect/effect/water/Bump(atom/A)
 	if(reagents)
 		reagents.reaction(A)
 	return ..()
-
 
 /datum/effect/effect/system
 	var/number = 3
@@ -102,7 +89,6 @@ steam.start() -- spawns the effect
 /////////////////////////////////////////////
 /obj/effect/effect/steam
 	name = "steam"
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	density = 0
 
@@ -131,7 +117,8 @@ steam.start() -- spawns the effect
 					sleep(5)
 					step(steam,direction)
 				spawn(20)
-					if(steam) steam.delete()
+					if(steam)
+						qdel(steam)
 
 /////////////////////////////////////////////
 //SPARK SYSTEM (like steam system)
@@ -144,8 +131,7 @@ steam.start() -- spawns the effect
 	name = "sparks"
 	desc = "it's a spark what do you need to know?"
 	icon_state = "sparks"
-	anchored = 1.0
-	mouse_opacity = 0
+	anchored = 1
 
 	var/inertia_dir = 0
 	var/energy = 0
@@ -166,9 +152,9 @@ steam.start() -- spawns the effect
 	var/turf/T = src.loc
 
 	if (istype(T, /turf))
-		T.hotspot_expose(1000,100)
+		T.hotspot_expose(1000, 100)
+
 	..()
-	return
 
 /obj/effect/effect/sparks/Move()
 	..()
@@ -223,8 +209,7 @@ steam.start() -- spawns the effect
 	name = "smoke"
 	icon_state = "smoke"
 	opacity = 1
-	anchored = 0.0
-	mouse_opacity = 0
+	anchored = 0
 	var/amount = 6.0
 	var/time_to_live = 100
 
@@ -234,10 +219,9 @@ steam.start() -- spawns the effect
 	pixel_y = -32
 
 /obj/effect/effect/smoke/New()
-	..()
-	spawn (time_to_live)
-		delete()
-	return
+	. = ..()
+	spawn(time_to_live)
+		qdel(src)
 
 /obj/effect/effect/smoke/HasEntered(mob/living/carbon/M as mob )
 	..()
@@ -372,7 +356,7 @@ steam.start() -- spawns the effect
 				sleep(10)
 				step(smoke,direction)
 			spawn(smoke.time_to_live*0.75+rand(10,30))
-				if (smoke) smoke.delete()
+				if (smoke) qdel(smoke)
 				src.total_smoke--
 
 
@@ -490,7 +474,7 @@ steam.start() -- spawns the effect
 					sleep(10)
 					step(smoke,direction)
 				spawn(150+rand(10,30))
-					if(smoke) smoke.delete()
+					if(smoke) qdel(smoke)
 					src.total_smoke--
 
 // Goon compat.
@@ -531,7 +515,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/ion_trails
 	name = "ion trails"
 	icon_state = "ion_trails"
-	anchored = 1.0
+	anchored = 1
 
 /datum/effect/effect/system/ion_trail_follow
 	var/turf/oldposition
@@ -558,7 +542,7 @@ steam.start() -- spawns the effect
 						flick("ion_fade", I)
 						I.icon_state = "blank"
 						spawn( 20 )
-							if(I) I.delete()
+							if(I) qdel(I)
 					spawn(2)
 						if(src.on)
 							src.processing = 1
@@ -617,8 +601,8 @@ steam.start() -- spawns the effect
 					I.icon_state = "blank"
 					II.icon_state = "blank"
 					spawn( 20 )
-						if(I) I.delete()
-						if(II) II.delete()
+						if(I) qdel(I)
+						if(II) qdel(II)
 				spawn(2)
 					if(src.on)
 						src.processing = 1
@@ -658,7 +642,7 @@ steam.start() -- spawns the effect
 					src.oldposition = get_turf(holder)
 					I.dir = src.holder.dir
 					spawn(10)
-						if(I) I.delete()
+						if(I) qdel(I)
 						src.number--
 					spawn(2)
 						if(src.on)
@@ -687,15 +671,13 @@ steam.start() -- spawns the effect
 	anchored = 1
 	density = 0
 	layer = OBJ_LAYER + 0.9
-	mouse_opacity = 0
 	var/amount = 3
 	var/expand = 1
 	animate_movement = 0
 	var/metal = 0
 
-
 /obj/effect/effect/foam/New(loc, var/ismetal=0)
-	..(loc)
+	. = ..(loc)
 	icon_state = "[ismetal ? "m":""]foam"
 	metal = ismetal
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
@@ -712,8 +694,7 @@ steam.start() -- spawns the effect
 
 		flick("[icon_state]-disolve", src)
 		sleep(5)
-		delete()
-	return
+		qdel(src)
 
 // on delete, transfer any reagents to the floor
 /obj/effect/effect/foam/Destroy()
@@ -758,7 +739,7 @@ steam.start() -- spawns the effect
 		flick("[icon_state]-disolve", src)
 
 		spawn(5)
-			delete()
+			qdel(src)
 
 
 /obj/effect/effect/foam/HasEntered(var/atom/movable/AM)
@@ -837,18 +818,6 @@ steam.start() -- spawns the effect
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1		// 1=aluminum, 2=iron
 
-	New()
-		..()
-		update_nearby_tiles()
-
-
-
-	Destroy()
-
-		density = 0
-		update_nearby_tiles()
-		..()
-
 	proc/updateicon()
 		if(metal == 1)
 			icon_state = "metalfoam"
@@ -919,6 +888,14 @@ steam.start() -- spawns the effect
 			air_master.mark_for_update(T)
 
 		return 1
+
+/obj/structure/foamedmetal/New()
+	. = ..()
+	update_nearby_tiles()
+
+/obj/structure/foamedmetal/Destroy()
+	update_nearby_tiles()
+	..()
 
 /datum/effect/effect/system/reagents_explosion
 	var/amount 						// TNT equivalent
