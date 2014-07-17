@@ -46,6 +46,7 @@ var/list/ai_list = list()
 
 	var/mob/living/silicon/ai/parent = null
 	var/camera_light_on = 0
+	var/list/obj/machinery/camera/lit_cameras = list()
 
 	var/datum/trackable/track = null
 
@@ -644,18 +645,24 @@ var/list/ai_list = list()
 	src << "Camera lights activated."
 	return
 
+//AI_CAMERA_LUMINOSITY
+
 /mob/living/silicon/ai/proc/light_cameras()
-	if (!camera_light_on)
-		return
+	var/list/obj/machinery/camera/add = list()
+	var/list/obj/machinery/camera/remove = list()
+	var/list/obj/machinery/camera/visible = list()
+	for (var/datum/camerachunk/CC in eyeobj.visibleCameraChunks)
+		for (var/obj/machinery/camera/C in CC.cameras)
+			if (!C.can_use() || C.light_disabled || get_dist(C, eyeobj) > 7)
+				continue
+			visible |= C
 
-	for(var/obj/machinery/camera/C in range(7, src.eyeobj))
-		if (!C.can_use())
-			continue
-		if (C.luminosity > 0)
-			continue
-		if (C.light_disabled)
-			continue
-		C.check_AI_light(src)
+	add = visible - lit_cameras
+	remove = lit_cameras - visible
 
-	spawn (5)
-		light_cameras()
+	for (var/obj/machinery/camera/C in remove)
+		C.SetLuminosity(0)
+		lit_cameras -= C
+	for (var/obj/machinery/camera/C in add)
+		C.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		lit_cameras |= C
