@@ -99,7 +99,7 @@
 					else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
 				new_mob.universal_speak = 1
 			if("human")
-				new_mob = new /mob/living/carbon/human(M.loc)
+				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
 
 				new_mob.gender = M.gender
 
