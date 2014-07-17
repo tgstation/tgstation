@@ -28,7 +28,7 @@
 		G.synch()
 		target.LAssailant = src
 
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		playsound(loc, pick('sound/scp/firstpersonsnap.ogg','sound/scp/firstpersonsnap2.ogg','sound/scp/firstpersonsnap3.ogg'), 100, 1, -1)
 		visible_message("\red [src] snapped [target]'s neck !")
 		target << "\red <b>In the blink of an eye, something grabs you and snaps your neck!</b> Everything goes black..."
 
@@ -190,9 +190,11 @@
 				if(in_darkness)
 					//move to right behind them
 					target_turf = get_step(target, src)
+					playsound(loc, pick('sound/scp/scare1.ogg','sound/scp/scare2.ogg','sound/scp/scare3.ogg','sound/scp/scare4.ogg'), 100, 1, -1)
 				else
 					//move to them really really fast and knock them down
 					target_turf = get_turf(target)
+					playsound(loc, pick('sound/scp/scare1.ogg','sound/scp/scare2.ogg','sound/scp/scare3.ogg','sound/scp/scare4.ogg'), 100, 1, -1)
 
 				//rampage along a path to get to them, in the blink of an eye
 				var/turf/next_turf = get_step_towards(src, target)
