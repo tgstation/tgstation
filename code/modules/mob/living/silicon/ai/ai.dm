@@ -427,6 +427,8 @@ var/list/ai_list = list()
 		updatehealth()
 
 /mob/living/silicon/ai/reset_view(atom/A)
+	if (camera_light_on)
+		light_cameras()
 	if(istype(A,/obj/machinery/camera))
 		current = A
 	..()
@@ -638,6 +640,11 @@ var/list/ai_list = list()
 
 	if (!camera_light_on)
 		src << "Camera lights deactivated."
+
+		for (var/obj/machinery/camera/C in lit_cameras)
+			C.SetLuminosity(0)
+			lit_cameras = list()
+
 		return
 
 	light_cameras()

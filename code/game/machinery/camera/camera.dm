@@ -18,7 +18,6 @@
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
-	var/light_on = 0
 
 	//OTHER
 
