@@ -29,6 +29,11 @@
 /obj/machinery/particle_accelerator/control_box/Destroy()
 	if(active)
 		toggle_power()
+
+	if(wires)
+		wires.Destroy()
+		wires = null
+
 	..()
 
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user as mob)

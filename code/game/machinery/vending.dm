@@ -74,6 +74,13 @@
 
 	return
 
+/obj/machinery/vending/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+
+	..()
+
 /obj/machinery/vending/proc/reconnect_database()
 	for(var/obj/machinery/account_database/DB in world)
 		// FIXME: If we're on asteroid z-level, use whatever's on the station. - N3X

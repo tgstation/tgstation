@@ -58,6 +58,13 @@ var/list/camera_names=list()
 			suffix++
 	..()
 
+/obj/machinery/camera/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+
+	..()
+
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
 		if(prob(100/severity))
