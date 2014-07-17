@@ -316,38 +316,32 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 420
 	chem_volume = 26
 
-	New()
-		..()
-		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("space_drugs", 7)
-		reagents.add_reagent("kelotane", 7)
-		reagents.add_reagent("bicaridine", 5)
-		reagents.add_reagent("toxin", 5)
+/obj/item/clothing/mask/cigarette/blunt/New()
+	. = ..()
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("space_drugs", 7)
+	reagents.add_reagent("kelotane", 7)
+	reagents.add_reagent("bicaridine", 5)
+	reagents.add_reagent("toxin", 5)
 
 /obj/item/clothing/mask/cigarette/blunt/rolled //grown.dm handles reagents for these
-
-/obj/item/clothing/mask/cigarette/blunt/rolled/New()
-	..()
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus
 	name = "blunt"
 	desc = "A fat ambrosia vulgaris cigar. Light it up and pass it around."
 	chem_volume = 36
 
-	New()
-		..()
-		reagents.clear_reagents()
-		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("space_drugs", 7)
-		reagents.add_reagent("kelotane", 7)
-		reagents.add_reagent("bicaridine", 5)
-		reagents.add_reagent("toxin", 5)
-		reagents.add_reagent("spiritbreaker", 10)
+/obj/item/clothing/mask/cigarette/blunt/cruciatus/New()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("space_drugs", 7)
+	reagents.add_reagent("kelotane", 7)
+	reagents.add_reagent("bicaridine", 5)
+	reagents.add_reagent("toxin", 5)
+	reagents.add_reagent("spiritbreaker", 10)
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus/rolled
-
-/obj/item/clothing/mask/cigarette/blunt/cruciatus/rolled/New()
-	..()
 
 /obj/item/clothing/mask/cigarette/blunt/deus
 	name = "godblunt"
@@ -357,19 +351,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "dbluntoff"
 	overlay_on = "dbluntlit"
 
-	New()
-		..()
-		reagents.clear_reagents()
-		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("bicaridine", 7)
-		reagents.add_reagent("synaptizine", 7)
-		reagents.add_reagent("hyperzine", 5)
-		reagents.add_reagent("space_drugs", 5)
+/obj/item/clothing/mask/cigarette/blunt/deus/New()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("bicaridine", 7)
+	reagents.add_reagent("synaptizine", 7)
+	reagents.add_reagent("hyperzine", 5)
+	reagents.add_reagent("space_drugs", 5)
 
 /obj/item/clothing/mask/cigarette/blunt/deus/rolled
-
-/obj/item/clothing/mask/cigarette/blunt/deus/rolled/New()
-	..()
 
 /obj/item/weapon/cigbutt/bluntbutt
 	name = "blunt butt"
@@ -378,7 +369,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "bluntbutt"
 	w_class = 1
 	throwforce = 1
-
 
 /////////////////
 //SMOKING PIPES//

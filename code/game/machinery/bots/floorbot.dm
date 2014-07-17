@@ -75,7 +75,7 @@ var/global/list/floorbot_targets=list()
 
 
 /obj/machinery/bot/floorbot/New()
-	..()
+	. = ..()
 	src.updateicon()
 
 /obj/machinery/bot/floorbot/turn_on()

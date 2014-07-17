@@ -483,7 +483,6 @@ var/const/POS_HEADER = {"<html>
 	src.attack_hand(usr)
 
 /obj/machinery/pos/attackby(var/atom/movable/A, var/mob/user)
-	..()
 	if(istype(A,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = A
 		if(!logged_in)
@@ -491,7 +490,8 @@ var/const/POS_HEADER = {"<html>
 			logged_in = user
 			screen=POS_SCREEN_ORDER
 			update_icon()
-			src.attack_hand(usr)
+			src.attack_hand(user) //why'd you use usr nexis, why
+			return
 		else
 			if(!linked_account)
 				visible_message("\red The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.","You hear a buzz.")
@@ -540,3 +540,4 @@ var/const/POS_HEADER = {"<html>
 				B.name="change"
 				B.desc="A box of change."
 			credits_held=0
+	..()

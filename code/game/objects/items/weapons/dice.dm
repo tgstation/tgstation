@@ -7,6 +7,7 @@
 	var/sides = 6
 
 /obj/item/weapon/dice/New()
+	. = ..()
 	icon_state = "[name][rand(sides)]"
 
 /obj/item/weapon/dice/d20

@@ -14,7 +14,6 @@
 	var/mopping = 0
 	var/mopcount = 0
 
-
 /obj/item/weapon/mop/New()
 	. = ..()
 	create_reagents(5)

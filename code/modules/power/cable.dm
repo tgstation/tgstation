@@ -200,7 +200,7 @@
 
 
 /obj/item/weapon/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
-	..()
+	. = ..()
 	src.amount = length
 	if (param_color)
 		_color = param_color
