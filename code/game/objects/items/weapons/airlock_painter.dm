@@ -17,9 +17,6 @@
 
 	var/obj/item/device/toner/ink = null
 
-	New()
-		ink = new /obj/item/device/toner(src)
-
 	//This proc doesn't just check if the painter can be used, but also uses it.
 	//Only call this if you are certain that the painter will be used right after this check!
 	proc/use(mob/user as mob)
@@ -77,3 +74,7 @@
 			user.put_in_hands(ink)
 			user << "<span class='notice'>You remove \the [ink] from \the [name].</span>"
 			ink = null
+
+/obj/item/weapon/airlock_painter/New()
+	. = ..()
+	ink = new /obj/item/device/toner(src)
