@@ -45,6 +45,7 @@ var/list/ai_list = list()
 	var/explosive = 0 //does the AI explode when it dies?
 
 	var/mob/living/silicon/ai/parent = null
+	var/camera_light_on = 0
 
 	var/datum/trackable/track = null
 
@@ -631,8 +632,30 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/toggle_camera_light()
 	if(stat != CONSCIOUS)
 		return
-	var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
-	if (camera)
-		var/t = camera.toggle_light()
-		src << "Camera lights [t ? "activated" : "deactivated"]."
+
+	camera_light_on = !camera_light_on
+
+	if (!camera_light_on)
+		src << "Camera lights deactivated."
+		return
+
+	light_cameras()
+
+	src << "Camera lights activated."
 	return
+
+/mob/living/silicon/ai/proc/light_cameras()
+	if (!camera_light_on)
+		return
+
+	for(var/obj/machinery/camera/C in range(7, src.eyeobj))
+		if (!C.can_use())
+			continue
+		if (C.luminosity > 0)
+			continue
+		if (C.light_disabled)
+			continue
+		C.check_AI_light(src)
+
+	spawn (5)
+		light_cameras()

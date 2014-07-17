@@ -341,12 +341,10 @@
 	busy = 0
 	return 0
 
-/obj/machinery/camera/proc/toggle_light()
-	light_on = !light_on
-	
-	if (light_on)
+/obj/machinery/camera/proc/check_AI_light(var/mob/living/silicon/ai/AI)
+	if ((src in range(6, AI.eyeobj)) && AI.camera_light_on && !light_disabled)
 		SetLuminosity(AI_CAMERA_LUMINOSITY)
+		spawn (5)
+			check_AI_light(AI)
 	else
 		SetLuminosity(0)
-
-	return light_on
