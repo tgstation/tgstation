@@ -105,7 +105,7 @@ schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are lo
 
 ##IRC BOT SETUP
 
-Included in the SVN is an IRC bot capable of relaying adminhelps to a specified
+Included in the repository is an IRC bot capable of relaying adminhelps to a specified
 IRC channel/server (thanks to Skibiliano).
 Instructions for bot setup are included in the /bot folder along with the script
 itself
