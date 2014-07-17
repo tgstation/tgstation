@@ -204,6 +204,12 @@
 			thermitemelt(user)
 			return
 
+		else if(istype(W, /obj/item/weapon/melee/energy/sword))
+			var/obj/item/weapon/melee/energy/sword/ES = W
+			if(ES.active)
+				thermitemelt(user)
+				return
+
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
