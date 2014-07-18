@@ -208,5 +208,11 @@
 	qdel(src)
 
 /obj/item/weapon/grab/Destroy()
-	qdel(hud)
+	if(hud)
+		if(assailant && assailant.client)
+			assailant.client.screen -= hud
+
+		qdel(hud)
+		hud = null
+
 	..()
