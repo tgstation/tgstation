@@ -21,7 +21,13 @@
 /obj/item/weapon/chisel/attack(mob/M as mob, mob/user as mob)
 	if(istype(M, /mob/living/simple_animal/sculpture))
 		var/engraving = sanitize(input(usr, "What do you want to write on the [M.real_name]?"))
+		var/turf/ST = user.loc
+
 		sleep( 10 + length(engraving) * 10)
+
+		if( !(user.loc == ST && user.get_active_hand() == src) ) return
+		if( !istype(M, /mob/living/sample_animal/sculpture) || !user || !src || !M ) return
+
 		M.desc += engraving
 
 /obj/item/weapon/chisel/afterattack(atom/target, mob/user as mob, proximity)
