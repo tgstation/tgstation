@@ -1,4 +1,3 @@
-
 /obj/item/weapon/reagent_containers/borghypo
 	name = "Cyborg Hypospray"
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
