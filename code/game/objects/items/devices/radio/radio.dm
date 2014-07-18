@@ -838,4 +838,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		R.radio = null
+
+	if(wires)
+		wires.Destroy()
+		wires = null
+
 	..()
