@@ -48,6 +48,13 @@
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	autoclose = 1
 
+/obj/machinery/door/airlock/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+
+	..()
+
 /obj/machinery/door/airlock/command
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorcom.dmi'

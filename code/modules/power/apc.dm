@@ -1283,6 +1283,10 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		terminal.master = null
 		terminal = null
 
+	if(wires)
+		wires.Destroy()
+		wires = null
+
 	..()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
