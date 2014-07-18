@@ -645,7 +645,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 		return
 	user << "<span class='notice'>You begin to awaken the Killer Tomato.</span>"
 	sleep(30)
-	var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(src.loc)
+	var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src.loc))
 	K.maxHealth += round(endurance / 3)
 	K.melee_damage_lower += round(potency / 10)
 	K.melee_damage_upper += round(potency / 10)
