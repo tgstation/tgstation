@@ -23,7 +23,7 @@
 	m_amt = 10
 	pressure_resistance = 2
 	var/colour = "black"	//what colour the ink is!
-
+	origin_tech = "materials=1"
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
