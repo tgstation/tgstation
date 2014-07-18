@@ -556,7 +556,7 @@
 
 		// Needed for M_TOXIC_FART
 		if("fart")
-			if(!src.op_stage.butt == 4)
+			if(src.op_stage.butt != 4)
 				if(world.time-lastFart >= 400)
 					var/list/farts = list("farts.","passes wind.","toots.","farts [pick("lightly", "tenderly", "softly", "with care")].","farts with the force of one thousand suns.")
 					if(miming)
