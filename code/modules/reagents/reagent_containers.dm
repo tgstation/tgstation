@@ -18,11 +18,10 @@
 
 /obj/item/weapon/reagent_containers/New()
 	..()
+	create_reagents(volume)
+
 	if (!possible_transfer_amounts)
 		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
-	var/datum/reagents/R = new/datum/reagents(volume)
-	reagents = R
-	R.my_atom = src
 
 /obj/item/weapon/reagent_containers/attack_self(mob/user as mob)
 	return
