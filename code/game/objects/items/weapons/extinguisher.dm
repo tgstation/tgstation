@@ -20,6 +20,11 @@
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
 
+/obj/item/weapon/extinguisher/New()
+	. = ..()
+	create_reagents(max_water)
+	reagents.add_reagent("water", max_water)
+
 /obj/item/weapon/extinguisher/mini
 	name = "fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
@@ -33,12 +38,6 @@
 	m_amt = 0
 	max_water = 30
 	sprite_name = "miniFE"
-
-/obj/item/weapon/extinguisher/New()
-	var/datum/reagents/R = new/datum/reagents(max_water)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("water", max_water)
 
 /obj/item/weapon/extinguisher/examine()
 	set src in usr

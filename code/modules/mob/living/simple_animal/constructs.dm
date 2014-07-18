@@ -13,7 +13,7 @@
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/weapons/spiderlunge.ogg'
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -148,7 +148,7 @@
 	attacktext = "smashes their armoured gauntlet into"
 	speed = 3
 	environment_smash = 2
-	attack_sound = 'sound/weapons/punch3.ogg'
+	attack_sound = 'sound/weapons/heavysmash.ogg'
 	status_flags = 0
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
 
@@ -219,7 +219,7 @@
 	attacktext = "slashes"
 	speed = -1
 	see_in_dark = 7
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/weapons/rapidslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 
 
@@ -244,7 +244,7 @@
 	attacktext = "rams"
 	speed = 0
 	environment_smash = 2
-	attack_sound = 'sound/weapons/punch2.ogg'
+	attack_sound = 'sound/weapons/rapidslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
@@ -273,7 +273,7 @@
 	attacktext = "brutally crushes"
 	speed = 5
 	environment_smash = 2
-	attack_sound = 'sound/weapons/punch4.ogg'
+	attack_sound = 'sound/weapons/heavysmash.ogg'
 	var/energy = 0
 	var/max_energy = 1000
 

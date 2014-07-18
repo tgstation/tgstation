@@ -50,6 +50,7 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 		if(mind)	mind.transfer_to(new_xeno)
 		del(src)
+		playsound(get_turf(src), 'sound/effects/evolve.ogg', 40, 1)
 		return
 	else
 		src << "\red You are not fully grown."

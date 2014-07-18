@@ -89,7 +89,12 @@ var/global/mulebot_count = 0
 
 	verbs -= /atom/movable/verb/pull
 
+/obj/machinery/bot/mulebot/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
 
+	..()
 
 // attack by item
 // emag : lock/unlock,

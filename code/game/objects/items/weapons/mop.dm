@@ -3,6 +3,7 @@
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
+	hitsound = "sound/weapons/whip.ogg"
 	force = 3.0
 	throwforce = 10.0
 	throw_speed = 5
@@ -13,14 +14,11 @@
 	var/mopping = 0
 	var/mopcount = 0
 
-
 /obj/item/weapon/mop/New()
-	var/datum/reagents/R = new/datum/reagents(5)
-	reagents = R
-	R.my_atom = src
+	. = ..()
+	create_reagents(5)
 
-
-obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
+/obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 	reagents.reaction(A,1,10)
 	A.clean_blood()
 	for(var/obj/effect/O in A)

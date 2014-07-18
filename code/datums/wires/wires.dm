@@ -48,6 +48,10 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 			var/list/wires = same_wires[holder_type]
 			src.wires = wires // Reference the wires list.
 
+/datum/wires/Destroy()
+	if(holder)
+		holder = null
+
 /datum/wires/proc/GenerateWires()
 	var/list/colours_to_pick = wireColours.Copy() // Get a copy, not a reference.
 	var/list/indexes_to_pick = list()

@@ -10,7 +10,7 @@
 	var/on = 0
 	var/no_light=0 // Disable the light on the atmos suit
 	_color = "engineering" //Determines used sprites: rig[on]-[_color] and rig[on]-[_color]2 (lying down sprite)
-	icon_action_button = "action_hardhat"
+	action_button_name = "Toggle Helmet Light"
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 

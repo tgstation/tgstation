@@ -5,12 +5,6 @@
  + cuff_orange
  + cuff_pink
  + cuff_white
---- C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\left\clownwiz.dmi
-+++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\right\clownwiz.dmi
- + clownwizhat
- + clownwizrobe
- - wizhatclown
- - wizrobeclown
 --- C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\left\guns.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\right\guns.dmi
  + scythe0

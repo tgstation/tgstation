@@ -32,7 +32,7 @@
 	h_style = "Bald"
 	..(new_loc, "Skellington")
 
-/mob/living/carbon/human/New(var/new_loc, var/new_species = null)
+/mob/living/carbon/human/New(var/new_loc, var/new_species = null, var/delay_ready_dna=0)
 
 	if(!species)
 		if(new_species)
@@ -58,7 +58,6 @@
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
-
 	..()
 
 	if(dna)
@@ -66,6 +65,10 @@
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
+
+	// Set up DNA.
+	if(!delay_ready_dna)
+		dna.ready_dna(src)
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
