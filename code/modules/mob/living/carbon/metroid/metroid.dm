@@ -296,7 +296,7 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+			if (is_muzzled())
 				return
 			if (health > 0)
 				attacked += 10
@@ -927,14 +927,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 		qdel(src)
 
-
-	proc/announce_to_ghosts()
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client)
-				var/area/A = get_area(src)
-				if(A)
-					G << "Golem rune created in [A.name]."
-
 /mob/living/carbon/slime/getTrail()
 	return null
 
@@ -942,6 +934,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	if(lube>=2)
 		return 0
 	.=..()
+
+/mob/living/carbon/slime/stripPanelUnequip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
+
+/mob/living/carbon/slime/stripPanelEquip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
 
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////

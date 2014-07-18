@@ -929,6 +929,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			var/obj/item/weapon/card/id/W = new(M)
 			W.icon_state = "centcom"
 			W.access = get_centcom_access("Centcom Official")
+			W.access += access_weapons
 			W.assignment = "Centcom Official"
 			W.registered_name = M.real_name
 			W.update_label()

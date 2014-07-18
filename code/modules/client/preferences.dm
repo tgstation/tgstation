@@ -16,6 +16,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI candidate" = 1,                                 // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
 	"blob" = IS_MODE_COMPILED("blob"),					 // 9
+	"monkey" = IS_MODE_COMPILED("monkey")				// 10
 )
 
 
@@ -632,7 +633,7 @@ datum/preferences
 						if(result)
 							var/newtype = roundstart_species[result]
 							pref_species = new newtype()
-							if(!config.mutant_colors)
+							if(!config.mutant_colors || mutant_color == "#000")
 								mutant_color = pref_species.default_color
 
 					if("mutant_color")
@@ -642,7 +643,9 @@ datum/preferences
 						var/new_mutantcolor = input(user, "Choose your character's alien skin color:", "Character Preference") as color|null
 						if(new_mutantcolor)
 							var/temp_hsv = RGBtoHSV(new_mutantcolor)
-							if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+							if(new_mutantcolor == "#000000")
+								mutant_color = pref_species.default_color
+							else if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
 								mutant_color = sanitize_hexcolor(new_mutantcolor)
 							else
 								user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"

@@ -176,7 +176,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	@param vmessage:
 		If specified, will display this as the message; such as "chimpering"
-		for monkies if the mob is not understood. Stored in signal.data["vmessage"].
+		for monkeys if the mob is not understood. Stored in signal.data["vmessage"].
 
 	@param radio:
 		Reference to the radio broadcasting the message, stored in signal.data["radio"]

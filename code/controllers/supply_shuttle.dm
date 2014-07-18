@@ -171,23 +171,17 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	proc/send()
 		var/area/from
 		var/area/dest
-		var/area/the_shuttles_way
 		switch(at_station)
 			if(1)
 				from = locate(SUPPLY_STATION_AREATYPE)
 				dest = locate(SUPPLY_DOCK_AREATYPE)
-				the_shuttles_way = from
 				at_station = 0
 			if(0)
 				from = locate(SUPPLY_DOCK_AREATYPE)
 				dest = locate(SUPPLY_STATION_AREATYPE)
-				the_shuttles_way = dest
 				at_station = 1
+		dest.clear_docking_area()
 		moving = 0
-
-		//Do I really need to explain this loop?
-		for(var/mob/living/unlucky_person in the_shuttles_way)
-			unlucky_person.gib()
 
 		from.move_contents_to(dest)
 
@@ -717,7 +711,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		temp = "Invalid Request"
 		for(var/i=1, i<=supply_shuttle.requestlist.len, i++)
 			var/datum/supply_order/SO = supply_shuttle.requestlist[i]
-			if(SO.ordernum == ordernum)
+			if(SO && SO.ordernum == ordernum)
 				O = SO
 				P = O.object
 				if(supply_shuttle.points >= P.cost)
@@ -763,7 +757,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		temp = "Invalid Request.<BR>"
 		for(var/i=1, i<=supply_shuttle.requestlist.len, i++)
 			var/datum/supply_order/SO = supply_shuttle.requestlist[i]
-			if(SO.ordernum == ordernum)
+			if(SO && SO.ordernum == ordernum)
 				supply_shuttle.requestlist.Cut(i,i+1)
 				temp = "Request removed.<BR>"
 				break

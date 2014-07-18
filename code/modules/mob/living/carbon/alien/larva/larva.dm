@@ -142,7 +142,7 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+			if (is_muzzled())
 				return
 			if (health > 0)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
@@ -292,3 +292,11 @@
 		var/mob/living/carbon/alien/humanoid/A = new(loc)
 		A.key = key
 		qdel(src) */
+
+/mob/living/carbon/alien/larva/stripPanelUnequip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
+
+/mob/living/carbon/alien/larva/stripPanelEquip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return

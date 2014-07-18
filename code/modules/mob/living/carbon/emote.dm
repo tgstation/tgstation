@@ -13,7 +13,7 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
-	var/muzzled = (src.wear_mask && istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+	var/muzzled = is_muzzled()
 	//var/m_type = 1
 
 	switch(act)//Even carbon organisms want it alphabetically ordered..

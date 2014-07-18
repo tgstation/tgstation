@@ -408,7 +408,7 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 				if(M.mind in ticker.mode.wizards)
 					return 2
 			if("monkey")
-				if(M.viruses && (locate(/datum/disease/jungle_fever) in M.viruses))
+				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
 		return 1
 	return 0
@@ -422,6 +422,13 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 
 /mob/proc/reagent_check(var/datum/reagent/R) // utilized in the species code
 	return 1
+
+/proc/notify_ghosts(var/message, var/ghost_sound = null) //Easy notification of ghosts.
+	for(var/mob/dead/observer/O in player_list)
+		if(O.client)
+			O << "<span class='ghostalert'>[message]<span>"
+			if(ghost_sound)
+				O << sound(ghost_sound)
 
 /proc/item_heal_robotic(var/mob/living/carbon/human/H, var/mob/user, var/brute, var/burn)
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
