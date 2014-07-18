@@ -9,6 +9,8 @@
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
+	autoignition_temperature = 522 // Kelvin
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is farting lightly on the [src.name]! It looks like \he's  trying to commit suicide!</b>"
 		return (user.death(1))
@@ -18,6 +20,8 @@
 	name = "bible"
 	desc = "To be applied to the head repeatedly."
 	icon_state ="bible"
+
+	autoignition_temperature = 0 // Not actually paper
 
 /obj/item/weapon/storage/bible/booze/New()
 	. = ..()

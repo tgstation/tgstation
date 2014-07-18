@@ -868,3 +868,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MT_ERROR  -1
 #define MT_UPDATE 1
 #define MT_REINIT 2
+
+#define AUTOIGNITION_WOOD  573.15
+#define AUTOIGNITION_PAPER 519.15
