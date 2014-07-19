@@ -320,6 +320,14 @@
 
 	decals += decal
 	overlays += decal
+/turf/proc/ClearDecals()
+	if(!decals)
+		return
+
+	for(var/image/decal in decals)
+		overlays -= decal
+
+	decals = 0
 
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
