@@ -5,18 +5,19 @@
 /mob/living/silicon/robot/get_active_hand()
 	return module_active
 
-/mob/living/silicon/robot/proc/uneq_module(const/module_state)
-	if(isitem(module_state))
-		var/obj/item/item = module_state
+/mob/living/silicon/robot/proc/uneq_module(const/obj/item/module)
+	if(!istype(module))
+		return 0
 
-		if(istype(item, /obj/item/borg/sight))
-			sight_mode &= ~item:sight_mode
+	if(istype(module, /obj/item/borg/sight))
+		sight_mode &= ~module:sight_mode
 
-		if(client)
-			client.screen -= item
+	if(client)
+		client.screen -= module
 
-		contents -= item
-		item.loc = module
+	contents -= module
+	module.loc = src.module
+	return 1
 
 /mob/living/silicon/robot/proc/uneq_active()
 	if(isnull(module_active))
