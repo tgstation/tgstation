@@ -605,6 +605,7 @@
 #include "code\game\objects\items\weapons\swords_axes_etc.dm"
 #include "code\game\objects\items\weapons\table_rack_parts.dm"
 #include "code\game\objects\items\weapons\teleportation.dm"
+#include "code\game\objects\items\weapons\tile_painter.dm"
 #include "code\game\objects\items\weapons\tools.dm"
 #include "code\game\objects\items\weapons\twohanded.dm"
 #include "code\game\objects\items\weapons\weaponry.dm"
