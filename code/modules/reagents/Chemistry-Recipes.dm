@@ -67,7 +67,7 @@ datum
 			id = "creatine"
 			result = "creatine"
 			required_reagents = list("nutriment"=1, "bicaridine"=1, "hyperzine"=1, "mutagen"=1)
-			result_amount = 1
+			result_amount = 2
 
 		emp_pulse
 			name = "EMP Pulse"
