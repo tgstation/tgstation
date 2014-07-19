@@ -2547,7 +2547,7 @@
 "aWY" = (/obj/machinery/firealarm{pixel_y = 24},/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/crew_quarters/locker)
 "aWZ" = (/obj/machinery/washing_machine,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/crew_quarters/locker)
 "aXa" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/turf/simulated/wall,/area/storage/art)
-"aXb" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/obj/structure/table,/obj/item/weapon/cable_coil/random,/obj/item/weapon/cable_coil/random,/turf/simulated/floor,/area/storage/art)
+"aXb" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/obj/structure/table,/obj/item/weapon/cable_coil/random,/obj/item/weapon/cable_coil/random,/obj/item/weapon/chisel,/obj/item/weapon/chisel,/turf/simulated/floor,/area/storage/art)
 "aXc" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor,/area/storage/art)
 "aXd" = (/turf/simulated/floor,/area/storage/art)
 "aXe" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/maintenance/port)

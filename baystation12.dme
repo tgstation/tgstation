@@ -575,6 +575,7 @@
 #include "code\game\objects\items\weapons\airlock_painter.dm"
 #include "code\game\objects\items\weapons\cards_ids.dm"
 #include "code\game\objects\items\weapons\cash.dm"
+#include "code\game\objects\items\weapons\chisel.dm"
 #include "code\game\objects\items\weapons\cigs_lighters.dm"
 #include "code\game\objects\items\weapons\clown_items.dm"
 #include "code\game\objects\items\weapons\cosmetics.dm"

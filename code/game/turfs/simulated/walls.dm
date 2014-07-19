@@ -13,6 +13,11 @@
 
 	var/walltype = "metal"
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
+	var/engraving, engraving_quality //engraving on the wall
+
+/turf/simulated/wall/examine()
+	..()
+	if(src.engraving) usr << src.engraving
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(istype(src,/turf/simulated/wall/r_wall))
