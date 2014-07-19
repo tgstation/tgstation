@@ -35,7 +35,7 @@ datum
 				var/datum/reagent/self = src
 				src = null										  //of the reagent to the mob on TOUCHING it.
 
-				if(!istype(self.holder.my_atom, /obj/effect/effect/smoke/chem))
+				if(self.holder && !istype(self.holder.my_atom, /obj/effect/effect/smoke/chem))
 					// If the chemicals are in a smoke cloud, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
 
 					if(method == TOUCH)
@@ -2425,34 +2425,36 @@ datum
 			var/has_ripped_and_torn=0 // We've applied permanent damage.
 			var/hulked_at = 0 // World.time
 
+			custom_metabolism=0.1
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
-				switch(data)
+				switch(volume)
 					if(1 to 25)
 						M.adjustToxLoss(data*5) // 5 if hulk, else 1
 						if(prob(5))
 							M << "<span class='warning'>Oh god, the pain!</span>"
 					if(25 to INFINITY)
 						if(ishuman(M)) // Does nothing to non-humans.
-							var/mob/living/carbon/human/H=usr
+							var/mob/living/carbon/human/H=M
 							if(H.species.name!="Dionae") // Dionae are broken as fuck
 								if(H.hulk_time<world.time && !has_been_hulk)
-									H.hulk_time = world.time + 30 SECONDS
+									H.hulk_time = world.time + (30 SECONDS)
+									hulked_at = H.hulk_time
 									if(!(M_HULK in H.mutations))
 										has_been_hulk=1
 										has_ripped_and_torn=0 // Fuck them UP after they dehulk.
 										H.mutations.Add(M_HULK)
 										H.update_mutations()		//update our mutation overlays
 										H.update_body()
-										message_admins("[key_name(usr)] is TOO SWOLE TO CONTROL (on creatine)! ([formatJumpTo(usr)])")
-								else if(H.hulk_time>world.time) // TIME'S UP
+										message_admins("[key_name(M)] is TOO SWOLE TO CONTROL (on creatine)! ([formatJumpTo(M)])")
+								else if(H.hulk_time<world.time && has_been_hulk) // TIME'S UP
 									dehulk(H)
 								else if(prob(1))
 									H.say(pick("YOU TRYIN' BUILD SUM MUSSLE?","TOO SWOLE TO CONTROL","HEY MANG","HEY MAAAANG"))
 
 				data++
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
