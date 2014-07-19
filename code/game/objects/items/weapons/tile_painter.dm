@@ -46,7 +46,7 @@
 	return 1
 
 /datum/paint_info/proc/apply(var/turf/simulated/floor/T, var/pname, var/pdesc)
-	warning("[type]: Running /datum/paint_info/proc/apply.")
+	//warning("[type]: Running /datum/paint_info/proc/apply.")
 	T.icon_state = icon_state
 	T.icon_regular_floor = icon_state	//required to 'save' the new floor type so if someone crowbars it and puts it back it won't revert to the original state
 	T.dir = dir
@@ -450,9 +450,9 @@ var/global/list/paint_variants = list(
 		return 0
 
 	var/turf/simulated/floor/test = get_turf(A) //it should be the simulated floor type
-	world.log << "[src]:  selected=[selected.type]"
+	//world.log << "[src]:  selected=[selected.type]"
 	if(!selected.validate(test))
-		user << "SHIT BROKE"
+		user << "<span class='warning'>An error indicator on [src] flicks on for a moment. Perhaps you're using it on the wrong floor type?</span>"
 		return 0
 
 	var/pdesc = ""
