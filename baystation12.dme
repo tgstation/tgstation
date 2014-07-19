@@ -1184,6 +1184,7 @@
 #include "code\modules\nano\JSON Writer.dm"
 #include "code\modules\nano\nanoexternal.dm"
 #include "code\modules\nano\nanomanager.dm"
+#include "code\modules\nano\nanomapgen.dm"
 #include "code\modules\nano\nanoui.dm"
 #include "code\modules\organs\blood.dm"
 #include "code\modules\organs\organ.dm"
