@@ -971,7 +971,35 @@
 		speech = sanitize(speech) // Nah, we don't trust them
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins("\blue [key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]")
+	
+	else if(href_list["sendtoprison"])
+		if(!check_rights(R_FUN))	return
 
+		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
+			return
+
+		var/mob/M = locate(href_list["sendtoprison"])
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob"
+			return
+		if(istype(M, /mob/living/silicon/ai))
+			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
+			return
+
+		for(var/obj/item/I in M)
+			M.unEquip(I)
+			if(I)
+				I.loc = M.loc
+				I.layer = initial(I.layer)
+				I.dropped(M)
+
+		M.Paralyse(5)
+		sleep(5)
+		M.loc = pick(prisonwarp)
+		spawn(50)
+			M << "\blue You have been sent to Prison!"
+		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
+		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!", 1)
 	else if(href_list["tdome1"])
 		if(!check_rights(R_FUN))	return
 
