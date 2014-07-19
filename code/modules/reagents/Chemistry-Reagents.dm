@@ -2432,7 +2432,7 @@ datum
 				if(!data) data = 1
 				switch(volume)
 					if(1 to 25)
-						M.adjustToxLoss(data*5) // 5 if hulk, else 1
+						M.adjustToxLoss(data*2)
 						if(prob(5))
 							M << "<span class='warning'>Oh god, the pain!</span>"
 					if(25 to INFINITY)
