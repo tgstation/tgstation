@@ -986,13 +986,6 @@
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
 			return
 
-		for(var/obj/item/I in M)
-			M.unEquip(I)
-			if(I)
-				I.loc = M.loc
-				I.layer = initial(I.layer)
-				I.dropped(M)
-
 		M.Paralyse(5)
 		sleep(5)
 		M.loc = pick(prisonwarp)
