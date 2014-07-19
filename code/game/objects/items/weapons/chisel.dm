@@ -26,7 +26,7 @@
 		sleep( 10 + length(engraving) * 10)
 
 		if( !(user.loc == ST && user.get_active_hand() == src) ) return
-		if( !istype(M, /mob/living/sample_animal/sculpture) || !user || !src || !M ) return
+		if( !istype(M, /mob/living/simple_animal/sculpture) || !user || !src || !M ) return
 
 		M.desc += engraving
 
