@@ -1,5 +1,13 @@
 
 /obj/machinery/computer/security
+
+	l_color = "#B40000"
+		power_change()
+			..()
+			if(!(stat & (BROKEN|NOPOWER)))
+				SetLuminosity(2)
+			else
+				SetLuminosity(0)
 	New()
 		if(network)
 			networks = list(network)

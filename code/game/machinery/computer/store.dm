@@ -4,6 +4,14 @@
 	icon_state = "comm_logs"
 	circuit = "/obj/item/weapon/circuitboard/merch"
 
+	l_color = "#50AB00"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/item/weapon/circuitboard/merch
 	name = "\improper Merchandise Computer Circuitboard"
 	build_path = /obj/machinery/computer/merch
