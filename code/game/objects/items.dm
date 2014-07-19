@@ -765,3 +765,9 @@
 
 /obj/item/proc/OnMobDeath(var/mob/holder)
 	return
+
+/proc/isitem(const/object)
+	if(istype(object, /obj/item))
+		return 1
+
+	return 0
