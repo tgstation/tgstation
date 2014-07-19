@@ -2,17 +2,16 @@
 #define PAINT_PLATING 		2
 #define PAINT_REINFORCED 	3
 
-#define DIR_ONE 	1
-#define DIR_ORTO 	2
-#define DIR_ALL 	3
+#define DIR_ONE 	1	//for those tiles with only one direction
+#define DIR_ORTHO 	2	//orthogonal (south, west, north, east)
+#define DIR_ALL 	3	//all the directions
 
 
 /datum/paint_info
 	var/dir = SOUTH
 	var/icon_state = "floor"
 	var/ftype as num		//the floor type required for this paint job
-							//I also had problems with this casting itself to a string
-	var/adirs //available dirs for this floor type
+	var/adirs 				//available dirs for this floor type
 
 /datum/paint_info/New(var/padir, var/picon)
 	src.adirs = padir
@@ -27,51 +26,49 @@
 	src.ftype = ptype
 	src.adirs = padir
 
-
-//This list contains all possible variants of paint jobs
-//It's long as fuck and of course could be shrunk a lot, but there are some exception to some tiles which can overcomplicate things
-//So I'll leave it as this for now -- Tehsapper
+	
+//The list of all available floor design groups
 
 var/global/list/paint_variants = list(
 	"Gray" = list(new /datum/paint_info(DIR_ONE,"floor"),
 	new /datum/paint_info(DIR_ALL,"black"),
-	new /datum/paint_info(DIR_ORTO,"blackcorner")),
+	new /datum/paint_info(DIR_ORTHO,"blackcorner")),
 	
 	"Neutral" = list(new /datum/paint_info(DIR_ALL,"neutral"),
-	new /datum/paint_info(DIR_ORTO,"neutralcorner"),
+	new /datum/paint_info(DIR_ORTHO,"neutralcorner"),
 	new /datum/paint_info(DIR_ONE,"neutralfull")),
 
 	"White" = list(new /datum/paint_info(DIR_ONE,"white"),
 	new /datum/paint_info(DIR_ALL,"whitehall"),
-	new /datum/paint_info(DIR_ORTO,"whitecorner")),
+	new /datum/paint_info(DIR_ORTHO,"whitecorner")),
 
 	"Red" = list(new /datum/paint_info(DIR_ONE,"redfull"),
 	new /datum/paint_info(DIR_ALL,"red"),
-	new /datum/paint_info(DIR_ORTO,"redcorner")),
+	new /datum/paint_info(DIR_ORTHO,"redcorner")),
 
 	"Green" = list(new /datum/paint_info(DIR_ONE,"greenfull"),
 	new /datum/paint_info(DIR_ALL,"green"),
-	new /datum/paint_info(DIR_ORTO,"greencorner")),
+	new /datum/paint_info(DIR_ORTHO,"greencorner")),
 
 	"Blue" = list(new /datum/paint_info(DIR_ONE,"bluefull"),
 	new /datum/paint_info(DIR_ALL,"blue"),
-	new /datum/paint_info(DIR_ORTO,"bluecorner")),
+	new /datum/paint_info(DIR_ORTHO,"bluecorner")),
 
 	"Yellow" = list(new /datum/paint_info(DIR_ONE,"yellowfull"),
 	new /datum/paint_info(DIR_ALL,"yellow"),
-	new /datum/paint_info(DIR_ORTO,"yellowcorner")),
+	new /datum/paint_info(DIR_ORTHO,"yellowcorner")),
 
 	"Purple" = list(new /datum/paint_info(DIR_ONE,"purplefull"),
 	new /datum/paint_info(DIR_ALL,"purple"),
-	new /datum/paint_info(DIR_ORTO,"purplecorner")),
+	new /datum/paint_info(DIR_ORTHO,"purplecorner")),
 
 	"Orange" = list(new /datum/paint_info(DIR_ONE,"orangefull"),
 	new /datum/paint_info(DIR_ALL,"orange"),
-	new /datum/paint_info(DIR_ORTO,"orangecorner")),
+	new /datum/paint_info(DIR_ORTHO,"orangecorner")),
 
 	"Brown" = list(new /datum/paint_info(DIR_ONE,"dark brown full"),
 	new /datum/paint_info(DIR_ALL,"brown"),
-	new /datum/paint_info(DIR_ORTO,"browncorner")),
+	new /datum/paint_info(DIR_ORTHO,"browncorner")),
 
 	"Red and yellow" = list(new /datum/paint_info(DIR_ONE,"redyellowfull"),
 	new /datum/paint_info(DIR_ALL,"redyellow")),
@@ -93,24 +90,24 @@ var/global/list/paint_variants = list(
 
 	"White red" = list(new /datum/paint_info(DIR_ONE,"whiteredfull"),
 	new /datum/paint_info(DIR_ALL,"whitered"),
-	new /datum/paint_info(DIR_ORTO,"whiteredcorner")),
+	new /datum/paint_info(DIR_ORTHO,"whiteredcorner")),
 
 	"White green" = list(new /datum/paint_info(DIR_ONE,"whitegreenfull"),
 	new /datum/paint_info(DIR_ALL,"whitegreen"),
-	new /datum/paint_info(DIR_ORTO,"whitegreencorner")),
+	new /datum/paint_info(DIR_ORTHO,"whitegreencorner")),
 
 	"White blue" = list(new /datum/paint_info(DIR_ONE,"whitebluefull"),
 	new /datum/paint_info(DIR_ALL,"whiteblue"),
-	new /datum/paint_info(DIR_ORTO,"whitebluecorner"),
+	new /datum/paint_info(DIR_ORTHO,"whitebluecorner"),
 	new /datum/paint_info(DIR_ONE,"cmo")),
 
 	"White yellow" = list(new /datum/paint_info(DIR_ONE,"whiteyellowfull"),
 	new /datum/paint_info(DIR_ALL,"whiteyellow"),
-	new /datum/paint_info(DIR_ORTO,"whiteyellowcorner")),
+	new /datum/paint_info(DIR_ORTHO,"whiteyellowcorner")),
 
 	"White purple" = list(new /datum/paint_info(DIR_ONE,"whitepurplefull"),
 	new /datum/paint_info(DIR_ALL,"whitepurple"),
-	new /datum/paint_info(DIR_ORTO,"whitepurplecorner")),
+	new /datum/paint_info(DIR_ORTHO,"whitepurplecorner")),
 
 	"Arrival" = list(new /datum/paint_info(DIR_ALL,"arrival")),
 
@@ -118,40 +115,40 @@ var/global/list/paint_variants = list(
 	
 	"Dark" = list(new /datum/paint_info(DIR_ONE,"dark"),
 	new /datum/paint_info(DIR_ALL,"dark floor stripe"),
-	new /datum/paint_info(DIR_ORTO,"dark floor corner")),
+	new /datum/paint_info(DIR_ORTHO,"dark floor corner")),
 	
 	"Dark red" = list(new /datum/paint_info(DIR_ONE,"dark red full"),
 	new /datum/paint_info(DIR_ALL,"dark red stripe"),
-	new /datum/paint_info(DIR_ORTO,"dark red corner")),
+	new /datum/paint_info(DIR_ORTHO,"dark red corner")),
 	
 	"Dark blue" = list(new /datum/paint_info(DIR_ONE,"dark blue full"),
 	new /datum/paint_info(DIR_ALL,"dark blue stripe"),
-	new /datum/paint_info(DIR_ORTO,"dark blue corner")),
+	new /datum/paint_info(DIR_ORTHO,"dark blue corner")),
 	
 	"Dark green" = list(new /datum/paint_info(DIR_ONE,"dark green full"),
 	new /datum/paint_info(DIR_ALL,"dark green stripe"),
-	new /datum/paint_info(DIR_ORTO,"dark green corner")),
+	new /datum/paint_info(DIR_ORTHO,"dark green corner")),
 	
 	"Dark purple" = list(new /datum/paint_info(DIR_ONE,"dark purple full"),
 	new /datum/paint_info(DIR_ALL,"dark purple stripe"),
-	new /datum/paint_info(DIR_ORTO,"dark purple corner")),
+	new /datum/paint_info(DIR_ORTHO,"dark purple corner")),
 	
 	"Dark yellow" = list(new /datum/paint_info(DIR_ONE,"dark yellow full"),
 	new /datum/paint_info(DIR_ALL,"dark yellow stripe"),
-	new /datum/paint_info(DIR_ORTO,"dark yellow corner")),
+	new /datum/paint_info(DIR_ORTHO,"dark yellow corner")),
 	
 	"Dark orange" = list(new /datum/paint_info(DIR_ONE,"dark orange full"),
 	new /datum/paint_info(DIR_ALL,"dark orange stripe"),
-	new /datum/paint_info(DIR_ORTO,"dark orange corner")),
+	new /datum/paint_info(DIR_ORTHO,"dark orange corner")),
 	
 	"Dark orange" = list(new /datum/paint_info(DIR_ONE,"dark orange full"),
 	new /datum/paint_info(DIR_ALL,"dark orange stripe"),
-	new /datum/paint_info(DIR_ORTO,"dark orange corner")),
+	new /datum/paint_info(DIR_ORTHO,"dark orange corner")),
 	
 	"Dark vault" = list(new /datum/paint_info(DIR_ONE,"dark vault full"),
 	new /datum/paint_info(DIR_ALL,"dark vault stripe"),
-	new /datum/paint_info(DIR_ORTO,"dark vault corner"),
-	new /datum/paint_info(DIR_ORTO,"dark-markings")),
+	new /datum/paint_info(DIR_ORTHO,"dark vault corner"),
+	new /datum/paint_info(DIR_ORTHO,"dark-markings")),
 
 	"Markings" = list(new /datum/paint_info(DIR_ONE,"delivery"),
 	new /datum/paint_info(DIR_ONE,"bot"),
@@ -161,21 +158,21 @@ var/global/list/paint_variants = list(
 	new /datum/paint_info(DIR_ONE,"enginebot", PAINT_REINFORCED),
 	new /datum/paint_info(DIR_ONE,"plaque")),
 
-	"Loading area" = list(new /datum/paint_info(DIR_ORTO,"loadingarea"),
-	new /datum/paint_info(DIR_ORTO,"engineloadingarea", PAINT_REINFORCED),
-	new /datum/paint_info(DIR_ORTO,"dark loading")),
+	"Loading area" = list(new /datum/paint_info(DIR_ORTHO,"loadingarea"),
+	new /datum/paint_info(DIR_ORTHO,"engineloadingarea", PAINT_REINFORCED),
+	new /datum/paint_info(DIR_ORTHO,"dark loading")),
 
 	"Warning" = list(new /datum/paint_info(DIR_ALL,"warning"),
-	new /datum/paint_info(DIR_ORTO,"warningcorner")),
+	new /datum/paint_info(DIR_ORTHO,"warningcorner")),
 
 	"White warning" = list(new /datum/paint_info(DIR_ALL,"warnwhite"),
-	new /datum/paint_info(DIR_ORTO,"warnwhitecorner")),
+	new /datum/paint_info(DIR_ORTHO,"warnwhitecorner")),
 
 	"Reinforced warning" = list(new /datum/paint_info(DIR_ALL,"enginewarn", PAINT_REINFORCED),
-	new /datum/paint_info(DIR_ORTO,"enginewarncorner", PAINT_REINFORCED)),
+	new /datum/paint_info(DIR_ORTHO,"enginewarncorner", PAINT_REINFORCED)),
 
 	"Plating warning" = list(new /datum/paint_info(DIR_ALL,"warnplate", PAINT_PLATING),
-	new /datum/paint_info(DIR_ORTO,"warnplatecorner", PAINT_PLATING)),
+	new /datum/paint_info(DIR_ORTHO,"warnplatecorner", PAINT_PLATING)),
 
 	"Chapel" = list(new /datum/paint_info(DIR_ALL,"chapel")),
 
@@ -266,7 +263,7 @@ var/global/list/paint_variants = list(
 		if(DIR_ONE)
 			user << browse_rsc(icon('icons/turf/floors.dmi', I.icon_state, I.dir), "[I.icon_state][I.dir].png")
 			data += "<a href=\"?src=\ref[src];set_dir=[I.dir];set_state=[I.icon_state];set_type=[I.ftype]\"><img src='[I.icon_state][I.dir].png'></a>"
-		if(DIR_ORTO)
+		if(DIR_ORTHO)
 			for(var/i = 1; i <= 8; i *= 2)
 				user << browse_rsc(icon('icons/turf/floors.dmi', I.icon_state, i), "[I.icon_state][i].png")
 				data += "<a href=\"?src=\ref[src];set_dir=[i];set_state=[I.icon_state];set_type=[I.ftype]\"><img src='[I.icon_state][i].png'></a>"
@@ -367,7 +364,7 @@ var/global/list/paint_variants = list(
 	if(selected.ftype == PAINT_FLOOR) //why is it named plasteel anyway?
 		if(!(istype(test.floor_tile,/obj/item/stack/tile/plasteel))) fail = 1 //if it's carpet, wood or some other stuff, we aren't going to paint that
 		if(istype(test, /turf/simulated/floor/engine)) fail = 1 	//reinforced floor has plasteel in floor_tile too
-																//but that isn't a regular floor
+																	//but that isn't a regular floor
 	if(!(istype(test,/turf/simulated/floor/plating)) && (selected.ftype == PAINT_PLATING))
 		fail = 1
 
@@ -375,7 +372,7 @@ var/global/list/paint_variants = list(
 		fail = 1
 
 	if(istype(test, /turf/simulated/floor/mech_bay_recharge_floor))
-		fail = 1 //we don't want to break it too
+		fail = 1 	//we don't want to break it too, as it's a special floor type
 
 	if(fail == 1)
 		user << "An error indicator on [src] flicks on for a moment. Perhaps you're using it on the wrong floor type?"
