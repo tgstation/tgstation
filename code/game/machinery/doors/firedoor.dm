@@ -1,6 +1,64 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
 
+#define NORTHCOLD 1
+#define NORTHHOT 2
+#define SOUTHCOLD 4
+#define SOUTHHOT 8
+#define WESTCOLD 32
+#define WESTHOT 64
+#define EASTCOLD 128
+#define EASTHOT 256
+/* HAHA TOPY PASTAN
+/proc/getTemperatureDifferential(var/turf/loc)
+	var/mint=16777216;
+	var/maxt= 0;
+	for(var/dir in cardinal)
+		var/turf/simulated/T=get_turf(get_step(loc,dir))
+		var/ct=0
+		if(T && istype(T) && T.zone)
+			var/datum/gas_mixture/environment = T.return_air()
+			ct = environment.temperature
+		else
+			if(istype(T,/turf/simulated))
+				continue
+		if(ct<mint)mint=ct
+		if(ct>maxt)maxt=ct
+	if(mint <= T20C - 20)
+		return convert_temperature(mint)-convert_temperature(maxt)
+	else
+		return convert_temperature(maxt)-convert_temperature(mint)
+*/
+/proc/convert_k2c(var/temp)
+	return ((temp - T0C)) // * 1.8) + 32
+
+/proc/convert_c2k(var/temp)
+	return ((temp + T0C)) // * 1.8) + 32
+
+/proc/getCardinalTemperatures(var/turf/loc)
+	var/list/temps = new/list(4)
+	for(var/dir in cardinal)
+		var/direction
+		switch(dir)
+			if(NORTH)
+				direction = 1
+			if(SOUTH)
+				direction = 2
+			if(EAST)
+				direction = 3
+			if(WEST)
+				direction = 4
+		var/turf/simulated/T=get_turf(get_step(loc,dir))
+		if(T && istype(T) && T.zone)
+			var/datum/gas_mixture/environment = T.return_air()
+			temps[direction] = environment.temperature
+		else
+			if(istype(T, /turf/simulated))
+				temps[direction] = T20C
+			else
+				temps[direction] = 0
+	return temps
+
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 
 /obj/machinery/door/firedoor
@@ -16,6 +74,7 @@
 	var/blocked = 0
 	var/pdiff_alert = 0
 	var/pdiff = 0
+	var/tdiff_alert = 0
 	var/nextstate = null
 	var/net_id
 	var/list/areas_added
@@ -52,7 +111,38 @@
 		. = ..()
 		if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
 			usr << "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa!</span>"
+		if(tdiff_alert)
+			var/alerts
+			var/list/temperatures = getCardinalTemperatures(src.loc)
+			for(var/index = 1; index <= temperatures.len; index++)
+				var/celsius = convert_k2c(temperatures[index])
+				switch(index)
+					if(1)
+						alerts += "NORTH: "
+						if(celsius >= 50 || celsius <= 0)
+							alerts += "[celsius]"
+						else
+							alerts += "NORMAL"
+					if(2)
+						alerts += " SOUTH: "
+						if(celsius >= 50 || celsius <= 0)
+							alerts += "[celsius]"
+						else
+							alerts += "NORMAL"
+					if(3)
+						alerts += " EAST: "
+						if(celsius >= 50 || celsius <= 0)
+							alerts += "[celsius]"
+						else
+							alerts += "NORMAL"
+					if(4)
+						alerts += " WEST: "
+						if(celsius >= 50 || celsius <= 0)
+							alerts += "[celsius]"
+						else
+							alerts += "NORMAL"
 
+			usr << "<span class='warning'>WARNING: Current temperatures are, [alerts] </span>"
 		if( islist(users_to_open) && users_to_open.len)
 			var/users_to_open_string = users_to_open[1]
 			if(users_to_open.len >= 2)
@@ -227,13 +317,30 @@
 
 
 	update_icon()
-		overlays.Cut()
+		overlays = 0
 		if(density)
 			icon_state = "door_closed"
 			if(blocked)
 				overlays += "welded"
 			if(pdiff_alert)
 				overlays += "palert"
+			if(tdiff_alert)
+				if(tdiff_alert & NORTHCOLD)
+					overlays += "calert_north"
+				if(tdiff_alert & NORTHHOT)
+					overlays += "halert_north"
+				if(tdiff_alert & SOUTHCOLD)
+					overlays += "calert_south"
+				if(tdiff_alert & SOUTHHOT)
+					overlays += "halert_south"
+				if(tdiff_alert & WESTCOLD)
+					overlays += "calert_west"
+				if(tdiff_alert & WESTHOT)
+					overlays += "halert_west"
+				if(tdiff_alert & EASTCOLD)
+					overlays += "calert_east"
+				if(tdiff_alert & EASTHOT)
+					overlays += "halert_east"
 		else
 			icon_state = "door_open"
 			if(blocked)
@@ -246,14 +353,47 @@
 
 		if(density)
 			pdiff = getOPressureDifferential(get_turf(src))
+
+
+			var/changed = 0
 			if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
 				if(!pdiff_alert)
 					pdiff_alert = 1
-					update_icon()
+					changed = 1 // update_icon()
 			else
 				if(pdiff_alert)
 					pdiff_alert = 0
-					update_icon()
+					changed = 1 // update_icon()
+			var/list/temperatures = getCardinalTemperatures(src.loc)
+			var/oldtdiff = tdiff_alert
+			for(var/index = 1; index <= temperatures.len; index++)
+				var/celsius = convert_k2c(temperatures[index])
+				switch(index)
+					if(1)
+						if(celsius >= 50)
+							tdiff_alert |= NORTHHOT
+						else if(celsius <= 0)
+							tdiff_alert |= NORTHCOLD
+					if(2)
+						if(celsius >= 50)
+							tdiff_alert |= SOUTHHOT
+						else if(celsius <= 0)
+							tdiff_alert |= SOUTHCOLD
+					if(3)
+						if(celsius >= 50)
+							tdiff_alert |= EASTHOT
+						else if(celsius <= 0)
+							tdiff_alert |= EASTCOLD
+					if(4)
+						if(celsius >= 50)
+							tdiff_alert |= WESTHOT
+						else if(celsius <= 0)
+							tdiff_alert |= WESTCOLD
+
+			if(oldtdiff != tdiff_alert)
+				changed = 1
+			if(changed)
+				update_icon()
 
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)
@@ -297,3 +437,11 @@
 /obj/machinery/door/firedoor/multi_tile
 	icon = 'icons/obj/doors/DoorHazard2x1.dmi'
 	width = 2
+#undef NORTHCOLD
+#undef NORTHHOT
+#undef SOUTHCOLD
+#undef SOUTHHOT
+#undef WESTCOLD
+#undef WESTHOT
+#undef EASTCOLD
+#undef EASTHOT
