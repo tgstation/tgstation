@@ -251,6 +251,12 @@
 	update_icon()
 	return 1
 
+/obj/machinery/biogenerator/proc/detach()
+	if(beaker)
+		beaker.loc = src.loc
+		beaker = null
+		update_icon()
+
 /obj/machinery/biogenerator/Topic(href, href_list)
 	if(..() || panel_open)
 		return
@@ -262,12 +268,8 @@
 		updateUsrDialog()
 
 	else if(href_list["detach"])
-		if(beaker)
-			var/obj/item/weapon/reagent_containers/RC = beaker
-			RC.loc = src.loc
-			beaker = null
-			update_icon()
-			updateUsrDialog()
+		detach()
+		updateUsrDialog()
 
 	else if(href_list["create"])
 		var/amount = (text2num(href_list["amount"]))
