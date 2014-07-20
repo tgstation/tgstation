@@ -1,6 +1,7 @@
 #define PAINT_FLOOR 		1
 #define PAINT_PLATING 		2
 #define PAINT_REINFORCED 	3
+#define PAINT_ALL           0
 
 #define DIR_ONE 	1	//for those tiles with only one direction
 #define DIR_ORTHO 	2	//orthogonal (south, west, north, east)
@@ -29,17 +30,19 @@
 
 /datum/paint_info/proc/validate(var/turf/simulated/floor/test)
 	//This is used to give the user a hint that he's a massive retard for using a floor painter on the carpet
-	if(ftype == PAINT_FLOOR) //why is it named plasteel anyway?
-		if(!(istype(test.floor_tile,/obj/item/stack/tile/plasteel)))
-			return 0 //if it's carpet, wood or some other stuff, we aren't going to paint that
-		if(istype(test, /turf/simulated/floor/engine))
-			return 0 	//reinforced floor has plasteel in floor_tile too
-																	//but that isn't a regular floor
-	if(!(istype(test,/turf/simulated/floor/plating)) && (ftype == PAINT_PLATING))
-		return 0
-
-	if(!(istype(test,/turf/simulated/floor/engine)) && (ftype == PAINT_REINFORCED))
-		return 0
+	switch(ftype)
+		if(PAINT_FLOOR) //why is it named plasteel anyway?
+			if(!(istype(test.floor_tile,/obj/item/stack/tile/plasteel)))
+				return 0 //if it's carpet, wood or some other stuff, we aren't going to paint that
+			if(istype(test, /turf/simulated/floor/engine))
+				return 0 	//reinforced floor has plasteel in floor_tile too
+							//but that isn't a regular floor
+		if(PAINT_PLATING)
+			if(!istype(test,/turf/simulated/floor/plating))
+				return 0
+		if(PAINT_REINFORCED)
+			if(!istype(test,/turf/simulated/floor/engine))
+				return 0
 
 	if(istype(test, /turf/simulated/floor/mech_bay_recharge_floor))
 		return 0
@@ -57,6 +60,7 @@
 
 /datum/paint_info/decal
 	icon = 'icons/effects/warning_stripes.dmi'
+	ftype = PAINT_ALL
 
 /datum/paint_info/decal/apply(var/turf/simulated/floor/T, var/pname, var/pdesc)
 	T.AddDecal(image(icon, icon_state = icon_state, dir = dir))
@@ -67,8 +71,8 @@
 var/global/list/paint_variants = list(
 	"Decals" = list(
 		// Stripes
-		new /datum/paint_info/decal(DIR_ALL, "old"),
-		new /datum/paint_info/decal(DIR_ONE, "all"),
+		new /datum/paint_info/decal(DIR_ALL,   "old"),
+		new /datum/paint_info/decal(DIR_ONE,   "all"),
 
 		// Loading areas (TODO: colorable)
 		new /datum/paint_info/decal(DIR_ORTHO, "corner"),
