@@ -95,6 +95,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 	active_power_usage = 100
 	var/busy = 0
 
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 	proc
 		wires_win(mob/user as mob)
 			var/dat as text
