@@ -286,3 +286,4 @@
 	else if(href_list["menu"])
 		menustat = "menu"
 		updateUsrDialog()
+		
