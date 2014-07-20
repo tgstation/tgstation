@@ -543,6 +543,14 @@ th.misc {
     color: green;
 }
 
+.toxin_light {
+    color: #3ADF00;
+}
+
 .oxyloss {
     color: blue;
+}
+
+.oxyloss_light {
+    color: #6698FF;
 }

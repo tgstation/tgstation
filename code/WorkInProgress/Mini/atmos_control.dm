@@ -91,11 +91,15 @@
 	for(var/obj/machinery/alarm/alarm in (machines)) // removing sortAtom because nano updates it just enough for the lag to happen
 		if(!is_in_filter(alarm.areaMaster.type))
 			continue // NO ACCESS 4 U
-
+		var/turf/pos = get_turf(alarm)
 		var/list/alarm_data=list()
 		alarm_data["ID"]="\ref[alarm]"
 		alarm_data["danger"] = max(alarm.local_danger_level, alarm.areaMaster.atmosalm-1)
 		alarm_data["name"] = "[alarm]"
+		alarm_data["area"] = get_area(alarm)
+		alarm_data["x"] = pos.x
+		alarm_data["y"] = pos.y
+		alarm_data["z"] = pos.z
 		alarms+=list(alarm_data)
 	data["alarms"]=alarms
 
@@ -104,9 +108,17 @@
 
 	if (!ui)
 		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "atmos_control.tmpl", name, 550, 410)
+		ui = new(user, src, ui_key, "atmos_control.tmpl", name, 900, 800)
+		// adding a template with the key "mapContent" enables the map ui functionality
+		ui.add_template("mapContent", "atmos_control_map_content.tmpl")
+		// adding a template with the key "mapHeader" replaces the map header content
+		ui.add_template("mapHeader", "atmos_control_map_header.tmpl")
 		// When the UI is first opened this is the data it will use
+		// we want to show the map by default
+		ui.set_show_map(1)
+
 		ui.set_initial_data(data)
+
 		ui.open()
 		// Auto update every Master Controller tick
 		if(current)

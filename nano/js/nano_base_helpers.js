@@ -145,6 +145,41 @@ NanoBaseHelpers = function ()
 				if(level==1) return 'average';
 				return 'bad';
 			},
+			dangerToSpan: function(level) {
+				if(level==0) return '"<span class="good">Good</span>"';
+				if(level==1) return '"<span class="average">Minor Alert</span>"';
+				return '"<span class="bad">Major Alert</span>"';
+			},
+			generateHref: function (parameters) {
+				var body = $('body'); // We store data in the body tag, it's as good a place as any
+				_urlParameters = body.data('urlParameters');
+				var queryString = '?';
+	
+				for (var key in _urlParameters)
+				{
+					if (_urlParameters.hasOwnProperty(key))
+					{
+						if (queryString !== '?')
+						{
+							queryString += ';';
+						}
+						queryString += key + '=' + _urlParameters[key];
+					}
+				}
+
+				for (var key in parameters)
+				{
+					if (parameters.hasOwnProperty(key))
+					{
+						if (queryString !== '?')
+						{
+							queryString += ';';
+						}
+						queryString += key + '=' + parameters[key];
+					}
+				}
+				return queryString;
+			},
 			// Display DNA Blocks (for the DNA Modifier UI)
 			displayDNABlocks: function(dnaString, selectedBlock, selectedSubblock, blockSize, paramKey) {
 			    if (!dnaString)
