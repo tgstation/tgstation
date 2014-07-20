@@ -292,7 +292,7 @@ var/global/list/paint_variants = list(
 )
 
 /obj/item/weapon/tile_painter
-	name = "floor painter"
+	name = "tile painter"
 	desc = "A device used to paint floors in various colors and fashions."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rpd" //placeholder art, someone please sprite it
@@ -464,7 +464,7 @@ var/global/list/paint_variants = list(
 
 	if(selected.icon_state == "plaque") //some juice
 		pdesc = input(user,"What do you want to be described on this plaque?", "Plaque description")
-		pname = "Commerative Plaque"
+		pname = "Commemorative Plaque"
 
 	user << "Painting floor..."
 	playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
