@@ -36,6 +36,7 @@
 		module_state_3 = null
 		inv3.icon_state = "inv3"
 
+	module_active = null
 	updateicon()
 
 /mob/living/silicon/robot/proc/uneq_all()
