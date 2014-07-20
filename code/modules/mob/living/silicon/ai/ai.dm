@@ -47,7 +47,7 @@ var/list/ai_list = list()
 	var/mob/living/silicon/ai/parent = null
 
 	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
-	var/datum/trackable/track = null
+	var/datum/trackable/track = new()
 
 	var/last_paper_seen = null
 	var/can_shunt = 1
