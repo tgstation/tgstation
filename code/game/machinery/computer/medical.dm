@@ -16,6 +16,14 @@
 	var/temp = null
 	var/printing = null
 
+	l_color = "#0000FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/machinery/computer/med_data/attack_ai(user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)

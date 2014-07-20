@@ -95,9 +95,9 @@
 			return
 
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			new/obj/item/weapon/cable_coil(T, 2, _color)
+			new/obj/item/weapon/cable_coil(T, 2, l_color)
 		else
-			new/obj/item/weapon/cable_coil(T, 1, _color)
+			new/obj/item/weapon/cable_coil(T, 1, l_color)
 
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
@@ -163,12 +163,12 @@
 			qdel(src)
 		if(2.0)
 			if (prob(50))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, _color)
+				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, l_color)
 				qdel(src)
 
 		if(3.0)
 			if (prob(25))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, _color)
+				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, l_color)
 				qdel(src)
 	return
 
@@ -337,7 +337,7 @@
 		use(1)
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				new/obj/item/weapon/cable_coil(C.loc, 1, C._color)
+				new/obj/item/weapon/cable_coil(C.loc, 1, C.l_color)
 				qdel(C)
 		//src.laying = 1
 		//last = C
@@ -397,7 +397,7 @@
 			use(1)
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
-					new/obj/item/weapon/cable_coil(NC.loc, 1, NC._color)
+					new/obj/item/weapon/cable_coil(NC.loc, 1, NC.l_color)
 					qdel(NC)
 
 			return
@@ -436,7 +436,7 @@
 		use(1)
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				new/obj/item/weapon/cable_coil(C.loc, 2, C._color)
+				new/obj/item/weapon/cable_coil(C.loc, 2, C.l_color)
 				qdel(C)
 
 		return
@@ -512,7 +512,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	var/color_n = "red"
 	if(colorC)
 		color_n = colorC
-	_color = color_n
+	l_color = color_n
 	switch(colorC)
 		if("red")
 			icon = 'icons/obj/power_cond_red.dmi'

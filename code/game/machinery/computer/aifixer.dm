@@ -6,6 +6,14 @@
 	var/mob/living/silicon/ai/occupant = null
 	var/active = 0
 
+	l_color = "#CD00CD"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/machinery/computer/aifixer/New()
 	..()
 	update_icon()

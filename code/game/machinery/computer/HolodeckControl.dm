@@ -9,6 +9,14 @@
 	var/damaged = 0
 	var/last_change = 0
 
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 
 	attack_ai(var/mob/user as mob)
 		src.add_hiddenprint(user)

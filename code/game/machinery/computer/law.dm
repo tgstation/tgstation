@@ -8,6 +8,14 @@
 	var/mob/living/silicon/ai/current = null
 	var/opened = 0
 
+	l_color = "#FFFFFF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 
 	verb/AccessInternals()
 		set category = "Object"

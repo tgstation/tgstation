@@ -153,6 +153,14 @@
 	var/list/recipes[0]
 	var/list/recipe_categories[0]
 
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 	on_reagent_change()			//When the reagents change, change the icon as well.
 		update_icon()
 
