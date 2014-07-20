@@ -34,12 +34,6 @@
 	var/custommessage 	= "This is a test, please ignore."
 
 	l_color = "#50AB00"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O as obj, mob/living/user as mob)

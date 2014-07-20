@@ -14,12 +14,6 @@
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 
 	l_color = "#B40000"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
 
 	attack_ai(var/mob/user as mob)

@@ -17,12 +17,6 @@
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
 	l_color = "#CD00CD"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
 
 /obj/machinery/computer/robotics/attack_ai(var/mob/user as mob)

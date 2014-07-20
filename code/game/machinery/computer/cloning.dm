@@ -15,12 +15,6 @@
 	var/loading = 0 // Nice loading text
 
 	l_color = "#0000FF"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
 /obj/machinery/computer/cloning/New()
 	..()

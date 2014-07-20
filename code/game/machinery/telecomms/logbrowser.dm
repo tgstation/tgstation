@@ -2,12 +2,6 @@
 /obj/machinery/computer/telecomms
 
 	l_color = "#50AB00"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
 /obj/machinery/computer/telecomms/server
 	name = "Telecommunications Server Monitor"
