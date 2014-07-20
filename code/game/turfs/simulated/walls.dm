@@ -165,6 +165,34 @@
 			thermitemelt(user)
 			return
 
+		else if(istype(W, /obj/item/weapon/lighter))
+			var/obj/item/weapon/lighter/L = W
+			if(L.lit)
+				thermitemelt(user)
+				return
+
+		else if(istype(W, /obj/item/weapon/match))
+			var/obj/item/weapon/match/M = W
+			if(M.lit)
+				thermitemelt(user)
+				return
+
+		else if(istype(W, /obj/item/device/flashlight/flare/torch))
+			var/obj/item/device/flashlight/flare/torch/T = W
+			if(T.on)
+				thermitemelt(user)
+				return
+
+		else if(istype(W, /obj/item/device/assembly/igniter))
+			thermitemelt(user)
+			return
+
+		else if(istype(W, /obj/item/candle))
+			var/obj/item/candle/C = W
+			if(C.lit)
+				thermitemelt(user)
+				return
+
 		else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
@@ -175,6 +203,12 @@
 
 			thermitemelt(user)
 			return
+
+		else if(istype(W, /obj/item/weapon/melee/energy/sword))
+			var/obj/item/weapon/melee/energy/sword/ES = W
+			if(ES.active)
+				thermitemelt(user)
+				return
 
 	var/turf/T = user.loc	//get user's location for delay checks
 

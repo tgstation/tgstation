@@ -155,4 +155,21 @@
 		src.processing = 0
 	src.visible_message("\blue \the [src] finished processing.")
 
+/obj/machinery/processor/verb/eject()
+	set category = "Object"
+	set name = "Eject Contents"
+	set src in oview(1)
+
+	if (usr.stat != 0)
+		return
+	src.empty()
+	add_fingerprint(usr)
+	return
+
+/obj/machinery/processor/proc/empty()
+	for (var/obj/O in src)
+		O.loc = src.loc
+	for (var/mob/M in src)
+		M.loc = src.loc
+	return
 

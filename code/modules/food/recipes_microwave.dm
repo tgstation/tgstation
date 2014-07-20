@@ -360,29 +360,29 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 
-/datum/recipe/human/kabob
+/datum/recipe/human/kebab
 	items = list(
 		/obj/item/stack/rods,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/human/kabob
+	result = /obj/item/weapon/reagent_containers/food/snacks/human/kebab
 
-/datum/recipe/monkeykabob
+/datum/recipe/monkeykebab
 	items = list(
 		/obj/item/stack/rods,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
+	result = /obj/item/weapon/reagent_containers/food/snacks/monkeykebab
 
-/datum/recipe/tofukabob
+/datum/recipe/tofukebab
 	items = list(
 		/obj/item/stack/rods,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/tofukabob
+	result = /obj/item/weapon/reagent_containers/food/snacks/tofukebab
 
 /datum/recipe/tofubread
 	reagents = list("flour" = 15)
@@ -737,21 +737,21 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
 
-/datum/recipe/spagetti
+/datum/recipe/spaghetti
 	reagents = list("flour" = 5)
-	result= /obj/item/weapon/reagent_containers/food/snacks/spagetti
+	result= /obj/item/weapon/reagent_containers/food/snacks/spaghetti
 
-/datum/recipe/boiledspagetti
+/datum/recipe/boiledspaghetti
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 
 /datum/recipe/pastatomato
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 	)
@@ -772,19 +772,19 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 
-/datum/recipe/meatballspagetti
+/datum/recipe/meatballspaghetti
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
 
 /datum/recipe/spesslaw
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,

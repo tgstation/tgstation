@@ -133,3 +133,7 @@
 		return !density
 	else
 		return 1
+
+//used in the AStar algorithm to determinate if the turf the door is on is passable
+/obj/machinery/door/firedoor/CanAStarPass()
+	return !density
