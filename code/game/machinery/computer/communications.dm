@@ -56,6 +56,14 @@ var/shuttle_call/shuttle_calls[0]
 	var/stat_msg2
 	var/display_type="blank"
 
+	l_color = "#0000FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..(href, href_list))
 		return

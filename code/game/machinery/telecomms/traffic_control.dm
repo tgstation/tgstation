@@ -23,6 +23,14 @@
 	var/list/access_log = list()
 	var/process = 0
 
+	l_color = "#50AB00"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 	req_access = list(access_tcomsat)
 
 /obj/machinery/computer/telecomms/traffic/proc/stop_editing()

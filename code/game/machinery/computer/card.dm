@@ -12,6 +12,14 @@
 	var/mode = 0.0
 	var/printing = null
 
+	l_color = "#0000FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 
 /obj/machinery/computer/card/attackby(O as obj, user as mob)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
@@ -115,9 +123,9 @@
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\card.dm:103: header += "<div align='center'><br>"
 			header += {"<div align='center'><br>
-				<a href='?src=\ref[src];choice=modify'>Remove [target_name]</a> || 
-				<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br> 
-				<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> || 
+				<a href='?src=\ref[src];choice=modify'>Remove [target_name]</a> ||
+				<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br>
+				<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> ||
 				<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"}
 		// END AUTOFIX
 

@@ -1,10 +1,11 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 /obj/machinery/computer/telecomms
-	l_color = "#50A900"
+
+	l_color = "#50AB00"
 	power_change()
 		..()
 		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(3)
+			SetLuminosity(2)
 		else
 			SetLuminosity(0)
 
