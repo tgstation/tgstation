@@ -8,6 +8,7 @@
 	circuit = "/obj/item/weapon/circuitboard/crew"
 	var/list/tracked = list(  )
 	var/track_special_role
+	var/currZ = 1
 
 	l_color = "#0000FF"
 
@@ -56,6 +57,16 @@
 	if(href_list["update"])
 		src.updateDialog()
 		return 1
+	if(href_list["zlevel"])
+		var/newz = input("Choose Z-Level to view.","Z-Levels",1) as null|anything in list(1,3,4,5,6)
+		if(!newz || isnull(newz))
+			return 0
+		if(newz < 1 || newz > 6 || newz == 2)
+			usr << "\red <b>Unable to establish a connection</b>"
+			return 0
+		currZ = newz
+		src.updateUsrDialog()
+		return 1
 
 /obj/machinery/computer/crew/interact(mob/user)
 	ui_interact(user)
@@ -102,6 +113,7 @@
 				crewmemberData["area"] = get_area(H)
 				crewmemberData["x"] = pos.x
 				crewmemberData["y"] = pos.y
+				crewmemberData["z"] = pos.z
 
 				// Works around list += list2 merging lists; it's not pretty but it works
 				crewmembers += "temporary item"
@@ -110,6 +122,7 @@
 	crewmembers = sortByKey(crewmembers, "name")
 
 	data["crewmembers"] = crewmembers
+	data["zlevel"] = currZ
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
