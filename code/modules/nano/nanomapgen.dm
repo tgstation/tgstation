@@ -23,9 +23,20 @@
 	if(!src.client.holder)
 		src << "Only administrators may use this command."
 		return
-	nanomapgen_DumpTile()
+	var/turf/T = get_turf(src)
+	nanomapgen_DumpTile(1,1, T.z)
 
-/mob/proc/nanomapgen_DumpTile(var/startX = 1, var/startY = 1, var/currentZ = 1, var/endX = -1, var/endY = -1)
+/mob/verb/nanomapgen_DumpImageAll()
+	set category = "Server"
+	set name = "Generate all NanoUI Maps"
+
+	if(!src.client.holder)
+		src << "Only administrators may use this command."
+		return
+	var/turf/T = get_turf(src)
+	nanomapgen_DumpTile(allz = 1)
+
+/mob/proc/nanomapgen_DumpTile(var/startX = 1, var/startY = 1, var/currentZ = 1, var/endX = -1, var/endY = -1, var/allz = 0)
 
 	if (endX < 0 || endX > world.maxx)
 		endX = world.maxx
@@ -49,7 +60,7 @@
 		sleep(3)
 		return NANOMAP_TERMINALERR
 
-	world.log << "NanoMapGen: <B>GENERATE MAP ([startX],[startY],[currentZ]) to ([endX],[endY],[currentZ])</B>"
+	world << "NanoMapGen: <B>GENERATE MAP ([startX],[startY],[currentZ]) to ([endX],[endY],[currentZ])</B>"
 
 	var/count = 0;
 	for(var/WorldX = startX, WorldX <= endX, WorldX++)
@@ -57,7 +68,7 @@
 
 			var/atom/Turf = locate(WorldX, WorldY, currentZ)
 
-			var/icon/TurfIcon = new(Turf.icon, Turf.icon_state, Turf.dir, 1, 0)
+			var/icon/TurfIcon = new(Turf.icon, Turf.icon_state, Turf, 1, 0)
 			TurfIcon.Scale(NANOMAP_ICON_SIZE, NANOMAP_ICON_SIZE)
 
 			Tile.Blend(TurfIcon, ICON_OVERLAY, ((WorldX - 1) * NANOMAP_ICON_SIZE), ((WorldY - 1) * NANOMAP_ICON_SIZE))
@@ -70,11 +81,14 @@
 
 	world.log << "NanoMapGen: sending nanoMap.png to client"
 
-	usr << browse(Tile, "window=picture;file=nanoMap.png;display=0")
+	usr << browse(Tile, "window=picture;file=nanoMap[currentZ].png;display=0")
 
 	world.log << "NanoMapGen: Done."
 
 	if (Tile.Width() != NANOMAP_MAX_ICON_DIMENSION || Tile.Height() != NANOMAP_MAX_ICON_DIMENSION)
 		return NANOMAP_BADOUTPUT
-
+	if(allz)
+		if(currentZ < world.maxz)
+			var/newz = currentZ+1
+			.(1,1,newz,-1,-1,1)
 	return NANOMAP_SUCCESS
