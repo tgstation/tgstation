@@ -28,8 +28,8 @@
 /obj/structure/grille/attack_hand(mob/user as mob)
 	user.changeNext_move(8)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
-	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
-						 "<span class='warning'>You kick [src].</span>", \
+	user.visible_message("<span class='warning'>[user] hits [src].</span>", \
+						 "<span class='warning'>You hit [src].</span>", \
 						 "You hear twisting metal.")
 
 	if(shock(user, 70))
