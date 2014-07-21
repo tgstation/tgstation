@@ -12,12 +12,6 @@
 	var/mapping = 0//For the overview file, interesting bit of code.
 
 	l_color = "#B40000"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
 
 	attack_ai(var/mob/user as mob)

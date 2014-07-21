@@ -20,12 +20,6 @@
 	var/temp = ""				// temporary feedback messages
 
 	l_color = "#50AB00"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))

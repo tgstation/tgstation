@@ -12,12 +12,6 @@
 	var/datum/radio_frequency/radio_connection
 
 	l_color = "#7BF9FF"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
 
 /obj/machinery/computer/atmos_alert/initialize()

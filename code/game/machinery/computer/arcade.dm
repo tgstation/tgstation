@@ -14,12 +14,6 @@
 	var/blocked = 0 //Player cannot attack/heal while set
 
 	l_color = "#00FF00"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
 							/obj/item/toy/blink								= 2,
