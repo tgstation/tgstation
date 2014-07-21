@@ -319,7 +319,7 @@
 
 /obj/machinery/portable_atmospherics/canister/toxins/New(loc)
 	..(loc)
-	air_contents.adjust(, , , (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust(tx = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/oxygen/New(loc)
@@ -331,7 +331,7 @@
 	..(loc)
 	var/datum/gas/sleeping_agent/sleeping_agent = new
 	sleeping_agent.moles = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.adjust(, , , , list(sleeping_agent))
+	air_contents.adjust(traces = list(sleeping_agent))
 	update_icon()
 
 /*
@@ -352,12 +352,12 @@
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New(loc)
 	..(loc)
-	air_contents.adjust(, , (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust(n2 = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New(loc)
 	..(loc)
-	air_contents.adjust(, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust(co2 = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/air/New(loc)
@@ -365,8 +365,7 @@
 
 	air_contents.adjust(\
 		(O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature),\
-		,\
-		(N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)\
+		n2 = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)\
 	)
 
 	update_icon()
