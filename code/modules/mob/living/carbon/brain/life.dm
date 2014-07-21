@@ -207,7 +207,7 @@
 
 	proc/handle_regular_hud_updates()
 
-		if (stat == 2 || (XRAY in src.mutations))
+		if (stat == 2 || (mutations.has_mutation(XRAY)))
 			sight |= SEE_TURFS
 			sight |= SEE_MOBS
 			sight |= SEE_OBJS
@@ -252,7 +252,7 @@
 			else
 				blind.layer = 0
 
-				if (disabilities & NEARSIGHTED)
+				if (mutations.has_disability(NEARSIGHTED))
 					client.screen += global_hud.vimpaired
 
 				if (eye_blurry)

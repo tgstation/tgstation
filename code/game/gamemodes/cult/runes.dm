@@ -888,7 +888,7 @@ var/list/sacrificed = list()
 					C.show_message("\red The world around you suddenly becomes quiet.", 3)
 					affected++
 					if(prob(1))
-						C.sdisabilities |= DEAF
+						C.mutations.add_disability(DEAF)
 				if(affected)
 					usr.say("Sti[pick("'","`")] kaliedir!")
 					usr << "\red The world becomes quiet as the deafening rune dissipates into fine dust."
@@ -927,9 +927,9 @@ var/list/sacrificed = list()
 					C.eye_blurry += 50
 					C.eye_blind += 20
 					if(prob(5))
-						C.disabilities |= NEARSIGHTED
+						C.mutations.add_disability(NEARSIGHTED)
 						if(prob(10))
-							C.sdisabilities |= BLIND
+							C.mutations.add_disability(BLIND)
 					C.show_message("\red Suddenly you see red flash that blinds you.", 3)
 					affected++
 				if(affected)
@@ -1031,7 +1031,7 @@ var/list/sacrificed = list()
 					if(iscarbon(L))
 						var/mob/living/carbon/C = L
 						flick("e_flash", C.flash)
-						if(C.stuttering < 1 && (!(HULK in C.mutations)))
+						if(C.stuttering < 1 && (!(C.mutations.stun_immune())))
 							C.stuttering = 1
 						C.Weaken(1)
 						C.Stun(1)
@@ -1058,7 +1058,7 @@ var/list/sacrificed = list()
 					else if(iscarbon(T))
 						var/mob/living/carbon/C = T
 						flick("e_flash", C.flash)
-						if (!(HULK in C.mutations))
+						if (!(C.mutations.stun_immune()))
 							C.silent += 15
 						C.Weaken(10)
 						C.Stun(10)

@@ -75,7 +75,7 @@
 	if(trigger_guard)
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
-			if (HULK in M.mutations)
+			if (M.mutations.thick_fingers())
 				M << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
 				return
 		if(ishuman(user))

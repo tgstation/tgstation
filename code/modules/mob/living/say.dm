@@ -99,7 +99,7 @@ var/list/department_radio_keys = list(
 		return
 
 	// Mute disability
-	if (sdisabilities & MUTE)
+	if (mutations.has_disability(MUTE))
 		return
 
 	// emotes

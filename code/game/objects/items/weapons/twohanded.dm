@@ -240,7 +240,7 @@ obj/item/weapon/twohanded/
 	..()
 	var/mob/living/M = loc
 	if(istype(loc, /mob/living))
-		if (HULK in M.mutations)
+		if (M.mutations.thick_fingers())
 			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
 	hitsound = 'sound/weapons/blade1.ogg' 
 
@@ -253,7 +253,7 @@ obj/item/weapon/twohanded/
 	if(wielded)
 		var/mob/living/M = loc
 		if(istype(loc, /mob/living))
-			if (HULK in M.mutations)
+			if (M.mutations.thick_fingers())
 				return
 			return 1
 

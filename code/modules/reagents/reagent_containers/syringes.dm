@@ -75,7 +75,7 @@
 						if(!check_dna_integrity(T))
 							user << "<span class='notice'>You are unable to locate any blood.</span>"
 							return
-						if(NOCLONE in T.mutations)	//target done been et, no more blood in him
+						if(T.mutations.has_condition(NOCLONE))	//target done been et, no more blood in him
 							user << "<span class='notice'>You are unable to locate any blood.</span>"
 							return
 						if(target != user)

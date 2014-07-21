@@ -77,18 +77,9 @@
 			if("Power")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
-				if (!(LASER in user.mutations))
-					user.mutations.Add(LASER)
-					user << "\blue You feel pressure building behind your eyes."
-				if (!(COLD_RESISTANCE in user.mutations))
-					user.mutations.Add(COLD_RESISTANCE)
-					user << "\blue Your body feels warm."
-				if (!(XRAY in user.mutations))
-					user.mutations.Add(XRAY)
-					user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-					user.see_in_dark = 8
-					user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-					user << "\blue The walls suddenly disappear."
+				user.mutations.add_mutation(LASER)
+				user.mutations.add_mutation(COLD_RESISTANCE)
+				user.mutations.add_mutation(XRAY)
 				user.dna.species = new /datum/species/shadow()
 				user.regenerate_icons()
 			if("Wealth")

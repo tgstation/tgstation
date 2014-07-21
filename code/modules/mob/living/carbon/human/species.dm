@@ -68,7 +68,7 @@
 	///////////
 
 	proc/update_base_icon_state(var/mob/living/carbon/human/H)
-		if(HUSK in H.mutations)
+		if(H.mutations.has_condition(HUSK))
 			H.remove_overlay(SPECIES_LAYER) // races lose their color
 			return "husk"
 		else if(sexes)
@@ -374,16 +374,14 @@
 		if(H.reagents) H.reagents.metabolize(H)
 
 		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-		if(FAT in H.mutations)
+		if(H.mutations.has_condition(FAT))
 			if(H.overeatduration < 100)
-				H << "<span class='notice'>You feel fit again!</span>"
-				H.mutations -= FAT
+				H.mutations.remove_condition(FAT)
 				H.update_inv_w_uniform(0)
 				H.update_inv_wear_suit()
 		else
 			if(H.overeatduration > 500)
-				H << "<span class='danger'>You suddenly feel blubbery!</span>"
-				H.mutations |= FAT
+				H.mutations.add_condition(FAT)
 				H.update_inv_w_uniform(0)
 				H.update_inv_wear_suit()
 
@@ -429,7 +427,7 @@
 			H.see_invisible = invis_sight
 			H.see_in_dark = darksight
 
-			if(XRAY in H.mutations)
+			if(H.mutations.has_mutation(XRAY))
 				H.sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 				H.see_in_dark = 8
 				H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
@@ -492,7 +490,7 @@
 				if(H.blinded)		H.blind.layer = 18
 				else			H.blind.layer = 0
 
-			if( H.disabilities & NEARSIGHTED && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
+			if( H.mutations.has_disability(NEARSIGHTED) && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 				H.client.screen += global_hud.vimpaired
 			if(H.eye_blurry)			H.client.screen += global_hud.blurry
 			if(H.druggy)				H.client.screen += global_hud.druggy
@@ -569,13 +567,11 @@
 
 	proc/handle_mutations_and_radiation(var/mob/living/carbon/human/H)
 		if(H.getFireLoss())
-			if((COLD_RESISTANCE in H.mutations) || (prob(1)))
+			if((H.mutations.has_mutation(COLD_RESISTANCE)) || (prob(1)))
 				H.heal_organ_damage(0,1)
 
-		if ((HULK in H.mutations) && H.health <= 25)
-			H.mutations.Remove(HULK)
-			H.update_mutations()		//update our mutation overlays
-			H << "<span class='danger'>You suddenly feel very weak.</span>"
+		if ((H.mutations.has_mutation(HULK)) && H.health <= 25)
+			H.mutations.remove_mutation(HULK)
 			H.Weaken(3)
 			H.emote("collapse")
 
@@ -652,7 +648,7 @@
 		if(H.back)
 			mspeed += H.back.slowdown
 
-		if(FAT in H.mutations)
+		if(H.mutations.has_condition(FAT))
 			mspeed += 1.5
 		if(H.bodytemperature < 283.222)
 			mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
@@ -747,8 +743,7 @@
 				var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
 				var/armor_block = H.run_armor_check(affecting, "melee")
 
-				if(HULK in M.mutations)
-					damage += 5
+				damage += M.mutations.bonus_damage()
 
 				if(M.dna)
 					playsound(H.loc, M.dna.species.attack_sound, 25, 1, -1)
@@ -1153,7 +1148,7 @@
 		return 1
 
 	proc/handle_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
-		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in H.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
+		if( (abs(310.15 - breath.temperature) > 50) && !(H.mutations.has_mutation(COLD_RESISTANCE)) && !(COLDRES in specflags)) // Hot air hurts :(
 			if(breath.temperature < 260.15)
 				if(prob(20))
 					H << "<span class='danger'>You feel your face freezing and an icicle forming in your lungs!</span>"
@@ -1263,7 +1258,7 @@
 			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 				H.pressure_alert = -1
 			else
-				if((COLD_RESISTANCE in H.mutations) || (COLDRES in specflags))
+				if((H.mutations.has_mutation(COLD_RESISTANCE)) || (COLDRES in specflags))
 					H.pressure_alert = -1
 				else
 					H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )

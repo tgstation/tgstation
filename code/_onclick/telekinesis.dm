@@ -39,7 +39,7 @@ var/const/tk_maxrange = 15
 
 /obj/item/attack_tk(mob/user)
 	if(user.stat || !isturf(loc)) return
-	if((TK in user.mutations) && !user.get_active_hand()) // both should already be true to get here
+	if((user.mutations.has_mutation(TK)) && !user.get_active_hand()) // both should already be true to get here
 		var/obj/item/tk_grab/O = new(src)
 		user.put_in_active_hand(O)
 		O.host = user
@@ -101,7 +101,7 @@ var/const/tk_maxrange = 15
 		if(!host || host != user)
 			qdel(src)
 			return
-		if(!(TK in host.mutations))
+		if(!(host.mutations.has_mutation(TK)))
 			qdel(src)
 			return
 		if(isobj(target) && !isturf(target.loc))

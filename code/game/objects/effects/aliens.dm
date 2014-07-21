@@ -100,7 +100,7 @@
 
 
 /obj/structure/alien/resin/attack_hand(mob/user)
-	if(HULK in user.mutations)
+	if(user.mutations.has_mutation(HULK))
 		user.visible_message("<span class='danger'>[user] destroys [src]!</span>")
 		health = 0
 		healthcheck()

@@ -109,12 +109,7 @@
 					new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(H))
 				if("scrying")
 					new /obj/item/weapon/scrying(get_turf(H))
-					if (!(XRAY in H.mutations))
-						H.mutations.Add(XRAY)
-						H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-						H.see_in_dark = 8
-						H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-						H << "<span class='notice'>The walls suddenly disappear.</span>"
+					H.mutations.add_mutation(XRAY)
 
 				if("special")
 					magiclist -= "special" //only one super OP item per summoning max

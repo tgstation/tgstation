@@ -40,8 +40,8 @@ Bonus
 				M.eye_blurry = 20
 				M.eye_stat += 5
 				if (M.eye_stat >= 10)
-					M.disabilities |= NEARSIGHTED
-					if (prob(M.eye_stat - 10 + 1) && !(M.sdisabilities & BLIND))
+					M.mutations.add_disability(NEARSIGHTED)
+					if (prob(M.eye_stat - 10 + 1) && !(M.mutations.has_disability(BLIND)))
 						M << "<span class='danger'>You go blind!</span>"
-						M.sdisabilities |= BLIND
+						M.mutations.add_disability(BLIND)
 	return

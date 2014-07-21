@@ -45,7 +45,7 @@
 /mob/living/proc/burn_skin(burn_amount)
 	if(istype(src, /mob/living/carbon/human))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		if (COLD_RESISTANCE in src.mutations) //fireproof
+		if (mutations.has_mutation(COLD_RESISTANCE)) //fireproof
 			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = (burn_amount)/(H.organs.len)
@@ -57,7 +57,7 @@
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
-		if (COLD_RESISTANCE in src.mutations) //fireproof
+		if (mutations.has_mutation(COLD_RESISTANCE)) //fireproof
 			return 0
 		var/mob/living/carbon/monkey/M = src
 		M.adjustFireLoss(burn_amount)
@@ -268,8 +268,7 @@
 	radiation = 0
 	nutrition = 400
 	bodytemperature = 310
-	sdisabilities = 0
-	disabilities = 0
+	mutations.clear_disabilities()
 	blinded = 0
 	eye_blind = 0
 	eye_blurry = 0
@@ -423,7 +422,7 @@
 
 /mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
 
-	if(HULK in usr.mutations)
+	if(usr.mutations.has_mutation(HULK))
 		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 
 	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>", \
@@ -449,7 +448,7 @@
 		breakouttime = LC.breakouttime
 	displaytime = breakouttime / 600
 
-	if(isalienadult(C) || HULK in usr.mutations)
+	if(isalienadult(C) || C.mutations.has_mutation(HULK))
 		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>", \
 				"<span class='warning'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>")
 		spawn(0)
@@ -459,7 +458,7 @@
 				cuff_break(I, C)
 	else
 
-		C.visible_message("<span class='warning'>[usr] attempts to remove [I]!</span>", \
+		C.visible_message("<span class='warning'>[C] attempts to remove [I]!</span>", \
 				"<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
 		spawn(0)
 			if(do_after(C, breakouttime))
@@ -469,11 +468,11 @@
 						"<span class='notice'>You successfully remove [I].</span>")
 
 				if(C.handcuffed)
-					C.handcuffed.loc = usr.loc
+					C.handcuffed.loc = C.loc
 					C.handcuffed = null
 					C.update_inv_handcuffed(0)
 				if(C.legcuffed)
-					C.legcuffed.loc = usr.loc
+					C.legcuffed.loc = C.loc
 					C.legcuffed = null
 					C.update_inv_legcuffed(0)
 

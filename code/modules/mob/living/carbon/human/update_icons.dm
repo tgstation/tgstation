@@ -90,7 +90,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(dna)
 		base_icon_state = dna.species.update_base_icon_state(src)
 	else
-		if(HUSK in mutations)
+		if(mutations.has_condition(HUSK))
 			base_icon_state = "husk"
 		else
 			base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
@@ -146,7 +146,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	if( (HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+	if( (mutations.has_condition(HUSK)) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		return
 
 	if(dna)
@@ -159,7 +159,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	var/g = (gender == FEMALE) ? "f" : "m"
 
-	for(var/mut in mutations)
+	for(var/mut in mutations.mutation_list)
 		switch(mut)
 			if(HULK)
 				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="hulk_[g]_s", "layer"=-MUTATIONS_LAYER)
@@ -175,7 +175,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	apply_overlay(MUTATIONS_LAYER)
 
 /mob/living/carbon/human/proc/update_mutcolor()
-	if(dna && !(HUSK in mutations))
+	if(dna && !(mutations.has_condition(HUSK)))
 		dna.species.update_color(src)
 
 /mob/living/carbon/human/proc/update_body()

@@ -127,7 +127,7 @@
 /mob/living/carbon/human
 
 	proc/handle_disabilities()
-		if (disabilities & EPILEPSY)
+		if (mutations.has_disability(EPILEPSY))
 			if ((prob(1) && paralysis < 1))
 				src << "\red You have a seizure!"
 				for(var/mob/O in viewers(src, null))
@@ -136,11 +136,11 @@
 					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
 				Paralyse(10)
 				Jitter(1000)
-		if (disabilities & COUGHING)
+		if (mutations.has_disability(COUGHING))
 			if ((prob(5) && paralysis <= 1))
 				drop_item()
 				emote("cough")
-		if (disabilities & TOURETTES)
+		if (mutations.has_disability(TOURETTES))
 			if ((prob(10) && paralysis <= 1))
 				Stun(10)
 				switch(rand(1, 3))
@@ -152,7 +152,7 @@
 				var/y_offset = pixel_y + rand(-1,1)
 				animate(src, pixel_x = pixel_x + x_offset, pixel_y = pixel_y + y_offset, time = 1)
 				animate(pixel_x = pixel_x - x_offset, pixel_y = pixel_y - y_offset, time = 1)
-		if (disabilities & NERVOUS)
+		if (mutations.has_disability(NERVOUS))
 			if (prob(10))
 				stuttering = max(10, stuttering)
 		if (getBrainLoss() >= 60 && stat != 2)
@@ -349,7 +349,7 @@
 
 	proc/get_cold_protection(temperature)
 
-		if(COLD_RESISTANCE in mutations)
+		if(mutations.has_mutation(COLD_RESISTANCE))
 			return 1 //Fully protected from the cold.
 
 		if(dna && COLDRES in dna.species.specflags)
@@ -507,7 +507,7 @@
 				stat = CONSCIOUS
 
 			//Eyes
-			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
+			if(mutations.has_disability(BLIND))	//disabled-blind, doesn't get better on its own
 				blinded = 1
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
@@ -519,7 +519,7 @@
 				eye_blurry = max(eye_blurry-1, 0)
 
 			//Ears
-			if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
+			if(mutations.has_disability(DEAF))	//disabled-deaf, doesn't get better on its own
 				ear_deaf = max(ear_deaf, 1)
 			else if(istype(ears, /obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster, and slowly heals deafness
 				ear_damage = max(ear_damage-0.15, 0)

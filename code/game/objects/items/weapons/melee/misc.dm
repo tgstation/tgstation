@@ -49,7 +49,7 @@
 
 	if(user.a_intent == "harm")
 		if(!..()) return
-		if(M.stuttering < 7 && !(HULK in M.mutations))
+		if(M.stuttering < 7 && !(M.mutations.stun_immune()))
 			M.stuttering = 7
 		M.Stun(7)
 		M.Weaken(7)

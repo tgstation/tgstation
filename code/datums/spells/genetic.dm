@@ -2,28 +2,26 @@
 	name = "Genetic"
 	desc = "This spell inflicts a set of mutations and disabilities upon the target."
 
-	var/disabilities = 0 //bits
 	var/list/mutations = list() //mutation strings
+	var/list/disabilities = list()
+	var/list/conditions = list()
 	var/duration = 100 //deciseconds
-	/*
-		Disabilities
-			1st bit - ?
-			2nd bit - ?
-			3rd bit - ?
-			4th bit - ?
-			5th bit - ?
-			6th bit - ?
-	*/
 
 /obj/effect/proc_holder/spell/targeted/genetic/cast(list/targets)
 
 	for(var/mob/living/target in targets)
-		target.mutations.Add(mutations)
-		target.disabilities |= disabilities
-		target.update_mutations()	//update target's mutation overlays
+		for (var/i in mutations)
+			target.mutations.add_mutation(i)
+		for (var/i in disabilities)
+			target.mutations.add_disability(i)
+		for (var/i in conditions)
+			target.mutations.add_condition(i)
 		spawn(duration)
-			target.mutations.Remove(mutations)
-			target.disabilities &= ~disabilities
-			target.update_mutations()
+			for (var/i in mutations)
+				target.mutations.remove_mutation(i)
+			for (var/i in disabilities)
+				target.mutations.remove_disability(i)
+			for (var/i in conditions)
+				target.mutations.remove_condition(i)
 
 	return

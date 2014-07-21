@@ -26,16 +26,14 @@
 	return 0
 
 /mob/living/carbon/human/RangedAttack(var/atom/A)
-	if(!gloves && !mutations.len) return
-	var/obj/item/clothing/gloves/G = gloves
-	if((LASER in mutations) && a_intent == "harm")
-		LaserEyes(A) // moved into a proc below
-
-	else if(istype(G) && G.Touch(A,0)) // for magic gloves
+	if (..())
 		return
 
-	else if(TK in mutations)
-		A.attack_tk(src)
+	var/obj/item/clothing/gloves/G = gloves
+	if(istype(G) && G.Touch(A,0)) // for magic gloves
+		return
+
+	return
 
 /*
 	Animals & All Unspecified

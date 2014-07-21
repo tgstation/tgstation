@@ -37,7 +37,6 @@
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
-	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
 	range = -1
 	include_user = 1
 	centcom_cancast = 0
@@ -208,7 +207,7 @@
 	amt_eye_blurry = 20
 
 /obj/effect/proc_holder/spell/targeted/genetic/blind
-	disabilities = 1
+	disabilities = list(BLIND)
 	duration = 300
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone

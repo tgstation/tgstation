@@ -230,10 +230,6 @@
 	if(!check_dna_integrity(M))
 		return 0
 
-	M.disabilities = 0
-	M.sdisabilities = 0
-	M.mutations.Cut()
-
 	M.see_in_dark = initial(M.see_in_dark)
 	M.see_invisible = initial(M.see_invisible)
 
@@ -247,58 +243,73 @@
 		blocks[i] = (deconstruct_block(getblock(M.dna.struc_enzymes, i), OP_MUTATION_DIFFICULTY) == OP_MUTATION_DIFFICULTY)
 
 	if(blocks[NEARSIGHTEDBLOCK])
-		M.disabilities |= NEARSIGHTED
-		M << "<span class='danger'>Your eyes feel strange.</span>"
+		M.mutations.add_disability(NEARSIGHTED)
+	else
+		M.mutations.remove_disability(NEARSIGHTED)
+
 	if(blocks[EPILEPSYBLOCK])
-		M.disabilities |= EPILEPSY
-		M << "<span class='danger'>You get a headache.</span>"
+		M.mutations.add_disability(EPILEPSY)
+	else
+		M.mutations.remove_disability(EPILEPSY)
+
 	if(blocks[STRANGEBLOCK])
 		M << "<span class='danger'>You feel strange.</span>"
 		if(prob(95))
 			if(prob(50))	randmutb(M)
 			else			randmuti(M)
 		else				randmutg(M)
+
 	if(blocks[COUGHBLOCK])
-		M.disabilities |= COUGHING
-		M << "<span class='danger'>You start coughing.</span>"
+		M.mutations.add_disability(COUGHING)
+	else
+		M.mutations.remove_disability(COUGHING)
+
 	if(blocks[CLUMSYBLOCK])
-		M << "<span class='danger'>You feel lightheaded.</span>"
-		M.mutations |= CLUMSY
+		M.mutations.add_disability(CLUMSY)
+	else
+		M.mutations.remove_disability(CLUMSY)
+
 	if(blocks[TOURETTESBLOCK])
-		M.disabilities |= TOURETTES
-		M << "<span class='danger'>You twitch.</span>"
+		M.mutations.add_disability(TOURETTES)
+	else
+		M.mutations.remove_disability(TOURETTES)
+
 	if(blocks[NERVOUSBLOCK])
-		M.disabilities |= NERVOUS
-		M << "<span class='danger'>You feel nervous.</span>"
+		M.mutations.add_disability(NERVOUS)
+	else
+		M.mutations.remove_disability(NERVOUS)
+
 	if(blocks[DEAFBLOCK])
-		M.sdisabilities |= DEAF
-		M.ear_deaf = 1
-		M << "<span class='danger'>You can't seem to hear anything.</span>"
+		M.mutations.add_disability(DEAF)
+	else
+		M.mutations.remove_disability(DEAF)
+
 	if(blocks[BLINDBLOCK])
-		M.sdisabilities |= BLIND
-		M << "<span class='danger'>You can't seem to see anything.</span>"
-	if(blocks[HULKBLOCK])
-		if(inj || prob(10))
-			M.mutations |= HULK
-			M << "<span class='notice'>Your muscles hurt.</span>"
-	if(blocks[XRAYBLOCK])
-		if(inj || prob(30))
-			M.mutations |= XRAY
-			M << "<span class='notice'>The walls suddenly disappear.</span>"
-			M.sight |= SEE_MOBS|SEE_OBJS|SEE_TURFS
-			M.see_in_dark = 8
-			M.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	if(blocks[FIREBLOCK])
-		if(inj || prob(30))
-			M.mutations |= COLD_RESISTANCE
-			M << "<span class='notice'>Your body feels warm.</span>"
-	if(blocks[TELEBLOCK])
-		if(inj || prob(25))
-			M.mutations |= TK
-			M << "<span class='notice'>You feel smarter.</span>"
+		M.mutations.add_disability(BLIND)
+	else
+		M.mutations.remove_disability(BLIND)
 
+	if(blocks[HULKBLOCK] && (inj || prob(10)))
+		M.mutations.add_mutation(HULK)
+	else
+		M.mutations.remove_mutation(HULK)
 
-	/* If you want the new mutations to work, UNCOMMENT THIS.
+	if(blocks[XRAYBLOCK] && (inj || prob(30)))
+		M.mutations.add_mutation(XRAY)
+	else
+		M.mutations.remove_mutation(XRAY)
+
+	if(blocks[FIREBLOCK] && (inj || prob(30)))
+		M.mutations.add_mutation(COLD_RESISTANCE)
+	else
+		M.mutations.remove_mutation(COLD_RESISTANCE)
+
+	if(blocks[TELEBLOCK] && (inj || prob(25)))
+		M.mutations.add_mutation(TK)
+	else
+		M.mutations.remove_mutation(TK)
+
+	/* If you want the new mutations to work, UNCOMMENT THIS. // Probably doesn't work anymore
 	if(istype(M, /mob/living/carbon))
 		for (var/datum/mutations/mut in global_mutations)
 			mut.check_mutation(M)
@@ -583,7 +594,7 @@
 	if(connected)
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(check_dna_integrity(viable_occupant) && (!(NOCLONE in viable_occupant.mutations) || (connected.scan_level == 3)))	//occupent is viable for dna modification
+			if(check_dna_integrity(viable_occupant) && (!(viable_occupant.mutations.has_condition(NOCLONE)) || (connected.scan_level == 3)))	//occupent is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)	occupant_status += "<span class='good'>Conscious</span>"
@@ -776,7 +787,7 @@
 	var/mob/living/carbon/viable_occupant
 	if(connected)
 		viable_occupant = connected.occupant
-		if(!istype(viable_occupant) || !viable_occupant.dna || (NOCLONE in viable_occupant.mutations))
+		if(!istype(viable_occupant) || !viable_occupant.dna || (viable_occupant.mutations.has_condition(NOCLONE)))
 			viable_occupant = null
 
 	//Basic Tasks///////////////////////////////////////////

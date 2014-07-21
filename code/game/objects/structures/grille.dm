@@ -34,10 +34,8 @@
 
 	if(shock(user, 70))
 		return
-	if(HULK in user.mutations)
-		health -= 5
 	else
-		health -= 3
+		health -= 3 + user.mutations.bonus_damage()
 	healthcheck()
 
 /obj/structure/grille/attack_alien(mob/user as mob)

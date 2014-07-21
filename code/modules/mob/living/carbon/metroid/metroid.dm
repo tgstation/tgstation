@@ -397,7 +397,7 @@
 
 			attacked += 10
 			if (prob(90))
-				if (HULK in M.mutations)
+				if (M.mutations.has_mutation(HULK))
 					damage += 5
 					if(Victim || Target)
 						Victim = null
