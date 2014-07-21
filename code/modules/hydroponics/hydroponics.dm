@@ -3,7 +3,7 @@
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "hydrotray"
 	density = 1
-	anchored = 1
+	anchored = 1			// anchored == 2 means the hoses are screwed in place
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)
@@ -71,7 +71,8 @@
 
 		for(var/step_dir in cardinal)
 			var/obj/machinery/hydroponics/h = locate() in get_step(a, step_dir)
-			if(h && h.anchored==1 && h.density && !(h in connected) && !(h in processing_atoms)) // Soil plots aren't dense, and don't get this feature.
+			// Soil plots aren't dense.  anchored == 2 means the hoses are screwed in place
+			if(h && h.anchored==2 && h.density && !(h in connected) && !(h in processing_atoms))
 				processing_atoms += h
 
 		processing_atoms -= a
@@ -610,7 +611,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
-		if(irrigate && reagent_source.amount_per_transfer_from_this > 30 && reagent_source.reagents.total_volume >= 30)
+		// anchored == 2 means the hoses are screwed in place
+		if(irrigate && reagent_source.amount_per_transfer_from_this > 30 && reagent_source.reagents.total_volume >= 30 && anchored == 2)
 			trays = FindConnected()
 			if (trays.len > 1)
 				visi_msg += ", setting off the irrigation system"
@@ -963,9 +965,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-grow[myseed.growthstages]")
 
-	if(!luminosity)
-		if(istype(myseed,/obj/item/seeds/glowshroom))
-			SetLuminosity(round(myseed.potency/10))
+	if(istype(myseed,/obj/item/seeds/glowshroom))
+		SetLuminosity(round(myseed.potency/10))
 	else
 		SetLuminosity(0)
 	return
