@@ -310,7 +310,7 @@ var/global/list/paint_variants = list(
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 15000
-	g_amt = 20000
+	g_amt = 7500
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=2;materials=1"
 	var/working = 0
