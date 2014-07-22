@@ -35,6 +35,30 @@
 		src << "<span class='danger'>The rules URL is not set in the server configuration.</span>"
 	return
 
+/client/verb/github()
+	set name = "Github"
+	set desc = "Visit Github"
+	set hidden = 1
+	if(config.githuburl)
+		if(alert("This will open the Github repository in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		src << link(config.githuburl)
+	else
+		src << "<span class='danger'>The Github URL is not set in the server configuration.</span>"
+	return
+
+/client/verb/reportissue()
+	set name = "Report issue"
+	set desc = "Report an issue"
+	set hidden = 1
+	if(config.githuburl)
+		if(alert("This will open the Github issue reporter in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		src << link("[config.githuburl]/issues/new")
+	else
+		src << "<span class='danger'>The Github URL is not set in the server configuration.</span>"
+	return
+
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"
