@@ -105,7 +105,7 @@
 	if (!ui) // no ui has been passed, so we'll search for one
 		ui = nanomanager.get_open_ui(user, src, ui_key)
 
-	if (!ui || ui && ui.show_map)
+	if (!ui)
 		// the ui does not exist, so we'll create a new one
 		ui = new(user, src, ui_key, "atmos_control.tmpl", name, 900, 800)
 		// adding a template with the key "mapContent" enables the map ui functionality
