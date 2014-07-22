@@ -109,6 +109,8 @@
 				crewmemberData["x"] = pos.x
 				crewmemberData["y"] = pos.y
 				crewmemberData["z"] = pos.z
+				crewmemberData["xoffset"] = pos.x+WORLD_X_OFFSET
+				crewmemberData["yoffset"] = pos.y+WORLD_X_OFFSET
 
 				// Works around list += list2 merging lists; it's not pretty but it works
 				crewmembers += "temporary item"
