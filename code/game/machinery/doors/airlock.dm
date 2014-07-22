@@ -881,14 +881,15 @@ About the new airlock wires panel:
 		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>"
 		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
 		if(do_after(user,40,5,1))
-			if(W.remove_fuel(0,user))
-				playsound(loc, 'sound/items/welder.ogg', 50, 1)
-				welded = !welded
-				user << "<span class='notice'>You [welded ? "welded the airlock shut":"unwelded the airlock"]</span>"
-				update_icon()
-				user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
-			else
-				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			if(!density && !operating)//Door must be closed to weld.
+				if(W.remove_fuel(0,user))
+					playsound(loc, 'sound/items/welder.ogg', 50, 1)
+					welded = !welded
+					user << "<span class='notice'>You [welded ? "welded the airlock shut":"unwelded the airlock"]</span>"
+					update_icon()
+					user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
+				else
+					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 		return
 	else if(istype(C, /obj/item/weapon/screwdriver))
 		src.p_open = !( src.p_open )
