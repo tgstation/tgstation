@@ -23,10 +23,6 @@
 
 
 /mob/living/silicon/ai/proc/ai_camera_list(var/camera)
-	if(src.stat == 2)
-		src << "You can't list the cameras because you are dead!"
-		return
-
 	if (!camera)
 		return 0
 
@@ -100,12 +96,12 @@
 
 	return targets
 
-/mob/living/silicon/ai/proc/ai_camera_track(var/target_name)
-	if(src.stat == 2)
-		src << "You can't track with camera because you are dead!"
-		return
+/mob/living/silicon/ai/verb/ai_camera_track(var/target_name as null|anything in trackable_mobs())
+	set name = "track"
+	set hidden = 1 //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
+
 	if(!target_name)
-		src.cameraFollow = null
+		return
 
 	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
 
