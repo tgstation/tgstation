@@ -21,7 +21,6 @@
 	var/obj/machinery/alarm/current
 	var/list/filter=null
 	var/overridden = 0 //not set yet, can't think of a good way to do it
-	var/currZ = 1
 	req_one_access = list(access_ce)
 
 
@@ -103,7 +102,6 @@
 		alarm_data["z"] = pos.z
 		alarms+=list(alarm_data)
 	data["alarms"]=alarms
-	data["zlevel"]=currZ
 	if (!ui) // no ui has been passed, so we'll search for one
 		ui = nanomanager.get_open_ui(user, src, ui_key)
 
@@ -287,14 +285,4 @@
 			else
 				current.target_temperature = input_temperature + T0C
 			return
-	if(href_list["zlevel"])
-		var/newz = input("Choose Z-Level to view.","Z-Levels",1) as null|anything in list(1,3,4,5,6)
-		if(!newz || isnull(newz))
-			return 0
-		if(newz < 1 || newz > 6 || newz == 2)
-			usr << "\red <b>Unable to establish a connection</b>"
-			return 0
-		currZ = newz
-		src.updateUsrDialog()
-		return 1
 	updateUsrDialog()
