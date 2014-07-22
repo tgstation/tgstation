@@ -291,8 +291,16 @@
 
 /obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity) return
+	
+	//blah
+	usr.changeNext_move(8)
+
 	if (istype(A, /turf/simulated/floor))
 		user << "\blue You hit the floor with the bible."
+
+		//Wanted to put this up above but it was just too annoying.
+		playsound(src.loc, hitsound, 25, 1, -1)
+		
 		if(user.mind && (user.mind.assigned_role == "Chaplain"))
 			call(/obj/effect/rune/proc/revealrunes)(src)
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
