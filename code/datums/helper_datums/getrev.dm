@@ -30,7 +30,7 @@ client/verb/showrevinfo()
 
 	if(revdata.revision)
 		src << "<b>Server revision compiled on:</b> [revdata.date]"
-		src << "[config.githuburl]/commit/[revdata.revision]"
+		src << "<a href='[config.githuburl]/commit/[revdata.revision]'>[revdata.revision]</a>"
 	else
 		src << "Revision unknown"
 	src << "<b>Current Infomational Settings:</b><br>Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]<br>Allow Latejoin Antagonists: [config.allow_latejoin_antagonists]"
