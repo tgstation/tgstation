@@ -973,10 +973,7 @@
 		message_admins("\blue [key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]")
 	
 	else if(href_list["sendtoprison"])
-		if(!check_rights(R_FUN))	return
-
-		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
-			return
+		if(!check_rights(R_ADMIN))	return
 
 		var/mob/M = locate(href_list["sendtoprison"])
 		if(!ismob(M))
@@ -986,11 +983,12 @@
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
 			return
 
-		M.Paralyse(5)
-		sleep(5)
+		if(alert(usr, "Send [key_name(M)] to Prison?", "Message", "Yes", "No") != "Yes")
+			return
+
 		M.loc = pick(prisonwarp)
-		spawn(50)
-			M << "\blue You have been sent to Prison!"
+		M << "\blue You have been sent to Prison!"
+
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!", 1)
 	else if(href_list["tdome1"])
