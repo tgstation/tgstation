@@ -219,8 +219,6 @@
 					modify.assignment = t1
 					modify.rank = t1
 
-				callHook("reassign_employee", list(modify))
-
 		if ("reg")
 			if (is_authenticated())
 				var/t2 = modify
