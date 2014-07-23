@@ -91,6 +91,10 @@
 	return
 
 // Chair types
+/obj/structure/stool/bed/chair/wood
+	autoignition_temperature = AUTOIGNITION_WOOD
+	// TODO:  Special ash subtype that looks like charred chair legs
+
 /obj/structure/stool/bed/chair/wood/normal
 	icon_state = "wooden_chair"
 	name = "wooden chair"

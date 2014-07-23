@@ -15,12 +15,14 @@ Attach to transfer valve and open. BOOM.
 	var/fire_dmi = 'icons/effects/fire.dmi'
 	var/fire_sprite = "fire"
 	var/ashtype = /obj/effect/decal/cleanable/ash
+	var/fire_time_min = 5 // Seconds
+	var/fire_time_max = 10 // Seconds
 
 /atom/proc/ignite(var/temperature)
 	on_fire=1
 	visible_message("\The [src] bursts into flame!")
 	overlays += image(fire_dmi,fire_sprite)
-	spawn(rand(3,10) SECONDS)
+	spawn(rand(fire_time_min,fire_time_max) SECONDS)
 		if(!on_fire)
 			return
 		new ashtype(src.loc)
