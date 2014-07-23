@@ -580,12 +580,14 @@
 	var/list/pos_targets = list()
 	var/target = null
 	for(var/mob/living/M in view(scan_range,src))
-		if(M.stat || faction == M.faction)
+		if(M.stat)
+			continue
+		if(faction in M.faction)
 			continue
 		pos_targets += M
 	for(var/obj/mecha/M in oview(scan_range, src))
 		if(M.occupant)
-			if(faction == M.occupant.faction)
+			if(faction in M.occupant.faction)
 				continue
 		if(!M.occupant)
 			continue //Don't shoot at empty mechs.

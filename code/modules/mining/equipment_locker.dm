@@ -519,7 +519,7 @@
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	stop_automated_movement_when_pulled = 1
 	mouse_opacity = 1
-	faction = "neutral"
+	faction = list("neutral")
 	a_intent = "harm"
 	min_oxy = 0
 	max_oxy = 0
@@ -663,12 +663,12 @@
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
-				M.faction = "neutral"
+				M.faction = list("neutral")
 				M.revive()
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
-						M.faction = "lazarus"
+						M.faction = list("lazarus")
 						H.friends += user
 						H.attack_same = 1
 						log_game("[user] has revived hostile mob [target] with a malfunctioning lazarus injector")
