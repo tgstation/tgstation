@@ -393,32 +393,20 @@
 		net1 = net2
 		net2 = temp
 
-	for(var/i=1,i<=net2.nodes.len,i++)		//merge net2 into net1
-		var/obj/machinery/power/Node = net2.nodes[i]
-		if(Node)
-			Node.powernet = net1
-			net1.nodes[Node] = Node
+	for(var/obj/machinery/power/node in net2.nodes)
+		if(node)
+			net2.nodes -= node
+			node.powernet = net1
+			net1.nodes += node
 
-	for(var/i=1,i<=net2.cables.len,i++)
-		var/obj/structure/cable/Cable = net2.cables[i]
-		if(Cable)
-			Cable.powernet = net1
-			net1.cables += Cable
+	for(var/obj/structure/cable/cable in net2.cables)
+		if(cable)
+			net2.cables -= cable
+			cable.powernet = net1
+			net1.cables += cable
 
-	del(net2)
-	//net2.garbageCollect()
+	net2.Destroy()
 	return net1
-
-/datum/powernet/proc/garbageCollect()
-	if(nodes.len)
-		for(var/obj/machinery/power/N in nodes)
-			N.powernet = null
-		nodes.Cut()
-	if(cables.len)
-		for(var/obj/structure/cable/C in cables)
-			C.powernet = null
-		cables.Cut()
-	powernets -= src
 
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
@@ -523,4 +511,10 @@
 	powernets += src
 
 /datum/powernet/Destroy()
+	for(var/obj/machinery/power/node in nodes)
+		node.powernet = null
+
+	for(var/obj/structure/cable/cable in cables)
+		cable.powernet = null
+
 	powernets -= src
