@@ -71,13 +71,13 @@ Used In File(s): /code/game/machinery/computers/communications.dm
 		<h3>Presets</h3>
 		{{for data.stat_display.presets}}
 			<div class="line">
-				<div class="statusLabel">{{:helper.link(data.label,'info',{'operation':'setstat','statdisp':name},null,(name==data.stat_display.type?'linkOn':''))}}</div>
+				<div class="statusLabel">{{:helper.link(value.label,'info',{'operation':'setstat','statdisp':value.name},null,(value.name==data.stat_display.type?'linkOn':''))}}</div>
 			</div>
 		{{/for}}
 		<h3>Alerts</h3>
 		{{for data.stat_display.alerts}}
 			<div class="line">
-				<div class="statusLabel">{{:helper.link(data.label,'alert',{'operation':'setstat','statdisp':'alert','alert':alert},null,(name==data.stat_display.type?'linkOn':''))}}</div>
+				<div class="statusLabel">{{:helper.link(value.label,'alert',{'operation':'setstat','statdisp':'alert','alert':value.alert},null,(value.alert==data.stat_display.type?'linkOn':''))}}</div>
 			</div>
 		{{/for}}
 		<h3>Messages</h3>
@@ -97,18 +97,22 @@ Used In File(s): /code/game/machinery/computers/communications.dm
 		<!-- MESSAGES -->
 		<h3>Messages</h3>
 		{{if data.current_message}}
-			{{:helper.link('Messages','home',{'operation':'messagelist'})}}
-			<h3>{{>title}}</h3>
-			<div class="item">
-				{{>body}}
-			</div>
+			{{for data.messages}}
+				{{if value.id == data.current_message}}
+					{{:helper.link('Messages','home',{'operation':'messagelist'})}}
+					<h3>{{>value.title}}</h3>
+					<div class="item">
+						{{>value.body}}
+					</div>
+				{{/if}}
+			{{/for}}
 		{{else}}
 			{{:helper.link('Back','home',{'operation':'main'})}}
 			{{for data.messages}}
 				<div class="line">
-					{{:helper.link('Open','mail-open',{'operation':'messagelist','msgid':data.id})}}
-					{{:helper.link('Delete','close',{'operation':'delmessage','msgid':data.id},'red')}}
-					{{>data.title}}
+					{{:helper.link('Open','mail-open',{'operation':'messagelist','msgid':value.id})}}
+					{{:helper.link('Delete','close',{'operation':'delmessage','msgid':value.id},null,'red')}}
+					{{>value.title}}
 				</div>
 			{{/for}}
 		{{/if}}
@@ -119,13 +123,13 @@ Used In File(s): /code/game/machinery/computers/communications.dm
 		<div class="item">
 			<div class="line">
 				<div class="itemLabel">Security Level:</div>
-				<div class="itemContents">{{>data.str_security_level}}</div>
+				<div class="itemContents {{:data.str_security_level}}">{{>data.str_security_level}}</div>
 			</div>
 			<div class="line">
 				<div class="itemLabel">Presets:</div>
 				<div class="itemContents">
 					{{for data.levels}}
-					{{:helper.link(name,'comment',{'operation':'newalertlevel','level':data.id},null,(data.id==data.security_level?'linkOn':''))}}
+						{{:helper.link(value.name,'comment',{'operation':'newalertlevel','level':value.id},null,(value.id==data.security_level?'linkOn':''))}}
 					{{/for}}
 				</div>
 			</div>

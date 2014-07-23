@@ -58,7 +58,6 @@
 	return interact(user)
 
 /obj/machinery/computer/atmoscontrol/interact(mob/user)
-	user.set_machine(src)
 	if(allowed(user))
 		overridden = 1
 	else if(!emagged)
@@ -136,14 +135,14 @@
 //a bunch of this is copied from atmos alarms
 /obj/machinery/computer/atmoscontrol/Topic(href, href_list)
 	if(..())
-		return
+		return 0
 	if(href_list["reset"])
 		current = null
 
 	if(href_list["alarm"])
 		current = locate(href_list["alarm"])
-		updateUsrDialog()
-		return
+		//updateUsrDialog()
+		return 1
 
 	if(current)
 		if(href_list["command"])
@@ -167,11 +166,11 @@
 					else
 						var/newval = input("Enter new value") as num|null
 						if(isnull(newval))
-							return
+							return 0
 						val = newval
 					current.send_signal(device_id, list (href_list["command"] = val))
 					spawn(3)
-						src.updateUsrDialog()
+						return 1
 				//if("adjust_threshold") //was a good idea but required very wide window
 				if("set_threshold")
 					var/env = href_list["env"]
@@ -180,7 +179,7 @@
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as num|null
 					if (isnull(newval) || ..() || (current.locked && issilicon(usr)))
-						return
+						return 0
 					if (newval<0)
 						selected[threshold] = -1.0
 					else if (env=="temperature" && newval>5000)
@@ -229,14 +228,14 @@
 							current.target_temperature = selected[3]
 
 					spawn(1)
-						updateUsrDialog()
-			return
+						return 1
+			return 0
 
 		if(href_list["screen"])
 			current.screen = text2num(href_list["screen"])
-			spawn(1)
-				src.updateUsrDialog()
-			return
+			//spawn(1)
+			//	updateUsrDialog()
+			return 1
 
 		if(href_list["atmos_unlock"])
 			switch(href_list["atmos_unlock"])
@@ -248,31 +247,31 @@
 		if(href_list["atmos_alarm"])
 			current.alarmActivated=1
 			current.areaMaster.updateDangerLevel()
-			spawn(1)
-				src.updateUsrDialog()
+			//spawn(1)
+				//src.updateUsrDialog()
 			current.update_icon()
-			return
+			return 1
 		if(href_list["atmos_reset"])
 			current.alarmActivated=0
 			current.areaMaster.updateDangerLevel()
-			spawn(1)
-				src.updateUsrDialog()
+			//spawn(1)
+				//src.updateUsrDialog()
 			current.update_icon()
-			return
+			return 1
 
 		if(href_list["mode"])
 			current.mode = text2num(href_list["mode"])
 			current.apply_mode()
-			spawn(5)
-				src.updateUsrDialog()
-			return
+			//spawn(5)
+				//src.updateUsrDialog()
+			return 1
 
 		if(href_list["preset"])
 			current.preset = text2num(href_list["preset"])
 			current.apply_preset()
-			spawn(5)
-				src.updateUsrDialog()
-			return
+			//spawn(5)
+				//src.updateUsrDialog()
+			return 1
 
 		if(href_list["temperature"])
 			var/list/selected = current.TLV["temperature"]
@@ -280,10 +279,10 @@
 			var/min_temperature = max(selected[2] - T0C, MIN_TEMPERATURE)
 			var/input_temperature = input("What temperature would you like the system to maintain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
 			if(input_temperature==null)
-				return
+				return 0
 			if(input_temperature > max_temperature || input_temperature < min_temperature)
 				usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
 			else
 				current.target_temperature = input_temperature + T0C
-			return
-	updateUsrDialog()
+			return 1
+	return 1//updateUsrDialog()

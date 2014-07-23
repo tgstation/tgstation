@@ -150,48 +150,47 @@
 	//Atmos
 	var/atmos_suitable = 1
 
-	var/atom/A = src.loc
+	var/atom/A = loc
+
 	if(isturf(A))
 		var/turf/T = A
-		var/areatemp = T.temperature
-		if( abs(areatemp - bodytemperature) > 40 )
-			var/diff = areatemp - bodytemperature
-			diff = diff / 5
-			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
-			bodytemperature += diff
+		var/datum/gas_mixture/Environment = T.return_air()
 
-		if(istype(T,/turf/simulated))
-			var/turf/simulated/ST = T
-			if(ST.air)
-				var/tox = ST.air.toxins
-				var/oxy = ST.air.oxygen
-				var/n2  = ST.air.nitrogen
-				var/co2 = ST.air.carbon_dioxide
+		if(Environment)
+			if(abs(Environment.temperature - bodytemperature) > 40)
+				bodytemperature += ((Environment.temperature - bodytemperature) / 5)
 
-				if(min_oxy)
-					if(oxy < min_oxy)
-						atmos_suitable = 0
-				if(max_oxy)
-					if(oxy > max_oxy)
-						atmos_suitable = 0
-				if(min_tox)
-					if(tox < min_tox)
-						atmos_suitable = 0
-				if(max_tox)
-					if(tox > max_tox)
-						atmos_suitable = 0
-				if(min_n2)
-					if(n2 < min_n2)
-						atmos_suitable = 0
-				if(max_n2)
-					if(n2 > max_n2)
-						atmos_suitable = 0
-				if(min_co2)
-					if(co2 < min_co2)
-						atmos_suitable = 0
-				if(max_co2)
-					if(co2 > max_co2)
-						atmos_suitable = 0
+			if(min_oxy)
+				if(Environment.oxygen < min_oxy)
+					atmos_suitable = 0
+
+			if(max_oxy)
+				if(Environment.oxygen > max_oxy)
+					atmos_suitable = 0
+
+			if(min_tox)
+				if(Environment.toxins < min_tox)
+					atmos_suitable = 0
+
+			if(max_tox)
+				if(Environment.toxins > max_tox)
+					atmos_suitable = 0
+
+			if(min_n2)
+				if(Environment.nitrogen < min_n2)
+					atmos_suitable = 0
+
+			if(max_n2)
+				if(Environment.nitrogen > max_n2)
+					atmos_suitable = 0
+
+			if(min_co2)
+				if(Environment.carbon_dioxide < min_co2)
+					atmos_suitable = 0
+
+			if(max_co2)
+				if(Environment.carbon_dioxide > max_co2)
+					atmos_suitable = 0
 
 	//Atmos effect
 	if(bodytemperature < minbodytemp)

@@ -48,6 +48,8 @@ nanoui is used to open and update nano browser uis
 	var/state_key = "default"
 	// show the map ui, this is used by the default layout
 	var/show_map = 0
+	// the map z level to display
+	var/map_z_level = 1
 	// initial data, containing the full data structure, must be sent to the ui (the data structure cannot be extended later on)
 	var/list/initial_data[0]
 	// set to 1 to update the ui automatically every master_controller tick
@@ -199,6 +201,7 @@ nanoui is used to open and update nano browser uis
 			"autoUpdateLayout" = auto_update_layout,
 			"autoUpdateContent" = auto_update_content,
 			"showMap" = show_map,
+			"mapZLevel" = map_z_level,
 			"user" = list("name" = user.name)
 		)
 	return config_data
@@ -318,6 +321,16 @@ nanoui is used to open and update nano browser uis
   */
 /datum/nanoui/proc/set_show_map(nstate)
 	show_map = nstate
+
+ /**
+  * Toggle showing the map ui
+  *
+  * @param nstate_key boolean 1 to show map, 0 to hide (default is 0)
+  *
+  * @return nothing
+  */
+/datum/nanoui/proc/set_map_z_level(nz)
+	map_z_level = nz
 
  /**
   * Set whether or not to use the "old" on close logic (mainly unset_machine())
@@ -457,12 +470,23 @@ nanoui is used to open and update nano browser uis
 		return
 
 	// This is used to toggle the nano map ui
-	var/show_map_updated = 0
+	var/map_update = 0
 	if(href_list["showMap"])
 		set_show_map(text2num(href_list["showMap"]))
-		show_map_updated = 1
+		map_update = 1
 
-	if ((src_object && src_object.Topic(href, href_list)) || show_map_updated)
+	if(href_list["zlevel"])
+		var/newz = input("Choose Z-Level to view.","Z-Levels",1) as null|anything in list(1,3,4,5,6)
+		if(!newz || isnull(newz))
+			return 0
+		if(newz < 1 || newz > 6 || newz == 2)
+			usr << "\red <b>Unable to establish a connection</b>"
+			return 0
+		if(newz != map_z_level)
+			set_map_z_level(newz)
+			map_update = 1
+
+	if ((src_object && src_object.Topic(href, href_list)) || map_update)
 		nanomanager.update_uis(src_object) // update all UIs attached to src_object
 
  /**
