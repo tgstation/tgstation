@@ -33,8 +33,10 @@
 	..()
 	solars_list.Add(src)
 
-// called by datum/sun/calc_position() as sun's angle changes
-/obj/machinery/power/tracker/proc/set_angle(var/angle)
+/*
+ * called by datum/sun/calc_position() as sun's angle changes
+ */
+/obj/machinery/power/tracker/proc/set_angle(const/angle)
 	sun_angle = angle
 
 	//set icon dir to show sun illumination
@@ -44,15 +46,15 @@
 	if(stat & NOPOWER)
 		return
 
+	if(isnull(powernet))
+		return
+
 	// find all solar controls and update them
 	// currently, just update all controllers in world
 	// ***TODO: better communication system using network
-	if(powernet)
-		for(var/obj/machinery/power/solar_control/C in get_solars_powernet())
-			if(powernet.nodes[C])
-				if(get_dist(C, src) < SOLAR_MAX_DIST)
-					C.tracker_update(angle)
-
+	for(var/obj/machinery/power/solar_control/solar_control in powernet.nodes)
+		if(get_dist(solar_control, src) < SOLAR_MAX_DIST)
+			solar_control.tracker_update(angle)
 
 /obj/machinery/power/tracker/attackby(var/obj/item/weapon/W, var/mob/user)
 
