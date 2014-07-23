@@ -59,7 +59,12 @@
 
 /obj/machinery/media/Move()
 	..()
+	if(anchored)
+		update_music()
+
+/obj/machinery/media/setLoc(var/turf/T, var/teleported=0)
 	disconnect_media_source()
+	..(T)
 	if(anchored)
 		update_music()
 

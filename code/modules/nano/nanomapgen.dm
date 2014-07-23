@@ -33,7 +33,7 @@
 	if(!src.client.holder)
 		src << "Only administrators may use this command."
 		return
-	var/turf/T = get_turf(src)
+	//var/turf/T = get_turf(src)
 	nanomapgen_DumpTile(allz = 1)
 
 /mob/proc/nanomapgen_DumpTile(var/startX = 1, var/startY = 1, var/currentZ = 1, var/endX = -1, var/endY = -1, var/allz = 0)
