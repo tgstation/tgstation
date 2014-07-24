@@ -327,7 +327,6 @@
 		C.updateicon()
 
 		C.powernet = new()
-		powernets += C.powernet
 		C.powernet.cables += C
 
 		C.mergeConnectedNetworks(C.d2)
@@ -461,7 +460,6 @@
 
 			if(!TC.powernet)
 				TC.powernet = new()
-				powernets += TC.powernet
 				TC.powernet.cables += TC
 
 			if(powernet)
@@ -476,7 +474,6 @@
 /obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
 	if(!powernet)
 		powernet = new()
-		powernets += powernet
 		powernet.cables += src
 
 	for(var/AM in loc)

@@ -95,7 +95,6 @@
 	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.powernet)
 			PC.powernet = new()
-			powernets += PC.powernet
 //			if(Debug)	world.log << "Starting mpn at [PC.x],[PC.y] ([PC.d1]/[PC.d2])"
 			powernet_nextlink(PC,PC.powernet)
 
@@ -275,7 +274,6 @@
 	if(notlooped)
 		// not looped, so make a new powernet
 		var/datum/powernet/PN = new()
-		powernets += PN
 
 //		if(Debug) world.log << "Was not looped: spliting PN#[number] ([cables.len];[nodes.len])"
 
@@ -520,3 +518,9 @@
 		cell.use(drained_energy)
 	return drained_energy
 
+/datum/powernet/New()
+	..()
+	powernets += src
+
+/datum/powernet/Destroy()
+	powernets -= src
