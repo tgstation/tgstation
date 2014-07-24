@@ -31,8 +31,8 @@
 
 
 /datum/powernet
-	var/list/cables = list()	// all cables & junctions
-	var/list/nodes = list()		// all APCs & sources
+	var/list/cables = new // /obj/structure/cable
+	var/list/nodes = new // /obj/machinery/power
 
 	var/newload = 0
 	var/load = 0

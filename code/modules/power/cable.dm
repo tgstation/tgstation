@@ -493,7 +493,7 @@
 				merge_powernets(powernet, N.terminal.powernet)
 			else
 				N.terminal.powernet = powernet
-				powernet.nodes[N.terminal] = N.terminal
+				powernet.nodes.Add(N.terminal)
 
 		else if(istype(AM,/obj/machinery/power))
 			var/obj/machinery/power/M = AM
@@ -502,8 +502,7 @@
 				merge_powernets(powernet, M.powernet)
 			else
 				M.powernet = powernet
-				powernet.nodes[M] = M
-
+				powernet.nodes.Add(M)
 
 obj/structure/cable/proc/cableColor(var/colorC)
 	var/color_n = "red"

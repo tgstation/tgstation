@@ -3,17 +3,7 @@
 #define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
 
-var/list/solars_list = list()
-
-// This will choose whether to get the solar list from the powernet or the powernet nodes,
-// depending on the size of the nodes.
-/obj/machinery/power/proc/get_solars_powernet()
-	if(!powernet)
-		return list()
-	if(solars_list.len < powernet.nodes)
-		return solars_list
-	else
-		return powernet.nodes
+var/list/solars_list = new
 
 /obj/machinery/power/solar
 	name = "solar panel"
@@ -468,14 +458,16 @@ Manual Tracking Direction:"}
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/power/solar_control/proc/set_panels(var/cdir)
-	if(!powernet) return
-	for(var/obj/machinery/power/solar/S in get_solars_powernet())
-		if(powernet.nodes[S])
-			if(get_dist(S, src) < SOLAR_MAX_DIST)
-				if(!S.control)
-					S.control = src
-				S.ndir = cdir
+/obj/machinery/power/solar_control/proc/set_panels(const/cdir)
+	if(isnull(powernet))
+		return
+
+	for(var/obj/machinery/power/solar/solar in powernet.nodes)
+		if(get_dist(src, solar) < SOLAR_MAX_DIST)
+			if(isnull(solar.control))
+				solar.control = src
+
+			solar.ndir = cdir
 
 /obj/machinery/power/solar_control/power_change()
 	if(powered())
