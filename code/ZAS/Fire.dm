@@ -122,6 +122,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure() ) //Burn the humans!
 	for(var/atom/A in loc)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
+	// Burn the turf, too.
+	S.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
+
 	//spread
 	for(var/direction in cardinal)
 		if(S.open_directions & direction) //Grab all valid bordering tiles
