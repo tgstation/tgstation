@@ -8,9 +8,14 @@
 	circuit = "/obj/item/weapon/circuitboard/crew"
 	var/list/tracked = list(  )
 	var/track_special_role
-	var/currZ = 1
 
 	l_color = "#0000FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 
 /obj/machinery/computer/crew/New()
@@ -56,16 +61,6 @@
 		return 0
 	if(href_list["update"])
 		src.updateDialog()
-		return 1
-	if(href_list["zlevel"])
-		var/newz = input("Choose Z-Level to view.","Z-Levels",1) as null|anything in list(1,3,4,5,6)
-		if(!newz || isnull(newz))
-			return 0
-		if(newz < 1 || newz > 6 || newz == 2)
-			usr << "\red <b>Unable to establish a connection</b>"
-			return 0
-		currZ = newz
-		src.updateUsrDialog()
 		return 1
 
 /obj/machinery/computer/crew/interact(mob/user)
@@ -114,17 +109,21 @@
 				crewmemberData["x"] = pos.x
 				crewmemberData["y"] = pos.y
 				crewmemberData["z"] = pos.z
+				crewmemberData["xoffset"] = pos.x+WORLD_X_OFFSET
+				crewmemberData["yoffset"] = pos.y+WORLD_X_OFFSET
 
+				crewmembers += list(crewmemberData)
 				// Works around list += list2 merging lists; it's not pretty but it works
-				crewmembers += "temporary item"
-				crewmembers[crewmembers.len] = crewmemberData
+				//crewmembers += "temporary item"
+				//crewmembers[crewmembers.len] = crewmemberData
 
 	crewmembers = sortByKey(crewmembers, "name")
 
 	data["crewmembers"] = crewmembers
-	data["zlevel"] = currZ
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	//ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if (!ui) // no ui has been passed, so we'll search for one
+		ui = nanomanager.get_open_ui(user, src, ui_key)
 	if(!ui)
 		ui = new(user, src, ui_key, "crew_monitor.tmpl", "Crew Monitoring Computer", 900, 800)
 
@@ -141,6 +140,10 @@
 
 		// should make the UI auto-update; doesn't seem to?
 		ui.set_auto_update(1)
+	else
+		// The UI is already open so push the new data to it
+		ui.push_data(data)
+		return
 
 /obj/machinery/computer/crew/proc/is_scannable(const/obj/item/clothing/under/C, const/mob/living/carbon/human/H)
 	if(!istype(H))

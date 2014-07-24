@@ -51,6 +51,8 @@ NanoBaseCallbacks = function ()
                         window.location.href = href;
                     }
                 });
+                
+                return updateData;
 		},
         nanomap: function (updateData) {
             $('.mapIcon')
@@ -85,6 +87,10 @@ NanoBaseCallbacks = function ()
                         marginTop: '-' + Math.floor(uiMapHeight / 2) + 'px'
                     });
                 });
+                
+                $('#uiMapImage').attr('src', 'nanomap' + updateData['config']['mapZLevel'] + '.png');
+                
+                return updateData;
         }
 	};
 

@@ -51,6 +51,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/ashtray/glass(), \
 		new /obj/item/weapon/camera_assembly(), \
 		new /obj/item/weapon/chisel(), \
+		new /obj/item/weapon/tile_painter(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \
