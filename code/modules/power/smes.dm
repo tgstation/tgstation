@@ -69,13 +69,14 @@
 		return 1
 		
 	var/userdir = get_dir(user, src)
-	var/turf/T = get_turf(user)
-	if(T.intact)
-		user << "<span class='warning'>The floor plating must be removed first.</span>"
-		return 1
 		
 	for(var/dirs in cardinal)	//there shouldn't be any diagonal terminals
 		if(userdir == dirs)
+			var/turf/T = get_turf(user)
+			if(T.intact)
+				user << "<span class='warning'>The floor plating must be removed first.</span>"
+				return 1
+		
 			user << "<span class='notice'>You start adding cable to the SMES.</span>"
 			playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
 			if(do_after(user,100))		
@@ -131,7 +132,7 @@
 		else if(istype(W, /obj/item/weapon/wirecutters) && terminal)
 			var/turf/T = get_turf(terminal) 
 			if(T.intact)
-				user << "\red You must remove the floor plating in front of the SMES first."
+				user << "<span class='warning'>You must remove the floor plating in front of the SMES first.</span>"
 				return
 			user << "You begin to cut the cables..."
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
@@ -143,7 +144,7 @@
 					return
 				new /obj/item/weapon/cable_coil(loc,10)
 				user.visible_message(\
-					"\red [user.name] cut the cables and dismantled the power terminal.",\
+					"<span class='warning'>[user.name] cut the cables and dismantled the power terminal.</span>",\
 					"You cut the cables and dismantle the power terminal.")
 				del(terminal)
 		else
