@@ -2,7 +2,7 @@
 	name = null
 	icon = 'icons/obj/power.dmi'
 
-	anchored = 1
+	anchored = 1.0
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -21,21 +21,21 @@
  * Common helper procs for all power machines.
  */
 /obj/machinery/power/proc/add_avail(const/amount)
-	if(powernet)
+	if (powernet)
 		powernet.newavail += amount
 
 /obj/machinery/power/proc/add_load(const/amount)
-	if(powernet)
+	if (powernet)
 		powernet.newload += amount
 
 /obj/machinery/power/proc/surplus()
-	if(powernet)
+	if (powernet)
 		return powernet.avail-powernet.load
 
 	return 0
 
 /obj/machinery/power/proc/avail()
-	if(powernet)
+	if (powernet)
 		return powernet.avail
 
 	return 0
@@ -45,13 +45,13 @@
  * Defaults to power_channel.
  */
 /obj/machinery/proc/powered(chan = power_channel)
-	if(!src.loc)
+	if (!src.loc)
 		return 0
 
-	if(!use_power)
+	if (!use_power)
 		return 1
 
-	if(isnull(areaMaster))
+	if (isnull(areaMaster))
 		return 0 // If not, then not powered.
 
 	return areaMaster.powered(chan) // Return power status of the area.
@@ -61,10 +61,10 @@
  * Defaults to power_channel.
  */
 /obj/machinery/proc/use_power(const/amount, chan = power_channel)
-	if(!src.loc)
+	if (!src.loc)
 		return 0
 
-	if(isnull(areaMaster))
+	if (isnull(areaMaster))
 		return
 
 	areaMaster.use_power(amount, chan)
@@ -75,10 +75,10 @@
  * Can override if needed.
  */
 /obj/machinery/proc/power_change()
-	switch(powered(power_channel))
-		if(1)
+	switch (powered(power_channel))
+		if (1)
 			stat &= ~NOPOWER
-		if(0)
+		if (0)
 			stat |= NOPOWER
 
 // the powernet datum
@@ -88,10 +88,9 @@
 // rebuild all power networks from scratch
 
 /proc/makepowernets()
-	for(var/datum/powernet/powernet in powernets)
-		powernet.Destroy()
-
-	powernets.len = 0
+	for(var/datum/powernet/PN in powernets)
+		del(PN)
+	powernets.Cut()
 
 	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.powernet)
@@ -107,7 +106,7 @@
 
 	for(var/obj/machinery/power/M in machines)
 		if(!M.powernet)	continue	// APCs have powernet=0 so they don't count as network nodes directly
-		M.powernet.nodes.Add(M)
+		M.powernet.nodes[M] = M
 
 
 // returns a list of all power-related objects (nodes, cable, junctions) in turf,
@@ -274,28 +273,35 @@
 
 	if(notlooped)
 		// not looped, so make a new powernet
-		var/datum/powernet/new_powernet = new
+		var/datum/powernet/PN = new()
 
 //		if(Debug) world.log << "Was not looped: spliting PN#[number] ([cables.len];[nodes.len])"
 
-		for(var/obj/structure/cable/cable in cables)
-			if(isnull(cable.powernet))
-				cables.Remove(cable)
-				cable.powernet = new_powernet
-				new_powernet.cables.Add(cable)
+		i=1
+		while(i<=cables.len)
+			var/obj/structure/cable/Cable = cables[i]
+			if(Cable && !Cable.powernet)	// non-connected cables will have powernet=null, since they weren't reached by propagation
+				Cable.powernet = PN
+				cables.Cut(i,i+1)	// remove from old network & add to new one
+				PN.cables += Cable
+				continue
+			i++
 
-		for(var/obj/machinery/power/machine in nodes)
-			if(isnull(machine.powernet))
-				nodes.Remove(machine)
-				machine.powernet = new_powernet
-				new_powernet.nodes.Add(machine)
+		i=1
+		while(i<=nodes.len)
+			var/obj/machinery/power/Node = nodes[i]
+			if(Node && !Node.powernet)
+				Node.powernet = PN
+				nodes.Cut(i,i+1)
+				PN.nodes[Node] = Node
+				continue
+			i++
 
-	// disconnect machines connected to nodes
+	// Disconnect machines connected to nodes
 	if(node)
-		for(var/obj/machinery/power/machine in T1.contents)
-			if(nodes.Find(machine))
-				machine.disconnect_from_network()
-
+		for(var/obj/machinery/power/P in T1)
+			if(P.powernet && !P.powernet.nodes[src])
+				P.disconnect_from_network()
 //		if(Debug)
 //			world.log << "Old PN#[number] : ([cables.len];[nodes.len])"
 //			world.log << "New PN#[PN.number] : ([PN.cables.len];[PN.nodes.len])"
@@ -306,28 +312,39 @@
 //		//there is a loop, so nothing to be done
 //		return
 
+
+
 /datum/powernet/proc/reset()
 	load = newload
 	newload = 0
 	avail = newavail
 	newavail = 0
-	viewload = round(0.8 * viewload + 0.2 * load)
+
+
+	viewload = 0.8*viewload + 0.2*load
+
+	viewload = round(viewload)
 
 	var/numapc = 0
 
-	for(var/obj/machinery/power/terminal/terminal in nodes)
-		if(istype(terminal.master, /obj/machinery/power/apc))
-			numapc++
+	if(nodes && nodes.len) // Added to fix a bad list bug -- TLE
+		for(var/obj/machinery/power/terminal/term in nodes)
+			if( istype( term.master, /obj/machinery/power/apc ) )
+				numapc++
 
 	if(numapc)
-		perapc = avail / numapc
+		perapc = avail/numapc
 
 	netexcess = avail - load
 
-	if(netexcess > 100) // if there was excess power last cycle
-		for(var/obj/machinery/power/smes/sme in nodes) // find the SMESes in the network
-			if(sme.powernet)
-				sme.restore()
+	if( netexcess > 100)		// if there was excess power last cycle
+		if(nodes && nodes.len)
+			for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
+				if(S.powernet == src)
+					S.restore()				// and restore some of the power that was used
+				else
+					error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).")
+					nodes.Remove(S)
 
 /datum/powernet/proc/get_electrocute_damage()
 	switch(avail)/*
@@ -377,46 +394,45 @@
 		net2 = temp
 
 	for(var/obj/machinery/power/node in net2.nodes)
-		net2.nodes.Remove(node)
-		node.powernet = net1
-		net1.nodes.Add(node)
+		if(node)
+			net2.nodes -= node
+			node.powernet = net1
+			net1.nodes += node
 
 	for(var/obj/structure/cable/cable in net2.cables)
-		net2.cables.Remove(cable)
-		cable.powernet = net1
-		net1.cables.Add(cable)
+		if(cable)
+			net2.cables -= cable
+			cable.powernet = net1
+			net1.cables += cable
 
 	net2.Destroy()
 	return net1
 
 /obj/machinery/power/proc/connect_to_network()
-	var/turf/location = loc
-	var/obj/structure/cable/cable = location.get_cable_node()
-
-	if(isnull(cable) || isnull(cable.powernet))
-		return 0
-
+	var/turf/T = src.loc
+	var/obj/structure/cable/C = T.get_cable_node()
+	if(!C || !C.powernet)	return 0
 //	makepowernets() //TODO: find fast way	//EWWWW what are you doing!?
-	powernet = cable.powernet
-	powernet.nodes.Add(src)
+	powernet = C.powernet
+	powernet.nodes[src] = src
 	return 1
 
 /obj/machinery/power/proc/disconnect_from_network()
-	if(isnull(powernet))
+	if(!powernet)
 		//world << " no powernet"
 		return 0
-
-	powernet.nodes.Remove(src)
+	powernet.nodes -= src
 	powernet = null
 	//world << "powernet null"
 	return 1
 
 /turf/proc/get_cable_node()
-
-/turf/simulated/floor/get_cable_node()
-	for(var/obj/structure/cable/cable in contents)
-		if(cable.d1 == 0)
-			return cable
+	if(!istype(src, /turf/simulated/floor))
+		return null
+	for(var/obj/structure/cable/C in src)
+		if(C.d1 == 0)
+			return C
+	return null
 
 /area/proc/get_apc()
 	for(var/area/RA in src.related)
@@ -489,3 +505,16 @@
 	else if (istype(power_source, /obj/item/weapon/cell))
 		cell.use(drained_energy)
 	return drained_energy
+
+/datum/powernet/New()
+	..()
+	powernets += src
+
+/datum/powernet/Destroy()
+	for(var/obj/machinery/power/node in nodes)
+		node.powernet = null
+
+	for(var/obj/structure/cable/cable in cables)
+		cable.powernet = null
+
+	powernets -= src
