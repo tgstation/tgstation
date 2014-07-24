@@ -17,6 +17,18 @@ proc/random_hair_style(gender, species = "Human")
 
 	return h_style
 
+/proc/GetOppositeDir(var/dir)
+	switch(dir)
+		if(NORTH)     return SOUTH
+		if(SOUTH)     return NORTH
+		if(EAST)      return WEST
+		if(WEST)      return EAST
+		if(SOUTHWEST) return NORTHEAST
+		if(NORTHWEST) return SOUTHEAST
+		if(NORTHEAST) return SOUTHWEST
+		if(SOUTHEAST) return NORTHWEST
+	return 0
+
 proc/random_facial_hair_style(gender, species = "Human")
 	var/f_style = "Shaved"
 
