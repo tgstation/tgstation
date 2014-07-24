@@ -445,10 +445,9 @@ Manual Tracking Direction:"}
 		if(powernet && (track == 2))
 			if(!solars_list.Find(src,1,0) || !(locate(src) in solars_list) || !(src in solars_list))
 				solars_list.Add(src)
-			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
-				if(powernet.nodes[T])
-					cdir = T.sun_angle
-					break
+			for(var/obj/machinery/power/tracker/tracker in powernet.nodes)
+				cdir = tracker.sun_angle
+				break
 
 	if(href_list["trackdir"])
 		trackdir = text2num(href_list["trackdir"])

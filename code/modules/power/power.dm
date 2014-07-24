@@ -284,11 +284,11 @@
 				cable.powernet = new_powernet
 				new_powernet.cables.Add(cable)
 
-		for(var/obj/machinery/power/node in nodes)
-			if(isnull(node.powernet))
-				nodes.Remove(node)
-				node.powernet = new_powernet
-				new_powernet.nodes.Add(node)
+		for(var/obj/machinery/power/machine in nodes)
+			if(isnull(machine.powernet))
+				nodes.Remove(machine)
+				machine.powernet = new_powernet
+				new_powernet.nodes.Add(machine)
 
 	// disconnect machines connected to nodes
 	if(node)
@@ -489,16 +489,3 @@
 	else if (istype(power_source, /obj/item/weapon/cell))
 		cell.use(drained_energy)
 	return drained_energy
-
-/datum/powernet/New()
-	..()
-	powernets.Add(src)
-
-/datum/powernet/Destroy()
-	for(var/obj/machinery/power/node in nodes)
-		node.powernet = null
-
-	for(var/obj/structure/cable/cable in cables)
-		cable.powernet = null
-
-	powernets.Remove(src)
