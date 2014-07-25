@@ -27,23 +27,23 @@
 	<form name="spawner" action="byond://?src=/* ref src */" method="get">
 		<input type="hidden" name="src" value="/* ref src */">
 		
-		Type <input type="text" name="filter" value="" onkeypress="submitFirst(event)" style="width:350px"> <input type = "button" value = "Search" onclick = "updateSearch()" /><br>
-		Offset: <input type="text" name="offset" value="x,y,z" style="width:250px">
+		Type <input type="text" name="filter" value="" onkeypress="submitFirst(event)" style="width:280px;height:25"> <input type = "button" value = "Search" onclick = "updateSearch()" /><br><br>
+		Offset: <input type="text" name="offset" value="x,y,z" style="width:250px;height:20">
 		
 		A <input type="radio" name="offset_type" value="absolute">
-		R <input type="radio" name="offset_type" value="relative" checked="checked"><br>
+		R <input type="radio" name="offset_type" value="relative" checked="checked"><br><br>
 		
-		Number: <input type="text" name="object_count" value="1" style="width:30px">
-		Dir: <input type="text" name="object_dir" value="2" style="width:30px">
-		Name: <input type="text" name="object_name" value="" style="width:180px"><br>
+		Number: <input type="text" name="object_count" value="1" style="width:30px;height:20">
+		Dir: <input type="text" name="object_dir" value="2" style="width:30px;height:20">
+		Name: <input type="text" name="object_name" value="" style="width:180px;height:20"><br><br>
 		Where: 
-			<select name='object_where' style="width:320px">
+			<select name='object_where' style="width:320px;height:35">
 				<option value='onfloor'>On floor below own mob</option>
 				<!-- <option value='inhand'>In own mob's hand</option> -->
 				<option value='inmarked'>In marked object</option>
 			</select>
 		<br><br>
-		<select name="object_list" id="object_list" size="18" multiple style="width:98%"></select><br>
+		<select name="object_list" id="object_list" size="18" multiple style="width:98%;height:62%"></select><br>
 		<input type="submit" value="Spawn">
 	</form>
 	
