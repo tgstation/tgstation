@@ -417,6 +417,7 @@
 	return
 
 /obj/mecha/attack_hand(mob/user as mob)
+	user.changeNext_move(8) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code. 
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
@@ -630,6 +631,8 @@
 	return
 
 /obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+	user.changeNext_move(8) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code. 
+
 	src.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(src.deflect_chance))
 		user << "\red The [W] bounces off [src.name] armor."
@@ -639,12 +642,13 @@
 			if(V.client && !(V.blinded))
 				V.show_message("The [W] bounces off [src.name] armor.", 1)
 */
+		return 0
 	else
 		src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
 		user.visible_message("<font color='red'><b>[user] hits [src] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
 		src.take_damage(W.force,W.damtype)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-	return
+		return 1
 
 //////////////////////
 ////// AttackBy //////
