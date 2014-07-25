@@ -833,8 +833,15 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	listening = 0
 
 /obj/item/device/radio/Destroy()
+	for(var/channel in channels)
+		if(secure_radio_connections[channel])
+			secure_radio_connections[channel] = null
+			radio_controller.remove_object(src, radiochannels[channel])
+
 	if(radio_connection)
-		radio_connection.remove_listener(src)
+		radio_connection = null
+		radio_controller.remove_object(src, frequency)
+
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		R.radio = null
