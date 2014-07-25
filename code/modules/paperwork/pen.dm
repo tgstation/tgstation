@@ -53,13 +53,13 @@
 	add_logs(user, M, "stabbed", object="[name]")
 
 /*
- * Parapens
+ * Sleepypens
  */
-/obj/item/weapon/pen/paralysis
+/obj/item/weapon/pen/sleepy
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
+/obj/item/weapon/pen/sleepy/attack(mob/living/M, mob/user)
 	if(!istype(M))	return
 
 	if(..())
@@ -68,7 +68,7 @@
 				reagents.trans_to(M, 50)
 
 
-/obj/item/weapon/pen/paralysis/New()
+/obj/item/weapon/pen/sleepy/New()
 	create_reagents(60)
 	reagents.add_reagent("stoxin", 30)
 	reagents.add_reagent("mutetoxin", 30)

@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile
-	faction = "hostile"
+	faction = list("hostile")
 	stop_automated_movement_when_pulled = 0
 	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
 	var/stance = HOSTILE_STANCE_IDLE	//Used to determine behavior
@@ -25,7 +25,6 @@
 	var/list/wanted_objects = list() //A list of objects that will be checked against to attack, should we have search_objects enabled
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
-	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
 /mob/living/simple_animal/hostile/Life()
 
@@ -107,7 +106,12 @@
 		var/mob/living/L = the_target
 		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 			return 0
-		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
+		var/faction_check = 0
+		for(var/F in faction)
+			if(F in L.faction)
+				faction_check = 1
+				break
+		if(faction_check && !attack_same || !faction_check && attack_same == 2)
 			return 0
 		if(L in friends)
 			return 0

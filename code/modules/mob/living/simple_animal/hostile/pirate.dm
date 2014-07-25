@@ -32,7 +32,7 @@
 	var/corpse = /obj/effect/landmark/mobcorpse/pirate
 	var/weapon1 = /obj/item/weapon/melee/energy/sword/pirate
 
-	faction = "pirate"
+	faction = list("pirate")
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"

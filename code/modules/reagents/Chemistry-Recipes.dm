@@ -1062,7 +1062,7 @@ datum/chemical_reaction/pestkiller
 			for(var/i = 1, i <= 5, i++)
 				var/chosen = pick(critters)
 				var/mob/living/simple_animal/hostile/C = new chosen
-				C.faction = "slimesummon"
+				C.faction |= "slimesummon"
 				C.loc = get_turf(holder.my_atom)
 				if(prob(50))
 					for(var/j = 1, j <= rand(1, 3), j++)
@@ -1116,7 +1116,7 @@ datum/chemical_reaction/pestkiller
 
 			var/chosen = pick(critters)
 			var/mob/living/simple_animal/hostile/C = new chosen
-			C.faction = "neutral"
+			C.faction |= "neutral"
 			C.loc = get_turf(holder.my_atom)
 
 //Silver

@@ -236,11 +236,11 @@ var/list/uplink_items = list()
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
 
-/datum/uplink_item/stealthy_weapons/para_pen
+/datum/uplink_item/stealthy_weapons/sleepy_pen
 	name = "Sleepy Pen"
 	desc = "A syringe disguised as a functional pen, filled with a potent mix of drugs, including a strong anaesthetic and a chemical that is capable of blocking the movement of the vocal chords. \
 	The pen holds one dose of the mixture, and cannot be refilled."
-	item = /obj/item/weapon/pen/paralysis
+	item = /obj/item/weapon/pen/sleepy
 	cost = 3
 	excludefrom = list(/datum/game_mode/nuclear)
 

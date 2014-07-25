@@ -17,7 +17,7 @@
 	melee_damage_upper = 12
 	attacktext = "slams"
 	ventcrawler = 2
-	faction = "plants"
+	faction = list("plants")
 
 	min_oxy = 5
 	max_oxy = 0

@@ -48,7 +48,7 @@ var/list/ai_list = list()
 	var/camera_light_on = 0
 	var/list/obj/machinery/camera/lit_cameras = list()
 
-	var/datum/trackable/track = null
+	var/datum/trackable/track = new()
 
 	var/last_paper_seen = null
 	var/can_shunt = 1
