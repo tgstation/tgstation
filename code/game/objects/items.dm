@@ -6,8 +6,6 @@
 	var/item_state = null
 	var/r_speed = 1.0
 	var/health = null
-	var/burn_point = null
-	var/burning = null
 	var/hitsound = null
 	var/w_class = 3.0
 	flags = FPRINT | TABLEPASS

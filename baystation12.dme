@@ -941,6 +941,7 @@
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\lib_readme.dm"
 #include "code\modules\liquid\splash_simulation.dm"
+#include "code\modules\media\broadcast.dm"
 #include "code\modules\media\jukebox.dm"
 #include "code\modules\media\machinery.dm"
 #include "code\modules\media\mediamanager.dm"

@@ -15,12 +15,14 @@ Attach to transfer valve and open. BOOM.
 	var/fire_dmi = 'icons/effects/fire.dmi'
 	var/fire_sprite = "fire"
 	var/ashtype = /obj/effect/decal/cleanable/ash
+	var/fire_time_min = 5 // Seconds
+	var/fire_time_max = 10 // Seconds
 
 /atom/proc/ignite(var/temperature)
 	on_fire=1
 	visible_message("\The [src] bursts into flame!")
 	overlays += image(fire_dmi,fire_sprite)
-	spawn(rand(3,10) SECONDS)
+	spawn(rand(fire_time_min,fire_time_max) SECONDS)
 		if(!on_fire)
 			return
 		new ashtype(src.loc)
@@ -120,6 +122,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure() ) //Burn the humans!
 	for(var/atom/A in loc)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
+	// Burn the turf, too.
+	S.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
+
 	//spread
 	for(var/direction in cardinal)
 		if(S.open_directions & direction) //Grab all valid bordering tiles

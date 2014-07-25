@@ -43,6 +43,15 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 	else
 		icon_regular_floor = icon_state
 
+/turf/simulated/floor/ignite(var/temperature)
+	on_fire=1
+	visible_message("\The [src] bursts into flame!")
+	overlays += image(fire_dmi,fire_sprite)
+	spawn(rand(fire_time_min,fire_time_max) SECONDS)
+		if(!on_fire)
+			return
+		burn_tile()
+
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
 //		if (!( locate(/obj/machinery/mass_driver, src) ))

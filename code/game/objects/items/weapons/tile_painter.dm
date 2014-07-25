@@ -327,9 +327,9 @@ var/global/list/paint_variants = list(
 /obj/item/weapon/tile_painter/attack_self(mob/user as mob)
 	show_menu(user)
 
-/obj/item/weapon/tile_painter/proc/render_tile(var/mob/user, var/datum/paint_info/I, var/cdir=SOUTH)
+/obj/item/weapon/tile_painter/proc/render_tile(var/icon/basestate, var/mob/user, var/datum/paint_info/I, var/cdir=SOUTH)
 	// Send user the image
-	user << browse_rsc(icon(I.icon, I.icon_state, cdir), "[I.icon_state][cdir].png")
+	user << browse_rsc(new /icon(basestate, dir=cdir), "[I.icon_state][cdir].png")
 	// Determine if we're actually selecting this
 	var/is_selected = selected.icon==I.icon && selected.icon_state == I.icon_state && selected.dir==cdir
 	var/class=""
@@ -341,16 +341,16 @@ var/global/list/paint_variants = list(
 
 /obj/item/weapon/tile_painter/proc/populate_selection(mob/user as mob, var/datum/paint_info/I)
 	var/data = ""
-
+	var/icon/basestate = new /icon(I.icon, I.icon_state)
 	switch(I.adirs)
 		if(DIR_ONE)
-			data += render_tile(user,I)
+			data += render_tile(basestate,user,I)
 		if(DIR_ORTHO)
 			for(var/d in cardinal) // cardinal is N,S,E,W (see global.dm)
-				data += render_tile(user,I,d)
+				data += render_tile(basestate,user,I,d)
 		if(DIR_ALL)
 			for(var/d in alldirs) // All 2D directions
-				data += render_tile(user,I,d)
+				data += render_tile(basestate,user,I,d)
 
 	return data
 
