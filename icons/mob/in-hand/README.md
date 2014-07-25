@@ -34,7 +34,7 @@ cd icons/mobs/in-hand
 ss13_makeinhands
 ```
 
-buildIcons.bat in the root folder of this repository will do steps 2-3 for you, if you're on Windows.
+buildIcons.bat in the root folder of this repository will do steps 3-4 for you, if you're on Windows.
 
 Adding More Output Targets
 --------------------------
