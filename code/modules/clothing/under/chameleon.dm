@@ -5,6 +5,7 @@
 	item_state = "bl_suit"
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
+	action_button_name = "Change"
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 	var/malfunctioning = 0
@@ -57,9 +58,7 @@
 	..()
 
 
-/obj/item/clothing/under/chameleon/verb/change()
-	set name = "Change Color"
-	set category = "Object"
+/obj/item/clothing/under/chameleon/attack_self()
 	set src in usr
 
 	var/obj/item/clothing/under/A
