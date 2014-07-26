@@ -139,3 +139,9 @@
 	desc = "Simon's Shoes"
 	icon_state = "simonshoes"
 	item_state = "simonshoes"
+
+/obj/item/clothing/shoes/kneesocks
+	name = "Kneesocks"
+	desc = "For only the most kawaii tsundres."
+	icon_state = "kneesock"
+	item_state = "kneesock"

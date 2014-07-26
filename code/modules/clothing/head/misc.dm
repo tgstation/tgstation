@@ -252,3 +252,26 @@
 	item_state = "bmhead"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+
+/obj/item/clothing/head/stalhelm
+	name = "Stalhelm"
+	desc = "Ein Helm, um die Nazi-Interesse an fremden Raumstationen zu sichern."
+	icon_state = "stalhelm"
+	item_state = "stalhelm"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags_inv = HIDEEARS
+
+/obj/item/clothing/head/panzer
+	name = "Panzer Cap"
+	desc = "Ein Hut passen nur für die größten Tanks."
+	icon_state = "panzercap"
+	item_state = "panzercap"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+
+/obj/item/clothing/head/naziofficer
+	name = "Officer Cap"
+	desc = "Ein Hut von Offizieren in der Nazi-Partei getragen."
+	icon_state = "officercap"
+	item_state = "officercap"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags_inv = HIDEEARS
