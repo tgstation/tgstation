@@ -6,9 +6,29 @@
 
 	var/area/master_area
 
+	var/list/obj/machinery/media/transmitter/hooked = list()
+	var/exclusive_hook=null // Disables output to the room
+
+/obj/machinery/media/proc/hookMediaOutput(var/obj/machinery/media/transmitter/T, exclusive=0)
+	if(exclusive)
+		exclusive_hook=T
+	hooked.Add(T)
+/obj/machinery/media/proc/unhookMediaOutput(var/obj/machinery/media/transmitter/T)
+	if(exclusive_hook==T)
+		exclusive_hook=null
+	hooked.Remove(T)
+
 // Notify everyone in the area of new music.
 // YOU MUST SET MEDIA_URL AND MEDIA_START_TIME YOURSELF!
 /obj/machinery/media/proc/update_music()
+	// Broadcasting shit
+	for(var/obj/machinery/media/transmitter/T in hooked)
+		T.broadcast(media_url,media_start_time)
+
+	if(exclusive_hook)
+		disconnect_media_source() // Just to be sure.
+		return
+
 	update_media_source()
 
 	// Bail if we lost connection to master.
