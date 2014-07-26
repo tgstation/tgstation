@@ -154,44 +154,33 @@ var/const/RADIO_CONVEYORS = "10"
 
 var/global/datum/controller/radio/radio_controller
 
-datum/controller/radio
-	var/list/datum/radio_frequency/frequencies = list()
+/datum/controller/radio
+	var/list/datum/radio_frequency/frequencies = new
 
-	proc/add_object(obj/device as obj, var/new_frequency as num, var/filter = null as text|null)
-		var/f_text = num2text(new_frequency)
-		var/datum/radio_frequency/frequency = frequencies[f_text]
+/datum/controller/radio/proc/add_object(const/obj/device, const/_frequency, var/filter = null as text|null)
+	var/datum/radio_frequency/frequency = return_frequency(_frequency)
 
-		if(!frequency)
-			frequency = new
-			frequency.frequency = new_frequency
-			frequencies[f_text] = frequency
+	if(isnull(frequency))
+		frequency = new
+		frequency.frequency = _frequency
+		frequencies[num2text(_frequency)] = frequency
 
-		frequency.add_listener(device, filter)
-		return frequency
+	frequency.add_listener(device, filter)
+	return frequency
 
-	proc/remove_object(obj/device, old_frequency)
-		var/f_text = num2text(old_frequency)
-		var/datum/radio_frequency/frequency = frequencies[f_text]
+/datum/controller/radio/proc/remove_object(const/obj/device, const/_frequency)
+	var/datum/radio_frequency/frequency = return_frequency(_frequency)
 
-		if(frequency)
-			frequency.remove_listener(device)
+	if(frequency)
+		frequency.remove_listener(device)
 
-			if(frequency.devices.len == 0)
-				del(frequency)
-				frequencies -= f_text
+		if(frequency.devices.len <= 0)
+			frequencies.Remove(num2text(_frequency))
 
-		return 1
+	return 1
 
-	proc/return_frequency(var/new_frequency as num)
-		var/f_text = num2text(new_frequency)
-		var/datum/radio_frequency/frequency = frequencies[f_text]
-
-		if(!frequency)
-			frequency = new
-			frequency.frequency = new_frequency
-			frequencies[f_text] = frequency
-
-		return frequency
+/datum/controller/radio/proc/return_frequency(const/_frequency)
+	return frequencies[num2text(_frequency)]
 
 datum/radio_frequency
 	var/frequency as num
