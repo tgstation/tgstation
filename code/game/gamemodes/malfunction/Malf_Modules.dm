@@ -74,7 +74,7 @@
 		return
 
 	var/obj/machinery/door/airlock/AL
-	for(var/obj/machinery/door/D in portals)
+	for(var/obj/machinery/door/D in airlocks)
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
@@ -109,7 +109,7 @@
 		return
 
 	var/obj/machinery/door/airlock/AL
-	for(var/obj/machinery/door/D in portals)
+	for(var/obj/machinery/door/D in airlocks)
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D

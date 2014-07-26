@@ -99,7 +99,9 @@
 	var/turf/curturf = get_turf(teleatom)
 	var/area/destarea = get_area(destination)
 	if(precision)
-		var/list/posturfs = circlerangeturfs(destination,precision)
+		var/list/posturfs = list()
+		for(var/turf/T in range(precision,destination))
+			posturfs.Add(T)
 		destturf = safepick(posturfs)
 	else
 		destturf = get_turf(destination)
