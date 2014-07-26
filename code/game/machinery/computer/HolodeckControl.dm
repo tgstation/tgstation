@@ -9,6 +9,8 @@
 	var/damaged = 0
 	var/last_change = 0
 
+	l_color = "#7BF9FF"
+
 
 	attack_ai(var/mob/user as mob)
 		src.add_hiddenprint(user)

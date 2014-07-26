@@ -65,9 +65,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		T += G.reagents.maximum_volume
-	var/datum/reagents/R = new/datum/reagents(T)		//Holder for the reagents used as materials.
-	reagents = R
-	R.my_atom = src
+
+	create_reagents(T) // Holder for the reagents used as materials.
 	T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating

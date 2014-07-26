@@ -721,16 +721,23 @@
 /obj/machinery/mecha_part_fabricator/proc/remove_material(var/matID, var/amount)
 	if(matID in materials)
 		var/datum/material/material = materials[matID]
-		var/obj/item/stack/sheet/res = new material.sheettype(src)
-		var/total_amount = round(material.stored/res.perunit)
-		res.amount = min(total_amount,amount)
-		if(res.amount>0)
-			material.stored -= res.amount*res.perunit
-			materials[matID]=material
+		//var/obj/item/stack/sheet/res = new material.sheettype(src)
+		var/total_amount = min(round(material.stored/material.cc_per_sheet),amount)
+		var/to_spawn = total_amount
+		
+		while(to_spawn > 0)
+			var/obj/item/stack/sheet/res = new material.sheettype(src)
+			if(to_spawn > res.max_amount) 
+				res.amount = res.max_amount
+				to_spawn -= res.max_amount
+			else 
+				res.amount = to_spawn
+				to_spawn = 0
+				
+			material.stored -= res.amount * res.perunit
+			//materials[matID]=material - why?
 			res.Move(src.loc)
-			return res.amount
-		else
-			del res
+		return total_amount
 	return 0
 
 
@@ -813,7 +820,7 @@
 		sleep(10)
 		if(stack && stack.amount)
 			while(material.stored < res_max_amount && stack)
-				if(stack.amount < 0 || !stack)
+				if(stack.amount <= 0 || !stack)
 					user.drop_item(stack)
 					qdel(stack)
 					break

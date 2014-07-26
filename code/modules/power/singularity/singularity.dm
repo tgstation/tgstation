@@ -298,6 +298,9 @@ var/global/list/uneatable = list(
 
 		if (dist <= consume_range && !istype(A, /turf/space))
 			var/turf/T = A
+			if(istype(T,/turf/simulated/wall))
+				var/turf/simulated/wall/W = T
+				W.del_suppress_resmoothing=1 // Reduce lag from wallsmoothing.
 			T.ChangeTurf(/turf/space)
 			gain = 2
 
@@ -540,6 +543,9 @@ var/global/list/uneatable = list(
 
 		if (dist <= consume_range && !istype(A, /turf/space))
 			var/turf/T = A
+			if(istype(T,/turf/simulated/wall))
+				var/turf/simulated/wall/W = T
+				W.del_suppress_resmoothing=1 // Reduce lag from wallsmoothing.
 			T.ChangeTurf(/turf/space)
 
 /obj/machinery/singularity/narsie/ex_act(severity) //No throwing bombs at it either. --NEO

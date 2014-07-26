@@ -7,6 +7,7 @@
 	w_class = 1.0
 	desc = "This is rubbish."
 	w_type=NOT_RECYCLABLE
+	autoignition_temperature = AUTOIGNITION_PAPER
 	bustanuts
 		name = "Busta-Nuts"
 		icon_state = "busta_nut"

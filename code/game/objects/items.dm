@@ -6,8 +6,6 @@
 	var/item_state = null
 	var/r_speed = 1.0
 	var/health = null
-	var/burn_point = null
-	var/burning = null
 	var/hitsound = null
 	var/w_class = 3.0
 	flags = FPRINT | TABLEPASS
@@ -45,9 +43,6 @@
 	if(istype(src.loc, /mob))
 		var/mob/H = src.loc
 		H.drop_from_inventory(src) // items at the very least get unequipped from their mob before being deleted
-	if(reagents && istype(reagents))
-		reagents.my_atom = null
-		reagents.delete()
 	if(hasvar(src, "holder"))
 		src:holder = null
 	/*  BROKEN, FUCK BYOND
@@ -768,3 +763,9 @@
 
 /obj/item/proc/OnMobDeath(var/mob/holder)
 	return
+
+/proc/isitem(const/object)
+	if(istype(object, /obj/item))
+		return 1
+
+	return 0

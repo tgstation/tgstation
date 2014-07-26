@@ -66,7 +66,7 @@
 					D.reagents.reaction(A_turf)
 				sleep(2)
 			sleep(3)
-		D.reagents.delete()
+		D.reagents.Destroy()
 		D.loc = null
 
 	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)

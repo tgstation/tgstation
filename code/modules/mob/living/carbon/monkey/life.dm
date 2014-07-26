@@ -126,6 +126,9 @@
 			src << "\red You suddenly feel very weak."
 			Weaken(3)
 			emote("collapse")
+			if(reagents.has_reagent("creatine"))
+				var/datum/reagent/creatine/C = reagents.get_reagent("creatine")
+				C.dehulk(src)
 
 		if (radiation)
 

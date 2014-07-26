@@ -1,0 +1,16 @@
+<!--
+Title: Crew Monitoring Console (Main content)
+Used In File(s): \code\game\machinery\computer\crew.dm
+ -->
+{{:helper.link('Show Tracker Map', 'pin-s', {'showMap' : 1})}}
+<table width="100%"><tbody>
+	{{for data.crewmembers}}
+		{{if value.sensor_type == 1}}
+			<tr><td>{{:value.name}}</td><td>{{:value.dead ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"}}</td><td><span class="neutral">Not Available</span></td></tr>
+		{{else value.sensor_type == 2}}
+			<tr><td>{{:value.name}}</td><td>{{:value.dead ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"}} (<span class="oxyloss_light">{{:value.oxy}}</span>/<span class="toxin_light">{{:value.tox}}</span>/<span class="burn">{{:value.fire}}</span>/<span class="brute">{{:value.brute}}</span>)</td><td><span class="neutral">Not Available</td></td></tr>
+		{{else value.sensor_type == 3}}
+			<tr><td>{{:value.name}}</td><td>{{:value.dead ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"}} (<span class="oxyloss_light">{{:value.oxy}}</span>/<span class="toxin_light">{{:value.tox}}</span>/<span class="burn">{{:value.fire}}</span>/<span class="brute">{{:value.brute}}</span>)</td><td>{{:value.area}}({{:value.xoffset}}, {{:value.yoffset}})</td></tr>
+		{{/if}}
+	{{/for}}
+</tbody></table>

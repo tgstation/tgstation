@@ -17,15 +17,32 @@
 	var/mob/pulledby = null
 
 	var/area/areaMaster
-	var/global/guid = 0
 
 	// Garbage collection (controller).
+	var/gcDestroyed
 	var/timeDestroyed
 
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)
-	tag = "[++guid]"
+
+/atom/movable/Destroy()
+	gcDestroyed = "bye world!"
+	tag = null
+	loc = null
+	..()
+
+/atom/movable/Del()
+	// Pass to Destroy().
+	if(!gcDestroyed)
+		Destroy()
+
+	..()
+
+// Used in shuttle movement and AI eye stuff.
+// Primarily used to notify objects being moved by a shuttle/bluespace fuckup.
+/atom/movable/proc/setLoc(var/T, var/teleported=0)
+	loc = T
 
 /atom/movable/Move()
 	var/atom/A = src.loc
@@ -194,11 +211,6 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
-
-/atom/movable/Destroy()
-	areaMaster = null
-	loc = null
-	..()
 
 /////////////////////////////
 // SINGULOTH PULL REFACTOR

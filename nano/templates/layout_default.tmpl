@@ -1,0 +1,30 @@
+<div id='uiTitleWrapper' unselectable="on"><div id='uiStatusIcon' class='icon24 uiStatusGood' unselectable="on"></div><div id='uiTitleText' unselectable="on">{{:config.title}}</div><div id='uiTitleFluff' unselectable="on"></div></div>
+<div id='uiMapWrapper' class="hidden" unselectable="on">
+    <div id='uiMapHeader' unselectable="on">
+        {{:helper.link('Hide Map', 'close', {'showMap' : 0})}}
+        <div style="float: right; width: 240px;">
+            <span style="float: left;">Zoom Level:&nbsp;</span>
+            <div unselectable="on" class="link zoomLink" data-zoom-level="4">x1.0</div>
+            <div unselectable="on" class="link zoomLink" data-zoom-level="6">x1.5</div>
+            <div unselectable="on" class="link zoomLink" data-zoom-level="8">x2.0</div>
+            <div unselectable="on" class="link zoomLink" data-zoom-level="12">x2.5</div>
+        </div>
+        <!-- Add a template with the key "mapHeader" to have it rendered here -->
+    </div>
+    <div id='uiMapContainer' unselectable="on">
+        <div id='uiMap' unselectable="on">
+            <img id="uiMapImage" src="nanomap{{:config.mapZLevel}}.png" width="256" height="256" unselectable="on" />
+            <div id='uiMapContent' unselectable="on">
+                <!-- Add a template with the key "mapContent" to have it rendered here (on the map) -->
+                <!-- Having a "mapContent" template enables the map functionality -->
+            </div>
+        </div>
+        <div id="uiMapTooltip"></div>
+    </div>
+    <div id='uiMapFooter' unselectable="on">
+        <!-- Add a template with the key "mapFooter" to have it rendered here -->
+    </div>
+</div>
+<div id='uiContent' unselectable="on">
+	<div id='uiLoadingNotice'>Initiating...</div>
+</div>

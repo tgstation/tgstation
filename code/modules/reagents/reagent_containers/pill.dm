@@ -93,6 +93,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //Pills
+/obj/item/weapon/reagent_containers/pill/creatine
+	name = "Creatine (50 units)"
+	desc = "Pump it up."
+	icon_state = "pill5"
+	New()
+		..()
+		reagents.add_reagent("creatine", 50)
+
 /obj/item/weapon/reagent_containers/pill/antitox
 	name = "Anti-toxins pill"
 	desc = "Neutralizes many common toxins."

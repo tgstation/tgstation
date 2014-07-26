@@ -50,6 +50,8 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/light/bulb(), \
 		new /obj/item/ashtray/glass(), \
 		new /obj/item/weapon/camera_assembly(), \
+		new /obj/item/weapon/chisel(), \
+		new /obj/item/weapon/tile_painter(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \
@@ -93,6 +95,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 	idle_power_usage = 10
 	active_power_usage = 100
 	var/busy = 0
+
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 	proc
 		wires_win(mob/user as mob)

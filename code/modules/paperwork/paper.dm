@@ -17,6 +17,7 @@
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
 	attack_verb = list("slapped")
+	autoignition_temperature = AUTOIGNITION_PAPER
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF

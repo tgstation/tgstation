@@ -28,7 +28,7 @@ var/global/list/moneytypes=list(
 	var/stack_color = "#4E054F"
 
 /obj/item/weapon/spacecash/New(var/new_loc,var/new_amount=1)
-	loc = new_loc
+	. = ..(new_loc)
 	name = "[worth] credit chip"
 	amount = new_amount
 	update_icon()

@@ -171,17 +171,13 @@
 
 /obj/item/weapon/weldingtool/New()
 	. = ..()
-//	var/random_fuel = min(rand(10,20),max_fuel)
-	var/datum/reagents/R = new/datum/reagents(max_fuel)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("fuel", max_fuel)
+	create_reagents(max_fuel)
+	reagents.add_reagent("fuel", max_fuel)
 
 /obj/item/weapon/weldingtool/examine()
 	set src in usr
 	usr << text("\icon[] [] contains []/[] units of fuel!", src, src.name, get_fuel(),src.max_fuel )
 	return
-
 
 /obj/item/weapon/weldingtool/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/screwdriver))
@@ -471,7 +467,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is smashing \his head in with the [src.name]! It looks like \he's done waiting for half life three!</b>"
 		return (BRUTELOSS)

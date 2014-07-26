@@ -1,179 +1,177 @@
 <div class='notice'>
-	{{if siliconUser}}
+	{{if data.siliconUser}}
 		<div class="itemContentSmall">
 			Interface Lock:
 		</div>
 		<div class="itemContentFull">
-			{{:~link('Engaged', 'locked', {'toggleaccess' : 1}, locked ? 'selected' : null)}}{{:~link('Disengaged', 'unlocked', {'toggleaccess' : 1}, malfStatus >= 2 ? 'linkOff' : (locked ? null : 'selected'))}}
+			{{:helper.link('Engaged', 'locked', {'toggleaccess' : 1}, data.locked ? 'selected' : null)}}{{:helper.link('Disengaged', 'unlocked', {'toggleaccess' : 1}, data.malfStatus >= 2 ? 'linkOff' : (data.locked ? null : 'selected'))}}
 		</div>
 		<div class="clearBoth"></div>
 	{{else}}
-		{{if locked}}
-			Swipe an ID card to unlock this interface.
+		{{if data.locked}}
+			Swipe an ID card to unlock this interface
 		{{else}}
-			Swipe an ID card to lock this interface.
+			Swipe an ID card to lock this interface
 		{{/if}}
 	{{/if}}
 </div>
 
 <div style="min-width: 480px">
 
-<h3>Power Status</h3>
+	<h3>Power Status</h3>
 
-<div class="item">
-	<div class="itemLabel">
-		Main Breaker:
-	</div>
-	<div class="itemContent">
-		{{if locked && !siliconUser}}
-			{{if isOperating}}
-				<span class='good'>On</span>
-			{{else}}
-				<span class='bad'>Off</span>
-			{{/if}}
-		{{else}}
-			{{:~link('On', 'power', {'breaker' : 1}, isOperating ? 'selected' : null)}}{{:~link('Off', 'close', {'breaker' : 1}, isOperating ? null : 'selected')}}
-		{{/if}}
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		External Power:
-	</div>
-	<div class="itemContent">
-		{{if externalPower == 2}}
-			<span class='good'>Good</span>
-		{{else externalPower == 1}}
-			<span class='average'>Low</span>
-		{{else}}
-			<span class='bad'>None</span>
-		{{/if}}
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		Power Cell:
-	</div>
-	{{if powerCellStatus == null}}
-		<div class="itemContent bad">		
-			Power cell removed.
-		</div>
-	{{else}}
-		<div class="itemContent" style="width: 60px">		
-			{{:~round(powerCellStatus*10)/10}}%
-		</div>	
-		{{:~displayBar(powerCellStatus, 0, 100, powerCellStatus >= 50 ? 'good' : powerCellStatus >= 25 ? 'average' : 'bad')}}
-	{{/if}}
-</div>
-
-{{if powerCellStatus != null}}
 	<div class="item">
 		<div class="itemLabel">
-			Charge Mode:
+			Main Breaker:
 		</div>
 		<div class="itemContent">
-			{{if locked && !siliconUser}}
-				{{if chargeMode}}
-					<span class='good'>Auto</span>
+			{{if data.locked && !data.siliconUser}}
+				{{if data.isOperating}}
+					<span class='good'>On</span>
 				{{else}}
 					<span class='bad'>Off</span>
-				{{/if}}				
+				{{/if}}
 			{{else}}
-				{{:~link('Auto', 'refresh', {'cmode' : 1}, chargeMode ? 'selected' : null)}}{{:~link('Off', 'close', {'cmode' : 1}, chargeMode ? null : 'selected')}}
-			{{/if}}
-			&nbsp;
-			{{if chargingStatus > 1}}
-				[<span class='good'>Fully Charged</span>]
-			{{else chargingStatus == 1}}
-				[<span class='average'>Charging</span>]
-			{{else}}
-				[<span class='bad'>Not Charging</span>]
+				{{:helper.link('On', 'power', {'breaker' : 1}, data.isOperating ? 'selected' : null)}}{{:helper.link('Off', 'close', {'breaker' : 1}, data.isOperating ? null : 'selected')}}
 			{{/if}}
 		</div>
 	</div>
-{{/if}}
 
-
-<h3>Power Channels</h3>
-
-{{for powerChannels}}
 	<div class="item">
 		<div class="itemLabel">
-			{{:title}}:
+			External Power:
+		</div>
+		<div class="itemContent">
+			{{if data.externalPower == 2}}
+				<span class='good'>Good</span>
+			{{else data.externalPower == 1}}
+				<span class='average'>Low</span>
+			{{else}}
+				<span class='bad'>None</span>
+			{{/if}}
+		</div>
+	</div>
+
+	<div class="item">
+		<div class="itemLabel">
+			Power Cell:
+		</div>
+		{{if data.powerCellStatus == null}}
+			<div class="itemContent bad">		
+				Power cell removed.
+			</div>
+		{{else}}
+			
+			{{:helper.displayBar(data.powerCellStatus, 0, 100, (data.powerCellStatus >= 50) ? 'good' : (data.powerCellStatus >= 25) ? 'average' : 'bad')}}
+			<div class="itemContent" style="width: 60px">		
+				{{:helper.round(data.powerCellStatus*10)/10}}%
+			</div>	
+		{{/if}}
+	</div>
+
+	{{if data.powerCellStatus != null}}
+		<div class="item">
+			<div class="itemLabel">
+				Charge Mode:
+			</div>
+			<div class="itemContent">
+				{{if data.locked && !data.siliconUser}}
+					{{if data.chargeMode}}
+						<span class='good'>Auto</span>
+					{{else}}
+						<span class='bad'>Off</span>
+					{{/if}}				
+				{{else}}
+					{{:helper.link('Auto', 'refresh', {'cmode' : 1}, data.chargeMode ? 'selected' : null)}}{{:helper.link('Off', 'close', {'cmode' : 1}, data.chargeMode ? null : 'selected')}}
+				{{/if}}
+				&nbsp;
+				{{if data.chargingStatus > 1}}
+					[<span class='good'>Fully Charged</span>]
+				{{else data.chargingStatus == 1}}
+					[<span class='average'>Charging</span>]
+				{{else}}
+					[<span class='bad'>Not Charging</span>]
+				{{/if}}
+			</div>
+		</div>
+	{{/if}}
+
+
+	<h3>Power Channels</h3>
+
+	{{for data.powerChannels}}
+		<div class="item">
+			<div class="itemLabel">
+				{{:value.title}}:
+			</div>
+			<div class="itemContent" style="width: 70px; text-align: right">
+				{{:value.powerLoad}} W
+			</div>
+			<div class="itemContent" style="width: 105px">
+				&nbsp;&nbsp;
+				{{if value.status <= 1}}
+					<span class='bad'>Off</span>
+				{{else value.status >= 2}}
+					<span class='good'>On</span>
+				{{/if}}
+				{{if data.locked}}
+					{{if value.status == 1 || value.status == 3}}
+						&nbsp;&nbsp;Auto
+					{{else}}
+						&nbsp;&nbsp;Manual
+					{{/if}}		
+				{{/if}}
+			</div>
+			{{if !data.locked || data.siliconUser}}
+				<div class="itemContentFull">
+					{{:helper.link('Auto', 'refresh', value.topicParams.auto, (value.status == 1 || value.status == 3) ? 'selected' : null)}}
+					{{:helper.link('On', 'power', value.topicParams.on, (value.status == 2) ? 'selected' : null)}}
+					{{:helper.link('Off', 'close', value.topicParams.off, (value.status == 0) ? 'selected' : null)}}
+				</div>
+			{{/if}}
+		</div>
+	{{/for}}
+
+	<div class="item" style="font-weight: bold">
+		<div class="itemLabel">
+			Total Load:
 		</div>
 		<div class="itemContent" style="width: 70px; text-align: right">
-			{{:~precisionRound(powerLoad,2)}} W
+			{{:data.totalLoad}} W
 		</div>
-		<div class="itemContent" style="width: 105px">
-			&nbsp;&nbsp;
-			{{if status <= 1}}
-				<span class='bad'>Off</span>
-			{{else status >= 2}}
-				<span class='good'>On</span>
-			{{/if}}
-			{{if status == 1 || status == 3}}
-				[Auto]
-			{{else}}
-				[Manual]
-			{{/if}}		
+	</div>
+
+	<div class="item">&nbsp;</div>
+
+	<div class="item">
+		<div class="itemLabel">
+			Cover Lock:
 		</div>
-		{{if !~root.locked || ~root.siliconUser}}
-			<div class="itemContentFull">
-				{{:~link('Auto', 'refresh', topicParams.auto, (status == 1 || status == 3) ? 'selected' : null)}}
-				{{:~link('On', 'power', topicParams.on, (status == 2) ? 'selected' : null)}}
-				{{:~link('Off', 'close', topicParams.off, (status == 0) ? 'selected' : null)}}
-			</div>
-		{{/if}}
-	</div>
-{{/for}}
-
-<div class="item" style="font-weight: bold">
-	<div class="itemLabel">
-		Total Load:
-	</div>
-	<div class="itemContent" style="width: 70px; text-align: right">
-		{{:totalLoad}} W
-	</div>
-</div>
-
-<div class="item">&nbsp;</div>
-
-<div class="item">
-	<div class="itemLabel">
-		Cover Lock:
-	</div>
-	<div class="itemContent">
-		{{if locked && !siliconUser}}
-			{{if coverLocked}}
-				<span class='good'>Engaged</span>
+		<div class="itemContent">
+			{{if data.locked && !data.siliconUser}}
+				{{if data.coverLocked}}
+					<span class='good'>Engaged</span>
+				{{else}}
+					<span class='bad'>Disengaged</span>
+				{{/if}}
 			{{else}}
-				<span class='bad'>Disengaged</span>
+				{{:helper.link('Engaged', 'locked', {'lock' : 1}, data.coverLocked ? 'selected' : null)}}{{:helper.link('Disengaged', 'unlocked', {'lock' : 1}, data.coverLocked ? null : 'selected')}}
 			{{/if}}
-		{{else}}
-			{{:~link('Engaged', 'locked', {'lock' : 1}, coverLocked ? 'selected' : null)}}{{:~link('Disengaged', 'unlocked', {'lock' : 1}, coverLocked ? null : 'selected')}}
-		{{/if}}
+		</div>
 	</div>
-</div>
 
+	{{if data.siliconUser}}
+		<h3>System Overrides</h3>
 
-{{if siliconUser}}
-<h3>System Overrides</h3>
-
-<div class="item">
-	{{:~link('Overload Lighting Circuit', 'lightbulb', {'overload' : 1})}}
-	{{if malfStatus == 1}}
-		{{:~link('Override Programming', 'script', {'malfhack' : 1})}}
-	{{else malfStatus == 2}}
-		{{:~link('Shunt Core Processes', 'arrowreturn-1-s', {'occupyapc' : 1})}}
-	{{else malfStatus == 3}}
-		{{:~link('Return to Main Core', 'arrowreturn-1-w', {'deoccupyapc' : 1})}}
-	{{else malfStatus == 4}}
-		{{:~link('Shunt Core Processes', 'arrowreturn-1-s', {'occupyapc' : 1}, 'linkOff')}}
+		<div class="item">
+			{{:helper.link('Overload Lighting Circuit', 'lightbulb', {'overload' : 1})}}
+			{{if data.malfStatus == 1}}
+				{{:helper.link('Override Programming', 'script', {'malfhack' : 1})}}
+			{{else data.malfStatus > 1}}
+				<div class='notice'>APC Hacked</div>
+			{{/if}}
+		</div>
 	{{/if}}
-</div>
-{{/if}}
 
 </div>
 		

@@ -23,6 +23,14 @@
 	var/biomass = CLONE_BIOMASS // * 3 - N3X
 	var/opened = 0
 
+	l_color = "#00FF00"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
@@ -181,7 +189,7 @@
 	spawn(30)
 		src.eject_wait = 0
 
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, delay_ready_dna=1)
 	occupant = H
 
 	src.icon_state = "pod_1"
@@ -446,7 +454,7 @@
 	icon_state = "disk_kit"
 
 /obj/item/weapon/storage/box/disks/New()
-	..()
+	. = ..()
 	new /obj/item/weapon/disk/data(src)
 	new /obj/item/weapon/disk/data(src)
 	new /obj/item/weapon/disk/data(src)

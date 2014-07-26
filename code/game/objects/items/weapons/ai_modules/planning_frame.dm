@@ -37,6 +37,7 @@
 	var/datum/ai_laws/laws
 
 /obj/item/weapon/planning_frame/New()
+	. = ..()
 	laws = new base_law_type
 
 /obj/item/weapon/planning_frame/recycle(var/datum/materials/rec)

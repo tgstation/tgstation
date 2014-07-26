@@ -2,9 +2,9 @@
 //sculpture
 //SCP-173, nothing more need be said
 /mob/living/simple_animal/sculpture
-	name = "\improper sculpture"
+	name = "\improper SCP-173"
 	real_name = "sculpture"
-	desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid. "
+	desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid and even more dangerous. "
 	icon = 'code/WorkInProgress/Cael_Aislinn/unknown.dmi'
 	icon_state = "sculpture"
 	icon_living = "sculpture"
@@ -18,7 +18,7 @@
 	var/observed = 0
 	var/allow_escape = 0	//set this to 1 for src to drop it's target next Life() call and try to escape
 	var/hibernate = 0
-	var/random_escape_chance = 5 //5 times out of 100 he'll just yakkety sax away, pretty powerful, think of it as blinking
+	var/random_escape_chance = 10 //10 times out of 100 he'll just yakkety sax away, pretty powerful, think of it as blinking. Most likely not functional, hail the coder
 
 /mob/living/simple_animal/sculpture/proc/GrabMob(var/mob/living/target)
 	if(target && target != src && ishuman(target))
@@ -28,20 +28,22 @@
 		G.synch()
 		target.LAssailant = src
 
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		playsound(loc, pick('sound/scp/firstpersonsnap.ogg','sound/scp/firstpersonsnap2.ogg','sound/scp/firstpersonsnap3.ogg'), 100, 1, -1)
 		visible_message("\red [src] snapped [target]'s neck !")
 		target << "\red <b>In the blink of an eye, something grabs you and snaps your neck!</b> Everything goes black..."
 
 		G.state = GRAB_KILL
 
-		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid. [G ? "\red The sculpture is holding [G.affecting] in a vice-like grip." : ""]"
+		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid and even more dangerous. [G ? "\red The sculpture is holding [G.affecting] in a vice-like grip." : ""]"
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been grabbed by SCP-173, and had his neck snapped!</font>")
-		log_admin("[target] ([target.ckey]) has been grabbed and had his neck snapped.")
-		message_admins("Alert: [target.real_name] has been grabbed and had his neck snapped.") //Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.
+		log_admin("[target] ([target.ckey]) has been grabbed and had his neck snapped by an active SCP-173.")
+		message_admins("Alert: [target.real_name] has been grabbed and had his neck snapped by an active SCP-173.") //Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.
 
+//Kept for manual calling, is being integrated into Life()
 /mob/living/simple_animal/sculpture/proc/Escape()
+	observed = 0
 	var/list/turfs = new/list()
-	for(var/turf/thisturf in view(50,src))
+	for(var/turf/thisturf in range(100,src))
 		if(istype(thisturf, /turf/space))
 			continue
 		else if(istype(thisturf, /turf/simulated/wall))
@@ -57,17 +59,23 @@
 	src.dir = get_dir(src, target_turf)
 	src.loc = target_turf
 
+	observed = 1
+
 	hibernate = 1
-	spawn(rand(20,35) * 10)
+	spawn(rand(20,35))
 		hibernate = 0
 
 /mob/living/simple_animal/sculpture/Life()
 
 	observed = 0
 
+	//SCP is not for unstoppable
+	// if(prob(5)) //If we're kinda lucky
+		// Escape() //Just get the fuck out of here. It's fine, we're supposed to be adminbus anyways
+
 	//update the desc
 	if(!G)
-		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid."
+		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid and even more dangerous."
 
 	//if we are sent into forced hibernation mode, allow our victim to escape
 	if(hibernate && G && G.state == GRAB_KILL)
@@ -182,28 +190,35 @@
 				if(in_darkness)
 					//move to right behind them
 					target_turf = get_step(target, src)
+					playsound(loc, pick('sound/scp/scare1.ogg','sound/scp/scare2.ogg','sound/scp/scare3.ogg','sound/scp/scare4.ogg'), 100, 1, -1)
 				else
 					//move to them really really fast and knock them down
 					target_turf = get_turf(target)
+					playsound(loc, pick('sound/scp/scare1.ogg','sound/scp/scare2.ogg','sound/scp/scare3.ogg','sound/scp/scare4.ogg'), 100, 1, -1)
 
 				//rampage along a path to get to them, in the blink of an eye
 				var/turf/next_turf = get_step_towards(src, target)
 				var/num_turfs = get_dist(src,target)
-				while(get_turf(src) != target_turf && num_turfs > 0)
-					for(var/obj/structure/window/W in next_turf)
-						spawn(5) W.destroy()
-					for(var/obj/structure/table/O in next_turf)
-						spawn(5) O.ex_act(1)
-					for(var/obj/structure/grille/G in next_turf)
-						spawn(5) G.ex_act(1)
-					for(var/obj/machinery/door/D in next_turf)
-						spawn(5) D.open()
-					if(!next_turf.CanPass(src, next_turf))
-						break
-					src.loc = next_turf
-					src.dir = get_dir(src, target)
-					next_turf = get_step(src, get_dir(next_turf,target))
-					num_turfs--
+				spawn()
+					while(get_turf(src) != target_turf && num_turfs > 0)
+						for(var/obj/structure/window/W in next_turf)
+							W.destroy()
+							sleep(5)
+						for(var/obj/structure/table/O in next_turf)
+							O.ex_act(1)
+							sleep(10)
+						for(var/obj/structure/grille/G in next_turf)
+							G.ex_act(1)
+							sleep(10)
+						for(var/obj/machinery/door/D in next_turf)
+							D.open()
+							sleep(10)
+						if(!next_turf.CanPass(src, next_turf))
+							break
+						src.loc = next_turf
+						src.dir = get_dir(src, target)
+						next_turf = get_step(src, get_dir(next_turf,target))
+						num_turfs--
 
 				//if we reached them, knock them down and start strangling them
 				if(get_turf(src) == target_turf)
@@ -213,6 +228,9 @@
 					target.apply_damage(150, BRUTE, "head")
 
 					//Should be better now
+
+			if(prob(5) && !observed)
+				Escape()
 
 			//if we're not strangling anyone, take a stroll
 			if(!G && prob(50)) //Half chance out of whatever
@@ -235,21 +253,27 @@
 				//rampage along a path to get to it, in the blink of an eye
 				var/turf/next_turf = get_step_towards(src, target_turf)
 				var/num_turfs = get_dist(src,target_turf)
-				while(get_turf(src) != target_turf && num_turfs > 0)
-					for(var/obj/structure/window/W in next_turf)
-						spawn(5) W.destroy()
-					for(var/obj/structure/table/O in next_turf)
-						spawn(5) O.ex_act(1)
-					for(var/obj/structure/grille/G in next_turf)
-						spawn(5) G.ex_act(1)
-					for(var/obj/machinery/door/D in next_turf)
-						spawn(5) D.open()
-					if(!next_turf.CanPass(src, next_turf))
-						break
-					src.loc = next_turf
-					src.dir = get_dir(src, target)
-					next_turf = get_step(src, get_dir(next_turf,target_turf))
-					num_turfs--
+				spawn()
+					while(get_turf(src) != target_turf && num_turfs > 0)
+						for(var/obj/structure/window/W in next_turf)
+							W.destroy()
+							sleep(5)
+						for(var/obj/structure/table/O in next_turf)
+							O.ex_act(1)
+							sleep(10)
+						for(var/obj/structure/grille/G in next_turf)
+							G.ex_act(1)
+							sleep(10)
+						for(var/obj/machinery/door/D in next_turf)
+							D.open()
+							sleep(10)
+						if(!next_turf.CanPass(src, next_turf))
+							break
+						src.loc = next_turf
+						src.dir = get_dir(src, target)
+						next_turf = get_step(src, get_dir(next_turf,target_turf))
+						num_turfs--
+
 
 		//if(!istype(src.loc, /turf)) // Is SCP-173 in a container/closet/pod/tray etc? Well fuck it
 

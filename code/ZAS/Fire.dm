@@ -9,8 +9,28 @@ Fill rest with super hot gas from separated canisters, they should be about 125C
 Attach to transfer valve and open. BOOM.
 
 */
+/atom
+	var/autoignition_temperature = 0 // In Kelvin.  0 = Not flammable
+	var/on_fire=0
+	var/fire_dmi = 'icons/effects/fire.dmi'
+	var/fire_sprite = "fire"
+	var/ashtype = /obj/effect/decal/cleanable/ash
+	var/fire_time_min = 5 // Seconds
+	var/fire_time_max = 10 // Seconds
+
+/atom/proc/ignite(var/temperature)
+	on_fire=1
+	visible_message("\The [src] bursts into flame!")
+	overlays += image(fire_dmi,fire_sprite)
+	spawn(rand(fire_time_min,fire_time_max) SECONDS)
+		if(!on_fire)
+			return
+		new ashtype(src.loc)
+		qdel(src)
 
 /atom/proc/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(autoignition_temperature && !on_fire && exposed_temperature > autoignition_temperature)
+		ignite(exposed_temperature)
 
 turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 
@@ -102,6 +122,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure() ) //Burn the humans!
 	for(var/atom/A in loc)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
+	// Burn the turf, too.
+	S.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
+
 	//spread
 	for(var/direction in cardinal)
 		if(S.open_directions & direction) //Grab all valid bordering tiles

@@ -19,6 +19,8 @@
 
 	var/temp = ""				// temporary feedback messages
 
+	l_color = "#50AB00"
+
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))
 			return

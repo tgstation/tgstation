@@ -56,6 +56,14 @@ var/shuttle_call/shuttle_calls[0]
 	var/stat_msg2
 	var/display_type="blank"
 
+	l_color = "#0000FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..(href, href_list))
 		return
@@ -185,6 +193,7 @@ var/shuttle_call/shuttle_calls[0]
 					post_status("message", stat_msg1, stat_msg2)
 				if("alert")
 					post_status("alert", href_list["alert"])
+					display_type = href_list["alert"]
 				else
 					post_status(href_list["statdisp"])
 			setMenuState(usr,COMM_SCREEN_STAT)
@@ -305,6 +314,7 @@ var/shuttle_call/shuttle_calls[0]
 		var/cur_msg[0]
 		cur_msg["title"]=messagetitle[i]
 		cur_msg["body"]=messagetext[i]
+		cur_msg["id"] = i
 		msg_data += list(cur_msg)
 	data["messages"] = msg_data
 	data["current_message"] = data["is_ai"] ? aicurrmsg : currmsg

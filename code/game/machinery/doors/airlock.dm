@@ -48,6 +48,13 @@
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	autoclose = 1
 
+/obj/machinery/door/airlock/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+
+	..()
+
 /obj/machinery/door/airlock/command
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorcom.dmi'
@@ -218,13 +225,10 @@
 	icon = 'icons/obj/doors/Doorplasma.dmi'
 	mineral = "plasma"
 
-/obj/machinery/door/airlock/plasma/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
+	autoignition_temperature = 300
 
-/obj/machinery/door/airlock/plasma/proc/ignite(exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
+/obj/machinery/door/airlock/plasma/ignite(temperature)
+	PlasmaBurn(temperature)
 
 /obj/machinery/door/airlock/plasma/proc/PlasmaBurn(temperature)
 	for(var/turf/simulated/floor/target_tile in range(2,loc))
@@ -1160,7 +1164,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/New()
-	..()
+	. = ..()
 	wires = new(src)
 	if(src.closeOtherId != null)
 		spawn (5)

@@ -16,7 +16,14 @@
 	var/open_panel = 0
 
 /obj/item/weapon/plastique/New()
+	. = ..()
 	wires = new(src)
+
+/obj/item/weapon/plastique/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+
 	..()
 
 /obj/item/weapon/plastique/suicide_act(var/mob/user)

@@ -1,0 +1,13 @@
+<!--
+Title: Crew Monitoring Console (Map content)
+Used In File(s): \code\game\machinery\computer\crew.dm
+ -->
+{{for data.crewmembers}}
+    {{if value.sensor_type == 3 && value.z == config.mapZLevel}}
+        <div class="mapIcon mapIcon16 rank-{{:value.rank.ckey()}} {{:value.dead ? 'dead' : 'alive'}}" style="left: {{:(value.x)}}px; bottom: {{:(value.y)}}px;" unselectable="on">
+            <div class="tooltip hidden">
+                {{:value.name}} ({{:value.dead ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"}}) (<span class="oxyloss_light">{{:value.oxy}}</span>/<span class="toxin_light">{{:value.tox}}</span>/<span class="burn">{{:value.fire}}</span>/<span class="brute">{{:value.brute}}</span>) ({{:value.area}}: {{:value.xoffset}}, {{:value.yoffset}})
+            </div>
+        </div>
+    {{/if}}
+{{/for}}

@@ -63,54 +63,47 @@
 	..()
 	return 0
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+/turf/Enter(atom/movable/O, atom/oldloc)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		usr << "\red Movement is admin-disabled." //This is to identify lag problems
-		return
-	if (!mover || !isturf(mover.loc))
-		return 1
-
-
-	//First, check objects to block exit that are not on the border
-	for(var/obj/obstacle in mover.loc)
-		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
-			if(!obstacle.CheckExit(mover, src))
-				mover.Bump(obstacle, 1)
-				return 0
-
-	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle in mover.loc)
-		if((border_obstacle.flags & ON_BORDER) && (mover != border_obstacle) && (forget != border_obstacle))
-			if(!border_obstacle.CheckExit(mover, src))
-				mover.Bump(border_obstacle, 1)
-				return 0
-
-	//Next, check objects to block entry that are on the border
-	for(var/obj/border_obstacle in src)
-		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
-				mover.Bump(border_obstacle, 1)
-				return 0
-
-	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
-		mover.Bump(src, 1)
 		return 0
 
-	//Finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle in src)
+	// first, check objects to block exit that are not on the border
+	for(var/atom/movable/obstacle in oldloc.contents - O)
 		if(obstacle.flags & ~ON_BORDER)
-			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
-				mover.Bump(obstacle, 1)
+			if(!obstacle.CheckExit(O, src))
+				O.Bump(obstacle, 1)
 				return 0
-	return 1 //Nothing found to block so return success!
 
+	// now, check objects to block exit that are on the border
+	for(var/atom/movable/border_obstacle in oldloc.contents - O)
+		if(border_obstacle.flags & ON_BORDER)
+			if(!border_obstacle.CheckExit(O, src))
+				O.Bump(border_obstacle, 1)
+				return 0
+
+	// next, check objects to block entry that are on the border
+	for(var/atom/movable/border_obstacle in contents)
+		if(border_obstacle.flags & ON_BORDER)
+			if(!border_obstacle.CanPass(O, oldloc))
+				O.Bump(border_obstacle, 1)
+				return 0
+
+	// then, check the turf itself
+	if (!CanPass(O, src))
+		O.Bump(src, 1)
+		return 0
+
+	// finally, check objects/mobs to block entry that are not on the border
+	for(var/atom/movable/obstacle in contents)
+		if(obstacle.flags & ~ON_BORDER)
+			if(!obstacle.CanPass(O, oldloc))
+				O.Bump(obstacle, 1)
+				return 0
+
+	return 1 // nothing found to block so return success!
 
 /turf/Entered(atom/atom as mob|obj)
-	if(movement_disabled)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
-		return
-	..()
 //vvvvv Infared beam stuff vvvvv
 
 	if ((atom && atom.density && !( istype(atom, /obj/effect/beam) )))
@@ -320,6 +313,14 @@
 
 	decals += decal
 	overlays += decal
+/turf/proc/ClearDecals()
+	if(!decals)
+		return
+
+	for(var/image/decal in decals)
+		overlays -= decal
+
+	decals = 0
 
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.

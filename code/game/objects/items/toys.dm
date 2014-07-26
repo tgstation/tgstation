@@ -30,9 +30,8 @@
 	item_state = "balloon-empty"
 
 /obj/item/toy/balloon/New()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
+	. = ..()
+	create_reagents(10)
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
@@ -112,7 +111,7 @@
 	desc = "\"Singulo\" brand spinning toy."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is putting \his head into the [src.name]! It looks like \he's  trying to commit suicide!</b>"
 		return (BRUTELOSS|TOXLOSS|OXYLOSS)
@@ -459,10 +458,9 @@
 	flags =  USEDELAY
 
 /obj/item/toy/waterflower/New()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("water", 10)
+	. = ..()
+	create_reagents(10)
+	reagents.add_reagent("water", 10)
 
 /obj/item/toy/waterflower/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
@@ -618,7 +616,7 @@
 	desc = "The holy grail of all programmers."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "gooncode"
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</b>"
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)

@@ -150,6 +150,12 @@
 
 	first_run()
 
+/obj/machinery/alarm/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+
+	..()
 
 /obj/machinery/alarm/proc/first_run()
 	area_uid = areaMaster.uid

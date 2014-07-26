@@ -36,11 +36,10 @@
 		trail = 0
 
 /obj/structure/stool/bed/chair/vehicle/clowncart/New()
+	. = ..()
 	//fuel = 0
-	var/datum/reagents/R = new/datum/reagents(5000)
-	reagents = R
-	R.my_atom = src
-	reagents.add_reagent("banana",175)
+	create_reagents(5000)
+	reagents.add_reagent("banana", 175)
 
 	processing_objects |= src
 	handle_rotation()
@@ -299,5 +298,5 @@
 	playsound(get_turf(src), 'sound/items/bikehorn.ogg', 75, 1)
 	explosion(src.loc,-1,0,3,7,10)
 	for(var/a=0, a<round(reagents.total_volume*0.25), a++) //spawn banana peels in place of the cart
-		new /obj/item/weapon/bananapeel/traitorpeel( get_turf(src) )
+		new /obj/item/weapon/bananapeel( get_turf(src) ) // WHAT STUPID ASSHOLE MADE THESE TATORPEELS
 	del(src)

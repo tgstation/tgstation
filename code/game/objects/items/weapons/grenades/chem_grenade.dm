@@ -13,11 +13,6 @@
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
 	var/affected_area = 3
 
-	New()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
-
 	hear_talk(mob/M as mob, message)
 		if(detonator)
 			detonator.hear_talk(M, message)
@@ -178,6 +173,9 @@
 			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 				G.loc = get_turf(src.loc)*/
 
+/obj/item/weapon/grenade/chem_grenade/New()
+	. = ..()
+	create_reagents(1000)
 
 /obj/item/weapon/grenade/chem_grenade/large
 	name = "Large Chem Grenade"
