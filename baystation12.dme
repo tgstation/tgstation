@@ -65,6 +65,7 @@
 #define FILE_DIR "sound/misc"
 #define FILE_DIR "sound/music"
 #define FILE_DIR "sound/piano"
+#define FILE_DIR "sound/scp"
 #define FILE_DIR "sound/violin"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/voice/Serithi"
