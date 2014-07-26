@@ -62,7 +62,7 @@
 
 
 /obj/item/weapon/pinpointer/advpinpointer
-	name = "Advanced Pinpointer"
+	name = "advanced pinpointer"
 	icon = 'icons/obj/device.dmi'
 	desc = "A larger version of the normal pinpointer, this unit features a helpful quantum entanglement detection system to locate various objects that do not broadcast a locator signal."
 	var/mode = 0  // Mode 0 locates disk, mode 1 locates coordinates.

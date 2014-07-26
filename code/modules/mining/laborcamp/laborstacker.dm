@@ -1,7 +1,7 @@
 /**********************Prisoners' Console**************************/
 
 /obj/machinery/mineral/labor_claim_console
-	name = "Point Claim Console"
+	name = "point claim console"
 	desc = "A stacking console with an electromagnetic writer, used to track ore mined by prisoners."
 	name = "stacking machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
@@ -34,7 +34,7 @@
 
 
 /obj/machinery/mineral/labor_claim_console/attack_hand(user as mob)
-	name = "Point Claim Console"
+	name = "point claim console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	desc = "A stacking console with an electromagnetic writer, used to track ore mined by prisoners."
