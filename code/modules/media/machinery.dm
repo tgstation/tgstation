@@ -9,20 +9,27 @@
 	var/list/obj/machinery/media/transmitter/hooked = list()
 	var/exclusive_hook=null // Disables output to the room
 
+	// Media system autolink.
+	var/id_tag = "???"
+
 /obj/machinery/media/proc/hookMediaOutput(var/obj/machinery/media/transmitter/T, exclusive=0)
 	if(exclusive)
 		exclusive_hook=T
 	hooked.Add(T)
+	return 1
+
 /obj/machinery/media/proc/unhookMediaOutput(var/obj/machinery/media/transmitter/T)
 	if(exclusive_hook==T)
 		exclusive_hook=null
 	hooked.Remove(T)
+	return 1
 
 // Notify everyone in the area of new music.
 // YOU MUST SET MEDIA_URL AND MEDIA_START_TIME YOURSELF!
 /obj/machinery/media/proc/update_music()
 	// Broadcasting shit
 	for(var/obj/machinery/media/transmitter/T in hooked)
+		testing("[src] Writing media to [T].")
 		T.broadcast(media_url,media_start_time)
 
 	if(exclusive_hook)

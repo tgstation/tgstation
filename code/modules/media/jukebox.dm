@@ -108,7 +108,6 @@ var/global/loopModeNames=list(
 		linked_account = department_accounts[department]
 	else
 		linked_account = station_account
-	update_icon()
 
 /obj/machinery/media/jukebox/attack_ai(var/mob/user)
 	attack_hand(user)
@@ -259,6 +258,9 @@ var/global/loopModeNames=list(
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/multitool))
+		update_multitool_menu(user)
+		return 1
 	if(istype(W, /obj/item/weapon/card/emag))
 		current_song = 0
 		if(!emagged)
@@ -426,6 +428,9 @@ var/global/loopModeNames=list(
 				update_icon()
 				return
 			visible_message("<span class='notice'>\icon[src] \The [src] beeps, and the menu on its front fills with [playlist.len] items.</span>","<em>You hear a beep.</em>")
+			if(autoplay)
+				playing=1
+				autoplay=0
 		else
 			testing("[src] failed to update playlist: Response null.")
 			stat &= BROKEN
@@ -482,6 +487,22 @@ var/global/loopModeNames=list(
 		"rock" = "Rock"
 	)
 
+// Relaxing elevator music~
+/obj/machinery/media/jukebox/dj
+
+	playlist_id="muzak"
+	autoplay = 1
+
+	id_tag="DJ Satellite" // For autolink
+
+	// Must be defined on your server.
+	playlists=list(
+		"bar"  = "Bar Mix",
+		"jazz" = "Jazz",
+		"rock" = "Rock",
+		"muzak" = "Muzak"
+	)
+
 // So I don't have to do all this shit manually every time someone sacrifices pun-pun.
 // Also for debugging.
 /obj/machinery/media/jukebox/superjuke
@@ -497,6 +518,7 @@ var/global/loopModeNames=list(
 		"bar"  = "Bar Mix",
 		"jazz" = "Jazz",
 		"rock" = "Rock",
+		"muzak" = "Muzak",
 
 		"emagged" = "Syndie Mix",
 		"shuttle" = "Shuttle",
