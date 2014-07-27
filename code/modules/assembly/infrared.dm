@@ -197,6 +197,11 @@
 	qdel(src)
 	return
 
+/obj/effect/beam/i_beam/Crossed(atom/movable/O)
+	if(O && O.density && !istype(O, /obj/effect/beam))
+		spawn(0)
+			hit()
+
 /obj/effect/beam/i_beam/proc/vis_spread(v)
 	//world << "i_beam \ref[src] : vis_spread"
 	visible = v
