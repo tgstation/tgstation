@@ -117,7 +117,7 @@
 	if(in_use)
 		var/list/nearby = viewers(1, src)
 		var/is_in_use = 0
-		for(var/mob/M in _using.Copy()) // Only check things actually messing with us.
+		for(var/mob/M in _using) // Only check things actually messing with us.
 			// Not actually using the fucking thing?
 			if (!M || !M.client || M.machine != src)
 				_using.Remove(M)
