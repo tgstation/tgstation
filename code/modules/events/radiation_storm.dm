@@ -1,6 +1,5 @@
 /datum/event/radiation_storm
 	announceWhen	= 1
-	oneShot			= 1
 	var/safe_zones = list(
 		/area/maintenance,
 		/area/crew_quarters/sleep,
