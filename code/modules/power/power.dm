@@ -106,7 +106,7 @@
 
 	for(var/obj/machinery/power/M in machines)
 		if(!M.powernet)	continue	// APCs have powernet=0 so they don't count as network nodes directly
-		M.powernet.nodes[M] = M
+		M.powernet.nodes.Add(M)
 
 
 // returns a list of all power-related objects (nodes, cable, junctions) in turf,
@@ -293,14 +293,14 @@
 			if(Node && !Node.powernet)
 				Node.powernet = PN
 				nodes.Cut(i,i+1)
-				PN.nodes[Node] = Node
+				PN.nodes.Add(Node)
 				continue
 			i++
 
 	// Disconnect machines connected to nodes
 	if(node)
 		for(var/obj/machinery/power/P in T1)
-			if(P.powernet && !P.powernet.nodes[src])
+			if(P.powernet && !P.powernet.nodes.Find(src))
 				P.disconnect_from_network()
 //		if(Debug)
 //			world.log << "Old PN#[number] : ([cables.len];[nodes.len])"
@@ -414,7 +414,7 @@
 	if(!C || !C.powernet)	return 0
 //	makepowernets() //TODO: find fast way	//EWWWW what are you doing!?
 	powernet = C.powernet
-	powernet.nodes[src] = src
+	powernet.nodes.Add(src)
 	return 1
 
 /obj/machinery/power/proc/disconnect_from_network()

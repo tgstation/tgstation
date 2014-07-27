@@ -33,7 +33,7 @@
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
 		src.attack_log += "[src] has succumbed to death with [health] points of health!"
-		src.adjustOxyLoss(src.health + 200)
+		src.adjustOxyLoss(src.health + (src.health + 115)) // This will ensure people die when using the command, but don't go into overkill. 15 oxy points over the limit for safety since brute and burn regenerates
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
 		src << "\blue You have given up life and succumbed to death."
 

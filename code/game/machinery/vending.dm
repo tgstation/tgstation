@@ -850,7 +850,7 @@
 	vend_reply = "Thank you for using AutoDrobe!"
 	products = list(/obj/item/clothing/suit/chickensuit = 3,/obj/item/clothing/head/chicken = 3,/obj/item/clothing/suit/monkeysuit = 3,/obj/item/clothing/mask/gas/monkeymask = 3,/obj/item/clothing/suit/xenos = 3,/obj/item/clothing/head/xenos = 3,/obj/item/clothing/under/gladiator = 3,
 					/obj/item/clothing/head/helmet/gladiator = 3,/obj/item/clothing/under/gimmick/rank/captain/suit = 3,/obj/item/clothing/head/flatcap = 3,/obj/item/clothing/glasses/gglasses = 3,/obj/item/clothing/shoes/jackboots = 3,
-					/obj/item/clothing/under/schoolgirl = 3,/obj/item/clothing/head/kitty = 3,/obj/item/clothing/under/blackskirt = 3,/obj/item/clothing/head/beret = 3,/obj/item/clothing/suit/hastur = 3,/obj/item/clothing/head/hasturhood = 3,
+					/obj/item/clothing/under/schoolgirl = 3,/obj/item/clothing/shoes/kneesocks = 3,/obj/item/clothing/head/kitty = 3,/obj/item/clothing/under/blackskirt = 3,/obj/item/clothing/head/beret = 3,/obj/item/clothing/suit/hastur = 3,/obj/item/clothing/head/hasturhood = 3,
 					/obj/item/clothing/suit/wcoat = 3,/obj/item/clothing/under/suit_jacket = 3,/obj/item/clothing/head/that = 3,/obj/item/clothing/head/cueball = 3,
 					/obj/item/clothing/under/scratch = 3,/obj/item/clothing/under/kilt = 3,/obj/item/clothing/head/beret = 3,/obj/item/clothing/suit/wcoat = 3,
 					/obj/item/clothing/glasses/monocle =3,/obj/item/clothing/head/bowlerhat = 3,/obj/item/weapon/cane = 3,/obj/item/clothing/under/sl_suit = 3,
@@ -905,3 +905,13 @@
 	premium = list(/obj/item/clothing/shoes/rainbow = 1)
 
 
+//HEIL ADMINBUS
+/obj/machinery/vending/nazivend
+	name = "Nazivend"
+	desc = "Remember the gorrilions lost."
+	icon_state = "nazi"
+	vend_reply = "SIEG HEIL!"
+	product_ads = "BESTRAFEN die Juden.;BESTRAFEN die Alliierten."
+	product_slogans = "Das Vierte Reich wird zuruckkehren!;ENTFERNEN JUDEN!;Billiger als die Juden jemals geben!;Rader auf dem adminbus geht rund und rund.;Warten Sie, warum wir wieder hassen Juden?- *BZZT*"
+	products = list(/obj/item/clothing/head/stalhelm = 20, /obj/item/clothing/head/panzer = 20, /obj/item/clothing/suit/soldiercoat = 20, /obj/item/clothing/under/soldieruniform = 20)
+	contraband = list(/obj/item/clothing/head/naziofficer = 10, /obj/item/clothing/suit/officercoat = 10, /obj/item/clothing/under/officeruniform = 10)
