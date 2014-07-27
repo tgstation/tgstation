@@ -1022,7 +1022,7 @@ proc/process_ghost_teleport_locs()
 
 	break_room
 		name = "\improper Engineering Foyer"
-		icon_state = "engine_lobby"
+		icon_state = "engine"
 
 	ce
 		name = "\improper Chief Engineer's office"
@@ -1036,10 +1036,6 @@ proc/process_ghost_teleport_locs()
 	atmos
 		name = "Atmospherics"
 		icon_state = "atmos"
-
-	atmos_control
-		name = "Atmospherics Monitoring"
-		icon_state = "atmos_monitor"
 
 	supermatter_room
 		name = "Supermatter Room"
@@ -1140,7 +1136,7 @@ proc/process_ghost_teleport_locs()
 
 /area/medical/surgery_ghetto
 	name = "Ghetto Surgery"
-	icon_state = "medbay_ghetto"
+	icon_state = "medbay2"
 	music = 'sound/ambience/signal.ogg'
 
 /area/medical/medbay3
@@ -1150,7 +1146,7 @@ proc/process_ghost_teleport_locs()
 
 /area/medical/break_room
 	name = "Medbay Break Room"
-	icon_state = "medbay_break"
+	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
 /area/medical/patients_rooms
@@ -1226,7 +1222,7 @@ proc/process_ghost_teleport_locs()
 
 /area/security/lobby
 	name = "\improper Security Lobby"
-	icon_state = "sec_lobby"
+	icon_state = "security"
 
 /area/security/brig
 	name = "\improper Brig"
@@ -1243,15 +1239,15 @@ proc/process_ghost_teleport_locs()
 
 /area/security/medical
 	name = "\improper Brig Medbay"
-	icon_state = "sec_medbay"
+	icon_state = "medbay"
 
 /area/security/rec_room
 	name = "\improper Brig Recording Room"
-	icon_state = "rec"
+	icon_state = "green"
 
 /area/security/interrogation
 	name = "\improper Interrogation Room"
-	icon_state = "interrog"
+	icon_state = "security"
 
 /obj/item/weapon/paper/Gaschamber
 	name = "paper - 'Gas Chambers for Idiots'"
@@ -1392,8 +1388,8 @@ proc/process_ghost_teleport_locs()
 	icon_state = "toxlab"
 
 /area/science/hallway
-	name = "\improper Research Division"
-	icon_state = "tox_hall"
+	name = "\improper Research Lab"
+	icon_state = "toxlab"
 
 /area/science/rd
 	name = "\improper Research Director's Office"
@@ -1406,7 +1402,7 @@ proc/process_ghost_teleport_locs()
 
 /area/science/xenobiology
 	name = "\improper Xenobiology Lab"
-	icon_state = "xenobio"
+	icon_state = "toxlab"
 
 /area/science/xenobiology/specimen_1
 	name = "\improper Xenobiology Specimen Cage 1"
@@ -1458,7 +1454,7 @@ proc/process_ghost_teleport_locs()
 
 /area/science/podbay
 	name = "\improper Pod Bay"
-	icon_state = "pod"
+	icon_state = "toxmisc"
 
 /area/science/server
 	name = "\improper Server Room"
