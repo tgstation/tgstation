@@ -56,8 +56,7 @@
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"
-	maxbodytemp = 0
-
+	maxbodytemp = INFINITY
 
 /mob/living/simple_animal/hostile/carp/holocarp/Die()
 	qdel(src)
