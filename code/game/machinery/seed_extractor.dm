@@ -70,6 +70,18 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		S.use(1)
 		new /obj/item/seeds/grassseed(loc)
 
+	if(O)
+		var/obj/item/F = O
+		if(F.nonplant_seed_type)
+			user.drop_item()
+			var/obj/item/seeds/seed = text2path(F.nonplant_seed_type)
+			var/t_amount = 0
+			var/t_max = rand(1,4)
+			while(t_amount < t_max)
+				new seed(src.loc)
+				t_amount++
+			del(O)
+
 	else if (istype(O, /obj/item/weapon/screwdriver))
 		if (!opened)
 			src.opened = 1

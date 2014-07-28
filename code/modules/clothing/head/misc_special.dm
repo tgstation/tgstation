@@ -195,6 +195,7 @@
 
 	var/s_tone = 0.0
 	var/created_name = "Buttbot"
+	nonplant_seed_type = /obj/item/seeds/synthbuttseed
 
 	proc
 		transfer_buttdentity(var/mob/living/carbon/H)
