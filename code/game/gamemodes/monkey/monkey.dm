@@ -70,6 +70,8 @@
 		D.holder = carriermind.current
 		D.affected_mob = carriermind.current
 		carriermind.current.viruses += D
+	spawn (rand(waittime_l, waittime_h))
+		send_intercept()
 	..()
 
 /datum/game_mode/monkey/proc/check_monkey_victory()
