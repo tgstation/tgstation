@@ -1024,9 +1024,47 @@
 	icon_state = "spawner"
 	potency = 10
 	New()
+		..()
 		dispense_cash(rand(1,100)*10,src.loc)//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
 		spawn(5) //Workaround to keep harvesting from working weirdly.
 			del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/meat
+	seed = "/obj/item/seeds/synthmeatseed"
+	name = "synthmeat"
+	desc = "Tasty?"
+	icon_state = "spawner"
+	potency = 10
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/butt
+	seed = "/obj/item/seeds/synthbuttseed"
+	name = "synthbutt"
+	desc = "Tasty?"
+	icon_state = "spawner"
+	potency = 10
+	New()
+		..()
+		new /obj/item/clothing/head/butt(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/brain
+	seed = "/obj/item/seeds/synthbrainseed"
+	name = "synthmeat"
+	desc = "Tasty?"
+	icon_state = "spawner"
+	potency = 10
+	New()
+		..()
+		new /obj/item/brain(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
 	seed = "/obj/item/seeds/bluespacetomatoseed"
