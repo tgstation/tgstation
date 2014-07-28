@@ -14,7 +14,7 @@
 	var/can_move=1
 
 // Shit be ethereal.
-/obj/structure/stool/bed/chair/vehicle/wizmobile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/stool/bed/chair/vehicle/wizmobile/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	return 1
 
 /obj/structure/stool/bed/chair/vehicle/wizmobile/update_mob()

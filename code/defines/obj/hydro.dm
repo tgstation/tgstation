@@ -1163,6 +1163,57 @@
 	growthstages = 4
 	plant_type = 1
 
+/obj/item/seeds/synthmeatseed
+	name = "pack of synthmeat seeds"
+	desc = "These seeds grow into a synthmeat tree."
+	icon_state = "seed-synthmeat"
+	mypath = "/obj/item/seeds/synthmeatseed"
+	species = "synthmeat"
+	plantname = "Synthmeat Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/meat"
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 2
+
+/obj/item/seeds/synthbuttseed //*fart
+	name = "pack of synthbutt seeds"
+	desc = "These butts butt into a synthbutt butt."
+	icon_state = "seed-synthbutt"
+	mypath = "/obj/item/seeds/synthbuttseed"
+	species = "synthbutt"
+	plantname = "Synthbutt Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/butt"
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 2
+
+/obj/item/seeds/synthbrainseed
+	name = "pack of synthbrain seeds"
+	desc = "These seeds grow into a synthbrain tree."
+	icon_state = "seed-synthbrain"
+	mypath = "/obj/item/seeds/synthbrainseed"
+	species = "synthbrain"
+	plantname = "Synthbrain Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/brain"
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 2
+
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return

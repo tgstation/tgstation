@@ -55,7 +55,7 @@
 		..()
 		return
 
-/obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -351,6 +351,13 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	else if ( istype(myseed, /obj/item/seeds/plumpmycelium ))
 		del(myseed)
 		myseed = new /obj/item/seeds/walkingmushroommycelium
+	else if ( istype(myseed, /obj/item/seeds/synthmeatseed ))
+		del(myseed)
+		switch(rand(1,100))
+			if(1 to 50)
+				myseed = new /obj/item/seeds/synthbuttseed
+			if(51 to 100)
+				myseed = new /obj/item/seeds/synthbrainseed
 
 	else if ( istype(myseed, /obj/item/seeds/chiliseed ))
 		del(myseed)
