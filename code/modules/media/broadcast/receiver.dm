@@ -20,25 +20,27 @@ var/global/media_receivers=list()
 	update_music()
 
 /obj/machinery/media/receiver/proc/connect_frequency()
-	// This is basically media_receivers[media_frequency] += src
+	// This is basically media_receivers["[media_frequency]"] += src
 	var/list/receivers=list()
-	if(media_frequency in media_receivers)
-		receivers = media_receivers[media_frequency]
+	var/freq = num2text(media_frequency)
+	if(freq in media_receivers)
+		receivers = media_receivers[freq]
 	receivers.Add(src)
-	media_receivers[media_frequency]=receivers
+	media_receivers[freq]=receivers
 
 	// Check if there's a broadcast to tune into.
-	if(media_frequency in media_transmitters)
+	if(freq in media_transmitters)
 		// Pick a random broadcast in that frequency.
-		var/obj/machinery/media/transmitter/B = pick(media_transmitters[media_frequency])
+		var/obj/machinery/media/transmitter/B = pick(media_transmitters[freq])
 		if(B.media_crypto == media_crypto) // Crypto-key check, if needed.
 			receive_broadcast(B.media_url,B.media_start_time)
 
 /obj/machinery/media/receiver/proc/disconnect_frequency()
 	var/list/receivers=list()
-	if(media_frequency in media_receivers)
-		receivers = media_receivers[media_frequency]
+	var/freq = num2text(media_frequency)
+	if(freq in media_receivers)
+		receivers = media_receivers[freq]
 	receivers.Remove(src)
-	media_receivers[media_frequency]=receivers
+	media_receivers[freq]=receivers
 
 	receive_broadcast()
