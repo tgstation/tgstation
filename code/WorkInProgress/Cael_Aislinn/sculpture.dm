@@ -21,27 +21,30 @@
 	var/random_escape_chance = 10 //10 times out of 100 he'll just yakkety sax away, pretty powerful, think of it as blinking. Most likely not functional, hail the coder
 
 /mob/living/simple_animal/sculpture/proc/GrabMob(var/mob/living/target)
-	if(target && target != src && ishuman(target))
+	if(target && target != src && ishuman(target) && !observed)
 		G = new /obj/item/weapon/grab(src, target)
 		G.loc=src
 		target.grabbed_by += G
 		G.synch()
 		target.LAssailant = src
+		//Killing people has been extradited here for reasons, SCP still looks to grab targets on his turf later down
+		target.Stun(1)
+		target.Paralyse(1)
+		target.apply_damage(150, BRUTE, "head")
 
 		playsound(loc, pick('sound/scp/firstpersonsnap.ogg','sound/scp/firstpersonsnap2.ogg','sound/scp/firstpersonsnap3.ogg'), 100, 1, -1)
 		visible_message("\red [src] snapped [target]'s neck !")
-		target << "\red <b>In the blink of an eye, something grabs you and snaps your neck!</b> Everything goes black..."
+		target << "\red <b>In the blink of an eye, something grabs you and snaps your neck !</b> Everything turns dark..."
 
 		G.state = GRAB_KILL
 
-		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid and even more dangerous. [G ? "\red The sculpture is holding [G.affecting] in a vice-like grip." : ""]"
+		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid and threatening. [G ? "\red The sculpture is holding [G.affecting] in a vice-like grip." : ""]"
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been grabbed by SCP-173, and had his neck snapped!</font>")
 		log_admin("[target] ([target.ckey]) has been grabbed and had his neck snapped by an active SCP-173.")
 		message_admins("Alert: [target.real_name] has been grabbed and had his neck snapped by an active SCP-173.") //Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.
 
 //Kept for manual calling, is being integrated into Life()
 /mob/living/simple_animal/sculpture/proc/Escape()
-	observed = 0
 	var/list/turfs = new/list()
 	for(var/turf/thisturf in range(100,src))
 		if(istype(thisturf, /turf/space))
@@ -59,29 +62,24 @@
 	src.dir = get_dir(src, target_turf)
 	src.loc = target_turf
 
-	observed = 1
-
 	hibernate = 1
-	spawn(rand(20,35))
+	spawn(rand(5,10)*10)
 		hibernate = 0
+	//observed = 1
 
 /mob/living/simple_animal/sculpture/Life()
 
-	observed = 0
-
-	//SCP is not for unstoppable
-	// if(prob(5)) //If we're kinda lucky
-		// Escape() //Just get the fuck out of here. It's fine, we're supposed to be adminbus anyways
+	//observed = 0
 
 	//update the desc
 	if(!G)
-		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid and even more dangerous."
+		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid and threatening."
 
 	//if we are sent into forced hibernation mode, allow our victim to escape
 	if(hibernate && G && G.state == GRAB_KILL)
 		if(G)
-			G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-			visible_message("\red [src] suddenly loosens it's grip and seems to calm down!")
+			G.affecting << "\red You suddenly feel the grip around your neck being loosened !"
+			visible_message("\red [src] suddenly loosens it's grip and seems to calm down !")
 			G.state = GRAB_AGGRESSIVE
 		return
 
@@ -89,12 +87,11 @@
 	if(allow_escape)
 		allow_escape = 0
 		if(G)
-			G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-			visible_message("\red [src] suddenly loosens it's grip!")
+			G.affecting << "\red You suddenly feel the grip around your neck being loosened !"
+			visible_message("\red [src] suddenly loosens it's grip !")
 			G.state = GRAB_AGGRESSIVE
-			if(!observed)
-				Escape()
-		observed = 1
+			//if(!observed)
+				//Escape()
 
 	//space part removed to avoid mass driving
 	//can't do anything in space at all
@@ -135,6 +132,9 @@
 			//mob is on the same tile as src
 			observed = 0
 			//breaks the sculpture since it's target can observe it, changed to observed = 0
+		else
+			observed = 0
+			//otherwise we're pretty safe in saying no-one's looking at you boy, avoids having to define it at the start of Life()
 			break
 
 	//account for darkness
@@ -220,16 +220,11 @@
 						next_turf = get_step(src, get_dir(next_turf,target))
 						num_turfs--
 
-				//if we reached them, knock them down and start strangling them
-				if(get_turf(src) == target_turf)
-					GrabMob(target)
-					target.Stun(1)
-					target.Paralyse(1)
-					target.apply_damage(150, BRUTE, "head")
+				//If we reached our target, time to have fun
+				//if(get_turf(src) == target_turf)
+					//GrabMob(target)
 
-					//Should be better now
-
-			if(prob(5) && !observed)
+			if(prob(5) && !G && !observed)
 				Escape()
 
 			//if we're not strangling anyone, take a stroll
@@ -274,16 +269,6 @@
 						next_turf = get_step(src, get_dir(next_turf,target_turf))
 						num_turfs--
 
-
-		//if(!istype(src.loc, /turf)) // Is SCP-173 in a container/closet/pod/tray etc? Well fuck it
-
-//	else if(G)
-//		//we can't move while observed, so we can't effectively strangle any more //since victim is observer this means no strangling
-//		//our grip is still rock solid, but the victim has a chance to escape
-//		G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-//		visible_message("\red [src] suddenly loosens it's grip due to being observed!")
-//		G.state = GRAB_AGGRESSIVE
-
 /mob/living/simple_animal/sculpture/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
 
@@ -291,11 +276,11 @@
 	..()
 
 /mob/living/simple_animal/sculpture/Bump(atom/movable/AM as mob, yes)
-	if(!G)
+	if(!G && !observed)
 		GrabMob(AM)
 
 /mob/living/simple_animal/sculpture/Bumped(atom/movable/AM as mob, yes)
-	if(!G)
+	if(!G && !observed)
 		GrabMob(AM)
 
 /mob/living/simple_animal/sculpture/ex_act(var/severity)

@@ -103,55 +103,37 @@
 
 	return 1 // nothing found to block so return success!
 
-/turf/Entered(atom/atom as mob|obj)
-//vvvvv Infared beam stuff vvvvv
-
-	if ((atom && atom.density && !( istype(atom, /obj/effect/beam) )))
-		for(var/obj/effect/beam/i_beam/I in src)
-			spawn( 0 )
-				if (I)
-					I.hit()
-				break
-
-//^^^^^ Infared beam stuff ^^^^^
-
-	if(!istype(atom, /atom/movable))
-		return
-
-	var/atom/movable/M = atom
-
+/turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
-	if(ismob(M))
-		if(!M:lastarea)
-			M:lastarea = get_area(M.loc)
-		if(M:lastarea.has_gravity == 0)
-			inertial_drift(M)
+	if(ismob(Obj))
+		if(!Obj:lastarea)
+			Obj:lastarea = get_area(Obj.loc)
+		if(Obj:lastarea.has_gravity == 0)
+			inertial_drift(Obj)
 
 	/*
-		if(M.flags & NOGRAV)
-			inertial_drift(M)
+		if(Obj.flags & NOGRAV)
+			inertial_drift(Obj)
 	*/
 
-
-
 		else if(!istype(src, /turf/space))
-			M:inertia_dir = 0
+			Obj:inertia_dir = 0
 	..()
 	var/objects = 0
 	for(var/atom/A as mob|obj|turf|area in src)
 		if(objects > loopsanity)	break
 		objects++
 		spawn( 0 )
-			if ((A && M))
-				A.HasEntered(M, 1)
+			if ((A && Obj))
+				A.HasEntered(Obj, 1)
 			return
 	objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))
 		if(objects > loopsanity)	break
 		objects++
 		spawn( 0 )
-			if ((A && M))
-				A.HasProximity(M, 1)
+			if ((A && Obj))
+				A.HasProximity(Obj, 1)
 			return
 	return
 

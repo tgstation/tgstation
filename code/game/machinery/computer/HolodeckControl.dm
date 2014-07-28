@@ -579,7 +579,7 @@
 		visible_message("\blue [user] dunks [W] into the [src]!", 3)
 		return
 
-/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if (istype(mover,/obj/item) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
