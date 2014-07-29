@@ -20,7 +20,7 @@
 	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/helmet/HoS/dermal
-	name = "Dermal Armour Patch"
+	name = "Dermal Armor Patch"
 	desc = "An armored implant that automatically integrates just below the scalp for robust protection without sacrificing style."
 	icon_state = "dermal"
 	item_state = "dermal"
