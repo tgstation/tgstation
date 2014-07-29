@@ -87,21 +87,21 @@
 		if(1.0)
 			for(var/atom/movable/A in src)
 				A.loc = loc
-				ex_act(severity)
+				A.ex_act(severity)
 			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
 				for(var/atom/movable/A in src)
 					A.loc = loc
-					ex_act(severity)
+					A.ex_act(severity)
 				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
 				for(var/atom/movable/A in src)
 					A.loc = loc
-					ex_act(severity)
+					A.ex_act(severity)
 				qdel(src)
 
 
@@ -130,11 +130,6 @@
 /obj/machinery/sleeper/relaymove(var/mob/user)
 	..()
 	open_machine()
-
-/obj/machinery/sleeper/Destroy()
-	var/turf/T = loc
-	T.contents += contents
-	..()
 
 /obj/machinery/sleeper/attack_hand(mob/user)
 	if(..())
