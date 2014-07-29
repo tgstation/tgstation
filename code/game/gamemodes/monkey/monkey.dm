@@ -12,9 +12,6 @@
 
 	restricted_jobs = list("Cyborg", "AI")
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
 	var/carriers_to_make = 1
 	var/list/carriers = list()
 
@@ -70,8 +67,6 @@
 		D.holder = carriermind.current
 		D.affected_mob = carriermind.current
 		carriermind.current.viruses += D
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
 	..()
 
 /datum/game_mode/monkey/proc/check_monkey_victory()
