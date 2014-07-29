@@ -19,24 +19,28 @@ var/global/media_transmitters=list()
 
 /obj/machinery/media/transmitter/proc/connect_frequency()
 	var/list/transmitters=list()
-	if(media_frequency in media_transmitters)
-		transmitters = media_transmitters[media_frequency]
+	var/freq = num2text(media_frequency)
+	if(freq in media_transmitters)
+		transmitters = media_transmitters[freq]
 	transmitters.Add(src)
-	media_transmitters[media_frequency]=transmitters
+	media_transmitters[freq]=transmitters
 
 
 /obj/machinery/media/transmitter/update_music()
 	//..()
-	if(media_frequency in media_receivers)
-		for(var/obj/machinery/media/receiver/R in media_receivers[media_frequency])
+	var/freq = num2text(media_frequency)
+	if(freq in media_receivers)
+		for(var/obj/machinery/media/receiver/R in media_receivers[freq])
 			if(R.media_crypto == media_crypto)
 				R.receive_broadcast(media_url,media_start_time)
+				//testing("[src]: Sending music to [R]")
 
 /obj/machinery/media/transmitter/proc/disconnect_frequency()
 	var/list/transmitters=list()
-	if(media_frequency in media_transmitters)
-		transmitters = media_transmitters[media_frequency]
+	var/freq = num2text(media_frequency)
+	if(freq in media_transmitters)
+		transmitters = media_transmitters[freq]
 	transmitters.Remove(src)
-	media_transmitters[media_frequency]=transmitters
+	media_transmitters[freq]=transmitters
 
 	broadcast()

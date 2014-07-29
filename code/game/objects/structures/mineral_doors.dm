@@ -45,7 +45,7 @@
 	attack_hand(mob/user as mob)
 		return TryToSwitchState(user)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 		if(air_group) return 0
 		if(istype(mover, /obj/effect/beam))
 			return !opacity

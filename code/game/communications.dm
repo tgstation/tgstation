@@ -245,8 +245,9 @@ datum/radio_frequency
 //			del(signal)
 
 /datum/radio_frequency/proc/add_listener(const/obj/device, var/filter)
-	if(!filter)
-		filter = "FIXME"
+	if(!filter) // FIXME
+		filter = "_default"
+
 	var/list/devices_at_filter = devices[filter]
 
 	if(isnull(devices_at_filter))
