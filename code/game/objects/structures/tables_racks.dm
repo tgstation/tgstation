@@ -559,16 +559,16 @@
 	if (istype(I, /obj/item/weapon/wrench))
 		table_destroy(2, user)
 		return
-	
+
 	if (istype(I, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
 			var/list/obj/item/oldContents = T.contents.Copy()
 			T.quick_empty()
-			
+
 			for(var/obj/item/C in oldContents)
 				C.loc = src.loc
-			
+
 			user.visible_message("<span class='notice'>[user] empties [I] on [src].</span>")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
@@ -609,7 +609,7 @@ Destroy type values:
 			if(RT.status == 1)
 				user << "<span class='notice'>Now disassembling the reinforced table</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if (do_after(user, 50))
+				if (do_after(user, 25))
 					new parts( src.loc )
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					qdel(src)
@@ -617,7 +617,7 @@ Destroy type values:
 		else
 			user << "<span class='notice'>Now disassembling table</span>"
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 50))
+			if (do_after(user, 25))
 				new parts( src.loc )
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				qdel(src)
@@ -659,14 +659,14 @@ Destroy type values:
 			if(src.status == 2)
 				user << "\blue Now weakening the reinforced table"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50))
+				if (do_after(user, 25))
 					if(!src || !WT.isOn()) return
 					user << "\blue Table weakened"
 					src.status = 1
 			else
 				user << "\blue Now strengthening the reinforced table"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50))
+				if (do_after(user, 25))
 					if(!src || !WT.isOn()) return
 					user << "\blue Table strengthened"
 					src.status = 2
