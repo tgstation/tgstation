@@ -199,9 +199,9 @@
 
 /* // Used to create the glow sprites. Remember to set the animate loop to 1, instead of infinite!
 
-var/datum/blob_colour/B = new()
+var/datum/blob_color/B = new()
 
-/datum/blob_colour/New()
+/datum/blob_color/New()
 	..()
 	var/icon/I = 'icons/mob/blob.dmi'
 	I += rgb(35, 35, 0)

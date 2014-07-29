@@ -479,13 +479,13 @@
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype( W, /obj/item/toy/crayon ))
 			var/obj/item/toy/crayon/C = W
-			var/clr = C.colourName
+			var/clr = C.colorName
 
 			if(!(clr in list("blue", "green", "mime", "orange", "purple", "rainbow", "red", "yellow")))
-				usr << "<span class='notice'>[src] refuses to take on this colour!</span>"
+				usr << "<span class='notice'>[src] refuses to take on this color!</span>"
 				return
 
-			usr << "<span class='notice'>You colour [src] [clr].</span>"
+			usr << "<span class='notice'>You color [src] [clr].</span>"
 			icon_state = "egg-[clr]"
 			item_color = clr
 		else

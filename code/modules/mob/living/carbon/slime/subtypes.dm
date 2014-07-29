@@ -1,6 +1,6 @@
-proc/mutation_table(var/colour)
+proc/mutation_table(var/slimecolor)
 	var/list/slime_mutation[4]
-	switch(colour)
+	switch(slimecolor)
 		//Tier 1
 		if("grey")
 			slime_mutation[1] = "orange"
@@ -72,8 +72,8 @@ proc/mutation_table(var/colour)
 			slime_mutation[4] = "black"
 		// Tier 5
 		else
-			slime_mutation[1] = colour
-			slime_mutation[2] = colour
-			slime_mutation[3] = colour
-			slime_mutation[4] = colour
+			slime_mutation[1] = slimecolor
+			slime_mutation[2] = slimecolor
+			slime_mutation[3] = slimecolor
+			slime_mutation[4] = slimecolor
 	return(slime_mutation)

@@ -57,7 +57,7 @@ var/global/mulebot_count = 0
 
 	var/wires = 1023		// all flags on
 
-	var/list/wire_text	// list of wire colours
+	var/list/wire_text	// list of wire colors
 	var/list/wire_order	// order of wire indices
 	*/
 

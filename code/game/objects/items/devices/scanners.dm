@@ -326,7 +326,7 @@ MASS SPECTROMETER
 		return
 	var/mob/living/carbon/slime/T = M
 	user.show_message("Slime scan results:", 1)
-	user.show_message(text("[T.colour] [] slime", T.is_adult ? "adult" : "baby"), 1)
+	user.show_message(text("[T.color] [] slime", T.is_adult ? "adult" : "baby"), 1)
 	user.show_message(text("Nutrition: [T.nutrition]/[]", T.get_max_nutrition()), 1)
 	if (T.nutrition < T.get_starve_nutrition())
 		user.show_message("<span class='warning'>Warning: slime is starving!</span>", 1)
@@ -334,7 +334,7 @@ MASS SPECTROMETER
 		user.show_message("<span class='warning'>Warning: slime is hungry</span>", 1)
 	user.show_message("Electric change strength: [T.powerlevel]", 1)
 	user.show_message("Health: [T.health]", 1)
-	if (T.slime_mutation[4] == T.colour)
+	if (T.slime_mutation[4] == T.color)
 		user.show_message("This slime does not evolve any further.", 1)
 	else
 		if (T.slime_mutation[3] == T.slime_mutation[4])

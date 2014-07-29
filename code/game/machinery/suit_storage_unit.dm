@@ -279,7 +279,7 @@
 		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
 		return*/
 	else
-		user << "You push the button. The coloured LED next to it changes."
+		user << "You push the button. The colored LED next to it changes."
 		src.safetieson = !src.safetieson
 
 

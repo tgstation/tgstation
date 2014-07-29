@@ -141,7 +141,7 @@
 
 /obj/item/clothing/under/rank/mime
 	name = "mime's outfit"
-	desc = "It's not very colourful."
+	desc = "It's not very colorful."
 	icon_state = "mime"
 	item_state = "mime"
 	item_color = "mime"

@@ -195,7 +195,7 @@
 				var/mob/living/M = card.loc
 				var/count = 0
 				while(!istype(M, /mob/living))
-					if(!M || !M.loc) return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
+					if(!M || !M.loc) return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colorful)
 					M = M.loc
 					count++
 					if(count >= 6)

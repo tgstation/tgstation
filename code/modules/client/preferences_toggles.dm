@@ -136,7 +136,7 @@
 /client/verb/toggle_member_publicity()
 	set name = "Toggle Membership Publicity"
 	set category = "Preferences"
-	set desc = "Toggles whether other players can see that you are a BYOND member (OOC blag icon/colours)."
+	set desc = "Toggles whether other players can see that you are a BYOND member (OOC blag icon/colors)."
 	prefs.toggles ^= MEMBER_PUBLIC
 	prefs.save_preferences()
 	src << "Others can[(prefs.toggles & MEMBER_PUBLIC) ? "" : "not"] see whether you are a byond member."

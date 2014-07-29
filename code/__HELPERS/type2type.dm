@@ -301,7 +301,7 @@ proc/tg_list2text(list/list, glue=",")
 		if("Plasmafire")	return 'icons/mob/screen_plasmafire.dmi'
 		else			return 'icons/mob/screen_midnight.dmi'
 
-//colour formats
+//color formats
 /proc/rgb2hsl(red, green, blue)
 	red /= 255;green /= 255;blue /= 255;
 	var/max = max(red,green,blue)

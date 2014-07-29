@@ -112,15 +112,15 @@ var/list/radiochannels = list(
 	"AI Private" = 1447,
 )
 //depenging helpers
-var/const/SYND_FREQ = 1213 //nuke op frequency, coloured dark brown in chat window
-var/const/SUPP_FREQ = 1347 //supply, coloured light brown in chat window
-var/const/SERV_FREQ = 1349 //service, coloured green in chat window
-var/const/SCI_FREQ = 1351 //science, coloured plum in chat window
+var/const/SYND_FREQ = 1213 //nuke op frequency, colored dark brown in chat window
+var/const/SUPP_FREQ = 1347 //supply, colored light brown in chat window
+var/const/SERV_FREQ = 1349 //service, colored green in chat window
+var/const/SCI_FREQ = 1351 //science, colored plum in chat window
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
-var/const/MED_FREQ = 1355 //medical, coloured blue in chat window
-var/const/ENG_FREQ = 1357 //engineering, coloured orange in chat window
-var/const/SEC_FREQ = 1359 //security, coloured red in chat window
-var/const/DSQUAD_FREQ = 1441 //death squad frequency, coloured grey in chat window
+var/const/MED_FREQ = 1355 //medical, colored blue in chat window
+var/const/ENG_FREQ = 1357 //engineering, colored orange in chat window
+var/const/SEC_FREQ = 1359 //security, colored red in chat window
+var/const/DSQUAD_FREQ = 1441 //death squad frequency, colored grey in chat window
 var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 
 #define TRANSMISSION_WIRE	0

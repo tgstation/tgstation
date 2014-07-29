@@ -409,21 +409,21 @@
 
 /obj/item/toy/crayon
 	name = "crayon"
-	desc = "A colourful crayon. Looks tasty. Mmmm..."
+	desc = "A colorful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
 	w_class = 1.0
-	attack_verb = list("attacked", "coloured")
-	var/colour = "#FF0000" //RGB
+	attack_verb = list("attacked", "colored")
+	var/crayoncolor = "#FF0000" //RGB
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
-	var/colourName = "red" //for updateIcon purposes
+	var/colorName = "red" //for updateIcon purposes
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|OXYLOSS)
 /obj/item/toy/crayon/New()
 	..()
-	name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
+	name = "[colorName] crayon" //Makes crayons identifiable in things like grinders
 /*
  * Snap pops
  */
