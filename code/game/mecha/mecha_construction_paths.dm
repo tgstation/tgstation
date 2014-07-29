@@ -316,7 +316,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="External armor is installed."),
 					 //3
-					 list("key"=/obj/item/mecha_parts/part/gygax_armour,
+					 list("key"=/obj/item/mecha_parts/part/gygax_armor,
 					 		"backkey"=/obj/item/weapon/weldingtool,
 					 		"desc"="Internal armor is welded."),
 					 //4
@@ -540,7 +540,7 @@
 					holder.icon_state = "gygax19"
 				else
 					user.visible_message("[user] pries Gygax Armour Plates from [holder].", "You pry Gygax Armour Plates from [holder].")
-					new /obj/item/mecha_parts/part/gygax_armour(get_turf(holder))
+					new /obj/item/mecha_parts/part/gygax_armor(get_turf(holder))
 					holder.icon_state = "gygax17"
 			if(1)
 				if(diff==FORWARD)
@@ -894,7 +894,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="External armor is installed."),
 					 //3
-					 list("key"=/obj/item/mecha_parts/part/durand_armour,
+					 list("key"=/obj/item/mecha_parts/part/durand_armor,
 					 		"backkey"=/obj/item/weapon/weldingtool,
 					 		"desc"="Internal armor is welded."),
 					 //4
@@ -1119,7 +1119,7 @@
 					holder.icon_state = "durand19"
 				else
 					user.visible_message("[user] pries Durand Armour Plates from [holder].", "You pry Durand Armour Plates from [holder].")
-					new /obj/item/mecha_parts/part/durand_armour(get_turf(holder))
+					new /obj/item/mecha_parts/part/durand_armor(get_turf(holder))
 					holder.icon_state = "durand17"
 			if(1)
 				if(diff==FORWARD)
