@@ -19,7 +19,7 @@
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
 
 
-	//Death squad armoed space suits, not hardsuits!
+	//Death squad armored space suits, not hardsuits!
 /obj/item/clothing/head/helmet/space/deathsquad
 	name = "deathsquad helmet"
 	desc = "That's not red paint. That's real blood."
