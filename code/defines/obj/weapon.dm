@@ -218,7 +218,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
 	var/table_type = /obj/structure/table
-	var/construct_delay = 50
+	var/construct_delay = 25
 	m_amt = 3750
 	flags = CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
@@ -229,7 +229,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "reinf_tableparts"
 	table_type = /obj/structure/table/reinforced
-	construct_delay = 100
+	construct_delay = 50
 	m_amt = 7500
 	flags = CONDUCT
 
