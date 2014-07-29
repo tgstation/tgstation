@@ -556,7 +556,7 @@
 		usr << "\red You are already sleeping"
 		return
 	if(alert(src,"Are you sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		usr.sleeping = 3000 //Long nap of about five minutes, because we just told you you're about to sleep for a while
+		usr.sleeping = 150 //Long nap of 5 minutes. Those are MC TICKS. Don't get fooled
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
