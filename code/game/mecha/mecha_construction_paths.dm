@@ -316,7 +316,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="External armor is installed."),
 					 //3
-					 list("key"=/obj/item/mecha_parts/part/gygax_armour,
+					 list("key"=/obj/item/mecha_parts/part/gygax_armor,
 					 		"backkey"=/obj/item/weapon/weldingtool,
 					 		"desc"="Internal armor is welded."),
 					 //4
@@ -528,7 +528,7 @@
 					holder.icon_state = "gygax15"
 			if(3)
 				if(diff==FORWARD)
-					user.visible_message("[user] installs Gygax Armour Plates to [holder].", "You install Gygax Armour Plates to [holder].")
+					user.visible_message("[user] installs Gygax armor Plates to [holder].", "You install Gygax armor Plates to [holder].")
 					qdel(used_atom)
 					holder.icon_state = "gygax18"
 				else
@@ -536,17 +536,17 @@
 					holder.icon_state = "gygax16"
 			if(2)
 				if(diff==FORWARD)
-					user.visible_message("[user] secures Gygax Armour Plates.", "You secure Gygax Armour Plates.")
+					user.visible_message("[user] secures Gygax armor Plates.", "You secure Gygax armor Plates.")
 					holder.icon_state = "gygax19"
 				else
-					user.visible_message("[user] pries Gygax Armour Plates from [holder].", "You pry Gygax Armour Plates from [holder].")
-					new /obj/item/mecha_parts/part/gygax_armour(get_turf(holder))
+					user.visible_message("[user] pries Gygax armor Plates from [holder].", "You pry Gygax armor Plates from [holder].")
+					new /obj/item/mecha_parts/part/gygax_armor(get_turf(holder))
 					holder.icon_state = "gygax17"
 			if(1)
 				if(diff==FORWARD)
-					user.visible_message("[user] welds Gygax Armour Plates to [holder].", "You weld Gygax Armour Plates to [holder].")
+					user.visible_message("[user] welds Gygax armor Plates to [holder].", "You weld Gygax armor Plates to [holder].")
 				else
-					user.visible_message("[user] unfastens Gygax Armour Plates.", "You unfasten Gygax Armour Plates.")
+					user.visible_message("[user] unfastens Gygax armor Plates.", "You unfasten Gygax armor Plates.")
 					holder.icon_state = "gygax18"
 		return 1
 
@@ -894,7 +894,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="External armor is installed."),
 					 //3
-					 list("key"=/obj/item/mecha_parts/part/durand_armour,
+					 list("key"=/obj/item/mecha_parts/part/durand_armor,
 					 		"backkey"=/obj/item/weapon/weldingtool,
 					 		"desc"="Internal armor is welded."),
 					 //4
@@ -1107,7 +1107,7 @@
 					holder.icon_state = "durand15"
 			if(3)
 				if(diff==FORWARD)
-					user.visible_message("[user] installs Durand Armour Plates to [holder].", "You install Durand Armour Plates to [holder].")
+					user.visible_message("[user] installs Durand armor Plates to [holder].", "You install Durand armor Plates to [holder].")
 					qdel(used_atom)
 					holder.icon_state = "durand18"
 				else
@@ -1115,17 +1115,17 @@
 					holder.icon_state = "durand16"
 			if(2)
 				if(diff==FORWARD)
-					user.visible_message("[user] secures Durand Armour Plates.", "You secure Durand Armour Plates.")
+					user.visible_message("[user] secures Durand armor Plates.", "You secure Durand armor Plates.")
 					holder.icon_state = "durand19"
 				else
-					user.visible_message("[user] pries Durand Armour Plates from [holder].", "You pry Durand Armour Plates from [holder].")
-					new /obj/item/mecha_parts/part/durand_armour(get_turf(holder))
+					user.visible_message("[user] pries Durand armor Plates from [holder].", "You pry Durand armor Plates from [holder].")
+					new /obj/item/mecha_parts/part/durand_armor(get_turf(holder))
 					holder.icon_state = "durand17"
 			if(1)
 				if(diff==FORWARD)
-					user.visible_message("[user] welds Durand Armour Plates to [holder].", "You weld Durand Armour Plates to [holder].")
+					user.visible_message("[user] welds Durand armor Plates to [holder].", "You weld Durand armor Plates to [holder].")
 				else
-					user.visible_message("[user] unfastens Durand Armour Plates.", "You unfasten Durand Armour Plates.")
+					user.visible_message("[user] unfastens Durand armor Plates.", "You unfasten Durand armor Plates.")
 					holder.icon_state = "durand18"
 		return 1
 
