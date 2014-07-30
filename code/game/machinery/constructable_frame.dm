@@ -539,3 +539,21 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1,
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
+/obj/item/weapon/circuitboard/ore_redemption
+	name = "circuit board (Ore Redemption)"
+	build_path = /obj/machinery/mineral/ore_redemption
+	board_type = "machine"
+	origin_tech = "programming=1;engineering=2"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/console_screen" = 1,
+							"/obj/item/weapon/stock_parts/matter_bin" = 1,
+							"/obj/item/device/assembly/igniter" = 1)
+
+/obj/item/weapon/circuitboard/mining_equipment_vendor
+	name = "circuit board (Mining Equipment Vendor)"
+	build_path = /obj/machinery/mineral/equipment_vendor
+	board_type = "machine"
+	origin_tech = "programming=1;engineering=2"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/console_screen" = 1,
+							"/obj/item/weapon/stock_parts/matter_bin" = 3)

@@ -1448,6 +1448,24 @@ datum/design/vendor
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/vendor
 
+datum/design/ore_redemption
+	name = "Machine Design (Ore Redemption Board)"
+	desc = "The circuit board for an Ore Redemption machine."
+	id = "ore_redemption"
+	req_tech = list("programming" = 1, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/ore_redemption
+
+
+datum/design/mining_equipment_vendor
+	name = "Machine Design (Mining Rewards Vender Board)"
+	desc = "The circuit board for a Mining Rewards Vender."
+	id = "mining_equipment_vendor"
+	req_tech = list("programming" = 1, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mining_equipment_vendor
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
@@ -1836,7 +1854,7 @@ datum/design/security_hud
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
-	
+
 datum/design/security_hud_night
 	name = "Night Vision Security HUD"
 	desc = "A heads-up display which provides id data and vision in complete darkness."
@@ -1906,21 +1924,12 @@ datum/design/welding_mask
 
 datum/design/mesons
 	name = "Optical Meson Scanners"
-	desc = "Used for seeing walls, floors, and stuff through anything."
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	id = "mesons"
-	req_tech = list("magnets" = 2, "engineering" = 2)
+	req_tech = list("materials" = 3, "magnets" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 50, "$glass" = 50)
+	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
 	build_path = /obj/item/clothing/glasses/meson
-
-datum/design/advanced_mesons
-	name = "Advanced Optical Meson Scanner"
-	desc = "More powerful than your standard mesons, these ones make everything appear to be lit extremely brightly."
-	id = "advanced_mesons"
-	req_tech = list("magnets" = 4, "engineering" = 4)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 100, "$glass" = 100)
-	build_path = /obj/item/clothing/glasses/meson/advanced
 
 datum/design/night_vision_goggles
 	name = "Night Vision Goggles"

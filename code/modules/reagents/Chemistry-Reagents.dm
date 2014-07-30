@@ -1598,8 +1598,9 @@ datum
 						M.sleeping += 1
 					if(51 to INFINITY)
 						M.sleeping += 1
-						M.adjustToxLoss(data - 50)
+						M.adjustToxLoss((data - 50)*REM)
 				data++
+				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				..()
 				return
 
@@ -1708,6 +1709,17 @@ datum
 			reagent_state = SOLID
 			color = "#7F8400" // rgb: 127, 132, 0
 			toxpwr = 0.5
+
+		toxin/mutetoxin //the new zombie powder.
+			name = "Mute Toxin"
+			id = "mutetoxin"
+			reagent_state = LIQUID
+			color = "#F0F8FF" // rgb: 240, 248, 255
+			toxpwr = 0
+
+			on_mob_life(mob/living/carbon/M)
+				M.silent += 2 * REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
+				..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents

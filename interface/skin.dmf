@@ -1827,10 +1827,10 @@ window "rpane"
 		splitter = 50
 		show-splitter = true
 		lock = none
-	elem "rulesb"
+	elem "reportissueb"
 		type = BUTTON
-		pos = 278,0
-		size = 60x16
+		pos = 480,0
+		size = 67x16
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1847,17 +1847,17 @@ window "rpane"
 		right-click = false
 		saved-params = "is-checked"
 		on-size = ""
-		text = "Rules"
+		text = "Report Issue"
 		image = ""
-		command = "rules"
+		command = "report-issue"
 		is-flat = false
 		stretch = false
 		is-checked = false
 		group = "rpanemode"
 		button-type = pushbutton
-	elem "changelog"
+	elem "changelogb"
 		type = BUTTON
-		pos = 341,0
+		pos = 336,0
 		size = 67x16
 		anchor1 = none
 		anchor2 = none
@@ -1883,9 +1883,65 @@ window "rpane"
 		is-checked = false
 		group = "rpanemode"
 		button-type = pushbutton
+	elem "rulesb"
+		type = BUTTON
+		pos = 272,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Rules"
+		image = ""
+		command = "rules"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+	elem "githubb"
+		type = BUTTON
+		pos = 408,0
+		size = 67x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Github"
+		image = ""
+		command = "github"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
 	elem "forumb"
 		type = BUTTON
-		pos = 215,0
+		pos = 208,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1913,7 +1969,7 @@ window "rpane"
 		button-type = pushbutton
 	elem "wikib"
 		type = BUTTON
-		pos = 152,0
+		pos = 144,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1969,7 +2025,7 @@ window "rpane"
 		button-type = pushbox
 	elem "browseb"
 		type = BUTTON
-		pos = 464,0
+		pos = 552,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none

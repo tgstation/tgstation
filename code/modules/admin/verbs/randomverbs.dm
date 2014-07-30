@@ -594,7 +594,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			return
 		if(M)
 			AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
-			M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+			M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason]</B></BIG>"
 			M << "\red This is a temporary ban, it will be removed in [mins] minutes."
 			M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
 			log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
@@ -609,7 +609,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(!reason)
 			return
 		AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-		M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+		M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason]</B></BIG>"
 		M << "\red This is a permanent ban."
 		M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
 		log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")

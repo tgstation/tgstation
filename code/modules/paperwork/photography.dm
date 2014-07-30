@@ -122,36 +122,8 @@
 /obj/item/device/camera/siliconcam/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
 
-/obj/item/device/camera/siliconcam/ai_camera/verb/picture()
-	set category ="AI Commands"
-	set name = "Take Image"
-	set src in usr
-
-	toggle_camera_mode()
-
-/obj/item/device/camera/siliconcam/ai_camera/verb/viewpicture()
-	set category ="AI Commands"
-	set name = "View Images"
-	set src in usr
-
-	viewpictures()
-
 /obj/item/device/camera/siliconcam/robot_camera //camera cyborgs can take pictures with.. needs it's own because of verb CATEGORY >.>
 	name = "Cyborg photo camera"
-
-/obj/item/device/camera/siliconcam/robot_camera/verb/picture()
-	set category ="Robot Commands"
-	set name = "Take Image"
-	set src in usr
-
-	toggle_camera_mode()
-
-/obj/item/device/camera/siliconcam/robot_camera/verb/viewpicture()
-	set category ="Robot Commands"
-	set name = "View Images"
-	set src in usr
-
-	viewpictures(usr)
 
 /obj/item/device/camera/siliconcam/robot_camera/verb/borgprinting()
 	set category ="Robot Commands"

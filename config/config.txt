@@ -111,10 +111,16 @@ GUEST_BAN
 # SERVER ss13.example.com:2506
 
 ## forum address
-# FORUMURL http://justanotherday.example.com
+# FORUMURL http://tgstation13.org/phpBB/index.php
 
 ## Wiki address
 # WIKIURL http://www.tgstation13.org/wiki
+
+##Rules address
+# RULESURL http://www.tgstation13.org/wiki/Rules
+
+##Github address
+# GITHUBURL https://www.github.com/tgstation/-tg-station
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com

@@ -387,10 +387,11 @@ What a mess.*/
 						while(active2.fields[text("com_[]", counter)])
 							P.info += text("[]<BR>", active2.fields[text("com_[]", counter)])
 							counter++
+						P.name = text("SR-[] '[]'", data_core.securityPrintCount, active1.fields["name"])
 					else
 						P.info += "<B>Security Record Lost!</B><BR>"
+						P.name = text("SR-[] '[]'", data_core.securityPrintCount, "Record Lost")
 					P.info += "</TT>"
-					P.name = text("SR-[] '[]'", data_core.securityPrintCount, active1.fields["name"])
 					printing = null
 //RECORD DELETE
 			if ("Delete All Records")
