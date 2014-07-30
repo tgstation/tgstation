@@ -38,7 +38,7 @@
 	speed = 5
 	small = 1
 	density = 0
-	a_intent = "harm"
+	a_intent = "hurt"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attacktext = "nips"
