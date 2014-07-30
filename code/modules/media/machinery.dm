@@ -3,6 +3,7 @@
 	var/playing=0
 	var/media_url=""
 	var/media_start_time=0
+	var/volume = 1 // 0 - 1 for ease of coding.
 
 	var/area/master_area
 
