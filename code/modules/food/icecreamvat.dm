@@ -11,7 +11,6 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/useramount = 15	//Last used amount
 
-
 /obj/machinery/icemachine/proc/generate_name(reagent_name)
 	var/name_prefix = pick("Mr.","Mrs.","Super","Happy","Whippy")
 	var/name_suffix = pick(" Whippy "," Slappy "," Creamy "," Dippy "," Swirly "," Swirl ")
@@ -42,7 +41,6 @@
 		return
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/icecream))
 		if(!I.reagents.has_reagent("sprinkles"))
-			if(I.reagents.total_volume > 29) I.reagents.remove_any(1)
 			I.reagents.add_reagent("sprinkles",1)
 			var/image/sprinkles = image('icons/obj/kitchen.dmi', src, "sprinkles")
 			I.overlays += sprinkles
@@ -50,17 +48,6 @@
 			I.desc += ". This also has sprinkles."
 		else
 			user << "<span class='notice'>This [I] already has sprinkles.</span>"
-
-
-/obj/machinery/icemachine/proc/validexchange(reag)
-	if(reag == "sprinkles" | reag == "cola" | reag == "kahlua" | reag == "dr_gibb" | reag == "vodka" | reag == "space_up" | reag == "rum" | reag == "spacemountainwind" | reag == "gin" | reag == "cream" | reag == "water")
-		return 1
-	else
-		if(reagents.total_volume < 500)
-			usr << "<span class='notice'>[src] vibrates for a moment, apparently accepting the unknown liquid.</span>"
-			playsound(loc, 'sound/machines/twobeep.ogg', 10, 1)
-		return 1
-
 
 /obj/machinery/icemachine/Topic(href, href_list)
 	if(..()) return
@@ -80,24 +67,20 @@
 		A = beaker
 		R = A.reagents
 
-	if(href_list["add"])
-		if(href_list["amount"])
-			var/id = href_list["add"]
-			var/amount = text2num(href_list["amount"])
-			if(validexchange(id))
-				R.trans_id_to(src, id, amount)
+	if(href_list["add"] && href_list["amount"])
+		var/id = href_list["add"]
+		var/amount = text2num(href_list["amount"])
+		R.trans_id_to(src, id, amount)
 
-	else if(href_list["remove"])
-		if(href_list["amount"])
-			var/id = href_list["remove"]
-			var/amount = text2num(href_list["amount"])
-			if(beaker == null)
-				reagents.remove_reagent(id,amount)
-			else
-				if(validexchange(id))
-					reagents.trans_id_to(A, id, amount)
-				else
-					reagents.remove_reagent(id,amount)
+	else if(href_list["remove"] && href_list["amount"])
+		var/id = href_list["remove"]
+		var/amount = text2num(href_list["amount"])
+		if(!reagents.has_reagent(id))
+			return
+		if(beaker == null)
+			reagents.remove_reagent(id,amount)
+		else
+			reagents.trans_id_to(A, id, amount)
 
 	else if(href_list["main"])
 		attack_hand(usr)
@@ -112,42 +95,39 @@
 	else if(href_list["synthcond"])
 		if(href_list["type"])
 			var/ID = text2num(href_list["type"])
-			/*
-			if(ID == 1)
-				reagents.add_reagent("sprinkles",1)
-				*/ //Sprinkles are now created by using the ice cream on the machine
-			if(ID == 2 | ID == 3)
-				var/brand = pick(1,2,3,4)
-				if(brand == 1)
-					if(ID == 2)
-						reagents.add_reagent("cola",5)
-					else
-						reagents.add_reagent("kahlua",5)
-				else if(brand == 2)
-					if(ID == 2)
-						reagents.add_reagent("dr_gibb",5)
-					else
-						reagents.add_reagent("vodka",5)
-				else if(brand == 3)
-					if(ID == 2)
-						reagents.add_reagent("space_up",5)
-					else
-						reagents.add_reagent("rum",5)
-				else if(brand == 4)
-					if(ID == 2)
-						reagents.add_reagent("spacemountainwind",5)
-					else
-						reagents.add_reagent("gin",5)
-			else if(ID == 4)
-				if(reagents.total_volume <= 500 & reagents.total_volume >= 15)
-					reagents.add_reagent("cream",(30 - reagents.total_volume))
-				else if(reagents.total_volume <= 15)
-					reagents.add_reagent("cream",(15 - reagents.total_volume))
-			else if(ID == 5)
-				if(reagents.total_volume <= 500 & reagents.total_volume >= 15)
-					reagents.add_reagent("water",(30 - reagents.total_volume))
-				else if(reagents.total_volume <= 15)
-					reagents.add_reagent("water",(15 - reagents.total_volume))
+			switch(ID)
+				if(2 to 3)
+					var/brand = pick(1,2,3,4)
+					if(brand == 1)
+						if(ID == 2)
+							reagents.add_reagent("cola",5)
+						else
+							reagents.add_reagent("kahlua",5)
+					else if(brand == 2)
+						if(ID == 2)
+							reagents.add_reagent("dr_gibb",5)
+						else
+							reagents.add_reagent("vodka",5)
+					else if(brand == 3)
+						if(ID == 2)
+							reagents.add_reagent("space_up",5)
+						else
+							reagents.add_reagent("rum",5)
+					else if(brand == 4)
+						if(ID == 2)
+							reagents.add_reagent("spacemountainwind",5)
+						else
+							reagents.add_reagent("gin",5)
+				else if(ID == 4)
+					if(reagents.total_volume <= 500 & reagents.total_volume >= 15)
+						reagents.add_reagent("cream",(30 - reagents.total_volume))
+					else if(reagents.total_volume <= 15)
+						reagents.add_reagent("cream",(15 - reagents.total_volume))
+				else if(ID == 5)
+					if(reagents.total_volume <= 500 & reagents.total_volume >= 15)
+						reagents.add_reagent("water",(30 - reagents.total_volume))
+					else if(reagents.total_volume <= 15)
+						reagents.add_reagent("water",(15 - reagents.total_volume))
 
 	else if(href_list["createcup"])
 		var/name = generate_name(reagents.get_master_reagent_name())
@@ -157,8 +137,8 @@
 		C.name = "[name]"
 		C.pixel_x = rand(-8, 8)
 		C.pixel_y = -16
-		reagents.trans_to(C,30)
 		if(reagents)
+			reagents.trans_to(C,30)
 			reagents.clear_reagents()
 		C.update_icon()
 
@@ -170,8 +150,8 @@
 		C.name = "[name]"
 		C.pixel_x = rand(-8, 8)
 		C.pixel_y = -16
-		reagents.trans_to(C,15)
 		if(reagents)
+			reagents.trans_to(C,15)
 			reagents.clear_reagents()
 		C.update_icon()
 	updateUsrDialog()

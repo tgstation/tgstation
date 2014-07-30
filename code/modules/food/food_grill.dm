@@ -17,35 +17,34 @@
 	if(istype(I, /obj/item/weapon/grab)||istype(I, /obj/item/tk_grab))
 		user << "<span class='warning'>That isn't going to fit.</span>"
 		return
-	else
-		user << "<span class='notice'>You put [I] onto [src].</span>"
-		on = TRUE
-		user.drop_item()
-		I.loc = src
-		icon_state = "grill_on"
+	user << "<span class='notice'>You put [I] onto [src].</span>"
+	on = TRUE
+	user.drop_item()
+	I.loc = src
+	icon_state = "grill_on"
 
-		var/image/img = new(I.icon, I.icon_state)
-		img.pixel_y = 5
-		overlays += img
-		sleep(200)
-		overlays.Cut()
-		img.color = "#C28566"
-		overlays += img
-		sleep(200)
-		overlays.Cut()
-		img.color = "#A34719"
-		overlays += img
-		sleep(50)
-		overlays.Cut()
+	var/image/img = new(I.icon, I.icon_state)
+	img.pixel_y = 5
+	overlays += img
+	sleep(200)
+	overlays.Cut()
+	img.color = "#C28566"
+	overlays += img
+	sleep(200)
+	overlays.Cut()
+	img.color = "#A34719"
+	overlays += img
+	sleep(50)
+	overlays.Cut()
 
-		on = FALSE
-		icon_state = "grill_off"
+	on = FALSE
+	icon_state = "grill_off"
 
-		if(istype(I, /obj/item/weapon/reagent_containers/))
-			var/obj/item/weapon/reagent_containers/food = I
-			food.reagents.add_reagent("nutriment", 10)
-			food.reagents.trans_to(I, food.reagents.total_volume)
-		I.loc = get_turf(src)
-		I.color = "#A34719"
-		var/tempname = I.name
-		I.name = "grilled [tempname]"
+	if(istype(I, /obj/item/weapon/reagent_containers/))
+		var/obj/item/weapon/reagent_containers/food = I
+		food.reagents.add_reagent("nutriment", 10)
+		food.reagents.trans_to(I, food.reagents.total_volume)
+	I.loc = get_turf(src)
+	I.color = "#A34719"
+	var/tempname = I.name
+	I.name = "grilled [tempname]"

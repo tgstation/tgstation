@@ -32,28 +32,26 @@
 	if(istype(I, /obj/item/weapon/disk/nuclear))
 		user << "Central command would kill you if you deep fried that."
 		return
-	else
-		user << "<span class='notice'>You put [I] into [src].</span>"
-		on = TRUE
-		user.drop_item()
-		frying = I
-		frying.loc = src
-		icon_state = "fryer_on"
-		sleep(200)
+	user << "<span class='notice'>You put [I] into [src].</span>"
+	on = TRUE
+	user.drop_item()
+	frying = I
+	frying.loc = src
+	icon_state = "fryer_on"
+	sleep(200)
 
-		if(frying && frying.loc == src)
-			var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
-			if(istype(frying, /obj/item/weapon/reagent_containers/))
-				var/obj/item/weapon/reagent_containers/food = frying
-				food.reagents.trans_to(S, food.reagents.total_volume)
-			S.color = "#FFAD33"
-			S.icon = frying.icon
-			S.icon_state = frying.icon_state
-			S.overlays += frying.overlays
-			S.name = "deep fried [frying.name]"
-			S.desc = I.desc
-			frying.loc = S	//this might be a bad idea.
-
+	if(frying && frying.loc == src)
+		var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
+		if(istype(frying, /obj/item/weapon/reagent_containers/))
+			var/obj/item/weapon/reagent_containers/food = frying
+			food.reagents.trans_to(S, food.reagents.total_volume)
+		S.color = "#FFAD33"
+		S.icon = frying.icon
+		S.icon_state = frying.icon_state
+		S.overlays += frying.overlays
+		S.name = "deep fried [frying.name]"
+		S.desc = I.desc
+		frying.loc = S	//this might be a bad idea.
 		icon_state = "fryer_off"
 		on = FALSE
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)

@@ -1,3 +1,7 @@
+var/global/list/oven_choices = typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/cook)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/cook)
+var/global/list/candy_choices = typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy)
+var/global/list/still_choices = typesof(/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/)-(/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/)
+
 /obj/machinery/cooking
 	name = "oven"
 	desc = "Cookies are ready, dear."
@@ -36,29 +40,27 @@
 	if(!istype(I,/obj/item/weapon/reagent_containers/food/snacks/grown/) && grown_only)
 		user << "You can only still grown items."
 		return
-	else
-		var/obj/item/weapon/reagent_containers/food/snacks/F = I
-		var/obj/item/weapon/reagent_containers/food/snacks/customizable/C
-		user.drop_item()
-		F.loc = src
-		C = input("Select food to make.", "Cooking", C) in food_choices
-		if(!C)
-			F.loc = user.loc
-			return
-		else
-			user << "You put [F] into [src] for [production_meth]."
-			user.drop_item()
-			F.loc = src
-			on = TRUE
-			icon_state = "[orig]_on"
-			sleep(100)
-			on = FALSE
-			icon_state = "[orig]_off"
-			C.loc = get_turf(src)
-			C.attackby(F,user)
-			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
-			updatefood()
-			return
+
+	var/obj/item/weapon/reagent_containers/food/snacks/F = I
+	var/obj/item/weapon/reagent_containers/food/C
+	user.drop_item()
+	F.loc = src
+	C = input("Select food to make.", "Cooking", C) in food_choices
+	if(!C)
+		return
+	user << "You put [F] into [src] for [production_meth]."
+	user.drop_item()
+	F.loc = src
+	on = TRUE
+	icon_state = "[orig]_on"
+	sleep(100)
+	on = FALSE
+	icon_state = "[orig]_off"
+	var/obj/item/weapon/reagent_containers/food/foodtype = new C.type(src.loc)
+	foodtype.loc = get_turf(src)
+	foodtype.attackby(F,user)
+	playsound(loc, 'sound/machines/ding.ogg', 50, 1)
+	return
 
 /obj/machinery/cooking/proc/updatefood()
 	return
@@ -68,12 +70,18 @@
 	desc = "Cookies are ready, dear."
 	icon_state = "oven_off"
 
+/obj/machinery/cooking/oven/New()
+	var/list/foodtemp = oven_choices
+	oven_choices = list()
+	for(var/F in foodtemp)
+		var/obj/item/weapon/reagent_containers/food/snacks/customizable/cook/V = new F
+		oven_choices.Add(V)
+	..()
+
 /obj/machinery/cooking/oven/updatefood()
 	for(var/U in food_choices)
 		food_choices.Remove(U)
-	for(var/U in typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/cook)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/cook))
-		var/obj/item/weapon/reagent_containers/food/snacks/customizable/cook/V = new U
-		src.food_choices += V
+	src.food_choices = oven_choices
 	return
 
 /obj/machinery/cooking/candy
@@ -83,12 +91,18 @@
 	orig = "mixer"
 	production_meth = "candizing"
 
+/obj/machinery/cooking/candy/New()
+	var/list/foodtemp = candy_choices
+	candy_choices = list()
+	for(var/F in foodtemp)
+		var/obj/item/weapon/reagent_containers/food/snacks/customizable/candy/V = new F
+		candy_choices.Add(V)
+	..()
+
 /obj/machinery/cooking/candy/updatefood()
 	for(var/U in food_choices)
 		food_choices.Remove(U)
-	for(var/U in typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy))
-		var/obj/item/weapon/reagent_containers/food/snacks/customizable/candy/V = new U
-		src.food_choices += V
+	src.food_choices = candy_choices
 	return
 
 
@@ -100,10 +114,16 @@
 	grown_only = 1
 	production_meth = "brewing"
 
+/obj/machinery/cooking/still/New()
+	var/list/foodtemp = still_choices
+	still_choices = list()
+	for(var/F in foodtemp)
+		var/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/V = new F
+		still_choices.Add(V)
+	..()
+
 /obj/machinery/cooking/still/updatefood()
 	for(var/U in food_choices)
 		food_choices.Remove(U)
-	for(var/U in typesof(/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/)-(/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/))
-		var/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/V = new U
-		src.food_choices += V
+	src.food_choices = still_choices
 	return
