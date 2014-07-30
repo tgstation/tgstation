@@ -96,7 +96,7 @@
 			D.holder = null
 		..()
 
-/obj/effect/decal/cleanable/vomit/HasEntered(mob/living/carbon/human/perp)
+/obj/effect/decal/cleanable/vomit/Crossed(mob/living/carbon/human/perp)
 	if (!istype(perp))
 		return
 	if(amount < 1)
