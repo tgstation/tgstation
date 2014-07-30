@@ -55,6 +55,7 @@
 //	var/offsetstuff = 1 //Do we offset the overlays?
 	var/sandwich_limit = 2000
 	var/fullycustom = 0
+	var/list/descriptors = list("absurd","colossal","enormous","ridiculous","massive","oversized","cardiac-arresting","pipe-clogging","edible but sickening","sickening","gargantuan","mega","belly-burster","chest-burster")
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
@@ -338,24 +339,24 @@
 				else
 					I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 			if(add_overlays)
-				I.pixel_x = pick(list(-1,0,1))
+				I.pixel_x = rand(-1,1)
 				I.pixel_y = (i*2)+1
 			overlays += I
 		else
 			var/image/F = new(O.icon, O.icon_state)
-			F.pixel_x = pick(list(-1,0,1))
-			F.pixel_y = pick(list(-1,0,1))
+			F.pixel_x = rand(-1,1)
+			F.pixel_y = rand(-1,1)
 			overlays += F
 			overlays += O.overlays
 
 	if(top)
 		var/image/T = new(src.icon, "[baseicon]_top")
-		T.pixel_x = pick(list(-1,0,1))
+		T.pixel_x = rand(-1,1)
 		T.pixel_y = (ingredients.len * 2)+1
 		overlays += T
 
 	name = lowertext("[fullname] [basename]")
-	if(length(name) > 80) name = "[pick(list("absurd","colossal","enormous","ridiculous","massive","oversized","cardiac-arresting","pipe-clogging","edible but sickening","sickening","gargantuan","mega","belly-burster","chest-burster"))] [basename]"
+	if(length(name) > 80) name = "[pick(descriptors)] [basename]"
 	w_class = n_ceil(Clamp((ingredients.len/2),1,3))
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/Destroy()
@@ -480,11 +481,6 @@
 		i++
 		if(i == 1)
 			fullname += "[O.name]"
-		else if(i == ingredients.len)
-			fullname += ""
-		else
-			fullname += ""
-
 		if(!fullycustom)
 			var/image/I = new(src.icon, "[baseicon]_filling")
 			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))
@@ -494,13 +490,13 @@
 				else
 					I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 			if(add_overlays)
-				I.pixel_x = pick(list(-1,0,1))
+				I.pixel_x = rand(-1,1)
 				I.pixel_y = (i*2)+1
 			overlays += I
 		else
 			var/image/F = new(O.icon, O.icon_state)
-			F.pixel_x = pick(list(-1,0,1))
-			F.pixel_y = pick(list(-1,0,1))
+			F.pixel_x = rand(-1,1)
+			F.pixel_y = rand(-1,1)
 			overlays += F
 			overlays += O.overlays
 

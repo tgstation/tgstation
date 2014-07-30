@@ -13,11 +13,9 @@
 
 /obj/machinery/icemachine/proc/generate_name(reagent_name)
 	var/name_prefix = pick("Mr.","Mrs.","Super","Happy","Whippy")
-	var/name_suffix = pick(" Whippy "," Slappy "," Creamy "," Dippy "," Swirly "," Swirl ")
+	var/name_suffix = pick("Whippy","Slappy","Creamy","Dippy","Swirly","Swirl")
 	var/cone_name = null	//Heart failure prevention.
-	cone_name += name_prefix
-	cone_name += name_suffix
-	cone_name += "[reagent_name]"
+	cone_name += "[name_prefix] [name_suffix] [reagent_name]"
 	return cone_name
 
 
@@ -118,16 +116,10 @@
 							reagents.add_reagent("spacemountainwind",5)
 						else
 							reagents.add_reagent("gin",5)
-				else if(ID == 4)
-					if(reagents.total_volume <= 500 & reagents.total_volume >= 15)
-						reagents.add_reagent("cream",(30 - reagents.total_volume))
-					else if(reagents.total_volume <= 15)
-						reagents.add_reagent("cream",(15 - reagents.total_volume))
-				else if(ID == 5)
-					if(reagents.total_volume <= 500 & reagents.total_volume >= 15)
-						reagents.add_reagent("water",(30 - reagents.total_volume))
-					else if(reagents.total_volume <= 15)
-						reagents.add_reagent("water",(15 - reagents.total_volume))
+				if(4)
+					reagents.add_reagent("cream",5)
+				if(5)
+					reagents.add_reagent("water",5)
 
 	else if(href_list["createcup"])
 		var/name = generate_name(reagents.get_master_reagent_name())

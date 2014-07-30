@@ -21,7 +21,7 @@
 		user << "<span class='notice'>[src] is still active!</span>"
 		return
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
-		user << "<span class='userdanger'>[I] is already deepfried, you vomituous deviant. This attempt has been logged.</span>"
+		user << "<span class='userdanger'>[I] is already deepfried, you vomituous deviant.</span>"
 		return
 	if(istype(I, /obj/item/weapon/grab) || istype(I, /obj/item/tk_grab))
 		user << "<span class='warning'>That isn't going to fit.</span>"
@@ -51,7 +51,7 @@
 		S.overlays += frying.overlays
 		S.name = "deep fried [frying.name]"
 		S.desc = I.desc
-		frying.loc = S	//this might be a bad idea.
+		qdel(frying)
 		icon_state = "fryer_off"
 		on = FALSE
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
