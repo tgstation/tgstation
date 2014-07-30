@@ -18,6 +18,13 @@
 		cargo_holder = M
 		return
 
+	detach(atom/moveto = null)
+		..()
+		if(can_attach(chassis))
+			cargo_holder = chassis
+		else
+			cargo_holder = null
+
 	action(atom/target)
 		if(!action_checks(target)) return
 		if(!cargo_holder) return
@@ -657,6 +664,11 @@
 		pr_repair_droid.set_delay(equip_cooldown)
 		return
 
+	Destroy()
+		qdel(pr_repair_droid)
+		pr_repair_droid = null
+		..()
+
 	attach(obj/mecha/M as obj)
 		..()
 		droid_overlay = new(src.icon, icon_state = "repair_droid")
@@ -745,6 +757,11 @@
 		pr_energy_relay = new /datum/global_iterator/mecha_energy_relay(list(src),0)
 		pr_energy_relay.set_delay(equip_cooldown)
 		return
+
+	Destroy()
+		qdel(pr_energy_relay)
+		pr_energy_relay = null
+		..()
 
 	detach()
 		pr_energy_relay.stop()
@@ -861,6 +878,11 @@
 		..()
 		init()
 		return
+
+	Destroy()
+		qdel(pr_mech_generator)
+		pr_mech_generator = null
+		..()
 
 	proc/init()
 		fuel = new /obj/item/stack/sheet/mineral/plasma(src)

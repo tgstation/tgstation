@@ -8,7 +8,7 @@
 	icon_state = "ore_redemption"
 	density = 1
 	anchored = 1.0
-	input_dir = WEST
+	input_dir = NORTH
 	output_dir = SOUTH
 	req_access = list(access_mineral_storeroom)
 	var/stk_types = list()
@@ -17,6 +17,15 @@
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("gold" = 20), ("silver" = 20), ("uranium" = 20), ("bananium" = 30), ("diamond" = 40), ("plasma" = 40))
+
+/obj/machinery/mineral/ore_redemption/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/ore_redemption(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/device/assembly/igniter(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
 
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
@@ -30,25 +39,26 @@
 		O.loc = null //Let the old sheet garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()
-	var/turf/T = get_turf(get_step(src, input_dir))
-	var/i
-	if(T)
-		if(locate(/obj/item/weapon/ore) in T)
-			for (i = 0; i < 10; i++)
-				var/obj/item/weapon/ore/O = locate() in T
-				if(O)
-					process_sheet(O)
-				else
-					break
-		else
-			var/obj/structure/ore_box/B = locate() in T
-			if(B)
+	if(!panel_open) //If the machine is partially dissassembled, it should not process minerals
+		var/turf/T = get_turf(get_step(src, input_dir))
+		var/i
+		if(T)
+			if(locate(/obj/item/weapon/ore) in T)
 				for (i = 0; i < 10; i++)
-					var/obj/item/weapon/ore/O = locate() in B.contents
+					var/obj/item/weapon/ore/O = locate() in T
 					if(O)
 						process_sheet(O)
 					else
 						break
+			else
+				var/obj/structure/ore_box/B = locate() in T
+				if(B)
+					for (i = 0; i < 10; i++)
+						var/obj/item/weapon/ore/O = locate() in B.contents
+						if(O)
+							process_sheet(O)
+						else
+							break
 
 /obj/machinery/mineral/ore_redemption/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(istype(W,/obj/item/weapon/card/id))
@@ -58,6 +68,18 @@
 			I.loc = src
 			inserted_id = I
 			interact(user)
+		return
+	if(panel_open)
+		if(istype(W, /obj/item/weapon/crowbar))
+			for (var/obj/O in src.contents)
+				O.loc = src.loc //Drop item to the floor
+				O.layer = initial(O.layer)
+			default_deconstruction_crowbar(W)
+		return 1
+	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
+		updateUsrDialog()
+		return
+	..()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.refined_type)
@@ -142,8 +164,23 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/ore_redemption/ex_act()
-	return //So some chucklefuck doesn't ruin miners reward with an explosion
+/obj/machinery/mineral/ore_redemption/ex_act(severity)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	if(severity == 1)
+		if(prob(50))
+			for (var/obj/O in src.contents)
+				O.loc = src.loc //Drop item to the floor
+				O.layer = initial(O.layer)
+			qdel(src)
+	else if(severity == 2)
+		if(prob(25))
+			for (var/obj/O in src.contents)
+				O.loc = src.loc //Drop item to the floor
+				O.layer = initial(O.layer)
+			qdel(src)
+	return
 
 /**********************Mining Equipment Vendor**************************/
 
@@ -183,6 +220,16 @@
 	src.equipment_name = name
 	src.equipment_path = path
 	src.cost = cost
+
+/obj/machinery/mineral/equipment_vendor/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
 
 /obj/machinery/mineral/equipment_vendor/attack_hand(user as mob)
 	if(..())
@@ -246,6 +293,13 @@
 			inserted_id = C
 			interact(user)
 		return
+	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
+		updateUsrDialog()
+		return
+	if(panel_open)
+		if(istype(I, /obj/item/weapon/crowbar))
+			default_deconstruction_crowbar(I)
+		return 1
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
@@ -262,8 +316,16 @@
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_vendor/ex_act()
-	return
+/obj/machinery/mineral/equipment_vendor/ex_act(severity)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	if(severity == 1)
+		if(prob(50))
+			qdel(src)
+	else if(severity == 2)
+		if(prob(25))
+			qdel(src)
 
 /**********************Mining Equipment Vendor Items**************************/
 
@@ -457,7 +519,7 @@
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	stop_automated_movement_when_pulled = 1
 	mouse_opacity = 1
-	faction = "neutral"
+	faction = list("neutral")
 	a_intent = "harm"
 	min_oxy = 0
 	max_oxy = 0
@@ -601,12 +663,12 @@
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
-				M.faction = "neutral"
+				M.faction = list("neutral")
 				M.revive()
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
-						M.faction = "lazarus"
+						M.faction = list("lazarus")
 						H.friends += user
 						H.attack_same = 1
 						log_game("[user] has revived hostile mob [target] with a malfunctioning lazarus injector")

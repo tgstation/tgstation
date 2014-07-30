@@ -958,6 +958,12 @@ steam.start() -- spawns the effect
 		attack_hand(user)
 		return
 
+	attack_animal(var/mob/living/simple_animal/M)
+		if(M.environment_smash >= 1)
+			M << "<span class='notice'>You smash apart the foam wall.</span>"
+			qdel(src)
+			return
+
 	attack_hand(var/mob/user)
 		if ((HULK in user.mutations) || (prob(75 - metal*25)))
 			user << "\blue You smash through the metal foam wall."

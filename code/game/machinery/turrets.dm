@@ -78,6 +78,8 @@
 	spark_system.attach(src)
 //	targets = new
 	..()
+	src.cover = new /obj/machinery/turretcover(src.loc)
+	src.cover.host = src
 	return
 
 /obj/machinery/turretcover
@@ -168,8 +170,9 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(src.cover==null)
-		src.cover = new /obj/machinery/turretcover(src.loc)
-		src.cover.host = src
+		src.loc = null
+		qdel(src)
+		return ..()
 	protected_area = get_protected_area()
 	if(!enabled || !protected_area || protected_area.turretTargets.len<=0)
 		if(!isDown() && !isPopping())
@@ -580,12 +583,14 @@
 	var/list/pos_targets = list()
 	var/target = null
 	for(var/mob/living/M in view(scan_range,src))
-		if(M.stat || faction == M.faction)
+		if(M.stat)
+			continue
+		if(faction in M.faction)
 			continue
 		pos_targets += M
 	for(var/obj/mecha/M in oview(scan_range, src))
 		if(M.occupant)
-			if(faction == M.occupant.faction)
+			if(faction in M.occupant.faction)
 				continue
 		if(!M.occupant)
 			continue //Don't shoot at empty mechs.

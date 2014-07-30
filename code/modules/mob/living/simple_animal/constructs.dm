@@ -24,7 +24,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
-	faction = "cult"
+	faction = list("cult")
 	var/list/construct_spells = list()
 	var/playstyle_string = "<B>You are a generic construct! Your job is to not exist.</B>"
 

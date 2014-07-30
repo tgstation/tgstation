@@ -47,6 +47,9 @@ var/bomb_set
 /obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
+/obj/machinery/nuclearbomb/attack_ai(mob/user as mob)
+	return
+
 /obj/machinery/nuclearbomb/attack_hand(mob/user as mob)
 	user.set_machine(src)
 	var/dat = text("<TT>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
