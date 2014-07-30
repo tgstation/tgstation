@@ -290,7 +290,7 @@
 			return
 	return ..()
 
-/obj/item/weapon/shard/HasEntered(AM as mob|obj)
+/obj/item/weapon/shard/Crossed(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
 		M << "\red <B>You step in the broken glass!</B>"
