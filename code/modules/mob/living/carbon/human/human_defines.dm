@@ -1,13 +1,13 @@
 /mob/living/carbon/human
-	//Hair colour and style
+	//Hair color and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
 
-	//Facial hair colour and style
+	//Facial hair color and style
 	var/facial_hair_color = "000"
 	var/facial_hair_style = "Shaved"
 
-	//Eye colour
+	//Eye color
 	var/eye_color = "000"
 
 	var/skin_tone = "caucasian1"	//Skin tone

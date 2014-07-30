@@ -100,7 +100,7 @@
 	qdel(src)
 
 /obj/effect/landmark/corpse/slimeCorpse
-	var/mobcolour = "grey"
+	var/mobcolor = "grey"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime" //sets the icon in the map editor
 
@@ -109,7 +109,7 @@
 	if(A) //if variable A is true
 		return //stop executing the proc
 	var/mob/living/carbon/slime/M = new(src.loc) //variable M is a new slime at the location of the landmark
-	M.colour = src.mobcolour //slime colour is set by landmark's mobcolour var
+	M.color = src.mobcolor //slime color is set by landmark's mobcolor var
 	M.adjustToxLoss(9001) //kills the slime, death() doesn't update its icon correctly
 	qdel(src)
 

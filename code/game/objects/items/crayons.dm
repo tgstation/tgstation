@@ -1,65 +1,65 @@
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
-	colour = "#DA0000"
-	colourName = "red"
+	color = "#DA0000"
+	colorName = "red"
 
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
-	colour = "#FF9300"
-	colourName = "orange"
+	color = "#FF9300"
+	colorName = "orange"
 
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
-	colour = "#FFF200"
-	colourName = "yellow"
+	color = "#FFF200"
+	colorName = "yellow"
 
 
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
-	colour = "#A8E61D"
-	colourName = "green"
+	color = "#A8E61D"
+	colorName = "green"
 
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
-	colour = "#00B7EF"
-	colourName = "blue"
+	color = "#00B7EF"
+	colorName = "blue"
 
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
-	colour = "#DA00FF"
-	colourName = "purple"
+	color = "#DA00FF"
+	colorName = "purple"
 
 
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
-	colour = "#FFFFFF"
-	colourName = "mime"
+	color = "#FFFFFF"
+	colorName = "mime"
 	uses = 0
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user as mob) //inversion
-	if(colour != "#FFFFFF")
-		colour = "#FFFFFF"
+	if(color != "#FFFFFF")
+		color = "#FFFFFF"
 		user << "You will now draw in white with this crayon."
 	else
-		colour = "#000000"
+		color = "#000000"
 		user << "You will now draw in black with this crayon."
 	return
 
 /obj/item/toy/crayon/rainbow
 	icon_state = "crayonrainbow"
-	colour = "#FFF000"
-	colourName = "rainbow"
+	color = "#FFF000"
+	colorName = "rainbow"
 	uses = 0
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user as mob)
-	colour = input(user, "Please select the main colour.", "Crayon colour") as color
+	color = input(user, "Please select the main color.", "Crayon color") as color
 	return
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
@@ -75,7 +75,7 @@
 			if("rune")
 				user << "You start drawing a rune on the [target.name]."
 		if(instant || do_after(user, 50))
-			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype)
+			new /obj/effect/decal/cleanable/crayon(target,color,drawtype)
 			user << "You finish drawing."
 			if(uses)
 				uses--

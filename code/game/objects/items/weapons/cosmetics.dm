@@ -5,36 +5,36 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
 	w_class = 1
-	var/colour = "red"
+	var/lipstickcolor = "red"
 	var/open = 0
 
 
 /obj/item/weapon/lipstick/purple
 	name = "purple lipstick"
-	colour = "purple"
+	lipstickcolor = "purple"
 
 /obj/item/weapon/lipstick/jade
 	name = "jade lipstick"
-	colour = "jade"
+	lipstickcolor = "jade"
 
 /obj/item/weapon/lipstick/black
 	name = "black lipstick"
-	colour = "black"
+	lipstickcolor = "black"
 
 
 /obj/item/weapon/lipstick/random
 	name = "lipstick"
 
 /obj/item/weapon/lipstick/random/New()
-	colour = pick("red","purple","jade","black")
-	name = "[colour] lipstick"
+	lipstickcolor = pick("red","purple","jade","black")
+	name = "[lipstickcolor] lipstick"
 
 
 /obj/item/weapon/lipstick/attack_self(mob/user)
 	user << "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>"
 	open = !open
 	if(open)
-		icon_state = "[initial(icon_state)]_[colour]"
+		icon_state = "[initial(icon_state)]_[lipstickcolor]"
 	else
 		icon_state = initial(icon_state)
 
@@ -51,7 +51,7 @@
 		if(H == user)
 			user.visible_message("<span class='notice'>[user] does their lips with \the [src].</span>", \
 								 "<span class='notice'>You take a moment to apply \the [src]. Perfect!</span>")
-			H.lip_style = colour
+			H.lip_style = lipstickcolor
 			H.update_body()
 		else
 			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
@@ -59,7 +59,7 @@
 			if(do_after(user, 20) && do_after(H, 20, 5, 0))	//user needs to keep their active hand, H does not.
 				user.visible_message("<span class='notice'>[user] does [H]'s lips with \the [src].</span>", \
 									 "<span class='notice'>You apply \the [src].</span>")
-				H.lip_style = colour
+				H.lip_style = lipstickcolor
 				H.update_body()
 	else
 		user << "<span class='notice'>Where are the lips on that?</span>"

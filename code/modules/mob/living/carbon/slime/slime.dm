@@ -49,7 +49,7 @@
 
 	///////////TIME FOR SUBSPECIES
 
-	var/colour = "grey"
+	var/slimecolor = "grey"
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
@@ -57,17 +57,17 @@
 	create_reagents(100)
 	spawn (0)
 		number = rand(1, 1000)
-		name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
-		icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
+		name = "[slimecolor] [is_adult ? "adult" : "baby"] slime ([number])"
+		icon_state = "[slimecolor] [is_adult ? "adult" : "baby"] slime"
 		real_name = name
-		slime_mutation = mutation_table(colour)
+		slime_mutation = mutation_table(slimecolor)
 		mutation_chance = rand(25, 35)
-		var/sanitizedcolour = replacetext(colour, " ", "")
-		coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
+		var/sanitizedcolor = replacetext(slimecolor, " ", "")
+		coretype = text2path("/obj/item/slime_extract/[sanitizedcolor]")
 	..()
 
 /mob/living/carbon/slime/regenerate_icons()
-	icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
+	icon_state = "[slimecolor] [is_adult ? "adult" : "baby"] slime"
 	overlays.len = 0
 	if (mood)
 		overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
@@ -732,10 +732,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user << "<span class='warning'> The slime resists!</span>"
 			return ..()
 		var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
-		pet.icon_state = "[M.colour] baby slime"
-		pet.icon_living = "[M.colour] baby slime"
-		pet.icon_dead = "[M.colour] baby slime dead"
-		pet.colour = "[M.colour]"
+		pet.icon_state = "[M.slimecolor] baby slime"
+		pet.icon_living = "[M.slimecolor] baby slime"
+		pet.icon_dead = "[M.slimecolor] baby slime dead"
+		pet.color = "[M.slimecolor]"
 		user <<"You feed the slime the potion, removing it's powers and calming it."
 		qdel(M)
 		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
@@ -763,10 +763,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user << "<span class='warning'> The slime resists!</span>"
 			return ..()
 		var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
-		pet.icon_state = "[M.colour] adult slime"
-		pet.icon_living = "[M.colour] adult slime"
-		pet.icon_dead = "[M.colour] baby slime dead"
-		pet.colour = "[M.colour]"
+		pet.icon_state = "[M.slimecolor] adult slime"
+		pet.icon_living = "[M.slimecolor] adult slime"
+		pet.icon_dead = "[M.slimecolor] baby slime dead"
+		pet.color = "[M.slimecolor]"
 		user <<"You feed the slime the potion, removing it's powers and calming it."
 		qdel(M)
 		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)

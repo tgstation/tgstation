@@ -12,7 +12,7 @@ var/datum/global_hud/global_hud = new()
 	var/list/darkMask
 
 /datum/global_hud/New()
-	//420erryday psychedellic colours screen overlay for when you are high
+	//420erryday psychedellic colors screen overlay for when you are high
 	druggy = new /obj/screen()
 	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	druggy.icon_state = "druggy"

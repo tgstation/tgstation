@@ -26,7 +26,7 @@
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/sql_enabled = 0					// for sql switching
-	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
+	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc color
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/allow_vote_mode = 0				// allow votes to change mode
 	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)

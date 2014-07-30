@@ -13,7 +13,7 @@
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
 	ventcrawler = 2
-	var/colour = "grey"
+	var/slimecolor = "grey"
 
 /mob/living/simple_animal/slime/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -55,7 +55,7 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
-	var/colour = "grey"
+	var/slimecolor = "grey"
 
 /mob/living/simple_animal/adultslime/New()
 	..()
@@ -64,13 +64,13 @@
 
 /mob/living/simple_animal/slime/adult/Die()
 	var/mob/living/simple_animal/slime/S1 = new /mob/living/simple_animal/slime (src.loc)
-	S1.icon_state = "[src.colour] baby slime"
-	S1.icon_living = "[src.colour] baby slime"
-	S1.icon_dead = "[src.colour] baby slime dead"
-	S1.colour = "[src.colour]"
+	S1.icon_state = "[src.slimecolor] baby slime"
+	S1.icon_living = "[src.slimecolor] baby slime"
+	S1.icon_dead = "[src.slimecolor] baby slime dead"
+	S1.slimecolor = "[src.slimecolor]"
 	var/mob/living/simple_animal/slime/S2 = new /mob/living/simple_animal/slime (src.loc)
-	S2.icon_state = "[src.colour] baby slime"
-	S2.icon_living = "[src.colour] baby slime"
-	S2.icon_dead = "[src.colour] baby slime dead"
-	S2.colour = "[src.colour]"
+	S2.icon_state = "[src.slimecolor] baby slime"
+	S2.icon_living = "[src.slimecolor] baby slime"
+	S2.icon_dead = "[src.slimecolor] baby slime dead"
+	S2.slimecolor = "[src.slimecolor]"
 	qdel(src)

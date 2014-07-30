@@ -146,17 +146,17 @@
 
 /obj/item/weapon/storage/backpack/satchel_vir
 	name = "virologist satchel"
-	desc = "A sterile satchel with virologist colours."
+	desc = "A sterile satchel with virologist colors."
 	icon_state = "satchel-vir"
 
 /obj/item/weapon/storage/backpack/satchel_chem
 	name = "chemist satchel"
-	desc = "A sterile satchel with chemist colours."
+	desc = "A sterile satchel with chemist colors."
 	icon_state = "satchel-chem"
 
 /obj/item/weapon/storage/backpack/satchel_gen
 	name = "geneticist satchel"
-	desc = "A sterile satchel with geneticist colours."
+	desc = "A sterile satchel with geneticist colors."
 	icon_state = "satchel-gen"
 
 /obj/item/weapon/storage/backpack/satchel_tox
