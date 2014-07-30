@@ -1373,6 +1373,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Mining Storage"
 	icon_state = "green"
 
+/area/supply/miningdelivery
+	name = "\improper Mining Delivery"
+	icon_state = "mining_delivery"
+
 /area/supply/mechbay
 	name = "\improper Mech Bay"
 	icon_state = "yellow"
