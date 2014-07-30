@@ -730,7 +730,7 @@ var/global/mulebot_count = 0
 	return get_turf(src)
 
 
-// called from mob/living/carbon/human/HasEntered()
+// called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
 	src.visible_message("\red [src] drives over [H]!")

@@ -73,9 +73,9 @@
 	if(bombassembly)
 		bombassembly.HasProximity(AM)
 
-/obj/item/device/onetankbomb/HasEntered(AM as mob|obj)
+/obj/item/device/onetankbomb/Crossed(AM as mob|obj)
 	if(bombassembly)
-		bombassembly.HasEntered(AM)
+		bombassembly.Crossed(AM)
 
 /obj/item/device/onetankbomb/on_found(mob/finder as mob)
 	if(bombassembly)

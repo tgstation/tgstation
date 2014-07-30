@@ -291,6 +291,12 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>[M.attacktext] [src.name] ([src.ckey])</font>")
+		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.attacktext] by [M.name] ([M.ckey])</font>")
+		if(!iscarbon(M))
+			LAssailant = null
+		else
+			LAssailant = M
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
@@ -523,7 +529,7 @@
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/human/Crossed(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOverCreature(src,species.blood_color)

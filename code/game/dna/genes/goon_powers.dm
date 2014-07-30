@@ -524,7 +524,7 @@
 			usr << "\blue <b>Mood</b>: You sense cautious thoughts from [M.name]."
 		if ("grab")
 			usr << "\blue <b>Mood</b>: You sense hostile thoughts from [M.name]."
-		if ("harm")
+		if ("hurt")
 			usr << "\blue <b>Mood</b>: You sense cruel thoughts from [M.name]."
 			for(var/mob/living/L in view(7,M))
 				if (L == M)
