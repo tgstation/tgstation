@@ -116,6 +116,8 @@ Class Procs:
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
+	if(occupant)
+		open_machine()
 	..()
 
 /obj/machinery/process()//If you dont use process or power why are you here

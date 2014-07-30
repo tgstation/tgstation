@@ -398,6 +398,13 @@ var/list/uplink_items = list()
 	cost = 5
 	excludefrom = list(/datum/game_mode/traitor/double_agents)
 
+/datum/uplink_item/device_tools/rad_laser
+	name = "Radioactive Microlaser"
+	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a powerful burst of radiation, which, after a short delay, can incapitate all but the most protected of humanoids. \
+	It has two settings: intensity, which controls the power of the radiation, and wavelength, which controls how long the radiation delay is."
+	item = /obj/item/device/rad_laser
+	cost = 4
+
 /datum/uplink_item/device_tools/syndicate_detonator
 	name = "Syndicate Detonator"
 	desc = "The Syndicate Detonator is a companion device to the Syndicate Bomb. Simply press the included button and an encrypted radio frequency will instruct all live syndicate bombs to detonate. \
