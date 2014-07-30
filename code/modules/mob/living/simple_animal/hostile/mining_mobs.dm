@@ -383,13 +383,14 @@
 	for(var/mob/living/M in src.loc)
 		M.Weaken(5)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
-	del(src)
 
-/obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
-	if(isliving(AM))
+	qdel(src)
+
+/obj/effect/goliath_tentacle/Crossed(atom/movable/O)
+	..(O)
+
+	if(isliving(O))
 		Trip()
-		return
-	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Die()
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)

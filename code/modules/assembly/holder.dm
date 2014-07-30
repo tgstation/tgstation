@@ -110,13 +110,13 @@
 			special_assembly.HasProximity(AM)
 
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if(a_left)
-			a_left.HasEntered(AM)
+			a_left.Crossed(AM)
 		if(a_right)
-			a_right.HasEntered(AM)
+			a_right.Crossed(AM)
 		if(special_assembly)
-			special_assembly.HasEntered(AM)
+			special_assembly.Crossed(AM)
 
 
 	on_found(mob/finder as mob)
