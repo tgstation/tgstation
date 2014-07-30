@@ -711,7 +711,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		temp = "Invalid Request"
 		for(var/i=1, i<=supply_shuttle.requestlist.len, i++)
 			var/datum/supply_order/SO = supply_shuttle.requestlist[i]
-			if(SO.ordernum == ordernum)
+			if(SO && SO.ordernum == ordernum)
 				O = SO
 				P = O.object
 				if(supply_shuttle.points >= P.cost)
@@ -757,7 +757,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		temp = "Invalid Request.<BR>"
 		for(var/i=1, i<=supply_shuttle.requestlist.len, i++)
 			var/datum/supply_order/SO = supply_shuttle.requestlist[i]
-			if(SO.ordernum == ordernum)
+			if(SO && SO.ordernum == ordernum)
 				supply_shuttle.requestlist.Cut(i,i+1)
 				temp = "Request removed.<BR>"
 				break

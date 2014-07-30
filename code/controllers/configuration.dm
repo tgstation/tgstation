@@ -54,7 +54,9 @@
 	var/server
 	var/banappeals
 	var/wikiurl = "http://www.tgstation13.org/wiki" // Default wiki link.
-	var/forumurl
+	var/forumurl = "http://tgstation13.org/phpBB/index.php" //default forums
+	var/rulesurl = "http://www.tgstation13.org/wiki/Rules" // default rules
+	var/githuburl = "https://www.github.com/tgstation/-tg-station" //default github
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
@@ -76,6 +78,7 @@
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
+	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 
 	var/traitor_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
@@ -243,6 +246,10 @@
 					config.wikiurl = value
 				if("forumurl")
 					config.forumurl = value
+				if("rulesurl")
+					config.rulesurl = value
+				if("githuburl")
+					config.githuburl = value
 				if("guest_jobban")
 					config.guest_jobban = 1
 				if("guest_ban")
@@ -346,6 +353,8 @@
 					config.traitor_scaling_coeff	= text2num(value)
 				if("changeling_scaling_coeff")
 					config.changeling_scaling_coeff	= text2num(value)
+				if("security_scaling_coeff")
+					config.security_scaling_coeff	= text2num(value)
 				if("traitor_objectives_amount")
 					config.traitor_objectives_amount = text2num(value)
 				if("probability")

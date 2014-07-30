@@ -480,10 +480,11 @@
 						while(src.active2.fields[text("com_[]", counter)])
 							P.info += text("[]<BR>", src.active2.fields[text("com_[]", counter)])
 							counter++
+						P.name = text("MR-[] '[]'", data_core.medicalPrintCount, src.active1.fields["name"])
 					else
 						P.info += "<B>Medical Record Lost!</B><BR>"
+						P.name = text("MR-[] '[]'", data_core.medicalPrintCount, "Record Lost")
 					P.info += "</TT>"
-					P.name = text("MR-[] '[]'", data_core.medicalPrintCount, src.active1.fields["name"])
 					src.printing = null
 
 	src.add_fingerprint(usr)

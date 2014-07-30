@@ -149,7 +149,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
-					/obj/item/weapon/pen/paralysis,
+					/obj/item/weapon/pen/sleepy,
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
 	cost = 20
 	containertype = /obj/structure/closet/crate

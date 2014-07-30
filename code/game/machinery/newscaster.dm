@@ -796,7 +796,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		photo = user.get_active_hand()
 		user.drop_item()
 		photo.loc = src
-	if(istype(usr,/mob/living/silicon/ai))
+/*	if(istype(usr,/mob/living/silicon/ai))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
@@ -813,17 +813,25 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				selection = q
 				break  	// just in case some AI decides to take 10 thousand pictures in a round
 		P.construct(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
-		photo = P
-	if(istype(user,/mob/living/silicon/robot))
+		photo = P*/
+	if(istype(user,/mob/living/silicon))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
-		var/mob/living/silicon/robot/R = user
 		var/obj/item/device/camera/siliconcam/targetcam = null
-		if(R.connected_ai)
-			targetcam = R.connected_ai.aicamera
-		else
+
+		if(istype(user,/mob/living/silicon/ai))
+			var/mob/living/silicon/ai/R = user
 			targetcam = R.aicamera
+		else if(istype(user,/mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = user
+			if(R.connected_ai)
+				targetcam = R.connected_ai.aicamera
+			else
+				targetcam = R.aicamera
+		else
+			user << "You cannot interface with silicon photo uploading"	//gtfo pAIs
+
 		if(targetcam.aipictures.len == 0)
 			usr << "<span class='userdanger'>No images saved</span>"
 			return

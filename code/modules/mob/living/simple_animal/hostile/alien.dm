@@ -28,7 +28,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
-	faction = "alien"
+	faction = list("alien")
 	status_flags = CANPUSH
 	minbodytemp = 0
 	heat_damage_per_tick = 20

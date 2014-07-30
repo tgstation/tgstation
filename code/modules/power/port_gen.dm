@@ -9,7 +9,6 @@
 	icon_state = "off"
 	density = 1
 	anchored = 0
-	directwired = 0
 	var/t_status = 0
 	var/t_per = 5000
 	var/filter = 1
@@ -48,7 +47,6 @@ display round(lastgen) and plasmatank amount
 	icon_state = "portgen0"
 	density = 1
 	anchored = 0
-	directwired = 0
 	use_power = 0
 
 	var/active = 0

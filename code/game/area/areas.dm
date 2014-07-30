@@ -319,9 +319,12 @@
 				var/mob/living/living_mob = AM
 				living_mob.Paralyse(10)
 				living_mob.take_organ_damage(80)
+				living_mob.anchored = 0 //Unbuckle them so they can be moved
 			//Anything not bolted down is moved, everything else is destroyed
-			AM.anchored = 0
-			AM.Move(D)
+			if(!AM.anchored)
+				AM.Move(D)
+			else
+				qdel(AM)
 		if(istype(T, /turf/simulated))
 			del(T)
 

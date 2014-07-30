@@ -645,28 +645,28 @@ var/list/slot_equipment_priority = list( \
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
-        var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
-        var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
-        if(ko || resting || stunned)
-                drop_r_hand()
-                drop_l_hand()
-        else
-                lying = 0
-                canmove = 1
-        if(buckled)
-                lying = 90 * bed
-                anchored = buckled
-        else
-                if((ko || resting) && !lying)
-                        fall(ko)
-        canmove = !(ko || resting || stunned || buckled)
-        density = !lying
-        update_transform()
-        lying_prev = lying
-        if(update_icon) //forces a full overlay update
-                update_icon = 0
-                regenerate_icons()
-        return canmove
+	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
+	if(ko || resting || stunned)
+		drop_r_hand()
+		drop_l_hand()
+	else
+		lying = 0
+		canmove = 1
+	if(buckled)
+		lying = 90 * bed
+		anchored = buckled
+	else
+		if((ko || resting) && !lying)
+			fall(ko)
+	canmove = !(ko || resting || stunned || buckled)
+	density = !lying
+	update_transform()
+	lying_prev = lying
+	if(update_icon) //forces a full overlay update
+		update_icon = 0
+		regenerate_icons()
+	return canmove
 
 /mob/proc/fall(var/forced)
 	drop_l_hand()
@@ -705,6 +705,9 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
+	return 0
+
+/mob/proc/SpeciesCanConsume()
 	return 0
 
 /mob/proc/Jitter(amount)

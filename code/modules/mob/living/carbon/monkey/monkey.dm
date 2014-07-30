@@ -86,7 +86,7 @@
 					contract_disease(D,1,0)
 			else
 				visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>", \
-						"<span class='userdanger'>[M.name] has attempted to bite [name]!</span>")
+					"<span class='userdanger'>[M.name] has attempted to bite [name]!</span>")
 	return
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
@@ -348,7 +348,6 @@
 /mob/living/carbon/monkey/canBeHandcuffed()
 	return 1
 
-
 /mob/living/carbon/monkey/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
 	if(judgebot.emagged == 2)
 		return 10 //Everyone is a criminal!
@@ -378,3 +377,6 @@
 		threatcount -= 1
 
 	return threatcount
+
+/mob/living/carbon/monkey/SpeciesCanConsume()
+	return 1 // Monkeys can eat, drink, and be forced to do so

@@ -20,9 +20,6 @@
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/scale_modifier = 1 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 
@@ -66,28 +63,21 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		if(!exchange_blue && traitors.len >= 5) //Set up an exchange if there are enough traitors
-			if(!exchange_red)
-				exchange_red = traitor
-			else
-				exchange_blue = traitor
-				assign_exchange_role(exchange_red)
-				assign_exchange_role(exchange_blue)
-		else
-			forge_traitor_objectives(traitor)
+		forge_traitor_objectives(traitor)
 		spawn(rand(10,100))
 			finalize_traitor(traitor)
 			greet_traitor(traitor)
+	if(!exchange_blue)
+		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
 	..()
 	return 1
 
 /datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	if(traitors.len >= round(joined_player_list.len / (config.traitor_scaling_coeff * scale_modifier)) + 1) //Caps number of latejoin antagonists
+	var/traitorcap = round(joined_player_list.len / (config.traitor_scaling_coeff * scale_modifier))
+	if(traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
-	if (prob(100/(config.traitor_scaling_coeff * scale_modifier)))
+	if(traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * scale_modifier)))
 		if(character.client.prefs.be_special & BE_TRAITOR)
 			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))
@@ -115,7 +105,17 @@
 			traitor.objectives += block_objective
 
 	else
-		for(var/i = 0, i < config.traitor_objectives_amount, i++)
+		var/is_hijacker = prob(10)
+		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
+		if(!exchange_blue && traitors.len >= 5) 	//Set up an exchange if there are enough traitors
+			if(!exchange_red)
+				exchange_red = traitor
+			else
+				exchange_blue = traitor
+				assign_exchange_role(exchange_red)
+				assign_exchange_role(exchange_blue)
+			objective_count += 1					//Exchange counts towards number of objectives
+		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 			if(prob(50))
 				var/datum/objective/assassinate/kill_objective = new
 				kill_objective.owner = traitor
@@ -127,22 +127,18 @@
 				steal_objective.find_target()
 				traitor.objectives += steal_objective
 
-		forge_escape_objective(traitor)
+		if(is_hijacker && objective_count <= config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
+			if (!(locate(/datum/objective/hijack) in traitor.objectives))
+				var/datum/objective/hijack/hijack_objective = new
+				hijack_objective.owner = traitor
+				traitor.objectives += hijack_objective
+		else
+			if (!(locate(/datum/objective/escape) in traitor.objectives))
+				var/datum/objective/escape/escape_objective = new
+				escape_objective.owner = traitor
+				traitor.objectives += escape_objective
 
 	return
-
-
-/datum/game_mode/proc/forge_escape_objective(var/datum/mind/traitor)
-	if(prob(90))
-		if (!(locate(/datum/objective/escape) in traitor.objectives))
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = traitor
-			traitor.objectives += escape_objective
-	else
-		if (!(locate(/datum/objective/hijack) in traitor.objectives))
-			var/datum/objective/hijack/hijack_objective = new
-			hijack_objective.owner = traitor
-			traitor.objectives += hijack_objective
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
@@ -327,8 +323,6 @@
 		backstab_objective.set_faction(faction)
 		backstab_objective.owner = owner
 		owner.objectives += backstab_objective
-
-	forge_escape_objective(owner)
 
 	//Spawn and equip documents
 	var/mob/living/carbon/human/mob = owner.current

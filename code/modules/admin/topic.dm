@@ -810,7 +810,7 @@
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
 				ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
-				M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+				M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason]</B></BIG>"
 				M << "\red This is a temporary ban, it will be removed in [mins] minutes."
 				feedback_inc("ban_tmp",1)
 				DB_ban_record(BANTYPE_TEMP, M, mins, reason)
@@ -834,7 +834,7 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-				M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+				M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason]</B></BIG>"
 				M << "\red This is a permanent ban."
 				if(config.banappeals)
 					M << "\red To try to resolve this matter head to [config.banappeals]"
@@ -971,7 +971,26 @@
 		speech = sanitize(speech) // Nah, we don't trust them
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins("\blue [key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]")
+	
+	else if(href_list["sendtoprison"])
+		if(!check_rights(R_ADMIN))	return
 
+		var/mob/M = locate(href_list["sendtoprison"])
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob"
+			return
+		if(istype(M, /mob/living/silicon/ai))
+			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
+			return
+
+		if(alert(usr, "Send [key_name(M)] to Prison?", "Message", "Yes", "No") != "Yes")
+			return
+
+		M.loc = pick(prisonwarp)
+		M << "\blue You have been sent to Prison!"
+
+		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
+		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!", 1)
 	else if(href_list["tdome1"])
 		if(!check_rights(R_FUN))	return
 
@@ -1670,10 +1689,11 @@
 				log_admin("[key_name(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]")
 
 			if("wave")
+				var/should_announce = alert(usr, "Meteors will be spawned. Would you like to make an announcement?", "Message", "Yes", "No") == "Yes"
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","MW")
 				message_admins("[key_name_admin(usr)] has spawned meteors")
-				E = new /datum/round_event/meteor_wave()
+				E = new /datum/round_event/meteor_wave(should_announce)
 			if("gravanomalies")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","GA")

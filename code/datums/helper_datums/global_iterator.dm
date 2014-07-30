@@ -66,6 +66,12 @@ Data storage vars:
 			start()
 		return
 
+	Destroy()
+		tag = null
+		arg_list.Cut()
+		stop()
+		//Do not call ..()
+
 	proc/main()
 		state = 1
 		while(src && control_switch)

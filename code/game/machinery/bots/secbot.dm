@@ -71,8 +71,8 @@
 	declare_arrests = 0
 
 /obj/item/weapon/secbot_assembly
-	name = "helmet/signaler assembly"
-	desc = "Some sort of bizarre assembly."
+	name = "incomplete securitron assembly"
+	desc = "Some sort of bizarre assembly made from a proximity sensor, helmet, and signaler."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
@@ -81,17 +81,16 @@
 
 
 
-/obj/machinery/bot/secbot
-	New()
-		..()
-		src.icon_state = "secbot[src.on]"
-		spawn(3)
-			src.botcard = new /obj/item/weapon/card/id(src)
-			var/datum/job/detective/J = new/datum/job/detective
-			src.botcard.access = J.get_access()
-			if(radio_controller)
-				radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
-				radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
+/obj/machinery/bot/secbot/New()
+	..()
+	src.icon_state = "secbot[src.on]"
+	spawn(3)
+		src.botcard = new /obj/item/weapon/card/id(src)
+		var/datum/job/detective/J = new /datum/job/detective
+		src.botcard.access = J.get_access()
+		if(radio_controller)
+			radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
+			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
 
 /obj/machinery/bot/secbot/turn_on()
@@ -206,7 +205,9 @@ Auto Patrol: []"},
 				user << "\red Access denied."
 	else
 		..()
-		if(!istype(W, /obj/item/weapon/screwdriver) && !istype(W, /obj/item/weapon/weldingtool) && (W.force) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
+			return
+		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 			threatlevel = user.assess_threat(src)
 			threatlevel += 6
 			if(threatlevel > 0)
@@ -254,7 +255,7 @@ Auto Patrol: []"},
 				src.target = null
 				src.last_found = world.time
 				src.frustration = 0
-				src.mode = 0
+				src.mode = SECBOT_IDLE
 				walk_to(src,0)
 
 			if(target)		// make sure target exists
@@ -384,7 +385,6 @@ Auto Patrol: []"},
 
 
 // perform a single patrol step
-
 /obj/machinery/bot/secbot/proc/patrol_step()
 
 	if(loc == patrol_target)		// reached target

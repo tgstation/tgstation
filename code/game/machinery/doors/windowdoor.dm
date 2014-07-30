@@ -86,6 +86,10 @@
 	else
 		return 1
 
+//used in the AStar algorithm to determinate if the turf the door is on is passable
+/obj/machinery/door/window/CanAStarPass(var/obj/item/weapon/card/id/ID, var/to_dir)
+	return !density || (dir != to_dir) || check_access(ID)
+
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
@@ -289,7 +293,6 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
-	req_access = list(access_security)
 	var/id = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
