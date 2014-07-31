@@ -22,6 +22,9 @@
 			src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
 			return
 		suiciding = 1
+
+		update_roundstart_logouts_and_suicides()
+
 		var/obj/item/held_item = get_active_hand()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
@@ -91,10 +94,12 @@
 
 	if(confirm == "Yes")
 		suiciding = 1
+		update_roundstart_logouts_and_suicides()
 		viewers(loc) << "\red <b>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</b>"
 		spawn(50)
 			death(0)
 			suiciding = 0
+
 
 /mob/living/carbon/monkey/verb/suicide()
 	set hidden = 1
@@ -118,6 +123,7 @@
 			src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
 			return
 		suiciding = 1
+		update_roundstart_logouts_and_suicides()
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"
 		adjustOxyLoss(max(175- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -138,6 +144,7 @@
 
 	if(confirm == "Yes")
 		suiciding = 1
+		update_roundstart_logouts_and_suicides()
 		viewers(src) << "\red <b>[src] is powering down. It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -158,6 +165,7 @@
 
 	if(confirm == "Yes")
 		suiciding = 1
+		update_roundstart_logouts_and_suicides()
 		viewers(src) << "\red <b>[src] is powering down. It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -172,6 +180,7 @@
 		card.removePersonality()
 		for (var/mob/M in viewers(loc))
 			M.show_message("\blue [src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"", 3, "\blue [src] bleeps electronically.", 2)
+		update_roundstart_logouts_and_suicides()
 		death(0)
 	else
 		src << "Aborting suicide attempt."
@@ -191,6 +200,7 @@
 
 	if(confirm == "Yes")
 		suiciding = 1
+		update_roundstart_logouts_and_suicides()
 		viewers(src) << "\red <b>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
 		adjustOxyLoss(max(175 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -211,6 +221,7 @@
 
 	if(confirm == "Yes")
 		suiciding = 1
+		update_roundstart_logouts_and_suicides()
 		setOxyLoss(100)
 		adjustBruteLoss(100 - getBruteLoss())
 		setToxLoss(100)

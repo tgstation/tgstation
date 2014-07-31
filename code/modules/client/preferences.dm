@@ -31,7 +31,7 @@ datum/preferences
 	var/muted = 0
 	var/last_ip
 	var/last_id
-	var/roundstart_logout_count = 0		//Reduced antag chance based on bad behaviour!
+	var/roundstart_logout_and_suicide_count = 0		//Reduced antag chance based on bad behaviour!
 
 
 	//game-preferences

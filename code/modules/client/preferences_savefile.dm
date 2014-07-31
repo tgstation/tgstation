@@ -287,7 +287,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["version"] << SAVEFILE_VERSION_MAX
 
-	S["roundstart_logout_count"] << roundstart_logout_count
+	S["roundstart_logout_and_suicide_count"] << roundstart_logout_and_suicide_count
 
 	return 1
 
@@ -302,7 +302,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == -2)
 		return 0
 
-	S["roundstart_logout_count"] >> roundstart_logout_count
+	S["roundstart_logout_and_suicide_count"] >> roundstart_logout_and_suicide_count
 
 	if(needs_update >= 0)
 		update_preferences(needs_update)

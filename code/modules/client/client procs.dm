@@ -165,7 +165,7 @@ var/next_external_rsc = 0
 		return
 
 	if(world.time <= ROUNDSTART_END_TIME)
-		Save_file.roundstart_logout_count++
+		Save_file.roundstart_logout_and_suicide_count++
 		Save_file.save_misc()
 
 

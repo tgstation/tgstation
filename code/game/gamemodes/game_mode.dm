@@ -414,10 +414,10 @@ proc/display_roundstart_logout_report()
 
 	var/should_break = 0 //This proc goes in the pre_setup() loops
 
-	if(Save_file.roundstart_logout_count && !Mind.current.client.roundstart_punishment_searched)
+	if(Save_file.roundstart_logout_and_suicide_count && !Mind.current.client.roundstart_punishment_searched)
 		log_game("[Mind.key] (ckey) has been searched for roundstart punishment")
 		Mind.current.client.roundstart_punishment_searched++
-		switch(Save_file.roundstart_logout_count)
+		switch(Save_file.roundstart_logout_and_suicide_count)
 			if(MIN_ROUNDSTART_LOGOUT_PUNISHMENT to MAX_ROUNDSTART_LOGOUT_PUNISHMENT)
 				log_game("[Mind.key] (ckey) has been denied an antagonist role and placed back into the candidates pool")
 				should_break++
@@ -430,14 +430,26 @@ proc/display_roundstart_logout_report()
 		return 1
 	return 0
 
+
+//Mob proc for simple updating of roundstart_logout_and_suicide_count
+/mob/proc/update_roundstart_logouts_and_suicides()
+	if(client && client.prefs)
+		var/datum/preferences/Save_file = client.prefs
+		Save_file.roundstart_logout_and_suicide_count++
+		Save_file.save_misc()
+
+
 //Lower's everyone in the game's rounstart_logout_count by 1, as a reward for finishing the round
 //this allows players to earn back normal antag chances
 /proc/handle_roundend_reward()
 	for(var/mob/living/carbon/human/player in player_list)
+		if(player.suiciding)
+			continue
+
 		if(player && player.client && player.client.prefs)
 			var/datum/preferences/Save_file = player.client.prefs
-			Save_file.roundstart_logout_count--
-			if(Save_file.roundstart_logout_count < 0)
-				Save_file.roundstart_logout_count = 0
+			Save_file.roundstart_logout_and_suicide_count--
+			if(Save_file.roundstart_logout_and_suicide_count < 0)
+				Save_file.roundstart_logout_and_suicide_count = 0
 			Save_file.save_misc()
 
