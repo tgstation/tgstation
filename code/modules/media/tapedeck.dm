@@ -1,5 +1,5 @@
 /*******************************
- * Largely a rewrite of the Jukebox from D2K5
+ * Modified Jukebox code for DJing.
  *
  * By N3X15
  *******************************/
@@ -64,15 +64,15 @@ var/global/loopModeNames=list(
 	JUKEMODE_REPEAT_SONG = "Single",
 	JUKEMODE_PLAY_ONCE= "Once",
 )
-/obj/machinery/media/jukebox
-	name = "Jukebox"
-	desc = "A bastion of goodwill, peace, and hope."
+/obj/machinery/media/tapedeck
+	name = "Tape Deck"
+	desc = "What the fuck is \"tape\", anyway?"
+
 	icon = 'icons/obj/jukebox.dmi'
 	icon_state = "jukebox2"
-	density = 1
 
+	density = 1
 	anchored = 1
-	luminosity = 4 // Why was this 16
 
 	playing=0
 
@@ -80,6 +80,8 @@ var/global/loopModeNames=list(
 
 	// Server-side playlist IDs this jukebox can play.
 	var/list/playlists=list() // ID = Label
+
+	var/list/current_playlist=list()
 
 	// Playlist to load at startup.
 	var/playlist_id = ""
@@ -90,16 +92,12 @@ var/global/loopModeNames=list(
 	var/selected_song = 0 // 0 or the song someone has selected for purchase
 	var/autoplay      = 0 // Start playing after spawn?
 	var/last_reload   = 0 // Reload cooldown.
-	var/last_song     = 0 // ID of previous song (used in shuffle to prevent double-plays)
+	var/last_song     = 0 // Doubleplay prevention
 
-	var/screen = JUKEBOX_SCREEN_MAIN
-
-	var/credits_held   = 0 // Cash currently held
-	var/credits_needed = 0 // Credits needed to complete purchase.
-	var/change_cost    = 10 // Current cost to change songs.
-	var/list/change_access  = list() // Access required to change songs
-	var/datum/money_account/linked_account
-	var/department // Department that gets the money
+	var/cycletype      = TAPEDECK_CYCLE_MUSIC
+	var/adcyc_duration = 2 MINUTES
+	var/last_ad_cyc    = 0 // Last world.time of an ad cycle
+	var/list/ad_queue  = 0 // Ads queued to play
 
 	var/state_base = "jukebox2"
 
@@ -160,17 +158,16 @@ var/global/loopModeNames=list(
 	t += "</div>"
 	switch(screen)
 		if(JUKEBOX_SCREEN_MAIN)     t += ScreenMain(user)
-		if(JUKEBOX_SCREEN_PAYMENT)  t += ScreenPayment(user)
 		if(JUKEBOX_SCREEN_SETTINGS) t += ScreenSettings(user)
 
 	user.set_machine(src)
-	var/datum/browser/popup = new (user,"jukebox",name,420,700)
+	var/datum/browser/popup = new (user,"tapedeck",name,420,700)
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/media/jukebox/proc/ScreenMain(var/mob/user)
-	var/t = "<h1>Jukebox Interface</h1>"
+	var/t = "<h1>[src] Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
 	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[loopModeNames[loop_mode]]</a><br />"
 	if(playlist == null)
@@ -194,10 +191,7 @@ var/global/loopModeNames=list(
 			t += "<b>Up next:</b> [song.artist] - [song.title]<br />"
 		t += "<table class='prettytable'><tr><th colspan='2'>Artist - Title</th><th>Album</th></tr>"
 		var/i
-		var/can_change=!next_song
-		if(change_access.len > 0) // Permissions
-			if(can_access(user.GetAccess(),req_access=change_access))
-				can_change = 1
+		var/can_change=1
 
 		for(i = 1,i <= playlist.len,i++)
 			var/datum/song_info/song=playlist[i]
@@ -449,10 +443,7 @@ var/global/loopModeNames=list(
 			else
 				switch(loop_mode)
 					if(JUKEMODE_SHUFFLE)
-						while(1)
-							current_song=rand(1,playlist.len)
-							if(current_song!=last_song || playlist.len<4)
-								break
+						current_song=rand(1,playlist.len)
 					if(JUKEMODE_REPEAT_SONG)
 						current_song=current_song
 					if(JUKEMODE_PLAY_ONCE)
@@ -465,7 +456,6 @@ var/global/loopModeNames=list(
 	if(current_song && playing)
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url
-		last_song = current_song
 		media_start_time = world.time
 		visible_message("<span class='notice'>\icon[src] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
 		//visible_message("<span class='notice'>\icon[src] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")

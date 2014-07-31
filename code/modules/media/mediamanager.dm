@@ -62,8 +62,9 @@ function SetMusic(url, time, volume) {
 /datum/media_manager
 	var/url = ""
 	var/start_time = 0
-	var/volume = 50
+	var/source_volume = 1 // volume * source_volume
 
+	var/volume = 50
 	var/client/owner
 	var/mob/mob
 
@@ -86,7 +87,7 @@ function SetMusic(url, time, volume) {
 		if(!(owner.prefs.toggles & SOUND_STREAMING))
 			return // Nope.
 		MP_DEBUG("\green Sending update to WMP ([url])...")
-		owner << output(list2params(list(url, (world.time - start_time) / 10, volume)), "[window]:SetMusic")
+		owner << output(list2params(list(url, (world.time - start_time) / 10, volume*source_volume)), "[window]:SetMusic")
 
 	proc/stop_music()
 		url=""
@@ -97,7 +98,7 @@ function SetMusic(url, time, volume) {
 	proc/update_music()
 		var/targetURL = ""
 		var/targetStartTime = 0
-		//var/targetVolume = volume
+		var/targetVolume = 0
 
 		if (!owner)
 			//testing("owner is null")
@@ -108,18 +109,19 @@ function SetMusic(url, time, volume) {
 			//testing("[owner] in [mob.loc].  Aborting.")
 			stop_music()
 			return
-		var/obj/machinery/media/M = A.media_source
+		var/obj/machinery/media/M = A.media_source // TODO: turn into a list, then only play the first one that's playing.
 		if(M && M.playing)
 			targetURL = M.media_url
 			targetStartTime = M.media_start_time
+			targetVolume = M.volume
 			//owner << "Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s."
 		//else
 		//	testing("M is not playing or null.")
 
-		if (url != targetURL || abs(targetStartTime - start_time) > 1)
+		if (url != targetURL || abs(targetStartTime - start_time) > 1 || abs(targetVolume - source_volume) > 0.1 /* 10% */)
 			url = targetURL
 			start_time = targetStartTime
-			//volume = targetVolume
+			source_volume = between(0,targetVolume,1)
 			send_update()
 
 	proc/update_volume(var/value)
