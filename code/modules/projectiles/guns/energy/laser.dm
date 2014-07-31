@@ -166,8 +166,9 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "plasma rifle"
 	desc = "Plasma rifle that is given to members of an unknown shadow organization."
 	icon_state = "alienrifle"
-	projectile_type = "/obj/item/projectile/energy/plasma/rifle"
+	projectile_type = /obj/item/projectile/energy/plasma/rifle
 	charge_cost = 150
+
 ////////Laser Tag////////////////////
 
 /obj/item/weapon/gun/energy/laser/bluetag
