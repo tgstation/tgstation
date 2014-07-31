@@ -20,14 +20,14 @@
 	name = "laser pistol"
 	desc = "A laser pistol issued to high ranking members of a certain shadow corporation."
 	icon_state = "xcomlaserpistol"
-	projectile_type = "/obj/item/projectile/beam"
+	projectile_type = /obj/item/projectile/beam
 	charge_cost = 100 // holds less "ammo" then the rifle variant.
 
 /obj/item/weapon/gun/energy/laser/rifle
 	name = "laser rifle"
 	desc = "A laser rifle issued to high ranking members of a certain shadow corporation."
 	icon_state = "xcomlasergun"
-	projectile_type = "/obj/item/projectile/beam"
+	projectile_type = /obj/item/projectile/beam
 	charge_cost = 50
 
 obj/item/weapon/gun/energy/laser/retro
@@ -145,21 +145,21 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "xray"
 	fire_sound = 'sound/weapons/elecfire.ogg'
 	origin_tech = "combat=5;materials=3;magnets=2"
-	projectile_type = "/obj/item/projectile/energy/plasma"
+	projectile_type = /obj/item/projectile/energy/plasma
 	charge_cost = 50
 
 /obj/item/weapon/gun/energy/plasma/pistol
 	name = "plasma pistol"
 	desc = "Plasma pistol that is given to members of an unknown shadow organization."
 	icon_state = "alienpistol"
-	projectile_type = "/obj/item/projectile/energy/plasma/pistol"
+	projectile_type = /obj/item/projectile/energy/plasma/pistol
 	charge_cost = 50
 
 /obj/item/weapon/gun/energy/plasma/light
 	name = "light plasma rifle"
 	desc = "Light plasma rifle that is given to members of an unknown shadow organization."
 	icon_state = "lightalienrifle"
-	projectile_type = "/obj/item/projectile/energy/plasma/light"
+	projectile_type = /obj/item/projectile/energy/plasma/light
 	charge_cost = 100
 
 /obj/item/weapon/gun/energy/plasma/rifle
