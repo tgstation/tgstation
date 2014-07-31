@@ -233,11 +233,13 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 	species_restricted = list("Plasmaman")
+	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE | PLASMAGUARD
 
 	icon_state = "plasmaman_suit"
 	item_state = "plasmaman_suit"
 
 /obj/item/clothing/head/helmet/space/plasmaman
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
 	species_restricted = list("Plasmaman")
 
 	icon_state = "plasmaman_helmet0"
