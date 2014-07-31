@@ -915,3 +915,10 @@
 	product_slogans = "Das Vierte Reich wird zuruckkehren!;ENTFERNEN JUDEN!;Billiger als die Juden jemals geben!;Rader auf dem adminbus geht rund und rund.;Warten Sie, warum wir wieder hassen Juden?- *BZZT*"
 	products = list(/obj/item/clothing/head/stalhelm = 20, /obj/item/clothing/head/panzer = 20, /obj/item/clothing/suit/soldiercoat = 20, /obj/item/clothing/under/soldieruniform = 20, /obj/item/clothing/shoes/jackboots = 20)
 	contraband = list(/obj/item/clothing/head/naziofficer = 10, /obj/item/clothing/suit/officercoat = 10, /obj/item/clothing/under/officeruniform = 10)
+
+/obj/machinery/vending/ammunation
+	name = "AmmuNation"
+	desc = "20 ROUNDS OF FREEDOM."
+	icon_state = "ammo"
+	products = list(/obj/item/ammo_magazine/a12mm = 30)
+	product_slogans = "GET YER GUNZ HERE!;FREEDOM MEANS THE 2ND AMENDMENT!.;YOU DONT KNOW POWER UNTIL YOU HOLD A GUN IN YER HAND!;IF I HAD HANDS I WOULD SHOOT YOU!;YOU CANT SPELL FREEDOM WITHOUT GUNS!;YOU CANT SPELL COMMUNISM WITHOUT LIBERALISM!"
