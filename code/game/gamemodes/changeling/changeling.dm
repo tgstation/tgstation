@@ -61,6 +61,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		for(var/i = 0, i < num_changelings, i++)
 			if(!antag_candidates.len) break
 			var/datum/mind/changeling = pick(antag_candidates)
+
+			if(handle_antag_punishments(changeling))
+				break
+
 			antag_candidates -= changeling
 			changelings += changeling
 			modePlayer += changelings

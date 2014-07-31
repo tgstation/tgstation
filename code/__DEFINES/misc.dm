@@ -1,5 +1,11 @@
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
+//Used for detecting Roundstart logouts
+#define ROUNDSTART_END_TIME 6000 //10 minutes in Byond ticks
+#define MIN_ROUNDSTART_LOGOUT_PUNISHMENT 3 //Lowest amount of roundstart logouts to punish with antag candidate shuffles
+#define MAX_ROUNDSTART_LOGOUT_PUNISHMENT 6 //Highest amount of roundstart logouts to punish with antag candidate shuffles
+											//Lowest amount to start preventing antag is MAX_ROUNDSTART_LOGOUT_PUNISHMENT + 1
+
 //Security levels
 #define SEC_LEVEL_GREEN	0
 #define SEC_LEVEL_BLUE	1

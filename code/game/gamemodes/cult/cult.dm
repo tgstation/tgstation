@@ -73,6 +73,10 @@
 		if(!antag_candidates.len)
 			break
 		var/datum/mind/cultist = pick(antag_candidates)
+
+		if(handle_antag_punishments(cultist))
+			break
+
 		antag_candidates -= cultist
 		cult += cultist
 		log_game("[cultist.key] (ckey) has been selected as a cultist")

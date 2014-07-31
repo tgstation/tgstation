@@ -309,8 +309,14 @@ var/round_start_time = 0
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
 
+
 				if(!delay_end)
 					sleep(restart_timeout)
+
+					//Lower's everyone in the game's rounstart_logout_count by 1, as a reward for finishing the round
+					//this allows players to earn back normal antag chances
+					handle_roundend_reward()
+
 					kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
 					world.Reboot()
 				else

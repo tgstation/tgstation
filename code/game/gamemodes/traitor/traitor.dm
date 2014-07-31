@@ -50,6 +50,10 @@
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/traitor = pick(antag_candidates)
+
+		if(handle_antag_punishments(traitor))
+			break
+
 		traitors += traitor
 		traitor.special_role = traitor_name
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
