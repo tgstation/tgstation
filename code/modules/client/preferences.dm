@@ -371,7 +371,12 @@ datum/preferences
 
 		HTML += "</center></table>"
 
-		HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[userandomjob ? "Get random job if preferences unavailable" : "Be an Assistant if preference unavailable"]</a></center>"
+		var/message = "Be an Assistant if preferences unavailable"
+		if(userandomjob == 1)
+			message = "Get random job if preferences unavailable"
+		else if(userandomjob == 2)
+			message = "Do not play if preferences unavailable"
+		HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[message]</a></center>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
 		user << browse(null, "window=preferences")
@@ -525,7 +530,9 @@ datum/preferences
 					ResetJobs()
 					SetChoices(user)
 				if("random")
-					userandomjob = !userandomjob
+					userandomjob += 1
+					if(userandomjob >= 3)
+						userandomjob = 0
 					SetChoices(user)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
