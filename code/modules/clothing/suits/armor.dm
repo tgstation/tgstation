@@ -50,7 +50,7 @@
 	icon_state = "xcomarmor2"
 	item_state = "xcomarmor2"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 50, bullet = 80, laser = 50, energy = 50, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 90, laser = 50, energy = 50, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.5
 
