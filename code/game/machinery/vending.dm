@@ -1,9 +1,14 @@
+#define CAT_NORMAL 0
+#define CAT_HIDDEN 1
+#define CAT_COIN   2
+
 /datum/data/vending_product
 	var/product_name = "generic"
 	var/product_path = null
 	var/amount = 0
 	var/price = 0
 	var/display_color = "blue"
+	var/category = CAT_NORMAL
 
 
 /obj/machinery/vending
@@ -124,10 +129,13 @@
 		R.display_color = pick("red","blue","green")
 
 		if(hidden)
+			R.category=CAT_HIDDEN
 			hidden_records += R
 		else if(req_coin)
+			R.category=CAT_COIN
 			coin_records += R
 		else
+			R.category=CAT_NORMAL
 			product_records += R
 //		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 
@@ -240,6 +248,31 @@
 	src.add_hiddenprint(user)
 	return attack_hand(user)
 
+/obj/machinery/vending/proc/GetProductIndex(var/datum/data/vending_product/P)
+	var/list/plist
+	switch(P.category)
+		if(CAT_NORMAL)
+			plist=product_records
+		if(CAT_HIDDEN)
+			plist=hidden_records
+		if(CAT_COIN)
+			plist=coin_records
+		else
+			warning("UNKNOWN CATEGORY [P.category] IN TYPE [P.product_path] INSIDE [type]!")
+	return plist.Find(P)
+
+/obj/machinery/vending/proc/GetProductByID(var/pid, var/category)
+	switch(category)
+		if(CAT_NORMAL)
+			return product_records[pid]
+		if(CAT_HIDDEN)
+			return hidden_records[pid]
+		if(CAT_COIN)
+			return coin_records[pid]
+		else
+			warning("UNKNOWN PRODUCT: PID: [pid], CAT: [category] INSIDE [type]!")
+			return null
+
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
 		return
@@ -274,12 +307,11 @@
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
 		var/list/display_records = src.product_records
+
 		if(src.extended_inventory)
-			display_records = src.product_records + src.hidden_records
+			display_records += src.hidden_records
 		if(src.coin)
-			display_records = src.product_records + src.coin_records
-		if(src.coin && src.extended_inventory)
-			display_records = src.product_records + src.hidden_records + src.coin_records
+			display_records += src.coin_records
 
 		for (var/datum/data/vending_product/R in display_records)
 
@@ -291,7 +323,8 @@
 			if(R.price)
 				dat += " <b>(Price: [R.price])</b>"
 			if (R.amount > 0)
-				dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>(Vend)</A>"
+				var/idx=GetProductIndex(R)
+				dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
 			else
 				dat += " <font color = 'red'>SOLD OUT</font>"
 			dat += "<br>"
@@ -341,14 +374,17 @@
 
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		if ((href_list["vend"]) && (src.vend_ready) && (!currently_vending))
+		if ("vend" in href_list && src.vend_ready && !currently_vending)
 
 			if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 				usr << "\red Access denied." //Unless emagged of course
 				flick(src.icon_deny,src)
 				return
 
-			var/datum/data/vending_product/R = locate(href_list["vend"])
+			var/idx=text2num(href_list["vend"])
+			var/cat=text2num(href_list["cat"])
+
+			var/datum/data/vending_product/R = GetProductByID(idx,cat)
 			if (!R || !istype(R) || !R.product_path || R.amount <= 0)
 				return
 

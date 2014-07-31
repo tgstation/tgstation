@@ -32,6 +32,10 @@
 	h_style = "Bald"
 	..(new_loc, "Skellington")
 
+/mob/living/carbon/human/plasma/New(var/new_loc)
+	h_style = "Bald"
+	..(new_loc, "Plasmaman")
+
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null, var/delay_ready_dna=0)
 
 	if(!species)
@@ -529,7 +533,7 @@
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/human/Crossed(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOverCreature(src,species.blood_color)

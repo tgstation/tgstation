@@ -75,6 +75,12 @@
 /obj/structure/sign/double/map/right
 	icon_state = "map-right"
 
+//For efficiency station
+/obj/structure/sign/map/efficiency
+	name = "station map"
+	desc = "A framed picture of the station."
+	icon_state = "map_efficiency"
+
 /obj/structure/sign/securearea
 	name = "\improper SECURE AREA"
 	desc = "A warning sign which reads 'SECURE AREA'."

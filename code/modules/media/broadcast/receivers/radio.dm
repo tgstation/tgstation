@@ -73,6 +73,7 @@
 	icon='icons/obj/radio.dmi'
 	icon_state="wallradio"
 	anchored=1
+	volume=0.25 // 25% of user's set volume.
 
 /obj/machinery/media/receiver/boombox/wallmount/muzak
 	on=1

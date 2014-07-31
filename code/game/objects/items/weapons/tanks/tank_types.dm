@@ -96,6 +96,17 @@
 		src.loc = F
 	return
 
+/obj/item/weapon/tank/plasma/plasmaman
+	desc = "The lifeblood of plasmamen.  Warning:  Extremely flammable, do not inhale (unless you're a plasman)."
+	icon_state = "plasma_fr"
+
+/obj/item/weapon/tank/plasma/plasmaman/examine()
+	set src in usr
+	..()
+	if(air_contents.toxins < 0.2 && loc==usr)
+		usr << text("\red <B>The meter on the [src.name] indicates you are almost out of plasma!</B>")
+		usr << sound('sound/effects/alert.ogg')
+
 /*
  * Emergency Oxygen
  */

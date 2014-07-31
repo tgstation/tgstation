@@ -198,6 +198,8 @@
 	return
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/O)
+	..(O)
+
 	if(O && O.density && !istype(O, /obj/effect/beam))
 		spawn(0)
 			hit()
@@ -274,7 +276,7 @@
 	hit()
 	return
 
-/obj/effect/beam/i_beam/HasEntered(atom/movable/AM as mob|obj)
+/obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
 	if(istype(AM, /obj/effect/beam))
 		return
 	spawn(0)
