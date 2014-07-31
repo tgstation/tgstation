@@ -42,7 +42,6 @@
 	fire_sound = 'sound/weapons/Gunshot_c20.ogg'
 	load_method = 2
 
-
 	New()
 		..()
 		empty_mag = new /obj/item/ammo_magazine/a12mm/empty(src)
@@ -66,6 +65,34 @@
 			icon_state = "c20r-[round(loaded.len,4)]"
 		else
 			icon_state = "c20r"
+		return
+
+/obj/item/weapon/gun/projectile/automatic/xcom
+	name = "\improper Assault Rifle"
+	desc = "A lightweight, fast firing gun, issued to shadow organization members."
+	icon_state = "xcomassaultrifle"
+	origin_tech = "combat=5;materials=2"
+	item_state = "c20r"
+	w_class = 3.0
+	max_shells = 20
+	caliber = "12mm"
+	ammo_type = "/obj/item/ammo_casing/a12mm"
+	fire_sound = 'sound/weapons/Gunshot_c20.ogg'
+	load_method = 2
+
+	New()
+		..()
+		empty_mag = new /obj/item/ammo_magazine/a12mm/empty(src)
+		update_icon()
+		return
+
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+		..()
+		if(!loaded.len && empty_mag)
+			empty_mag.loc = get_turf(src.loc)
+			empty_mag = null
+			playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+			update_icon()
 		return
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
