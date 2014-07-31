@@ -7,69 +7,14 @@
 #define JUKEMODE_SHUFFLE     1 // Default
 #define JUKEMODE_REPEAT_SONG 2
 #define JUKEMODE_PLAY_ONCE   3 // Play, then stop.
-#define JUKEMODE_COUNT       3
-
-#define JUKEBOX_SCREEN_MAIN     1 // Default
-#define JUKEBOX_SCREEN_PAYMENT  2
-#define JUKEBOX_SCREEN_SETTINGS 3
-
-#define JUKEBOX_RELOAD_COOLDOWN 600 // 60s
-
-// Represents a record returned.
-/datum/song_info
-	var/title  = ""
-	var/artist = ""
-	var/album  = ""
-
-	var/url    = ""
-	var/length = 0 // decaseconds
-
-	var/emagged = 0
-
-	New(var/list/json)
-		title  = json["title"]
-		artist = json["artist"]
-		album  = json["album"]
-
-		url    = json["url"]
-
-		length = text2num(json["length"])
-
-	proc/display()
-		var/str="\"[title]\""
-		if(artist!="")
-			str += ", by [artist]"
-		if(album!="")
-			str += ", from '[album]'"
-		return str
-
-	proc/displaytitle()
-		if(artist==""&&title=="")
-			return "\[NO TAGS\]"
-		var/str=""
-		if(artist!="")
-			str += artist+" - "
-		if(title!="")
-			str += "\"[title]\""
-		else
-			str += "Untitled"
-		// Only show album if we have to.
-		if(album!="" && artist == "")
-			str += " ([album])"
-		return str
 
 
-var/global/loopModeNames=list(
-	JUKEMODE_SHUFFLE = "Shuffle",
-	JUKEMODE_REPEAT_SONG = "Single",
-	JUKEMODE_PLAY_ONCE= "Once",
-)
 /obj/machinery/media/tapedeck
 	name = "Tape Deck"
 	desc = "What the fuck is \"tape\", anyway?"
 
 	icon = 'icons/obj/jukebox.dmi'
-	icon_state = "jukebox2"
+	icon_state = "tapedeck"
 
 	density = 1
 	anchored = 1
@@ -94,33 +39,27 @@ var/global/loopModeNames=list(
 	var/last_reload   = 0 // Reload cooldown.
 	var/last_song     = 0 // Doubleplay prevention
 
+	// Eventually...
 	var/cycletype      = TAPEDECK_CYCLE_MUSIC
 	var/adcyc_duration = 2 MINUTES
 	var/last_ad_cyc    = 0 // Last world.time of an ad cycle
 	var/list/ad_queue  = 0 // Ads queued to play
 
-	var/state_base = "jukebox2"
+	var/state_base = "tapedeck"
 
-/obj/machinery/media/jukebox/New(loc)
-	..(loc)
-	if(department)
-		linked_account = department_accounts[department]
-	else
-		linked_account = station_account
-
-/obj/machinery/media/jukebox/attack_ai(var/mob/user)
+/obj/machinery/media/tapedeck/attack_ai(var/mob/user)
 	attack_hand(user)
 
-/obj/machinery/media/jukebox/attack_paw()
+/obj/machinery/media/tapedeck/attack_paw()
 	return
 
-/obj/machinery/media/jukebox/power_change()
+/obj/machinery/media/tapedeck/power_change()
 	..()
-	if(emagged && !(stat & (NOPOWER|BROKEN)))
-		playing = 1
+	//if(emagged && !(stat & (NOPOWER|BROKEN)))
+	//	playing = 1
 	update_icon()
 
-/obj/machinery/media/jukebox/update_icon()
+/obj/machinery/media/tapedeck/update_icon()
 	overlays = 0
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		if(stat & BROKEN)
@@ -136,10 +75,10 @@ var/global/loopModeNames=list(
 		else
 			overlays += "[state_base]-running"
 
-/obj/machinery/media/jukebox/proc/check_reload()
+/obj/machinery/media/tapedeck/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
-/obj/machinery/media/jukebox/attack_hand(var/mob/user)
+/obj/machinery/media/tapedeck/attack_hand(var/mob/user)
 	if(stat & NOPOWER)
 		usr << "\red You don't see anything to mess with."
 		return
@@ -153,12 +92,12 @@ var/global/loopModeNames=list(
 
 	var/t = "<div class=\"navbar\">"
 	t += "<a href=\"?src=\ref[src];screen=[JUKEBOX_SCREEN_MAIN]\">Main</a>"
-	if(allowed(user))
-		t += " | <a href=\"?src=\ref[src];screen=[JUKEBOX_SCREEN_SETTINGS]\">Settings</a>"
+	//if(allowed(user))
+	//	t += " | <a href=\"?src=\ref[src];screen=[JUKEBOX_SCREEN_SETTINGS]\">Settings</a>"
 	t += "</div>"
 	switch(screen)
 		if(JUKEBOX_SCREEN_MAIN)     t += ScreenMain(user)
-		if(JUKEBOX_SCREEN_SETTINGS) t += ScreenSettings(user)
+		//if(JUKEBOX_SCREEN_SETTINGS) t += ScreenSettings(user)
 
 	user.set_machine(src)
 	var/datum/browser/popup = new (user,"tapedeck",name,420,700)
@@ -183,53 +122,49 @@ var/global/loopModeNames=list(
 		else
 			t += "<i>You cannot change the playlist.</i>"
 		t += "<br />"
+
+		////////////////////////////
+		// Now here's the cool shit
+		t += {"
+		<b>Playlist Tools:</b>
+			<a href='?src=\ref[src];reload=1'>Reload</a>
+			<a href='?src=\ref[src];add=1'>Add Song</a>
+			<a href='?src=\ref[src];clear=1'>Clear</a>
+		<br />"}
+		//
+		////////////////////////////
+
 		if(current_song)
 			var/datum/song_info/song=playlist[current_song]
 			t += "<b>Current song:</b> [song.artist] - [song.title]<br />"
 		if(next_song)
 			var/datum/song_info/song=playlist[next_song]
 			t += "<b>Up next:</b> [song.artist] - [song.title]<br />"
-		t += "<table class='prettytable'><tr><th colspan='2'>Artist - Title</th><th>Album</th></tr>"
+		t += "<table class='prettytable'><tr><th colspan='2'>Artist - Title</th><th>Album</th><th>Controls</th></tr>"
 		var/i
 		var/can_change=1
 
 		for(i = 1,i <= playlist.len,i++)
 			var/datum/song_info/song=playlist[i]
-			t += "<tr><th>#[i]</th><td>"
-			if(can_change) t += "<A href='?src=\ref[src];song=[i]' class='nobg'>"
-			t += song.displaytitle()
-			if(can_change) t += "</A>"
-			t += "</td><td>[song.album]</td></tr>"
+			t += {"
+			<tr>
+				<th>#[i]</th>
+				<td>
+					<A href='?src=\ref[src];song=[i]' class='nobg'>[song.displaytitle()]</A>
+				</td>
+				<td>[song.album]</td>
+				<td>
+					<A href='?src=\ref[src];queue=[i]'>Q</A>
+					<A href='?src=\ref[src];remove=[i]'>X</A>
+				</td>
+			</tr>"}
 		t += "</table>"
-	return t
-
-/obj/machinery/media/jukebox/proc/ScreenPayment(var/mob/user)
-	var/t = "<h1>Pay for Song</h1>"
-	var/datum/song_info/song=playlist[selected_song]
-	t += {"
-	<center>
-		<p>You've selected <b>[song.displaytitle()]</b>.</p>
-		<p><b>Swipe ID card</b> or <b>insert cash</b> to play this song next! ($[num2septext(change_cost)])</p>
-		\[ <a href='?src=\ref[src];cancelbuy=1'>Cancel</a> \]
-	</center>"}
 	return t
 
 /obj/machinery/media/jukebox/proc/ScreenSettings(var/mob/user)
 	var/dat={"<h1>Settings</h1>
 		<form action="?src=\ref[src]" method="get">
 		<input type="hidden" name="src" value="\ref[src]" />
-		<fieldset>
-			<legend>Banking</legend>
-			<div>
-				<b>Payable Account:</b> <input type="textbox" name="payableto" value="[linked_account.account_number]" />
-			</div>
-		</fieldset>
-		<fieldset>
-			<legend>Pricing</legend>
-			<div>
-				<b>Change Song:</b> $<input type="textbox" name="set_change_cost" value="[change_cost]" />
-			</div>
-		</fieldset>
 		<fieldset>
 			<legend>Access</legend>
 			<p>Permissions required to change song:</p>
@@ -278,65 +213,13 @@ var/global/loopModeNames=list(
 			playing = emagged
 			update_music()
 			update_icon()
-	else if(istype(W,/obj/item/weapon/card/id))
-		if(!selected_song || screen!=JUKEBOX_SCREEN_PAYMENT)
-			visible_message("\blue The machine buzzes.","\red You hear a buzz.")
-			return
-		var/obj/item/weapon/card/id/I = W
-		if(!linked_account)
-			visible_message("\red The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.","You hear a buzz.")
-			return
-		var/datum/money_account/acct = get_card_account(I)
-		if(!acct)
-			visible_message("\red The machine buzzes, and flashes \"NO ACCOUNT\" on the screen.","You hear a buzz.")
-			return
-		if(credits_needed > acct.money)
-			visible_message("\red The machine buzzes, and flashes \"NOT ENOUGH FUNDS\" on the screen.","You hear a buzz.")
-			return
-		visible_message("\blue The machine beeps happily.","You hear a beep.")
-		acct.charge(credits_needed,linked_account,"Song selection at [areaMaster.name]'s [name].")
-		credits_needed = 0
-
-		successful_purchase()
-
-		attack_hand(user)
-	else if(istype(W,/obj/item/weapon/spacecash))
-		if(!selected_song || screen!=JUKEBOX_SCREEN_PAYMENT)
-			visible_message("\blue The machine buzzes.","\red You hear a buzz.")
-			return
-		if(!linked_account)
-			visible_message("\red The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.","You hear a buzz.")
-			return
-		var/obj/item/weapon/spacecash/C=W
-		credits_held += C.worth*C.amount
-		if(credits_held >= credits_needed)
-			visible_message("\blue The machine beeps happily.","You hear a beep.")
-			credits_held -= credits_needed
-			credits_needed=0
-			screen=JUKEBOX_SCREEN_MAIN
-			if(credits_held)
-				var/obj/item/weapon/storage/box/B = new(loc)
-				dispense_cash(credits_held,B)
-				B.name="change"
-				B.desc="A box of change."
-			credits_held=0
-
-			successful_purchase()
-		attack_hand(user)
-
-/obj/machinery/media/jukebox/proc/successful_purchase()
-		next_song = selected_song
-		selected_song = 0
-		screen = JUKEBOX_SCREEN_MAIN
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	if(isobserver(usr) && !isAdminGhost(usr))
 		usr << "\red You can't push buttons when your fingers go right through them, dummy."
 		return
+
 	..()
-	if(emagged)
-		usr << "\red You touch the bluescreened menu. Nothing happens. You feel dumber."
-		return
 
 	if (href_list["power"])
 		playing=!playing
@@ -362,6 +245,8 @@ var/global/loopModeNames=list(
 					change_access = list()
 
 				screen=POS_SCREEN_SETTINGS
+	if (href_list["reload"])
+		href_list["playlist"]=playlist_id // Hax
 
 	if (href_list["playlist"])
 		if(!check_reload())
@@ -378,20 +263,14 @@ var/global/loopModeNames=list(
 
 	if (href_list["song"])
 		selected_song=Clamp(text2num(href_list["song"]),1,playlist.len)
-		if(!change_cost)
-			next_song = selected_song
-			selected_song = 0
-			if(!current_song)
-				update_music()
-				update_icon()
-		else
-			usr << "\red Swipe card or insert $[num2septext(change_cost)] to set this song."
-			screen = JUKEBOX_SCREEN_PAYMENT
-			credits_needed=change_cost
+		next_song = selected_song
+		selected_song = 0
+		if(!current_song)
+			update_music()
+			update_icon()
 
-	if (href_list["cancelbuy"])
-		selected_song=0
-		screen = JUKEBOX_SCREEN_MAIN
+	if (href_list["add_song"])
+		var/song_uri=
 
 	if (href_list["mode"])
 		loop_mode = (loop_mode % JUKEMODE_COUNT) + 1

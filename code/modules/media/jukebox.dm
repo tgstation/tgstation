@@ -497,6 +497,7 @@ var/global/loopModeNames=list(
 
 	playlist_id="muzak"
 	autoplay = 1
+	change_cost = 0
 
 	id_tag="DJ Satellite" // For autolink
 

@@ -469,10 +469,10 @@
 	for(var/datum/design/D in files.known_designs)
 		if(D.build_type&16)
 			if(D.category in part_sets)//Checks if it's a valid category
-				if(add_part_to_set(D.category, text2path(D.build_path)))//Adds it to said category
+				if(add_part_to_set(D.category, D.build_path))//Adds it to said category
 					i++
 			else
-				if(add_part_to_set("Misc", text2path(D.build_path)))//If in doubt, chunk it into the Misc
+				if(add_part_to_set("Misc", D.build_path))//If in doubt, chunk it into the Misc
 					i++
 	return i
 
@@ -724,16 +724,16 @@
 		//var/obj/item/stack/sheet/res = new material.sheettype(src)
 		var/total_amount = min(round(material.stored/material.cc_per_sheet),amount)
 		var/to_spawn = total_amount
-		
+
 		while(to_spawn > 0)
 			var/obj/item/stack/sheet/res = new material.sheettype(src)
-			if(to_spawn > res.max_amount) 
+			if(to_spawn > res.max_amount)
 				res.amount = res.max_amount
 				to_spawn -= res.max_amount
-			else 
+			else
 				res.amount = to_spawn
 				to_spawn = 0
-				
+
 			material.stored -= res.amount * res.perunit
 			//materials[matID]=material - why?
 			res.Move(src.loc)
