@@ -881,7 +881,7 @@ About the new airlock wires panel:
 		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>"
 		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
 		if(do_after(user,40,5,1))
-			if(!density && !operating)//Door must be closed to weld.
+			if(density && !operating)//Door must be closed to weld.
 				if(W.remove_fuel(0,user))
 					playsound(loc, 'sound/items/welder.ogg', 50, 1)
 					welded = !welded

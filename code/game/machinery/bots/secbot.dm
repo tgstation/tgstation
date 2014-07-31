@@ -71,8 +71,8 @@
 	declare_arrests = 0
 
 /obj/item/weapon/secbot_assembly
-	name = "helmet/signaler assembly"
-	desc = "Some sort of bizarre assembly."
+	name = "incomplete securitron assembly"
+	desc = "Some sort of bizarre assembly made from a proximity sensor, helmet, and signaler."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
