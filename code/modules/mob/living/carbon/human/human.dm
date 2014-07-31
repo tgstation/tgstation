@@ -32,6 +32,10 @@
 	h_style = "Bald"
 	..(new_loc, "Skellington")
 
+/mob/living/carbon/human/plasma/New(var/new_loc)
+	h_style = "Bald"
+	..(new_loc, "Plasmaman")
+
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null, var/delay_ready_dna=0)
 
 	if(!species)
