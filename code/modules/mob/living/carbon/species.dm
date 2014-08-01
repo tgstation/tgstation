@@ -404,7 +404,7 @@
 	language = "Grey"
 	attack_verb = "punch"
 	darksight = 5 // BOOSTED from 2
-	eyes = "grey_eyes_s"
+	eyes = ""
 
 	max_hurt_damage = 3 // From 5 (for humans)
 
@@ -423,13 +423,13 @@
 	language = "Muton"
 	attack_verb = "punch"
 	darksight = 1
-	eyes = "grey_eyes_s"
+	eyes = "eyes_s"
 
 	max_hurt_damage = 10
 
 	primitive = /mob/living/carbon/monkey // TODO
 
-	flags = WHITELISTED | HAS_LIPS
+	flags = HAS_LIPS
 
 	// Both must be set or it's only a 45% chance of manifesting.
 	default_mutations=list(M_STRONG | M_RUN | M_LOUD)
