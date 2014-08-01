@@ -228,7 +228,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/air_management
-	
+
 /datum/design/large_tank_control
 	name = "Circuit Design (Atmospheric Tank Control)"
 	desc = "Allows for the construction of circuit boards used to build an Atmospheric Tank Control."
@@ -1638,6 +1638,84 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 2000)
 	build_path = /obj/item/weapon/gun/energy/lasercannon
+	locked = 1
+
+/datum/design/xcomsquaddiearmor
+	name = "Squaddie Armor"
+	desc = "A set of armor good against ballistics and laser weaponry.."
+	id = "xcomsquaddiearmor"
+	req_tech = list("materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 5000, "$glass" = 1000)
+	build_path = /obj/item/clothing/suit/armor/xcomsquaddie
+
+/datum/design/xcomoriginalarmor
+	name = "Original Armor"
+	desc = "A set of armor good against ballistics and laser weaponry.."
+	id = "xcomoriginalarmor"
+	req_tech = list("materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 5000, "$glass" = 1000)
+	build_path = /obj/item/clothing/suit/armor/xcomarmor
+
+/datum/design/xcomplasmapistol
+	name = "Plasma Pistol"
+	desc = "A plasma pistol."
+	id = "xcomplasmapistol"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 1000)
+	build_path = /obj/item/weapon/gun/energy/plasma/pistol
+	locked = 1
+
+/datum/design/xcomplasmarifle
+	name = "Plasma Rifle"
+	desc = "A plasma rifle."
+	id = "xcomplasmarifle"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 3000)
+	build_path = /obj/item/weapon/gun/energy/plasma/rifle
+	locked = 1
+
+/datum/design/xcomlightplasmarifle
+	name = "Light Plasma Rifle"
+	desc = "A plasma rifle."
+	id = "xcomlightplasmarifle"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 2000)
+	build_path = /obj/item/weapon/gun/energy/plasma/light
+	locked = 1
+
+/datum/design/xcomlaserrifle
+	name = "Laser Cannon"
+	desc = "A laser rifle."
+	id = "xcomlaserrifle"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 2000)
+	build_path = /obj/item/weapon/gun/energy/laser/rifle
+	locked = 1
+
+/datum/design/xcomlaserpistol
+	name = "Laser Pistol"
+	desc = "A laser pistol."
+	id = "xcomlaserpistol"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 1000)
+	build_path = /obj/item/weapon/gun/energy/laser/pistol
+	locked = 1
+
+/datum/design/xcomar
+	name = "Assault Rifle"
+	desc = "An Assault Rifle."
+	id = "xcomar"
+	req_tech = list("combat" = 4, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000)
+	build_path = /obj/item/weapon/gun/projectile/automatic/xcom
 	locked = 1
 
 /datum/design/decloner
