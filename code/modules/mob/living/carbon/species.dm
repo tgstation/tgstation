@@ -425,7 +425,7 @@
 	darksight = 1
 	eyes = "grey_eyes_s"
 
-	max_hurt_damage = 15
+	max_hurt_damage = 10
 
 	primitive = /mob/living/carbon/monkey // TODO
 
