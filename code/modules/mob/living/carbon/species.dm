@@ -439,8 +439,6 @@
 		// Unequip existing suits and hats.
 		H.u_equip(H.wear_suit)
 		H.u_equip(H.head)
-		if(H.mind.assigned_role!="Clown")
-			H.u_equip(H.wear_mask)
 
 /datum/species/skrell
 	name = "Skrell"
