@@ -1,6 +1,6 @@
-var/const
-	DB_SERVER = "localhost" // This is the location of your MySQL server (localhost is USUALLY fine)
-	DB_PORT = 3306 			// This is the port your MySQL server is running on (3306 is the default)
+//var/const
+	//DB_SERVER = "localhost" // This is the location of your MySQL server (localhost is USUALLY fine)
+	//DB_PORT = 3306 			// This is the port your MySQL server is running on (3306 is the default)
 
 DBConnection
 	var
@@ -9,8 +9,10 @@ DBConnection
 		user 			// This variable contains the username data.
 		password 		// This variable contains the password data.
 		default_cursor  // This contains the default database cursor data.
-		server = DB_SERVER // "localhost"
-		port = DB_PORT // 3306
+		//server = DB_SERVER // "localhost"
+		server = "localhost"
+		//port = DB_PORT // 3306
+		port = 3306
 
 	New(dbi_handler,username,password_handler,cursor_handler)
 		src.dbi = dbi_handler
@@ -21,14 +23,16 @@ DBConnection
 
 	proc
 		Connect(dbi_handler=src.dbi,user_handler=src.user,password_handler=src.password,cursor_handler)
-			if(!src) return 0
+			//if(!src) return 0
+			if(!sqllogging || !src) return 0
 			cursor_handler = src.default_cursor
 			if(!cursor_handler) cursor_handler = Default_Cursor
 			return _dm_db_connect(_db_con,dbi_handler,user_handler,password_handler,cursor_handler,null)
 
 		Disconnect() return _dm_db_close(_db_con)
 
-		IsConnected() return _dm_db_is_connected(_db_con)
+		//IsConnected() return _dm_db_is_connected(_db_con)
+		IsConnected() return !sqllogging ? 0 : _dm_db_is_connected(_db_con)
 
 		Quote(str) return _dm_db_quote(_db_con,str)
 
@@ -36,7 +40,8 @@ DBConnection
 
 		SelectDB(database_name,dbi)
 			if(IsConnected()) Disconnect()
-			return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)
+			//return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)
+			return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[sqladdress]:[sqlport]"]",user,password)
 
 		NewQuery(sql_query,cursor_handler=src.default_cursor) return new/DBQuery(sql_query,src,cursor_handler)
 
