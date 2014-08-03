@@ -4,7 +4,7 @@
 /obj/structure/ore_box
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "orebox"
-	name = "Ore Box"
+	name = "ore box"
 	desc = "It's heavy"
 	density = 1
 
