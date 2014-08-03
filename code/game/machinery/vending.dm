@@ -644,7 +644,7 @@
 /obj/machinery/vending/snack
 	name = "Getmore Chocolate Corp"
 	desc = "A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars"
-	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
+	product_slogans = "Try our new nougat bar!;Half the calories for double the price!;It's better then Dan's!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
@@ -652,9 +652,9 @@
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
-	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 20,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 30,/obj/item/weapon/reagent_containers/food/snacks/chips =25,
-					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 30,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 20,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 30,
-					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 25,
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 40,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 60,/obj/item/weapon/reagent_containers/food/snacks/chips = 50,
+					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 60,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 40,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 60,
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 50,
 					/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 0)
 
 
@@ -663,15 +663,15 @@
 	name = "Robust Softdrinks"
 	desc = "A softdrink vendor provided by Robust Industries, LLC."
 	icon_state = "Cola_Machine"
-	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!"
+	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!;Atleast we aren't Dan!"
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 5)
-	prices = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 20,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 20,
-					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 20,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 20,
-					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 20)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 40,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 40,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 40,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 40,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 40)
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -820,6 +820,7 @@
 	name = "BODA"
 	desc = "Old sweet water vending machine"
 	icon_state = "sovietsoda"
+	product_slogans = "BODA: We sell drink.;BODA: Drink today.;BODA: We're better then Comrade Dan."
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda = 30)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola = 20)
@@ -951,3 +952,16 @@
 	product_slogans = "Das Vierte Reich wird zuruckkehren!;ENTFERNEN JUDEN!;Billiger als die Juden jemals geben!;Rader auf dem adminbus geht rund und rund.;Warten Sie, warum wir wieder hassen Juden?- *BZZT*"
 	products = list(/obj/item/clothing/head/stalhelm = 20, /obj/item/clothing/head/panzer = 20, /obj/item/clothing/suit/soldiercoat = 20, /obj/item/clothing/under/soldieruniform = 20, /obj/item/clothing/shoes/jackboots = 20)
 	contraband = list(/obj/item/clothing/head/naziofficer = 10, /obj/item/clothing/suit/officercoat = 10, /obj/item/clothing/under/officeruniform = 10)
+
+/obj/machinery/vending/discount
+	name = "Discount Dan's"
+	desc = "A snack machine owned by the infamous 'Discount Dan' franchise."
+	product_slogans = "Discount Dan, he's the man!;There 'aint nothing better in this world then a bite of mystery.;Don't listen to those other machines, buy my product!;Quantity over Quality!;Don't listen to those eggheads at the CDC, buy now!;Discount Dan's: We're good for you! Nope, couldn't say it with a straight face.;Discount Dan's: Only the best quality produ-*BZZT*"
+	product_ads = "Discount Dan(tm) is not responsible for any damages caused by misuse of his product."
+	vend_reply = "Good luck with that, pal.;No refunds.;Really? Ok then.;Wow, really? You're dumber then I thought."
+	icon_state = "discount"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 6,/obj/item/weapon/reagent_containers/food/drinks/groans = 6,/obj/item/weapon/reagent_containers/food/snacks/danitos =6,
+					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 6,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 6)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 20,/obj/item/weapon/reagent_containers/food/drinks/groans = 30,/obj/item/weapon/reagent_containers/food/snacks/danitos = 25,
+					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 30,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 20)
+
