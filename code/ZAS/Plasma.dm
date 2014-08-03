@@ -1,23 +1,27 @@
 var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
-obj/var/contaminated = 0
-
+/obj/item
+	var/contaminated = 0
 
 /obj/item/proc/can_contaminate()
-	//Clothing and backpacks can be contaminated.
-	if(flags & PLASMAGUARD) return 0
-	else if(istype(src,/obj/item/weapon/storage/backpack)) return 0 //Cannot be washed :(
-	else if(istype(src,/obj/item/clothing)) return 1
+	// clothing and backpacks can be contaminated.
+	if(flags & PLASMAGUARD)
+		return 0
+	else if(istype(src, /obj/item/weapon/storage/backpack))
+		return 0 // cannot be washed :(
+	else if(istype(src, /obj/item/clothing))
+		return 1
 
 /obj/item/proc/contaminate()
-	//Do a contamination overlay? Temporary measure to keep contamination less deadly than it was.
+	// do a contamination overlay?
+	// temporary measure to keep contamination less deadly than it was.
 	if(!contaminated)
 		contaminated = 1
-		overlays += contamination_overlay
+		overlays.Add(contamination_overlay)
 
 /obj/item/proc/decontaminate()
 	contaminated = 0
-	overlays -= contamination_overlay
+	overlays.Remove(contamination_overlay)
 
 /mob/proc/contaminate()
 
@@ -115,13 +119,15 @@ obj/var/contaminated = 0
 	if(gloves) gloves.contaminate()
 
 
-turf/Entered(obj/item/I)
-	. = ..()
-	//Items that are in plasma, but not on a mob, can still be contaminated.
+/turf/Entered(atom/movable/Obj,atom/OldLoc)
+	..(atom/movable/Obj,atom/OldLoc)
+
+	var/obj/item/I = Obj
+
+	// items that are in plasma, but not on a mob, can still be contaminated.
 	if(istype(I) && zas_settings.Get(/datum/ZAS_Setting/CLOTH_CONTAMINATION))
-		var/datum/gas_mixture/env = return_air(1)
-		if(!env)
-			return
-		if(env.toxins > MOLES_PLASMA_VISIBLE + 1)
+		var/datum/gas_mixture/environment = return_air()
+
+		if(environment.toxins > MOLES_PLASMA_VISIBLE + 1)
 			if(I.can_contaminate())
 				I.contaminate()
