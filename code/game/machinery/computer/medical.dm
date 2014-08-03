@@ -103,31 +103,31 @@
 					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[];u_load=1'>Upload From Disk</A><BR>\n<A href='?src=\ref[];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];screen=1'>Back</A>", src, src, src, src)
 				if(4.0)
 
-					dat += "<table></td></tr><b><font size='4'>Medical Record</font></b></td></tr>"
+					dat += "<table><tr><td><b><font size='4'>Medical Record</font></b></td></tr>"
 					if(active1 in data_core.general)
 						dat += "<tr><td>Name:</td><td>[active1.fields["name"]]</td></tr>"
 						dat += "<tr><td>ID:</td><td>[active1.fields["id"]]</td></tr>"
-						dat += "<tr><td>Sex:</td><td><A href='?src=\ref[src];field=sex'>e</A>[active1.fields["sex"]]</td></tr>"
-						dat += "<tr><td>Age:</td><td><A href='?src=\ref[src];field=age'>e</A>[active1.fields["age"]]</td></tr>"
-						dat += "<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];field=fingerprint'>e</A>[active1.fields["fingerprint"]]</td></tr>"
-						dat += "<tr><td>Physical Status:</td><td><A href='?src=\ref[src];field=p_stat'>e</A>[active1.fields["p_stat"]]</td></tr>"
-						dat += "<tr><td>Mental Status:</td><td><A href='?src=\ref[src];field=m_stat'>e</A>[active1.fields["m_stat"]]</td></tr>"
+						dat += "<tr><td>Sex:</td><td><A href='?src=\ref[src];field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>Age:</td><td><A href='?src=\ref[src];field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>Physical Status:</td><td><A href='?src=\ref[src];field=p_stat'>&nbsp;[active1.fields["p_stat"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>Mental Status:</td><td><A href='?src=\ref[src];field=m_stat'>&nbsp;[active1.fields["m_stat"]]&nbsp;</A></td></tr>"
 					else
 						dat += "<tr><td>General Record Lost!</td></tr>"
 
 					dat += "<tr><td><br><b><font size='4'>Medical Data</font></b></td></tr>"
 					if(active2 in data_core.medical)
-						dat += "<tr><td>Blood Type:</td><td><A href='?src=\ref[src];field=blood_type'>e</A>[active2.fields["blood_type"]]</td></tr>"
-						dat += "<tr><td>DNA:</td><td><A href='?src=\ref[src];field=b_dna'>e</A>[active2.fields["b_dna"]]</td></tr>"
-						dat += "<tr><td><br>Minor Disabilities:</td><td><br><A href='?src=\ref[src];field=mi_dis'>e</A>[active2.fields["mi_dis"]]</td></tr>"
-						dat += "<tr><td>Details:</td><td><A href='?src=\ref[src];field=mi_dis_d'>e</A>[active2.fields["mi_dis_d"]]</td></tr>"
-						dat += "<tr><td><br>Major Disabilities:</td><td><br><A href='?src=\ref[src];field=ma_dis'>e</A>[active2.fields["ma_dis"]]</td></tr>"
-						dat += "<tr><td>Details:</td><td><A href='?src=\ref[src];field=ma_dis_d'>e</A>[active2.fields["ma_dis_d"]]</td></tr>"
-						dat += "<tr><td><br>Allergies:</td><td><br><A href='?src=\ref[src];field=alg'>e</A>[active2.fields["alg"]]</td></tr>"
-						dat += "<tr><td>Details:</td><td><A href='?src=\ref[src];field=alg_d'>e</A>[active2.fields["alg_d"]]</td></tr>"
-						dat += "<tr><td><br>Current Diseases:</td><td><br><A href='?src=\ref[src];field=cdi'>e</A>[active2.fields["cdi"]]</td></tr>" //(per disease info placed in log/comment section)
-						dat += "<tr><td>Details:</td><td><A href='?src=\ref[src];field=cdi_d'>e</A>[active2.fields["cdi_d"]]</td></tr>"
-						dat += "<tr><td><br>Important Notes:</td><td><br><A href='?src=\ref[src];field=notes'>e</A>[active2.fields["notes"]]</td></tr>"
+						dat += "<tr><td>Blood Type:</td><td><A href='?src=\ref[src];field=blood_type'>&nbsp;[active2.fields["blood_type"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>DNA:</td><td><A href='?src=\ref[src];field=b_dna'>&nbsp;[active2.fields["b_dna"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td><br>Minor Disabilities:</td><td><br><A href='?src=\ref[src];field=mi_dis'>&nbsp;[active2.fields["mi_dis"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>Details:</td><td><A href='?src=\ref[src];field=mi_dis_d'>&nbsp;[active2.fields["mi_dis_d"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td><br>Major Disabilities:</td><td><br><A href='?src=\ref[src];field=ma_dis'>&nbsp;[active2.fields["ma_dis"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>Details:</td><td><A href='?src=\ref[src];field=ma_dis_d'>&nbsp;[active2.fields["ma_dis_d"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td><br>Allergies:</td><td><br><A href='?src=\ref[src];field=alg'>&nbsp;[active2.fields["alg"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>Details:</td><td><A href='?src=\ref[src];field=alg_d'>&nbsp;[active2.fields["alg_d"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td><br>Current Diseases:</td><td><br><A href='?src=\ref[src];field=cdi'>&nbsp;[active2.fields["cdi"]]&nbsp;</A></td></tr>" //(per disease info placed in log/comment section)
+						dat += "<tr><td>Details:</td><td><A href='?src=\ref[src];field=cdi_d'>&nbsp;[active2.fields["cdi_d"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td><br>Important Notes:</td><td><br><A href='?src=\ref[src];field=notes'>&nbsp;[active2.fields["notes"]]&nbsp;</A></td></tr>"
 
 						dat += "<tr><td><br><b><font size='4'>Comments/Log</font></b></td></tr>"
 						var/counter = 1
