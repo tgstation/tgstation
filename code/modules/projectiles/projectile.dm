@@ -79,7 +79,7 @@
 		bumped = 1
 		if(ismob(A))
 			var/mob/M = A
-			if(!istype(A, /mob/living))
+			if(!isliving(A)||ispAI(A))
 				loc = A.loc
 				return 0// nope.avi
 
