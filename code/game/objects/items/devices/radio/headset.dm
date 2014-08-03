@@ -155,7 +155,7 @@
 	keyslot2 = new /obj/item/device/encryptionkey/headset_service
 
 /obj/item/device/radio/headset/headset_cent
-	name = "centcom headset"
+	name = "\improper Centcom headset"
 	desc = "A headset used by the upper echelons of Nanotrasen. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "cent_headset"
 	item_state = "headset"
