@@ -100,7 +100,7 @@
 		spark_system.start()
 		playsound(src.loc, "sparks", 50, 1)
 		
-	else
+	else if(!balance) //to prevent coins from magically disappearing
 		..()
 
 /obj/machinery/computer/slot_machine/attack_hand(mob/living/user)
