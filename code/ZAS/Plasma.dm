@@ -119,8 +119,8 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	if(gloves) gloves.contaminate()
 
 
-/turf/Entered(atom/movable/Obj,atom/OldLoc)
-	..(atom/movable/Obj,atom/OldLoc)
+/turf/Entered(atom/movable/Obj, atom/OldLoc)
+	..(Obj, OldLoc)
 
 	var/obj/item/I = Obj
 
