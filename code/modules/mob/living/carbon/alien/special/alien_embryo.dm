@@ -120,7 +120,7 @@ Des: Adds the infection image to all aliens for this embryo
 /obj/item/alien_embryo/proc/AddInfectionImages()
 	for(var/mob/living/carbon/alien/alien in player_list)
 		if(alien.client)
-			var/I = image('icons/mob/alien.dmi', loc = src.loc, icon_state = "infected[stage]")
+			var/I = image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "infected[stage]")
 			alien.client.images += I
 
 /*----------------------------------------
@@ -131,5 +131,5 @@ Des: Removes all images from the mob infected by this embryo
 	for(var/mob/living/carbon/alien/alien in player_list)
 		if(alien.client)
 			for(var/image/I in alien.client.images)
-				if(dd_hasprefix_case(I.icon_state, "infected") && I.loc == loc)
+				if(dd_hasprefix_case(I.icon_state, "infected") && I.loc == affected_mob)
 					qdel(I)
