@@ -41,7 +41,7 @@
  */
 
 // Uncomment to show debug messages.
-//#define DEBUG_OBJECT_POOL
+#define DEBUG_OBJECT_POOL
 
 #define MAINTAINING_OBJECT_POOL_COUNT 20
 
@@ -58,18 +58,18 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
  * Example call: getFromPool(/obj/item/weapon/shard, loc)
  */
 /proc/getFromPool(const/A, const/B)
-	if(length(masterPool["[A]"]) <= 0)
+	if(length(masterPool[A]) <= 0)
 		#ifdef DEBUG_OBJECT_POOL
 		world << text("DEBUG_OBJECT_POOL: new proc has been called ([]).", A)
 		#endif
 
 		return new A(B)
 
-	var/atom/movable/O = masterPool["[A]"][1]
-	masterPool["[A]"] -= O
+	var/atom/movable/O = masterPool[A][1]
+	masterPool[A] -= O
 
 	#ifdef DEBUG_OBJECT_POOL
-	world << text("DEBUG_OBJECT_POOL: getFromPool([]) [] left.", A, length(masterPool["[A]"]))
+	world << text("DEBUG_OBJECT_POOL: getFromPool([]) [] left.", A, length(masterPool[A]))
 	#endif
 
 	O.loc = B
@@ -85,7 +85,7 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
  * Example call: returnToPool(src)
  */
 /proc/returnToPool(const/atom/movable/AM)
-	if(length(masterPool["[AM.type]"]) >= MAINTAINING_OBJECT_POOL_COUNT)
+	if(length(masterPool[AM.type]) >= MAINTAINING_OBJECT_POOL_COUNT)
 		#ifdef DEBUG_OBJECT_POOL
 		world << text("DEBUG_OBJECT_POOL: returnToPool([]) exceeds [] discarding...", AM.type, MAINTAINING_OBJECT_POOL_COUNT)
 		#endif
@@ -93,14 +93,14 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
 		qdel(AM)
 		return
 
-	if(isnull(masterPool["[AM.type]"]))
-		masterPool["[AM.type]"] = new
+	if(isnull(masterPool[AM.type]))
+		masterPool[AM.type] = new
 
-	masterPool["[AM.type]"] += AM
+	masterPool[AM.type] += AM
 	AM.resetVariables()
 
 	#ifdef DEBUG_OBJECT_POOL
-	world << text("DEBUG_OBJECT_POOL: returnToPool([]) [] left.", AM.type, length(masterPool["[AM.type]"]))
+	world << text("DEBUG_OBJECT_POOL: returnToPool([]) [] left.", AM.type, length(masterPool[AM.type]))
 	#endif
 
 #undef MAINTAINING_OBJECT_POOL_COUNT
@@ -116,9 +116,8 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
  *				 /obj/item/weapon/shard/resetVariables()
  */
 /atom/movable/proc/resetVariables()
+	loc = null
 	var/list/exclude = global.exclude + args // Explicit var exclusion.
 
 	for(var/key in vars - exclude)
 		vars[key] = initial(vars[key])
-
-	vars["loc"] = null // Making sure the loc is null not a compile-time var value.
