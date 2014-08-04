@@ -2803,7 +2803,10 @@ datum
 								var/datum/organ/internal/liver/L = H.internal_organs["liver"]
 								if (istype(L))
 									L.take_damage(0.1, 1)
-								H.adjustToxLoss(0.3)
+								H.adjustToxLoss(0.13)
+								holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
+						else
+							return
 
 		irradiatedbeans
 			name = "Irradiated Beans"
