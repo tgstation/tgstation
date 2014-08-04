@@ -9468,7 +9468,7 @@
 "dAd" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/wall,/area/derelict/bridge/access)
 "dAe" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor,/area/derelict/bridge/access)
 "dAf" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/cable,/turf/simulated/floor/plating/airless,/area/solar/derelict_starboard)
-"dAg" = (/obj/structure/cable,/obj/structure/table,/obj/machinery/power/apc{dir = 2; pixel_x = -24},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/item/weapon/storage/toolbox/mechanical,/turf/simulated/floor{icon_state = "cmo"},/area/research_outpost/entry)
+"dAg" = (/obj/structure/cable,/obj/structure/table,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/item/weapon/storage/toolbox/mechanical,/obj/machinery/power/apc{pixel_y = -24},/turf/simulated/floor{icon_state = "cmo"},/area/research_outpost/entry)
 "dAh" = (/turf/simulated/floor/plating,/area/derelict/bridge/access)
 "dAi" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor,/area/derelict/bridge/access)
 "dAj" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/derelict/bridge/access)
