@@ -1210,6 +1210,20 @@
 		reagents.add_reagent("bustanut", 2) //YOU FEELIN HARDCORE BRAH?
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/discountburrito
+	name = "Discount Dan's Burritos"
+	desc = "The perfect blend of cheap processing and cheap materials."
+	icon_state = "danburrito"
+	trash = /obj/item/trash/danitos
+	var/list/ddname = list("Spooky Dan's BOO-ritos - Texas Toast Chainsaw Massacre Flavor","Sconto Danilo's Burritos - 50% Real Mozzarella Pepperoni Pizza Party Flavor","Descuento Danito's Burritos - Pancake Sausage Brunch Flavor","Descuento Danito's Burritos - Homestyle Comfort Flavor","Spooky Dan's BOO-ritos - Nightmare on Elm Meat Flavor","Descuento Danito's Burritos - Strawberrito Churro Flavor","Descuento Danito's Burritos - Beff and Bean Flavor")
+	New()
+		..()
+		name = pick(ddname)
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("discount", 6)
+		reagents.add_reagent("chemical_waste", 2) //Does nothing, but it's pretty fucking funny.
+		bitesize = 2
+
 
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
@@ -2886,7 +2900,7 @@
 	deepfried = 1
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 1)
 
 ///////////////////////////////////////////
 // new old food stuff from bs12

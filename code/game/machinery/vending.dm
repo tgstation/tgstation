@@ -965,7 +965,7 @@
 	vend_reply = "No refunds."
 	icon_state = "discount"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 6,/obj/item/weapon/reagent_containers/food/drinks/groans = 6,/obj/item/weapon/reagent_containers/food/snacks/danitos =6,
-					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 6,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 6)
+					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 6,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/discountburrito = 6)
 	prices = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 20,/obj/item/weapon/reagent_containers/food/drinks/groans = 30,/obj/item/weapon/reagent_containers/food/snacks/danitos = 25,
-					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 30,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 20)
+					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 30,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 20,/obj/item/weapon/reagent_containers/food/snacks/discountburrito = 20)
 

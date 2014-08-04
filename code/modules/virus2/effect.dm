@@ -831,5 +831,5 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	stage = 1
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob << "<span class = 'notice'> You feel optimistic!</span>"
-		if (mob.reagents.get_reagent_amount("tricordazine") < 1)
-			mob.reagents.add_reagent("tricordazine", 1)
+		if (mob.reagents.get_reagent_amount("tricordrazine") < 1)
+			mob.reagents.add_reagent("tricordrazine", 1)

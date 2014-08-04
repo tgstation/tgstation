@@ -1,4 +1,5 @@
 /mob/proc/say()
+	src << "\red /MOB/SAY NOT OVERRIDDEN WHAT THE FUCK MAN"
 	return
 
 /mob/verb/whisper()

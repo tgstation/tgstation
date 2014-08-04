@@ -2073,8 +2073,8 @@ var/list/the_station_areas = list (
 
 
 
-/area/beach
-	name = "Keelin's private beach"
+/area/beach/
+	name = "The metaclub's private beach"
 	icon_state = "null"
 	luminosity = 1
 	lighting_use_dynamic = 0
@@ -2113,7 +2113,7 @@ var/list/the_station_areas = list (
 		var/sound/S = null
 		var/sound_delay = 0
 		if(prob(25))
-			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
+			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=50)
 			sound_delay = rand(0, 50)
 
 		for(var/mob/living/carbon/human/H in src)
