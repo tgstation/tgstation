@@ -111,7 +111,7 @@
 
 
 /obj/structure/alien/resin/attack_alien(mob/user)
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(islarva(user))
 		return
 	user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
@@ -123,7 +123,7 @@
 
 
 /obj/structure/alien/resin/attackby(obj/item/I, mob/user)
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	health -= I.force
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	healthcheck()
@@ -198,7 +198,7 @@
 
 
 /obj/structure/alien/weeds/attackby(obj/item/I, mob/user)
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(I.attack_verb.len)
 		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I] by [user].</span>")
 	else

@@ -66,7 +66,7 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	src.health -= W.force
 	src.healthcheck()
 	..()
@@ -76,7 +76,7 @@
 	return src.attack_hand(user)
 
 /obj/structure/displaycase/attack_hand(mob/user as mob)
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if (src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 		user << "\b You deactivate the hover field built into the case."

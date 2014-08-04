@@ -190,6 +190,7 @@
 			itemname = P.name
 			info = P.notehtml
 		U << "You hold \the [itemname] up to the camera ..."
+		U.changeNext_move(CLICK_CD_MELEE)
 		for(var/mob/O in player_list)
 			if(istype(O, /mob/living/silicon/ai))
 				var/mob/living/silicon/ai/AI = O
