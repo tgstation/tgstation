@@ -1215,24 +1215,10 @@
 	desc = "The perfect blend of cheap processing and cheap materials."
 	icon_state = "danburrito"
 	trash = /obj/item/trash/danitos
+	var/list/ddname = list("Spooky Dan's BOO-ritos - Texas Toast Chainsaw Massacre Flavor","Sconto Danilo's Burritos - 50% Real Mozzarella Pepperoni Pizza Party Flavor","Descuento Danito's Burritos - Pancake Sausage Brunch Flavor","Descuento Danito's Burritos - Homestyle Comfort Flavor","Spooky Dan's BOO-ritos - Nightmare on Elm Meat Flavor","Descuento Danito's Burritos - Strawberrito Churro Flavor","Descuento Danito's Burritos - Beff and Bean Flavor")
 	New()
 		..()
-		var/namestuff = rand(1, 7)
-		switch(namestuff)
-			if(1)
-				name = "Spooky Dan's BOO-ritos - Texas Toast Chainsaw Massacre Flavor"
-			if(2)
-				name = "Sconto Danilo's Burritos - 50% Real Mozzarella Pepperoni Pizza Party Flavor"
-			if(3)
-				name = "Descuento Danito's Burritos - Pancake Sausage Brunch Flavor"
-			if(4)
-				name = "Descuento Danito's Burritos - Homestyle Comfort Flavor"
-			if(5)
-				name = "Spooky Dan's BOO-ritos - Nightmare on Elm Meat Flavor"
-			if(6)
-				name = "Descuento Danito's Burritos - Strawberrito Churro Flavor"
-			if(7)
-				name = "escuento Danito's Burritos - Beff and Bean Flavor"
+		name = pick(ddname)
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("discount", 6)
 		reagents.add_reagent("chemical_waste", 2) //Does nothing, but it's pretty fucking funny.
