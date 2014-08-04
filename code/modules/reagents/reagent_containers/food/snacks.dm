@@ -2961,6 +2961,3 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
-
-//Discount Dan's WaCkY product.
-/obj/item/weapon/reagent_containers/food/snacks/noodle_soup
