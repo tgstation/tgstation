@@ -413,6 +413,60 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 		return 1
 	return 0
 
+proc/inherit_role(var/mob/user, var/mob/target) //returns 0 if no inheritable role, 1 for role(s) inherited
+//Note: This proc is for adding roles on mob CREATION. It assumes the mob has no preexisting alliances or barriers to antagery.
+
+	var/intrinsic_loyalty = 0 //stops antaged creations from dunking their masters because "I'M AN ANTAG I CAN DO ANYTHING!"
+
+	if(!user.mind || !user.mind.special_role) //nothing to inhert!
+		return 0
+	if(!target.mind) //just in case
+		target.mind_initialize()
+
+	if(user.mind && user.mind.special_role) //no switches in case of multiple roles to transfer
+		if(user.mind in ticker.mode.head_revolutionaries || user.mind in ticker.mode.revolutionaries) //All revs rev to rev
+			target.mind.has_been_rev = 1
+			ticker.mode.add_revolutionary(target.mind)
+			intrinsic_loyalty = 1
+		if(user.mind in ticker.mode.wizards) //All wizards summon apprentices
+			ticker.mode.traitors += target.mind
+			target.mind.special_role = "apprentice"
+		if(user.mind in	ticker.mode.syndicates) //All syndies are syndies
+			ticker.mode.syndicates += target.mind
+			ticker.mode.update_synd_icons_added(target.mind)
+			target.mind.special_role = "syndicate"
+			target.faction = list("syndicate")
+			intrinsic_loyalty = 1
+		if(user.mind in ticker.mode.traitors) //All traitors trait to their own role (this includes apprentices and survivors)
+			ticker.mode.traitors += target.mind
+			target.mind.special_role = user.mind.special_role
+		if(user.mind in ticker.mode.cult) //All cultist cult cultist
+			ticker.mode.add_cultist(target.mind)
+			target.mind.special_role = "Cultist"
+			intrinsic_loyalty = 1
+		if(user.mind in ticker.mode.changelings) //Changelings trait to ling aligned basic traitors
+			ticker.mode.traitors += target.mind
+			target.mind.special_role = "changeling sympathizer"
+
+	if(!target.mind.special_role)//user was an antag, but not one that creates antags
+		return 0
+
+	if(!intrinsic_loyalty) //Don't be a dick now
+		var/datum/objective/protect/new_objective = new /datum/objective/protect
+		new_objective.owner = target.mind
+		new_objective.target = user.mind
+		target.mind.objectives += new_objective
+		new_objective.explanation_text = "Protect [user.real_name], the [user.mind.special_role]."
+
+	target << "\red <FONT size = 3><B>You are a [target.mind.special_role]!</B></FONT>"
+
+	var/obj_count = 1
+	for(var/datum/objective/OBJ in target.mind.objectives)
+		target << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+		obj_count++
+	return 1
+
+
 /mob/proc/has_mutation(var/mutation)
 	return mutation in src.mutations ? 1 : 0
 

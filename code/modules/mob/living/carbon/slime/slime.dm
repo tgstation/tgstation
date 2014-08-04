@@ -925,6 +925,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		G.loc = src.loc
 		G.key = ghost.key
 		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+		inherit_role(user,G)
 		qdel(src)
 
 /mob/living/carbon/slime/getTrail()

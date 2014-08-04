@@ -214,6 +214,7 @@
 				M.Friends = Friends.Copy()
 				babies += M
 				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
+				inherit_role(src,M)
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = "harm"
