@@ -56,24 +56,24 @@ Note: Must be placed west/left of and R&D console to function.
 		T += (M.rating/3)
 	efficiency_coeff = max(T, 1)
 
-/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)	// now returns how many times the item can be build with the material
+/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)	// now returns how many times the item can be built with the material
 	switch(M)
 		if("$metal")
-			return (m_amount / (being_built.materials[M]/efficiency_coeff))
+			return (m_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$glass")
-			return (g_amount / (being_built.materials[M]/efficiency_coeff))
+			return (g_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$gold")
-			return (gold_amount / (being_built.materials[M]/efficiency_coeff))
+			return (gold_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$silver")
-			return (silver_amount / (being_built.materials[M]/efficiency_coeff))
+			return (silver_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$plasma")
-			return (plasma_amount / (being_built.materials[M]/efficiency_coeff))
+			return (plasma_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$uranium")
-			return (uranium_amount / (being_built.materials[M]/efficiency_coeff))
+			return (uranium_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$diamond")
-			return (diamond_amount / (being_built.materials[M]/efficiency_coeff))
+			return (diamond_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$clown")
-			return (clown_amount / (being_built.materials[M]/efficiency_coeff))
+			return (clown_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		else
 			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)))
 
