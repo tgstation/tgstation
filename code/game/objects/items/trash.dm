@@ -32,6 +32,12 @@
 	syndi_cakes
 		name = "Syndi cakes"
 		icon_state = "syndi_cakes"
+	discountchocolate
+		name = "Discount Dan's Chocolate Bar"
+		icon_state = "danbar"
+	danitos
+		name = "Danitos"
+		icon_state = "danitos"
 	waffles
 		name = "Waffles"
 		icon_state = "waffles"
