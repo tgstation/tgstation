@@ -10,7 +10,7 @@
 	var/use = 5
 	var/unlocked = 0
 	var/open = 0
-	var/brightness_on = 999		//can't remember what the maxed out value is
+	var/brightness_on = 8		//This time justified in balance. Encumbering but nice lightening
 
 /obj/machinery/floodlight/New()
 	src.cell = new(src)
@@ -46,20 +46,21 @@
 		updateicon()
 		return
 
-	if(on)
-		on = 0
-		user << "\blue You turn off the light"
-		SetLuminosity(0)
-	else
-		if(!cell)
-			return
-		if(cell.charge <= 0)
-			return
-		on = 1
-		user << "\blue You turn on the light"
-		SetLuminosity(brightness_on)
+	if (ishuman(user))
+		if(on)
+			on = 0
+			user << "\blue You turn off the light"
+			SetLuminosity(0)
+		else
+			if(!cell)
+				return
+			if(cell.charge <= 0)
+				return
+			on = 1
+			user << "\blue You turn on the light"
+			SetLuminosity(brightness_on)
 
-	updateicon()
+		updateicon()
 
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W as obj, mob/user as mob)

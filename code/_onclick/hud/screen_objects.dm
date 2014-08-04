@@ -325,6 +325,13 @@
 											else
 												contents.Add(0)
 
+										// ACK ACK ACK Plasmen
+										if ("plasma")
+											if(t.air_contents.toxins)
+												contents.Add(t.air_contents.toxins)
+											else
+												contents.Add(0)
+
 
 								else
 									//no tank so we set contents to 0

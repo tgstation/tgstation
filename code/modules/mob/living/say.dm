@@ -87,9 +87,11 @@ var/list/department_radio_keys = list(
 	message = capitalize(message)
 
 	if (!message)
+		src << "\red You cannot say that ...? \black (SAYDEBUG: message == null)"
 		return
 
 	if(silent)
+		src << "\red You can't speak while silenced."
 		return
 
 	if (stat == 2) // Dead.
@@ -102,10 +104,12 @@ var/list/department_radio_keys = list(
 			src << "\red You cannot speak in IC (muted)."
 			return
 		if (src.client.handle_spam_prevention(message, MUTE_IC))
+			src << "\red Stop spamming, shitbird."
 			return
 
 	// stat == 2 is handled above, so this stops transmission of uncontious messages
 	if (stat)
+		src << "\red You cannot find the strength to form the words."
 		return
 
 	// undo last word status.
@@ -116,10 +120,12 @@ var/list/department_radio_keys = list(
 
 	// Mute disability
 	if (sdisabilities & MUTE)
+		src << "\red Your words don't leave your mouth!"
 		return
 
 	// Muzzled.
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+		src << "\red [pick("Mmmrf!","Mmmf!","Hmmmf!")]"
 		return
 
 	// Emotes.
@@ -183,6 +189,7 @@ var/list/department_radio_keys = list(
 		message_mode = null //Stunned people shouldn't be able to physically turn on their radio/hold down the button to speak into it
 */
 	if (!message)
+		src << "\red You cannot say that ...? \black (SAYDEBUG: living/say.dm: message == null, before brainloss)"
 		return
 
 	// :downs:

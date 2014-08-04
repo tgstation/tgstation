@@ -1,9 +1,14 @@
+#define CAT_NORMAL 1
+#define CAT_HIDDEN 2
+#define CAT_COIN   3
+
 /datum/data/vending_product
 	var/product_name = "generic"
 	var/product_path = null
 	var/amount = 0
 	var/price = 0
 	var/display_color = "blue"
+	var/category = CAT_NORMAL
 
 
 /obj/machinery/vending
@@ -124,10 +129,13 @@
 		R.display_color = pick("red","blue","green")
 
 		if(hidden)
-			hidden_records += R
+			R.category=CAT_HIDDEN
+			hidden_records  += R
 		else if(req_coin)
-			coin_records += R
+			R.category=CAT_COIN
+			coin_records    += R
 		else
+			R.category=CAT_NORMAL
 			product_records += R
 //		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 
@@ -171,7 +179,7 @@
 
 //H.wear_id
 /obj/machinery/vending/proc/connect_account(var/obj/item/W)
-	if(istype(W,/obj/item/device/pda))
+	if(istype(W, /obj/item/device/pda))
 		W=W:id // Cheating, but it'll work.  Hopefully.
 	if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
@@ -240,6 +248,31 @@
 	src.add_hiddenprint(user)
 	return attack_hand(user)
 
+/obj/machinery/vending/proc/GetProductIndex(var/datum/data/vending_product/P)
+	var/list/plist
+	switch(P.category)
+		if(CAT_NORMAL)
+			plist=product_records
+		if(CAT_HIDDEN)
+			plist=hidden_records
+		if(CAT_COIN)
+			plist=coin_records
+		else
+			warning("UNKNOWN CATEGORY [P.category] IN TYPE [P.product_path] INSIDE [type]!")
+	return plist.Find(P)
+
+/obj/machinery/vending/proc/GetProductByID(var/pid, var/category)
+	switch(category)
+		if(CAT_NORMAL)
+			return product_records[pid]
+		if(CAT_HIDDEN)
+			return hidden_records[pid]
+		if(CAT_COIN)
+			return coin_records[pid]
+		else
+			warning("UNKNOWN PRODUCT: PID: [pid], CAT: [category] INSIDE [type]!")
+			return null
+
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
 		return
@@ -271,15 +304,14 @@
 		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] (<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>)<br><br>"
 
 	if (src.product_records.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
+		dat += "<font color = 'red'>No products loaded!</font>"
 	else
-		var/list/display_records = src.product_records
+		var/list/display_records = src.product_records.Copy()
+
 		if(src.extended_inventory)
-			display_records = src.product_records + src.hidden_records
+			display_records += src.hidden_records
 		if(src.coin)
-			display_records = src.product_records + src.coin_records
-		if(src.coin && src.extended_inventory)
-			display_records = src.product_records + src.hidden_records + src.coin_records
+			display_records += src.coin_records
 
 		for (var/datum/data/vending_product/R in display_records)
 
@@ -289,9 +321,10 @@
 				<b>[R.amount]</b> </font>"}
 			// END AUTOFIX
 			if(R.price)
-				dat += " <b>(Price: [R.price])</b>"
+				dat += " <b>($[R.price])</b>"
 			if (R.amount > 0)
-				dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>(Vend)</A>"
+				var/idx=GetProductIndex(R)
+				dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
 			else
 				dat += " <font color = 'red'>SOLD OUT</font>"
 			dat += "<br>"
@@ -317,6 +350,8 @@
 	if(..())
 		return
 
+	//testing("..(): [href]")
+
 	if(istype(usr,/mob/living/silicon))
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
@@ -341,15 +376,20 @@
 
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		if ((href_list["vend"]) && (src.vend_ready) && (!currently_vending))
+		if (href_list["vend"] && src.vend_ready && !currently_vending)
+			//testing("vend: [href]")
 
 			if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 				usr << "\red Access denied." //Unless emagged of course
 				flick(src.icon_deny,src)
 				return
 
-			var/datum/data/vending_product/R = locate(href_list["vend"])
+			var/idx=text2num(href_list["vend"])
+			var/cat=text2num(href_list["cat"])
+
+			var/datum/data/vending_product/R = GetProductByID(idx,cat)
 			if (!R || !istype(R) || !R.product_path || R.amount <= 0)
+				message_admins("Invalid vend request by [formatJumpTo(src.loc)]: [href]")
 				return
 
 			if(R.price == null || !R.price)
@@ -608,7 +648,7 @@
 /obj/machinery/vending/snack
 	name = "Getmore Chocolate Corp"
 	desc = "A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars"
-	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
+	product_slogans = "Try our new nougat bar!;Half the calories for double the price!;It's better then Dan's!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
@@ -616,9 +656,9 @@
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
-	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 20,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 30,/obj/item/weapon/reagent_containers/food/snacks/chips =25,
-					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 30,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 20,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 30,
-					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 25,
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 40,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 60,/obj/item/weapon/reagent_containers/food/snacks/chips = 50,
+					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 60,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 40,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 60,
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 50,
 					/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 0)
 
 
@@ -627,15 +667,15 @@
 	name = "Robust Softdrinks"
 	desc = "A softdrink vendor provided by Robust Industries, LLC."
 	icon_state = "Cola_Machine"
-	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!"
+	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!;At least we aren't Dan!"
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 5)
-	prices = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 20,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 20,
-					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 20,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 20,
-					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 20)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 40,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 40,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 40,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 40,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 40)
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -784,6 +824,7 @@
 	name = "BODA"
 	desc = "Old sweet water vending machine"
 	icon_state = "sovietsoda"
+	product_slogans = "BODA: We sell drink.;BODA: Drink today.;BODA: We're better then Comrade Dan."
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda = 30)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola = 20)
@@ -915,3 +956,16 @@
 	product_slogans = "Das Vierte Reich wird zuruckkehren!;ENTFERNEN JUDEN!;Billiger als die Juden jemals geben!;Rader auf dem adminbus geht rund und rund.;Warten Sie, warum wir wieder hassen Juden?- *BZZT*"
 	products = list(/obj/item/clothing/head/stalhelm = 20, /obj/item/clothing/head/panzer = 20, /obj/item/clothing/suit/soldiercoat = 20, /obj/item/clothing/under/soldieruniform = 20, /obj/item/clothing/shoes/jackboots = 20)
 	contraband = list(/obj/item/clothing/head/naziofficer = 10, /obj/item/clothing/suit/officercoat = 10, /obj/item/clothing/under/officeruniform = 10)
+
+/obj/machinery/vending/discount
+	name = "Discount Dan's"
+	desc = "A snack machine owned by the infamous 'Discount Dan' franchise."
+	product_slogans = "Discount Dan, he's the man!;There 'aint nothing better in this world then a bite of mystery.;Don't listen to those other machines, buy my product!;Quantity over Quality!;Don't listen to those eggheads at the CDC, buy now!;Discount Dan's: We're good for you! Nope, couldn't say it with a straight face.;Discount Dan's: Only the best quality produ-*BZZT*"
+	product_ads = "Discount Dan(tm) is not responsible for any damages caused by misuse of his product."
+	vend_reply = "No refunds."
+	icon_state = "discount"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 6,/obj/item/weapon/reagent_containers/food/drinks/groans = 6,/obj/item/weapon/reagent_containers/food/snacks/danitos =6,
+					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 6,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/discountburrito = 6)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 20,/obj/item/weapon/reagent_containers/food/drinks/groans = 30,/obj/item/weapon/reagent_containers/food/snacks/danitos = 25,
+					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 30,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 20,/obj/item/weapon/reagent_containers/food/snacks/discountburrito = 20)
+

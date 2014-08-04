@@ -8,6 +8,10 @@
 --- C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\left\guns.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\right\guns.dmi
  + scythe0
+--- C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\left\paramedic_eva.dmi
++++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\right\paramedic_eva.dmi
+ + paramedic-eva
+ + paramedic-eva-helmet
 --- C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\left\swords_axes.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\right\swords_axes.dmi
  + axe0

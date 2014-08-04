@@ -62,5 +62,7 @@
 		user << "<span class='notice'>You pull [frying] from [src]! It looks like you were just in time!</span>"
 		user.put_in_hands(frying)
 		frying = null
+		on = FALSE
+		icon_state = "fryer_off"
 		return
 	..()

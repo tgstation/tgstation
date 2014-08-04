@@ -247,6 +247,91 @@
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
+/obj/item/weapon/reagent_containers/food/drinks/groans
+	name = "Groans Soda"
+	desc = "Groans Soda: We'll make you groan."
+	icon_state = "groans"
+	New()
+		..()
+		switch(pick(1,2,3,4,5))
+			if(1)
+				name = "Groans Soda: Cuban Spice Flavor"
+				desc = "Warning: Long exposure to liquid inside may cause you to follow the rumba beat."
+				icon_state += "_hot"
+				reagents.add_reagent("condensedcapsaicin", 10)
+				reagents.add_reagent("rum", 10)
+			if(2)
+				name = "Groans Soda: Icey Cold Flavor"
+				desc = "Cold in a can. Er, bottle."
+				icon_state += "_cold"
+				reagents.add_reagent("frostoil", 10)
+				reagents.add_reagent("ice", 10)
+			if(3)
+				name = "Groans Soda: Zero Calories"
+				desc = "Zero Point Calories. That's right, we fit even MORE nutriment in this thing."
+				icon_state += "_nutriment"
+				reagents.add_reagent("nutriment", 20)
+			if(4)
+				name = "Groans Soda: Energy Shot"
+				desc = "Warning: The Groans Energy Blend(tm), may be toxic to those without constant exposure to chemical waste. Drink responsibly."
+				icon_state += "_energy"
+				reagents.add_reagent("sugar", 10)
+				reagents.add_reagent("chemical_waste", 10)
+			if(5)
+				name = "Groans Soda: Double Dan"
+				desc = "Just when you thought you've had enough Dan, The 'Double Dan' strikes back with this wonderful mixture of too many flavors. Bring a barf bag, Drink responsibly."
+				icon_state += "_doubledew"
+				reagents.add_reagent("discount", 20)
+		reagents.add_reagent("discount", 10)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/groans
+	name = "Groan-o-matic 9000"
+	desc = "This is for testing reasons."
+	icon_state = "toddler"
+
+/obj/item/weapon/groans/attack_self(mob/user as mob)
+	user << "Now spawning groans."
+	var/turf/T = get_turf(user.loc)
+	var/obj/item/weapon/reagent_containers/food/drinks/groans/A = new /obj/item/weapon/reagent_containers/food/drinks/groans(T)
+	A.desc += " It also smells like a toddler." //This is required
+
+/obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot
+	name = "\improper Discount Dan's Noodle Soup"
+	desc = "Discount Dan is proud to introduce his own take on noodle soups, with this on the go treat! Simply pull the tab, and a self heating mechanism activates!"
+	icon_state = "ramen"
+	var/list/ddname = list("Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor","Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown Flavor","Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak","Discount Deng's Quik-Noodles - Teriyaki TVP Flavor","Sconto Danilo's Quik-Noodles - Italian Strozzapreti Lunare Flavor")
+	New()
+		..()
+		name = pick(ddname)
+		reagents.add_reagent("hot_ramen", 20)
+		reagents.add_reagent("discount", 10)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/discount_ramen
+	name = "\improper Discount Dan's Noodle Soup"
+	desc = "Discount Dan is proud to introduce his own take on noodle soups, with this on the go treat! Simply pull the tab, and a self heating mechanism activates!"
+	icon_state = "ramen"
+	var/list/ddname = list("Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor","Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown Flavor","Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak","Discount Deng's Quik-Noodles - Teriyaki TVP Flavor","Sconto Danilo's Quik-Noodles - Italian Strozzapreti Lunare Flavor")
+	New()
+		..()
+		name = pick(ddname)
+		reagents.add_reagent("dry_ramen", 20)
+		reagents.add_reagent("discount", 10)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/discount_ramen/attack_self(mob/user as mob)
+	user << "You pull the tab, you feel the drink heat up in your hands, and its horrible fumes hits your nose like a ton of bricks. You drop the soup in disgust."
+	var/turf/T = get_turf(user.loc)
+	var/obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot/A = new /obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot(T)
+	A.desc += " It feels warm.." //This is required
+	user.drop_from_inventory(src)
+	del(src)
+
+
 /obj/item/weapon/reagent_containers/food/drinks/beer
 	name = "Space Beer"
 	desc = "Beer. In space."
