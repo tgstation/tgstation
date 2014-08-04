@@ -69,6 +69,13 @@ datum
 			required_reagents = list("nutriment"=1, "bicaridine"=1, "hyperzine"=1, "mutagen"=1)
 			result_amount = 2
 
+		discount
+			name = "Discount Dan's Special Sauce"
+			id = "discount"
+			result = "discount"
+			required_reagents = list("irradiatedbeans"=1, "toxicwaste"=1, "refriedbeans"=1, "mutatedbeans"=1, "beff"=1, "horsemeat"=1,"moonrocks"=1, "offcolorcheese"=1, "bonemarrow"=1, "greenramen"=1, "glowingramen"=1, "deepfriedramen"=1)
+			result_amount = 12
+
 		emp_pulse
 			name = "EMP Pulse"
 			id = "emp_pulse"
