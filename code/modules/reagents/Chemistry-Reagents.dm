@@ -2807,6 +2807,79 @@ datum
 								holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 						else
 							return
+
+		irradiatedbeans
+			name = "Irradiated Beans"
+			id = "irradiatedbeans"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		toxicwaste
+			name = "Toxic Waste"
+			id = "toxicwaste"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		refriedbeans
+			name = "Re-Fried Beans"
+			id = "refriedbeans"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		mutatedbeans
+			name = "Mutated Beans"
+			id = "mutatedbeans"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		beff
+			name = "Beff"
+			id = "beff"
+			description = "What's beff? Find out!"
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		horsemeat
+			name = "Horse Meat"
+			id = "horsemeat"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		moonrocks
+			name = "Moon Rocks"
+			id = "moonrocks"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		offcolorcheese
+			name = "Off-Color Cheese"
+			id = "offcolorcheese"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		bonemarrow
+			name = "Bone Marrow"
+			id = "bonemarrow"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		greenramen
+			name = "Greenish Ramen Noodles"
+			id = "greenramen"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		glowingramen
+			name = "Glowing Ramen Noodles"
+			id = "glowingramen"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		deepfriedramen
+			name = "Deep Fried Ramen Noodles"
+			id = "deepfriedramen"
+			description = "You can almost feel your liver failing, just by looking at it."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum//////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

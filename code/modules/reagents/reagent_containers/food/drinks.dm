@@ -307,6 +307,8 @@
 		name = pick(ddname)
 		reagents.add_reagent("hot_ramen", 20)
 		reagents.add_reagent("discount", 10)
+		reagents.add_reagent("glowingramen", 8)
+		reagents.add_reagent("toxicwaste", 8)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
@@ -320,6 +322,10 @@
 		name = pick(ddname)
 		reagents.add_reagent("dry_ramen", 20)
 		reagents.add_reagent("discount", 10)
+		reagents.add_reagent("toxicwaste", 4)
+		reagents.add_reagent("greenramen", 4)
+		reagents.add_reagent("glowingramen", 4)
+		reagents.add_reagent("deepfriedramen", 4)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
