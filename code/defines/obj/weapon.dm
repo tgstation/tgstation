@@ -177,6 +177,47 @@
 	origin_tech = "materials=1"
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
+/obj/item/weapon/legcuffs/bolas
+	name = "bolas"
+	desc = "An entangling bolas. Throw at your foes to trip them and prevent them from running."
+	gender = PLURAL
+	icon = 'icons/obj/items.dmi'
+	icon_state = "bolas"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
+	throwforce = 2
+	w_class = 2.0
+	m_amt = 500
+	w_type = RECYK_METAL
+	origin_tech = "materials=1"
+	attack_verb = list("lashed", "bludgeoned", "whipped")
+	force = 10
+	var/dispenser = 0
+	var/throw_sound = 'sound/weapons/whip.ogg'
+
+	suicide_act(mob/living/user)
+		viewers(user) << "\red <b>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
+		return(OXYLOSS)
+
+/obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, range, speed) //mostly copied and modified from gun code - Comic
+	var /obj/item/projectile/thrownbolas/T = new /obj/item/projectile/thrownbolas(usr.loc) //creates a bolas projectile (projectile is used for compatibility with mechs)
+	var /turf/targetloc = get_turf(A) //gets the position of the clicked atom
+	T.current = usr.loc //projectile is placed on user
+	T.starting = usr.loc
+	T.original = targetloc
+	T.yo = (targetloc.y - T.starting.y)
+	T.xo = (targetloc.x - T.starting.x)
+	if (ishuman(usr))  // determines if the bolas should spawn an item when it dies (prevents infinite spam from mechsWell)
+		T.shot_from = "hand"
+	else
+		T.shot_from = "mecha"
+	T.process()
+	playsound(src, throw_sound, 20, 1)
+	Destroy() //gets rid of the bolas item in the hand
+
+// /obj/item/weapon/legcuffs/bolas/cyborg To be implemented
+//	dispenser = 1
+
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
 	throw_speed = 2

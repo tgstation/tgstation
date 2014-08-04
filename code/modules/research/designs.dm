@@ -228,7 +228,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/air_management
-	
+
 /datum/design/large_tank_control
 	name = "Circuit Design (Atmospheric Tank Control)"
 	desc = "Allows for the construction of circuit boards used to build an Atmospheric Tank Control."
@@ -926,6 +926,15 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("combat" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
+	category = "Exosuit Equipment"
+
+/datum/design/mech_bolas
+	name = "Exosuit Weapon Design (PCMK-6 Bolas Launcher)"
+	desc = "Allows for the construction of PCMK-6 Bolas Launcher."
+	id = "mech_bolas"
+	build_type = MECHFAB
+	req_tech = list("combat" = 3)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas
 	category = "Exosuit Equipment"
 
 /datum/design/mech_laser
