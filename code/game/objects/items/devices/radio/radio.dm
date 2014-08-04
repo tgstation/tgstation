@@ -229,7 +229,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			to each individual headset.
 		*/
 
-	   //#### Grab the connection datum ####//
+		//#### Grab the connection datum ####//
 		var/datum/radio_frequency/connection = null
 		if(channel && channels && channels.len > 0)
 			if (channel == "department")

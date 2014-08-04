@@ -10,8 +10,6 @@
 		return 1
 	if (istype(other, /mob/living/silicon/robot))
 		return 1
-	if (istype(other, /mob/living/silicon/decoy))
-		return 1
 	if (istype(other, /mob/living/carbon/brain))
 		return 1
 	if (istype(other, /mob/living/silicon/pai))
@@ -30,6 +28,60 @@
 
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai
+
+/mob/living/silicon/ai/get_message_mode(message)
+	if(copytext(message, 1, 3) in list(":h", ":H", ".h", ".H", "#h", "#H"))
+		return "holopad"
+
+/mob/living/silicon/ai/radio(message, message_mode, say_verb)
+	. = ..()
+	if(. != 2)
+		return .
+	
+	if(message_mode == "holopad")
+		holopad_talk(message)
+
+//For holopads only. Usable by AI.
+/mob/living/silicon/ai/proc/holopad_talk(var/message)
+	log_say("[key_name(src)] : [message]")
+
+	message = trim(message)
+
+	if (!message)
+		return
+
+	var/obj/machinery/hologram/holopad/T = current
+	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
+		var/message_a = say_quote(message)
+
+		//Human-like, sorta, heard by those who understand humans.
+		var/rendered_a = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
+
+		//Speach distorted, heard by those who do not understand AIs.
+		message = stars(message)
+		var/message_b = say_quote(message)
+		var/rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
+
+		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>[message_a]</span></span></i>"//The AI can "hear" its own message.
+		var/list/speech_bubble_recipients = list()
+		for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
+			if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
+				M.show_message(rendered_a, 2)
+			else//If they do not.
+				M.show_message(rendered_b, 2)
+			if(M.client)
+				speech_bubble_recipients.Add(M.client)
+
+		//speech bubble
+		spawn(0)
+			flick_overlay(image('icons/mob/talk.dmi', src, "hR[say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+
+		/* Radios "filter out" this conversation channel so we don't need to account for them.
+		This is another way of saying that we won't bother dealing with them. */
+	else
+		src << "No holopad connected."
+	return
+
 
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX

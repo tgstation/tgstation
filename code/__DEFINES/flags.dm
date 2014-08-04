@@ -1,6 +1,7 @@
 /*
 	These defines are specific to the atom/flags bitmask
 */
+#define ALL 65535 //For convenience.
 //FLAGS BITMASK
 #define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
 //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
@@ -62,3 +63,9 @@
 #define NOGUNS		512
 #define NOBLOOD		1024
 #define NOFIRE		2048
+
+//flags for languages
+#define HUMAN 1
+#define MONKEY 2
+#define ALIEN 4
+#define ROBOT 8

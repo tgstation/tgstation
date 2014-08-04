@@ -23,11 +23,6 @@
 				return 0
 			else
 				return 1
-		if (istype(other, /mob/living/silicon/decoy))
-			if(!(container && istype(container, /obj/item/device/mmi)))
-				return 0
-			else
-				return 1
 		if (istype(other, /mob/living/silicon/pai))
 			if(!(container && istype(container, /obj/item/device/mmi)))
 				return 0

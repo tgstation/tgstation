@@ -7,8 +7,6 @@
 		return 1
 	if (istype(other, /mob/living/silicon/ai))
 		return 1
-	if (istype(other, /mob/living/silicon/decoy))
-		return 1
 	if (istype(other, /mob/living/carbon/brain))
 		return 1
 	return ..()
@@ -28,3 +26,6 @@
 		src << "<span class='warning'>Communication circuits remain unitialized.</span>"
 	else
 		..(msg)
+
+/mob/living/silicon/pai/binarycheck()
+	return 0
