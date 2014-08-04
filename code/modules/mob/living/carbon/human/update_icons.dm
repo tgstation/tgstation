@@ -204,6 +204,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(AUGMENTS_LAYER)
 
 	var/list/standing	= list()
+	var/g = (gender == FEMALE) ? "f" : "m"
 
 
 	if(getlimb(/obj/item/organ/limb/robot/r_arm))
@@ -217,7 +218,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_s", "layer"=-AUGMENTS_LAYER)
 
 	if(getlimb(/obj/item/organ/limb/robot/chest))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_s", "layer"=-AUGMENTS_LAYER)
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_[g]_s", "layer"=-AUGMENTS_LAYER)
 	if(getlimb(/obj/item/organ/limb/robot/head))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_s", "layer"=-AUGMENTS_LAYER)
 
