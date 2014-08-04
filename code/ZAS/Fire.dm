@@ -15,7 +15,7 @@ Attach to transfer valve and open. BOOM.
 	var/fire_dmi = 'icons/effects/fire.dmi'
 	var/fire_sprite = "fire"
 	var/ashtype = /obj/effect/decal/cleanable/ash
-	var/fire_time_min = 5 // Seconds
+	var/fire_time_min = 5  // Seconds
 	var/fire_time_max = 10 // Seconds
 
 /atom/proc/ignite(var/temperature)
@@ -55,7 +55,12 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 			new /obj/fire(src)
 
 	return igniting
-
+/*
+/turf/simulated/proc/getAmtFuel()
+	var/fuel_found=0
+	for(var/atom/A in T)
+		t += A.getFuelAmount()
+*/
 /obj/fire
 	//Icon for fire on turfs.
 

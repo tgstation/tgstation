@@ -1,6 +1,6 @@
-#define CAT_NORMAL 0
-#define CAT_HIDDEN 1
-#define CAT_COIN   2
+#define CAT_NORMAL 1
+#define CAT_HIDDEN 2
+#define CAT_COIN   3
 
 /datum/data/vending_product
 	var/product_name = "generic"
@@ -130,10 +130,10 @@
 
 		if(hidden)
 			R.category=CAT_HIDDEN
-			hidden_records += R
+			hidden_records  += R
 		else if(req_coin)
 			R.category=CAT_COIN
-			coin_records += R
+			coin_records    += R
 		else
 			R.category=CAT_NORMAL
 			product_records += R
@@ -179,7 +179,7 @@
 
 //H.wear_id
 /obj/machinery/vending/proc/connect_account(var/obj/item/W)
-	if(istype(W,/obj/item/device/pda))
+	if(istype(W, /obj/item/device/pda))
 		W=W:id // Cheating, but it'll work.  Hopefully.
 	if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
@@ -304,9 +304,9 @@
 		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] (<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>)<br><br>"
 
 	if (src.product_records.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
+		dat += "<font color = 'red'>No products loaded!</font>"
 	else
-		var/list/display_records = src.product_records
+		var/list/display_records = src.product_records.Copy()
 
 		if(src.extended_inventory)
 			display_records += src.hidden_records
@@ -321,7 +321,7 @@
 				<b>[R.amount]</b> </font>"}
 			// END AUTOFIX
 			if(R.price)
-				dat += " <b>(Price: [R.price])</b>"
+				dat += " <b>($[R.price])</b>"
 			if (R.amount > 0)
 				var/idx=GetProductIndex(R)
 				dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
@@ -350,6 +350,8 @@
 	if(..())
 		return
 
+	//testing("..(): [href]")
+
 	if(istype(usr,/mob/living/silicon))
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
@@ -374,7 +376,8 @@
 
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		if ("vend" in href_list && src.vend_ready && !currently_vending)
+		if (href_list["vend"] && src.vend_ready && !currently_vending)
+			//testing("vend: [href]")
 
 			if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 				usr << "\red Access denied." //Unless emagged of course
@@ -386,6 +389,7 @@
 
 			var/datum/data/vending_product/R = GetProductByID(idx,cat)
 			if (!R || !istype(R) || !R.product_path || R.amount <= 0)
+				message_admins("Invalid vend request by [formatJumpTo(src.loc)]: [href]")
 				return
 
 			if(R.price == null || !R.price)
