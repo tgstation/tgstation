@@ -301,8 +301,10 @@
 	name = "\improper Discount Dan's Noodle Soup"
 	desc = "Discount Dan is proud to introduce his own take on noodle soups, with this on the go treat! Simply pull the tab, and a self heating mechanism activates!"
 	icon_state = "ramen"
+	var/list/ddname = list("Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor","Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown Flavor","Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak","Discount Deng's Quik-Noodles - Teriyaki TVP Flavor","Sconto Danilo's Quik-Noodles - Italian Strozzapreti Lunare Flavor")
 	New()
 		..()
+		name = pick(ddname)
 		reagents.add_reagent("hot_ramen", 20)
 		reagents.add_reagent("discount", 10)
 		src.pixel_x = rand(-10.0, 10)
@@ -312,8 +314,10 @@
 	name = "\improper Discount Dan's Noodle Soup"
 	desc = "Discount Dan is proud to introduce his own take on noodle soups, with this on the go treat! Simply pull the tab, and a self heating mechanism activates!"
 	icon_state = "ramen"
+	var/list/ddname = list("Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor","Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown Flavor","Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak","Discount Deng's Quik-Noodles - Teriyaki TVP Flavor","Sconto Danilo's Quik-Noodles - Italian Strozzapreti Lunare Flavor")
 	New()
 		..()
+		name = pick(ddname)
 		reagents.add_reagent("dry_ramen", 20)
 		reagents.add_reagent("discount", 10)
 		src.pixel_x = rand(-10.0, 10)
