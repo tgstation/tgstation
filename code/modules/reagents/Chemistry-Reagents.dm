@@ -2781,27 +2781,32 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
-				switch(volume)
-					if(1 to 30)
-						if(prob(5))
-							M << "<span class='warning'>You don't feel very good..</span>"
-					if(30 to 55)
-						if(prob(10))
-							M << "<span class='warning'>You REALLY don't feel very good..</span>"
-						if(prob(5))
-							M.adjustToxLoss(0.1)
-					if(55 to INFINITY)
-						if(prob(10))
-							M << "<span class='warning'>Your stomach grumbles unsettlingly..</span>"
-						if(prob(1))
-							M << "<span class='warning'>Something feels wrong with your body..</span>"
-							if(ishuman(M))
-								var/mob/living/carbon/human/H = M
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					switch(volume)
+						if(1 to 20)
+							if(prob(5))
+								H << "<span class='warning'>You don't feel very good..</span>"
+								holder.remove_reagent(src.id, 0.1 * REAGENTS_METABOLISM)
+						if(20 to 35)
+							if(prob(10))
+								H << "<span class='warning'>You REALLY don't feel very good..</span>"
+							if(prob(5))
+								H.adjustToxLoss(0.1)
+								H.visible_message("[H] groans.")
+								holder.remove_reagent(src.id, 0.3 * REAGENTS_METABOLISM)
+						if(35 to INFINITY)
+							if(prob(10))
+								H << "<span class='warning'>Your stomach grumbles unsettlingly..</span>"
+							if(prob(5))
+								H << "<span class='warning'>Something feels wrong with your body..</span>"
 								var/datum/organ/internal/liver/L = H.internal_organs["liver"]
 								if (istype(L))
 									L.take_damage(0.1, 1)
-								H.adjustToxLoss(0.3)
-
+								H.adjustToxLoss(0.13)
+								holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
+						else
+							return
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum//////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
