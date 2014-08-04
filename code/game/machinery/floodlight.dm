@@ -46,20 +46,21 @@
 		updateicon()
 		return
 
-	if(on)
-		on = 0
-		user << "\blue You turn off the light"
-		SetLuminosity(0)
-	else
-		if(!cell)
-			return
-		if(cell.charge <= 0)
-			return
-		on = 1
-		user << "\blue You turn on the light"
-		SetLuminosity(brightness_on)
+	if (ishuman(user))
+		if(on)
+			on = 0
+			user << "\blue You turn off the light"
+			SetLuminosity(0)
+		else
+			if(!cell)
+				return
+			if(cell.charge <= 0)
+				return
+			on = 1
+			user << "\blue You turn on the light"
+			SetLuminosity(brightness_on)
 
-	updateicon()
+		updateicon()
 
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W as obj, mob/user as mob)
