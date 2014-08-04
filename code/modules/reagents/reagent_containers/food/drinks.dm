@@ -303,6 +303,18 @@
 	icon_state = "ramen"
 	New()
 		..()
+		var/namestuff = rand(1, 5)
+		switch(namestuff)
+			if(1)
+				name = "Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor"
+			if(2)
+				name = "Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown Flavor"
+			if(3)
+				name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak"
+			if(4)
+				name = "Discount Deng's Quik-Noodles - Teriyaki TVP Flavor"
+			if(5)
+				name = "Sconto Danilo's Quik-Noodles - Italian Strozzapreti Lunare Flavor"
 		reagents.add_reagent("hot_ramen", 20)
 		reagents.add_reagent("discount", 10)
 		src.pixel_x = rand(-10.0, 10)
@@ -314,6 +326,18 @@
 	icon_state = "ramen"
 	New()
 		..()
+		var/namestuff = rand(1, 5)
+		switch(namestuff)
+			if(1)
+				name = "Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor"
+			if(2)
+				name = "Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown Flavor"
+			if(3)
+				name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak"
+			if(4)
+				name = "Discount Deng's Quik-Noodles - Teriyaki TVP Flavor"
+			if(5)
+				name = "Sconto Danilo's Quik-Noodles - Italian Strozzapreti Lunare Flavor"
 		reagents.add_reagent("dry_ramen", 20)
 		reagents.add_reagent("discount", 10)
 		src.pixel_x = rand(-10.0, 10)
