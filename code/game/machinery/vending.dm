@@ -964,8 +964,19 @@
 	product_ads = "Discount Dan(tm) is not responsible for any damages caused by misuse of his product."
 	vend_reply = "No refunds."
 	icon_state = "discount"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 6,/obj/item/weapon/reagent_containers/food/drinks/groans = 6,/obj/item/weapon/reagent_containers/food/snacks/danitos =6,
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 6,/obj/item/weapon/reagent_containers/food/snacks/danitos =6,
 					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 6,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/discountburrito = 6)
-	prices = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 20,/obj/item/weapon/reagent_containers/food/drinks/groans = 30,/obj/item/weapon/reagent_containers/food/snacks/danitos = 25,
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/discountchocolate = 20,/obj/item/weapon/reagent_containers/food/snacks/danitos = 25,
 					/obj/item/weapon/reagent_containers/food/snacks/discountburger = 30,/obj/item/weapon/reagent_containers/food/drinks/discount_ramen = 20,/obj/item/weapon/reagent_containers/food/snacks/discountburrito = 20)
 
+
+/obj/machinery/vending/groans
+	name = "Groans Soda"
+	desc = "A soda machine owned by the infamous 'Groans' franchise."
+	product_slogans = "Groans: Drink up!;Sponsored by Discount Dan!;Take a sip!;Just one sip, do it!"
+	product_ads = "Try our new 'Double Dan' flavor!"
+	vend_reply = "No refunds."
+	icon_state = "discount"
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/groans = 10)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/groans = 20)
+	contraband = list()
