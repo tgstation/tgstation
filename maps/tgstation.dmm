@@ -2417,7 +2417,7 @@
 "aUy" = (/obj/machinery/computer/security/telescreen/entertainment{pixel_x = 32},/obj/structure/table/woodentable,/obj/item/ashtray/bronze{pixel_x = -1; pixel_y = 1},/turf/simulated/floor/carpet,/area/crew_quarters/bar)
 "aUz" = (/obj/structure/closet/secure_closet/bar{req_access_txt = "25"},/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "aUA" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor/wood,/area/crew_quarters/bar)
-"aUB" = (/obj/machinery/vending/groans,/turf/simulated/floor/wood,/area/crew_quarters/bar)
+"aUB" = (/obj/machinery/vending/cola,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "aUC" = (/obj/machinery/vending/coffee,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "aUD" = (/obj/effect/landmark{name = "blobstart"},/obj/structure/closet/gmcloset{name = "formal wardrobe"},/obj/item/device/eftpos{eftpos_name = "Bar EFTPOS scanner"},/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "aUE" = (/obj/structure/kitchenspike,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
