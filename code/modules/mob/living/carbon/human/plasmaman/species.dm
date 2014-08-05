@@ -13,9 +13,9 @@
 
 	breath_type = "plasma"
 
-	var/heat_level_1 = 350  // Heat damage level 1 above this point.
-	var/heat_level_2 = 400  // Heat damage level 2 above this point.
-	var/heat_level_3 = 500  // Heat damage level 3 above this point.
+	heat_level_1 = 350  // Heat damage level 1 above this point.
+	heat_level_2 = 400  // Heat damage level 2 above this point.
+	heat_level_3 = 500  // Heat damage level 3 above this point.
 
 /datum/species/plasmaman/say_filter(mob/M, message, datum/language/speaking)
 	if(copytext(message, 1, 2) != "*")
