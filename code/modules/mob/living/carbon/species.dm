@@ -404,7 +404,7 @@
 	language = "Grey"
 	attack_verb = "punch"
 	darksight = 5 // BOOSTED from 2
-	eyes = ""
+	eyes = "grey_eyes_s"
 
 	max_hurt_damage = 3 // From 5 (for humans)
 

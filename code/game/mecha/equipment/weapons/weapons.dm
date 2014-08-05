@@ -401,3 +401,33 @@
 		log_message("Launched a mouse-trap from [src.name], targeting [target]. HONK!")
 		do_after_cooldown()
 		return
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas
+	name = "PCMK-6 Bolas Launcher"
+	icon_state = "mecha_bolas"
+	projectile = /obj/item/weapon/legcuffs/bolas
+	fire_sound = 'sound/weapons/whip.ogg'
+	projectiles = 10
+	missile_speed = 5
+	missile_range = 30
+	projectile_energy_cost = 50
+	equip_cooldown = 10
+	construction_time = 300
+	construction_cost = list("iron"=20000)
+
+	can_attach(obj/mecha/combat/gygax/M as obj)
+		if(..())
+			if(istype(M))
+				return 1
+		return 0
+
+	action(target)
+		if(!action_checks(target)) return
+		set_ready_state(0)
+		var/obj/item/weapon/legcuffs/bolas/M = new projectile(chassis.loc)
+		playsound(chassis, fire_sound, 50, 1)
+		M.throw_at(target, missile_range, missile_speed)
+		projectiles--
+		log_message("Fired from [src.name], targeting [target].")
+		do_after_cooldown()
+		return

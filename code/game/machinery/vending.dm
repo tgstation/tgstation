@@ -977,6 +977,6 @@
 	product_ads = "Try our new 'Double Dan' flavor!"
 	vend_reply = "No refunds."
 	icon_state = "discount"
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/groans = 10)
-	prices = list(/obj/item/weapon/reagent_containers/food/drinks/groans = 20)
-	contraband = list()
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/groans = 10,/obj/item/weapon/reagent_containers/food/drinks/filk = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo = 10,/obj/item/weapon/reagent_containers/food/drinks/mannsdrink = 10)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/groans = 20,/obj/item/weapon/reagent_containers/food/drinks/filk = 20,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo = 30,/obj/item/weapon/reagent_containers/food/drinks/mannsdrink = 10,/obj/item/weapon/reagent_containers/food/drinks/groansbanned = 50)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/groansbanned = 10)
