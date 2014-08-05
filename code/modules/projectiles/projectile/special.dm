@@ -149,7 +149,7 @@
 
 	on_hit(var/atom/target, var/blocked = 0)
 		log_admin("[src] has hit an atom of [target]")
-		if(isliving(target) && current != starting) //if the target is a live creature other than the thrower
+		if(isliving(target) && target != usr) //if the target is a live creature other than the thrower
 			var/mob/living/M = target
 			if(ishuman(M)) //if they're a human species
 				var/mob/living/carbon/human/H = M
@@ -162,6 +162,10 @@
 						H.Weaken(10)
 						H.legcuffed = new /obj/item/weapon/legcuffs/bolas(H) //applies legcuff properties inherited through legcuffs
 						H.update_inv_legcuffed()
+						if (!H.legcuffed) //if it triggers, but they aren't cuffed because of immunity
+							OnDeath() //spawn the item anyways
+						else
+							qdel(src) //delete the projectile
 				else if(H.legcuffed) //if the target is already legcuffed (has to be walking)
 					OnDeath()
 				else //walking, but uncuffed, or the running prob(70) failed
@@ -176,10 +180,28 @@
 			OnDeath()
 
 	OnDeath()
-		if(shot_from == "hand") //if it's thrown, we want it to respawn the item. Mechs don't do this to avoid spam and infinite bolas works
+		log_admin(shot_from)
+		if(shot_from == /obj/item/weapon/legcuffs/bolas) //if it's thrown, we want it to respawn the item. Mechs don't do this to avoid spam and infinite bolas works
+			// log_admin("Bolas created at [get_turf(src)]")
 			var /obj/item/weapon/legcuffs/bolas/B = new /obj/item/weapon/legcuffs/bolas
-			B.loc = current
-		Destroy()
+			B.loc = get_turf(src)
+		qdel(src)
+
+	Bump(atom/A as mob|obj|turf|area)
+		if(A == firer)
+			loc = A.loc
+			return
+		if(src)
+			if(A)
+				if(istype(A, /mob/living)) //if it hits something living, we want to go to on_hit
+					on_hit(A)
+				else
+				// log_admin("Currently travelling in [get_dir(starting, original)], at location [src.loc]")
+				// step(src, turn(get_dir(starting, original), 180)) //reverses object by finding direction from its starting position to its target
+					OnDeath() //it deletes the projectile and decides to spawn the bolas
+				return 1
+		else
+			return 0
 
 /obj/item/projectile/kinetic
 	name = "kinetic force"

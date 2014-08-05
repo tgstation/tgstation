@@ -191,7 +191,8 @@
 	w_type = RECYK_METAL
 	origin_tech = "materials=1"
 	attack_verb = list("lashed", "bludgeoned", "whipped")
-	force = 10
+	force = 4
+	breakouttime = 100 //10 seconds
 	var/dispenser = 0
 	var/throw_sound = 'sound/weapons/whip.ogg'
 
@@ -200,17 +201,18 @@
 		return(OXYLOSS)
 
 /obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, range, speed) //mostly copied and modified from gun code - Comic
-	var /obj/item/projectile/thrownbolas/T = new /obj/item/projectile/thrownbolas(usr.loc) //creates a bolas projectile (projectile is used for compatibility with mechs)
+	var /obj/item/projectile/thrownbolas/T = new /obj/item/projectile/thrownbolas(src.loc) //creates a bolas projectile (projectile is used for compatibility with mechs)
 	var /turf/targetloc = get_turf(A) //gets the position of the clicked atom
-	T.current = usr.loc //projectile is placed on user
-	T.starting = usr.loc
+	T.current = get_turf(src) //projectile is placed on user
+	T.starting = get_turf(src)
 	T.original = targetloc
 	T.yo = (targetloc.y - T.starting.y)
 	T.xo = (targetloc.x - T.starting.x)
-	if (ishuman(usr))  // determines if the bolas should spawn an item when it dies (prevents infinite spam from mechsWell)
-		T.shot_from = "hand"
+	if (ishuman(usr) && T.starting == usr.loc)  // determines if the bolas should spawn an item when it dies (prevents infinite spam from mechs)
+		T.shot_from = /obj/item/weapon/legcuffs/bolas
 	else
-		T.shot_from = "mecha"
+		T.shot_from = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas
+	// log_admin("Bolas fired from [T.shot_from], location [T.starting] to [T.original], with [T.xo] and [T.yo]")
 	T.process()
 	playsound(src, throw_sound, 20, 1)
 	Destroy() //gets rid of the bolas item in the hand
