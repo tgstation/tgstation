@@ -620,13 +620,21 @@
 		return
 
 	if(B.chemicals >= 100)
-		src << "\red <B>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</B>"
-		visible_message("\red <B>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</B>")
-		B.chemicals -= 100
+		src << "\red You strain, trying to push out your young..."
+		var/mob/dead/observer/O = B.request_player()
+		if(!O)
+			// No spaceghoasts.
+			src << "<span class='warning'>Your young are not ready yet.</span>"
+		else
+			src << "\red <B>Your host twitches and quivers as you rapidly excrete several larvae from your sluglike body.</B>"
+			visible_message("\red <B>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</B>")
+			B.chemicals -= 100
 
-		new /obj/effect/decal/cleanable/vomit(get_turf(src))
-		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-		new /mob/living/simple_animal/borer(get_turf(src))
+			new /obj/effect/decal/cleanable/vomit(get_turf(src))
+			playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+
+			var/mob/living/simple_animal/borer/nB = new (get_turf(src),by_gamemode=1) // We've already chosen.
+			nB.transfer_personality(O.client)
 
 	else
 		src << "You do not have enough chemicals stored to reproduce."
