@@ -30,3 +30,8 @@
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
+
+
+#define CLICK_CD_MELEE 8
+#define CLICK_CD_RANGE 4
+//click cooldowns, in tenths of a second

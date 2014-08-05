@@ -10,7 +10,7 @@
 			return 0
 		if(i > 1)
 			newshot()
-	user.changeNext_move(4)
+	user.changeNext_move(CLICK_CD_RANGE)
 	update_icon()
 	return 1
 
