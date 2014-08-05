@@ -2817,7 +2817,7 @@ datum
 		toxicwaste
 			name = "Toxic Waste"
 			id = "toxicwaste"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "Yum!"
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		refriedbeans
@@ -2841,43 +2841,43 @@ datum
 		horsemeat
 			name = "Horse Meat"
 			id = "horsemeat"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "Taste excellent in lasagna."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		moonrocks
 			name = "Moon Rocks"
 			id = "moonrocks"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "We don't know much about them, but we damn well know that it hates the human skeleton."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		offcolorcheese
 			name = "Off-Color Cheese"
 			id = "offcolorcheese"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "American Cheese."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		bonemarrow
 			name = "Bone Marrow"
 			id = "bonemarrow"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "Looks like a skeleton got stuck in the production line."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		greenramen
 			name = "Greenish Ramen Noodles"
 			id = "greenramen"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "That green isn't organic."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		glowingramen
 			name = "Glowing Ramen Noodles"
 			id = "glowingramen"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "That glow 'aint healthy."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		deepfriedramen
 			name = "Deep Fried Ramen Noodles"
 			id = "deepfriedramen"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "Ramen, deep fried."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
