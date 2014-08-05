@@ -1018,20 +1018,24 @@ proc/process_ghost_teleport_locs()
 
 	engine
 		name = "Engineering"
-		icon_state = "engine_smes"
+		icon_state = "engine"
+
+	engine_storage
+		name = "Engineering Secure Storage"
+		icon_state = "engine_storage"
 
 	break_room
 		name = "\improper Engineering Foyer"
 		icon_state = "engine_lobby"
 
 	ce
-		name = "\improper Chief Engineer's office"
-		icon_state = "engine_control"
+		name = "\improper Chief Engineer's Office"
+		icon_state = "head_quarters"
 		jammed=1
 
 	burn_chamber
 		name = "Burn Chamber"
-		icon_state = "engine_control"
+		icon_state = "thermo_engine"
 
 	atmos
 		name = "Atmospherics"
@@ -1043,7 +1047,11 @@ proc/process_ghost_teleport_locs()
 
 	supermatter_room
 		name = "Supermatter Room"
-		icon_state = "engine_control"
+		icon_state = "supermatter"
+
+	antimatter_room
+		name = "Antimatter Engine Room"
+		icon_state = "antimatter"
 
 	engineering_auxiliary
 		name = "Auxiliary Engineering"

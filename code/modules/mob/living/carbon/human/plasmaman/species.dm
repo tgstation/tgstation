@@ -5,11 +5,17 @@
 	language = "Clatter"
 	attack_verb = "punch"
 
-	flags = IS_WHITELISTED /*| HAS_LIPS | HAS_TAIL | NO_EAT | NO_BREATHE | NON_GENDERED*/ | NO_BLOOD
+	//flags = IS_WHITELISTED /*| HAS_LIPS | HAS_TAIL | NO_EAT | NO_BREATHE | NON_GENDERED*/ | NO_BLOOD
+	// These things are just really, really griefy. IS_WHITELISTED removed for now - N3X
+	flags = NO_BLOOD
 
 	//default_mutations=list(SKELETON) // This screws things up
 
 	breath_type = "plasma"
+
+	heat_level_1 = 350  // Heat damage level 1 above this point.
+	heat_level_2 = 400  // Heat damage level 2 above this point.
+	heat_level_3 = 500  // Heat damage level 3 above this point.
 
 /datum/species/plasmaman/say_filter(mob/M, message, datum/language/speaking)
 	if(copytext(message, 1, 2) != "*")
@@ -17,6 +23,8 @@
 	return message
 
 /datum/species/plasmaman/equip(var/mob/living/carbon/human/H)
+	H.fire_sprite = "Plasmaman"
+
 	// Unequip existing suits and hats.
 	H.u_equip(H.wear_suit)
 	H.u_equip(H.head)

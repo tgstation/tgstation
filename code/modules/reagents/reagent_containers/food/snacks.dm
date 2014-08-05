@@ -1183,6 +1183,8 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("discount", 4)
+		reagents.add_reagent("moonrocks", 4)
+		reagents.add_reagent("toxicwaste", 8)
 		reagents.add_reagent("chemical_waste", 2) //Does nothing, but it's pretty fucking funny.
 		bitesize = 2
 
@@ -1194,6 +1196,9 @@
 		..()
 		reagents.add_reagent("nutriment", 4)
 		reagents.add_reagent("discount", 4)
+		reagents.add_reagent("beff", 4)
+		reagents.add_reagent("horsemeat", 4)
+		reagents.add_reagent("offcolorcheese", 4)
 		reagents.add_reagent("chemical_waste", 2) //Does nothing, but it's pretty fucking funny.
 		bitesize = 2
 
@@ -1207,6 +1212,8 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("discount", 4)
+		reagents.add_reagent("bonemarrow", 4)
+		reagents.add_reagent("toxicwaste", 8)
 		reagents.add_reagent("bustanut", 2) //YOU FEELIN HARDCORE BRAH?
 		bitesize = 2
 
@@ -1221,6 +1228,10 @@
 		name = pick(ddname)
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("discount", 6)
+		reagents.add_reagent("irradiatedbeans", 4)
+		reagents.add_reagent("refriedbeans", 4)
+		reagents.add_reagent("mutatedbeans", 4)
+		reagents.add_reagent("beff", 4)
 		reagents.add_reagent("chemical_waste", 2) //Does nothing, but it's pretty fucking funny.
 		bitesize = 2
 
