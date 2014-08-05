@@ -170,6 +170,7 @@
 				invisibility = 101
 			//del(src)
 				returnToPool(src)
+				OnDeath()
 		return 1
 
 
