@@ -45,8 +45,7 @@
 		trunk.linked = src	// link the pipe trunk to self
 
 /obj/machinery/disposal/Destroy()
-	for(var/atom/movable/AM in contents)
-		AM.loc = src.loc
+	eject()
 	..()
 
 /obj/machinery/disposal/initialize()
