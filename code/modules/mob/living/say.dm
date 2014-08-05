@@ -56,12 +56,12 @@ var/list/department_radio_keys = list(
 /mob/living/proc/binarycheck()
 	return 0
 
-/mob/living/say(message, bubble_type, steps)
+/mob/living/say(message, bubble_type, steps = 0)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	check_emote(message)
 
-	if(!can_speak_basic(message))
+	if(!can_speak_basic(message) || stat) //Stat is seperate so I can handle whispers properly.
 		return
 
 	var/message_mode = get_message_mode(message)
@@ -82,7 +82,7 @@ var/list/department_radio_keys = list(
 		return
 
 	var/message_range
-	radio_return = radio(message, message_mode, say_verb) //0 to 2
+	radio_return = radio(message, message_mode) //0 to 2
 	if(!radio_return) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
 	else if(radio_return & 1)
@@ -117,7 +117,7 @@ var/list/department_radio_keys = list(
 
 	log_say("[name]/[key] : [message]")
 
-/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, steps)
+/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, steps, radio_freq)
 	var/deaf_message
 	var/deaf_type
 	if(speaker != src)
@@ -150,9 +150,6 @@ var/list/department_radio_keys = list(
 
 	if(stat == DEAD)
 		say_dead(message)
-		return
-
-	if(stat)
 		return
 
 	if(client)
@@ -242,5 +239,5 @@ var/list/department_radio_keys = list(
 	if(mind && mind.changeling)
 		return 1
 
-/mob/living/get_alt_name()
+/mob/living/proc/get_alt_name()
 	return

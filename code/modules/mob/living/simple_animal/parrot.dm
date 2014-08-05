@@ -123,7 +123,7 @@
 	stat("Held Item", held_item)
 	stat("Mode",a_intent)
 
-/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, steps)
+/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, steps, radio_freq)
 	if(speaker != src && prob(20)) //Dont imitate ourselves
 		if(speech_buffer.len >= 20)
 			speech_buffer -= pick(speech_buffer)

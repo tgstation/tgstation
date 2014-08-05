@@ -11,7 +11,7 @@
 
 	return "telepathically chirps, \"[text]\"";
 
-/mob/living/carbon/slime/Hear(message, atom/movable/speaker, message_langs, raw_message, steps)
+/mob/living/carbon/slime/Hear(message, atom/movable/speaker, message_langs, raw_message, steps, radio_freq)
 	if(speaker != src)
 		if (speaker in Friends)
 			speech_buffer = list()

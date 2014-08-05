@@ -1,20 +1,8 @@
 /mob/living/silicon/ai/say(var/message)
-	if(parent && istype(parent) && parent.stat != 2)
+	if(parent && istype(parent) && parent.stat != 2) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		parent.say(message)
 		return
-		//If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 	..(message)
-
-/mob/living/silicon/ai/say_understands(var/other)
-	if (istype(other, /mob/living/carbon/human))
-		return 1
-	if (istype(other, /mob/living/silicon/robot))
-		return 1
-	if (istype(other, /mob/living/carbon/brain))
-		return 1
-	if (istype(other, /mob/living/silicon/pai))
-		return 1
-	return ..()
 
 /mob/living/silicon/ai/say_quote(var/text)
 	var/ending = copytext(text, length(text))
@@ -33,7 +21,7 @@
 	if(copytext(message, 1, 3) in list(":h", ":H", ".h", ".H", "#h", "#H"))
 		return "holopad"
 
-/mob/living/silicon/ai/radio(message, message_mode, say_verb)
+/mob/living/silicon/ai/radio(message, message_mode)
 	. = ..()
 	if(. != 2)
 		return .

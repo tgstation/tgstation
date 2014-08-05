@@ -16,7 +16,7 @@
 
 	. = src.say_dead(message)
 
-/mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, steps)
+/mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, steps = 0, radio_freq)
 	src << message
 
 /*

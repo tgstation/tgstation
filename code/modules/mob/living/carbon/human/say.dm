@@ -46,20 +46,6 @@
 
 	return message
 
-/mob/living/carbon/human/say_understands(var/other)
-	if (istype(other, /mob/living/silicon/ai))
-		return 1
-	if (istype(other, /mob/living/silicon/pai))
-		return 1
-	if (istype(other, /mob/living/silicon/robot))
-		return 1
-	if (istype(other, /mob/living/carbon/brain))
-		return 1
-	if (istype(other, /mob/living/carbon/slime))
-		return 1
-	return ..()
-
-
 /mob/living/carbon/human/GetVoice()
 	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 		var/obj/item/clothing/mask/gas/voice/V = src.wear_mask

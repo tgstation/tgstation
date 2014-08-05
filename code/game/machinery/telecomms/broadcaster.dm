@@ -304,7 +304,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Can understand the speech ---
 
-		if (!M || R.say_understands(M))
+		if (!M || R.languages & M.languages)
 
 			// - Not human or wearing a voice mask -
 			if (!M || !ishuman(M) || vmask)
@@ -613,7 +613,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Can understand the speech ---
 
-		if (R.say_understands(M))
+		if (R.languages & M.languages)
 
 			heard_normal += R
 

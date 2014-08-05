@@ -10,7 +10,7 @@
 		return
 	send_speech(message)
 
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, steps)
+/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, steps = 0, radio_freq)
 	return
 
 /atom/movable/proc/can_speak()

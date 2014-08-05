@@ -462,7 +462,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		for (var/mob/R in receive)
 			if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 				continue
-			if (R.say_understands(M))
+			if (R.languages & M.languages)
 				if (ishuman(M) && M.GetVoice() != M.real_name)
 					heard_masked += R
 				else
