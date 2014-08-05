@@ -32,5 +32,6 @@
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 
 
-#define BE_CLOSE 1
-//used by canUseTopic(), in the case of a silicon, to select if they need to be next to the atom
+#define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
+#define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
+//used by canUseTopic()

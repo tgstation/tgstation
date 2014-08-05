@@ -214,8 +214,12 @@ Class Procs:
 	if(check_rights(R_ADMIN))
 		return
 
-/mob/living/canUseTopic()
-	src << "<span class='notice'>You don't have the dexterity to do this!</span>"
+/mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(no_dextery)
+		if(be_close && in_range(M, src))
+			return 1
+	else
+		src << "<span class='notice'>You don't have the dexterity to do this!</span>"
 	return
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M)
