@@ -1174,6 +1174,58 @@
 		reagents.add_reagent("doctorsdelight", 5)
 		bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/discountchocolate
+	name = "\improper Discount Dan's Chocolate Bar"
+	desc = "Something tells you that the glowing green filling inside, isn't healthy."
+	icon_state = "danbar"
+	trash = /obj/item/trash/discountchocolate
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("discount", 4)
+		reagents.add_reagent("chemical_waste", 2) //Does nothing, but it's pretty fucking funny.
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/discountburger
+	name = "\improper Discount Dan's On The Go Burger"
+	desc = "Its still warm..."
+	icon_state = "goburger" //Someone make a better sprite for this.
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("discount", 4)
+		reagents.add_reagent("chemical_waste", 2) //Does nothing, but it's pretty fucking funny.
+		bitesize = 2
+
+
+/obj/item/weapon/reagent_containers/food/snacks/danitos
+	name = "Danitos"
+	desc = "For only the most MLG hardcore robust spessmen."
+	icon_state = "danitos"
+	trash = /obj/item/trash/danitos
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("discount", 4)
+		reagents.add_reagent("bustanut", 2) //YOU FEELIN HARDCORE BRAH?
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/discountburrito
+	name = "Discount Dan's Burritos"
+	desc = "The perfect blend of cheap processing and cheap materials."
+	icon_state = "danburrito"
+	trash = /obj/item/trash/danitos
+	var/list/ddname = list("Spooky Dan's BOO-ritos - Texas Toast Chainsaw Massacre Flavor","Sconto Danilo's Burritos - 50% Real Mozzarella Pepperoni Pizza Party Flavor","Descuento Danito's Burritos - Pancake Sausage Brunch Flavor","Descuento Danito's Burritos - Homestyle Comfort Flavor","Spooky Dan's BOO-ritos - Nightmare on Elm Meat Flavor","Descuento Danito's Burritos - Strawberrito Churro Flavor","Descuento Danito's Burritos - Beff and Bean Flavor")
+	New()
+		..()
+		name = pick(ddname)
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("discount", 6)
+		reagents.add_reagent("chemical_waste", 2) //Does nothing, but it's pretty fucking funny.
+		bitesize = 2
+
+
+
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 	name = "Loaded Baked Potato"
 	desc = "Totally baked."
@@ -2848,7 +2900,7 @@
 	deepfried = 1
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 1)
 
 ///////////////////////////////////////////
 // new old food stuff from bs12
