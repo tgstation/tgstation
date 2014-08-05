@@ -16,21 +16,14 @@
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/send_speech(message, range, steps) //PLACEHOLDER
+/atom/movable/proc/send_speech(message, range, steps)
 	for(var/atom/movable/AM in get_hearers_in_view(range))
-		if(AM.can_hear())
-			AM.Hear(message, src, languages, message, steps)
+		AM.Hear(message, src, languages, message, steps)
 
 /atom/movable/proc/say_quote(var/text)
 	if(!text)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
-	if (stuttering)
-		return "stammers, \"[text]\""
-	if(isliving(src))
-		var/mob/living/L = src
-		if (L.getBrainLoss() >= 60)
-			return "gibbers, \"[text]\""
 	if (ending == "?")
 		return "asks, \"[text]\""
 	if (ending == "!")
@@ -42,13 +35,15 @@
 	if(languages & message_langs)
 		return message
 	else if(message_langs & HUMAN)
-		return "<span class='game say'><span class='name'>[speaker.GetVoice()]</span>[speaker.get_alt_name()] <span class='message'>[say_quote(stars(raw_message))]</span></span>"
+		return "<span class='game say'><span class='name'>[speaker.GetVoice()]</span> <span class='message'>[say_quote(stars(raw_message))]</span></span>"
 	else if(message_langs & MONKEY)
-		return "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>chimpers.</span></span>"
+		return "<span class='game say'><span class='name'>[speaker.GetVoice()]</span> <span class='message'>chimpers.</span></span>"
 	else if(message_langs & ALIEN)
-		return "<span class='game say'><span class='name'>[speaker] </span><span class='message'>hisses.</span></span>"
+		return "<span class='game say'><span class='name'>[speaker.GetVoice()] </span><span class='message'>hisses.</span></span>"
 	else if(message_langs & ROBOT)
-		return "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>beeps rapidly.</span></span>"
+		return "<span class='game say'><span class='name'>[speaker.GetVoice()]</span> <span class='message'>beeps rapidly.</span></span>"
 	else
-		return "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>makes a strange sound.</span></span>"
+		return "<span class='game say'><span class='name'>[speaker.GetVoice()]</span> <span class='message'>makes a strange sound.</span></span>"
 
+/atom/movable/proc/GetVoice()
+	return name

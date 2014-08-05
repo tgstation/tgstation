@@ -40,32 +40,8 @@
 
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
-		var/message_a = say_quote(message)
-
-		//Human-like, sorta, heard by those who understand humans.
-		var/rendered_a = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
-
-		//Speach distorted, heard by those who do not understand AIs.
-		message = stars(message)
-		var/message_b = say_quote(message)
-		var/rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
-
-		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>[message_a]</span></span></i>"//The AI can "hear" its own message.
-		var/list/speech_bubble_recipients = list()
-		for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
-			if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
-				M.show_message(rendered_a, 2)
-			else//If they do not.
-				M.show_message(rendered_b, 2)
-			if(M.client)
-				speech_bubble_recipients.Add(M.client)
-
-		//speech bubble
-		spawn(0)
-			flick_overlay(image('icons/mob/talk.dmi', src, "hR[say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
-
-		/* Radios "filter out" this conversation channel so we don't need to account for them.
-		This is another way of saying that we won't bother dealing with them. */
+		send_speech(message, 7, T.loc, "R")
+		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>[message]</span></span></i>"//The AI can "hear" its own message.
 	else
 		src << "No holopad connected."
 	return

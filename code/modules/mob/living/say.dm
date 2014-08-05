@@ -81,8 +81,8 @@ var/list/department_radio_keys = list(
 	if(!message || message == "")
 		return
 
-	var/message_range
-	radio_return = radio(message, message_mode) //0 to 2
+	var/message_range = 7
+	var/radio_return = radio(message, message_mode) //0 to 2
 	if(!radio_return) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
 	else if(radio_return & 1)
@@ -90,9 +90,24 @@ var/list/department_radio_keys = list(
 		message_range = 1
 	//Only other possible output is 2, which means no radio was spoken into. In this case we can continue.
 
-	var/alt_name = get_alt_name()
+	send_speech(message, message_range, src, bubble_type)
 
-	var/list/listening = get_hearers_in_view(message_range, src)
+	log_say("[name]/[key] : [message]")
+
+/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, steps, radio_freq)
+	var/deaf_message
+	var/deaf_type
+	if(speaker != src)
+		deaf_message = "<span class='name'>[name]</span> talks but you cannot hear them."
+		deaf_type = 1
+	else
+		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
+		deaf_type = 2 // Since you should be able to hear yourself without looking
+	message = lang_treat(message, speaker, message_langs, raw_message)
+	show_message(message, 2, deaf_message, deaf_type)
+
+/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type)
+	var/list/listening = get_hearers_in_view(message_range, source)
 	var/list/listening_dead
 	for(var/mob/M in player_list)
 		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && client) // client is so that ghosts don't have to listen to mice
@@ -100,11 +115,11 @@ var/list/department_radio_keys = list(
 
 	listening -= listening_dead //so ghosts dont hear stuff twice
 
-	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[get_alt_name()] <span class='message'>[message]</span></span>"
 	for(var/atom/movable/AM in listening)
 		AM.Hear(rendered, src, languages, message, 0)
 
-	for(var/mob/M in listening_dead) //deaf ghosts is bad mkay
+	for(var/mob/M in listening_dead)
 		M << rendered
 
 	//speech bubble
@@ -114,23 +129,6 @@ var/list/department_radio_keys = list(
 			speech_bubble_recipients.Add(M.client)
 	spawn(0)
 		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
-
-	log_say("[name]/[key] : [message]")
-
-/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, steps, radio_freq)
-	var/deaf_message
-	var/deaf_type
-	if(speaker != src)
-		deaf_message = "<span class='name'>[name][alt_name]</span> talks but you cannot hear them."
-		deaf_type = 1
-	else
-		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
-		deaf_type = 2 // Since you should be able to hear yourself without looking
-	message = lang_treat(message, speaker, message_langs, raw_message)
-	show_message(message, 2, deaf_message, deaf_type)
-
-/mob/living/proc/GetVoice()
-	return name
 
 /mob/living/proc/say_test(var/text)
 	var/ending = copytext(text, length(text))
@@ -241,3 +239,10 @@ var/list/department_radio_keys = list(
 
 /mob/living/proc/get_alt_name()
 	return
+
+/mob/living/say_quote()
+	if (stuttering)
+		return "stammers, \"[text]\""
+	if (getBrainLoss() >= 60)
+		return "gibbers, \"[text]\""
+	return ..()
