@@ -7,6 +7,7 @@
 	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
+	languages = MONKEY
 	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 

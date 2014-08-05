@@ -12,6 +12,7 @@
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2
+	languages = ALIEN
 
 	var/storedPlasma = 250
 	var/max_plasma = 500

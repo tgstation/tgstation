@@ -11,15 +11,18 @@
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 
 	for (var/mob/living/S in living_mob_list)
-		if(S.binarycheck() || S.stat == DEAD) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
+		if(S.binarycheck() || S.stat == DEAD)
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
 				S << renderedAI
 			else
-				S << renderedAI
+				S << rendered
 
 /mob/living/silicon/binarycheck()
 	return 1
+
+/mob/living/silicon/lingcheck()
+	return 0 //Borged or AI'd lings can't speak on the ling channel.
 
 /mob/living/silicon/radio(message, message_mode, say_verb)
 	. = ..()
@@ -29,9 +32,6 @@
 	if(message_mode == "robot")
 		if (radio)
 			radio.talk_into(src, message)
-			used_radios += radio
-		message_range = 1
-		italics = 1
 		return 1
 
 	else if(message_mode in radiochannels)

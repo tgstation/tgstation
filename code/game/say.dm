@@ -10,21 +10,18 @@
 		return
 	send_speech(message)
 
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message)
+/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, steps)
 	return
 
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/can_hear()
-	return 0
-
-/atom/movable/proc/send_speech(message) //PLACEHOLDER
-	for(var/atom/movable/AM in range(7))
+/atom/movable/proc/send_speech(message, range, steps) //PLACEHOLDER
+	for(var/atom/movable/AM in get_hearers_in_view(range))
 		if(AM.can_hear())
-			AM.Hear(message, src, languages, message)
+			AM.Hear(message, src, languages, message, steps)
 
-/mob/say_quote(var/text)
+/atom/movable/proc/say_quote(var/text)
 	if(!text)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
@@ -40,3 +37,18 @@
 		return "exclaims, \"[text]\""
 
 	return "says, \"[text]\""
+
+/atom/movable/proc/lang_treat(message, atom/movable/speaker, message_langs, raw_message)
+	if(languages & message_langs)
+		return message
+	else if(message_langs & HUMAN)
+		return "<span class='game say'><span class='name'>[speaker.GetVoice()]</span>[speaker.get_alt_name()] <span class='message'>[say_quote(stars(raw_message))]</span></span>"
+	else if(message_langs & MONKEY)
+		return "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>chimpers.</span></span>"
+	else if(message_langs & ALIEN)
+		return "<span class='game say'><span class='name'>[speaker] </span><span class='message'>hisses.</span></span>"
+	else if(message_langs & ROBOT)
+		return "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>beeps rapidly.</span></span>"
+	else
+		return "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>makes a strange sound.</span></span>"
+

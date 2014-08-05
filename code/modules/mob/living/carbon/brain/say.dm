@@ -1,7 +1,4 @@
 /mob/living/carbon/brain/say(var/message)
-	if (silent)
-		return
-
 	if(!(container && istype(container, /obj/item/device/mmi)))
 		return //No MMI, can't speak, bucko./N
 	else
@@ -15,3 +12,6 @@
 			if(R.radio)
 				spawn(0) R.radio.hear_talk(src, sanitize(message))
 		..()
+
+/mob/living/carbon/brain/lingcheck()
+	return 0

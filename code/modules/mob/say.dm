@@ -59,3 +59,6 @@
 
 /mob/proc/hivecheck()
 	return 0
+
+/mob/proc/lingcheck()
+	return 0

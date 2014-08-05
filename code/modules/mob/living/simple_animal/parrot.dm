@@ -6,13 +6,8 @@
  *		AI
  *		Procs / Verbs (usable by players)
  *		Sub-types
+ *		Hear & say (the things we do for gimmicks)
  */
-
-/*So you want to delete parrots eh?
-heres the locations of their snowflake code:
-lines 294-301 in living/say.dm (speech buffer)
-135 in living/say.dm (parrots talking into headsets)
-*/
 
 /*
  * Defines
@@ -33,7 +28,7 @@ lines 294-301 in living/say.dm (speech buffer)
 
 /mob/living/simple_animal/parrot
 	name = "parrot"
-	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\""
+	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\"" //'
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
@@ -127,6 +122,40 @@ lines 294-301 in living/say.dm (speech buffer)
 	..()
 	stat("Held Item", held_item)
 	stat("Mode",a_intent)
+
+/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, steps)
+	if(speaker != src && prob(20)) //Dont imitate ourselves
+		if(speech_buffer.len >= 20)
+			speech_buffer -= pick(speech_buffer)
+		speech_buffer |= html_decode(message)
+
+/mob/living/simple_animal/parrot/radio(message, message_mode, steps) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
+	. = ..()
+	if(. != 2)
+		return .
+
+	switch(message_mode)
+		if("headset")
+			if (ears)
+				ears.talk_into(src, message)
+			return 1
+
+		if("secure headset")
+			if (ears)
+				ears.talk_into(src, message, 1)
+			return 1
+
+		if("department")
+			if (ears)
+				ears.talk_into(src, message, message_mode)
+			return 1
+	
+	if(message_mode in radiochannels)
+		if(ears)
+			ears.talk_into(src, message, message_mode)
+			return 1
+
+	return 2
 
 /*
  * Inventory

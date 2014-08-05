@@ -7,6 +7,7 @@
 	say_message = "hums"
 	ventcrawler = 2
 	var/is_adult = 0
+	languages = SLIME | HUMAN
 
 	layer = 5
 

@@ -22,5 +22,5 @@
 			return 1
 		return 0
 
-/mob/living/proc/hivecheck()
+/mob/living/carbon/alien/hivecheck()
 	return 1

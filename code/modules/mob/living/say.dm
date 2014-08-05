@@ -56,7 +56,7 @@ var/list/department_radio_keys = list(
 /mob/living/proc/binarycheck()
 	return 0
 
-/mob/living/say(message, bubble_type, say_verb)
+/mob/living/say(message, bubble_type, steps)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	check_emote(message)
@@ -81,127 +81,53 @@ var/list/department_radio_keys = list(
 	if(!message || message == "")
 		return
 
+	var/message_range
 	radio_return = radio(message, message_mode, say_verb) //0 to 2
 	if(!radio_return) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
-	else if(radio_return == 1)
+	else if(radio_return & 1)
 		message = "<i>[message]</i>"
-		for(var/mob/M in range(1))
-			M << message
-		return
-	//Only other possible output is 2, which means no radio was spoken into. In this case we can continue as if nothing happened.
+		message_range = 1
+	//Only other possible output is 2, which means no radio was spoken into. In this case we can continue.
 
-	var/list/obj/item/used_radios = list()
+	var/alt_name = get_alt_name()
 
-	var/alt_name = ""
-	if (istype(src, /mob/living/carbon/human) && name != GetVoice())
-		var/mob/living/carbon/human/H = src
-		alt_name = " (as [H.get_id_name("Unknown")])"
-
-	var/list/listening
-
-	listening = get_mobs_in_view(message_range, src)
+	var/list/listening = get_hearers_in_view(message_range, src)
+	var/list/listening_dead
 	for(var/mob/M in player_list)
-		if (!M.client)
-			continue //skip monkeys and leavers
-		if (istype(M, /mob/new_player))
-			continue
 		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && client) // client is so that ghosts don't have to listen to mice
-			listening|=M
+			listening_dead |= M
 
-	var/turf/T = get_turf(src)
-	var/list/W = hear(message_range, T)
+	listening -= listening_dead //so ghosts dont hear stuff twice
 
-	for (var/obj/O in ((W | contents)-used_radios))
-		W |= O
+	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] <span class='message'>[message]</span></span>"
+	for(var/atom/movable/AM in listening)
+		AM.Hear(rendered, src, languages, message, 0)
 
-	for (var/mob/M in W)
-		W |= M.contents
-
-	for (var/atom/A in W)
-		if(istype(A, /mob/living/simple_animal/parrot)) //Parrot speech mimickry
-			if(A == src)
-				continue //Dont imitate ourselves
-
-			var/mob/living/simple_animal/parrot/P = A
-			if(P.speech_buffer.len >= 10)
-				P.speech_buffer.Remove(pick(P.speech_buffer))
-			P.speech_buffer.Add(html_decode(message))
-
-		if(isslime(A)) //Slimes answering to people
-			if (A == src)
-				continue
-
-			var/mob/living/carbon/slime/S = A
-			if (src in S.Friends)
-				S.speech_buffer = list()
-				S.speech_buffer.Add(src)
-				S.speech_buffer.Add(lowertext(html_decode(message)))
-
-		if(istype(A, /obj/)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
-			var/obj/O = A
-			spawn (0)
-				if(O && !istype(O.loc, /obj/item/weapon/storage))
-					O.hear_talk(src, message)
-
-	var/list/heard_a = list() // understood us
-	var/list/heard_b = list() // didn't understand us
-
-	for (var/M in listening)
-		if(hascall(M,"say_understands"))
-			if (M:say_understands(src))
-				heard_a += M
-			else
-				heard_b += M
-
-	var/rendered = null
-	if (length(heard_a))
-		var/message_a = say_quote(message)
-
-		if (italics)
-			message_a = "<i>[message_a]</i>"
-
-		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] <span class='message'>[message_a]</span></span>"
-
-		for (var/M in heard_a)
-			if(hascall(M,"show_message"))
-				var/deaf_message = ""
-				var/deaf_type = 1
-				if(M != src)
-					deaf_message = "<span class='name'>[name][alt_name]</span> talks but you cannot hear them."
-				else
-					deaf_message = "<span class='notice'>You cannot hear yourself!</span>"
-					deaf_type = 2 // Since you should be able to hear yourself without looking
-				M:show_message(rendered, 2, deaf_message, deaf_type)
-
-	if (length(heard_b))
-		var/message_b
-
-		if (voice_message)
-			message_b = voice_message
-		else
-			message_b = stars(message)
-			message_b = say_quote(message_b)
-
-		if (italics)
-			message_b = "<i>[message_b]</i>"
-
-		rendered = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
-
-
-		for (var/M in heard_b)
-			if(hascall(M,"show_message"))
-				M:show_message(rendered, 2)
+	for(var/mob/M in listening_dead) //deaf ghosts is bad mkay
+		M << rendered
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
-	for(var/mob/M in heard_a + heard_b)
+	for(var/mob/M in (listening + listening_dead))
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	spawn(0)
 		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 	log_say("[name]/[key] : [message]")
+
+/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, steps)
+	var/deaf_message
+	var/deaf_type
+	if(speaker != src)
+		deaf_message = "<span class='name'>[name][alt_name]</span> talks but you cannot hear them."
+		deaf_type = 1
+	else
+		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
+		deaf_type = 2 // Since you should be able to hear yourself without looking
+	message = lang_treat(message, speaker, message_langs, raw_message)
+	show_message(message, 2, deaf_message, deaf_type)
 
 /mob/living/proc/GetVoice()
 	return name
@@ -265,10 +191,10 @@ var/list/department_radio_keys = list(
 
 /mob/living/proc/handle_inherent_channels(message, message_mode)
 	if(message_mode == "changeling")
-		if(mind && mind.changeling)
+		if(lingcheck())
 			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 			for(var/mob/M in mob_list)
-				if((M.mind && M.mind.changeling) || M.stat == DEAD)
+				if(M.lingcheck() || M.stat == DEAD)
 					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 			return 1
 	return 0
@@ -285,24 +211,21 @@ var/list/department_radio_keys = list(
 /mob/living/proc/IsVocal()
 	return 1
 
-/mob/living/proc/radio(message, message_mode)
+/mob/living/proc/radio(message, message_mode, steps)
 	switch(message_mode)
 		if("right hand")
 			if (r_hand)
 				r_hand.talk_into(src, message)
-				used_radios += r_hand
 			return 1
 
 		if("left hand")
 			if (l_hand)
 				l_hand.talk_into(src, message)
-				used_radios += l_hand
 			return 1
 
 		if("intercom")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
 				I.talk_into(src, message)
-				used_radios += I
 			return 1
 
 		if("binary")
@@ -314,3 +237,10 @@ var/list/department_radio_keys = list(
 			whisper(message)
 			return 0
 	return 2
+
+/mob/living/lingcheck()
+	if(mind && mind.changeling)
+		return 1
+
+/mob/living/get_alt_name()
+	return
