@@ -88,12 +88,6 @@
 			a_right.on_found(finder)
 
 
-	hear_talk(mob/living/M as mob, msg)
-		if(a_left)
-			a_left.hear_talk(M, msg)
-		if(a_right)
-			a_right.hear_talk(M, msg)
-
 	Move()
 		..()
 		if(a_left && a_right)

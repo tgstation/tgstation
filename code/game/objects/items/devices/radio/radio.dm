@@ -27,7 +27,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/maxf = 1499
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
-	flags = CONDUCT
+	flags = CONDUCT | HEAR
 	slot_flags = SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
@@ -600,11 +600,12 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					else
 						R.show_message(rendered, 2)
 
-/obj/item/device/radio/hear_talk(mob/M as mob, msg)
-
-	if (broadcasting)
-		if(get_dist(src, M) <= canhear_range)
-			talk_into(M, msg)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, steps, radio_freq)
+	if(radio_freq)
+		return
+	if(broadcasting)
+		if(get_dist(src, speaker) <= canhear_range)
+			talk_into(speaker, raw_message)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 

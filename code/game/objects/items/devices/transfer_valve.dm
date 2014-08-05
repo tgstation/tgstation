@@ -64,11 +64,6 @@
 	if(!attached_device)	return
 	attached_device.HasProximity(AM)
 	return
-/obj/item/device/transfer_valve/hear_talk(mob/living/M, msg)
-	if(!attached_device)	return
-	attached_device.hear_talk(M, msg)
-	return
-
 /obj/item/device/transfer_valve/attack_self(mob/user as mob)
 	user.set_machine(src)
 	var/dat = {"<B> Valve properties: </B>

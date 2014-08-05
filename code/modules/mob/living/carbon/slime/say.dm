@@ -12,7 +12,7 @@
 	return "telepathically chirps, \"[text]\"";
 
 /mob/living/carbon/slime/Hear(message, atom/movable/speaker, message_langs, raw_message, steps, radio_freq)
-	if(speaker != src)
+	if(speaker != src && !radio_freq)
 		if (speaker in Friends)
 			speech_buffer = list()
 			speech_buffer += speaker.name
