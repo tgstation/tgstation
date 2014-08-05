@@ -2811,7 +2811,7 @@ datum
 		irradiatedbeans
 			name = "Irradiated Beans"
 			id = "irradiatedbeans"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "You can almost taste the lead sheet behind it!"
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		toxicwaste
@@ -2823,13 +2823,13 @@ datum
 		refriedbeans
 			name = "Re-Fried Beans"
 			id = "refriedbeans"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "Mmm.."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		mutatedbeans
 			name = "Mutated Beans"
 			id = "mutatedbeans"
-			description = "You can almost feel your liver failing, just by looking at it."
+			description = "Mutated flavor."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		beff
@@ -2841,13 +2841,13 @@ datum
 		horsemeat
 			name = "Horse Meat"
 			id = "horsemeat"
-			description = "Taste excellent in lasagna."
+			description = "Tastes excellent in lasagna."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		moonrocks
 			name = "Moon Rocks"
 			id = "moonrocks"
-			description = "We don't know much about them, but we damn well know that it hates the human skeleton."
+			description = "We don't know much about it, but we damn well know that it hates the human skeleton."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
 		offcolorcheese
