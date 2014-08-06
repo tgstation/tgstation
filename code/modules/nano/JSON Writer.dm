@@ -1,5 +1,5 @@
 
-json_writer/proc/WriteObject(list/L)
+/json_writer/proc/WriteObject(list/L)
 	. = "{"
 	var/i = 1
 	for(var/k in L)
@@ -9,7 +9,7 @@ json_writer/proc/WriteObject(list/L)
 			. += ","
 	.+= "}"
 
-json_writer/proc/write(val)
+/json_writer/proc/write(val)
 	if(isnum(val))
 		return num2text(val, 100)
 	else if(isnull(val))
@@ -22,7 +22,7 @@ json_writer/proc/write(val)
 	else
 		. += write_string("[val]")
 
-json_writer/proc/write_array(list/L)
+/json_writer/proc/write_array(list/L)
 	. = "\["
 	for(var/i = 1 to L.len)
 		. += write(L[i])
@@ -30,7 +30,7 @@ json_writer/proc/write_array(list/L)
 			. += ","
 	. += "]"
 
-json_writer/proc/write_string(txt)
+/json_writer/proc/write_string(txt)
 	var/static/list/json_escape = list("\\", "\"", "'", "\n")
 	for(var/targ in json_escape)
 		var/start = 1
@@ -50,7 +50,7 @@ json_writer/proc/write_string(txt)
 
 	return {""[txt]""}
 
-json_writer/proc/is_associative(list/L)
+/json_writer/proc/is_associative(list/L)
 	for(var/key in L)
 		// if the key is a list that means it's actually an array of lists (stupid Byond...)
 		if(!isnum(key) && !istype(key, /list))
