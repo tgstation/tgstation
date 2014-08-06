@@ -119,6 +119,7 @@
 				observer.real_name = client.prefs.real_name
 				observer.name = observer.real_name
 				observer.key = key
+				qdel(mind)
 
 				qdel(src)
 				return 1
