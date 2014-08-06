@@ -100,7 +100,13 @@
 		usr << "<span class='notice'>Too far away to view contents.</span>"
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
-	ui_interact(user)
+	if(stat & (NOPOWER|BROKEN))
+		if(state_open == 1)
+			close_machine()
+		else
+			open_machine()
+	else
+		ui_interact(user)
 
 
  /**
@@ -189,7 +195,6 @@
 			on = 1
 
 	if(href_list["open"])
-		on = 0
 		open_machine()
 
 	if(href_list["close"])
@@ -235,6 +240,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
+		on = 0
 		layer = 3
 		if(occupant)
 			occupant.bodytemperature = Clamp(occupant.bodytemperature, 261, 360)

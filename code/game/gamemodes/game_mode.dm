@@ -32,6 +32,9 @@
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/datum/mind/sacrifice_target = null
 
+	var/const/waittime_l = 600
+	var/const/waittime_h = 1800 // started at 1800
+
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
@@ -75,6 +78,8 @@
 	if(revdata.revision)
 		feedback_set_details("revision","[revdata.revision]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+	spawn (rand(waittime_l, waittime_h))
+		send_intercept()
 	return 1
 
 ///make_antag_chance()

@@ -398,7 +398,7 @@
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			harvest()
 	else
-		user.changeNext_move(8)
+		user.changeNext_move(CLICK_CD_MELEE)
 		if(O.force)
 			if(O.force >= force_threshold)
 				var/damage = O.force

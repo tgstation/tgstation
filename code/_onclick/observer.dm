@@ -24,7 +24,7 @@
 		ManualFollow(A)
 
 	// Otherwise jump
-	else
+	else if(A.loc)
 		loc = get_turf(A)
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
