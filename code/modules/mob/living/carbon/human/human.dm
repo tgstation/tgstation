@@ -26,6 +26,7 @@
 	..(new_loc, "Vox")
 
 /mob/living/carbon/human/diona/New(var/new_loc)
+	h_style = "Bald"
 	..(new_loc, "Diona")
 
 /mob/living/carbon/human/skellington/New(var/new_loc)

@@ -2781,27 +2781,105 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
-				switch(volume)
-					if(1 to 30)
-						if(prob(5))
-							M << "<span class='warning'>You don't feel very good..</span>"
-					if(30 to 55)
-						if(prob(10))
-							M << "<span class='warning'>You REALLY don't feel very good..</span>"
-						if(prob(5))
-							M.adjustToxLoss(0.1)
-					if(55 to INFINITY)
-						if(prob(10))
-							M << "<span class='warning'>Your stomach grumbles unsettlingly..</span>"
-						if(prob(1))
-							M << "<span class='warning'>Something feels wrong with your body..</span>"
-							if(ishuman(M))
-								var/mob/living/carbon/human/H = M
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					switch(volume)
+						if(1 to 20)
+							if(prob(5))
+								H << "<span class='warning'>You don't feel very good..</span>"
+								holder.remove_reagent(src.id, 0.1 * REAGENTS_METABOLISM)
+						if(20 to 35)
+							if(prob(10))
+								H << "<span class='warning'>You REALLY don't feel very good..</span>"
+							if(prob(5))
+								H.adjustToxLoss(0.1)
+								H.visible_message("[H] groans.")
+								holder.remove_reagent(src.id, 0.3 * REAGENTS_METABOLISM)
+						if(35 to INFINITY)
+							if(prob(10))
+								H << "<span class='warning'>Your stomach grumbles unsettlingly..</span>"
+							if(prob(5))
+								H << "<span class='warning'>Something feels wrong with your body..</span>"
 								var/datum/organ/internal/liver/L = H.internal_organs["liver"]
 								if (istype(L))
 									L.take_damage(0.1, 1)
-								H.adjustToxLoss(0.3)
+								H.adjustToxLoss(0.13)
+								holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
+						else
+							return
 
+		irradiatedbeans
+			name = "Irradiated Beans"
+			id = "irradiatedbeans"
+			description = "You can almost taste the lead sheet behind it!"
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		toxicwaste
+			name = "Toxic Waste"
+			id = "toxicwaste"
+			description = "Yum!"
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		refriedbeans
+			name = "Re-Fried Beans"
+			id = "refriedbeans"
+			description = "Mmm.."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		mutatedbeans
+			name = "Mutated Beans"
+			id = "mutatedbeans"
+			description = "Mutated flavor."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		beff
+			name = "Beff"
+			id = "beff"
+			description = "What's beff? Find out!"
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		horsemeat
+			name = "Horse Meat"
+			id = "horsemeat"
+			description = "Tastes excellent in lasagna."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		moonrocks
+			name = "Moon Rocks"
+			id = "moonrocks"
+			description = "We don't know much about it, but we damn well know that it hates the human skeleton."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		offcolorcheese
+			name = "Off-Color Cheese"
+			id = "offcolorcheese"
+			description = "American Cheese."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		bonemarrow
+			name = "Bone Marrow"
+			id = "bonemarrow"
+			description = "Looks like a skeleton got stuck in the production line."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		greenramen
+			name = "Greenish Ramen Noodles"
+			id = "greenramen"
+			description = "That green isn't organic."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		glowingramen
+			name = "Glowing Ramen Noodles"
+			id = "glowingramen"
+			description = "That glow 'aint healthy."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
+		deepfriedramen
+			name = "Deep Fried Ramen Noodles"
+			id = "deepfriedramen"
+			description = "Ramen, deep fried."
+			reagent_state = LIQUID
+			color = "#6F884F" // rgb: 255,255,255 //to-do
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum//////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

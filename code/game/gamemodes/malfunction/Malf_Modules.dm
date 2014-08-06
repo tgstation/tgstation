@@ -107,7 +107,7 @@ rcd light flash thingy on matter drain
 				for(var/mob/V in hearers(M, null))
 					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
 				spawn(50)
-					explosion(get_turf(M), 0,1,1,0)
+					explosion(get_turf(M), -1, 1, 2, 3) //C4 Radius + 1 Dest for the machine
 					del(M)
 			else src << "Out of uses."
 	else src << "That's not a machine."
