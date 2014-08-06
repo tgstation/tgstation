@@ -271,15 +271,6 @@ datum/controller/game_controller/proc/process_machines()
 					continue
 		machines.Cut(i,i+1)
 
-mob/verb/aranclanos()
-
-	var/list/listita = list()
-	for(var/atom/A in machines)
-		listita[A.type] ++
-		//world << "[A.name]_[A.type]_([A.x], [A.y], [A.z])"
-	for(var/A in listita)
-		world << "[A]: [listita[A]]"
-
 datum/controller/game_controller/proc/process_objects()
 	var/i = 1
 	while(i<=processing_objects.len)
