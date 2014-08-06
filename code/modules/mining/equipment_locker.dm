@@ -42,7 +42,7 @@
 		storage.amount += 1 //Stack the sheets
 		O.loc = null //Let the old sheet garbage collect
 		
-/obj/machinery/mineral/ore_redemption/proc/announce_mats(obj/machinery/requests_console/T, N)		//announce the availability of N to request console T
+/obj/machinery/mineral/ore_redemption/proc/announce_mats(obj/machinery/requests_console/T, N)		//announce the availability of string N to request console T
 	T.newmessagepriority = 1
 	T.update_icon()
 //	if(!T.silent)
