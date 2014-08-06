@@ -73,6 +73,15 @@
 		chan = power_channel
 	A.master.use_power(amount, chan)
 
+/obj/machinery/proc/addStaticPower(value, powerchannel)
+	var/area/A = get_area(src)
+	if(!A || !A.master)
+		return
+	A.master.addStaticPower(value, powerchannel)
+
+/obj/machinery/proc/removeStaticPower(value, powerchannel)
+	addStaticPower(-value, powerchannel)
+
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
 										// can override if needed
