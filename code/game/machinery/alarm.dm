@@ -6,26 +6,29 @@
 	var/min1
 	var/max1
 	var/max2
-	New(_min2 as num, _min1 as num, _max1 as num, _max2 as num)
-		min2 = _min2
-		min1 = _min1
-		max1 = _max1
-		max2 = _max2
-	proc/get_danger_level(curval as num)
-		if (max2 >=0 && curval>=max2)
-			return 2
-		if (min2 >=0 && curval<=min2)
-			return 2
-		if (max1 >=0 && curval>=max1)
-			return 1
-		if (min1 >=0 && curval<=min1)
-			return 1
-		return 0
-	proc/CopyFrom(datum/tlv/other)
-		min2 = other.min2
-		min1 = other.min1
-		max1 = other.max1
-		max2 = other.max2
+
+/datum/tlv/New(_min2 as num, _min1 as num, _max1 as num, _max2 as num)
+	min2 = _min2
+	min1 = _min1
+	max1 = _max1
+	max2 = _max2
+
+/datum/tlv/proc/get_danger_level(curval as num)
+	if (max2 >=0 && curval>=max2)
+		return 2
+	if (min2 >=0 && curval<=min2)
+		return 2
+	if (max1 >=0 && curval>=max1)
+		return 1
+	if (min1 >=0 && curval<=min1)
+		return 1
+	return 0
+
+/datum/tlv/proc/CopyFrom(datum/tlv/other)
+	min2 = other.min2
+	min1 = other.min1
+	max1 = other.max1
+	max2 = other.max2
 
 #define AALARM_MODE_SCRUBBING 1
 #define AALARM_MODE_VENTING 2 //makes draught
