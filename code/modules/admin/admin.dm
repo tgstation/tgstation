@@ -45,7 +45,6 @@ var/global/floorIsLava = 0
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
 	body += "<A href='?_src_=holder;boot2=\ref[M]'>Kick</A> | "
-	body += "<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> | "
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "

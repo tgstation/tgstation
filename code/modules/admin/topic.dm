@@ -249,9 +249,6 @@
 				alert(usr, "This ban has already been lifted / does not exist.", "Error", "Ok")
 				unbanpanel()
 
-	else if(href_list["warn"])
-		usr.client.warn(href_list["warn"])
-
 	else if(href_list["unbane"])
 		if(!check_rights(R_BAN))	return
 
@@ -971,7 +968,7 @@
 		speech = sanitize(speech) // Nah, we don't trust them
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins("\blue [key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]")
-	
+
 	else if(href_list["sendtoprison"])
 		if(!check_rights(R_ADMIN))	return
 
