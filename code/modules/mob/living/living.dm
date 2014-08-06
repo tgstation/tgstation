@@ -740,7 +740,7 @@
 						if(!CM.legcuffed || CM.buckled)
 							return // time leniency for lag which also might make this whole thing pointless but the server
 						for(var/mob/O in viewers(CM))//                                         lags so hard that 40s isn't lenient enough - Quarxink
-							O.show_message("\red <B>[CM] manages to remove the legcuffs!</B>", 1)
+							O.show_message("\red <B>[CM] manages to remove the [HC.name]!</B>", 1)
 						CM << "\blue You successfully remove \the [CM.legcuffed]."
 						CM.legcuffed.loc = usr.loc
 						CM.legcuffed = null
