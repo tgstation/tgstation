@@ -170,6 +170,7 @@
 				invisibility = 101
 			//del(src)
 				returnToPool(src)
+				OnDeath()
 		return 1
 
 
@@ -181,10 +182,13 @@
 		else
 			return 1
 
+	proc/OnDeath()	//if assigned, allows for code when the projectile disappears
+		return 1
 
 	process()
 		if(kill_count < 1)
 			//del(src)
+			OnDeath()
 			returnToPool(src)
 			return
 		kill_count--
@@ -193,6 +197,7 @@
 				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 				//del(src)
+				OnDeath()
 				returnToPool(src)
 				return
 			step_towards(src, current)
@@ -206,9 +211,11 @@
 	proc/dumbfire(var/dir) // for spacepods, go snowflake go
 		if(!dir)
 			//del(src)
+			OnDeath()
 			returnToPool(src)
 		if(kill_count < 1)
 			//del(src)
+			OnDeath()
 			returnToPool(src)
 		kill_count--
 		spawn while(loc)

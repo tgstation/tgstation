@@ -286,6 +286,100 @@
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
+/obj/item/weapon/reagent_containers/food/drinks/filk
+	name = "Filk"
+	desc = "Only the best Filk for your crew."
+	icon_state = "filk"
+	New()
+		..()
+		switch(pick(1,2,3,4,5))
+			if(1)
+				name = "Filk: Chocolate Edition"
+				reagents.add_reagent("hot_coco", 10)
+			if(2)
+				name = "Filk: Scripture Edition"
+				reagents.add_reagent("holywater", 30)
+			if(3)
+				name = "Filk: Carribean Edition"
+				reagents.add_reagent("rum", 30)
+			if(4)
+				name = "Filk: Sugar Blast Editon"
+				reagents.add_reagent("sugar", 30)
+				reagents.add_reagent("radium", 10) // le epik fallout may mays
+				reagents.add_reagent("toxicwaste", 10)
+			if(5)
+				name = "Filk: Pure Filk Edition"
+				reagents.add_reagent("discount", 20)
+		reagents.add_reagent("discount", 10)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo
+	name = "Grifeo"
+	desc = "A quality drink."
+	icon_state = "griefo"
+	New()
+		..()
+		switch(pick(1,2,3,4,5))
+			if(1)
+				name = "Grifeo: Spicy"
+				reagents.add_reagent("condensedcapsaicin", 30)
+			if(2)
+				name = "Grifeo: Frozen"
+				reagents.add_reagent("frostoil", 30)
+			if(3)
+				name = "Grifeo: Crystallic"
+				reagents.add_reagent("sugar", 20)
+				reagents.add_reagent("ice", 20)
+				reagents.add_reagent("space_drugs", 20)
+			if(4)
+				name = "Grifeo: Rich"
+				reagents.add_reagent("tequilla", 10)
+				reagents.add_reagent("chemical_waste", 10)
+			if(5)
+				name = "Grifeo: Pure"
+				reagents.add_reagent("discount", 20)
+		reagents.add_reagent("discount", 10)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/groansbanned
+	name = "Groans: Banned Edition"
+	desc = "Banned literally everywhere."
+	icon_state = "groansevil"
+	New()
+		..()
+		switch(pick(1,2,3,4,5))
+			if(1)
+				name = "Groans Banned Soda: Fish Suprise"
+				reagents.add_reagent("carpotoxin", 10)
+			if(2)
+				name = "Groans Banned Soda: Bitter Suprise"
+				reagents.add_reagent("toxin", 20)
+			if(3)
+				name = "Groans Banned Soda: Sour Suprise"
+				reagents.add_reagent("pacid", 20)
+			if(4)
+				name = "Groans Banned Soda: Sleepy Suprise"
+				reagents.add_reagent("stoxin", 10)
+			if(5)
+				name = "Groans Banned Soda: Quadruple Dan"
+				reagents.add_reagent("discount", 40)
+		reagents.add_reagent("discount", 10)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/mannsdrink
+	name = "Mann's Drink"
+	desc = "The only thing a <B>REAL MAN</B> needs."
+	icon_state = "mannsdrink"
+	New()
+		..()
+		reagents.add_reagent("discount", 30)
+		reagents.add_reagent("water", 20)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
 /obj/item/weapon/groans
 	name = "Groan-o-matic 9000"
 	desc = "This is for testing reasons."
@@ -307,6 +401,8 @@
 		name = pick(ddname)
 		reagents.add_reagent("hot_ramen", 20)
 		reagents.add_reagent("discount", 10)
+		reagents.add_reagent("glowingramen", 8)
+		reagents.add_reagent("toxicwaste", 8)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
@@ -320,6 +416,10 @@
 		name = pick(ddname)
 		reagents.add_reagent("dry_ramen", 20)
 		reagents.add_reagent("discount", 10)
+		reagents.add_reagent("toxicwaste", 4)
+		reagents.add_reagent("greenramen", 4)
+		reagents.add_reagent("glowingramen", 4)
+		reagents.add_reagent("deepfriedramen", 4)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
