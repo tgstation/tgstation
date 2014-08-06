@@ -28,25 +28,24 @@ obj/item/weapon/gun/energy/laser/retro
 	origin_tech = null
 	var/charge_tick = 0
 
-
-	New()
-		..()
-		processing_objects.Add(src)
-
-
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/laser/captain/New()
+	..()
+	processing_objects.Add(src)
 
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/laser/captain/Destroy()
+	processing_objects.Remove(src)
+	..()
+
+
+/obj/item/weapon/gun/energy/laser/captain/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
+	update_icon()
+	return 1
 
 
 
@@ -68,9 +67,9 @@ obj/item/weapon/gun/energy/laser/retro
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
 
-	attack_self(mob/living/user as mob)
-		select_fire(user)
-		update_icon()
+/obj/item/weapon/gun/energy/laser/scatter/attack_self(mob/living/user as mob)
+	select_fire(user)
+	update_icon()
 
 
 /obj/item/weapon/gun/energy/lasercannon
@@ -100,31 +99,31 @@ obj/item/weapon/gun/energy/laser/retro
 	clumsy_check = 0
 	var/charge_tick = 0
 
-	special_check(var/mob/living/carbon/human/M)
-		if(ishuman(M))
-			if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
-				return 1
-			M << "\red You need to be wearing your laser tag vest!"
-		return 0
+/obj/item/weapon/gun/energy/laser/bluetag/special_check(var/mob/living/carbon/human/M)
+	if(ishuman(M))
+		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
+			return 1
+		M << "\red You need to be wearing your laser tag vest!"
+	return 0
 
-	New()
-		..()
-		processing_objects.Add(src)
-
-
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/laser/bluetag/New()
+	..()
+	processing_objects.Add(src)
 
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/laser/bluetag/Destroy()
+	processing_objects.Remove(src)
+	..()
+
+
+/obj/item/weapon/gun/energy/laser/bluetag/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
+	update_icon()
+	return 1
 
 
 
@@ -137,28 +136,28 @@ obj/item/weapon/gun/energy/laser/retro
 	clumsy_check = 0
 	var/charge_tick = 0
 
-	special_check(var/mob/living/carbon/human/M)
-		if(ishuman(M))
-			if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
-				return 1
-			M << "\red You need to be wearing your laser tag vest!"
-		return 0
+/obj/item/weapon/gun/energy/laser/redtag/special_check(var/mob/living/carbon/human/M)
+	if(ishuman(M))
+		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
+			return 1
+		M << "\red You need to be wearing your laser tag vest!"
+	return 0
 
-	New()
-		..()
-		processing_objects.Add(src)
-
-
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/laser/redtag/New()
+	..()
+	processing_objects.Add(src)
 
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/laser/redtag/Destroy()
+	processing_objects.Remove(src)
+	..()
+
+
+/obj/item/weapon/gun/energy/laser/redtag/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
+	update_icon()
+	return 1
