@@ -31,6 +31,8 @@ datum/preferences
 	var/muted = 0
 	var/last_ip
 	var/last_id
+	var/roundstart_logout_and_suicide_count = 0		//Reduced antag chance based on bad behaviour!
+
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
@@ -94,15 +96,21 @@ datum/preferences
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
 				max_save_slots = 8
+
+	var/loaded_misc_successfully = load_misc()
+
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
 			return
+
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	real_name = random_name(gender)
 	if(!loaded_preferences_successfully)
 		save_preferences()
+	if(!loaded_misc_successfully) //misc stuff failed, make + save defaults
+		save_misc()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
 	return
 
@@ -719,10 +727,12 @@ datum/preferences
 					if("save")
 						save_preferences()
 						save_character()
+						save_misc()
 
 					if("load")
 						load_preferences()
 						load_character()
+						load_misc()
 
 					if("changeslot")
 						if(!load_character(text2num(href_list["num"])))

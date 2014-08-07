@@ -522,6 +522,13 @@ var/global/floorIsLava = 0
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
 
+		//Lower's everyone in the game's rounstart_logout_count by 1, as a reward for finishing the round
+		//this allows players to earn back normal antag chances
+		handle_roundend_reward()
+
+		if(ticker)
+			ticker.current_state = GAME_STATE_FINISHED
+
 		sleep(50)
 		world.Reboot()
 
@@ -678,6 +685,13 @@ var/global/floorIsLava = 0
 
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
+
+	//Lower's everyone in the game's rounstart_logout_count by 1, as a reward for finishing the round
+	//this allows players to earn back normal antag chances
+	handle_roundend_reward()
+
+	if(ticker)
+		ticker.current_state = GAME_STATE_FINISHED
 
 	world.Reboot()
 

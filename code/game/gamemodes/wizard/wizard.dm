@@ -22,6 +22,10 @@
 /datum/game_mode/wizard/pre_setup()
 
 	var/datum/mind/wizard = pick(antag_candidates)
+
+	if(handle_antag_punishments(wizard))
+		return 0
+
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.

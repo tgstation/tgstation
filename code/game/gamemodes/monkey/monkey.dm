@@ -33,6 +33,10 @@
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/carrier = pick(antag_candidates)
+
+		if(handle_antag_punishments(carrier))
+			break
+
 		carriers += carrier
 		carrier.special_role = "monkey"
 		log_game("[carrier.key] (ckey) has been selected as a Jungle Fever carrier")

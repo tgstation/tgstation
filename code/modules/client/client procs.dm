@@ -150,8 +150,23 @@ var/next_external_rsc = 0
 		admins -= src
 	directory -= ckey
 	clients -= src
+
+	check_for_roundstart_logout() //Checks for an early logout, and saves the preferences to savefile
+
 	return ..()
 
+
+/client/proc/check_for_roundstart_logout()
+	if(!ticker || ticker.current_state == GAME_STATE_FINISHED)
+		return
+
+	var/datum/preferences/Save_file = prefs
+	if(!Save_file)
+		return
+
+	if(world.time <= ROUNDSTART_END_TIME)
+		Save_file.roundstart_logout_and_suicide_count++
+		Save_file.save_misc()
 
 
 /client/proc/log_client_to_db()

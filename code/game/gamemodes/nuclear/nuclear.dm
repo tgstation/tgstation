@@ -38,6 +38,10 @@
 
 	while(agent_number > 0)
 		var/datum/mind/new_syndicate = pick(antag_candidates)
+
+		if(handle_antag_punishments(new_syndicate))
+			break
+
 		syndicates += new_syndicate
 		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
 		agent_number--

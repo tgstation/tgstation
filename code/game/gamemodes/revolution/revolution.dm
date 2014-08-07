@@ -58,6 +58,10 @@
 		if (antag_candidates.len==0)
 			break
 		var/datum/mind/lenin = pick(antag_candidates)
+
+		if(handle_antag_punishments(lenin))
+			break
+
 		antag_candidates -= lenin
 		head_revolutionaries += lenin
 		log_game("[lenin.key] (ckey) has been selected as a head rev")

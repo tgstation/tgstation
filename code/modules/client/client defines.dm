@@ -39,3 +39,11 @@
 	var/related_accounts_cid = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id
 
 	preload_rsc = PRELOAD_RSC
+
+		//////////////////////////////////
+		//Roundstart Antag Chance Checks//
+		//////////////////////////////////
+
+	var/roundstart_punishment_searched = 0 //If you're a good little boy or girl, this will always be 0
+	//This is tied to roundstart_logout_count in a player's savefile, both are used in Game mode code
+	//to reduce a player's chance at antag if they're logging out alot at roundstart

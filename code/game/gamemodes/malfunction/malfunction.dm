@@ -47,6 +47,10 @@
 	var/datum/mind/chosen_ai
 	for(var/i = required_enemies, i > 0, i--)
 		chosen_ai=pick(antag_candidates)
+
+		if(handle_antag_punishments(chosen_ai))
+			break
+
 		malf_ai += chosen_ai
 		antag_candidates -= malf_ai
 	if (malf_ai.len < required_enemies)

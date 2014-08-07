@@ -82,6 +82,7 @@
 
 	var/traitor_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
+	var/punish_roundstart_logouts = 0	//Used to reduce the antagonist chance of players who frequently logout at roundstart
 	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
 	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/continuous_round_wiz = 0
@@ -374,6 +375,8 @@
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist	= 1
+				if("punish_roundstart_logouts")
+					config.punish_roundstart_logouts = 1
 				if("allow_latejoin_antagonists")
 					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")

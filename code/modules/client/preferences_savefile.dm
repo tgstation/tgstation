@@ -136,6 +136,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return 1
 
+
 /datum/preferences/proc/load_character(slot)
 	if(!path)				return 0
 	if(!fexists(path))		return 0
@@ -266,6 +267,45 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_high"]	<< job_engsec_high
 	S["job_engsec_med"]		<< job_engsec_med
 	S["job_engsec_low"]		<< job_engsec_low
+
+	return 1
+
+
+//////////////////////////////////////////////////////////
+// MISC things that need to be persistant in a savefile //
+//////////////////////////////////////////////////////////
+
+//these are seperate to character() and preferences()
+//because I don't want anyone to have to deal with any weirdness
+//that may come from saving character() and prefernces mid round
+
+/datum/preferences/proc/save_misc()
+	if(!path)				return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	S.cd = "/"
+
+	S["version"] << SAVEFILE_VERSION_MAX
+
+	S["roundstart_logout_and_suicide_count"] << roundstart_logout_and_suicide_count
+
+	return 1
+
+/datum/preferences/proc/load_misc()
+	if(!path)				return 0
+	if(!fexists(path))		return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	S.cd = "/"
+
+	var/needs_update = savefile_needs_update(S)
+	if(needs_update == -2)
+		return 0
+
+	S["roundstart_logout_and_suicide_count"] >> roundstart_logout_and_suicide_count
+
+	if(needs_update >= 0)
+		update_preferences(needs_update)
 
 	return 1
 

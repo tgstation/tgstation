@@ -41,6 +41,10 @@ var/list/blob_nodes = list()
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/blob = pick(antag_candidates)
+
+		if(handle_antag_punishments(blob))
+			break
+
 		infected_crew += blob
 		blob.special_role = "Blob"
 		log_game("[blob.key] (ckey) has been selected as a Blob")
