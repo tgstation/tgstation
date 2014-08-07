@@ -210,9 +210,13 @@
 	T.xo = (targetloc.x - T.starting.x)
 	if (ishuman(usr) && T.starting == usr.loc)  // determines if the bolas should spawn an item when it dies (prevents infinite spam from mechs)
 		T.shot_from = /obj/item/weapon/legcuffs/bolas
+		T.firer = usr
 	else
 		T.shot_from = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas
+		T.firer = T.shot_from
 	// log_admin("Bolas fired from [T.shot_from], location [T.starting] to [T.original], with [T.xo] and [T.yo]")
+	if(!T.xo && !T.yo) //Required. If you take this out, you can create stationary projectiles which never disappear
+		T.OnDeath()
 	T.process()
 	playsound(src, throw_sound, 20, 1)
 	Destroy() //gets rid of the bolas item in the hand

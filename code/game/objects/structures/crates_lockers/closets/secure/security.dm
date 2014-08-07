@@ -188,6 +188,7 @@
 		new /obj/item/taperoll/police(src)
 		new /obj/item/device/hailer(src) //wonder if vg would spam this
 		new /obj/item/clothing/gloves/black(src)
+		new /obj/item/weapon/legcuffs/bolas(src) //I added this - Comic
 		return
 
 
