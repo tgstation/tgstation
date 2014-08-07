@@ -35,21 +35,13 @@
 			s.amount = 0
 			stack_list[processed_sheet] = s
 			if(s.name != "glass" && s.name != "metal")		//we can get these from cargo anyway
+				var/msg = "[capitalize(s.name)] sheets are now available in the Cargo Bay."
 				for(var/obj/machinery/requests_console/D in world)		//this will only happen a few times per round
-					if(D.department == "Science" || D.department == "Robotics")
-						announce_mats(D, s.name)
+					if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk")
+						D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
 		storage.amount += 1 //Stack the sheets
 		O.loc = null //Let the old sheet garbage collect
-		
-/obj/machinery/mineral/ore_redemption/proc/announce_mats(obj/machinery/requests_console/T, N)		//announce the availability of string N to request console T
-	T.newmessagepriority = 1
-	T.update_icon()
-//	if(!T.silent)
-//		playsound(T.loc, 'sound/machines/twobeep.ogg', 50, 1)
-	for (var/mob/O in hearers(4, T.loc))
-		O.show_message("\icon[T] *The Requests Console flashes: 'New minerals available!'")
-	T.messages += "<b>From:</b> Ore Redemption Machine<BR>[capitalize(N)] sheets are now available in the Cargo Bay."
 
 /obj/machinery/mineral/ore_redemption/process()
 	if(!panel_open) //If the machine is partially dissassembled, it should not process minerals
