@@ -1,5 +1,5 @@
 /obj/structure/closet/syndicate
-	name = "armoury closet"
+	name = "armory closet"
 	desc = "Why is this here?"
 	icon_state = "syndicate"
 	icon_closed = "syndicate"
@@ -15,8 +15,8 @@
 	new /obj/item/weapon/tank/jetpack/oxygen/harness(src)
 	new /obj/item/clothing/mask/gas/syndicate(src)
 	new /obj/item/clothing/under/syndicate(src)
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
-	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/head/helmet/space/hardsuit/syndi(src)
+	new /obj/item/clothing/suit/space/hardsuit/syndi(src)
 	new /obj/item/weapon/storage/belt/military(src)
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/stock_parts/cell/high(src)

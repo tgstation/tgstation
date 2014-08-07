@@ -45,20 +45,20 @@
 
 	var/obj/item/organ/limb/affecting = user.zone_sel.selecting //Find what the player is aiming at
 
-	var/armor_block = 0 //Get the target's armour values for normal attack damage.
+	var/armor_block = 0 //Get the target's armor values for normal attack damage.
 	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
 
 	//Calculating duration and calculating damage.
 	if(ishuman(target))
 
 		var/mob/living/carbon/human/H = target
-		var/headarmor = 0 // Target's head armour
+		var/headarmor = 0 // Target's head armor
 		armor_block = H.run_armor_check(affecting, "melee") // For normal attack damage
 
 		//If they have a hat/helmet and the user is targeting their head.
 		if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
 
-			// If their head has an armour value, assign headarmor to it, else give it 0.
+			// If their head has an armor value, assign headarmor to it, else give it 0.
 			if(H.head.armor["melee"])
 				headarmor = H.head.armor["melee"]
 			else
@@ -70,7 +70,7 @@
 		armor_duration = (duration - headarmor) + force
 
 	else
-		//Only humans can have armour, right?
+		//Only humans can have armor, right?
 		armor_block = target.run_armor_check(affecting, "melee")
 		if(affecting == "head")
 			armor_duration = duration + force

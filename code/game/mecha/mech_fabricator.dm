@@ -73,7 +73,7 @@
 						/obj/item/mecha_parts/part/gygax_right_arm,
 						/obj/item/mecha_parts/part/gygax_left_leg,
 						/obj/item/mecha_parts/part/gygax_right_leg,
-						/obj/item/mecha_parts/part/gygax_armour
+						/obj/item/mecha_parts/part/gygax_armor
 					),
 	"Durand"=list(
 						/obj/item/mecha_parts/chassis/durand,
@@ -83,7 +83,7 @@
 						/obj/item/mecha_parts/part/durand_right_arm,
 						/obj/item/mecha_parts/part/durand_left_leg,
 						/obj/item/mecha_parts/part/durand_right_leg,
-						/obj/item/mecha_parts/part/durand_armour
+						/obj/item/mecha_parts/part/durand_armor
 					),
 	"H.O.N.K"=list(
 						/obj/item/mecha_parts/chassis/honker,
@@ -291,7 +291,7 @@
 /*
 	New()
 		..()
-		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000))
+		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armor","time"=600,"metal"=75000,"diamond"=10000))
 		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000))
 		src.remove_part_set("Gygax")
 		return
@@ -355,11 +355,11 @@
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(var/obj/item/part)
 	if(!part) return
-	
+
 	 // critical exploit prevention, do not remove unless you replace it
 	if( (part.loc != src) || !(hasvar(part, "construction_time")) || !(hasvar(part, "construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
 		return
-	
+
 	src.being_built = new part.type(src)
 	src.desc = "It's building \a [src.being_built]."
 	src.remove_resources(part)
@@ -610,17 +610,17 @@
 
 /obj/machinery/mecha_part_fabricator/proc/exploit_prevention(var/obj/Part, mob/user as mob, var/desc_exploit)
 // critical exploit prevention, feel free to improve or replace this, but do not remove it
-	
+
 	if(!istype(Part) || !istype(user)) // sanity
 		return 1
-	
+
 	if( (Part.loc != src) || !(hasvar(Part, "construction_time")) || !(hasvar(Part, "construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
-	
+
 		var/turf/LOC = get_turf(user)
 		message_admins("[key_name_admin(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] <a href='?_src_=vars;Vars=\ref[Part]'>[Part]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
-		log_admin("EXPLOIT : [key_name(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] [Part] !")		
+		log_admin("EXPLOIT : [key_name(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] [Part] !")
 		return 1
-	
+
 	return null
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
@@ -637,24 +637,24 @@
 				screen = "parts"
 	if(href_list["part"])
 		var/obj/part = filter.getObj("part")
-		
+
 		// critical exploit prevention, do not remove unless you replace it
 		if(src.exploit_prevention(part, usr))
 			return
-		
+
 		if(!processing_queue)
 			build_part(part)
 		else
 			add_to_queue(part)
 	if(href_list["add_to_queue"])
 		var/obj/part = filter.getObj("add_to_queue")
-		
+
 		// critical exploit prevention, do not remove unless you replace it
 		if(src.exploit_prevention(part, usr))
 			return
-			
+
 		add_to_queue(part)
-		
+
 		return update_queue_on_page()
 	if(href_list["remove_from_queue"])
 		remove_from_queue(filter.getNum("remove_from_queue"))
@@ -691,11 +691,11 @@
 		src.sync()
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")
-		
+
 		// critical exploit prevention, do not remove unless you replace it
 		if(src.exploit_prevention(part, usr, 1))
 			return
-		
+
 		if(part)
 			temp = {"<h1>[part] description:</h1>
 						[part.desc]<br>
