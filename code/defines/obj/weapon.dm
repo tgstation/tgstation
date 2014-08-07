@@ -195,6 +195,7 @@
 	breakouttime = 100 //10 seconds
 	var/dispenser = 0
 	var/throw_sound = 'sound/weapons/whip.ogg'
+	throw_speed = 1
 
 	suicide_act(mob/living/user)
 		viewers(user) << "\red <b>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
