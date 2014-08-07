@@ -72,8 +72,8 @@
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
 	icon_state = "rock"
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Diamond" = 1, "Gold" = 10, "Silver" = 15, "Plasma" = 25, "Iron" = 40, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
-	var/mineralChance = 15
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Diamond" = 1, "Gold" = 10, "Silver" = 12, "Plasma" = 20, "Iron" = 40, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralChance = 13
 
 /turf/simulated/mineral/random/New()
 	..()
@@ -120,7 +120,7 @@
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 6
-	mineralSpawnChanceList = list("Uranium" = 2, "Diamond" = 1, "Gold" = 4, "Silver" = 6, "Plasma" = 20, "Iron" = 40, "Gibtonite" = 2)
+	mineralSpawnChanceList = list("Uranium" = 2, "Diamond" = 1, "Gold" = 4, "Silver" = 6, "Plasma" = 15, "Iron" = 40, "Gibtonite" = 2)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
@@ -172,7 +172,7 @@
 	mineralName = "Plasma"
 	spreadChance = 8
 	spread = 1
-	hidden = 0
+	hidden = 1
 	scan_state = "rock_Plasma"
 
 /turf/simulated/mineral/clown
