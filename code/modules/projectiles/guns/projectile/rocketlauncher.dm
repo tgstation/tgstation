@@ -6,20 +6,30 @@
 	item_state = "rpg"
 	max_shells = 1
 	w_class = 4.0
+	m_amt = 5000
+	w_type = RECYK_METAL
 	force = 10
-	ejectshell = 0
+	recoil = 5
+	throw_speed = 4
+	throw_range = 3
+	load_method = SPEEDLOADER
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
 	caliber = "rpg"
 	origin_tech = "combat=4;materials=2;syndicate=2"
 	ammo_type = "/obj/item/ammo_casing/rocket_rpg"
+	attack_verb = list("struck", "hit", "bashed")
 
 	attack_self(mob/living/user as mob)
-		update_icon()
+		icon_state = "rpg_e"
+
+	isHandgun()
+		return 0
 
 	update_icon()
-		if(empty_mag)
+		if(!load_into_chamber())
 			icon_state = "rpg_e"
+			item_state = "rpg_e"
 		else
 			icon_state = "rpg"
-		return
+			item_state = "rpg"
