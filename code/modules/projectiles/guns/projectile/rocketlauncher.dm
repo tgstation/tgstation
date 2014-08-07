@@ -3,6 +3,7 @@
 	desc = "Ranged explosions, science marches on."
 	fire_sound = 'sound/weapons/shotgun.ogg'
 	icon_state = "rpg_e"
+	item_state = null
 	max_shells = 1
 	empty_casings = 0
 	w_class = 4.0
