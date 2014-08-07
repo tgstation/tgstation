@@ -108,7 +108,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm magazines and is compatible with silencers."
+	desc = "A small, easily concealable handgun that uses 10mm magazines and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 5
 
@@ -213,8 +213,8 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-12mm"
-	desc = "A 20-round 12mm magazine for use in the C-20r submachine gun."
-	item = /obj/item/ammo_box/magazine/m12mm
+	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
+	item = /obj/item/ammo_box/magazine/c20m
 	cost = 1
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -257,10 +257,10 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
 
-/datum/uplink_item/stealthy_weapons/silencer
-	name = "Stetchkin Silencer"
-	desc = "Fitted for use on the Stetchkin pistol, this silencer will make its shots quieter when equipped onto it."
-	item = /obj/item/weapon/silencer
+/datum/uplink_item/stealthy_weapons/suppressor
+	name = "Stetchkin Suppressor"
+	desc = "Fitted for use on the Stetchkin pistol, this suppressor will make its shots quieter when equipped onto it."
+	item = /obj/item/weapon/suppressor
 	cost = 2
 
 // STEALTHY TOOLS

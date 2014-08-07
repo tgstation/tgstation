@@ -17,7 +17,7 @@
 
 			if("bond")
 				new /obj/item/weapon/gun/projectile/automatic/pistol(src)
-				new /obj/item/weapon/silencer(src)
+				new /obj/item/weapon/suppressor(src)
 				new /obj/item/ammo_box/magazine/m10mm(src)
 				new /obj/item/ammo_box/magazine/m10mm(src)
 				new /obj/item/clothing/under/chameleon(src)
