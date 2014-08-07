@@ -99,7 +99,7 @@
 	LOUDBLOCK      = getAssignedBlock("LOUD",       numsToAssign)
 	WHISPERBLOCK   = getAssignedBlock("WHISPER",    numsToAssign)
 	DIZZYBLOCK     = getAssignedBlock("DIZZY",      numsToAssign)
-	SANSBLOCK      = getAssignedBlock("SANS"",	numsToAssign)
+	SANSBLOCK      = getAssignedBlock("SANS",	numsToAssign)
 
 
 	//
