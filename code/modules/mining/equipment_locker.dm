@@ -48,7 +48,7 @@
 //	if(!T.silent)
 //		playsound(T.loc, 'sound/machines/twobeep.ogg', 50, 1)
 	for (var/mob/O in hearers(4, T.loc))
-		O.show_message("\icon[T] *The Requests Console flashes: 'New ores available!'")
+		O.show_message("\icon[T] *The Requests Console flashes: 'New minerals available!'")
 	T.messages += "<b>From:</b> Ore Redemption Machine<BR>[capitalize(N)] sheets are now available in the Cargo Bay."
 
 /obj/machinery/mineral/ore_redemption/process()
