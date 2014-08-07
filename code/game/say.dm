@@ -33,17 +33,17 @@
 
 /atom/movable/proc/lang_treat(message, atom/movable/speaker, message_langs, raw_message)
 	if(languages & message_langs)
-		return message
+		return speaker.say_quote(message)
 	else if(message_langs & HUMAN)
-		return "<span class='game say'><span class='name'>[speaker.GetVoice()]</span> <span class='message'>[say_quote(stars(raw_message))]</span></span>"
+		return speaker.say_quote(stars(raw_message))
 	else if(message_langs & MONKEY)
-		return "<span class='game say'><span class='name'>[speaker.GetVoice()]</span> <span class='message'>chimpers.</span></span>"
+		return "chimpers."
 	else if(message_langs & ALIEN)
-		return "<span class='game say'><span class='name'>[speaker.GetVoice()] </span><span class='message'>hisses.</span></span>"
+		return "hisses."
 	else if(message_langs & ROBOT)
-		return "<span class='game say'><span class='name'>[speaker.GetVoice()]</span> <span class='message'>beeps rapidly.</span></span>"
+		return "<beeps rapidly."
 	else
-		return "<span class='game say'><span class='name'>[speaker.GetVoice()]</span> <span class='message'>makes a strange sound.</span></span>"
+		return "makes a strange sound."
 
 /atom/movable/proc/GetVoice()
 	return name

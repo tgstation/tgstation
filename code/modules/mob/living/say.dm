@@ -103,7 +103,7 @@ var/list/department_radio_keys = list(
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	message = lang_treat(message, speaker, message_langs, raw_message)
+	message = "<span class='game say'><span class='name'>[speaker.GetVoice()]</span>[speaker.get_alt_name] <span class='message'>[lang_treat(message, speaker, message_langs, raw_message)]</span></span>"
 	show_message(message, 2, deaf_message, deaf_type)
 
 /mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type)
