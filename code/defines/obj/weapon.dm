@@ -200,7 +200,31 @@
 		viewers(user) << "\red <b>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
 		return(OXYLOSS)
 
-/obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, range, speed) //mostly copied and modified from gun code - Comic
+	throw_impact(atom/hit_atom)
+		if(isliving(hit_atom) && hit_atom != usr) //if the target is a live creature other than the thrower
+			var/mob/living/M = hit_atom
+			if(ishuman(M)) //if they're a human species
+				var/mob/living/carbon/human/H = M
+				if(H.m_intent == "run") //if they're set to run (though not necessarily running at that moment)
+					if(prob(70)) //this probability is up for change and mostly a placeholder - Comic
+						step(H, H.dir)
+						H.visible_message("<span class='warning'>[H] was tripped by the bolas!</span>","<span class='warning'>Your legs have been tangled!</span>");
+						H.Stun(5) //used instead of setting damage in vars to avoid non-human targets being affected
+						H.Weaken(10)
+						H.legcuffed = src //applies legcuff properties inherited through legcuffs
+						src.loc = H
+						H.update_inv_legcuffed()
+				else if(H.legcuffed) //if the target is already legcuffed (has to be walking)
+					return
+				else //walking, but uncuffed, or the running prob(70) failed
+					H << "\blue You stumble over the thrown bolas"
+					step(H, H.dir)
+					H.m_intent = "walk"
+					return
+			else
+				M.Stun(2) //minor stun damage to anything not human
+
+/*/obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, range, speed) //mostly copied and modified from gun code - Comic
 	var /obj/item/projectile/thrownbolas/T = new /obj/item/projectile/thrownbolas(src.loc) //creates a bolas projectile (projectile is used for compatibility with mechs)
 	var /turf/targetloc = get_turf(A) //gets the position of the clicked atom
 	T.current = get_turf(src) //projectile is placed on user
@@ -220,6 +244,8 @@
 	T.process()
 	playsound(src, throw_sound, 20, 1)
 	Destroy() //gets rid of the bolas item in the hand
+*/
+
 
 // /obj/item/weapon/legcuffs/bolas/cyborg To be implemented
 //	dispenser = 1
