@@ -6,6 +6,7 @@
 	heat_protection = CHEST|GROIN
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 
+
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
@@ -13,6 +14,7 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
@@ -25,6 +27,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 
+
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
 	desc = "An armored jacket with silver rank pips and livery."
@@ -33,6 +36,14 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
+
+
+/obj/item/clothing/suit/armor/vest/det_suit
+	name = "armor"
+	desc = "An armored vest with a detective's badge on it."
+	icon_state = "detective-armor"
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
+
 
 /obj/item/clothing/suit/armor/vest/capcarapace
 	name = "captain's carapace"
@@ -45,7 +56,7 @@
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
-	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
+	desc = "A suit of armor with heavy padding on all limbs to protect against melee attacks. Looks like it might impair movement."
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -55,9 +66,10 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
+
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof vest"
-	desc = "A vest that excels in protecting the wearer against high-velocity solid projectiles."
+	desc = "An armor vest that excels in protecting the wearer against ballistic projectiles."
 	icon_state = "bulletproof"
 	item_state = "armor"
 	blood_overlay_type = "armor"
@@ -66,40 +78,59 @@
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "ablative armor vest"
-	desc = "A vest that excels in protecting the wearer against energy projectiles."
+	desc = "An advanced armor vest that excels in protecting the wearer against energy projectiles. It must be toggled on in order to deflect projectiles."
 	icon_state = "armor_reflec"
 	item_state = "armor_reflec"
 	blood_overlay_type = "armor"
-	armor = list(melee = 10, bullet = 10, laser = 80, energy = 50, bomb = 0, bio = 0, rad = 0)
+	var/active = 1
+	armor = list(melee = 10, bullet = -20, laser = 80, energy = 50, bomb = 0, bio = 0, rad = -20)
+	action_button_name = "Toggle Armor"
 	reflect_chance = 40
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(var/def_zone)
 	var/hit_reflect_chance = reflect_chance
-	if(!(def_zone in list("chest", "groin"))) //If not shot where ablative is covering you, you don't get the reflection bonus!
-		hit_reflect_chance = 0
-	if (prob(hit_reflect_chance))
-		return 1
+	if(active)
+		if(!(def_zone in list("chest", "groin"))) //If not shot where ablative is covering you, you don't get the reflection bonus!
+			hit_reflect_chance = 0
+		if (prob(hit_reflect_chance))
+			return 1
+	return 0
 
+/obj/item/clothing/suit/armor/laserproof/attack_self(mob/user as mob)
+	src.active = !( src.active )
+	if (src.active)
+		user << "<span class='notice'>[src] is now active.</span>"
+		src.icon_state = "armor_reflec"
+		src.item_state = "armor_reflec"
+		usr.update_inv_wear_suit()
+	else
+		user << "<span class='notice'>[src] is now inactive.</span>"
+		src.icon_state = "armor_reflecoff"
+		src.item_state = "armor_reflecoff"
+		usr.update_inv_wear_suit()
+		src.add_fingerprint(user)
+	return
 
-/obj/item/clothing/suit/armor/vest/det_suit
-	name = "armor"
-	desc = "An armored vest with a detective's badge on it."
-	icon_state = "detective-armor"
-	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
-
+/obj/item/clothing/suit/armor/laserproof/emp_act(severity)
+	active = 0
+	src.icon_state = "armor_reflecoff"
+	src.item_state = "armor_reflecoff"
+	usr.update_inv_wear_suit()
+	..()
 
 
 //Reactive armor
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive
 	name = "reactive teleport armor"
-	desc = "Someone seperated our Research Director from his own head!"
-	var/active = 0.0
+	desc = "An experimental armor vest which flings the wearer away upon taking damage. The bluespace field around the armor slows the user down when active."
+	var/active = 0
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
-	slowdown = 1
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	slowdown = 0
+	armor = list(melee = 10, bullet = 5, laser = -20, energy = 0, bomb = 0, bio = 0, rad = -20)
+	action_button_name = "Toggle Armor"
 
 /obj/item/clothing/suit/armor/reactive/IsShield()
 	if(active)
@@ -112,10 +143,14 @@
 		user << "<span class='notice'>[src] is now active.</span>"
 		src.icon_state = "reactive"
 		src.item_state = "reactive"
+		slowdown = 1
+		usr.update_inv_wear_suit()
 	else
 		user << "<span class='notice'>[src] is now inactive.</span>"
 		src.icon_state = "reactiveoff"
 		src.item_state = "reactiveoff"
+		slowdown = 0
+		usr.update_inv_wear_suit()
 		src.add_fingerprint(user)
 	return
 
@@ -123,6 +158,8 @@
 	active = 0
 	src.icon_state = "reactiveoff"
 	src.item_state = "reactiveoff"
+	slowdown = 0
+	usr.update_inv_wear_suit()
 	..()
 
 
@@ -144,6 +181,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 
+
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
 	desc = "A heavily armored suit that protects against moderate damage."
@@ -156,6 +194,7 @@
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
+
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -163,11 +202,13 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
+
 /obj/item/clothing/suit/armor/tdome/red
 	name = "thunderdome suit"
 	desc = "Reddish armor."
 	icon_state = "tdred"
 	item_state = "tdred"
+
 
 /obj/item/clothing/suit/armor/tdome/green
 	name = "thunderdome suit"
