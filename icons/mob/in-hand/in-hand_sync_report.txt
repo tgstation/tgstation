@@ -8,6 +8,7 @@
 --- C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\left\guns.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\right\guns.dmi
  + scythe0
+ + taser100
 --- C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\left\paramedic_eva.dmi
 +++ C:\Users\Rob\Documents\Projects\vgstation13\icons\mob\in-hand\right\paramedic_eva.dmi
  + paramedic-eva
@@ -72,6 +73,7 @@
  + blade
  + blindfold
  + blueprints
+ + bolas
  + bombvest
  + brain2
  + brick
