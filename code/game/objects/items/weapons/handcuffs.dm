@@ -109,3 +109,24 @@
 					C.handcuffed = new /obj/item/weapon/handcuffs(C)
 					C.update_inv_handcuffed(0)
 					add_logs(user, C, "handcuffed")
+
+/obj/item/weapon/handcuffs/fur
+	name = "fur lined handcuffs"
+	desc = "Use this... to keep your prisoner in line?"
+	var/fur_color = "#FFFFFF"
+
+/obj/item/weapon/handcuffs/fur/New()
+	src.setColor(fur_color)
+	..()
+
+/obj/item/weapon/handcuffs/fur/proc/setColor(C)
+	var/icon/F = icon('icons/obj/items.dmi',"handcuff_fur")
+	F *= C
+	src.overlays += F
+	qdel(F)
+
+/obj/item/weapon/handcuffs/fur/random
+
+/obj/item/weapon/handcuffs/fur/random/New()
+	fur_color = rgb( rand(64,255), rand(64,255), rand(64,255) )
+	..()
