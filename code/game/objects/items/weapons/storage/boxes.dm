@@ -70,7 +70,7 @@
 
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
-	desc = "Contains white gloves."
+	desc = "Contains sterile latex gloves."
 	icon_state = "latex"
 	New()
 		..()
@@ -84,7 +84,7 @@
 
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
-	desc = "This box contains masks of sterility."
+	desc = "This box contains sterile medical masks."
 	icon_state = "sterile"
 
 	New()
