@@ -180,7 +180,6 @@
 			OnDeath()
 
 	OnDeath()
-		log_admin(shot_from)
 		if(shot_from == /obj/item/weapon/legcuffs/bolas) //if it's thrown, we want it to respawn the item. Mechs don't do this to avoid spam and infinite bolas works
 			// log_admin("Bolas created at [get_turf(src)]")
 			var /obj/item/weapon/legcuffs/bolas/B = new /obj/item/weapon/legcuffs/bolas
@@ -188,8 +187,10 @@
 		qdel(src)
 
 	Bump(atom/A as mob|obj|turf|area)
-		if(A == firer)
-			loc = A.loc
+		if(A == firer) //As if this ever happens
+			loc = get_turf(A)
+			A <<"\blue You run into your own bolas!"
+			OnDeath()
 			return
 		if(src)
 			if(A)

@@ -4,7 +4,7 @@
 	icon_state = "jani_keys"
 
 /obj/item/mecha_parts/janicart_upgrade
-	name = "Janicart cleaner upgrade"
+	name = "Janicart Cleaner Upgrade"
 	desc = "This device upgrades the janicart to automatically clean surfaces when driving."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
