@@ -222,6 +222,7 @@
 #include "code\game\dna\genes\powers.dm"
 #include "code\game\dna\genes\speech.dm"
 #include "code\game\dna\genes\vg_powers.dm"
+#include "code\game\dna\genes\vg_disabilities.dm"
 #include "code\game\gamemodes\antag_spawner.dm"
 #include "code\game\gamemodes\events.dm"
 #include "code\game\gamemodes\factions.dm"
