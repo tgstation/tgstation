@@ -389,7 +389,7 @@ ________________________________________________________________________________
 //Randomizes suit parameters.
 /obj/item/clothing/suit/space/space_ninja/proc/randomize_param()
 	s_cost = rand(1,20)
-	s_acost = rand(20,50)
+	s_acost = rand(20,100)
 	k_cost = rand(100,500)
 	k_damage = rand(1,20)
 	s_delay = rand(10,100)
