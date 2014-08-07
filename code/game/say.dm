@@ -10,7 +10,7 @@
 		return
 	send_speech(message)
 
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, steps = 0, radio_freq)
+/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return
 
 /atom/movable/proc/can_speak()
@@ -45,5 +45,68 @@
 	else
 		return "makes a strange sound."
 
+/atom/movable/proc/get_radio_span(freq)
+	switch(freq)
+		if(SCI_FREQ)
+			return "sciradio"
+		if(MED_FREQ)
+			return "medradio"
+		if(ENG_FREQ)
+			return "engradio"
+		if(SEC_FREQ)
+			return "secradio"
+		if(COMM_FREQ)
+			return "comradio"
+		if(SUPP_FREQ)
+			return "suppradio"
+		if(AIPRIV_FREQ)
+			return "aiprivradio"
+		if(SYND_FREQ)
+			return "syndradio"
+		if(SERV_FREQ)
+			return "servradio"
+		if(DSQUAD_FREQ)
+			return "dsquadradio"
+		return "radio"
+
+/atom/movable/proc/get_radio_name(freq) //There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
+	switch(freq)
+		if(COMM_FREQ)
+			return "Command"
+		if(SCI_FREQ)
+			return "Science"
+		if(MED_FREQ)
+			return "Medical"
+		if(ENG_FREQ)
+			return "Engineering"
+		if(SEC_FREQ)
+			return "Security"
+		if(SUPP_FREQ)
+			return "Supply"
+		if(AIPRIV_FREQ)
+			return "AI Private"
+		if(SYND_FREQ)
+			return "#unkn"
+		if(SERV_FREQ)
+			return "Service"
+		return freq
+
 /atom/movable/proc/GetVoice()
 	return name
+
+//these exist mostly to deal with the AIs hrefs and job stuff.
+/atom/movable/proc/GetJob()
+	return
+
+/atom/movable/proc/GetTrack()
+	return
+
+/atom/movable/virtualspeaker
+	var/job
+	var/faketrack
+
+/atom/movable/virtualspaker/GetJob()
+	return job
+
+/atom/movable/virtualspeaker/GetTrack()
+	return faketrack

@@ -4,6 +4,12 @@
 		return
 	..(message)
 
+/mob/living/silicon/ai/compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	var/faketrack = "byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]"
+	if(radio_freq && speaker.GetTrack())
+		faketrack = "byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]"
+	return message = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>[radio_freq ? "\[[get_radio_name(radio_freq)]\]" : ""]<a href='[faketrack]'><span class='name'>[speaker.GetVoice()]</span>[speaker.get_alt_name] [radio_freq ? "(" + speaker.GetJob() + ") " : ""]</a><span class='message'>[lang_treat(message, speaker, message_langs, raw_message)]</span></span>"
+
 /mob/living/silicon/ai/say_quote(var/text)
 	var/ending = copytext(text, length(text))
 

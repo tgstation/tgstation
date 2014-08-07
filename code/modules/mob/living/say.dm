@@ -56,7 +56,7 @@ var/list/department_radio_keys = list(
 /mob/living/proc/binarycheck()
 	return 0
 
-/mob/living/say(message, bubble_type, steps = 0)
+/mob/living/say(message, bubble_type)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	check_emote(message)
@@ -94,7 +94,7 @@ var/list/department_radio_keys = list(
 
 	log_say("[name]/[key] : [message]")
 
-/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, steps, radio_freq)
+/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	var/deaf_message
 	var/deaf_type
 	if(speaker != src)
@@ -103,8 +103,12 @@ var/list/department_radio_keys = list(
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	message = "<span class='game say'><span class='name'>[speaker.GetVoice()]</span>[speaker.get_alt_name] <span class='message'>[lang_treat(message, speaker, message_langs, raw_message)]</span></span>"
+	message = compose_message(message, speaker, message_langs, raw_message, radio_freq, job)
 	show_message(message, 2, deaf_message, deaf_type)
+	return message
+
+/mob/living/proc/compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, job)
+	return message = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>[radio_freq ? "\[[get_radio_name(radio_freq)]\]" : ""]<span class='name'>[speaker.GetVoice()]</span>[speaker.get_alt_name] <span class='message'>[lang_treat(message, speaker, message_langs, raw_message)]</span></span>"
 
 /mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type)
 	var/list/listening = get_hearers_in_view(message_range, source)

@@ -84,7 +84,7 @@
 		if(!istype(dongle)) return 0
 		if(dongle.translate_binary) return 1
 
-/mob/living/carbon/human/radio(message, message_mode, steps)
+/mob/living/carbon/human/radio(message, message_mode)
 	. = ..()
 	if(. != 2)
 		return .

@@ -67,7 +67,7 @@
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
-	They are used in atom/movable/Hear() and atom/movable/say() to determine whether objects can understand a message.
+	They are used in atom/movable/Hear() and atom/movable/say() to determine whether hearers can understand a message.
 */
 #define HUMAN 1
 #define MONKEY 2

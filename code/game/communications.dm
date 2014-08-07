@@ -282,7 +282,7 @@ var/list/pointers = list()
 			src << S.debug_print()
 
 /obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
-	return null
+	return
 
 /datum/signal
 	var/obj/source

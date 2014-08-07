@@ -16,8 +16,8 @@
 
 	. = src.say_dead(message)
 
-/mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, steps = 0, radio_freq)
-	src << message
+/mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	src << "<span class='game say'><span class='name'>[speaker.GetVoice()]</span>[speaker.get_alt_name()] <span class='message'>[say_quote(message)]</span></span>"
 
 /*
 	for (var/mob/M in hearers(null, null))

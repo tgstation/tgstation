@@ -600,7 +600,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					else
 						R.show_message(rendered, 2)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, steps, radio_freq)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(radio_freq)
 		return
 	if(broadcasting)
