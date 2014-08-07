@@ -1218,6 +1218,11 @@ datum/design/hyper_cell
 	build_path = /obj/item/weapon/stock_parts/cell/hyper
 	category = "Misc"
 
+
+////////////////////////////////////////
+//////////////Maintanace////////////////
+////////////////////////////////////////
+
 datum/design/light_replacer
 	name = "Light Replacer"
 	desc = "A device to automatically replace lights. Refill with working lightbulbs."
@@ -1226,6 +1231,46 @@ datum/design/light_replacer
 	build_type = PROTOLATHE
 	materials = list("$metal" = 1500, "$silver" = 150, "$glass" = 3000)
 	build_path = /obj/item/device/lightreplacer
+
+datum/design/welding_mask
+	name = "Welding Gas Mask"
+	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
+	id = "weldingmask"
+	req_tech = list("materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000, "$glass" = 1000)
+	build_path = /obj/item/clothing/mask/gas/welding
+
+datum/design/mesons
+	name = "Optical Meson Scanners"
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
+	id = "mesons"
+	req_tech = list("materials" = 3, "magnets" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
+	build_path = /obj/item/clothing/glasses/meson
+
+datum/design/magboots
+	name = "Magnetic Boots"
+	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
+	id = "magboots"
+	req_tech = list("materials" = 4, "magnets" = 4, "engineering" = 5)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4500, "$silver" = 1500, "$gold" = 2500)
+	build_path = /obj/item/clothing/shoes/magboots
+
+datum/design/welder_experimental
+	name = "Experimental Welding Tool"
+	desc = "A new and luxurious experimental welder capable of self refueling!"
+	id = "ExpWelder"
+	req_tech = list("engineering=4;plasmatech=3;bluespace=2")
+	build_type = PROTOLATHE
+	materials = list("$metal" = 100, "$glass" = 150)
+	build_path = /obj/item/weapon/weldingtool/experimental
+
+
+
+
 
 ////////////////////////////////////////
 //////////////MISC Boards///////////////
@@ -1913,24 +1958,6 @@ datum/design/borg_syndicate_module
 //////////////////Misc///////////////////
 /////////////////////////////////////////
 
-datum/design/welding_mask
-	name = "Welding Gas Mask"
-	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
-	id = "weldingmask"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 4000, "$glass" = 1000)
-	build_path = /obj/item/clothing/mask/gas/welding
-
-datum/design/mesons
-	name = "Optical Meson Scanners"
-	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
-	id = "mesons"
-	req_tech = list("materials" = 3, "magnets" = 3, "engineering" = 3)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
-	build_path = /obj/item/clothing/glasses/meson
-
 datum/design/night_vision_goggles
 	name = "Night Vision Goggles"
 	desc = "Goggles that let you see through darkness unhindered."
@@ -1939,12 +1966,3 @@ datum/design/night_vision_goggles
 	build_type = PROTOLATHE
 	materials = list("$metal" = 100, "$glass" = 100, "$uranium" = 1000)
 	build_path = /obj/item/clothing/glasses/night
-
-datum/design/magboots
-	name = "Magnetic Boots"
-	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
-	id = "magboots"
-	req_tech = list("materials" = 4, "magnets" = 4, "engineering" = 5)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 4500, "$silver" = 1500, "$gold" = 2500)
-	build_path = /obj/item/clothing/shoes/magboots
