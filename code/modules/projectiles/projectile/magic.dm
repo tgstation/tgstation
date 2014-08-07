@@ -198,13 +198,10 @@ proc/wabbajack(mob/living/M)
 
 					var/mob/living/carbon/human/H = new_mob
 					ready_dna(H)
-					if(H.dna)
-						var/list/randspecies = list()
-						for(var/t in typesof(/datum/species)) // returns a bunch of types
-							var/datum/species/temp = new t()
-							randspecies += "[temp.type]"
-						var/datum/species/new_species = pick(randspecies)
+					if(H.dna && prob(50))
+						var/new_species = pick(typesof(/datum/species) - /datum/species)
 						H.dna.species = new new_species()
+					H.update_icons()
 				else
 					return
 

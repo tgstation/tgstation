@@ -53,7 +53,7 @@
 	return
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	src.health -= rand(15,30)*brute_dam_coeff
 	src.visible_message("\red <B>[user] has slashed [src]!</B>")
 	playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)
@@ -64,7 +64,7 @@
 
 /obj/machinery/bot/attack_animal(var/mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)	return
-	M.changeNext_move(8)
+	M.changeNext_move(CLICK_CD_MELEE)
 	src.health -= M.melee_damage_upper
 	src.visible_message("\red <B>[M] has [M.attacktext] [src]!</B>")
 	add_logs(M, src, "attacked", admin=0)
@@ -93,7 +93,7 @@
 		Emag(user)
 	else
 		if(hasvar(W,"force") && hasvar(W,"damtype"))
-			user.changeNext_move(8)
+			user.changeNext_move(CLICK_CD_MELEE)
 			switch(W.damtype)
 				if("fire")
 					src.health -= W.force * fire_dam_coeff

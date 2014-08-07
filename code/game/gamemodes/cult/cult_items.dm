@@ -92,10 +92,10 @@
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/cult
-	name = "cult armour"
-	icon_state = "cult_armour"
-	item_state = "cult_armour"
-	desc = "A bulky suit of armour, bristling with spikes. It looks space proof."
+	name = "cult armor"
+	icon_state = "cult_armor"
+	item_state = "cult_armor"
+	desc = "A bulky suit of armor, bristling with spikes. It looks space proof."
 	w_class = 3
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1

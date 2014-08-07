@@ -276,7 +276,7 @@
 
 /obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
 	..()
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/weapons/smash.ogg', 60, 1)
 	src.spark_system.start()
 	src.health -= W.force * 0.5
@@ -410,7 +410,7 @@
 
 
 /obj/machinery/turret/attack_animal(mob/living/simple_animal/M as mob)
-	M.changeNext_move(8)
+	M.changeNext_move(CLICK_CD_MELEE)
 	if(M.melee_damage_upper == 0)	return
 	if(!(stat & BROKEN))
 		visible_message("\red <B>[M] [M.attacktext] [src]!</B>")
@@ -427,7 +427,7 @@
 
 
 /obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	M.changeNext_move(8)
+	M.changeNext_move(CLICK_CD_MELEE)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		visible_message("\red <B>[] has slashed at []!</B>", M, src)
@@ -548,7 +548,7 @@
 
 
 /obj/machinery/gun_turret/attack_alien(mob/user as mob)
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("[user] slashes at [src]", "You slash at [src]")
 	take_damage(15)
 	return

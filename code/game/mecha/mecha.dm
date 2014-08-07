@@ -465,7 +465,7 @@
 		qdel(src)
 
 /obj/mecha/attack_hand(mob/user as mob)
-	user.changeNext_move(8) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code. 
+	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
@@ -633,7 +633,7 @@
 	return
 
 /obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
-	user.changeNext_move(8) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code. 
+	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 
 	src.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(src.deflect_chance))
