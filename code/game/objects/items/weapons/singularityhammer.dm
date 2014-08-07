@@ -15,20 +15,20 @@
 
 
 
-	New()
-		..()
-		processing_objects.Add(src)
+/obj/item/weapon/twohanded/singularityhammer/New()
+	..()
+	processing_objects.Add(src)
 
 
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/twohanded/singularityhammer/Destroy()
+	processing_objects.Remove(src)
+	..()
 
 
-	process()
-		if(charged < 5)
-			charged++
-		return
+/obj/item/weapon/twohanded/singularityhammer/process()
+	if(charged < 5)
+		charged++
+	return
 
 /obj/item/weapon/twohanded/singularityhammer/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"
