@@ -9,7 +9,7 @@
  * Lasertag
  */
 /obj/item/clothing/suit/bluetag
-	name = "blue laser tag armour"
+	name = "blue laser tag armor"
 	desc = "Blue Pride, Station Wide"
 	icon_state = "bluetag"
 	item_state = "bluetag"
@@ -18,7 +18,7 @@
 	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
 
 /obj/item/clothing/suit/redtag
-	name = "red laser tag armour"
+	name = "red laser tag armor"
 	desc = "Pew pew pew"
 	icon_state = "redtag"
 	item_state = "redtag"

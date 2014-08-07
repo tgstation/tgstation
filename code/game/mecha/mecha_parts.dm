@@ -132,11 +132,11 @@
 	construction_time = 200
 	construction_cost = list("metal"=15000, "diamond"=2000)
 
-/obj/item/mecha_parts/part/gygax_armour
+/obj/item/mecha_parts/part/gygax_armor
 	gender = PLURAL
-	name = "\improper Gygax armour plates"
-	desc = "A set of armour plates designed for the Gygax. Designed to effectively deflect damage with a lightweight construction."
-	icon_state = "gygax_armour"
+	name = "\improper Gygax armor plates"
+	desc = "A set of armor plates designed for the Gygax. Designed to effectively deflect damage with a lightweight construction."
+	icon_state = "gygax_armor"
 	origin_tech = "materials=6;combat=4;engineering=5"
 	construction_time = 600
 	construction_cost = list("metal"=25000,"diamond"=10000)
@@ -200,11 +200,11 @@
 	construction_time = 200
 	construction_cost = list("metal"=15000,"silver"=4000)
 
-/obj/item/mecha_parts/part/durand_armour
+/obj/item/mecha_parts/part/durand_armor
 	gender = PLURAL
-	name = "\improper Durand armour plates"
-	desc = "A set of armour plates for the Durand. Built heavy to resist an incredible amount of brute force."
-	icon_state = "durand_armour"
+	name = "\improper Durand armor plates"
+	desc = "A set of armor plates for the Durand. Built heavy to resist an incredible amount of brute force."
+	icon_state = "durand_armor"
 	origin_tech = "materials=5;combat=4;engineering=5"
 	construction_time = 600
 	construction_cost = list("metal"=50000,"uranium"=30000)
@@ -401,9 +401,9 @@
 	construction_time = 130
 	construction_cost = list("metal"=7000)
 
-/*/obj/item/mecha_parts/part/odysseus_armour
+/*/obj/item/mecha_parts/part/odysseus_armor
 	name="Odysseus Carapace"
-	icon_state = "odysseus_armour"
+	icon_state = "odysseus_armor"
 	origin_tech = "materials=3;engineering=3"
 	construction_time = 200
 	construction_cost = list("metal"=15000)*/
