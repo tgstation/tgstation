@@ -14,11 +14,11 @@
 
 	// What reagents should be logged when transferred TO this object?
 	// Reagent ID => friendly name
-	var/global/list/reagents_to_log = list(
-		"fuel"  =  "welder fuel",
-		"plasma"=  "plasma",
-		"pacid" =  "polytrinic acid",
-		"sacid" =  "sulphuric acid"
+	var/global/list/reagents_to_log = list( \
+		"fuel"  =  "welder fuel", \
+		"plasma"=  "plasma", \
+		"pacid" =  "polytrinic acid", \
+		"sacid" =  "sulphuric acid" \
 	)
 
 	var/list/mob/_using // All mobs dicking with us.
