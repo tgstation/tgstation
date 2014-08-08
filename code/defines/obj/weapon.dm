@@ -192,61 +192,89 @@
 	origin_tech = "materials=1"
 	attack_verb = list("lashed", "bludgeoned", "whipped")
 	force = 4
-	breakouttime = 100 //10 seconds
+	breakouttime = 50 //10 seconds
+	throw_speed = 1
+	throw_range = 10
 	var/dispenser = 0
 	var/throw_sound = 'sound/weapons/whip.ogg'
-	throw_speed = 1
+	var/trip_prob = 60
+	var/thrown_from
 
 	suicide_act(mob/living/user)
 		viewers(user) << "\red <b>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
 		return(OXYLOSS)
 
-	throw_impact(atom/hit_atom)
+	throw_at(var/atom/A, throw_range, throw_speed)
+		if(usr && !istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas)) //if there is a user, but not a mech
+			if(istype(usr, /mob/living/carbon/human)) //if the user is human
+				var/mob/living/carbon/human/H = usr
+				if((M_CLUMSY in H.mutations) && prob(50))
+					H <<"\red You smack yourself in the face while swinging the [src]!"
+					H.Stun(2)
+					H.drop_item()
+					return
+		if (!thrown_from && usr) //if something hasn't set it already (like a mech does when it launches)
+			thrown_from = usr //then the user must have thrown it
+		if (!istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas))
+			playsound(src, throw_sound, 20, 1) //because mechs play the sound anyways
+		var/turf/target = get_turf(A)
+		var/atom/movable/adjtarget = new /atom/movable
+		var/xadjust = 0
+		var/yadjust = 0
+		var/scaler = 0 //used to changed the normalised vector to the proper size
+		scaler = throw_range / max(abs(target.x - src.x), abs(target.y - src.y)) //whichever is larger magnitude is what we normalise to
+		if (target.x - src.x != 0) //just to avoid fucking with math for no reason
+			xadjust = round((target.x - src.x) * scaler) //normalised vector is now scaled up to throw_range
+			adjtarget.x = src.x + xadjust //the new target at max range
+		else
+			adjtarget.x = src.x
+		if (target.y - src.y != 0)
+			yadjust = round((target.y - src.y) * scaler)
+			adjtarget.y = src.y + yadjust
+		else
+			adjtarget.y = src.y
+		// log_admin("Adjusted target of [adjtarget.x] and [adjtarget.y], adjusted with [xadjust] and [yadjust] from [scaler]")
+		..(get_turf(adjtarget), throw_range, throw_speed)
+		thrown_from = null
+
+	throw_impact(atom/hit_atom) //Pomf was right, I was wrong - Comic
 		if(isliving(hit_atom) && hit_atom != usr) //if the target is a live creature other than the thrower
 			var/mob/living/M = hit_atom
 			if(ishuman(M)) //if they're a human species
 				var/mob/living/carbon/human/H = M
 				if(H.m_intent == "run") //if they're set to run (though not necessarily running at that moment)
-					if(prob(70)) //this probability is up for change and mostly a placeholder - Comic
+					if(prob(trip_prob)) //this probability is up for change and mostly a placeholder - Comic
 						step(H, H.dir)
 						H.visible_message("<span class='warning'>[H] was tripped by the bolas!</span>","<span class='warning'>Your legs have been tangled!</span>");
-						H.Stun(5) //used instead of setting damage in vars to avoid non-human targets being affected
-						H.Weaken(10)
+						H.Stun(2) //used instead of setting damage in vars to avoid non-human targets being affected
+						H.Weaken(4)
 						H.legcuffed = src //applies legcuff properties inherited through legcuffs
 						src.loc = H
 						H.update_inv_legcuffed()
+						if(!H.legcuffed) //in case it didn't happen, we need a safety net
+							throw_failed()
 				else if(H.legcuffed) //if the target is already legcuffed (has to be walking)
+					throw_failed()
 					return
-				else //walking, but uncuffed, or the running prob(70) failed
+				else //walking, but uncuffed, or the running prob() failed
 					H << "\blue You stumble over the thrown bolas"
 					step(H, H.dir)
 					H.m_intent = "walk"
+					throw_failed()
 					return
 			else
 				M.Stun(2) //minor stun damage to anything not human
+				throw_failed()
+				return
 
-/*/obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, range, speed) //mostly copied and modified from gun code - Comic
-	var /obj/item/projectile/thrownbolas/T = new /obj/item/projectile/thrownbolas(src.loc) //creates a bolas projectile (projectile is used for compatibility with mechs)
-	var /turf/targetloc = get_turf(A) //gets the position of the clicked atom
-	T.current = get_turf(src) //projectile is placed on user
-	T.starting = get_turf(src)
-	T.original = targetloc
-	T.yo = (targetloc.y - T.starting.y)
-	T.xo = (targetloc.x - T.starting.x)
-	if (ishuman(usr) && T.starting == usr.loc)  // determines if the bolas should spawn an item when it dies (prevents infinite spam from mechs)
-		T.shot_from = /obj/item/weapon/legcuffs/bolas
-		T.firer = usr
-	else
-		T.shot_from = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas
-		T.firer = T.shot_from
-	// log_admin("Bolas fired from [T.shot_from], location [T.starting] to [T.original], with [T.xo] and [T.yo]")
-	if(!T.xo && !T.yo) //Required. If you take this out, you can create stationary projectiles which never disappear
-		T.OnDeath()
-	T.process()
-	playsound(src, throw_sound, 20, 1)
-	Destroy() //gets rid of the bolas item in the hand
-*/
+	proc/throw_failed() //called when the throw doesn't entangle
+		log_admin("Logged as [thrown_from]")
+		if(!thrown_from || !istype(thrown_from, /mob/living)) //in essence, if we don't know whether a person threw it
+			qdel(src) //destroy it, to stop infinite bolases
 
+	Bump()
+		..()
+		throw_failed() //allows a mech bolas to be destroyed
 
 // /obj/item/weapon/legcuffs/bolas/cyborg To be implemented
 //	dispenser = 1
