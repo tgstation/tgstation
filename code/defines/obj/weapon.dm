@@ -186,8 +186,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 2
-	w_class = 2.0
-	m_amt = 500
+	w_class = 3.0
 	w_type = RECYK_METAL
 	origin_tech = "materials=1"
 	attack_verb = list("lashed", "bludgeoned", "whipped")
@@ -204,77 +203,77 @@
 		viewers(user) << "\red <b>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
 		return(OXYLOSS)
 
-/obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, throw_range, throw_speed)
-		if(usr && !istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas)) //if there is a user, but not a mech
-			if(istype(usr, /mob/living/carbon/human)) //if the user is human
-				var/mob/living/carbon/human/H = usr
-				if((M_CLUMSY in H.mutations) && prob(50))
-					H <<"\red You smack yourself in the face while swinging the [src]!"
-					H.Stun(2)
-					H.drop_item()
-					return
-		if (!thrown_from && usr) //if something hasn't set it already (like a mech does when it launches)
-			thrown_from = usr //then the user must have thrown it
-		if (!istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas))
-			playsound(src, throw_sound, 20, 1) //because mechs play the sound anyways
-		var/turf/target = get_turf(A)
-		var/atom/movable/adjtarget = new /atom/movable
-		var/xadjust = 0
-		var/yadjust = 0
-		var/scaler = 0 //used to changed the normalised vector to the proper size
-		scaler = throw_range / max(abs(target.x - src.x), abs(target.y - src.y)) //whichever is larger magnitude is what we normalise to
-		if (target.x - src.x != 0) //just to avoid fucking with math for no reason
-			xadjust = round((target.x - src.x) * scaler) //normalised vector is now scaled up to throw_range
-			adjtarget.x = src.x + xadjust //the new target at max range
-		else
-			adjtarget.x = src.x
-		if (target.y - src.y != 0)
-			yadjust = round((target.y - src.y) * scaler)
-			adjtarget.y = src.y + yadjust
-		else
-			adjtarget.y = src.y
-		// log_admin("Adjusted target of [adjtarget.x] and [adjtarget.y], adjusted with [xadjust] and [yadjust] from [scaler]")
-		..(get_turf(adjtarget), throw_range, throw_speed)
-		thrown_from = null
+/obj/item/weapon/legcuffs/bolas/procthrow_at(var/atom/A, throw_range, throw_speed)
+	if(usr && !istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas)) //if there is a user, but not a mech
+		if(istype(usr, /mob/living/carbon/human)) //if the user is human
+			var/mob/living/carbon/human/H = usr
+			if((M_CLUMSY in H.mutations) && prob(50))
+				H <<"\red You smack yourself in the face while swinging the [src]!"
+				H.Stun(2)
+				H.drop_item()
+				return
+	if (!thrown_from && usr) //if something hasn't set it already (like a mech does when it launches)
+		thrown_from = usr //then the user must have thrown it
+	if (!istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas))
+		playsound(src, throw_sound, 20, 1) //because mechs play the sound anyways
+	var/turf/target = get_turf(A)
+	var/atom/movable/adjtarget = new /atom/movable
+	var/xadjust = 0
+	var/yadjust = 0
+	var/scaler = 0 //used to changed the normalised vector to the proper size
+	scaler = throw_range / max(abs(target.x - src.x), abs(target.y - src.y)) //whichever is larger magnitude is what we normalise to
+	if (target.x - src.x != 0) //just to avoid fucking with math for no reason
+		xadjust = round((target.x - src.x) * scaler) //normalised vector is now scaled up to throw_range
+		adjtarget.x = src.x + xadjust //the new target at max range
+	else
+		adjtarget.x = src.x
+	if (target.y - src.y != 0)
+		yadjust = round((target.y - src.y) * scaler)
+		adjtarget.y = src.y + yadjust
+	else
+		adjtarget.y = src.y
+	// log_admin("Adjusted target of [adjtarget.x] and [adjtarget.y], adjusted with [xadjust] and [yadjust] from [scaler]")
+	..(get_turf(adjtarget), throw_range, throw_speed)
+	thrown_from = null
 
 /obj/item/weapon/legcuffs/bolas/throw_impact(atom/hit_atom) //Pomf was right, I was wrong - Comic
-		if(isliving(hit_atom) && hit_atom != usr) //if the target is a live creature other than the thrower
-			var/mob/living/M = hit_atom
-			if(ishuman(M)) //if they're a human species
-				var/mob/living/carbon/human/H = M
-				if(H.m_intent == "run") //if they're set to run (though not necessarily running at that moment)
-					if(prob(trip_prob)) //this probability is up for change and mostly a placeholder - Comic
-						step(H, H.dir)
-						H.visible_message("<span class='warning'>[H] was tripped by the bolas!</span>","<span class='warning'>Your legs have been tangled!</span>");
-						H.Stun(2) //used instead of setting damage in vars to avoid non-human targets being affected
-						H.Weaken(4)
-						H.legcuffed = src //applies legcuff properties inherited through legcuffs
-						src.loc = H
-						H.update_inv_legcuffed()
-						if(!H.legcuffed) //in case it didn't happen, we need a safety net
-							throw_failed()
-				else if(H.legcuffed) //if the target is already legcuffed (has to be walking)
-					throw_failed()
-					return
-				else //walking, but uncuffed, or the running prob() failed
-					H << "\blue You stumble over the thrown bolas"
+	if(isliving(hit_atom) && hit_atom != usr) //if the target is a live creature other than the thrower
+		var/mob/living/M = hit_atom
+		if(ishuman(M)) //if they're a human species
+			var/mob/living/carbon/human/H = M
+			if(H.m_intent == "run") //if they're set to run (though not necessarily running at that moment)
+				if(prob(trip_prob)) //this probability is up for change and mostly a placeholder - Comic
 					step(H, H.dir)
-					H.m_intent = "walk"
-					throw_failed()
-					return
-			else
-				M.Stun(2) //minor stun damage to anything not human
+					H.visible_message("<span class='warning'>[H] was tripped by the bolas!</span>","<span class='warning'>Your legs have been tangled!</span>");
+					H.Stun(2) //used instead of setting damage in vars to avoid non-human targets being affected
+					H.Weaken(4)
+					H.legcuffed = src //applies legcuff properties inherited through legcuffs
+					src.loc = H
+					H.update_inv_legcuffed()
+					if(!H.legcuffed) //in case it didn't happen, we need a safety net
+						throw_failed()
+			else if(H.legcuffed) //if the target is already legcuffed (has to be walking)
 				throw_failed()
 				return
+			else //walking, but uncuffed, or the running prob() failed
+				H << "\blue You stumble over the thrown bolas"
+				step(H, H.dir)
+				H.m_intent = "walk"
+				throw_failed()
+				return
+		else
+			M.Stun(2) //minor stun damage to anything not human
+			throw_failed()
+			return
 
 /obj/item/weapon/legcuffs/bolas/proc/throw_failed() //called when the throw doesn't entangle
-		log_admin("Logged as [thrown_from]")
-		if(!thrown_from || !istype(thrown_from, /mob/living)) //in essence, if we don't know whether a person threw it
-			qdel(src) //destroy it, to stop infinite bolases
+	log_admin("Logged as [thrown_from]")
+	if(!thrown_from || !istype(thrown_from, /mob/living)) //in essence, if we don't know whether a person threw it
+		qdel(src) //destroy it, to stop infinite bolases
 
 /obj/item/weapon/legcuffs/bolas/Bump()
-		..()
-		throw_failed() //allows a mech bolas to be destroyed
+	..()
+	throw_failed() //allows a mech bolas to be destroyed
 
 // /obj/item/weapon/legcuffs/bolas/cyborg To be implemented
 //	dispenser = 1
