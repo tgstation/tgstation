@@ -135,4 +135,4 @@ datum/airlock_maker/Topic(var/href,var/list/href_list)
 
 		return
 
-datum/airlock_maker/interact()
+	interact()
