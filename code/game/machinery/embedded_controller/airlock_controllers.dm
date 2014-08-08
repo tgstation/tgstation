@@ -17,7 +17,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 
 	if (!ui)
-		ui = new(user, src, ui_key, "advanced_airlock_console.tmpl", name, 470, 300)
+		ui = new(user, src, ui_key, "advanced_airlock_console.tmpl", name, 470, 290)
 
 		ui.set_initial_data(data)
 
@@ -59,13 +59,15 @@
 
 	data = list(
 		"chamber_pressure" = round(program.memory["chamber_sensor_pressure"]),
+		"exterior_status" = program.memory["exterior_status"],
+		"interior_status" = program.memory["interior_status"],
 		"processing" = program.memory["processing"],
 	)
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 
 	if (!ui)
-		ui = new(user, src, ui_key, "simple_airlock_console.tmpl", name, 470, 300)
+		ui = new(user, src, ui_key, "simple_airlock_console.tmpl", name, 470, 290)
 
 		ui.set_initial_data(data)
 
@@ -117,14 +119,13 @@
 	data = list(
 		"exterior_status" = program.memory["exterior_status"],
 		"interior_status" = program.memory["interior_status"],
-		"processing" = program.memory["processing"],
-		"secure" = program.memory["secure"],
+		"processing" = program.memory["processing"]
 	)
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 
 	if (!ui)
-		ui = new(user, src, ui_key, "door_access_console.tmpl", name, 470, 300)
+		ui = new(user, src, ui_key, "door_access_console.tmpl", name, 330, 220)
 
 		ui.set_initial_data(data)
 
@@ -140,11 +141,11 @@
 		if("cycle_int_door")
 			clean = 1
 		if("force_ext")
-			clean = 1
+			if(program.memory["interior_status"]["state"] == "closed")
+				clean = 1
 		if("force_int")
-			clean = 1
-		if("secure")
-			clean = 1
+			if(program.memory["exterior_status"]["state"] == "closed")
+				clean = 1
 
 	if(clean)
 		program.receive_user_command(href_list["command"])

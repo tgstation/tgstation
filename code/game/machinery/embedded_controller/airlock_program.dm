@@ -124,9 +124,21 @@
 
 		if("purge")
 			memory["purge"] = !memory["purge"]
+			if(memory["purge"])
+			toggleDoor(memory["exterior_status"], tag_exterior_door, 1, "close")
+			toggleDoor(memory["interior_status"], tag_interior_door, 1, "close")
+			state = STATE_DEPRESSURIZE
+			target_state = TARGET_NONE
+			signalPump(tag_airpump, 1, 0, 0)
 
 		if("secure")
 			memory["secure"] = !memory["secure"]
+			if(memory["secure"])
+				signalDoor(tag_interior_door, "lock")
+				signalDoor(tag_exterior_door, "lock")
+			else
+				signalDoor(tag_interior_door, "unlock")
+				signalDoor(tag_exterior_door, "unlock")
 
 	if(shutdown_pump)
 		signalPump(tag_airpump, 0)		//send a signal to stop pressurizing
@@ -233,6 +245,13 @@
 		if(TARGET_INOPEN)
 			toggleDoor(memory["exterior_status"], tag_exterior_door, memory["secure"], "close")
 			toggleDoor(memory["interior_status"], tag_interior_door, memory["secure"], "open")
+
+		if(TARGET_NONE)
+			var/command = "unlock"
+			if(memory["secure"])
+				command = "lock"
+			signalDoor(tag_exterior_door, command)
+			signalDoor(tag_interior_door, command)
 
 
 /*----------------------------------------------------------
