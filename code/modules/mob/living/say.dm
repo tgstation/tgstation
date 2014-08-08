@@ -107,9 +107,6 @@ var/list/department_radio_keys = list(
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-/mob/living/proc/compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, job)
-	return message = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>[radio_freq ? "\[[get_radio_name(radio_freq)]\]" : ""]<span class='name'>[speaker.GetVoice()]</span>[speaker.get_alt_name] <span class='message'>[lang_treat(message, speaker, message_langs, raw_message)]</span></span>"
-
 /mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type)
 	var/list/listening = get_hearers_in_view(message_range, source)
 	var/list/listening_dead
@@ -240,9 +237,6 @@ var/list/department_radio_keys = list(
 /mob/living/lingcheck()
 	if(mind && mind.changeling)
 		return 1
-
-/mob/living/proc/get_alt_name()
-	return
 
 /mob/living/say_quote()
 	if (stuttering)

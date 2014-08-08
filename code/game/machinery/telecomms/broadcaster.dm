@@ -292,9 +292,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			receive -= R
 
 	for(var/atom/movable/hearer in receive)
-		AM.Hear(message, virt, M.languages, message, freq)
+		hearer.Hear(message, virt, M.languages, message, freq)
 
-	// ###### Organize the receivers into categories for displaying the message ######
+/*	// ###### Organize the receivers into categories for displaying the message ######
 
   	// Understood the message:
 	var/list/heard_masked 	= list() // masked name or no real name
@@ -304,33 +304,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/list/heard_voice 	= list() // voice message	(ie "chimpers")
 	var/list/heard_garbled	= list() // garbled message (ie "f*c* **u, **i*er!")
 	var/list/heard_gibberish= list() // completely screwed over message (ie "F%! (O*# *#!<>&**%!")
+*/
 
-	// ###### Begin formatting and sending the message ######
 	if(length(receive))
-
-	  // --- Some miscellaneous variables to format the string output ---
-		var/part_a = "<span class='radio'><span class='name'>" // goes in the actual output
-
-		// --- Some more pre-message formatting ---
-
-		var/part_b_extra = ""
-		if(data == 3) // intercepted radio message
-			part_b_extra = " <i>(Intercepted)</i>"
-		var/part_b = "</span><b> \[[freq_text]\][part_b_extra]</b> <span class='message'>"
-		var/part_c = "</span></span>"
-
-		// --- Filter the message; place it in quotes apply a verb ---
-
-		var/quotedmsg = null
-		if(M)
-			quotedmsg = M.say_quote(message)
-		else
-			quotedmsg = "says, \"[message]\""
-
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
-		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>"
-		var/blackbox_msg = "[part_a][name][part_blackbox_b][quotedmsg][part_c]"
+		var/blackbox_msg = M.compose_message("", virt, M.languages, message, freq)
 		//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
 
 		//BR.messages_admin += blackbox_admin_msg
@@ -360,7 +339,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.messages += blackbox_msg
 
 		//End of research and feedback code.
-
+/*
 		var/aitrack = ""
 
 	// ###### Send the message ###### 
@@ -458,7 +437,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				else
 					R.show_message(rendered, 2)
 
-
+*/
 
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
 

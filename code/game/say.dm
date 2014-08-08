@@ -67,7 +67,7 @@
 			return "servradio"
 		if(DSQUAD_FREQ)
 			return "dsquadradio"
-		return "radio"
+	return "radio"
 
 /atom/movable/proc/get_radio_name(freq) //There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 	switch(freq)
@@ -89,10 +89,13 @@
 			return "#unkn"
 		if(SERV_FREQ)
 			return "Service"
-		return freq
+	return freq
 
 /atom/movable/proc/GetVoice()
 	return name
+
+/atom/movable/proc/get_alt_name()
+	return
 
 //these exist mostly to deal with the AIs hrefs and job stuff.
 /atom/movable/proc/GetJob()
@@ -101,12 +104,18 @@
 /atom/movable/proc/GetTrack()
 	return
 
+/atom/movable/proc/GetSource()
+
 /atom/movable/virtualspeaker
 	var/job
 	var/faketrack
+	var/mob/source
 
-/atom/movable/virtualspaker/GetJob()
+/atom/movable/virtualspeaker/GetJob()
 	return job
 
 /atom/movable/virtualspeaker/GetTrack()
 	return faketrack
+
+/atom/movable/virtualspeaker/GetSource()
+	return source
