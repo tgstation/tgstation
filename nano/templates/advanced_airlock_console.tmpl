@@ -4,9 +4,9 @@
 			External Pressure:
 		</div>
 		<div class="itemContent">
-			{{:~displayBar(external_pressure, 0, 200, external_pressure < 80 || external_pressure > 120 ? 'bad' : external_pressure < 95 || external_pressure > 110 ? 'average' : 'good')}}
+			{{:helper.displayBar(data.external_pressure, 0, 200, (data.external_pressure < 80 || data.external_pressure > 120) ? 'bad' : (data.external_pressure < 95 || data.external_pressure > 110) ? 'average' : 'good')}}
 			<div class="statusValue">
-				{{:external_pressure}} kPa
+				{{:data.external_pressure}} kPa
 			</div>
 		</div>
 	</div>
@@ -15,9 +15,9 @@
 			Chamber Pressure:
 		</div>
 		<div class="itemContent">
-			{{:~displayBar(chamber_pressure, 0, 200, chamber_pressure < 80 || chamber_pressure > 120 ? 'bad' : chamber_pressure < 95 || chamber_pressure > 110 ? 'average' : 'good')}}
+			{{:helper.displayBar(data.chamber_pressure, 0, 200, (data.chamber_pressure < 80 || data.chamber_pressure > 120) ? 'bad' : (data.chamber_pressure < 95 || data.chamber_pressure > 110) ? 'average' : 'good')}}
 			<div class="statusValue">
-				{{:chamber_pressure}} kPa
+				{{:data.chamber_pressure}} kPa
 			</div>
 		</div>
 	</div>
@@ -26,9 +26,9 @@
 			Internal Pressure:
 		</div>
 		<div class="itemContent">
-			{{:~displayBar(internal_pressure, 0, 200, internal_pressure < 80 || internal_pressure > 120 ? 'bad' : internal_pressure < 95 || internal_pressure > 110 ? 'average' : 'good')}}
+			{{:helper.displayBar(data.internal_pressure, 0, 200, (data.internal_pressure < 80 || data.internal_pressure > 120) ? 'bad' : (data.internal_pressure < 95 || data.internal_pressure > 110) ? 'average' : 'good')}}
 			<div class="statusValue">
-				{{:internal_pressure}} kPa
+				{{:data.internal_pressure}} kPa
 			</div>
 		</div>
 	</div>
@@ -36,25 +36,25 @@
 <div class="item" style="padding-top: 10px">
 	<div class="item" style="width: auto; float: left">
 		<div class="itemContent">
-			{{:~link('Cycle to Exterior', 'arrowthickstop-1-w', {'command' : 'cycle_ext'}, processing ? 'disabled' : null)}}
-			{{:~link('Cycle to Interior', 'arrowthickstop-1-e', {'command' : 'cycle_int'}, processing ? 'disabled' : null)}}
+			{{:helper.link('Cycle to Exterior', 'arrowthickstop-1-w', {'command' : 'cycle_ext'}, data.processing ? 'disabled' : null)}}
+			{{:helper.link('Cycle to Interior', 'arrowthickstop-1-e', {'command' : 'cycle_int'}, data.processing ? 'disabled' : null)}}
 		</div>
 		<div class="itemContent" style="padding-top: 2px">
-			{{:~link('Force exterior door', 'alert', {'command' : 'force_ext'}, null, processing ? 'yellowBackground' : null)}}
-			{{:~link('Force interior door', 'alert', {'command' : 'force_int'}, null, processing ? 'yellowBackground' : null)}}
+			{{:helper.link('Force exterior door', 'alert', {'command' : 'force_ext'}, null, data.processing ? 'yellowBackground' : null)}}
+			{{:helper.link('Force interior door', 'alert', {'command' : 'force_int'}, null, data.processing ? 'yellowBackground' : null)}}
 		</div>
 	</div>
 	<div style="padding-left: 10px; width: 80px; float: left">
 		<div class="item">
 			<div class="itemContent" style="padding-bottom: 2px; width: auto">
-				{{:~link('Purge', 'refresh', {'command' : 'purge'}, processing ? 'disabled' : null, purge ? 'linkOn' : null)}}
+				{{:helper.link('Purge', 'refresh', {'command' : 'purge'}, data.processing ? 'disabled' : null, data.purge ? 'linkOn' : null)}}
 			</div>
 			<div class="itemContent" style="width: auto">
-				{{:~link('Secure', secure ? 'locked' : 'unlocked', {'command' : 'secure'}, processing ? 'disabled' : null, secure ? 'linkOn' : null)}}
+				{{:helper.link('Secure', data.secure ? 'locked' : 'unlocked', {'command' : 'secure'}, data.processing ? 'disabled' : null, data.secure ? 'linkOn' : null)}}
 			</div>
 		</div>
 	</div>
 	<div class="item" style="padding-top: 10px">
-			{{:~link('Abort', 'cancel', {'command' : 'abort'}, processing ? null : 'disabled', processing ? 'redBackground' : null)}}
+			{{:helper.link('Abort', 'cancel', {'command' : 'abort'}, data.processing ? null : 'disabled', data.processing ? 'redBackground' : null)}}
 	</div>
 </div>
