@@ -125,11 +125,11 @@
 		if("purge")
 			memory["purge"] = !memory["purge"]
 			if(memory["purge"])
-			toggleDoor(memory["exterior_status"], tag_exterior_door, 1, "close")
-			toggleDoor(memory["interior_status"], tag_interior_door, 1, "close")
-			state = STATE_DEPRESSURIZE
-			target_state = TARGET_NONE
-			signalPump(tag_airpump, 1, 0, 0)
+				toggleDoor(memory["exterior_status"], tag_exterior_door, 1, "close")
+				toggleDoor(memory["interior_status"], tag_interior_door, 1, "close")
+				state = STATE_DEPRESSURIZE
+				target_state = TARGET_NONE
+				signalPump(tag_airpump, 1, 0, 0)
 
 		if("secure")
 			memory["secure"] = !memory["secure"]
