@@ -1,0 +1,35 @@
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel">
+			Exterior Door Status: 
+		</div>
+		<div class="statusValue">
+			{{:exterior_status.state}} - {{:exterior_status.lock}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Interior Door Status: 
+		</div>
+		<div class="statusValue">
+			{{:interior_status.state}} - {{:interior_status.lock}}
+		</div>
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemContent">
+			{{:~link('Cycle to Exterior', 'arrowthickstop-1-w', {'command' : 'cycle_ext_door'}, processing ? 'disabled' : null)}}
+			{{:~link('Cycle to Interior', 'arrowthickstop-1-e', {'command' : 'cycle_int_door'}, processing ? 'disabled' : null)}}
+		</div>
+		<div class="itemContent" style="padding-top: 2px">
+			{{:~link('Force exterior door', 'alert', {'command' : 'force_ext'}, null, processing ? 'yellowBackground' : null)}}
+			{{:~link('Force interior door', 'alert', {'command' : 'force_int'}, null, processing ? 'yellowBackground' : null)}}
+		</div>
+	</div>
+	<div class="item">
+			<div class="itemContent" style="width: auto">
+				{{:~link('Secure', secure ? 'locked' : 'unlocked', {'command' : 'secure'}, processing ? 'disabled' : null, secure ? 'linkOn' : null)}}
+			</div>
+	</div>
+</div>
