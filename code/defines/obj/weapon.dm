@@ -200,11 +200,11 @@
 	var/trip_prob = 60
 	var/thrown_from
 
-	suicide_act(mob/living/user)
+/obj/item/weapon/legcuffs/bolas/suicide_act(mob/living/user)
 		viewers(user) << "\red <b>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
 		return(OXYLOSS)
 
-	throw_at(var/atom/A, throw_range, throw_speed)
+/obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, throw_range, throw_speed)
 		if(usr && !istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas)) //if there is a user, but not a mech
 			if(istype(usr, /mob/living/carbon/human)) //if the user is human
 				var/mob/living/carbon/human/H = usr
@@ -237,7 +237,7 @@
 		..(get_turf(adjtarget), throw_range, throw_speed)
 		thrown_from = null
 
-	throw_impact(atom/hit_atom) //Pomf was right, I was wrong - Comic
+/obj/item/weapon/legcuffs/bolas/throw_impact(atom/hit_atom) //Pomf was right, I was wrong - Comic
 		if(isliving(hit_atom) && hit_atom != usr) //if the target is a live creature other than the thrower
 			var/mob/living/M = hit_atom
 			if(ishuman(M)) //if they're a human species
@@ -267,12 +267,12 @@
 				throw_failed()
 				return
 
-	proc/throw_failed() //called when the throw doesn't entangle
+/obj/item/weapon/legcuffs/bolas/proc/throw_failed() //called when the throw doesn't entangle
 		log_admin("Logged as [thrown_from]")
 		if(!thrown_from || !istype(thrown_from, /mob/living)) //in essence, if we don't know whether a person threw it
 			qdel(src) //destroy it, to stop infinite bolases
 
-	Bump()
+/obj/item/weapon/legcuffs/bolas/Bump()
 		..()
 		throw_failed() //allows a mech bolas to be destroyed
 
