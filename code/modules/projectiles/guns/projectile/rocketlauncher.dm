@@ -23,25 +23,16 @@
 
 	//Snowflake code
 	New()
-		if(load_into_chamber())
+		if(in_chamber)
 			del(in_chamber)
 			update_icon()
-
-	attack_self(mob/living/user as mob)
-		update_icon()
+		return
 
 	isHandgun()
 		return 0
 
-	load_into_chamber()
-		update_icon()
-		if(in_chamber)
-			return 0
-
 	update_icon()
-		if(!load_into_chamber())
+		if(!in_chamber)
 			icon_state = "rpg_e"
-			item_state = "rpg_e"
 		else
 			icon_state = "rpg"
-			item_state = "rpg"
