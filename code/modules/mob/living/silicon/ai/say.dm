@@ -35,13 +35,14 @@
 	if(copytext(message, 1, 3) in list(":h", ":H", ".h", ".H", "#h", "#H"))
 		return "holopad"
 
-/mob/living/silicon/ai/radio(message, message_mode)
+/mob/living/silicon/ai/handle_inherent_channels(message, message_mode)
 	. = ..()
-	if(. != 2)
+	if(.)
 		return .
 	
 	if(message_mode == "holopad")
 		holopad_talk(message)
+		return 1
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(var/message)
@@ -55,7 +56,7 @@
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
 		send_speech(message, 7, T.loc, "R")
-		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>[message]</span></span></i>"//The AI can "hear" its own message.
+		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>\"[message]\"</span></span></i>"//The AI can "hear" its own message.
 	else
 		src << "No holopad connected."
 	return

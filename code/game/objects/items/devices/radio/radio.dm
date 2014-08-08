@@ -29,6 +29,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = CONDUCT | HEAR
 	slot_flags = SLOT_BELT
+	languages = HUMAN | ROBOT
 	throw_speed = 3
 	throw_range = 7
 	w_class = 2

@@ -63,7 +63,6 @@ var/list/department_radio_keys = list(
 
 	if(!can_speak_basic(message) || stat) //Stat is seperate so I can handle whispers properly.
 		return
-
 	var/message_mode = get_message_mode(message)
 
 	if(message_mode == "headset" || message_mode == "robot")
@@ -71,13 +70,14 @@ var/list/department_radio_keys = list(
 	else if(message_mode)
 		message = copytext(message, 3)
 
-	if(handle_inherent_channels(message, message_mode)) //Hiveminds & binary chat.
+	if(handle_inherent_channels(message, message_mode)) //Hiveminds, binary chat & holopad.
 		return
 
 	if(!can_speak_vocal(message))
 		return
 
 	message = treat_message(message)
+
 	if(!message || message == "")
 		return
 
@@ -118,10 +118,10 @@ var/list/department_radio_keys = list(
 
 	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[get_alt_name()] <span class='message'>[message]</span></span>"
 	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, languages, message, 0)
+		AM.Hear(rendered, src, languages, message)
 
 	for(var/mob/M in listening_dead)
-		M << rendered
+		M.Hear(rendered, src, languages, message)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()

@@ -61,7 +61,7 @@
 	. += radio_freq ? get_radio_span(radio_freq) : "game say"
 	. += "'>"
 	//Radio freq/name display
-	. += radio_freq ? "\[" + get_radio_name(radio_freq) + "\]" : ""
+	. += radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Begin track (AI only)
 	. += compose_track_href(message, speaker, message_langs, raw_message, radio_freq)
 	//Speaker name

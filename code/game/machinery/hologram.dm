@@ -83,10 +83,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/holopad/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(speaker && hologram && master && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		if(!master.languages & speaker.languages)//The AI will be able to understand most mobs talking through the holopad.
-			text = stars(text)
+			raw_message = master.lang_treat(message, speaker, message_langs, raw_message)
 		var/name_used = speaker.GetVoice()
-		//This communication is imperfect because the holopad "filters" voices and is only designed to connect to the master only.
-		var/rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> <span class='message'>[speaker.say_quote(text)]</span></span></i>"
+		var/rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> <span class='message'>[speaker.say_quote(raw_message)]</span></span></i>"
 		master.show_message(rendered, 2)
 	return
 

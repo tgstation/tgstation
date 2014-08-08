@@ -138,7 +138,8 @@
 	var/list/processed_list = list()
 	var/list/found_mobs = list()
 
-	for(var/atom/A in processing_list)
+	while(processing_list.len) //APPARENTLY THIS HAS TO BE A WHILE LOOP INSTEAD OF A FOR LOOP. THAT WOULD HAVE BEEN CONVENIENT TO KNOW BEFORE I WASTED SEVERAL HOURS.
+		var/atom/A = processing_list[1]
 
 		if(A.flags & HEAR)
 			found_mobs |= A
@@ -150,6 +151,7 @@
 		processing_list.Cut(1, 2)
 		processed_list[A] = A
 
+	return found_mobs
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
 /proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
@@ -202,7 +204,6 @@
 		return hear
 
 	var/list/range = get_hear(R, T)
-
 	for(var/atom/movable/A in range)
 		hear |= recursive_hear_check(A)
 

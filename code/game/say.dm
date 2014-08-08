@@ -17,7 +17,7 @@
 	return 1
 
 /atom/movable/proc/send_speech(message, range, steps)
-	for(var/atom/movable/AM in get_hearers_in_view(range))
+	for(var/atom/movable/AM in get_hearers_in_view(range, src))
 		AM.Hear(message, src, languages, message, steps)
 
 /atom/movable/proc/say_quote(var/text)
@@ -33,7 +33,7 @@
 
 /atom/movable/proc/lang_treat(message, atom/movable/speaker, message_langs, raw_message)
 	if(languages & message_langs)
-		return speaker.say_quote(message)
+		return speaker.say_quote(raw_message)
 	else if(message_langs & HUMAN)
 		return speaker.say_quote(stars(raw_message))
 	else if(message_langs & MONKEY)
@@ -89,7 +89,7 @@
 			return "#unkn"
 		if(SERV_FREQ)
 			return "Service"
-	return freq
+	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
 
 /atom/movable/proc/GetVoice()
 	return name
@@ -119,3 +119,10 @@
 
 /atom/movable/virtualspeaker/GetSource()
 	return source
+
+/atom/movable/verb/say_something(message as text)
+	set name = "make honk"
+	set category = "IC"
+	set src in view()
+
+	say(message)
