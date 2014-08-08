@@ -26,7 +26,12 @@
 				return
 
 
-			var/trans = 0
+			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+			user << "\blue You transfer [trans] units of the solution."
+			if (src.reagents.total_volume<=0)
+				filled = 0
+				icon_state = "dropper[filled]"
+
 			if(isobj(target))
 				// /vg/: Logging transfers of bad things
 				if(target.reagents_to_log.len)
@@ -36,8 +41,8 @@
 							badshit += reagents_to_log[bad_reagent]
 					if(badshit.len)
 						var/hl="\red <b>([english_list(badshit)])</b> \black"
-						message_admins("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-						log_game("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].")
+						message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+						log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
 
 			else if(ismob(target))
 				if(istype(target , /mob/living/carbon/human))
@@ -88,13 +93,6 @@
 					M.LAssailant = null
 				else
 					M.LAssailant = user
-
-
-			trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			user << "\blue You transfer [trans] units of the solution."
-			if (src.reagents.total_volume<=0)
-				filled = 0
-				icon_state = "dropper[filled]"
 
 		else
 
