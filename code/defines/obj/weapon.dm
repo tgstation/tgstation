@@ -203,7 +203,7 @@
 		viewers(user) << "\red <b>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
 		return(OXYLOSS)
 
-/obj/item/weapon/legcuffs/bolas/procthrow_at(var/atom/A, throw_range, throw_speed)
+/obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, throw_range, throw_speed)
 	if(usr && !istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas)) //if there is a user, but not a mech
 		if(istype(usr, /mob/living/carbon/human)) //if the user is human
 			var/mob/living/carbon/human/H = usr
