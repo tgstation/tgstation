@@ -2,8 +2,8 @@
 	name = "rocket launcher"
 	desc = "Ranged explosions, science marches on."
 	fire_sound = 'sound/weapons/shotgun.ogg'
-	icon_state = "rpg_e"
-	item_state = "rpg_e"
+	icon_state = "rpg"
+	item_state = "rpg"
 	max_shells = 1
 	empty_casings = 0
 	w_class = 4.0
@@ -22,17 +22,17 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	//Snowflake code
-	New()
-		if(in_chamber)
-			del(in_chamber)
-			update_icon()
-		return
+	//New()
+		//if(in_chamber)
+			//del(in_chamber)
+			//update_icon()
+		//return
 
 	isHandgun()
 		return 0
 
 	update_icon()
-		if(!in_chamber)
+		if(!loaded.len)
 			icon_state = "rpg_e"
 		else
 			icon_state = "rpg"
