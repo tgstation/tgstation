@@ -28,21 +28,15 @@
 			update_icon()
 
 	attack_self(mob/living/user as mob)
-		if(load_into_chamber())
-			del(in_chamber)
-			new /obj/item/ammo_casing/rocket_rpg(loc, 1)
-			update_icon()
+		update_icon()
 
 	isHandgun()
 		return 0
 
-	Fire()
-		update_icon()
-
 	load_into_chamber()
+		update_icon()
 		if(in_chamber)
 			return 0
-
 
 	update_icon()
 		if(!load_into_chamber())
