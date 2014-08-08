@@ -2,13 +2,10 @@
 	var/datum/computer/file/embedded_program/program
 
 	name = "Embedded Controller"
-	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "airlock_control_build0"
 	anchored = 1
 
 	var/on = 1
 
-<<<<<<< HEAD
 	var/build=2        // Build state
 	var/boardtype=null // /obj/item/weapon/circuitboard/ecb
 	var/obj/item/weapon/circuitboard/_circuitboard
@@ -29,9 +26,6 @@
 			build=0
 			stat |= MAINT
 			src.update_icon()
-
-	/obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
-	return 0
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if(type==/obj/machinery/embedded_controller)
@@ -123,6 +117,9 @@
 		else
 			..()
 
+/obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
+	return 0
+
 /obj/machinery/embedded_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
 	if(!signal || signal.encryption) return
 
@@ -136,10 +133,6 @@
 
 	update_icon()
 	src.updateDialog()
-
-		if(isobserver(usr) && !canGhostWrite(usr,src,"fucked with"))
-			usr << "\red Nope."
-			return 0
 
 
 /obj/machinery/embedded_controller/attack_ai(mob/user as mob)
