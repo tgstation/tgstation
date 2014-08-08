@@ -7,7 +7,7 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 
 
-	attack_self(mob/living/user as mob)
-		select_fire(user)
-		update_icon()
-		return
+/obj/item/weapon/gun/energy/temperature/attack_self(mob/living/user as mob)
+	select_fire(user)
+	update_icon()
+	return
