@@ -3,7 +3,7 @@
 	desc = "Ranged explosions, science marches on."
 	fire_sound = 'sound/weapons/shotgun.ogg'
 	icon_state = "rpg_e"
-	item_state = null
+	item_state = "rpg_e"
 	max_shells = 1
 	empty_casings = 0
 	w_class = 4.0
@@ -28,13 +28,26 @@
 			update_icon()
 
 	attack_self(mob/living/user as mob)
-		icon_state = "rpg_e"
+		if(load_into_chamber())
+			del(in_chamber)
+			new /obj/item/ammo_casing/rocket_rpg(loc, 1)
+			update_icon()
 
 	isHandgun()
 		return 0
 
+	Fire()
+		update_icon()
+
+	load_into_chamber()
+		if(in_chamber)
+			return 0
+
+
 	update_icon()
 		if(!load_into_chamber())
 			icon_state = "rpg_e"
+			item_state = "rpg_e"
 		else
 			icon_state = "rpg"
+			item_state = "rpg"
