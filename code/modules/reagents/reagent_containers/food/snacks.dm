@@ -1221,7 +1221,6 @@
 	name = "Discount Dan's Burritos"
 	desc = "The perfect blend of cheap processing and cheap materials."
 	icon_state = "danburrito"
-	trash = /obj/item/trash/danitos
 	var/list/ddname = list("Spooky Dan's BOO-ritos - Texas Toast Chainsaw Massacre Flavor","Sconto Danilo's Burritos - 50% Real Mozzarella Pepperoni Pizza Party Flavor","Descuento Danito's Burritos - Pancake Sausage Brunch Flavor","Descuento Danito's Burritos - Homestyle Comfort Flavor","Spooky Dan's BOO-ritos - Nightmare on Elm Meat Flavor","Descuento Danito's Burritos - Strawberrito Churro Flavor","Descuento Danito's Burritos - Beff and Bean Flavor")
 	New()
 		..()
