@@ -1,5 +1,5 @@
 	//Captain's space suit, not hardsuits because no flashlight!
-	/obj/item/clothing/head/helmet/space/captain
+/obj/item/clothing/head/helmet/space/captain
 	name = "captain's space helmet"
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
