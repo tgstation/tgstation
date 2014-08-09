@@ -44,7 +44,7 @@
 /atom/movable/proc/setLoc(var/T, var/teleported=0)
 	loc = T
 
-/atom/movable/Move()
+/atom/movable/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	var/atom/A = src.loc
 	. = ..()
 	src.move_speed = world.timeofday - src.l_move_time
@@ -52,7 +52,7 @@
 	src.m_flag = 1
 	if ((A != src.loc && A && A.z == src.z))
 		src.last_move = get_dir(A, src.loc)
-	return
+	return .
 
 /atom/movable/proc/recycle(var/datum/materials/rec)
 	return 0
@@ -62,14 +62,14 @@
 /atom/movable/Crossed(atom/movable/AM)
 	return
 
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
+/atom/movable/Bump(atom/Obstacle, yes)
 	if(src.throwing)
-		src.throw_impact(A)
+		src.throw_impact(Obstacle)
 		src.throwing = 0
 
-	if ((A && yes))
-		A.last_bumped = world.time
-		A.Bumped(src)
+	if ((Obstacle && yes))
+		Obstacle.last_bumped = world.time
+		Obstacle.Bumped(src)
 	return
 	..()
 	return

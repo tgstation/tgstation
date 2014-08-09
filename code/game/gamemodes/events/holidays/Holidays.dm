@@ -50,6 +50,8 @@ var/global/Holiday = null
 				if(1)
 					Holiday = "April Fool's Day"
 					if(YY == 18 && prob(50)) 	Holiday = "Easter"
+				if(2)
+					Holiday = "Autism Awareness Day"
 				if(5)
 					if(YY == 15)				Holiday = "Easter"
 				if(16)
@@ -137,7 +139,10 @@ var/global/Holiday = null
 /proc/Holiday_Game_Start()
 	if(Holiday)
 		world << "<font color='blue'>and...</font>"
-		world << "<h4>Happy [Holiday] Everybody!</h4>"
+		if(!Holiday == "Autism Awareness Day")
+			world << "<h4>Happy [Holiday] Everybody!</h4>"
+		else
+			world << "<h4>Happy <span class='sans'>Autism Awareness Day</span> Everybody!</h4>" //Together we can finish the puzzle.
 		switch(Holiday)			//special holidays
 			if("Easter")
 				//do easter stuff
