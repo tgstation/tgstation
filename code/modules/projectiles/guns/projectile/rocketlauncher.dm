@@ -9,6 +9,7 @@
 	w_class = 4.0
 	m_amt = 5000
 	w_type = RECYK_METAL
+	load_method = 2
 	force = 10
 	recoil = 5
 	throw_speed = 4
@@ -20,13 +21,6 @@
 	origin_tech = "combat=4;materials=2;syndicate=2"
 	ammo_type = "/obj/item/ammo_casing/rocket_rpg"
 	attack_verb = list("struck", "hit", "bashed")
-
-	//Snowflake code
-	//New()
-		//if(in_chamber)
-			//del(in_chamber)
-			//update_icon()
-		//return
 
 	isHandgun()
 		return 0
