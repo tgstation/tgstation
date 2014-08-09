@@ -2,7 +2,7 @@
 	name = "display case"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox1"
-	desc = "A display case for prized possessions. It taunts you to kick it."
+	desc = "A display case for prized possessions. Hooked up with an anti-theft system."
 	density = 1
 	anchored = 1
 	unacidable = 1//Dissolving the case would also delete the gun.
@@ -53,6 +53,33 @@
 			new /obj/item/weapon/shard( src.loc )
 			playsound(src, "shatter", 70, 1)
 			update_icon()
+
+			//Activate Anti-theft
+			if(isinspace()) //No alarms lights in space
+				return
+
+			//Trigger alarm effect
+			var/area/alarmed_area = get_area(loc)
+			var/RAcontents = area_contents(alarmed_area)
+			for(var/area/related_areas in alarmed_area.related)
+				related_areas.fire = 1
+				related_areas.updateicon()
+				related_areas.mouse_opacity = 0
+
+				//Lockdown airlocks
+				for(var/obj/machinery/door/airlock/DOOR in RAcontents)
+					DOOR.close()
+					if(DOOR.density)
+						DOOR.locked = 1
+						DOOR.update_icon()
+
+			//Alert silicons
+			var/list/cameras = list()
+			for (var/obj/machinery/camera/C in RAcontents)
+				cameras += C
+			for (var/mob/living/silicon/SILICON in player_list)
+				SILICON.triggerAlarm("Burglar", alarmed_area, cameras, src)
+
 	else
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	return

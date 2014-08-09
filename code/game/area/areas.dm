@@ -112,7 +112,7 @@
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
-		for (var/mob/living/silicon/ai/aiPlayer in player_list)
+		for (var/mob/living/silicon/aiPlayer in player_list)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
 			a.triggerAlarm("Fire", src, cameras, src)
@@ -130,7 +130,7 @@
 				else if(D.density)
 					spawn(0)
 					D.open()
-		for (var/mob/living/silicon/ai/aiPlayer in player_list)
+		for (var/mob/living/silicon/aiPlayer in player_list)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
 			a.cancelAlarm("Fire", src, src)
