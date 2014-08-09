@@ -38,7 +38,6 @@
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
 	item_color="white"
-	transfer_prints = TRUE
 
 	cmo
 		item_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
