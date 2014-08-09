@@ -943,9 +943,3 @@ obj/item/toy/cards/deck/syndicate
 	else
 		var/timeleft = (cooldown - world.time)
 		user << "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>"
-
-
-
-
-
-

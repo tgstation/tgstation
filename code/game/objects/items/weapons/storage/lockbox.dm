@@ -75,12 +75,12 @@
 	name = "lockbox of loyalty implants"
 	req_access = list(access_security)
 
-	New()
-		..()
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implanter/loyalty(src)
+/obj/item/weapon/storage/lockbox/loyalty/New()
+	..()
+	new /obj/item/weapon/implantcase/loyalty(src)
+	new /obj/item/weapon/implantcase/loyalty(src)
+	new /obj/item/weapon/implantcase/loyalty(src)
+	new /obj/item/weapon/implanter/loyalty(src)
 
 
 /obj/item/weapon/storage/lockbox/clusterbang
@@ -88,9 +88,9 @@
 	desc = "You have a bad feeling about opening this."
 	req_access = list(access_security)
 
-	New()
-		..()
-		new /obj/item/weapon/grenade/flashbang/clusterbang(src)
+/obj/item/weapon/storage/lockbox/clusterbang/New()
+	..()
+	new /obj/item/weapon/grenade/flashbang/clusterbang(src)
 
 /obj/item/weapon/storage/lockbox/medal
 	name = "medal box"
@@ -105,11 +105,11 @@
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 
-	New()
-		..()
-		new /obj/item/clothing/tie/medal/silver/valor(src)
-		new /obj/item/clothing/tie/medal/bronze_heart(src)
-		new /obj/item/clothing/tie/medal/conduct(src)
-		new /obj/item/clothing/tie/medal/conduct(src)
-		new /obj/item/clothing/tie/medal/conduct(src)
-		new /obj/item/clothing/tie/medal/gold/captain(src)
+/obj/item/weapon/storage/lockbox/medal/New()
+	..()
+	new /obj/item/clothing/tie/medal/silver/valor(src)
+	new /obj/item/clothing/tie/medal/bronze_heart(src)
+	new /obj/item/clothing/tie/medal/conduct(src)
+	new /obj/item/clothing/tie/medal/conduct(src)
+	new /obj/item/clothing/tie/medal/conduct(src)
+	new /obj/item/clothing/tie/medal/gold/captain(src)

@@ -23,6 +23,10 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Plants some alien weeds"
 	set category = "Alien"
 
+	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
+		src << "There's already a weed node here."
+		return
+
 	if(powerc(50,1))
 		adjustToxLoss(-50)
 		for(var/mob/O in viewers(src, null))
