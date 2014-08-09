@@ -408,7 +408,7 @@
 	projectile = /obj/item/weapon/legcuffs/bolas
 	fire_sound = 'sound/weapons/whip.ogg'
 	projectiles = 10
-	missile_speed = 5
+	missile_speed = 1
 	missile_range = 30
 	projectile_energy_cost = 50
 	equip_cooldown = 10
@@ -426,6 +426,7 @@
 		set_ready_state(0)
 		var/obj/item/weapon/legcuffs/bolas/M = new projectile(chassis.loc)
 		playsound(chassis, fire_sound, 50, 1)
+		M.thrown_from = src
 		M.throw_at(target, missile_range, missile_speed)
 		projectiles--
 		log_message("Fired from [src.name], targeting [target].")
