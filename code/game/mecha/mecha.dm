@@ -966,7 +966,9 @@
 	visible_message("<span class='notice'>[user] starts to climb into [src.name]")
 
 	if(enter_after(40,user))
-		if(!src.occupant)
+		if(src.health <= 0)
+			user << "You cannot get in the [src.name], it has been destroyed."
+		else if(!src.occupant)
 			moved_inside(user)
 		else if(src.occupant!=user)
 			user << "[src.occupant] was faster. Try better next time, loser."
