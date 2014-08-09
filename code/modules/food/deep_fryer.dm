@@ -78,16 +78,14 @@ var/global/super_fryer = 1
 	set desc = "Toggle fryers frying non-food items."
 	set category = "Debug"
 
-	if(super_fryer == 1)
-		super_fryer -= 1
+	super_fryer = !super_fryer
+	if(super_fryer)
+    		super_fryer -= 1
 		world << "<b>Fryers can no longer fry non-food items.</b>"
 		log_admin("[key_name(usr)] made fryers no longer fry non-food items.")
 		message_admins("\blue [key_name(usr)] made fryers no longer fry non-food items.", 1)
-	if(super_fryer == 0)
+	else
 		super_fryer += 1
 		world << "<b>Fryers can now fry non-food items.</b>"
 		log_admin("[key_name(usr)] made fryers able to fry non-food items.")
 		message_admins("\blue [key_name(usr)] made fryers able to fry non-food items.", 1)
-	else
-		world << "Error with deep fryers. The super_fryer var must be set to 1 or 0. If this happens without an admin setting it manually, please yell at the nearest coder."
-		world << "My deep apologies to all black people hungry for sum fried chikun"
