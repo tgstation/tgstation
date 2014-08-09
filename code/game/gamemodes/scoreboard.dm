@@ -323,8 +323,7 @@
 	dat += {"<B>Food Eaten:</b> [score_foodeaten]<BR>
 	<B>Times a Clown was Abused:</B> [score_clownabuse]<BR><BR>"}
 	if (score_escapees)
-		dat += {"<B>Richest Escapee:</B> [score_richestname], [score_richestjob]: $[num2text(score_richestcash,50)] ([score_richestkey])<BR>
-		<B>Most Battered Escapee:</B> [score_dmgestname], [score_dmgestjob]: [score_dmgestdamage] damage ([score_dmgestkey])<BR>"}
+		dat += "<B>Most Battered Escapee:</B> [score_dmgestname], [score_dmgestjob]: [score_dmgestdamage] damage ([score_dmgestkey])<BR>"
 	else
 		dat += "The station wasn't evacuated or no one escaped!<BR>"
 	dat += {"<HR><BR>
