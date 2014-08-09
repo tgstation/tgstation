@@ -9,7 +9,6 @@
 	w_class = 4.0
 	m_amt = 5000
 	w_type = RECYK_METAL
-	load_method = 2
 	force = 10
 	recoil = 5
 	throw_speed = 4
