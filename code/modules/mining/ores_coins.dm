@@ -79,51 +79,53 @@
 	name = "mauxite ore"
 	desc = "A chunk of Mauxite, a sturdy common metal."
 	icon_state = "mauxite"
-
+	material="mauxite"
 /obj/item/weapon/ore/molitz
 	name = "molitz crystal"
 	desc = "A crystal of Molitz, a common crystalline substance."
 	icon_state = "molitz"
-
+	material="molitz"
 /obj/item/weapon/ore/pharosium
 	name = "pharosium ore"
 	desc = "A chunk of Pharosium, a conductive metal."
 	icon_state = "pharosium"
+	material="pharosium"
 // Common Cluster Ores
 
 /obj/item/weapon/ore/cobryl
 	name = "cobryl ore"
 	desc = "A chunk of Cobryl, a somewhat valuable metal."
 	icon_state = "cobryl"
-
+	material="cobryl"
 /obj/item/weapon/ore/char
 	name = "char ore"
 	desc = "A heap of Char, a fossil energy source similar to coal."
 	icon_state = "char"
-
+	material="char"
 // Rare Vein Ores
 
 /obj/item/weapon/ore/claretine
 	name = "claretine ore"
 	desc = "A heap of Claretine, a highly conductive salt."
 	icon_state = "claretine"
-
+	material="claretine"
 /obj/item/weapon/ore/bohrum
 	name = "bohrum ore"
 	desc = "A chunk of Bohrum, a heavy and highly durable metal."
 	icon_state = "bohrum"
-
+	material="bohrum"
 /obj/item/weapon/ore/syreline
 	name = "syreline ore"
 	desc = "A chunk of Syreline, an extremely valuable and coveted metal."
 	icon_state = "syreline"
-
+	material="syreline"
 // Rare Cluster Ores
 
 /obj/item/weapon/ore/erebite
 	name = "erebite ore"
 	desc = "A chunk of Erebite, an extremely volatile high-energy mineral."
 	icon_state = "erebite"
+	material="erebite"
 /obj/item/weapon/ore/erebite/ex_act()
 	explosion(src.loc,-1,0,2)
 	del(src)
@@ -136,7 +138,7 @@
 	name = "cerenkite ore"
 	desc = "A chunk of Cerenkite, a highly radioactive mineral."
 	icon_state = "cerenkite"
-
+	material="cerenkite"
 /obj/item/weapon/ore/cerenkite/ex_act()
 	var/L = get_turf(src)
 	for(var/mob/living/carbon/human/M in viewers(L, null))
@@ -156,7 +158,7 @@
 	name = "cytine"
 	desc = "A glowing Cytine gemstone, somewhat valuable but not paticularly useful."
 	icon_state = "cytine"
-
+	material="cytine"
 /obj/item/weapon/ore/cytine/New()
 	..()
 	color = pick("#FF0000","#0000FF","#008000","#FFFF00")
@@ -171,12 +173,12 @@
 	name = "uqill nugget"
 	desc = "A nugget of Uqill, a rare and very dense stone."
 	icon_state = "uqill"
-
+	material="uqill"
 /obj/item/weapon/ore/telecrystal
 	name = "telecrystal"
 	desc = "A large unprocessed telecrystal, a gemstone with space-warping properties."
 	icon_state = "telecrystal"
-
+	material="telecrystal"
 /obj/item/weapon/twohanded/required/gibtonite
 	name = "Gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
