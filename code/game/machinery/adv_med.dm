@@ -17,7 +17,7 @@
 	l_color = "#00FF00"
 	power_change()
 		..()
-		if(!(stat & (BROKEN|NOPOWER)))
+		if(!(stat & (BROKEN|NOPOWER)) && src.occupant)
 			SetLuminosity(2)
 		else
 			SetLuminosity(0)

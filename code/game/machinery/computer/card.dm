@@ -11,6 +11,8 @@
 	var/mode = 0.0
 	var/printing = null
 
+	l_color = "#0000FF"
+
 	proc/is_centcom()
 		return istype(src, /obj/machinery/computer/card/centcom)
 

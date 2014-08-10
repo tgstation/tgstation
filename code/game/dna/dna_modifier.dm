@@ -49,6 +49,14 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/opened = 0
 
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)) && src.occupant)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/machinery/dna_scannernew/New()
 	. = ..()
 
@@ -320,6 +328,8 @@
 
 	// Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X.
 	var/waiting_for_user_input = 0
+
+	l_color = "#0000FF"
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))

@@ -51,6 +51,14 @@
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
+	l_color = "#B40000"
+	power_change()
+		..()
+		if(src.on)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 
 /obj/machinery/bot/secbot/beepsky
 	name = "Officer Beep O'sky"

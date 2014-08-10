@@ -23,6 +23,7 @@
 	var/overridden = 0 //not set yet, can't think of a good way to do it
 	req_one_access = list(access_ce)
 
+	l_color = "#7BF9FF"
 
 /obj/machinery/computer/atmoscontrol/xeno
 	name = "\improper Xenobiology Atmospherics Computer"

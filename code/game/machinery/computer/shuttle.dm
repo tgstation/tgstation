@@ -7,7 +7,6 @@
 
 	l_color = "#7BF9FF"
 
-
 	attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))	return
 		if ((!( istype(W, /obj/item/weapon/card) ) || !( ticker ) || emergency_shuttle.location != 1 || !( user )))	return

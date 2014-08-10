@@ -518,3 +518,5 @@
 	name = "Medical Laptop"
 	desc = "Cheap Nanotrasen Laptop."
 	icon_state = "medlaptop"
+
+	l_color = "#00FF00"

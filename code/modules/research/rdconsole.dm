@@ -49,6 +49,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 
+	l_color = "#CD00CD"
 
 /obj/machinery/computer/rdconsole/proc/Maximize()
 	files.known_tech=files.possible_tech
@@ -966,15 +967,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = list(access_tox)
 	circuit = "/obj/item/weapon/circuitboard/rdconsole/mommi"
 
+	l_color = "#CD00CD"
+
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
 	id = 2
-	req_one_access = list(access_tox,access_robotics)
+	req_one_access = list(access_robotics)
 	req_access=list()
 	circuit = "/obj/item/weapon/circuitboard/rdconsole/robotics"
+
+	l_color = "#CD00CD"
 
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
 	id = 1
 	req_access = list(access_tox)
 	circuit = "/obj/item/weapon/circuitboard/rdconsole"
+
+	l_color = "#CD00CD"

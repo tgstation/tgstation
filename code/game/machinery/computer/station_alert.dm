@@ -8,7 +8,6 @@
 
 	l_color = "#7BF9FF"
 
-
 	attack_ai(mob/user)
 		src.add_hiddenprint(user)
 		add_fingerprint(user)
