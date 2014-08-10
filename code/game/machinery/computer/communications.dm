@@ -374,6 +374,9 @@ var/shuttle_call/shuttle_calls[0]
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
 
+	if(!universe.OnShuttleCall(user))
+		return
+
 	if(sent_strike_team == 1)
 		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
 		return

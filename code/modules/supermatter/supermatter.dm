@@ -66,7 +66,7 @@
 
 		gasefficency = 0.125
 
-		explosion_power = 3 //3,6,9,12? Or is that too small?
+		explosion_power = 8 // WAS 3 - N3X
 
 
 /obj/machinery/power/supermatter/New()
@@ -79,6 +79,12 @@
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
+		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+		new /turf/unsimulated/wall/supermatter(get_turf(src))
+		SetUniversalState(/datum/universal_state/supermatter_cascade)
+		del(src)
+
+/obj/machinery/power/supermatter/shard/explode()
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
 		del src
 		return
