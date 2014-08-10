@@ -1,3 +1,4 @@
+
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/customizable/S = new(get_turf(user))
@@ -53,7 +54,7 @@
 	var/top = 1	//Do we have a top?
 	var/add_overlays = 1	//Do we stack?
 //	var/offsetstuff = 1 //Do we offset the overlays?
-	var/sandwich_limit = 2000
+	var/sandwich_limit = 600
 	var/fullycustom = 0
 	var/list/descriptors = list("absurd","colossal","enormous","ridiculous","massive","oversized","cardiac-arresting","pipe-clogging","edible but sickening","sickening","gargantuan","mega","belly-burster","chest-burster")
 	trash = /obj/item/trash/plate
