@@ -544,8 +544,7 @@ var/global/loopModeNames=list(
 
 
 /obj/machinery/media/jukebox/superjuke/thematic
-	playlist_id="shuttle"
-	id_tag="Shuttle" // For autolink
+	playlist_id="endgame"
 
 /obj/machinery/media/jukebox/superjuke/thematic/update_music()
 	if(current_song && playing)
