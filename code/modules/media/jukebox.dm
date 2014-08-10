@@ -541,3 +541,25 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/superjuke/shuttle
 	playlist_id="shuttle"
 	id_tag="Shuttle" // For autolink
+
+
+/obj/machinery/media/jukebox/superjuke/thematic
+	playlist_id="shuttle"
+	id_tag="Shuttle" // For autolink
+
+/obj/machinery/media/jukebox/superjuke/thematic/update_music()
+	if(current_song && playing)
+		var/datum/song_info/song = playlist[current_song]
+		media_url = song.url
+		last_song = current_song
+		media_start_time = world.time
+		visible_message("<span class='notice'>\icon[src] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
+		//visible_message("<span class='notice'>\icon[src] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
+	else
+		media_url=""
+		media_start_time = 0
+
+	// Send update to clients.
+	for(var/mob/M in mob_list)
+		if(M && M.client)
+			M.force_music(media_url,media_start_time,volume)
