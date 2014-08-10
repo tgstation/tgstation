@@ -21,11 +21,19 @@
 	ammo_type = "/obj/item/ammo_casing/rocket_rpg"
 	attack_verb = list("struck", "hit", "bashed")
 
-	isHandgun()
-		return 0
+/obj/item/weapon/gun/projectile/rocketlauncher/isHandgun()
+	return 0
 
+/obj/item/weapon/gun/projectile/rocketlauncher/attack_hand(mob/user as mob)
+	if(loc != user)
+		..()
+		return
 	update_icon()
-		if(!loaded.len)
-			icon_state = "rpg_e"
-		else
-			icon_state = "rpg"
+
+/obj/item/weapon/gun/projectile/rocketlauncher/update_icon()
+	if(!loaded.len)
+		icon_state = "rpg_e"
+		item_state = "rpg_e"
+	else
+		icon_state = "rpg"
+		item_state = "rpg"
