@@ -79,7 +79,7 @@ var/global/super_fryer = 1
 	set category = "Debug"
 
 	super_fryer = !super_fryer
-	if(super_fryer)
+	if(!super_fryer)
 		world << "<b>Fryers can no longer fry non-food items.</b>"
 		log_admin("[key_name(usr)] made fryers no longer fry non-food items.")
 		message_admins("\blue [key_name(usr)] made fryers no longer fry non-food items.", 1)
