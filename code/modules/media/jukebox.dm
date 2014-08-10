@@ -538,10 +538,6 @@ var/global/loopModeNames=list(
 		return
 	..()
 
-/obj/machinery/media/jukebox/shuttle
+/obj/machinery/media/jukebox/superjuke/shuttle
 	playlist_id="shuttle"
-	// Must be defined on your server.
-	playlists=list(
-		"shuttle"  = "Shuttle Mix"
-	)
-	invisibility=101 // FAK U NO SONG 4 U
+	id_tag="Shuttle" // For autolink

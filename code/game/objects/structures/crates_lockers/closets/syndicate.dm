@@ -38,6 +38,7 @@
 	new /obj/item/ammo_magazine/a12mm(src)
 	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
+	new /obj/item/weapon/storage/box/emps(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/weapon/gun/energy/gun(src)

@@ -235,3 +235,10 @@
 	media_frequency=1015
 	autolink = list("DJ Satellite")
 	on=1
+
+// Centcomm Shuttle Radio
+/obj/machinery/media/transmitter/broadcast/shuttle
+	id_tag = "shuttle"
+	media_frequency=953
+	autolink = list("Shuttle")
+	on=1
