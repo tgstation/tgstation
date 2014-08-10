@@ -180,8 +180,8 @@
 /obj/item/weapon/legcuffs/bolas
 	name = "bolas"
 	desc = "An entangling bolas. Throw at your foes to trip them and prevent them from running."
-	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
+	gender = NEUTER
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolas"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
@@ -258,7 +258,7 @@
 			else //walking, but uncuffed, or the running prob() failed
 				H << "\blue You stumble over the thrown bolas"
 				step(H, H.dir)
-				H.m_intent = "walk"
+				H.Stun(1)
 				throw_failed()
 				return
 		else
@@ -277,6 +277,122 @@
 
 // /obj/item/weapon/legcuffs/bolas/cyborg To be implemented
 //	dispenser = 1
+
+/obj/item/weapon/legcuffs/bolas/cable
+	name = "cable bolas"
+	desc = "A poorly made bolas, tied together with cable."
+	icon_state = ""
+	throw_speed = 1
+	throw_range = 6
+	trip_prob = 10
+	var/obj/item/weight1 = null //the two items that are attached to the cable
+	var/obj/item/weight2 = null
+	var/cable_color = ""
+	var/desc_empty = "A poorly made bolas, tied together with cable. It has nothing on it."
+	var/screw_state = "" //used for storing info about the screwdriver
+	var/screw_istate = ""
+
+/obj/item/weapon/legcuffs/bolas/cable/New()
+	..()
+	desc = desc_empty
+	weight1 = null
+	weight2 = null
+	update_icon()
+
+/obj/item/weapon/legcuffs/bolas/cable/update_icon()
+	if (!weight1 && !weight2)
+		icon_state = "cbolas_[cable_color]"
+		overlays.Cut()
+		desc = desc_empty
+		trip_prob = 0
+		return
+	else
+		overlays.Cut()
+		if (weight1)
+			trip_prob = 10
+			overlays += icon("icons/obj/weapons.dmi", "cbolas_weight1")
+		if (weight2)
+			trip_prob = 30
+			overlays += icon("icons/obj/weapons.dmi", "cbolas_weight2")
+		desc = "A poorly made bolas, made out of \a [weight1] and [weight2 ? "\a [weight2]": "missing a second weight"], tied together with cable."
+
+/obj/item/weapon/legcuffs/bolas/cable/throw_failed()
+	if(prob(20))
+		for (var/mob/V in viewers(src, null))
+			V << "\red \The [src] falls to pieces on impact!"
+		if(weight1)
+			weight1.loc = src.loc
+			weight1 = null
+		if(weight2)
+			weight2.loc = src.loc
+			weight2 = null
+		var /obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(src.loc)
+		var /obj/item/weapon/cable_coil/S = new /obj/item/weapon/screwdriver(src.loc)
+		C.amount = 10
+		C._color = cable_color
+		C.icon_state = "coil_[C._color]"
+		C.update_icon()
+		S.item_state = screw_state
+		S.icon_state = screw_istate
+		S.update_icon()
+		qdel(src)
+
+/obj/item/weapon/legcuffs/bolas/cable/attackby(var/obj/O)
+	if(istype(O, /obj/item))
+		var/obj/item/I = O
+		if(istype(I, /obj/item/weapon/wirecutters)) //allows you to convert the wire back to a cable coil
+			if(!weight1 && !weight2) //if there's nothing attached
+				usr << "\blue You cut the knot in the [src]."
+				playsound(usr, 'sound/items/Wirecutter.ogg', 50, 1)
+				var /obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(usr.loc) //we get back the wire lengths we put in
+				var /obj/item/weapon/cable_coil/S = new /obj/item/weapon/screwdriver(src.loc)
+				C.amount = 10
+				C._color = cable_color
+				C.icon_state = "coil_[C._color]"
+				C.update_icon()
+				S.item_state = screw_state
+				S.icon_state = screw_istate
+				S.update_icon()
+				qdel(src)
+				return
+			else
+				usr << "\blue You cut off [weight1] [weight2 ? "and [weight2]" : ""]." //you remove the items currently attached
+				if(weight1)
+					weight1.loc = get_turf(usr)
+					weight1 = null
+				if(weight2)
+					weight2.loc = get_turf(usr)
+					weight2 = null
+				playsound(usr, 'sound/items/Wirecutter.ogg', 50, 1)
+				update_icon()
+				return
+		if(I.w_class) //if it has a defined weight
+			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
+				if(weight1 == null)
+					usr.drop_item(I)
+					weight1 = I
+					I.forceMove(src)
+					usr << "\blue You tie [weight1] to the [src]."
+					update_icon()
+					//del(I)
+					return
+				if(weight2 == null) //just in case
+					usr.drop_item(I)
+					weight2 = I
+					I.forceMove(src)
+					usr << "\blue You tie [weight2] to the [src]."
+					update_icon()
+					//del(I)
+					return
+				else
+					usr << "\red There are already two weights on this [src]!"
+					return
+			else if (I.w_class < 2.0)
+				usr << "\red \The [I] is too small to be used as a weight."
+			else if (I.w_class > 3.0)
+				usr << "\red \The [I] is [I.w_class > 4.0 ? "far " : ""] too big to be used a weight."
+			else
+				usr << "\red There are already two weights on this [src]!"
 
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
