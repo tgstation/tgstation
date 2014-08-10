@@ -4,11 +4,13 @@ var/global/list/boo_phrases=list(
 	"You feel a chill run down your spine.",
 	"You think you see a figure in your peripheral vision.",
 	"What was that?",
-	"The hairs stand up on the back of your neck.",
-	"You are filled with a great sadness.",
+	"The hair stands up on the back of your neck.",
+	"You are filled with great sadness.",
 	"Something doesn't feel right...",
 	"You feel a presence in the room.",
 	"It feels like someone's standing behind you.",
+	"Terrifying whispers suddenly fill your mind.",
+	"A form draws in your vision as you blink",
 )
 
 /obj/effect/proc_holder/spell/aoe_turf/boo
@@ -22,7 +24,7 @@ var/global/list/boo_phrases=list(
 	clothes_req = 0
 	invocation = ""
 	invocation_type = "none"
-	range = 1 // Or maybe 3?
+	range = 3
 
 /obj/effect/proc_holder/spell/aoe_turf/boo/cast(list/targets)
 	for(var/turf/T in targets)

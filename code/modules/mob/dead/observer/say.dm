@@ -11,14 +11,14 @@
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			src << "\red You cannot talk in deadchat (muted)."
+			src << "\red You have muted yourself from deadchat."
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
 			return
 
 	. = src.say_dead(message)
-	
+
 /mob/dead/observer/say_quote(var/text)
 	var/ending = copytext(text, length(text))
 
@@ -43,7 +43,7 @@
 
 	if(src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			src << "\red You cannot emote in deadchat (muted)."
+			src << "\red You have muted yourself from deadchat."
 			return
 
 		if(src.client.handle_spam_prevention(message, MUTE_DEADCHAT))
