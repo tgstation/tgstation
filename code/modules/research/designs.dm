@@ -82,7 +82,7 @@ other types of metals and chemistry for reagents).
 	id = "seccamera"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$erebite" = 2000, "sacid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/security
 
 /datum/design/aicore
