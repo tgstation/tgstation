@@ -166,7 +166,7 @@
 	var/tag_interior_sensor
 	var/tag_secure = 0
 
-	var/frequency = 1379
+	var/frequency = 1449 //seems to be the frequency used for all the controllers on /vg/ so why not make it default
 	var/datum/radio_frequency/radio_connection
 	unacidable = 1
 
