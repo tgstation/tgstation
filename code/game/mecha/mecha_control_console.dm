@@ -8,6 +8,8 @@
 	var/screen = 0
 	var/stored_data
 
+	l_color = "#CD00CD"
+
 	attack_ai(var/mob/user as mob)
 		src.add_hiddenprint(user)
 		return src.attack_hand(user)

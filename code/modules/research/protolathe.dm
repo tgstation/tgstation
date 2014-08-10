@@ -24,6 +24,15 @@ it creates. All the menus and other manipulation commands are in the R&D console
 	var/stopped=1
 	var/obj/output=null
 
+	l_color = "#7BF9FF"
+
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/machinery/r_n_d/protolathe/New()
 	. = ..()
 
