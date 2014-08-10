@@ -24,7 +24,7 @@ var/global/deepfry_nutriment = 1
 		if(M == usr)
 			usr << "<span class='notice'>You finish eating \the [src].</span>"
 		usr.visible_message("<span class='notice'>[usr] finishes eating \the [src].</span>")
-		score_foodeaten++
+		score["foodeaten"]++
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
@@ -43,7 +43,7 @@ var/global/deepfry_nutriment = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/New()
 	..()
-	score_meals++
+	score["meals"]++
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)

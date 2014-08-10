@@ -27,15 +27,16 @@
 	// Who is alive/dead, who escaped
 	for (var/mob/living/silicon/ai/I in mob_list)
 		if (I.stat == 2 && I.z == 1)
-			score_deadaipenalty = 1
-			score_deadcrew += 1
+			score["deadaipenalty"] = 1
+			score["deadcrew"] += 1
+
 	for (var/mob/living/carbon/human/I in mob_list)
 //		for (var/datum/ailment/disease/V in I.ailments)
-//			if (!V.vaccine && !V.spread != "Remissive") score_disease++
-		if (I.stat == 2 && I.z == 1) score_deadcrew += 1
+//			if (!V.vaccine && !V.spread != "Remissive") score["disease"]++
+		if (I.stat == 2 && I.z == 1) score["deadcrew"] += 1
 		if (I.job == "Clown")
 			for(var/thing in I.attack_log)
-				if(findtext(thing, "<font color='orange'>")) score_clownabuse++
+				if(findtext(thing, "<font color='orange'>")) score["clownabuse"]++
 
 
 	for(var/mob/living/player in mob_list)
@@ -44,7 +45,7 @@
 				var/turf/location = get_turf(player.loc)
 				var/area/escape_zone = locate(/area/shuttle/escape/centcom)
 				if (location in escape_zone)
-					score_escapees += 1
+					score["escapees"] += 1
 //					player.unlock_medal("100M Dash", 1)
 //				player.unlock_medal("Survivor", 1)
 //				for (var/obj/item/weapon/gnomechompski/G in player.get_contents())
@@ -66,17 +67,17 @@
 				for (var/obj/item/weapon/spacecash/C4 in S.contents) cashscore += C4.worth
 //			for(var/datum/data/record/Ba in data_core.bank)
 //				if(Ba.fields["name"] == E.real_name) cashscore += Ba.fields["current_money"]
-			if (cashscore > score_richestcash)
-				score_richestcash = cashscore
-				score_richestname = E.real_name
-				score_richestjob = E.job
-				score_richestkey = E.key
+			if (cashscore > score["richestcash"])
+				score["richestcash"] = cashscore
+				score["richestname"] = E.real_name
+				score["richestjob"] = E.job
+				score["richestkey"] = E.key
 			dmgscore = E.bruteloss + E.fireloss + E.toxloss + E.oxyloss
-			if (dmgscore > score_dmgestdamage)
-				score_dmgestdamage = dmgscore
-				score_dmgestname = E.real_name
-				score_dmgestjob = E.job
-				score_dmgestkey = E.key
+			if (dmgscore > score["dmgestdamage"])
+				score["dmgestdamage"] = dmgscore
+				score["dmgestname"] = E.real_name
+				score["dmgestjob"] = E.job
+				score["dmgestkey"] = E.key
 
 	var/nukedpenalty = 1000
 	if (ticker.mode.config_tag == "nuclear")
@@ -84,27 +85,27 @@
 		for(var/datum/mind/M in ticker.mode:syndicates)
 			foecount++
 			if (!M || !M.current)
-				score_opkilled++
+				score["opkilled"]++
 				continue
 			var/turf/T = M.current.loc
-			if (T && istype(T.loc, /area/security/brig)) score_arrested += 1
-			else if (M.current.stat == 2) score_opkilled++
-		if(foecount == score_arrested) score_allarrested = 1
+			if (T && istype(T.loc, /area/security/brig)) score["arrested"] += 1
+			else if (M.current.stat == 2) score["opkilled"]++
+		if(foecount == score["arrested"]) score["allarrested"] = 1
 
 /*
-		score_disc = 1
+		score["disc"] = 1
 		for(var/obj/item/weapon/disk/nuclear/A in world)
 			if(A.loc != /mob/living/carbon) continue
 			var/turf/location = get_turf(A.loc)
 			var/area/bad_zone1 = locate(/area)
 			var/area/bad_zone2 = locate(/area/syndicate_station)
 			var/area/bad_zone3 = locate(/area/wizard_station)
-			if (location in bad_zone1) score_disc = 0
-			if (location in bad_zone2) score_disc = 0
-			if (location in bad_zone3) score_disc = 0
-			if (A.loc.z != 1) score_disc = 0
+			if (location in bad_zone1) score["disc"] = 0
+			if (location in bad_zone2) score["disc"] = 0
+			if (location in bad_zone3) score["disc"] = 0
+			if (A.loc.z != 1) score["disc"] = 0
 */
-		if (score_nuked)
+		if (score["nuked"])
 			for (var/obj/machinery/nuclearbomb/NUKE in machines)
 				if (NUKE.r_code == "Nope") continue
 				var/turf/T = NUKE.loc
@@ -118,98 +119,98 @@
 		for(var/datum/mind/M in ticker.mode:head_revolutionaries)
 			foecount++
 			if (!M || !M.current)
-				score_opkilled++
+				score["opkilled"]++
 				continue
 			var/turf/T = M.current.loc
-			if (istype(T.loc, /area/security/brig)) score_arrested += 1
-			else if (M.current.stat == 2) score_opkilled++
-		if(foecount == score_arrested) score_allarrested = 1
+			if (istype(T.loc, /area/security/brig)) score["arrested"] += 1
+			else if (M.current.stat == 2) score["opkilled"]++
+		if(foecount == score["arrested"]) score["allarrested"] = 1
 		for(var/mob/living/carbon/human/player in world)
 			if(player.mind)
 				var/role = player.mind.assigned_role
 				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
-					if (player.stat == 2) score_deadcommand++
+					if (player.stat == 2) score["deadcommand"]++
 
 	// Check station's power levels
 	for (var/obj/machinery/power/apc/A in machines)
 		if (A.z != 1) continue
 		for (var/obj/item/weapon/cell/C in A.contents)
-			if (C.charge < 2300) score_powerloss += 1 // 200 charge leeway
+			if (C.charge < 2300) score["powerloss"] += 1 // 200 charge leeway
 
 	// Check how much uncleaned mess is on the station
 	for (var/obj/effect/decal/cleanable/M in world)
 		if (M.z != 1) continue
-		if (istype(M, /obj/effect/decal/cleanable/blood/gibs/)) score_mess += 3
-		if (istype(M, /obj/effect/decal/cleanable/blood/)) score_mess += 1
-//		if (istype(M, /obj/effect/decal/cleanable/greenpuke)) score_mess += 1
-//		if (istype(M, /obj/effect/decal/cleanable/poop)) score_mess += 1 // What the literal fuck Paradise. Jesus christ no. - Iamgoofball
-//		if (istype(M, /obj/decal/cleanable/urine)) score_mess += 1
-		if (istype(M, /obj/effect/decal/cleanable/vomit)) score_mess += 1
+		if (istype(M, /obj/effect/decal/cleanable/blood/gibs/)) score["mess"] += 3
+		if (istype(M, /obj/effect/decal/cleanable/blood/)) score["mess"] += 1
+//		if (istype(M, /obj/effect/decal/cleanable/greenpuke)) score["mess"] += 1
+//		if (istype(M, /obj/effect/decal/cleanable/poop)) score["mess"] += 1 // What the literal fuck Paradise. Jesus christ no. - Iamgoofball
+//		if (istype(M, /obj/decal/cleanable/urine)) score["mess"] += 1
+		if (istype(M, /obj/effect/decal/cleanable/vomit)) score["mess"] += 1
 
 	// Bonus Modifiers
-	//var/traitorwins = score_traitorswon
-	var/deathpoints = score_deadcrew * 25 //done
-	var/researchpoints = score_researchdone * 30
-	var/eventpoints = score_eventsendured * 50
-	var/escapoints = score_escapees * 25 //done
-	var/harvests = score_stuffharvested * 5 //done
-	var/shipping = score_stuffshipped * 5
-	var/mining = score_oremined * 2 //done
-	var/meals = score_meals * 5 //done, but this only counts cooked meals, not drinks served
-	var/power = score_powerloss * 20
+	//var/traitorwins = score["traitorswon"]
+	var/deathpoints = score["deadcrew"] * 25 //done
+	var/researchpoints = score["researchdone"] * 30
+	var/eventpoints = score["eventsendured"] * 50
+	var/escapoints = score["escapees"] * 25 //done
+	var/harvests = score["stuffharvested"] * 5 //done
+	var/shipping = score["stuffshipped"] * 5
+	var/mining = score["oremined"] * 2 //done
+	var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
+	var/power = score["powerloss"] * 20
 	var/messpoints
-	if (score_mess != 0) messpoints = score_mess //done
-	var/plaguepoints = score_disease * 30
+	if (score["mess"] != 0) messpoints = score["mess"] //done
+	var/plaguepoints = score["disease"] * 30
 
 	// Mode Specific
 	if (ticker.mode.config_tag == "nuclear")
-		if (score_disc) score_crewscore += 500
-		var/killpoints = score_opkilled * 250
-		var/arrestpoints = score_arrested * 1000
-		score_crewscore += killpoints
-		score_crewscore += arrestpoints
-		if (score_nuked) score_crewscore -= nukedpenalty
+		if (score["disc"]) score["crewscore"] += 500
+		var/killpoints = score["opkilled"] * 250
+		var/arrestpoints = score["arrested"] * 1000
+		score["crewscore"] += killpoints
+		score["crewscore"] += arrestpoints
+		if (score["nuked"]) score["crewscore"] -= nukedpenalty
 
 	if (ticker.mode.config_tag == "revolution")
-		var/arrestpoints = score_arrested * 1000
-		var/killpoints = score_opkilled * 500
-		var/comdeadpts = score_deadcommand * 500
-		if (score_traitorswon) score_crewscore -= 10000
-		score_crewscore += arrestpoints
-		score_crewscore += killpoints
-		score_crewscore -= comdeadpts
+		var/arrestpoints = score["arrested"] * 1000
+		var/killpoints = score["opkilled"] * 500
+		var/comdeadpts = score["deadcommand"] * 500
+		if (score["traitorswon"]) score["crewscore"] -= 10000
+		score["crewscore"] += arrestpoints
+		score["crewscore"] += killpoints
+		score["crewscore"] -= comdeadpts
 
 	// Good Things
-	score_crewscore += shipping
-	score_crewscore += harvests
-	score_crewscore += mining
-	score_crewscore += researchpoints
-	score_crewscore += eventpoints
-	score_crewscore += escapoints
+	score["crewscore"] += shipping
+	score["crewscore"] += harvests
+	score["crewscore"] += mining
+	score["crewscore"] += researchpoints
+	score["crewscore"] += eventpoints
+	score["crewscore"] += escapoints
 
 	if (power == 0)
-		score_crewscore += 2500
-		score_powerbonus = 1
-	if (score_mess == 0)
-		score_crewscore += 3000
-		score_messbonus = 1
-	score_crewscore += meals
-	if (score_allarrested) score_crewscore *= 3 // This needs to be here for the bonus to be applied properly
+		score["crewscore"] += 2500
+		score["powerbonus"] = 1
+	if (score["mess"] == 0)
+		score["crewscore"] += 3000
+		score["messbonus"] = 1
+	score["crewscore"] += meals
+	if (score["allarrested"]) score["crewscore"] *= 3 // This needs to be here for the bonus to be applied properly
 
 	// Bad Things
-	score_crewscore -= deathpoints
-	if (score_deadaipenalty) score_crewscore -= 250
-	score_crewscore -= power
-	//if (score_crewscore != 0) // Dont divide by zero!
+	score["crewscore"] -= deathpoints
+	if (score["deadaipenalty"]) score["crewscore"] -= 250
+	score["crewscore"] -= power
+	//if (score["crewscore"] != 0) // Dont divide by zero!
 	//	while (traitorwins > 0)
-	//		score_crewscore /= 2
+	//		score["crewscore"] /= 2
 	//		traitorwins -= 1
-	score_crewscore -= messpoints
-	score_crewscore -= plaguepoints
+	score["crewscore"] -= messpoints
+	score["crewscore"] -= plaguepoints
 
 	// Show the score - might add "ranks" later
 	world << "<b>The crew's final score is:</b>"
-	world << "<b><font size='4'>[score_crewscore]</font></b>"
+	world << "<b><font size='4'>[score["crewscore"]]</font></b>"
 	for(var/mob/E in player_list)
 		if(E.client) E.scorestats()
 	return
@@ -260,12 +261,12 @@
 		<B>Number of Surviving Crew:</B> [crewcount]<BR>
 		<B>Final Location of Nuke:</B> [bombdat]<BR>
 		<B>Final Location of Disk:</B> [diskdat]<BR><BR>
-		<B>Operatives Arrested:</B> [score_arrested] ([score_arrested * 1000] Points)<BR>
-		<B>Operatives Killed:</B> [score_opkilled] ([score_opkilled * 250] Points)<BR>
-		<B>Station Destroyed:</B> [score_nuked ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
-		<B>All Operatives Arrested:</B> [score_allarrested ? "Yes" : "No"] (Score tripled)<BR>
+		<B>Operatives Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
+		<B>Operatives Killed:</B> [score["opkilled"]] ([score["opkilled"] * 250] Points)<BR>
+		<B>Station Destroyed:</B> [score["nuked"] ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
+		<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
-//		<B>Nuclear Disk Secure:</B> [score_disc ? "Yes" : "No"] ([score_disc * 500] Points)<BR>
+//		<B>Nuclear Disk Secure:</B> [score["disc"] ? "Yes" : "No"] ([score["disc"] * 500] Points)<BR>
 	if (ticker.mode.name == "revolution")
 		var/foecount = 0
 		var/comcount = 0
@@ -291,61 +292,61 @@
 		<B>Number of Surviving Command Staff:</B> [comcount]<BR>
 		<B>Number of Surviving Revolutionaries:</B> [revcount]<BR>
 		<B>Number of Surviving Loyal Crew:</B> [loycount]<BR><BR>
-		<B>Revolution Heads Arrested:</B> [score_arrested] ([score_arrested * 1000] Points)<BR>
-		<B>Revolution Heads Slain:</B> [score_opkilled] ([score_opkilled * 500] Points)<BR>
-		<B>Command Staff Slain:</B> [score_deadcommand] (-[score_deadcommand * 500] Points)<BR>
-		<B>Revolution Successful:</B> [score_traitorswon ? "Yes" : "No"] (-[score_traitorswon * revpenalty] Points)<BR>
-		<B>All Revolution Heads Arrested:</B> [score_allarrested ? "Yes" : "No"] (Score tripled)<BR>
+		<B>Revolution Heads Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
+		<B>Revolution Heads Slain:</B> [score["opkilled"]] ([score["opkilled"] * 500] Points)<BR>
+		<B>Command Staff Slain:</B> [score["deadcommand"]] (-[score["deadcommand"] * 500] Points)<BR>
+		<B>Revolution Successful:</B> [score["traitorswon"] ? "Yes" : "No"] (-[score["traitorswon"] * revpenalty] Points)<BR>
+		<B>All Revolution Heads Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
 //	var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 	dat += {"<B><U>GENERAL STATS</U></B><BR>
 	<U>THE GOOD:</U><BR>
-	<B>Useful Items Shipped:</B> [score_stuffshipped] ([score_stuffshipped * 5] Points)<BR>
-	<B>Hydroponics Harvests:</B> [score_stuffharvested] ([score_stuffharvested * 5] Points)<BR>
-	<B>Ore Mined:</B> [score_oremined] ([score_oremined * 2] Points)<BR>
-	<B>Refreshments Prepared:</B> [score_meals] ([score_meals * 5] Points)<BR>
-	<B>Research Completed:</B> [score_researchdone] ([score_researchdone * 30] Points)<BR>"}
-	dat += "<B>Shuttle Escapees:</B> [score_escapees] ([score_escapees * 25] Points)<BR>"
-	dat += {"<B>Random Events Endured:</B> [score_eventsendured] ([score_eventsendured * 50] Points)<BR>
-	<B>Whole Station Powered:</B> [score_powerbonus ? "Yes" : "No"] ([score_powerbonus * 2500] Points)<BR>
-	<B>Ultra-Clean Station:</B> [score_mess ? "No" : "Yes"] ([score_messbonus * 3000] Points)<BR><BR>
+	<B>Useful Items Shipped:</B> [score["stuffshipped"]] ([score["stuffshipped"] * 5] Points)<BR>
+	<B>Hydroponics Harvests:</B> [score["stuffharvested"]] ([score["stuffharvested"] * 5] Points)<BR>
+	<B>Ore Mined:</B> [score["oremined"]] ([score["oremined"] * 2] Points)<BR>
+	<B>Refreshments Prepared:</B> [score["meals"]] ([score["meals"] * 5] Points)<BR>
+	<B>Research Completed:</B> [score["researchdone"]] ([score["researchdone"] * 30] Points)<BR>"}
+	dat += "<B>Shuttle Escapees:</B> [score["escapees"]] ([score["escapees"] * 25] Points)<BR>"
+	dat += {"<B>Random Events Endured:</B> [score["eventsendured"]] ([score["eventsendured"] * 50] Points)<BR>
+	<B>Whole Station Powered:</B> [score["powerbonus"] ? "Yes" : "No"] ([score["powerbonus"] * 2500] Points)<BR>
+	<B>Ultra-Clean Station:</B> [score["mess"] ? "No" : "Yes"] ([score["messbonus"] * 3000] Points)<BR><BR>
 	<U>THE BAD:</U><BR>
-	<B>Dead Bodies on Station:</B> [score_deadcrew] (-[score_deadcrew * 25] Points)<BR>
-	<B>Uncleaned Messes:</B> [score_mess] (-[score_mess] Points)<BR>
-	<B>Station Power Issues:</B> [score_powerloss] (-[score_powerloss * 20] Points)<BR>
-	<B>Rampant Diseases:</B> [score_disease] (-[score_disease * 30] Points)<BR>
-	<B>AI Destroyed:</B> [score_deadaipenalty ? "Yes" : "No"] (-[score_deadaipenalty * 250] Points)<BR><BR>
+	<B>Dead Bodies on Station:</B> [score["deadcrew"]] (-[score["deadcrew"] * 25] Points)<BR>
+	<B>Uncleaned Messes:</B> [score["mess"]] (-[score["mess"]] Points)<BR>
+	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 20] Points)<BR>
+	<B>Rampant Diseases:</B> [score["disease"]] (-[score["disease"] * 30] Points)<BR>
+	<B>AI Destroyed:</B> [score["deadaipenalty"] ? "Yes" : "No"] (-[score["deadaipenalty"] * 250] Points)<BR><BR>
 	<U>THE WEIRD</U><BR>"}
 /*	<B>Final Station Budget:</B> $[num2text(totalfunds,50)]<BR>"}
 	var/profit = totalfunds - 100000
 	if (profit > 0) dat += "<B>Station Profit:</B> +[num2text(profit,50)]<BR>"
 	else if (profit < 0) dat += "<B>Station Deficit:</B> [num2text(profit,50)]<BR>"}*/
-	dat += {"<B>Food Eaten:</b> [score_foodeaten]<BR>
-	<B>Times a Clown was Abused:</B> [score_clownabuse]<BR><BR>"}
-	if (score_escapees)
-		dat += "<B>Most Battered Escapee:</B> [score_dmgestname], [score_dmgestjob]: [score_dmgestdamage] damage ([score_dmgestkey])<BR>"
+	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
+	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR><BR>"}
+	if (score["escapees"])
+		dat += "<B>Most Battered Escapee:</B> [score["dmgestname"]], [score["dmgestjob"]]: [score["dmgestdamage"]] damage ([score["dmgestkey"]])<BR>"
 	else
 		dat += "The station wasn't evacuated or no one escaped!<BR>"
 	dat += {"<HR><BR>
-	<B><U>FINAL SCORE: [score_crewscore]</U></B><BR>"}
-	var/score_rating = "The Aristocrats!"
-	switch(score_crewscore)
-		if(-99999 to -50000) score_rating = "Even the Singularity Deserves Better"
-		if(-49999 to -5000) score_rating = "Singularity Fodder"
-		if(-4999 to -1000) score_rating = "You're All Fired"
-		if(-999 to -500) score_rating = "A Waste of Perfectly Good Oxygen"
-		if(-499 to -250) score_rating = "A Wretched Heap of Scum and Incompetence"
-		if(-249 to -100) score_rating = "Outclassed by Lab Monkeys"
-		if(-99 to -21) score_rating = "The Undesirables"
-		if(-20 to 20) score_rating = "Ambivalently Average"
-		if(21 to 99) score_rating = "Not Bad, but Not Good"
-		if(100 to 249) score_rating = "Skillful Servants of Science"
-		if(250 to 499) score_rating = "Best of a Good Bunch"
-		if(500 to 999) score_rating = "Lean Mean Machine Thirteen"
-		if(1000 to 4999) score_rating = "Promotions for Everyone"
-		if(5000 to 9999) score_rating = "Ambassadors of Discovery"
-		if(10000 to 49999) score_rating = "The Pride of Science Itself"
-		if(50000 to INFINITY) score_rating = "NanoTrasen's Finest"
-	dat += "<B><U>RATING:</U></B> [score_rating]"
+	<B><U>FINAL SCORE: [score["crewscore"]]</U></B><BR>"}
+	score["rating"] = "The Aristocrats!"
+	switch(score["crewscore"])
+		if(-99999 to -50000) score["rating"] = "Even the Singularity Deserves Better"
+		if(-49999 to -5000) score["rating"] = "Singularity Fodder"
+		if(-4999 to -1000) score["rating"] = "You're All Fired"
+		if(-999 to -500) score["rating"] = "A Waste of Perfectly Good Oxygen"
+		if(-499 to -250) score["rating"] = "A Wretched Heap of Scum and Incompetence"
+		if(-249 to -100) score["rating"] = "Outclassed by Lab Monkeys"
+		if(-99 to -21) score["rating"] = "The Undesirables"
+		if(-20 to 20) score["rating"] = "Ambivalently Average"
+		if(21 to 99) score["rating"] = "Not Bad, but Not Good"
+		if(100 to 249) score["rating"] = "Skillful Servants of Science"
+		if(250 to 499) score["rating"] = "Best of a Good Bunch"
+		if(500 to 999) score["rating"] = "Lean Mean Machine Thirteen"
+		if(1000 to 4999) score["rating"] = "Promotions for Everyone"
+		if(5000 to 9999) score["rating"] = "Ambassadors of Discovery"
+		if(10000 to 49999) score["rating"] = "The Pride of Science Itself"
+		if(50000 to INFINITY) score["rating"] = "NanoTrasen's Finest"
+	dat += "<B><U>RATING:</U></B> [score["rating"]]"
 	src << browse(dat, "window=roundstats;size=500x600")
 	return
