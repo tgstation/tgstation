@@ -19,6 +19,9 @@
 	world << "___________________________________________________________________"
 	world << "<span class='sinister' style='font-size:3'>You are blinded by a brilliant flash of energy.</span>"
 
+	if(emergency_shuttle.direction==2)
+		captain_announce("The emergency shuttle has returned due to bluespace distortion.")
+
 	emergency_shuttle.force_shutdown()
 
 	for(var/area/ca in world)
