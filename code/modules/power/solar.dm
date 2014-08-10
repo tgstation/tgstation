@@ -270,6 +270,15 @@ var/list/solars_list = list()
 	var/trackdir = 1		// -1=CCW, 1=CW
 	var/nexttime = 0		// Next clock time that manual tracking will move the array
 
+	l_color = "#FF9933"
+
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/machinery/power/solar_control/New()
 	. = ..()
 	if(ticker)

@@ -124,6 +124,8 @@ proc/move_mining_shuttle()
 	var/hacked = 0
 	var/location = 0 //0 = station, 1 = mining base
 
+	l_color = "#7BF9FF"
+
 /obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
 	if(..(user))
 		return

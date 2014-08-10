@@ -23,6 +23,8 @@
 	var/teleport_cell_usage=1000 // 100% of a standard cell
 	processing=1
 
+	l_color = "#0000FF"
+
 /obj/machinery/computer/telescience/New()
 	..()
 	cell=new/obj/item/weapon/cell()

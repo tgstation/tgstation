@@ -10,6 +10,7 @@
 	var/time = 30.0
 	var/title = "Mass Driver Controls"
 
+	l_color = "#50AB00"
 
 /obj/machinery/computer/pod/New()
 	..()
@@ -202,6 +203,8 @@
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
 	req_access = list(access_syndicate)
+
+	l_color = "#000000"
 
 /obj/machinery/computer/pod/old/syndicate/attack_hand(var/mob/user as mob)
 	if(!allowed(user))

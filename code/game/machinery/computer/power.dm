@@ -149,6 +149,11 @@
 
 /obj/machinery/power/monitor/power_change()
 
+	if(!(stat & (BROKEN|NOPOWER)))
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
+
 	if(stat & BROKEN)
 		icon_state = "broken"
 	else
