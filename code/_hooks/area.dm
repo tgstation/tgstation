@@ -2,3 +2,6 @@
 // (Master, as opposed to lighting subareas)
 /hook/mobAreaChange
 	name = "MobAreaChange"
+
+/hook/emergencyShuttleDeparture
+	name = "EmergencyShuttleDeparture"

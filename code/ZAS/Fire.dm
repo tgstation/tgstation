@@ -36,6 +36,9 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 
 
 turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
+	var/obj/effect/effect/foam/fire/W = locate() in contents
+	if(istype(W))
+		return 0
 	if(fire_protection > world.time-300)
 		return 0
 	if(locate(/obj/fire) in src)
@@ -143,6 +146,10 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 				if(!acs.check_recombustability(liq)) continue
 				//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
 				//reduce firelevel.
+				var/obj/effect/effect/foam/fire/W = locate() in enemy_tile
+				if(istype(W))
+					firelevel -= 3
+					continue
 				if(enemy_tile.fire_protection > world.time-30)
 					firelevel -= 1.5
 					continue

@@ -1,4 +1,6 @@
 //Food items that are eaten normally and don't leave anything behind.
+var/global/deepfry_nutriment = 1
+
 /obj/item/weapon/reagent_containers/food/snacks
 	name = "snack"
 	desc = "yummy"
@@ -22,7 +24,7 @@
 		if(M == usr)
 			usr << "<span class='notice'>You finish eating \the [src].</span>"
 		usr.visible_message("<span class='notice'>[usr] finishes eating \the [src].</span>")
-		score_foodeaten++
+		score["foodeaten"]++
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
@@ -41,7 +43,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/New()
 	..()
-	score_meals++
+	score["meals"]++
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
@@ -1226,7 +1228,6 @@
 	name = "Discount Dan's Burritos"
 	desc = "The perfect blend of cheap processing and cheap materials."
 	icon_state = "danburrito"
-	trash = /obj/item/trash/danitos
 	var/list/ddname = list("Spooky Dan's BOO-ritos - Texas Toast Chainsaw Massacre Flavor","Sconto Danilo's Burritos - 50% Real Mozzarella Pepperoni Pizza Party Flavor","Descuento Danito's Burritos - Pancake Sausage Brunch Flavor","Descuento Danito's Burritos - Homestyle Comfort Flavor","Spooky Dan's BOO-ritos - Nightmare on Elm Meat Flavor","Descuento Danito's Burritos - Strawberrito Churro Flavor","Descuento Danito's Burritos - Beff and Bean Flavor")
 	New()
 		..()
@@ -2916,7 +2917,7 @@
 	deepfried = 1
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("nutriment", deepfry_nutriment)
 
 ///////////////////////////////////////////
 // new old food stuff from bs12
@@ -2991,3 +2992,17 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
+
+/client/proc/fryer_nutriment()
+	set name = "Toggle nutriment added by deep frying."
+	set desc = "Toggle the amount of nutriment added to things that have been deep fried."
+	set category = "Debug"
+
+	deepfry_nutriment = input("Please select an amount. Note: Setting this number below 1 can cause problems with deep fried food, and has been disabled.", "Select amount", "[deepfry_nutriment]")  as text
+	if(deepfry_nutriment < 1)
+		deepfry_nutriment = 1
+		usr << "The nutriment has been set to 1. Please select a number that is above or equal to 1 next time."
+
+	log_admin("[key_name(usr)] set the base nutriment of deep fried foods to [deepfry_nutriment]")
+	message_admins("\blue [key_name(usr)] set the nutriment of deep fried foods to [deepfry_nutriment]", 1)
+

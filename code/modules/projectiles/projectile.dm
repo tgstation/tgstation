@@ -170,6 +170,7 @@
 				invisibility = 101
 			//del(src)
 				returnToPool(src)
+				OnDeath()
 		return 1
 
 
@@ -207,6 +208,7 @@
 						sleep(1)
 			sleep(1)
 		return
+
 	proc/dumbfire(var/dir) // for spacepods, go snowflake go
 		if(!dir)
 			//del(src)

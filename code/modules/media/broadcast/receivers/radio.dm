@@ -75,13 +75,18 @@
 	anchored=1
 	volume=0.25 // 25% of user's set volume.
 
-/obj/machinery/media/receiver/boombox/wallmount/muzak
-	on=1
-	media_frequency=1015
-
 /obj/machinery/media/receiver/boombox/wallmount/update_on()
 	..()
 	if(on)
 		icon_state="wallradio-p"
 	else
 		icon_state="wallradio"
+
+/obj/machinery/media/receiver/boombox/wallmount/shuttle
+	on=1
+	media_frequency=953
+	volume=1
+
+/obj/machinery/media/receiver/boombox/wallmount/muzak
+	on=1
+	media_frequency=1015

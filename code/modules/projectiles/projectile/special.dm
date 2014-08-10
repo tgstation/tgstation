@@ -138,49 +138,6 @@
 			M.adjustBrainLoss(20)
 			M.hallucination += 20
 
-/obj/item/projectile/thrownbolas
-	name ="bolas"
-	icon_state= "bolas_thrown"
-	damage = 3
-	kill_count = 50
-	damage_type = BRUTE
-	flag = "bullet"
-	anchored = 0 //it's an object, can still be affected by singularity
-
-	on_hit(var/atom/target, var/blocked = 0)
-		log_admin("[src] has hit an atom of [target]")
-		if(isliving(target) && current != starting) //if the target is a live creature other than the thrower
-			var/mob/living/M = target
-			if(ishuman(M)) //if they're a human species
-				var/mob/living/carbon/human/H = M
-				if(H.m_intent == "run") //if they're set to run (though not necessarily running at that moment)
-					if(prob(70)) //this probability is up for change and mostly a placeholder - Comic
-						step(H, H.dir)
-						H << "\blue Your legs have been tangled!"
-						viewers(H) << "\red [H] was tripped by the bolas!"
-						H.Stun(5) //used instead of setting damage in vars to avoid non-human targets being affected
-						H.Weaken(10)
-						H.legcuffed = new /obj/item/weapon/legcuffs/bolas(H) //applies legcuff properties inherited through legcuffs
-						H.update_inv_legcuffed()
-				else if(H.legcuffed) //if the target is already legcuffed (has to be walking)
-					OnDeath()
-				else //walking, but uncuffed, or the running prob(70) failed
-					H << "\blue You stumble over the thrown bolas"
-					step(H, H.dir)
-					H.m_intent = "walk"
-					OnDeath()
-			else
-				M.Stun(2) //minor stun damage to anything not human
-				OnDeath()
-		else
-			OnDeath()
-
-	OnDeath()
-		if(shot_from == "hand") //if it's thrown, we want it to respawn the item. Mechs don't do this to avoid spam and infinite bolas works
-			var /obj/item/weapon/legcuffs/bolas/B = new /obj/item/weapon/legcuffs/bolas
-			B.loc = current
-		Destroy()
-
 /obj/item/projectile/kinetic
 	name = "kinetic force"
 	icon_state = "energy"

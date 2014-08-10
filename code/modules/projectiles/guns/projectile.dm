@@ -12,6 +12,7 @@
 	m_amt = 1000
 	w_type = RECYK_METAL
 	recoil = 1
+	var/empty_casings = 1 //Set to 0 to not eject empty casings
 	var/ammo_type = "/obj/item/ammo_casing/a357"
 	var/list/loaded = list()
 	var/max_shells = 7
@@ -37,13 +38,20 @@
 	loaded -= AC //Remove casing from loaded list.
 	if(isnull(AC) || !istype(AC))
 		return 0
-	AC.loc = get_turf(src) //Eject casing onto ground.
-	if(AC.BB)
-		AC.desc += " This one is spent."	//descriptions are magic - only when there's a projectile in the casing
-		in_chamber = AC.BB //Load projectile into chamber.
-		AC.BB.loc = src //Set projectile loc to gun.
-		return 1
-	return 0
+	if(empty_casings == 1)
+		AC.loc = get_turf(src) //Eject casing onto ground.
+		if(AC.BB)
+			AC.desc += " This one is spent."	//descriptions are magic - only when there's a projectile in the casing
+			in_chamber = AC.BB //Load projectile into chamber.
+			AC.BB.loc = src //Set projectile loc to gun.
+			return 1
+		return 0
+	else
+		if(AC.BB)
+			in_chamber = AC.BB //Load projectile into chamber
+			AC.BB.loc = src //Set projectile loc to gun
+			return 1
+		return 0
 
 
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)

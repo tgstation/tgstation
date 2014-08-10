@@ -257,6 +257,9 @@ datum/shuttle_controller
 
 						settimeleft(SHUTTLETRANSITTIME)
 
+						// Shuttle Radio
+						CallHook("EmergencyShuttleDeparture", list())
+
 						//main shuttle
 						move_pod(/area/shuttle/escape/station,/area/shuttle/escape/transit,NORTH,0)
 

@@ -6,8 +6,8 @@
 	w_class = 1
 	var/sides = 6
 
-/obj/item/weapon/dice/New()
-	. = ..()
+/obj/item/weapon/dice/New(loc)
+	..(loc)
 	icon_state = "[name][rand(sides)]"
 
 /obj/item/weapon/dice/d20
@@ -17,7 +17,7 @@
 	sides = 20
 
 /obj/item/weapon/dice/attack_self(mob/user as mob)
-	var/result = rand(1, sides)
+	var/result = roll(1, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)
 		comment = "Nat 20!"

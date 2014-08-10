@@ -105,6 +105,7 @@ var/POLYMORPHBLOCK = 0
 var/LOUDBLOCK = 0
 var/WHISPERBLOCK = 0
 var/DIZZYBLOCK = 0
+var/SANSBLOCK = 0
 
 
 
@@ -287,37 +288,41 @@ var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the
 var/recall_time_limit=72000
 
 //Goonstyle scoreboard
-var/score_crewscore = 0 // this is the overall var/score for the whole round
-var/score_stuffshipped = 0 // how many useful items have cargo shipped out?
-var/score_stuffharvested = 0 // how many harvests have hydroponics done?
-var/score_oremined = 0 // obvious
-var/score_researchdone = 0
-var/score_eventsendured = 0 // how many random events did the station survive?
-var/score_powerloss = 0 // how many APCs have poor charge?
-var/score_escapees = 0 // how many people got out alive?
-var/score_deadcrew = 0 // dead bodies on the station, oh no
-var/score_mess = 0 // how much poo, puke, gibs, etc went uncleaned
-var/score_meals = 0
-var/score_disease = 0 // how many rampant, uncured diseases are on board the station
-var/score_deadcommand = 0 // used during rev, how many command staff perished
-var/score_arrested = 0 // how many traitors/revs/whatever are alive in the brig
-var/score_traitorswon = 0 // how many traitors were successful?
-var/score_allarrested = 0 // did the crew catch all the enemies alive?
-var/score_opkilled = 0 // used during nuke mode, how many operatives died?
-var/score_disc = 0 // is the disc safe and secure?
-var/score_nuked = 0 // was the station blown into little bits?
+// NOW AN ASSOCIATIVE LIST
+// NO FUCKING EXCUSE FOR THE ATROCITY THAT WAS
+var/list/score=list(
+	"crewscore"      = 0, // this is the overall var/score for the whole round
+	"stuffshipped"   = 0, // how many useful items have cargo shipped out?
+	"stuffharvested" = 0, // how many harvests have hydroponics done?
+	"oremined"       = 0, // obvious
+	"researchdone"   = 0,
+	"eventsendured"  = 0, // how many random events did the station survive?
+	"powerloss"      = 0, // how many APCs have poor charge?
+	"escapees"       = 0, // how many people got out alive?
+	"deadcrew"       = 0, // dead bodies on the station, oh no
+	"mess"           = 0, // how much poo, puke, gibs, etc went uncleaned
+	"meals"          = 0,
+	"disease"        = 0, // how many rampant, uncured diseases are on board the station
+	"deadcommand"    = 0, // used during rev, how many command staff perished
+	"arrested"       = 0, // how many traitors/revs/whatever are alive in the brig
+	"traitorswon"    = 0, // how many traitors were successful?
+	"allarrested"    = 0, // did the crew catch all the enemies alive?
+	"opkilled"       = 0, // used during nuke mode, how many operatives died?
+	"disc"           = 0, // is the disc safe and secure?
+	"nuked"          = 0, // was the station blown into little bits?
 
 	// these ones are mainly for the stat panel
-var/score_powerbonus = 0 // if all APCs on the station are running optimally, big bonus
-var/score_messbonus = 0 // if there are no messes on the station anywhere, huge bonus
-var/score_deadaipenalty = 0 // is the AI dead? if so, big penalty
-var/score_foodeaten = 0 // nom nom nom
-var/score_clownabuse = 0 // how many times a clown was punched, struck or otherwise maligned
-var/score_richestname = null // this is all stuff to show who was the richest alive on the shuttle
-var/score_richestjob = null  // kinda pointless if you dont have a money system i guess
-var/score_richestcash = 0
-var/score_richestkey = null
-var/score_dmgestname = null // who had the most damage on the shuttle (but was still alive)
-var/score_dmgestjob = null
-var/score_dmgestdamage = 0
-var/score_dmgestkey = null
+	"powerbonus"    = 0, // if all APCs on the station are running optimally, big bonus
+	"messbonus"     = 0, // if there are no messes on the station anywhere, huge bonus
+	"deadaipenalty" = 0, // is the AI dead? if so, big penalty
+	"foodeaten"     = 0, // nom nom nom
+	"clownabuse"    = 0, // how many times a clown was punched, struck or otherwise maligned
+	"richestname"   = null, // this is all stuff to show who was the richest alive on the shuttle
+	"richestjob"    = null,  // kinda pointless if you dont have a money system i guess
+	"richestcash"   = 0,
+	"richestkey"    = null,
+	"dmgestname"    = null, // who had the most damage on the shuttle (but was still alive)
+	"dmgestjob"     = null,
+	"dmgestdamage"  = 0,
+	"dmgestkey"     = null
+)

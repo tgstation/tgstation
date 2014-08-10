@@ -1,3 +1,5 @@
+var/global/super_fryer = 1
+
 /obj/machinery/deepfryer
 	name = "deep fryer"
 	desc = "Deep fried <i>everything</i>."
@@ -17,6 +19,10 @@
 		usr << "You can make out [frying] in the oil."
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
+	if(!super_fryer == 1)
+		if(!istype(I, /obj/item/weapon/reagent_containers/food))
+			user << "Dear god man, that's not edible!"
+			return
 	if(on)
 		user << "<span class='notice'>[src] is still active!</span>"
 		return
@@ -66,3 +72,18 @@
 		icon_state = "fryer_off"
 		return
 	..()
+
+/client/proc/fryer_toggle()
+	set name = "Toggle fryers frying non-food"
+	set desc = "Toggle fryers frying non-food items."
+	set category = "Debug"
+
+	super_fryer = !super_fryer
+	if(!super_fryer)
+		world << "<b>Fryers can no longer fry non-food items.</b>"
+		log_admin("[key_name(usr)] made fryers no longer fry non-food items.")
+		message_admins("\blue [key_name(usr)] made fryers no longer fry non-food items.", 1)
+	else
+		world << "<b>Fryers can now fry non-food items.</b>"
+		log_admin("[key_name(usr)] made fryers able to fry non-food items.")
+		message_admins("\blue [key_name(usr)] made fryers able to fry non-food items.", 1)
