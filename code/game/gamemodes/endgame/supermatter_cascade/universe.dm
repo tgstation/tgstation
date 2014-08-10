@@ -6,7 +6,8 @@
  	decay_rate = 5 // 5% chance of a turf decaying on lighting update/airflow (there's no actual tick for turfs)
 
 /datum/universal_state/supermatter_cascade/OnShuttleCall(var/mob/user)
-	user << "<span class='sinister'>All you hear on the frequency is static and panicked screaming. There will be no shuttle call today.</span>"
+	if(user)
+		user << "<span class='sinister'>All you hear on the frequency is static and panicked screaming. There will be no shuttle call today.</span>"
 	return 0
 
 // Apply changes when exiting state
@@ -17,6 +18,9 @@
 /datum/universal_state/supermatter_cascade/OnEnter()
 	world << "___________________________________________________________________"
 	world << "<span class='sinister' style='font-size:3'>You are blinded by a brilliant flash of energy.</span>"
+
+	emergency_shuttle.force_shutdown()
+
 	for(var/area/ca in world)
 		var/area/A=get_area_master(ca)
 		if(!istype(A,/area) || A.name=="Space")
@@ -48,7 +52,7 @@
 		A.updateicon()
 
 	for(var/turf/space/spess in world)
-		spess.overlays += "end"
+		spess.overlays += "end01"
 
 	for (var/obj/machinery/firealarm/alm in world)
 		if (!(alm.stat & BROKEN))

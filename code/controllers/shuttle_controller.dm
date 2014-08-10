@@ -26,11 +26,12 @@ datum/shuttle_controller
 	var/always_fake_recall = 0
 	var/deny_shuttle = 0 //for admins not allowing it to be called.
 	var/departed = 0
+
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall(coeff = 1)
-		if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
+		if((!universe.OnShuttleCall(null) || deny_shuttle) && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
 			return
 		if(endtime)
 			if(direction == -1)
@@ -48,6 +49,17 @@ datum/shuttle_controller
 
 	proc/shuttlealert(var/X)
 		alert = X
+
+
+	proc/force_shutdown()
+		online=0
+
+		// Heading to centcomm? Not anymore.
+		if(direction==2)
+			endtime=0 // Immediate (FIXME)
+			setdirection(1)
+			departed=0
+
 
 
 	proc/recall()

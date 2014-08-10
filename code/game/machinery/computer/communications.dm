@@ -419,6 +419,9 @@ var/shuttle_call/shuttle_calls[0]
 
 	// if force is 0, some things may stop the shuttle call
 	if(!force)
+		if(!universe.OnShuttleCall(user))
+			return
+
 		if(emergency_shuttle.deny_shuttle)
 			user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
 			return
