@@ -2880,6 +2880,27 @@ datum
 			description = "Ramen, deep fried."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
+
+		peptobismol
+			name = "Peptobismol"
+			id = "peptobismol"
+			description = "Jesus juice." //You're welcome, guy in the thread that rolled a 69.
+			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.drowsyness = max(M.drowsyness-2*REM, 0)
+				if(holder.has_reagent("discount"))
+					holder.remove_reagent("discount", 2*REM)
+				if(holder.has_reagent("beer2"))
+					holder.remove_reagent("beer2", 2*REM)
+				if(holder.has_reagent("chefspecial"))
+					holder.remove_reagent("chefspecial", 1*REM)
+				M.hallucination = max(0, M.hallucination - 5*REM)
+				M.adjustToxLoss(-2*REM)
+				..()
+				return
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum//////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
