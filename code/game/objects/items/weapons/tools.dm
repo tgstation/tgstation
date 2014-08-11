@@ -95,6 +95,27 @@
 		M = user
 	return eyestab(M,user)
 
+/obj/item/weapon/screwdriver/attackby(var/obj/O)
+	if(istype(O, /obj/item/weapon/cable_coil))
+		var/obj/item/weapon/cable_coil/C = O
+		var/mob/M = usr
+		if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
+			if(!istype(M.loc,/turf)) return
+			if(C.amount < 10)
+				usr << "\red You need at least 10 lengths to make a bolas wire!"
+				return
+			var/obj/item/weapon/legcuffs/bolas/cable/B = new /obj/item/weapon/legcuffs/bolas/cable(usr.loc)
+			qdel(src)
+			B.icon_state = "cbolas_[C._color]"
+			B.cable_color = C._color
+			B.screw_state = item_state
+			B.screw_istate = icon_state
+			M << "\blue You wind some cable around the screwdriver handle to make a bolas wire."
+			C.use(10)
+		else
+			usr << "\blue You cannot do that."
+	else
+		..()
 /*
  * Wirecutters
  */
