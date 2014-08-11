@@ -246,8 +246,8 @@
 				return
 			iscrayon = 1
 
-
-		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
+		// if paper is not in usr, then it must be in a clipboard or folder, which must be in or near usr
+		if(src.loc != usr && !((istype(src.loc, /obj/item/weapon/clipboard) || istype(src.loc, /obj/item/weapon/folder)) && (src.loc.loc == usr || src.loc.Adjacent(usr)) ) )
 			return
 
 		t = checkhtml(t)

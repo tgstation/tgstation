@@ -69,6 +69,8 @@ proc/move_research_shuttle()
 	var/hacked = 0
 	var/location = 0 //0 = station, 1 = research base
 
+	l_color = "#7BF9FF"
+
 /obj/machinery/computer/research_shuttle/attack_hand(user as mob)
 	src.add_fingerprint(usr)
 	var/dat = "<center>Research shuttle: <b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"

@@ -627,16 +627,21 @@
 	if (istype(id))
 		return id
 
-//Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, var/safety = 0)
+/*
+ * added a safety check in case you want to shock a human mob directly through electrocute_act.
+ */
+/mob/living/carbon/human/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0, const/safety = 0)
+	var/sc = siemens_coeff
+
 	if(!safety)
 		if(gloves)
-			var/obj/item/clothing/gloves/G = gloves
-			siemens_coeff = G.siemens_coefficient
-	//If they have shock immunity mutation
+			var/obj/item/clothing/gloves/Glove = gloves
+			sc = Glove.siemens_coefficient
+
 	if(M_NO_SHOCK in src.mutations)
-		siemens_coeff = 0
-	return ..(shock_damage,source,siemens_coeff)
+		sc = 0
+
+	return ..(shock_damage, source, sc)
 
 
 /mob/living/carbon/human/proc/num2slotname(var/slot_id)

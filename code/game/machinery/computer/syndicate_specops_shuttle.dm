@@ -19,6 +19,8 @@ var/syndicate_elite_shuttle_timeleft = 0
 	var/hacked = 0
 	var/allowedtocall = 0
 
+	l_color = "#B40000"
+
 /proc/syndicate_elite_process()
 	var/area/syndicate_mothership/control/syndicate_ship = locate()//To find announcer. This area should exist for this proc to work.
 	var/area/syndicate_mothership/elite_squad/elite_squad = locate()//Where is the specops area located?

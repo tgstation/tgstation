@@ -11,6 +11,14 @@
 	var/opened = 0
 	var/useramount = 30 // Last used amount
 
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/

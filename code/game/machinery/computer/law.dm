@@ -134,6 +134,8 @@
 	circuit = "/obj/item/weapon/circuitboard/borgupload"
 	var/mob/living/silicon/robot/current = null
 
+	l_color = "#FFFFFF"
+
 	proc/announce_law_changes()
 		current << "These are your laws now:"
 		current.show_laws()
