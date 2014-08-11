@@ -14,6 +14,8 @@ var/global/vox_shuttle_location
 	var/lastMove = 0
 	var/warning //Warning about the end of the round.
 
+	l_color = "#B40000"
+
 /obj/machinery/computer/vox_station/New()
 	curr_location= locate(/area/shuttle/vox/station)
 

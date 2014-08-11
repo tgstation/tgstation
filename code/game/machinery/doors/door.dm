@@ -342,6 +342,7 @@
 		update_heat_protection(turf)
 		air_master.mark_for_update(turf)
 
+	update_freelok_sight()
 	return 1
 
 /obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)

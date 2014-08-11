@@ -133,7 +133,9 @@
 			usr << "\blue \The [src] is almost full!"
 		else
 			usr << "\blue \The [src] is full!"
-
+	New()
+		..()
+		score["meals"]++
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END

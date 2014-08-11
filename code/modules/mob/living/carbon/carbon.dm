@@ -82,26 +82,38 @@
 	share_contact_diseases(M)
 	return
 
-/mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
-	if(status_flags & GODMODE)	return 0	//godmode
-	shock_damage *= siemens_coeff
-	if (shock_damage<1)
+/mob/living/carbon/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0)
+	var/damage = shock_damage * siemens_coeff
+
+	if(damage <= 0)
+		damage = 0
+
+	if(take_overall_damage(0, damage, "[source]") == 0) // godmode
 		return 0
-	src.take_overall_damage(0,shock_damage,used_weapon="Electrocution")
+
 	//src.burn_skin(shock_damage)
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
-	src.visible_message(
-		"\red [src] was shocked by the [source]!", \
-		"\red <B>You feel a powerful shock course through your body!</B>", \
-		"\red You hear a heavy electrical crack." \
-	)
-//	if(src.stunned < shock_damage)	src.stunned = shock_damage
-	Stun(10)//This should work for now, more is really silly and makes you lay there forever
-//	if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
-	Weaken(10)
-	return shock_damage
 
+	visible_message( \
+		"<span class='warning'>[src] was shocked by the [source]!</span>", \
+		"<span class='danger'>You feel a powerful shock course through your body!</span>", \
+		"<span class='warning'>You hear a heavy electrical crack.</span>" \
+	)
+
+	//if(src.stunned < shock_damage)	src.stunned = shock_damage
+
+	Stun(10) // this should work for now, more is really silly and makes you lay there forever
+
+	//if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
+
+	Weaken(10)
+
+	var/datum/effect/effect/system/spark_spread/SparkSpread = new
+	SparkSpread.set_up(5, 1, loc)
+	SparkSpread.start()
+
+	return damage
 
 /mob/living/carbon/proc/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()

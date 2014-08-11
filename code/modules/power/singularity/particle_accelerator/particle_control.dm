@@ -21,6 +21,8 @@
 	var/parts = null
 	var/datum/wires/particle_acc/control_box/wires = null
 
+	l_color = "#0000FF"
+
 /obj/machinery/particle_accelerator/control_box/New()
 	wires = new(src)
 	connected_parts = list()
@@ -144,6 +146,11 @@
 	else if(!stat && construction_state <= 3)
 		use_power = 1
 	return
+
+	if(!(stat & (BROKEN|NOPOWER)))
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
 
 
 /obj/machinery/particle_accelerator/control_box/process()

@@ -101,6 +101,8 @@ var/list/mechtoys = list(
 	var/last_viewed_group = "categories"
 	var/datum/money_account/current_acct
 
+	l_color = "#87421F"
+
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
 	icon = 'icons/obj/computer.dmi'
@@ -110,6 +112,8 @@ var/list/mechtoys = list(
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/last_viewed_group = "categories"
 	var/datum/money_account/current_acct
+
+	l_color = "#87421F"
 
 /*
 /obj/effect/marker/supplymarker

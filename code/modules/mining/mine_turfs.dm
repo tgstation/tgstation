@@ -623,7 +623,20 @@
 		"Silver"    = 5,
 		"Gibtonite" = 5,
 		"Diamond"   = 1,
-		"Cave"      = 1
+		"Cave"      = 1,
+		"Pharosium"  = 25,
+		"Char"  = 25,
+		"Claretine"  = 25,
+		"Bohrum"  = 25,
+		"Syreline"  = 25,
+		"Erebite"  = 25,
+		"Uqill"  = 25,
+		"Telecrystal"  = 25,
+		"Mauxite"  = 25,
+		"Cobryl"  = 25,
+		"Cerenkite"  = 25,
+		"Molitz"  = 25,
+		"Cytine"  = 25
 	)
 	//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
@@ -655,6 +668,19 @@
 		"Gold"    = 10,
 		"Silver"  = 10,
 		"Plasma"  = 25,
+		"Pharosium"  = 25,
+		"Char"  = 25,
+		"Claretine"  = 25,
+		"Bohrum"  = 25,
+		"Syreline"  = 25,
+		"Erebite"  = 25,
+		"Uqill"  = 25,
+		"Telecrystal"  = 25,
+		"Mauxite"  = 25,
+		"Cobryl"  = 25,
+		"Cerenkite"  = 25,
+		"Molitz"  = 25,
+		"Cytine"  = 25
 	)
 
 /turf/unsimulated/mineral/random/high_chance_clown
@@ -666,6 +692,19 @@
 		"Diamond" = 2,
 		"Gold"    = 5,
 		"Silver"  = 5,
+		"Pharosium"  = 25,
+		"Char"  = 25,
+		"Claretine"  = 25,
+		"Bohrum"  = 25,
+		"Syreline"  = 25,
+		"Erebite"  = 25,
+		"Uqill"  = 25,
+		"Telecrystal"  = 25,
+		"Mauxite"  = 25,
+		"Cobryl"  = 25,
+		"Cerenkite"  = 25,
+		"Molitz"  = 25,
+		"Cytine"  = 25,
 		"Plasma"  = 25,
 		"Clown"   = 15,
 		"Phazon"  = 10
@@ -727,6 +766,71 @@
 	icon_state = "rock_Phazon"
 	mineral = new /mineral/phazon
 	scan_state = "rock_Phazon"
+
+/turf/unsimulated/mineral/pharosium
+	name = "Pharosium deposit"
+	icon_state = "rock_Pharosium"
+	mineral = new /mineral/pharosium
+
+/turf/unsimulated/mineral/char
+	name = "Char deposit"
+	icon_state = "rock_Char"
+	mineral = new /mineral/char
+
+/turf/unsimulated/mineral/claretine
+	name = "Claretine deposit"
+	icon_state = "rock_Claretine"
+	mineral = new /mineral/claretine
+
+/turf/unsimulated/mineral/bohrum
+	name = "Bohrum deposit"
+	icon_state = "rock_Bohrum"
+	mineral = new /mineral/bohrum
+
+/turf/unsimulated/mineral/syreline
+	name = "Syreline deposit"
+	icon_state = "rock_Syreline"
+	mineral = new /mineral/syreline
+
+/turf/unsimulated/mineral/erebite
+	name = "Erebite deposit"
+	icon_state = "rock_Erebite"
+	mineral = new /mineral/erebite
+
+/turf/unsimulated/mineral/cytine
+	name = "Cytine deposit"
+	icon_state = "rock_Cytine"
+	mineral = new /mineral/cytine
+
+/turf/unsimulated/mineral/uqill
+	name = "Uqill deposit"
+	icon_state = "rock_Uqill"
+	mineral = new /mineral/uqill
+
+/turf/unsimulated/mineral/telecrystal
+	name = "Telecrystal deposit"
+	icon_state = "rock_Telecrystal"
+	mineral = new /mineral/telecrystal
+
+/turf/unsimulated/mineral/mauxite
+	name = "Mauxite deposit"
+	icon_state = "rock_Mauxite"
+	mineral = new /mineral/mauxite
+
+/turf/unsimulated/mineral/cobryl
+	name = "Cobryl deposit"
+	icon_state = "rock_Cobryl"
+	mineral = new /mineral/cobryl
+
+/turf/unsimulated/mineral/cerenkite
+	name = "Cerenkite deposit"
+	icon_state = "rock_Cerenkite"
+	mineral = new /mineral/cerenkite
+
+/turf/unsimulated/mineral/molitz
+	name = "Molitz deposit"
+	icon_state = "rock_Molitz"
+	mineral = new /mineral/molitz
 
 ////////////////////////////////Gibtonite
 /turf/unsimulated/mineral/gibtonite

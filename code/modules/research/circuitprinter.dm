@@ -29,7 +29,20 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		/obj/item/stack/sheet/mineral/gold,
 		/obj/item/stack/sheet/mineral/diamond,
 		/obj/item/stack/sheet/mineral/uranium,
-		/obj/item/stack/sheet/mineral/plasma
+		/obj/item/stack/sheet/mineral/plasma,
+		/obj/item/stack/sheet/mineral/pharosium,
+		/obj/item/stack/sheet/mineral/char,
+		/obj/item/stack/sheet/mineral/claretine,
+		/obj/item/stack/sheet/mineral/bohrum,
+		/obj/item/stack/sheet/mineral/syreline,
+		/obj/item/stack/sheet/mineral/erebite,
+		/obj/item/stack/sheet/mineral/cytine,
+		/obj/item/stack/sheet/mineral/telecrystal,
+		/obj/item/stack/sheet/mineral/mauxite,
+		/obj/item/stack/sheet/mineral/cobryl,
+		/obj/item/stack/sheet/mineral/cerenkite,
+		/obj/item/stack/sheet/mineral/molitz,
+		/obj/item/stack/sheet/mineral/uqill
 	)
 
 /obj/machinery/r_n_d/circuit_imprinter/New()

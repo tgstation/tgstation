@@ -57,12 +57,6 @@ var/shuttle_call/shuttle_calls[0]
 	var/display_type="blank"
 
 	l_color = "#0000FF"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..(href, href_list))
@@ -374,6 +368,9 @@ var/shuttle_call/shuttle_calls[0]
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
 
+	if(!universe.OnShuttleCall(user))
+		return
+
 	if(sent_strike_team == 1)
 		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
 		return
@@ -416,6 +413,9 @@ var/shuttle_call/shuttle_calls[0]
 
 	// if force is 0, some things may stop the shuttle call
 	if(!force)
+		if(!universe.OnShuttleCall(user))
+			return
+
 		if(emergency_shuttle.deny_shuttle)
 			user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
 			return

@@ -2,8 +2,8 @@
 	name = "rocket launcher"
 	desc = "Ranged explosions, science marches on."
 	fire_sound = 'sound/weapons/shotgun.ogg'
-	icon_state = "rpg_e"
-	item_state = null
+	icon_state = "rpg"
+	item_state = "rpg"
 	max_shells = 1
 	empty_casings = 0
 	w_class = 4.0
@@ -21,20 +21,19 @@
 	ammo_type = "/obj/item/ammo_casing/rocket_rpg"
 	attack_verb = list("struck", "hit", "bashed")
 
-	//Snowflake code
-	New()
-		if(load_into_chamber())
-			del(in_chamber)
-			update_icon()
+/obj/item/weapon/gun/projectile/rocketlauncher/isHandgun()
+	return 0
 
-	attack_self(mob/living/user as mob)
-		icon_state = "rpg_e"
-
-	isHandgun()
-		return 0
-
+/obj/item/weapon/gun/projectile/rocketlauncher/attack_hand(mob/user as mob)
+	if(loc != user)
+		..()
+		return
 	update_icon()
-		if(!load_into_chamber())
-			icon_state = "rpg_e"
-		else
-			icon_state = "rpg"
+
+/obj/item/weapon/gun/projectile/rocketlauncher/update_icon()
+	if(!loaded.len)
+		icon_state = "rpg_e"
+		item_state = "rpg_e"
+	else
+		icon_state = "rpg"
+		item_state = "rpg"

@@ -26,11 +26,15 @@ datum/shuttle_controller
 	var/always_fake_recall = 0
 	var/deny_shuttle = 0 //for admins not allowing it to be called.
 	var/departed = 0
+
+	var/shutdown = 0 // Completely shut down.
+
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall(coeff = 1)
-		if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
+		if(shutdown) return
+		if((!universe.OnShuttleCall(null) || deny_shuttle) && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
 			return
 		if(endtime)
 			if(direction == -1)
@@ -47,10 +51,18 @@ datum/shuttle_controller
 					A.readyalert()
 
 	proc/shuttlealert(var/X)
+		if(shutdown) return
 		alert = X
 
 
+	proc/force_shutdown()
+		online=0
+		shutdown=1
+
+
+
 	proc/recall()
+		if(shutdown) return
 		if(direction == 1)
 			var/timeleft = timeleft()
 			if(alert == 0)
@@ -128,8 +140,24 @@ datum/shuttle_controller
 
 
 	emergency_shuttle
+		force_shutdown()
+			..()
+			if(direction == 2)
+				location = 1
+
+				//main shuttle
+				move_pod(/area/shuttle/escape/transit,/area/shuttle/escape/station,NORTH,1)
+
+				//pods
+				move_pod(/area/shuttle/escape_pod1/transit,/area/shuttle/escape_pod1/station, NORTH,1)
+				move_pod(/area/shuttle/escape_pod2/transit,/area/shuttle/escape_pod2/station, NORTH,1)
+				move_pod(/area/shuttle/escape_pod3/transit,/area/shuttle/escape_pod3/station, NORTH,1)
+				move_pod(/area/shuttle/escape_pod5/transit,/area/shuttle/escape_pod5/station, NORTH,1)
+
+				online = 0
+
 		process()
-			if(!online)
+			if(!online || shutdown)
 				return
 			var/timeleft = timeleft()
 			if(timeleft > 1e5)		// midnight rollover protection
@@ -256,6 +284,9 @@ datum/shuttle_controller
 						direction = 2 // heading to centcom
 
 						settimeleft(SHUTTLETRANSITTIME)
+
+						// Shuttle Radio
+						CallHook("EmergencyShuttleDeparture", list())
 
 						//main shuttle
 						move_pod(/area/shuttle/escape/station,/area/shuttle/escape/transit,NORTH,0)
