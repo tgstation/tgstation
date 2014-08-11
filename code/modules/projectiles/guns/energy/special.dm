@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/ionrifle
 	name = "ion rifle"
-	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
+	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	origin_tech = "combat=2;magnets=4"
@@ -130,7 +130,7 @@
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
-	desc = "A self defense weapon that exhausts targets, weakening them until they collapse. Non-lethal."
+	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)

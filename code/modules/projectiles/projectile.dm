@@ -22,7 +22,7 @@
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
-	var/silenced = 0	//Attack message
+	var/suppressed = 0	//Attack message
 	var/yo = null
 	var/xo = null
 	var/current = null
@@ -91,7 +91,7 @@
 				reagent_note += num2text(R.volume) + ") "
 		var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 		def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
-		if(silenced)
+		if(suppressed)
 			playsound(loc, hitsound, 5, 1, -1)
 			M << "<span class='userdanger'>You've been shot by \a [src] in \the [parse_zone(def_zone)]!</span>"
 		else

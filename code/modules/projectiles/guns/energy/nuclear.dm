@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
-	desc = "A basic energy-based gun with two settings: Stun and kill."
+	desc = "A basic hybrid energy gun with two settings: Stun and kill."
 	icon_state = "energy"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
@@ -14,8 +14,8 @@
 
 
 /obj/item/weapon/gun/energy/gun/nuclear
-	name = "Advanced Energy Gun"
-	desc = "An energy gun with an experimental miniaturized reactor."
+	name = "advanced energy gun"
+	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
 	icon_state = "nucgun"
 	origin_tech = "combat=3;materials=5;powerstorage=3"
 	var/lightfail = 0

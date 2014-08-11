@@ -20,7 +20,7 @@
 	BB.original = target
 	BB.firer = user
 	BB.def_zone = user.zone_sel.selecting
-	BB.silenced = quiet
+	BB.suppressed = quiet
 
 	if(reagents && BB.reagents)
 		reagents.trans_to(BB, reagents.total_volume) //For chemical darts/bullets

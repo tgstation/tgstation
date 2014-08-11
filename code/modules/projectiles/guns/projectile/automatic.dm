@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 	name = "submachine gun"
-	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
+	desc = "A lightweight, rapid-fire gun. Uses 9mm rounds."
 	icon_state = "saber"	//ugly
 	w_class = 3.0
 	origin_tech = "combat=4;materials=2"
@@ -19,7 +19,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Uzi"
-	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses .45 rounds."
+	desc = "A lightweight, rapid-fire submachine gun, for when you really want someone dead. Uses .45 rounds."
 	icon_state = "mini-uzi"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
@@ -29,12 +29,12 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "\improper C-20r SMG"
-	desc = "A lightweight, fast firing gun, for when you REALLY need someone dead. Uses 12mm rounds. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp"
+	desc = "A lightweight, compact bullpup SMG. Uses .45 rounds in medium-capacity magazines and has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	item_state = "c20r"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	mag_type = /obj/item/ammo_box/magazine/m12mm
+	mag_type = /obj/item/ammo_box/magazine/c20m
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 
 
@@ -62,7 +62,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "\improper L6 SAW"
-	desc = "A rather traditionally made light machine gun with a pleasantly lacquered wooden pistol grip. Has 'Aussec Armoury- 2531' engraved on the reciever"
+	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made belt-fed ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = 5
