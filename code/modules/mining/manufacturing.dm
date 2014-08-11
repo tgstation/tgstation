@@ -18,7 +18,7 @@
 /obj/machinery/manufacturer
 	name = "Manufacturing Unit"
 	desc = "A standard Fabricator unit capable of producing certain items from mined ore."
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fab-idle"
 	density = 1
 	anchored = 1
