@@ -121,7 +121,7 @@ move an amendment</a> to the drawing.</p>
 		return
 	var/area/A = new
 	A.name = str
-	A.tag="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
+	A.tagbase = "[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
 	//var/ma
 	//ma = A.master ? "[A.master]" : "(null)"
 	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
