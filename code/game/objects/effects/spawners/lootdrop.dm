@@ -20,6 +20,7 @@
 
 /obj/effect/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"
+	lootdoubles = 0
 
 	loot = list(
 				/obj/item/weapon/gun/projectile/automatic/pistol = 8,
@@ -53,7 +54,7 @@
 	//fpmaint:				5  items,  4 spots 0 extra (08/08/2014)
 	//fpmaint2:				11 items, 10 spots 2 extra (08/08/2014)
 	//fsmaint:				0  items,  0 spots 0 extra (08/08/2014)
-	//fsmaint2:				41 items, 30 spots 4 extra (08/08/2014)
+	//fsmaint2:				40 items, 30 spots 5 extra (11/08/2014)
 	//maintcentral:			2  items,  2 spots 0 extra (08/08/2014)
 	//port:					5  items,  5 spots 0 extra (08/08/2014)
 	loot = list(
@@ -71,7 +72,6 @@
 				/obj/item/clothing/under/rank/vice = 1,
 				/obj/item/device/assembly/prox_sensor = 4,
 				/obj/item/device/assembly/timer = 3,
-				/obj/item/device/flash = 1,
 				/obj/item/device/flashlight = 4,
 				/obj/item/device/flashlight/pen = 1,
 				/obj/item/device/multitool = 2,
@@ -115,5 +115,5 @@
 				/obj/item/weapon/weldingtool = 3,
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
-				"" = 10
+				"" = 11
 				)
