@@ -50,56 +50,25 @@
 
 
 
-/obj/machinery/containment_field/proc/shock(mob/living/user as mob)
+/obj/machinery/containment_field/proc/shock(const/mob/living/user)
 	if(hasShocked)
 		return 0
-	if(!FG1 || !FG2)
-		del(src)
+
+	if(isnull(FG1) || isnull(FG2))
+		qdel(src)
 		return 0
-	if(iscarbon(user))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, user.loc)
-		s.start()
 
+	if(isliving(user))
 		hasShocked = 1
-		var/shock_damage = min(rand(30,40),rand(30,40))
-		user.burn_skin(shock_damage)
-		user.updatehealth()
-		user.visible_message("\red [user.name] was shocked by the [src.name]!", \
-			"\red <B>You feel a powerful shock course through your body sending you flying!</B>", \
-			"\red You hear a heavy electrical crack")
+		var/shock_damage = min(rand(30, 40), rand(30, 40))
+		user.electrocute_act(shock_damage, src)
 
-		var/stun = min(shock_damage, 15)
-		user.Stun(stun)
-		user.Weaken(10)
-
-		user.updatehealth()
-		var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
-		user.throw_at(target, 200, 4)
+		if(iscarbon(user))
+			var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
+			user.throw_at(target, 200, 4)
 
 		sleep(20)
 		hasShocked = 0
-		return
-
-	else if(issilicon(user))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, user.loc)
-		s.start()
-
-		hasShocked = 1
-		var/shock_damage = rand(15,30)
-		user.take_overall_damage(0,shock_damage)
-		user.visible_message("\red [user.name] was shocked by the [src.name]!", \
-			"\red <B>Energy pulse detected, system damaged!</B>", \
-			"\red You hear an electrical crack")
-		if(prob(20))
-			user.Stun(2)
-
-		sleep(20)
-		hasShocked = 0
-		return
-
-	return
 
 /obj/machinery/containment_field/proc/set_master(var/master1,var/master2)
 	if(!master1 || !master2)

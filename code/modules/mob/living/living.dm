@@ -236,8 +236,9 @@
 	return 0
 
 
-/mob/living/proc/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
-	  return 0 //only carbon liveforms have this proc
+/mob/living/proc/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0)
+	  return 0 // only carbon liveforms have this proc
+				// now with silicons
 
 /mob/living/emp_act(severity)
 	var/list/L = src.get_contents()
