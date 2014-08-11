@@ -320,6 +320,7 @@ turf/proc/shift_to_subarea()
 			A.SetLightLevel(level, color_light)
 
 		A.contents += src	// move the turf into the area
+	universe.OnTurfTick(src)
 
 // Dedicated lighting sublevel for space turfs
 // helps us depower things in space, remove space fire alarms,

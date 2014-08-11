@@ -13,6 +13,7 @@ datum/objective
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
+	var/blocked = 0                     // Universe fucked, you lost.
 
 	New(var/text)
 		if(text)
@@ -58,7 +59,7 @@ datum/objective/assassinate
 
 
 	check_completion()
-		if(target && target.current)
+		if(target && target.current && !blocked)
 			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 				return 1
 			return 0
@@ -85,7 +86,7 @@ datum/objective/mutiny
 		return target
 
 	check_completion()
-		if(target && target.current)
+		if(target && target.current && !blocked)
 			if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 				return 1
 			var/turf/T = get_turf(target.current)
@@ -115,7 +116,7 @@ datum/objective/mutiny/rp
 	// less violent rev objectives
 	check_completion()
 		var/rval = 1
-		if(target && target.current)
+		if(target && target.current && !blocked)
 			//assume that only carbon mobs can become rev heads for now
 			if(target.current.stat == DEAD || target.current:handcuffed || !ishuman(target.current))
 				return 1
@@ -175,6 +176,7 @@ datum/objective/anti_revolution/brig
 		return target
 
 	check_completion()
+		if(blocked) return 0
 		if(already_completed)
 			return 1
 
@@ -205,6 +207,7 @@ datum/objective/anti_revolution/demote
 		return target
 
 	check_completion()
+		if(blocked) return 0
 		if(target && target.current && istype(target,/mob/living/carbon/human))
 			var/obj/item/weapon/card/id/I = target.current:wear_id
 			if(istype(I, /obj/item/device/pda))
@@ -238,6 +241,7 @@ datum/objective/debrain//I want braaaainssss
 		return target
 
 	check_completion()
+		if(blocked) return 0
 		if(!target)//If it's a free objective.
 			return 1
 		if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
@@ -271,6 +275,7 @@ datum/objective/protect//The opposite of killing a dude.
 		return target
 
 	check_completion()
+		if(blocked) return 0
 		if(!target)			//If it's a free objective.
 			return 1
 		if(target.current)
@@ -284,6 +289,7 @@ datum/objective/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping without any organic life-forms, other than yourself."
 
 	check_completion()
+		if(blocked) return 0
 		if(!owner.current || owner.current.stat)
 			return 0
 		if(emergency_shuttle.location<2)
@@ -309,6 +315,7 @@ datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 
 	check_completion()
+		if(blocked) return 0
 		if(!istype(owner.current, /mob/living/silicon))
 			return 0
 		if(emergency_shuttle.location<2)
@@ -329,6 +336,7 @@ datum/objective/silence
 	explanation_text = "Do not allow anyone to escape the station.  Only allow the shuttle to be called when everyone is dead and your story is the only one left."
 
 	check_completion()
+		if(blocked) return 0
 		if(emergency_shuttle.location<2)
 			return 0
 
@@ -349,6 +357,7 @@ datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and free."
 
 	check_completion()
+		if(blocked) return 0
 		if(issilicon(owner.current))
 			return 0
 		if(isbrain(owner.current))
@@ -398,6 +407,7 @@ datum/objective/survive
 	explanation_text = "Stay alive until the end."
 
 	check_completion()
+		if(blocked) return 0
 		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
 			return 0		//Brains no longer win survive objectives. --NEO
 		if(issilicon(owner.current) && owner.current != owner.original)
@@ -426,6 +436,7 @@ datum/objective/brig
 		return target
 
 	check_completion()
+		if(blocked) return 0
 		if(already_completed)
 			return 1
 
@@ -461,6 +472,7 @@ datum/objective/harm
 		return target
 
 	check_completion()
+		if(blocked) return 0
 		if(already_completed)
 			return 1
 
@@ -529,6 +541,7 @@ datum/objective/nuclear
 		return steal_target
 
 	check_completion()
+		if(blocked) return 0
 		if(!steal_target) return 1 // Free Objective
 		return steal_target.check_completion(owner)
 
@@ -540,6 +553,7 @@ datum/objective/download
 
 
 	check_completion()
+		if(blocked) return 0
 		if(!ishuman(owner.current))
 			return 0
 		if(!owner.current || owner.current.stat == 2)
@@ -566,6 +580,7 @@ datum/objective/capture
 
 
 	check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
+		if(blocked) return 0
 		var/captured_amount = 0
 		var/area/centcom/holding/A = locate()
 		for(var/mob/living/carbon/human/M in A)//Humans.
@@ -603,6 +618,7 @@ datum/objective/blood
 		return target_amount
 
 	check_completion()
+		if(blocked) return 0
 		if(owner && owner.vampire && owner.vampire.bloodtotal && owner.vampire.bloodtotal >= target_amount)
 			return 1
 		else
@@ -626,6 +642,7 @@ datum/objective/absorb
 		return target_amount
 
 	check_completion()
+		if(blocked) return 0
 		if(owner && owner.changeling && owner.changeling.absorbed_dna && (owner.changeling.absorbedcount >= target_amount))
 			return 1
 		else
@@ -694,5 +711,6 @@ datum/objective/absorb
 /datum/objective/minimize_casualties
 	explanation_text = "Minimise casualties."
 	check_completion()
+		if(blocked) return 0
 		if(owner.kills.len>5) return 0
 		return 1

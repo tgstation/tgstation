@@ -1,0 +1,36 @@
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel">
+			Chamber Pressure:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.chamber_pressure, 0, 200, (data.chamber_pressure < 80) || (data.chamber_pressure > 120) ? 'bad' : (data.chamber_pressure < 95) || (data.chamber_pressure > 110) ? 'average' : 'good')}}
+			<div class="statusValue">
+				{{:data.chamber_pressure}} kPa
+			</div>
+		</div>
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemContent" style="width: 100%">
+			{{:helper.link('Cycle to Exterior', 'arrowthickstop-1-w', {'command' : 'cycle_ext'}, data.processing ? 'disabled' : null)}}
+			{{:helper.link('Cycle to Interior', 'arrowthickstop-1-e', {'command' : 'cycle_int'}, data.processing ? 'disabled' : null)}}
+		</div>
+		<div class="itemContent" style="padding-top: 2px; width: 100%">
+		{{if data.interior_status.state == "open"}}
+			{{:helper.link('Force exterior door', 'alert', {'command' : 'force_ext'}, null, 'redBackground')}}
+		{{else}}
+			{{:helper.link('Force exterior door', 'alert', {'command' : 'force_ext'}, null, data.processing ? 'yellowBackground' : null)}}
+		{{/if}}
+		{{if data.exterior_status.state == "open"}}
+			{{:helper.link('Force interior door', 'alert', {'command' : 'force_int'}, null, 'redBackground')}}
+		{{else}}
+			{{:helper.link('Force interior door', 'alert', {'command' : 'force_int'}, null, data.processing ? 'yellowBackground' : null)}}
+		{{/if}}
+		</div>
+	</div>
+	<div class="item" style="padding-top: 10px; width: 100%">
+			{{:helper.link('Abort', 'cancel', {'command' : 'abort'}, data.processing ? null : 'disabled', data.processing ? 'redBackground' : null)}}
+	</div>
+</div>

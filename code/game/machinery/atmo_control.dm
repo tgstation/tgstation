@@ -113,6 +113,8 @@
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
+	l_color = "#7BF9FF"
+
 	attack_hand(mob/user)
 		if(..(user))
 			return
@@ -683,5 +685,5 @@ legend {
 				)
 
 				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-				
+
 

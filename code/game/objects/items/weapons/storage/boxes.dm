@@ -245,6 +245,21 @@
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
 
+/obj/item/weapon/storage/box/bolas
+	name = "bolas box"
+	desc = "Box of bolases. Make sure to take them out before throwing them."
+	icon_state = "bolas"
+
+	New()
+		..()
+		new /obj/item/weapon/legcuffs/bolas(src)
+		new /obj/item/weapon/legcuffs/bolas(src)
+		new /obj/item/weapon/legcuffs/bolas(src)
+		new /obj/item/weapon/legcuffs/bolas(src)
+		new /obj/item/weapon/legcuffs/bolas(src)
+		new /obj/item/weapon/legcuffs/bolas(src)
+		new /obj/item/weapon/legcuffs/bolas(src)
+
 
 /obj/item/weapon/storage/box/rxglasses
 	name = "prescription glasses"

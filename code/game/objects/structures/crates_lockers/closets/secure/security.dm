@@ -153,6 +153,7 @@
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/taser(src)
+		new /obj/item/weapon/storage/box/bolas(src)
 		return
 
 
@@ -188,7 +189,6 @@
 		new /obj/item/taperoll/police(src)
 		new /obj/item/device/hailer(src) //wonder if vg would spam this
 		new /obj/item/clothing/gloves/black(src)
-		new /obj/item/weapon/legcuffs/bolas(src) //I added this - Comic
 		return
 
 

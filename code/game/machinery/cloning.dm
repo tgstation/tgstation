@@ -23,10 +23,10 @@
 	var/biomass = CLONE_BIOMASS // * 3 - N3X
 	var/opened = 0
 
-	l_color = "#00FF00"
+	l_color = "#7BF9FF"
 	power_change()
 		..()
-		if(!(stat & (BROKEN|NOPOWER)))
+		if(!(stat & (BROKEN|NOPOWER)) && attempting)
 			SetLuminosity(2)
 		else
 			SetLuminosity(0)
