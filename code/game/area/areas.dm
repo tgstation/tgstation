@@ -96,7 +96,7 @@
 	return 0
 
 /area/proc/firealert()
-	if(src.name == "Space") //no fire alarms in space
+	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
 	if (!( src.fire ))
 		src.fire = 1
@@ -137,30 +137,26 @@
 	return
 
 /area/proc/burglaralert(var/obj/trigger)
-	if(src.name == "Space") //no burglar alarms in space
+	if(always_unpowered == 1) //no burglar alarms in space/asteroid
 		return
-
 	//Trigger alarm effect
 	var/RAcontents = area_contents(src)
 	for(var/area/related_areas in related)
 		related_areas.fire = 1
 		related_areas.updateicon()
 		related_areas.mouse_opacity = 0
-
 		//Lockdown airlocks
 		for(var/obj/machinery/door/airlock/DOOR in RAcontents)
 			DOOR.close()
 			if(DOOR.density)
 				DOOR.locked = 1
 				DOOR.update_icon()
-
 	//Alert silicons
 	var/list/cameras = list()
 	for (var/obj/machinery/camera/C in RAcontents)
 		cameras += C
 	for (var/mob/living/silicon/SILICON in player_list)
 		SILICON.triggerAlarm("Burglar", src, cameras, trigger)
-
 	//Cancel silicon alert after 1 minute
 	spawn(600)
 		for (var/mob/living/silicon/SILICON in player_list)
