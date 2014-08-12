@@ -17,9 +17,18 @@
 /proc/sanitizeSQL(var/t as text)
 	//var/sanitized_text = replacetext(t, "'", "\\'")
 	//sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
-	var/sqltext = dbcon.Quote(t);
-	return copytext(sqltext, 2, lentext(sqltext)-1);//Quote() adds quotes around input, we already do that
 
+	var/sqltext = dbcon.Quote(t)
+	//testing("sanitizeSQL(): BEFORE copytext(): [sqltext]")
+	sqltext = copytext(sqltext, 2, lentext(sqltext))//Quote() adds quotes around input, we already do that
+	//testing("sanitizeSQL(): AFTER copytext(): [sqltext]")
+	return sqltext
+
+/*
+/mob/verb/SanitizeTest(var/t as text)
+	src << "IN: [t]"
+	src << "OUT: [sanitizeSQL(t)]"
+*/
 /*
  * Text sanitization
  */

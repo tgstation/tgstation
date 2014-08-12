@@ -156,7 +156,7 @@
 	var/harvests = score["stuffharvested"] * 5 //done
 	var/shipping = score["stuffshipped"] * 5
 	var/mining = score["oremined"] * 2 //done
-	var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
+	//var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
 	var/power = score["powerloss"] * 20
 	var/messpoints
 	if (score["mess"] != 0) messpoints = score["mess"] //done

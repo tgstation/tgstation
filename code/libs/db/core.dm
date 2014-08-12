@@ -48,6 +48,7 @@ DBConnection
 
 DBQuery
 	var
+		closed = 0 // N3X: Explicitly closed?
 		sql 			// The sql query being executed.
 		default_cursor
 		list/columns 	// list of DB Columns populated by Columns()
@@ -63,6 +64,11 @@ DBQuery
 		if(cursor_handler) src.default_cursor = cursor_handler
 		_db_query = _dm_db_new_query()
 		return ..()
+
+
+	// DO NOT CHANGE TO DESTROY() - N3X
+	Del()
+		Close()
 
 	proc
 
@@ -97,6 +103,9 @@ DBQuery
 			return results
 
 		Close()
+			if(closed)
+				return // Don't do this twice.
+			closed=1
 			item.len = 0
 			columns = null
 			conversions = null
