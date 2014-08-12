@@ -204,7 +204,7 @@
 		del L
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/turf/N)
+/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1)
 	if (!N)
 		return
 
@@ -257,6 +257,9 @@
 		if (istype(W,/turf/simulated/floor))
 			W.RemoveLattice()
 
+		if(tell_universe)
+			universe.OnTurfChange(W)
+
 		if(air_master)
 			air_master.mark_for_update(src)
 
@@ -275,6 +278,9 @@
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
+		if(tell_universe)
+			universe.OnTurfChange(W)
+
 		if(air_master)
 			air_master.mark_for_update(src)
 
@@ -287,6 +293,7 @@
 
 	decals += decal
 	overlays += decal
+
 /turf/proc/ClearDecals()
 	if(!decals)
 		return
