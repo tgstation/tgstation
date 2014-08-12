@@ -386,13 +386,13 @@
 	new /obj/item/weapon/card/id/prisoner/seven(src)
 
 /obj/item/weapon/storage/box/seccarts
-	name = "box of spare R.O.B.U.S.T. Cartridges"
-	desc = "A box full of R.O.B.U.S.T. Cartridges, used by Security."
+	name = "box of PDA security cartridges"
+	desc = "A box full of PDA cartridges used by Security."
 	icon_state = "pda"
 
 /obj/item/weapon/storage/box/seccarts/New()
 	..()
-	new /obj/item/weapon/cartridge/security(src)
+	new /obj/item/weapon/cartridge/detective(src)
 	new /obj/item/weapon/cartridge/security(src)
 	new /obj/item/weapon/cartridge/security(src)
 	new /obj/item/weapon/cartridge/security(src)
@@ -523,3 +523,18 @@
 		new /obj/item/weapon/light/tube(src)
 	for(var/i = 0; i < 7; i++)
 		new /obj/item/weapon/light/bulb(src)
+
+
+/obj/item/weapon/storage/box/deputy
+	name = "box of deputy armbands"
+	desc = "To be issued to those authorized to act as deputy of security."
+
+/obj/item/weapon/storage/box/deputy/New()
+	..()
+	new /obj/item/clothing/tie/armband/deputy(src)
+	new /obj/item/clothing/tie/armband/deputy(src)
+	new /obj/item/clothing/tie/armband/deputy(src)
+	new /obj/item/clothing/tie/armband/deputy(src)
+	new /obj/item/clothing/tie/armband/deputy(src)
+	new /obj/item/clothing/tie/armband/deputy(src)
+	new /obj/item/clothing/tie/armband/deputy(src)
