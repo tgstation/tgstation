@@ -103,7 +103,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	SetLuminosity(2)			//pad lighting
 	icon_state = "holopad1"
 	A.current = src
-	//master = A//master = A//AI is the master.
 	use_power = 2//Active power usage.
 	return 1
 
