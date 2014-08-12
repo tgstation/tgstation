@@ -20,6 +20,9 @@
 	var/sqltext = dbcon.Quote(t);
 	return copytext(sqltext, 2, lentext(sqltext)-1);//Quote() adds quotes around input, we already do that
 
+/mob/verb/SanitizeTest(var/t as text)
+	src << "IN: [t]"
+	src << "OUT: [sanitizeSQL(t)]"
 /*
  * Text sanitization
  */
