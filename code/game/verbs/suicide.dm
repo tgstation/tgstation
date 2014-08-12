@@ -71,6 +71,7 @@
 							"\red <b>[src] is holding \his breath! It looks like \he's trying to commit suicide.</b>"))
 		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
+		DB_add_logout_suicide_record(SUICIDE)
 
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1

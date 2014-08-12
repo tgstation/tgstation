@@ -28,6 +28,10 @@
 
 
 				send2irc("Server", "[cheesy_message]")
+
+
+	DB_add_logout_suicide_record(LOGOUT)
+
 	..()
 
 	if(isobj(loc))

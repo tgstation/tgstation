@@ -107,6 +107,26 @@ CREATE TABLE `erro_ban` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `TG_logouts_and_suicides`
+-- By RemieRichards
+-- 
+
+DROP TABLE IF EXISTS `TG_logouts_and_suicides`; 
+/*!40101 SET @saved_cs_client	= @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TG_logouts_and_suicides` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`userID` int(11) NOT NULL,
+	`datetime` datetime DEFAULT NULL,
+	`roundtime` int(11) DEFAULT NULL,
+	`isAntag` BOOLEAN DEFAULT NULL,
+	`typeLS` varchar(32) NOT NULL,
+	PRIMARY KEY(`id`)
+	FOREIGN KEY(`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `erro_connection_log`
 --
 
