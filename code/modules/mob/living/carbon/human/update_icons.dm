@@ -39,7 +39,7 @@ There are several things that need to be remembered:
 		update_base_icon_state()	//Handles updating var/base_icon_state (WIP) This is used to update the
 									mob's icon_state easily e.g. "[base_icon_state]_s" is the standing icon_state
 		update_body()				//Handles updating your mob's icon_state (using update_base_icon_state())
-									as well as sprite-accessories that didn't really fit elsewhere (underwear, lips, eyes)
+									as well as sprite-accessories that didn't really fit elsewhere (underwear, undershirts, lips, eyes)
 									//NOTE: update_mutantrace() is now merged into this!
 		update_hair()				//Handles updating your hair overlay (used to be update_face, but mouth and
 									eyes were merged into update_body())
@@ -57,7 +57,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 //Human Overlays Indexes/////////
 #define SPECIES_LAYER			23		// mutantrace colors... these are on a seperate layer in order to prvent
-#define BODY_LAYER				22		//underwear, eyes, lips(makeup)
+#define BODY_LAYER				22		//underwear, undershirts, eyes, lips(makeup)
 #define MUTATIONS_LAYER			21		//Tk headglows etc.
 #define AUGMENTS_LAYER			20
 #define DAMAGE_LAYER			19		//damage indicators (cuts and burns)

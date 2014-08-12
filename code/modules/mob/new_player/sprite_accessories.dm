@@ -542,3 +542,34 @@
 		name = "Tankini"
 		icon_state = "female_tankini"
 		gender = FEMALE
+
+////////////////////////////
+// Undershirt Definitions //
+////////////////////////////
+/datum/sprite_accessory/undershirt
+	icon = 'icons/mob/undershirt.dmi'
+
+	nude
+		name = "Nude"
+		icon_state = null
+		gender = NEUTER
+
+	shirt_white
+		name = "White Shirt"
+		icon_state = "shirt_white"
+		gender = NEUTER
+
+	shirt_black
+		name = "Black Shirt"
+		icon_state = "shirt_black"
+		gender = NEUTER
+
+	tank_white
+		name = "White Tank-Top"
+		icon_state = "tank_white"
+		gender = NEUTER
+
+	tank_black
+		name = "Black Tank-Top"
+		icon_state = "tank_black"
+		gender = NEUTER
