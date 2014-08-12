@@ -43,3 +43,9 @@
 	icon_state = "advmag0"
 	magboot_state = "advmag"
 	slowdown_active = SHOES_SLOWDOWN
+
+/obj/item/clothing/shoes/magboots/syndie
+	desc = "Reverse-engineered magnetic boots that have a custom syndicate paintjob for use in high-speed low-grav combat."
+	name = "gorlex magboots"
+	icon_state = "syndiemag0"
+	magboot_state = "syndiemag"

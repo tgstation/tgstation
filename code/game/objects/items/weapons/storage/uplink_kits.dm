@@ -88,6 +88,16 @@
 	desc = "A sleek, sturdy box"
 	icon_state = "box_of_doom"
 
+/obj/item/weapon/storage/box/syndie_kit/rcdkit
+	name = "boxed RCD and cartridges"
+
+/obj/item/weapon/storage/box/syndie_kit/rcdkit/New()
+	new /obj/item/weapon/rcd(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	return
+
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
 
