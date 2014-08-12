@@ -49,9 +49,7 @@
 		else
 			set_species()
 
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
+	create_reagents(1000)
 
 	if(!dna)
 		dna = new /datum/dna(null)
@@ -272,8 +270,10 @@
 
 
 /mob/living/carbon/human/blob_act()
-	if(stat == 2)	return
-	show_message("\red The blob attacks you!")
+	if(stat == DEAD)
+		return
+
+	show_message("<span class='warning'>The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
