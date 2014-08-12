@@ -166,6 +166,6 @@
 			M.show_message(rendered, 2)
 	if(said_last_words)
 		// Kill 'em.
-		src.stat = 2
+		src.stat = DEAD
 		src.death(0)
 		src.regenerate_icons()
