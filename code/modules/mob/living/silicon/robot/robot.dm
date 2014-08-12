@@ -209,6 +209,7 @@
 
 	overlays -= "eyes" //Takes off the eyes that it started with
 
+	playsound(loc, 'sound/machines/transform.ogg', 75, 1)
 	transform_animation(animation_length)
 	notify_ai(2)
 	updateicon()
