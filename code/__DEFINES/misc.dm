@@ -29,8 +29,9 @@
 //3 = no hud (for screenshots)
 
 #define MINERAL_MATERIAL_AMOUNT 2000
-//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
-
+//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc#define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
+#define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
+//used by canUseTopic()
 
 #define CLICK_CD_MELEE 8
 #define CLICK_CD_RANGE 4
