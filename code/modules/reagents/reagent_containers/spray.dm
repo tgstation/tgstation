@@ -57,7 +57,7 @@
 		qdel(D)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-	user.changeNext_move(4)
+	user.changeNext_move(CLICK_CD_RANGE)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src].")
@@ -217,7 +217,7 @@
 			qdel(D)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-	user.changeNext_move(4)
+	user.changeNext_move(CLICK_CD_RANGE)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from a chem sprayer.")

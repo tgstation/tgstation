@@ -175,12 +175,13 @@
 	icon_state = "coin"
 	flags = CONDUCT
 	force = 1
-	throwforce = 0
+	throwforce = 2
 	w_class = 1.0
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cmineral = null
 	var/cooldown = 0
+	var/value = 10
 
 /obj/item/weapon/coin/New()
 	pixel_x = rand(0,16)-8
@@ -192,35 +193,45 @@
 
 /obj/item/weapon/coin/gold
 	cmineral = "gold"
+	value = 160
 
 /obj/item/weapon/coin/silver
 	cmineral = "silver"
+	value = 40
 
 /obj/item/weapon/coin/diamond
 	cmineral = "diamond"
+	value = 120
 
 /obj/item/weapon/coin/iron
 	cmineral = "iron"
+	value = 20
 
 /obj/item/weapon/coin/plasma
 	cmineral = "plasma"
+	value = 80
 
 /obj/item/weapon/coin/uranium
 	cmineral = "uranium"
+	value = 160
 
 /obj/item/weapon/coin/clown
 	cmineral = "bananium"
+	value = 600 //makes the clown cri
 
 /obj/item/weapon/coin/adamantine
 	cmineral = "adamantine"
+	value = 400
 
 /obj/item/weapon/coin/mythril
 	cmineral = "mythril"
+	value = 400
 
 /obj/item/weapon/coin/twoheaded
 	cmineral = "iron"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
+	value = 20
 
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)

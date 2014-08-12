@@ -38,7 +38,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 
-	faction = "russian"
+	faction = list("russian")
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson

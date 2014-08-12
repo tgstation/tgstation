@@ -78,6 +78,8 @@
 	spark_system.attach(src)
 //	targets = new
 	..()
+	src.cover = new /obj/machinery/turretcover(src.loc)
+	src.cover.host = src
 	return
 
 /obj/machinery/turretcover
@@ -168,8 +170,9 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(src.cover==null)
-		src.cover = new /obj/machinery/turretcover(src.loc)
-		src.cover.host = src
+		src.loc = null
+		qdel(src)
+		return ..()
 	protected_area = get_protected_area()
 	if(!enabled || !protected_area || protected_area.turretTargets.len<=0)
 		if(!isDown() && !isPopping())
@@ -273,7 +276,7 @@
 
 /obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
 	..()
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/weapons/smash.ogg', 60, 1)
 	src.spark_system.start()
 	src.health -= W.force * 0.5
@@ -407,7 +410,7 @@
 
 
 /obj/machinery/turret/attack_animal(mob/living/simple_animal/M as mob)
-	M.changeNext_move(8)
+	M.changeNext_move(CLICK_CD_MELEE)
 	if(M.melee_damage_upper == 0)	return
 	if(!(stat & BROKEN))
 		visible_message("\red <B>[M] [M.attacktext] [src]!</B>")
@@ -424,7 +427,7 @@
 
 
 /obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	M.changeNext_move(8)
+	M.changeNext_move(CLICK_CD_MELEE)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		visible_message("\red <B>[] has slashed at []!</B>", M, src)
@@ -545,7 +548,7 @@
 
 
 /obj/machinery/gun_turret/attack_alien(mob/user as mob)
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("[user] slashes at [src]", "You slash at [src]")
 	take_damage(15)
 	return
@@ -580,12 +583,14 @@
 	var/list/pos_targets = list()
 	var/target = null
 	for(var/mob/living/M in view(scan_range,src))
-		if(M.stat || faction == M.faction)
+		if(M.stat)
+			continue
+		if(faction in M.faction)
 			continue
 		pos_targets += M
 	for(var/obj/mecha/M in oview(scan_range, src))
 		if(M.occupant)
-			if(faction == M.occupant.faction)
+			if(faction in M.occupant.faction)
 				continue
 		if(!M.occupant)
 			continue //Don't shoot at empty mechs.

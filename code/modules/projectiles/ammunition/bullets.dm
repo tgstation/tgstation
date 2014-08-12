@@ -44,12 +44,6 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet
 
 
-/obj/item/ammo_casing/a12mm
-	desc = "A 12mm bullet casing."
-	caliber = "12mm"
-	projectile_type = /obj/item/projectile/bullet/midbullet
-
-
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
 	desc = "A 12 gauge slug."

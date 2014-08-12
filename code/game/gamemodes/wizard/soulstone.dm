@@ -151,7 +151,7 @@
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/construct/armoured, A, U)
+						makeNewConstruct(/mob/living/simple_animal/construct/armored, A, U)
 
 					if("Wraith")
 						makeNewConstruct(/mob/living/simple_animal/construct/wraith, A, U)
@@ -168,6 +168,7 @@
 
 proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/target, var/mob/stoner = null, cultoverride = 0)
 	var/mob/living/simple_animal/construct/newstruct = new ctype(get_turf(target))
+	newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
 	if(stoner && iscultist(stoner) || cultoverride)
 		if(ticker.mode.name == "cult")
@@ -196,6 +197,7 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = T.key
+	S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
 	if(iscultist(U))
 		ticker.mode.add_cultist(S.mind,2)
 	S.cancel_camera()

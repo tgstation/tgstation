@@ -15,8 +15,6 @@
 	uplink_uses = 10
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
@@ -139,9 +137,6 @@
 		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
 		the_bomb.r_code = nuke_code
 
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
-
 	return ..()
 
 
@@ -200,7 +195,7 @@
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(synd_mob), slot_shoes)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(synd_mob), slot_wear_suit)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat/syndicate(synd_mob), slot_head)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
 	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
 	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
@@ -217,7 +212,7 @@
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
 	E.imp_in = synd_mob
 	E.implanted = 1
-	synd_mob.faction = "syndicate"
+	synd_mob.faction |= "syndicate"
 	synd_mob.update_icons()
 	return 1
 

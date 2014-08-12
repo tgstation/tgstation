@@ -836,7 +836,7 @@
 		else
 			return 0
 
-		var/armor = H.run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
+		var/armor = H.run_armor_check(affecting, "melee", "<span class='warning'>Your armor has protected your [hit_area].</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area].</span>")
 		if(armor >= 100)	return 0
 		var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
@@ -1148,7 +1148,7 @@
 					if(prob(20))
 						spawn(0) H.emote(pick("giggle", "laugh"))
 
-		handle_temperature(breath)
+		handle_temperature(breath, H)
 
 		return 1
 

@@ -1,7 +1,7 @@
 var/bomb_set
 
 /obj/machinery/nuclearbomb
-	name = "\improper Nuclear Fission Explosive"
+	name = "nuclear fission explosive"
 	desc = "Uh oh. RUN!!!!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
@@ -46,6 +46,9 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
+
+/obj/machinery/nuclearbomb/attack_ai(mob/user as mob)
+	return
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user as mob)
 	user.set_machine(src)

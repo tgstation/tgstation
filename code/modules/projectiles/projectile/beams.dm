@@ -58,7 +58,7 @@
 
 
 /obj/item/projectile/lasertag
-	name = "lasertag beam"
+	name = "laser tag beam"
 	icon_state = "omnilaser"
 	hitsound = null
 	damage = 0

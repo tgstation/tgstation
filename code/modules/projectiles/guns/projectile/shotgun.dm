@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/shotgun
 	name = "shotgun"
-	desc = "Useful for sweeping alleys."
+	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	item_state = "shotgun"
 	w_class = 4.0
@@ -54,6 +54,7 @@
 
 /obj/item/weapon/gun/projectile/shotgun/combat
 	name = "combat shotgun"
+	desc = "A traditional shotgun with tactical furniture and an eight-shell capacity underneath."
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom

@@ -50,13 +50,13 @@
 	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
 
 /obj/structure/showcase/fakeid
-	name = "Centcom Identification Console"
+	name = "\improper Centcom identification console"
 	desc = "You can use this to change ID's."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "id"
 
 /obj/structure/showcase/fakesec
-	name = "Centcom Security Records"
+	name = "\improper Centcom security records"
 	desc = "Used to view and edit personnel's security records"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "security"

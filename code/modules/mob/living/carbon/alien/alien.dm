@@ -10,7 +10,7 @@
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
-	faction = "alien"
+	faction = list("alien")
 	ventcrawler = 2
 
 	var/storedPlasma = 250
@@ -156,6 +156,9 @@
 
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
+
+/mob/living/carbon/alien/SpeciesCanConsume()
+	return 1 // Aliens can eat, and they can be fed food/drink
 
 /mob/living/carbon/alien/Process_Spaceslipping()
 	return 0 // Don't slip in space.

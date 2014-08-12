@@ -164,6 +164,10 @@
 	icon_state = "red"
 	item_color = "red"
 
+/obj/item/clothing/tie/armband/deputy
+	name = "security deputy armband"
+	desc = "An armband, worn by personnel authorized to act as a deputy of station security."
+
 /obj/item/clothing/tie/armband/cargo
 	name = "cargo bay guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."

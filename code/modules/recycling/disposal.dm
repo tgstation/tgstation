@@ -45,8 +45,7 @@
 		trunk.linked = src	// link the pipe trunk to self
 
 /obj/machinery/disposal/Destroy()
-	for(var/atom/movable/AM in contents)
-		AM.loc = src.loc
+	eject()
 	..()
 
 /obj/machinery/disposal/initialize()
@@ -141,7 +140,8 @@
 // mouse drop another mob or self
 //
 /obj/machinery/disposal/MouseDrop_T(mob/target, mob/user)
-	stuff_mob_in(target, user)
+	if(istype(target))
+		stuff_mob_in(target, user)
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/target, mob/user)
 	if (!user.canUseTopic(target) || istype(user, /mob/living/silicon/ai))
@@ -775,6 +775,12 @@
 
 	// pipe affected by explosion
 	ex_act(severity)
+
+		//pass on ex_act to our contents before calling it on ourself
+		var/obj/structure/disposalholder/H = locate() in src
+		if(H)
+			for(var/atom/movable/AM in H)
+				AM.ex_act(severity)
 
 		switch(severity)
 			if(1.0)

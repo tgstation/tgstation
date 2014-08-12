@@ -142,7 +142,7 @@
 		recording = 0
 		update_icon()
 	else
-		usr << "<span class='notice'The tape is full.</span>"
+		usr << "<span class='notice'>The tape is full.</span>"
 
 
 /obj/item/device/taperecorder/verb/stop()

@@ -31,7 +31,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
-	faction = "syndicate"
+	faction = list("syndicate")
 	status_flags = CANPUSH
 
 /mob/living/simple_animal/hostile/syndicate/Die()
@@ -108,7 +108,7 @@
 	minimum_distance = 5
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
-	casingtype = /obj/item/ammo_casing/a12mm
+	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
 	projectiletype = /obj/item/projectile/bullet/midbullet2
 
@@ -147,7 +147,7 @@
 	melee_damage_upper = 15
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	faction = "syndicate"
+	faction = list("syndicate")
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0

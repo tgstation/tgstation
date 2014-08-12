@@ -49,7 +49,7 @@
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	var/obj/effect/blob/factory/factory = null
 	var/is_zombie = 0
-	faction = "blob"
+	faction = list("blob")
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0

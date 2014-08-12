@@ -72,8 +72,8 @@
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
 	icon_state = "rock"
-	var/mineralSpawnChanceList = list("Uranium" = 1, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Plasma" = 1, "Iron" = 50, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
-	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Diamond" = 1, "Gold" = 10, "Silver" = 12, "Plasma" = 20, "Iron" = 40, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralChance = 13
 
 /turf/simulated/mineral/random/New()
 	..()
@@ -99,6 +99,8 @@
 					new/turf/simulated/floor/plating/asteroid/airless/cave(src)
 				if("Gibtonite")
 					M = new/turf/simulated/mineral/gibtonite(src)
+				if("Clown")
+					M = new/turf/simulated/mineral/clown(src)
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
@@ -109,7 +111,7 @@
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 35, "Diamond" = 10, "Gold" = 35, "Silver" = 35, "Plasma" = 35, "Iron" = 50)
+	mineralSpawnChanceList = list("Uranium" = 35, "Diamond" = 30, "Gold" = 45, "Silver" = 50, "Plasma" = 50)
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
@@ -117,8 +119,8 @@
 
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
-	mineralChance = 5
-	mineralSpawnChanceList = list("Uranium" = 1, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Plasma" = 1, "Iron" = 50, "Gibtonite" = 4)
+	mineralChance = 6
+	mineralSpawnChanceList = list("Uranium" = 2, "Diamond" = 1, "Gold" = 4, "Silver" = 6, "Plasma" = 15, "Iron" = 40, "Gibtonite" = 2)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
@@ -168,7 +170,7 @@
 	name = "Plasma deposit"
 	icon_state = "rock_Plasma"
 	mineralName = "Plasma"
-	spreadChance = 5
+	spreadChance = 8
 	spread = 1
 	hidden = 1
 	scan_state = "rock_Plasma"

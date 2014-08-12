@@ -16,7 +16,7 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
-	var/silenced = 0
+	var/suppressed = 0
 	var/recoil = 0
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
@@ -37,7 +37,7 @@
 		spawn()
 			shake_camera(user, recoil + 1, recoil)
 
-	if(silenced)
+	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
 	else
 		playsound(user, fire_sound, 50, 1)
@@ -89,7 +89,7 @@
 	if(!special_check(user))
 		return
 	if(chambered)
-		if(!chambered.fire(target, user, params, , silenced))
+		if(!chambered.fire(target, user, params, , suppressed))
 			shoot_with_empty_chamber(user)
 		else
 			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot

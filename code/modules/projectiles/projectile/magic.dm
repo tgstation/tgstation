@@ -167,7 +167,7 @@ proc/wabbajack(mob/living/M)
 					new_mob.universal_speak = 1*/
 				if("animal")
 					if(prob(50))
-						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat")
+						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato")
 						switch(beast)
 							if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
 							if("bear")		new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
@@ -175,15 +175,15 @@ proc/wabbajack(mob/living/M)
 							if("statue")	new_mob = new /mob/living/simple_animal/hostile/statue(M.loc)
 							if("bat") 		new_mob = new /mob/living/simple_animal/hostile/retaliate/bat(M.loc)
 							if("goat")		new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
+							if("killertomato")	new_mob = new /mob/living/simple_animal/hostile/killertomato(M.loc)
 					else
-						var/animal = pick("parrot","corgi","crab","pug","cat","tomato","mouse","chicken","cow","lizard","chick")
+						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick")
 						switch(animal)
 							if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
 							if("corgi")		new_mob = new /mob/living/simple_animal/corgi(M.loc)
 							if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
 							if("pug")		new_mob = new /mob/living/simple_animal/pug(M.loc)
 							if("cat")		new_mob = new /mob/living/simple_animal/cat(M.loc)
-							if("tomato")	new_mob = new /mob/living/simple_animal/tomato(M.loc)
 							if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
 							if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
 							if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
@@ -198,13 +198,10 @@ proc/wabbajack(mob/living/M)
 
 					var/mob/living/carbon/human/H = new_mob
 					ready_dna(H)
-					if(H.dna)
-						var/list/randspecies = list()
-						for(var/t in typesof(/datum/species)) // returns a bunch of types
-							var/datum/species/temp = new t()
-							randspecies += "[temp.type]"
-						var/datum/species/new_species = pick(randspecies)
+					if(H.dna && prob(50))
+						var/new_species = pick(typesof(/datum/species) - /datum/species)
 						H.dna.species = new new_species()
+					H.update_icons()
 				else
 					return
 
@@ -237,7 +234,7 @@ proc/wabbajack(mob/living/M)
 			for(var/mob/living/carbon/human/H in change.contents)
 				var/mob/living/simple_animal/hostile/statue/S = new /mob/living/simple_animal/hostile/statue(change.loc, firer)
 				S.name = "statue of [H.name]"
-				S.faction = "\ref[firer]"
+				S.faction = list("\ref[firer]")
 				S.icon = change.icon
 				if(H.mind)
 					H.mind.transfer_to(S)
