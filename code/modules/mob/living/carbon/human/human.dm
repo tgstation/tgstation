@@ -1,4 +1,3 @@
-#define STRIP_DELAY			40	//time taken (in deciseconds) to strip somebody
 /mob/living/carbon/human
 	name = "unknown"
 	real_name = "unknown"
@@ -736,7 +735,7 @@
 					else if(place_item && place_item.mob_can_equip(src, slot_wear_id, 1))
 						usr << "<span class='notice'>You try to place [place_item] on [src].</span>"
 
-					if(do_mob(usr, src, STRIP_DELAY))
+					if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 						if(id_item)
 							u_equip(id_item)
 							if(pickpocket) usr.put_in_hands(id_item)
@@ -774,7 +773,7 @@
 			else
 				return
 
-			if(do_mob(usr, src, STRIP_DELAY))
+			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 				if(pocket_item)
 					u_equip(pocket_item)
 					if(pickpocket) usr.put_in_hands(pocket_item)
