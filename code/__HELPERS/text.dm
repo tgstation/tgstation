@@ -20,8 +20,9 @@
 
 	var/sqltext = dbcon.Quote(t);
 	testing("sanitizeSQL(): BEFORE copytext(): [sqltext]")
-	sqltext = copytext(sqltext, 2, lentext(sqltext)-1);//Quote() adds quotes around input, we already do that
+	sqltext = copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
 	testing("sanitizeSQL(): AFTER copytext(): [sqltext]")
+	return sqltext
 
 /mob/verb/SanitizeTest(var/t as text)
 	src << "IN: [t]"
