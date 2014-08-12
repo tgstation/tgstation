@@ -312,49 +312,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (ckey(Console.department) == ckey(href_list["department"]))
 						switch(priority)
 							if(2)		//High priority
-								if(Console.newmessagepriority < 2)
-									Console.newmessagepriority = 2
-									Console.update_icon()
-								if(!Console.silent)
-									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-									for (var/mob/O in hearers(5, Console.loc))
-										O.show_message("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'")
-								Console.messages += "<span class='bad'>High Priority</span><BR><b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
-								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
-								// Same message, but without the hyperlink.
-								slip.info = "<span class='bad'>High Priority</span><BR><b>From:</b> [department]<BR>[sending]"
-								slip.name = "Priority Request - [department]"
-
+								Console.createmessage(src, "PRIORITY Alert in [department]", sending, 2, 1)
 							if(3)		// Extreme Priority
-								if(Console.newmessagepriority < 3)
-									Console.newmessagepriority = 3
-									Console.update_icon()
-								if(1) // This is EXTREMELY important, so beep.
-									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-									for (var/mob/O in hearers(7, Console.loc))
-										O.show_message("\icon[Console] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'")
-								Console.messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
-								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
-								// Same message, but without the hyperlink.
-								slip.info = "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [department]<BR>[sending]"
-								slip.name = "EXTREME Request - [department]"
-								var/mob/living/target = locate() in view(7,Console)
-								if(target)
-									Console.visible_message("<span class='danger'>[Console] launches [slip] at [target]!</span>")
-									slip.throw_at(target, 16, 3)
-
+								Console.createmessage(src, "EXTREME PRIORITY Alert in [department]", sending, 3, 1)
 							else		// Normal priority
-								if(Console.newmessagepriority < 1)
-									Console.newmessagepriority = 1
-									Console.update_icon()
-								if(!Console.silent)
-									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-									for (var/mob/O in hearers(4, Console.loc))
-										O.show_message("\icon[Console] *The Requests Console beeps: 'Message from [department]'")
-								Console.messages += "<b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
-								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
-								slip.info = "<b>From:</b> [department]<BR>[sending]"
-								slip.name = "Request Slip - [department]"
+								Console.createmessage(src, "Message from [department]", sending, 1, 1)
 
 						screen = 6
 						Console.luminosity = 2
@@ -410,59 +372,65 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 	
-/obj/machinery/requests_console/proc/createmessage(source, title, message, priority, paper)	//generate one-way message, from 'source'
-	var/obj/machinery/requests_console/Console = src
-	var/sending = message
-	capitalize(source)
+/obj/machinery/requests_console/proc/createmessage(source, title, message, priority, paper)
+	var/linkedsender
+	var/unlinkedsender
+	if(istype(source, /obj/machinery/requests_console))
+		var/obj/machinery/requests_console/sender = source
+		linkedsender = "<a href='?src=\ref[src];write=[ckey(sender.department)]'>[sender.department]</a>"
+		unlinkedsender = sender.department
+	else
+		capitalize(source)
+		linkedsender = source
+		unlinkedsender = source
 	capitalize(title)
-	sending += "<BR>"
 	switch(priority)
 		if(2)		//High priority
-			if(Console.newmessagepriority < 2)
-				Console.newmessagepriority = 2
-				Console.update_icon()
-			if(!Console.silent)
-				playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				for (var/mob/O in hearers(5, Console.loc))
-					O.show_message("\icon[Console] *The Requests Console beeps: '[title]'")
-			Console.messages += "<span class='bad'>High Priority</span><BR><b>From:</b> [source]><BR>[sending]"
+			if(src.newmessagepriority < 2)
+				src.newmessagepriority = 2
+				src.update_icon()
+			if(!src.silent)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
+				for (var/mob/O in hearers(5, src.loc))
+					O.show_message("\icon[src] *The Requests Console beeps: '[title]'")
+				src.messages += "<span class='bad'>High Priority</span><BR><b>From:</b> [linkedsender]<BR>[message]"
 			if(paper)
-				var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
-				slip.info = "<span class='bad'>High Priority</span><BR><b>From:</b> [source]<BR>[sending]"
+				var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(src.loc)
+				slip.info = "<span class='bad'>High Priority</span><BR><b>From:</b> [unlinkedsender]<BR>[message]"
 				slip.name = "Important Message - [source]"
 
 		if(3)		// Extreme Priority
-			if(Console.newmessagepriority < 3)
-				Console.newmessagepriority = 3
-				Console.update_icon()
+			if(src.newmessagepriority < 3)
+				src.newmessagepriority = 3
+				src.update_icon()
 			if(1) 
-				playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				for (var/mob/O in hearers(7, Console.loc))
-					O.show_message("\icon[Console] *The Requests Console yells: '[title]'")
-			Console.messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [source]<BR>[sending]"
-			var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
+				for (var/mob/O in hearers(7, src.loc))
+					O.show_message("\icon[src] *The Requests Console yells: '[title]'")
+			src.messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [linkedsender]<BR>[message]"
+			var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(src.loc)
 			if(paper)
-				slip.info = "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [source]<BR>[sending]"
-				slip.name = "URGENT message - [source]"
-				var/mob/living/target = locate() in view(7,Console)
+				slip.info = "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [unlinkedsender]<BR>[message]"
+				slip.name = "URGENT message - [unlinkedsender]"
+				var/mob/living/target = locate() in view(7,src)
 				if(target)
-					Console.visible_message("<span class='danger'>[Console] launches [slip] at [target]!</span>")
+					src.visible_message("<span class='danger'>[src] launches [slip] at [target]!</span>")
 					slip.throw_at(target, 16, 3)
 
 		else		// Normal priority
-			if(Console.newmessagepriority < 1)
-				Console.newmessagepriority = 1
-				Console.update_icon()
-			if(!Console.silent)
-				playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				for (var/mob/O in hearers(4, Console.loc))
-					O.show_message("\icon[Console] *The Requests Console beeps: '[title]'")
-			Console.messages += "<b>From:</b> [source]<BR>[sending]"
+			if(src.newmessagepriority < 1)
+				src.newmessagepriority = 1
+				src.update_icon()
+			if(!src.silent)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
+				for (var/mob/O in hearers(4, src.loc))
+					O.show_message("\icon[src] *The Requests Console beeps: '[title]'")
+			src.messages += "<b>From:</b> [linkedsender]<BR>[message]"
 			if(paper)
-				var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
-				slip.info = "<b>From:</b> [source]<BR>[sending]"
-				slip.name = "Message - [source]"
-	Console.luminosity = 2
+				var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(src.loc)
+				slip.info = "<b>From:</b> [unlinkedsender]<BR>[message]"
+				slip.name = "Message - [unlinkedsender]"
+	src.luminosity = 2
 
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/weapon/crowbar))
