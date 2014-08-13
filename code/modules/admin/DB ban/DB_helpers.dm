@@ -3,7 +3,7 @@
 Table needs to be a string corresponding to one of our SQL tables see the SQL.schema file for them.
 */
 
-/proc/DB_get_ID_from_table(var/mob/M, var/table) //finds an ID corresponding to M, in table
+/proc/DB_get_ID_from_table(var/mob/M, var/table, var/allow_multiples) //finds an ID corresponding to M, in table
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return "<span class='warning'>Database connection failed.</span>"
@@ -26,7 +26,7 @@ Table needs to be a string corresponding to one of our SQL tables see the SQL.sc
 	if(id_number == 0) //No matches
 		return "<span class='warning'>Database find failed due to no matches fitting the search criteria.</span>"
 
-	if(id_number > 1) //Too many matches
+	if(!allow_multiples && id_number > 1) //Too many matches
 		return "<span class='warning'>Database find failed due to multiple matches fitting the search criteria.</span>"
 
 	if(istext(id))

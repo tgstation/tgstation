@@ -139,7 +139,7 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 
 
 /mob/proc/DB_add_logout_suicide_record(var/typeLS)
-	var/id = DB_get_ID_from_table(src,"erro_connection_log")
+	var/id = DB_get_ID_from_table(src,"erro_connection_log",0)
 	if(!id || !isnum(id))
 		return
 
@@ -155,7 +155,7 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 
 
 /datum/admins/proc/DB_access_logouts_suicides(var/mob/M) //Not used yet, still WIP.
-	var/id = DB_get_ID_from_table(M,"erro_connection_log")
+	var/id = DB_get_ID_from_table(M,"erro_connection_log",1)
 	if(!id)
 		return
 
