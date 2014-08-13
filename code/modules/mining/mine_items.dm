@@ -148,7 +148,7 @@ proc/move_mining_shuttle()
 	if (istype(W, /obj/item/weapon/card/emag))
 		src.req_access = list()
 		hacked = 1
-		usr << "You disable the console's acess requirement."
+		usr << "You disable the console's access requirement."
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
