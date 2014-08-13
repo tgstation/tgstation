@@ -24,10 +24,7 @@
 /obj/item/weapon/gun/projectile/rocketlauncher/isHandgun()
 	return 0
 
-/obj/item/weapon/gun/projectile/rocketlauncher/attack_hand(mob/user as mob)
-	if(loc != user)
-		..()
-		return
+/obj/item/weapon/gun/projectile/rocketlauncher/attack_self(mob/user as mob)
 	update_icon()
 
 /obj/item/weapon/gun/projectile/rocketlauncher/update_icon()
