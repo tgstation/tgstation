@@ -396,7 +396,7 @@
 	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "\blue You you disable the security protocols"
+		user << "\blue You disable the security protocols"
 	src.updateUsrDialog()
 	return
 
@@ -404,7 +404,7 @@
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"
 	id_with_upload_string = "1;2"
-	id_with_download_string = "1;2"
+	id_with_download_string = "1;2;3;4"
 	server_id = 2
 
 

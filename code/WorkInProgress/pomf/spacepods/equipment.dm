@@ -64,7 +64,7 @@
 /obj/item/device/spacepod_equipment/weaponry
 	name = "pod weapon"
 	desc = "You shouldn't be seeing this"
-	icon = 'icons/pods/ship.dmi'
+	icon = 'icons/pods/pod_parts.dmi'
 	icon_state = "blank"
 	var/projectile_type
 	var/shot_cost = 0

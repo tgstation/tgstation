@@ -179,10 +179,9 @@
 						"self_msg" = "You cut the {HOLDER}'s bulkhead panelling loose."
 					),
 					state_next = list(
-						"key"      = /obj/item/stack/sheet/plasteel,
-						"amount"   = 5,
-						"vis_msg"  = "{USER} installs the {HOLDER}'s plasteel armor.",
-						"self_msg" = "You install the {HOLDER}'s plasteel armor."
+						"key"      = /obj/item/pod_parts/armor,
+						"vis_msg"  = "{USER} installs the {HOLDER}'s armor plating.",
+						"self_msg" = "You install the {HOLDER}'s armor plating."
 					)
 				),
 				// 11. Loose armor

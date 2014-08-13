@@ -37,6 +37,7 @@ other types of metals and chemistry for reagents).
 #define	AUTOLATHE	4	//Uses glass/metal only.
 #define CRAFTLATHE	8	//Uses fuck if I know. For use eventually.
 #define MECHFAB		16 //Remember, objects utilising this flag should have construction_time and construction_cost vars.
+#define PODFAB		32 //Used for the pod making machine
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 /datum/design						//Datum for object designs, used in construction
@@ -447,6 +448,11 @@ other types of metals and chemistry for reagents).
 	name = "Circuit Design (MoMMI R&D Console)"
 	id = "rdconsole_mommi"
 	build_path = /obj/item/weapon/circuitboard/rdconsole/mommi
+
+/datum/design/rdconsole/pods
+	name = "Circuit Design (Spacepod Hangar R&D Console)"
+	id = "rdconsole_pods"
+	build_path = /obj/item/weapon/circuitboard/rdconsole/pods
 
 /datum/design/ordercomp
 	name = "Circuit Design (Supply ordering console)"
@@ -1326,7 +1332,7 @@ other types of metals and chemistry for reagents).
 	desc = "A basic power cell that holds 1000 units of energy"
 	id = "basic_cell"
 	req_tech = list("powerstorage" = 1)
-	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
+	build_type = PROTOLATHE | AUTOLATHE | MECHFAB | PODFAB
 	materials = list("$metal" = 700, "$glass" = 50)
 	build_path = /obj/item/weapon/cell
 	category = "Misc"
@@ -1336,7 +1342,7 @@ other types of metals and chemistry for reagents).
 	desc = "A power cell that holds 10000 units of energy"
 	id = "high_cell"
 	req_tech = list("powerstorage" = 2)
-	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AUTOLATHE | MECHFAB | PODFAB
 	materials = list("$metal" = 700, "$glass" = 60)
 	build_path = /obj/item/weapon/cell/high
 	category = "Misc"
@@ -1347,7 +1353,7 @@ other types of metals and chemistry for reagents).
 	id = "super_cell"
 	req_tech = list("powerstorage" = 3, "materials" = 2)
 	reliability_base = 75
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | MECHFAB | PODFAB
 	materials = list("$metal" = 700, "$glass" = 70)
 	build_path = /obj/item/weapon/cell/super
 	category = "Misc"
@@ -1358,7 +1364,7 @@ other types of metals and chemistry for reagents).
 	id = "hyper_cell"
 	req_tech = list("powerstorage" = 5, "materials" = 4)
 	reliability_base = 70
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | MECHFAB | PODFAB
 	materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
 	build_path = /obj/item/weapon/cell/hyper
 	category = "Misc"
@@ -1439,6 +1445,78 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mechfab
 
+/datum/design/spacepod_fab
+	name = "Spacepod Fabricator Board"
+	desc = "Allows for the construction of a Spacepod Fabricator."
+	id = "spacepod_fab"
+	req_tech = list("programming" = 4, "materials" = 2, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/podfab
+
+/////////////////////////////////////////
+////////////Spacepod Designs/////////////
+/////////////////////////////////////////
+
+/datum/design/spacepod/frame/fop
+	name = "Spacepod Design (Fore Port Frame)"
+	desc = "Component of a spacepod frame"
+	id = "spaceframe_fp"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PODFAB
+	materials = list("iron"=15000,"$glass"=5000)
+	build_path = /obj/item/pod_parts/pod_frame/fore_port
+	category = "Pod Frame"
+
+/datum/design/spacepod/frame/fos
+	name = "Spacepod Design (Fore Starboard Frame)"
+	desc = "Component of a spacepod frame"
+	id = "spaceframe_fp"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PODFAB
+	materials = list("iron"=15000,"$glass"=5000)
+	build_path = /obj/item/pod_parts/pod_frame/fore_starboard
+	category = "Pod Frame"
+
+/datum/design/spacepod/frame/afp
+	name = "Spacepod Design (Aft Port Frame)"
+	desc = "Component of a spacepod frame"
+	id = "spaceframe_fp"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PODFAB
+	materials = list("iron"=15000,"$glass"=5000)
+	build_path = /obj/item/pod_parts/pod_frame/aft_port
+	category = "Pod Frame"
+
+/datum/design/spacepod/frame/afs
+	name = "Spacepod Design (Aft Starboard Frame)"
+	desc = "Component of a spacepod frame"
+	id = "spaceframe_fp"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PODFAB
+	materials = list("iron"=15000,"$glass"=5000)
+	build_path = /obj/item/pod_parts/pod_frame/aft_starboard
+	category = "Pod Frame"
+
+/datum/design/spacepod/core
+	name = "Spacepod Design (Core)"
+	desc = "A spacepod core, made up of the engine and power source."
+	id = "spacepod_core"
+	req_tech = list("materials" = 3, "engineering" = 3, "power" = 3)
+	build_type = MECHFAB | PODFAB
+	materials = list("iron"=5000,"$glass"=5000,"uranium"=1000,"plasma"=5000)
+	build_path = /obj/item/pod_parts/core
+	category = "Pod Parts"
+
+/datum/design/spacepod/armor
+	name = "Spacepod Design (Civilian Armor)"
+	desc = "Spacepod armor. This is the civilian version."
+	id = "spacepod_core"
+	req_tech = list("materials" = 4)
+	build_type = PODFAB
+	materials = list("iron"=15000,"$glass"=5000,"plasma"=10000)
+	build_path = /obj/item/pod_parts/armor
+	category = "Pod Armor"
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
