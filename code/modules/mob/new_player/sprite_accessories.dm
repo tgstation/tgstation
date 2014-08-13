@@ -346,7 +346,7 @@
 		icon_state = "hair_joestar"
 		gender = MALE
 
-	80s
+	metal
 		name = "Metal"
 		icon_state = "hair_80s"
 
