@@ -249,7 +249,7 @@
 			module_sprites["Engiseer"] = "Engiseer"
 			module_sprites["Landmate"] = "landmate"
 			module_sprites["Wall-E"] = "wall-e"
-			module-sprites["Marina-EN"] = "marinaEN]
+			module-sprites["Marina-EN"] = "marinaEN"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
