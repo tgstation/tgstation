@@ -24,8 +24,10 @@ Possible to do for anyone motivated enough:
  * Holopad
  */
 
-#define RANGE_BASED 2
-#define AREA_BASED 4
+#define HOLOPAD_PASSIVE_POWER_USAGE 1
+#define HOLOGRAM_POWER_USAGE 2
+#define RANGE_BASED 4
+#define AREA_BASED 6
 
 var/const/HOLOPAD_MODE = RANGE_BASED
 
@@ -101,7 +103,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	SetLuminosity(2)			//pad lighting
 	icon_state = "holopad1"
 	A.current = src
-	use_power += 2//Active power usage.
+	use_power += HOLOGRAM_POWER_USAGE
 	return 1
 
 /obj/machinery/hologram/holopad/proc/clear_holo(mob/living/silicon/ai/user)
@@ -109,11 +111,11 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		user.current = null
 	qdel(masters[user])//Get rid of user's hologram
 	masters -= user //Discard AI from the list of those who use holopad
-	use_power = max(1, use_power - 2)//Reduce power usage
+	use_power = max(HOLOPAD_PASSIVE_POWER_USAGE, use_power - HOLOGRAM_POWER_USAGE)//Reduce power usage
 	if (!masters.len)//If no users left
 		SetLuminosity(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 		icon_state = "holopad0"
-		use_power = 1//Passive power usage.
+		use_power = HOLOPAD_PASSIVE_POWER_USAGE
 	return 1
 
 /obj/machinery/hologram/holopad/process()
@@ -213,3 +215,5 @@ Holographic project of everything else.
 
 #undef RANGE_BASED
 #undef AREA_BASED
+#undef HOLOPAD_PASSIVE_POWER_USAGE
+#undef HOLOGRAM_POWER_USAGE
