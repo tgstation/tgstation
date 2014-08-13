@@ -61,9 +61,16 @@ var/const/BORG_WIRE_CAMERA = 16
 					R.notify_ai(1)
 				var/numberer = 1  // Send images the Cyborg has taken to the AI's album upon sync.
 				for(var/datum/picture/z in R.aicamera.aipictures)
+					if(R.connected_ai.aicamera.aipictures.len == 0)
+						var/datum/picture/p = new/datum/picture()
+						p = z
+						p.fields["name"] = "Uploaded Image [numberer] (synced from [R.name])"
+						R.connected_ai.aicamera.aipictures += p
+						numberer++
+						continue
 					for(var/datum/picture/t in R.connected_ai.aicamera.aipictures) //Hopefully to prevent someone spamming images to silicons, by spamming this wire
 						if((z.fields["pixel_y"] != t.fields["pixel_y"]) && (z.fields["pixel_x"] != t.fields["pixel_x"])) //~2.26 out of 1000 chance this will stop something it shouldn't
-							var/datum/picture/p = new()
+							var/datum/picture/p = new/datum/picture()
 							p = z
 							p.fields["name"] = "Uploaded Image [numberer] (synced from [R.name])"
 							R.connected_ai.aicamera.aipictures += p

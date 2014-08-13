@@ -788,9 +788,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)
 	if(photo)
-		photo.loc = src.loc
-		if(!issilicon(user))
-			user.put_in_inactive_hand(photo)
+		if(!photo.sillynewscastervar)
+			photo.loc = src.loc
+			if(!issilicon(user))
+				user.put_in_inactive_hand(photo)
+		else
+			qdel(photo)
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
@@ -825,8 +828,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(q.fields["name"] == find)
 				selection = q
 				break
- 		P.construct(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		P.sillynewscastervar = 1
 		photo = P
+		qdel(P)
 
 
 //########################################################################################################################

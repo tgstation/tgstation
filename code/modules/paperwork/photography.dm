@@ -31,6 +31,7 @@
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
+	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
 
 
 /obj/item/weapon/photo/attack_self(mob/user)
@@ -78,7 +79,7 @@
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
-/obj/item/weapon/photo/proc/construct(var/inicon, var/inimg, var/indesc, var/inblueprints)
+/obj/item/weapon/photo/proc/photocreate(var/inicon, var/inimg, var/indesc, var/inblueprints)
 	icon = inicon
 	img = inimg
 	desc = indesc
@@ -198,7 +199,7 @@
 
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/mob_detail
-	for(var/mob/living/carbon/A in the_turf)
+	for(var/mob/living/A in the_turf)
 		if(A.invisibility) continue
 		var/holding = null
 		if(A.l_hand || A.r_hand)
@@ -348,7 +349,7 @@ obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/
 		if(q.fields["name"] == find)
 			selection = q
 			break  	// just in case some AI decides to take 10 thousand pictures in a round
-	P.construct(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+	P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
 	P.pixel_x = selection.fields["pixel_x"]
 	P.pixel_y = selection.fields["pixel_y"]
 
@@ -422,7 +423,7 @@ obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
 			selection = q
 			break
 	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(C.loc)
-	p.construct(selection.fields["icon"], selection.fields["img"], selection.fields["desc"], selection.fields["blueprints"])
+	p.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"], selection.fields["blueprints"])
 	p.pixel_x = rand(-10, 10)
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
