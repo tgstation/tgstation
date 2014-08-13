@@ -11,7 +11,7 @@ How it works:
 AI clicks on holopad in camera view. View centers on holopad.
 AI clicks again on the holopad to display a hologram. Hologram stays as long as AI is looking at the pad and it (the hologram) is in range of the pad.
 AI can use the directional keys to move the hologram around, provided the above conditions are met and the AI in question is the holopad's master.
-Only one AI may project from a holopad at any given time.
+Any number of AIs can use a holopad, however, they will not be able to hear each other talk through it. /Lo6
 AI may cancel the hologram at any time by clicking on the holopad once more.
 
 Possible to do for anyone motivated enough:
@@ -24,10 +24,10 @@ Possible to do for anyone motivated enough:
  * Holopad
  */
 
-// HOLOPAD MODE
-// 0 = RANGE BASED
-// 1 = AREA BASED
-var/const/HOLOPAD_MODE = 0
+#define RANGE_BASED 2
+#define AREA_BASED 4
+
+var/const/HOLOPAD_MODE = RANGE_BASED
 
 /obj/machinery/hologram/holopad
 	name = "\improper AI holopad"
@@ -68,8 +68,6 @@ var/const/HOLOPAD_MODE = 0
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if (istype(user.current, /obj/machinery/hologram/holopad))
-//			var/obj/machinery/hologram/holopad/H = user.current
-//			if(H.masters[user])//If there is already a hologram.
 			user << "\red ERROR: \black Image feed in progress."
 			return
 		create_holo(user)//Create one.
@@ -103,11 +101,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	SetLuminosity(2)			//pad lighting
 	icon_state = "holopad1"
 	A.current = src
-	use_power = 2//Active power usage.
+	use_power += 2//Active power usage.
 	return 1
 
 /obj/machinery/hologram/holopad/proc/clear_holo(mob/living/silicon/ai/user)
-//	hologram.SetLuminosity(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
 	if(user.current == src)
 		user.current = null
 	qdel(masters[user])//Get rid of user's hologram
@@ -115,7 +112,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if (!masters.len)//If no users left
 		SetLuminosity(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 		icon_state = "holopad0"
-		use_power = 1//Passive power usage.
+		use_power = max(1, use_power - 2)//Passive power usage.
 	return 1
 
 /obj/machinery/hologram/holopad/process()
@@ -123,10 +120,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		for (var/mob/living/silicon/ai/master in masters)
 			if(master && !master.stat && master.client && master.eyeobj)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
 				if(!(stat & NOPOWER))//If the  machine has power.
-					if((HOLOPAD_MODE == 0 && (get_dist(master.eyeobj, src) <= holo_range)))
+					if((HOLOPAD_MODE == RANGE_BASED && (get_dist(master.eyeobj, src) <= holo_range)))
 						return 1
 
-					else if (HOLOPAD_MODE == 1)
+					else if (HOLOPAD_MODE == AREA_BASED)
 
 						var/area/holo_area = get_area(src)
 						var/area/eye_area = get_area(master.eyeobj)
@@ -154,7 +151,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-//	var/obj/effect/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
 
 /obj/machinery/hologram/power_change()
 	if (powered())
@@ -213,3 +209,6 @@ Holographic project of everything else.
 	desc = "It makes a hologram appear...with magnets or something..."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "hologram0"
+
+#undef RANGE_BASED
+#undef AREA_BASED
