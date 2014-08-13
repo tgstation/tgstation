@@ -50,11 +50,6 @@
 	damage_type = TOX
 
 
-/obj/item/projectile/bullet/burstbullet//I think this one needs something for the on hit
-	name = "exploding bullet"
-	damage = 20
-
-
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5
@@ -75,11 +70,32 @@
 				M.adjust_fire_stacks(1)
 				M.IgniteMob()
 
+
 /obj/item/projectile/bullet/incendiary/shell
+	name = "dragonsbreath round"
 	damage = 20
+
+/obj/item/projectile/bullet/incendiary/shell/Move()
+	..()
+	new/obj/effect/hotspot(get_turf(src))
+
 
 /obj/item/projectile/bullet/incendiary/mech
 	damage = 5
+
+
+/obj/item/projectile/bullet/meteorshot
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "small"
+	damage = 10
+	damage_type = OXY
+
+/obj/item/projectile/bullet/meteorshot/on_hit(var/atom/target, var/blocked = 0)
+	target.ex_act(3)
+
+/obj/item/projectile/bullet/meteorshot/New()
+	..()
+	SpinAnimation()
 
 
 /obj/item/projectile/bullet/mime

@@ -61,6 +61,12 @@
 	pellets = 5
 	variance = 0.8
 
+/obj/item/ammo_casing/shotgun/meteorshot
+	name = "meteorshot shell"
+	desc = "A shotgun shell rigged with CMC technology, which launches a massive slug when fired."
+	icon_state = "gshell"
+	projectile_type = /obj/item/projectile/bullet/meteorshot
+
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
