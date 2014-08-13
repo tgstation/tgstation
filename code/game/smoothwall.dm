@@ -99,7 +99,6 @@
 /turf/simulated/wall/Del()
 	spawn(10)
 		for(var/turf/simulated/wall/W in range(src,1))
-			world << "asd:[W]([W.x],[W.y],[W.z])"
 			W.relativewall()
 
 		for(var/obj/structure/falsewall/W in range(src,1))
