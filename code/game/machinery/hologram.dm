@@ -109,10 +109,11 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		user.current = null
 	qdel(masters[user])//Get rid of user's hologram
 	masters -= user //Discard AI from the list of those who use holopad
+	use_power = max(1, use_power - 2)//Reduce power usage
 	if (!masters.len)//If no users left
 		SetLuminosity(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 		icon_state = "holopad0"
-		use_power = max(1, use_power - 2)//Passive power usage.
+		use_power = 1//Passive power usage.
 	return 1
 
 /obj/machinery/hologram/holopad/process()
