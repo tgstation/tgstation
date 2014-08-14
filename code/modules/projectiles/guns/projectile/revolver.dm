@@ -50,10 +50,10 @@
 	usr << "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/weapon/gun/projectile/revolver/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is putting the [src.name] in \his throat! It looks like \he's trying to commit suicide.</span>", \
+	user.visible_message(pick("<span class='suicide'>[user] is putting the [src.name] into \his throat! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is putting the [src.name] to their temple! It looks like \he's trying to commit suicide.</span>"))
-	return (bruteloss)
-	return (brainloss)
+	return (BRUTELOSS)
+	var/turf/pos = get_turf(user)
 	pos.add_blood_floor(user)
 	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
 	playsound(pos, 'sound/weapons/Gunshot.ogg', 50, 1)
