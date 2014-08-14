@@ -75,7 +75,7 @@ datum/preferences
 	var/job_engsec_low = 0
 
 		// Want randomjob if preferences already filled - Donkie
-	var/userandomjob = 1 //defaults to 1 for fewer assistants
+	var/joblessrole = BERANDOMJOB //defaults to 1 for fewer assistants
 
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
@@ -372,10 +372,10 @@ datum/preferences
 		HTML += "</center></table>"
 
 		var/message = "Be an Assistant if preferences unavailable"
-		if(userandomjob == 1)
+		if(joblessrole == BERANDOMJOB)
 			message = "Get random job if preferences unavailable"
-		else if(userandomjob == 2)
-			message = "Do not play if preferences unavailable"
+		else if(joblessrole == RETURNTOLOBBY)
+			message = "Return to lobby if preferences unavailable"
 		HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[message]</a></center>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
@@ -530,9 +530,9 @@ datum/preferences
 					ResetJobs()
 					SetChoices(user)
 				if("random")
-					userandomjob += 1
-					if(userandomjob >= 3)
-						userandomjob = 0
+					joblessrole += 1
+					if(joblessrole >= 4)
+						joblessrole = 1
 					SetChoices(user)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))

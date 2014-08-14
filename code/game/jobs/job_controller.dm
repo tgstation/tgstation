@@ -1,3 +1,7 @@
+#define BEASSISTANT 	1
+#define BERANDOMJOB 	2
+#define RETURNTOLOBBY 	3
+
 var/global/datum/controller/occupations/job_master
 
 /datum/controller/occupations
@@ -261,7 +265,7 @@ var/global/datum/controller/occupations/job_master
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
 	for(var/mob/new_player/player in unassigned)
-		if(player.client.prefs.userandomjob == 1)
+		if(player.client.prefs.joblessrole == BERANDOMJOB)
 			GiveRandomJob(player)
 
 	Debug("DO, Standard Check end")
@@ -270,7 +274,7 @@ var/global/datum/controller/occupations/job_master
 
 	// For those who wanted to be assistant if their preferences were filled, here you go.
 	for(var/mob/new_player/player in unassigned)
-		if(player.client.prefs.userandomjob == 0)
+		if(player.client.prefs.joblessrole == BEASSISTANT)
 			Debug("AC2 Assistant located, Player: [player]")
 			AssignRole(player, "Assistant")
 
@@ -278,13 +282,12 @@ var/global/datum/controller/occupations/job_master
 
 	Debug("DO, Running Backout Check")
 
-	// For those who don't want to play if their preference were filled, see you next time.
+	// For those who don't want to play if their preference were filled, back you go.
 	for(var/mob/new_player/player in unassigned)
 		Debug("Backout Check observer located, Player: [player]")
 		player << "<b>You have failed to qualify for any job you desired.</b>"
 		unassigned -= player
 		player.ready = 0
-		player.join_as_observer()
 
 	return 1
 
