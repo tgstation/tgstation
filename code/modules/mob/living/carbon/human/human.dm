@@ -1,4 +1,3 @@
-#define STRIP_DELAY			40	//time taken (in deciseconds) to strip somebody
 /mob/living/carbon/human
 	name = "unknown"
 	real_name = "unknown"
@@ -49,9 +48,7 @@
 		else
 			set_species()
 
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
+	create_reagents(1000)
 
 	if(!dna)
 		dna = new /datum/dna(null)
@@ -272,8 +269,10 @@
 
 
 /mob/living/carbon/human/blob_act()
-	if(stat == 2)	return
-	show_message("\red The blob attacks you!")
+	if(stat == DEAD)
+		return
+
+	show_message("<span class='warning'>The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
@@ -736,7 +735,7 @@
 					else if(place_item && place_item.mob_can_equip(src, slot_wear_id, 1))
 						usr << "<span class='notice'>You try to place [place_item] on [src].</span>"
 
-					if(do_mob(usr, src, STRIP_DELAY))
+					if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 						if(id_item)
 							u_equip(id_item)
 							if(pickpocket) usr.put_in_hands(id_item)
@@ -774,7 +773,7 @@
 			else
 				return
 
-			if(do_mob(usr, src, STRIP_DELAY))
+			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 				if(pocket_item)
 					u_equip(pocket_item)
 					if(pickpocket) usr.put_in_hands(pocket_item)

@@ -3,7 +3,12 @@ Title: Telescience Control UI
 Used In File(s): \code\modules\telesci\telesci_computer.dm
  -->
 <div class="item">
-	<div class="itemLabel">Coordinates:</div>
+	<div class="itemLabel">Offsets:</div>
+	<div class="itemContent">
+		{{:helper.link('X offset: ' + data.pOffsetX, 'gear', {'setPOffsetX': 1})}}
+		{{:helper.link('Y offset: ' + data.pOffsetY, 'gear', {'setPOffsetY': 1})}}
+	</div>
+	<div class="itemLabel">Coordinates:</div>	
 	<div class="itemContent">
 		{{:helper.link('X: ' + data.coordx, 'gear', {'setx': 1})}}
 		{{:helper.link('Y: ' + data.coordy, 'gear', {'sety': 1})}}
@@ -18,3 +23,15 @@ Used In File(s): \code\modules\telesci\telesci_computer.dm
 		{{:helper.link('Recalibrate', 'gear', {'recal': 1})}}
 	</div>
 </div>
+{{if !data.cell}}
+	<div class="notice">No power cell detected.</div>
+{{else}}
+	<div class="statusDisplay">
+		<div class="line">
+			<div class="statusLabel">Charge:</div> 
+			{{:helper.displayBar(data.cell.charge,0,data.cell.maxcharge,(data.cell.charge<1000)?"bad":"good")}}
+			{{:data.cell.charge}}/{{:data.cell.maxcharge}}
+			{{:helper.link("Eject", "eject", {"eject_cell":1},null)}}
+		</div>
+	</div>
+{{/if}}

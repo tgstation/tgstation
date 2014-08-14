@@ -56,6 +56,10 @@
 /datum/universal_state/proc/OnEnter()
  	// Does nothing by default
 
+// Apply changes to a new turf.
+/datum/universal_state/proc/OnTurfChange(var/turf/NT)
+ 	return
+
 /proc/SetUniversalState(var/newstate,var/on_exit=1, var/on_enter=1)
 	if(on_exit)
 		universe.OnExit()

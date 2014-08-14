@@ -81,6 +81,84 @@ mineral/phazon
 	spread = 0
 	ore = /obj/item/weapon/ore/phazon
 
+mineral/pharosium
+	name = "Pharosium"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/pharosium
+
+mineral/char
+	name = "Char"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/char
+
+mineral/claretine
+	name = "Claretine"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/claretine
+
+mineral/bohrum
+	name = "Bohrum"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/bohrum
+
+mineral/syreline
+	name = "Syreline"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/syreline
+
+mineral/erebite
+	name = "Erebite"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/erebite
+
+mineral/cytine
+	name = "Cytine"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/cytine
+
+mineral/uqill
+	name = "Uqill"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/uqill
+
+mineral/telecrystal
+	name = "Telecrystal"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/telecrystal
+
+mineral/mauxite
+	name = "Mauxite"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/mauxite
+
+mineral/cobryl
+	name = "Cobryl"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/cobryl
+
+mineral/cerenkite
+	name = "Cerenkite"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/cerenkite
+
+mineral/molitz
+	name = "Molitz"
+	result_amount = 5
+	spread_chance = 5
+	ore = /obj/item/weapon/ore/molitz
+
 mineral/gibtonite
 	display_name = "Gibtonite"
 	name = "Gibtonite"

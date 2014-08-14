@@ -13,6 +13,11 @@
 // Apply changes when exiting state
 /datum/universal_state/supermatter_cascade/OnExit()
 
+/datum/universal_state/supermatter_cascade/OnTurfChange(var/turf/T)
+	var/turf/space/spess = T
+	if(istype(spess))
+		spess.overlays += "end01"
+
 
 // Apply changes when entering state
 /datum/universal_state/supermatter_cascade/OnEnter()
