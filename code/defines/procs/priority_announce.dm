@@ -35,5 +35,6 @@
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player))
 			M << "<br><br><b><font size = 3><font color = red>[department] Announcement:</font color> [message]</font size></b><br>"
+			M << sound('sound/misc/notice2.ogg')
 	if(submit_to_news)
 		news_network.SubmitArticle(message, department, "Station Announcements", null)
