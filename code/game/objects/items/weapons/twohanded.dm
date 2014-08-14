@@ -176,6 +176,10 @@ obj/item/weapon/twohanded/
 				if(W.reinf) new /obj/item/stack/rods( W.loc)
 		qdel(A)
 
+/obj/item/weapon/twohanded/fireaxe/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is butchering \hisself with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is chopping \hisself with the [src.name]! It looks like \he's trying to commit suicide.</span>"))
+	return (BRUTELOSS)
 
 /*
  * Double-Bladed Energy Swords - Cheridan
@@ -276,6 +280,11 @@ obj/item/weapon/twohanded/
 		else
 			user << "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>"
 
+/obj/item/weapon/twohanded/dualsaber/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is trying to swallow the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is impaling \hisself with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
+	return (BRUTELOSS)
 
 //spears
 /obj/item/weapon/twohanded/spear
@@ -297,3 +306,8 @@ obj/item/weapon/twohanded/
 	icon_state = "spearglass[wielded]"
 	return
 
+/obj/item/weapon/twohanded/spear/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is trying to swallow the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is impaling \hisself with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
+	return (BRUTELOSS)
