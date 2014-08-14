@@ -120,7 +120,7 @@
 
 //window placing begin
 	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))
-		if(!destroyed)
+		if (!destroyed)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 1)
 				user << "<span class='warning'>You need at least one sheet of glass for that.</span>"
@@ -165,7 +165,7 @@
 				WD.state = 0
 				ST.use(1)
 				user << "<span class='notice'>You place the [WD] on [src].</span>"
-		return
+			return
 //window placing end
 
 	else if(istype(W, /obj/item/weapon/shard))
