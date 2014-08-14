@@ -249,7 +249,7 @@
 			module_sprites["Engiseer"] = "Engiseer"
 			module_sprites["Landmate"] = "landmate"
 			module_sprites["Wall-E"] = "wall-e"
-			module-sprites["Marina-EN"] = "marinaEN"
+			module_sprites["Marina-EN"] = "marinaEN"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -258,7 +258,7 @@
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
 			module_sprites["Mechaduster"] = "mechaduster"
 			module_sprites["HAN-D"] = "han-d"
-			module-sprites["Marina-JN"] = "marinaJN"
+			module_sprites["Marina-JN"] = "marinaJN"
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
