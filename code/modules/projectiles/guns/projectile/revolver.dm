@@ -53,6 +53,9 @@
 	user.visible_message(pick("<span class='suicide'>[user] is putting the [src.name] in \his throat! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is putting the [src.name] to their temple! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS|BRAINLOSS)
+	pos.add_blood_floor(M)
+	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	playsound(pos, 'sound/weapons/Gunshot.off', 50, 1)
 
 /obj/item/weapon/gun/projectile/revolver/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-special rounds."
@@ -139,6 +142,9 @@
 	user.visible_message(pick("<span class='suicide'>[user] is putting the [src.name] in \his throat! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is putting the [src.name] to their temple! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS|BRAINLOSS)
+	pos.add_blood_floor(M)
+	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	playsound(pos, 'sound/weapons/Gunshot.off', 50, 1)
 
 /obj/item/weapon/gun/projectile/revolver/mateba
 	name = "mateba"
@@ -150,6 +156,9 @@
 	user.visible_message(pick("<span class='suicide'>[user] is putting the [src.name] in \his throat! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is putting the [src.name] to their temple! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS|BRAINLOSS)
+	pos.add_blood_floor(M)
+	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	playsound(pos, 'sound/weapons/Gunshot.off', 50, 1)
 	
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
@@ -240,3 +249,6 @@
 	user.visible_message(pick("<span class='suicide'>[user] is putting the [src.name] in \his throat! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is putting the [src.name] to their temple! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS|BRAINLOSS)
+	pos.add_blood_floor(M)
+	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	playsound(pos, 'sound/weapons/Gunshot.off', 50, 1)
