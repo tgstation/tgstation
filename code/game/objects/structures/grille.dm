@@ -178,7 +178,7 @@
 			if("brute")
 				health -= W.force * 0.1
 	healthcheck()
-//	..()
+	..()
 	return
 
 
