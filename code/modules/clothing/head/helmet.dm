@@ -20,7 +20,7 @@
 	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/helmet/HoS/dermal
-	name = "Dermal Armour Patch"
+	name = "Dermal Armor Patch"
 	desc = "An armored implant that automatically integrates just below the scalp for robust protection without sacrificing style."
 	icon_state = "dermal"
 	item_state = "dermal"
@@ -44,7 +44,7 @@
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
-	desc = "A robust helmet used by the SWAT branches planetary security forces."
+	desc = "An extremely robust, space-worthy helmet with a nanotrasen logo on the top."
 	icon_state = "swat"
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
@@ -52,6 +52,12 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+
+/obj/item/clothing/head/helmet/swat/syndicate
+	name = "blood-red helmet"
+	desc = "An extremely robust, space-worthy helmet without a visor to allow for goggle usage underneath. Property of Gorlex Marauders."
+	icon_state = "helmetsyndi"
+	item_state = "helmet"
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
@@ -86,7 +92,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 obj/item/clothing/head/helmet/redtaghelm
-	name = "Red LaserTag Helmet"
+	name = "red laser tag helmet"
 	desc = "They have chosen their own end."
 	icon_state = "redtaghelm"
 	flags = HEADCOVERSEYES
@@ -96,7 +102,7 @@ obj/item/clothing/head/helmet/redtaghelm
 	flags_inv = HIDEEARS|HIDEEYES
 
 obj/item/clothing/head/helmet/bluetaghelm
-	name = "Blue LaserTag Helmet"
+	name = "blue laser tag helmet"
 	desc = "They'll need more men."
 	icon_state = "bluetaghelm"
 	flags = HEADCOVERSEYES

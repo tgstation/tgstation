@@ -9,108 +9,108 @@
 	var/damaged = 0
 	var/last_change = 0
 
-	attack_hand(var/mob/user as mob)
+/obj/machinery/computer/HolodeckControl/attack_hand(var/mob/user as mob)
 
-		if(..())
-			return
-		user.set_machine(src)
-
-		var/dat = "<h3>Current Loaded Programs</h3>"
-		dat += "<A href='?src=\ref[src];emptycourt=1'>((Empty Court)</font>)</A><BR>"
-		dat += "<A href='?src=\ref[src];boxingcourt=1'>((Dodgeball Arena)</font>)</A><BR>"
-		dat += "<A href='?src=\ref[src];basketball=1'>((Basketball Court)</font>)</A><BR>"
-		dat += "<A href='?src=\ref[src];thunderdomecourt=1'>((Thunderdome Court)</font>)</A><BR>"
-		dat += "<A href='?src=\ref[src];beach=1'>((Beach)</font>)</A><BR>"
-//		dat += "<A href='?src=\ref[src];turnoff=1'>((Shutdown System)</font>)</A><BR>"
-
-		dat += "<span class='notice'>Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.</span><BR>"
-
-		if(emagged)
-			dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
-			dat += "Ensure the holodeck is empty before testing.<BR>"
-			dat += "<BR>"
-			dat += "<A href='?src=\ref[src];wildlifecarp=1'>(<font color=red>Begin Wildlife Simulation</font>)</A><BR>"
-			dat += "Ensure the holodeck is empty before testing.<BR>"
-			dat += "<BR>"
-			if(issilicon(user))
-				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
-			dat += "Safety Protocols are <font class='bad'>DISABLED</font><BR>"
-		else
-			if(issilicon(user))
-				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
-			dat += "<BR>"
-			dat += "Safety Protocols are <font class='good'>ENABLED</font><BR>"
-
-		//user << browse(dat, "window=computer;size=400x500")
-		//onclose(user, "computer")
-		var/datum/browser/popup = new(user, "computer", name, 400, 500)
-		popup.set_content(dat)
-		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-		popup.open()
+	if(..())
 		return
+	user.set_machine(src)
+
+	var/dat = "<h3>Current Loaded Programs</h3>"
+	dat += "<A href='?src=\ref[src];emptycourt=1'>((Empty Court)</font>)</A><BR>"
+	dat += "<A href='?src=\ref[src];boxingcourt=1'>((Dodgeball Arena)</font>)</A><BR>"
+	dat += "<A href='?src=\ref[src];basketball=1'>((Basketball Court)</font>)</A><BR>"
+	dat += "<A href='?src=\ref[src];thunderdomecourt=1'>((Thunderdome Court)</font>)</A><BR>"
+	dat += "<A href='?src=\ref[src];beach=1'>((Beach)</font>)</A><BR>"
+//	dat += "<A href='?src=\ref[src];turnoff=1'>((Shutdown System)</font>)</A><BR>"
+
+	dat += "<span class='notice'>Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.</span><BR>"
+
+	if(emagged)
+		dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
+		dat += "Ensure the holodeck is empty before testing.<BR>"
+		dat += "<BR>"
+		dat += "<A href='?src=\ref[src];wildlifecarp=1'>(<font color=red>Begin Wildlife Simulation</font>)</A><BR>"
+		dat += "Ensure the holodeck is empty before testing.<BR>"
+		dat += "<BR>"
+		if(issilicon(user))
+			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
+		dat += "Safety Protocols are <font class='bad'>DISABLED</font><BR>"
+	else
+		if(issilicon(user))
+			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
+		dat += "<BR>"
+		dat += "Safety Protocols are <font class='good'>ENABLED</font><BR>"
+
+	//user << browse(dat, "window=computer;size=400x500")
+	//onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", name, 400, 500)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+	return
 
 
-	Topic(href, href_list)
-		if(..())
-			return
-		if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-			usr.set_machine(src)
-
-			if(href_list["emptycourt"])
-				target = locate(/area/holodeck/source_emptycourt)
-				if(target)
-					loadProgram(target)
-
-			else if(href_list["boxingcourt"])
-				target = locate(/area/holodeck/source_boxingcourt)
-				if(target)
-					loadProgram(target)
-
-			else if(href_list["basketball"])
-				target = locate(/area/holodeck/source_basketball)
-				if(target)
-					loadProgram(target)
-
-			else if(href_list["thunderdomecourt"])
-				target = locate(/area/holodeck/source_thunderdomecourt)
-				if(target)
-					loadProgram(target)
-
-			else if(href_list["beach"])
-				target = locate(/area/holodeck/source_beach)
-				if(target)
-					loadProgram(target)
-
-			else if(href_list["turnoff"])
-				target = locate(/area/holodeck/source_plating)
-				if(target)
-					loadProgram(target)
-
-			else if(href_list["burntest"])
-				if(!emagged)	return
-				target = locate(/area/holodeck/source_burntest)
-				if(target)
-					loadProgram(target)
-
-			else if(href_list["wildlifecarp"])
-				if(!emagged)	return
-				target = locate(/area/holodeck/source_wildlife)
-				if(target)
-					loadProgram(target)
-
-			else if(href_list["AIoverride"])
-				if(!issilicon(usr))	return
-				emagged = !emagged
-				if(emagged)
-					message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
-					log_game("[key_name(usr)] overrided the holodeck's safeties")
-				else
-					message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
-					log_game("[key_name(usr)] restored the holodeck's safeties")
-
-			src.add_fingerprint(usr)
-		src.updateUsrDialog()
+/obj/machinery/computer/HolodeckControl/Topic(href, href_list)
+	if(..())
 		return
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+		usr.set_machine(src)
+
+		if(href_list["emptycourt"])
+			target = locate(/area/holodeck/source_emptycourt)
+			if(target)
+				loadProgram(target)
+
+		else if(href_list["boxingcourt"])
+			target = locate(/area/holodeck/source_boxingcourt)
+			if(target)
+				loadProgram(target)
+
+		else if(href_list["basketball"])
+			target = locate(/area/holodeck/source_basketball)
+			if(target)
+				loadProgram(target)
+
+		else if(href_list["thunderdomecourt"])
+			target = locate(/area/holodeck/source_thunderdomecourt)
+			if(target)
+				loadProgram(target)
+
+		else if(href_list["beach"])
+			target = locate(/area/holodeck/source_beach)
+			if(target)
+				loadProgram(target)
+
+		else if(href_list["turnoff"])
+			target = locate(/area/holodeck/source_plating)
+			if(target)
+				loadProgram(target)
+
+		else if(href_list["burntest"])
+			if(!emagged)	return
+			target = locate(/area/holodeck/source_burntest)
+			if(target)
+				loadProgram(target)
+
+		else if(href_list["wildlifecarp"])
+			if(!emagged)	return
+			target = locate(/area/holodeck/source_wildlife)
+			if(target)
+				loadProgram(target)
+
+		else if(href_list["AIoverride"])
+			if(!issilicon(usr))	return
+			emagged = !emagged
+			if(emagged)
+				message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
+				log_game("[key_name(usr)] overrided the holodeck's safeties")
+			else
+				message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
+				log_game("[key_name(usr)] restored the holodeck's safeties")
+
+		src.add_fingerprint(usr)
+	src.updateUsrDialog()
+	return
 
 
 

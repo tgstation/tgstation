@@ -207,6 +207,10 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			return 1
 		if(istype(A,/obj/item/device/radio/beacon))
 			return 1
+		if(istype(A,/obj/effect/blob))
+			return 1
+		if(istype(A,/obj/effect/spider/spiderling))
+			return 1
 
 		for(var/i=1, i<=A.contents.len, i++)
 			var/atom/B = A.contents[i]

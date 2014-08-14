@@ -54,6 +54,10 @@
 /obj/item/clothing/mask/gas/sechailer/hos
 	icon_state = "hosmask"
 
+/obj/item/clothing/mask/gas/sechailer/cyborg
+	icon_state = "hosmask"
+	aggressiveness = 1 //Borgs are nicecurity!
+
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)

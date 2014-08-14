@@ -151,7 +151,7 @@
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/construct/armoured, A, U)
+						makeNewConstruct(/mob/living/simple_animal/construct/armored, A, U)
 
 					if("Wraith")
 						makeNewConstruct(/mob/living/simple_animal/construct/wraith, A, U)
