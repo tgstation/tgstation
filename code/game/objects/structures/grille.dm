@@ -178,19 +178,18 @@
 			if("brute")
 				health -= W.force * 0.1
 	healthcheck()
-	..()
+//	..()
 	return
 
 
 /obj/structure/grille/proc/healthcheck()
 	if(health <= 0)
-		var/obj/item/stack/rods/newrods = new(loc)
-		transfer_fingerprints_to(newrods)
-
 		if(!destroyed)
 			icon_state = "brokengrille"
 			density = 0
 			destroyed = 1
+			var/obj/item/stack/rods/newrods = new(loc)
+			transfer_fingerprints_to(newrods)
 
 		else
 			if(health <= -6)
