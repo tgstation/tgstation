@@ -1511,7 +1511,7 @@ other types of metals and chemistry for reagents).
 /datum/design/spacepod/armor
 	name = "Spacepod Design (Civilian Armor)"
 	desc = "Spacepod armor. This is the civilian version."
-	id = "spacepod_core"
+	id = "spacepod_armor_white"
 	req_tech = list("materials" = 4)
 	build_type = PODFAB
 	materials = list("iron"=15000,"$glass"=5000,"plasma"=10000)
