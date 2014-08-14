@@ -177,9 +177,12 @@ obj/item/weapon/twohanded/
 		qdel(A)
 
 /obj/item/weapon/twohanded/fireaxe/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is butchering \hisself with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is chopping \hisself with the [src.name]! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message(pick("<span class='suicide'>[user] is butchering \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is chopping \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS)
+	var/turf/pos = get_turf(user)
+	pos.add_blood_floor(user)
+	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
 
 /*
  * Double-Bladed Energy Swords - Cheridan
@@ -282,9 +285,12 @@ obj/item/weapon/twohanded/
 
 /obj/item/weapon/twohanded/dualsaber/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is trying to swallow the [src.name]! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is impaling \hisself with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
 	return (BRUTELOSS)
+	var/turf/pos = get_turf(user)
+	pos.add_blood_floor(user)
+	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
 
 //spears
 /obj/item/weapon/twohanded/spear
@@ -308,6 +314,9 @@ obj/item/weapon/twohanded/
 
 /obj/item/weapon/twohanded/spear/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is trying to swallow the [src.name]! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is impaling \hisself with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
 	return (BRUTELOSS)
+	var/turf/pos = get_turf(user)
+	pos.add_blood_floor(user)
+	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
