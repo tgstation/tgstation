@@ -174,7 +174,25 @@
 	name = "fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
-	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	desc = "It's NOT a trilby!"
+	action_button_name = "Tip Fedora"
+
+/obj/item/clothing/head/fedora/New()
+	if(prob(50))
+		name = "trilby"
+		desc = "It's NOT a fedora!"
+
+/obj/item/clothing/head/fedora/attack_self()
+	if(usr.canmove)
+		usr.visible_message("[usr] tips their [src].")
+
+/obj/item/clothing/head/fedora/euphoric
+	flags = NODROP
+
+/obj/item/clothing/head/fedora/euphoric/equipped(mob/user)
+	var/mob/living/carbon/human/M = user
+	M.facial_hair_style = "Neckbeard"
+	M.update_icon = 1
 
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
