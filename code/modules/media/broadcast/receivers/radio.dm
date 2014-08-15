@@ -24,6 +24,7 @@
 	dat += {"
 				Power: <a href="?src=\ref[src];power=1">[on ? "On" : "Off"]</a><BR>
 				Frequency: <A href='byond://?src=\ref[src];set_freq=-1'>[format_frequency(media_frequency)]</a><BR>
+				Frequency: <A href='byond://?src=\ref[src];set_volume=-1'>[volume*100]%</a><BR>
 				"}
 	dat+={"</TT></body></html>"}
 	user << browse(dat, "window=radio-recv")
@@ -63,6 +64,21 @@
 				connect_frequency()
 			else
 				usr << "\red Invalid FM frequency. (90.0, 200.0)"
+	if("set_volume" in href_list)
+		var/vol=volume
+		if(href_list["set_volume"]!="-1")
+			vol = text2num(href_list["set_volume"])/100
+		else
+			vol = input(usr, "Set a new volume (1-100%).", src, media_frequency) as null|num
+			if(vol==null)
+				updateUsrDialog()
+				return
+			vol /= 100
+		if(vol)
+			volume = vol
+			update_music()
+		else
+			usr << "\red Invalid volume."
 	updateDialog()
 
 

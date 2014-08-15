@@ -68,6 +68,10 @@
 	if(href_list["add"] && href_list["amount"])
 		var/id = href_list["add"]
 		var/amount = text2num(href_list["amount"])
+
+		if(amount < 0)
+			return
+
 		R.trans_id_to(src, id, amount)
 
 	else if(href_list["remove"] && href_list["amount"])

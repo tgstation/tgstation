@@ -139,6 +139,15 @@
 			if(7) src.overlays += "pai-sad"
 			if(8) src.overlays += "pai-angry"
 			if(9) src.overlays += "pai-what"
+			if(10) src.overlays += "pai-longface"
+			if(11) src.overlays += "pai-sick"
+			if(12) src.overlays += "pai-high"
+			if(13) src.overlays += "pai-love"
+			if(14) src.overlays += "pai-electric"
+			if(15) src.overlays += "pai-pissed"
+			if(16) src.overlays += "pai-nose"
+			if(17) src.overlays += "pai-kawaii"
+			if(18) src.overlays += "pai-cry"
 
 /obj/item/device/paicard/proc/alertUpdate()
 	var/turf/T = get_turf_or_move(src.loc)
