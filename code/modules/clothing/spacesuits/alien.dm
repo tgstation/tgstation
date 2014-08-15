@@ -238,6 +238,25 @@
 	icon_state = "plasmaman_suit"
 	item_state = "plasmaman_suit"
 
+	var/next_extinguish=0
+	var/extinguish_cooldown=10 SECONDS
+	var/extinguishes_left=10 // Yeah yeah, reagents, blah blah blah.  This should be simple.
+
+/obj/item/clothing/suit/space/plasmaman/examine()
+	set src in view()
+	..()
+	usr << "There are [extinguishes_left] extinguisher canisters left in this suit."
+/obj/item/clothing/suit/space/plasmaman/proc/Extinguish(var/mob/user)
+	var/mob/living/carbon/human/H=user
+	if(extinguishes_left)
+		if(next_extinguish > world.time)
+			return
+
+		next_extinguish = world.time + extinguish_cooldown
+		extinguishes_left--
+		H << "<span class='warning'>Your suit automatically extinguishes the fire.</span>"
+		H.ExtinguishMob()
+
 /obj/item/clothing/head/helmet/space/plasmaman
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
 	species_restricted = list("Plasmaman")
