@@ -173,6 +173,8 @@
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+	t = replacetext(t, "\[img\]","<img src=\"")
+	t = replacetext(t, "\[/img\]", "\" />")	
 
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")
