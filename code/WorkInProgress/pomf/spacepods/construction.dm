@@ -179,10 +179,10 @@
 						"self_msg" = "You cut the {HOLDER}'s bulkhead panelling loose."
 					),
 					state_next = list(
-						"key"      = /obj/item/pod_parts/armor,
-						"vis_msg"  = "{USER} installs the {HOLDER}'s armor plating.",
-						"self_msg" = "You install the {HOLDER}'s armor plating."
-						"delete"   = 1
+						"key"      = /obj/item/stack/sheet/plasteel,
+						"amount"   = 5,
+						"vis_msg"  = "{USER} installs the {HOLDER}'s plasteel armor.",
+						"self_msg" = "You install the {HOLDER}'s plasteel armor."
 					)
 				),
 				// 11. Loose armor
@@ -192,8 +192,6 @@
 						"key"      = /obj/item/weapon/crowbar,
 						"vis_msg"  = "{USER} pries off {HOLDER}'s armor.",
 						"self_msg" = "You pry off {HOLDER}'s armor."
-						"spawn"    = /obj/item/pod_parts/armor,
-						"amount"   = 1
 					),
 					state_next = list(
 						"key"      = /obj/item/weapon/wrench,
