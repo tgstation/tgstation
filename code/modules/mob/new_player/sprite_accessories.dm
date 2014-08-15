@@ -350,6 +350,61 @@
 		name = "Metal"
 		icon_state = "hair_80s"
 
+	edgeworth
+		name = "Edgeworth"
+		icon_state = "hair_edgeworth"
+		gender = MALE
+
+	objection
+		name = "Objection!"
+		icon_state = "hair_objection"
+		gender = MALE
+
+	dubs
+		name = "Check 'Em"
+		icon_state = "hair_dubs"
+		gender = MALE
+
+	swordsman
+		name = "Black Swordsman"
+		icon_state = "hair_blackswordsman"
+		gender = MALE
+
+	mentalist
+		name = "Mentalist"
+		icon_state = "hair_mentalist"
+		gender = MALE
+
+	fujisaki
+		name = "Fujisaki"
+		icon_state = "hair_fujisaki"
+		gender = FEMALE
+
+	schierke
+		name = "Schierke"
+		icon_state = "hair_schierke"
+		gender = FEMALE
+
+	akari
+		name = "Akari"
+		icon_state = "hair_akari"
+		gender = FEMALE
+
+	fujiyabashi
+		name = "Fujuyabashi"
+		icon_state = "hair_fujiyabashi"
+		gender = FEMALE
+
+	nia
+		name = "Nia"
+		icon_state = "hair_nia"
+		gender = FEMALE
+
+	shinobu
+		name = "Shinobu"
+		icon_state = "hair_shinobu"
+		gender = FEMALE
+
 	bald
 		name = "Bald"
 		icon_state = "bald"
