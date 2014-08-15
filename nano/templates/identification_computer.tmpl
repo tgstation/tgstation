@@ -187,7 +187,7 @@
                     {{/for}}
                   </td>
                 </tr>
-	       			{{/if}}
+	      {{/if}}
             </table>
           </div>
         </div>
@@ -216,16 +216,16 @@
                     {{:helper.link(accessValue.desc, '', {'choice' : 'access', 'access_target' : accessValue.ref, 'allowed' : accessValue.allowed}, null, accessValue.allowed ? 'selected' : null)}}
                   </div>
                 {{/for}}
-								</div>
-						{{/for}}
-        		<div style='float: left; width: 175px; min-height: 250px'>
-							<div class='average'><b>Card Skin</b></div>
-							{{for data.card_skins}}
-								<div class='itemContentWide'>
-					  			{{:helper.link(value.display_name, '', {'choice' : 'skin', 'skin_target' : value.skin}, null,(data.current_skin == value.skin) ? 'selected' : null )}}
-								</div>
-							{{/for}}
-			  		</div>
+	      </div>
+	    {{/for}}
+            <div style='float: left; width: 175px; min-height: 250px'>
+	    <div class='average'><b>Card Skin</b></div>
+	      {{for data.card_skins}}
+		<div class='itemContentWide'>
+		  {{:helper.link(value.display_name, '', {'choice' : 'skin', 'skin_target' : value.skin}, null,(data.current_skin == value.skin) ? 'selected' : null )}}
+	 	</div>
+	      {{/for}}
+	    </div>
           </div>
         {{/if}}
       {{/if}}
