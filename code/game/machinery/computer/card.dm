@@ -45,7 +45,7 @@
 		var/list/formatted = list()
 		for(var/job in jobs)
 			formatted.Add(list(list(
-				"display_name" = replacetext(job, " ", "&nbsp"),
+				"display_name" = replacetext(job, " ", "&nbsp;"),
 				"target_rank" = get_target_rank(),
 				"job" = job)))
 
@@ -55,7 +55,7 @@
 		var/list/formatted = list()
 		for(var/skin in card_skins)
 			formatted.Add(list(list(
-				"display_name" = replacetext(skin, " ", "&nbsp"),
+				"display_name" = replacetext(skin, " ", "&nbsp;"),
 				"skin" = skin)))
 
 		return formatted
