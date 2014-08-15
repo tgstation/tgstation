@@ -184,7 +184,7 @@
 
 /obj/item/clothing/head/fedora/attack_self()
 	if(usr.canmove)
-		usr.visible_message("[usr] tips their [src].")
+		usr.visible_message("[usr] tips their [name].")
 
 /obj/item/clothing/head/fedora/euphoric
 	flags = NODROP
