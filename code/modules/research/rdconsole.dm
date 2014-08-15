@@ -963,7 +963,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/mommi
 	name = "MoMMI R&D Console"
-	id = 2
+	id = 3
 	req_access = list(access_tox)
 	circuit = "/obj/item/weapon/circuitboard/rdconsole/mommi"
 
@@ -975,6 +975,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_one_access = list(access_robotics)
 	req_access=list()
 	circuit = "/obj/item/weapon/circuitboard/rdconsole/robotics"
+
+	l_color = "#CD00CD"
+
+/obj/machinery/computer/rdconsole/pods
+	name = "Spacepod Hangar R&D Console"
+	id = 4
+	req_access = list(access_robotics)
+	circuit = "/obj/item/weapon/circuitboard/rdconsole/pods"
 
 	l_color = "#CD00CD"
 

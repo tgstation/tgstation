@@ -327,10 +327,14 @@
 	var/output
 	for(var/matID in materials)
 		var/datum/material/material = materials[matID]
-		output += "<span class=\"res_name\">[material.processed_name]: </span>[material.stored] cm&sup3;"
-		if(material.stored>0)
+		if(material.stored > 0) //because we have too many materials now
+			output += "<span class=\"res_name\">[material.processed_name]: </span>[material.stored] cm&sup3;"
 			output += "<span style='font-size:80%;'> - Remove \[<a href='?src=\ref[src];remove_mat=1;material=[matID]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[matID]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[res_max_amount];material=[matID]'>All</a>\]</span>"
-		output += "<br/>"
+			output += "<br/>"
+	if(!output)
+		output = "<b>No materials loaded!</b> <br/>"
+	else
+		output = "<b>Materials Loaded:</b> <br/>" + output
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/remove_resources(var/obj/item/part)
@@ -724,7 +728,6 @@
 		//var/obj/item/stack/sheet/res = new material.sheettype(src)
 		var/total_amount = min(round(material.stored/material.cc_per_sheet),amount)
 		var/to_spawn = total_amount
-
 		while(to_spawn > 0)
 			var/obj/item/stack/sheet/res = new material.sheettype(src)
 			if(to_spawn > res.max_amount)
@@ -736,7 +739,7 @@
 
 			material.stored -= res.amount * res.perunit
 			//materials[matID]=material - why?
-			res.Move(src.loc)
+			res.Move(src.output.loc) //material wasn't spawning on machine (possibly because of density?) - don't change unless it works
 		return total_amount
 	return 0
 
