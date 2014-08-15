@@ -24,17 +24,15 @@
 	announcement += "<br>"
 
 	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
+		if(!istype(M,/mob/new_player) && !M.ear_deaf)
 			M << announcement
 			M << sound(sound)
 
-/proc/minor_announce(var/department, var/message, var/submit_to_news)
-	if(!department || !message)
+/proc/minor_announce(var/message, var/title = "Attention:")
+	if(!message)
 		return
 
 	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
-			M << "<br><br><b><font size = 3><font color = red>[department] Announcement:</font color> [message]</font size></b><br>"
+		if(!istype(M,/mob/new_player) && !M.ear_deaf)
+			M << "<b><font size = 3><font color = red>[title]</font color> [message]</font size></b>"
 			M << sound('sound/misc/notice2.ogg')
-	if(submit_to_news)
-		news_network.SubmitArticle(message, department, "Station Announcements", null)

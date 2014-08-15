@@ -280,7 +280,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)	return
-		minor_announce(department, message, 1)
+		minor_announce(message, "[department] Announcement:")
+		news_network.SubmitArticle(message, department, "Station Announcements", null)
 		announceAuth = 0
 		message = ""
 		screen = 0
