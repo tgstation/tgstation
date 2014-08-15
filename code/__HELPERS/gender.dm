@@ -179,9 +179,3 @@ var/global/list/genders=list(
 		warning("Invalid gender \"[gender]\" given to gender_replace().")
 		return text // FUCK YOU
 	return G.replace(text)
-
-/mob/verb/TEST_GENDERLIST()
-	usr << "<b>DUMPING GENDER LIST</b>"
-	for(var/g in genders)
-		var/gender/Ge=genders[g]
-		usr << "  <b>[g]</b>: [Ge.name]"
