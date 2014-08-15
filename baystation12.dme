@@ -254,6 +254,7 @@
 #include "code\game\gamemodes\cult\cult.dm"
 #include "code\game\gamemodes\cult\cult_items.dm"
 #include "code\game\gamemodes\cult\cult_structures.dm"
+#include "code\game\gamemodes\cult\hell_universe.dm"
 #include "code\game\gamemodes\cult\ritual.dm"
 #include "code\game\gamemodes\cult\runes.dm"
 #include "code\game\gamemodes\cult\talisman.dm"

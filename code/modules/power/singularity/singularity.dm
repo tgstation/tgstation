@@ -483,12 +483,16 @@ var/global/list/uneatable = list(
 	consume_range = 12 // How many tiles out do we eat.
 	var/announce=1
 
-/obj/machinery/singularity/narsie/large/New()
+/obj/machinery/singularity/narsie/large/New(var/cultspawn=0)
 	..()
 	if(announce)
 		world << "<font size='15' color='red'><b>[uppertext(name)] HAS RISEN</b></font>"
+
 	if (emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall.
+
+	if(cultspawn)
+		SetUniversalState(/datum/universal_state/hell)
 
 /obj/machinery/singularity/narsie/process()
 	eat()
