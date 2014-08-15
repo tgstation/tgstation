@@ -118,15 +118,15 @@
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
 
-	New()
-		..()
-		reagents.add_reagent("enzyme", 50)
+/obj/item/weapon/reagent_containers/food/condiment/enzyme/New()
+	..()
+	reagents.add_reagent("enzyme", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
 
-	New()
-		..()
-		reagents.add_reagent("sugar", 50)
+/obj/item/weapon/reagent_containers/food/condiment/sugar/New()
+	..()
+	reagents.add_reagent("sugar", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
 	name = "Salt Shaker"											//	a large one.
@@ -136,9 +136,9 @@
 	amount_per_transfer_from_this = 1
 	volume = 20
 
-	New()
-		..()
-		reagents.add_reagent("sodiumchloride", 20)
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker/New()
+	..()
+	reagents.add_reagent("sodiumchloride", 20)
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "Pepper Mill"
@@ -148,9 +148,9 @@
 	amount_per_transfer_from_this = 1
 	volume = 20
 
-	New()
-		..()
-		reagents.add_reagent("blackpepper", 20)
+/obj/item/weapon/reagent_containers/food/condiment/peppermill/New()
+	..()
+	reagents.add_reagent("blackpepper", 20)
 
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
 /obj/item/weapon/reagent_containers/food/condiment/pack
