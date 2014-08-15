@@ -84,8 +84,13 @@
 //							if(M.mind.has_been_rev)
 //								revsafe = 2
 							if(!revsafe)
-								M.mind.has_been_rev = 1
-								ticker.mode.add_revolutionary(M.mind)
+								if(jobban_isbanned(M, "Syndicate") || jobban_isbanned(M, "revolutionary"))
+									M << "<span class='userdanger'>Error: You are currently jobbanned from Revolutionary.</span>"
+									user << "<span class='warning'>This mind was unable to survive the rigors of conversion and has been wiped clean!</span>"
+									M.ghostize(0) //Jobbanned players are force ghosted
+								else
+									M.mind.has_been_rev = 1
+									ticker.mode.add_revolutionary(M.mind)
 							else if(revsafe == 1)
 								user << "<span class='warning'>Something seems to be blocking the flash!</span>"
 							else

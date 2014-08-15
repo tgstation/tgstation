@@ -109,10 +109,15 @@ var/list/sacrificed = list()
 				cultsinrange += C
 				C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
 		if(cultsinrange.len >= 3)
-			M.visible_message("\red [M] writhes in pain as the markings below him glow a bloody red.", \
-			"\red AAAAAAHHHH!.", \
-			"\red You hear an anguished scream.")
+			M.visible_message("<span class='danger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
+			"<span class='userdanger'>AAAAAAHHHH!.</span>", \
+			"<span class='danger'>You hear an anguished scream.</span>")
 			if(is_convertable_to_cult(M.mind))
+				if(jobban_isbanned(M, "Syndicate") || jobban_isbanned(M, "cultist"))
+					M.visible_message("<span class='warning'>A horrified look flashes across [M]'s face before their body goes limp.", \
+					"<span class='userdanger'>Error: You are currently jobbanned from Cultist.</span>")
+					M.ghostize(0) //Jobbanned players are force ghosted
+					return 0
 				ticker.mode.add_cultist(M.mind)
 				M.mind.special_role = "Cultist"
 				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
@@ -302,8 +307,12 @@ var/list/sacrificed = list()
 
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if(!jobban_isbanned(O, "Syndicate") && !jobban_isbanned(O, "cultist"))
+			continue
 		ghost = O
 		break
 
