@@ -343,7 +343,7 @@ client/proc/one_click_antag()
 
 	if(candidates.len >= 3) //Minimum 3 to be considered a squad
 		//Pick the lucky players
-		var/numagents = 5 //How many commandos to spawn
+		var/numagents = min(5,candidates.len) //How many commandos to spawn
 		while(numagents && deathsquadspawn.len && candidates.len)
 			var/spawnloc = deathsquadspawn[1]
 			var/mob/dead/observer/chosen_candidate = pick(candidates)
@@ -366,13 +366,20 @@ client/proc/one_click_antag()
 					Commando.real_name = "Trooper Delta"
 				if(5)
 					Commando.real_name = "Trooper Echo"
-			equip_deathsquad(Commando,"[numagents==1?1:0]")
+			if(numagents == 1) //If Squad Leader
+				equip_deathsquad(Commando, 1)
+			else
+				equip_deathsquad(Commando)
 			Commando.key = chosen_candidate.key
+			Commando.mind.assigned_role = "Death Commando"
 
-			//Assign the mission
+			//Assign antag status and the mission
+			ticker.mode.traitors += Commando.mind
+			Commando.mind.special_role = "deathsquad"
 			var/datum/objective/missionobj = new
 			missionobj.owner = Commando.mind
 			missionobj.explanation_text = mission
+			missionobj.completed = 1
 			Commando.mind.objectives += missionobj
 
 			//Greet the commando
