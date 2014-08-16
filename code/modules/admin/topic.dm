@@ -42,7 +42,7 @@
 				message_admins("[key_name(usr)] created a nuke team.")
 				log_admin("[key_name(usr)] created a nuke team.")
 				if(!src.makeNukeTeam())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunatly there were not enough candidates available"
 			if("8")
 				message_admins("[key_name(usr)] spawned a ninja.")
 				log_admin("[key_name(usr)] spawned a ninja.")
@@ -51,13 +51,12 @@
 				message_admins("[key_name(usr)] started an alien infestation.")
 				log_admin("[key_name(usr)] started an alien infestation.")
 				src.makeAliens()
-/* DEATH SQUADS
 			if("10")
 				message_admins("[key_name(usr)] created a death squad.")
 				log_admin("[key_name(usr)] created a death squad.")
 				if(!src.makeDeathsquad())
-					usr << "\red Unfortunatly there were no candidates available"
-*/
+					usr << "\red Unfortunatly there were not enough candidates available"
+
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
@@ -1386,6 +1385,14 @@
 		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
 		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
 		H << "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
+
+	else if(href_list["movecentcomferry"])
+		if(!check_rights(R_FUN))	return
+
+		var/datum/shuttle_manager/s = shuttles["ferry"]
+		if(istype(s)) s.move_shuttle(0)
+		message_admins("[key_name_admin(usr)] moved the centcom ferry", 1)
+		log_admin("[key_name(usr)] moved the centcom ferry")
 
 	else if(href_list["jumpto"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
