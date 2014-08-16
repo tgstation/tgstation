@@ -10,6 +10,25 @@
 	var/obj/item/weapon/card/id/modify = null
 	var/mode = 0.0
 	var/printing = null
+	var/list/card_skins = list(
+		"data",
+		"id",
+		"gold",
+		"silver",
+		"centcom_old",
+		"centcom",
+		"security",
+		"medical",
+		"HoS",
+		"research",
+		"engineering",
+		"CMO",
+		"RD",
+		"CE",
+		"clown",
+		"mime",
+		"syndie" // yes no?
+	)
 
 	l_color = "#0000FF"
 
@@ -26,9 +45,18 @@
 		var/list/formatted = list()
 		for(var/job in jobs)
 			formatted.Add(list(list(
-				"display_name" = replacetext(job, " ", "&nbsp"),
+				"display_name" = replacetext(job, " ", "&nbsp;"),
 				"target_rank" = get_target_rank(),
 				"job" = job)))
+
+		return formatted
+
+	proc/format_card_skins(list/card_skins)
+		var/list/formatted = list()
+		for(var/skin in card_skins)
+			formatted.Add(list(list(
+				"display_name" = replacetext(skin, " ", "&nbsp;"),
+				"skin" = skin)))
 
 		return formatted
 
@@ -108,6 +136,10 @@
 	data["security_jobs"] = format_jobs(security_positions)
 	data["civilian_jobs"] = format_jobs(civilian_positions)
 	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
+	data["card_skins"] = format_card_skins(card_skins)
+
+	if(modify)
+		data["current_skin"] = modify.icon_state
 
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()
@@ -191,6 +223,9 @@
 						modify.access -= access_type
 						if(!access_allowed)
 							modify.access += access_type
+		if("skin")
+			modify.icon_state = href_list["skin_target"]
+
 
 		if ("assign")
 			if (is_authenticated() && modify)

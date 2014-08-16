@@ -426,9 +426,14 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 				// OH FUCK HE LEAKIN'.
 				// This was OP.
 				//environment.adjust(tx = environment.total_moles()*BREATH_PERCENTAGE) // About one breath's worth. (I know we aren't breathing it out, but this should be about the right amount)
-				src << "<span class='warning'>Your body reacts with the atmosphere and bursts into flame!</span>"
+				if(!on_fire)
+					src << "<span class='warning'>Your body reacts with the atmosphere and bursts into flame!</span>"
 				adjust_fire_stacks(0.5)
 				IgniteMob()
+			else
+				if(fire_stacks)
+					var/obj/item/clothing/suit/space/plasmaman/PS=wear_suit
+					PS.Extinguish(src)
 
 		if(breath)
 			loc.assume_air(breath)
