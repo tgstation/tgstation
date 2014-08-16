@@ -10,7 +10,7 @@ Pipelines + Other Objects -> Pipe network
 
 */
 
-obj/machinery/atmospherics
+/obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -20,46 +20,46 @@ obj/machinery/atmospherics
 
 
 
-obj/machinery/atmospherics/var/initialize_directions = 0
-obj/machinery/atmospherics/var/pipe_color
+/obj/machinery/atmospherics/var/initialize_directions = 0
+/obj/machinery/atmospherics/var/pipe_color
 
-obj/machinery/atmospherics/process()
+/obj/machinery/atmospherics/process()
 	if(gc_destroyed) //comments on /vg/ imply that GC'd pipes still process
 		return PROCESS_KILL
 	build_network()
 
-obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
+/obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	// Check to see if should be added to network. Add self if so and adjust variables appropriately.
 	// Note don't forget to have neighbors look as well!
 
 	return null
 
-obj/machinery/atmospherics/proc/build_network()
+/obj/machinery/atmospherics/proc/build_network()
 	// Called to build a network from this node
 
 	return null
 
-obj/machinery/atmospherics/proc/return_network(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/proc/return_network(obj/machinery/atmospherics/reference)
 	// Returns pipe_network associated with connection to reference
 	// Notes: should create network if necessary
 	// Should never return null
 
 	return null
 
-obj/machinery/atmospherics/proc/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
+/obj/machinery/atmospherics/proc/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
 	// Used when two pipe_networks are combining
 
-obj/machinery/atmospherics/proc/return_network_air(datum/network/reference)
+/obj/machinery/atmospherics/proc/return_network_air(datum/network/reference)
 	// Return a list of gas_mixture(s) in the object
 	//		associated with reference pipe_network for use in rebuilding the networks gases list
 	// Is permitted to return null
 
-obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 
-obj/machinery/atmospherics/update_icon()
+/obj/machinery/atmospherics/update_icon()
 	return null
 
-obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(can_unwrench && istype(W, /obj/item/weapon/wrench))
 		var/turf/T = src.loc
 		if (level==1 && isturf(T) && T.intact)
