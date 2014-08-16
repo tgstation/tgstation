@@ -736,7 +736,7 @@
 
 			material.stored -= res.amount * res.perunit
 			//materials[matID]=material - why?
-			res.Move(src.loc)
+			res.loc = src.loc
 		return total_amount
 	return 0
 
