@@ -204,9 +204,6 @@ var/list/department_radio_keys = list(
 	
 	return message
 
-/mob/living/proc/IsVocal()
-	return 1
-
 /mob/living/proc/radio(message, message_mode, steps)
 	switch(message_mode)
 		if("right hand")

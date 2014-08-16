@@ -60,6 +60,36 @@
       If receiving object don't know right key, it must ignore encrypted signal in its receive_signal.
 
 */
+/*	WELCOME TO MIAUW'S EMPORIUM OF "FUCK THIS FUCKING SHITCODE HOLY SHIT HOW DID ANYONE THINK UP SOMETHING THIS FUCKING AWFUL"
+		TODAY'S SPECIAL: FUCKING RADIO CODE. IT SIMPLY DOESNT WORK, AND I HAVE NO FUCKING IDEA WHY.
+		THAT IS WHY I REPLACED IT WITH A LIST, WHICH DOES WORK. THANK ME LATER.
+*/
+var/list/all_radios = list()
+/proc/add_radio(var/obj/item/radio, freq)
+	var/converttest = radiochannels["[freq]"]
+	if(converttest)
+		freq = converttest
+	
+	if(!all_radios["[freq]"])
+		all_radios["[freq]"] = list(radio)
+		return freq
+	
+	all_radios["[freq]"] |= radio
+	return freq
+
+/proc/remove_radio(var/obj/item/radio, freq)
+	var/converttest = radiochannels["[freq]"]
+	if(converttest)
+		freq = converttest
+
+	if(!all_radios["[freq]"])
+		return
+
+	all_radios["[freq]"] -= radio
+
+/proc/remove_radio_all(var/obj/item/radio)
+	for(var/freq in all_radios)
+		all_radios["[freq]"] -= radio
 
 /*
 Frequency range: 1200 to 1600

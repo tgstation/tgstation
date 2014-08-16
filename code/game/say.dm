@@ -33,15 +33,23 @@
 
 /atom/movable/proc/lang_treat(message, atom/movable/speaker, message_langs, raw_message)
 	if(languages & message_langs)
-		return speaker.say_quote(raw_message)
+		var/atom/movable/AM = speaker.GetSource()
+		if(AM)
+			return AM.say_quote(raw_message)
+		else
+			return speaker.say_quote(raw_message)
 	else if(message_langs & HUMAN)
-		return speaker.say_quote(stars(raw_message))
+		var/atom/movable/AM = speaker.GetSource()
+		if(AM)
+			return AM.say_quote(stars(raw_message))
+		else
+			return speaker.say_quote(stars(raw_message))
 	else if(message_langs & MONKEY)
 		return "chimpers."
 	else if(message_langs & ALIEN)
 		return "hisses."
 	else if(message_langs & ROBOT)
-		return "<beeps rapidly."
+		return "beeps rapidly."
 	else
 		return "makes a strange sound."
 
@@ -94,6 +102,9 @@
 /atom/movable/proc/GetVoice()
 	return name
 
+/atom/movable/proc/IsVocal()
+	return 1
+
 /atom/movable/proc/get_alt_name()
 	return
 
@@ -105,11 +116,12 @@
 	return
 
 /atom/movable/proc/GetSource()
+	return
 
 /atom/movable/virtualspeaker
 	var/job
 	var/faketrack
-	var/mob/source
+	var/atom/movable/source
 
 /atom/movable/virtualspeaker/GetJob()
 	return job

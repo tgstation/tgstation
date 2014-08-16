@@ -230,7 +230,7 @@
 
 	initialize()
 		if (src.frequency < 1441 || src.frequency > 1489)
-			src.frequency = sanitize_frequency(src.frequency)
+			src.frequency =  num2text(sanitize_frequency(src.frequency))
 
 		set_frequency(frequency)
 

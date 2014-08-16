@@ -314,9 +314,6 @@ datum/signal
 			freq = text2num(freq)
 		newsign.frequency = freq
 
-		var/datum/radio_frequency/connection = radio_controller.return_frequency(freq)
-		newsign.data["connection"] = connection
-
 
 		newsign.data["radio"] = hradio
 		newsign.data["vmessage"] = message

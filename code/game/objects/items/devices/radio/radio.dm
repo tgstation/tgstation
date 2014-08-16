@@ -16,6 +16,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/canhear_range = 3 // the range which mobs can hear this radio from
 	var/obj/item/device/radio/patch_link = null
 	var/datum/wires/radio/wires = null
+	var/radio_connection = 0
+	var/list/secure_radio_connections
 	var/prison_radio = 0
 	var/b_stat = 0
 	var/broadcasting = 0
@@ -40,14 +42,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
 
-/obj/item/device/radio
-	var/datum/radio_frequency/radio_connection
-	var/list/datum/radio_frequency/secure_radio_connections
-
-	proc/set_frequency(new_frequency)
-		radio_controller.remove_object(src, frequency)
-		frequency = new_frequency
-		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+/obj/item/device/radio/proc/set_frequency(new_frequency)
+	new_frequency = num2text(new_frequency)
+	remove_radio(src, radio_connection)
+	radio_connection = add_radio(src, new_frequency)
 
 /obj/item/device/radio/New()
 	wires = new(src)
@@ -67,19 +65,19 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 
 /obj/item/device/radio/initialize()
-
+	var/frequency_num = text2num(frequency)
 	if(freerange)
-		if(frequency < 1200 || frequency > 1600)
-			frequency = sanitize_frequency(frequency, maxf)
+		if(frequency_num < 1200 || frequency_num > 1600)
+			frequency = num2text(sanitize_frequency(frequency_num, maxf))
 	// The max freq is higher than a regular headset to decrease the chance of people listening in, if you use the higher channels.
-	else if (frequency < 1441 || frequency > maxf)
+	else if (frequency_num < 1441 || frequency_num > maxf)
 		//world.log << "[src] ([type]) has a frequency of [frequency], sanitizing."
-		frequency = sanitize_frequency(frequency, maxf)
+		frequency =  num2text(sanitize_frequency(frequency_num, maxf))
 
 	set_frequency(frequency)
 
 	for (var/ch_name in channels)
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+		secure_radio_connections[ch_name] = add_radio(src, ch_name)
 
 
 /obj/item/device/radio/attack_self(mob/user as mob)
@@ -170,7 +168,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	else if (href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
 		if (!freerange || (frequency < 1200 || frequency > 1600))
-			new_frequency = sanitize_frequency(new_frequency, maxf)
+			new_frequency = num2text(sanitize_frequency(new_frequency, maxf))
 		set_frequency(new_frequency)
 		if(hidden_uplink)
 			if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
@@ -203,8 +201,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/proc/isWireCut(var/index)
 	return wires.IsIndexCut(index)
 
-/obj/item/device/radio/talk_into(mob/living/M as mob, message, channel)
-
+/obj/item/device/radio/talk_into(atom/movable/M, message, channel)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -218,7 +215,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		return
 
 	if(GLOBAL_RADIO_TYPE == 1) // NEW RADIO SYSTEMS: By Doohl
-
 		/* Quick introduction:
 			This new radio system uses a very robust FTL signaling technology unoriginally
 			dubbed "subspace" which is somewhat similar to 'blue-space' but can't
@@ -229,23 +225,22 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			the signal gets processed and logged, and an audible transmission gets sent
 			to each individual headset.
 		*/
+		
+		/*
+			be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
+		*/
 
-		//#### Grab the connection datum ####//
-		var/datum/radio_frequency/connection = null
+		//get the frequency you buttface. radios no longer use the radio_controller. confusing for future generations, convenient for me.
+		var/freq
 		if(channel && channels && channels.len > 0)
 			if (channel == "department")
-				//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
 				channel = channels[1]
-			connection = secure_radio_connections[channel]
+			freq = secure_radio_connections[channel]
 			if (!channels[channel]) // if the channel is turned off, don't broadcast
 				return
 		else
-			connection = radio_connection
+			freq = radio_connection
 			channel = null
-		if (!istype(connection))
-			return
-		if (!connection)
-			return
 
 		var/turf/position = get_turf(src)
 
@@ -253,11 +248,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		// ||-- The mob's name identity --||
 		var/displayname = M.name	// grab the display name (name you get when you hover over someone's icon)
-		var/real_name = M.real_name // mob's real name
+		var/real_name = M.name // mob's real name
 		var/mobkey = "none" // player key associated with mob
 		var/voicemask = 0 // the speaker is wearing a voice mask
-		if(M.client)
-			mobkey = M.key // assign the mob's key
+		if(ismob(M))
+			var/mob/speaker = M
+			real_name = speaker.real_name
+			if(speaker.client)
+				mobkey = speaker.key // assign the mob's key
 
 
 		var/jobname // the mob's "job"
@@ -293,11 +291,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		else if (istype(M, /mob/living/silicon/pai))
 			jobname = "Personal AI"
 
+		// --- Cold, emotionless machines. ---
+		else if(isobj(M))
+			jobname = "Machine"
+
 		// --- Unidentifiable mob ---
 		else
 			jobname = "Unknown"
-
-
 
 	  /* ###### Radio headsets can only broadcast through subspace ###### */
 
@@ -316,17 +316,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				"name" = displayname,	// the mob's display name
 				"job" = jobname,		// the mob's job
 				"key" = mobkey,			// the mob's key
-				"vmessage" = M.voice_message, // the message to display if the voice wasn't understood
-				"vname" = M.voice_name, // the name to display if the voice wasn't understood
 				"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
 
 				// We store things that would otherwise be kept in the actual mob
 				// so that they can be logged even AFTER the mob is deleted or something
 
 			  // Other tags:
-				"compression" = rand(45,50), // compressed radio signal
+				"compression" = rand(35,65), // compressed radio signal
 				"message" = message, // the actual sent message
-				"connection" = connection, // the radio connection to use
 				"radio" = src, // stores the radio used for transmission
 				"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
 				"traffic" = 0, // dictates the total traffic sum that the signal went through
@@ -335,7 +332,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 				"level" = position.z // The source's z level
 			)
-			signal.frequency = connection.frequency // Quick frequency set
+			signal.frequency = freq
 
 		  //#### Sending the signal to all subspace receivers ####//
 
@@ -373,13 +370,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			"name" = displayname,	// the mob's display name
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
-			"vmessage" = M.voice_message, // the message to display if the voice wasn't understood
-			"vname" = M.voice_name, // the name to display if the voice wasn't understood
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
 
 			"compression" = 0, // uncompressed radio signal
 			"message" = message, // the actual sent message
-			"connection" = connection, // the radio connection to use
 			"radio" = src, // stores the radio used for transmission
 			"slow" = 0,
 			"traffic" = 0,
@@ -388,8 +382,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			"reject" = 0,
 			"level" = position.z
 		)
-		signal.frequency = connection.frequency // Quick frequency set
-
+		signal.frequency = text2num(freq) // Quick frequency set
 		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
 			R.receive_signal(signal)
 
@@ -402,17 +395,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
 	  	// Send a mundane broadcast with limited targets:
-
-		//THIS IS TEMPORARY.
-		if(!connection)	return	//~Carn
-
-		Broadcast_Message(connection, M, voicemask, M.voice_message,
-						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type, signal.data["compression"], list(position.z), connection.frequency)
+		world << "radio mundane broadcast"
+		Broadcast_Message(M, voicemask,
+						  src, message, displayname, jobname, real_name,
+		                  filter_type, signal.data["compression"], list(position.z), freq)
 
 
 
-	else // OLD RADIO SYSTEMS: By Goons?
+	/*else // OLD RADIO SYSTEMS: By Goons?
 
 		var/datum/radio_frequency/connection = null
 		if(channel && channels && channels.len > 0)
@@ -599,7 +589,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					if(istype(R, /mob/living/silicon/ai))
 						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", 2)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, 2) */
 
 /obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(radio_freq)
@@ -644,9 +634,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	else
 		var/accept = (freq==frequency && listening)
 		if (!accept)
-			for (var/ch_name in channels)
-				var/datum/radio_frequency/RF = secure_radio_connections[ch_name]
-				if (RF.frequency==freq && (channels[ch_name]&FREQ_LISTENING))
+			for(var/ch_name in channels)
+				if(channels[ch_name] & FREQ_LISTENING)
 					accept = 1
 					break
 		if (!accept)
@@ -783,7 +772,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			src.name = "broken radio"
 			return
 
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+		secure_radio_connections[ch_name] = add_radio(src, ch_name)
 
 	return
 

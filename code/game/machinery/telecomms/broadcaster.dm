@@ -26,7 +26,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
+	world << "[src] received signal"
 	if(signal.data["reject"])
+		world << "[src] signal rejected"
 		return
 
 	if(signal.data["message"])
@@ -56,11 +58,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(signal.data["type"] == 0)
 
 			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_Message(signal.data["connection"], signal.data["mob"],
-							  signal.data["vmask"], signal.data["vmessage"],
+			world << "broadcaster normal broadcast"
+			Broadcast_Message(signal.data["mob"],
+							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], signal.data["level"], signal.frequency)
+							  signal.data["realname"], 0, signal.data["compression"], signal.data["level"], signal.frequency)
 
 
 	   /** #### - Simple Broadcast - #### **/
@@ -80,8 +83,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			/* ###### Broadcast a message using signal.data ###### */
 				// Parameter "data" as 4: AI can't track this person/mob
-
-			Broadcast_Message(signal.data["connection"], signal.data["mob"],
+			world << "broadcaster artifical boradcast"
+			Broadcast_Message(signal.data["mob"],
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
@@ -140,22 +143,23 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
 		/* ###### Broadcast a message using signal.data ###### */
-
-		var/datum/radio_frequency/connection = signal.data["connection"]
-
-		if(connection.frequency == SYND_FREQ) // if syndicate broadcast, just
-			Broadcast_Message(signal.data["connection"], signal.data["mob"],
-							  signal.data["vmask"], signal.data["vmessage"],
+		world << "frequency:"
+		world << signal.frequency
+		if(signal.frequency == SYND_FREQ) // if syndicate broadcast, just
+			world << "syndicate  broadcast from tcomms allinone"
+			Broadcast_Message(signal.data["mob"],
+							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], list(0), connection.frequency)
+							  signal.data["realname"],, signal.data["compression"], list(0), signal.frequency)
 		else
 			if(intercept)
-				Broadcast_Message(signal.data["connection"], signal.data["mob"],
-							  signal.data["vmask"], signal.data["vmessage"],
+				world << "normal broadcast from allinone"
+				Broadcast_Message(signal.data["mob"],
+							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"], list(0), connection.frequency)
+							  signal.data["realname"], 3, signal.data["compression"], list(0), signal.frequency)
 
 
 
@@ -163,9 +167,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	Here is the big, bad function that broadcasts a message given the appropriate
 	parameters.
-
-	@param connection:
-		The datum generated in radio.dm, stored in signal.data["connection"].
 
 	@param M:
 		Reference to the mob/speaker, stored in signal.data["mob"]
@@ -216,26 +217,44 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 **/
 
-/proc/Broadcast_Message(var/datum/radio_frequency/connection, var/mob/M,
-						var/vmask, var/vmessage, var/obj/item/device/radio/radio,
-						var/message, var/name, var/job, var/realname, var/vname,
+//this proc is cursed. save yourself while you still can.
+/proc/Broadcast_Message(var/atom/movable/AM,
+						var/vmask, var/obj/item/device/radio/radio,
+						var/message, var/name, var/job, var/realname,
 						var/data, var/compression, var/list/level, var/freq)
 
-  /* ###### Prepare the radio connection ###### */
-
-	var/display_freq = freq
-
+	world << "am = [AM]"
+	world << "vmask = [vmask]"
+	world << "radio = [radio]"
+	world << "message = [message]"
+	world << "name = [name]"
+	world << "job = [job]"
+	world << "realname = [realname]"
+	world << "data = [data]"
+	world << "compression = [compression]"
+	world << "freq = [freq]"
+	world << "level = [level]"
+	for(var/ASSHOLE in level)
+		world << ASSHOLE
 	var/list/obj/item/device/radio/radios = list()
-
 	// Cut down on the message sizes.
+	world << "broadcast_message() called"
 
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
-	vmessage = copytext(vmessage, 1, MAX_BROADCAST_LEN)
+	world << "<font size='10'>STUPID BULLSHIT:</font>"
+	var/i = 0
+	var/j = 0
+	for(var/list/FUCK in all_radios)
+		i++
+		for(var/atom/SHIT in FUCK)
+			j++
+			world << "[i].[j]"
+			world << SHIT
 
 	var/atom/movable/virtualspeaker/virt = new(null) //fuck this code.
 	virt.name = name
 	virt.job = job
-	virt.languages = M.languages
+	virt.languages = AM.languages
 
 	if(compression > 0)
 		message = Gibberish(message, compression + 50)
@@ -243,42 +262,38 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	if(data == 1)
 
-		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
-			if(R.receive_range(display_freq, level) > -1)
+		for (var/obj/item/device/radio/intercom/R in all_radios["[freq]"])
+			if(R.receive_range(freq, level) > -1)
 				radios += R
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
 
 	else if(data == 2)
 
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/R in all_radios["[freq]"])
 
 			if(istype(R, /obj/item/device/radio/headset))
 				continue
 
-			if(R.receive_range(display_freq, level) > -1)
+			if(R.receive_range(freq, level) > -1)
 				radios += R
-
 	// --- Broadcast to syndicate radio! ---
 
 	else if(data == 3)
 
-		var/datum/radio_frequency/syndicateconnection = radio_controller.return_frequency(SYND_FREQ)
-
-		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/R in all_radios["[freq]"])
 
 			if(R.receive_range(SYND_FREQ, level) > -1)
 				radios += R
 
-	if(data == 4) //whoever added this argument to the data function was an idiot.
+	else if(data == 4) //whoever added this argument to the data key instead of a new one was an idiot.
 		virt.faketrack = 1
 
 	// --- Broadcast to ALL radio devices ---
 
 	else
-
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
-			if(R.receive_range(display_freq, level) > -1)
+		for (var/obj/item/device/radio/R in all_radios["[freq]"])
+			if(R.receive_range(freq, level) > -1)
 				radios += R
 
 	// Get a list of mobs who can hear from the radios we collected.
@@ -291,8 +306,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(istype(R, /mob/new_player)) // we don't want new players to hear messages. rare but generates runtimes.
 			receive -= R
 
+	world << "<b>Radios ([radios.len]):</b>"
+	for(var/atom/movable/df in radios)
+		world << df.name
+	world << "<b>Hearers ([receive.len]):</b>"
 	for(var/atom/movable/hearer in receive)
-		hearer.Hear(message, virt, M.languages, message, freq)
+		world << hearer.name
+		hearer.Hear(message, virt, AM.languages, message, freq)
 
 /*	// ###### Organize the receivers into categories for displaying the message ######
 
@@ -309,12 +329,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
-		var/blackbox_msg = M.compose_message("", virt, M.languages, message, freq)
+		var/blackbox_msg = "[AM] [AM.say_quote(message)]"
 		//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
 
 		//BR.messages_admin += blackbox_admin_msg
 		if(istype(blackbox))
-			switch(display_freq)
+			switch(freq)
 				if(1459)
 					blackbox.msg_common += blackbox_msg
 				if(1351)
