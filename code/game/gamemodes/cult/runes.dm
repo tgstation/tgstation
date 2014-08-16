@@ -1024,7 +1024,7 @@ var/list/sacrificed = list()
 
 /obj/effect/rune/proc/runestun(var/mob/living/T as mob)
 	if(istype(src,/obj/effect/rune))   ///When invoked as rune, flash and stun everyone around.
-		usr.say("Fuu ma[pick("'","`")]jin!")
+		usr.say("Geber[pick("'","`")]t suh'ta!")
 		for(var/mob/living/L in viewers(src))
 
 			if(iscarbon(L))
@@ -1042,7 +1042,7 @@ var/list/sacrificed = list()
 				S.show_message("\red BZZZT... The rune has exploded in a bright flash.", 3)
 		qdel(src)
 	else                        ///When invoked as talisman, stun and mute the target mob.
-		usr.say("Dream sign ''Evil sealing talisman'[pick("'","`")]!")
+		usr.say("Kad[pick("'","`")]ad geber't suh") //Try pronouncing it three times fast.
 		var/obj/item/weapon/nullrod/N = locate() in T
 		if(N)
 			for(var/mob/O in viewers(T, null))
@@ -1068,9 +1068,9 @@ var/list/sacrificed = list()
 /obj/effect/rune/proc/armor()
 	var/mob/living/carbon/human/user = usr
 	if(istype(src,/obj/effect/rune))
-		usr.say("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+		usr.say("N'ath grauda eth akkar shud[pick("'","`")]urethnor!") //"Summon guard of protective armor, "akar" is Sumerian for "armor" and "shudul" is "protection"
 	else
-		usr.whisper("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+		usr.whisper("N'ath grauda eth akkar shud[pick("'","`")]urethnor!")
 	usr.visible_message("\red The rune disappears with a flash of red light, and a set of armor appears on [usr]...", \
 	"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
 
@@ -1087,8 +1087,8 @@ var/list/sacrificed = list()
 /obj/effect/rune/proc/summon_shell()		// Summons a construct shell
 	for(var/obj/item/stack/sheet/plasteel/PS in src.loc)		//I could probably combine the amounts but I'm too lazy to compensate for others' lazyness
 		if(PS.amount >= 4)		// may need increasing?
-			usr.say("Eth ra p'ni[pick("'","`")]dedo ol!")		//I have no idea if these are written in a proper made up language or just Urist smacking his face on the keyboard
-			new /obj/structure/constructshell(src.loc)
+			usr.say("N'ath sugum dim alad'dukkathor!")		//I have no idea if these are written in a proper made up language or just Urist smacking his face on the keyboard
+			new /obj/structure/constructshell(src.loc)		//Most of the cult words is smacking face on keyboard and picking what sounds gritty, with some borrowing from Sumerian.
 //?			PS.remove_amount(4)			//TO-DO: Write a proc for removing sheets from a stack and deleting when stack is empty... why doesnt this exist yet??
 			PS.amount -= 4
 		if(PS.amount <= 0)
