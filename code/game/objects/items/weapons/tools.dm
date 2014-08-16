@@ -394,27 +394,38 @@
 	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
-	origin_tech = "engineering=3"
+	origin_tech = "engineering=3;plasmatech=2"
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
-	max_fuel = 40
-	w_class = 3.0
+	desc = "A new and luxurious experimental welder capable of self refueling!"
+	max_fuel = 20
+	w_class = 2.0
 	m_amt = 70
 	g_amt = 120
-	origin_tech = "engineering=4;plasmatech=3"
-	icon_state = "ewelder"
-	var/last_gen = 0
+	origin_tech = "engineering=4;plasmatech=3;bluespace=2"
+	var/regencooldown  =   0
+	var/cooldown_time  = 300
+	var/countdown_wait =   0
 
+/obj/item/weapon/weldingtool/experimental/examine()
+	..()
+	usr << "The next charge time indicates it will be in [(max(countdown_wait - world.timeofday,0))]."
+/obj/item/weapon/weldingtool/experimental/New()
+	..()
+	processing_objects += src
+	countdown_wait = world.timeofday + cooldown_time
 
-//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
-//i don't think this is actually used, yaaaaay -Pete
-/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
-	var/gen_amount = (world.time - last_gen) / 25
-	reagents += gen_amount
-	if(reagents > max_fuel)
-		reagents = max_fuel
+/obj/item/weapon/weldingtool/experimental/Destroy()
+	processing_objects -= src
 
+/obj/item/weapon/weldingtool/experimental/process()
+	if(!regencooldown)
+		regencooldown = 1
+		spawn(cooldown_time)
+			regencooldown = 0
+			countdown_wait = (world.timeofday + cooldown_time)
+		reagents.add_reagent("fuel", 1)
 
 /*
  * Crowbar
