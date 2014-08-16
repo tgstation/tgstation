@@ -195,7 +195,7 @@
 
 		if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 			if(prob(20))
-				src << "\red You feel a searing heat in your lungs!"
+				src << "<span class='danger'>You feel a searing heat in your lungs!>/span>"
 			fire_alert = max(fire_alert, 1)
 		else
 			fire_alert = 0
@@ -267,12 +267,12 @@
 		if(FAT in mutations)
 			if(nutrition < 100)
 				if(prob(round((50 - nutrition) / 100)))
-					src << "\blue You feel fit again!"
+					src << "<span class='info'>You feel fit again!</span>"
 					mutations.Remove(FAT)
 		else
 			if(nutrition > 500)
 				if(prob(5 + round((nutrition - 200) / 2)))
-					src << "\red You suddenly feel blubbery!"
+					src << "<span class='danger'>You suddenly feel blubbery!</span>"
 					mutations.Add(FAT)
 
 		if (nutrition > 0)
