@@ -624,6 +624,7 @@
 		"Gibtonite" = 5,
 		"Diamond"   = 1,
 		"Cave"      = 1,
+		/*
 		"Pharosium"  = 5,
 		"Char"  = 5,
 		"Claretine"  = 5,
@@ -637,6 +638,7 @@
 		"Cerenkite"  = 5,
 		"Molitz"  = 5,
 		"Cytine"  = 5
+		*/
 	)
 	//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
@@ -668,6 +670,7 @@
 		"Gold"    = 10,
 		"Silver"  = 10,
 		"Plasma"  = 25,
+		/*
 		"Pharosium"  = 5,
 		"Char"  = 5,
 		"Claretine"  = 5,
@@ -681,6 +684,7 @@
 		"Cerenkite"  = 5,
 		"Molitz"  = 5,
 		"Cytine"  = 5
+		*/
 	)
 
 /turf/unsimulated/mineral/random/high_chance_clown
@@ -692,6 +696,7 @@
 		"Diamond" = 2,
 		"Gold"    = 5,
 		"Silver"  = 5,
+		/*
 		"Pharosium"  = 1,
 		"Char"  = 1,
 		"Claretine"  = 1,
@@ -705,6 +710,7 @@
 		"Cerenkite"  = 1,
 		"Molitz"  = 1,
 		"Cytine"  = 1,
+		*/
 		"Plasma"  = 25,
 		"Clown"   = 15,
 		"Phazon"  = 10
