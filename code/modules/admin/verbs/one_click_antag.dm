@@ -344,7 +344,7 @@ client/proc/one_click_antag()
 	if(candidates.len >= 3) //Minimum 3 to be considered a squad
 		//Pick the lucky players
 		var/numagents = 5 //How many commandos to spawn
-		while(numagents && !deathsquadspawn.len && !candidates.len)
+		while(numagents && deathsquadspawn.len && candidates.len)
 			var/spawnloc = deathsquadspawn[1]
 			var/mob/dead/observer/chosen_candidate = pick(candidates)
 			candidates -= chosen_candidate
