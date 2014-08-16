@@ -118,12 +118,11 @@
 		if(s.amount > 0)
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
-	if(!(/obj/item/stack/sheet/metal in stack_list)) return
-	if(!(/obj/item/stack/sheet/mineral/plasma in stack_list)) return
-	var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
-	var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
-	if(min(metalstack.amount, plasmastack.amount))
-		dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];plasteel=1'>Smelt</A><BR>")
+	if((/obj/item/stack/sheet/metal in stack_list) && (/obj/item/stack/sheet/mineral/plasma in stack_list))
+		var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
+		var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
+		if(min(metalstack.amount, plasmastack.amount))
+			dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];plasteel=1'>Smelt</A><BR>")
 
 	dat += text("<HR><b>Mineral Value List:</b><BR>[get_ore_values()]")
 
