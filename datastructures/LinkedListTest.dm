@@ -1,11 +1,11 @@
-/datum/datastructurs/LinkedListTest
+/datum/datastructures/LinkedListTest
 
 
 /world/proc/testLinkedList()
 	var/allTestsPass = 1
 
 	world << "\red \b Testing LinkedList."
-	var/datum/datastructurs/LinkedList/head = new /datum/datastructurs/LinkedList()
+	var/datum/datastructures/LinkedList/head = new /datum/datastructures/LinkedList()
 
 
 	//List starts out with nothing in it
@@ -39,7 +39,7 @@
 	//Adding is working if no errors so far
 
 	//Test pop
-	var/datum/datastructurs/LinkedList/poped = head.pop()
+	var/datum/datastructures/LinkedList/poped = head.pop()
 	if(poped!=firstText)
 		world << "\red \b LinkedList Test Error: expected [firstText], but was [head.peek()]"
 		allTestsPass = 0

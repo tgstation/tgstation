@@ -3,80 +3,80 @@
 
 
 
-/datum/datastructurs/LinkedList
+/datum/datastructures/LinkedList
 
 
-	var/datum/datastructurs/LinkedListNode/first = null
-	var/datum/datastructurs/LinkedListNode/last = null
+	var/datum/datastructures/LinkedListNode/first = null
+	var/datum/datastructures/LinkedListNode/last = null
 	var/size = 0
 
 
-/datum/datastructurs/LinkedList/New()
+/datum/datastructures/LinkedList/New()
 
 //private
-/datum/datastructurs/LinkedList/proc/getEntry(var/n )
-	var/datum/datastructurs/LinkedListNode/e = null
+/datum/datastructures/LinkedList/proc/getEntry(var/n )
+	var/datum/datastructures/LinkedListNode/e = null
 	if(n < size / 2)
 		e = first
 		while (n-->0)
-			e = e.getNext()
+			e = e.next
 	else
 		e = last
 		while (++n<size)
-			e = e.getPrev()
+			e = e.prev
 
 	return e
 
 //private
-/datum/datastructurs/LinkedList/proc/removeEntry( var/datum/datastructurs/LinkedListNode/e )
+/datum/datastructures/LinkedList/proc/removeEntry( var/datum/datastructures/LinkedListNode/e )
 	size--
 	if(size==0)
 		first = null
 		last = null
 	else
 		if(e==first)
-			first = e.getNext()
-			first.setPrev(null)
+			first = e.next
+			first.prev = null
 		else if(e==last)
-			last= e.getPrev()
-			last.setNext(null)
+			last= e.prev
+			last.next = null
 		else
-			var/datum/datastructurs/LinkedListNode/next = e.getNext()
-			var/datum/datastructurs/LinkedListNode/prev = e.getPrev()
-			next.setPrev(prev)
-			prev.setNext(next)
+			var/datum/datastructures/LinkedListNode/next = e.next
+			var/datum/datastructures/LinkedListNode/prev = e.prev
+			next.prev = prev
+			prev.next =next
 
 
 
 //public
-/datum/datastructurs/LinkedList/proc/getFirst()
+/datum/datastructures/LinkedList/proc/getFirst()
 	if(size ==0)
 		return null
 
-	return first.getObject()
+	return first.object
 
 
 //public
-/datum/datastructurs/LinkedList/proc/getLast()
+/datum/datastructures/LinkedList/proc/getLast()
 	if(size == 0)
 		return null
-	return last.getObject()
+	return last.object
 
 
 
 
 
-
-/datum/datastructurs/LinkedList/proc/removeFirst()
+//public
+/datum/datastructures/LinkedList/proc/removeFirst()
 	if (size ==0)
 		return null
 	size--
-	var/datum/datastructurs/LinkedListNode/r = first.getObject()
+	var/datum/datastructures/LinkedListNode/r = first.object
 
-	var/datum/datastructurs/LinkedListNode/next = first.getNext()
+	var/datum/datastructures/LinkedListNode/next = first.next
 
 	if(next !=null)
-		next.setPrev(null)
+		next.prev = null
 	else
 		last = null
 
@@ -86,16 +86,16 @@
 
 
 
-
-/datum/datastructurs/LinkedList/proc/removeLast()
+//public
+/datum/datastructures/LinkedList/proc/removeLast()
 	if(size==0)
 		return null
 	size--
 
-	var/r = last.getObject()
-	var/datum/datastructurs/LinkedListNode/prev = last.getPrev()
+	var/r = last.object
+	var/datum/datastructures/LinkedListNode/prev = last.prev
 	if(prev!=null)
-		last.setNext(null)
+		last.next = null
 	else
 		first = null
 
@@ -106,15 +106,15 @@
 
 
 //public
-/datum/datastructurs/LinkedList/proc/addFirst(var/o)
+/datum/datastructures/LinkedList/proc/addFirst(var/o)
 
-	var/datum/datastructurs/LinkedListNode/e = new /datum/datastructurs/LinkedListNode(o)
+	var/datum/datastructures/LinkedListNode/e = new /datum/datastructures/LinkedListNode(o)
 	if(size ==0)
 		first = e
 		last = e
 	else
-		e.setNext(first)
-		first.setPrev(e)
+		e.next = first
+		first.prev = e
 		first = e
 
 	size++
@@ -123,8 +123,8 @@
 
 
 //public
-/datum/datastructurs/LinkedList/proc/addLast(var/o)
-	var e = new /datum/datastructurs/LinkedListNode(o)
+/datum/datastructures/LinkedList/proc/addLast(var/o)
+	var e = new /datum/datastructures/LinkedListNode(o)
 
 	addLastEntry(e)
 
@@ -132,48 +132,48 @@
 
 
 //private
-/datum/datastructurs/LinkedList/proc/addLastEntry(var/datum/datastructurs/LinkedListNode/e)
+/datum/datastructures/LinkedList/proc/addLastEntry(var/datum/datastructures/LinkedListNode/e)
 	if(size == 0)
 		first = e
 		last = e
 	else
-		e.setPrev(last)
-		last.setNext(e)
+		e.prev = last
+		last.next = e
 		last = e
 
 	size++
 
 
-
-/datum/datastructurs/LinkedList/proc/contains(var/o)
-	var/datum/datastructurs/LinkedListNode/e = first
+//public
+/datum/datastructures/LinkedList/proc/contains(var/o)
+	var/datum/datastructures/LinkedListNode/e = first
 	while(e!=null)
-		if(o==e.getObject())
+		if(o==e.object)
 			return 1
-		e = e.getNext()
+		e = e.next
 	return 0
 
 
 
 
-/datum/datastructurs/LinkedList/proc/size()
+/datum/datastructures/LinkedList/proc/size()
 	return size
 
 
-/datum/datastructurs/LinkedList/proc/add(var/o)
-	var node = new /datum/datastructurs/LinkedListNode(o)
+/datum/datastructures/LinkedList/proc/add(var/o)
+	var node = new /datum/datastructures/LinkedListNode(o)
 	addLastEntry(node)
 	return 1
 
 
 
-/datum/datastructurs/LinkedList/proc/remove(var/o)
-	var/datum/datastructurs/LinkedListNode/e = first
+/datum/datastructures/LinkedList/proc/remove(var/o)
+	var/datum/datastructures/LinkedListNode/e = first
 	while(e!=null)
-		if(o==e.getObject())
+		if(o==e.object)
 			removeEntry(e)
 			return 1
-		e=e.getNext()
+		e=e.next
 	return 0
 
 
@@ -181,7 +181,7 @@
 
 
 
-/datum/datastructurs/LinkedList/proc/clear()
+/datum/datastructures/LinkedList/proc/clear()
 	if(size > 0)
 		first =null
 		last = null
@@ -189,95 +189,95 @@
 
 
 
-/datum/datastructurs/LinkedList/proc/get(var/index)
+/datum/datastructures/LinkedList/proc/get(var/index)
 	//bounds check
 	if(index<0||index>=size())
 		return null
 
-	var/datum/datastructurs/LinkedListNode/e = getEntry(index)
-	return e.getObject()
+	var/datum/datastructures/LinkedListNode/e = getEntry(index)
+	return e.object
 
 
-/datum/datastructurs/LinkedList/proc/setAtIndex(var/index, var/obj)
+/datum/datastructures/LinkedList/proc/setAtIndex(var/index, var/obj)
 	//bounds check
 	if(index<0||index>=size())
 		return null
 
-	var/datum/datastructurs/LinkedListNode/e = getEntry(index)
-	var/old = e.getObject()
-	e.setObject(obj)
+	var/datum/datastructures/LinkedListNode/e = getEntry(index)
+	var/old = e.object
+	e.object = obj
 	return old
 
 
-/datum/datastructurs/LinkedList/proc/addAtIndex(var/index, var/o)
+/datum/datastructures/LinkedList/proc/addAtIndex(var/index, var/o)
 	//bounds check
 	if(index<0||index>=size())
 		return null
 
-	var/datum/datastructurs/LinkedListNode/e = new /datum/datastructurs/LinkedListNode(o)
+	var/datum/datastructures/LinkedListNode/e = new /datum/datastructures/LinkedListNode(o)
 	if(index<size)
-		var/datum/datastructurs/LinkedListNode/after = getEntry(index)
-		e.setNext(after)
-		var/datum/datastructurs/LinkedListNode/previous = after.getPrev()
-		e.setPrev(previous)
+		var/datum/datastructures/LinkedListNode/after = getEntry(index)
+		e.next = after
+		var/datum/datastructures/LinkedListNode/previous = after.prev
+		e.prev =previous
 		if(previous==null)
 			first = e
 		else
-			previous.setNext(e)
-		after.setPrev(e)
+			previous.next = e
+		after.prev = e
 		size++
 	else
 		addLastEntry(e)
 
 //public
-/datum/datastructurs/LinkedList/proc/removeAtIndex(var/index)
+/datum/datastructures/LinkedList/proc/removeAtIndex(var/index)
 	//bounds check
 	if(index<0||index>=size())
 		return null
 
-	var/datum/datastructurs/LinkedListNode/e = getEntry(index)
+	var/datum/datastructures/LinkedListNode/e = getEntry(index)
 	removeEntry(e)
-	return e.getObject()
+	return e.object
 
 
 
 
 
 //public int indexOf(Object o)
-/datum/datastructurs/LinkedList/proc/indexOf(var/o)
+/datum/datastructures/LinkedList/proc/indexOf(var/o)
 	var/index = 0
-	var/datum/datastructurs/LinkedListNode/e = first
+	var/datum/datastructures/LinkedListNode/e = first
 	while(e!=null)
-		if(e.getObject()==o)
+		if(e.object==o)
 			return index
 		index++
-		e=e.getNext()
+		e=e.next
 	return -1
 
 
 //public int lastIndexOf(Object o)
-/datum/datastructurs/LinkedList/proc/lastIndexOf(var/o)
+/datum/datastructures/LinkedList/proc/lastIndexOf(var/o)
 	var/index = size -1
-	var/datum/datastructurs/LinkedListNode/e = last
+	var/datum/datastructures/LinkedListNode/e = last
 	while(e!=null)
 		return index
 		index--
-		e=e.getPrev()
+		e=e.prev
 	return -1
 
 
 
 //public LinkedListItr<Object> listIterator(int index)
-/datum/datastructurs/LinkedList/proc/listIterator(var/index)
+/datum/datastructures/LinkedList/proc/listIterator(var/index)
 
-	var/datum/datastructurs/LinkedListItr/toReturn = null;
+	var/datum/datastructures/LinkedListItr/toReturn = null;
 
 
 	if( index == size)
-		toReturn = new /datum/datastructurs/LinkedListItr(src,last,null,index)
+		toReturn = new /datum/datastructures/LinkedListItr(src,last,null,index)
 	else
-		var/datum/datastructurs/LinkedListNode/next = getEntry(index)
-		toReturn = new /datum/datastructurs/LinkedListItr(src,next.getPrev(),next,index)
+		var/datum/datastructures/LinkedListNode/next = getEntry(index)
+		toReturn = new /datum/datastructures/LinkedListItr(src,next.prev,next,index)
 
 	return toReturn
 
@@ -287,37 +287,37 @@
 
 //Done above this
 //public Object poll()
-/datum/datastructurs/LinkedList/proc/poll()
+/datum/datastructures/LinkedList/proc/poll()
 	if(size==0)
 		return null
 	return removeFirst()
 
-/** /datum/datastructurs/LinkedList/proc/remove()
+/** /datum/datastructures/LinkedList/proc/remove()
 	return removeFirst()
 */
 
-/datum/datastructurs/LinkedList/proc/peekFirst()
+/datum/datastructures/LinkedList/proc/peekFirst()
 	return peek()
 
-/datum/datastructurs/LinkedList/proc/peekLast()
+/datum/datastructures/LinkedList/proc/peekLast()
 
-/datum/datastructurs/LinkedList/proc/peek()
+/datum/datastructures/LinkedList/proc/peek()
 	if (first==null)
 		return null
-	return first.getObject()
+	return first.object
 
-/datum/datastructurs/LinkedList/proc/pop()
+/datum/datastructures/LinkedList/proc/pop()
 	if (first==null)
 		return null
 
 	//Because first isn't null, we know there is at least one element
 	size = size -1
 
-	var/toReturn = first.getObject()
+	var/toReturn = first.object
 
-	var/datum/datastructurs/LinkedListNode/next = first.getNext();
+	var/datum/datastructures/LinkedListNode/next = first.next;
 	if(next!=null)
-		next.setPrev(null)
+		next.prev = null
 		first=next
 
 	if(size==0)
