@@ -19,8 +19,9 @@
 
 	if (!msg)
 		return
+	var/nicknames = file2list("config/admin_nicknames.txt")
 
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([src.holder.fakekey ? pick("BADMIN", "Fun Police", "Conspiracy", "ERP BLOCKER", "Button Masher", "MissPhaeron", "Turdicide", "hornigranny", "TLC", "scaredofshowers", "SXSI", "HerpEs", "Nerdrak", "Dickarrus", "Wario90900", "Deurpyn", "Fatbeaver", "Arrowage", "Intigaycy", "Hosin Hitter", "Cheridumb", "Petethegoatse", "HotelHabboLover", "Giacunt", "Muskrats", "FickleInspector", "Tankbutt", "Ulisex", "Scrotemis", "Sillnazi", "Stillachair", "cbdsm", "Un_Professional", "Doopenis", "Calasrear", "Quackink ",  "ANyan:3", "Slieve", "Pali-en269", "Teamcreep", "Agoatsie", "Zoomerdik", "LewdMechanic", "NemoPanFried", "LameMontgommery", "EndGameOver", "LocalDingus", "ThoughtlessNaps", "Sewage", "hbgay6969", "Cockdtbent", "Iranclanos", "Liarwhine", "Vagyina", "Nohrape", "Dumboner69", "Gaymarr", "Jesusfraud") : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([src.holder.fakekey ? pick(nicknames) : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
 	for (var/mob/M in player_list)
 		if (istype(M, /mob/new_player))
