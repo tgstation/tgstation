@@ -247,23 +247,8 @@
 									C.internals.icon_state = "internal1"
 							else
 								C << "<span class='notice'>You don't have an oxygen tank.</span>"
-
 		if("act_intent")
-			if(!ishuman(usr))
-				usr.a_intent_change("right")
-
-		if("intent_help")
-			usr.a_intent_change("help")
-
-		if("intent_harm")
-			usr.a_intent_change("harm")
-
-		if("intent_disarm")
-			usr.a_intent_change("disarm")
-
-		if("intent_grab")
-			usr.a_intent_change("grab")
-
+			usr.a_intent_change("right")
 		if("pull")
 			usr.stop_pulling()
 		if("throw/catch")

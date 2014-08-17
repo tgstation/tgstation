@@ -105,8 +105,6 @@ var/datum/global_hud/global_hud = new()
 	var/obj/screen/action_intent
 	var/obj/screen/move_intent
 
-	var/list/intents = list()
-
 	var/list/adding
 	var/list/other
 	var/list/obj/screen/hotkeybuttons
@@ -217,15 +215,12 @@ datum/hud/New(mob/owner)
 			hud_shown = 1	//Governs behavior of other procs
 			if(adding)
 				mymob.client.screen += adding
-			if(intents)
-				mymob.client.screen += intents
 			if(other && inventory_shown)
 				mymob.client.screen += other
 			if(hotkeybuttons && !hotkey_ui_hidden)
 				mymob.client.screen += hotkeybuttons
 
 			action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-			for(var/obj/screen/S in intents) S.screen_loc = ui_acti
 			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
 			mymob.client.screen += mymob.bodytemp				//As are the rest of these...
 			mymob.client.screen += mymob.fire
@@ -245,8 +240,6 @@ datum/hud/New(mob/owner)
 			hud_shown = 0	//Governs behavior of other procs
 			if(adding)
 				mymob.client.screen -= adding
-			if(intents)
-				mymob.client.screen -= intents
 			if(other)
 				mymob.client.screen -= other
 			if(hotkeybuttons)
@@ -263,11 +256,7 @@ datum/hud/New(mob/owner)
 			mymob.client.screen += l_hand_hud_object	//we want the hands to be visible
 			mymob.client.screen += r_hand_hud_object	//we want the hands to be visible
 			mymob.client.screen += action_intent		//we want the intent swticher visible
-
 			action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
-			for(var/obj/screen/S in intents)
-				S.screen_loc = ui_acti_alt
-				mymob.client.screen += S
 
 			hidden_inventory_update()
 			persistant_inventory_update()
@@ -299,8 +288,6 @@ datum/hud/New(mob/owner)
 			hidden_inventory_update()
 			persistant_inventory_update()
 			mymob.update_action_buttons()
-
-	mymob.a_intent_change(mymob.a_intent)
 	hud_version = display_hud_version
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)

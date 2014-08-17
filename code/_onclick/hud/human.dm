@@ -8,44 +8,11 @@
 
 	using = new /obj/screen()
 	using.name = "act_intent"
-	using.icon_state = "intent"//mymob.a_intent
+	using.icon_state = mymob.a_intent
 	using.screen_loc = ui_acti
 	using.layer = 20
 	adding += using
 	action_intent = using
-
-	using = new /obj/screen()
-	using.name = "intent_help"
-	using.icon_state = "intent_help"
-	using.screen_loc = ui_acti
-	using.layer = 20.1
-	adding += using
-	intents += using
-
-	using = new /obj/screen()
-	using.name = "intent_harm"
-	using.icon_state = "intent_harm"
-	using.screen_loc = ui_acti
-	using.layer = 20.1
-	adding += using
-	intents += using
-
-	using = new /obj/screen()
-	using.name = "intent_disarm"
-	using.icon_state = "intent_disarm"
-	using.screen_loc = ui_acti
-	using.layer = 20.1
-	adding += using
-	intents += using
-
-	using = new /obj/screen()
-	using.name = "intent_grab"
-	using.icon_state = "intent_grab"
-	using.screen_loc = ui_acti
-	using.layer = 20.1
-	adding += using
-	intents += using
-
 
 	using = new /obj/screen()
 	using.name = "mov_intent"
