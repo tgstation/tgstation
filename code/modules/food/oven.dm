@@ -25,21 +25,20 @@ var/global/list/still_choices = typesof(/obj/item/weapon/reagent_containers/food
 
 /obj/machinery/cooking/attackby(obj/item/I, mob/user)
 	if(on)
-		user << "<span class='notice'>The machine is currently [production_meth] something.</span>"
+		user << "<span class='notice'>[src] is currently [production_meth] something!</span>"
 		return
 	if(istype(I,/obj/item/weapon/wrench))
 		if(!anchored)
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 1
-			user << "You wrench [src] in place."
-			return
-		else if(anchored && !on)
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 0
-			user << "You unwrench [src]."
+			if(do_after(user, 30))
+				anchored = 1
+				user << "You wrench [src] in place."
 			return
 		else
-			user << "<span class='warning'>The [src] is currently [production_meth], wait until it is finished!</span>"
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 30))
+				anchored = 0
+				user << "You unwrench [src]."
 			return
 	if(!istype(I,/obj/item/weapon/reagent_containers/food/snacks/))
 		user << "<span class='warning'>That isn't food.</span>"

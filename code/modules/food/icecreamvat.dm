@@ -7,7 +7,7 @@
 	icon = 'icons/obj/cooking_machines.dmi'
 	icon_state = "icecream_vat"
 	use_power = 1
-	idle_power_usage = 20
+	idle_power_usage = 100
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/useramount = 15	//Last used amount
 
@@ -27,6 +27,22 @@
 
 
 /obj/machinery/icemachine/attackby(obj/item/I, mob/user)
+	if(istype(I,/obj/item/weapon/wrench))
+		if(!anchored)
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 30))
+				anchored = 1
+				user << "You wrench [src] in place."
+			return
+		else
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 30))
+				anchored = 0
+				user << "You unwrench [src]."
+			return
+	if(!anchored)
+		user << "<span class='warning'>[src] must be anchored first!</span>"
+		return
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "<span class='notice'>A container is already inside [src].</span>"
