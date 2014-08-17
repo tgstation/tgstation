@@ -3,10 +3,11 @@
 	desc = "A slab of meat"
 	icon_state = "meat"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/sosjerky
-	New()
-		..()
-		reagents.add_reagent("nutriment", 3)
-		src.bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/New()
+	..()
+	reagents.add_reagent("nutriment", 3)
+	src.bitesize = 3
 
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
