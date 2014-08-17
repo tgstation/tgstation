@@ -224,6 +224,7 @@
 	if(icon_gib)
 		flick(icon_gib, src)
 	if(meat_amount && meat_type)
+		playsound(src, 'sound/effects/blobattack.ogg', 20)
 		for(var/i = 0; i < meat_amount; i++)
 			new meat_type(src.loc)
 	..()
