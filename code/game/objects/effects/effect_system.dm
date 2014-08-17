@@ -778,7 +778,9 @@ steam.start() -- spawns the effect
 	if(metal)
 		return
 	if(istype(src, /obj/effect/effect/foam/fire))
-		reagents.reaction(M)
+		if(isliving(AM))
+			var/mob/living/M = AM
+			reagents.reaction(M)
 		return
 
 	if (istype(AM, /mob/living/carbon))
