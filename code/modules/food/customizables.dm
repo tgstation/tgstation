@@ -461,7 +461,7 @@
 		user << "<span class='warning'>You can't fit it into the [src].</span>"
 		return
 	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
-		user << "<span class='notice'> You add [W] to [src].</span>"
+		user << "<span class='notice'> You add some [W] to the [src].</span>"
 		var/obj/item/weapon/reagent_containers/F = W
 		F.reagents.trans_to(src, F.reagents.total_volume)
 		user.drop_item()
