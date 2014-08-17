@@ -136,19 +136,20 @@ for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
     if today not in all_changelog_entries:
         all_changelog_entries[today] = {}
     author_entries = all_changelog_entries[today].get(cl['author'], [])
-    for change in cl['changes']:
-        '''
-        for css,comment in change.items():
-            c=(css,comment)
-            if c not in author_entries:
-                author_entries += [c]
-        '''
-        if change not in author_entries:
-            (change_type, _) = dictToTuples(change)[0]
-            if change_type not in validPrefixes:
-                print('  {0}: Invalid prefix {1}'.format(fileName, change_type), file=sys.stderr)
-            author_entries += [change]
-    all_changelog_entries[today][cl['author']] = author_entries 
+    if len(cl['changes']):
+        for change in cl['changes']:
+            '''
+            for css,comment in change.items():
+                c=(css,comment)
+                if c not in author_entries:
+                    author_entries += [c]
+            '''
+            if change not in author_entries:
+                (change_type, _) = dictToTuples(change)[0]
+                if change_type not in validPrefixes:
+                    print('  {0}: Invalid prefix {1}'.format(fileName, change_type), file=sys.stderr)
+                author_entries += [change]
+        all_changelog_entries[today][cl['author']] = author_entries 
     
     if args.dryRun: continue
     
@@ -170,15 +171,17 @@ with open(args.targetFile.replace('.htm', '.dry.htm') if args.dryRun else args.t
         write_entry = False
         for author in sorted(all_changelog_entries[_date].keys()):
             if len(all_changelog_entries[_date]) == 0: continue
-            entry_htm += '\t\t\t<h3 class="author">{author} updated:</h3>\n'.format(author=author)
-            entry_htm += '\t\t\t<ul class="changes bgimages16">\n'
+            author_htm = '\t\t\t<h3 class="author">{author} updated:</h3>\n'.format(author=author)
+            author_htm += '\t\t\t<ul class="changes bgimages16">\n'
             changes_added = []
             for (css_class, change) in (dictToTuples(e)[0] for e in all_changelog_entries[_date][author]):
                 if change in changes_added: continue
                 write_entry = True
                 changes_added += [change] 
-                entry_htm += '\t\t\t\t<li class="{css_class}">{change}</li>\n'.format(css_class=css_class, change=change.strip())
-            entry_htm += '\t\t\t</ul>\n'
+                author_htm += '\t\t\t\t<li class="{css_class}">{change}</li>\n'.format(css_class=css_class, change=change.strip())
+            author_htm += '\t\t\t</ul>\n'
+            if len(changes_added)>0:
+                entry_htm += author_htm
         entry_htm += '\t\t</div>\n'
         if write_entry:
             changelog.write(entry_htm)
