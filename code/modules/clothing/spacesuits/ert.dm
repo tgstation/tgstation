@@ -73,7 +73,7 @@
 
 /obj/item/clothing/suit/space/ert/engineer
 	name = "emergency response team engineer suit"
-	desc = "A suit worn by the engineering of a NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
+	desc = "A suit worn by the engineering members of a NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_engineer"
 
 //Medical
