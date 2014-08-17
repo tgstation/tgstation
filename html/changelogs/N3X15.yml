@@ -1,2 +1,3 @@
 author: N3X15
-changes: []
+changes: 
+  - bugfix: Fixed wall smoothing not being applied to new walls.

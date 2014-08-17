@@ -71,7 +71,7 @@
 					A.relativewall()
 
 /turf/simulated/wall/New()
-	relativewall_neighbours()
+	relativewall()
 	..()
 
 /turf/simulated/wall/Destroy()
