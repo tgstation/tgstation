@@ -51,7 +51,6 @@
 					src.gib()
 
 /mob/living/carbon/gib(var/animation = 1)
-	playsound(src, 'sound/effects/blobattack.ogg', 50)
 	for(var/mob/M in src)
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)
