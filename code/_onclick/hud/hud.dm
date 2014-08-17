@@ -301,6 +301,7 @@ datum/hud/New(mob/owner)
 			persistant_inventory_update()
 			mymob.update_action_buttons()
 
+	mymob.a_intent_change(mymob.a_intent)
 	hud_version = display_hud_version
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
