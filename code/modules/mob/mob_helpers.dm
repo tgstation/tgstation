@@ -395,6 +395,9 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			if("revolution")
 				if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
 					return 2
+			if("gang")
+				if((M.mind in ticker.mode.A_bosses) || (M.mind in ticker.mode.B_bosses) || (M.mind in ticker.mode.A_gangsters) || (M.mind in ticker.mode.B_gangsters))
+					return 2
 			if("cult")
 				if(M.mind in ticker.mode.cult)
 					return 2
