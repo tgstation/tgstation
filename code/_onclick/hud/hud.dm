@@ -225,8 +225,7 @@ datum/hud/New(mob/owner)
 				mymob.client.screen += hotkeybuttons
 
 			action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-			for(var/obj/screen/S in intents)
-				S.screen_loc = ui_acti
+			for(var/obj/screen/S in intents) S.screen_loc = ui_acti
 			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
 			mymob.client.screen += mymob.bodytemp				//As are the rest of these...
 			mymob.client.screen += mymob.fire
