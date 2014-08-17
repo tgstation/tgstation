@@ -344,7 +344,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				a_intent = intent_numeric((intent_numeric(a_intent) + 3) % 4)
 
 		if(hud_used && hud_used.intents)
-			//hud_used.action_intent.icon_state = "[a_intent]"
 			for(var/obj/screen/S in hud_used.intents)
 				if(S.name=="intent_[a_intent]")
 					S.icon_state = a_intent
