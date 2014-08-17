@@ -140,21 +140,21 @@
 						H.apply_damage(5, BURN, "chest")
 						return
 					else
-						H.apply_damage(-fixing, OXY) //Tada
+						H.apply_damage(-fixable, OXY) //Tada
 				else if(uni && !armor) //Just a suit, still bad
 					if(prob(50))
 						viewers(M) << "\red [src] buzzes: Resuscitation failed. Please apply on bare skin"
 						H.apply_damage(10, BURN, "chest")
 						return
 					else
-						H.apply_damage(-fixing, OXY)
+						H.apply_damage(-fixable, OXY)
 				else
 					if(prob(5))
 						viewers(M) << "\red [src] buzzes: Resuscitation failed. Please apply on bare skin"
 						H.apply_damage(15, BURN, "chest")
 						return
 					else
-						H.apply_damage(-fixing, OXY)
+						H.apply_damage(-fixable, OXY)
 				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
 				M.visible_message("\red [M]'s body convulses a bit.")
 				var/datum/organ/external/temp = H.get_organ("head")
