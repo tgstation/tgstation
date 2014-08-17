@@ -433,7 +433,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/mob/living/silicon/ai/selected
 	var/list/active = active_ais()
 	for(var/mob/living/silicon/ai/A in active)
-		if(!selected || (selected.connected_robots > A.connected_robots))
+		if(!selected || (selected.connected_robots.len > A.connected_robots.len))
 			selected = A
 
 	return selected
