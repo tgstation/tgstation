@@ -1024,7 +1024,7 @@ var/list/sacrificed = list()
 
 /obj/effect/rune/proc/runestun(var/mob/living/T as mob)
 	if(istype(src,/obj/effect/rune))   ///When invoked as rune, flash and stun everyone around.
-		usr.say("Geber[pick("'","`")]t suh'ta!")
+		usr.say("Fuu ma[pick("'","`")]jin!") //"Geber[pick("'","`")]t suh'ta!"
 		for(var/mob/living/L in viewers(src))
 
 			if(iscarbon(L))
@@ -1042,7 +1042,7 @@ var/list/sacrificed = list()
 				S.show_message("\red BZZZT... The rune has exploded in a bright flash.", 3)
 		qdel(src)
 	else                        ///When invoked as talisman, stun and mute the target mob.
-		usr.say("Kad[pick("'","`")]ad geber't suh") //Try pronouncing it three times fast.
+		usr.say("Fuu ma[pick("'","`")]jin!") //"Kad[pick("'","`")]ad geber't suh"
 		var/obj/item/weapon/nullrod/N = locate() in T
 		if(N)
 			for(var/mob/O in viewers(T, null))
