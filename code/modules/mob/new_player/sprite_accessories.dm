@@ -328,6 +328,106 @@
 	name = "Bun Head"
 	icon_state = "hair_bun"
 
+/datum/sprite_accessory/hair/braidtail
+	name = "Braided Tail"
+	icon_state = "hair_braidtail"
+
+/datum/sprite_accessory/hair/familyman
+	name = "Family Man"
+	icon_state = "hair_thefamilyman"
+
+/datum/sprite_accessory/hair/drillruru
+	name = "Drillruru"
+	icon_state = "hair_drillruru"
+
+/datum/sprite_accessory/hair/dandypomp
+	name = "Dandy Pompadour"
+	icon_state = "hair_dandypompadour"
+
+/datum/sprite_accessory/hair/poofy
+	name = "Poofy"
+	icon_state = "hair_poofy"
+
+/datum/sprite_accessory/hair/crono
+	name = "Chrono"
+	icon_state = "hair_toriyama1"
+
+/datum/sprite_accessory/hair/vegeta
+	name = "Vegeta Hair"
+	icon_state = "hair_toriyama2"
+
+/datum/sprite_accessory/hair/cia
+	name = "CIA"
+	icon_state = "hair_cia"
+
+/datum/sprite_accessory/hair/mulder
+	name = "Mulder"
+	icon_state = "hair_mulder"
+
+/datum/sprite_accessory/hair/scully
+	name = "Scully"
+	icon_state = "hair_scully"
+
+/datum/sprite_accessory/hair/nitori
+	name = "Nitori"
+	icon_state = "hair_nitori"
+
+/datum/sprite_accessory/hair/joestar
+	name = "Joestar"
+	icon_state = "hair_joestar"
+
+/datum/sprite_accessory/hair/edgeworth
+	name = "Edgeworth"
+	icon_state = "hair_edgeworth"
+
+/datum/sprite_accessory/hair/objection
+	name = "Objection"
+	icon_state = "hair_objection!"
+
+/datum/sprite_accessory/hair/dubsman
+	name = "Dubsman"
+	icon_state = "hair_dubsman"
+
+/datum/sprite_accessory/hair/blackswordsman
+	name = "Black Swordsman"
+	icon_state = "hair_blackswordsman"
+
+/datum/sprite_accessory/hair/mentalist
+	name = "Mentalist"
+	icon_state = "hair_mentalist"
+
+/datum/sprite_accessory/hair/fujisaki
+	name = "Fujisaki"
+	icon_state = "hair_fujisaki"
+
+/datum/sprite_accessory/hair/schierke
+	name = "Schierke"
+	icon_state = "hair_schierke"
+
+/datum/sprite_accessory/hair/akari
+	name = "Akari"
+	icon_state = "hair_akari"
+
+/datum/sprite_accessory/hair/fujiyabashi
+	name = "Fujiyabashi"
+	icon_state = "hair_fujiyabashi"
+
+/datum/sprite_accessory/hair/nia
+	name = "Nia"
+	icon_state = "hair_nia"
+
+/datum/sprite_accessory/hair/shinobu
+	name = "Shinobu"
+	icon_state = "hair_shinobu"
+
+/datum/sprite_accessory/hair/ramona
+	name = "Ramona"
+	icon_state = "hair_ramona"
+
+/datum/sprite_accessory/hair/megaeyebrows
+	name = "Mega Eyebrows"
+	icon_state = "hair_megaeyebrow"
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
