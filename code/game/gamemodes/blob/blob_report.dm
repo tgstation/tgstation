@@ -42,14 +42,8 @@
 					aiPlayer.set_zeroth_law(law)
 					aiPlayer << "Laws Updated: [law]"
 
+	print_command_report(intercepttext,interceptname)
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg');
-	for (var/obj/machinery/computer/communications/C in machines)
-		if(! (C.stat & (BROKEN|NOPOWER) ) )
-			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
-			P.name = "paper- '[interceptname]'"
-			P.info = intercepttext
-			C.messagetitle.Add("[interceptname]")
-			C.messagetext.Add(intercepttext)
 	return
 
 
