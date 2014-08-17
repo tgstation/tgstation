@@ -1,6 +1,6 @@
 /obj/item/weapon/melee/defibrillator
 	name = "emergency defibrillator"
-	desc = "A handheld emergency defibrillator, used to bring people back from the brink of death or put them there."
+	desc = "A handheld emergency defibrillator, used to recall people back from the etheral planes or send them there."
 	icon_state = "defib_full"
 	item_state = "defib"
 	flags = FPRINT | TABLEPASS
@@ -17,7 +17,7 @@
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is putting the live paddles on \his chest! It looks like \he's trying to commit suicide.</b>"
 		playsound(get_turf(src), 'sound/items/defib.ogg', 50, 1)
-		return (OXYLOSS)
+		return (FIRELOSS)
 
 /obj/item/weapon/melee/defibrillator/update_icon()
 	if(!status)
@@ -42,8 +42,12 @@
 		spark_system.attach(user)
 		spark_system.set_up(5, 0, src)
 		spark_system.start()
-		user << "\red You touch the paddles together shorting the device."
+		user << "\red You touch the paddles together, shorting the device."
+		playsound(get_turf(src), "sparks", 75, 1, -1)
 		user.Weaken(5)
+		var/mob/living/carbon/human/H = user
+		if(ishuman(user))
+			H.apply_damage(10, BURN)
 		charges--
 		if(charges < 1)
 			status = 0
@@ -73,21 +77,29 @@
 			overlays -= I
 
 /obj/item/weapon/melee/defibrillator/attack(mob/M as mob, mob/user as mob)
-	var/tobehealed
-	var/threshhold = -config.health_threshold_dead
 	var/mob/living/carbon/human/H = M
 	if(!ishuman(M))
 		..()
 		return
+	var/datum/organ/internal/heart/dropthebeat = H.internal_organs["heart"]
 	if(status)
-		if(user.a_intent == "hurt" && emagged)
-			H.visible_message("<span class='danger'>[M.name] has been touched by the defibrillator paddles by [user]!</span>")
+		if(emagged)
+			H.visible_message("<span class='danger'>[M.name] has been touched by the defibrillator paddles in the chest by [user]!</span>")
 			if(charges >= 2)
 				H.Weaken(10)
-				H.adjustOxyLoss(10)
+				H.apply_damage(20, BURN, "chest")
+				if(prob(80)) //Life 101 : Sending loadse electricity through your chest is bad for your heart
+					if(prob(60))
+						H.apply_damage(10, BURN, "chest") //Bonus
+						dropthebeat.damage += 5 //Ouchie
+						H.emote("gasp")
+					else
+						H.apply_damage(30, BURN, "chest") //Dead
+						dropthebeat.damage += 60 //Drop the beat
+						H.emote("scream") //I have no beat and I must scream
 			else
 				H.Weaken(5)
-				H.adjustOxyLoss(5)
+				H.apply_damage(10, BURN)
 			H.updatehealth() //forces health update before next life tick
 			spark_system.attach(M)
 			spark_system.set_up(5, 0, M)
@@ -99,46 +111,50 @@
 				status = 0
 			update_icon()
 			playsound(get_turf(src), 'sound/items/defib.ogg', 50, 1)
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> Defibrillated [H.name] ([H.ckey]) with [src.name]</font>"
-			H.attack_log += "\[[time_stamp()]\]<font color='orange'> Defibrillated by [user.name] ([user.ckey]) with [src.name]</font>"
-			log_attack("<font color='red'>[user.name] ([user.ckey]) defibrillated [H.name] ([H.ckey]) with [src.name]</font>" )
+			user.attack_log += "\[[time_stamp()]\]<font color='red'> Shocked [H.name] ([H.ckey]) with an emagged [src.name]</font>"
+			H.attack_log += "\[[time_stamp()]\]<font color='orange'> Shocked by [user.name] ([user.ckey]) with an emagged [src.name]</font>"
+			log_attack("<font color='red'>[user.name] ([user.ckey]) shocked [H.name] ([H.ckey]) with an emagged [src.name]</font>" )
 			if(!iscarbon(user))
 				M.LAssailant = null
 			else
 				M.LAssailant = user
 			return
-		H.visible_message("\blue [user] places the defibrillator paddles on [M.name]'s chest.", "\blue You place the defibrillator paddles on [M.name]'s chest.")
-		if(do_after(user, 10))
+		H.visible_message("\blue [user] starts setting up the defibrillator paddles on [M.name]'s chest.", "\blue You place the defibrillator paddles on [M.name]'s chest.")
+		if(do_after(user, 50))
 			if(H.stat == 2 || H.stat == DEAD)
 				var/uni = 0
 				var/armor = 0
-				var/health = H.health
+				var/fixable = H.getOxyLoss() //Simple but efficient. You'd have popped a Dex+ pill anyways
+				playsound(get_turf(src), 'sound/items/defib.ogg', 50, 1)
+				spark_system.attach(M)
+				spark_system.set_up(5, 0, M)
+				spark_system.start()
 				for(var/obj/item/carried_item in H.contents)
 					if(istype(carried_item, /obj/item/clothing/under))
 						uni = 1
 					if(istype(carried_item, /obj/item/clothing/suit/armor))
 						armor = 1
-				if(uni && armor)
-					if(prob(30))
-						spark_system.attach(M)
-						spark_system.start()
-					if(prob(30))
-						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
-						H.adjustOxyLoss(tobehealed)
-				else if(uni || armor)
-					if(prob(30))
-						spark_system.attach(M)
-						spark_system.start()
-					if(prob(60))
-						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
-						H.adjustOxyLoss(tobehealed)
+				if(armor) //I'm sure I should apply the paddles on hardsuit plating
+					if(prob(95))
+						viewers(M) << "\red [src] buzzes: Resuscitation failed. Please apply on bare skin"
+						H.apply_damage(5, BURN, "chest")
+						return
+					else
+						H.apply_damage(-fixable, OXY) //Tada
+				else if(uni && !armor) //Just a suit, still bad
+					if(prob(50))
+						viewers(M) << "\red [src] buzzes: Resuscitation failed. Please apply on bare skin"
+						H.apply_damage(10, BURN, "chest")
+						return
+					else
+						H.apply_damage(-fixable, OXY)
 				else
-					if(prob(90))
-						tobehealed = health + threshhold
-						tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
-						H.adjustOxyLoss(tobehealed)
+					if(prob(5))
+						viewers(M) << "\red [src] buzzes: Resuscitation failed. Please apply on bare skin"
+						H.apply_damage(15, BURN, "chest")
+						return
+					else
+						H.apply_damage(-fixable, OXY)
 				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
 				M.visible_message("\red [M]'s body convulses a bit.")
 				var/datum/organ/external/temp = H.get_organ("head")
@@ -148,13 +164,17 @@
 						H.stat = 1
 						dead_mob_list -= H
 						living_mob_list |= list(H)
+						flick("e_flash", M.flash)
+						H.apply_effect(10, EYE_BLUR)
+						H.apply_effect(10, PARALYZE)
+						H << "<span class='notice'><b>You suddenly feel a spark and your consciousness returns, dragging you back to the mortal plane.</b><br><i>Not today.</i></span>"
 						H.emote("gasp")
 				else
-					viewers(M) << "\blue [src] beeps: Resuscitation failed."
+					viewers(M) << "\red [src] buzzes: Resuscitation failed. Patient is beyond saving"
 				charges--
 				if(charges < 1)
 					charges = 0
 					status = 0
 				update_icon()
 			else
-				user.visible_message("\blue [src] beeps: Patient is not in a valid state.")
+				user.visible_message("\red [src] buzzes: Patient is not in need of resuscitation.")
