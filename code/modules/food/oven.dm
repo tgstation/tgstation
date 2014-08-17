@@ -33,35 +33,36 @@ var/global/list/still_choices = typesof(/obj/item/weapon/reagent_containers/food
 			anchored = 1
 			user << "You wrench [src] in place."
 			return
-		else if(anchored)
+		else if(anchored && !on)
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = 0
 			user << "You unwrench [src]."
 			return
-		else if(anchored && on)
+		else
 			user << "<span class='warning'>The [src] is currently [production_meth], wait until it is finished!</span>"
 			return
 	if(!istype(I,/obj/item/weapon/reagent_containers/food/snacks/))
 		user << "<span class='warning'>That isn't food.</span>"
 		return
 	if(!istype(I,/obj/item/weapon/reagent_containers/food/snacks/grown/) && grown_only)
-		user << "<span class='warning'>You can only still grown food items.</span>"
+		user << "<span class='warning'>You can only use grown food items.</span>"
 		return
 	if(!anchored)
-		user << "<span class='warning'>The [src] must be anchored first!</span>"
+		user << "<span class='warning'>[src] must be anchored first!</span>"
 		return
 
 	var/obj/item/weapon/reagent_containers/food/snacks/F = I
 	var/obj/item/weapon/reagent_containers/food/C
+	on = TRUE
 	user.drop_item()
 	F.loc = src
 	C = input("Select food to make.", "\proper [production_meth]", C) in food_choices
 	if(!C)
+		on = FALSE
 		return
-	user << "<span class='notice'>You put some [F] into the [src] for [production_meth].</span>"
+	user << "<span class='notice'>You put [F] into [src] for [production_meth].</span>"
 	//user.drop_item()
 	F.loc = src
-	on = TRUE
 	icon_state = "[orig]_on"
 	playsound(get_turf(src), production_sound, 20, 1)
 	sleep(100)
@@ -69,12 +70,7 @@ var/global/list/still_choices = typesof(/obj/item/weapon/reagent_containers/food
 	icon_state = "[orig]_off"
 	var/obj/item/weapon/reagent_containers/food/foodtype = new C.type(src.loc)
 	foodtype.loc = get_turf(src)
-	//foodtype.attackby(F,user)
-	//playsound(loc, 'sound/machines/ding.ogg', 50, 1)
-	F.reagents.trans_to(foodtype, F.reagents.total_volume)
-	F.loc = foodtype
-	//foodtype.ingredients += F
-	//foodtype.update()
+	foodtype.attackby(F,user) //For reference, causes person who is brewing to drop item in current hand and show message. Please fix if possible
 	return
 
 /obj/machinery/cooking/proc/updatefood()
