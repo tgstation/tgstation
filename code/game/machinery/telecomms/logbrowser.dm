@@ -89,19 +89,22 @@
 							race = "Artificial Life"
 
 						else if(mobtype in slimes) // NT knows a lot about slimes, but not aliens. Can identify slimes
-							race = "slime"
+							race = "Slime"
 							language = race
 
 						else if(mobtype in animals)
 							race = "Domestic Animal"
 							language = race
 
+						else if(istype(mobtype, /obj))
+							race = "Machinery"
+
 						else
 							race = "<i>Unidentifiable</i>"
 							language = race
 
 
-						// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
+						// -- If the orator is a human, or universal translate is active, OR mob has universal speech on -- (NOTE: universal speech just means languages & HUMAN.)
 
 						if(language == "Human" || universal_translate || C.parameters["uspeech"])
 							dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"

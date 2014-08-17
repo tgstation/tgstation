@@ -330,7 +330,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				"type" = 0, // determines what type of radio input it is: normal broadcast
 				"server" = null, // the last server to log this signal
 				"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
-				"level" = position.z // The source's z level
+				"level" = position.z, // The source's z level
+				"languages" = M.languages //The languages M is talking in.
 			)
 			signal.frequency = freq
 

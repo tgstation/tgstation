@@ -43,7 +43,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 	if(!on)
 		return
-	//world << "[src] ([src.id]) - [signal.debug_print()]"
 	var/send_count = 0
 
 	//signal.data["slow"] == 0 // apply some lag based on integrity
@@ -278,7 +277,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		return
 	if(!check_receive_level(signal))
 		return
-	world << "[src] received signal]"
 	if(signal.transmission_method == 2)
 
 		if(is_freq_listening(signal)) // detect subspace signals
@@ -287,9 +285,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			signal.data["level"] = list()
 
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub") // ideally relay the copied information to relays
-			world << "[src] attempting bus relay..."
 			if(!can_send)
-				world << "could not relay to hub, relaying to bus..."
 				relay_information(signal, "/obj/machinery/telecomms/bus") // Send it to a bus instead, if it's linked to one
 
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/signal)
@@ -333,14 +329,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
-	world << "[src] received signal"
 	if(is_freq_listening(signal))
 		if(istype(machine_from, /obj/machinery/telecomms/receiver))
-			world << "[src] compressed signal, relaying to bus"
 			//If the signal is compressed, send it to the bus.
 			relay_information(signal, "/obj/machinery/telecomms/bus", 1) // ideally relay the copied information to bus units
 		else
-			world << "[src] uncompressed signal, relaying to broadcaster and relay"
 			// Get a list of relays that we're linked to, then send the signal to their levels.
 			relay_information(signal, "/obj/machinery/telecomms/relay", 1)
 			relay_information(signal, "/obj/machinery/telecomms/broadcaster", 1) // Send it to a broadcaster.
@@ -372,10 +365,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/receiving = 1
 
 /obj/machinery/telecomms/relay/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
-	world << "[src] received signal"
 	// Add our level and send it back
 	if(can_send(signal))
-		world << "[src]: signal sent, level added"
 		signal.data["level"] |= listening_level
 
 // Checks to see if it can send/receive.
@@ -425,25 +416,20 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/bus/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 	if(is_freq_listening(signal))
-		world << "[src] received signal"
 		if(change_frequency)
 			signal.frequency = change_frequency
 
 		if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready (stupid assuming machine), let's send it
 			// send to one linked processor unit
-			world << "[src] sending machine not a processor, sending signal"
 			var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor")
 
 			if(send_to_processor)
-				world << "[src] sending to processor succeeded, cancelling"
 				return
 			// failed to send to a processor, relay information anyway
-			world << "[src] sending to processor failed, relaying anyway"
 			signal.data["slow"] += rand(1, 5) // slow the signal down only slightly
 			src.receive_information(signal, src)
 
 		// Try sending it!
-		world << "[src] attempting to send signal"
 		var/list/try_send = list("/obj/machinery/telecomms/server", "/obj/machinery/telecomms/hub", "/obj/machinery/telecomms/broadcaster", "/obj/machinery/telecomms/bus")
 		var/i = 0
 		for(var/send in try_send)
@@ -452,7 +438,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			i++
 			var/can_send = relay_information(signal, send)
 			if(can_send)
-				world << "[src] sending signal succeeded, breaking"
 				break
 
 
@@ -549,7 +534,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	..()
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
-	world << "[src] received signal"
 	if(signal.data["message"])
 
 		if(is_freq_listening(signal))
@@ -574,7 +558,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 
-				log.parameters["uspeech"] = 1 //*whistles*
+				log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)
@@ -598,10 +582,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				if(Compiler && autoruncode)
 					Compiler.Run(signal)	// execute the code
 
-			world << "[src] attempting to relay signal to hub"
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub")
 			if(!can_send)
-				world << "[src] relaying to hub failed, attempting to relay to broadcaster"
 				relay_information(signal, "/obj/machinery/telecomms/broadcaster")
 
 

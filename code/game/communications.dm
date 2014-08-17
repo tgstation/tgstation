@@ -60,9 +60,8 @@
       If receiving object don't know right key, it must ignore encrypted signal in its receive_signal.
 
 */
-/*	WELCOME TO MIAUW'S EMPORIUM OF "FUCK THIS FUCKING SHITCODE HOLY SHIT HOW DID ANYONE THINK UP SOMETHING THIS FUCKING AWFUL"
-		TODAY'S SPECIAL: FUCKING RADIO CODE. IT SIMPLY DOESNT WORK, AND I HAVE NO FUCKING IDEA WHY.
-		THAT IS WHY I REPLACED IT WITH A LIST, WHICH DOES WORK. THANK ME LATER.
+/*	the radio controller is a confusing piece of shit and didnt work
+	so i made radios not use the radio controller.
 */
 var/list/all_radios = list()
 /proc/add_radio(var/obj/item/radio, freq)
