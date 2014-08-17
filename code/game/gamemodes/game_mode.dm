@@ -68,7 +68,7 @@
 
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
-/datum/game_mode/proc/post_setup()
+/datum/game_mode/proc/post_setup(var/report=1)
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
@@ -78,8 +78,9 @@
 	if(revdata.revision)
 		feedback_set_details("revision","[revdata.revision]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+	if(report)
+		spawn (rand(waittime_l, waittime_h))
+			send_intercept(0)
 	return 1
 
 ///make_antag_chance()
