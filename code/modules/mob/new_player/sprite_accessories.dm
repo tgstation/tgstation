@@ -353,7 +353,7 @@
 	icon_state = "hair_toriyama1"
 
 /datum/sprite_accessory/hair/vegeta
-	name = "Vegeta Hair"
+	name = "Prideful Warrior"
 	icon_state = "hair_toriyama2"
 
 /datum/sprite_accessory/hair/cia
