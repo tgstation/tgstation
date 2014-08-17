@@ -47,11 +47,11 @@ var/const/MAX_ACTIVE_TIME = 400
 	..()
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			usr << "\red \b [src] is not moving."
+			usr << "<span class='userdanger'>[src] is not moving.</span>"
 		if(CONSCIOUS)
-			usr << "\red \b [src] seems to be active."
+			usr << "<span class='userdanger'>[src] seems to be active.</span>"
 	if (sterile)
-		usr << "\red \b It looks like the proboscis has been removed."
+		usr << "<span class='userdanger'>It looks like the proboscis has been removed.</span>"
 	return
 
 /obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m)
@@ -117,12 +117,12 @@ var/const/MAX_ACTIVE_TIME = 400
 	if(stat != CONSCIOUS)	return 0
 	if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 
-	L.visible_message("\red \b [src] leaps at [L]'s face!")
+	L.visible_message("<span class='userdanger'>[src] leaps at [L]'s face!</span>")
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.head && H.head.flags & HEADCOVERSMOUTH)
-			H.visible_message("\red \b [src] smashes against [H]'s [H.head]!")
+			H.visible_message("<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
 			Die()
 			return 0
 
@@ -135,7 +135,7 @@ var/const/MAX_ACTIVE_TIME = 400
 			if(W.flags & NODROP)	return 0
 			target.unEquip(W)
 
-			target.visible_message("\red \b [src] tears [W] off of [target]'s face!")
+			target.visible_message("<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
 
 		src.loc = target
 		target.equip_to_slot(src, slot_wear_mask,,0)
@@ -164,7 +164,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(!sterile)
 		//target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
-		target.visible_message("\red \b [src] falls limp after violating [target]'s face!")
+		target.visible_message("<span class='userdanger'>[src] falls limp after violating [target]'s face!</span>")
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
@@ -178,7 +178,7 @@ var/const/MAX_ACTIVE_TIME = 400
 			src.loc = get_turf(C)
 			C.facehugger = null
 	else
-		target.visible_message("\red \b [src] violates [target]'s face!")
+		target.visible_message("<span class='userdanger'>[src] violates [target]'s face!</span>")
 	return
 
 /obj/item/clothing/mask/facehugger/proc/GoActive()
@@ -218,7 +218,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon_state = "[initial(icon_state)]_dead"
 	stat = DEAD
 
-	src.visible_message("\red \b[src] curls up into a ball!")
+	src.visible_message("<span class='userdanger'>[src] curls up into a ball!</span>")
 
 	return
 

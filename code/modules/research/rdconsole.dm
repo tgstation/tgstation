@@ -392,7 +392,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 					var/R = being_built.reliability
 					var/O = being_built.locked
-					spawn(32*amount)
+					spawn(32*amount/coeff)
 						if(g2g) //And if we only fail the material requirements, we still spend time and power
 							for(var/i = 0, i<amount, i++)
 								var/obj/new_item = new P(src)

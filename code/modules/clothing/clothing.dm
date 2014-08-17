@@ -171,18 +171,18 @@ BLIND     // can't see anything
 	attachTie(I, user)
 	..()
 
-/obj/item/clothing/under/proc/attachTie(obj/item/I, mob/user)
+/obj/item/clothing/under/proc/attachTie(obj/item/I, mob/user, notifyAttach = 1)
 	if(istype(I, /obj/item/clothing/tie))
 		if(hastie)
 			if(user)
 				user << "<span class='warning'>[src] already has an accessory.</span>"
-			return
+			return 0
 		else
 			if(user)
 				user.drop_item()
 			hastie = I
 			I.loc = src
-			if(user)
+			if(user && notifyAttach)
 				user << "<span class='notice'>You attach [I] to [src].</span>"
 			I.transform *= 0.5	//halve the size so it doesn't overpower the under
 			I.pixel_x += 8
@@ -195,7 +195,7 @@ BLIND     // can't see anything
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform(0)
 
-			return
+			return 1
 
 
 /obj/item/clothing/under/examine()

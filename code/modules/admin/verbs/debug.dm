@@ -664,7 +664,8 @@ var/global/list/g_fancy_list_of_safe_types = null
 
 		if ("as job...")
 			if(jobdatum)
-				dresscode = "[jobdatum.title]"
+				dresscode = jobdatum.title
+				M.job = jobdatum.title
 				jobdatum.equip(M)
 
 		if ("standard space gear")
