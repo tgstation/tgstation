@@ -9,12 +9,14 @@ var/global/list/still_choices = typesof(/obj/item/weapon/reagent_containers/food
 	icon_state = "oven_off"
 	var/orig = "oven"
 	var/production_meth = "cooking"
+	var/production_sound = 'sound/machines/ding.ogg'
 	layer = 2.9
 	density = 1
 	anchored = 1
 	use_power = 1
+	idle_power_usage = 20
+	active_power_usage = 500
 	var/grown_only = 0
-	idle_power_usage = 5
 	var/on = FALSE	//Is it making food already?
 	var/list/food_choices = list()
 /obj/machinery/cooking/New()
@@ -23,45 +25,51 @@ var/global/list/still_choices = typesof(/obj/item/weapon/reagent_containers/food
 
 /obj/machinery/cooking/attackby(obj/item/I, mob/user)
 	if(on)
-		user << "The machine is already running."
+		user << "<span class='notice'>[src] is currently [production_meth] something!</span>"
 		return
 	if(istype(I,/obj/item/weapon/wrench))
 		if(!anchored)
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 1
-			user << "You wrench [src] in place."
+			if(do_after(user, 30))
+				anchored = 1
+				user << "You wrench [src] in place."
 			return
-		else if(anchored)
+		else
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 0
-			user << "You unwrench [src]."
+			if(do_after(user, 30))
+				anchored = 0
+				user << "You unwrench [src]."
 			return
 	if(!istype(I,/obj/item/weapon/reagent_containers/food/snacks/))
-		user << "That isn't food."
+		user << "<span class='warning'>That isn't food.</span>"
 		return
 	if(!istype(I,/obj/item/weapon/reagent_containers/food/snacks/grown/) && grown_only)
-		user << "You can only still grown items."
+		user << "<span class='warning'>You can only use grown food items.</span>"
+		return
+	if(!anchored)
+		user << "<span class='warning'>[src] must be anchored first!</span>"
 		return
 
 	var/obj/item/weapon/reagent_containers/food/snacks/F = I
 	var/obj/item/weapon/reagent_containers/food/C
-	user.drop_item()
-	F.loc = src
-	C = input("Select food to make.", "Cooking", C) in food_choices
-	if(!C)
-		return
-	user << "You put [F] into [src] for [production_meth]."
-	user.drop_item()
-	F.loc = src
 	on = TRUE
+	user.drop_item()
+	F.loc = src
+	C = input("Select food to make.", "\proper [production_meth]", C) in food_choices
+	if(!C)
+		on = FALSE
+		return
+	user << "<span class='notice'>You put [F] into [src] for [production_meth].</span>"
+	//user.drop_item()
+	F.loc = src
 	icon_state = "[orig]_on"
+	playsound(get_turf(src), production_sound, 20, 1)
 	sleep(100)
 	on = FALSE
 	icon_state = "[orig]_off"
 	var/obj/item/weapon/reagent_containers/food/foodtype = new C.type(src.loc)
 	foodtype.loc = get_turf(src)
-	foodtype.attackby(F,user)
-	playsound(loc, 'sound/machines/ding.ogg', 50, 1)
+	foodtype.attackby(F,user) //For reference, causes person who is brewing to drop item in current hand and show message. Please fix if possible
 	return
 
 /obj/machinery/cooking/proc/updatefood()
@@ -91,7 +99,8 @@ var/global/list/still_choices = typesof(/obj/item/weapon/reagent_containers/food
 	desc = "Get yer box of deep fried deep fried deep fried deep fried cotton candy cereal sandwich cookies here!"
 	icon_state = "mixer_off"
 	orig = "mixer"
-	production_meth = "candizing"
+	production_meth = "caramelizing"
+	production_sound = 'sound/machines/juicer.ogg'
 
 /obj/machinery/cooking/candy/New()
 	var/list/foodtemp = candy_choices
@@ -115,6 +124,7 @@ var/global/list/still_choices = typesof(/obj/item/weapon/reagent_containers/food
 	orig = "still"
 	grown_only = 1
 	production_meth = "brewing"
+	production_sound = 'sound/machines/juicer.ogg'
 
 /obj/machinery/cooking/still/New()
 	var/list/foodtemp = still_choices
