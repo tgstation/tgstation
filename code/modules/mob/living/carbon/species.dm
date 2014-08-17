@@ -457,6 +457,8 @@
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
 
+	survival_gear = /obj/item/weapon/storage/box/survival/vox
+
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
 
