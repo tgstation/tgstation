@@ -7,7 +7,6 @@
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
-	var/was_toggled = 0 //To make toggle open stop welding that is in progress
 	var/welded = 0
 	var/locked = 0
 	var/broken = 0
@@ -180,16 +179,11 @@
 
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.isOn())
-				was_toggled = 0
-				user << "<span class='notice'>You begin cutting the [src] apart...</span>"
-				playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-				if(do_after(user,40,5,1))
-					if (!was_toggled) //If Toggle Open was not successfully used
-						was_toggled = 0
-						if(!WT.remove_fuel(0,user))
-							user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
-							return
+			user << "<span class='notice'>You begin cutting the [src] apart...</span>"
+			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+			if(do_after(user,40,5,1))
+				if(!src.opened)
+					if(WT.remove_fuel(0,user))
 						playsound(loc, 'sound/items/welder.ogg', 50, 1)
 						new /obj/item/stack/sheet/metal(src.loc)
 						for(var/mob/M in viewers(src))
@@ -207,22 +201,16 @@
 		return
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.isOn())
-			was_toggled = 0
-			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the [src]...</span>"
-			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-			if(do_after(user,40,5,1))
-				if (!was_toggled) //If Toggle Open was not successfully used
-					was_toggled = 0
-					if(!WT.remove_fuel(0,user))
-						user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
-						return
+		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the [src]...</span>"
+		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+		if(do_after(user,40,5,1))
+			if(!src.opened)
+				if(WT.remove_fuel(0,user))
 					playsound(loc, 'sound/items/welder.ogg', 50, 1)
 					welded = !welded
 					user << "<span class='notice'>You [welded ? "welded the [src] shut":"unwelded the [src]"]</span>"
 					update_icon()
 					user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
-
 		return
 	else if(!place(user, W))
 		src.attack_hand(user)
@@ -275,8 +263,6 @@
 
 	if(!src.toggle())
 		usr << "<span class='notice'>It won't budge!</span>"
-		return 0
-	return 1
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user as mob)
@@ -294,8 +280,7 @@
 		return
 
 	if(ishuman(usr))
-		was_toggled = src.attack_hand(usr) //will set to 1 if toggle was successful
-
+		src.attack_hand(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
 
