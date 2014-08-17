@@ -117,6 +117,8 @@ var/list/sacrificed = list()
 					M.visible_message("<span class='warning'>A horrified look flashes across [M]'s face before their body goes limp.", \
 					"<span class='userdanger'>Error: You are currently jobbanned from Cultist.</span>")
 					M.ghostize(0) //Jobbanned players are force ghosted
+					var/obj/item/weapon/paper/talisman/supply/recompense = new //Cultists are recompensated for the failed convert
+					recompense.uses = 1
 					return 0
 				ticker.mode.add_cultist(M.mind)
 				M.mind.special_role = "Cultist"
