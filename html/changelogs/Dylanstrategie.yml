@@ -1,0 +1,9 @@
+author: Dylanstrategie
+changes: 
+  - tweak: Modified functionality of Kitchen machines
+  - bugfix: Fixed Teleporter Console dropping two boards
+  - bugfix: Fixed Voxes spawning with human survival boxes
+  - bugfix: Fixed ERT Suit fire resistance coefficient
+  - bugfix: Fixed invisible combat borgs using placeholder sprite
+  - bugfix: Made Operating Computer functional again
+  - wip: Modified how defibrillators function in view of more profound changes to Medbay
