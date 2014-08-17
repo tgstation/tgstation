@@ -52,6 +52,14 @@
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
+	if(usr)
+		var/mob/living/L = usr
+		var/obj/machinery/power/supermatter/SM = locate() in contents
+		if(istype(SM))
+			message_admins("[L.name] ([L.ckey]) opened \the [src] that contained supermatter (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[L.x];Y=[L.y];Z=[L.z]'>JMP</a>)")
+			log_game("[L.name] ([L.ckey]) opened \the [src] that contained supermatter (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[L.x];Y=[L.y];Z=[L.z]'>JMP</a>)")
+
+
 	//Cham Projector Exception
 	for(var/obj/effect/dummy/chameleon/AD in src)
 		AD.loc = src.loc
