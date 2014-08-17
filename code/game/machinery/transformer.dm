@@ -60,7 +60,7 @@
 		return
 
 	// Activate the cooldown if the human isn't jobbanned
-	if(!jobban_isbanned(H, "Cyborg")) //Jobbanned players get killed instead
+	if(!jobban_isbanned(H, "Cyborg"))
 		cooldown = 1
 		update_icon()
 		spawn(cooldown_duration)
@@ -78,6 +78,7 @@
 	if(jobban_isbanned(H, "Cyborg")) //Jobbanned players get horribly maimed instead
 		H.adjustBruteLoss(1000)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		return
 
 	use_power(5000) // Use a lot of power.
 	var/mob/living/silicon/robot/R = H.Robotize(1) // Delete the items or they'll all pile up in a single tile and lag
