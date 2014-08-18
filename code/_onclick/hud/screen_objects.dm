@@ -257,13 +257,13 @@
 				if(_x<=16 && _y<=16)
 					usr.a_intent_change("harm")
 
-				if(_x<=16 && _y>=17)
+				else if(_x<=16 && _y>=17)
 					usr.a_intent_change("help")
 
-				if(_x>=17 && _y<=16)
+				else if(_x>=17 && _y<=16)
 					usr.a_intent_change("grab")
 
-				if(_x>=17 && _y>=17)
+				else if(_x>=17 && _y>=17)
 					usr.a_intent_change("disarm")
 
 			else
