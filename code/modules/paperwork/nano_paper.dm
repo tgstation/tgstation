@@ -180,8 +180,8 @@
 	t = replacetext(t, "\[/small\]", "</font>")
 	t = replacetext(t, "\[list\]", "<ul>")
 	t = replacetext(t, "\[/list\]", "</ul>")
-	t = replacetext(t, "\[video\]", "<object type=\"video/x-ms-wmv\" data=\"")
-	t = replacetext(t, "\[/video\]", "\" width=\"340\" height=\"280\"><param name=\"controller\" value=\"true\" /><param name=\"autostart\" value=\"true\" /></object>")
+	t = replacetext(t, "\[video\]", "<embed src=\"")
+	t = replacetext(t, "\[/video\]", "\" width=\"420\" height=\"344\" type=\"x-ms-wmv\" volume=\"85\" autoStart=\"0\" autoplay=\"true\" />")
 
 	t = "<font face=\"[deffont]\" color=[P.colour]>[t]</font>"
 
