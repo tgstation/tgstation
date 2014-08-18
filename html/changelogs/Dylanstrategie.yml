@@ -1,2 +1,3 @@
 author: Dylanstrategie
-changes: []
+changes:
+  - wip: Changed cloner functionality. Base cloning time has seen a pretty steep increase (between 3 and 6 minutes) but the cloning time and biomass use can be reduced by replacing the cloning pod's parts. This change should make cloning people less of a choice early in the round and reverse "clone everything" mentality with the recent changes to defibrillators and other planned changes
