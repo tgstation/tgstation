@@ -2004,6 +2004,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/health
 
+/*
 /datum/design/security_hud
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
@@ -2012,6 +2013,17 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
+	locked = 1
+*/
+
+/datum/design/sechud_sunglass
+	name = "HUDSunglasses"
+	desc = "Sunglasses with a heads-up display that scans the humans in view and provides accurate data about their ID status."
+	id = "sechud_sunglass"
+	req_tech = list("magnets" = 3, "combat" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 50, "$glass" = 50)
+	build_path = /obj/item/clothing/glasses/sunglasses/sechud
 	locked = 1
 
 /////////////////////////////////////////
