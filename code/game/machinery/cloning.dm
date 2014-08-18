@@ -266,10 +266,10 @@
 			src.occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
-			src.occupant.adjustCloneLoss(-0.25*time_coeff) //Very slow, new parts = much faster
+			src.occupant.adjustCloneLoss(-0.2*time_coeff) //Very slow, new parts = much faster
 
 			//Premature clones may have brain damage.
-			src.occupant.adjustBrainLoss(-0.125*time_coeff) //Ditto above
+			src.occupant.adjustBrainLoss(-0.1*time_coeff) //Ditto above
 
 			//So clones don't die of oxyloss in a running pod.
 			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
