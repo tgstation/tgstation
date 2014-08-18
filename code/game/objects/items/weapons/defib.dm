@@ -42,7 +42,7 @@
 		spark_system.attach(user)
 		spark_system.set_up(5, 0, src)
 		spark_system.start()
-		user << "\red You touch the paddles together, shorting the device."
+		user << "<span class='warning'>You touch the paddles together, shorting the device.</span>"
 		playsound(get_turf(src), "sparks", 75, 1, -1)
 		user.Weaken(5)
 		var/mob/living/carbon/human/H = user
