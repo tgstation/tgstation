@@ -69,11 +69,11 @@
 		var/image/I = image("icon" = "icons/obj/weapons.dmi", "icon_state" = "defib_emag")
 		if(emagged == 0)
 			emagged = 1
-			usr << "\red [W] unlocks [src]'s safety protocols"
+			usr << "<span class='warning'>You short out [src]'s safety protocols using [W].</span>"
 			overlays += I
 		else
 			emagged = 0
-			usr << "\blue [W] sets [src]'s safety protocols"
+			usr << "<span class='notice'>You reset [src]'s safety protocols using [W].</span>"
 			overlays -= I
 
 /obj/item/weapon/melee/defibrillator/attack(mob/M as mob, mob/user as mob)
@@ -119,7 +119,7 @@
 			else
 				M.LAssailant = user
 			return
-		H.visible_message("\blue [user] starts setting up the defibrillator paddles on [M.name]'s chest.", "\blue You place the defibrillator paddles on [M.name]'s chest.")
+		H.visible_message("<span class='notice'>[user] starts setting up the defibrillator paddles on [M.name]'s chest.</span>", "<span class='notice'>You start setting up the defibrillator paddles on [M.name]'s chest.</span>")
 		if(do_after(user, 50))
 			if(H.stat == 2 || H.stat == DEAD)
 				var/uni = 0
@@ -129,6 +129,11 @@
 				spark_system.attach(M)
 				spark_system.set_up(5, 0, M)
 				spark_system.start()
+				charges--
+				if(charges < 1)
+					charges = 0
+					status = 0
+				update_icon()
 				for(var/obj/item/carried_item in H.contents)
 					if(istype(carried_item, /obj/item/clothing/under))
 						uni = 1
@@ -136,30 +141,30 @@
 						armor = 1
 				if(armor) //I'm sure I should apply the paddles on hardsuit plating
 					if(prob(95))
-						viewers(M) << "\red [src] buzzes: Resuscitation failed. Please apply on bare skin"
+						viewers(M) << "<span class='warning'>[src] buzzes: Resuscitation failed. Please apply on bare skin.</span>"
 						H.apply_damage(5, BURN, "chest")
 						return
 					else
 						H.apply_damage(-fixable, OXY) //Tada
 				else if(uni && !armor) //Just a suit, still bad
 					if(prob(50))
-						viewers(M) << "\red [src] buzzes: Resuscitation failed. Please apply on bare skin"
+						viewers(M) << "<span class='warning'>[src] buzzes: Resuscitation failed. Please apply on bare skin.</span>"
 						H.apply_damage(10, BURN, "chest")
 						return
 					else
 						H.apply_damage(-fixable, OXY)
 				else
 					if(prob(5))
-						viewers(M) << "\red [src] buzzes: Resuscitation failed. Please apply on bare skin"
+						viewers(M) << "<span class='warning'>[src] buzzes: Resuscitation failed. Please apply on bare skin.</span>"
 						H.apply_damage(15, BURN, "chest")
 						return
 					else
 						H.apply_damage(-fixable, OXY)
 				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
-				M.visible_message("\red [M]'s body convulses a bit.")
+				M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
 				var/datum/organ/external/temp = H.get_organ("head")
 				if(H.health > -100 && !(temp.status & ORGAN_DESTROYED) && !(M_NOCLONE in H.mutations) && !H.suiciding && (H.brain_op_stage < 4))
-					viewers(M) << "\blue [src] beeps: Resuscitation successful."
+					viewers(M) << "<span class='notice'>[src] beeps: Resuscitation successful.</span>"
 					spawn(0)
 						H.stat = 1
 						dead_mob_list -= H
@@ -170,11 +175,6 @@
 						H << "<span class='notice'><b>You suddenly feel a spark and your consciousness returns, dragging you back to the mortal plane.</b><br><i>Not today.</i></span>"
 						H.emote("gasp")
 				else
-					viewers(M) << "\red [src] buzzes: Resuscitation failed. Patient is beyond saving"
-				charges--
-				if(charges < 1)
-					charges = 0
-					status = 0
-				update_icon()
+					viewers(M) << "<span class='warning'>[src] buzzes: Resuscitation failed. Patient is beyond saving.</span>"
 			else
-				user.visible_message("\red [src] buzzes: Patient is not in need of resuscitation.")
+				viewers(M) << "<span class='warning'>[src] buzzes: Patient is not in need of resuscitation.</span>"
