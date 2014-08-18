@@ -258,7 +258,10 @@ proc/hasorgans(A)
 
 	return zone
 
-
+// adds stars to a text to obfuscate it
+// var/n -> text to obfuscate
+// var/pr -> percent of the text to obfuscate
+// return -> obfuscated text
 /proc/stars(n, pr)
 	if (pr == null)
 		pr = 25
