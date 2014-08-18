@@ -382,6 +382,7 @@ var/global/datum/controller/gameticker/ticker
 				else if(!delay_end)
 					sleep(restart_timeout)
 					if(!delay_end)
+						CallHook("Reboot",list())
 						world.Reboot()
 					else
 						world << "\blue <B>An admin has delayed the round end</B>"
