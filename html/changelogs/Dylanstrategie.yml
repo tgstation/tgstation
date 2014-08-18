@@ -1,2 +1,3 @@
 author: Dylanstrategie
-changes: []
+changes:
+  - bugfix: R&D now makes HUDSunglasses instead of the old "Sec HUD" item
