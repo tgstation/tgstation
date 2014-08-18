@@ -57,10 +57,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			/* ###### Broadcast a message using signal.data ###### */
 			Broadcast_Message(signal.data["mob"],
-							  signal.data["vmask"],
-							  signal.data["radio"], signal.data["message"],
-							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], 0, signal.data["compression"], signal.data["level"], signal.frequency)
+							  signal.data["vmask"], signal.data["radio"],
+							  signal.data["message"], signal.data["name"], signal.data["job"], signal.data["realname"],
+							  0, signal.data["compression"], signal.data["level"], signal.frequency)
 
 
 	   /** #### - Simple Broadcast - #### **/
@@ -81,10 +80,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			/* ###### Broadcast a message using signal.data ###### */
 				// Parameter "data" as 4: AI can't track this person/mob
 			Broadcast_Message(signal.data["mob"],
-							  signal.data["vmask"], signal.data["vmessage"],
+							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], signal.data["level"], signal.frequency)
+							  signal.data["realname"], 4, signal.data["compression"], signal.data["level"], signal.frequency)
 
 		if(!message_delay)
 			message_delay = 1
@@ -209,19 +208,37 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 **/
 
-//this proc is cursed. save yourself while you still can.
+
 /proc/Broadcast_Message(var/atom/movable/AM,
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
 						var/data, var/compression, var/list/level, var/freq)
 
+	/*world << "broadcast_message() called"
+	world << "AM = [AM]"
+	world << "vmask = [vmask]"
+	world << "radio = [radio]"
+	world << "message = [message]"
+	world << "name = [name]"
+	world << "job = [job]"
+	world << "realname = [realname]"
+	world << "data = [data]"
+	world << "compression = [compression]"
+	world << "level:"
+	for(var/i in level)
+		world << i
+	world << "freq = [freq]"*/
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
+	if(!message)
+		return
 
 	var/list/radios = list()
 	var/atom/movable/virtualspeaker/virt = new(null) //fuck this code.
 	virt.name = name
 	virt.job = job
 	virt.languages = AM.languages
+	virt.source = AM
+	virt.faketrack = data == 4 ? 1 : 0
 
 	if(compression > 0)
 		message = Gibberish(message, compression + 50)
@@ -253,9 +270,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			if(R.receive_range(SYND_FREQ, level) > -1)
 				radios += R
 
-	else if(data == 4) //whoever added this argument to the data key instead of a new one was an idiot.
-		virt.faketrack = 1
-
 	// --- Broadcast to ALL radio devices ---
 
 	else
@@ -276,25 +290,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	for(var/atom/movable/hearer in receive)
 		hearer.Hear(message, virt, AM.languages, message, freq)
 
-/*	// ###### Organize the receivers into categories for displaying the message ######
-
-  	// Understood the message:
-	var/list/heard_masked 	= list() // masked name or no real name
-	var/list/heard_normal 	= list() // normal message
-
-	// Did not understand the message:
-	var/list/heard_voice 	= list() // voice message	(ie "chimpers")
-	var/list/heard_garbled	= list() // garbled message (ie "f*c* **u, **i*er!")
-	var/list/heard_gibberish= list() // completely screwed over message (ie "F%! (O*# *#!<>&**%!")
-*/
-
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
 		var/blackbox_msg = "[AM] [AM.say_quote(message)]"
-		//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
-
-		//BR.messages_admin += blackbox_admin_msg
 		if(istype(blackbox))
 			switch(freq)
 				if(1459)
@@ -319,107 +318,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_cargo += blackbox_msg
 				else
 					blackbox.messages += blackbox_msg
-
-		//End of research and feedback code.
-/*
-		var/aitrack = ""
-
-	// ###### Send the message ###### 
-
-
-	  	// --- Process all the mobs that heard a masked voice (understood) ---
-
-		if (length(heard_masked))
-			var/N = name
-			var/J = job
-			var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
-			for (var/mob/R in heard_masked)
-				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
-				if(data == 4)
-					aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]'>"
-
-				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a][aitrack][N] ([J]) </a>[part_b][quotedmsg][part_c]", 2)
-				else
-					R.show_message(rendered, 2)
-
-		// --- Process all the mobs that heard the voice normally (understood) ---
-
-		if (length(heard_normal))
-			var/rendered = "[part_a][realname][part_b][quotedmsg][part_c]"
-
-			for (var/mob/R in heard_normal)
-				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
-				if(data == 4)
-					aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]'>"
-
-				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a][aitrack][realname] ([job]) </a>[part_b][quotedmsg][part_c]", 2)
-				else
-					R.show_message(rendered, 2)
-
-		// --- Process all the mobs that heard the voice normally (did not understand) ---
-			// Does not display message; displayes the mob's voice_message (ie "chimpers")
-
-		if (length(heard_voice))
-			var/rendered = "[part_a][vname][part_b][vmessage][part_c]"
-
-			for (var/mob/R in heard_voice)
-				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
-				if(data == 4)
-					aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]'>"
-
-
-				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a][aitrack][vname] ([job]) </a>[part_b][vmessage]][part_c]", 2)
-				else
-					R.show_message(rendered, 2)
-
-		// --- Process all the mobs that heard a garbled voice (did not understand) --- 
-			// Displays garbled message (ie "f*c* **u, **i*er!")
-
-		if (length(heard_garbled))
-			if(M)
-				quotedmsg = M.say_quote(stars(message))
-			else
-				quotedmsg = stars(quotedmsg)
-
-			var/rendered = "[part_a][vname][part_b][quotedmsg][part_c]"
-
-			for (var/mob/R in heard_garbled)
-				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
-				if(data == 4)
-					aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]'>"
-
-
-				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a][aitrack][vname]</a>[part_b][quotedmsg][part_c]", 2)
-				else
-					R.show_message(rendered, 2)
-
-
-		// --- Complete gibberish. Usually happens when there's a compressed message --- 
-
-		if (length(heard_gibberish))
-			if(M)
-				quotedmsg = M.say_quote(Gibberish(message, compression + 50))
-			else
-				quotedmsg = Gibberish(quotedmsg, compression + 50)
-
-			var/rendered = "[part_a][Gibberish(name, compression + 50)][part_b][quotedmsg][part_c]"
-
-			for (var/mob/R in heard_gibberish)
-				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
-				if(data == 4)
-					aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];faketrack=\ref[M]'>"
-
-
-				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a][aitrack][Gibberish(realname, compression + 50)] ([Gibberish(job, compression + 50)]) </a>[part_b][quotedmsg][part_c]", 2)
-				else
-					R.show_message(rendered, 2)
-
-*/
 
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
 

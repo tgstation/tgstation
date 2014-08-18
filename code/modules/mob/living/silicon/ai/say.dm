@@ -16,7 +16,7 @@
 
 /mob/living/silicon/ai/compose_job(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//Also includes the </a> for AI hrefs, for convenience.
-	return "[radio_freq ? "(" + speaker.GetJob() + ") " : ""]" + speaker.GetSource() ? "</a>" : ""
+	return " [radio_freq ? "(" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""] "
 
 /mob/living/silicon/ai/say_quote(var/text)
 	var/ending = copytext(text, length(text))
@@ -34,6 +34,8 @@
 /mob/living/silicon/ai/get_message_mode(message)
 	if(copytext(message, 1, 3) in list(":h", ":H", ".h", ".H", "#h", "#H"))
 		return "holopad"
+	else
+		return ..()
 
 /mob/living/silicon/ai/handle_inherent_channels(message, message_mode)
 	. = ..()

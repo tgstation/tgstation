@@ -7,7 +7,7 @@
 		return
 	usr.say(message)
 
-/mob/verb/whisper()
+/mob/verb/whisper(message as text)
 	set name = "Whisper"
 	set category = "IC"
 	return
@@ -60,14 +60,18 @@
 	. += "<span class='"
 	. += radio_freq ? get_radio_span(radio_freq) : "game say"
 	. += "'>"
+	//Start name span.
+	. += "<span class='name'>"
 	//Radio freq/name display
 	. += radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Begin track (AI only)
 	. += compose_track_href(message, speaker, message_langs, raw_message, radio_freq)
 	//Speaker name
-	. += "<span class='name'>[speaker.GetVoice()]</span>[speaker.get_alt_name()]"
+	. += "[speaker.GetVoice()][speaker.get_alt_name()]"
 	//Job & end track (AI only)
 	. += compose_job(message, speaker, message_langs, raw_message, radio_freq)
+	//End name span.
+	. += "</span>"
 	//Message
 	. += " <span class='message'>[lang_treat(message, speaker, message_langs, raw_message)]</span></span>"
 	return .

@@ -42,5 +42,19 @@
 	return 2
 
 /mob/living/silicon/get_message_mode(message)
+	. = ..()
 	if(..() == "headset")
 		return "robot"
+	else
+		return .
+
+/mob/living/silicon/handle_inherent_channels(message, message_mode)
+	. = ..()
+	if(.)
+		return .
+	
+	if(message_mode == "binary")
+		if(binarycheck())
+			robot_talk(message)
+			return 1
+	return 0

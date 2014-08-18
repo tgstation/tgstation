@@ -59,16 +59,20 @@ var/list/department_radio_keys = list(
 /mob/living/say(message, bubble_type)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	check_emote(message)
+	if(check_emote(message))
+		return
 
 	if(!can_speak_basic(message) || stat) //Stat is seperate so I can handle whispers properly.
 		return
+
 	var/message_mode = get_message_mode(message)
 
 	if(message_mode == "headset" || message_mode == "robot")
 		message = copytext(message, 2)
 	else if(message_mode)
 		message = copytext(message, 3)
+	if(findtext(message, " ", 1, 2))
+		message = copytext(message, 2)
 
 	if(handle_inherent_channels(message, message_mode)) //Hiveminds, binary chat & holopad.
 		return
@@ -109,7 +113,7 @@ var/list/department_radio_keys = list(
 
 /mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type)
 	var/list/listening = get_hearers_in_view(message_range, source)
-	var/list/listening_dead
+	var/list/listening_dead = list()
 	for(var/mob/M in player_list)
 		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && client) // client is so that ghosts don't have to listen to mice
 			listening_dead |= M
@@ -224,7 +228,7 @@ var/list/department_radio_keys = list(
 		if("binary")
 			if(binarycheck())
 				robot_talk(message)
-			return 1
+			return 1 //Does not return 0 since this is only reached by humans, not borgs or AIs.
 
 		if("whisper")
 			whisper(message)

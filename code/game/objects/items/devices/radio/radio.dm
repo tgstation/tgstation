@@ -46,6 +46,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	new_frequency = num2text(new_frequency)
 	remove_radio(src, radio_connection)
 	radio_connection = add_radio(src, new_frequency)
+	frequency = text2num(new_frequency)
 
 /obj/item/device/radio/New()
 	wires = new(src)
@@ -388,18 +389,17 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			R.receive_signal(signal)
 
 
-		sleep(rand(10,25)) // wait a little...
+		spawn(20) // wait a little...
 
-		if(signal.data["done"] && position.z in signal.data["level"])
-			// we're done here.
-			return
+			if(signal.data["done"] && position.z in signal.data["level"])
+				// we're done here.
+				return
 
-	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
-	  	// Send a mundane broadcast with limited targets:
-		world << "radio mundane broadcast"
-		Broadcast_Message(M, voicemask,
-						  src, message, displayname, jobname, real_name,
-		                  filter_type, signal.data["compression"], list(position.z), freq)
+			// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
+			// Send a mundane broadcast with limited targets:
+			Broadcast_Message(M, voicemask,
+							  src, message, displayname, jobname, real_name,
+							  filter_type, signal.data["compression"], list(position.z), freq)
 
 
 

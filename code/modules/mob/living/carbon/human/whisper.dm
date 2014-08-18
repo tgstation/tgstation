@@ -48,14 +48,12 @@
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[message]\"</span></span>"
 
 	for(var/mob/M in listening)
-		M.Hear(rendered, src, languages, message, 1)
+		M.Hear(rendered, src, languages, message)
 
 	message = stars(message)
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[message]\"</span></span>"
 	for(var/mob/M in eavesdropping)
-		M.Hear(rendered, src, languages, message, 2)
+		M.Hear(rendered, src, languages, message)
 
-	// We whispered our final breath, now we die and show the message you have sent
-	// since it might have been cut off and it would be annoying not being able to know.
-	if(critical)
+	if(critical) //Dying words.
 		succumb(1)
