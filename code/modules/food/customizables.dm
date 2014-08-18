@@ -305,7 +305,7 @@
 		user << "<span class='warning'>If you put anything else in or on [src] it's going to make a mess.</span>"
 		return
 	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
-		user << "<span class='notice'> You add [W] to [src].</span>"
+		user << "<span class='notice'>[W] was added to [src].</span>" //This message shows when the MACHINES do it too, so I made it indirect
 		var/obj/item/weapon/reagent_containers/F = W
 		F.reagents.trans_to(src, F.reagents.total_volume)
 		user.drop_item()
@@ -369,7 +369,7 @@
 	..()
 	var/whatsinside = pick(ingredients)
 
-	usr << "<span class='notice'> You think you can see [whatsinside] in there.</span>"
+	usr << "<span class='notice'>You think you can see [whatsinside] in there.</span>"
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable // Shamelessly stolen from original customizables, so that I can easily use the oven code.
 	name = "Customizable Drink"
@@ -458,10 +458,10 @@
 			name = "[n_name]"
 		return
 	if(src.contents.len > sandwich_limit)
-		user << "<span class='warning'>You can't fit it into the [src].</span>"
+		user << "<span class='warning'>You can't fit it into [src].</span>"
 		return
 	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
-		user << "<span class='notice'> You add [W] to [src].</span>"
+		user << "<span class='notice'>[W] was added to [src].</span>" //This message shows when the MACHINES do it too, so I made it indirect
 		var/obj/item/weapon/reagent_containers/F = W
 		F.reagents.trans_to(src, F.reagents.total_volume)
 		user.drop_item()

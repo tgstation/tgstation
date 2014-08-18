@@ -10,13 +10,12 @@
 	automatic = 1
 	fire_delay = 0
 	var/unload_directly = 1
-	var/mag_inserted = 1
 
 /obj/item/weapon/gun/projectile/automatic/isHandgun()
 	return 0
 
 /obj/item/weapon/gun/projectile/automatic/attack_self(mob/user as mob)
-	if (unload_directly == 1 && mag_inserted)
+	if (unload_directly == 1 && loaded.len)
 		empty_mag = new /obj/item/ammo_magazine/mc9mm(src)
 		empty_mag.stored_ammo = loaded
 		empty_mag.icon_state = "9x19p"
@@ -26,20 +25,22 @@
 		empty_mag = null
 		loaded = list()
 		update_icon()
-		mag_inserted = 0
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
-/obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/ammo_magazine/mc9mm/A as obj, mob/user as mob)
-	if(mag_inserted)
+/obj/item/weapon/gun/projectile/automatic/attackby(obj/item/ammo_magazine/mc9mm/A as obj, mob/user as mob)
+	if(loaded.len)
 		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
 		return
 	else
 		user << "<span class='notice'>You insert the magazine!</span>"
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = A.stored_ammo
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
 		loaded = A.stored_ammo
-		qdel(A)
 		update_icon()
-		mag_inserted = 1
-	..()
+		del(A)
+		return
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Uzi"
@@ -52,7 +53,7 @@
 	ammo_type = "/obj/item/ammo_casing/c45"
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi/attack_self(mob/user as mob)
-	if (unload_directly == 1 && mag_inserted)
+	if (unload_directly == 1 && loaded.len)
 		empty_mag = new /obj/item/ammo_magazine/mc9mm(src)
 		empty_mag.stored_ammo = loaded
 		empty_mag.icon_state = "9x19p"
@@ -62,20 +63,22 @@
 		empty_mag = null
 		loaded = list()
 		update_icon()
-		mag_inserted = 0
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
-/obj/item/weapon/gun/projectile/automatic/mini_uzi/attackby(var/obj/item/ammo_magazine/mc9mm/A as obj, mob/user as mob)
-	if(mag_inserted)
+/obj/item/weapon/gun/projectile/automatic/mini_uzi/attackby(obj/item/ammo_magazine/mc9mm/A as obj, mob/user as mob)
+	if(loaded.len)
 		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
 		return
 	else
 		user << "<span class='notice'>You insert the magazine!</span>"
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = A.stored_ammo
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
 		loaded = A.stored_ammo
-		qdel(A)
 		update_icon()
-		mag_inserted = 1
-	..()
+		del(A)
+		return
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi/isHandgun()
 	return 1
@@ -95,7 +98,7 @@
 	load_method = 2
 
 /obj/item/weapon/gun/projectile/automatic/c20r/attack_self(mob/user as mob)
-	if (unload_directly == 1 && mag_inserted)
+	if (unload_directly == 1 && loaded.len)
 		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
 		empty_mag.stored_ammo = loaded
 		empty_mag.icon_state = "12mm"
@@ -105,20 +108,22 @@
 		empty_mag = null
 		loaded = list()
 		update_icon()
-		mag_inserted = 0
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
-/obj/item/weapon/gun/projectile/automatic/c20r/attackby(var/obj/item/ammo_magazine/a12mm/A as obj, mob/user as mob)
-	if(mag_inserted)
+/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/ammo_magazine/a12mm/A as obj, mob/user as mob)
+	if(loaded.len)
 		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
 		return
 	else
 		user << "<span class='notice'>You insert the magazine!</span>"
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = A.stored_ammo
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
 		loaded = A.stored_ammo
-		qdel(A)
 		update_icon()
-		mag_inserted = 1
-	..()
+		del(A)
+		return
 
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
 		..()
@@ -133,7 +138,6 @@
 		empty_mag.loc = get_turf(src.loc)
 		empty_mag = null
 		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
-		mag_inserted = 0
 		update_icon()
 	return
 
@@ -160,7 +164,7 @@
 	load_method = 2
 
 /obj/item/weapon/gun/projectile/automatic/xcom/attack_self(mob/user as mob)
-	if (unload_directly == 1 && mag_inserted)
+	if (unload_directly == 1 && loaded.len)
 		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
 		empty_mag.stored_ammo = loaded
 		empty_mag.icon_state = "12mm"
@@ -170,19 +174,21 @@
 		empty_mag = null
 		loaded = list()
 		update_icon()
-		mag_inserted = 0
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
-/obj/item/weapon/gun/projectile/automatic/xcom/attackby(var/obj/item/ammo_magazine/a12mm/A as obj, mob/user as mob)
-	if(mag_inserted)
+/obj/item/weapon/gun/projectile/automatic/xcom/attackby(obj/item/ammo_magazine/a12mm/A as obj, mob/user as mob)
+	if(loaded.len)
 		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
 		return
 	else
 		user << "<span class='notice'>You insert the magazine!</span>"
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = A.stored_ammo
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
 		loaded = A.stored_ammo
-		qdel(A)
 		update_icon()
-		mag_inserted = 1
+		del(A)
 		return
 
 /obj/item/weapon/gun/projectile/automatic/xcom/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
@@ -191,7 +197,6 @@
 		empty_mag.loc = get_turf(src.loc)
 		empty_mag = null
 		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
-		mag_inserted = 0
 		update_icon()
 	return
 
@@ -210,6 +215,7 @@
 	load_method = 2
 	var/cover_open = 0
 	unload_directly = 0
+	var/mag_inserted = 1
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
@@ -251,20 +257,23 @@
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/ammo_magazine/a762/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/ammo_magazine/a762/A as obj, mob/user as mob)
 	if(!cover_open)
 		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
 		return
-	else if(cover_open && mag_inserted)
+	else if(cover_open && loaded.len)
 		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
 		return
-	else if(cover_open && !mag_inserted)
+	else if(cover_open && !loaded.len)
 		user << "<span class='notice'>You insert the magazine!</span>"
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = A.stored_ammo
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
 		loaded = A.stored_ammo
-		qdel(A)
-		mag_inserted = 1
 		update_icon()
-	..()
+		del(A)
+		return
 
 
 /* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.

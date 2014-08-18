@@ -27,6 +27,8 @@
 	var/rigged = 0
 	var/spam_flag = 0
 
+	var/log=""
+
 	var/const/deffont = "Verdana"
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
@@ -174,7 +176,7 @@
 	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[img\]","<img src=\"")
-	t = replacetext(t, "\[/img\]", "\" />")	
+	t = replacetext(t, "\[/img\]", "\" />")
 
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")
@@ -251,6 +253,11 @@
 		// if paper is not in usr, then it must be in a clipboard or folder, which must be in or near usr
 		if(src.loc != usr && !((istype(src.loc, /obj/item/weapon/clipboard) || istype(src.loc, /obj/item/weapon/folder)) && (src.loc.loc == usr || src.loc.Adjacent(usr)) ) )
 			return
+
+		log += "<br />\[[time_stamp()]] [key_name(usr)] added: [t]"
+
+		if(findtext(t,"\[img]"))
+			message_admins("[key_name_admin(usr)] added an image to [src] at [formatJumpTo(get_turf(src))]")
 
 		/* Jesus christ whoever did this is retarded.
 		t = checkhtml(t)

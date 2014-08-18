@@ -27,8 +27,12 @@ THE SOFTWARE.
 
 from __future__ import print_function
 import yaml, os, glob, sys, re, time, argparse
+from datetime import datetime, date
+from time import time
 
-today = time.strftime("%Y.%m.%d")
+today = date.today()
+
+dateformat = "%Y.%m.%d"
 
 opt = argparse.ArgumentParser()
 opt.add_argument('-d', '--dry-run', dest='dryRun', default=False, action='store_true', help='Only parse changelogs and, if needed, the targetFile. (A .dry_changelog.yml will be output for debugging purposes.)')
@@ -40,17 +44,17 @@ args = opt.parse_args()
 all_changelog_entries = {}
 
 validPrefixes = [
-    'bugfix', 
-    'wip', 
-    'tweak', 
-    'soundadd', 
-    'sounddel', 
-    'rscdel', 
-    'rscadd', 
-    'imageadd', 
-    'imagedel', 
-    'spellcheck', 
-    'experiment', 
+    'bugfix',
+    'wip',
+    'tweak',
+    'soundadd',
+    'sounddel',
+    'rscdel',
+    'rscadd',
+    'imageadd',
+    'imagedel',
+    'spellcheck',
+    'experiment',
     'tgs'
 ]
 
@@ -59,12 +63,25 @@ def dictToTuples(inp):
 
 changelog_cache = os.path.join(args.ymlDir, '.all_changelog.yml')
 
-failed_cache_read=True
+failed_cache_read = True
 if os.path.isfile(changelog_cache):
     try:
         with open(changelog_cache) as f:
             (_, all_changelog_entries) = yaml.load_all(f)
-            failed_cache_read=False
+            failed_cache_read = False
+            
+            # Convert old timestamps to newer format.
+            new_entries = {}
+            for _date in all_changelog_entries.keys():
+                ty = type(_date).__name__
+                # print(ty)
+                if ty in ['str', 'unicode']:
+                    temp_data = all_changelog_entries[_date]
+                    _date = datetime.strptime(_date, dateformat).date()
+                    new_entries[_date] = temp_data
+                else:
+                    new_entries[_date] = all_changelog_entries[_date]
+            all_changelog_entries = new_entries
     except Exception as e:
         print("Failed to read cache:")
         print(e, file=sys.stderr)
@@ -72,7 +89,7 @@ if os.path.isfile(changelog_cache):
 if args.dryRun: 
     changelog_cache = os.path.join(args.ymlDir, '.dry_changelog.yml')
     
-if os.path.isfile(args.targetFile):
+if failed_cache_read and os.path.isfile(args.targetFile):
     from bs4 import BeautifulSoup
     from bs4.element import NavigableString
     print(' Generating cache...')
@@ -80,7 +97,7 @@ if os.path.isfile(args.targetFile):
         soup = BeautifulSoup(f)
         for e in soup.find_all('div', {'class':'commit'}):
             entry = {}
-            date = e.h2.string.strip()  # key
+            date = datetime.strptime(e.h2.string.strip(), dateformat).date()  # key
             for authorT in e.find_all('h3', {'class':'author'}):
                 author = authorT.string
                 # Strip suffix
@@ -119,19 +136,20 @@ for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
     if today not in all_changelog_entries:
         all_changelog_entries[today] = {}
     author_entries = all_changelog_entries[today].get(cl['author'], [])
-    for change in cl['changes']:
-        '''
-        for css,comment in change.items():
-            c=(css,comment)
-            if c not in author_entries:
-                author_entries += [c]
-        '''
-        if change not in author_entries:
-            (change_type,_) = dictToTuples(change)[0]
-            if change_type not in validPrefixes:
-                print('  {0}: Invalid prefix {1}'.format(fileName,change_type),file=sys.stderr)
-            author_entries += [change]
-    all_changelog_entries[today][cl['author']] = author_entries 
+    if len(cl['changes']):
+        for change in cl['changes']:
+            '''
+            for css,comment in change.items():
+                c=(css,comment)
+                if c not in author_entries:
+                    author_entries += [c]
+            '''
+            if change not in author_entries:
+                (change_type, _) = dictToTuples(change)[0]
+                if change_type not in validPrefixes:
+                    print('  {0}: Invalid prefix {1}'.format(fileName, change_type), file=sys.stderr)
+                author_entries += [change]
+        all_changelog_entries[today][cl['author']] = author_entries 
     
     if args.dryRun: continue
     
@@ -141,27 +159,29 @@ for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
         
 targetDir = os.path.dirname(args.targetFile)
 
-with open(args.targetFile.replace('.htm','.dry.htm') if args.dryRun else args.targetFile, 'w') as changelog:
+with open(args.targetFile.replace('.htm', '.dry.htm') if args.dryRun else args.targetFile, 'w') as changelog:
     with open(os.path.join(targetDir, 'templates', 'header.html'), 'r') as h:
         for line in h:
             changelog.write(line)
     
-    for date in reversed(sorted(all_changelog_entries.keys())):
+    for _date in reversed(sorted(all_changelog_entries.keys())):
         entry_htm = '\n'
         entry_htm += '\t\t<div class="commit sansserif">\n'
-        entry_htm += '\t\t\t<h2 class="date">{date}</h2>\n'.format(date=date)
-        write_entry=False
-        for author in sorted(all_changelog_entries[date].keys()):
-            if len(all_changelog_entries[date]) == 0: continue
-            entry_htm += '\t\t\t<h3 class="author">{author} updated:</h3>\n'.format(author=author)
-            entry_htm += '\t\t\t<ul class="changes bgimages16">\n'
+        entry_htm += '\t\t\t<h2 class="date">{date}</h2>\n'.format(date=_date.strftime(dateformat))
+        write_entry = False
+        for author in sorted(all_changelog_entries[_date].keys()):
+            if len(all_changelog_entries[_date]) == 0: continue
+            author_htm = '\t\t\t<h3 class="author">{author} updated:</h3>\n'.format(author=author)
+            author_htm += '\t\t\t<ul class="changes bgimages16">\n'
             changes_added = []
-            for (css_class, change) in (dictToTuples(e)[0] for e in all_changelog_entries[date][author]):
+            for (css_class, change) in (dictToTuples(e)[0] for e in all_changelog_entries[_date][author]):
                 if change in changes_added: continue
-                write_entry=True
+                write_entry = True
                 changes_added += [change] 
-                entry_htm += '\t\t\t\t<li class="{css_class}">{change}</li>\n'.format(css_class=css_class, change=change.strip())
-            entry_htm += '\t\t\t</ul>\n'
+                author_htm += '\t\t\t\t<li class="{css_class}">{change}</li>\n'.format(css_class=css_class, change=change.strip())
+            author_htm += '\t\t\t</ul>\n'
+            if len(changes_added)>0:
+                entry_htm += author_htm
         entry_htm += '\t\t</div>\n'
         if write_entry:
             changelog.write(entry_htm)
@@ -173,5 +193,4 @@ with open(args.targetFile.replace('.htm','.dry.htm') if args.dryRun else args.ta
 
 with open(changelog_cache, 'w') as f:
     cache_head = 'DO NOT EDIT THIS FILE BY HAND!  AUTOMATICALLY GENERATED BY ss13_genchangelog.py.'
-    print(repr(all_changelog_entries))
     yaml.dump_all([cache_head, all_changelog_entries], f, default_flow_style=False)

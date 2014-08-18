@@ -46,10 +46,6 @@
 	item_state = "foam_extinguisher"
 	sprite_name = "foam_extinguisher"
 
-/obj/item/weapon/extinguisher/foam/attackby(obj/item/W, mob/user)
-	return // no filling this with fun stuff.
-
-
 /obj/item/weapon/extinguisher/examine()
 	set src in usr
 
@@ -273,18 +269,13 @@
 
 		for(var/a=0, a<5, a++)
 			spawn(0)
-				var/obj/effect/effect/foam/fire/W = new /obj/effect/effect/foam/fire( get_turf(src) )
-				var/turf/my_target = pick(the_targets)
 				var/datum/reagents/R = new/datum/reagents(5)
-				if(!W) return
-				W.reagents = R
-				R.my_atom = W
+				reagents.trans_to_holder(R,1)
+				var/obj/effect/effect/foam/fire/W = new /obj/effect/effect/foam/fire( get_turf(src) , R)
+				var/turf/my_target = pick(the_targets)
 				if(!W || !src) return
-				src.reagents.trans_to(W,1)
 				for(var/b=0, b<5, b++)
 					var/turf/oldturf = get_turf(W)
-
-
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return
 					W.reagents.reaction(get_turf(W), TOUCH)
@@ -297,10 +288,7 @@
 
 					var/obj/effect/effect/foam/fire/F = locate() in oldturf
 					if(!istype(F) && oldturf != get_turf(src))
-						F = new /obj/effect/effect/foam/fire( get_turf(oldturf) )
-						F.reagents = new/datum/reagents(5)
-						F.reagents.my_atom = F
-						W.reagents.trans_to(F,1)
+						F = new /obj/effect/effect/foam/fire( get_turf(oldturf) , W.reagents)
 					if(W.loc == my_target) break
 					sleep(2)
 

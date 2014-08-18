@@ -10,8 +10,8 @@
 	var/processing = 0
 	var/opened = 0.0
 	use_power = 1
-	idle_power_usage = 5
-	active_power_usage = 50
+	idle_power_usage = 20
+	active_power_usage = 500
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -51,15 +51,7 @@
 	meat2
 		input = /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-/*
-	monkeymeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
-	humanmeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat/human
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-*/
 	potato
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 		output = /obj/item/weapon/reagent_containers/food/snacks/fries
@@ -102,9 +94,9 @@
 				var/mob/living/carbon/monkey/O = what
 				if (O.client) //grief-proof
 					O.loc = loc
-					O.visible_message("\blue Suddenly [O] jumps out from the processor!", \
+					O.visible_message("<span class='notice'>[O] suddenly jumps out of [src]!</span>", \
 							"You jump out from the processor", \
-							"You hear chimp")
+							"You hear a slimy sound")
 					return
 				var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
 				var/datum/reagent/blood/B = new()
@@ -139,10 +131,26 @@
 
 /obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.processing)
-		user << "\red The processor is in the process of processing."
+		user << "<span class='warning'>[src] is already processing!</span>"
 		return 1
+	if(istype(O,/obj/item/weapon/wrench))
+		if(!anchored)
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 30))
+				anchored = 1
+				user << "You wrench [src] in place."
+			return
+		else
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 30))
+				anchored = 0
+				user << "You unwrench [src]."
+			return
+	if(!anchored)
+		user << "<span class='warning'>[src] must be anchored first!</span>"
+		return
 	if(src.contents.len > 0) //TODO: several items at once? several different items?
-		user << "\red Something is already in the processing chamber."
+		user << "<span class='warning'>Something is already in [src]</span>."
 		return 1
 	var/what = O
 	if (istype(O, /obj/item/weapon/grab))
@@ -172,10 +180,10 @@
 
 	var/datum/food_processor_process/P = select_recipe(what)
 	if (!P)
-		user << "\red That probably won't blend."
+		user << "<span class='warning'>This probably won't blend.</span>"
 		return 1
-	user.visible_message("[user] put [what] into [src].", \
-		"You put the [what] into [src].")
+	user.visible_message("<span class='notice'>[user] puts [what] into [src].</span>", \
+		"You put [what] into the [src].")
 	user.drop_item()
 	what:loc = src
 	return
@@ -183,27 +191,30 @@
 /obj/machinery/processor/attack_hand(var/mob/user as mob)
 	if (src.stat != 0) //NOPOWER etc
 		return
+	if(!anchored)
+		user << "<span class='warning'>[src] must be anchored first!</span>"
+		return
 	if(src.processing)
-		user << "\red The processor is in the process of processing."
+		user << "<span class='warning'>[src] is already processing!</span>"
 		return 1
 	if(src.contents.len == 0)
-		user << "\red The processor is empty."
+		user << "<span class='warning'>[src] is empty!</span>"
 		return 1
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
-			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0
+			log_admin("DEBUG: [O] in processor is not suitable. How did you put it in?") //-rastaf0
 			continue
 		src.processing = 1
-		user.visible_message("\blue [user] turns on \a [src].", \
+		user.visible_message("<span class='notice'>[user] turns on [src]</span>.", \
 			"You turn on \a [src].", \
-			"You hear a food processor")
+			"You hear [src] start")
 		playsound(get_turf(src), 'sound/machines/blender.ogg', 50, 1)
 		use_power(500)
 		sleep(P.time)
 		P.process(src.loc, O)
 		src.processing = 0
-	src.visible_message("\blue \the [src] finished processing.", \
-		"You hear food processor stops")
+	src.visible_message("<span class='notice'>[src] is done.</span>", \
+		"You hear [src] stop")
 
 
