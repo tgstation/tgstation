@@ -81,6 +81,9 @@ var/global/super_fryer = 1
 
 
 /obj/machinery/deepfryer/attack_hand(mob/user)
+	if(istype(user, /mob/dead/observer))
+		user << "You attempt to interact with the deep fryer. You notice your hand goes straight through the fryer. You wonder why you tried this." // WHO THE HELL MADE GHOSTS CALL ATTACK_HAND I NEVER ACCOUNTED FOR THIS - Iamgoofball
+		return
 	if(on && frying)
 		user << "<span class='notice'>You pull [frying] from [src]! It looks like you were just in time!</span>"
 		user.put_in_hands(frying)
