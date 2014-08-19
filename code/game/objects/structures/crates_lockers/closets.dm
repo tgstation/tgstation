@@ -182,7 +182,7 @@
 			user << "<span class='notice'>You begin cutting the [src] apart...</span>"
 			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
 			if(do_after(user,40,5,1))
-				if(!src.opened)
+				if(src.opened)
 					if(WT.remove_fuel(0,user))
 						playsound(loc, 'sound/items/welder.ogg', 50, 1)
 						new /obj/item/stack/sheet/metal(src.loc)
