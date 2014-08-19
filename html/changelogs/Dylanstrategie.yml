@@ -1,2 +1,3 @@
 author: Dylanstrategie
-changes: []
+changes:
+  - tweak: Changed the way mops function. They notably now correctly use their reagents and can be used on people
