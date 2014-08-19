@@ -57,6 +57,7 @@
 			//Activate Anti-theft
 			var/area/alarmed = get_area(src)
 			alarmed.burglaralert(src)
+			playsound(src, "sound/effects/alert.ogg", 50, 1)
 
 	else
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)

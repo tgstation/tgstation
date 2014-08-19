@@ -1135,24 +1135,16 @@ FIRE ALARM
 /obj/machinery/firealarm/proc/reset()
 	if (stat & (NOPOWER|BROKEN)) // can't reset alarm if it's unpowered or broken.
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
-	for(var/area/RA in A.related)
-		RA.firereset()
+	var/area/A = get_area(src)
+	A.firereset()
 	update_icon()
 	return
 
 /obj/machinery/firealarm/proc/alarm()
 	if (stat & (NOPOWER|BROKEN))  // can't activate alarm if it's unpowered or broken.
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
-	for(var/area/RA in A.related)
-		RA.firealert()
+	var/area/A = get_area(src)
+	A.firealert()
 	update_icon()
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
