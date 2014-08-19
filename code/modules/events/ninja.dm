@@ -1244,7 +1244,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 			spawn(0)
 				for(var/turf/T in getline(mobloc, destination))
 					spawn(0)
-						T.phase_damage_creatures(180,U)
+						T.phase_damage_creatures(190,U)
 					if(T==mobloc||T==destination)	continue
 					spawn(0)
 						anim(T,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
