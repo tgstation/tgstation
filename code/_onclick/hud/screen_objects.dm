@@ -249,7 +249,7 @@
 								C << "<span class='notice'>You don't have an oxygen tank.</span>"
 
 		if("act_intent")
-			if(ishuman(usr))
+			if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
 
 				var/_x = text2num(params2list(params)["icon-x"])
 				var/_y = text2num(params2list(params)["icon-y"])
