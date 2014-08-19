@@ -257,7 +257,22 @@
 		log += "<br />\[[time_stamp()]] [key_name(usr)] added: [t]"
 
 		if(findtext(t,"\[img]"))
-			message_admins("[key_name_admin(usr)] added an image to [src] at [formatJumpTo(get_turf(src))]")
+			var/start = 1
+			var/finish = 1
+			var/amount = 0
+			var/link = ""
+			var/pos = findtext(t, "\[img]", start)
+			spawn()
+				while(pos > 0)
+					pos = findtext(t, "\[img]", start)
+					start = pos + 5
+					world.log << "[pos] [start]"
+					if(pos)
+						finish = findtext(t, "\[/img]", start)
+						link += "[copytext(t, start, finish)] "
+						amount++
+				message_admins("[key_name_admin(usr)] added [amount] image\s ([link]) to [src] at [formatJumpTo(get_turf(src))]")
+				log_admin("[key_name_admin(usr)] added [amount] image\s ([link]) to [src] at [formatJumpTo(get_turf(src))]")
 
 		/* Jesus christ whoever did this is retarded.
 		t = checkhtml(t)
