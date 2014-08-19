@@ -14,10 +14,12 @@
 	create_reagents(100)
 
 /obj/structure/mopbucket/examine()
+	..()
 	usr << "<span class='notice'>[src] contains [reagents.total_volume] units of reagents!"
 	usr << "<span class='notice'>[src]'s wheels are [anchored? "locked" : "unlocked"]!"
 
 /obj/structure/mopbucket/attack_hand(mob/user as mob)
+	..()
 	if(!anchored)
 		anchored = 1
 		user.visible_message("<span class='notice'>[user] locks [src]'s wheels!</span>")
