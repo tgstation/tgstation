@@ -1386,14 +1386,6 @@
 		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
 		H << "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
 
-	else if(href_list["movecentcomferry"])
-		if(!check_rights(R_FUN))	return
-
-		var/datum/shuttle_manager/s = shuttles["ferry"]
-		if(istype(s)) s.move_shuttle(0)
-		message_admins("[key_name_admin(usr)] moved the centcom ferry", 1)
-		log_admin("[key_name(usr)] moved the centcom ferry")
-
 	else if(href_list["jumpto"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
 
