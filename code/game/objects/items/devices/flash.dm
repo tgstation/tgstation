@@ -85,7 +85,7 @@
 //								revsafe = 2
 							if(!revsafe)
 								if(jobban_isbanned(M, "Syndicate") || jobban_isbanned(M, "revolutionary"))
-									M << "<span class='userdanger'>Error: You are currently jobbanned from Revolutionary.</span>"
+									M << "<span class='userdanger'>You are currently jobbanned from Revolutionary.</span>"
 									user << "<span class='warning'>This mind was unable to survive the rigors of conversion and has been wiped clean!</span>"
 									M.ghostize(0) //Jobbanned players are force ghosted
 								else
