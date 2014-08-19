@@ -266,7 +266,6 @@
 				while(pos > 0)
 					pos = findtext(t, "\[img]", start)
 					start = pos + 5
-					world.log << "[pos] [start]"
 					if(pos)
 						finish = findtext(t, "\[/img]", start)
 						link += "[copytext(t, start, finish)] "
