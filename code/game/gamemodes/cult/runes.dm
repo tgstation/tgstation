@@ -115,7 +115,7 @@ var/list/sacrificed = list()
 			if(is_convertable_to_cult(M.mind))
 				if(jobban_isbanned(M, "Syndicate") || jobban_isbanned(M, "cultist"))
 					M.visible_message("<span class='warning'>A horrified look flashes across [M]'s face before their body goes limp.", \
-					"<span class='userdanger'>Error: You are currently jobbanned from Cultist.</span>")
+					"<span class='userdanger'>You are currently jobbanned from Cultist.</span>")
 					M.ghostize(0) //Jobbanned players are force ghosted
 					var/obj/item/weapon/paper/talisman/supply/recompense = new //Cultists are recompensated for the failed convert
 					recompense.uses = 1
