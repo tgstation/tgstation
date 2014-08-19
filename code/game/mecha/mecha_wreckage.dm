@@ -31,9 +31,7 @@
 				salvage_num--
 			else
 				user << "<span class='notice'>You failed to salvage anything valuable from [src].</span>"
-		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
-			return
+		return
 
 	if(istype(I, /obj/item/weapon/wirecutters))
 		if(salvage_num <= 0)

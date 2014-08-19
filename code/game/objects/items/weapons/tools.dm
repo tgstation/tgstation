@@ -175,9 +175,7 @@
 		if(src.remove_fuel(0))
 			item_heal_robotic(H, user, 30, 0)
 			return
-		else
-			user << "<span class='warning'>Need more welding fuel!</span>"
-			return
+		return
 	else
 		return ..()
 

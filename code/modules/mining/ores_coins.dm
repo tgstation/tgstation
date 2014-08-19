@@ -10,10 +10,10 @@
 /obj/item/weapon/ore/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
-		if(W.remove_fuel(15))
+		if(W.remove_fuel(15, user))
 			new refined_type(get_turf(src.loc))
 			qdel(src)
-		else
+		else if(W.isOn())
 			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
 	..()
 

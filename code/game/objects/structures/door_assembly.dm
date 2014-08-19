@@ -438,9 +438,7 @@ obj/structure/door_assembly/New()
 						new M(get_turf(src))
 						new M(get_turf(src))
 				qdel(src)
-		else
-			user << "<span class='warning'> You need more welding fuel to dissassemble the airlock assembly.</span>"
-			return
+		return
 
 	else if(istype(W, /obj/item/weapon/wrench) && !anchored )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)

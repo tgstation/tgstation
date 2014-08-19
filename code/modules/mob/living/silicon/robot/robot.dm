@@ -412,9 +412,7 @@
 			add_fingerprint(user)
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
-		else
-			user << "Need more welding fuel!"
-			return
+		return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		var/obj/item/stack/cable_coil/coil = W
