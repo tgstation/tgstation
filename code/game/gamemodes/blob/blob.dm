@@ -142,7 +142,11 @@ var/list/blob_nodes = list()
 		sleep(2000)
 		stage(1)
 
-	..()
+		// Stage 2
+		sleep(30000)
+		stage(2)
+
+	return ..(0)
 
 /datum/game_mode/blob/proc/stage(var/stage)
 
@@ -150,11 +154,12 @@ var/list/blob_nodes = list()
 		if (0)
 			send_intercept(1)
 			declared = 1
-			return
 
 		if (1)
 			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
-			return
+
+		if (2)
+			send_intercept(2)
 
 	return
 

@@ -23,6 +23,8 @@
 			L.client.eye = src
 		L.loc = src
 		L.sdisabilities += MUTE
+		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
+
 		health = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		intialTox = L.getToxLoss()
 		intialFire = L.getFireLoss()
@@ -79,6 +81,7 @@
 		M.loc = src.loc
 		M.sdisabilities -= MUTE
 		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurred is transfered to the mob
+		M.faction -= "mimic"
 		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
