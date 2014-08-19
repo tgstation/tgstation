@@ -141,10 +141,6 @@
 	add_fingerprint(usr)
 
 /obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
-	if(!interact_offline && stat & (NOPOWER|BROKEN))
-		return
-	if(!usr.canUseTopic(src))
-		return
 	src.enabled = !src.enabled
 	src.updateTurrets()
 	add_fingerprint(usr)
@@ -166,10 +162,6 @@
 	return
 
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
-	if(!interact_offline && stat & (NOPOWER|BROKEN))
-		return
-	if(!usr.canUseTopic(src))
-		return
 	src.lethal = !src.lethal
 	src.updateTurrets()
 	add_fingerprint(usr)
