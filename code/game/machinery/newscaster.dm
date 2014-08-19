@@ -788,36 +788,50 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)
 	if(photo)
-		photo.loc = src.loc
-		user.put_in_inactive_hand(photo)
+		if(!photo.sillynewscastervar)
+			photo.loc = src.loc
+			if(!issilicon(user))
+				user.put_in_inactive_hand(photo)
+		else
+			qdel(photo)
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
 		user.drop_item()
 		photo.loc = src
-	if(istype(usr,/mob/living/silicon/ai))
+	if(istype(user,/mob/living/silicon))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
-		var/mob/living/silicon/ai/tempAI = user
-		if(tempAI.aicamera.aipictures.len == 0)
-			usr << "<FONT COLOR=red><B>No images saved</B>"
+		var/obj/item/device/camera/siliconcam/targetcam = null
+
+		if(istype(user,/mob/living/silicon/ai))
+			var/mob/living/silicon/ai/R = user
+			targetcam = R.aicamera
+		else if(istype(user,/mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = user
+			if(R.connected_ai)
+				targetcam = R.connected_ai.aicamera
+			else
+				targetcam = R.aicamera
+		else
+			user << "You cannot interface with silicon photo uploading"	//gtfo pAIs
+
+		if(targetcam.aipictures.len == 0)
+			usr << "<span class='userdanger'>No images saved</span>"
 			return
-		for(var/datum/picture/t in tempAI.aicamera.aipictures)
+		for(var/datum/picture/t in targetcam.aipictures)
 			nametemp += t.fields["name"]
 		find = input("Select image (numbered in order taken)") in nametemp
 		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-		for(var/datum/picture/q in tempAI.aicamera.aipictures)
+		for(var/datum/picture/q in targetcam.aipictures)
 			if(q.fields["name"] == find)
 				selection = q
-				break  	// just in case some AI decides to take 10 thousand pictures in a round
-		P.icon = selection.fields["icon"]
-		P.img = selection.fields["img"]
-		P.desc = selection.fields["desc"]
+				break
+		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		P.sillynewscastervar = 1
 		photo = P
-
-
-
+		qdel(P)
 
 
 //########################################################################################################################

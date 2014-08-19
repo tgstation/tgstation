@@ -208,7 +208,7 @@
 	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
-	projectile = /obj/item/projectile/bullet/incendiary/mech
+	projectile = /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
 	projectiles = 24
 	projectile_energy_cost = 15
 
