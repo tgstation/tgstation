@@ -105,3 +105,15 @@
 	flags_inv = HIDEFACE
 	w_class = 2
 	gas_transfer_coefficient = 0.90
+
+/obj/item/clothing/mask/bandana
+	name = "bandana"
+	desc = "A colorful bandana."
+	action_button_name = "Toggle Bandana"
+	flags_inv = HIDEFACE
+	w_class = 1
+	can_flip = 1
+
+obj/item/clothing/mask/bandana/red
+	name = "red bandana"
+	icon_state = "bandred"
