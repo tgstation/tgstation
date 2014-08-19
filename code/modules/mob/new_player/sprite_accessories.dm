@@ -333,7 +333,7 @@
 	icon_state = "hair_braidtail"
 
 /datum/sprite_accessory/hair/familyman
-	name = "Family Man"
+	name = "Big Flat Top"
 	icon_state = "hair_thefamilyman"
 
 /datum/sprite_accessory/hair/drillruru
@@ -341,39 +341,39 @@
 	icon_state = "hair_drillruru"
 
 /datum/sprite_accessory/hair/dandypomp
-	name = "Dandy Pompadour"
+	name = "Big Pompadour"
 	icon_state = "hair_dandypompadour"
 
 /datum/sprite_accessory/hair/poofy
-	name = "Poofy"
+	name = "Side Ponytail"
 	icon_state = "hair_poofy"
 
 /datum/sprite_accessory/hair/crono
-	name = "Spikey Hair 1"
+	name = "Big Spiky Hair"
 	icon_state = "hair_toriyama1"
 
 /datum/sprite_accessory/hair/vegeta
-	name = "Spikey Hair 2"
+	name = "Big Spiky Hair 2"
 	icon_state = "hair_toriyama2"
 
 /datum/sprite_accessory/hair/cia
-	name = "CIA"
+	name = "Business Hair 3"
 	icon_state = "hair_cia"
 
 /datum/sprite_accessory/hair/mulder
-	name = "Sculder"
+	name = "Business Hair 4"
 	icon_state = "hair_mulder"
 
 /datum/sprite_accessory/hair/scully
-	name = "Mully"
+	name = "Bob Hair 2"
 	icon_state = "hair_scully"
 
 /datum/sprite_accessory/hair/nitori
-	name = "Double Pigtails"
+	name = "Pigtail Hair"
 	icon_state = "hair_nitori"
 
 /datum/sprite_accessory/hair/joestar
-	name = "Action Hair"
+	name = "Swept Back Hair 2"
 	icon_state = "hair_joestar"
 
 /datum/sprite_accessory/hair/edgeworth
