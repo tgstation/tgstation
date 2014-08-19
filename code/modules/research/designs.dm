@@ -757,6 +757,15 @@ other types of metals and chemistry for reagents).
 	materials = list("$metal" = 2000, "$glass" = 1000, "$silver" = 1000, "$gold" = 500, "$plasma" = 500, "$diamond" = 100)
 	build_path = /obj/item/device/mmi/posibrain
 
+/datum/design/np_dispenser
+	name = "Nano Paper Dispenser"
+	desc = "A machine to create Nano Paper"
+	id = "np_dispenser"
+	req_tech = list("programming" = 2, "materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$glass" = 500, "$metal" = 1000, "$gold" = 500)
+	build_path = /obj/item/weapon/nano_paper_bin
+
 ///////////////////////////////////
 //////////Mecha Module Disks///////
 ///////////////////////////////////
@@ -2238,6 +2247,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/bhangmeter
+
 
 //////////////////////////////////////////////////////////////////
 // EMBEDDED CONTROLLER BOARDS

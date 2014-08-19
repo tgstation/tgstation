@@ -1,14 +1,14 @@
 /obj/item/weapon/nano_paper_bin
 	name = "Nano paper dispenser"
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "paper_bin1"
+	icon_state = "np_dispenser"
 	item_state = "sheet-metal"
 	throwforce = 1
 	w_class = 3
 	throw_speed = 3
 	throw_range = 3
-	var/ressources = 30	// how much nano paper it can print
-
+	var/ressources = 30	// how much nano paper it contains
+	var/max_ressources = 30 // the maxium amount of paper it can contain, un-used for now
 	autoignition_temperature = 1000 // Kelvin
 
 
@@ -18,7 +18,7 @@
 			if( !usr.get_active_hand() )		//if active hand is empty
 				src.loc = user
 				user.put_in_hands(src)
-				user.visible_message("<span class='notice'>[user] picks up the [src].</span>", "<span class='notice'>You grab [src] from the floor!</span>")
+				user.visible_message("<span class='notice'>[user] picks up the [src].</span>", "<span class='notice'>You pick-up the [src]</span>")
 
 	return
 
@@ -30,7 +30,6 @@
 /obj/item/weapon/nano_paper_bin/attack_hand(mob/user as mob)
 	if(ressources > 0)
 		ressources--
-
 		var/obj/item/weapon/nano_paper/p
 		p = new /obj/item/weapon/nano_paper
 		p.loc = user.loc
@@ -70,12 +69,11 @@
 			usr << "<span class='notice'>There is [ressources] nano paper left in the dispenser!</span>"
 		else
 			usr << "<span class='notice'>The nano paper dispenser is empty! add more plasteel to refil!</span>"
-
 		return
 
 
 /obj/item/weapon/nano_paper_bin/update_icon()
 	if(ressources < 1)
-		icon_state = "paper_bin0"
+		icon_state = "np_dispenser_empty"
 	else
-		icon_state = "paper_bin1"
+		icon_state = "np_dispenser"

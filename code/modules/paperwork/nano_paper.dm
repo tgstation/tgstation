@@ -22,16 +22,13 @@
 	autoignition_temperature = AUTOIGNITION_PAPER
 
 	var/info		//What's actually written on the paper.
-	var/info_links	//A different version of the paper which includes html links at fields and EOF
+	var/info_links
 	var/fields		//Amount of user created fields
 	var/rigged = 0
 	var/spam_flag = 0
-
 	var/log=""
-
-	var/const/deffont = "Serif" // looks more digital
+	var/const/deffont = "Sans-Serif" // looks more digital
 	var/const/signfont = "Times New Roman"
-	// var/const/crayonfont = "Comic Sans MS" doesn't matter what pen you use
 
 /obj/item/weapon/nano_paper/New()
 	..()
@@ -51,7 +48,7 @@
 /obj/item/weapon/nano_paper/examine()
 	set src in oview(1)
 
-// if in range, show whats on the paper.
+	// if in range, show whats on the paper.
 	if(in_range(usr, src))
 		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]</BODY></HTML>", "window=[name]")
@@ -60,7 +57,7 @@
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]</BODY></HTML>", "window=[name]")
 			onclose(usr, "[name]")
 	else
-		usr << "<span class='notice'>This is Nano paper, I should get closer to see its content...</span>"
+		usr << "<span class='notice'>This is Nano paper, I should get closer to see its contents...</span>"
 	return
 
 /obj/item/weapon/nano_paper/verb/rename()
@@ -143,10 +140,10 @@
 /obj/item/weapon/nano_paper/proc/updateinfolinks()
 	info_links = info
 	for(var/i=0,i < fields,i++)
-		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
-		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];help=[i]'>help</A></font>", 1)
-	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
-
+		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>\[write\]</A> </font>", 1)
+		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];help=[i]'>\[help\]</A> </font>", 2)
+	info_links += "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>\[write\]</A> </font>"
+	info_links += "<font face=\"[deffont]\"><A href='?src=\ref[src];help=end'>\[help\]</A> </font>"
 
 /obj/item/weapon/nano_paper/proc/clearpaper()
 	info = null
@@ -154,10 +151,7 @@
 	updateinfolinks()
 	update_icon()
 
-
 /obj/item/weapon/nano_paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
-//	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-
 	t = replacetext(t, "\[center\]", "<center>")
 	t = replacetext(t, "\[/center\]", "</center>")
 	t = replacetext(t, "\[br\]", "<BR>")
@@ -173,7 +167,6 @@
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[img\]","<img src=\"")
 	t = replacetext(t, "\[/img\]", "\" />")
-
 	t = replacetext(t, "\[*\]", "<li>")
 	t = replacetext(t, "\[hr\]", "<HR>")
 	t = replacetext(t, "\[small\]", "<font size = \"1\">")
@@ -182,7 +175,6 @@
 	t = replacetext(t, "\[/list\]", "</ul>")
 	t = replacetext(t, "\[video\]", "<embed src=\"")
 	t = replacetext(t, "\[/video\]", "\" width=\"420\" height=\"344\" type=\"x-ms-wmv\" volume=\"85\" autoStart=\"0\" autoplay=\"true\" />")
-
 	t = "<font face=\"[deffont]\" color=[P.colour]>[t]</font>"
 
 //Count the fields
@@ -193,14 +185,13 @@
 			break
 		laststart = i+1
 		fields++
-
 	return t
 
 
 /obj/item/weapon/nano_paper/proc/openhelp(mob/user as mob)
 	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
 	<BODY>
-		<b><center>Crayon&Pen commands</center></b><br>
+		<b><center>Valid BBcodes</center></b><br>
 		<br>
 		\[br\] : Creates a linebreak.<br>
 		\[center\] - \[/center\] : Centers the text.<br>
@@ -210,16 +201,13 @@
 		\[large\] - \[/large\] : Increases the <font size = \"4\">size</font> of the text.<br>
 		\[sign\] : Inserts a signature of your name in a foolproof way.<br>
 		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
-		<br>
-		<b><center>Pen exclusive commands</center></b><br>
 		\[small\] - \[/small\] : Decreases the <font size = \"1\">size</font> of the text.<br>
 		\[list\] - \[/list\] : A list.<br>
 		\[*\] : A dot used for lists.<br>
-		\[hr\] : Adds a horizontal rule.
-		\[img\]http://url\[/img\] : add an image
-		\[video\]http://url.wmv\[/video\] : add a video with simple controls, MUST BE IN WMV FORMAT!!
+		\[hr\] : Adds a horizontal rule. <br>
+		\[img\]http://url\[/img\] : add an image <br>
+		\[video\]http://url.wmv\[/video\] : add a video with simple controls, MUST BE IN WMV FORMAT!! <br>
 	</BODY></HTML>"}, "window=paper_help")
-
 
 /obj/item/weapon/nano_paper/Topic(href, href_list)
 	..()

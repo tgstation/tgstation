@@ -144,10 +144,11 @@
 
 /obj/item/weapon/paper/proc/updateinfolinks()
 	info_links = info
-	var/i = 0
-	for(i=1,i<=fields,i++)
-		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
-	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+	for(var/i=0,i < fields,i++)
+		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>\[write\]</A> </font>", 1)
+		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];help=[i]'>\[help\]</A> </font>", 2)
+	info_links += "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>\[write\]</A> </font>"
+	info_links += "<font face=\"[deffont]\"><A href='?src=\ref[src];help=end'>\[help\]</A> </font>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -175,8 +176,6 @@
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
-	t = replacetext(t, "\[img\]","<img src=\"")
-	t = replacetext(t, "\[/img\]", "\" />")
 
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")
@@ -283,6 +282,9 @@
 		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]") // Update the window
 
 		update_icon()
+
+	if(href_list["help"])
+		openhelp(usr)
 
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
