@@ -4,7 +4,9 @@
 /datum/round_event_control/ninja
 	name = "Space Ninja"
 	typepath = /datum/round_event/ninja
+	weight = 5
 	max_occurrences = 1
+	earliest_start = 48000 // 1 hour 20 minutes
 
 /datum/round_event/ninja
 	var/success_spawn = 0
