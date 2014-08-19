@@ -337,7 +337,7 @@
 	icon_state = "hair_thefamilyman"
 
 /datum/sprite_accessory/hair/drillruru
-	name = "Drillruru"
+	name = "Drill Hair"
 	icon_state = "hair_drillruru"
 
 /datum/sprite_accessory/hair/dandypomp
@@ -349,11 +349,11 @@
 	icon_state = "hair_poofy"
 
 /datum/sprite_accessory/hair/crono
-	name = "Chrono"
+	name = "Spikey Hair 1"
 	icon_state = "hair_toriyama1"
 
 /datum/sprite_accessory/hair/vegeta
-	name = "Prideful Warrior"
+	name = "Spikey Hair 2"
 	icon_state = "hair_toriyama2"
 
 /datum/sprite_accessory/hair/cia
@@ -361,63 +361,63 @@
 	icon_state = "hair_cia"
 
 /datum/sprite_accessory/hair/mulder
-	name = "Mulder"
+	name = "Sculder"
 	icon_state = "hair_mulder"
 
 /datum/sprite_accessory/hair/scully
-	name = "Scully"
+	name = "Mully"
 	icon_state = "hair_scully"
 
 /datum/sprite_accessory/hair/nitori
-	name = "Nitori"
+	name = "Double Pigtails"
 	icon_state = "hair_nitori"
 
 /datum/sprite_accessory/hair/joestar
-	name = "Joestar"
+	name = "Action Hair"
 	icon_state = "hair_joestar"
 
 /datum/sprite_accessory/hair/edgeworth
-	name = "Edgeworth"
+	name = "Keanu Hair"
 	icon_state = "hair_edgeworth"
 
 /datum/sprite_accessory/hair/objection
-	name = "Objection"
+	name = "Swept Back Hair"
 	icon_state = "hair_objection!"
 
 /datum/sprite_accessory/hair/dubsman
-	name = "Dubsman"
+	name = "Business Hair 2"
 	icon_state = "hair_dubsman"
 
 /datum/sprite_accessory/hair/blackswordsman
-	name = "Black Swordsman"
+	name = "Hedgehog Hair"
 	icon_state = "hair_blackswordsman"
 
 /datum/sprite_accessory/hair/mentalist
-	name = "Mentalist"
+	name = "Business Hair 1"
 	icon_state = "hair_mentalist"
 
 /datum/sprite_accessory/hair/fujisaki
-	name = "Fujisaki"
+	name = "Short Hair 3"
 	icon_state = "hair_fujisaki"
 
 /datum/sprite_accessory/hair/schierke
-	name = "Schierke"
+	name = "Bob Hair"
 	icon_state = "hair_schierke"
 
 /datum/sprite_accessory/hair/akari
-	name = "Akari"
+	name = "Twin Buns"
 	icon_state = "hair_akari"
 
 /datum/sprite_accessory/hair/fujiyabashi
-	name = "Fujiyabashi"
+	name = "Ponytail 4"
 	icon_state = "hair_fujiyabashi"
 
 /datum/sprite_accessory/hair/nia
-	name = "Nia"
+	name = "Long Hair 1"
 	icon_state = "hair_nia"
 
 /datum/sprite_accessory/hair/shinobu
-	name = "Shinobu"
+	name = "Long Hair 2"
 	icon_state = "hair_shinobu"
 
 /datum/sprite_accessory/hair/ramona
