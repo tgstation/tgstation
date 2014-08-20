@@ -139,11 +139,12 @@
 
 /obj/item/weapon/nano_paper/proc/updateinfolinks()
 	info_links = info
-	for(var/i=0,i < fields,i++)
-		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>\[write\]</A> </font>", 1)
-		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];help=[i]'>\[help\]</A> </font>", 2)
-	info_links += "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>\[write\]</A> </font>"
-	info_links += "<font face=\"[deffont]\"><A href='?src=\ref[src];help=end'>\[help\]</A> </font>"
+	var/i = 0
+	for(i=1,i<=fields,i++)
+		addtofield(i, "<A href='?src=\ref[src];write=[i]'>write</A> ", 1)
+		addtofield(i, "<A href='?src=\ref[src];help=[i]'>help</A> ", 1)
+	info_links +="<A href='?src=\ref[src];write=end'>write</A> "
+	info_links +="<A href='?src=\ref[src];help=end'>help</A> "
 
 /obj/item/weapon/nano_paper/proc/clearpaper()
 	info = null
@@ -151,41 +152,9 @@
 	updateinfolinks()
 	update_icon()
 
-/obj/item/weapon/nano_paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
-	t = replacetext(t, "\[center\]", "<center>")
-	t = replacetext(t, "\[/center\]", "</center>")
-	t = replacetext(t, "\[br\]", "<BR>")
-	t = replacetext(t, "\[b\]", "<B>")
-	t = replacetext(t, "\[/b\]", "</B>")
-	t = replacetext(t, "\[i\]", "<I>")
-	t = replacetext(t, "\[/i\]", "</I>")
-	t = replacetext(t, "\[u\]", "<U>")
-	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[large\]", "<font size=\"4\">")
-	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
-	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
-	t = replacetext(t, "\[img\]","<img src=\"")
-	t = replacetext(t, "\[/img\]", "\" />")
-	t = replacetext(t, "\[*\]", "<li>")
-	t = replacetext(t, "\[hr\]", "<HR>")
-	t = replacetext(t, "\[small\]", "<font size = \"1\">")
-	t = replacetext(t, "\[/small\]", "</font>")
-	t = replacetext(t, "\[list\]", "<ul>")
-	t = replacetext(t, "\[/list\]", "</ul>")
-	t = replacetext(t, "\[video\]", "<embed src=\"")
-	t = replacetext(t, "\[/video\]", "\" width=\"420\" height=\"344\" type=\"x-ms-wmv\" volume=\"85\" autoStart=\"0\" autoplay=\"true\" />")
-	t = "<font face=\"[deffont]\" color=[P.colour]>[t]</font>"
-
-//Count the fields
-	var/laststart = 1
-	while(1)
-		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
-		if(i==0)
-			break
-		laststart = i+1
-		fields++
-	return t
+/obj/item/weapon/nano_paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob)
+	var/is_nano_paper = 1
+	return P.Format(user,t,is_nano_paper)
 
 
 /obj/item/weapon/nano_paper/proc/openhelp(mob/user as mob)
