@@ -61,6 +61,7 @@
 		var/datum/mind/lenin = pick(antag_candidates)
 		antag_candidates -= lenin
 		head_revolutionaries += lenin
+		lenin.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		log_game("[lenin.key] (ckey) has been selected as a head rev")
 
 	if((head_revolutionaries.len < required_enemies)||(!head_check))

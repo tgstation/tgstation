@@ -64,6 +64,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			var/datum/mind/changeling = pick(antag_candidates)
 			antag_candidates -= changeling
 			changelings += changeling
+			changeling.assigned_role = "MODE" //So they aren't chosen for other jobs.
 			modePlayer += changelings
 		return 1
 	else

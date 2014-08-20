@@ -44,6 +44,7 @@ var/list/blob_nodes = list()
 		var/datum/mind/blob = pick(antag_candidates)
 		infected_crew += blob
 		blob.special_role = "Blob"
+		blob.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		log_game("[blob.key] (ckey) has been selected as a Blob")
 		antag_candidates -= blob
 
