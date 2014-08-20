@@ -114,32 +114,21 @@ var/list/sacrificed = list()
 			"<span class='danger'>You hear an anguished scream.</span>")
 			if(is_convertable_to_cult(M.mind))
 				if(jobban_isbanned(M, "Syndicate") || jobban_isbanned(M, "cultist"))
-					M.visible_message("<span class='warning'>A horrified look flashes across [M]'s face before their body goes limp.", \
+					M.visible_message("<span class='warning'>[M] screams horrifically before falling limp, his mind clearly broken by something he saw.", \
 					"<span class='userdanger'>You are currently jobbanned from Cultist.</span>")
 					M.ghostize(0) //Jobbanned players are force ghosted
-					var/obj/item/weapon/paper/talisman/supply/recompense = new //Cultists are recompensated for the failed convert
-					recompense.uses = 1
-					return 0
-				ticker.mode.add_cultist(M.mind)
-				M.mind.special_role = "Cultist"
-				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-				M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-/*//convert no longer gives words
-				//picking which word to use
-				if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
-					var/convert_word
-					for(var/i=1, i<=3, i++)
-						convert_word = pick(ticker.mode.grantwords)
-						if(convert_word in usr.mind.cult_words)
-							if(i==3) convert_word = null				//NOTE: If max loops is changed ensure this condition is changed to match /Mal
-						else
-							break
-					if(!convert_word)
-						usr << "\red This Convert was unworthy of knowledge of the other side!"
+					var/client/C = pick_from_candidates(BE_CULTIST) //Try to find a suitable observer to replace the jobbanned player
+					if(C)
+						M.key = C.key
+						M << "<span class='warning'>Who are you? How did you get here? You can't seem to remember anything but...</span>"
 					else
-						usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
-						ticker.mode.grant_runeword(usr, convert_word)
-					return 1		*/
+						M.resting = 0
+				if(M.key)
+					ticker.mode.add_cultist(M.mind)
+					M.mind.special_role = "Cultist"
+					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
+					M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+
 			else
 				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 				M << "<font color=\"red\"><b>And not a single fuck was given, exterminate the cult at all costs.</b></font>"

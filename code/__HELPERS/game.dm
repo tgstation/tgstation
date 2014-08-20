@@ -305,10 +305,29 @@ proc/isInSight(var/atom/A, var/atom/B)
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client != null)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-					if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
+					if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag) && !jobban_isbanned(G, get_roletext(be_special_flag)))
 						candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
+
+/proc/pick_from_candidates(be_special_flag=0)
+	var/list/candidates = get_candidates(be_special_flag)
+	if(candidates.len)
+		var/client/C = pick(candidates)
+		return C
+	return 0 //Unable to find a valid candidate
+
+/proc/get_roletext(role) //Translates role flag to role text
+	var/roletext
+	switch(role)
+		if(BE_CHANGELING)	roletext="changeling"
+		if(BE_TRAITOR)		roletext="traitor"
+		if(BE_OPERATIVE)	roletext="operative"
+		if(BE_WIZARD)		roletext="wizard"
+		if(BE_REV)			roletext="revolutionary"
+		if(BE_CULTIST)		roletext="cultist"
+		if(BE_MONKEY)		roletext="monkey"
+	return roletext
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))	O = new /obj/screen/text()

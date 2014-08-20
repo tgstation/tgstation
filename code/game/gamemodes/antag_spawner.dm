@@ -53,10 +53,9 @@
 			if (used)
 				H << "You already used this contract!"
 				return
-			var/list/candidates = get_candidates(BE_WIZARD)
-			if(candidates.len)
+			var/client/C = pick_from_candidates(BE_WIZARD)
+			if(C)
 				src.used = 1
-				var/client/C = pick(candidates)
 				spawn_antag(C, get_turf(H.loc), href_list["school"])
 			else
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
@@ -126,10 +125,9 @@
 	if(used)
 		user << "The teleporter is out of power."
 		return
-	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
-	if(borg_candicates.len > 0)
+	var/client/C = pick_from_candidates(BE_OPERATIVE)
+	if(C)
 		used = 1
-		var/client/C = pick(borg_candicates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
 	else
 		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"

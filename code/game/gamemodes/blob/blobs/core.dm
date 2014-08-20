@@ -72,12 +72,9 @@
 		qdel(overmind)
 
 	var/client/C = null
-	var/list/candidates = list()
 
 	if(!new_overmind)
-		candidates = get_candidates(BE_BLOB)
-		if(candidates.len)
-			C = pick(candidates)
+		C = pick_from_candidates(BE_BLOB)
 	else
 		C = new_overmind
 
