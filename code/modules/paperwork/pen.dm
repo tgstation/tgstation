@@ -66,7 +66,7 @@
 	addReplacement(REG_BBTAG("/small"), "</font>")
 	addReplacement(REG_BBTAG("list"), "<ul>")
 	addReplacement(REG_BBTAG("/list"), "</ul>")
-
+	// : is our delimiter, gi = global search, case-insensitive.
 	addExpression(":"+REG_BBTAG("img")+"("+REG_NOTBB+")"+REG_BBTAG("/img")+":gi", ACT_BBCODE_IMG,list())
 
 	..() // Order of operations
