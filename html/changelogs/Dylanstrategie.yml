@@ -1,3 +1,3 @@
 author: Dylanstrategie
 changes:
-  - wip: Meteor gamemode is being reworked. A lot of elements have changed, notably concerning the way the round runs
+  - tweak: Changed the way mops function. They notably now correctly use their reagents and can be used on people

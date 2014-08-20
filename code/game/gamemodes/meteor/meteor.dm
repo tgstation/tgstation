@@ -29,7 +29,7 @@
 		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
 			rcd.disabled = 1
 		spawn(100) //Panic interval
-		emergency_shuttle.incall(2.5)
+		emergency_shuttle.incall(3.5)
 		captain_announce("A backup emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 		world << sound('sound/AI/shuttlecalled.ogg')
 
@@ -133,8 +133,6 @@
 			new /obj/item/weapon/storage/toolbox/electrical(buildkit.loc)
 			new /obj/item/weapon/storage/toolbox/mechanical(buildkit.loc)
 			new /obj/item/clothing/head/welding(buildkit.loc)
-			new /obj/item/weapon/grenade/chem_grenade/metalfoam(buildkit.loc) //Useful for sealing breaches in a pinch
-			new /obj/item/weapon/grenade/chem_grenade/metalfoam(buildkit.loc)
 			new /obj/item/device/multitool(buildkit.loc)
 			//Sometimes you just need to eat
 			for(var/atom/A in get_turf(pizzakit))
