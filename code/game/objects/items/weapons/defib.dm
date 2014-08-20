@@ -163,12 +163,18 @@
 				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
 				M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
 				var/datum/organ/external/temp = H.get_organ("head")
-				if(H.health > -100 && !(temp.status & ORGAN_DESTROYED) && !(M_NOCLONE in H.mutations) && !H.suiciding && (H.brain_op_stage < 4))
+				if(H.health > config.health_threshold_dead && !(temp.status & ORGAN_DESTROYED) && !(M_NOCLONE in H.mutations) && !H.suiciding && (H.brain_op_stage < 4))
 					viewers(M) << "<span class='notice'>[src] beeps: Resuscitation successful.</span>"
 					spawn(0)
-						H.stat = 1
-						dead_mob_list -= H
-						living_mob_list |= list(H)
+						if(H.stat == 2)
+							dead_mob_list -= H
+							living_mob_list += H
+							H.tod = null
+
+							// restore us to conciousness
+							H.stat = CONSCIOUS
+							H.regenerate_icons()
+							H.update_canmove()
 						flick("e_flash", M.flash)
 						H.apply_effect(10, EYE_BLUR)
 						H.apply_effect(10, PARALYZE)
