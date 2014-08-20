@@ -228,9 +228,6 @@
 
 		t = replacetext(t, "\n", "<BR>")
 
-		if(findtext(t,"\[img]"))
-			message_admins("[key_name_admin(usr)] added an image to [src] at [formatJumpTo(get_turf(src))]")
-
 		if(istype(i,/obj/item/weapon/pen))
 			//t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 			var/obj/item/weapon/pen/P=i

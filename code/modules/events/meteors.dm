@@ -14,7 +14,7 @@
 
 /datum/event/meteor_wave/tick()
 	if(IsMultiple(activeFor, 3))
-		spawn_meteors(rand(2,5))
+		meteor_wave(rand(2,5))
 
 /datum/event/meteor_wave/end()
 	command_alert("The station has cleared the meteor storm.", "Meteor Alert")
@@ -35,7 +35,7 @@
 //meteor showers are lighter and more common,
 /datum/event/meteor_shower/tick()
 	if(activeFor >= next_meteor)
-		spawn_meteors(rand(1,4))
+		meteor_wave(rand(1,4))
 		next_meteor += rand(20,100)
 		waves--
 		if(waves <= 0)
