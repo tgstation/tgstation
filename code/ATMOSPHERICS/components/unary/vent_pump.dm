@@ -301,7 +301,7 @@
 	else
 		return ..()
 
-/obj/machinery/atmospherics/unary/vent_pump/examine()
+/obj/machinery/atmospherics/unary/vent_pump/examine(mob/user)
 	..()
 	if(welded)
 		user << "It seems welded shut."

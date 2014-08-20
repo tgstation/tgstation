@@ -87,22 +87,6 @@
 
 	return
 
-/obj/item/weapon/reagent_containers/food/drinks/examine()
-	set src in view()
-	..()
-	if (!(usr in range(0)) && usr!=src.loc) return
-	if(!reagents || reagents.total_volume==0)
-		usr << "<span class='notice'>\The [src] is empty!</span>"
-	else if (reagents.total_volume<=src.volume/4)
-		usr << "<span class='notice'>\The [src] is almost empty!</span>"
-	else if (reagents.total_volume<=src.volume*0.66)
-		usr << "<span class='notice'>\The [src] is half full!</span>"
-	else if (reagents.total_volume<=src.volume*0.90)
-		usr << "<span class='notice'>\The [src] is almost full!</span>"
-	else
-		usr << "<span class='notice'>\The [src] is full!</span>"
-
-
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////

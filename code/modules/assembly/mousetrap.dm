@@ -7,7 +7,7 @@
 	var/armed = 0
 
 
-/obj/item/device/assembly/mousetrap/examine()
+/obj/item/device/assembly/mousetrap/examine(mob/user)
 	..()
 	if(armed)
 		user << "It looks like it's armed."

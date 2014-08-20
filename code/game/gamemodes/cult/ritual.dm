@@ -99,7 +99,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 
 /obj/effect/rune
-	desc = ""
+	desc = "A strange collection of symbols drawn in blood."
 	anchored = 1
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
@@ -146,15 +146,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	for(var/mob/living/silicon/ai/AI in player_list)
 		AI.client.images += blood
 
-/obj/effect/rune/examine()
-	..()	if(iscultist(user))
+/obj/effect/rune/examine(mob/user)
+	..()
+	if(iscultist(user))
 		user << "This spell circle reads: <i>[word1] [word2] [word3]</i>."
-	if(!desc)
-		usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
-	else
-		usr << "Explosive Runes inscription in blood. It reads: <i>[desc]</i>."
 
-	return
 
 
 /obj/effect/rune/attackby(I as obj, user as mob)
@@ -337,6 +333,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 /obj/item/weapon/tome
 	name = "arcane tome"
+	desc = "An old, dusty tome with frayed edges and a sinister looking cover."
 	icon_state ="tome"
 	throw_speed = 2
 	throw_range = 5
@@ -683,12 +680,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		user << "You copy the translation notes from your tome."
 
 
-/obj/item/weapon/tome/examine()
-		..()
-		if(!iscultist(user))
-			user << "An old, dusty tome with frayed edges and a sinister looking cover."
-		else
-			user << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of."
+/obj/item/weapon/tome/examine(mob/user)
+	..()
+	if(iscultist(user))
+		user << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of."
 
 /obj/item/weapon/tome/imbued //admin tome, spawns working runes without waiting
 	w_class = 2.0

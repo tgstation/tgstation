@@ -54,7 +54,7 @@
 		the_disk = locate()
 	point_at(the_disk)
 
-/obj/item/weapon/pinpointer/examine()
+/obj/item/weapon/pinpointer/examine(mob/user)
 	..()
 	for(var/obj/machinery/nuclearbomb/bomb in world)
 		if(bomb.timing)

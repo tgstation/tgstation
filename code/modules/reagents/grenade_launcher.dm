@@ -12,7 +12,7 @@
 	var/max_grenades = 3
 	m_amt = 2000
 
-/obj/item/weapon/gun/grenadelauncher/examine()
+/obj/item/weapon/gun/grenadelauncher/examine(mob/user)
 	..()
 	user << "[grenades] / [max_grenades] grenades loaded."
 

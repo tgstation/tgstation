@@ -27,7 +27,7 @@
 		overlays  += "sheater-open"
 	return
 
-/obj/machinery/space_heater/examine()
+/obj/machinery/space_heater/examine(mob/user)
 
 	..()
 	user << "The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."

@@ -42,7 +42,7 @@
 	else
 		return 1
 
-/obj/item/weapon/airlock_painter/examine()
+/obj/item/weapon/airlock_painter/examine(mob/user)
 	..()
 	if(!ink)
 		user << "<span class='notice'>It doesn't have a toner cardridge installed.</span>"

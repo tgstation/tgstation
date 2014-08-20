@@ -124,13 +124,12 @@
 	return
 
 
-/obj/item/device/assembly/examine()
+/obj/item/device/assembly/examine(mob/user)
 	..()
-	if((in_range(src, user) || loc == user))
-		if(secured)
-			user << "\The [src] is secured and ready to be used."
-		else
-			user << "\The [src] can be attached to other things."
+	if(secured)
+		user << "\The [src] is secured and ready to be used."
+	else
+		user << "\The [src] can be attached to other things."
 
 
 /obj/item/device/assembly/attack_self(mob/user as mob)

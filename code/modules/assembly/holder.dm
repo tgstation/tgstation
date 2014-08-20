@@ -57,13 +57,12 @@
 		master.update_icon()
 
 
-/obj/item/device/assembly_holder/examine()
+/obj/item/device/assembly_holder/examine(mob/user)
 	..()
-	if ((in_range(src, user) || src.loc == user))
-		if(secured)
-			user << "\The [src] is secured and ready to be used."
-		else
-			user << "\The [src] can be attached to other things."
+	if(secured)
+		user << "\The [src] is secured and ready to be used."
+	else
+		user << "\The [src] can be attached to other things."
 
 
 

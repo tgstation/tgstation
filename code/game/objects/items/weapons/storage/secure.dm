@@ -27,7 +27,7 @@
 	max_w_class = 2
 	max_combined_w_class = 14
 
-/obj/item/weapon/storage/secure/examine()
+/obj/item/weapon/storage/secure/examine(mob/user)
 	..()
 	user << text("The service panel is [src.open ? "open" : "closed"].")
 

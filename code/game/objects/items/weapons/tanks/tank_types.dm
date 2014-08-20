@@ -23,7 +23,7 @@
 	return
 
 
-/obj/item/weapon/tank/oxygen/examine()
+/obj/item/weapon/tank/oxygen/examine(mob/user)
 	..()
 	if(air_contents.oxygen < 10)
 		user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
@@ -69,7 +69,7 @@
 	icon_state = "oxygen"
 
 
-/obj/item/weapon/tank/air/examine()
+/obj/item/weapon/tank/air/examine(mob/user)
 	..()
 	if(air_contents.oxygen < 1 && loc==user)
 		user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
@@ -139,7 +139,7 @@
 	return
 
 
-/obj/item/weapon/tank/emergency_oxygen/examine()
+/obj/item/weapon/tank/emergency_oxygen/examine(mob/user)
 	..()
 	if(air_contents.oxygen < 0.2 && loc==user)
 		user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")

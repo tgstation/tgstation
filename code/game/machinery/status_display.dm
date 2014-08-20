@@ -122,7 +122,7 @@
 					line1 = ""
 			update_display(line1, line2)
 
-/obj/machinery/status_display/examine()
+/obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	switch(mode)
 		if(1,2,4)

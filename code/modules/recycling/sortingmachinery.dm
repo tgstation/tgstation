@@ -161,7 +161,7 @@
 	return
 
 
-/obj/item/weapon/packageWrap/examine()
+/obj/item/weapon/packageWrap/examine(mob/user)
 	..()
 	user << "<span class='notice'>There are [amount] units of package wrap left.</span>"
 
