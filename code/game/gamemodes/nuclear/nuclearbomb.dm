@@ -1,7 +1,7 @@
 var/bomb_set
 
 /obj/machinery/nuclearbomb
-	name = "\improper Nuclear Fission Explosive"
+	name = "nuclear fission explosive"
 	desc = "Uh oh. RUN!!!!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
@@ -46,6 +46,9 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
+
+/obj/machinery/nuclearbomb/attack_ai(mob/user as mob)
+	return
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user as mob)
 	user.set_machine(src)
@@ -210,9 +213,32 @@ var/bomb_set
 				return
 	return
 
+
+//==========DAT FUKKEN DISK===============
+/obj/item/weapon/disk/nuclear
+	name = "nuclear authentication disk"
+	desc = "Better keep this safe."
+	icon_state = "nucleardisk"
+	item_state = "card-id"
+	w_class = 1.0
+
+/obj/item/weapon/disk/nuclear/New()
+	..()
+	processing_objects.Add(src)
+
+/obj/item/weapon/disk/nuclear/process()
+	var/turf/disk_loc = get_turf(src)
+	if(disk_loc.z > 2)
+		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		Destroy()
+
 /obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
-		loc = pick(blobstart)
-		message_admins("[src] has been destroyed.  Moving it to ([x], [y], [z]).")
-		log_game("[src] has been destroyed.  Moving it to ([x], [y], [z]).")
+		var/obj/item/weapon/disk/nuclear/NEWDISK = new(pick(blobstart))
+		transfer_fingerprints_to(NEWDISK)
+		message_admins("[src] has been destroyed.  Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
+		log_game("[src] has been destroyed.  Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
+		del(src) //Needed to clear all references to it
+	else
+		ERROR("[src] was supposed to be destroyed, but we were unable to locate a blobstart landmark to spawn a new one.")
 	return 1 // Cancel destruction.

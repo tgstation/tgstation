@@ -20,7 +20,8 @@
 	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
-	var/mutantrace = null  //The type of mutant race the player is if applicable (i.e. potato-man)
+	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
+	var/mutant_color = "FFF"		 // What color you are if you have certain speciess
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 
 /datum/dna/proc/generate_uni_identity(mob/living/carbon/character)
@@ -30,6 +31,8 @@
 		L[DNA_GENDER_BLOCK] = construct_block((character.gender!=MALE)+1, 2)
 		if(istype(character, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = character
+			if(!H.dna.species)
+				H.dna.species = new /datum/species/human()
 			L[DNA_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len)
 			L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
 			L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
@@ -62,11 +65,17 @@
 		. += repeat_string(DNA_UNIQUE_ENZYMES_LEN, "0")
 	return .
 
-/proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, mutantrace, blood_type)
+/proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor)
 	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
 		return
 	if(!owner.dna)
-		create_dna(owner)
+		create_dna(owner, mrace)
+
+	if(mrace)
+		owner.dna.species = new mrace()
+
+	if(mcolor)
+		owner.dna.mutant_color = mcolor
 
 	if(real_name)
 		owner.real_name = real_name
@@ -79,18 +88,13 @@
 		owner.dna.uni_identity = ui
 		updateappearance(owner)
 
-	var/update_mutantrace = (mutantrace != owner.dna.mutantrace)
-	owner.dna.mutantrace = mutantrace
-	if(update_mutantrace && istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = owner
-		H.update_body()
-		H.update_hair()
-
 	if(se)
 		owner.dna.struc_enzymes = se
 		domutcheck(owner)
 
 	check_dna_integrity(owner)
+
+	owner.regenerate_icons()
 	return
 
 /proc/check_dna_integrity(mob/living/carbon/character)
@@ -122,8 +126,9 @@
 	character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
 	return character.dna
 
-/proc/create_dna(mob/living/carbon/C) //don't use this unless you're about to use hardset_dna or ready_dna
+/proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
 	C.dna = new /datum/dna()
+	if(S)	C.dna.species = new S()	// do not remove; this is here to prevent runtimes
 
 /////////////////////////// DNA DATUM
 
@@ -422,7 +427,8 @@
 					for(var/mob/dead/observer/ghost in player_list)
 						if(ghost.mind == occupant.mind)
 							if(ghost.can_reenter_corpse)
-								ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+								ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Return to your body if you want to be cloned!</span> (Verbs -> Ghost -> Re-enter corpse)"
+								ghost << sound('sound/effects/genetics.ogg')
 							break
 
 		return 1
@@ -480,8 +486,6 @@
 	qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
-	if(..())
-		return
 	toggle_open(user)
 	add_fingerprint(user)
 
@@ -981,7 +985,7 @@ proc/deconstruct_block(value, values, blocksize=DNA_BLOCK_SIZE)
 
 /datum/dna/proc/is_same_as(var/datum/dna/D)
 	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
-		if(mutantrace == D.mutantrace && blood_type == D.blood_type)
+		if(species == D.species && mutant_color == D.mutant_color && blood_type == D.blood_type)
 			return 1
 	return 0
 

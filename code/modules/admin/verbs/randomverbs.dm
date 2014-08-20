@@ -423,23 +423,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
 	if(confirm == "Yes")
-		priority_announce(input, null, 'sound/AI/commandreport.ogg');
-		for (var/obj/machinery/computer/communications/C in machines)
-			if(! (C.stat & (BROKEN|NOPOWER) ) )
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
-				P.name = "paper- '[command_name()] Update.'"
-				P.info = input
-				C.messagetitle.Add("[command_name()] Update")
-				C.messagetext.Add(P.info)
+		priority_announce(input, null, 'sound/AI/commandreport.ogg')
 	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg');
-		for (var/obj/machinery/computer/communications/C in machines)
-			if(! (C.stat & (BROKEN|NOPOWER) ) )
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
-				P.name = "paper- 'Classified [command_name()] Update.'"
-				P.info = input
-				C.messagetitle.Add("Classified [command_name()] Update")
-				C.messagetext.Add(P.info)
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
+
+	print_command_report(input,"[confirm=="Yes" ? "" : "Classified"] [command_name()] Update")
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report", 1)
@@ -594,7 +582,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			return
 		if(M)
 			AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
-			M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+			M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason]</B></BIG>"
 			M << "\red This is a temporary ban, it will be removed in [mins] minutes."
 			M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
 			log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
@@ -609,7 +597,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(!reason)
 			return
 		AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-		M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+		M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason]</B></BIG>"
 		M << "\red This is a permanent ban."
 		M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
 		log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")

@@ -229,7 +229,7 @@
 			if("coffee")			M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
 			if("parrot")			M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
 			if("polyparrot")		M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
-			if("constructarmoured")	M.change_mob_type( /mob/living/simple_animal/construct/armoured , null, null, delmob )
+			if("constructarmored")	M.change_mob_type( /mob/living/simple_animal/construct/armored , null, null, delmob )
 			if("constructbuilder")	M.change_mob_type( /mob/living/simple_animal/construct/builder , null, null, delmob )
 			if("constructwraith")	M.change_mob_type( /mob/living/simple_animal/construct/wraith , null, null, delmob )
 			if("shade")				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
@@ -248,9 +248,6 @@
 			else
 				alert(usr, "This ban has already been lifted / does not exist.", "Error", "Ok")
 				unbanpanel()
-
-	else if(href_list["warn"])
-		usr.client.warn(href_list["warn"])
 
 	else if(href_list["unbane"])
 		if(!check_rights(R_BAN))	return
@@ -810,7 +807,7 @@
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
 				ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
-				M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+				M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason]</B></BIG>"
 				M << "\red This is a temporary ban, it will be removed in [mins] minutes."
 				feedback_inc("ban_tmp",1)
 				DB_ban_record(BANTYPE_TEMP, M, mins, reason)
@@ -834,7 +831,7 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-				M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+				M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason]</B></BIG>"
 				M << "\red This is a permanent ban."
 				if(config.banappeals)
 					M << "\red To try to resolve this matter head to [config.banappeals]"
@@ -972,6 +969,25 @@
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins("\blue [key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]")
 
+	else if(href_list["sendtoprison"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/mob/M = locate(href_list["sendtoprison"])
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob"
+			return
+		if(istype(M, /mob/living/silicon/ai))
+			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
+			return
+
+		if(alert(usr, "Send [key_name(M)] to Prison?", "Message", "Yes", "No") != "Yes")
+			return
+
+		M.loc = pick(prisonwarp)
+		M << "\blue You have been sent to Prison!"
+
+		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
+		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!", 1)
 	else if(href_list["tdome1"])
 		if(!check_rights(R_FUN))	return
 
@@ -1584,13 +1600,6 @@
 				usr.client.triple_ai()
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","TriAI")
-			if("gravity")
-				alert("WIP - event unavailable")
-/*				E = new /datum/round_event/weightless()
-				log_admin("[key_name(usr)] triggered a gravity-failure event.", 1)
-				message_admins("\blue [key_name_admin(usr)] triggered a gravity-failure event.", 1)
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","Grav")	*/
 			if("power")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","P")
@@ -1677,10 +1686,11 @@
 				log_admin("[key_name(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]")
 
 			if("wave")
+				var/should_announce = alert(usr, "Meteors will be spawned. Would you like to make an announcement?", "Message", "Yes", "No") == "Yes"
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","MW")
 				message_admins("[key_name_admin(usr)] has spawned meteors")
-				E = new /datum/round_event/meteor_wave()
+				E = new /datum/round_event/meteor_wave(should_announce)
 			if("gravanomalies")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","GA")
@@ -1933,15 +1943,22 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShM")
 				var/datum/shuttle_manager/s = shuttles["mining"]
-				if(istype(s)) s.move_shuttle()
-				message_admins("\blue [key_name_admin(usr)] moved mining shuttle", 1)
+				if(istype(s)) s.move_shuttle(0)
+				message_admins("[key_name_admin(usr)] moved mining shuttle", 1)
 				log_admin("[key_name(usr)] moved the mining shuttle")
+			if("movelaborshuttle")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","ShL")
+				var/datum/shuttle_manager/s = shuttles["laborcamp"]
+				if(istype(s)) s.move_shuttle(0)
+				message_admins("[key_name_admin(usr)] moved labor shuttle", 1)
+				log_admin("[key_name(usr)] moved the labor shuttle")
 			if("moveferry")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShF")
 				var/datum/shuttle_manager/s = shuttles["ferry"]
-				if(istype(s)) s.move_shuttle()
-				message_admins("\blue [key_name_admin(usr)] moved the centcom ferry", 1)
+				if(istype(s)) s.move_shuttle(0)
+				message_admins("[key_name_admin(usr)] moved the centcom ferry", 1)
 				log_admin("[key_name(usr)] moved the centcom ferry")
 			if("kick_all_from_lobby")
 				if(ticker && ticker.current_state == GAME_STATE_PLAYING)

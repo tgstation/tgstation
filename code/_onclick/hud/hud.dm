@@ -298,7 +298,7 @@ datum/hud/New(mob/owner)
 	if(hud_used && client)
 		if(ishuman(src))
 			hud_used.show_hud() //Shows the next hud preset
-			usr << "<span class ='info'>Switched HUD mode.</span>"
+			usr << "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>"
 		else
 			usr << "<span class ='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>"
 	else

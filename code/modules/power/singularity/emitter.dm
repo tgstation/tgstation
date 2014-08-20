@@ -37,7 +37,6 @@
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
-		src.directwired = 1
 
 /obj/machinery/power/emitter/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
@@ -109,6 +108,8 @@
 				powered = 0
 				update_icon()
 				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+				log_game("Emitter lost power in ([x],[y],[z])")
+				message_admins("Emitter lost power in ([x],[y],[z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			return
 
 		src.last_shot = world.time
@@ -185,7 +186,6 @@
 						state = 2
 						user << "You weld the [src] to the floor."
 						connect_to_network()
-						src.directwired = 1
 				else
 					user << "\red You need more welding fuel to complete this task."
 			if(2)
@@ -199,7 +199,6 @@
 						state = 1
 						user << "You cut the [src] free from the floor."
 						disconnect_from_network()
-						src.directwired = 0
 				else
 					user << "\red You need more welding fuel to complete this task."
 		return

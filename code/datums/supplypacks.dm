@@ -149,7 +149,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
-					/obj/item/weapon/pen/paralysis,
+					/obj/item/weapon/pen/sleepy,
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
 	cost = 20
 	containertype = /obj/structure/closet/crate
@@ -899,7 +899,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "water tank crate"
 
 /datum/supply_packs/misc/lasertag
-	name = "LaserTag Crate"
+	name = "Laser Tag Crate"
 	contains = list(/obj/item/weapon/gun/energy/laser/redtag,
 					/obj/item/weapon/gun/energy/laser/redtag,
 					/obj/item/weapon/gun/energy/laser/redtag,
@@ -915,7 +915,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/helmet/redtaghelm,
 					/obj/item/clothing/head/helmet/bluetaghelm)
 	cost = 15
-	containername = "LaserTag Crate"
+	containername = "laser tag crate"
 
 /datum/supply_packs/misc/religious_supplies
 	name = "Religious Supplies Crate"
@@ -1018,7 +1018,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/mask/gas/clown_hat,
 					/obj/item/clothing/under/rank/clown,
 					/obj/item/weapon/bikehorn,
-					/obj/item/clothing/under/mime,
+					/obj/item/clothing/under/rank/mime,
 					/obj/item/clothing/shoes/sneakers/black,
 					/obj/item/clothing/gloves/white,
 					/obj/item/clothing/mask/gas/mime,
@@ -1064,7 +1064,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/collectable/petehat)
 	name = "Collectable hat crate!"
 	cost = 200
-	containername = "Collectable hats crate! Brought to you by Bass.inc!"
+	containername = "collectable hats crate! Brought to you by Bass.inc!"
 
 /datum/supply_packs/misc/randomised/New()
 	manifest += "Contains any [num_contained] of:"

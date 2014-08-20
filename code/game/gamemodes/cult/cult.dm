@@ -34,8 +34,6 @@
 	uplink_uses = 10
 
 	var/finished = 0
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/list/startwords = list("blood","join","self","hell")
 	var/list/secondwords = list("travel", "see", "tech", "destroy", "other", "hide")
@@ -108,9 +106,6 @@
 		cult_mind.current << "\blue You are a member of the cult!"
 		memorize_cult_objectives(cult_mind)
 		cult_mind.special_role = "Cultist"
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
 	..()
 
 

@@ -109,7 +109,7 @@
 			R.add_fingerprint(user)
 		qdel(src)
 	else
-		user.changeNext_move(8)
+		user.changeNext_move(CLICK_CD_MELEE)
 		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
 		add_fingerprint(user)
 		playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
@@ -122,7 +122,7 @@
 /obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	health -= damage
 	if(health <= 0)
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
@@ -191,7 +191,7 @@
 		qdel(src)
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
-			user.changeNext_move(8)
+			user.changeNext_move(CLICK_CD_MELEE)
 			hit(I.force)
 			if(health <= 7)
 				anchored = 0
@@ -220,15 +220,19 @@
 			var/index = null
 			index = 0
 			while(index < 2)
-				new /obj/item/weapon/shard(loc)
-				if(reinf) new /obj/item/stack/rods(loc)
+				spawnfragments()
 				index++
 		else
-			new /obj/item/weapon/shard(loc)
-			if(reinf) new /obj/item/stack/rods(loc)
+			spawnfragments()
 		qdel(src)
 		return
 
+/obj/structure/window/proc/spawnfragments()
+	var/newshard = new /obj/item/weapon/shard(loc)
+	transfer_fingerprints_to(newshard)
+	if(reinf)
+		var/newrods = new /obj/item/stack/rods(loc)
+		transfer_fingerprints_to(newrods)
 
 /obj/structure/window/verb/rotate()
 	set name = "Rotate Window Counter-Clockwise"

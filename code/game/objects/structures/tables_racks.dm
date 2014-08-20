@@ -103,6 +103,32 @@
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 20
 
+/datum/table_recipe/meteorshot
+	name = "Meteorshot Shell"
+	result_path = /obj/item/ammo_casing/shotgun/meteorshot
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/rcd_ammo = 1,
+				/obj/item/weapon/stock_parts/manipulator = 2)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/pulseslug
+	name = "Pulse Slug Shell"
+	result_path = /obj/item/ammo_casing/shotgun/pulseslug
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/stock_parts/capacitor/adv = 2,
+				/obj/item/weapon/stock_parts/micro_laser/ultra = 1)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/dragonsbreath
+	name = "Dragonsbreath Shell"
+	result_path = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/datum/reagent/phosphorus = 5,)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
 
 /obj/structure/table
 	name = "table"
@@ -521,6 +547,8 @@
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(locate(/obj/structure/table) in get_turf(mover))
+		return 1
 	else
 		return 0
 
@@ -559,16 +587,16 @@
 	if (istype(I, /obj/item/weapon/wrench))
 		table_destroy(2, user)
 		return
-	
+
 	if (istype(I, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
 			var/list/obj/item/oldContents = T.contents.Copy()
 			T.quick_empty()
-			
+
 			for(var/obj/item/C in oldContents)
 				C.loc = src.loc
-			
+
 			user.visible_message("<span class='notice'>[user] empties [I] on [src].</span>")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)

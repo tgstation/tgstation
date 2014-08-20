@@ -39,35 +39,40 @@
 
 /obj/machinery/suit_storage_unit/captain
 	SUIT_TYPE = /obj/item/clothing/suit/space/captain
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/capspace
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/captain
 	MASK_TYPE = /obj/item/clothing/mask/gas
 	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen
 
 /obj/machinery/suit_storage_unit/engine
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/ce
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/elite
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/elite
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/elite
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/elite
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	STORAGE_TYPE= /obj/item/clothing/shoes/magboots/advance
 
 /obj/machinery/suit_storage_unit/security
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/security
 	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
 
 /obj/machinery/suit_storage_unit/atmos
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/atmos
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/atmos
 	MASK_TYPE = /obj/item/clothing/mask/gas
 	STORAGE_TYPE = /obj/item/weapon/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/mining
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/mining
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/mining
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/mining
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/cmo
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/medical
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/medical
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/New()

@@ -234,8 +234,22 @@
 			used += master.used_environ
 		if(TOTAL)
 			used += master.used_light + master.used_equip + master.used_environ
-
+		if(STATIC_EQUIP)
+			used += master.static_equip
+		if(STATIC_LIGHT)
+			used += master.static_light
+		if(STATIC_ENVIRON)
+			used += master.static_environ
 	return used
+
+/area/proc/addStaticPower(value, powerchannel)
+	switch(powerchannel)
+		if(STATIC_EQUIP)
+			static_equip += value
+		if(STATIC_LIGHT)
+			static_light += value
+		if(STATIC_ENVIRON)
+			static_environ += value
 
 /area/proc/clear_usage()
 
@@ -286,9 +300,10 @@
 /area/proc/mob_activate(var/mob/living/L)
 	return
 
-/proc/has_gravity(var/atom/AT)
-	var/area/A = get_area(AT)
-	var/turf/T = get_turf(AT)
+/proc/has_gravity(atom/AT, turf/T)
+	if(!T)
+		T = get_turf(AT)
+	var/area/A = get_area(T)
 	if(istype(T, /turf/space)) // Turf never has gravity
 		return 0
 	else if(A && A.has_gravity) // Areas which always has gravity
@@ -298,3 +313,34 @@
 		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
 			return 1
 	return 0
+
+/area/proc/clear_docking_area()
+	var/list/dstturfs = list()
+	var/throwy = world.maxy
+
+	for(var/turf/T in src)
+		dstturfs += T
+		if(T.y < throwy)
+			throwy = T.y
+
+	// hey you, get out of the way!
+	for(var/turf/T in dstturfs)
+		// find the turf to move things to
+		var/turf/D = locate(T.x, throwy - 1, T.z)
+		for(var/atom/movable/AM as mob|obj in T)
+			//mobs take damage
+			if(istype(AM, /mob/living))
+				var/mob/living/living_mob = AM
+				living_mob.Paralyse(10)
+				living_mob.take_organ_damage(80)
+				living_mob.anchored = 0 //Unbuckle them so they can be moved
+			//Anything not bolted down is moved, everything else is destroyed
+			if(!AM.anchored)
+				AM.Move(D)
+			else
+				qdel(AM)
+		if(istype(T, /turf/simulated))
+			del(T)
+
+	for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
+		qdel(bug)

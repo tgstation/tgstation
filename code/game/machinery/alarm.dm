@@ -6,26 +6,29 @@
 	var/min1
 	var/max1
 	var/max2
-	New(_min2 as num, _min1 as num, _max1 as num, _max2 as num)
-		min2 = _min2
-		min1 = _min1
-		max1 = _max1
-		max2 = _max2
-	proc/get_danger_level(curval as num)
-		if (max2 >=0 && curval>=max2)
-			return 2
-		if (min2 >=0 && curval<=min2)
-			return 2
-		if (max1 >=0 && curval>=max1)
-			return 1
-		if (min1 >=0 && curval<=min1)
-			return 1
-		return 0
-	proc/CopyFrom(datum/tlv/other)
-		min2 = other.min2
-		min1 = other.min1
-		max1 = other.max1
-		max2 = other.max2
+
+/datum/tlv/New(_min2 as num, _min1 as num, _max1 as num, _max2 as num)
+	min2 = _min2
+	min1 = _min1
+	max1 = _max1
+	max2 = _max2
+
+/datum/tlv/proc/get_danger_level(curval as num)
+	if (max2 >=0 && curval>=max2)
+		return 2
+	if (min2 >=0 && curval<=min2)
+		return 2
+	if (max1 >=0 && curval>=max1)
+		return 1
+	if (min1 >=0 && curval<=min1)
+		return 1
+	return 0
+
+/datum/tlv/proc/CopyFrom(datum/tlv/other)
+	min2 = other.min2
+	min1 = other.min1
+	max1 = other.max1
+	max2 = other.max2
 
 #define AALARM_MODE_SCRUBBING 1
 #define AALARM_MODE_VENTING 2 //makes draught
@@ -807,20 +810,17 @@ table tr:first-child th:first-child { border: none;}
 
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
-				if(cable.amount < 5)
-					user << "You need more cable!"
+				if(cable.get_amount() < 5)
+					user << "<span class='warning'>You need five lengths of cable to wire the fire alarm.</span>"
 					return
-
-				user << "You start wiring the air alarm!"
-				spawn(20)
-					cable.amount -= 5
-					if(!cable.amount)
-						qdel(cable)
-
-					user << "You wire the air alarm!"
-					wires.wires_status = 0
-					buildstage = 2
-					update_icon()
+				user << "<span class='notice'>You start wiring the air alarm.</span>"
+				if (do_after(user, 20))
+					if (cable.get_amount() >= 5 && buildstage == 1)
+						cable.use(5)
+						user << "<span class='notice'>You wire the air alarm.</span>"
+						wires.wires_status = 0
+						buildstage = 2
+						update_icon()
 				return
 		if(0)
 			if(istype(W, /obj/item/weapon/airalarm_electronics))
@@ -999,13 +999,11 @@ FIRE ALARM
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
-					if(coil.amount < 5)
+					if(coil.get_amount() < 5)
 						user << "<span class='warning'>You need more cable for this!</span>"
 						return
 
-					coil.amount -= 5
-					if(!coil.amount)
-						qdel(coil)
+					coil.use(5)
 
 					buildstage = 2
 					user << "<span class='notice'>You wire \the [src]!</span>"

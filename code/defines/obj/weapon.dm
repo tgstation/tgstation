@@ -66,46 +66,6 @@
 	icon_state = "spacecash1000"
 	desc = "It's worth 1000 credits."
 
-/obj/item/weapon/soap
-	name = "soap"
-	desc = "A cheap bar of soap. Doesn't smell."
-	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
-	icon_state = "soap"
-	w_class = 1.0
-	throwforce = 0
-	throw_speed = 3
-	throw_range = 7
-
-/obj/item/weapon/soap/nanotrasen
-	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
-	icon_state = "soapnt"
-
-/obj/item/weapon/soap/deluxe
-	desc = "A deluxe Waffle Co. brand bar of soap. Smells of condoms."
-	icon_state = "soapdeluxe"
-
-/obj/item/weapon/soap/syndie
-	desc = "An untrustworthy bar of soap. Smells of fear."
-	icon_state = "soapsyndie"
-
-/obj/item/weapon/bikehorn
-	name = "bike horn"
-	desc = "A horn off of a bicycle."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "bike_horn"
-	item_state = "bike_horn"
-	throwforce = 0
-	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 7
-	attack_verb = list("HONKED")
-	var/spam_flag = 0
-
-/obj/item/weapon/bikehorn/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1) //plays instead of tap.ogg!
-	return ..()
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
@@ -134,28 +94,8 @@
 	name = "disk"
 	icon = 'icons/obj/items.dmi'
 
-/obj/item/weapon/disk/nuclear
-	name = "nuclear authentication disk"
-	desc = "Better keep this safe."
-	icon_state = "nucleardisk"
-	item_state = "card-id"
-	w_class = 1.0
-
-/*
-/obj/item/weapon/game_kit
-	name = "Gaming Kit"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "game_kit"
-	var/selected = null
-	var/board_stat = null
-	var/data = ""
-	var/base_url = "http://svn.slurm.us/public/spacestation13/misc/game_kit"
-	item_state = "sheet-metal"
-	w_class = 5.0
-*/
-
 /obj/item/weapon/legcuffs
-	name = "legcuffs"
+	name = "leg cuffs"
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
@@ -212,7 +152,6 @@
 			else
 				L.apply_damage(20,BRUTE)
 	..()
-
 
 
 /obj/item/weapon/caution
@@ -343,6 +282,7 @@
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
 	desc = "Meat that appears...strange..."
+	gender = PLURAL
 	icon = 'icons/obj/food.dmi'
 	icon_state = "meat"
 	flags = CONDUCT
@@ -403,7 +343,7 @@
 ///////////////////////////////////////Stock Parts /////////////////////////////////
 
 /obj/item/weapon/storage/part_replacer
-	name = "Rapid Part Exchange Device"
+	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
 	item_state = "RPED"
@@ -423,9 +363,10 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = 2.0
 	var/rating = 1
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/stock_parts/New()
+	src.pixel_x = rand(-5.0, 5)
+	src.pixel_y = rand(-5.0, 5)
 
 //Rank 1
 

@@ -21,6 +21,8 @@
 	var/blocks_air = 0
 	var/icon_old = null
 
+	var/PathNode/PNode = null //associated PathNode in the A* algorithm
+
 	flags = 0
 
 /turf/New()
@@ -106,20 +108,15 @@
 
 	var/loopsanity = 100
 	if(ismob(M))
-		if(!M:lastarea)
-			M:lastarea = get_area(M.loc)
-		if(!has_gravity(M))
-			inertial_drift(M)
-
-	/*
-		if(M.flags & NOGRAV)
-			inertial_drift(M)
-	*/
-
-
-
+		var/mob/O = M
+		if(!O.lastarea)
+			O.lastarea = get_area(O.loc)
+		var/has_gravity = O.mob_has_gravity(src)
+		O.update_gravity(has_gravity)
+		if(!has_gravity)
+			inertial_drift(O)
 		else if(!istype(src, /turf/space))
-			M:inertia_dir = 0
+			O.inertia_dir = 0
 	..()
 	var/objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))
@@ -149,7 +146,10 @@
 	return 0
 
 /turf/proc/inertial_drift(atom/movable/A as mob|obj)
-	if(!(A.last_move))	return
+	if(!(A.last_move))
+		return
+	if (A.pulledby)
+		return
 	if((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
 		var/mob/M = A
 		if(M.Process_Spacemove(1))
@@ -157,7 +157,7 @@
 			return
 		spawn(5)
 			if((M && !(M.anchored) && (M.loc == src)))
-				if(M.inertia_dir)
+				if(M.inertia_dir & M.last_move)
 					step(M, M.inertia_dir)
 					return
 				M.inertia_dir = M.last_move
@@ -256,38 +256,107 @@
 			M.take_damage(100, "brute")
 
 /turf/proc/Bless()
-	if(flags & NOJAUNT)
-		return
 	flags |= NOJAUNT
 
-/turf/proc/AdjacentTurfs()
-	var/L[] = new()
-	for(var/turf/simulated/t in oview(src,1))
-		if(!t.density)
-			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-				L.Add(t)
-	return L
-/turf/proc/Distance(turf/t)
-	if(get_dist(src,t) == 1)
-		var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
-		return sqrt(cost)
-	else
-		return get_dist(src,t)
+/////////////////////////////////////////////////////////////////////////
+// Navigation procs
+// Used for A-star pathfinding
+////////////////////////////////////////////////////////////////////////
 
-// This Distance proc assumes that only cardinal movement is
+///////////////////////////
+//Cardinal only movements
+///////////////////////////
+
+// Returns the surrounding cardinal turfs with open links
+// Including through doors openable with the ID
+/turf/proc/CardinalTurfsWithAccess(var/obj/item/weapon/card/id/ID)
+	var/list/L = new()
+	var/turf/simulated/T
+
+	for(var/dir in cardinal)
+		T = get_step(src, dir)
+		if(istype(T) && !T.density)
+			if(!LinkBlockedWithAccess(src, T, ID))
+				L.Add(T)
+	return L
+
+// Returns the surrounding cardinal turfs with open links
+// Don't check for ID, doors passable only if open
+/turf/proc/CardinalTurfs()
+	var/list/L = new()
+	var/turf/simulated/T
+
+	for(var/dir in cardinal)
+		T = get_step(src, dir)
+		if(istype(T) && !T.density)
+			if(!LinkBlocked(src, T))
+				L.Add(T)
+	return L
+
+///////////////////////////
+//All directions movements
+///////////////////////////
+
+// Returns the surrounding simulated turfs with open links
+// Including through doors openable with the ID
+/turf/proc/AdjacentTurfsWithAccess(var/obj/item/weapon/card/id/ID = null,var/list/closed)//check access if one is passed
+	var/list/L = new()
+	var/turf/simulated/T
+	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
+		T = get_step(src,dir)
+		if(T in closed) //turf already proceeded in A*
+			continue
+		if(istype(T) && !T.density)
+			if(!LinkBlockedWithAccess(src, T, ID))
+				L.Add(T)
+	return L
+
+//Idem, but don't check for ID and goes through open doors
+/turf/proc/AdjacentTurfs(var/list/closed)
+	var/list/L = new()
+	var/turf/simulated/T
+	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
+		T = get_step(src,dir)
+		if(T in closed) //turf already proceeded by A*
+			continue
+		if(istype(T) && !T.density)
+			if(!LinkBlocked(src, T))
+				L.Add(T)
+	return L
+
+// check for all turfs, including unsimulated ones
+/turf/proc/AdjacentTurfsSpace(var/obj/item/weapon/card/id/ID = null, var/list/closed)//check access if one is passed
+	var/list/L = new()
+	var/turf/T
+	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
+		T = get_step(src,dir)
+		if(T in closed) //turf already proceeded by A*
+			continue
+		if(istype(T) && !T.density)
+			if(!ID)
+				if(!LinkBlocked(src, T))
+					L.Add(T)
+			else
+				if(!LinkBlockedWithAccess(src, T, ID))
+					L.Add(T)
+	return L
+
+//////////////////////////////
+//Distance procs
+//////////////////////////////
+
+//Distance associates with all directions movement
+/turf/proc/Distance(var/turf/T)
+	return get_dist(src,T)
+
+//  This Distance proc assumes that only cardinal movement is
 //  possible. It results in more efficient (CPU-wise) pathing
 //  for bots and anything else that only moves in cardinal dirs.
-/turf/proc/Distance_cardinal(turf/t)
-	if(!src || !t) return 0
-	return abs(src.x - t.x) + abs(src.y - t.y)
+/turf/proc/Distance_cardinal(turf/T)
+	if(!src || !T) return 0
+	return abs(src.x - T.x) + abs(src.y - T.y)
 
-/turf/proc/AdjacentTurfsSpace()
-	var/L[] = new()
-	for(var/turf/t in oview(src,1))
-		if(!t.density)
-			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-				L.Add(t)
-	return L
+////////////////////////////////////////////////////
 
 /turf/handle_fall(mob/faller, forced)
 	faller.lying = pick(90, 270)
@@ -302,13 +371,15 @@
 		if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 			return 0
 		if(!M.lying)
+			var/olddir = M.dir
+			M.Stun(s_amount)
+			M.Weaken(w_amount)
 			M.stop_pulling()
-			if(lube&STEP)
-				step(M, M.dir)
 			if(lube&SLIDE)
 				for(var/i=1, i<5, i++)
 					spawn (i)
-						step(M, M.dir)
+						step(M, olddir)
+						M.spin(1,1)
 				if(M.lying) //did I fall over?
 					M.adjustBruteLoss(2)
 			if(O)
@@ -316,7 +387,5 @@
 			else
 				M << "<span class='notice'>You slipped!</span>"
 			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-			M.Stun(s_amount)
-			M.Weaken(w_amount)
 			return 1
 	return 0 // no success. Used in clown pda and wet floors

@@ -92,10 +92,13 @@
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
-		C.use(1)
-		det_time = 50 // In case the cable_coil was removed and readded.
-		stage_change(WIRED)
-		user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
+		if (C.use(1))
+			det_time = 50 // In case the cable_coil was removed and readded.
+			stage_change(WIRED)
+			user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
+		else
+			user << "<span class='warning'>You need one length of coil to wire the assembly.</span>"
+			return
 
 	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
 		stage_change(WIRED)
@@ -244,18 +247,18 @@
 	desc = "Used for emergency sealing of air breaches."
 	stage = READY
 
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+/obj/item/weapon/grenade/chem_grenade/metalfoam/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("aluminium", 30)
-		B2.reagents.add_reagent("foaming_agent", 10)
-		B2.reagents.add_reagent("pacid", 10)
+	B1.reagents.add_reagent("aluminium", 30)
+	B2.reagents.add_reagent("foaming_agent", 10)
+	B2.reagents.add_reagent("pacid", 10)
 
-		beakers += B1
-		beakers += B2
-		icon_state = "grenade"
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/incendiary
@@ -263,18 +266,18 @@
 	desc = "Used for clearing rooms of living things."
 	stage = READY
 
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+/obj/item/weapon/grenade/chem_grenade/incendiary/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("aluminium", 25)
-		B2.reagents.add_reagent("plasma", 25)
-		B2.reagents.add_reagent("sacid", 25)
+	B1.reagents.add_reagent("aluminium", 25)
+	B2.reagents.add_reagent("plasma", 25)
+	B2.reagents.add_reagent("sacid", 25)
 
-		beakers += B1
-		beakers += B2
-		icon_state = "grenade"
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/antiweed
@@ -282,19 +285,19 @@
 	desc = "Used for purging large areas of invasive plant species. Contents under pressure. Do not directly inhale contents."
 	stage = READY
 
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+/obj/item/weapon/grenade/chem_grenade/antiweed/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("plantbgone", 25)
-		B1.reagents.add_reagent("potassium", 25)
-		B2.reagents.add_reagent("phosphorus", 25)
-		B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent("plantbgone", 25)
+	B1.reagents.add_reagent("potassium", 25)
+	B2.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("sugar", 25)
 
-		beakers += B1
-		beakers += B2
-		icon_state = "grenade"
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/cleaner
@@ -302,18 +305,18 @@
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
 	stage = READY
 
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+/obj/item/weapon/grenade/chem_grenade/cleaner/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("fluorosurfactant", 40)
-		B2.reagents.add_reagent("water", 40)
-		B2.reagents.add_reagent("cleaner", 10)
+	B1.reagents.add_reagent("fluorosurfactant", 40)
+	B2.reagents.add_reagent("water", 40)
+	B2.reagents.add_reagent("cleaner", 10)
 
-		beakers += B1
-		beakers += B2
-		icon_state = "grenade"
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/teargas
@@ -321,19 +324,19 @@
 	desc = "Used for nonlethal riot control. Contents under pressure. Do not directly inhale contents."
 	stage = READY
 
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+/obj/item/weapon/grenade/chem_grenade/teargas/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("condensedcapsaicin", 25)
-		B1.reagents.add_reagent("potassium", 25)
-		B2.reagents.add_reagent("phosphorus", 25)
-		B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent("condensedcapsaicin", 25)
+	B1.reagents.add_reagent("potassium", 25)
+	B2.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("sugar", 25)
 
-		beakers += B1
-		beakers += B2
-		icon_state = "grenade"
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
 
 #undef EMPTY
 #undef WIRED

@@ -36,6 +36,11 @@ emp_act
 				protection += C.armor[type]
 	return protection
 
+/mob/living/carbon/human/on_hit(proj_type)
+	if(dna)
+		dna.species.on_hit(proj_type, src)
+	return
+
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
@@ -118,94 +123,93 @@ emp_act
 /mob/living/carbon/human/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	if(!I || !user)	return 0
 
+	var/obj/item/organ/limb/target_limb = get_organ(check_zone(user.zone_sel.selecting))
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
-
 	var/hit_area = parse_zone(affecting.name)
+	var/target_area = parse_zone(target_limb.name)
 
-	if((user != src) && check_shields(I.force, "the [I.name]"))
-		return 0
+	if(dna)	// allows your species to affect the attacked_by code
+		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
 
-	if(I.attack_verb && I.attack_verb.len)
-		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
-						"<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>")
-	else if(I.force)
-		visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>", \
-						"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
 	else
-		return 0
+		if((user != src) && check_shields(I.force, "the [I.name]"))
+			return 0
 
-	var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armour has protected your [hit_area].</span>", "<span class='warning'>Your armour has softened a hit to your [hit_area].</span>")
-	if(armor >= 100)	return 0
-	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
+		if(I.attack_verb && I.attack_verb.len)
+			visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>", \
+							"<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I] by [user]!</span>")
+		else if(I.force)
+			visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>", \
+							"<span class='userdanger'>[src] has been attacked in the [hit_area] with [I] by [user]!</span>")
+		else
+			return 0
 
-	apply_damage(I.force, I.damtype, affecting, armor , I)
+		var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armor has protected your [hit_area].</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area].</span>")
+		if(armor >= 100)	return 0
+		var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
-	var/bloody = 0
-	if(((I.damtype == BRUTE) && prob(25 + (I.force * 2))))
-		if(affecting.status == ORGAN_ORGANIC)
-			I.add_blood(src)	//Make the weapon bloody, not the person.
-			if(prob(I.force * 2))	//blood spatter!
-				bloody = 1
-				var/turf/location = loc
-				if(istype(location, /turf/simulated))
-					location.add_blood(src)
-				if(ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if(get_dist(H, src) <= 1)	//people with TK won't get smeared with blood
-						if(H.wear_suit)
-							H.wear_suit.add_blood(src)
-							H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
-						else if(H.w_uniform)
-							H.w_uniform.add_blood(src)
-							H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
-						if (H.gloves)
-							var/obj/item/clothing/gloves/G = H.gloves
-							G.add_blood(H)
-						else
-							H.add_blood(H)
-						H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
+		apply_damage(I.force, I.damtype, affecting, armor , I)
 
+		var/bloody = 0
+		if(((I.damtype == BRUTE) && prob(25 + (I.force * 2))))
+			if(affecting.status == ORGAN_ORGANIC)
+				I.add_blood(src)	//Make the weapon bloody, not the person.
+				if(prob(I.force * 2))	//blood spatter!
+					bloody = 1
+					var/turf/location = loc
+					if(istype(location, /turf/simulated))
+						location.add_blood(src)
+					if(ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if(get_dist(H, src) <= 1)	//people with TK won't get smeared with blood
+							if(H.wear_suit)
+								H.wear_suit.add_blood(src)
+								H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
+							else if(H.w_uniform)
+								H.w_uniform.add_blood(src)
+								H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
+							if (H.gloves)
+								var/obj/item/clothing/gloves/G = H.gloves
+								G.add_blood(H)
+							else
+								H.add_blood(H)
+								H.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
 
-		switch(hit_area)
-			if("head")	//Harder to score a stun but if you do it lasts a bit longer
-				if(stat == CONSCIOUS && prob(I.force))
-					if(Iforce >= 5)
+			switch(hit_area)
+				if("head")	//Harder to score a stun but if you do it lasts a bit longer
+					if(stat == CONSCIOUS && prob(I.force))
 						visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
 										"<span class='userdanger'>[src] has been knocked unconscious!</span>")
 						apply_effect(20, PARALYZE, armor)
 						if(src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
+					if(bloody)	//Apply blood
+						if(wear_mask)
+							wear_mask.add_blood(src)
+							update_inv_wear_mask(0)
+						if(head)
+							head.add_blood(src)
+							update_inv_head(0)
+						if(glasses && prob(33))
+							glasses.add_blood(src)
+							update_inv_glasses(0)
 
-				if(bloody)	//Apply blood
-					if(wear_mask)
-						wear_mask.add_blood(src)
-						update_inv_wear_mask(0)
-					if(head)
-						head.add_blood(src)
-						update_inv_head(0)
-					if(glasses && prob(33))
-						glasses.add_blood(src)
-						update_inv_glasses(0)
-
-			if("chest")	//Easier to score a stun but lasts less time
-				if(stat == CONSCIOUS && prob(I.force + 10))
-					if(Iforce >= 5)
+				if("chest")	//Easier to score a stun but lasts less time
+					if(stat == CONSCIOUS && prob(I.force + 10))
 						visible_message("<span class='danger'>[src] has been knocked down!</span>", \
 										"<span class='userdanger'>[src] has been knocked down!</span>")
 						apply_effect(5, WEAKEN, armor)
 
-				if(bloody)
-					if(wear_suit)
-						wear_suit.add_blood(src)
-						update_inv_wear_suit(0)
-					if(w_uniform)
-						w_uniform.add_blood(src)
-						update_inv_w_uniform(0)
+					if(bloody)
+						if(wear_suit)
+							wear_suit.add_blood(src)
+							update_inv_wear_suit(0)
+						if(w_uniform)
+							w_uniform.add_blood(src)
+							update_inv_w_uniform(0)
 
-		if(Iforce > 10 || Iforce >= 5 && prob(33))
-			forcesay(hit_appends)	//forcesay checks stat already.
-
-
+			if(Iforce > 10 || Iforce >= 5 && prob(33))
+				forcesay(hit_appends)	//forcesay checks stat already
 
 /mob/living/carbon/human/emp_act(severity)
 	var/informed = 0

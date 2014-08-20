@@ -7,9 +7,15 @@
 /datum/round_event/meteor_wave
 	startWhen		= 6
 	endWhen			= 66
+	var/announce = 1
+
+/datum/round_event/meteor_wave/New(should_announce = 1)
+	..()
+	announce = should_announce
 
 /datum/round_event/meteor_wave/announce()
-	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", 'sound/AI/meteors.ogg')
+	if(announce)
+		priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", 'sound/AI/meteors.ogg')
 
 
 /datum/round_event/meteor_wave/tick()

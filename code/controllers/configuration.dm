@@ -54,7 +54,9 @@
 	var/server
 	var/banappeals
 	var/wikiurl = "http://www.tgstation13.org/wiki" // Default wiki link.
-	var/forumurl
+	var/forumurl = "http://tgstation13.org/phpBB/index.php" //default forums
+	var/rulesurl = "http://www.tgstation13.org/wiki/Rules" // default rules
+	var/githuburl = "https://www.github.com/tgstation/-tg-station" //default github
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
@@ -76,7 +78,9 @@
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
+	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 
+	var/traitor_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
 	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
@@ -85,6 +89,7 @@
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
+	var/mutant_colors = 0
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -241,6 +246,10 @@
 					config.wikiurl = value
 				if("forumurl")
 					config.forumurl = value
+				if("rulesurl")
+					config.rulesurl = value
+				if("githuburl")
+					config.githuburl = value
 				if("guest_jobban")
 					config.guest_jobban = 1
 				if("guest_ban")
@@ -344,6 +353,10 @@
 					config.traitor_scaling_coeff	= text2num(value)
 				if("changeling_scaling_coeff")
 					config.changeling_scaling_coeff	= text2num(value)
+				if("security_scaling_coeff")
+					config.security_scaling_coeff	= text2num(value)
+				if("traitor_objectives_amount")
+					config.traitor_objectives_amount = text2num(value)
 				if("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
@@ -385,6 +398,8 @@
 					config.default_laws				= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
+				if("mutant_colors")
+					config.mutant_colors			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

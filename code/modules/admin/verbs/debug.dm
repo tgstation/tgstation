@@ -619,15 +619,15 @@ var/global/list/g_fancy_list_of_safe_types = null
 	//log_admin("[key_name(src)] has alienized [M.key].")
 	var/list/dresspacks = list(
 		"naked",
-		"assistant grey",
+		"as job...",
 		"standard space gear",
 		"tournament standard red",
 		"tournament standard green",
 		"tournament gangster",
 		"tournament chef",
 		"tournament janitor",
-		"lasertag red",
-		"lasertag blue",
+		"laser tag red",
+		"laser tag blue",
 		"pirate",
 		"space pirate",
 		"soviet admiral",
@@ -647,6 +647,12 @@ var/global/list/g_fancy_list_of_safe_types = null
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
 		return
+
+	var/datum/job/jobdatum
+	if (dresscode == "as job...")
+		var/jobname = input("Select job", "Robust quick dress shop") as null|anything in get_all_jobs()
+		jobdatum = job_master.GetJob(jobname)
+
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M)
 		if (istype(I, /obj/item/weapon/implant))
@@ -656,25 +662,11 @@ var/global/list/g_fancy_list_of_safe_types = null
 		if ("naked")
 			//do nothing
 
-		if ("assistant grey")
-			var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(M)
-			new /obj/item/weapon/storage/box/survival(BPK)
-			M.equip_to_slot_or_del(BPK, slot_back,1)
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
-
-			var/obj/item/weapon/card/id/W = new(M)
-			W.assignment = "Assistant"
-			W.registered_name = M.real_name
-			W.update_label()
-			M.equip_to_slot_or_del(W, slot_wear_id)
-			var/obj/item/device/pda/P = new(M)
-			P.owner = M.real_name
-			P.ownjob = "Assistant"
-			P.update_label()
-			M.equip_to_slot_or_del(P, slot_belt)
-
+		if ("as job...")
+			if(jobdatum)
+				dresscode = jobdatum.title
+				M.job = jobdatum.title
+				jobdatum.equip(M)
 
 		if ("standard space gear")
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
@@ -687,6 +679,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			J.toggle()
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
 			J.Topic(null, list("stat" = 1))
+
 		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
 			if (dresscode=="tournament standard red")
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), slot_w_uniform)
@@ -703,7 +696,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 
 
 		if ("tournament gangster") //gangster are supposed to fight each other. --rastaf0
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/det(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/det(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
 
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/det_suit(M), slot_wear_suit)
@@ -747,7 +740,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), slot_in_backpack)
 
-		if ("lasertag red")
+		if ("laser tag red")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/red(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/red(M), slot_gloves)
@@ -758,7 +751,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/laser/redtag(M), slot_s_store)
 
-		if ("lasertag blue")
+		if ("laser tag blue")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/blue(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/blue(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/blue(M), slot_gloves)
@@ -876,7 +869,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/deathsquad(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/swat(M), slot_wear_mask)
@@ -937,6 +930,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			var/obj/item/weapon/card/id/W = new(M)
 			W.icon_state = "centcom"
 			W.access = get_centcom_access("Centcom Official")
+			W.access += access_weapons
 			W.assignment = "Centcom Official"
 			W.registered_name = M.real_name
 			W.update_label()
@@ -970,7 +964,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			M.equip_to_slot_or_del(R, slot_ears)
 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate/combat(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat/officer(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/deathsquad/officer(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat/combat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
@@ -1137,3 +1131,15 @@ var/global/list/g_fancy_list_of_safe_types = null
 			usr << list2text(clients,",")
 		if("Joined Clients")
 			usr << list2text(joined_player_list,",")
+
+/client/proc/cmd_display_del_log()
+	set category = "Debug"
+	set name = "Display del() Log"
+	set desc = "Displays a list of things that have failed to GC this round"
+
+	var/dat = "<B>List of things that failed to GC this round</B><BR><BR>"
+
+	for(var/path in garbage.logging)
+		dat += "[path] - [garbage.logging[path]] times<BR>"
+
+	usr << browse(dat, "window=dellog")

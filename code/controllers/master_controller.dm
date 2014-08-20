@@ -11,7 +11,7 @@ var/global/last_tick_duration = 0
 var/global/air_processing_killed = 0
 var/global/pipe_processing_killed = 0
 
-datum/controller/game_controller
+/datum/controller/game_controller
 	var/processing = 0
 	var/breather_ticks = 2		//a somewhat crude attempt to iron over the 'bumps' caused by high-cpu use by letting the MC have a breather for this many ticks after every loop
 	var/minimum_ticks = 20		//The minimum length of time between MC ticks
@@ -37,7 +37,7 @@ datum/controller/game_controller
 
 	var/last_thing_processed
 
-datum/controller/game_controller/New()
+/datum/controller/game_controller/New()
 	//There can be only one master_controller. Out with the old and in with the new.
 	if(master_controller != src)
 		if(istype(master_controller))
@@ -69,7 +69,7 @@ datum/controller/game_controller/New()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 	if(!supply_shuttle)				supply_shuttle = new /datum/controller/supply_shuttle()
 
-datum/controller/game_controller/proc/setup()
+/datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
 
 	setup_objects()
@@ -80,7 +80,7 @@ datum/controller/game_controller/proc/setup()
 		if(ticker)
 			ticker.pregame()
 
-datum/controller/game_controller/proc/setup_objects()
+/datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects..."
 	sleep(-1)
 	for(var/atom/movable/object in world)
@@ -110,7 +110,7 @@ datum/controller/game_controller/proc/setup_objects()
 	sleep(-1)
 
 
-datum/controller/game_controller/proc/process()
+/datum/controller/game_controller/proc/process()
 	processing = 1
 	spawn(0)
 		set background = BACKGROUND_ENABLED
@@ -223,7 +223,7 @@ datum/controller/game_controller/proc/process()
 				sleep(10)
 
 /*
-datum/controller/game_controller/proc/process_liquid()
+/datum/controller/game_controller/proc/process_liquid()
 	last_thing_processed = /datum/puddle
 	var/i = 1
 	while(i<=puddles.len)
@@ -235,7 +235,7 @@ datum/controller/game_controller/proc/process_liquid()
 		puddles.Cut(i,i+1)
 */
 
-datum/controller/game_controller/proc/process_mobs()
+/datum/controller/game_controller/proc/process_mobs()
 	var/i = 1
 	while(i<=mob_list.len)
 		var/mob/M = mob_list[i]
@@ -246,7 +246,7 @@ datum/controller/game_controller/proc/process_mobs()
 			continue
 		mob_list.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_diseases()
+/datum/controller/game_controller/proc/process_diseases()
 	var/i = 1
 	while(i<=active_diseases.len)
 		var/datum/disease/Disease = active_diseases[i]
@@ -257,7 +257,7 @@ datum/controller/game_controller/proc/process_diseases()
 			continue
 		active_diseases.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_machines()
+/datum/controller/game_controller/proc/process_machines()
 	var/i = 1
 	while(i<=machines.len)
 		var/obj/machinery/Machine = machines[i]
@@ -271,7 +271,7 @@ datum/controller/game_controller/proc/process_machines()
 					continue
 		machines.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_objects()
+/datum/controller/game_controller/proc/process_objects()
 	var/i = 1
 	while(i<=processing_objects.len)
 		var/obj/Object = processing_objects[i]
@@ -282,7 +282,7 @@ datum/controller/game_controller/proc/process_objects()
 			continue
 		processing_objects.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_pipenets()
+/datum/controller/game_controller/proc/process_pipenets()
 	last_thing_processed = /datum/pipe_network
 	var/i = 1
 	while(i<=pipe_networks.len)
@@ -293,7 +293,7 @@ datum/controller/game_controller/proc/process_pipenets()
 			continue
 		pipe_networks.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_powernets()
+/datum/controller/game_controller/proc/process_powernets()
 	last_thing_processed = /datum/powernet
 	var/i = 1
 	while(i<=powernets.len)
@@ -304,7 +304,7 @@ datum/controller/game_controller/proc/process_powernets()
 			continue
 		powernets.Cut(i,i+1)
 
-datum/controller/game_controller/proc/process_nano()
+/datum/controller/game_controller/proc/process_nano()
 	var/i = 1
 	while(i<=nanomanager.processing_uis.len)
 		var/datum/nanoui/ui = nanomanager.processing_uis[i]
@@ -314,7 +314,7 @@ datum/controller/game_controller/proc/process_nano()
 			continue
 		nanomanager.processing_uis.Cut(i,i+1)
 
-datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
+/datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
 	for(var/varname in master_controller.vars)
 		switch(varname)

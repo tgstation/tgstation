@@ -17,17 +17,18 @@
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
 
-	New()
-		..()
-		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-		return
+/obj/item/weapon/tank/oxygen/New()
+	..()
+	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return
 
 
-	examine(mob/user)
-		..()
-		if(air_contents.oxygen < 10)
-			user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
-			playsound(user, 'sound/effects/alert.ogg', 50, 1)
+/obj/item/weapon/tank/oxygen/examine()
+	..()
+	if(air_contents.oxygen < 10)
+		user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
+		playsound(user, 'sound/effects/alert.ogg', 50, 1)
+
 
 
 /obj/item/weapon/tank/oxygen/yellow
@@ -68,11 +69,12 @@
 	icon_state = "oxygen"
 
 
-	examine(mob/user)
-		..()
-		if(air_contents.oxygen < 1 && loc==user)
-			user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
-			playsound(user, 'sound/effects/alert.ogg', 50, 1)
+/obj/item/weapon/tank/air/examine()
+	..()
+	if(air_contents.oxygen < 1 && loc==user)
+		user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
+		playsound(user, 'sound/effects/alert.ogg', 50, 1)
+
 
 /obj/item/weapon/tank/air/New()
 	..()
@@ -131,17 +133,17 @@
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 
 
-	New()
-		..()
-		src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-		return
+/obj/item/weapon/tank/emergency_oxygen/New()
+	..()
+	src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return
 
 
-	examine(mob/user)
-		..()
-		if(air_contents.oxygen < 0.2 && loc==user)
-			user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
-			playsound(user, 'sound/effects/alert.ogg', 50, 1)
+/obj/item/weapon/tank/emergency_oxygen/examine()
+	..()
+	if(air_contents.oxygen < 0.2 && loc==user)
+		user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
+		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"

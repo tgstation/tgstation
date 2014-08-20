@@ -119,15 +119,6 @@ obj/machinery/gateway/centerstation/process()
 	if(!active)		return
 	if(!awaygate)	return
 
-	if(istype(M, /obj/item/weapon/disk/nuclear))
-		return
-
-	if(M.GetTypeInAllContents(/obj/item/weapon/disk/nuclear))
-		if(ismob(M))
-			var/mob/MOB = M
-			MOB << "<span class='warning'>You are forbidden from taking the nuclear authentication disk off station.</span>"
-		return
-
 	if(awaygate.calibrated)
 		M.loc = get_step(awaygate.loc, SOUTH)
 		M.dir = SOUTH

@@ -205,7 +205,7 @@
 					src << "<span class='info'>You're completely exhausted.</span>"
 				else
 					src << "<span class='info'>You feel fatigued.</span>"
-			if(dna && (dna.mutantrace == "skeleton") && !H.w_uniform && !H.wear_suit)
+			if(dna && (dna.species == /datum/species/skeleton) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			if(ishuman(src))
@@ -420,7 +420,7 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 	//strip panel
-	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+	if(canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["internal"])
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
@@ -452,19 +452,6 @@
 	..()
 
 
-/mob/living/carbon/say(var/message, var/bubble_type)
-	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
-		return
-
-	..(message, bubble_type)
-
-/mob/living/carbon/proc/is_mutantrace(var/mrace)
-	if(mrace)
-		if(src.dna && src.dna.mutantrace == mrace)
-			return 1
-	else
-		return src.dna && src.dna.mutantrace ? 1 : 0
-
 /mob/living/carbon/getTrail()
 	if(getBruteLoss() < 300)
 		if(prob(50))
@@ -483,3 +470,6 @@ var/const/GALOSHES_DONT_HELP = 8
 
 /mob/living/carbon/fall(var/forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
+
+/mob/living/carbon/is_muzzled()
+	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))

@@ -24,7 +24,7 @@
 		ManualFollow(A)
 
 	// Otherwise jump
-	else
+	else if(A.loc)
 		loc = get_turf(A)
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
@@ -83,6 +83,10 @@
 		user.loc = stationgate.loc
 	else
 		user << "[src] has no destination."
+
+/obj/item/weapon/storage/attack_ghost(mob/user as mob)
+	orient2hud(user)
+	show_to(user)
 
 // -------------------------------------------
 // This was supposed to be used by adminghosts
