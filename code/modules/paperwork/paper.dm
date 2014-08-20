@@ -142,9 +142,10 @@
 	info_links = info
 	var/i = 0
 	for(i=1,i<=fields,i++)
-		addtofield(i, "<A href='?src=\ref[src];write=[i]'>write</A>", 1)
-	info_links = info_links + "<A href='?src=\ref[src];write=end'>write</A>"
-
+		addtofield(i, "<A href='?src=\ref[src];write=[i]'>write</A> ", 1)
+		addtofield(i, "<A href='?src=\ref[src];help=[i]'>help</A> ", 1)
+	info_links +="<A href='?src=\ref[src];write=end'>write</A> "
+	info_links +="<A href='?src=\ref[src];help=end'>help</A> "
 
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
@@ -245,6 +246,9 @@
 		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]") // Update the window
 
 		update_icon()
+
+	if(href_list["help"])
+		openhelp(usr)
 
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)

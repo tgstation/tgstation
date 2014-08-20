@@ -6,7 +6,8 @@
  */
 
 #define ACT_BBCODE_IMG /datum/speech_filter_action/bbcode/img
-
+#define ACT_BBCODE_VIDEO /datum/speech_filter_action/bbcode/video
+#define CHECK_NANO /obj/item/weapon/pen
 // MACROS
 #define REG_NOTBB "\[^\\\[\]+"    // [^\]]+
 
@@ -23,6 +24,15 @@
 	while(expr.FindNext(text))
 		message_admins("[key_name_admin(usr)] added an image ([html_encode(expr.GroupText(1))]) to [src] at [formatJumpTo(get_turf(src))]")
 		var/rtxt="<img src=\"[html_encode(expr.GroupText(1))]\" />"
+		text=copytext(text,1,expr.match)+rtxt+copytext(text,expr.index)
+		expr.index=expr.match+length(rtxt)
+	return text
+
+/datum/speech_filter_action/bbcode/video/Run(var/text)
+	expr.index=1
+	while(expr.FindNext(text))
+		message_admins("[key_name_admin(usr)] added a video ([html_encode(expr.GroupText(1))]) to [src] at [formatJumpTo(get_turf(src))]")
+		var/rtxt="<embed src=\"[html_encode(expr.GroupText(1))]\" width=\"420\" height=\"344\" type=\"x-ms-wmv\" volume=\"85\" autoStart=\"0\" autoplay=\"true\" />"
 		text=copytext(text,1,expr.match)+rtxt+copytext(text,expr.index)
 		expr.index=expr.match+length(rtxt)
 	return text
@@ -58,6 +68,7 @@
 /datum/writing_style/proc/Format(var/t, var/obj/item/weapon/pen/P, var/mob/user)
 	t = FilterSpeech(t)
 	t = replacetext(t,"<USERNAME />",user.real_name)
+
 	return "<span style=\"[style];color:[P.colour]\">[t]</span>"
 
 /datum/writing_style/pen/New()
@@ -67,10 +78,15 @@
 	addReplacement(REG_BBTAG("/small"), "</font>")
 	addReplacement(REG_BBTAG("list"), "<ul>")
 	addReplacement(REG_BBTAG("/list"), "</ul>")
-	// : is our delimiter, gi = global search, case-insensitive.
-	addExpression(":"+REG_BBTAG("img")+"("+REG_NOTBB+")"+REG_BBTAG("/img")+":gi", ACT_BBCODE_IMG,list())
 
 	..() // Order of operations
+
+/datum/writing_style/pen/nano_paper/New()
+	// : is our delimiter, gi = global search, case-insensitive.
+	addExpression(":"+REG_BBTAG("img")+"("+REG_NOTBB+")"+REG_BBTAG("/img")+":gi", ACT_BBCODE_IMG,list())
+	addExpression(":"+REG_BBTAG("video")+"("+REG_NOTBB+")"+REG_BBTAG("/video")+":gi", ACT_BBCODE_VIDEO,list())
+
+	..()
 
 /datum/writing_style/crayon
 	style = "font-family:'Comic Sans MS';font-weight:bold"
@@ -97,15 +113,22 @@
 
 	var/colour = "black"	//what colour the ink is!
 	var/style_type = /datum/writing_style/pen
+	var/nano_style_type = /datum/writing_style/pen/nano_paper
 	var/datum/writing_style/style
+	var/datum/writing_style/nano_style // stlyle when used on nano_paper
 
 /obj/item/weapon/pen/New()
 	..()
 
 	style = new style_type
+	nano_style = new nano_style_type
 
-/obj/item/weapon/pen/proc/Format(var/mob/user,var/text)
-	return style.Format(text,src,user)
+// checks if its used on nano_paper, if it is, use the nano_paper formating
+/obj/item/weapon/pen/proc/Format(var/mob/user, var/text, var/is_nano_paper)
+	if(is_nano_paper)
+		return nano_style.Format(text,src,user)
+	else
+		return style.Format(text,src,user)
 
 /obj/item/weapon/pen/suicide_act(mob/user)
 	viewers(user) << "\red <b>[user]is jamming the [src.name]into \his ear! It looks like \he's trying to commit suicide.</b>"
