@@ -29,10 +29,6 @@
 
 	var/log=""
 
-	var/const/deffont = "Verdana"
-	var/const/signfont = "Times New Roman"
-	var/const/crayonfont = "Comic Sans MS"
-
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
 /obj/item/weapon/paper/New()
@@ -146,8 +142,8 @@
 	info_links = info
 	var/i = 0
 	for(i=1,i<=fields,i++)
-		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
-	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+		addtofield(i, "<A href='?src=\ref[src];write=[i]'>write</A>", 1)
+	info_links = info_links + "<A href='?src=\ref[src];write=end'>write</A>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -159,45 +155,9 @@
 	update_icon()
 
 
-/obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
+/obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-
-	t = replacetext(t, "\[center\]", "<center>")
-	t = replacetext(t, "\[/center\]", "</center>")
-	t = replacetext(t, "\[br\]", "<BR>")
-	t = replacetext(t, "\[b\]", "<B>")
-	t = replacetext(t, "\[/b\]", "</B>")
-	t = replacetext(t, "\[i\]", "<I>")
-	t = replacetext(t, "\[/i\]", "</I>")
-	t = replacetext(t, "\[u\]", "<U>")
-	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[large\]", "<font size=\"4\">")
-	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
-	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
-	t = replacetext(t, "\[img\]","<img src=\"")
-	t = replacetext(t, "\[/img\]", "\" />")
-
-	if(!iscrayon)
-		t = replacetext(t, "\[*\]", "<li>")
-		t = replacetext(t, "\[hr\]", "<HR>")
-		t = replacetext(t, "\[small\]", "<font size = \"1\">")
-		t = replacetext(t, "\[/small\]", "</font>")
-		t = replacetext(t, "\[list\]", "<ul>")
-		t = replacetext(t, "\[/list\]", "</ul>")
-
-		t = "<font face=\"[deffont]\" color=[P.colour]>[t]</font>"
-	else // If it is a crayon, and he still tries to use these, make them empty!
-		t = replacetext(t, "\[*\]", "")
-		t = replacetext(t, "\[hr\]", "")
-		t = replacetext(t, "\[small\]", "")
-		t = replacetext(t, "\[/small\]", "")
-		t = replacetext(t, "\[list\]", "")
-		t = replacetext(t, "\[/list\]", "")
-
-		t = "<font face=\"[crayonfont]\" color=[P.colour]><b>[t]</b></font>"
-
-//	t = replacetext(t, "#", "") // Junk converted to nothing!
+	return P.Format(user,t)
 
 //Count the fields
 	var/laststart = 1
@@ -244,20 +204,12 @@
 		//var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
 		var/t = sanitize(input("Enter what you want to write:", "Write", null, null))  as message
 		var/obj/item/i = usr.get_active_hand() // Check to see if he still got that darn pen, also check if he's using a crayon or pen.
-		var/iscrayon = 0
-		if(!istype(i, /obj/item/weapon/pen))
-			if(!istype(i, /obj/item/toy/crayon))
-				return
-			iscrayon = 1
 
 		// if paper is not in usr, then it must be in a clipboard or folder, which must be in or near usr
 		if(src.loc != usr && !((istype(src.loc, /obj/item/weapon/clipboard) || istype(src.loc, /obj/item/weapon/folder)) && (src.loc.loc == usr || src.loc.Adjacent(usr)) ) )
 			return
 
 		log += "<br />\[[time_stamp()]] [key_name(usr)] added: [t]"
-
-		if(findtext(t,"\[img]"))
-			message_admins("[key_name_admin(usr)] added an image to [src] at [formatJumpTo(get_turf(src))]")
 
 		/* Jesus christ whoever did this is retarded.
 		t = checkhtml(t)
@@ -271,8 +223,21 @@
 				return
 		*/
 
+
+
 		t = replacetext(t, "\n", "<BR>")
-		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
+
+		if(findtext(t,"\[img]"))
+			message_admins("[key_name_admin(usr)] added an image to [src] at [formatJumpTo(get_turf(src))]")
+
+		if(istype(i,/obj/item/weapon/pen))
+			//t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
+			var/obj/item/weapon/pen/P=i
+			t=P.Format(usr,t)
+
+		else if(istype(i,/obj/item/toy/crayon))
+			var/obj/item/toy/crayon/C=i
+			t=C.Format(usr,t)
 
 		if(id!="end")
 			addtofield(text2num(id), t) // He wants to edit a field, let him.

@@ -1,2 +1,3 @@
 author: N3X15
-changes: []
+changes: 
+  - bugfix: Rewrote how paper is parsed, fixes a number of XSS exploits.

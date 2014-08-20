@@ -5,6 +5,75 @@
  *		Parapens
  */
 
+#define ACT_BBCODE_IMG /datum/speech_filter_action/bbcode/img
+
+// MACROS
+#define REG_NOTBB "\[^\\\[\]+"    // [^\]]+
+
+// This WAS a macro, but BYOND a shit.
+/proc/REG_BBTAG(x)
+	return "\\\[[x]\\\]"
+
+// [x]blah[/x]
+/proc/REG_BETWEEN_BBTAG(x)
+	return "[REG_BBTAG(x)]([REG_NOTBB])[REG_BBTAG("/[x]")]"
+
+/datum/speech_filter_action/bbcode/img/Run(var/text)
+	expr.index=1
+	while(expr.FindNext(text))
+		var/rtxt="<img src=\"[html_encode(expr.GroupText(1))]\" />"
+		text=copytext(text,1,expr.match)+rtxt+copytext(text,expr.index)
+		expr.index=expr.match+length(rtxt)
+	return text
+
+// Attached to writing instrument. (pen/pencil/etc)
+/datum/writing_style
+	parent_type = /datum/speech_filter
+
+	var/style      = "font-family:Verdana, sans;"
+	var/style_sign = "font-family:'Times New Roman', monospace;text-style:italic;"
+
+/datum/writing_style/New()
+	..()
+
+	addReplacement(REG_BBTAG("center"), "<center>")
+	addReplacement(REG_BBTAG("/center"),"</center>")
+	addReplacement(REG_BBTAG("br"),     "<BR>")
+	addReplacement(REG_BBTAG("b"),      "<B>")
+	addReplacement(REG_BBTAG("/b"),     "</B>")
+	addReplacement(REG_BBTAG("i"),      "<I>")
+	addReplacement(REG_BBTAG("/i"),     "</I>")
+	addReplacement(REG_BBTAG("u"),      "<U>")
+	addReplacement(REG_BBTAG("/u"),     "</U>")
+	addReplacement(REG_BBTAG("large"),  "<font size=\"4\">")
+	addReplacement(REG_BBTAG("/large"), "</font>")
+	addReplacement(REG_BBTAG("sign"),   "<span style=\"[style_sign]\"><USERNAME /></span>")
+	addReplacement(REG_BBTAG("field"),  "<span class=\"paper_field\"></span>")
+
+	// Fallthrough just fucking kills the tag
+	addReplacement(REG_BBTAG("\[^\\\]\]"), "")
+
+
+/datum/writing_style/proc/Format(var/t, var/obj/item/weapon/pen/P, var/mob/user)
+	t = FilterSpeech(t)
+	t = replacetext(t,"<USERNAME />",user.real_name)
+	return "<span style=\"[style];color:[P.colour]\">[t]</span>"
+
+/datum/writing_style/pen/New()
+	addReplacement(REG_BBTAG("*"), "<li>")
+	addReplacement(REG_BBTAG("hr"), "<HR>")
+	addReplacement(REG_BBTAG("small"), "<font size = \"1\">")
+	addReplacement(REG_BBTAG("/small"), "</font>")
+	addReplacement(REG_BBTAG("list"), "<ul>")
+	addReplacement(REG_BBTAG("/list"), "</ul>")
+
+	addExpression(":"+REG_BBTAG("img")+"("+REG_NOTBB+")"+REG_BBTAG("/img")+":gi", ACT_BBCODE_IMG,list())
+
+	..() // Order of operations
+
+/datum/writing_style/crayon
+	style = "font-family:'Comic Sans MS';font-weight:bold"
+
 
 /*
  * Pens
@@ -23,12 +92,23 @@
 	throw_range = 15
 	m_amt = 10
 	w_type = RECYK_MISC
-	var/colour = "black"	//what colour the ink is!
 	pressure_resistance = 2
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user]is jamming the [src.name]into \his ear! It looks like \he's trying to commit suicide.</b>"
-		return(OXYLOSS)
+	var/colour = "black"	//what colour the ink is!
+	var/style_type = /datum/writing_style/pen
+	var/datum/writing_style/style
+
+/obj/item/weapon/pen/New()
+	..()
+
+	style = new style_type
+
+/obj/item/weapon/pen/proc/Format(var/mob/user,var/text)
+	return style.Format(text,src,user)
+
+/obj/item/weapon/pen/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user]is jamming the [src.name]into \his ear! It looks like \he's trying to commit suicide.</b>"
+	return(OXYLOSS)
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
