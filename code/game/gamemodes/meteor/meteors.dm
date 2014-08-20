@@ -1,26 +1,28 @@
 #define METEOR_TEMPERATURE
 
-/var/const/meteor_wave_delay = 625 //minimum wait between waves in tenths of seconds
+/var/const/meteor_wave_delay = 300 //minimum wait between waves in tenths of seconds. Here every 30 seconds
 //set to at least 100 unless you want evarr ruining every round
 
-/var/const/meteors_in_wave = 50
-/var/const/meteors_in_small_wave = 10
+/var/const/meteors_in_big_wave = 50 //DAKKA
+/var/const/meteors_in_wave = 30 //Panic
+/var/const/meteors_in_small_wave = 10 //Boom
+/var/meteorwavecurrent = 0
 
-/proc/meteor_wave(var/number = meteors_in_wave)
-	if(!ticker || wavesecret)
+/proc/meteor_wave(var/number = meteors_in_wave) //Call above constants to change
+	if(!ticker || meteorwavecurrent)
 		return
 
-	wavesecret = 1
+	meteorwavecurrent = 1
 	for(var/i = 0 to number)
-		spawn(rand(10,100))
+		spawn(rand(5,50)) //0.5 to 5 seconds between meteors
 			spawn_meteor()
 	spawn(meteor_wave_delay)
-		wavesecret = 0
+		meteorwavecurrent = 0
 
-/proc/spawn_meteors(var/number = meteors_in_small_wave)
-	for(var/i = 0; i < number; i++)
-		spawn(0)
-			spawn_meteor()
+///proc/meteor_small_wave(var/number = meteors_in_small_wave)
+	//for(var/i = 0; i < number; i++)
+		//spawn(0)
+			//spawn_meteor()
 
 /proc/spawn_meteor()
 
@@ -61,18 +63,18 @@
 		max_i--
 		if(max_i<=0) return
 
-	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
+	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space") //FUUUCK, should never happen.
 
 
 	var/obj/effect/meteor/M
 	switch(rand(1, 100))
 
 		if(1 to 10)
-			M = new /obj/effect/meteor/big( pickedstart )
+			M = new /obj/effect/meteor/big(pickedstart)
 		if(11 to 75)
-			M = new /obj/effect/meteor( pickedstart )
+			M = new /obj/effect/meteor(pickedstart)
 		if(76 to 100)
-			M = new /obj/effect/meteor/small( pickedstart )
+			M = new /obj/effect/meteor/small(pickedstart)
 
 	M.dest = pickedgoal
 	spawn(0)
