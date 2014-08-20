@@ -3,7 +3,7 @@
 	config_tag = "meteor"
 	var/const/waittime_l = 600 //Lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //Upper bound on time before intercept arrives (in tenths of seconds)
-	var/const/meteorannouncedelay = 6000 //Time before a special intercept tells the station to prepare (aka reveal)
+	var/const/meteorannouncedelay = 9000 //Time before a special intercept tells the station to prepare (aka reveal). Now 15 minutes
 	var/const/supplydelay = 100 //Delay before meteor supplies are spawned in tenth of seconds. Anyone in the way will be GIBBED
 	var/const/meteordelay = 3000 //Supplementary time before the dakka commences, here 5 minutes
 	var/nometeors = 1 //Can we send the meteors ?
@@ -28,6 +28,7 @@
 			rcd.disabled = 1
 		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
 			rcd.disabled = 1
+		spawn(100) //Panic interval
 		emergency_shuttle.incall(3.5)
 		captain_announce("A backup emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 		world << sound('sound/AI/shuttlecalled.ogg')
@@ -145,9 +146,9 @@
 			playsound(get_turf(pizzakit), 'sound/effects/sparks1.ogg', 50, 1)
 			new /obj/structure/rack(pizzakit.loc)
 			new /obj/item/pizzabox/margherita(pizzakit.loc)
-			new	/obj/item/pizzabox/mushroom(pizzakit.loc)
-			new	/obj/item/pizzabox/meat(pizzakit.loc)
-			new	/obj/item/pizzabox/vegetable(pizzakit.loc)
+			new /obj/item/pizzabox/mushroom(pizzakit.loc)
+			new /obj/item/pizzabox/meat(pizzakit.loc)
+			new /obj/item/pizzabox/vegetable(pizzakit.loc)
 			new /obj/item/weapon/kitchenknife(pizzakit.loc)
 			//Don't panic, honest
 			for(var/atom/A in get_turf(panickit))
