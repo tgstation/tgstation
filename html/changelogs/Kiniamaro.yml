@@ -1,9 +1,2 @@
 author: Kiniamaro
-changes:
-  - rscdel: remove [img] BBcode from paper.
-  - rscadd: add new item "nano paper" that supports [img] and [video] tags.
-  - rscadd: add new item "Nano Paper Dispenser" that can be made using R&D.
-  - rscadd: add a nano paper dispenser inside the librarians office.
-  - bugfix: paper now properly displays help
-  - rscadd: detailed update info here : http://pastebin.com/Sr5gxUZA
-  
+changes: []
