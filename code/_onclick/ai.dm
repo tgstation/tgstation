@@ -140,9 +140,7 @@
 	toggle_breaker()
 
 /obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
-	src.enabled = !src.enabled
-	src.updateTurrets()
-
+	Topic("toggleOn", list("toggleOn" = 1), 1) // 1 meaning no window (consistency!)
 
 /atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
 	AltClick(user)
@@ -160,8 +158,7 @@
 	return
 
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
-	src.lethal = !src.lethal
-	src.updateTurrets()
+	Topic("toggleLethal", list("toggleLethal" = 1), 1) // 1 meaning no window (consistency!)
 
 //
 // Override TurfAdjacent for AltClicking
