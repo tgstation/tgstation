@@ -202,5 +202,6 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 			return
 		sleep(300)
 		log_game("Rebooting due to universal collapse")
+		CallHook("Reboot",list())
 		world.Reboot()
 		return

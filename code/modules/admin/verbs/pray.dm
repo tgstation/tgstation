@@ -23,10 +23,12 @@
 	for(var/client/C in admins)
 		if(C.prefs.toggles & CHAT_PRAYER)
 			C << msg
-	usr.whisper(orig_message, \
-		heard="inclines $his head and mumbles,", \
-		unheard="inclines $his head and mumbles something under $his breath.", \
-		allow_lastwords=0)
+
+	if(!stat)
+		usr.whisper(orig_message, \
+			heard="inclines $his head and mumbles,", \
+			unheard="inclines $his head and mumbles something under $his breath.", \
+			allow_lastwords=0)
 	usr << "Your prayers have been received by the gods."
 
 	feedback_add_details("admin_verb","PR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

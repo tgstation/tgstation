@@ -34,6 +34,13 @@ function SetMusic(url, time, volume) {
 		C.media.open()
 		C.media.update_music()
 
+	proc/OnReboot(var/list/args)
+		//testing("Received OnReboot.")
+		// Stop all music.
+		for(var/mob/M in mob_list)
+			if(M && M.client)
+				M.stop_all_music()
+
 	// Update when moving between areas.
 	proc/OnMobAreaChange(var/list/args)
 		var/mob/M = args["mob"]
@@ -53,6 +60,10 @@ function SetMusic(url, time, volume) {
 /mob/proc/update_music()
 	if (client && client.media && !client.media.forced)
 		client.media.update_music()
+
+/mob/proc/stop_all_music()
+	if (client && client.media)
+		client.media.push_music("",0,1)
 
 /mob/proc/force_music(var/url,var/start,var/volume=1)
 	if (client && client.media)

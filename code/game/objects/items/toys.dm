@@ -373,10 +373,20 @@
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
+	var/style_type = /datum/writing_style/crayon
+	var/datum/writing_style/style
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
-		return (BRUTELOSS|OXYLOSS)
+/obj/item/toy/crayon/New()
+	..()
+
+	style = new style_type
+
+/obj/item/toy/crayon/proc/Format(var/mob/user,var/text)
+	return style.Format(text,src,user)
+
+/obj/item/toy/crayon/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
+	return (BRUTELOSS|OXYLOSS)
 
 
 
