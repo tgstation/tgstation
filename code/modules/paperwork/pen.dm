@@ -21,6 +21,7 @@
 /datum/speech_filter_action/bbcode/img/Run(var/text)
 	expr.index=1
 	while(expr.FindNext(text))
+		message_admins("[key_name_admin(usr)] added an image ([html_encode(expr.GroupText(1))]) to [src] at [formatJumpTo(get_turf(src))]")
 		var/rtxt="<img src=\"[html_encode(expr.GroupText(1))]\" />"
 		text=copytext(text,1,expr.match)+rtxt+copytext(text,expr.index)
 		expr.index=expr.match+length(rtxt)
