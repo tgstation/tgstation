@@ -156,9 +156,9 @@
 	update_icon()
 
 
-/obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/isnp = 0)
+/obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-	return P.Format(user,t,isnp)
+	return P.Format(user,t)
 
 //Count the fields
 	var/laststart = 1
