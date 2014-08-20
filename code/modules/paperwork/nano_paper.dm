@@ -198,24 +198,12 @@
 			return
 
 		 log += "<br />\[[time_stamp()]] [key_name(usr)] added: [t]"
-
-		// logs images and videos, IN CASE SOMEONE POSTS SOME CP, so admins can have some fun...
-		if(findtext(t,"\[img]"))
-			message_admins("[key_name_admin(usr)] added an image to [src] at [formatJumpTo(get_turf(src))]")
-			log_admin("[key_name_admin(usr)] added an image to [src] at [formatJumpTo(get_turf(src))]")
-		if(findtext(t,"\[video]"))
-			message_admins("[key_name_admin(usr)] added an image to [src] at [formatJumpTo(get_turf(src))]")
-			log_admin("[key_name_admin(usr)] added an image to [src] at [formatJumpTo(get_turf(src))]")
-
 		t = replacetext(t, "\n", "<BR>")
-		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
-
 		if(id!="end")
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
 		else
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
-
 		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]</BODY></HTML>", "window=[name]") // Update the window
 
 	if(href_list["help"])

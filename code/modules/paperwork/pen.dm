@@ -31,6 +31,7 @@
 /datum/speech_filter_action/bbcode/video/Run(var/text)
 	expr.index=1
 	while(expr.FindNext(text))
+		message_admins("[key_name_admin(usr)] added a video ([html_encode(expr.GroupText(1))]) to [src] at [formatJumpTo(get_turf(src))]")
 		var/rtxt="<embed src=\"[html_encode(expr.GroupText(1))]\" width=\"420\" height=\"344\" type=\"x-ms-wmv\" volume=\"85\" autoStart=\"0\" autoplay=\"true\" />"
 		text=copytext(text,1,expr.match)+rtxt+copytext(text,expr.index)
 		expr.index=expr.match+length(rtxt)
