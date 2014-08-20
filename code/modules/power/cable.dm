@@ -461,7 +461,7 @@ obj/structure/cable/proc/avail()
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
-	gender = NEUTER //That's a cable coil sounds better than that's some cable coil.
+	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil_red"
 	item_state = "coil_red"

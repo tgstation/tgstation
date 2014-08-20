@@ -20,11 +20,6 @@
 	create_reagents(100)
 
 
-/obj/structure/janitorialcart/examine(mob/user)
-	..()
-	user << "It contains [reagents.total_volume] unit\s of liquid."
-	//everything else is visible, so doesn't need to be mentioned
-
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
 	if(reagents.total_volume < 1)
 		user << "[src] is out of water!</span>"

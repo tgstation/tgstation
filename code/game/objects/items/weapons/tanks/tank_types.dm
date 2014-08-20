@@ -23,14 +23,6 @@
 	return
 
 
-/obj/item/weapon/tank/oxygen/examine(mob/user)
-	..()
-	if(air_contents.oxygen < 10)
-		user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
-		playsound(user, 'sound/effects/alert.ogg', 50, 1)
-
-
-
 /obj/item/weapon/tank/oxygen/yellow
 	desc = "A tank of oxygen, this one is yellow."
 	icon_state = "oxygen_f"
@@ -67,13 +59,6 @@
 	name = "air tank"
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
-
-
-/obj/item/weapon/tank/air/examine(mob/user)
-	..()
-	if(air_contents.oxygen < 1 && loc==user)
-		user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
-		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 
 /obj/item/weapon/tank/air/New()
@@ -137,13 +122,6 @@
 	..()
 	src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
-
-
-/obj/item/weapon/tank/emergency_oxygen/examine(mob/user)
-	..()
-	if(air_contents.oxygen < 0.2 && loc==user)
-		user << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
-		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"

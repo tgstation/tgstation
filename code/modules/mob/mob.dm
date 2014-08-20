@@ -254,6 +254,11 @@ var/list/slot_equipment_priority = list( \
 	set name = "Examine"
 	set category = "IC"
 
+//	if( (sdisabilities & BLIND || blinded || stat) && !istype(src,/mob/dead/observer) )
+	if(is_blind(src))
+		src << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+
 	face_atom(A)
 	A.examine(src)
 

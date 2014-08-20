@@ -86,7 +86,7 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/examine(mob/user)
 	..()
-	user << "It is[active?"n't":""] running."
+	user << "It is[!active?"n't":""] running."
 
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"

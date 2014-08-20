@@ -38,8 +38,7 @@
 
 /obj/machinery/light_switch/examine(mob/user)
 	..()
-	if(user && !user.stat)
-		user << "It is [on? "on" : "off"]."
+	user << "It is [on? "on" : "off"]."
 
 
 /obj/machinery/light_switch/attack_paw(mob/user)

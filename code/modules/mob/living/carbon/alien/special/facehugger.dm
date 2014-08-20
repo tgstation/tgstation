@@ -45,15 +45,15 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
-	if(!real)
+	if(!real)//So that giant red text about probisci doesn't show up.
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			user << "<span class='danger'>[src] is not moving.</span>"
+			user << "<span class='userdanger'>[src] is not moving.</span>"
 		if(CONSCIOUS)
 			user << "<span class='userdanger'>[src] seems to be active!</span>"
 	if (sterile)
-		user << "<span class='notice'>It looks like the proboscis has been removed.</span>"
+		user << "<span class='userdanger'>It looks like the proboscis has been removed.</span>"
 
 /obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m)
 	if(O.force)

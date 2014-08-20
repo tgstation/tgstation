@@ -36,13 +36,6 @@
 	else
 		user << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%."
 
-	usr << "The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
-	if(open)
-		usr << "The power cell is [cell ? "installed" : "missing"]."
-	else
-		usr << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
-	return
-
 /obj/machinery/space_heater/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)

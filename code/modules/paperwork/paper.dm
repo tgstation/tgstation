@@ -49,8 +49,7 @@
 
 
 /obj/item/weapon/paper/examine(mob/user)
-	if(is_blind(user))
-		return
+	..()
 	if(in_range(user, src))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")

@@ -49,10 +49,11 @@
 
 /obj/item/weapon/photo/examine(mob/user)
 	..()
-	if(is_blind(user))	return
 
 	if(in_range(user, src))
 		show(user)
+	else
+		user << "You need to get closer to get a good look at this photo."
 
 
 /obj/item/weapon/photo/proc/show(mob/user)

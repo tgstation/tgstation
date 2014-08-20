@@ -35,9 +35,9 @@
 	..()
 	if (is_cyborg)
 		if(src.singular_name)
-			usr << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
+			user << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
 		else
-			usr << "There is enough energy for [src.get_amount()]."
+			user << "There is enough energy for [src.get_amount()]."
 		return
 	if(src.singular_name)
 		if(src.get_amount()>1)
@@ -48,7 +48,6 @@
 		user << "There are [src.get_amount()] in the stack."
 	else
 		user << "There is [src.get_amount()] in the stack."
-	return
 
 /obj/item/stack/proc/get_amount()
 	if (is_cyborg)
