@@ -37,6 +37,7 @@
 
 	var/memory
 
+	var/need_job_assign = 1 //Whether the job controller should give them a job
 	var/assigned_role
 	var/special_role
 
@@ -997,7 +998,6 @@
 		else
 			current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 		special_role = "Syndicate"
-		assigned_role = "MODE"
 		current << "\blue You are a [syndicate_name()] agent!"
 		ticker.mode.forge_syndicate_objectives(src)
 		ticker.mode.greet_syndicate(src)
@@ -1029,7 +1029,6 @@
 	if(!(src in ticker.mode.wizards))
 		ticker.mode.wizards += src
 		special_role = "Wizard"
-		assigned_role = "MODE"
 		//ticker.mode.learn_basic_spells(current)
 		if(!wizardstart.len)
 			current.loc = pick(latejoin)
@@ -1139,11 +1138,13 @@
 //slime
 /mob/living/carbon/slime/mind_initialize()
 	..()
+	mind.special_role = "slime"
 	mind.assigned_role = "slime"
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
+	mind.special_role = "Alien"
 	mind.assigned_role = "Alien"
 	//XENO HUMANOID
 /mob/living/carbon/alien/humanoid/queen/mind_initialize()
@@ -1191,14 +1192,17 @@
 /mob/living/simple_animal/mind_initialize()
 	..()
 	mind.assigned_role = "Animal"
+	mind.special_role = "Animal"
 
 /mob/living/simple_animal/corgi/mind_initialize()
 	..()
 	mind.assigned_role = "Corgi"
+	mind.special_role = "Corgi"
 
 /mob/living/simple_animal/shade/mind_initialize()
 	..()
 	mind.assigned_role = "Shade"
+	mind.special_role = "Shade"
 
 /mob/living/simple_animal/construct/mind_initialize()
 	..()

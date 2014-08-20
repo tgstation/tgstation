@@ -76,7 +76,6 @@
 		var/datum/mind/cultist = pick(antag_candidates)
 		antag_candidates -= cultist
 		cult += cultist
-		cultist.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
 	return (cult.len>=required_enemies)

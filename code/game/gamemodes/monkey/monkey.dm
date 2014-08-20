@@ -36,7 +36,6 @@
 		var/datum/mind/carrier = pick(antag_candidates)
 		carriers += carrier
 		carrier.special_role = "monkey"
-		carrier.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		log_game("[carrier.key] (ckey) has been selected as a Jungle Fever carrier")
 		antag_candidates -= carrier
 
