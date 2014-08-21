@@ -75,7 +75,7 @@ datum
 			result = "discount"
 			required_reagents = list("irradiatedbeans"=1, "toxicwaste"=1, "refriedbeans"=1, "mutatedbeans"=1, "beff"=1, "horsemeat"=1,"moonrocks"=1, "offcolorcheese"=1, "bonemarrow"=1, "greenramen"=1, "glowingramen"=1, "deepfriedramen"=1)
 			result_amount = 12
-			
+
 		peptobismol
 			name = "Peptobismol"
 			id = "peptobismol"
@@ -459,7 +459,7 @@ datum
 					napalm.update_values()
 
 					target_tile.assume_air(napalm)
-					spawn (0) target_tile.hotspot_expose(700, 400)
+					spawn (0) target_tile.hotspot_expose(700, 400,surfaces=1)
 				holder.del_reagent("napalm")
 				return
 
@@ -1315,7 +1315,7 @@ datum
 					napalm.temperature = 1400
 
 					target_tile.assume_air(napalm)
-					spawn (0) target_tile.hotspot_expose(700, 400)
+					spawn (0) target_tile.hotspot_expose(700, 400,surfaces=1)
 
 //Yellow
 		slimeoverload

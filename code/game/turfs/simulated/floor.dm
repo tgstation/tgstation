@@ -43,14 +43,8 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 	else
 		icon_regular_floor = icon_state
 
-/turf/simulated/floor/ignite(var/temperature)
-	on_fire=1
-	visible_message("\The [src] bursts into flame!")
-	overlays += image(fire_dmi,fire_sprite)
-	spawn(rand(fire_time_min,fire_time_max) SECONDS)
-		if(!on_fire)
-			return
-		burn_tile()
+/turf/simulated/floor/ashify()
+	burn_tile()
 
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
@@ -75,12 +69,12 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 						src.break_tile_to_plating()
 					else
 						src.break_tile()
-					src.hotspot_expose(1000,CELL_VOLUME)
+					src.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(3.0)
 			if (prob(50))
 				src.break_tile()
-				src.hotspot_expose(1000,CELL_VOLUME)
+				src.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
 	return
 
 /turf/simulated/floor/blob_act()

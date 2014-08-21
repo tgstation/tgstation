@@ -37,8 +37,9 @@
 	name = "floor"
 	icon_state = "wood"
 	floor_tile = new/obj/item/stack/tile/wood
+
 	autoignition_temperature = AUTOIGNITION_WOOD
-	autoignition_temperature = AUTOIGNITION_WOOD
+	fire_fuel = 10
 
 /turf/simulated/floor/light
 	name = "Light floor"
@@ -61,6 +62,9 @@
 	name = "floor"
 	icon_state = "wood"
 	floor_tile = new/obj/item/stack/tile/wood
+
+	autoignition_temperature = AUTOIGNITION_WOOD
+	fire_fuel = 10
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"

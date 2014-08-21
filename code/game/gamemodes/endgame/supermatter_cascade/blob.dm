@@ -3,9 +3,10 @@
 	name = "supermatter"
 	desc = "THE END IS right now actually."
 	icon_state = "supermatter"
-	luminosity = 8
+	luminosity = 5
 
 	var/spawned=0 // DIR mask
+	var/avail_dirs = list(NORTH,SOUTH,EAST,WEST)
 
 /turf/unsimulated/wall/supermatter/New()
 	..()
@@ -16,15 +17,14 @@
 	..()
 
 /turf/unsimulated/wall/supermatter/proc/process()
-	if(spawned & (NORTH|SOUTH|EAST|WEST))
-		processing_objects -= src
-		return
-	var/pdir = pick(cardinal)
-	if(spawned & pdir) return
+	var/pdir = pick(avail_dirs)
+	avail_dirs -= pdir
 	var/turf/T=get_step(src,pdir)
 	if(!istype(T,type))
 		T.ChangeTurf(type)
-	spawned |= pdir
+	if(spawned & (NORTH|SOUTH|EAST|WEST))
+		processing_objects -= src
+		return
 
 /turf/unsimulated/wall/supermatter/attack_paw(mob/user as mob)
 	return attack_hand(user)

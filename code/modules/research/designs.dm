@@ -764,7 +764,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 2, "materials" = 2)
 	build_type = PROTOLATHE
 	materials = list("$glass" = 500, "$metal" = 1000, "$gold" = 500)
-	build_path = /obj/item/weapon/nano_paper_bin
+	build_path = /obj/item/weapon/paper_bin/nano
 
 ///////////////////////////////////
 //////////Mecha Module Disks///////

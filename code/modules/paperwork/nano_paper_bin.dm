@@ -1,4 +1,4 @@
-/obj/item/weapon/nano_paper_bin
+/obj/item/weapon/paper_bin/nano
 	name = "Nano paper dispenser"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "np_dispenser"
@@ -10,9 +10,10 @@
 	var/ressources = 30	// how much nano paper it contains
 	var/max_ressources = 30 // the maxium amount of paper it can contain, un-used for now
 	autoignition_temperature = 1000 // Kelvin
+	fire_fuel = 1
 
 
-/obj/item/weapon/nano_paper_bin/MouseDrop(mob/user as mob)
+/obj/item/weapon/paper_bin/nano/MouseDrop(mob/user as mob)
 	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
 		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal))
 			if( !usr.get_active_hand() )		//if active hand is empty
@@ -23,15 +24,15 @@
 	return
 
 
-/obj/item/weapon/nano_paper_bin/attack_paw(mob/user as mob)
+/obj/item/weapon/paper_bin/nano/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
 
-/obj/item/weapon/nano_paper_bin/attack_hand(mob/user as mob)
+/obj/item/weapon/paper_bin/nano/attack_hand(mob/user as mob)
 	if(ressources > 0)
 		ressources--
-		var/obj/item/weapon/nano_paper/p
-		p = new /obj/item/weapon/nano_paper
+		var/obj/item/weapon/paper/nano/p
+		p = new /obj/item/weapon/paper/nano
 		p.loc = user.loc
 		user.put_in_hands(p)
 		user << "<span class='notice'>the [src] spits out a [p]</span>"
@@ -44,7 +45,7 @@
 	return
 
 
-/obj/item/weapon/nano_paper_bin/attackby(var/obj/item/stack/sheet/plasteel/i as obj, mob/user as mob)
+/obj/item/weapon/paper_bin/nano/attackby(var/obj/item/stack/sheet/plasteel/i as obj, mob/user as mob)
 	if(!istype(i))
 		return
 	if(ressources > 0)
@@ -59,7 +60,7 @@
 	update_icon()
 
 
-/obj/item/weapon/nano_paper_bin/examine()
+/obj/item/weapon/paper_bin/nano/examine()
 	set src in oview(1)
 	var/desc = "<span class='notice'>This machine dispenses nano paper</span>"
 	usr << desc
@@ -72,7 +73,7 @@
 		return
 
 
-/obj/item/weapon/nano_paper_bin/update_icon()
+/obj/item/weapon/paper_bin/nano/update_icon()
 	if(ressources < 1)
 		icon_state = "np_dispenser_empty"
 	else

@@ -100,7 +100,7 @@
 /obj/effect/meteor/Move()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
-		T.hotspot_expose(METEOR_TEMPERATURE, 1000)
+		T.hotspot_expose(METEOR_TEMPERATURE, 1000,surfaces=1)
 	..()
 	return
 

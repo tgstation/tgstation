@@ -23,10 +23,6 @@ In short:
 	return 0
 	*/
 
-// Apply changes when exiting state
-/datum/universal_state/hell/OnExit()
-
-
 /datum/universal_state/hell/DecayTurf(var/turf/T)
 	if(istype(T,/turf/simulated/wall) && !istype(T,/turf/simulated/wall/cult))
 		T.ChangeTurf(/turf/simulated/wall/cult)
