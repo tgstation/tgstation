@@ -27,3 +27,12 @@
 		if(!istype(M,/mob/new_player))
 			M << announcement
 			M << sound(sound)
+
+/proc/print_command_report(var/text = "", var/title = "Central Command Update")
+	for (var/obj/machinery/computer/communications/C in machines)
+		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == 1)
+			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
+			P.name = "paper- '[title]'"
+			P.info = text
+			C.messagetitle.Add("[title]")
+			C.messagetext.Add(text)

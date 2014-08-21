@@ -111,15 +111,16 @@ var/datum/controller/event/events
 
 //allows a client to trigger an event (For Debugging Purposes)
 /client/proc/forceEvent(var/datum/round_event_control/E in events.control)
-	set name = "Trigger Event (Debug Only)"
-	set category = "Debug"
+	set name = "Trigger Event"
+	set category = "Fun"
 
-	if(!holder)
+	if(!holder ||!check_rights(R_FUN))
 		return
 
 	if(istype(E))
 		E.runEvent()
 		message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])", 1)
+		log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 
 
 /*

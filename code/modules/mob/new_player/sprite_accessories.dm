@@ -328,6 +328,106 @@
 	name = "Bun Head"
 	icon_state = "hair_bun"
 
+/datum/sprite_accessory/hair/braidtail
+	name = "Braided Tail"
+	icon_state = "hair_braidtail"
+
+/datum/sprite_accessory/hair/familyman
+	name = "Big Flat Top"
+	icon_state = "hair_thefamilyman"
+
+/datum/sprite_accessory/hair/drillruru
+	name = "Drill Hair"
+	icon_state = "hair_drillruru"
+
+/datum/sprite_accessory/hair/dandypomp
+	name = "Big Pompadour"
+	icon_state = "hair_dandypompadour"
+
+/datum/sprite_accessory/hair/poofy
+	name = "Side Ponytail"
+	icon_state = "hair_poofy"
+
+/datum/sprite_accessory/hair/crono
+	name = "Big Spiky Hair"
+	icon_state = "hair_toriyama1"
+
+/datum/sprite_accessory/hair/vegeta
+	name = "Big Spiky Hair 2"
+	icon_state = "hair_toriyama2"
+
+/datum/sprite_accessory/hair/cia
+	name = "Business Hair 3"
+	icon_state = "hair_cia"
+
+/datum/sprite_accessory/hair/mulder
+	name = "Business Hair 4"
+	icon_state = "hair_mulder"
+
+/datum/sprite_accessory/hair/scully
+	name = "Bob Hair 2"
+	icon_state = "hair_scully"
+
+/datum/sprite_accessory/hair/nitori
+	name = "Pigtail Hair"
+	icon_state = "hair_nitori"
+
+/datum/sprite_accessory/hair/joestar
+	name = "Swept Back Hair 2"
+	icon_state = "hair_joestar"
+
+/datum/sprite_accessory/hair/edgeworth
+	name = "Keanu Hair"
+	icon_state = "hair_edgeworth"
+
+/datum/sprite_accessory/hair/objection
+	name = "Swept Back Hair"
+	icon_state = "hair_objection!"
+
+/datum/sprite_accessory/hair/dubsman
+	name = "Business Hair 2"
+	icon_state = "hair_dubsman"
+
+/datum/sprite_accessory/hair/blackswordsman
+	name = "Hedgehog Hair"
+	icon_state = "hair_blackswordsman"
+
+/datum/sprite_accessory/hair/mentalist
+	name = "Business Hair 1"
+	icon_state = "hair_mentalist"
+
+/datum/sprite_accessory/hair/fujisaki
+	name = "Short Hair 3"
+	icon_state = "hair_fujisaki"
+
+/datum/sprite_accessory/hair/schierke
+	name = "Bob Hair"
+	icon_state = "hair_schierke"
+
+/datum/sprite_accessory/hair/akari
+	name = "Twin Buns"
+	icon_state = "hair_akari"
+
+/datum/sprite_accessory/hair/fujiyabashi
+	name = "Ponytail 4"
+	icon_state = "hair_fujiyabashi"
+
+/datum/sprite_accessory/hair/nia
+	name = "Long Hair 1"
+	icon_state = "hair_nia"
+
+/datum/sprite_accessory/hair/shinobu
+	name = "Long Hair 2"
+	icon_state = "hair_shinobu"
+
+/datum/sprite_accessory/hair/ramona
+	name = "Ramona"
+	icon_state = "hair_ramona"
+
+/datum/sprite_accessory/hair/megaeyebrows
+	name = "Mega Eyebrows"
+	icon_state = "hair_megaeyebrow"
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////

@@ -196,7 +196,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		maxHealth = health
 		if(creator)
 			src.creator = creator
-			faction = list("\ref[creator]") // very unique
+			faction += "\ref[creator]" // very unique
 		if(destroy_original)
 			qdel(O)
 		return 1
