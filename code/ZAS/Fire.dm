@@ -69,7 +69,7 @@ Attach to transfer valve and open. BOOM.
 /turf
 	var/soot_type = /obj/effect/decal/cleanable/soot
 
-/turf/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/turf/simulated/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 
 	var/obj/effect/E = null
 	if(soot_type)
