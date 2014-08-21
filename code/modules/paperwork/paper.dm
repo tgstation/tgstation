@@ -42,10 +42,9 @@
 		return
 
 /obj/item/weapon/paper/update_icon()
+	icon_state=initial(icon_state)
 	if(info)
-		icon_state = "paper_words"
-		return
-	icon_state = "paper"
+		icon_state += "_words"
 
 /obj/item/weapon/paper/examine()
 	set src in oview(1)
@@ -70,9 +69,9 @@
 	set src in usr
 
 	if((M_CLUMSY in usr.mutations) && prob(50))
-		usr << "<span class='warning'>You cut yourself on the paper.</span>"
+		usr << "<span class='warning'>You cut yourself on [src].</span>"
 		return
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text), 1, MAX_NAME_LEN)
+	var/n_name = copytext(sanitize(input(usr, "What would you like to label [src]?", "Paper Labelling", null)  as text), 1, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
@@ -157,18 +156,15 @@
 	update_icon()
 
 
-/obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob)
-//	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-	return P.Format(user,t)
+/obj/item/weapon/paper/proc/parsepencode(var/mob/user,var/obj/item/i, var/t)
+	if(istype(i,/obj/item/weapon/pen))
+		//t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
+		var/obj/item/weapon/pen/P=i
+		t=P.Format(user,t,src)
 
-//Count the fields
-	var/laststart = 1
-	while(1)
-		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
-		if(i==0)
-			break
-		laststart = i+1
-		fields++
+	else if(istype(i,/obj/item/toy/crayon))
+		var/obj/item/toy/crayon/C=i
+		t=C.Format(user,t,src)
 
 	return t
 
@@ -191,7 +187,8 @@
 		\[small\] - \[/small\] : Decreases the <font size = \"1\">size</font> of the text.<br>
 		\[list\] - \[/list\] : A list.<br>
 		\[*\] : A dot used for lists.<br>
-		\[hr\] : Adds a horizontal rule.
+		\[hr\] : Adds a horizontal rule.<br>
+		\[img\]http://url\[/img\] : add an image
 	</BODY></HTML>"}, "window=paper_help")
 
 
@@ -213,30 +210,18 @@
 
 		log += "<br />\[[time_stamp()]] [key_name(usr)] added: [t]"
 
-		/* Jesus christ whoever did this is retarded.
-		t = checkhtml(t)
-
-		// check for exploits
-		for(var/bad in paper_blacklist)
-			if(findtext(t,bad))
-				usr << "\blue You think to yourself, \"Hm.. this is only paper...\""
-				log_admin("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
-				message_admins("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
-				return
-		*/
-
-
-
 		t = replacetext(t, "\n", "<BR>")
 
-		if(istype(i,/obj/item/weapon/pen))
-			//t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
-			var/obj/item/weapon/pen/P=i
-			t=P.Format(usr,t)
+		t = parsepencode(usr,i,t)
 
-		else if(istype(i,/obj/item/toy/crayon))
-			var/obj/item/toy/crayon/C=i
-			t=C.Format(usr,t)
+		//Count the fields
+		var/laststart = 1
+		while(1)
+			var/j = findtext(t, "<span class=\"paper_field\">", laststart)
+			if(j==0)
+				break
+			laststart = j+1
+			fields++
 
 		if(id!="end")
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
@@ -269,7 +254,7 @@
 		if((!in_range(src, usr) && loc != user && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != user && user.get_active_hand() != P))
 			return
 
-		stamps += (stamps=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the [P.name].</i>"
+		stamps += (stamps=="" ? "<HR>" : "<BR>") + "<i>This [src.name] has been stamped with the [P.name].</i>"
 
 		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 		stampoverlay.pixel_x = rand(-2, 2)
@@ -287,7 +272,7 @@
 		stamped += P.type
 		overlays += stampoverlay
 
-		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
+		user << "<span class='notice'>You stamp [src] with your rubber stamp.</span>"
 
 	add_fingerprint(user)
 	return

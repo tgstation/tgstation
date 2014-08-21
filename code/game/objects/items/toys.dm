@@ -381,8 +381,8 @@
 
 	style = new style_type
 
-/obj/item/toy/crayon/proc/Format(var/mob/user,var/text)
-	return style.Format(text,src,user)
+/obj/item/toy/crayon/proc/Format(var/mob/user,var/text,var/obj/item/weapon/paper/P)
+	return style.Format(text,src,user,P)
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"

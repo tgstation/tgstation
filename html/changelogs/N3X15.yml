@@ -1,2 +1,4 @@
 author: N3X15
-changes: []
+changes: 
+  - tweak: Regular paper supports [img] tags again.
+  - tweak: Improved paper logging.

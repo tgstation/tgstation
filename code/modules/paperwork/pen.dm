@@ -19,19 +19,22 @@
 /proc/REG_BETWEEN_BBTAG(x)
 	return "[REG_BBTAG(x)]([REG_NOTBB])[REG_BBTAG("/[x]")]"
 
-/datum/speech_filter_action/bbcode/img/Run(var/text)
+/datum/speech_filter_action/bbcode/Run(var/text, var/mob/user, var/atom/movable/P)
+	return
+
+/datum/speech_filter_action/bbcode/img/Run(var/text, var/mob/user, var/atom/movable/P)
 	expr.index=1
 	while(expr.FindNext(text))
-		message_admins("[key_name_admin(usr)] added an image ([html_encode(expr.GroupText(1))]) to [src] at [formatJumpTo(get_turf(src))]")
+		message_admins("[key_name_admin(user)] added an image ([html_encode(expr.GroupText(1))]) to [P] at [formatJumpTo(get_turf(P))]")
 		var/rtxt="<img src=\"[html_encode(expr.GroupText(1))]\" />"
 		text=copytext(text,1,expr.match)+rtxt+copytext(text,expr.index)
 		expr.index=expr.match+length(rtxt)
 	return text
 
-/datum/speech_filter_action/bbcode/video/Run(var/text)
+/datum/speech_filter_action/bbcode/video/Run(var/text, var/mob/user, var/atom/movable/P)
 	expr.index=1
 	while(expr.FindNext(text))
-		message_admins("[key_name_admin(usr)] added a video ([html_encode(expr.GroupText(1))]) to [src] at [formatJumpTo(get_turf(src))]")
+		message_admins("[key_name_admin(user)] added a video ([html_encode(expr.GroupText(1))]) to [P] at [formatJumpTo(get_turf(P))]")
 		var/rtxt="<embed src=\"[html_encode(expr.GroupText(1))]\" width=\"420\" height=\"344\" type=\"x-ms-wmv\" volume=\"85\" autoStart=\"0\" autoplay=\"true\" />"
 		text=copytext(text,1,expr.match)+rtxt+copytext(text,expr.index)
 		expr.index=expr.match+length(rtxt)
@@ -63,10 +66,14 @@
 
 	// Fallthrough just fucking kills the tag
 	addReplacement(REG_BBTAG("\[^\\\]\]"), "")
+	return
 
-
-/datum/writing_style/proc/Format(var/t, var/obj/item/weapon/pen/P, var/mob/user)
-	t = FilterSpeech(t)
+/datum/writing_style/proc/Format(var/t, var/obj/item/weapon/pen/P, var/mob/user, var/obj/item/weapon/paper/paper)
+	if(expressions.len)
+		for(var/key in expressions)
+			var/datum/speech_filter_action/SFA = expressions[key]
+			if(SFA && !SFA.broken)
+				t = SFA.Run(t,user,paper)
 	t = replacetext(t,"<USERNAME />",user.real_name)
 
 	return "<span style=\"[style];color:[P.colour]\">[t]</span>"
@@ -79,11 +86,13 @@
 	addReplacement(REG_BBTAG("list"), "<ul>")
 	addReplacement(REG_BBTAG("/list"), "</ul>")
 
+	// : is our delimiter, gi = global search, case-insensitive.
+	addExpression(":"+REG_BBTAG("img")+"("+REG_NOTBB+")"+REG_BBTAG("/img")+":gi", ACT_BBCODE_IMG,list())
+
 	..() // Order of operations
 
 /datum/writing_style/pen/nano_paper/New()
 	// : is our delimiter, gi = global search, case-insensitive.
-	addExpression(":"+REG_BBTAG("img")+"("+REG_NOTBB+")"+REG_BBTAG("/img")+":gi", ACT_BBCODE_IMG,list())
 	addExpression(":"+REG_BBTAG("video")+"("+REG_NOTBB+")"+REG_BBTAG("/video")+":gi", ACT_BBCODE_VIDEO,list())
 
 	..()
@@ -123,12 +132,12 @@
 	style = new style_type
 	nano_style = new nano_style_type
 
-// checks if its used on nano_paper, if it is, use the nano_paper formating
-/obj/item/weapon/pen/proc/Format(var/mob/user, var/text, var/is_nano_paper)
-	if(is_nano_paper)
-		return nano_style.Format(text,src,user)
+// checks if its used on nano paper, if it is, use the nano paper formatting
+/obj/item/weapon/pen/proc/Format(var/mob/user, var/text, var/obj/item/weapon/paper/P)
+	if(istype(P,/obj/item/weapon/paper/nano))
+		return nano_style.Format(text,src,user,P)
 	else
-		return style.Format(text,src,user)
+		return style.Format(text,src,user,P)
 
 /obj/item/weapon/pen/suicide_act(mob/user)
 	viewers(user) << "\red <b>[user]is jamming the [src.name]into \his ear! It looks like \he's trying to commit suicide.</b>"
