@@ -203,6 +203,9 @@
 		//var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
 		var/t = sanitize(input("Enter what you want to write:", "Write", null, null))  as message
 		var/obj/item/i = usr.get_active_hand() // Check to see if he still got that darn pen, also check if he's using a crayon or pen.
+		if(!istype(i,/obj/item/weapon/pen) && !istype(i,/obj/item/toy/crayon))
+			usr << "<span class='warning'>Please ensure your pen is in your active hand and that you're holding the paper.</span>"
+			return
 
 		// if paper is not in usr, then it must be in a clipboard or folder, which must be in or near usr
 		if(src.loc != usr && !((istype(src.loc, /obj/item/weapon/clipboard) || istype(src.loc, /obj/item/weapon/folder)) && (src.loc.loc == usr || src.loc.Adjacent(usr)) ) )
