@@ -102,12 +102,12 @@
 				M.adjustBrainLoss(10)
 				M << "\red You feel dumber."
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] beats [] over the head with []!</B>", user, M, src), 1)
+				O.show_message(text("<span class='danger'>[user] beats [M] over the head with [src]!</span>"), 1)
 			playsound(src.loc, "punch", 25, 1, -1)
 
 	else if(M.stat == 2)
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red <B>[] smacks []'s lifeless corpse with [].</B>", user, M, src), 1)
+			O.show_message(text("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>"), 1)
 		playsound(src.loc, "punch", 25, 1, -1)
 	return
 
