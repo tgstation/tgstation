@@ -11,13 +11,17 @@
 	var/antigen = 0 // 16 bits describing the antigens, when one bit is set, a cure with that bit can dock here
 	var/max_stage = 4
 
-/datum/disease2/disease/New()
+	var/log = ""
+	var/logged_virusfood=0
+
+/datum/disease2/disease/New(var/notes="No notes.")
 	uniqueID = rand(0,10000)
+	log += "<br />[timestamp()] CREATED - [notes]"
 	..()
 
 /datum/disease2/disease/proc/makerandom(var/greater=0)
 	for(var/i=1 ; i <= max_stage ; i++ )
-		var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
+		var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder(src)
 		holder.stage = i
 		if(greater)
 			holder.getrandomeffect(2)
@@ -35,6 +39,7 @@
 		cure(mob)
 		return
 
+
 	if(mob.stat == 2)
 		return
 	if(stage <= 1 && clicks == 0) 	// with a certain chance, the mob may become immune to the disease before it starts properly
@@ -44,6 +49,8 @@
 	if(mob.radiation > 50)
 		if(prob(1))
 			majormutate()
+			log += "<br />[timestamp()] MAJORMUTATE (rads)!"
+
 
 	//Space antibiotics stop disease completely (temporary)
 	if(mob.reagents.has_reagent("spaceacillin"))
@@ -52,15 +59,24 @@
 	//Virus food speeds up disease progress
 	if(mob.reagents.has_reagent("virusfood"))
 		mob.reagents.remove_reagent("virusfood",0.1)
+		if(!logged_virusfood)
+			log += "<br />[timestamp()] Virus Fed ([mob.reagents.get_reagent_amount("virusfood")]U)"
+			logged_virusfood=1
 		clicks += 10
+	else
+		logged_virusfood=0
 
 	//Moving to the next stage
 	if(clicks > stage*100 && prob(10))
 		if(stage == max_stage)
 			src.cure(mob)
 			mob.antibodies |= src.antigen
-		stage++
-		clicks = 0
+			log += "<br />[timestamp()] STAGEMAX ([stage])"
+		else
+			stage++
+			log += "<br />[timestamp()] NEXT STAGE ([stage])"
+			clicks = 0
+
 	//Do nasty effects
 	for(var/datum/disease2/effectholder/e in effects)
 		e.runeffect(mob,stage)
@@ -69,7 +85,7 @@
 	if(src.spreadtype == "Airborne")
 		for(var/mob/living/carbon/M in oview(1,mob))
 			if(airborne_can_reach(get_turf(mob), get_turf(M)))
-				infect_virus2(M,src)
+				infect_virus2(M,src, notes="(Airborne from [key_name(mob)])")
 
 	//fever
 	mob.bodytemperature = max(mob.bodytemperature, min(310+5*stage ,mob.bodytemperature+5*stage))
@@ -85,6 +101,7 @@
 	var/datum/disease2/effectholder/holder = pick(effects)
 	holder.minormutate()
 	infectionchance = min(50,infectionchance + rand(0,10))
+	log += "<br />[timestamp()] Infection chance now [infectionchance]%"
 
 /datum/disease2/disease/proc/majormutate()
 	uniqueID = rand(0,10000)
@@ -95,7 +112,8 @@
 		antigen |= text2num(pick(ANTIGENS))
 
 /datum/disease2/disease/proc/getcopy()
-	var/datum/disease2/disease/disease = new /datum/disease2/disease
+	var/datum/disease2/disease/disease = new /datum/disease2/disease("")
+	disease.log=log
 	disease.infectionchance = infectionchance
 	disease.spreadtype = spreadtype
 	disease.stageprob = stageprob
@@ -105,7 +123,7 @@
 	disease.stage = stage
 	disease.clicks = clicks
 	for(var/datum/disease2/effectholder/holder in effects)
-		var/datum/disease2/effectholder/newholder = new /datum/disease2/effectholder
+		var/datum/disease2/effectholder/newholder = new /datum/disease2/effectholder(disease)
 		newholder.effect = new holder.effect.type
 		newholder.chance = holder.chance
 		newholder.cure = holder.cure
