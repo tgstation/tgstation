@@ -181,41 +181,49 @@
 			break
 	if(!holder) return
 	var/list/pa = params2list(params)
-
+	var/turf/RT = get_turf(object)
 	switch(buildmode)
 		if(1)
 			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
 				if(istype(object,/turf/space))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/floor)
+					log_admin("[key_name(usr)] made a floor at [formatJumpTo(T)]")
 					return
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall)
+					log_admin("[key_name(usr)] made a wall at [formatJumpTo(T)]")
 					return
 				else if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall/r_wall)
+					log_admin("[key_name(usr)] made a rwall at [formatJumpTo(T)]")
 					return
 			else if(pa.Find("right"))
 				if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/floor)
+					log_admin("[key_name(usr)] removed a wall at [formatJumpTo(T)]")
 					return
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
 					T.ChangeTurf(/turf/space)
+					log_admin("[key_name(usr)] removed flooring at [formatJumpTo(T)]")
 					return
 				else if(istype(object,/turf/simulated/wall/r_wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall)
+					log_admin("[key_name(usr)] downgraded an rwall at [formatJumpTo(T)]")
 					return
 				else if(istype(object,/obj))
 					del(object)
 					return
 			else if(istype(object,/turf) && pa.Find("alt") && pa.Find("left"))
 				new/obj/machinery/door/airlock(get_turf(object))
+				log_admin("[key_name(usr)] made an airlock at [formatJumpTo(RT)]")
 			else if(istype(object,/turf) && pa.Find("ctrl") && pa.Find("left"))
+				log_admin("[key_name(usr)] made a window at [formatJumpTo(RT)]")
 				switch(holder.builddir.dir)
 					if(NORTH)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
@@ -239,7 +247,9 @@
 				else
 					var/obj/A = new holder.buildmode.objholder (get_turf(object))
 					A.dir = holder.builddir.dir
+				log_admin("[key_name(usr)] made a [holder.buildmode.objholder] at [formatJumpTo(RT)]")
 			else if(pa.Find("right"))
+				log_admin("[key_name(usr)] deleted a [object] at [formatJumpTo(RT)]")
 				if(isobj(object)) del(object)
 
 		if(3)
@@ -258,8 +268,10 @@
 
 		if(4)
 			if(pa.Find("left"))
+				log_admin("[key_name(usr)] is selecting [object] for throwing at [formatJumpTo(RT)]")
 				holder.throw_atom = object
 			if(pa.Find("right"))
 				if(holder.throw_atom)
 					holder.throw_atom.throw_at(object, 10, 1)
+					log_admin("[key_name(usr)] is throwing a [holder.throw_atom] at [object] - [formatJumpTo(RT)]")
 
