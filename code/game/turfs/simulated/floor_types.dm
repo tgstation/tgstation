@@ -40,6 +40,8 @@
 
 	autoignition_temperature = AUTOIGNITION_WOOD
 	fire_fuel = 10
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/light
 	name = "Light floor"
@@ -56,8 +58,6 @@
 				update_icon()
 				name = n
 
-
-
 /turf/simulated/floor/wood
 	name = "floor"
 	icon_state = "wood"
@@ -65,6 +65,8 @@
 
 	autoignition_temperature = AUTOIGNITION_WOOD
 	fire_fuel = 10
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
@@ -85,6 +87,9 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
+
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob)
 	if(!C)
@@ -155,6 +160,9 @@
 	heat_capacity = 0
 	layer = 2
 
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
+
 /turf/simulated/shuttle/wall
 	name = "wall"
 	icon_state = "wall1"
@@ -178,6 +186,8 @@
 /turf/simulated/floor/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
@@ -283,6 +293,9 @@
 	lighting_lumcount = 4		//starlight
 
 	intact = 0
+
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
 
 	New()
 		..()

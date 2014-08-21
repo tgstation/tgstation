@@ -12,12 +12,15 @@ Attach to transfer valve and open. BOOM.
 /atom
 	var/autoignition_temperature = 0 // In Kelvin.  0 = Not flammable
 	var/on_fire=0
+	var/fire_fuel=0 // Do NOT rely on this.  getFireFuel may be overridden.
 	var/fire_dmi = 'icons/effects/fire.dmi'
 	var/fire_sprite = "fire"
 	var/fire_overlay = null
 	var/ashtype = /obj/effect/decal/cleanable/ash
 
-	var/fire_fuel=0 // Do NOT rely on this.  getFireFuel may be overridden.
+	var/melt_temperature=0
+	var/molten = 0
+
 
 /atom/proc/getFireFuel()
 	return fire_fuel
@@ -48,9 +51,39 @@ Attach to transfer valve and open. BOOM.
 	if(! (locate(/obj/fire) in T))
 		new /obj/fire(T)
 
+/atom/proc/melt(var/temperature)
+	return //lolidk
+
 /atom/proc/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(autoignition_temperature && !on_fire && exposed_temperature > autoignition_temperature)
 		ignite(exposed_temperature)
+		return 1
+
+	if(melt_temperature && melt_temperature <= exposed_temperature && !molten && prob(5))
+		molten=1
+		melt()
+		return 1
+
+	return 0
+
+/turf
+	var/soot_type = /obj/effect/decal/cleanable/soot
+
+/turf/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+
+	var/obj/effect/E = null
+	if(soot_type)
+		E = locate(soot_type) in src
+	if(..())
+		return 1
+	if(molten || on_fire)
+		if(istype(E))
+			qdel(E)
+		return 0
+	if(!E && soot_type && prob(25))
+		new soot_type(src)
+
+	return 0
 
 /turf/proc/hotspot_expose(var/exposed_temperature, var/exposed_volume, var/soh = 0, var/surfaces=0)
 
@@ -281,7 +314,8 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 			fuel.moles -= (fuel.moles * used_fuel_ratio * used_reactants_ratio) * 5 //Fuel burns 5 times as quick
 			if(fuel.moles <= 0) del fuel
 
-		T.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
+		if(T.getFireFuel()>0)
+			T.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
 		for(var/atom/A in T)
 			if(A.getFireFuel()>0)
 				A.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
