@@ -143,7 +143,7 @@ Attach to transfer valve and open. BOOM.
 
 	// Check if there is something to combust.
 	if (!air_contents.check_recombustability(S))
-		testing("Not recombustible.")
+		//testing("Not recombustible.")
 		Extinguish()
 		return
 
@@ -281,6 +281,7 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 			fuel.moles -= (fuel.moles * used_fuel_ratio * used_reactants_ratio) * 5 //Fuel burns 5 times as quick
 			if(fuel.moles <= 0) del fuel
 
+		T.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
 		for(var/atom/A in T)
 			if(A.getFireFuel()>0)
 				A.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
@@ -319,7 +320,7 @@ datum/gas_mixture/proc/check_recombustability(var/turf/T)
 datum/gas_mixture/proc/check_combustability(var/turf/T, var/objects)
 	//this check comes up very often and is thus centralized here to ease adding stuff
 	if(!istype(T))
-		warning("check_recombustability being asked to check a [T.type] instead of /turf.")
+		warning("check_combustability being asked to check a [T.type] instead of /turf.")
 		return 0
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
