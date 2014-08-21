@@ -220,31 +220,54 @@ atom/proc/generate_uniform(index,t_color)
 	female_uniform_icon 			= fcopy_rsc(female_uniform_icon)
 	female_uniform_icons[index] = female_uniform_icon
 
+/obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
+	var/mob/M = usr
+	if (istype(M, /mob/dead/)) return
+	if (usr.stat || usr.restrained()) return
+	if(has_sensor >= 2)
+		usr << "The controls are locked."
+		return 0
+	if(has_sensor <= 0)
+		usr << "This suit does not have any sensors."
+		return 0
+
+	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
+	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
+	if(get_dist(usr, src) > 1)
+		usr << "You have moved too far away."
+		return
+	sensor_mode = modes.Find(switchMode) - 1
+
+	if (src.loc == usr)
+		switch(sensor_mode)
+			if(0)
+				usr << "You disable your suit's remote sensing equipment."
+			if(1)
+				usr << "Your suit will now only report whether you are alive or dead."
+			if(2)
+				usr << "Your suit will now only report your exact vital lifesigns."
+			if(3)
+				usr << "Your suit will now report your exact vital lifesigns as well as your coordinate position."
+	else if (istype(src.loc, /mob))
+		switch(sensor_mode)
+			if(0)
+				for(var/mob/V in viewers(usr, 1))
+					V.show_message("\red [usr] disables [src.loc]'s remote sensing equipment.", 1)
+			if(1)
+				for(var/mob/V in viewers(usr, 1))
+					V.show_message("[usr] turns [src.loc]'s remote sensors to binary.", 1)
+			if(2)
+				for(var/mob/V in viewers(usr, 1))
+					V.show_message("[usr] sets [src.loc]'s sensors to track exact vitals.", 1)
+			if(3)
+				for(var/mob/V in viewers(usr, 1))
+					V.show_message("[usr] sets [src.loc]'s sensors to maximum.", 1)
+
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
 	set category = "Object"
 	set src in usr
-	var/mob/M = usr
-	if (istype(M, /mob/dead/)) return
-	if (usr.stat) return
-	if(src.has_sensor >= 2)
-		usr << "The controls are locked."
-		return 0
-	if(src.has_sensor <= 0)
-		usr << "This suit does not have any sensors."
-		return 0
-	src.sensor_mode += 1
-	if(src.sensor_mode > 3)
-		src.sensor_mode = 0
-	switch(src.sensor_mode)
-		if(0)
-			usr << "You disable your suit's remote sensing equipment."
-		if(1)
-			usr << "Your suit will now report whether you are live or dead."
-		if(2)
-			usr << "Your suit will now report your vital lifesigns."
-		if(3)
-			usr << "Your suit will now report your vital lifesigns as well as your coordinate position."
+	set_sensors(usr)
 	..()
 
 /obj/item/clothing/under/verb/removetie()
