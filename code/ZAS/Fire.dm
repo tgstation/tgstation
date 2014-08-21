@@ -70,7 +70,6 @@ Attach to transfer valve and open. BOOM.
 	var/soot_type = /obj/effect/decal/cleanable/soot
 
 /turf/simulated/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-
 	var/obj/effect/E = null
 	if(soot_type)
 		E = locate(soot_type) in src
@@ -383,6 +382,8 @@ datum/gas_mixture/proc/calculate_firelevel(var/turf/T)
 	if(check_recombustability(T))
 
 		total_fuel += toxins
+
+		total_fuel += T.getFireFuel()
 
 		for(var/atom/A in T)
 			if(A)
