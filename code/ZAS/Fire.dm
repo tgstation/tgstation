@@ -35,13 +35,15 @@ Attach to transfer valve and open. BOOM.
 
 /atom/proc/extinguish()
 	on_fire=0
-	overlays -= fire_overlay
+	if(fire_overlay)
+		overlays -= fire_overlay
 
 /atom/proc/ignite(var/temperature)
 	on_fire=1
-	visible_message("\The [src] bursts into flame!")
-	fire_overlay = image(fire_dmi,fire_sprite)
-	overlays += fire_overlay
+	//visible_message("\The [src] bursts into flame!")
+	if(fire_dmi && fire_sprite)
+		fire_overlay = image(fire_dmi,fire_sprite)
+		overlays += fire_overlay
 	var/turf/T = get_turf(src)
 	if(! (locate(/obj/fire) in T))
 		new /obj/fire(T)
