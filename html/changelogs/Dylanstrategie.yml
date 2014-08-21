@@ -1,2 +1,3 @@
 author: Dylanstrategie
-changes: []
+changes:
+  - wip: Added barricade kit to replace old barricade function with wooden planks. Uses 5 planks and gives an unsprited (uses wood plank sprite) barricade kit. Can be used to make old barricades, or on doors to block passage like tape
