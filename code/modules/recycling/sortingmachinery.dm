@@ -29,7 +29,7 @@
 
 		if(sortTag != O.currTag)
 			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-			user << "\blue *[tag]*"
+			user << "<span class='notice'>*[tag]*</span>"
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
