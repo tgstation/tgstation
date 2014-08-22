@@ -3,10 +3,14 @@
 	config_tag = "meteor"
 	var/const/waittime_l = 600 //Lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //Upper bound on time before intercept arrives (in tenths of seconds)
-	var/const/meteorannouncedelay = 9000 //Time before a special intercept tells the station to prepare (aka reveal). Now 15 minutes
+	var/const/meteorannouncedelay_l = 9000 //Lower bound on announcement, here 15 minutes
+	var/const/meteorannouncedelay_h = 12000 //Upper bound on announcement, here 20 minutes
 	var/const/supplydelay = 100 //Delay before meteor supplies are spawned in tenth of seconds. Anyone in the way will be GIBBED
-	var/const/meteordelay = 3000 //Supplementary time before the dakka commences, here 5 minutes
+	var/const/meteordelay_l = 3000 //Lower bound to meteor arrival, here 5 minutes
+	var/const/meteordelay_h = 6000 //Higher bound to meteor arrival, here 10 minutes
+	var/const/meteorshuttlemultiplier = 3 //How much more will we need to hold out ? Here 30 minutes until shuttle arrives. 1 is 10 minutes
 	var/nometeors = 1 //Can we send the meteors ?
+	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 	required_players = 0
 
 	uplink_welcome = "EVIL METEOR Uplink Console:"
@@ -18,181 +22,240 @@
 
 /datum/game_mode/meteor/post_setup()
 	defer_powernet_rebuild = 2//Might help with the lag
-	spawn(0)
+
 	spawn(rand(waittime_l, waittime_h))
 		send_intercept()
 
-	spawn(meteorannouncedelay)
-		command_alert("A meteor storm has been detected in proximity of [station_name()] and is expected to strike in [round((meteordelay)/600)] minutes. A backup emergency shuttle is being set and emergency gear should be teleported into your station's Bar area in [(supplydelay)/10] seconds. Make good use of these supplies to build a safe zone and good luck.", "Space Weather Automated Announcements")
+	spawn(rand(meteorannouncedelay_l,meteorannouncedelay_h))
+		command_alert("A meteor storm has been detected in proximity of [station_name()] and is expected to strike within [round((meteordelay_l)/600)] to [round((meteordelay_h)/600)] minutes. A backup emergency shuttle will be dispatched and emergency gear should be teleported into your station's Bar area in [(supplydelay)/10] seconds. Make good use of these supplies to build a safe zone and good luck.", "Space Weather Automated Announcements")
+		//world << sound('sound/AI/meteorstorm.ogg')
 		for(var/obj/item/weapon/rcd/rcd in world) //No, you're not walling in everything
 			rcd.disabled = 1
 		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
 			rcd.disabled = 1
+
 		spawn(100) //Panic interval
-		emergency_shuttle.incall(2.5)
-		captain_announce("A backup emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-		world << sound('sound/AI/shuttlecalled.ogg')
+			emergency_shuttle.incall(meteorshuttlemultiplier)
+			captain_announce("A backup emergency shuttle has been called. It will arrive in [round((emergency_shuttle.timeleft())/60)] minutes.")
+			world << sound('sound/AI/shuttlecalled.ogg')
 
 		spawn(supplydelay)
-			//for(var/obj/effect/landmark/C in landmarks_list) //Time to get those supplies going, begin fuck huge free supply list
-			var/obj/effect/landmark/woodkit = locate("landmark*meteorsupplywoodkit")
-			var/obj/effect/landmark/woodkit2 = locate("landmark*meteorsupplywoodkit2") //Lazy man's way of unfucking shit
-			var/obj/effect/landmark/bombkit = locate("landmark*meteorsupplybombkit")
-			var/obj/effect/landmark/bombkit2 = locate("landmark*meteorsupplybombkit2")
-			var/obj/effect/landmark/bombkit3 = locate("landmark*meteorsupplybombkit3")
-			var/obj/effect/landmark/buildkit = locate("landmark*meteorsupplybuildkit")
-			var/obj/effect/landmark/pizzakit = locate("landmark*meteorsupplypizzakit")
-			var/obj/effect/landmark/panickit = locate("landmark*meteorsupplypanickit")
-			var/obj/effect/landmark/shieldkit = locate("landmark*meteorsupplyshieldkit")
-			//Barricading hallways
-			for(var/atom/A in get_turf(woodkit)) //Until I find a better idea, I'll just slap it here
-				if(istype(A,/mob/living))
-					var/mob/living/unlucky_person = A
-					unlucky_person.gib() //We told you to get the fuck out of here
-				if(istype(A,/obj) || istype(A,/turf/simulated/wall)) //We're going to do it very simply. There should NOT be things in the way, and if they are we want them out
-					qdel(A) //Telegib
-				break
-			spawn(1)
-			playsound(get_turf(woodkit), 'sound/effects/sparks1.ogg', 50, 1)
-			new /obj/structure/rack(woodkit.loc)
-			new /obj/item/stack/sheet/wood(woodkit.loc, 10)
-			new /obj/item/stack/sheet/wood(woodkit.loc, 10)
-			new /obj/item/stack/sheet/wood(woodkit.loc, 10)
-			for(var/atom/A in get_turf(woodkit2))
-				if(istype(A,/mob/living))
-					var/mob/living/unlucky_person = A
-					unlucky_person.gib()
-				if(istype(A,/obj) || istype(A,/turf/simulated/wall))
-					qdel(A) //Telegib
-				break
-			spawn(1)
-			playsound(get_turf(woodkit2), 'sound/effects/sparks1.ogg', 50, 1)
-			new /obj/structure/rack(woodkit2.loc)
-			new /obj/item/stack/sheet/wood(woodkit2.loc, 10)
-			new /obj/item/stack/sheet/wood(woodkit2.loc, 10)
-			new /obj/item/stack/sheet/wood(woodkit2.loc, 10)
-			//Very useful, I swear. Acts as discount EVA otherwise
-			for(var/atom/A in get_turf(bombkit))
-				if(istype(A,/mob/living))
-					var/mob/living/unlucky_person = A
-					unlucky_person.gib()
-				if(istype(A,/obj) || istype(A,/turf/simulated/wall))
-					qdel(A)
-				break
-			spawn(1)
-			playsound(get_turf(bombkit), 'sound/effects/sparks1.ogg', 50, 1)
-			new /obj/structure/rack(bombkit.loc)
-			new /obj/item/clothing/shoes/jackboots(bombkit.loc)
-			new /obj/item/weapon/tank/oxygen(bombkit.loc)
-			new /obj/item/clothing/suit/bomb_suit(bombkit.loc)
-			new /obj/item/clothing/mask/gas(bombkit.loc)
-			new /obj/item/clothing/head/bomb_hood(bombkit.loc)
-			for(var/atom/A in get_turf(bombkit2))
-				if(istype(A,/mob/living))
-					var/mob/living/unlucky_person = A
-					unlucky_person.gib()
-				if(istype(A,/obj) || istype(A,/turf/simulated/wall))
-					qdel(A)
-				break
-			spawn(1)
-			playsound(get_turf(bombkit2), 'sound/effects/sparks1.ogg', 50, 1)
-			new /obj/structure/rack(bombkit2.loc)
-			new /obj/item/clothing/shoes/jackboots(bombkit2.loc)
-			new /obj/item/weapon/tank/oxygen(bombkit2.loc)
-			new /obj/item/clothing/suit/bomb_suit(bombkit2.loc)
-			new /obj/item/clothing/mask/gas(bombkit2.loc)
-			new /obj/item/clothing/head/bomb_hood(bombkit2.loc)
-			for(var/atom/A in get_turf(bombkit3))
-				if(istype(A,/mob/living))
-					var/mob/living/unlucky_person = A
-					unlucky_person.gib()
-				if(istype(A,/obj) || istype(A,/turf/simulated/wall))
-					qdel(A)
-				break
-			spawn(1)
-			playsound(get_turf(bombkit3), 'sound/effects/sparks1.ogg', 50, 1)
-			new /obj/structure/rack(bombkit3.loc)
-			new /obj/item/clothing/shoes/jackboots(bombkit3.loc)
-			new /obj/item/weapon/tank/oxygen(bombkit3.loc)
-			new /obj/item/clothing/suit/bomb_suit(bombkit3.loc)
-			new /obj/item/clothing/mask/gas(bombkit3.loc)
-			new /obj/item/clothing/head/bomb_hood(bombkit3.loc)
-			//WE BUILD (RCDs are disabled)
-			for(var/atom/A in get_turf(buildkit))
-				if(istype(A,/mob/living))
-					var/mob/living/unlucky_person = A
-					unlucky_person.gib()
-				if(istype(A,/obj) || istype(A,/turf/simulated/wall))
-					qdel(A)
-				break
-			spawn(1)
-			playsound(get_turf(buildkit), 'sound/effects/sparks1.ogg', 50, 1)
-			new /obj/structure/rack(buildkit.loc)
-			new /obj/item/stack/sheet/metal(buildkit.loc, 30)
-			new /obj/item/stack/sheet/glass/plasmarglass(buildkit.loc, 30) //Bomb-proof, so very useful
-			new /obj/item/weapon/storage/toolbox/electrical(buildkit.loc)
-			new /obj/item/weapon/storage/toolbox/mechanical(buildkit.loc)
-			new /obj/item/clothing/head/welding(buildkit.loc)
-			new /obj/item/weapon/grenade/chem_grenade/metalfoam(buildkit.loc) //Useful for sealing breaches in a pinch
-			new /obj/item/weapon/grenade/chem_grenade/metalfoam(buildkit.loc)
-			new /obj/item/device/multitool(buildkit.loc)
-			//Sometimes you just need to eat
-			for(var/atom/A in get_turf(pizzakit))
-				if(istype(A,/mob/living))
-					var/mob/living/unlucky_person = A
-					unlucky_person.gib()
-				if(istype(A,/obj) || istype(A,/turf/simulated/wall))
-					qdel(A) //Telegib
-				break
-			spawn(1)
-			playsound(get_turf(pizzakit), 'sound/effects/sparks1.ogg', 50, 1)
-			new /obj/structure/rack(pizzakit.loc)
-			new /obj/item/pizzabox/margherita(pizzakit.loc)
-			new /obj/item/pizzabox/mushroom(pizzakit.loc)
-			new /obj/item/pizzabox/meat(pizzakit.loc)
-			new /obj/item/pizzabox/vegetable(pizzakit.loc)
-			new /obj/item/weapon/kitchenknife(pizzakit.loc)
-			//Don't panic, honest
-			for(var/atom/A in get_turf(panickit))
-				if(istype(A,/mob/living))
-					var/mob/living/unlucky_person = A
-					unlucky_person.gib()
-				if(istype(A,/obj) || istype(A,/turf/simulated/wall))
-					qdel(A)
-				break
-			spawn(1)
-			playsound(get_turf(panickit), 'sound/effects/sparks1.ogg', 50, 1)
-			new /obj/structure/rack(panickit.loc)
-			new /obj/item/weapon/storage/toolbox/emergency(panickit.loc)
-			new /obj/item/weapon/storage/toolbox/emergency(panickit.loc)
-			new /obj/item/device/violin(panickit.loc) //My tune will go on
-			new /obj/item/weapon/paper_bin(panickit.loc) //Any last wishes ?
-			new /obj/item/weapon/pen/red(panickit.loc)
-			//One local shield. We're on budget cuts, you see
-			for(var/atom/A in get_turf(shieldkit))
-				if(istype(A,/mob/living))
-					var/mob/living/unlucky_person = A
-					unlucky_person.gib()
-				if(istype(A,/obj) || istype(A,/turf/simulated/wall))
-					qdel(A) //Telegib
-				break
-			spawn(1)
-			playsound(get_turf(shieldkit), 'sound/effects/sparks1.ogg', 50, 1)
-			new /obj/machinery/shield_gen(shieldkit.loc)
-			//Add new kits here, then add to map
 
-		spawn(meteordelay)
+			//For barricades and materials
+			for(var/turf/T in meteor_materialkit)
+				meteor_materialkit -= T
+				for(var/atom/A in T) //Cleaning loop borrowed from the shuttle
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib() //We told you to get the fuck out of here
+					if(istype(A,/obj) || istype(A,/turf/simulated/wall)) //Remove anything in the way
+						qdel(A) //Telegib
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/structure/rack(T)
+				new /obj/item/stack/sheet/wood(T, 50) //10 cade kits, or miscellaneous things
+				new /obj/item/stack/sheet/metal(T, 50)
+				new /obj/item/stack/sheet/glass(T, 50)
+				new /obj/item/stack/sheet/glass/plasmarglass(T, 50) //Bomb-proof, so very useful
+
+			//Discount EVA that also acts as explosion shielding
+			for(var/turf/T in meteor_bombkit)
+				meteor_bombkit -= T
+				for(var/atom/A in T)
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib()
+					if(istype(A,/obj) && !istype(A, /obj/machinery/atmospherics) || istype(A,/turf/simulated/wall)) //Snowflake code since some instances are over pipes
+						qdel(A)
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/machinery/suit_storage_unit/meteor_eod(T)
+
+			//Things that don't fit in the EVA kits
+			for(var/turf/T in meteor_bombkitextra)
+				meteor_bombkitextra -= T
+				for(var/atom/A in T)
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib()
+					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
+						qdel(A)
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/structure/table(T) //Enough racks already
+				new /obj/item/clothing/gloves/black(T) //Always dress with style
+				new /obj/item/clothing/gloves/black(T)
+				new /obj/item/clothing/gloves/black(T)
+				new /obj/item/clothing/gloves/black(T)
+				new /obj/item/clothing/gloves/black(T)
+				new /obj/item/clothing/gloves/black(T)
+				new /obj/item/clothing/glasses/sunglasses(T) //Wouldn't it be dumb if a meteor explosion blinded you
+				new /obj/item/clothing/glasses/sunglasses(T)
+				new /obj/item/clothing/glasses/sunglasses(T)
+				new /obj/item/clothing/glasses/sunglasses(T)
+				new /obj/item/clothing/glasses/sunglasses(T)
+				new /obj/item/clothing/glasses/sunglasses(T)
+
+			//Free oxygen tanks
+			for(var/turf/T in meteor_tankkit)
+				meteor_tankkit -= T
+				for(var/atom/A in T)
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib()
+					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
+						qdel(A)
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/structure/dispenser/oxygen(T)
+
+			//Oxygen canisters for internals, don't waste 'em
+			for(var/turf/T in meteor_canisterkit)
+				meteor_canisterkit -= T
+				for(var/atom/A in T)
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib()
+					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
+						qdel(A)
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/machinery/portable_atmospherics/canister/oxygen(T)
+
+			//WE BUILD
+			for(var/turf/T in meteor_buildkit)
+				meteor_buildkit -= T
+				for(var/atom/A in T)
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib()
+					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
+						qdel(A)
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/structure/rack(T)
+				new /obj/item/weapon/storage/toolbox/electrical(T)
+				new /obj/item/weapon/storage/toolbox/electrical(T)
+				new /obj/item/weapon/storage/toolbox/mechanical(T)
+				new /obj/item/weapon/storage/toolbox/mechanical(T)
+				new /obj/item/clothing/head/welding(T)
+				new /obj/item/clothing/head/welding(T)
+				new /obj/item/device/multitool(T)
+				new /obj/item/device/multitool(T)
+
+			//Because eating is important
+			for(var/turf/T in meteor_pizzakit)
+				meteor_pizzakit -= T
+				for(var/atom/A in T)
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib()
+					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
+						qdel(A)
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/structure/rack(T)
+				new /obj/item/pizzabox/margherita(T)
+				new /obj/item/pizzabox/mushroom(T)
+				new /obj/item/pizzabox/meat(T)
+				new /obj/item/pizzabox/vegetable(T)
+				new /obj/item/weapon/kitchenknife(T)
+
+			//Don't panic
+			for(var/turf/T in meteor_panickit)
+				meteor_panickit -= T
+				for(var/atom/A in T)
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib()
+					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
+						qdel(A)
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/structure/rack(T)
+				new /obj/item/weapon/storage/toolbox/emergency(T)
+				new /obj/item/weapon/storage/toolbox/emergency(T)
+				new /obj/item/device/violin(T) //My tune will go on
+				new /obj/item/weapon/paper_bin(T) //Any last wishes ?
+				new /obj/item/weapon/pen/red(T)
+
+			//Emergency Area Shielding. Uses a lot of power
+			for(var/turf/T in meteor_shieldkit)
+				meteor_shieldkit -= T
+				for(var/atom/A in T)
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib()
+					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
+						qdel(A)
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/machinery/shield_gen(T)
+
+			//Power that should last for a bit. Pairs well with the shield generator when Engineering is dead
+			for(var/turf/T in meteor_genkit)
+				meteor_genkit -= T
+				for(var/atom/A in T)
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib()
+					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
+						qdel(A)
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/machinery/power/port_gen/pacman(T)
+				new /obj/item/stack/sheet/mineral/plasma(T, 20)
+
+			for(var/turf/T in meteor_breachkit)
+				meteor_breachkit -= T
+				for(var/atom/A in T)
+					if(istype(A,/mob/living))
+						var/mob/living/unlucky_person = A
+						unlucky_person.gib()
+					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
+						qdel(A)
+				spawn(1)
+				spark_system.attach(T)
+				spark_system.set_up(5, 0, T)
+				spark_system.start()
+				new /obj/structure/table(T)
+				new /obj/item/taperoll/atmos(T) //Just for the hell of it
+				new /obj/item/taperoll/atmos(T)
+				new /obj/item/weapon/grenade/chem_grenade/metalfoam(T) //Could use a custom box
+				new /obj/item/weapon/grenade/chem_grenade/metalfoam(T)
+				new /obj/item/weapon/grenade/chem_grenade/metalfoam(T)
+				new /obj/item/weapon/grenade/chem_grenade/metalfoam(T)
+
+			//Use existing templates in landmarks.dm, global.dm and here to add more supplies
+
+		spawn(rand(meteordelay_l,meteordelay_h))
 			nometeors = 0
 
 /datum/game_mode/meteor/process()
-	spawn(50) //Only check every 5 seconds to avoid lag
 	if(nometeors == 0)
-		if(prob(25)) //25 % chance of dakka dakka dakka (50 meteors. 50 GODDAMN METEORS IN A ROW)
-			meteor_wave(meteors_in_big_wave)
-		else if(prob(75))	//75 % chance of stopping here and firing 30 meteors
+		meteors_in_wave = (rand(1,10))*5 //Between 5 and 50 meteors, figures
+		if(prob(90)) //90 % chance of a wave happening
 			meteor_wave(meteors_in_wave)
-		else if(prob(90))	//90 % chance of firing 10 meteors
-			meteor_wave(meteors_in_small_wave)
 
 /datum/game_mode/meteor/declare_completion()
 	var/text
