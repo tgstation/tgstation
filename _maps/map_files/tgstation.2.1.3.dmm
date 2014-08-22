@@ -7149,7 +7149,7 @@
 "cHy" = (/obj/structure/closet/crate/medical,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "cHz" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/plating,/area/syndicate_station/start)
 "cHA" = (/obj/machinery/teleport/station,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
-"cHB" = (/obj/machinery/teleport/hub,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
+"cHB" = (/obj/machinery/teleport/hub/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "cHC" = (/obj/machinery/door/poddoor{id = "thunderdomegen"; name = "General Supply"},/turf/unsimulated/floor{icon_state = "floor"},/area/tdome)
 "cHD" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/space,/area/syndicate_station/start)
 "cHE" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/syndicate_station/start)

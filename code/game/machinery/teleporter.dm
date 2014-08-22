@@ -316,6 +316,12 @@
 	else
 		icon_state = "tele0"
 
+/obj/machinery/teleport/hub/syndicate/New()
+	..()
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
+	RefreshParts()
+
+
 /obj/machinery/teleport/station
 	name = "station"
 	desc = "The power control station for a bluespace teleporter. Used for toggling power, and can activate a test-fire to prevent malfunctions."
