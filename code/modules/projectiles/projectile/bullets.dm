@@ -50,11 +50,6 @@
 	damage_type = TOX
 
 
-/obj/item/projectile/bullet/burstbullet//I think this one needs something for the on hit
-	name = "exploding bullet"
-	damage = 20
-
-
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5
@@ -70,25 +65,56 @@
 /obj/item/projectile/bullet/incendiary
 
 /obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
-		if(istype(target, /mob/living/carbon))
-				var/mob/living/carbon/M = target
-				M.adjust_fire_stacks(1)
-				M.IgniteMob()
+	..()
+	if(istype(target, /mob/living/carbon))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()
+
 
 /obj/item/projectile/bullet/incendiary/shell
+	name = "incendiary slug"
 	damage = 20
 
-/obj/item/projectile/bullet/incendiary/mech
+/obj/item/projectile/bullet/incendiary/shell/Move()
+	..()
+	var/turf/location = get_turf(src)
+	new/obj/effect/hotspot(location)
+	location.hotspot_expose(700, 50, 1)
+
+/obj/item/projectile/bullet/incendiary/shell/dragonsbreath
+	name = "dragonsbreath round"
 	damage = 5
+
+
+/obj/item/projectile/bullet/meteorshot
+	name = "meteor"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "dust"
+	damage = 30
+	weaken = 8
+	stun = 8
+	hitsound = 'sound/effects/meteorimpact.ogg'
+
+/obj/item/projectile/bullet/meteorshot/on_hit(var/atom/target, var/blocked = 0)
+	..()
+	if(istype(target, /atom/movable))
+		var/atom/movable/M = target
+		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
+		M.throw_at(throw_target, 3, 2)
+
+/obj/item/projectile/bullet/meteorshot/New()
+	..()
+	SpinAnimation()
 
 
 /obj/item/projectile/bullet/mime
 	damage = 20
 
 /obj/item/projectile/bullet/mime/on_hit(var/atom/target, var/blocked = 0)
-		if(istype(target, /mob/living/carbon))
-				var/mob/living/carbon/M = target
-				M.silent = max(M.silent, 10)
+	if(istype(target, /mob/living/carbon))
+		var/mob/living/carbon/M = target
+		M.silent = max(M.silent, 10)
 
 
 /obj/item/projectile/bullet/dart

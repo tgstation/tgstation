@@ -9,7 +9,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	icon_state = "comm"
 	req_access = list(access_heads)
 	circuit = /obj/item/weapon/circuitboard/communications
-	var/prints_intercept = 1
 	var/authenticated = 0
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/messagetitle = list()

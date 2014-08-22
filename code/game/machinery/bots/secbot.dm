@@ -277,7 +277,8 @@ Auto Patrol: []"},
 						M.Stun(5)
 
 					if(declare_arrests)
-						declare_arrest()
+						var/area/location = get_area(src)
+						broadcast_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b>", src)
 					target.visible_message("<span class='danger'>[src.target] has been stunned by [src]!</span>",\
 											"<span class='userdanger'>[src.target] has been stunned by [src]!</span>")
 
@@ -775,11 +776,3 @@ Auto Patrol: []"},
 			new /obj/item/robot_parts/l_arm(get_turf(src))
 			user << "<span class='notice'>You remove the robot arm from [src].</span>"
 			build_step--
-
-/obj/machinery/bot/secbot/proc/declare_arrest()
-	var/area/location = get_area(src)
-	var/area/myturf = get_turf(src)
-	for(var/mob/living/carbon/human/human in mob_list)
-		var/turf/humanturf = get_turf(human)
-		if((humanturf.z == myturf.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security))
-			human.show_message("<span class='info'>\icon[human.glasses] [src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>", 1)

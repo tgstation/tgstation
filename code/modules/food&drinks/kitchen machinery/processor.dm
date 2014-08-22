@@ -26,77 +26,74 @@
 			qdel(what) // Note to self: Make this safer
 
 	/* objs */
-	meat
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
+/datum/food_processor_process/meat
+	input = /obj/item/weapon/reagent_containers/food/snacks/meat
+	output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
-	potato
-		input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
-		output = /obj/item/weapon/reagent_containers/food/snacks/fries
+/datum/food_processor_process/potato
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
+	output = /obj/item/weapon/reagent_containers/food/snacks/fries
 
-	carrot
-		input = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
-		output = /obj/item/weapon/reagent_containers/food/snacks/carrotfries
+/datum/food_processor_process/carrot
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
+	output = /obj/item/weapon/reagent_containers/food/snacks/carrotfries
 
-	soybeans
-		input = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
-		output = /obj/item/weapon/reagent_containers/food/snacks/soydope
-
-
-	/* mobs */
-	mob
-		process(loc, what)
-			..()
+/datum/food_processor_process/soybeans
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
+	output = /obj/item/weapon/reagent_containers/food/snacks/soydope
 
 
-		slime
+/* mobs */
+/datum/food_processor_process/mob/process(loc, what)
+	..()
 
-			process(loc, what)
 
-				var/mob/living/carbon/slime/S = what
-				var/C = S.cores
-				if(S.stat != DEAD)
-					S.loc = loc
-					S.visible_message("\blue [C] crawls free of the processor!")
-					return
-				for(var/i = 1, i <= C, i++)
-					new S.coretype(loc)
-					feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
-				..()
-			input = /mob/living/carbon/slime
-			output = null
-		monkey
-			process(loc, what)
-				var/mob/living/carbon/monkey/O = what
-				if (O.client) //grief-proof
-					O.loc = loc
-					O.visible_message("\blue Suddenly [O] jumps out from the processor!", \
-							"You jump out from the processor", \
-							"You hear chimpering")
-					return
-				var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
-				var/datum/reagent/blood/B = new()
-				B.holder = bucket_of_blood
-				B.volume = 70
-				//set reagent data
-				B.data["donor"] = O
+/datum/food_processor_process/mob/slime/process(loc, what)
+	var/mob/living/carbon/slime/S = what
+	var/C = S.cores
+	if(S.stat != DEAD)
+		S.loc = loc
+		S.visible_message("\blue [C] crawls free of the processor!")
+		return
+	for(var/i = 1, i <= C, i++)
+		new S.coretype(loc)
+		feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
+	..()
 
-				for(var/datum/disease/D in O.viruses)
-					if(D.spread_type != SPECIAL)
-						B.data["viruses"] += D.Copy()
-				if(check_dna_integrity(O))
-					B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
+/datum/food_processor_process/mob/slime/input = /mob/living/carbon/slime
+/datum/food_processor_process/mob/slime/output = null
 
-				if(O.resistances&&O.resistances.len)
-					B.data["resistances"] = O.resistances.Copy()
-				bucket_of_blood.reagents.reagent_list += B
-				bucket_of_blood.reagents.update_total()
-				bucket_of_blood.on_reagent_change()
-				//bucket_of_blood.reagents.handle_reactions() //blood doesn't react
-				..()
+/datum/food_processor_process/mob/monkey/process(loc, what)
+	var/mob/living/carbon/monkey/O = what
+	if (O.client) //grief-proof
+		O.loc = loc
+		O.visible_message("\blue Suddenly [O] jumps out from the processor!", \
+				"You jump out from the processor", \
+				"You hear chimpering")
+		return
+	var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
+	var/datum/reagent/blood/B = new()
+	B.holder = bucket_of_blood
+	B.volume = 70
+	//set reagent data
+	B.data["donor"] = O
 
-			input = /mob/living/carbon/monkey
-			output = null
+	for(var/datum/disease/D in O.viruses)
+		if(D.spread_type != SPECIAL)
+			B.data["viruses"] += D.Copy()
+	if(check_dna_integrity(O))
+		B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
+
+	if(O.resistances&&O.resistances.len)
+		B.data["resistances"] = O.resistances.Copy()
+	bucket_of_blood.reagents.reagent_list += B
+	bucket_of_blood.reagents.update_total()
+	bucket_of_blood.on_reagent_change()
+	//bucket_of_blood.reagents.handle_reactions() //blood doesn't react
+	..()
+
+/datum/food_processor_process/mob/monkey/input = /mob/living/carbon/monkey
+/datum/food_processor_process/mob/monkey/output = null
 
 /obj/machinery/processor/proc/select_recipe(var/X)
 	for (var/Type in typesof(/datum/food_processor_process) - /datum/food_processor_process - /datum/food_processor_process/mob)
