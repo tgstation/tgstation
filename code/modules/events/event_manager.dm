@@ -118,7 +118,12 @@ var/datum/controller/event/events
 		return
 
 	if(istype(E))
-		E.runEvent()
+		var/datum/round_event/event = E.runEvent()
+		if(event.announceWhen>0)
+			event.processing = 0
+			if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
+				event.announceWhen = -1
+			event.processing = 1
 		message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])", 1)
 		log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 
