@@ -163,6 +163,13 @@
 							sleep(50)
 							theAPC = null
 
+	regular_hud_updates()
+	switch(src.sensor_mode)
+		if (SEC_HUD)
+			process_sec_hud(src,0,src.eyeobj)
+		if (MED_HUD)
+			process_med_hud(src,src.eyeobj)
+
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
 		health = maxHealth

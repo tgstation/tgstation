@@ -165,12 +165,13 @@
 		if(see_override)
 			see_invisible = see_override
 
-	for(var/image/hud in client.images)
-		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-			client.images.Remove(hud)
+	regular_hud_updates() //Handles MED/SEC HUDs for borgs.
 
-	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
-	if(hud && hud.hud)	hud.hud.process_hud(src)
+	switch(sensor_mode)
+		if (SEC_HUD)
+			process_sec_hud(src, 1)
+		if (MED_HUD)
+			process_med_hud(src)
 
 	if (src.healths)
 		if (src.stat != 2)
