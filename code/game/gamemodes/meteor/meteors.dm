@@ -1,7 +1,7 @@
 #define METEOR_TEMPERATURE
 
 /var/meteor_wave_delay = 200 //Failsafe wait between waves in tenths of seconds
-//Set it above 100 (10s delay) if you want to minimize lag, and if you're a pussy
+//Set it above 100 (10s delay) if you want to minimize lag for some reason
 
 /var/meteors_in_wave = 10 //Failsafe in case a number isn't called
 /var/meteorwavecurrent = 0
@@ -78,7 +78,6 @@
 	icon_state = "flaming"
 	density = 1
 	anchored = 1.0
-	//var/hits = 1
 	var/dest
 	pass_flags = PASSTABLE
 
@@ -104,18 +103,6 @@
 			playsound(get_turf(src), "explosion", 40, 1) //Medium boom
 			explosion(src.loc, 1, 2, 4, 8) //Medium meteor, medium boom
 			qdel(src)
-		//if(--src.hits <= 0)
-
-			//Prevent meteors from blowing up the singularity's containment.
-			//Changing emitter and generator ex_act would result in them being bomb and C4 proof.
-			//if(!istype(A,/obj/machinery/power/emitter) && \
-				!istype(A,/obj/machinery/field_generator) && \
-				prob(15))
-
-				//explosion(src.loc, 1, 2, 4, 8)
-				//playsound(get_turf(src), "explosion", 50, 1)
-			//qdel(src)
-		//return
 
 /obj/effect/meteor/ex_act(severity)
 
