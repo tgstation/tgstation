@@ -485,15 +485,15 @@ var/list/slot_equipment_priority = list( \
 		if(machine && in_range(src, usr))
 			show_inv(machine)
 
-	if(canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			var/obj/item/what = get_item_by_slot(slot)
 
 			if(what)
-				usr.stripPanelUnequip(src,what,slot)
+				usr.stripPanelUnequip(what,src,slot)
 			else
-				usr.stripPanelEquip(src,what,slot)
+				usr.stripPanelEquip(what,src,slot)
 
 	if(usr.machine == src)
 		if(Adjacent(usr))
