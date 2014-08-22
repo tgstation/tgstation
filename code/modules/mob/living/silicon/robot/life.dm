@@ -171,7 +171,7 @@
 		if (SEC_HUD)
 			process_sec_hud(src, 1)
 		if (MED_HUD)
-			process_med_hud(src)
+			process_med_hud(src, 1)
 
 	if (src.healths)
 		if (src.stat != 2)
@@ -294,7 +294,7 @@
 		fire_stacks = max(0, fire_stacks)
 	else
 		ExtinguishMob()
-	
+
 	//adjustFireLoss(3)
 	return
 

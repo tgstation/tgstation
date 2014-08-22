@@ -28,7 +28,7 @@
 
 
 /obj/item/clothing/glasses/hud/health/process_hud(var/mob/M)
-	process_med_hud(M)
+	process_med_hud(M, 1)
 
 
 /obj/item/clothing/glasses/hud/health/night

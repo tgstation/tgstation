@@ -168,7 +168,7 @@
 		if (SEC_HUD)
 			process_sec_hud(src,0,src.eyeobj)
 		if (MED_HUD)
-			process_med_hud(src,src.eyeobj)
+			process_med_hud(src,0,src.eyeobj)
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)

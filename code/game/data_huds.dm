@@ -40,7 +40,7 @@ proc/RoundHealth(health)
 	return "0"
 
 //Medical HUD outputs. Called by the Life() proc of the mob using it, usually.
-proc/process_med_hud(var/mob/M, var/mob/eye)
+proc/process_med_hud(var/mob/M,var/local_scanner,var/mob/eye)
 	if(!M)
 		return
 	if(!M.client)
@@ -55,6 +55,15 @@ proc/process_med_hud(var/mob/M, var/mob/eye)
 	else
 		T = get_turf(M)
 	for(var/mob/living/carbon/human/patient in range(T))
+
+		if(!local_scanner) //Used for the AI's MedHUD, only works if the patient has activated suit sensors.
+			if(istype(patient.w_uniform, /obj/item/clothing/under))
+				var/obj/item/clothing/under/U = patient.w_uniform
+				if(!U.sensor_mode)
+					continue
+			else
+				continue
+
 		var/foundVirus = 0
 		for(var/datum/disease/D in patient.viruses)
 			if(!D.hidden[SCANNER])
@@ -102,7 +111,7 @@ proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
 			holder.icon_state = "hud[ckey(perp.wear_id.GetJobName())]"
 		C.images += holder
 
-		if(advanced_mode) //If set, the SecHUD will display the implants a person has.
+		if(advanced_mode) //If not set, the Sec HUD will only display the job.
 			for(var/obj/item/weapon/implant/I in perp)
 				if(I.implanted)
 					if(istype(I,/obj/item/weapon/implant/tracking))
@@ -119,16 +128,16 @@ proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
 					C.images += holder
 					break
 
-		var/perpname = perp.get_face_name(perp.get_id_name(""))
-		if(perpname)
-			var/datum/data/record/R = find_record("name", perpname, data_core.security)
-			if(R)
-				holder = perp.hud_list[WANTED_HUD]
-				switch(R.fields["criminal"])
-					if("*Arrest*")		holder.icon_state = "hudwanted"
-					if("Incarcerated")	holder.icon_state = "hudincarcerated"
-					if("Parolled")		holder.icon_state = "hudparolled"
-					if("Released")		holder.icon_state = "hudreleased"
-					else
-						continue
-				C.images += holder
+			var/perpname = perp.get_face_name(perp.get_id_name(""))
+			if(perpname)
+				var/datum/data/record/R = find_record("name", perpname, data_core.security)
+				if(R)
+					holder = perp.hud_list[WANTED_HUD]
+					switch(R.fields["criminal"])
+						if("*Arrest*")		holder.icon_state = "hudwanted"
+						if("Incarcerated")	holder.icon_state = "hudincarcerated"
+						if("Parolled")		holder.icon_state = "hudparolled"
+						if("Released")		holder.icon_state = "hudreleased"
+						else
+							continue
+					C.images += holder
