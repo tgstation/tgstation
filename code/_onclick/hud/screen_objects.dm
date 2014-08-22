@@ -355,6 +355,9 @@
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
 				AI.aicamera.toggle_camera_mode()
+			else if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.aicamera.toggle_camera_mode()
 
 		if("View Images")
 			if(isAI(usr))
@@ -365,12 +368,9 @@
 				R.aicamera.viewpictures()
 
 		if("Sensor Augmentation")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.sensor_mode()
-			else if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.sensor_mode()
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.sensor_mode()
 		else
 			return 0
 	return 1
