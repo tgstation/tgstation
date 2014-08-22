@@ -345,7 +345,7 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/humanoid/Topic(href, href_list)
 	..()
 	//strip panel
-	if(canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["pouches"])
 			visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")
