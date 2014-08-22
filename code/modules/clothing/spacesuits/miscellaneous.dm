@@ -40,6 +40,7 @@
 	name = "officer's beret"
 	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
 	icon_state = "beret_badge"
+	flags = STOPSPRESSUREDMAGE
 	flags_inv = 0
 
 /obj/item/clothing/suit/space/deathsquad/officer

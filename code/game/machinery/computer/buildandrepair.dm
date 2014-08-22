@@ -205,6 +205,12 @@
 /obj/item/weapon/circuitboard/labor_shuttle/one_way
 	name = "circuit Board (Prisoner Shuttle Console)"
 	build_path = /obj/machinery/computer/shuttle/labor/one_way
+/obj/item/weapon/circuitboard/ferry
+	name = "circuit Board (Transport Ferry)"
+	build_path = /obj/machinery/computer/shuttle/ferry
+/obj/item/weapon/circuitboard/ferry/request
+	name = "circuit Board (Transport Ferry Console)"
+	build_path = /obj/machinery/computer/shuttle/ferry/request
 /obj/item/weapon/circuitboard/mining_shuttle
 	name = "circuit Board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/mining

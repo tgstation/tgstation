@@ -42,7 +42,7 @@
 				message_admins("[key_name(usr)] created a nuke team.")
 				log_admin("[key_name(usr)] created a nuke team.")
 				if(!src.makeNukeTeam())
-					usr << "\red Unfortunatly there were no candidates available"
+					usr << "\red Unfortunatly there were not enough candidates available"
 			if("8")
 				message_admins("[key_name(usr)] spawned a ninja.")
 				log_admin("[key_name(usr)] spawned a ninja.")
@@ -51,13 +51,12 @@
 				message_admins("[key_name(usr)] started an alien infestation.")
 				log_admin("[key_name(usr)] started an alien infestation.")
 				src.makeAliens()
-/* DEATH SQUADS
 			if("10")
 				message_admins("[key_name(usr)] created a death squad.")
 				log_admin("[key_name(usr)] created a death squad.")
 				if(!src.makeDeathsquad())
-					usr << "\red Unfortunatly there were no candidates available"
-*/
+					usr << "\red Unfortunatly there were not enough candidates available"
+
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
