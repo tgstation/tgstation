@@ -10,8 +10,10 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
+
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
+	var/in_reverse = 0  // Swap forwards/reverse dirs. (Good for diagonals)
 	var/forwards		// this is the default (forward) direction, set by the map dir
 	var/backwards		// hopefully self-explanatory
 	var/movedir			// the actual direction to move stuff in
@@ -115,6 +117,12 @@
 		if(SOUTHWEST)
 			forwards = WEST
 			backwards = NORTH
+
+	if(in_reverse)
+		var/next_backwards=forwards
+		forwards=backwards
+		backwards=next_backwards
+
 	if(!startup) // Need to wait for the radio_controller to wake up.
 		initialize()
 
@@ -134,7 +142,10 @@
 		operating = 0
 	if(stat & NOPOWER)
 		operating = 0
-	icon_state = "conveyor[operating]"
+	var/disp_op = operating
+	if(in_reverse && disp_op!=0)
+		disp_op = -operating
+	icon_state = "conveyor[disp_op]"
 
 	// machine process
 	// move items to the target location
