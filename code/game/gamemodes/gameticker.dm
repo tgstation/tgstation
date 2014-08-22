@@ -198,6 +198,11 @@ var/round_start_time = 0
 					world << sound('sound/effects/explosionfar.ogg')
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
+				if("fake") //The round isn't over, we're just freaking people out for fun
+					flick("intro_nuke",cinematic)
+					sleep(35)
+					world << sound('sound/items/bikehorn.ogg')
+					flick("summary_selfdes",cinematic)
 				else
 					flick("intro_nuke",cinematic)
 					sleep(35)
