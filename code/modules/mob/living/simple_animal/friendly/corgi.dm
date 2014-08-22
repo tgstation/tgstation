@@ -306,7 +306,9 @@
 			valid = 1
 
 	if(valid)
-		if(usr)
+		if(health <= 0)
+			usr << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
+		else if(usr)
 			if(!usr.drop_item())
 				usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
 				return 0
