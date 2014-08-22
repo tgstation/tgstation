@@ -59,7 +59,7 @@ proc/process_med_hud(var/mob/M,var/local_scanner,var/mob/eye)
 		if(!local_scanner) //Used for the AI's MedHUD, only works if the patient has activated suit sensors.
 			if(istype(patient.w_uniform, /obj/item/clothing/under))
 				var/obj/item/clothing/under/U = patient.w_uniform
-				if(!U.sensor_mode)
+				if(U.sensor_mode < 2)
 					continue
 			else
 				continue
