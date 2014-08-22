@@ -448,7 +448,13 @@
 */
 
 
-		item.throw_at(target, item.throw_range, item.throw_speed)
+		var/throw_mult=1
+		if(istype(src,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H=src
+			throw_mult = H.species.throw_mult
+			if(M_HULK in H.mutations || M_STRONG in H.mutations)
+				throw_mult+=0.5
+		item.throw_at(target, item.throw_range*throw_mult, item.throw_speed*throw_mult)
 
 /*mob/living/carbon/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()

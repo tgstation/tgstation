@@ -6,11 +6,13 @@
 			continue
 		drop_from_inventory(W)
 	regenerate_icons()
+
 	monkeyizing = 1
 	canmove = 0
 	stunned = 1
 	icon = null
 	invisibility = 101
+
 	for(var/t in organs)
 		del(t)
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )

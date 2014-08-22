@@ -201,6 +201,17 @@
 				damage += M.species.punch_damage
 			apply_damage(damage, BRUTE, affecting, armor_block)
 
+			// Horror form can punch people so hard they learn how to fly.
+			if(M.species.punch_throw_range && prob(25))
+				visible_message("\red <B>[src] is thrown by the force of the assault!</B>")
+				var/turf/T = get_turf(src)
+				var/turf/target
+				if(istype(T, /turf/space)) // if ended in space, then range is unlimited
+					target = get_edge_target_turf(T, M.dir)
+				else						// otherwise limit to 10 tiles
+					target = get_ranged_target_turf(T, M.dir, M.species.punch_throw_range)
+				src.throw_at(target,100,M.species.punch_throw_speed)
+
 
 		if("disarm")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")

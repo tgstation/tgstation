@@ -941,7 +941,6 @@ About the new airlock wires panel:
 			// TODO: analyze the called proc
 			if (shock(user, 100))
 				return
-
 	if (!p_open)
 		..(user)
 	//else

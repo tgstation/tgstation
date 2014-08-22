@@ -204,7 +204,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	var/husk = (M_HUSK in src.mutations)  //100% unnecessary -Agouri	//nope, do you really want to iterate through src.mutations repeatedly? -Pete
 	var/fat = (M_FAT in src.mutations)
-	var/hulk = (M_HULK in src.mutations)
+	var/hulk = (M_HULK in src.mutations) && species.name == "Horror" // Part of the species.
 	var/skeleton = (SKELETON in src.mutations)
 
 	var/g = "m"
@@ -408,6 +408,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 		//Icon data is kept in species datums within the mob.
 		race_icon = species.icobase
 		deform_icon = species.deform
+
+	if(species.override_icon)
+		overlays_standing[MUTANTRACE_LAYER]	= image("icon" = species.override_icon, "icon_state" = "[lowertext(species.name)]_[gender][fat?"_fat":""]")
 
 	if(dna)
 		switch(dna.mutantrace)

@@ -56,6 +56,12 @@ var/list/datum/power/changeling/powerinstances = list()
 	genomecost = 1
 	verbpath = /mob/proc/changeling_lesser_form
 
+/datum/power/changeling/horror_form
+	name = "Horror Form"
+	desc = "This costly evolution allows us to transform into an all-consuming abomination. We are extremely strong, to the point that we can force airlocks open and devour humans whole, and immune to stuns."
+	genomecost = 30
+	verbpath = /mob/proc/changeling_horror_form
+
 /datum/power/changeling/deaf_sting
 	name = "Deaf Sting"
 	desc = "We silently sting a human, completely deafening them for a short time."

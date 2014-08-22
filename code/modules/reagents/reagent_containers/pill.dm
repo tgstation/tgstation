@@ -95,8 +95,8 @@
 
 //Pills
 /obj/item/weapon/reagent_containers/pill/creatine
-	name = "Creatine (50 units)"
-	desc = "Pump it up."
+	name = "Creatine Suicide Pill (50 units)"
+	desc = "WILL ALSO KILL YOU VIOLENTLY."
 	icon_state = "pill5"
 	New()
 		..()

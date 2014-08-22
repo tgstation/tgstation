@@ -47,7 +47,7 @@
 
 /mob/living/carbon/human/adjustFireLoss(var/amount)
 	if(amount > 0)
-		take_overall_damage(0, amount)
+		take_overall_damage(0, amount * species.fireloss_mult)
 	else
 		heal_overall_damage(0, -amount)
 

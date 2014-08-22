@@ -18,7 +18,10 @@
 			happensonce = -1
 
 /datum/disease2/effectholder/proc/getrandomeffect(var/badness = 1)
-	virus.log += "<br />[timestamp()] Effect [effect.name] [chance]%"
+	if(effect)
+		virus.log += "<br />[timestamp()] Effect [effect.name] [chance]% is now "
+	else
+		virus.log += "<br />[timestamp()] Added effect "
 	var/list/datum/disease2/effect/list = list()
 	for(var/e in (typesof(/datum/disease2/effect) - /datum/disease2/effect))
 		var/datum/disease2/effect/f = new e
@@ -28,7 +31,7 @@
 			list += f
 	effect = pick(list)
 	chance = rand(1,6)
-	virus.log += " is now [effect.name] [chance]%:"
+	virus.log += "[effect.name] [chance]%:"
 
 /datum/disease2/effectholder/proc/minormutate()
 	switch(pick(1,2,3,4,5))

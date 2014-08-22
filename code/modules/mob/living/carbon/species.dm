@@ -7,6 +7,7 @@
 
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
+	var/override_icon = null                             // DMI for overriding the icon.  states: [lowertext(species.name)]_[gender][fat?"_fat":""]
 	var/eyes = "eyes_s"                                  // Icon for eyes.
 
 	var/primitive                // Lesser form, if any (ie. monkey for humans)
@@ -14,6 +15,8 @@
 	var/language                 // Default racial language, if any.
 	var/attack_verb = "punch"    // Empty hand hurt intent verb.
 	var/punch_damage = 0		 // Extra empty hand attack damage.
+	var/punch_throw_range = 0
+	var/punch_throw_speed = 1
 	var/mutantrace               // Safeguard due to old code.
 
 	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
@@ -27,7 +30,11 @@
 	var/heat_level_2 = 400  // Heat damage level 2 above this point.
 	var/heat_level_3 = 1000 // Heat damage level 2 above this point.
 
+	var/fireloss_mult = 1
+
 	var/darksight = 2
+	var/throw_mult = 1 // Default mob throw_mult.
+
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
@@ -63,6 +70,7 @@
 	var/back_icons      = 'icons/mob/back.dmi'
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
+
 	//This is a basic humanoid limb setup.
 	H.organs = list()
 	H.organs_by_name["chest"] = new/datum/organ/external/chest()
