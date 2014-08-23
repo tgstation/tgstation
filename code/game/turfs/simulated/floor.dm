@@ -428,18 +428,18 @@ turf/simulated/floor/proc/update_icon()
 				qdel(C)
 				T.state = C //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				user << "\blue You replace the light bulb."
+				user << "<span class='notice'>You replace the light bulb.</span>"
 			else
-				user << "\blue The lightbulb seems fine, no need to replace it."
+				user << "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>"
 
 	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
 		if(broken || burnt)
-			user << "\red You remove the broken plating."
+			user << "<span class='danger'>You remove the broken plating.</span>"
 		else
 			if(is_wood_floor())
-				user << "\red You forcefully pry off the planks, destroying them in the process."
+				user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
 			else
-				user << "\red You remove the [floor_tile.name]."
+				user << "<span class='danger'>You remove the [floor_tile.name].</span>"
 				new floor_tile.type(src)
 
 		make_plating()
@@ -452,7 +452,7 @@ turf/simulated/floor/proc/update_icon()
 			return
 		else
 			if(is_wood_floor())
-				user << "\red You unscrew the planks."
+				user << "<span class='danger'>You unscrew the planks.</span>"
 				new floor_tile.type(src)
 
 		make_plating()
@@ -508,7 +508,7 @@ turf/simulated/floor/proc/update_icon()
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			else
-				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
+				user << "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
 
 
 	if(istype(C, /obj/item/stack/cable_coil))
@@ -526,20 +526,20 @@ turf/simulated/floor/proc/update_icon()
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			user << "\blue You shovel the grass."
+			user << "<span class='notice'>You shovel the grass.</span>"
 			make_plating()
 		else
-			user << "\red You cannot shovel this."
+			user << "<span class='danger'>You cannot shovel this.</span>"
 
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))
-					user << "\red You fix some dents on the broken plating."
+					user << "<span class='danger'>You fix some dents on the broken plating.</span>"
 					playsound(src, 'sound/items/Welder.ogg', 80, 1)
 					icon_state = icon_plating
 					burnt = 0
 					broken = 0
 				else
-					user << "\blue You need more welding fuel to complete this task."
+					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
