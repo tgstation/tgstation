@@ -511,7 +511,8 @@ datum/objective/destroy
 
 datum/objective/destroy/find_target()
 	var/list/possible_targets = active_ais()
-	target = pick(possible_targets)
+	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
+	target = target_ai.mind
 	update_explanation_text()
 	return target
 
