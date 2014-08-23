@@ -136,14 +136,19 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_icons()
 	update_hud()		//TODO: remove the need for this
 
-	if(overlays.len != overlays_standing.len)
+	if(species && species.override_icon)
 		overlays.len = 0
-		overlays.len = overlays_standing.len
-		icon = stand_icon
+		icon = species.override_icon
+		icon_state = "[lowertext(species.name)]_[gender][(mutations & M_FAT)?"_fat":""]"
+	else
+		if(overlays.len != overlays_standing.len)
+			overlays.len = 0
+			overlays.len = overlays_standing.len
+			icon = stand_icon
 
-		for(var/overlay in overlays_standing)
-			if(overlay)
-				overlays += overlay
+			for(var/overlay in overlays_standing)
+				if(overlay)
+					overlays += overlay
 
 	update_transform()
 
@@ -210,91 +215,88 @@ proc/get_damage_icon_part(damage_state, body_part)
 	var/g = "m"
 	if(gender == FEMALE)	g = "f"
 
-	if(species && species.override_icon)
-		stand_icon = image("icon" = species.override_icon, "icon_state" = "[lowertext(species.name)]_[gender][fat?"_fat":""]")
-	else
-		var/datum/organ/external/chest = get_organ("chest")
-		stand_icon = chest.get_icon(g,fat)
-		if(!skeleton)
-			if(husk)
-				stand_icon.ColorTone(husk_color_mod)
-			else if(hulk)
-				var/list/TONE = ReadRGB(hulk_color_mod)
-				stand_icon.MapColors(rgb(TONE[1],0,0),rgb(0,TONE[2],0),rgb(0,0,TONE[3]))
-
-		var/datum/organ/external/head = get_organ("head")
-		var/has_head = 0
-		if(head && !(head.status & ORGAN_DESTROYED))
-			has_head = 1
-
-		for(var/datum/organ/external/part in organs)
-			if(!istype(part, /datum/organ/external/chest) && !(part.status & ORGAN_DESTROYED))
-				var/icon/temp
-				if (istype(part, /datum/organ/external/groin) || istype(part, /datum/organ/external/head))
-					temp = part.get_icon(g,fat)
-				else
-					temp = part.get_icon()
-
-				if(part.status & ORGAN_DEAD)
-					temp.ColorTone(necrosis_color_mod)
-					temp.SetIntensity(0.7)
-
-				else if(!skeleton)
-					if(husk)
-						temp.ColorTone(husk_color_mod)
-					else if(hulk)
-						var/list/TONE = ReadRGB(hulk_color_mod)
-						temp.MapColors(rgb(TONE[1],0,0),rgb(0,TONE[2],0),rgb(0,0,TONE[3]))
-
-				//That part makes left and right legs drawn topmost and lowermost when human looks WEST or EAST
-				//And no change in rendering for other parts (they icon_position is 0, so goes to 'else' part)
-				if(part.icon_position&(LEFT|RIGHT))
-					var/icon/temp2 = new('icons/mob/human.dmi',"blank")
-					temp2.Insert(new/icon(temp,dir=NORTH),dir=NORTH)
-					temp2.Insert(new/icon(temp,dir=SOUTH),dir=SOUTH)
-					if(!(part.icon_position & LEFT))
-						temp2.Insert(new/icon(temp,dir=EAST),dir=EAST)
-					if(!(part.icon_position & RIGHT))
-						temp2.Insert(new/icon(temp,dir=WEST),dir=WEST)
-					stand_icon.Blend(temp2, ICON_OVERLAY)
-					temp2 = new('icons/mob/human.dmi',"blank")
-					if(part.icon_position & LEFT)
-						temp2.Insert(new/icon(temp,dir=EAST),dir=EAST)
-					if(part.icon_position & RIGHT)
-						temp2.Insert(new/icon(temp,dir=WEST),dir=WEST)
-					stand_icon.Blend(temp2, ICON_UNDERLAY)
-				else
-					stand_icon.Blend(temp, ICON_OVERLAY)
-
-		//Skin tone
-		if(!skeleton && !husk && !hulk && (species.flags & HAS_SKIN_TONE))
-			if(s_tone >= 0)
-				stand_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-			else
-				stand_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
-
+	var/datum/organ/external/chest = get_organ("chest")
+	stand_icon = chest.get_icon(g,fat)
+	if(!skeleton)
 		if(husk)
-			var/icon/mask = new(stand_icon)
-			var/icon/husk_over = new(race_icon,"overlay_husk")
-			mask.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,0)
-			husk_over.Blend(mask, ICON_ADD)
-			stand_icon.Blend(husk_over, ICON_OVERLAY)
+			stand_icon.ColorTone(husk_color_mod)
+		else if(hulk)
+			var/list/TONE = ReadRGB(hulk_color_mod)
+			stand_icon.MapColors(rgb(TONE[1],0,0),rgb(0,TONE[2],0),rgb(0,0,TONE[3]))
 
-		if(has_head)
-			//Eyes
-			if(!skeleton)
-				var/icon/eyes = new/icon('icons/mob/human_face.dmi', species.eyes)
-				eyes.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
-				stand_icon.Blend(eyes, ICON_OVERLAY)
+	var/datum/organ/external/head = get_organ("head")
+	var/has_head = 0
+	if(head && !(head.status & ORGAN_DESTROYED))
+		has_head = 1
 
-			//Mouth	(lipstick!)
-			if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
-				stand_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
+	for(var/datum/organ/external/part in organs)
+		if(!istype(part, /datum/organ/external/chest) && !(part.status & ORGAN_DESTROYED))
+			var/icon/temp
+			if (istype(part, /datum/organ/external/groin) || istype(part, /datum/organ/external/head))
+				temp = part.get_icon(g,fat)
+			else
+				temp = part.get_icon()
 
-		//Underwear
-		if(underwear >0 && underwear < 12 && species.flags & HAS_UNDERWEAR)
-			if(!fat && !skeleton)
-				stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+			if(part.status & ORGAN_DEAD)
+				temp.ColorTone(necrosis_color_mod)
+				temp.SetIntensity(0.7)
+
+			else if(!skeleton)
+				if(husk)
+					temp.ColorTone(husk_color_mod)
+				else if(hulk)
+					var/list/TONE = ReadRGB(hulk_color_mod)
+					temp.MapColors(rgb(TONE[1],0,0),rgb(0,TONE[2],0),rgb(0,0,TONE[3]))
+
+			//That part makes left and right legs drawn topmost and lowermost when human looks WEST or EAST
+			//And no change in rendering for other parts (they icon_position is 0, so goes to 'else' part)
+			if(part.icon_position&(LEFT|RIGHT))
+				var/icon/temp2 = new('icons/mob/human.dmi',"blank")
+				temp2.Insert(new/icon(temp,dir=NORTH),dir=NORTH)
+				temp2.Insert(new/icon(temp,dir=SOUTH),dir=SOUTH)
+				if(!(part.icon_position & LEFT))
+					temp2.Insert(new/icon(temp,dir=EAST),dir=EAST)
+				if(!(part.icon_position & RIGHT))
+					temp2.Insert(new/icon(temp,dir=WEST),dir=WEST)
+				stand_icon.Blend(temp2, ICON_OVERLAY)
+				temp2 = new('icons/mob/human.dmi',"blank")
+				if(part.icon_position & LEFT)
+					temp2.Insert(new/icon(temp,dir=EAST),dir=EAST)
+				if(part.icon_position & RIGHT)
+					temp2.Insert(new/icon(temp,dir=WEST),dir=WEST)
+				stand_icon.Blend(temp2, ICON_UNDERLAY)
+			else
+				stand_icon.Blend(temp, ICON_OVERLAY)
+
+	//Skin tone
+	if(!skeleton && !husk && !hulk && (species.flags & HAS_SKIN_TONE))
+		if(s_tone >= 0)
+			stand_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
+		else
+			stand_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+
+	if(husk)
+		var/icon/mask = new(stand_icon)
+		var/icon/husk_over = new(race_icon,"overlay_husk")
+		mask.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,0)
+		husk_over.Blend(mask, ICON_ADD)
+		stand_icon.Blend(husk_over, ICON_OVERLAY)
+
+	if(has_head)
+		//Eyes
+		if(!skeleton)
+			var/icon/eyes = new/icon('icons/mob/human_face.dmi', species.eyes)
+			eyes.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
+			stand_icon.Blend(eyes, ICON_OVERLAY)
+
+		//Mouth	(lipstick!)
+		if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
+			stand_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
+
+	//Underwear
+	if(underwear >0 && underwear < 12 && species.flags & HAS_UNDERWEAR)
+		if(!fat && !skeleton)
+			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 
 	if(update_icons)
 		update_icons()
@@ -411,9 +413,6 @@ proc/get_damage_icon_part(damage_state, body_part)
 		//Icon data is kept in species datums within the mob.
 		race_icon = species.icobase
 		deform_icon = species.deform
-
-	if(species.override_icon)
-		overlays_standing[MUTANTRACE_LAYER]	= image("icon" = species.override_icon, "icon_state" = "[lowertext(species.name)]_[gender][fat?"_fat":""]")
 
 	if(dna)
 		switch(dna.mutantrace)

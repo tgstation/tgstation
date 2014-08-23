@@ -64,7 +64,7 @@
 
 	H.set_species("Horror")
 	H.client.verbs |= H.species.abilities // Force ability equip.
-	H.update_body(1)
+	H.update_icons()
 
 //removes our changeling verbs
 /mob/proc/remove_changeling_powers()
