@@ -8,9 +8,9 @@
 /datum/round_event/wizard/deprevolt/start()
 
 	var/list/tidecolor
-	var/list/jobs_to_revolt
+	var/list/jobs_to_revolt	= 	list()
 	var/nation
-	var/list/citizens
+	var/list/citizens	=		list()
 
 	tidecolor = pick("grey", "white", "yellow", "purple", "brown", "whatevercolorrepresentstheservicepeople")
 	switch(tidecolor)
@@ -36,12 +36,18 @@
 	nation += pick("stan", "topia", "land")
 
 	for(var/mob/living/carbon/human/H in mob_list)
-		if(H.mind && H.mind.assigned_role in jobs_to_revolt && !(H.mind in ticker.mode.traitors))
-			citizens += H
-			ticker.mode.traitors += H.mind
-			H.mind.special_role = "separatist"
-			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a separatist, long live [nation]!</font>"
-			H << "<B>You are a separatist! [nation] forever! Protect the soverignty of your newfound land with your comrades in arms!</B>"
-
-	if(citizens)
-		message_admins("The nation of [nation] has been formed. Affected jobs are [jobs_to_revolt].")
+		if(H.mind)
+			var/datum/mind/M = H.mind
+			if(M.assigned_role && !(M in ticker.mode.traitors))
+				for(var/job in jobs_to_revolt)
+					if(M.assigned_role == job)
+						citizens += H
+						ticker.mode.traitors += M
+						M.special_role = "separatist"
+						H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a separatist, long live [nation]!</font>"
+						H << "<B>You are a separatist! [nation] forever! Protect the soverignty of your newfound land with your comrades in arms!</B>"
+	if(citizens.len)
+		var/message
+		for(var/job in jobs_to_revolt)
+			message += "[job],"
+		message_admins("The nation of [nation] has been formed. Affected jobs are [message]")
