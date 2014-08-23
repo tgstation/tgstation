@@ -92,7 +92,28 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 	if (istype(I, /obj/item/weapon/card/emag))
 		src.req_access = list()
 		emagged = 1
-		usr << "You fried the consoles ID checking system. It's now available to everyone!"
+		usr << "You fried the consoles ID checking system."
 	else
 		..()
 	return
+
+/obj/machinery/computer/shuttle/ferry
+	name = "transport ferry console"
+	circuit = /obj/item/weapon/circuitboard/ferry
+	id = "ferry"
+
+/obj/machinery/computer/shuttle/ferry/request
+	name = "ferry console"
+	circuit = /obj/item/weapon/circuitboard/ferry/request
+	var/cooldown //prevents spamming admins
+
+/obj/machinery/computer/shuttle/ferry/request/Topic(href, href_list)
+	if(href_list["move"])
+		if(cooldown)
+			return
+		cooldown = 1
+		usr << "<span class='notice'>Docking locks are engaged. Sending request to leave..."
+		var/datum/shuttle_manager/s = shuttles["ferry"]
+		admins << "<b>FERRY: <font color='blue'>[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;secretsadmin=moveferry'>Move</a>)</b> is requesting to move the transport ferry to [s.location == /area/shuttle/transport1/centcom ? "the station" : "Centcom"].</font>"
+		spawn(100)
+			cooldown = 0
