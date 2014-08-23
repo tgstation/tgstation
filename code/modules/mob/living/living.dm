@@ -611,7 +611,7 @@
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
-/mob/living/stripPanelUnequip(mob/who, obj/item/what, where)
+/mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(what.flags & NODROP)
 		src << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
 		return
@@ -625,7 +625,7 @@
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
-/mob/living/stripPanelEquip(mob/who, obj/item/what, where)
+/mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_hand()
 	if(what && (what.flags & NODROP))
 		src << "<span class='notice'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
