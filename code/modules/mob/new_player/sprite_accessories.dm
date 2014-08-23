@@ -283,11 +283,12 @@
 /datum/sprite_accessory/hair/not_floorlength_braid
 	name = "High Braid"
 	icon_state = "hair_braid2"
-
+/*
 /datum/sprite_accessory/hair/braid
 	name = "Floorlength Braid"
 	icon_state = "hair_braid"
-
+	// Fuck floorbraid hair. It looks fucking ugly. - Iamgoofball
+*/
 /datum/sprite_accessory/hair/odango
 	name = "Odango"
 	icon_state = "hair_odango"
