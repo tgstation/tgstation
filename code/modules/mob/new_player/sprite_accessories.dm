@@ -264,6 +264,14 @@
 	name = "Hime Cut"
 	icon_state = "hair_himecut"
 
+/datum/sprite_accessory/hair/himecut2
+	name = "Hime Cut 2"
+	icon_state = "hair_himecut2"
+
+/datum/sprite_accessory/hair/himeup
+	name = "Hime Updo"
+	icon_state = "hair_himeup"
+
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
