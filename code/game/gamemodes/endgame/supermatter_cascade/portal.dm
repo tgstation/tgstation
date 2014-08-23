@@ -9,6 +9,9 @@
 	move_self = 0
 	announce=0
 
+/obj/machinery/singularity/narsie/large/exit/New()
+	..(cultspawn=0)
+
 /obj/machinery/singularity/narsie/large/exit/update_icon()
 	overlays = 0
 

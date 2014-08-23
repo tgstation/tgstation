@@ -16,7 +16,18 @@
 		spess.overlays += "end01"
 
 /datum/universal_state/supermatter_cascade/DecayTurf(var/turf/T)
-	return ..()
+	if(istype(T,/turf/simulated/wall))
+		var/turf/simulated/wall/W=T
+		W.melt()
+		return
+	if(istype(T,/turf/simulated/floor))
+		var/turf/simulated/floor/F=T
+		// Burnt?
+		if(!F.burnt)
+			F.burn_tile()
+		else
+			F.ReplaceWithLattice()
+		return
 
 // Apply changes when entering state
 /datum/universal_state/supermatter_cascade/OnEnter()
