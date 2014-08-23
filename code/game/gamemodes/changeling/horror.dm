@@ -63,4 +63,6 @@
 				for(var/obj/machinery/door/firedoor/FD in D.loc)
 					if(FD && FD.density)
 						FD.open(1)
+			else
+				usr << "\red You fail to open \the [D]."
 			return

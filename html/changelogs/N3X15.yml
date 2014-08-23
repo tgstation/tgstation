@@ -1,2 +1,4 @@
 author: N3X15
-changes: []
+changes: 
+  - wip: Horror Form for changeling has been added.  Costs 30 points, effectively turns user into a hulk.  Unlike a hulk, however, Horrors can punch people so hard they have a 25% chance of flying down a hallway.  Can also force open doors (50% chance after 5 sec).  Throwing speed bonus.  Takes twice as much fire damage as a normal human.  <u>YOU CANNOT RETURN TO HUMAN FORM AFTER CHANGING INTO A HORROR.</u>
+  - rscadd: New traitor panel control for adjusting genomes of changelings. (No more opening 5 VV panels!)

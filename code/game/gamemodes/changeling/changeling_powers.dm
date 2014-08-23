@@ -64,7 +64,7 @@
 
 	H.set_species("Horror")
 	H.client.verbs |= H.species.abilities // Force ability equip.
-	H.regenerate_icons()
+	H.update_body(1)
 
 //removes our changeling verbs
 /mob/proc/remove_changeling_powers()
@@ -75,7 +75,7 @@
 
 
 //Helper proc. Does all the checks and stuff for us to avoid copypasta
-/mob/proc/changeling_power(var/required_chems=0, var/required_dna=0, var/max_genetic_damage=100, var/max_stat=0)
+/mob/proc/changeling_power(var/required_chems=0, var/required_dna=0, var/max_genetic_damage=100, var/max_stat=0, var/deny_horror=0)
 
 	if(!src.mind)		return
 	if(!iscarbon(src))	return
@@ -99,6 +99,11 @@
 
 	if(changeling.geneticdamage > max_genetic_damage)
 		src << "<span class='warning'>Our geneomes are still reassembling. We need time to recover first.</span>"
+		return
+
+	var/mob/living/carbon/human/H = src
+	if(deny_horror && istype(H) && H.species && H.species.name == "Horror")
+		src << "<span class='warning'>You are not permitted to taint our purity.  You cannot do this as a Horror.</span>"
 		return
 
 	return changeling
@@ -211,7 +216,7 @@
 	set category = "Changeling"
 	set name = "Transform (5)"
 
-	var/datum/changeling/changeling = changeling_power(5,1,0)
+	var/datum/changeling/changeling = changeling_power(5,1,0, deny_horror=1)
 	if(!changeling)	return
 
 	var/list/names = list()
@@ -246,7 +251,7 @@
 	set category = "Changeling"
 	set name = "Lesser Form (1)"
 
-	var/datum/changeling/changeling = changeling_power(1,0,0)
+	var/datum/changeling/changeling = changeling_power(1,0,0, deny_horror=1)
 	if(!changeling)	return
 
 	if(src.has_brain_worms())
@@ -314,7 +319,7 @@
 	set category = "Changeling"
 	set name = "Transform (1)"
 
-	var/datum/changeling/changeling = changeling_power(1,1,0)
+	var/datum/changeling/changeling = changeling_power(1,1,0, deny_horror=1)
 	if(!changeling)	return
 
 	var/list/names = list()

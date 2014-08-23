@@ -224,6 +224,8 @@ datum/mind
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
 				if( changeling && changeling.absorbed_dna.len && (current.real_name != changeling.absorbed_dna[1]) )
 					text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
+				if( changeling )
+					text += "<br><a href='?src=\ref[src];changeling=set_genomes'>[changeling.geneticpoints] genomes</a>"
 			else
 				text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
 //			var/datum/game_mode/changeling/changeling = ticker.mode
@@ -733,6 +735,14 @@ datum/mind
 						current.real_name = current.dna.real_name
 						current.UpdateAppearance()
 						domutcheck(current, null)
+
+				if("set_genomes")
+					if( !changeling )
+						usr << "\red No changeling!"
+						return
+					var/new_g = input(usr,"Number of genomes","Changeling",changeling.geneticpoints) as num
+					changeling.geneticpoints = between(0,new_g,100)
+					log_admin("[key_name_admin(usr)] has set changeling [current] to [changeling.geneticpoints] genomes.")
 
 		else if (href_list["vampire"])
 			switch(href_list["vampire"])
