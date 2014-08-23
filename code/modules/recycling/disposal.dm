@@ -100,9 +100,7 @@
 					C.update()
 					qdel(src)
 				return
-			else
-				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
-				return
+			return
 
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
 		user << "<span class='notice'>You can't place \the [I] into \the [src].</span>"
@@ -823,9 +821,7 @@
 				if(!src || !W.isOn()) return
 				welded()
 				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
-		else
-			user << "<span class='notice'>You need more welding fuel to cut the pipe.</span>"
-			return
+		return
 
 // called when pipe is cut with welder
 /obj/structure/disposalpipe/proc/welded()
@@ -1140,10 +1136,7 @@
 				if(!src || !W.isOn()) return
 				welded()
 				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
-		else
-			user << "<span class='notice'>You need more welding fuel to cut the pipe.</span>"
-
-			return
+		return
 
 	// would transfer to next pipe segment, but we are in a trunk
 	// if not entering from disposal bin,

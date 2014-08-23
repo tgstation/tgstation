@@ -296,7 +296,6 @@
 			else
 				user << "\blue The welding tool needs to be on to start this task."
 		else
-			user << "\blue You need more welding fuel to complete this task."
 			return 1
 	else
 		return ..()
