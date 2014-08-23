@@ -510,7 +510,7 @@ datum/objective/destroy
 	dangerrating = 10
 
 datum/objective/destroy/find_target()
-	var/list/possible_targets = active_ais()
+	var/list/possible_targets = active_ais(1)
 	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
 	target = target_ai.mind
 	update_explanation_text()

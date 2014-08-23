@@ -513,13 +513,15 @@
 					new_objective.update_explanation_text()
 
 			if ("destroy")
-				var/list/possible_targets = active_ais()
+				var/list/possible_targets = active_ais(1)
 				if(possible_targets.len)
 					var/mob/new_target = input("Select target:", "Objective target") as null|anything in possible_targets
 					new_objective = new /datum/objective/destroy
 					new_objective.target = new_target.mind
 					new_objective.owner = src
 					new_objective.update_explanation_text()
+				else
+					usr << "No active AIs with minds"
 
 			if ("prevent")
 				new_objective = new /datum/objective/block
