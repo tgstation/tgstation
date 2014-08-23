@@ -213,21 +213,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
 						var/data, var/compression, var/list/level, var/freq)
-
-	/*world << "broadcast_message() called"
-	world << "AM = [AM]"
-	world << "vmask = [vmask]"
-	world << "radio = [radio]"
-	world << "message = [message]"
-	world << "name = [name]"
-	world << "job = [job]"
-	world << "realname = [realname]"
-	world << "data = [data]"
-	world << "compression = [compression]"
-	world << "level:"
-	for(var/i in level)
-		world << i
-	world << "freq = [freq]"*/
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 	if(!message)
 		return
@@ -239,14 +224,15 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	virt.languages = AM.languages
 	virt.source = AM
 	virt.faketrack = data == 4 ? 1 : 0
+	virt.radio = radio
 
 	if(compression > 0)
-		message = Gibberish(message, compression + 50)
+		message = Gibberish(message, compression + 40)
+
 	// --- Broadcast only to intercom devices ---
 
 	if(data == 1)
-
-		for (var/obj/item/device/radio/intercom/R in all_radios["[freq]"])
+		for(var/obj/item/device/radio/intercom/R in all_radios["[freq]"])
 			if(R.receive_range(freq, level) > -1)
 				radios += R
 
@@ -254,26 +240,23 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	else if(data == 2)
 
-		for (var/obj/item/device/radio/R in all_radios["[freq]"])
-
+		for(var/obj/item/device/radio/R in all_radios["[freq]"])
 			if(istype(R, /obj/item/device/radio/headset))
 				continue
 
 			if(R.receive_range(freq, level) > -1)
 				radios += R
-	// --- Broadcast to syndicate radio! ---
 
 	else if(data == 3)
 
-		for (var/obj/item/device/radio/R in all_radios["[freq]"])
-
+		for(var/obj/item/device/radio/R in all_radios["[SYND_FREQ]"])
 			if(R.receive_range(SYND_FREQ, level) > -1)
 				radios += R
 
 	// --- Broadcast to ALL radio devices ---
 
 	else
-		for (var/obj/item/device/radio/R in all_radios["[freq]"])
+		for(var/obj/item/device/radio/R in all_radios["[freq]"])
 			if(R.receive_range(freq, level) > -1)
 				radios += R
 

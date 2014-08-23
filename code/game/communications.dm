@@ -158,7 +158,7 @@ var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 /* filters */
 var/const/RADIO_TO_AIRALARM = "1"
 var/const/RADIO_FROM_AIRALARM = "2"
-var/const/RADIO_CHAT = "3"
+var/const/RADIO_CHAT = "3" //deprecated
 var/const/RADIO_ATMOSIA = "4"
 var/const/RADIO_NAVBEACONS = "5"
 var/const/RADIO_AIRLOCK = "6"

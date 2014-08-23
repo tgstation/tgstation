@@ -16,7 +16,7 @@
 
 /mob/living/carbon/alien/handle_inherent_channels(message, message_mode)
 	if(!..())
-		if(message_mode == "alientalk")
+		if(message_mode == MODE_ALIEN)
 			if(alien_talk_understand || hivecheck())
 				alien_talk(message)
 			return 1

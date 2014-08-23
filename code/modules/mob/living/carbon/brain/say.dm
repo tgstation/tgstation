@@ -14,6 +14,7 @@
 		var/obj/item/device/mmi/radio_enabled/R = container
 		if(R.radio)
 			R.radio.talk_into(src, sanitize(message))
+			return ITALICS | REDUCE_RANGE
 
 /mob/living/carbon/brain/lingcheck()
 	return 0

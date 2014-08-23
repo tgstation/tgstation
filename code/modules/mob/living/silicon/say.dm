@@ -26,25 +26,25 @@
 
 /mob/living/silicon/radio(message, message_mode)
 	. = ..()
-	if(. != 2)
+	if(. != 0)
 		return .
 
 	if(message_mode == "robot")
 		if (radio)
 			radio.talk_into(src, message)
-		return 1
+		return REDUCE_RANGE
 
 	else if(message_mode in radiochannels)
 		if(radio)
 			radio.talk_into(src, message, message_mode)
-			return 1
+			return ITALICS | REDUCE_RANGE
 
-	return 2
+	return 0
 
 /mob/living/silicon/get_message_mode(message)
 	. = ..()
-	if(..() == "headset")
-		return "robot"
+	if(..() == MODE_HEADSET)
+		return MODE_ROBOT
 	else
 		return .
 
@@ -53,7 +53,7 @@
 	if(.)
 		return .
 	
-	if(message_mode == "binary")
+	if(message_mode == MODE_BINARY)
 		if(binarycheck())
 			robot_talk(message)
 			return 1

@@ -16,9 +16,9 @@
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/send_speech(message, range, steps)
+/atom/movable/proc/send_speech(message, range)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(message, src, languages, message, steps)
+		AM.Hear(message, src, languages, message)
 
 /atom/movable/proc/say_quote(var/text)
 	if(!text)
@@ -53,7 +53,7 @@
 	else
 		return "makes a strange sound."
 
-/atom/movable/proc/get_radio_span(freq)
+/proc/get_radio_span(freq)
 	switch(freq)
 		if(SCI_FREQ)
 			return "sciradio"
@@ -77,7 +77,7 @@
 			return "dsquadradio"
 	return "radio"
 
-/atom/movable/proc/get_radio_name(freq) //There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
+/proc/get_radio_name(freq) //There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 	switch(freq)
 		if(COMM_FREQ)
 			return "Command"
@@ -118,10 +118,13 @@
 /atom/movable/proc/GetSource()
 	return
 
+/atom/movable/proc/GetRadio()
+
 /atom/movable/virtualspeaker
 	var/job
 	var/faketrack
 	var/atom/movable/source
+	var/obj/item/device/radio/radio
 
 /atom/movable/virtualspeaker/GetJob()
 	return job
@@ -131,6 +134,9 @@
 
 /atom/movable/virtualspeaker/GetSource()
 	return source
+
+/atom/movable/virtualspeaker/GetRadio()
+	return radio
 
 /atom/movable/verb/say_something(message as text)
 	set name = "make honk"

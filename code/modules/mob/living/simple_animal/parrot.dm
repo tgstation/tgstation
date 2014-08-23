@@ -131,31 +131,31 @@
 
 /mob/living/simple_animal/parrot/radio(message, message_mode) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
-	if(. != 2)
+	if(. != 0)
 		return .
 
 	switch(message_mode)
-		if("headset")
+		if(MODE_HEADSET)
 			if (ears)
 				ears.talk_into(src, message)
-			return 1
+			return ITALICS | REDUCE_RANGE
 
-		if("secure headset")
+		if(MODE_SECURE_HEADSET)
 			if (ears)
 				ears.talk_into(src, message, 1)
-			return 1
+			return ITALICS | REDUCE_RANGE
 
-		if("department")
+		if(MODE_DEPARTMENT)
 			if (ears)
 				ears.talk_into(src, message, message_mode)
-			return 1
+			return ITALICS | REDUCE_RANGE
 	
 	if(message_mode in radiochannels)
 		if(ears)
 			ears.talk_into(src, message, message_mode)
-			return 1
+			return ITALICS | REDUCE_RANGE
 
-	return 2
+	return 0
 
 /*
  * Inventory
@@ -196,7 +196,7 @@
 						ears = null
 						for(var/possible_phrase in speak)
 							if(copytext(possible_phrase,1,3) in department_radio_keys)
-								possible_phrase = copytext(possible_phrase,3,length(possible_phrase))
+								possible_phrase = copytext(possible_phrase,3)
 					else
 						usr << "\red There is nothing to remove from its [remove_from]."
 						return
@@ -358,7 +358,7 @@
 
 //-----SPEECH
 	/* Parrot speech mimickry!
-	   Phrases that the parrot hears in mob/living/say() get added to speach_buffer.
+	   Phrases that the parrot Hear()s get added to speach_buffer.
 	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
 	   Then it clears the buffer to make sure they dont magically remember something from hours ago. */
 	if(speech_buffer.len && prob(10))
@@ -401,9 +401,9 @@
 							useradio = 1
 
 						if(copytext(possible_phrase,1,3) in department_radio_keys)
-							possible_phrase = "[useradio?pick(available_channels):""] [copytext(possible_phrase,3,length(possible_phrase)+1)]" //crop out the channel prefix
+							possible_phrase = "[useradio?pick(available_channels):""][copytext(possible_phrase,3)]" //crop out the channel prefix
 						else
-							possible_phrase = "[useradio?pick(available_channels):""] [possible_phrase]"
+							possible_phrase = "[useradio?pick(available_channels):""][possible_phrase]"
 
 						newspeak.Add(possible_phrase)
 
@@ -796,7 +796,7 @@
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS FREE CALL THE SHUTTLE")
+	speak = list("Poly wanna cracker!", "e: Check the singlo, you chucklefucks!","e: Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS FREE CALL THE SHUTTLE")
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)

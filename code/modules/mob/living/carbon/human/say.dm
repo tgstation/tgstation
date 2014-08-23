@@ -86,31 +86,31 @@
 
 /mob/living/carbon/human/radio(message, message_mode)
 	. = ..()
-	if(. != 2)
+	if(. != 0)
 		return .
 
 	switch(message_mode)
-		if("headset")
+		if(MODE_HEADSET)
 			if (ears)
 				ears.talk_into(src, message)
-			return 1
+			return ITALICS | REDUCE_RANGE
 
-		if("secure headset")
+		if(MODE_SECURE_HEADSET)
 			if (ears)
 				ears.talk_into(src, message, 1)
-			return 1
+			return ITALICS | REDUCE_RANGE
 
-		if("department")
+		if(MODE_DEPARTMENT)
 			if (ears)
 				ears.talk_into(src, message, message_mode)
-			return 1
+			return ITALICS | REDUCE_RANGE
 	
 	if(message_mode in radiochannels)
 		if(ears)
 			ears.talk_into(src, message, message_mode)
-			return 1
+			return ITALICS | REDUCE_RANGE
 
-	return 2
+	return 0
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())

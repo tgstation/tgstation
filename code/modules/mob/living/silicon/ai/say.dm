@@ -7,6 +7,7 @@
 /mob/living/silicon/ai/compose_track_href(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//this proc assumes that the message originated from a radio. if the speaker is not a virtual speaker this will probably fuck up hard.
 	var/mob/M = speaker.GetSource()
+	var/obj/item/device/radio = speaker.GetRadio()
 	if(M)
 		var/faketrack = "byond://?src=\ref[radio];track2=\ref[src];track=\ref[M]"
 		if(speaker.GetTrack())
@@ -33,7 +34,7 @@
 
 /mob/living/silicon/ai/get_message_mode(message)
 	if(copytext(message, 1, 3) in list(":h", ":H", ".h", ".H", "#h", "#H"))
-		return "holopad"
+		return MODE_HOLOPAD
 	else
 		return ..()
 
@@ -42,7 +43,7 @@
 	if(.)
 		return .
 	
-	if(message_mode == "holopad")
+	if(message_mode == MODE_HOLOPAD)
 		holopad_talk(message)
 		return 1
 

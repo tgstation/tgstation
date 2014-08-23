@@ -1,3 +1,21 @@
+//bitflag #defines for radio return.
+#define ITALICS 1
+#define REDUCE_RANGE 2
+#define NOPASS 4
+
+//message modes. you're not supposed to mess with these.
+#define MODE_HEADSET "headset"
+#define MODE_ROBOT "robot"
+#define MODE_R_HAND "right hand"
+#define MODE_L_HAND "left hand"
+#define MODE_INTERCOM "intercom"
+#define MODE_BINARY "binary"
+#define MODE_WHISPER "whisper"
+#define MODE_SECURE_HEADSET "secure headset"
+#define MODE_DEPARTMENT "department"
+#define MODE_ALIEN "alientalk"
+#define MODE_HOLOPAD "holopad"
+#define MODE_CHANGELING "changeling"
 
 var/list/department_radio_keys = list(
 	  ":r" = "right hand",	"#r" = "right hand",	".r" = "right hand",
@@ -67,7 +85,7 @@ var/list/department_radio_keys = list(
 
 	var/message_mode = get_message_mode(message)
 
-	if(message_mode == "headset" || message_mode == "robot")
+	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
 		message = copytext(message, 2)
 	else if(message_mode)
 		message = copytext(message, 3)
@@ -86,13 +104,13 @@ var/list/department_radio_keys = list(
 		return
 
 	var/message_range = 7
-	var/radio_return = radio(message, message_mode) //0 to 2
-	if(!radio_return) //There's a whisper() message_mode, no need to continue the proc if that is called
+	var/radio_return = radio(message, message_mode)
+	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
-	else if(radio_return & 1)
+	if(radio_return & ITALICS)
 		message = "<i>[message]</i>"
+	if(radio_return & REDUCE_RANGE)
 		message_range = 1
-	//Only other possible output is 2, which means no radio was spoken into. In this case we can continue.
 
 	send_speech(message, message_range, src, bubble_type)
 
@@ -185,12 +203,12 @@ var/list/department_radio_keys = list(
 
 /mob/living/proc/get_message_mode(message)
 	if(copytext(message, 1, 2) == ";")
-		return "headset"
+		return MODE_HEADSET
 	else if(length(message) > 2)
 		return department_radio_keys[copytext(message, 1, 3)]
 
 /mob/living/proc/handle_inherent_channels(message, message_mode)
-	if(message_mode == "changeling")
+	if(message_mode == MODE_CHANGELING)
 		if(lingcheck())
 			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 			for(var/mob/M in mob_list)
@@ -210,30 +228,30 @@ var/list/department_radio_keys = list(
 
 /mob/living/proc/radio(message, message_mode, steps)
 	switch(message_mode)
-		if("right hand")
+		if(MODE_R_HAND)
 			if (r_hand)
 				r_hand.talk_into(src, message)
-			return 1
+			return ITALICS | REDUCE_RANGE
 
-		if("left hand")
+		if(MODE_L_HAND)
 			if (l_hand)
 				l_hand.talk_into(src, message)
-			return 1
+			return ITALICS | REDUCE_RANGE
 
-		if("intercom")
+		if(MODE_INTERCOM)
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
 				I.talk_into(src, message)
-			return 1
+			return ITALICS | REDUCE_RANGE
 
-		if("binary")
+		if(MODE_BINARY)
 			if(binarycheck())
 				robot_talk(message)
-			return 1 //Does not return 0 since this is only reached by humans, not borgs or AIs.
+			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
 
-		if("whisper")
+		if(MODE_WHISPER)
 			whisper(message)
-			return 0
-	return 2
+			return NOPASS
+	return 0
 
 /mob/living/lingcheck()
 	if(mind && mind.changeling)
