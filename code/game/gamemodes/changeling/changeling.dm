@@ -100,22 +100,34 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	absorb_objective.gen_amount_goal(6, 8)
 	changeling.objectives += absorb_objective
 
-	var/datum/objective/assassinate/kill_objective = new
-	kill_objective.owner = changeling
-	kill_objective.find_target()
-	changeling.objectives += kill_objective
-
-	switch(rand(1,100))
-		if(1 to 60)
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = changeling
-			steal_objective.find_target()
-			changeling.objectives += steal_objective
+	var/list/active_ais = active_ais()
+	if(active_ais.len && prob(2))
+		var/datum/objective/destroy/destroy_objective = new
+		destroy_objective.owner = changeling
+		destroy_objective.find_target()
+		changeling.objectives += destroy_objective
+	else
+		if(prob(70))
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = changeling
+			kill_objective.find_target()
+			changeling.objectives += kill_objective
 		else
-			var/datum/objective/debrain/debrain_objective = new
-			debrain_objective.owner = changeling
-			debrain_objective.find_target()
-			changeling.objectives += debrain_objective
+			var/datum/objective/maroon/maroon_objective = new
+			maroon_objective.owner = changeling
+			maroon_objective.find_target()
+			changeling.objectives += maroon_objective
+
+	if(prob(60))
+		var/datum/objective/steal/steal_objective = new
+		steal_objective.owner = changeling
+		steal_objective.find_target()
+		changeling.objectives += steal_objective
+	else
+		var/datum/objective/debrain/debrain_objective = new
+		debrain_objective.owner = changeling
+		debrain_objective.find_target()
+		changeling.objectives += debrain_objective
 
 	if (!(locate(/datum/objective/escape) in changeling.objectives))
 		var/datum/objective/escape/escape_objective = new

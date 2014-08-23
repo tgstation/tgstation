@@ -115,17 +115,29 @@
 				assign_exchange_role(exchange_red)
 				assign_exchange_role(exchange_blue)
 			objective_count += 1					//Exchange counts towards number of objectives
+		var/list/active_ais = active_ais()
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
-			if(prob(50))
-				var/datum/objective/assassinate/kill_objective = new
-				kill_objective.owner = traitor
-				kill_objective.find_target()
-				traitor.objectives += kill_objective
-			else
-				var/datum/objective/steal/steal_objective = new
-				steal_objective.owner = traitor
-				steal_objective.find_target()
-				traitor.objectives += steal_objective
+			if(active_ais.len && prob(1))
+				var/datum/objective/destroy/destroy_objective = new
+				destroy_objective.owner = traitor
+				destroy_objective.find_target()
+				traitor.objectives += destroy_objective
+			else switch(rand(1,100))
+				if(1 to 15)
+					var/datum/objective/maroon/maroon_objective = new
+					maroon_objective.owner = traitor
+					maroon_objective.find_target()
+					traitor.objectives += maroon_objective
+				if(16 to 50)
+					var/datum/objective/assassinate/kill_objective = new
+					kill_objective.owner = traitor
+					kill_objective.find_target()
+					traitor.objectives += kill_objective
+				else
+					var/datum/objective/steal/steal_objective = new
+					steal_objective.owner = traitor
+					steal_objective.find_target()
+					traitor.objectives += steal_objective
 
 		if(is_hijacker && objective_count <= config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
 			if (!(locate(/datum/objective/hijack) in traitor.objectives))
