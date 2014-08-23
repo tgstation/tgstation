@@ -239,7 +239,7 @@
 						return
 					var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
 					spawn()
-						visible_message("<span class='danger'>[src] suddenly dissapears into [entry_vent.name] !</span>")
+						visible_message("<span class='danger'>[src] suddenly disappears into [entry_vent.name] !</span>")
 						loc = exit_vent
 						var/travel_time = round(get_dist(loc, exit_vent.loc)/2)
 						spawn(travel_time)
