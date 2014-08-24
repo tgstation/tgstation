@@ -163,7 +163,8 @@
 	playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 	src.bullets--
 	for(var/mob/O in viewers(user, null))
-		O.show_message(text("\red <B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+		O.show_message(text("<span class='danger'>[user] fires [src] at [target]!</span>"), 1,
+						 "<span class='warning'> You hear a gunshot.</span>", 2)
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
