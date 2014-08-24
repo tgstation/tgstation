@@ -49,6 +49,15 @@
 	..()
 	usr << "[get_ammo(0,0)] of those are live rounds."
 
+/obj/item/weapon/gun/projectile/revolver/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is putting the [src.name] into \his throat! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is putting the [src.name] to their temple! It looks like \he's trying to commit suicide.</span>"))
+	return (BRUTELOSS)
+	var/turf/pos = get_turf(user)
+	pos.add_blood_floor(user)
+	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	playsound(pos, 'sound/weapons/Gunshot.ogg', 50, 1)
+
 /obj/item/weapon/gun/projectile/revolver/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-special rounds."
 	name = "revolver"
@@ -130,15 +139,12 @@
 				desc = initial(desc)
 				user << "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>"
 
-
-
-
 /obj/item/weapon/gun/projectile/revolver/mateba
 	name = "mateba"
 	desc = "A retro high-powered revolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
-
+	
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
 
@@ -223,4 +229,3 @@
 					user.visible_message("<span class='danger'>*click*</span>", "<span class='danger'>*click*</span>")
 					return
 	..()
-
