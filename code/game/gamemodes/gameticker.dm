@@ -70,7 +70,7 @@ var/round_start_time = 0
 		if((master_mode=="secret") && (secret_force_mode != "secret"))
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
 			if (!smode.can_start())
-				message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.", 1)
+				message_admins("<span class='notice'>Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>", 1)
 			else
 				src.mode = smode
 
@@ -299,11 +299,11 @@ var/round_start_time = 0
 			if (mode.station_was_nuked)
 				feedback_set_details("end_proper","nuke")
 				if(!delay_end)
-					world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
+					world << "<span class='boldnotice'>Rebooting due to destruction of station in [restart_timeout/10] seconds</span>"
 			else
 				feedback_set_details("end_proper","proper completion")
 				if(!delay_end)
-					world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
+					world << "<span class='boldnotice'>Restarting in [restart_timeout/10] seconds</span>"
 
 
 			if(blackbox)
@@ -311,10 +311,10 @@ var/round_start_time = 0
 
 			if(!delay_end)
 				sleep(restart_timeout)
-				kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
+				kick_clients_in_lobby("<span class='danger'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
 				world.Reboot()
 			else
-				world << "\blue <B>An admin has delayed the round end</B>"
+				world << "<span class='boldnotice'>An admin has delayed the round end</span>"
 
 	return 1
 
@@ -336,7 +336,7 @@ var/round_start_time = 0
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s loyal minions were:</b> "
-			var/vsrobolist = "\red <b>[aiPlayer.real_name]'s disloyal minions were:</b> \black"
+			var/vsrobolist = "<span class='userdanger'>[aiPlayer.real_name]'s disloyal minions were:</span> \black"
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				if (is_special_character(robo) && robo.mind)
 					vsrobolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"

@@ -200,9 +200,9 @@ Auto Patrol: []"},
 			if(emagged)
 				user << "<span class='warning'>ERROR</span>"
 			if(open)
-				user << "\red Please close the access panel before locking it."
+				user << "<span class='danger'>Please close the access panel before locking it.</span>"
 			else
-				user << "\red Access denied."
+				user << "<span class='danger'>Access denied.</span>"
 	else
 		..()
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
@@ -217,10 +217,10 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/Emag(mob/user as mob)
 	..()
 	if(open && !locked)
-		if(user) user << "\red You short out [src]'s target assessment circuits."
+		if(user) user << "<span class='danger'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+				O.show_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -661,7 +661,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

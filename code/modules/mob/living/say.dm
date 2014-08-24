@@ -89,7 +89,7 @@ var/list/department_radio_keys = list(
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "\red You cannot speak in IC (muted)."
+			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -156,7 +156,7 @@ var/list/department_radio_keys = list(
 				for(var/i=0,i<bzz,i++)
 					message += "Z"
 */
-	
+
 	if(message_mode == "changeling")
 		if(mind && mind.changeling)
 			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
@@ -164,7 +164,7 @@ var/list/department_radio_keys = list(
 				if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
 					Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 			return
-	
+
 	if (message_mode == "alientalk")
 		if(alien_talk_understand || hivecheck())
 		//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
@@ -173,7 +173,7 @@ var/list/department_radio_keys = list(
 
 	if(is_muzzled()) // Intentionally after changeling hivemind check
 		return
-	
+
 	var/list/obj/item/used_radios = new
 
 	switch (message_mode)
