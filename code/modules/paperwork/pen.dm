@@ -69,7 +69,7 @@
 
 
 /obj/item/weapon/pen/sleepy/New()
-	create_reagents(60)
+	create_reagents(45)
 	reagents.add_reagent("stoxin", 30)
-	reagents.add_reagent("mutetoxin", 30)
+	reagents.add_reagent("mutetoxin", 15)
 	..()
