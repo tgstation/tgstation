@@ -138,6 +138,41 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 			del(banned_mob.client)
 
 
+/mob/proc/DB_add_logout_suicide_record(var/typeLS)
+	var/id = DB_get_ID_from_table(src,"erro_connection_log",0)
+	if(!id || !isnum(id))
+		return
+
+	if(!typeLS)
+		return
+
+	var/roundtime = world.time
+	var/isAntag = "[(mind && mind.special_role) ? 1 : 0]"
+
+	var/sql = "INSERT INTO TG_logout_and_suicides (`id`,`userID`,`datetime`,`roundtime`,`isAntag`,`typeLS`) VALUES (null, [id], Now(),[roundtime],[isAntag],'[typeLS]')"
+	var/DBQuery/logout_suicide_record = dbcon.NewQuery(sql)
+	logout_suicide_record.Execute()
+
+
+/datum/admins/proc/DB_access_logouts_suicides(var/mob/M) //Not used yet, still WIP.
+	var/id = DB_get_ID_from_table(M,"erro_connection_log",1)
+	if(!id)
+		return
+
+	if(!isnum(id)) //ID not a number, ID must be an error message
+		usr << id
+		return
+
+	var/logout_suicide = "SELECT id FROM TG_logouts_and_suicides WHERE userID = [id]"
+	var/DBQuery/find = dbcon.NewQuery(logout_suicide)
+	find.Execute()
+	usr << "ID: [find.item[1]]"
+	usr << "Datetime:[find.item[3]]"
+	usr << "Roundtime:[find.item[4]] (miliseconds)"
+	usr << "Is Antag: [(find.item[5] == 1) ? "True":"False"]"
+	usr << "Type: [find.item[6]]"
+
+
 datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 
 	if(!check_rights(R_BAN))	return

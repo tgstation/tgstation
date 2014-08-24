@@ -13,3 +13,20 @@ UPDATE erro_library SET deleted = 1 WHERE id = someid
 (Replace someid with the id of the book you want to soft delete.)
 
 ----------------------------------------------------
+
+12 August 2014, by RemieRichards
+
+Added the table TG_logout_and_suicides.
+It records whenever someone logs out or commits suicide.
+
+fields:
+- id //Logout/Suicide's ID
+- userID //User who "owns" the Logout/Suicide
+- datetime //Time of day the Logout/Suicide occurred
+- roundtime //Roundtime the Logout/Suicide occurred
+- isAntag //If they were an Antag at the time of Logout/Suicide
+- typeLS //Type of Logout/Suicide, it's either "Logout" or "Suicide"
+
+
+
+
