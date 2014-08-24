@@ -280,9 +280,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)	return
-		for(var/mob/M in player_list)
-			if(!istype(M,/mob/new_player))
-				M << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
+		minor_announce(message, "[department] Announcement:")
 		news_network.SubmitArticle(message, department, "Station Announcements", null)
 		announceAuth = 0
 		message = ""
@@ -371,7 +369,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	updateUsrDialog()
 	return
-	
+
 /obj/machinery/requests_console/proc/createmessage(source, title, message, priority, paper)
 	var/linkedsender
 	var/unlinkedsender
@@ -403,7 +401,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			if(src.newmessagepriority < 3)
 				src.newmessagepriority = 3
 				src.update_icon()
-			if(1) 
+			if(1)
 				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(7, src.loc))
 					O.show_message("\icon[src] *The Requests Console yells: '[title]'")
