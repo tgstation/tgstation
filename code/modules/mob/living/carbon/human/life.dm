@@ -697,7 +697,7 @@
 				Stun(5)
 
 				for(var/mob/O in viewers(world.view, src))
-					O.show_message(text("<b>\red [] throws up!</b>", src), 1)
+					O.show_message("<span class='danger'>[O] throws up!</span>")
 				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 				var/turf/location = loc
