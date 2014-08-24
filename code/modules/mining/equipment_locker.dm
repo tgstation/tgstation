@@ -36,7 +36,7 @@
 			stack_list[processed_sheet] = s
 			if(s.name != "glass" && s.name != "metal")		//we can get these from cargo anyway
 				var/msg = "[capitalize(s.name)] sheets are now available in the Cargo Bay."
-				for(var/obj/machinery/requests_console/D in allConsoles)		
+				for(var/obj/machinery/requests_console/D in allConsoles)
 					if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || (D.department == "Chemistry" && (s.name == "uranium" || s.name == "solid plasma")))
 						D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
@@ -273,7 +273,7 @@
 				usr.drop_item()
 				I.loc = src
 				inserted_id = I
-			else usr << "\red No valid ID."
+			else usr << "<span class='danger'>No valid ID.</span>"
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
