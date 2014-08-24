@@ -355,13 +355,11 @@ client/proc/one_click_antag()
 			var/mob/living/carbon/human/Commando = new(spawnloc)
 			chosen_candidate.client.prefs.copy_to(Commando)
 			ready_dna(Commando)
-			if(numagents == 1)
-				Commando.real_name = "Officer [pick(commando_names)]"
-			else
-				Commando.real_name = "Trooper [pick(commando_names)]"
 			if(numagents == 1) //If Squad Leader
+				Commando.real_name = "Officer [pick(commando_names)]"
 				equip_deathsquad(Commando, 1)
 			else
+				Commando.real_name = "Trooper [pick(commando_names)]"
 				equip_deathsquad(Commando)
 			Commando.key = chosen_candidate.key
 			Commando.mind.assigned_role = "Death Commando"
