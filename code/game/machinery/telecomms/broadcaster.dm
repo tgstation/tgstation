@@ -216,7 +216,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 	if(!message)
 		return
-
+	world << data
 	var/list/radios = list()
 	var/atom/movable/virtualspeaker/virt = new(null) //fuck this code.
 	virt.name = name
@@ -256,6 +256,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// --- Broadcast to ALL radio devices ---
 
 	else
+		world << "radios:"
 		for(var/obj/item/device/radio/R in all_radios["[freq]"])
 			if(R.receive_range(freq, level) > -1)
 				radios += R
@@ -263,15 +264,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// Get a list of mobs who can hear from the radios we collected.
 	var/list/receive = get_mobs_in_radio_ranges(radios) //this includes all hearers.
 
-	for (var/mob/R in receive) //Filter receiver list.
+	for(var/mob/R in receive) //Filter receiver list.
 		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			receive -= R
 
-		if(istype(R, /mob/new_player)) // we don't want new players to hear messages. rare but generates runtimes.
-			receive -= R
-
+	var/rendered = radio.compose_message(AM, AM.languages, message, freq) //The object this is called on is arbitrary as long as it's not an AI, using the radio just lets met advoid having to make a new atom/movable to call this on.
 	for(var/atom/movable/hearer in receive)
-		hearer.Hear(message, virt, AM.languages, message, freq)
+		hearer.Hear(rendered, virt, AM.languages, message, freq)
 
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---

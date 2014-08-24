@@ -16,7 +16,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/canhear_range = 3 // the range which mobs can hear this radio from
 	var/obj/item/device/radio/patch_link = null
 	var/datum/wires/radio/wires = null
-	var/radio_connection = 0
 	var/list/secure_radio_connections
 	var/prison_radio = 0
 	var/b_stat = 0
@@ -43,10 +42,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		//FREQ_BROADCASTING = 2
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
-	new_frequency = num2text(new_frequency)
-	remove_radio(src, radio_connection)
-	radio_connection = add_radio(src, new_frequency)
-	frequency = text2num(new_frequency)
+	remove_radio(src, frequency)
+	frequency = add_radio(src, new_frequency)
 
 /obj/item/device/radio/New()
 	wires = new(src)
@@ -68,19 +65,18 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 
 /obj/item/device/radio/initialize()
-	var/frequency_num = text2num(frequency)
 	if(freerange)
-		if(frequency_num < 1200 || frequency_num > 1600)
-			frequency = num2text(sanitize_frequency(frequency_num, maxf))
+		if(frequency < 1200 || frequency > 1600)
+			frequency = sanitize_frequency(frequency, maxf)
 	// The max freq is higher than a regular headset to decrease the chance of people listening in, if you use the higher channels.
-	else if (frequency_num < 1441 || frequency_num > maxf)
+	else if (frequency < 1441 || frequency > maxf)
 		//world.log << "[src] ([type]) has a frequency of [frequency], sanitizing."
-		frequency =  num2text(sanitize_frequency(frequency_num, maxf))
+		frequency = sanitize_frequency(frequency, maxf)
 
 	set_frequency(frequency)
 
 	for (var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, ch_name)
+		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 
 /obj/item/device/radio/attack_self(mob/user as mob)
@@ -171,7 +167,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	else if (href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
 		if (!freerange || (frequency < 1200 || frequency > 1600))
-			new_frequency = num2text(sanitize_frequency(new_frequency, maxf))
+			new_frequency = sanitize_frequency(new_frequency, maxf)
 		set_frequency(new_frequency)
 		if(hidden_uplink)
 			if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
@@ -241,7 +237,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		if (!channels[channel]) // if the channel is turned off, don't broadcast
 			return
 	else
-		freq = radio_connection
+		freq = frequency
 		channel = null
 
 	var/turf/position = get_turf(src)
@@ -353,11 +349,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	var/filter_type = 2
 
-	/* --- Intercoms can only broadcast to other intercoms, but bounced radios can broadcast to bounced radios and intercoms --- */
-	if(istype(src, /obj/item/device/radio/intercom))
-		filter_type = 1
-
-
 	var/datum/signal/signal = new
 	signal.transmission_method = 2
 
@@ -433,11 +424,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		if(!position || !(position.z in level))
 			return -1
 	if(freq == SYND_FREQ)
-		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
+		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
 	if (!on)
 		return -1
-	if (!freq) //recieved on main frequency
+	if (!freq) //received on main frequency
 		if (!listening)
 			return -1
 	else
@@ -582,7 +573,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			src.name = "broken radio"
 			return
 
-		secure_radio_connections[ch_name] = add_radio(src, ch_name)
+		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 	return
 

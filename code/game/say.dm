@@ -20,6 +20,29 @@
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
 		AM.Hear(message, src, languages, message)
 
+/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq) 
+	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
+	//Basic span
+	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
+	//Start name span.
+	var/spanpart2 = "<span class='name'>"
+	//Radio freq/name display
+	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
+	//Speaker name
+	var/namepart =  "[speaker.GetVoice()][speaker.get_alt_name()]"
+	//End name span.
+	var/endspanpart = "</span>"
+	//Message
+	var/messagepart = " <span class='message'>[lang_treat(speaker, message_langs, raw_message)]</span></span>"
+
+	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, message_langs, raw_message, radio_freq)][namepart][compose_job(speaker, message_langs, raw_message, radio_freq)][endspanpart][messagepart]"
+
+/atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
+	return ""
+
+/atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
+	return ""
+
 /atom/movable/proc/say_quote(var/text)
 	if(!text)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
@@ -31,7 +54,7 @@
 
 	return "says, \"[text]\""
 
-/atom/movable/proc/lang_treat(message, atom/movable/speaker, message_langs, raw_message)
+/atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message)
 	if(languages & message_langs)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM)

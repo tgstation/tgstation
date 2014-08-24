@@ -58,7 +58,6 @@
 		var/mob/living/new_mob = new new_form(affected_mob.loc)
 		if(istype(new_mob))
 			new_mob.a_intent = "harm"
-			new_mob.universal_speak = 1
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
 			else

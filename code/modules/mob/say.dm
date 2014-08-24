@@ -54,34 +54,6 @@
 			//M.show_message(rendered, 2) //Takes into account blindness and such. //preserved so you can look at it and cry at the stupidity of oldcoders. whoever coded this should be punched into the sun
 			M << rendered
 
-/mob/proc/compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
-	. = ""
-	//Basic span
-	. += "<span class='"
-	. += radio_freq ? get_radio_span(radio_freq) : "game say"
-	. += "'>"
-	//Start name span.
-	. += "<span class='name'>"
-	//Radio freq/name display
-	. += radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
-	//Begin track (AI only)
-	. += compose_track_href(message, speaker, message_langs, raw_message, radio_freq)
-	//Speaker name
-	. += "[speaker.GetVoice()][speaker.get_alt_name()]"
-	//Job & end track (AI only)
-	. += compose_job(message, speaker, message_langs, raw_message, radio_freq)
-	//End name span.
-	. += "</span>"
-	//Message
-	. += " <span class='message'>[lang_treat(message, speaker, message_langs, raw_message)]</span></span>"
-	return .
-
-/mob/proc/compose_track_href(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
-	return ""
-
-/mob/proc/compose_job(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
-	return ""
-
 /mob/proc/emote(var/act)
 	return
 

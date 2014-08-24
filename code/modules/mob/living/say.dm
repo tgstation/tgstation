@@ -117,6 +117,8 @@ var/list/department_radio_keys = list(
 	log_say("[name]/[key] : [message]")
 
 /mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	if(!client)
+		return
 	var/deaf_message
 	var/deaf_type
 	if(speaker != src)
@@ -125,7 +127,8 @@ var/list/department_radio_keys = list(
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	message = compose_message(message, speaker, message_langs, raw_message, radio_freq, job)
+	if(!(message_langs & languages) && !force_compose) //force_compose is so AIs don't end up without their hrefs.
+		message = compose_message(speaker, message_langs, raw_message, radio_freq)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
@@ -138,7 +141,7 @@ var/list/department_radio_keys = list(
 
 	listening -= listening_dead //so ghosts dont hear stuff twice
 
-	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[get_alt_name()] <span class='message'>[message]</span></span>"
+	var/rendered = compose_message(src, languages, message)
 	for(var/atom/movable/AM in listening)
 		AM.Hear(rendered, src, languages, message)
 

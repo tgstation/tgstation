@@ -127,7 +127,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	// return 1 if found, 0 if not found
 	if(!signal)
 		return 0
-	if((text2num(signal.frequency) in freq_listening) || (!freq_listening.len))
+	if((signal.frequency in freq_listening) || (!freq_listening.len))
 		return 1
 	else
 		return 0

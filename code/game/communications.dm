@@ -65,10 +65,8 @@
 */
 var/list/all_radios = list()
 /proc/add_radio(var/obj/item/radio, freq)
-	var/converttest = radiochannels["[freq]"]
-	if(converttest)
-		freq = converttest
-	
+	if(!freq || !radio)
+		return
 	if(!all_radios["[freq]"])
 		all_radios["[freq]"] = list(radio)
 		return freq
@@ -77,10 +75,8 @@ var/list/all_radios = list()
 	return freq
 
 /proc/remove_radio(var/obj/item/radio, freq)
-	var/converttest = radiochannels["[freq]"]
-	if(converttest)
-		freq = converttest
-
+	if(!freq || !radio)
+		return
 	if(!all_radios["[freq]"])
 		return
 

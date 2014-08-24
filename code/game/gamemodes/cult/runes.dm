@@ -362,7 +362,7 @@ var/list/sacrificed = list()
 				S=1
 			if(S)
 				if(istype(src,/obj/effect/rune))
-					usr.say("Kla[pick("'","`")]atu barada nikt'o!")
+					usr.say("Kla[pick("'","`")]atu barada nikt'o!") //" This comment stops notepad++ from freaking out
 					for (var/mob/V in viewers(src))
 						V.show_message("\red The rune turns into gray dust, veiling the surrounding runes.", 3)
 					qdel(src)
@@ -419,13 +419,12 @@ var/list/sacrificed = list()
 			if(!ghost)
 				return this_rune.fizzle()
 
-			usr.say("Gal'h'rfikk harfrandid mud[pick("'","`")]gib!")
+			usr.say("Gal'h'rfikk harfrandid mud[pick("'","`")]gib!") //'
 			var/mob/living/carbon/human/dummy/D = new(this_rune.loc)
 			usr.visible_message("\red A shape forms in the center of the rune. A shape of... a man.", \
 			"\red A shape forms in the center of the rune. A shape of... a man.", \
 			"\red You hear liquid flowing.")
 			D.real_name = "[pick(first_names_male)] [pick(last_names)]"
-			D.universal_speak = 1
 			D.status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH
 
 			D.key = ghost.key

@@ -4,8 +4,6 @@
 	mouse_opacity
 	density = 0
 
-	robot_talk_understand = 0
-
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 
