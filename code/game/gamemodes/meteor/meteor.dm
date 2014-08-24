@@ -20,6 +20,17 @@
 	world << "<B>The current game mode is - Meteor!</B>"
 	world << "<B>The space station has been stuck in a major meteor shower. You must escape from the station or at least live.</B>"
 
+/datum/universal_state/meteor_storm
+ 	name = "Meteor Storm"
+ 	desc = "Meteors are currently running havoc around this sector. Better get out of here quickly"
+
+ 	decay_rate = 0 // Just to make sure
+
+/datum/universal_state/meteor_storm/OnShuttleCall(var/mob/user)
+	if(user)
+		user << "<span class='notice'>You hear an automatic dispatch from Nanostraten. It states that Centcomm is being shielded due to the incoming meteor storm and regular shuttle service has been interrupted.</span>"
+	return 0
+
 /datum/game_mode/meteor/post_setup()
 	defer_powernet_rebuild = 2//Might help with the lag
 
@@ -38,6 +49,7 @@
 			emergency_shuttle.incall(meteorshuttlemultiplier)
 			captain_announce("A backup emergency shuttle has been called. It will arrive in [round((emergency_shuttle.timeleft())/60)] minutes.")
 			world << sound('sound/AI/shuttlecalled.ogg')
+			SetUniversalState(/datum/universal_state/meteor_storm)
 
 		spawn(supplydelay)
 
