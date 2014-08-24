@@ -56,7 +56,7 @@
 		max_i--
 		if(max_i<=0) return
 
-	while(!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" || (pickedstart.loc.name == "Emergency Shuttle Transit" && emergency_shuttle.direction != -1))
+	while(!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space")
 
 	var/obj/effect/meteor/M
 	switch(rand(1, 100))
@@ -101,7 +101,7 @@
 		if(A)
 			A.meteorhit(src)
 			playsound(get_turf(src), "explosion", 40, 1) //Medium boom
-			explosion(src.loc, 1, 2, 4, 8) //Medium meteor, medium boom
+			explosion(src.loc, 1, 2, 4, 8, 0) //Medium meteor, medium boom
 			qdel(src)
 
 /obj/effect/meteor/ex_act(severity)
@@ -123,7 +123,7 @@
 		if(A)
 			A.meteorhit(src)
 			playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 30, 1)
-			explosion(src.loc, -1, 1, 2, 4) //Tiny meteor doesn't cause too much damage
+			explosion(src.loc, -1, 1, 2, 4, 0) //Tiny meteor doesn't cause too much damage
 			qdel(src)
 
 
@@ -141,7 +141,7 @@
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
 				shake_camera(M, 7, 3) //Massive shellshock
 		if(A)
-			explosion(src.loc, 4, 6, 8, 8) //You have been visited by the nuclear meteor
+			explosion(src.loc, 4, 6, 8, 8, 0) //You have been visited by the nuclear meteor
 			playsound(get_turf(src), "explosion", 100, 1) //Deafening boom, default is 50
 			qdel(src)
 
