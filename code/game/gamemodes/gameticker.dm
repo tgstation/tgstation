@@ -325,10 +325,26 @@ var/round_start_time = 0
 
 
 /datum/controller/gameticker/proc/declare_completion()
+	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
+	for(var/mob/Player in player_list)
+		if(Player.mind)
+			if(Player.stat != DEAD)
+				if(emergency_shuttle.location > 0) //If the shuttle has already left the station
+					var/turf/playerTurf = get_turf(Player)
+					if(playerTurf.z != 2)
+						Player << "<font color='red'><b>You managed to survive, but were marooned on [station_name()]...</b>"
+					else
+						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
+				else
+					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
+			else
+				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b>"
+
+	world << "<BR>"
 
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2 && aiPlayer.mind)
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the game were:</b>"
+			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>"
 			aiPlayer.show_laws(1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
