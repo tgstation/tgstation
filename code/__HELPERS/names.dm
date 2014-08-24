@@ -60,6 +60,9 @@ var/religion_name = null
 		return station_name
 
 /proc/new_station_name()
+	if (config && config.server_name)
+		return "Space Station 13"
+
 	var/random = rand(1,5)
 	var/name = ""
 	var/new_station_name = ""
