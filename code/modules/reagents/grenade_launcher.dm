@@ -26,10 +26,10 @@
 			user.drop_item()
 			I.loc = src
 			grenades += I
-			user << "\blue You put the grenade in the grenade launcher."
-			user << "\blue [grenades.len] / [max_grenades] Grenades."
+			user << "<span class='notice'>You put the grenade in the grenade launcher.</span>"
+			user << "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>"
 		else
-			usr << "\red The grenade launcher cannot hold more grenades."
+			usr << "<span class='danger'>The grenade launcher cannot hold more grenades.</span>"
 
 /obj/item/weapon/gun/grenadelauncher/afterattack(obj/target, mob/user , flag)
 
@@ -45,12 +45,12 @@
 	if(grenades.len)
 		spawn(0) fire_grenade(target,user)
 	else
-		usr << "\red The grenade launcher is empty."
+		usr << "<span class='danger'>The grenade launcher is empty.</span>"
 
 /obj/item/weapon/gun/grenadelauncher/proc/fire_grenade(atom/target, mob/user)
 	for(var/mob/O in viewers(world.view, user))
-		O.show_message(text("\red [] fired a grenade!", user), 1)
-	user << "\red You fire the grenade launcher!"
+		O.show_message(text("<span class='danger'>[] fired a grenade!</span>", user), 1)
+	user << "<span class='danger'>You fire the grenade launcher!</span>"
 	var/obj/item/weapon/grenade/chem_grenade/F = grenades[1] //Now with less copypasta!
 	grenades -= F
 	F.loc = user.loc

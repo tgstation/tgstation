@@ -136,7 +136,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			new/obj/item/stack/cable_coil(T, 1, cable_color)
 
 		for(var/mob/O in viewers(src, null))
-			O.show_message("\red [user] cuts the cable.", 1)
+			O.show_message("<span class='danger'>[user] cuts the cable.</span>", 1)
 
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 
@@ -154,10 +154,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	else if(istype(W, /obj/item/device/multitool))
 
 		if(powernet && (powernet.avail > 0))		// is it powered?
-			user << "\red [powernet.avail]W in power network."
+			user << "<span class='danger'>[powernet.avail]W in power network.</span>"
 
 		else
-			user << "\red The cable is not powered."
+			user << "<span class='danger'>The cable is not powered.</span>"
 
 		shock(user, 5, 0.2)
 
@@ -553,14 +553,14 @@ obj/structure/cable/proc/avail()
 	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
 		if(!istype(usr.loc,/turf)) return
 		if(src.amount <= 14)
-			usr << "\red You need at least 15 lengths to make restraints!"
+			usr << "<span class='danger'>You need at least 15 lengths to make restraints!</span>"
 			return
 		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
 		B.icon_state = "cuff_[item_color]"
-		usr << "\blue You wind some cable together to make some restraints."
+		usr << "<span class='notice'>You wind some cable together to make some restraints.</span>"
 		src.use(15)
 	else
-		usr << "\blue You cannot do that."
+		usr << "<span class='notice'>You cannot do that.</span>"
 	..()
 
 // Items usable on a cable coil :
