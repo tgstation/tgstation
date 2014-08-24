@@ -332,7 +332,7 @@ var/round_start_time = 0
 				if(emergency_shuttle.location > 0) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
 					if(playerTurf.z != 2)
-						Player << "<font color='red'><b>You managed to survive, but were marooned on [station_name()]...</b>"
+						Player << "<font color='red'>You managed to survive, but were marooned on [station_name()]..."
 					else
 						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
 				else
