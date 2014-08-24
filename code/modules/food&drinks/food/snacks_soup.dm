@@ -15,7 +15,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/slimesoup
 	name = "slime soup"
 	desc = "If no water is available, you may substitute tears."
-	icon_state = "slimesoup"
+	icon_state = "rorosoup"
 
 /obj/item/weapon/reagent_containers/food/snacks/slimesoup/New()
 	..()
