@@ -9,6 +9,7 @@
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
+	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
@@ -146,8 +147,15 @@
 	var/totalslabs = 3
 
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/allmeat[totalslabs]
+
+	if(ishuman(occupant))
+		var/mob/living/carbon/human/gibee = occupant
+		if(gibee.dna && gibee.dna.species)
+			typeofmeat = gibee.dna.species.meat
+		else
+			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/human
 	for (var/i=1 to totalslabs)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new
+		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new typeofmeat
 		newmeat.name = sourcename + newmeat.name
 		newmeat.subjectname = sourcename
 		newmeat.subjectjob = sourcejob

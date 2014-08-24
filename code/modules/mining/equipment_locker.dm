@@ -3,7 +3,7 @@
 
 /obj/machinery/mineral/ore_redemption
 	name = "ore redemption machine"
-	desc = "A machine that accepts ore and instantly transforms it into workable material sheets, but cannot produce alloys such as Plasteel. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
+	desc = "A machine that accepts ore and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
 	density = 1
@@ -118,6 +118,12 @@
 		if(s.amount > 0)
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
+	if((/obj/item/stack/sheet/metal in stack_list) && (/obj/item/stack/sheet/mineral/plasma in stack_list))
+		var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
+		var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
+		if(min(metalstack.amount, plasmastack.amount))
+			dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];plasteel=1'>Smelt</A><BR>")
+
 	dat += text("<HR><b>Mineral Value List:</b><BR>[get_ore_values()]")
 
 	user << browse("[dat]", "window=console_stacking_machine")
@@ -164,6 +170,22 @@
 			if(out.amount >= 1)
 				inp.amount -= out.amount
 				unload_mineral(out)
+		else
+			usr << "<span class='warning'>Required access not found.</span>"
+	if(href_list["plasteel"] && istype(inserted_id))
+		if(check_access(inserted_id))
+			if(!(/obj/item/stack/sheet/metal in stack_list)) return
+			if(!(/obj/item/stack/sheet/mineral/plasma in stack_list)) return
+			var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
+			var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
+
+			var/desired = input("How much?", "How much would you like to smelt?", 1) as num
+			var/obj/item/stack/sheet/plasteel/plasteelout = new
+			plasteelout.amount = min(desired,50,metalstack.amount,plasmastack.amount)
+			if(plasteelout.amount >= 1)
+				metalstack.amount -= plasteelout.amount
+				plasmastack.amount -= plasteelout.amount
+				unload_mineral(plasteelout)
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
 	updateUsrDialog()

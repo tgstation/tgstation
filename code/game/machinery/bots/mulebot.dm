@@ -182,7 +182,7 @@ var/global/mulebot_count = 0
 
 /obj/machinery/bot/mulebot/interact(var/mob/user, var/ai=0)
 	var/dat
-	dat += "<h3>Multiple Utility Load Effector Mk. III</h3>"
+	dat += "<h3>Multiple Utility Load Effector Mk. IV</h3>"
 	dat += "<b>ID:</b> [suffix]<BR>"
 	dat += "<b>Power:</b> [on ? "On" : "Off"]<BR>"
 
@@ -497,25 +497,24 @@ var/global/mulebot_count = 0
 	if(on)
 		var/speed = (wires.Motor1() ? 1 : 0) + (wires.Motor2() ? 2 : 0)
 		//world << "speed: [speed]"
+		var/num_steps = 0
 		switch(speed)
 			if(0)
 				// do nothing
 			if(1)
-				process_bot()
-				spawn(2)
-					process_bot()
-					sleep(2)
-					process_bot()
-					sleep(2)
-					process_bot()
-					sleep(2)
-					process_bot()
+				num_steps = 10
 			if(2)
-				process_bot()
-				spawn(4)
-					process_bot()
+				num_steps = 5
 			if(3)
-				process_bot()
+				num_steps = 3
+
+		if(num_steps)
+			process_bot()
+			num_steps--
+			spawn(0)
+				for(var/i=num_steps,i>0,i--)
+					sleep(2)
+					process_bot()
 
 	if(refresh) updateDialog()
 
@@ -591,7 +590,7 @@ var/global/mulebot_count = 0
 							src.visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
 							playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 
-						if(blockcount > 5)	// attempt 5 times before recomputing
+						if(blockcount > 10)	// attempt 10 times before recomputing
 							// find new path excluding blocked turf
 							src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
 							playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)

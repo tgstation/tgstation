@@ -124,11 +124,11 @@ var/list/blob_nodes = list()
 
 		sleep(100)
 
-		show_message("<span class='alert'>You feel tired and bloated.</span>")
+		show_message("<span class='userdanger'>You feel tired and bloated.</span>")
 
 		sleep(wait_time)
 
-		show_message("<span class='alert'>You feel like you are about to burst.</span>")
+		show_message("<span class='userdanger'>You feel like you are about to burst.</span>")
 
 		sleep(wait_time / 2)
 

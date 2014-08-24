@@ -90,19 +90,23 @@
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
 	if(istype(traitor.current, /mob/living/silicon))
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = traitor
-		kill_objective.find_target()
-		traitor.objectives += kill_objective
-
-		var/datum/objective/survive/survive_objective = new
-		survive_objective.owner = traitor
-		traitor.objectives += survive_objective
+		var/objective_count = 0
 
 		if(prob(10))
 			var/datum/objective/block/block_objective = new
 			block_objective.owner = traitor
 			traitor.objectives += block_objective
+			objective_count++
+
+		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = traitor
+			kill_objective.find_target()
+			traitor.objectives += kill_objective
+
+		var/datum/objective/survive/survive_objective = new
+		survive_objective.owner = traitor
+		traitor.objectives += survive_objective
 
 	else
 		var/is_hijacker = prob(10)

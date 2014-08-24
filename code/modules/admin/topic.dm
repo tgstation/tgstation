@@ -181,7 +181,7 @@
 
 		emergency_shuttle.settimeleft( input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", emergency_shuttle.timeleft() ) as num )
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [emergency_shuttle.timeleft()]")
-		priority_announce("The emergency shuttle will reach its destination in [round(emergency_shuttle.timeleft()/60)] minutes.", null, null, "Priority")
+		minor_announce("The emergency shuttle will reach its destination in [round(emergency_shuttle.timeleft()/60)] minutes.")
 		message_admins("\blue [key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [emergency_shuttle.timeleft()]", 1)
 		href_list["secretsadmin"] = "check_antagonist"
 
