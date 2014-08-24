@@ -137,7 +137,7 @@ var/round_start_time = 0
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+		world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
 		if(events.holiday)
