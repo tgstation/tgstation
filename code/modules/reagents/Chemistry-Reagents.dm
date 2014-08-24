@@ -1718,7 +1718,7 @@ datum
 			toxpwr = 0
 
 			on_mob_life(mob/living/carbon/M)
-				M.silent += 2 * REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
+				M.silent += REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
 				..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
