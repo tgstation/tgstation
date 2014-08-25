@@ -34,7 +34,6 @@ In short:
 
 // Apply changes when entering state
 /datum/universal_state/hell/OnEnter()
-	#warning REMOVE ME.
 	world << "/datum/universal_state/hell/OnEnter()"
 	/*
 	if(emergency_shuttle.direction==2)
