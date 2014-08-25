@@ -17,7 +17,7 @@
 		return
 	if(stat & (BROKEN|NOPOWER))
 		return
-	crewmonitor(user)
+	crewmonitor(user,src)
 
 /obj/machinery/computer/crew/Topic(href, href_list)
 	if(..()) return
@@ -33,7 +33,7 @@
 		return
 
 
-proc/crewmonitor(mob/user)
+proc/crewmonitor(mob/user,var/obj/computer)
 	var/t = "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
 	var/list/logs = list()
 	var/list/tracked = crewscan()
@@ -42,7 +42,7 @@ proc/crewmonitor(mob/user)
 		var/turf/pos = get_turf(H)
 		if(istype(H.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = H.w_uniform
-			if(pos && pos.z == 1 && U.sensor_mode)
+			if(pos && pos.z == computer.z && U.sensor_mode)
 				var/obj/item/ID = null
 				if(H.wear_id)
 					ID = H.wear_id.GetID()
