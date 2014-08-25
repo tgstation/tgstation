@@ -332,13 +332,13 @@ var/round_start_time = 0
 				if(emergency_shuttle.location > 0) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
 					if(playerTurf.z != 2)
-						Player << "<font color='red'>You managed to survive, but were marooned on [station_name()]..."
+						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
 					else
-						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
+						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
 				else
-					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
+					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
 			else
-				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b>"
+				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>"
 
 	world << "<BR>"
 
@@ -351,15 +351,10 @@ var/round_start_time = 0
 			aiPlayer.show_laws(1)
 
 		if (aiPlayer.connected_robots.len)
-			var/robolist = "<b>[aiPlayer.real_name]'s loyal minions were:</b> "
-			var/vsrobolist = "\red <b>[aiPlayer.real_name]'s disloyal minions were:</b> \black"
+			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				if (is_special_character(robo) && robo.mind)
-					vsrobolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
-					continue
 				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			world << "[robolist]"
-			world << "[vsrobolist]"
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)
