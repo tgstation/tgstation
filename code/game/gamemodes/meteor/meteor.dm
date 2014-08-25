@@ -28,7 +28,7 @@
 
 /datum/universal_state/meteor_storm/OnShuttleCall(var/mob/user)
 	if(user)
-		user << "<span class='notice'>You hear an automatic dispatch from Nanostraten. It states that Centcomm is being shielded due to the incoming meteor storm and that regular shuttle service has been interrupted.</span>"
+		user << "<span class='notice'>You hear an automatic dispatch from Nanotrasen. It states that Centcomm is being shielded due to the incoming meteor storm and that regular shuttle service has been interrupted.</span>"
 	return 0
 
 /datum/game_mode/meteor/post_setup()
