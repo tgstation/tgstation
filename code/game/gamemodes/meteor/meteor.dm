@@ -8,7 +8,7 @@
 	var/const/supplydelay = 100 //Delay before meteor supplies are spawned in tenth of seconds. Anyone in the way will be GIBBED
 	var/const/meteordelay_l = 3000 //Lower bound to meteor arrival, here 5 minutes
 	var/const/meteordelay_h = 6000 //Higher bound to meteor arrival, here 10 minutes
-	var/const/meteorshuttlemultiplier = 3 //How much more will we need to hold out ? Here 30 minutes until shuttle arrives. 1 is 10 minutes
+	var/const/meteorshuttlemultiplier = 3.5 //How much more will we need to hold out ? Here 35 minutes until shuttle arrives. 1 is 10 minutes
 	var/nometeors = 1 //Can we send the meteors ?
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 	required_players = 0
@@ -28,7 +28,7 @@
 
 /datum/universal_state/meteor_storm/OnShuttleCall(var/mob/user)
 	if(user)
-		user << "<span class='notice'>You hear an automatic dispatch from Nanostraten. It states that Centcomm is being shielded due to the incoming meteor storm and regular shuttle service has been interrupted.</span>"
+		user << "<span class='notice'>You hear an automatic dispatch from Nanostraten. It states that Centcomm is being shielded due to the incoming meteor storm and that regular shuttle service has been interrupted.</span>"
 	return 0
 
 /datum/game_mode/meteor/post_setup()

@@ -1,6 +1,6 @@
 #define METEOR_TEMPERATURE
 
-/var/meteor_wave_delay = 200 //Failsafe wait between waves in tenths of seconds
+/var/meteor_wave_delay = 150 //Failsafe wait between waves in tenths of seconds
 //Set it above 100 (10s delay) if you want to minimize lag for some reason
 
 /var/meteors_in_wave = 10 //Failsafe in case a number isn't called
@@ -10,9 +10,9 @@
 	if(!ticker || meteorwavecurrent)
 		return
 	meteorwavecurrent = 1
-	meteor_wave_delay = (rand(20,40))*10 //Between 20 and 40 seconds, makes everything more chaotic
+	meteor_wave_delay = (rand(10,20))*10 //Between 10 and 25 seconds, makes everything more chaotic
 	for(var/i = 0 to number)
-		spawn(rand(20,50)) //2 to 5 seconds between meteors
+		spawn(rand(10,25)) //1 to 2.5 seconds between meteors
 			spawn_meteor()
 	spawn(meteor_wave_delay)
 		meteorwavecurrent = 0
@@ -62,9 +62,9 @@
 	switch(rand(1, 100))
 		if(1 to 5) //5 % chance of huge boom
 			M = new /obj/effect/meteor/big(pickedstart)
-		if(6 to 50) //45 % chance of medium boom
+		if(6 to 65) //60 % chance of medium boom
 			M = new /obj/effect/meteor(pickedstart)
-		if(51 to 100) //50 % chance of small boom
+		if(66 to 100) //35 % chance of small boom
 			M = new /obj/effect/meteor/small(pickedstart)
 
 	M.dest = pickedgoal
@@ -100,8 +100,8 @@
 				shake_camera(M, 3, 2) //Medium hit
 		if(A)
 			A.meteorhit(src)
-			playsound(get_turf(src), "explosion", 40, 1) //Medium boom
-			explosion(src.loc, 1, 2, 4, 8, 0) //Medium meteor, medium boom
+			playsound(get_turf(src), "explosion", 50, 1) //Medium boom
+			explosion(src.loc, 1, 3, 4, 8, 0) //Medium meteor, medium boom
 			qdel(src)
 
 /obj/effect/meteor/ex_act(severity)
@@ -122,8 +122,8 @@
 				shake_camera(M, 2, 1) //Poof
 		if(A)
 			A.meteorhit(src)
-			playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 30, 1)
-			explosion(src.loc, -1, 1, 2, 4, 0) //Tiny meteor doesn't cause too much damage
+			playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 10, 1)
+			explosion(src.loc, -1, 1, 3, 4, 0) //Tiny meteor doesn't cause too much damage
 			qdel(src)
 
 
