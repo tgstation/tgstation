@@ -56,6 +56,10 @@
 	name = "Short Hair 2"
 	icon_state = "hair_shorthair2"
 
+/datum/sprite_accessory/hair/fujisaki
+	name = "Short Hair 3"
+	icon_state = "hair_fujisaki"
+
 /datum/sprite_accessory/hair/cut
 	name = "Cut Hair"
 	icon_state = "hair_c"
@@ -111,6 +115,10 @@
 /datum/sprite_accessory/hair/ponytail3
 	name = "Ponytail 3"
 	icon_state = "hair_ponytail3"
+
+/datum/sprite_accessory/hair/fujiyabashi
+	name = "Ponytail 4"
+	icon_state = "hair_fujiyabashi"
 
 /datum/sprite_accessory/hair/side_tail
 	name = "Side Pony"
@@ -325,8 +333,12 @@
 	icon_state = "hair_braided"
 
 /datum/sprite_accessory/hair/bun
-	name = "Bun Head"
+	name = "Bun Head 1"
 	icon_state = "hair_bun"
+
+/datum/sprite_accessory/hair/akari
+	name = "Bun Head 2"
+	icon_state = "hair_akari"
 
 /datum/sprite_accessory/hair/braidtail
 	name = "Braided Tail"
@@ -356,25 +368,9 @@
 	name = "Big Spiky Hair 2"
 	icon_state = "hair_toriyama2"
 
-/datum/sprite_accessory/hair/cia
-	name = "Business Hair 3"
-	icon_state = "hair_cia"
-
-/datum/sprite_accessory/hair/mulder
-	name = "Business Hair 4"
-	icon_state = "hair_mulder"
-
-/datum/sprite_accessory/hair/scully
-	name = "Bob Hair 2"
-	icon_state = "hair_scully"
-
 /datum/sprite_accessory/hair/nitori
-	name = "Pigtail Hair"
+	name = "Pigtails"
 	icon_state = "hair_nitori"
-
-/datum/sprite_accessory/hair/joestar
-	name = "Swept Back Hair 2"
-	icon_state = "hair_joestar"
 
 /datum/sprite_accessory/hair/edgeworth
 	name = "Keanu Hair"
@@ -384,33 +380,37 @@
 	name = "Swept Back Hair"
 	icon_state = "hair_objection!"
 
-/datum/sprite_accessory/hair/dubsman
-	name = "Business Hair 2"
-	icon_state = "hair_dubsman"
-
-/datum/sprite_accessory/hair/blackswordsman
-	name = "Hedgehog Hair"
-	icon_state = "hair_blackswordsman"
+/datum/sprite_accessory/hair/joestar
+	name = "Swept Back Hair 2"
+	icon_state = "hair_joestar"
 
 /datum/sprite_accessory/hair/mentalist
 	name = "Business Hair 1"
 	icon_state = "hair_mentalist"
 
-/datum/sprite_accessory/hair/fujisaki
-	name = "Short Hair 3"
-	icon_state = "hair_fujisaki"
+/datum/sprite_accessory/hair/dubsman
+	name = "Business Hair 2"
+	icon_state = "hair_dubsman"
+
+/datum/sprite_accessory/hair/cia
+	name = "Business Hair 3"
+	icon_state = "hair_cia"
+
+/datum/sprite_accessory/hair/mulder
+	name = "Business Hair 4"
+	icon_state = "hair_mulder"
+
+/datum/sprite_accessory/hair/blackswordsman
+	name = "Hedgehog Hair"
+	icon_state = "hair_blackswordsman"
 
 /datum/sprite_accessory/hair/schierke
 	name = "Bob Hair"
 	icon_state = "hair_schierke"
 
-/datum/sprite_accessory/hair/akari
-	name = "Twin Buns"
-	icon_state = "hair_akari"
-
-/datum/sprite_accessory/hair/fujiyabashi
-	name = "Ponytail 4"
-	icon_state = "hair_fujiyabashi"
+/datum/sprite_accessory/hair/scully
+	name = "Bob Hair 2"
+	icon_state = "hair_scully"
 
 /datum/sprite_accessory/hair/nia
 	name = "Long Hair 1"
@@ -421,7 +421,7 @@
 	icon_state = "hair_shinobu"
 
 /datum/sprite_accessory/hair/ramona
-	name = "Ramona"
+	name = "Pixie Cut"
 	icon_state = "hair_ramona"
 
 /datum/sprite_accessory/hair/megaeyebrows
