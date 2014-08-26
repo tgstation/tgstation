@@ -209,7 +209,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
 				centcom_message_cooldown = 1
-				spawn(6000)//10 minute cooldown
+				spawn(600)//One minute cooldown
 					centcom_message_cooldown = 0
 
 
@@ -226,7 +226,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				centcom_message_cooldown = 1
-				spawn(6000)//10 minute cooldown
+				spawn(600)//One minute cooldown
 					centcom_message_cooldown = 0
 
 		if("RestoreBackup")
@@ -559,7 +559,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(is_silicon)
 		priority_announce(input, null, null, "Priority")
 		ai_message_cooldown = 1
-		spawn(600)//One minute cooldown
+		spawn(3000)//Five minute cooldown
 			ai_message_cooldown = 0
 	else
 		priority_announce(input, null, 'sound/misc/announce.ogg', "Captain")
