@@ -52,7 +52,7 @@
 			suit.transfer_ai("AICORE", "NINJASUIT", A, H)
 			return 1
 		else
-			H << "\red <b>ERROR</b>: \black Remote access channel disabled."
+			H << "<span class='userdanger'>ERROR</span>: \black Remote access channel disabled."
 			return 0
 
 	if(istype(A,/obj/structure/AIcore/deactivated))
@@ -61,7 +61,7 @@
 			suit.transfer_ai("INACTIVE","NINJASUIT",A, H)
 			return 1
 		else
-			H << "\red <b>ERROR</b>: \black Remote access channel disabled."
+			H << "<span class='userdanger'>ERROR</span>: \black Remote access channel disabled."
 			return 0
 	if(istype(A,/obj/machinery/computer/aifixer))
 		if(suit.s_control)
@@ -69,7 +69,7 @@
 			suit.transfer_ai("AIFIXER","NINJASUIT",A, H)
 			return 1
 		else
-			H << "\red <b>ERROR</b>: \black Remote access channel disabled."
+			H << "<span class='userdanger'>ERROR</span>: \black Remote access channel disabled."
 			return 0
 
 	// steal energy from powered things
