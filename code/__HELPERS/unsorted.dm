@@ -418,13 +418,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		. += R
 
 //Returns a list of AI's
-/proc/active_ais()
+/proc/active_ais(var/check_mind=0)
 	. = list()
 	for(var/mob/living/silicon/ai/A in living_mob_list)
 		if(A.stat == DEAD)
 			continue
 		if(A.control_disabled == 1)
 			continue
+		if(check_mind)
+			if(!A.mind)
+				continue
 		. += A
 	return .
 
