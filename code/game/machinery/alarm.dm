@@ -792,10 +792,10 @@ table tr:first-child th:first-child { border: none;}
 				else
 					if(src.allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 						locked = !locked
-						user << "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface."
+						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
 						src.updateUsrDialog()
 					else
-						user << "\red Access denied."
+						user << "<span class='danger'>Access denied.</span>"
 				return
 		if(1)
 			if(istype(W, /obj/item/weapon/crowbar) && wires.wires_status == (2 ** wires.wire_count) - 1)
@@ -892,14 +892,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red Air Alarm cannot be placed on this spot."
+		usr << "<span class='danger'>Air Alarm cannot be placed on this spot.</span>"
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "\red Air Alarm cannot be placed in this area."
+		usr << "<span class='danger'>Air Alarm cannot be placed in this area.</span>"
 		return
 
 	if(gotwallitem(loc, ndir))
-		usr << "\red There's already an item on this wall!"
+		usr << "<span class='danger'>There's already an item on this wall!</span>"
 		return
 
 	new /obj/machinery/alarm(loc, ndir, 1)
@@ -1225,14 +1225,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red Fire Alarm cannot be placed on this spot."
+		usr << "<span class='danger'>Fire Alarm cannot be placed on this spot.</span>"
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "\red Fire Alarm cannot be placed in this area."
+		usr << "<span class='danger'>Fire Alarm cannot be placed in this area.</span>"
 		return
 
 	if(gotwallitem(loc, ndir))
-		usr << "\red There's already an item on this wall!"
+		usr << "<span class='danger'>There's already an item on this wall!</span>"
 		return
 
 	new /obj/machinery/firealarm(loc, ndir, 1)

@@ -210,7 +210,7 @@
 /obj/item/weapon/grown/nettle/death
 	seed = /obj/item/seeds/deathnettleseed
 	name = "deathnettle"
-	desc = "The \red glowing \black nettle incites \red<B> rage</B>\black in you just from looking at it!"
+	desc = "The <span class='danger'>glowing</span> \black nettle incites <span class='userdanger'>rage</span>\black in you just from looking at it!"
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
