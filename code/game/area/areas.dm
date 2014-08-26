@@ -122,11 +122,11 @@
 
 /area/proc/firereset()
 	for(var/area/RA in related)
-		if (src.fire)
-			src.fire = 0
-			src.mouse_opacity = 0
-			src.updateicon()
-			for(var/obj/machinery/door/firedoor/D in src)
+		if (RA.fire)
+			RA.fire = 0
+			RA.mouse_opacity = 0
+			RA.updateicon()
+			for(var/obj/machinery/door/firedoor/D in RA)
 				if(!D.blocked)
 					if(D.operating)
 						D.nextstate = OPEN
