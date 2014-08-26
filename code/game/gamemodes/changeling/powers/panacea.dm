@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/panacea
 	name = "Anatomic Panacea"
-	desc = "Expels impurifications from our form; curing diseases, removing toxins and radiation, and it resets your genetic code completely."
+	desc = "Expels impurifications from our form; curing diseases, removing toxins and radiation, and resetting our genetic code completely."
 	helptext = "Can be used while unconscious."
 	chemical_cost = 25
 	dna_cost = 1
