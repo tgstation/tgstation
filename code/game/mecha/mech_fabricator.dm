@@ -12,7 +12,7 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
-	req_access = list(access_robotics)
+	req_one_access = list(access_robotics)
 	var/time_coeff = 1.5 //can be upgraded with research
 	var/resource_coeff = 1.5 //can be upgraded with research
 	var/res_max_amount = 200000
@@ -200,32 +200,8 @@
 /obj/machinery/mecha_part_fabricator/Destroy()
 	for(var/atom/A in src)
 		del A
+
 	..()
-	return
-
-/obj/machinery/mecha_part_fabricator/proc/operation_allowed(mob/M)
-	if(isrobot(M) || isAI(M))
-		return 1
-	if(!istype(req_access) || !req_access.len)
-		return 1
-	else if(istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
-			if(src.check_access(ID))
-				return 1
-	M << "<font color='red'>You don't have required permissions to use [src]</font>"
-	return 0
-
-/obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
-	if(istype(I, /obj/item/device/pda))
-		var/obj/item/device/pda/pda = I
-		I = pda.id
-	if(!istype(I) || !I.access) //not ID or no access
-		return 0
-	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
 
 /obj/machinery/mecha_part_fabricator/proc/emag()
 	sleep()
@@ -557,9 +533,13 @@
 	var/dat, left_part
 	if (..())
 		return
-	if(!operation_allowed(user))
+
+	if(!allowed(user))
+		user << "<span class='warning'>You don't have required permissions to use [src]</span>"
 		return
+
 	user.set_machine(src)
+
 	var/turf/exit = get_turf(output)
 	if(exit.density)
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Error! Part outlet is obstructed\".")
@@ -742,16 +722,17 @@
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(!opened)
 			icon_state = "fab-o"
-			user << "You open the maintenance hatch of [src]."
+			opened = TRUE
+			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
 		else
-			opened = 0
 			icon_state = "fab-idle"
-			user << "You close the maintenance hatch of [src]."
+			opened = FALSE
+			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
 		return
+
 	if (istype(W, /obj/item/device/multitool))
 		if(!opened)
 			var/result = input("Set your location as output?") in list("Yes","No","Machine Location")

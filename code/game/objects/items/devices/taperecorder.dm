@@ -56,7 +56,7 @@
 		var/mob/M = loc
 		M << "<span class='danger'>\The [src] explodes!</span>"
 	if(T)
-		T.hotspot_expose(700,125)
+		T.hotspot_expose(700,125,surfaces=istype(loc,/turf))
 		explosion(T, -1, -1, 0, 4)
 	del(src)
 	return

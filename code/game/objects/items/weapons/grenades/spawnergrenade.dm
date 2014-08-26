@@ -37,6 +37,13 @@
 	deliveryamt = 5
 	origin_tech = "materials=3;magnets=4;syndicate=4"
 
+/obj/item/weapon/grenade/spawnergrenade/manhacks/syndicate
+	desc = "It is set to detonate in 5 seconds. It will unleash a pair of hostile visceratorrs that will hack at any nearby targets indiscriminately."
+	name = "viscerator grenade"
+	spawner_type = /mob/living/simple_animal/hostile/viscerator
+	deliveryamt = 2
+	origin_tech = "materials=3;magnets=4;syndicate=4"
+
 /obj/item/weapon/grenade/spawnergrenade/spesscarp
 	name = "carp delivery grenade"
 	spawner_type = /mob/living/simple_animal/hostile/carp

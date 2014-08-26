@@ -24,7 +24,7 @@
 	dat += {"
 				Power: <a href="?src=\ref[src];power=1">[on ? "On" : "Off"]</a><BR>
 				Frequency: <A href='byond://?src=\ref[src];set_freq=-1'>[format_frequency(media_frequency)]</a><BR>
-				Frequency: <A href='byond://?src=\ref[src];set_volume=-1'>[volume*100]%</a><BR>
+				Volume: <A href='byond://?src=\ref[src];set_volume=-1'>[volume*100]%</a><BR>
 				"}
 	dat+={"</TT></body></html>"}
 	user << browse(dat, "window=radio-recv")
@@ -69,7 +69,7 @@
 		if(href_list["set_volume"]!="-1")
 			vol = text2num(href_list["set_volume"])/100
 		else
-			vol = input(usr, "Set a new volume (1-100%).", src, media_frequency) as null|num
+			vol = input(usr, "Set a new volume (1-100%).", src, volume*100) as null|num
 			if(vol==null)
 				updateUsrDialog()
 				return

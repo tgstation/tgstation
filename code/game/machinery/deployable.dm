@@ -129,6 +129,14 @@ for reference:
 		else
 			return 0
 
+/obj/structure/barricade/wooden/door //Used by the barricade kit when it is placed on doors
+
+	icon = 'icons/policetape.dmi'
+	icon_state = "wood_door"
+	anchored = 1
+	density = 1
+	health = 50 //Can take a few hits
+	maxhealth = 50
 
 //Actual Deployable machinery stuff
 

@@ -149,7 +149,7 @@ var/list/sacrificed = list()
 			playsound(U, 'sound/items/Welder2.ogg', 25, 1)
 			var/turf/T = get_turf(U)
 			if(T)
-				T.hotspot_expose(700,125)
+				T.hotspot_expose(700,125,surfaces=1)
 			var/rune = src // detaching the proc - in theory
 			empulse(U, (range_red - 2), range_red)
 			del(rune)
@@ -963,14 +963,14 @@ var/list/sacrificed = list()
 							else
 								M << "\red Rune suddenly ignites, burning you!"
 							var/turf/T = get_turf(R)
-							T.hotspot_expose(700,125)
+							T.hotspot_expose(700,125,surfaces=1)
 				for(var/obj/effect/decal/cleanable/blood/B in world)
 					if(B.blood_DNA == src.blood_DNA)
 						for(var/mob/living/M in orange(1,B))
 							M.take_overall_damage(0,5)
 							M << "\red Blood suddenly ignites, burning you!"
 							var/turf/T = get_turf(B)
-							T.hotspot_expose(700,125)
+							T.hotspot_expose(700,125,surfaces=1)
 							del(B)
 				del(src)
 

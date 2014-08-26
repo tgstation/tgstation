@@ -54,7 +54,7 @@
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
 				if(airborne_can_reach(get_turf(src), get_turf(target)))
 					if(get_infection_chance(target))
-						infect_virus2(target,src.virus2)
+						infect_virus2(target,src.virus2, notes="([src] attacked by [key_name(user)])")
 		del src
 
 /obj/item/weapon/virusdish/examine()

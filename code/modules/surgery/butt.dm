@@ -15,9 +15,8 @@
 
 /datum/surgery_step/butt/slice_cheek
 	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/hatchet = 75
 	)
 
 	min_duration = 50

@@ -147,9 +147,9 @@ datum
 							M.contract_disease(D, 1, 0)
 				if(self.data && self.data["virus2"] && istype(M, /mob/living/carbon))//infecting...
 					if(method == TOUCH)
-						infect_virus2(M,self.data["virus2"])
+						infect_virus2(M,self.data["virus2"], notes="(Contact with blood)")
 					else
-						infect_virus2(M,self.data["virus2"],1) //injected, force infection!
+						infect_virus2(M,self.data["virus2"],1, notes="(INJECTED)") //injected, force infection!
 				if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]
@@ -2880,14 +2880,14 @@ datum
 			description = "Ramen, deep fried."
 			reagent_state = LIQUID
 			color = "#6F884F" // rgb: 255,255,255 //to-do
-			
+
 		peptobismol
 			name = "Peptobismol"
 			id = "peptobismol"
 			description = "Jesus juice." //You're welcome, guy in the thread that rolled a 69.
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
-			
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.drowsyness = max(M.drowsyness-2*REM, 0)

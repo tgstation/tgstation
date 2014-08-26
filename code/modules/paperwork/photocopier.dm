@@ -80,8 +80,7 @@
 					else			//no toner? shitty copies for you!
 						c.info = "<font color = #808080>"
 					var/copied = html_decode(copy.info)
-					copied = replacetext(copied, "<font face=\"[c.deffont]\" color=", "<font face=\"[c.deffont]\" nocolor=")	//state of the art techniques in action
-					copied = replacetext(copied, "<font face=\"[c.crayonfont]\" color=", "<font face=\"[c.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+					copied = replacetext(copied, "color:", "nocolor:")	//state of the art techniques in action
 					c.info += copied
 					c.info += "</font>"
 					c.name = copy.name

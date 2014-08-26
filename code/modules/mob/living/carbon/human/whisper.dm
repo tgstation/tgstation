@@ -34,6 +34,7 @@
 	if (istype(src, /mob/living/carbon/human) && src.name != GetVoice())
 		var/mob/living/carbon/human/H = src
 		alt_name = " (as [H.get_id_name("Unknown")])"
+
 	// Mute disability
 	if (src.sdisabilities & MUTE)
 		return

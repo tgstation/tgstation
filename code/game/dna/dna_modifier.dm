@@ -917,7 +917,13 @@
 					else
 						selectedbuf=buf.dna.UI
 					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(selectedbuf)
-					success = setInjectorBlock(I,blk,buf)
+					if(injector_ready)
+						success = setInjectorBlock(I,blk,buf)
+					else
+						qdel(I)
+						success = FALSE
+
+
 				else
 					I.buf = buf
 				waiting_for_user_input=0

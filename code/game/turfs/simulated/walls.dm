@@ -20,6 +20,9 @@
 		/obj/structure/falsewall,
 		/obj/structure/falserwall // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
 	)
+
+	soot_type = null
+
 /turf/simulated/wall/examine()
 	..()
 	if(src.engraving) usr << src.engraving
@@ -408,7 +411,7 @@
 	return
 
 // Generic wall melting proc.
-/turf/simulated/wall/proc/melt(var/mob/user)
+/turf/simulated/wall/melt()
 	if(mineral == "diamond")
 		return
 

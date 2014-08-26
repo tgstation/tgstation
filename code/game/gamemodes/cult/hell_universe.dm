@@ -23,10 +23,6 @@ In short:
 	return 0
 	*/
 
-// Apply changes when exiting state
-/datum/universal_state/hell/OnExit()
-
-
 /datum/universal_state/hell/DecayTurf(var/turf/T)
 	if(istype(T,/turf/simulated/wall) && !istype(T,/turf/simulated/wall/cult))
 		T.ChangeTurf(/turf/simulated/wall/cult)
@@ -38,6 +34,8 @@ In short:
 
 // Apply changes when entering state
 /datum/universal_state/hell/OnEnter()
+	#warning REMOVE ME.
+	world << "/datum/universal_state/hell/OnEnter()"
 	/*
 	if(emergency_shuttle.direction==2)
 		captain_announce("The emergency shuttle has returned due to bluespace distortion.")

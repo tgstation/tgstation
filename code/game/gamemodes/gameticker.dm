@@ -51,7 +51,8 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/gaytony.ogg',\
 	'sound/music/rocketman.ogg',\
 	'sound/music/2525.ogg',\
-	'sound/music/moonbaseoddity.ogg')
+	'sound/music/moonbaseoddity.ogg',\
+	'sound/music/whatisthissong.ogg')
 	do
 		pregame_timeleft = 300
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -381,6 +382,7 @@ var/global/datum/controller/gameticker/ticker
 				else if(!delay_end)
 					sleep(restart_timeout)
 					if(!delay_end)
+						CallHook("Reboot",list())
 						world.Reboot()
 					else
 						world << "\blue <B>An admin has delayed the round end</B>"

@@ -757,6 +757,15 @@ other types of metals and chemistry for reagents).
 	materials = list("$metal" = 2000, "$glass" = 1000, "$silver" = 1000, "$gold" = 500, "$plasma" = 500, "$diamond" = 100)
 	build_path = /obj/item/device/mmi/posibrain
 
+/datum/design/np_dispenser
+	name = "Nano Paper Dispenser"
+	desc = "A machine to create Nano Paper"
+	id = "np_dispenser"
+	req_tech = list("programming" = 2, "materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$glass" = 500, "$metal" = 1000, "$gold" = 500)
+	build_path = /obj/item/weapon/paper_bin/nano
+
 ///////////////////////////////////
 //////////Mecha Module Disks///////
 ///////////////////////////////////
@@ -2004,6 +2013,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/health
 
+/*
 /datum/design/security_hud
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
@@ -2012,6 +2022,17 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
+	locked = 1
+*/
+
+/datum/design/sechud_sunglass
+	name = "HUDSunglasses"
+	desc = "Sunglasses with a heads-up display that scans the humans in view and provides accurate data about their ID status."
+	id = "sechud_sunglass"
+	req_tech = list("magnets" = 3, "combat" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 50, "$glass" = 50)
+	build_path = /obj/item/clothing/glasses/sunglasses/sechud
 	locked = 1
 
 /////////////////////////////////////////
@@ -2238,6 +2259,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/bhangmeter
+
 
 //////////////////////////////////////////////////////////////////
 // EMBEDDED CONTROLLER BOARDS

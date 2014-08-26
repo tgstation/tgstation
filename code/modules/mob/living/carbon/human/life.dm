@@ -1400,14 +1400,14 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 			if(B.virus2.len)
 				for (var/ID in B.virus2)
 					var/datum/disease2/disease/V = B.virus2[ID]
-					if (infect_virus2(src,V))
+					if (infect_virus2(src,V, notes="(Airborne from blood)"))
 						return 1
 
 		for(var/obj/effect/decal/cleanable/mucus/M in get_turf(src))
 			if(M.virus2.len)
 				for (var/ID in M.virus2)
 					var/datum/disease2/disease/V = M.virus2[ID]
-					if (infect_virus2(src,V))
+					if (infect_virus2(src,V, notes="(Airborne from mucus)"))
 						return 1
 		return 0
 	proc/handle_virus_updates()
@@ -1525,26 +1525,22 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		if(status_flags & FAKEDEATH)
 			temp = PULSE_NONE		//pretend that we're dead. unlike actual death, can be inflienced by meds
 
+		//handles different chems' influence on pulse
 		for(var/datum/reagent/R in reagents.reagent_list)
 			if(R.id in bradycardics)
 				if(temp <= PULSE_THREADY && temp >= PULSE_NORM)
 					temp--
-					break		//one reagent is enough
-								//comment out the breaks to make med effects stack
-		for(var/datum/reagent/R in reagents.reagent_list)				//handles different chems' influence on pulse
+
 			if(R.id in tachycardics)
 				if(temp <= PULSE_FAST && temp >= PULSE_NONE)
 					temp++
-					break
-		for(var/datum/reagent/R in reagents.reagent_list) //To avoid using fakedeath
-			if(R.id in heartstopper)
+
+			if(R.id in heartstopper) //To avoid using fakedeath
 				temp = PULSE_NONE
-				break
-		for(var/datum/reagent/R in reagents.reagent_list) //Conditional heart-stoppage
-			if(R.id in cheartstopper)
+
+			if(R.id in cheartstopper)  //Conditional heart-stoppage
 				if(R.volume >= R.overdose)
 					temp = PULSE_NONE
-					break
 
 		return temp
 

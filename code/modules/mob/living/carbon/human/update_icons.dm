@@ -136,14 +136,19 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_icons()
 	update_hud()		//TODO: remove the need for this
 
-	if(overlays.len != overlays_standing.len)
+	if(species && species.override_icon)
 		overlays.len = 0
-		overlays.len = overlays_standing.len
-		icon = stand_icon
+		icon = species.override_icon
+		icon_state = "[lowertext(species.name)]_[gender][(mutations & M_FAT)?"_fat":""]"
+	else
+		if(overlays.len != overlays_standing.len)
+			overlays.len = 0
+			overlays.len = overlays_standing.len
+			icon = stand_icon
 
-		for(var/overlay in overlays_standing)
-			if(overlay)
-				overlays += overlay
+			for(var/overlay in overlays_standing)
+				if(overlay)
+					overlays += overlay
 
 	update_transform()
 
@@ -204,7 +209,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	var/husk = (M_HUSK in src.mutations)  //100% unnecessary -Agouri	//nope, do you really want to iterate through src.mutations repeatedly? -Pete
 	var/fat = (M_FAT in src.mutations)
-	var/hulk = (M_HULK in src.mutations)
+	var/hulk = (M_HULK in src.mutations) && species.name == "Horror" // Part of the species.
 	var/skeleton = (SKELETON in src.mutations)
 
 	var/g = "m"

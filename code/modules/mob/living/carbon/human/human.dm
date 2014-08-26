@@ -1664,7 +1664,13 @@ mob/living/carbon/human/yank_out_object()
 	if(species && species.language)
 		remove_language(species.language)
 
+	if(species && species.abilities)
+		verbs -= species.abilities
+
 	species = all_species[new_species]
+
+	if(species.abilities)
+		verbs |= species.abilities
 
 	if(force_organs || !organs || !organs.len)
 		species.create_organs(src)
