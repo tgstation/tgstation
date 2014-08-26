@@ -72,7 +72,7 @@
 
 /obj/item/weapon/greentext/Destroy()
 	for(var/mob/M in mob_list)
-		var/message = "<span class='warning'>A dark temptation has passsed from this world"
+		var/message = "<span class='warning'>A dark temptation has passed from this world"
 		if(M in color_altered_mobs)
 			message += " and you're finally able to forgive yourself"
 			M.color = initial(M.color)

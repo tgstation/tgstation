@@ -40,7 +40,7 @@
 				all_spawned_items += I
 
 		for(var/obj/item/I in all_spawned_items)
-			I.flags += NODROP
+			I.flags |= NODROP
 			I.name = "cursed " + I.name
 
 
