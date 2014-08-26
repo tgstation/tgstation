@@ -656,7 +656,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 60
 	containertype = /obj/structure/closet/crate/secure
 	containername = "transfer valves crate"
-	access = access_tox_storage
+	access = access_rd
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
