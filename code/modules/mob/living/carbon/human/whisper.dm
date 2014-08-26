@@ -4,7 +4,7 @@
 		return
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
 	message = trim(copytext(strip_html_simple(message), 1, MAX_MESSAGE_LEN))
@@ -16,7 +16,7 @@
 
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)
-			src << "\red You cannot whisper (muted)."
+			src << "<span class='danger'>You cannot whisper (muted).</span>"
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_IC))

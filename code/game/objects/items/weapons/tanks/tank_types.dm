@@ -27,7 +27,7 @@
 	set src in usr
 	..()
 	if(air_contents.oxygen < 10)
-		usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
+		usr << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 		playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 
 
@@ -73,7 +73,7 @@
 	set src in usr
 	..()
 	if(air_contents.oxygen < 1 && loc==usr)
-		usr << "\red <B>The meter on the [src.name] indicates you are almost out of air!</B>"
+		usr << "<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>"
 		usr << sound('sound/effects/alert.ogg')
 
 /obj/item/weapon/tank/air/New()
@@ -143,7 +143,7 @@
 	set src in usr
 	..()
 	if(air_contents.oxygen < 0.2 && loc==usr)
-		usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
+		usr << text("<span class='userdanger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 		usr << sound('sound/effects/alert.ogg')
 
 /obj/item/weapon/tank/emergency_oxygen/engi

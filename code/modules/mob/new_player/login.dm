@@ -4,7 +4,7 @@
 		src << "<div class=\"motd\">[join_motd]</div>"
 
 	if(admin_notice)
-		src << "\blue <b>Admin Notice:</b>\n \t [admin_notice]"
+		src << "<span class='notice'><b>Admin Notice:</b>\n \t [admin_notice]</span>"
 
 	if(!mind)
 		mind = new /datum/mind(key)

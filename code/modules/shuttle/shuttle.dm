@@ -74,7 +74,7 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(!allowed(usr))
-		usr << "\red Access denied."
+		usr << "<span class='danger'>Access denied.</span>"
 		return
 	if(href_list["move"])
 		if(id in shuttles)
