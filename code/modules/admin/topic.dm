@@ -1587,8 +1587,8 @@
 				if(result)
 					log_admin("[key_name(usr)] turned all humans into [result]", 1)
 					message_admins("\blue [key_name_admin(usr)] turned all humans into [result]", 1)
+					var/newtype = species_list[result]
 					for(var/mob/living/carbon/human/H in mob_list)
-						var/newtype = species_list[result]
 						H.dna.species = new newtype()
 						H.regenerate_icons()
 			if("corgi")
