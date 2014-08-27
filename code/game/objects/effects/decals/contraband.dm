@@ -169,7 +169,7 @@ obj/structure/sign/poster/New(serial,subtype)
 				desc += " Who cares about lung cancer when you're high as a kite?"
 			if(26)
 				name += " - Revolver Advertisment"
-				desc += " Because six shots are all you need."
+				desc += " Because seven shots are all you need."
 			if(27)
 				name += " - D-Day Promotional Poster"
 				desc += " A promotional poster for some rapper."
@@ -190,7 +190,7 @@ obj/structure/sign/poster/New(serial,subtype)
 				desc += " Fight things for no reason, like a man!"
 			else
 				name += " - Error (subtype 0 serial_number)"
-				desc += " This is a bug, please report the circumstances under which you encountered this poster at https://github.com/NTStation/NTstation13/issues."
+				desc += " This is a bug, please report the circumstances under which you encountered this poster at https://github.com/tgstation/-tg-station/issues."
 
 	if(subtype == 1)
 		icon_state = "poster[serial_number]_legit"
