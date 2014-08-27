@@ -161,10 +161,3 @@
 
 /atom/movable/virtualspeaker/GetRadio()
 	return radio
-
-/atom/movable/verb/say_something(message as text)
-	set name = "make honk"
-	set category = "IC"
-	set src in view()
-
-	say(message)
