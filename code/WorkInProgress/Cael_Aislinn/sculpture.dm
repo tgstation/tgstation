@@ -15,30 +15,32 @@
 	response_harm   = "hits the"
 	var/response_snap = "snapped the neck of" //Past tense because it "happened before you could see it"
 	var/response_snap_target = "In the blink of an eye, something grabs you and snaps your neck!"
+	var/snap_sound = list('sound/scp/firstpersonsnap.ogg','sound/scp/firstpersonsnap2.ogg','sound/scp/firstpersonsnap3.ogg')
+	var/scare_sound = list('sound/scp/scare1.ogg','sound/scp/scare2.ogg','sound/scp/scare3.ogg','sound/scp/scare4.ogg')	//Boo
 	var/obj/item/weapon/grab/G
 	var/observed = 0
-	var/hibernate = 0	//Disables SCP until toggled back to O
+	var/hibernate = 0	//Disables SCP until toggled back to 0
 	var/scare_played = 0 //Did we rape everyone's ears yet ?
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent //Graciously stolen from spider code
 
 /mob/living/simple_animal/sculpture/proc/GrabMob(var/mob/living/target)
 	if(target && target != src && ishuman(target) && !observed)
 		G = new /obj/item/weapon/grab(src, target)
-		G.loc=src
+		G.loc = src
 		target.grabbed_by += G
 		G.synch()
 		target.LAssailant = src
 		//Killing people has been extradited here for reasons, SCP still looks to grab targets on his turf later down
 		target.Stun(1)
 		target.Paralyse(1)
-		target.apply_damage(150, BRUTE, "head")
+		target.apply_damage(rand(120,150), BRUTE, "head")
 
-		playsound(loc, pick('sound/scp/firstpersonsnap.ogg','sound/scp/firstpersonsnap2.ogg','sound/scp/firstpersonsnap3.ogg'), 100, 1, -1)
+		playsound(target.loc, pick(snap_sound), 100, 1, -1)
 		visible_message("<span class='danger'>[src] [response_snap] [target]!</span>")
-		target << "<span class='alert'><b>[response_snap_target]</b> Everything around you grows dim...</span>"
-		target.attack_log += text("\[[time_stamp()]\] <font color='red'>Has been grabbed by [src], and had his neck snapped!</font>")
-		log_admin("[target] ([target.ckey]) has been grabbed and had his neck snapped by an active [src].")
-		message_admins("Alert: [target.real_name] has been grabbed and had his neck snapped by an active [src].")
+		target << "<span class='alert'><b>[response_snap_target]</b> Your vision fades away...</span>"
+		target.attack_log += text("\[[time_stamp()]\] <font color='red'>Had his neck snapped by [src]!</font>")
+		log_admin("[target] ([target.ckey]) had his neck snapped by an active [src].")
+		message_admins("ALERT: <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>[target.real_name]</a> had his neck snapped by an active [src].")
 
 		//Instead of making SCP piss around, let's have him snap more necks
 		del(G)
@@ -90,7 +92,7 @@
 	//account for darkness
 	var/turf/T = get_turf(src)
 	var/in_darkness = 0
-	if(T.luminosity == 0) //Let's only bother with dark tiles. Centcomm can burn in hell
+	if(T.luminosity == 0 && !istype(T, /turf/unsimulated)) //Let's only bother with dark tiles. Unsimulated tiles can't run this check for reference.
 		in_darkness = 1
 
 	//see if we're able to do stuff
@@ -124,7 +126,7 @@
 				//move to right behind them
 				target_turf = get_step(target, src)
 				if(scare_played == 0) //Let's minimize the spam
-					playsound(loc, pick('sound/scp/scare1.ogg','sound/scp/scare2.ogg','sound/scp/scare3.ogg','sound/scp/scare4.ogg'), 100, 1, -1)
+					playsound(loc, pick(scare_sound), 100, 1, -1)
 					scare_played = 1
 					spawn(50)
 						scare_played = 0
@@ -132,7 +134,7 @@
 				//move to them really really fast and knock them down
 				target_turf = get_turf(target)
 				if(scare_played == 0) //Let's minimize the spam
-					playsound(loc, pick('sound/scp/scare1.ogg','sound/scp/scare2.ogg','sound/scp/scare3.ogg','sound/scp/scare4.ogg'), 100, 1, -1)
+					playsound(loc, pick(scare_sound), 100, 1, -1)
 					scare_played = 1
 					spawn(50)
 						scare_played = 0
@@ -207,6 +209,8 @@
 					src.dir = get_dir(src, target)
 					next_turf = get_step(src, get_dir(next_turf,target_turf))
 					num_turfs--
+			//Coding note : This is known to allow SCP to end up on tiles that contain obstructing structures (doors, machinery, etc)
+			//Although he CAN'T pass through them during normal movement. Will look into a fix soon
 
 		//Do we have a vent ? Good, let's take a look
 		for(entry_vent in view(1, src))
