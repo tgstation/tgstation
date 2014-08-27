@@ -7,7 +7,7 @@ var/list/doppler_arrays = list()
 	icon_state = "tdoppler"
 	density = 1
 	anchored = 1
-
+	languages = HUMAN
 
 /obj/machinery/doppler_array/New()
 	..()
@@ -74,10 +74,11 @@ var/list/doppler_arrays = list()
 	if(devastation_range < orig_dev_range || heavy_impact_range < orig_heavy_range || light_impact_range < orig_light_range)
 		messages += "Theoretical: Epicenter radius: [orig_dev_range]. Outer radius: [orig_heavy_range]. Shockwave radius: [orig_light_range]."
 
-	for(var/mob/O in hearers(src, null))
-		for(var/message in messages)
-			O.show_message("<span class='game say'><span class='name'>[src]</span> states coldly, \"[message]\"",2)
+	for(var/message in messages)
+		say(message)
 
+/obj/machinery/doppler_array/say_quote(text)
+	return "states coldly, \"[text]\""
 
 /obj/machinery/doppler_array/power_change()
 	if(stat & BROKEN)

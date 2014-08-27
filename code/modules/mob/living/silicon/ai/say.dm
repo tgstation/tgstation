@@ -4,7 +4,7 @@
 		return
 	..(message)
 
-/mob/living/silicon/ai/compose_track_href(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/living/silicon/ai/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//this proc assumes that the message originated from a radio. if the speaker is not a virtual speaker this will probably fuck up hard.
 	var/mob/M = speaker.GetSource()
 	var/obj/item/device/radio = speaker.GetRadio()
@@ -15,9 +15,9 @@
 		return "<a href='[faketrack]'>"
 	return ""
 
-/mob/living/silicon/ai/compose_job(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//Also includes the </a> for AI hrefs, for convenience.
-	return " [radio_freq ? "(" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""] "
+	return " [radio_freq ? "(" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
 /mob/living/silicon/ai/say_quote(var/text)
 	var/ending = copytext(text, length(text))

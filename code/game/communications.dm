@@ -134,8 +134,23 @@ var/list/radiochannels = list(
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 	"Service" = 1349,
-	"AI Private" = 1447,
+	"AI Private" = 1447
 )
+
+var/list/radiochannelsreverse = list(
+	"1459" = "Common",
+	"1351" = "Science",
+	"1353" = "Command",
+	"1355" = "Medical",
+	"1357" = "Engineering",
+	"1359" = "Security",
+	"1441" = "Deathsquad",
+	"1213" = "Syndicate",
+	"1347" = "Supply",
+	"1349" = "Service",
+	"1447" = "AI Private"
+)
+
 //depenging helpers
 var/const/SYND_FREQ = 1213 //nuke op frequency, coloured dark brown in chat window
 var/const/SUPP_FREQ = 1347 //supply, coloured light brown in chat window

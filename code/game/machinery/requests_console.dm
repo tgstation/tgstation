@@ -12,6 +12,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	anchored = 1
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
+	languages = HUMAN
 	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
 	var/list/messages = list() //List of all messages
 	var/departmentType = 0
@@ -317,8 +318,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 									Console.update_icon()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-									for (var/mob/O in hearers(5, Console.loc))
-										O.show_message("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'")
+									say("PRIORITY Alert in [department]!")
 								Console.messages += "<span class='bad'>High Priority</span><BR><b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
 								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
 								// Same message, but without the hyperlink.
@@ -331,8 +331,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 									Console.update_icon()
 								if(1) // This is EXTREMELY important, so beep.
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-									for (var/mob/O in hearers(7, Console.loc))
-										O.show_message("\icon[Console] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'")
+									say("!!!EXTREME PRIORITY ALERT IN [department]!!!")
 								Console.messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
 								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
 								// Same message, but without the hyperlink.
@@ -349,8 +348,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 									Console.update_icon()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-									for (var/mob/O in hearers(4, Console.loc))
-										O.show_message("\icon[Console] *The Requests Console beeps: 'Message from [department]'")
+									say("Message from [department].")
 								Console.messages += "<b>From:</b> <a href='?src=\ref[Console];write=[ckey(department)]'>[department]</a><BR>[sending]"
 								var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(Console.loc)
 								slip.info = "<b>From:</b> [department]<BR>[sending]"
@@ -365,8 +363,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					else
 						messages += "<b>To: [dpt]</b><BR>[sending]"
 			else
-				for (var/mob/O in hearers(4, src.loc))
-					O.show_message("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'")
+				say("NOTICE: No server detected!")
 
 
 	//Handle screen switching
@@ -409,6 +406,13 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	updateUsrDialog()
 	return
+
+/obj/machinery/say_quote(var/text)
+	var/ending = copytext(text, length(text) - 2)
+	if (ending == "!!!")
+		return "yells, \"[text]\""
+
+	return "beeps, \"[text]\""
 
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/weapon/crowbar))

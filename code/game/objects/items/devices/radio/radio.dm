@@ -249,6 +249,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/real_name = M.name // mob's real name
 	var/mobkey = "none" // player key associated with mob
 	var/voicemask = 0 // the speaker is wearing a voice mask
+	var/voice = M.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
 	if(ismob(M))
 		var/mob/speaker = M
 		real_name = speaker.real_name
@@ -261,7 +262,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 	if (ishuman(M))
-		var/voice = M.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
 		var/datum/data/record/findjob = find_record("name", voice, data_core.general)
 
 		if(voice != real_name)
@@ -310,7 +310,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			"mob" = M, // store a reference to the mob
 			"mobtype" = M.type, 	// the mob's type
 			"realname" = real_name, // the mob's real name
-			"name" = displayname,	// the mob's display name
+			"name" = voice,			// the mob's display name
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask

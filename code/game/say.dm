@@ -17,8 +17,9 @@
 	return 1
 
 /atom/movable/proc/send_speech(message, range)
+	var/rendered = compose_message(src, languages, message)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(message, src, languages, message)
+		AM.Hear(rendered, src, languages, message)
 
 /atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq) 
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.

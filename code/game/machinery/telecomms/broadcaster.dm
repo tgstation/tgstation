@@ -143,15 +143,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"],, signal.data["compression"], list(0), signal.frequency)
-		else
-			if(intercept)
-				Broadcast_Message(signal.data["mob"],
-							  signal.data["vmask"],
-							  signal.data["radio"], signal.data["message"],
-							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], 3, signal.data["compression"], list(0), signal.frequency)
-
+							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency)
 
 
 /**
@@ -213,11 +205,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
 						var/data, var/compression, var/list/level, var/freq)
+
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
+
 	if(!message)
 		return
-	world << data
+
 	var/list/radios = list()
+
 	var/atom/movable/virtualspeaker/virt = new(null) //fuck this code.
 	virt.name = name
 	virt.job = job
@@ -247,19 +242,17 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			if(R.receive_range(freq, level) > -1)
 				radios += R
 
-	else if(data == 3)
-
-		for(var/obj/item/device/radio/R in all_radios["[SYND_FREQ]"])
-			if(R.receive_range(SYND_FREQ, level) > -1)
-				radios += R
-
 	// --- Broadcast to ALL radio devices ---
 
 	else
-		world << "radios:"
 		for(var/obj/item/device/radio/R in all_radios["[freq]"])
 			if(R.receive_range(freq, level) > -1)
 				radios += R
+
+		var/freqtext = num2text(freq)
+		for(var/obj/item/device/radio/R in all_radios["[SYND_FREQ]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
+			if(R.receive_range(SYND_FREQ, list(R.z)) > -1 && freqtext in radiochannelsreverse)
+				radios |= R
 
 	// Get a list of mobs who can hear from the radios we collected.
 	var/list/receive = get_mobs_in_radio_ranges(radios) //this includes all hearers.
@@ -268,7 +261,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			receive -= R
 
-	var/rendered = radio.compose_message(AM, AM.languages, message, freq) //The object this is called on is arbitrary as long as it's not an AI, using the radio just lets met advoid having to make a new atom/movable to call this on.
+	var/rendered = virt.compose_message(virt, virt.languages, message, freq) //Always call this on the virtualspeaker to advoid issues.
 	for(var/atom/movable/hearer in receive)
 		hearer.Hear(rendered, virt, AM.languages, message, freq)
 

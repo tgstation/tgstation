@@ -77,10 +77,17 @@ var/list/department_radio_keys = list(
 /mob/living/say(message, bubble_type)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
+	if(stat == DEAD)
+		say_dead(message)
+		return
+
+	if(stat)
+		return
+
 	if(check_emote(message))
 		return
 
-	if(!can_speak_basic(message) || stat) //Stat is seperate so I can handle whispers properly.
+	if(!can_speak_basic(message)) //Stat is seperate so I can handle whispers properly.
 		return
 
 	var/message_mode = get_message_mode(message)
@@ -127,7 +134,7 @@ var/list/department_radio_keys = list(
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	if(!(message_langs & languages) && !force_compose) //force_compose is so AIs don't end up without their hrefs.
+	if(!(message_langs & languages) || force_compose) //force_compose is so AIs don't end up without their hrefs.
 		message = compose_message(speaker, message_langs, raw_message, radio_freq)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
@@ -172,10 +179,6 @@ var/list/department_radio_keys = list(
 	if(!message || message == "")
 		return
 
-	if(stat == DEAD)
-		say_dead(message)
-		return
-
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
@@ -201,8 +204,9 @@ var/list/department_radio_keys = list(
 	return 1
 
 /mob/living/proc/check_emote(message)
-	if (copytext(message, 1, 2) == "*")
-		return emote(copytext(message, 2))
+	if(copytext(message, 1, 2) == "*")
+		emote(copytext(message, 2))
+		return 1
 
 /mob/living/proc/get_message_mode(message)
 	if(copytext(message, 1, 2) == ";")

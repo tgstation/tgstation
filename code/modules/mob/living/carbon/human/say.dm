@@ -69,11 +69,9 @@
 		special_voice = new_voice
 	return
 
-
 /mob/living/carbon/human/proc/UnsetSpecialVoice()
 	special_voice = ""
 	return
-
 
 /mob/living/carbon/human/proc/GetSpecialVoice()
 	return special_voice

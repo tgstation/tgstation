@@ -127,7 +127,7 @@
 	if(speaker != src && prob(20)) //Dont imitate ourselves
 		if(speech_buffer.len >= 20)
 			speech_buffer -= pick(speech_buffer)
-		speech_buffer |= html_decode(message)
+		speech_buffer |= html_decode(raw_message)
 	..()
 
 /mob/living/simple_animal/parrot/radio(message, message_mode) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.

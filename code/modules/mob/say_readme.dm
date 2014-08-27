@@ -13,6 +13,7 @@ Radio code, while very much related to saycode, is not something I wanted to tou
 If you came here to see how to use saycode, all you will ever really need to call is say(message).
 To have things react when other things speak around them, add the HEAR flag to their flags variable and
 override their Hear() proc.
+
 =======================PROCS & VARIABLES=======================
 	Here follows a list of say()-related procs and variables.
 global procs
@@ -97,7 +98,6 @@ global procs
 	can_speak_basic(message)
 		Sees if the mob can "think" the message. Does not include vocalization or stat checks.
 		Vocalization checks are in can_speak_vocal, stat checks have to be done manually.
-		Will call say_dead() if the speaker is dead.
 		Called right before handle_inherent_channels()
 
 	can_speak_vocal(message)
@@ -135,13 +135,13 @@ I did not want to interfere with radios too much, but I sort of had to.
 For future generations, here is how radio code works:
 First, talk_into() is called on a radio. This sends a signal datum into the magic machine that is tcomms, which
 eventually results in broadcast_message() being called.
-	
+
 Broadcast_message() does NOT call say() on radios, but rather calls Hear() on everyone in range of a radio.
 This is because the system does not like repeating says.
-	
+
 Furthermore, I changed radios to not be in the radio_controller. Instead, they are in a global list called all_radios.
 This is an associative list, and the numbers as strings are the keys. The values are lists of radios that can hear said frequency.
-	
+
 To add a radio, simply use add_radio(radio, frequency). To remove a radio, use remove_radio(radio, frequency).
 To remove a radio from ALL frequencies, use remove_radio_all(radio).
 
@@ -156,7 +156,7 @@ If radio_freq is not null, the code will rely on the fact that the speaker is vi
 	GetSource()
 		Returns the source of the virtual speaker.
 	GetRadio()
-		Returns the radio that was spoken through by the source.
+		Returns the radio that was spoken through by the source. Needed for AI tracking.
 
 This is fairly hacky, but it means that I can advoid using istypes. It's mainly relevant for AI tracking and AI job display.
 

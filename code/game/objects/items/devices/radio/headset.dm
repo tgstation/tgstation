@@ -26,15 +26,9 @@
 	..()
 
 /obj/item/device/radio/headset/receive_range(freq, level)
-	world << "receive_range() called"
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
-			world << "calling ..()"
-			world << freq
-			for(var/wub in level)
-				world << wub
-			world << H
 			return ..(freq, level)
 	return -1
 
