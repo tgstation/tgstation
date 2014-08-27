@@ -172,6 +172,8 @@
 				if("boiling")
 					watertemp = "normal"
 			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I].</span>")
+			log_game("[key_name(user)] has wrenched a shower to [watertemp] at ([x],[y],[z])")
+			add_hiddenprint(user)
 
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
