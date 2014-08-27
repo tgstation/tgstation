@@ -105,7 +105,7 @@
 	icon_state = "hair_halfbang2"
 
 /datum/sprite_accessory/hair/ponytail1
-	name = "Ponytail 1"
+	name = "Ponytail"
 	icon_state = "hair_ponytail"
 
 /datum/sprite_accessory/hair/ponytail2
@@ -361,7 +361,7 @@
 	icon_state = "hair_braided"
 
 /datum/sprite_accessory/hair/bun
-	name = "Bun Head 1"
+	name = "Bun Head"
 	icon_state = "hair_bun"
 
 /datum/sprite_accessory/hair/bun2
@@ -405,7 +405,7 @@
 	icon_state = "hair_swept2"
 
 /datum/sprite_accessory/hair/business
-	name = "Business Hair 1"
+	name = "Business Hair"
 	icon_state = "hair_business"
 
 /datum/sprite_accessory/hair/business2
