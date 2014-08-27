@@ -54,7 +54,8 @@
 		pickedstart = locate(startx, starty, 1)
 		pickedgoal = locate(endx, endy, 1)
 		max_i--
-		if(max_i<=0) return
+		if(max_i <= 0)
+			return
 
 	while(!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space")
 

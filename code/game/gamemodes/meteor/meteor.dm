@@ -5,10 +5,12 @@
 	var/const/waittime_h = 1800 //Upper bound on time before intercept arrives (in tenths of seconds)
 	var/const/meteorannouncedelay_l = 9000 //Lower bound on announcement, here 15 minutes
 	var/const/meteorannouncedelay_h = 12000 //Upper bound on announcement, here 20 minutes
+	var/meteorannouncedelay = 10500 //Final announcement delay, this is a failsafe value
 	var/const/supplydelay = 100 //Delay before meteor supplies are spawned in tenth of seconds. Anyone in the way will be GIBBED
 	var/const/meteordelay_l = 3000 //Lower bound to meteor arrival, here 5 minutes
 	var/const/meteordelay_h = 6000 //Higher bound to meteor arrival, here 10 minutes
 	var/const/meteorshuttlemultiplier = 3.5 //How much more will we need to hold out ? Here 35 minutes until shuttle arrives. 1 is 10 minutes
+	var/meteordelay = 4500 //Final meteor delay, failsafe as above
 	var/nometeors = 1 //Can we send the meteors ?
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 	required_players = 0
@@ -22,7 +24,7 @@
 
 /datum/universal_state/meteor_storm
  	name = "Meteor Storm"
- 	desc = "Meteors are currently running havoc around this sector. Better get out of here quickly"
+ 	desc = "Meteors are currently running havoc around this sector. Better get out of here quickly."
 
  	decay_rate = 0 // Just to make sure
 
@@ -34,15 +36,24 @@
 /datum/game_mode/meteor/post_setup()
 	defer_powernet_rebuild = 2//Might help with the lag
 
+		//Let's set up the announcement and meteor delay immediatly to send to admins and use later
+	meteorannouncedelay = rand((meteorannouncedelay_l/600), (meteorannouncedelay_h/600))*600 //Minute interval for simplicity
+	meteordelay = rand((meteordelay_l/600), (meteordelay_h/600))*600 //Ditto above
+	spawn(450) //Give everything 45 seconds to initialize, this does not delay the rest of post_setup() nor the game and ensures deadmins aren't aware in advance and the admins are
+
+		message_admins("Meteor storm confirmed by Space Weather Incorporated. Announcement arrives in [round((meteorannouncedelay/600)-450)] minutes, actual meteors in [round(((meteordelay/600)+(meteorannouncedelay/600))-450)] minutes. Shuttle will take [10*meteorshuttlemultiplier] minutes to arrive when and supplies will be dispatched in the Bar.")
+
+
 	spawn(rand(waittime_l, waittime_h))
 		send_intercept()
 
-	spawn(rand(meteorannouncedelay_l,meteorannouncedelay_h))
-		command_alert("A meteor storm has been detected in proximity of [station_name()] and is expected to strike within [round((meteordelay_l)/600)] to [round((meteordelay_h)/600)] minutes. A backup emergency shuttle will be dispatched and emergency gear should be teleported into your station's Bar area in [(supplydelay)/10] seconds. Make good use of these supplies to build a safe zone and good luck.", "Space Weather Automated Announcements")
-		world << sound('sound/AI/meteorround.ogg')
-		for(var/obj/item/weapon/rcd/rcd in world) //No, you're not walling in everything
-			rcd.disabled = 1
-		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
+	spawn(meteorannouncedelay)
+		if(prob(70)) //Slighty off-scale
+			command_alert("A meteor storm has been detected in proximity of [station_name()] and is expected to strike within [round((rand(meteordelay - 900, meteordelay + 900))/600)] minutes. A backup emergency shuttle is being dispatched and emergency gear should be teleported into your station's Bar area in [supplydelay/10] seconds. Make good use of these supplies to build a safe zone and good luck.", "Space Weather Automated Announcements")
+		else //Oh boy
+			command_alert("A meteor storm has been detected in proximity of [station_name()] and is expected to strike within [round((rand(meteordelay - 2400, meteordelay + 2400))/600)] minutes. A backup emergency shuttle is being dispatched and emergency gear should be teleported into your station's Bar area in [supplydelay/10] seconds. Make good use of these supplies to build a safe zone and good luck.", "Space Weather Automated Announcements")
+			world << sound('sound/AI/meteorround.ogg')
+		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world) //Borg RCDs are fairly cheap, so disabling those
 			rcd.disabled = 1
 
 		spawn(100) //Panic interval
@@ -220,7 +231,7 @@
 				spark_system.attach(T)
 				spark_system.set_up(5, 0, T)
 				spark_system.start()
-				new /obj/machinery/shield_gen(T)
+				new /obj/machinery/shieldgen(T)
 
 			//Power that should last for a bit. Pairs well with the shield generator when Engineering is dead
 			for(var/turf/T in meteor_genkit)
@@ -260,7 +271,7 @@
 
 			//Use existing templates in landmarks.dm, global.dm and here to add more supplies
 
-		spawn(rand(meteordelay_l,meteordelay_h))
+		spawn(meteordelay)
 			nometeors = 0
 
 /datum/game_mode/meteor/process()
