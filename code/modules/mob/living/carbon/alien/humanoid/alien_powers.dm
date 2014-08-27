@@ -142,10 +142,10 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
 
-	if(powerc(75))
+	if(powerc(55))
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
-		if(!choice || !powerc(75))	return
-		adjustToxLoss(-75)
+		if(!choice || !powerc(55))	return
+		adjustToxLoss(-55)
 		src << "<span class='userdanger'>You shape a [choice].</span>"
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("<span class='userdanger'>[src] vomits up a thick purple substance and begins to shape it!</span>"), 1)
@@ -171,3 +171,18 @@ Doesn't work on other aliens/AI.*/
 				//Paralyse(10)
 		src.visible_message("<span class='alertealien'>[src] hurls out the contents of their stomach!</span>")
 	return
+
+/mob/living/carbon/alien/humanoid/verb/nightvisiontoggle()
+	set name = "Toggle Night Vision"
+	set category = "Alien"
+
+	if(nightvision == 0)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
+		nightvision = 1
+		hud_used.nightvisionicon.icon_state = "nightvision1"
+	else if(nightvision == 1)
+		see_in_dark = 4
+		see_invisible = 45
+		nightvision = 0
+		hud_used.nightvisionicon.icon_state = "nightvision0"

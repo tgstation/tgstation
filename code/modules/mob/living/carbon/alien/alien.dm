@@ -33,7 +33,6 @@
 
 	var/heat_protection = 0.5
 
-
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
