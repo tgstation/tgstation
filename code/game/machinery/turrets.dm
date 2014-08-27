@@ -440,8 +440,10 @@
 
 
 
-/obj/machinery/turretid/Topic(href, href_list)
-	if(..())
+/obj/machinery/turretid/Topic(href, href_list, var/nowindow = 0)
+	// If you add an if(..()) check you must first remove the var/nowindow parameter.
+	// Otherwise it will runtime with this kind of error: null.Topic()
+	if(..(href, href_list))
 		return
 	if (src.locked)
 		if (!istype(usr, /mob/living/silicon))
@@ -453,7 +455,8 @@
 	else if (href_list["toggleLethal"])
 		src.lethal = !src.lethal
 		src.updateTurrets()
-	src.attack_hand(usr)
+	if(!nowindow)
+		src.attack_hand(usr)
 
 /obj/machinery/turretid/proc/updateTurrets()
 	if(control_area)
