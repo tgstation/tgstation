@@ -68,9 +68,9 @@
 			for(var/turf/T in meteor_materialkit)
 				meteor_materialkit -= T
 				for(var/atom/A in T) //Cleaning loop borrowed from the shuttle
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib() //We told you to get the fuck out of here
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib() //We told you to get the fuck out of here
 					if(istype(A,/obj) || istype(A,/turf/simulated/wall)) //Remove anything in the way
 						qdel(A) //Telegib
 				spawn(1)
@@ -87,9 +87,9 @@
 			for(var/turf/T in meteor_bombkit)
 				meteor_bombkit -= T
 				for(var/atom/A in T)
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib()
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib()
 					if(istype(A,/obj) && !istype(A, /obj/machinery/atmospherics) || istype(A,/turf/simulated/wall)) //Snowflake code since some instances are over pipes
 						qdel(A)
 				spawn(1)
@@ -102,9 +102,9 @@
 			for(var/turf/T in meteor_bombkitextra)
 				meteor_bombkitextra -= T
 				for(var/atom/A in T)
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib()
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib()
 					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
 						qdel(A)
 				spawn(1)
@@ -129,9 +129,9 @@
 			for(var/turf/T in meteor_tankkit)
 				meteor_tankkit -= T
 				for(var/atom/A in T)
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib()
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib()
 					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
 						qdel(A)
 				spawn(1)
@@ -144,9 +144,9 @@
 			for(var/turf/T in meteor_canisterkit)
 				meteor_canisterkit -= T
 				for(var/atom/A in T)
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib()
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib()
 					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
 						qdel(A)
 				spawn(1)
@@ -159,9 +159,9 @@
 			for(var/turf/T in meteor_buildkit)
 				meteor_buildkit -= T
 				for(var/atom/A in T)
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib()
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib()
 					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
 						qdel(A)
 				spawn(1)
@@ -182,9 +182,9 @@
 			for(var/turf/T in meteor_pizzakit)
 				meteor_pizzakit -= T
 				for(var/atom/A in T)
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib()
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib()
 					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
 						qdel(A)
 				spawn(1)
@@ -202,9 +202,9 @@
 			for(var/turf/T in meteor_panickit)
 				meteor_panickit -= T
 				for(var/atom/A in T)
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib()
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib()
 					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
 						qdel(A)
 				spawn(1)
@@ -222,9 +222,9 @@
 			for(var/turf/T in meteor_shieldkit)
 				meteor_shieldkit -= T
 				for(var/atom/A in T)
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib()
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib()
 					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
 						qdel(A)
 				spawn(1)
@@ -237,9 +237,9 @@
 			for(var/turf/T in meteor_genkit)
 				meteor_genkit -= T
 				for(var/atom/A in T)
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib()
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib()
 					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
 						qdel(A)
 				spawn(1)
@@ -252,9 +252,9 @@
 			for(var/turf/T in meteor_breachkit)
 				meteor_breachkit -= T
 				for(var/atom/A in T)
-					if(istype(A,/mob/living))
-						var/mob/living/unlucky_person = A
-						unlucky_person.gib()
+					//if(istype(A,/mob/living))
+						//var/mob/living/unlucky_person = A
+						//unlucky_person.gib()
 					if(istype(A,/obj) || istype(A,/turf/simulated/wall))
 						qdel(A)
 				spawn(1)
