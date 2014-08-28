@@ -58,7 +58,7 @@
 
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
-		send_speech(message, 7, T.loc, "R")
+		send_speech(message, 7, T.hologram, "R")
 		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>\"[message]\"</span></span></i>"//The AI can "hear" its own message.
 	else
 		src << "No holopad connected."
