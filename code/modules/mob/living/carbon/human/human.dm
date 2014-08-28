@@ -217,11 +217,11 @@
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 	var/brute_dmg = rand(15,25)
-	var/tox_dmg = rand(0,15)
-	if(brute_dmg)
-		apply_damage(brute_dmg, BRUTE, affecting, run_armor_check(affecting, "melee"))
-	if(tox_dmg)
-		apply_damage(tox_dmg, TOX, affecting, run_armor_check(affecting, "melee"))
+	var/spore_amt = rand(5,15)
+	apply_damage(brute_dmg, BRUTE, affecting, run_armor_check(affecting, "melee"))
+	if(reagents)
+		reagents.add_reagent("spore",spore_amt)
+		src << "<span class='userdanger'>The blob covers you in spores!</span>"
 	return
 
 
