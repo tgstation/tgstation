@@ -29,27 +29,11 @@
 	air_update_turf(1)
 	return
 
-/obj/structure/alien/resin/relativewall()
-
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
-
-	for(var/obj/structure/alien/resin/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			junction |= get_dir(src,W)
-	var/obj/structure/alien/resin/resin = src
-	resin.icon_state = "[resin.resintype][junction]"
-	return
-
 /obj/structure/alien/resin/Destroy()
 	spawn(10)
-		for(var/obj/structure/alien/resin/wall/W in range(src,1))
-			W.relativewall_neighbours()
-		for(var/obj/structure/alien/resin/membrane/W in range(src,1))
-			W.relativewall_neighbours()
-	density = 0
-	air_update_turf(1)
+		var/turf/T = loc
+		T.relativewall_neighbours()
 	..()
-	return
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
