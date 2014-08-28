@@ -142,8 +142,10 @@ obj/structure/door_assembly/New()
 /obj/structure/door_assembly/door_assembly_med
 	name = "medical airlock assembly"
 	icon_state = "door_as_med1"
+	glass_base_icon_state = "door_as_gmed"
 	typetext = "medical"
 	icontext = "med"
+	glass_type = /obj/machinery/door/airlock/glass_medical
 	airlock_type = /obj/machinery/door/airlock/medical
 	anchored = 1
 	density = 1
@@ -314,6 +316,22 @@ obj/structure/door_assembly/New()
 	density = 1
 	state = 1
 	mineral = "wood"
+
+/obj/structure/door_assembly/door_assembly_viro
+	name = "virology airlock assembly"
+	icon_state = "door_as_viro1"
+	glass_base_icon_state = "door_as_gviro"
+	typetext = "virology"
+	icontext = "viro"
+	glass_type = /obj/machinery/door/airlock/glass_virology
+	airlock_type = /obj/machinery/door/airlock/virology
+	anchored = 1
+	density = 1
+	state = 1
+
+/obj/structure/door_assembly/door_assembly_viro/glass
+	mineral = "glass"
+	icon_state = "door_as_gviro1"
 
 /obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pen))
