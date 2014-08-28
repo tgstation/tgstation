@@ -41,17 +41,15 @@
 	return
 
 /obj/structure/alien/resin/Destroy()
-	density = 0
-	air_update_turf(1)
-	..()
-	return
-
-/obj/structure/alien/resin/Del()
 	spawn(10)
 		for(var/obj/structure/alien/resin/wall/W in range(src,1))
 			W.relativewall_neighbours()
 		for(var/obj/structure/alien/resin/membrane/W in range(src,1))
 			W.relativewall_neighbours()
+	density = 0
+	air_update_turf(1)
+	..()
+	return
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
