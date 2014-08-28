@@ -176,7 +176,7 @@ Doesn't work on other aliens/AI.*/
 	set name = "Toggle Night Vision"
 	set category = "Alien"
 
-	if(nightvision == 0)
+	if(!nightvision)
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
 		nightvision = 1

@@ -92,6 +92,7 @@
 		W.update_icon()//Refreshes the wall to make sure the icons don't desync
 	for(var/obj/structure/alien/resin/W in range(src,1))
 		W.relativewall()
+		W.update_icon()
 	return
 
 /turf/simulated/wall/New()

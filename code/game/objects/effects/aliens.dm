@@ -40,7 +40,7 @@
 	resin.icon_state = "[resin.resintype][junction]"
 	return
 
-/obj/structure/alien/resin/Destroy()
+/obj/structure/alien/resin/Del()
 	spawn(10)
 		for(var/obj/structure/alien/resin/wall/W in range(src,1))
 			W.relativewall_neighbours()
@@ -66,6 +66,7 @@
 	resintype = "wall"
 
 /obj/structure/alien/resin/wall/New()
+	relativewall_neighbours()
 	..()
 
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
@@ -78,8 +79,9 @@
 	opacity = 0
 	health = 120
 	resintype = "membrane"
-/
-obj/structure/alien/resin/membrane/New()
+
+/obj/structure/alien/resin/membrane/New()
+	relativewall_neighbours()
 	..()
 
 /obj/structure/alien/resin/proc/healthcheck()
