@@ -23,6 +23,10 @@
 /mob/living/simple_animal/hostile/carp/ranged
 	name = "magicarp"
 	desc = "50% magic, 50% carp, 100% horrible."
+	icon_state = "magicarp"
+	icon_living = "magicarp"
+	icon_dead = "magicarp_dead"
+	icon_gib = "magicarp_gib"
 	ranged = 1
 	retreat_distance = 2
 	minimum_distance = 0 //Between shots they can and will close in to nash
