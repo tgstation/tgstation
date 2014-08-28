@@ -410,7 +410,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 /obj/machinery/say_quote(var/text)
 	var/ending = copytext(text, length(text) - 2)
 	if (ending == "!!!")
-		return "yells, \"[text]\""
+		return "blares, \"[text]\""
 
 	return "beeps, \"[text]\""
 
