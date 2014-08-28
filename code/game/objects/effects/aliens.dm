@@ -40,7 +40,7 @@
 	resin.icon_state = "[resin.resintype][junction]"
 	return
 
-/obj/structure/alien/resin/Del()
+/obj/structure/alien/resin/Destroy()
 	spawn(10)
 		for(var/obj/structure/alien/resin/wall/W in range(src,1))
 			W.relativewall_neighbours()
