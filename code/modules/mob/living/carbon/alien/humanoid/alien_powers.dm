@@ -138,7 +138,7 @@ Doesn't work on other aliens/AI.*/
 	return
 
 /mob/living/carbon/alien/humanoid/proc/resin()
-	set name = "Secrete Resin (75)"
+	set name = "Secrete Resin (55)"
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
 
