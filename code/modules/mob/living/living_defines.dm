@@ -38,3 +38,4 @@
 
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/floating = 0
+	var/nightvision = 0

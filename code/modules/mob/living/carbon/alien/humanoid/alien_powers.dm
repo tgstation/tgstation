@@ -171,18 +171,3 @@ Doesn't work on other aliens/AI.*/
 				//Paralyse(10)
 		src.visible_message("<span class='alertealien'>[src] hurls out the contents of their stomach!</span>")
 	return
-
-/mob/living/carbon/alien/humanoid/verb/nightvisiontoggle()
-	set name = "Toggle Night Vision"
-	set category = "Alien"
-
-	if(!nightvision)
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-		nightvision = 1
-		hud_used.nightvisionicon.icon_state = "nightvision1"
-	else if(nightvision == 1)
-		see_in_dark = 4
-		see_invisible = 45
-		nightvision = 0
-		hud_used.nightvisionicon.icon_state = "nightvision0"
