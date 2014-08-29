@@ -46,5 +46,5 @@
 		W.update_label(H.real_name)
 		H.equip_to_slot_or_del(W, slot_wear_id)
 
-	message_admins("\blue [key_name_admin(usr)] used THERE CAN BE ONLY ONE!", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>", 1)
 	log_admin("[key_name(usr)] used there can be only one.")

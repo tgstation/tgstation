@@ -96,6 +96,42 @@ datum/objective/mutiny/update_explanation_text()
 
 
 
+datum/objective/maroon
+	var/target_role_type=0
+	dangerrating = 5
+
+datum/objective/maroon/find_target_by_role(role, role_type=0)
+	target_role_type = role_type
+	..(role, role_type)
+	return target
+
+datum/objective/maroon/check_completion()
+	if(target && target.current)
+		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+			return 1
+		var/area/A = get_area(target.current)
+		if(istype(A, /area/shuttle/escape/centcom))
+			return 0
+		if(istype(A, /area/shuttle/escape_pod1/centcom))
+			return 0
+		if(istype(A, /area/shuttle/escape_pod2/centcom))
+			return 0
+		if(istype(A, /area/shuttle/escape_pod3/centcom))
+			return 0
+		if(istype(A, /area/shuttle/escape_pod4/centcom))
+			return 0
+		else
+			return 1
+	return 1
+
+datum/objective/maroon/update_explanation_text()
+	if(target && target.current)
+		explanation_text = "Prevent [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
+	else
+		explanation_text = "Free Objective"
+
+
+
 datum/objective/debrain//I want braaaainssss
 	var/target_role_type=0
 	dangerrating = 20
@@ -205,7 +241,7 @@ datum/objective/block/check_completion()
 
 
 datum/objective/escape
-	explanation_text = "Escape on the shuttle or an escape pod alive."
+	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 	dangerrating = 5
 
 datum/objective/escape/check_completion()
@@ -467,3 +503,29 @@ datum/objective/absorb/check_completion()
 		return 1
 	else
 		return 0
+
+
+
+datum/objective/destroy
+	dangerrating = 10
+
+datum/objective/destroy/find_target()
+	var/list/possible_targets = active_ais(1)
+	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
+	target = target_ai.mind
+	update_explanation_text()
+	return target
+
+datum/objective/destroy/check_completion()
+	if(target && target.current)
+		if(target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+			return 1
+		return 0
+	return 1
+
+datum/objective/destroy/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Destroy [target.current.real_name], the experimental AI."
+	else
+		explanation_text = "Free Objective"

@@ -59,13 +59,13 @@
 					C.loc = src
 					C.add_fingerprint(usr)
 
-					user.visible_message("\blue [user] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
+					user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 		else
 			user << "The hatch must be open to insert a power cell."
 			return
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		open = !open
-		user.visible_message("\blue [user] [open ? "opens" : "closes"] the hatch on the [src].", "\blue You [open ? "open" : "close"] the hatch on the [src].")
+		user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
 		update_icon()
 		if(!open && user.machine == src)
 			user << browse(null, "window=spaceheater")
@@ -103,7 +103,7 @@
 
 	else
 		on = !on
-		user.visible_message("\blue [user] switches [on ? "on" : "off"] the [src].","\blue You switch [on ? "on" : "off"] the [src].")
+		user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 		update_icon()
 	return
 
@@ -127,7 +127,7 @@
 				usr.put_in_hands(cell)
 				cell.add_fingerprint(usr)
 				cell = null
-				usr.visible_message("\blue [usr] removes the power cell from \the [src].", "\blue You remove the power cell from \the [src].")
+				usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 
 
 		if("cellinstall")
@@ -139,7 +139,7 @@
 					C.loc = src
 					C.add_fingerprint(usr)
 
-					usr.visible_message("\blue [usr] inserts a power cell into \the [src].", "\blue You insert the power cell into \the [src].")
+					usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
 
 	updateDialog()
 

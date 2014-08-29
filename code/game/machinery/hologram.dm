@@ -71,9 +71,9 @@ var/const/HOLOPAD_MODE = 0
 			create_holo(user)//Create one.
 			src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
 		else
-			user << "\red ERROR: \black Image feed in progress."
+			user << "<span class='danger'>ERROR:</span> \black Image feed in progress."
 	else
-		user << "\red ERROR: \black Unable to project hologram."
+		user << "<span class='danger'>ERROR:</span> \black Unable to project hologram."
 	return
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.

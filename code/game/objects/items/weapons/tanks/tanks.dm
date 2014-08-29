@@ -129,17 +129,17 @@
 				if(location.internal == src)
 					location.internal = null
 					location.internals.icon_state = "internal0"
-					usr << "\blue You close the tank release valve."
+					usr << "<span class='notice'>You close the tank release valve.</span>"
 					if (location.internals)
 						location.internals.icon_state = "internal0"
 				else
 					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 						location.internal = src
-						usr << "\blue You open \the [src] valve."
+						usr << "<span class='notice'>You open \the [src] valve.</span>"
 						if (location.internals)
 							location.internals.icon_state = "internal1"
 					else
-						usr << "\blue You need something to connect to \the [src]."
+						usr << "<span class='notice'>You need something to connect to \the [src].</span>"
 
 		src.add_fingerprint(usr)
 /*

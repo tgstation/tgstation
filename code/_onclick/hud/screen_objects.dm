@@ -314,7 +314,7 @@
 		if("Crew Monitorting")
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
-				crewmonitor(AI)
+				crewmonitor(AI,AI)
 
 		if("Show Crew Manifest")
 			if(isAI(usr))
