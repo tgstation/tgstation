@@ -327,6 +327,7 @@
 
 /obj/structure/alien/egg/attack_hand(mob/user)
 	user << "<span class='notice'>It feels slimy.</span>"
+	user.changeNext_move(CLICK_CD_MELEE)
 
 
 /obj/structure/alien/egg/proc/GetFacehugger()
@@ -378,6 +379,7 @@
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 	health -= damage
+	user.changeNext_move(CLICK_CD_MELEE)
 	healthcheck()
 
 
