@@ -1,5 +1,5 @@
 /obj/item/weapon/melee/defibrillator
-	name = "emergency defibrillator"
+	name = "\improper emergency defibrillator"
 	desc = "A handheld emergency defibrillator, used to recall people back from the etheral planes or send them there."
 	icon_state = "defib_full"
 	item_state = "defib"
@@ -55,12 +55,12 @@
 		return
 	if(charges > 0)
 		status = !status
-		user << "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>"
+		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
 		playsound(get_turf(src), "sparks", 75, 1, -1)
 		update_icon()
 	else
 		status = 0
-		user << "<span class='warning'>\The [src] is out of charge.</span>"
+		user << "<span class='warning'>[src] is out of charge.</span>"
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/defibrillator/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -162,7 +162,16 @@
 						H.apply_damage(-fixable, OXY)
 				H.updatehealth() //forces a health update, otherwise the oxyloss adjustment wouldnt do anything
 				M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
+				if(!H.client && H.mind)
+					for(var/mob/dead/observer/ghost in player_list)
+						if(ghost.mind == H.mind)
+							ghost << 'sound/effects/adminhelp.ogg'
+							ghost << "<b><font color = #330033><font size = 3>An attempt to defibrillate you has been made. Return to your body if you want to be resurrected!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+							break
 				var/datum/organ/external/temp = H.get_organ("head")
+				if(!H.client)
+					viewers(M) << "<span class='notice'>[src] beeps: Resuscitation failed. Patient's brain shows no cerebral activity. Try again in a few seconds.</span>"
+					return
 				if(H.health > config.health_threshold_dead && !(temp.status & ORGAN_DESTROYED) && !(M_NOCLONE in H.mutations) && !H.suiciding && (H.brain_op_stage < 4))
 					viewers(M) << "<span class='notice'>[src] beeps: Resuscitation successful.</span>"
 					spawn(0)
