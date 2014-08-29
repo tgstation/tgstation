@@ -144,7 +144,7 @@ mob/living/carbon/proc/handle_hallucinations()
 						src << "<span class='warning'>You feel a tiny prick!</span>"
 					if(14)
 						src << "<h1 class='alert'>Priority Announcement</h1>"
-						src << "<br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br>"
+						src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
 						src << sound('sound/AI/shuttledock.ogg')
 			if(66 to 70)
 				//Flashes of danger
