@@ -63,7 +63,7 @@
 				if(is_zombie)
 					spore_amt = 15
 				L.reagents.add_reagent("spore", spore_amt)
-				L << "<span class='userdanger'>The [src] covers you in spores!</span>"
+				L << "<span class='userdanger'>[src] covers you in spores!</span>"
 
 /mob/living/simple_animal/hostile/blobspore/proc/Zombify(var/mob/living/carbon/human/H)
 	if(H.wear_suit)
