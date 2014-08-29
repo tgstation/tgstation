@@ -62,19 +62,19 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
 			if(1)
-				user << "\blue You set the restrictor to the middle position."
+				user << "<span class='notice'>You set the restrictor to the middle position.</span>"
 				aggressiveness = 2
 			if(2)
-				user << "\blue You set the restrictor to the last position."
+				user << "<span class='notice'>You set the restrictor to the last position.</span>"
 				aggressiveness = 3
 			if(3)
-				user << "\blue You set the restrictor to the first position."
+				user << "<span class='notice'>You set the restrictor to the first position.</span>"
 				aggressiveness = 1
 			if(4)
-				user << "\red You adjust the restrictor but nothing happens, probably because its broken."
+				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>"
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
-			user << "\red You broke it!"
+			user << "<span class='danger'>You broke it!</span>"
 			aggressiveness = 4
 	else
 		..()

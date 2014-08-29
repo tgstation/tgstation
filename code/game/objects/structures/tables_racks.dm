@@ -103,6 +103,32 @@
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 20
 
+/datum/table_recipe/meteorshot
+	name = "Meteorshot Shell"
+	result_path = /obj/item/ammo_casing/shotgun/meteorshot
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/rcd_ammo = 1,
+				/obj/item/weapon/stock_parts/manipulator = 2)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/pulseslug
+	name = "Pulse Slug Shell"
+	result_path = /obj/item/ammo_casing/shotgun/pulseslug
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/stock_parts/capacitor/adv = 2,
+				/obj/item/weapon/stock_parts/micro_laser/ultra = 1)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/dragonsbreath
+	name = "Dragonsbreath Shell"
+	result_path = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/datum/reagent/phosphorus = 5,)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
 
 /obj/structure/table
 	name = "table"
@@ -659,18 +685,18 @@ Destroy type values:
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				user << "\blue Now weakening the reinforced table"
+				user << "<span class='notice'>Now weakening the reinforced table</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table weakened"
+					user << "<span class='notice'>Table weakened</span>"
 					src.status = 1
 			else
-				user << "\blue Now strengthening the reinforced table"
+				user << "<span class='notice'>Now strengthening the reinforced table</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table strengthened"
+					user << "<span class='notice'>Table strengthened</span>"
 					src.status = 2
 			return
 	..()

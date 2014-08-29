@@ -17,6 +17,6 @@
 	if(href_list["move"])
 		var/datum/shuttle_manager/s = shuttles["laborcamp"]
 		if(s.location == /area/shuttle/laborcamp/outpost)
-			usr << "\blue Shuttle is already at the outpost."
+			usr << "<span class='notice'>Shuttle is already at the outpost.</span>"
 			return 0
 	..()

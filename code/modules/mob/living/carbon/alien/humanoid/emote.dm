@@ -14,54 +14,54 @@
 
 	switch(act) //Alphabetical please
 		if ("deathgasp")
-			message = "<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw..."
+			message = "<span class='name'>[src]</span> lets out a waning guttural screech, green blood bubbling from its maw..."
 			m_type = 2
 
 		if ("gnarl")
 			if (!muzzled)
-				message = "<B>[src]</B> gnarls and shows its teeth.."
+				message = "<span class='name'>[src]</span> gnarls and shows its teeth.."
 				m_type = 2
 
 		if ("hiss")
 			if(!muzzled)
-				message = "<B>[src]</B> hisses."
+				message = "<span class='name'>[src]</span> hisses."
 				m_type = 2
 
 		if ("moan")
-			message = "<B>[src]</B> moans!"
+			message = "<span class='name'>[src]</span> moans!"
 			m_type = 2
 
 		if ("roar")
 			if (!muzzled)
-				message = "<B>[src]</B> roars."
+				message = "<span class='name'>[src]</span> roars."
 				m_type = 2
 
 		if ("roll")
 			if (!src.restrained())
-				message = "<B>[src]</B> rolls."
+				message = "<span class='name'>[src]</span> rolls."
 				m_type = 1
 
 		if ("scratch")
 			if (!src.restrained())
-				message = "<B>[src]</B> scratches."
+				message = "<span class='name'>[src]</span> scratches."
 				m_type = 1
 
 		if ("scretch")
 			if (!muzzled)
-				message = "<B>[src]</B> scretches."
+				message = "<span class='name'>[src]</span> scretches."
 				m_type = 2
 
 		if ("shiver")
-			message = "<B>[src]</B> shivers."
+			message = "<span class='name'>[src]</span> shivers."
 			m_type = 2
 
 		if ("sign")
 			if (!src.restrained())
-				message = text("<B>[src]</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
+				message = text("<span class='name'>[src]</span> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
 
 		if ("tail")
-			message = "<B>[src]</B> waves its tail."
+			message = "<span class='name'>[src]</span> waves its tail."
 			m_type = 1
 
 		if ("help") //This is an exception

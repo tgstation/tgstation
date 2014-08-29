@@ -24,29 +24,29 @@
 		if(istype(grabbed, /mob/living/carbon/monkey))
 			var/mob/living/carbon/monkey/target = grabbed
 			if(target.stat == 0)
-				user << "\red The monkey is struggling far too much to put it in the recycler."
+				user << "<span class='danger'>The monkey is struggling far too much to put it in the recycler.</span>"
 			else
 				user.drop_item()
 				qdel(target)
-				user << "\blue You stuff the monkey in the machine."
+				user << "<span class='notice'>You stuff the monkey in the machine.</span>"
 				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 				use_power(500)
 				src.grinded++
-				user << "\blue The machine now has [grinded] monkey\s worth of material stored."
+				user << "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"
 
 		else
-			user << "\red The machine only accepts monkeys!"
+			user << "<span class='danger'>The machine only accepts monkeys!</span>"
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(var/mob/user as mob)
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(grinded >= 5)
-		user << "\blue The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube."
+		user << "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>"
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= 5
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src.loc)
-		user << "\blue The machine's display flashes that it has [grinded] monkeys worth of material left."
+		user << "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>"
 	else
-		user << "\red The machine needs at least 5 monkeys worth of material to produce a monkey cube. It only has [grinded]."
+		user << "<span class='danger'>The machine needs at least 5 monkeys worth of material to produce a monkey cube. It only has [grinded].</span>"
 	return

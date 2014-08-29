@@ -26,13 +26,13 @@ em						{font-style: normal;	font-weight: bold;}
 .deadsay				{color: #5c00e6;}
 .radio					{color: #008000;}
 .sciradio				{color: #993399;}
-.comradio				{color: #ACA82D;}
-.secradio				{color: #B22222;}
+.comradio				{color: #aca82d;}
+.secradio				{color: #b22222;}
 .medradio				{color: #337296;}
 .engradio				{color: #fb5613;}
 .suppradio				{color: #a8732b;}
 .servradio				{color: #6eaa2c;}
-.syndradio				{color: #6D3F40;}
+.syndradio				{color: #6d3f40;}
 .dsquadradio			{color: #686868;}
 .aiprivradio			{color: #ff00ff;}
 
@@ -40,7 +40,7 @@ em						{font-style: normal;	font-weight: bold;}
 h1.alert, h2.alert		{color: #000000;}
 
 .emote					{					font-style: italic;}
-.selecteddna			{color: #FFFFFF; 	background-color: #001B1B}
+.selecteddna			{color: #ffffff; 	background-color: #001B1B}
 
 .attack					{color: #ff0000;}
 .disarm					{color: #990000;}
@@ -53,16 +53,19 @@ h1.alert, h2.alert		{color: #000000;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
-.unconscious			{color: #0000FF;	font-weight: bold;}
+.boldnotice				{color: #000099;	font-weight: bold;}
+.unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 
-.alien					{color: #543354;}
 .newscaster				{color: #800000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}
+
+.alien					{color: #543354;}
+.noticealien			{color: #00c000;}
+.alertalien				{color: #00c000;	font-weight: bold;}
 
 .interface				{color: #330033;}
 
 BIG IMG.icon 			{width: 32px; height: 32px;}
-
 
 </style>"}

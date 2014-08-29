@@ -169,19 +169,19 @@ lines 294-301 in living/say.dm (speech buffer)
 							if(copytext(possible_phrase,1,3) in department_radio_keys)
 								possible_phrase = copytext(possible_phrase,3,length(possible_phrase))
 					else
-						usr << "\red There is nothing to remove from its [remove_from]."
+						usr << "<span class='danger'>There is nothing to remove from its [remove_from].</span>"
 						return
 
 		//Adding things to inventory
 		else if(href_list["add_inv"])
 			var/add_to = href_list["add_inv"]
 			if(!usr.get_active_hand())
-				usr << "\red You have nothing in your hand to put on its [add_to]."
+				usr << "<span class='danger'>You have nothing in your hand to put on its [add_to].</span>"
 				return
 			switch(add_to)
 				if("ears")
 					if(ears)
-						usr << "\red It's already wearing something."
+						usr << "<span class='danger'>It's already wearing something.</span>"
 						return
 					else
 						var/obj/item/item_to_add = usr.get_active_hand()
@@ -189,7 +189,7 @@ lines 294-301 in living/say.dm (speech buffer)
 							return
 
 						if( !istype(item_to_add,  /obj/item/device/radio/headset) )
-							usr << "\red This object won't fit."
+							usr << "<span class='danger'>This object won't fit.</span>"
 							return
 
 						var/obj/item/device/radio/headset/headset_to_add = item_to_add
@@ -288,7 +288,7 @@ lines 294-301 in living/say.dm (speech buffer)
 		user.drop_item()
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
-		user << "\blue [src] eagerly devours the cracker."
+		user << "<span class='notice'>[src] eagerly devours the cracker.</span>"
 	..()
 	return
 
@@ -452,7 +452,7 @@ lines 294-301 in living/say.dm (speech buffer)
 				if(!parrot_perch || parrot_interest.loc != parrot_perch.loc)
 					held_item = parrot_interest
 					parrot_interest.loc = src
-					visible_message("[src] grabs [held_item]!", "\blue You grab [held_item]!", "You hear the sounds of wings flapping furiously.")
+					visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "You hear the sounds of wings flapping furiously.")
 
 			parrot_interest = null
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
@@ -626,7 +626,7 @@ lines 294-301 in living/say.dm (speech buffer)
 		return -1
 
 	if(held_item)
-		src << "\red You are already holding [held_item]"
+		src << "<span class='danger'>You are already holding [held_item]</span>"
 		return 1
 
 	for(var/obj/item/I in view(1,src))
@@ -639,10 +639,10 @@ lines 294-301 in living/say.dm (speech buffer)
 
 			held_item = I
 			I.loc = src
-			visible_message("[src] grabs [held_item]!", "\blue You grab [held_item]!", "You hear the sounds of wings flapping furiously.")
+			visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "You hear the sounds of wings flapping furiously.")
 			return held_item
 
-	src << "\red There is nothing of interest to take."
+	src << "<span class='danger'>There is nothing of interest to take.</span>"
 	return 0
 
 /mob/living/simple_animal/parrot/proc/steal_from_mob()
@@ -654,7 +654,7 @@ lines 294-301 in living/say.dm (speech buffer)
 		return -1
 
 	if(held_item)
-		src << "\red You are already holding [held_item]"
+		src << "<span class='danger'>You are already holding [held_item]</span>"
 		return 1
 
 	var/obj/item/stolen_item = null
@@ -670,10 +670,10 @@ lines 294-301 in living/say.dm (speech buffer)
 			C.unEquip(stolen_item)
 			held_item = stolen_item
 			stolen_item.loc = src
-			visible_message("[src] grabs [held_item] out of [C]'s hand!", "\blue You snag [held_item] out of [C]'s hand!", "You hear the sounds of wings flapping furiously.")
+			visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "You hear the sounds of wings flapping furiously.")
 			return held_item
 
-	src << "\red There is nothing of interest to take."
+	src << "<span class='danger'>There is nothing of interest to take.</spawn>"
 	return 0
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()
@@ -698,7 +698,7 @@ lines 294-301 in living/say.dm (speech buffer)
 
 	if(!held_item)
 		if(src == usr) //So that other mobs wont make this message appear when they're bludgeoning you.
-			src << "\red You have nothing to drop!"
+			src << "<span class='danger'>You have nothing to drop!</span>"
 		return 0
 
 
@@ -742,7 +742,7 @@ lines 294-301 in living/say.dm (speech buffer)
 					src.loc = AM.loc
 					icon_state = "parrot_sit"
 					return
-	src << "\red There is no perch nearby to sit on."
+	src << "<span class='danger'>There is no perch nearby to sit on.</span>"
 	return
 
 /mob/living/simple_animal/parrot/proc/toggle_mode()

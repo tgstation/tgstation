@@ -80,7 +80,7 @@
 			if(uses)
 				uses--
 				if(!uses)
-					user << "\red You used up your crayon!"
+					user << "<span class='danger'>You used up your crayon!</span>"
 					qdel(src)
 	return
 
@@ -91,7 +91,7 @@
 		if(uses)
 			uses -= 5
 			if(uses <= 0)
-				user << "\red You ate your crayon!"
+				user << "<span class='danger'>You ate your crayon!</span>"
 				qdel(src)
 	else
 		..()
