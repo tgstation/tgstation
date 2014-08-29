@@ -1,5 +1,5 @@
 /datum/round_event_control/treevenge
-	name = "Treevenge"
+	name = "Treevenge (Christmas)"
 	holidayID = "Xmas"
 	typepath = /datum/round_event/treevenge
 	max_occurrences = 1

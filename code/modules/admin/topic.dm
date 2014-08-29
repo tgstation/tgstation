@@ -63,6 +63,24 @@
 				log_admin("[key_name(usr)] spawned a blob with strength [strength].")
 				new/datum/round_event/blob(strength)
 
+	else if(href_list["forceevent"])
+		var/datum/round_event_control/E = locate(href_list["forceevent"]) in events.control
+		if(E)
+			var/datum/round_event/event = E.runEvent()
+			if(event.announceWhen>0)
+				event.processing = 0
+				var/prompt = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel")
+				switch(prompt)
+					if("Cancel")
+						event.kill()
+						return
+					if("No")
+						event.announceWhen = -1
+				event.processing = 1
+			message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])", 1)
+			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
+		return
+
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
