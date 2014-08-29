@@ -13,6 +13,7 @@
 		"[user.name] pulls you free from the gelatinous resin.",\
 		"You hear squelching...")
 	buckled_mob.pixel_y = 0
+	buckled_mob.pixel_x = 0
 	unbuckle()
 
 /obj/structure/stool/bed/nest/unbuckle_myself(mob/user as mob)
@@ -23,6 +24,7 @@
 	spawn(600)
 		if(user && buckled_mob && user.buckled == src)
 			buckled_mob.pixel_y = 0
+			buckled_mob.pixel_x = 0
 			unbuckle()
 
 /obj/structure/stool/bed/nest/buckle_mob(mob/M as mob, mob/user as mob)
@@ -48,6 +50,7 @@
 	M.dir = src.dir
 	M.update_canmove()
 	M.pixel_y = 1
+	M.pixel_x = 2
 	src.buckled_mob = M
 	src.add_fingerprint(user)
 	src.overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=6)
