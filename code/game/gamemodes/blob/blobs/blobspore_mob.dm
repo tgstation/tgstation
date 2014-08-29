@@ -58,12 +58,11 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.reagents)
-			if(prob(33))
-				var/spore_amt = 5
-				if(is_zombie)
-					spore_amt = 15
-				L.reagents.add_reagent("spore", spore_amt)
-				L << "<span class='userdanger'>[src] covers you in spores!</span>"
+			var/spore_amt = 3
+			if(is_zombie)
+				spore_amt = 9
+			L.reagents.add_reagent("spore", spore_amt)
+			L << "<span class='userdanger'>[src] covers you in spores!</span>"
 
 /mob/living/simple_animal/hostile/blobspore/proc/Zombify(var/mob/living/carbon/human/H)
 	if(H.wear_suit)
