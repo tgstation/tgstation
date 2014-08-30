@@ -23,11 +23,11 @@ Buildable meters
 #define PIPE_DVALVE             18
 
 /obj/item/pipe
-	var/pipename
 	name = "pipe"
 	desc = "A pipe."
 	var/pipe_type = 0
 	//var/pipe_dir = 0
+	var/pipename
 	force = 7
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
@@ -231,32 +231,6 @@ Buildable meters
 			return dir
 		else
 			return 0
-
-
-
-/*
-/obj/structure/closet/body_bag/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/weapon/pen))
-		var/t = input(user, "What would you like the label to be?", name, null) as text
-		if(user.get_active_hand() != I)
-			return
-		if(!in_range(src, user) && loc != user)
-			return
-		t = copytext(sanitize(t), 1, 53)	//max length of 64 - "body bag - " instead of MAX_MESSAGE_LEN, as per the hand labeler
-		if(t)
-			name = "body bag - "
-			name += t
-			overlays += "bodybag_label"
-		else
-			name = "body bag"
-		return
-	else if(istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You cut the tag off of [src].</span>"
-		name = "body bag"
-		overlays.Cut()
-*/
-
-
 
 
 /obj/item/pipe/attack_self(mob/user as mob)
