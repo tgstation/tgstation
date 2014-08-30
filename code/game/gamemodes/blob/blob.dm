@@ -135,11 +135,11 @@ var/list/blob_nodes = list()
 		burst_blobs()
 
 		// Stage 0
-		sleep(40)
+		sleep(wait_time)
 		stage(0)
 
 		// Stage 1
-		sleep(2000)
+		sleep(wait_time)
 		stage(1)
 
 		// Stage 2
