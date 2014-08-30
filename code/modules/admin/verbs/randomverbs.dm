@@ -427,7 +427,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
 
-	print_command_report(input,"[confirm=="Yes" ? "" : "Classified"] [command_name()] Update")
+	print_command_report(input,"[confirm=="Yes" ? "" : "Classified "][command_name()] Update")
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report", 1)
