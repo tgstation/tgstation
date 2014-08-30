@@ -321,6 +321,8 @@
 
 
 /obj/machinery/atmospherics/pipe/simple/insulated
+	name = "insulated pipe"
+	desc = "A one meter section of insulated, highly pressure-proof pipe"
 	icon = 'icons/obj/atmospherics/red_pipe.dmi'
 	icon_state = "intact"
 
