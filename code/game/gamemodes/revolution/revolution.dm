@@ -349,7 +349,7 @@
 		if(mob.mind)
 			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
 				num_revs++
-	world << "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/living_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
+	world << "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/living_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
 	..()
 	return 1
 
