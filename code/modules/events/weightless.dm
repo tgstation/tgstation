@@ -6,6 +6,7 @@
 /datum/round_event/weightless
 	startWhen = 5
 	endWhen = 65
+	announceWhen	= 1
 
 /datum/round_event/weightless/setup()
 	startWhen = rand(0,10)
@@ -17,7 +18,7 @@
 /datum/round_event/weightless/start()
 	for(var/area/A in world)
 		A.gravitychange(0)
-	
+
 	if(control)
 		control.weight *= 2
 

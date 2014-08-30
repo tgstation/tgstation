@@ -16,6 +16,7 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
 		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
+		<a href='?src=\ref[src];makeAntag=11'>Make Blob</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Requires Ghosts)</a><br>
