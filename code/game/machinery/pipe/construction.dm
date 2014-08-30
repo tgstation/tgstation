@@ -23,11 +23,11 @@ Buildable meters
 #define PIPE_DVALVE             18
 
 /obj/item/pipe
+	var/pipename
 	name = "pipe"
-	desc = "A pipe"
+	desc = "A pipe."
 	var/pipe_type = 0
 	//var/pipe_dir = 0
-	var/pipename
 	force = 7
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
@@ -40,6 +40,7 @@ Buildable meters
 	if (make_from)
 		src.dir = make_from.dir
 		src.pipename = make_from.name
+		src.desc = "A pipe. It's labeled [src.pipename]."
 		var/is_bent
 		if  (make_from.initialize_directions in list(NORTH|SOUTH, WEST|EAST))
 			is_bent = 0
@@ -231,6 +232,33 @@ Buildable meters
 		else
 			return 0
 
+
+
+/*
+/obj/structure/closet/body_bag/attackby(obj/item/I, mob/user)
+	if (istype(I, /obj/item/weapon/pen))
+		var/t = input(user, "What would you like the label to be?", name, null) as text
+		if(user.get_active_hand() != I)
+			return
+		if(!in_range(src, user) && loc != user)
+			return
+		t = copytext(sanitize(t), 1, 53)	//max length of 64 - "body bag - " instead of MAX_MESSAGE_LEN, as per the hand labeler
+		if(t)
+			name = "body bag - "
+			name += t
+			overlays += "bodybag_label"
+		else
+			name = "body bag"
+		return
+	else if(istype(I, /obj/item/weapon/wirecutters))
+		user << "<span class='notice'>You cut the tag off of [src].</span>"
+		name = "body bag"
+		overlays.Cut()
+*/
+
+
+
+
 /obj/item/pipe/attack_self(mob/user as mob)
 	return rotate()
 
@@ -238,6 +266,19 @@ Buildable meters
 	..()
 	//*
 	if (!istype(W, /obj/item/weapon/wrench))
+		if(istype(W, /obj/item/weapon/pen))
+			if(user.get_active_hand() != W)
+				return
+			if(!in_range(src, user) && loc != user)
+				return
+			var/t = input(user, "What would you like the pipe name to be?", name, null) as text
+			t = copytext(sanitize(t), 1, 53)	//delishus copypasta from body bag code.
+			if(t)
+				pipename = t
+				desc = "A pipe. It's labeled [t]."
+			else
+				pipename = null
+				desc = "A pipe. It's not labeled."
 		return ..()
 	if (!isturf(src.loc))
 		return 1
@@ -261,6 +302,8 @@ Buildable meters
 			var/obj/machinery/atmospherics/pipe/simple/P = new( src.loc )
 			P.dir = src.dir
 			P.initialize_directions = pipe_dir
+			if (pipename)
+				P.name = pipename
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
@@ -280,6 +323,8 @@ Buildable meters
 			P.dir = src.dir
 			P.initialize_directions = pipe_dir
 			P.initialize_directions_he = pipe_dir
+			if (pipename)
+				P.name = pipename
 			//var/turf/T = P.loc
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
@@ -313,6 +358,8 @@ Buildable meters
 			var/obj/machinery/atmospherics/pipe/manifold/M = new( src.loc )
 			M.dir = dir
 			M.initialize_directions = pipe_dir
+			if (pipename)
+				M.name = pipename
 			//M.New()
 			var/turf/T = M.loc
 			M.level = T.intact ? 2 : 1
@@ -336,6 +383,8 @@ Buildable meters
 			P.dir = src.dir
 			P.initialize_directions = src.get_pdir()
 			P.initialize_directions_he = src.get_hdir()
+			if (pipename)
+				P.name = pipename
 			//var/turf/T = P.loc
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
@@ -476,6 +525,8 @@ Buildable meters
 			var/obj/machinery/atmospherics/pipe/simple/insulated/P = new( src.loc )
 			P.dir = src.dir
 			P.initialize_directions = pipe_dir
+			if (pipename)
+				P.name = pipename
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
