@@ -431,7 +431,7 @@
 			dat += "</table>"
 
 		if(ticker.mode.A_bosses.len || ticker.mode.A_gangsters.len)
-			dat += "<br><table cellspacing=5><tr><td><B>[ticker.mode.A_name] Gang Members</B></td><td></td></tr>"
+			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("A")] Gang Members</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.A_bosses)
 				var/mob/M = N.current
 				if(!M)
@@ -447,7 +447,7 @@
 			dat += "</table>"
 
 		if(ticker.mode.B_bosses.len || ticker.mode.B_gangsters.len)
-			dat += "<br><table cellspacing=5><tr><td><B>[ticker.mode.B_name] Gang Members</B></td><td></td></tr>"
+			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("B")] Gang Members</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.B_bosses)
 				var/mob/M = N.current
 				if(!M)

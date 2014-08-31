@@ -736,38 +736,38 @@
 					return
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.add_gangster(src,"A",0)
-				message_admins("[key_name_admin(usr)] has added [current] to the [ticker.mode.A_name] Gang (A).")
-				log_admin("[key_name(usr)] has added [current] to the [ticker.mode.A_name] Gang (A).")
+				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A).")
+				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A).")
 
 			if("aboss")
 				if(src in ticker.mode.A_bosses)
 					return
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.A_bosses += src
-				src.special_role = "[ticker.mode.A_name] Gang (A) Boss"
+				src.special_role = "[gang_name("A")] Gang (A) Boss"
 				ticker.mode.update_gang_icons_added(src, "A")
-				current << "<FONT size=3 color=red><B>You are a [ticker.mode.A_name] Gang Boss!</B></FONT>"
-				message_admins("[key_name_admin(usr)] has added [current] to the [ticker.mode.A_name] Gang (A) leadership.")
-				log_admin("[key_name(usr)] has added [current] to the [ticker.mode.A_name] Gang (A) leadership.")
+				current << "<FONT size=3 color=red><B>You are a [gang_name("A")] Gang Boss!</B></FONT>"
+				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
+				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
 
 			if("bgang")
 				if(src in ticker.mode.B_gangsters)
 					return
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.add_gangster(src,"B",0)
-				message_admins("[key_name_admin(usr)] has added [current] to the [ticker.mode.B_name] Gang (B).")
-				log_admin("[key_name(usr)] has added [current] to the [ticker.mode.B_name] Gang (B).")
+				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B).")
+				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B).")
 
 			if("bboss")
 				if(src in ticker.mode.B_bosses)
 					return
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.B_bosses += src
-				src.special_role = "[ticker.mode.B_name] Gang (B) Boss"
+				src.special_role = "[gang_name("B")] Gang (B) Boss"
 				ticker.mode.update_gang_icons_added(src, "B")
-				current << "<FONT size=3 color=red><B>You are a [ticker.mode.B_name] Gang Boss!</B></FONT>"
-				message_admins("[key_name_admin(usr)] has added [current] to the [ticker.mode.B_name] Gang (B) leadership.")
-				log_admin("[key_name(usr)] has added [current] to the [ticker.mode.B_name] Gang (B) leadership.")
+				current << "<FONT size=3 color=red><B>You are a [gang_name("B")] Gang Boss!</B></FONT>"
+				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
+				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
 
 			if("autoobjective")
 				ticker.mode.forge_gang_objectives(src)
@@ -1228,7 +1228,7 @@
 
 
 /datum/mind/proc/make_Gang(var/gang)
-	special_role = "[(gang=="A") ? "[ticker.mode.A_name] Gang (A)" : "[ticker.mode.B_name] Gang (B)"] Boss"
+	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
 	ticker.mode.update_gang_icons_added(src, gang)
 	ticker.mode.forge_gang_objectives(src, gang)
 	ticker.mode.greet_gang(src)

@@ -6,8 +6,6 @@
 	var/list/datum/mind/A_gangsters = list() //gang A Members
 	var/list/datum/mind/B_bosses = list() //gang B bosses
 	var/list/datum/mind/B_gangsters = list() //gang B Members
-	var/A_name = "Waffle"
-	var/B_name = "Donk"
 
 /datum/game_mode/gang
 	name = "gang war"
@@ -82,26 +80,26 @@
 	var/datum/mind/boss = pick(antag_candidates)
 	A_bosses += boss
 	antag_candidates -= boss
-	boss.special_role = "[A_name] Gang (A) Boss"
-	log_game("[boss.key] (ckey) has been selected as a boss for the [A_name] Gang (A)")
+	boss.special_role = "[gang_name("A")] Gang (A) Boss"
+	log_game("[boss.key] (ckey) has been selected as a boss for the [gang_name("A")] Gang (A)")
 
 	boss = pick(antag_candidates)
 	B_bosses += boss
 	antag_candidates -= boss
-	boss.special_role = "[B_name] Gang (B) Boss"
-	log_game("[boss.key] (ckey) has been selected as a boss for the [B_name] Gang (B)")
+	boss.special_role = "[gang_name("B")] Gang (B) Boss"
+	log_game("[boss.key] (ckey) has been selected as a boss for the [gang_name("B")] Gang (B)")
 
 /datum/game_mode/proc/forge_gang_objectives(var/datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
 	rival_obj.owner = boss_mind
-	rival_obj.explanation_text = "Assassinate or exile the [(boss_mind in A_bosses) ? B_name : A_name] Gang's bosses."
+	rival_obj.explanation_text = "Assassinate or exile the [(boss_mind in A_bosses) ? gang_name("B") : gang_name("A")] Gang's bosses."
 	boss_mind.objectives += rival_obj
 
 
 /datum/game_mode/proc/greet_gang(var/datum/mind/boss_mind, var/you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		boss_mind.current << "<FONT size=3 color=red><B>You are a [(boss_mind in A_bosses) ? A_name : B_name] Gang Boss!</B></FONT>"
+		boss_mind.current << "<FONT size=3 color=red><B>You are a [(boss_mind in A_bosses) ? gang_name("A") : gang_name("B")] Gang Boss!</B></FONT>"
 	for(var/datum/objective/objective in boss_mind.objectives)
 		boss_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
@@ -186,10 +184,10 @@
 		A_gangsters += gangster_mind
 	else
 		B_gangsters += gangster_mind
-	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? A_name : B_name] Gang!</B></FONT>"
+	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
 	gangster_mind.current << "<font color='red'>Help your bosses take over the station by defeating their rivals. You can identify your bosses by the brown \"B\" icons, but only they know who is in your gang! Work with your boss to avoid attacking your own gang.</font>"
-	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[A_name] Gang (A)" : "[B_name] Gang (B)"]!</font>"
-	gangster_mind.special_role = "[gang=="A" ? "[A_name] Gang (A)" : "[B_name] Gang (B)"]"
+	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
+	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
 	update_gang_icons_added(gangster_mind,gang)
 	return 1
 //////////////////////////////////////////////////////////////
@@ -219,13 +217,13 @@
 
 	gangster_mind.special_role = null
 	if(silent < 2)
-		gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has reformed and defected from the [gang=="A" ? "[A_name] Gang (A)" : "[B_name] Gang (B)"]!</font>"
+		gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has reformed and defected from the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 
 		if(beingborged)
 			if(!silent)
 				gangster_mind.current.visible_message("The frame beeps contentedly from the MMI before initalizing it.")
 			gangster_mind.current << "<FONT size=3 color=red><B>The frame's firmware detects and deletes your criminal behavior! You are no longer a gangster!</B></FONT>"
-			message_admins("[key_name_admin(gangster_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[gangster_mind.current]'>?</A> has been borged while being a member of the [gang=="A" ? "[A_name] Gang (A)" : "[B_name] Gang (B)"] Gang.")
+			message_admins("[key_name_admin(gangster_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[gangster_mind.current]'>?</A> has been borged while being a member of the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Gang.")
 		else
 			if(!silent)
 				gangster_mind.current.visible_message("[gangster_mind.current] looks like they've given up the life of crime!")
@@ -378,7 +376,7 @@
 	if(finished == "Draw")
 		world << "<FONT size=3 color=red><B>All gang bosses have been killed or exiled!</B></FONT>"
 	else
-		world << "<FONT size=3 color=red><B>The [finished=="A" ? A_name : B_name] Gang defeated their rivals!</B></FONT>"
+		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang defeated their rivals!</B></FONT>"
 	..()
 	return 1
 
@@ -409,18 +407,18 @@
 
 	if(A_bosses.len || A_gangsters.len)
 		if(winner == "A" || winner == "B")
-			world << "<br><b>The [A_name] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_ganga/num_survivors)*100, 0.1)]% strength.</b>"
-		world << "<br><font size=2><b>The [A_name] Gang bosses were:</b></font>"
+			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_ganga/num_survivors)*100, 0.1)]% strength.</b>"
+		world << "<br><font size=2><b>The [gang_name("A")] Gang bosses were:</b></font>"
 		gang_membership_report(A_bosses)
-		world << "<br><font size=2><b>The [A_name] Gangsters were:</b></font>"
+		world << "<br><font size=2><b>The [gang_name("A")] Gangsters were:</b></font>"
 		gang_membership_report(A_gangsters)
 
 	if(B_bosses.len || B_gangsters.len)
 		if(winner == "A" || winner == "B")
-			world << "<br><b>The [B_name] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_gangb/num_survivors)*100, 0.1)]% strength</b>"
-		world << "<br><font size=2><b>The [B_name] Gang bosses were:</b></font>"
+			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_gangb/num_survivors)*100, 0.1)]% strength</b>"
+		world << "<br><font size=2><b>The [gang_name("B")] Gang bosses were:</b></font>"
 		gang_membership_report(B_bosses)
-		world << "<br><font size=2><b>The [B_name] Gangsters were:</b></font>"
+		world << "<br><font size=2><b>The [gang_name("B")] Gangsters were:</b></font>"
 		gang_membership_report(B_gangsters)
 
 /datum/game_mode/proc/gang_membership_report(var/list/membership)

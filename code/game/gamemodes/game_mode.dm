@@ -63,10 +63,6 @@
 ///pre_setup()
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
-	var/gang_name_pool = list("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib")
-	A_name = pick(gang_name_pool)
-	gang_name_pool -= A_name
-	B_name = pick(gang_name_pool)
 	return 1
 
 
