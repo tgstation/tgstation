@@ -198,15 +198,7 @@
 	if(efficiency < 3 && prob(50))
 		randmutb(H)
 
-	//Clones will come out nude and unshaved, with messy hair
-	if(H.gender == MALE)
-		H.facial_hair_style = "Full Beard"
-	else
-		H.facial_hair_style = "Shaved"
-	H.hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
-	H.underwear = "Nude"
-
-	H.regenerate_icons()
+	H.set_cloned_appearance()
 
 	H.suiciding = 0
 	src.attempting = 0
