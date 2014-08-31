@@ -49,7 +49,7 @@
 			if(!infiniteloop)
 				target.initialize(1)
 			break
-	build_network()
+	//build_network()
 
 	update_icon()
 
