@@ -16,8 +16,8 @@
 			switch(imbue)
 				if("newtome")
 					call(/obj/effect/rune/proc/tomesummon)()
-				//if("armor") //Fuck off with your shit /tg/. This isn't Edgy Rev+
-					//call(/obj/effect/rune/proc/armor)()
+				if("armor") //Fuck off with your shit /tg/. This isn't Edgy Rev+
+					call(/obj/effect/rune/proc/armor)()
 				if("emp")
 					call(/obj/effect/rune/proc/emp)(usr.loc,3)
 				if("conceal")
@@ -107,9 +107,9 @@
 				if("runestun")
 					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
 					T.imbue = "runestun"
-				//if("armor")
-					//var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
-					//T.imbue = "armor"
+				if("armor")
+					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
+					T.imbue = "armor"
 				if("soulstone")
 					new /obj/item/device/soulstone(get_turf(usr))
 				if("construct")
