@@ -17,7 +17,7 @@ datum/controller/air_system
 
 /datum/controller/air_system/proc/setup()
 	set background = BACKGROUND_ENABLED
-	world << "<span class='userdanger'>Processing Geometry...</span>"
+	world << "\red \b Processing Geometry..."
 	sleep(1)
 
 	var/start_time = world.timeofday
@@ -26,7 +26,7 @@ datum/controller/air_system
 
 	global_activeturfs = active_turfs.len
 
-	world << "<span class='userdanger'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>"
+	world << "\red \b Geometry processed in [(world.timeofday-start_time)/10] seconds!"
 
 /datum/controller/air_system/proc/process()
 	if(kill_air)

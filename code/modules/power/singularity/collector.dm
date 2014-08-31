@@ -44,23 +44,23 @@ var/global/list/rad_collectors = list()
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
-			user << "<span class='danger'>The controls are locked!</span>"
+			user << "\red The controls are locked!"
 			return
 ..()
 
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/multitool))
-		user << "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>"
+		user << "\blue The [W.name] detects that [last_power]W were recently produced."
 		return 1
 	else if(istype(W, /obj/item/device/analyzer) && P)
 		atmosanalyzer_scan(P.air_contents, user)
 	else if(istype(W, /obj/item/weapon/tank/plasma))
 		if(!src.anchored)
-			user << "<span class='danger'>The [src] needs to be secured to the floor first.</span>"
+			user << "\red The [src] needs to be secured to the floor first."
 			return 1
 		if(src.P)
-			user << "<span class='danger'>There's already a plasma tank loaded.</span>"
+			user << "\red There's already a plasma tank loaded."
 			return 1
 		user.drop_item()
 		src.P = W
@@ -72,7 +72,7 @@ var/global/list/rad_collectors = list()
 			return 1
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(P)
-			user << "<span class='notice'>Remove the plasma tank first.</span>"
+			user << "\blue Remove the plasma tank first."
 			return 1
 		if(!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -95,9 +95,9 @@ var/global/list/rad_collectors = list()
 				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "<span class='danger'>The controls can only be locked when the [src] is active.</span>"
+				user << "\red The controls can only be locked when the [src] is active"
 		else
-			user << "<span class='danger'>Access denied!</span>"
+			user << "\red Access denied!"
 			return 1
 	else
 		..()

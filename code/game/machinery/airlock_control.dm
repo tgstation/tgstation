@@ -194,7 +194,7 @@ obj/machinery/access_button/update_icon()
 obj/machinery/access_button/attack_hand(mob/user)
 	add_fingerprint(usr)
 	if(!allowed(user))
-		user << "<span class='danger'>Access Denied</span>"
+		user << "\red Access Denied"
 
 	else if(radio_connection)
 		var/datum/signal/signal = new

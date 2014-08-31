@@ -38,15 +38,15 @@
 					return
 */
 				if(affected_mob.lying && prob(30))  //changed FROM prob(20) until sleeping is fixed
-					affected_mob << "<span class='notice'>You feel better.</span>"
+					affected_mob << "\blue You feel better."
 					cure()
 					return
 			if (prob(8))
-				affected_mob << "<span class='danger'>Your head hurts.</span>"
+				affected_mob << "\red Your head hurts."
 			if (prob(9))
 				affected_mob << "You feel a tingling sensation in your chest."
 			if (prob(9))
-				affected_mob << "<span class='danger'>You feel angry.</span>"
+				affected_mob << "\red You feel angry."
 		if(2)
 			if(restcure)
 /*
@@ -56,18 +56,18 @@
 					return
 */
 				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					affected_mob << "<span class='notice'>You feel better.</span>"
+					affected_mob << "\blue You feel better."
 					cure()
 					return
 			if (prob(8))
-				affected_mob << "<span class='danger'>Your skin feels loose.</span>"
+				affected_mob << "\red Your skin feels loose."
 			if (prob(10))
 				affected_mob << "You feel very strange."
 			if (prob(4))
-				affected_mob << "<span class='danger'>You feel a stabbing pain in your head!</span>"
+				affected_mob << "\red You feel a stabbing pain in your head!"
 				affected_mob.Paralyse(2)
 			if (prob(4))
-				affected_mob << "<span class='danger'>Your stomach churns.</span>"
+				affected_mob << "\red Your stomach churns."
 		if(3)
 			if(restcure)
 /*
@@ -77,11 +77,11 @@
 					return
 */
 				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					affected_mob << "<span class='notice'>You feel better.</span>"
+					affected_mob << "\blue You feel better."
 					cure()
 					return
 			if (prob(10))
-				affected_mob << "<span class='danger'>Your entire body vibrates.</span>"
+				affected_mob << "\red Your entire body vibrates."
 
 			if (prob(35))
 				if(prob(50))	scramble_dna(affected_mob, 1, 0, rand(15,45))
@@ -96,7 +96,7 @@
 					return
 */
 				if(affected_mob.lying && prob(5))  //changed FROM prob(5) until sleeping is fixed
-					affected_mob << "<span class='notice'>You feel better.</span>"
+					affected_mob << "\blue You feel better."
 					cure()
 					return
 			if (prob(60))

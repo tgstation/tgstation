@@ -35,8 +35,8 @@
 				src << "<i>The [met.name] is already feeding on this subject...</i>"
 				return 0
 
-		src << "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>"
-		M << "<span class='userdanger'>The [src.name] has latched onto your head!</span>"
+		src << "\blue <i>I have latched onto the subject and begun feeding...</i>"
+		M << "\red <b>The [src.name] has latched onto your head!</b>"
 
 		Feedon(M)
 		return 1
@@ -217,7 +217,7 @@
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = "harm"
-			new_slime.languages = languages
+			new_slime.universal_speak = universal_speak
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else

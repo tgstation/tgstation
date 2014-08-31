@@ -24,29 +24,29 @@
 		if(istype(grabbed, /mob/living/carbon/monkey))
 			var/mob/living/carbon/monkey/target = grabbed
 			if(target.stat == 0)
-				user << "<span class='danger'>The monkey is struggling far too much to put it in the recycler.</span>"
+				user << "\red The monkey is struggling far too much to put it in the recycler."
 			else
 				user.drop_item()
 				qdel(target)
-				user << "<span class='notice'>You stuff the monkey in the machine.</span>"
+				user << "\blue You stuff the monkey in the machine."
 				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 				use_power(500)
 				src.grinded++
-				user << "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"
+				user << "\blue The machine now has [grinded] monkey\s worth of material stored."
 
 		else
-			user << "<span class='danger'>The machine only accepts monkeys!</span>"
+			user << "\red The machine only accepts monkeys!"
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(var/mob/user as mob)
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(grinded >= 5)
-		user << "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>"
+		user << "\blue The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube."
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= 5
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src.loc)
-		user << "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>"
+		user << "\blue The machine's display flashes that it has [grinded] monkeys worth of material left."
 	else
-		user << "<span class='danger'>The machine needs at least 5 monkeys worth of material to produce a monkey cube. It only has [grinded].</span>"
+		user << "\red The machine needs at least 5 monkeys worth of material to produce a monkey cube. It only has [grinded]."
 	return

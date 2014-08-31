@@ -43,12 +43,12 @@
 	set src in view()
 	..()
 	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "<span class='notice'>It contains:</span>"
+	usr << "\blue It contains:"
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "<span class='notice'>[R.volume] units of [R.name]</span>"
+			usr << "\blue [R.volume] units of [R.name]"
 	else
-		usr << "<span class='danger'>Nothing.</span>"
+		usr << "\blue Nothing."
 
 /obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"

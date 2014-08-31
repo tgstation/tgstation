@@ -60,7 +60,7 @@
 		if(chassis.loc!=C || target.loc!=T)
 			return
 		if(occupant)
-			occupant_message("<span class='userdanger'>The sleeper is already occupied!</span>")
+			occupant_message("<font color=\"red\"><B>The sleeper is already occupied!</B></font>")
 			return
 		target.forceMove(src)
 		occupant = target
@@ -72,7 +72,7 @@
 		*/
 		set_ready_state(0)
 		pr_mech_sleeper.start()
-		occupant_message("<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
+		occupant_message("<font color='blue'>[target] successfully loaded into [src]. Life support functions engaged.</font>")
 		chassis.visible_message("[chassis] loads [target] into [src].")
 		log_message("[target] loaded. Life support functions engaged.")
 	return
@@ -281,7 +281,7 @@
 	var/result = load_cable(target)
 	var/message
 	if(isnull(result))
-		message = "<span class='danger'>Unable to load [target] - no cable found.</span>"
+		message = "<font color='red'>Unable to load [target] - no cable found.</font>"
 	else if(!result)
 		message = "Reel is full."
 	else

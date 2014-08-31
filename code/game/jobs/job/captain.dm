@@ -43,7 +43,7 @@ Captain
 	L.imp_in = H
 	L.implanted = 1
 
-	minor_announce("Captain [H.real_name] on deck!")
+	world << "<b>Captain [H.real_name] on deck!</b>"
 
 /datum/job/captain/get_access()
 	return get_all_accesses()

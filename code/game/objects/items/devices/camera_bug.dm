@@ -78,7 +78,7 @@
 
 	var/turf/T = get_turf(user.loc)
 	if(T.z != current.z || (!skip_bugcheck && current.bug != src) || !current.can_use())
-		user << "<span class='danger'>[src] has lost the signal.</span>"
+		user << "\red [src] has lost the signal."
 		current = null
 		user.reset_view(null)
 		user.unset_machine()
@@ -249,11 +249,11 @@
 		var/obj/machinery/camera/C = locate(href_list["view"])
 		if(istype(C))
 			if(!C.can_use())
-				usr << "<span class='danger'>Something's wrong with that camera.  You can't get a feed.</span>"
+				usr << "\red Something's wrong with that camera.  You can't get a feed."
 				return
 			var/turf/T = get_turf(loc)
 			if(!T || C.z != T.z)
-				usr << "<span class='danger'>You can't get a signal.</span>"
+				usr << "\red You can't get a signal."
 				return
 			current = C
 			spawn(6)

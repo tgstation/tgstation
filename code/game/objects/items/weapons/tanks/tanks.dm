@@ -42,7 +42,7 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if (!in_range(src, usr))
-		if (icon == src) usr << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
+		if (icon == src) usr << "\blue If you want any more information you'll need to get closer."
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
@@ -61,7 +61,7 @@
 	else
 		descriptive = "furiously hot"
 
-	usr << "<span class='notice'>It feels [descriptive]</span>"
+	usr << "\blue It feels [descriptive]"
 
 	return
 
@@ -131,17 +131,17 @@
 				if(location.internal == src)
 					location.internal = null
 					location.internals.icon_state = "internal0"
-					usr << "<span class='notice'>You close the tank release valve.</span>"
+					usr << "\blue You close the tank release valve."
 					if (location.internals)
 						location.internals.icon_state = "internal0"
 				else
 					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 						location.internal = src
-						usr << "<span class='notice'>You open \the [src] valve.</span>"
+						usr << "\blue You open \the [src] valve."
 						if (location.internals)
 							location.internals.icon_state = "internal1"
 					else
-						usr << "<span class='notice'>You need something to connect to \the [src].</span>"
+						usr << "\blue You need something to connect to \the [src]."
 
 		src.add_fingerprint(usr)
 /*

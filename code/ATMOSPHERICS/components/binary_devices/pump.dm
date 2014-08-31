@@ -151,7 +151,7 @@ Thus, the two variables affect pump operation are set in New():
 		return
 	src.add_fingerprint(usr)
 	if(!src.allowed(user))
-		user << "<span class='danger'>Access denied.</span>"
+		user << "\red Access denied."
 		return
 	usr.set_machine(src)
 	interact(user)
@@ -177,7 +177,7 @@ Thus, the two variables affect pump operation are set in New():
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
-		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
+		user << "\red You cannot unwrench this [src], turn it off first."
 		return 1
 	return ..()
 

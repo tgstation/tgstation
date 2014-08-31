@@ -30,8 +30,7 @@
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)
 	user << "<span class='notice'>Constructing table..</span>"
 	if (do_after(user, construct_delay))
-		var/obj/new_table = new table_type( user.loc )
-		new_table.add_fingerprint(user)
+		new table_type( user.loc )
 		user.drop_item()
 		qdel(src)
 		return

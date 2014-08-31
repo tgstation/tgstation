@@ -211,7 +211,7 @@
 // human interact with machine
 /obj/machinery/disposal/attack_hand(mob/user as mob)
 	if(user && user.loc == src)
-		usr << "<span class='danger'>You cannot reach the controls from inside.</span>"
+		usr << "\red You cannot reach the controls from inside."
 		return
 	/*
 	if(mode==-1)
@@ -267,11 +267,11 @@
 	if(..())
 		return
 	if(usr.loc == src)
-		usr << "<span class='danger'>You cannot reach the controls from inside.</span>"
+		usr << "\red You cannot reach the controls from inside."
 		return
 
 	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
-		usr << "<span class='danger'>\The [src]'s power is disabled.</span>"
+		usr << "\red \The [src]'s power is disabled."
 		return
 	..()
 	usr.set_machine(src)

@@ -247,28 +247,8 @@
 									C.internals.icon_state = "internal1"
 							else
 								C << "<span class='notice'>You don't have an oxygen tank.</span>"
-
 		if("act_intent")
-			if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
-
-				var/_x = text2num(params2list(params)["icon-x"])
-				var/_y = text2num(params2list(params)["icon-y"])
-
-				if(_x<=16 && _y<=16)
-					usr.a_intent_change("harm")
-
-				else if(_x<=16 && _y>=17)
-					usr.a_intent_change("help")
-
-				else if(_x>=17 && _y<=16)
-					usr.a_intent_change("grab")
-
-				else if(_x>=17 && _y>=17)
-					usr.a_intent_change("disarm")
-
-			else
-				usr.a_intent_change("right")
-
+			usr.a_intent_change("right")
 		if("pull")
 			usr.stop_pulling()
 		if("throw/catch")
@@ -334,7 +314,7 @@
 		if("Crew Monitorting")
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
-				crewmonitor(AI,AI)
+				crewmonitor(AI)
 
 		if("Show Crew Manifest")
 			if(isAI(usr))
@@ -419,3 +399,4 @@
 				usr.update_inv_l_hand(0)
 				usr.update_inv_r_hand(0)
 	return 1
+

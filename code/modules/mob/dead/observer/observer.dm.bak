@@ -1,0 +1,170 @@
+/mob/observer/New(mob/corpse)
+	set invisibility = 10
+
+	..()
+
+	if(corpse)
+		src.corpse = corpse
+		src.loc = get_turf(corpse.loc)
+		src.real_name = corpse.real_name
+		src.name = corpse.real_name
+
+	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS
+	src.see_invisible = 10
+	src.see_in_dark = 100
+	src.verbs += /mob/observer/proc/dead_tele
+	src.verbs += /mob/observer/proc/reenter_corpse
+
+/mob/proc/ghostize()
+	set name = "Ghost"
+	set desc = "You cannot be revived as a ghost"
+	if(src.client)
+		src.client.mob = new/mob/observer(src)
+	return
+
+/mob/observer/Move(NewLoc, direct)
+	if(NewLoc)
+		src.loc = NewLoc
+		return
+	if((direct & NORTH) && src.y < world.maxy)
+		src.y++
+	if((direct & SOUTH) && src.y > 1)
+		src.y--
+	if((direct & EAST) && src.x < world.maxx)
+		src.x++
+	if((direct & WEST) && src.x > 1)
+		src.x--
+
+/mob/observer/examine()
+	if(usr)	usr << src.desc
+
+/mob/observer/can_use_hands()	return 0
+/mob/observer/is_active()		return 0
+
+/mob/observer/Stat()
+	..()
+	statpanel("Status")
+	if (src.client.statpanel == "Status")
+		if(ticker && ticker.mode)
+			if (ticker.timeleft)
+				stat(null, "ETA-[ticker.timeleft / 600 % 60]:[ticker.timeleft / 100 % 6][ticker.timeleft / 100 % 10]")
+
+			if(ticker.mode.name == "Corporate Restructuring" && ticker.target)
+				var/icon = ticker.target.name
+				var/icon2 = ticker.target.real_name
+				var/area = get_area(ticker.target)
+				stat(null, text("Target: [icon2] (as [icon]) is in [area]"))
+
+			if(ticker.mode.name == "AI malfunction" && ticker.processing)
+				stat(null, text("Time until all [station_name()]'s systems are taken over: [(ticker.AIwin - ticker.AItime) / 600 % 60]:[(ticker.AIwin - ticker.AItime) / 100 % 6][(ticker.AIwin - ticker.AItime) / 10 % 10]"))
+
+			if (ticker.mode.name == "ctf")
+				stat(null, text("Red Team - [ticker.red_score]"))
+				stat(null, text("Green Team - [ticker.green_score]"))
+
+/mob/observer/proc/reenter_corpse()
+	set category = "Special Verbs"
+	set name = "Re-enter Corpse"
+	if(!corpse)
+		alert("You don't have a corpse!")
+		return
+	if(corpse.stat == 2)
+		alert("Your body is dead!")
+		return
+	if(src.client && src.client.holder && src.client.holder.state == 2)
+		var/rank = src.client.holder.rank
+		src.client.clear_admin_verbs()
+		src.client.holder.state = 1
+		src.client.update_admins(rank)
+	src.client.mob = corpse
+	del(src)
+
+/mob/observer/proc/dead_tele()
+	set category = "Special Verbs"
+	set name = "Teleport"
+	set desc= "Teleport"
+	if((usr.stat != 2) || !istype(usr, /mob/observer))
+		usr << "Not when you're not dead!"
+		return
+	var/A
+	usr.verbs -= /mob/observer/proc/dead_tele
+	spawn(50)
+		usr.verbs += /mob/observer/proc/dead_tele
+	A = input("Area to jump to", "BOOYEA", A) in list("Engine","Hallways","Toxins","Storage","Maintenance","Crew Quarters","Medical","Security","Chapel","Bridge")
+
+	switch (A)
+		if ("Engine")
+			var/list/L = list()
+			for(var/area/B in world)
+				if(istype(B, /area/engine) && !istype(B, /area/engine/combustion) && !istype(B, /area/engine/engine_walls))
+					L += B
+			A = pick(L)
+		if ("Hallways")
+			var/list/L = list()
+			for(var/area/B in world)
+				if(istype(B, /area/hallway))
+					L += B
+			A = pick(L)
+		if ("Toxins")
+			var/list/L = list()
+			for(var/area/B in world)
+				if(istype(B, /area/toxins) && !istype(B, /area/toxins/test_chamber))
+					L += B
+			A = pick(L)
+		if ("Storage")
+			var/list/L = list()
+			for(var/area/B in world)
+				if(istype(B, /area/storage))
+					L += B
+			A = pick(L)
+		if ("Maintenance")
+			var/list/L = list()
+			for(var/area/B in world)
+				if(istype(B, /area/maintenance))
+					L += B
+			A = pick(L)
+		if ("Crew Quarters")
+			var/list/L = list()
+			for(var/area/B in world)
+				if(istype(B, /area/crew_quarters))
+					L += B
+			A = pick(L)
+		if ("Medical")
+			var/list/L = list()
+			for(var/area/B in world)
+				if(istype(B, /area/medical))
+					L += B
+			A = pick(L)
+		if ("Security")
+			var/list/L = list()
+			for(var/area/B in world)
+				if(istype(B, /area/security))
+					L += B
+			A = pick(L)
+		if ("Chapel")
+			var/list/L = list()
+			for(var/area/B in world)
+				if(istype(B, /area/chapel))
+					L += B
+			A = pick(L)
+		if ("Bridge")
+			var/list/L = list()
+			for(var/area/B in world)
+				if(istype(B, /area/bridge))
+					L += B
+			A = pick(L)
+
+	var/list/L = list()
+	for(var/turf/T in A)
+		if(!T.density)
+			var/clear = 1
+			for(var/obj/O in T)
+				if(O.density)
+					clear = 0
+					break
+			if(clear)
+				L+=T
+
+	usr.loc = pick(L)
+
+

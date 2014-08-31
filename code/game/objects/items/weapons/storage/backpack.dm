@@ -41,11 +41,11 @@
 
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(crit_fail)
-		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
+		user << "\red The Bluespace generator isn't working."
 		return
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 		investigate_log("has become a singularity. Caused by [user.key]","singulo")
-		user << "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
+		user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
 		qdel(W)
 		var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
 		singulo.energy = 300 //should make it a bit bigger~
@@ -58,9 +58,9 @@
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user as mob)
 	if (prob(src.reliability)) return 1 //No failure
 	if (prob(src.reliability))
-		user << "<span class='danger'>The Bluespace portal resists your attempt to add another item.</span>" //light failure
+		user << "\red The Bluespace portal resists your attempt to add another item." //light failure
 	else
-		user << "<span class='danger'>The Bluespace generator malfunctions!</span>"
+		user << "\red The Bluespace generator malfunctions!"
 		for (var/obj/O in src.contents) //it broke, delete what was in it
 			qdel(O)
 		crit_fail = 1

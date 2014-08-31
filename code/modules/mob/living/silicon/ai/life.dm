@@ -14,7 +14,7 @@
 
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
-				src << "<span class='danger'>ERROR: APC access disabled, hack attempt canceled.</span>"
+				src << "\red ERROR: APC access disabled, hack attempt canceled."
 				src.malfhacking = 0
 				src.malfhack = null
 

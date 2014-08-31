@@ -117,7 +117,7 @@
 				src.locked = !src.locked
 				user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 			else
-				user << "<span class='danger'>Access denied.</span>"
+				user << "\red Access denied."
 			updateDialog()
 		else
 			user << "You must open the cover first!"

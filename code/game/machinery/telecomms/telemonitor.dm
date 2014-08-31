@@ -128,7 +128,7 @@
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='notice'>You you disable the security protocols.</span>"
+		user << "\blue You you disable the security protocols"
 	else
 		..()
 	src.updateUsrDialog()

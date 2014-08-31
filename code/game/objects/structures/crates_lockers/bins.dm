@@ -32,7 +32,7 @@
 /obj/structure/closet/crate/bin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = W
-		user << "<span class='notice'>You fill the bag.</span>"
+		user << "\blue You fill the bag."
 		for(var/obj/item/O in src)
 			if(T.can_be_inserted(O, 1))
 				O.loc = T

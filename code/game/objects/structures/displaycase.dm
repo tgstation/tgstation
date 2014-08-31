@@ -2,7 +2,7 @@
 	name = "display case"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox1"
-	desc = "A display case for prized possessions. Hooked up with an anti-theft system."
+	desc = "A display case for prized possessions. It taunts you to kick it."
 	density = 1
 	anchored = 1
 	unacidable = 1//Dissolving the case would also delete the gun.
@@ -53,12 +53,6 @@
 			new /obj/item/weapon/shard( src.loc )
 			playsound(src, "shatter", 70, 1)
 			update_icon()
-
-			//Activate Anti-theft
-			var/area/alarmed = get_area(src)
-			alarmed.burglaralert(src)
-			playsound(src, "sound/effects/alert.ogg", 50, 1)
-
 	else
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	return
@@ -91,10 +85,10 @@
 		update_icon()
 		return
 	else
-		usr << text("<span class='notice'>You kick the display case.</span>")
+		usr << text("\blue You kick the display case.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("<span class='danger'>[] kicks the display case.</span>", usr)
+				O << text("\red [] kicks the display case.", usr)
 		src.health -= 2
 		healthcheck()
 		return

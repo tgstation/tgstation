@@ -137,7 +137,7 @@
 		return
 	src.add_fingerprint(usr)
 	if(!src.allowed(user))
-		user << "<span class='danger'>Access denied.</span>"
+		user << "\red Access denied."
 		return
 	usr.set_machine(src)
 	interact(user)
@@ -165,6 +165,6 @@
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (on)
-		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
+		user << "\red You cannot unwrench this [src], turn it off first."
 		return 1
 	return ..()

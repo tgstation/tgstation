@@ -19,13 +19,12 @@ var/list/ai_list = list()
 	anchored = 1
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
-	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
 	//var/list/laws = list()
-	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
+	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/item/device/pda/ai/aiPDA = null
@@ -394,7 +393,7 @@ var/list/ai_list = list()
 		if ("help")
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe like arm.</span>"), 1)
+					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
 
 		else //harm
 			var/damage = rand(10, 20)
@@ -402,7 +401,7 @@ var/list/ai_list = list()
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='userdanger'>[] has slashed at []!</span>", M, src), 1)
+						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
 					flick("noise", flash)
 				adjustBruteLoss(damage)
@@ -411,7 +410,7 @@ var/list/ai_list = list()
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='userdanger'>[] took a swipe at []!</span>", M, src), 1)
+						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
 	return
 
 /mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M as mob)
@@ -421,7 +420,7 @@ var/list/ai_list = list()
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!", 1)
+			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
@@ -546,7 +545,7 @@ var/list/ai_list = list()
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
 				break
-	src << "<span class='notice'>Switched to [network] camera network.</span>"
+	src << "\blue Switched to [network] camera network."
 //End of code by Mord_Sith
 
 
@@ -629,7 +628,7 @@ var/list/ai_list = list()
 
 	var/obj/machinery/power/apc/apc = src.loc
 	if(!istype(apc))
-		src << "<span class='notice'>You are already in your Main Core.</span>"
+		src << "\blue You are already in your Main Core."
 		return
 	apc.malfvacate()
 

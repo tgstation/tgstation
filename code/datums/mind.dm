@@ -479,20 +479,25 @@
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "protect", "prevent", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type) return
 
 		var/datum/objective/new_objective = null
 
 		switch (new_obj_type)
-			if ("assassinate","protect","debrain","maroon")
+			if ("assassinate","protect","debrain")
+				//To determine what to name the objective in explanation text.
+				var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
+				var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
+				var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
+
 				var/list/possible_targets = list("Free objective")
 				for(var/datum/mind/possible_target in ticker.minds)
 					if ((possible_target != src) && istype(possible_target.current, /mob/living/carbon/human))
 						possible_targets += possible_target.current
 
 				var/mob/def_target = null
-				var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain, /datum/objective/maroon)
+				var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)
 				if (objective&&(objective.type in objective_list) && objective:target)
 					def_target = objective:target.current
 
@@ -510,18 +515,7 @@
 					new_objective.owner = src
 					new_objective:target = new_target:mind
 					//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
-					new_objective.update_explanation_text()
-
-			if ("destroy")
-				var/list/possible_targets = active_ais(1)
-				if(possible_targets.len)
-					var/mob/new_target = input("Select target:", "Objective target") as null|anything in possible_targets
-					new_objective = new /datum/objective/destroy
-					new_objective.target = new_target.mind
-					new_objective.owner = src
-					new_objective.update_explanation_text()
-				else
-					usr << "No active AIs with minds"
+					new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
 
 			if ("prevent")
 				new_objective = new /datum/objective/block
@@ -611,16 +605,16 @@
 		switch(href_list["revolution"])
 			if("clear")
 				remove_rev()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary!</FONT></span>"
+				current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT>"
 				message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
 				log_admin("[key_name(usr)] has de-rev'ed [current].")
 			if("rev")
 				if(src in ticker.mode.head_revolutionaries)
 					ticker.mode.head_revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					current << "<span class='userdanger'><FONT size = 3>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</FONT></span>"
+					current << "\red <FONT size = 3><B>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</B></FONT>"
 				else if(!(src in ticker.mode.revolutionaries))
-					current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
+					current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
 				else
 					return
 				ticker.mode.revolutionaries += src
@@ -633,9 +627,9 @@
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					current << "<span class='userdanger'><FONT size = 3>You have proved your devotion to revoltion! Yea are a head revolutionary now!</FONT></span>"
+					current << "\red <FONT size = 3><B>You have proved your devotion to revoltion! Yea are a head revolutionary now!</B></FONT>"
 				else if(!(src in ticker.mode.head_revolutionaries))
-					current << "<span class='userdanger'><FONT size = 3>You are a member of the revolutionaries' leadership now!</FONT></span>"
+					current << "\red <FONT size = 3><B>You are a member of the revolutionaries' leadership now!</B></FONT>"
 				else
 					return
 				if (ticker.mode.head_revolutionaries.len>0)
@@ -658,24 +652,24 @@
 			if("autoobjectives")
 				ticker.mode.forge_revolutionary_objectives(src)
 				ticker.mode.greet_revolutionary(src,0)
-				usr << "<span class='notice'>The objectives for revolution have been generated and shown to [key]</span>"
+				usr << "\blue The objectives for revolution have been generated and shown to [key]"
 
 			if("flash")
 				if (!ticker.mode.equip_revolutionary(current))
-					usr << "<span class='danger'>Spawning flash failed!</span>"
+					usr << "\red Spawning flash failed!"
 
 			if("takeflash")
 				var/list/L = current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
 				if (!flash)
-					usr << "<span class='danger'>Deleting flash failed!</span>"
+					usr << "\red Deleting flash failed!"
 				qdel(flash)
 
 			if("repairflash")
 				var/list/L = current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
 				if (!flash)
-					usr << "<span class='danger'>Repairing flash failed!</span>"
+					usr << "\red Repairing flash failed!"
 				else
 					flash.broken = 0
 
@@ -688,13 +682,13 @@
 				fail |= !ticker.mode.equip_traitor(current, 1)
 				fail |= !ticker.mode.equip_revolutionary(current)
 				if (fail)
-					usr << "<span class='danger'>Reequipping revolutionary goes wrong!</span>"
+					usr << "\red Reequipping revolutionary goes wrong!"
 
 	else if (href_list["cult"])
 		switch(href_list["cult"])
 			if("clear")
 				remove_cultist()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a cultist!</FONT></span>"
+				current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT>"
 				message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
 				log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
@@ -716,26 +710,26 @@
 					)
 					var/where = H.equip_in_one_of_slots(T, slots)
 					if (!where)
-						usr << "<span class='danger'>Spawning tome failed!</span>"
+						usr << "\red Spawning tome failed!"
 					else
 						H << "A tome, a message from your new master, appears in your [where]."
 
 			if("amulet")
 				if (!ticker.mode.equip_cultist(current))
-					usr << "<span class='danger'>Spawning amulet failed!</span>"
+					usr << "\red Spawning amulet failed!"
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
 			if("clear")
 				remove_wizard()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a wizard!</FONT></span>"
+				current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>"
 				log_admin("[key_name(usr)] has de-wizard'ed [current].")
 			if("wizard")
 				if(!(src in ticker.mode.wizards))
 					ticker.mode.wizards += src
 					special_role = "Wizard"
 					//ticker.mode.learn_basic_spells(current)
-					current << "<span class='userdanger'>You are the Space Wizard!</span>"
+					current << "<B>\red You are the Space Wizard!</B>"
 					message_admins("[key_name_admin(usr)] has wizard'ed [current].")
 					log_admin("[key_name(usr)] has wizard'ed [current].")
 			if("lair")
@@ -746,13 +740,13 @@
 				ticker.mode.name_wizard(current)
 			if("autoobjectives")
 				ticker.mode.forge_wizard_objectives(src)
-				usr << "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>"
+				usr << "\blue The objectives for wizard [key] have been generated. You can edit them and anounce manually."
 
 	else if (href_list["changeling"])
 		switch(href_list["changeling"])
 			if("clear")
 				remove_changeling()
-				current << "<span class='userdanger'><FONT size = 3>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</FONT></span>"
+				current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 				message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 				log_admin("[key_name(usr)] has de-changeling'ed [current].")
 			if("changeling")
@@ -760,16 +754,16 @@
 					ticker.mode.changelings += src
 					current.make_changeling()
 					special_role = "Changeling"
-					current << "<span class='userdanger'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</span>"
+					current << "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>"
 					message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 					log_admin("[key_name(usr)] has changeling'ed [current].")
 			if("autoobjectives")
 				ticker.mode.forge_changeling_objectives(src)
-				usr << "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>"
+				usr << "\blue The objectives for changeling [key] have been generated. You can edit them and anounce manually."
 
 			if("initialdna")
 				if( !changeling || !changeling.absorbed_dna.len || !istype(current, /mob/living/carbon))
-					usr << "<span class='danger'>Resetting DNA failed!</span>"
+					usr << "\red Resetting DNA failed!"
 				else
 					var/mob/living/carbon/C = current
 					C.dna = changeling.absorbed_dna[1]
@@ -781,7 +775,7 @@
 		switch(href_list["nuclear"])
 			if("clear")
 				remove_nukeop()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a syndicate operative!</FONT></span>"
+				current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT>"
 				message_admins("[key_name_admin(usr)] has de-nuke op'ed [current].")
 				log_admin("[key_name(usr)] has de-nuke op'ed [current].")
 			if("nuclear")
@@ -793,7 +787,7 @@
 					else
 						current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 					special_role = "Syndicate"
-					current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
+					current << "\blue You are a [syndicate_name()] agent!"
 					ticker.mode.forge_syndicate_objectives(src)
 					ticker.mode.greet_syndicate(src)
 					message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
@@ -813,7 +807,7 @@
 				qdel(H.w_uniform)
 
 				if (!ticker.mode.equip_syndicate(current))
-					usr << "<span class='danger'>Equipping a syndicate failed!</span>"
+					usr << "\red Equipping a syndicate failed!"
 			if("tellcode")
 				var/code
 				for (var/obj/machinery/nuclearbomb/bombue in world)
@@ -824,13 +818,13 @@
 					store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", 0, 0)
 					current << "The nuclear authorization code is: <B>[code]</B>"
 				else
-					usr << "<span class='danger'>No valid nuke found!</span>"
+					usr << "\red No valid nuke found!"
 
 	else if (href_list["traitor"])
 		switch(href_list["traitor"])
 			if("clear")
 				remove_traitor()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a traitor!</FONT></span>"
+				current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>"
 				message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
 
@@ -838,7 +832,7 @@
 				if(!(src in ticker.mode.traitors))
 					ticker.mode.traitors += src
 					special_role = "traitor"
-					current << "<span class='userdanger'>You are a traitor!</span>"
+					current << "<B>\red You are a traitor!</B>"
 					message_admins("[key_name_admin(usr)] has traitor'ed [current].")
 					log_admin("[key_name(usr)] has traitor'ed [current].")
 					if(isAI(current))
@@ -848,7 +842,7 @@
 
 			if("autoobjectives")
 				ticker.mode.forge_traitor_objectives(src)
-				usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
+				usr << "\blue The objectives for traitor [key] have been generated. You can edit them and anounce manually."
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
@@ -861,7 +855,7 @@
 					var/mob/living/carbon/monkey/M = current
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
-						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]</span>")
+						message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]")
 						src = null
 						M = H.monkeyize()
 						src = M.mind
@@ -876,7 +870,7 @@
 					var/mob/living/carbon/monkey/M = current
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
-						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>", 1)
+						message_admins("\blue [key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]", 1)
 						src = null
 						M = H.monkeyize()
 						src = M.mind
@@ -893,7 +887,7 @@
 								D.cure(0)
 								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
-						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
+						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
 						H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
 						if(H)
 							src = H.mind
@@ -902,7 +896,7 @@
 		switch(href_list["silicon"])
 			if("unmalf")
 				remove_malf()
-				current << "<span class='userdanger'><FONT size = 3>You have been patched! You are no longer malfunctioning!</FONT></span>"
+				current << "\red <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT>"
 				message_admins("[key_name_admin(usr)] has de-malf'ed [current].")
 				log_admin("[key_name(usr)] has de-malf'ed [current].")
 
@@ -948,12 +942,12 @@
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("uplink")
 				if (!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
-					usr << "<span class='danger'>Equipping a syndicate failed!</span>"
+					usr << "\red Equipping a syndicate failed!"
 				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
 
 	else if (href_list["obj_announce"])
 		var/obj_count = 1
-		current << "<span class='notice'>Your current objectives:</span>"
+		current << "\blue Your current objectives:"
 		for(var/datum/objective/objective in objectives)
 			current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
@@ -1004,7 +998,7 @@
 			current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 		special_role = "Syndicate"
 		assigned_role = "MODE"
-		current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
+		current << "\blue You are a [syndicate_name()] agent!"
 		ticker.mode.forge_syndicate_objectives(src)
 		ticker.mode.greet_syndicate(src)
 

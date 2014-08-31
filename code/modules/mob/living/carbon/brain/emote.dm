@@ -54,7 +54,7 @@
 			src << "Help for MMI emotes. You can use these emotes with say \"*emote\":\nalarm, alert, beep, blink, boop, flash, notice, whistle"
 
 		else
-			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+			src << "\blue Unusable emote '[act]'. Say *help for a list."
 
 	if (message)
 		log_emote("[name]/[key] : [message]")

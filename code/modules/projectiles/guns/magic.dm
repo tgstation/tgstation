@@ -32,11 +32,7 @@
 /obj/item/weapon/gun/magic/proc/newshot()
 	if (charges && chambered)
 		chambered.newshot()
-	return
-
-/obj/item/weapon/gun/magic/process_chamber()
-	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
-		charges--//... drain a charge
+		charges--
 	return
 
 /obj/item/weapon/gun/magic/New()

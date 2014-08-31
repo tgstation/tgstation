@@ -115,11 +115,11 @@ datum/hSB/Topic(href, href_list)
 			if("hsbtobj")
 				if(!admin) return
 				if(hsboxspawn)
-					world << "<span class='userdanger'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>"
+					world << "<b>\red Sandbox:  \black[usr.key] has disabled object spawning!</b>"
 					hsboxspawn = 0
 					return
 				else
-					world << "<span class='boldnotice'>Sandbox:</span> <b>\black[usr.key] has enabled object spawning!</b>"
+					world << "<b>\blue Sandbox:  \black[usr.key] has enabled object spawning!</b>"
 					hsboxspawn = 1
 					return
 			//
@@ -128,10 +128,10 @@ datum/hSB/Topic(href, href_list)
 			if("hsbtac")
 				if(!admin) return
 				if(config.sandbox_autoclose)
-					world << "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>"
+					world << "<b>\blue Sandbox:  \black [usr.key] has removed the object spawn limiter.</b>"
 					config.sandbox_autoclose = 0
 				else
-					world << "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>"
+					world << "<b>\red Sandbox:  \black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>"
 					config.sandbox_autoclose = 1
 				return
 			//

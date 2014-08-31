@@ -89,11 +89,11 @@
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
-				"<span class='notice'>You have unfastened \the [src].</span>", \
+				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
 			new /obj/item/pipe_meter(src.loc)
 			qdel(src)

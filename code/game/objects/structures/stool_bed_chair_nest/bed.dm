@@ -97,12 +97,12 @@
 
 	if (M == usr)
 		M.visible_message(\
-			"<span class='notice'>[M.name] buckles in!</span>",\
+			"\blue [M.name] buckles in!",\
 			"You buckle yourself to [src].",\
 			"You hear metal clanking")
 	else
 		M.visible_message(\
-			"<span class='notice'>[M.name] is buckled in to [src] by [user.name]!</span>",\
+			"\blue [M.name] is buckled in to [src] by [user.name]!",\
 			"You are buckled in to [src] by [user.name].",\
 			"You hear metal clanking")
 	M.buckled = src

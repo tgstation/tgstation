@@ -19,6 +19,8 @@
 /obj/item/device/assembly_holder/proc/process_activation(var/obj/item/device/D)
 	return
 
+
+
 /obj/item/device/assembly_holder/IsAssemblyHolder()
 	return 1
 
@@ -85,12 +87,20 @@
 	if(a_right)
 		a_right.on_found(finder)
 
+
+/obj/item/device/assembly_holder/hear_talk(mob/living/M as mob, msg)
+	if(a_left)
+		a_left.hear_talk(M, msg)
+	if(a_right)
+		a_right.hear_talk(M, msg)
+
 /obj/item/device/assembly_holder/Move()
 	..()
 	if(a_left && a_right)
 		a_left.holder_movement()
 		a_right.holder_movement()
 	return
+
 
 /obj/item/device/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	if(a_left && a_right)
@@ -103,15 +113,15 @@
 /obj/item/device/assembly_holder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!a_left || !a_right)
-			user << "<span class='danger'>BUG:Assembly part missing, please report this!</span>"
+			user << "\red BUG:Assembly part missing, please report this!"
 			return
 		a_left.toggle_secure()
 		a_right.toggle_secure()
 		secured = !secured
 		if(secured)
-			user << "<span class='notice'>\The [src] is ready!</span>"
+			user << "\blue \The [src] is ready!"
 		else
-			user << "<span class='notice'>\The [src] can now be taken apart!</span>"
+			user << "\blue \The [src] can now be taken apart!"
 		update_icon()
 		return
 	else
@@ -123,7 +133,7 @@
 	src.add_fingerprint(user)
 	if(src.secured)
 		if(!a_left || !a_right)
-			user << "<span class='danger'>Assembly part missing!</span>"
+			user << "\red Assembly part missing!"
 			return
 		if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
 			switch(alert("Which side would you like to use?",,"Left","Right"))
@@ -156,3 +166,13 @@
 	if(master)
 		master.receive_signal()
 	return 1
+
+
+
+
+
+
+
+
+
+

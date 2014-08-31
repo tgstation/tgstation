@@ -56,11 +56,11 @@
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
+			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."
 			cmd_admin_mute(src, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
+			src << "\red You are nearing the spam filter limit for identical messages."
 			return 0
 	else
 		last_message = message

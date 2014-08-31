@@ -60,7 +60,7 @@
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "\red You don't have the dexterity to do this!"
 		return 0
 	var/title = "Sheet-Glass"
 	title += " ([src.get_amount()] sheet\s left)"
@@ -74,11 +74,11 @@
 			for (var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
-					user << "<span class='danger'>There are too many windows in this location.</span>"
+					user << "\red There are too many windows in this location."
 					return 1
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
-					user << "<span class='danger'>Can't let you do that.</span>"
+					user << "\red Can't let you do that."
 					return 1
 
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
@@ -104,10 +104,10 @@
 			if(!src)	return 1
 			if(src.loc != user)	return 1
 			if(src.get_amount() < 2)
-				user << "<span class='danger'>You need more glass to do that.</span>"
+				user << "\red You need more glass to do that."
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
-				user << "<span class='danger'>There is a window in the way.</span>"
+				user << "\red There is a window in the way."
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/basic( user.loc, 0 )
@@ -160,7 +160,7 @@
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "\red You don't have the dexterity to do this!"
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([src.get_amount()] sheet\s left)"
@@ -173,11 +173,11 @@
 			for (var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
-					user << "<span class='danger'>There are too many windows in this location.</span>"
+					user << "\red There are too many windows in this location."
 					return 1
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
-					user << "<span class='danger'>Can't let you do that.</span>"
+					user << "\red Can't let you do that."
 					return 1
 
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.

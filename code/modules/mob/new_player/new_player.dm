@@ -5,8 +5,6 @@
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 	var/totalPlayers = 0		 //Player counts for the Lobby tab
 	var/totalPlayersReady = 0
-	
-	flags = NONE
 
 	invisibility = 101
 
@@ -77,13 +75,11 @@
 			stat("Time To Start:", "DELAYED")
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Players:", "[totalPlayers]")
-			if(src.client in admins)
-				stat("Players Ready:", "[totalPlayersReady]")
+			stat("Players: [totalPlayers]", "Players Ready: [totalPlayersReady]")
 			totalPlayers = 0
 			totalPlayersReady = 0
 			for(var/mob/new_player/player in player_list)
-				stat("[player.key]", (player.ready && src.client in admins)?("(Playing)"):(null))
+				stat("[player.key]", (player.ready)?("(Playing)"):(null))
 				totalPlayers++
 				if(player.ready)totalPlayersReady++
 
@@ -116,7 +112,7 @@
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			src << "<span class='notice'>Now teleporting.</span>"
+			src << "\blue Now teleporting."
 			observer.loc = O.loc
 			if(client.prefs.be_random_name)
 				client.prefs.real_name = random_name(gender)
@@ -130,14 +126,14 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
+			usr << "\red The round is either not ready, or has already finished..."
 			return
 		LateChoices()
 
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
+			usr << "\blue There is an administrative lock on entering the game!"
 			return
 
 		AttemptLateSpawn(href_list["SelectedJob"])

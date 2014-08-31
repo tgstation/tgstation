@@ -55,13 +55,13 @@
 	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		var/obj/o = target
 		o.reagents.trans_to(src, max_water)
-		user << "<span class='notice'>\The [src] is now refilled</span>"
+		user << "\blue \The [src] is now refilled"
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 
 	if (!safety)
 		if (src.reagents.total_volume < 1)
-			usr << "<span class='danger'>\The [src] is empty.</span>"
+			usr << "\red \The [src] is empty."
 			return
 
 		if (world.time < src.last_use + 20)

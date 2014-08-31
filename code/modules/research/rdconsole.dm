@@ -152,15 +152,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(istype(D, /obj/item/weapon/disk/tech_disk)) t_disk = D
 		else if (istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
 		else
-			user << "<span class='danger'> Machine cannot accept disks in that format.</span>"
+			user << "\red Machine cannot accept disks in that format."
 			return
 		user.drop_item()
 		D.loc = src
-		user << "<span class='notice'> You add the disk to the machine!</span>"
+		user << "\blue You add the disk to the machine!"
 	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='notice'> You you disable the security protocols</span>"
+		user << "\blue You you disable the security protocols"
 	else
 		..()
 	src.updateUsrDialog()
@@ -229,7 +229,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(linked_destroy)
 			if(linked_destroy.busy)
-				usr << "<span class='danger'> The destructive analyzer is busy at the moment.</span>"
+				usr << "\red The destructive analyzer is busy at the moment."
 
 			else if(linked_destroy.loaded_item)
 				linked_destroy.loaded_item.loc = linked_destroy.loc
@@ -240,7 +240,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
 		if(linked_destroy)
 			if(linked_destroy.busy)
-				usr << "<span class='danger'> The destructive analyzer is busy at the moment.</span>"
+				usr << "\red The destructive analyzer is busy at the moment."
 			else
 				var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
 				if(choice == "Cancel" || !linked_destroy) return
@@ -253,7 +253,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						linked_destroy.busy = 0
 						if(!linked_destroy.hacked)
 							if(!linked_destroy.loaded_item)
-								usr <<"<span class='danger'> The destructive analyzer appears to be empty.</span>"
+								usr <<"\red The destructive analyzer appears to be empty."
 								screen = 1.0
 								return
 							if((linked_destroy.loaded_item.reliability >= 99 - (linked_destroy.decon_mod * 3)) || linked_destroy.loaded_item.crit_fail)
@@ -298,7 +298,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
 		screen = 0.0
 		if(!sync)
-			usr << "<span class='danger'> You must connect to the network first!</span>"
+			usr << "\red You must connect to the network first!"
 		else
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
@@ -356,8 +356,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if (!(being_built.build_type & PROTOLATHE))
 					g2g = 0
 					message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
-
-
+				
+				
 
 				if (g2g) //If input is incorrect, nothing happens
 					linked_lathe.busy = 1
@@ -366,7 +366,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 					for(var/M in being_built.materials)
 						if(!linked_lathe.check_mat(being_built, M))
-							src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</span>")
+							src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
 							g2g = 0
 							break
 						switch(M)
@@ -441,7 +441,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 					for(var/M in being_built.materials)
 						if(!linked_imprinter.check_mat(being_built, M))
-							src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</span>")
+							src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
 							g2g = 0
 							break
 						switch(M)
@@ -790,7 +790,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					else
 						temp_material += " [D.materials[M]/coeff] [CallMaterialName(M)]"
 					c = min(c,t)
-
+						
 				if (c)
 					dat += "* <A href='?src=\ref[src];build=[D.id];amount=1'>[temp_dat]</A>"
 					if(c >= 5.0)

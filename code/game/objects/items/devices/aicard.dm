@@ -18,6 +18,13 @@
 	transfer_ai("AICORE", "AICARD", M, user)
 	return
 
+/obj/item/device/aicard/attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
+	if (!istype (M, /mob/living/silicon/decoy))
+		return ..()
+	else
+		M.death()
+		user << "<b>ERROR ERROR ERROR</b>"
+
 /obj/item/device/aicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return

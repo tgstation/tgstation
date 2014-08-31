@@ -1,5 +1,4 @@
 /mob/living/carbon/human
-	languages = HUMAN
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"

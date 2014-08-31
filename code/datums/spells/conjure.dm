@@ -35,7 +35,7 @@
 				targets -= spawn_place
 			if(ispath(summoned_object_type,/turf))
 				if(istype(get_turf(usr),/turf/simulated/shuttle))
-					usr << "<span class='danger'>You can't build things on shuttles!</span>"
+					usr << "\red You can't build things on shuttles!"
 					break
 				var/turf/O = spawn_place
 				var/N = summoned_object_type

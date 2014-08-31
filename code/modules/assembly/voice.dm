@@ -5,27 +5,26 @@
 	m_amt = 500
 	g_amt = 50
 	origin_tech = "magnets=1"
-	flags = HEAR
 	var/listening = 0
 	var/recorded	//the activation message
 
-/obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/item/device/assembly/voice/hear_talk(mob/living/M as mob, msg)
 	if(listening)
-		recorded = raw_message
+		recorded = msg
 		listening = 0
-		say("Activation message is '[recorded]'.")
+		var/turf/T = get_turf(src)	//otherwise it won't work in hand
+		T.visible_message("\icon[src] beeps, \"Activation message is '[recorded]'.\"")
 	else
-		if(findtext(raw_message, recorded))
+		if(findtext(msg, recorded))
 			pulse(0)
 
 /obj/item/device/assembly/voice/activate()
 	if(secured)
 		if(!holder)
 			listening = !listening
-			say("[listening ? "Now" : "No longer"] recording input.")
+			var/turf/T = get_turf(src)
+			T.visible_message("\icon[src] beeps, \"[listening ? "Now" : "No longer"] recording input.\"")
 
-/obj/machinery/vending/say_quote(text)
-	return "beeps, \"[text]\""
 
 /obj/item/device/assembly/voice/attack_self(mob/user)
 	if(!user)	return 0

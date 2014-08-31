@@ -4,9 +4,7 @@
 	icon_state = "taperecorder_empty"
 	item_state = "analyzer"
 	w_class = 2
-	flags = HEAR
 	slot_flags = SLOT_BELT
-	languages = ALL //this is a translator, after all.
 	m_amt = 60
 	g_amt = 30
 	force = 2
@@ -91,10 +89,23 @@
 		icon_state = "taperecorder_idle"
 
 
-/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/item/device/taperecorder/hear_talk(mob/living/M as mob, msg)
 	if(mytape && recording)
+		var/ending = copytext(msg, length(msg))
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
+		if(M.stuttering)
+			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] stammers, \"[msg]\""
+			return
+		if(M.getBrainLoss() >= 60)
+			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] gibbers, \"[msg]\""
+			return
+		if(ending == "?")
+			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] asks, \"[msg]\""
+			return
+		else if(ending == "!")
+			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] exclaims, \"[msg]\""
+			return
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] says, \"[msg]\""
 
 
 /obj/item/device/taperecorder/verb/record()
@@ -183,16 +194,19 @@
 			break
 		if(mytape.storedinfo.len < i)
 			break
-		say(mytape.storedinfo[i])
+		var/turf/T = get_turf(src)
+		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [mytape.storedinfo[i]]</font>")
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
-			say("End of recording.")
+			T = get_turf(src)
+			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: End of recording.</font>")
 		else
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14)
 			sleep(10)
-			say("Skipping [playsleepseconds] seconds of silence")
+			T = get_turf(src)
+			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Skipping [playsleepseconds] seconds of silence</font>")
 			playsleepseconds = 1
 		i++
 

@@ -17,7 +17,7 @@
 		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-		user << "<span class='notice'>You empty the satchel into the box.</span>"
+		user << "\blue You empty the satchel into the box."
 	return
 
 /obj/structure/ore_box/attack_hand(mob/user as mob)
@@ -79,6 +79,6 @@
 		for (var/obj/item/weapon/ore/O in contents)
 			contents -= O
 			O.loc = src.loc
-		usr << "<span class='notice'>You empty the box.</span>"
+		usr << "\blue You empty the box"
 	src.updateUsrDialog()
 	return

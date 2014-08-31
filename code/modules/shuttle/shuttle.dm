@@ -74,7 +74,7 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(!allowed(usr))
-		usr << "<span class='danger'>Access denied.</span>"
+		usr << "\red Access denied."
 		return
 	if(href_list["move"])
 		if(id in shuttles)
@@ -115,5 +115,5 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 		usr << "<span class='notice'>Docking locks are engaged. Sending request to leave..."
 		var/datum/shuttle_manager/s = shuttles["ferry"]
 		admins << "<b>FERRY: <font color='blue'>[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;secretsadmin=moveferry'>Move</a>)</b> is requesting to move the transport ferry to [s.location == /area/shuttle/transport1/centcom ? "the station" : "Centcom"].</font>"
-		spawn(600) //One minute cooldown
+		spawn(100)
 			cooldown = 0

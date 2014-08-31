@@ -93,7 +93,7 @@
 					usr.drop_item()
 					I.loc = src
 					inserted_id = I
-				else usr << "<span class='danger'>No valid ID.</span>"
+				else usr << "\red No valid ID."
 			else if(istype(inserted_id))
 				switch(href_list["id"])
 					if("eject")

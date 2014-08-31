@@ -18,24 +18,24 @@
 			t_him = "him"
 		else if (M.gender == FEMALE)
 			t_him = "her"
-		user << "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>"
+		user << "\red \The [M] is dead, you cannot help [t_him]!"
 		return
 
 	if (!istype(M))
-		user << "<span class='danger'>\The [src] cannot be applied to [M]!</span>"
+		user << "\red \The [src] cannot be applied to [M]!"
 		return 1
 
 	if ( ! (istype(user, /mob/living/carbon/human) || \
 			istype(user, /mob/living/silicon) || \
 			istype(user, /mob/living/carbon/monkey)) )
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "\red You don't have the dexterity to do this!"
 		return 1
 
 	if (user)
 		if (M != user)
 			user.visible_message( \
-				"<span class='notice'>[M] has been applied with [src] by [user].</span>", \
-				"<span class='notice'>You apply \the [src] to [M].</span>" \
+				"\blue [M] has been applied with [src] by [user].", \
+				"\blue You apply \the [src] to [M]." \
 			)
 		else
 			var/t_himself = "itself"
@@ -45,8 +45,8 @@
 				t_himself = "herself"
 
 			user.visible_message( \
-				"<span class='notice'>[M] applied [src] on [t_himself].</span>", \
-				"<span class='notice'>You apply \the [src] on yourself.</span>" \
+				"\blue [M] applied [src] on [t_himself].", \
+				"\blue You apply \the [src] on yourself." \
 			)
 
 	if (istype(M, /mob/living/carbon/human))

@@ -300,18 +300,9 @@ datum/signal
 			freq *= 10 // shift the decimal one place
 
 		if(!job)
-			job = "Unknown"
-		
-		//SAY REWRITE RELATED CODE.
-		//This code is a little hacky, but it *should* work. Even though it'll result in a virtual speaker referencing another virtual speaker. vOv
-		var/atom/movable/virtualspeaker/virt = new(null)
-		virt.name = source
-		virt.job = job
-		virt.faketrack = 1
-		virt.languages = HUMAN
-		//END SAY REWRITE RELATED CODE.
+			job = "?"
 
-		newsign.data["mob"] = virt
+		newsign.data["mob"] = null
 		newsign.data["mobtype"] = /mob/living/carbon/human
 		newsign.data["name"] = source
 		newsign.data["realname"] = newsign.data["name"]
@@ -323,12 +314,15 @@ datum/signal
 			freq = text2num(freq)
 		newsign.frequency = freq
 
+		var/datum/radio_frequency/connection = radio_controller.return_frequency(freq)
+		newsign.data["connection"] = connection
+
 
 		newsign.data["radio"] = hradio
 		newsign.data["vmessage"] = message
 		newsign.data["vname"] = source
 		newsign.data["vmask"] = 0
-		newsign.data["level"] = data["level"]
+		newsign.data["level"] = list()
 
 		newsign.sanitize_data()
 

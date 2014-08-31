@@ -115,7 +115,7 @@
 
 /obj/item/device/sbeacondrop/attack_self(mob/user as mob)
 	if(user)
-		user << "<span class='notice'>Locked In.</span>"
+		user << "\blue Locked In"
 		new droptype( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
@@ -145,14 +145,14 @@
 
 /obj/machinery/singularity_beacon/proc/Activate(mob/user = null)
 	if(!checkWirePower())
-		if(user) user << "<span class='notice'>The connected wire doesn't have enough current.</span>"
+		if(user) user << "\blue The connected wire doesn't have enough current."
 		return
 	for(var/obj/machinery/singularity/singulo in world)
 		if(singulo.z == z)
 			singulo.target = src
 	icon_state = "[icontype]1"
 	active = 1
-	if(user) user << "<span class='notice'>You activate the beacon.</span>"
+	if(user) user << "\blue You activate the beacon."
 
 
 /obj/machinery/singularity_beacon/proc/Deactivate(mob/user = null)
@@ -161,7 +161,7 @@
 			singulo.target = null
 	icon_state = "[icontype]0"
 	active = 0
-	if(user) user << "<span class='notice'>You deactivate the beacon.</span>"
+	if(user) user << "\blue You deactivate the beacon."
 
 
 /obj/machinery/singularity_beacon/attack_ai(mob/user as mob)
@@ -172,20 +172,20 @@
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else
-		user << "<span class='danger'>You need to screw the beacon to the floor first!</span>"
+		user << "\red You need to screw the beacon to the floor first!"
 		return
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(active)
-			user << "<span class='danger'>You need to deactivate the beacon first!</span>"
+			user << "\red You need to deactivate the beacon first!"
 			return
 
 		if(stat & SCREWED)
 			stat &= ~SCREWED
 			anchored = 0
-			user << "<span class='notice'>You unscrew the beacon from the floor.</span>"
+			user << "\blue You unscrew the beacon from the floor."
 			attached = null
 			return
 		else
@@ -197,7 +197,7 @@
 				return
 			stat |= SCREWED
 			anchored = 1
-			user << "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>"
+			user << "\blue You screw the beacon to the floor and attach the cable."
 			return
 	..()
 	return

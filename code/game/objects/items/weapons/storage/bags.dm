@@ -137,7 +137,7 @@
 		current += S.amount
 	if(capacity == current)//If it's full, you're done
 		if(!stop_messages)
-			usr << "<span class='danger'>The snatcher is full.</span>"
+			usr << "\red The snatcher is full."
 		return 0
 	return 1
 

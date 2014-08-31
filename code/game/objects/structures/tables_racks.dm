@@ -295,7 +295,7 @@
 	var/dat = "<h3>Construction menu</h3>"
 	dat += "<div class='statusDisplay'>"
 	if(busy)
-		dat += "Construction in progress...</div>"
+		dat += "Construction inprogress...</div>"
 	else
 		for(var/datum/table_recipe/R in table_recipes)
 			if(check_contents(R))
@@ -585,14 +585,8 @@
 		return
 
 	if (istype(I, /obj/item/weapon/wrench))
-		if(istype(src, /obj/structure/table/reinforced))
-			var/obj/structure/table/reinforced/RT = src
-			if(RT.status == 1)
-				table_destroy(2, user)
-				return
-		else
-			table_destroy(2, user)
-			return
+		table_destroy(2, user)
+		return
 
 	if (istype(I, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = I
@@ -638,13 +632,24 @@ Destroy type values:
 		return
 
 	if(destroy_type == 2)
-		user << "<span class='notice'>Now disassembling the [src.name]</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if (do_after(user, 50))
-			new parts( src.loc )
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			qdel(src)
-		return
+		if(istype(src, /obj/structure/table/reinforced))
+			var/obj/structure/table/reinforced/RT = src
+			if(RT.status == 1)
+				user << "<span class='notice'>Now disassembling the reinforced table</span>"
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				if (do_after(user, 50))
+					new parts( src.loc )
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					qdel(src)
+				return
+		else
+			user << "<span class='notice'>Now disassembling table</span>"
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if (do_after(user, 50))
+				new parts( src.loc )
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				qdel(src)
+			return
 
 
 
@@ -680,18 +685,18 @@ Destroy type values:
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				user << "<span class='notice'>Now weakening the reinforced table</span>"
+				user << "\blue Now weakening the reinforced table"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>Table weakened</span>"
+					user << "\blue Table weakened"
 					src.status = 1
 			else
-				user << "<span class='notice'>Now strengthening the reinforced table</span>"
+				user << "\blue Now strengthening the reinforced table"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>Table strengthened</span>"
+					user << "\blue Table strengthened"
 					src.status = 2
 			return
 	..()
@@ -800,3 +805,4 @@ Destroy type values:
 		qdel(src)
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
+

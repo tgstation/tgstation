@@ -59,7 +59,7 @@
 		var/obj/item/weapon/card/id/I = W.GetID()
 		if(istype(I))
 			if(src.broken)
-				user << "<span class='danger'>It appears to be broken.</span>"
+				user << "\red It appears to be broken."
 				return
 			if(!I || !I.registered_name)	return
 			if(src.allowed(user) || !src.registered_name || (istype(I) && (src.registered_name == I.registered_name)))
@@ -72,7 +72,7 @@
 					src.registered_name = I.registered_name
 					src.desc = "Owned by [I.registered_name]."
 			else
-				user << "<span class='danger'>Access Denied.</span>"
+				user << "\red Access Denied"
 		else
 			..()
 	else

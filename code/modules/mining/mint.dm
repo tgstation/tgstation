@@ -117,7 +117,7 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(processing==1)
-		usr << "<span class='notice'>The machine is processing.</span>"
+		usr << "\blue The machine is processing."
 		return
 	if(href_list["choose"])
 		chosen = href_list["choose"]

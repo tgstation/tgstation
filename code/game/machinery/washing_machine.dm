@@ -266,9 +266,9 @@
 				W.loc = src
 				state = 3
 			else
-				user << "<span class='notice'>You can't put the item in right now.</span>"
+				user << "\blue You can't put the item in right now."
 		else
-			user << "<span class='notice'>The washing machine is full.</span>"
+			user << "\blue The washing machine is full."
 	else
 		..()
 	update_icon()
@@ -290,7 +290,7 @@
 			crayon = null
 			state = 1
 		if(5)
-			user << "<span class='danger'>The [src] is busy.</span>"
+			user << "\red The [src] is busy."
 		if(6)
 			state = 7
 		if(7)

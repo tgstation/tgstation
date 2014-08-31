@@ -22,7 +22,7 @@
 			else if(prob(5))
 				affected_mob.emote("gasp")
 			if(prob(10))
-				affected_mob << "<span class='danger'>You're starting to feel very weak...</span>"
+				affected_mob << "\red You're starting to feel very weak..."
 		if(4)
 			if(prob(10))
 				affected_mob.emote("cough")

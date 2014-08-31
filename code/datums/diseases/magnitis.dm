@@ -16,7 +16,7 @@
 	switch(stage)
 		if(2)
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a slight shock course through your body.</span>"
+				affected_mob << "\red You feel a slight shock course through your body."
 			if(prob(2))
 				for(var/obj/M in orange(2,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
@@ -36,9 +36,9 @@
 						*/
 		if(3)
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a strong shock course through your body.</span>"
+				affected_mob << "\red You feel a strong shock course through your body."
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel like clowning around.</span>"
+				affected_mob << "\red You feel like clowning around."
 			if(prob(4))
 				for(var/obj/M in orange(4,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
@@ -64,9 +64,9 @@
 						*/
 		if(4)
 			if(prob(2))
-				affected_mob << "<span class='danger'>You feel a powerful shock course through your body.</span>"
+				affected_mob << "\red You feel a powerful shock course through your body."
 			if(prob(2))
-				affected_mob << "<span class='danger'>You query upon the nature of miracles.</span>"
+				affected_mob << "\red You query upon the nature of miracles."
 			if(prob(8))
 				for(var/obj/M in orange(6,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))

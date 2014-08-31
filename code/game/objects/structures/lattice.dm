@@ -58,7 +58,7 @@
 	if (istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
-			user << "<span class='notice'>Slicing lattice joints ...</span>"
+			user << "\blue Slicing lattice joints ..."
 		new /obj/item/stack/rods(src.loc)
 		qdel(src)
 

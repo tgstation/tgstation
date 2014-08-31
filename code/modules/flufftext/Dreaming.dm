@@ -12,7 +12,7 @@ mob/living/carbon/proc/dream()
 		for(var/i = rand(1,4),i > 0, i--)
 			var/dream_image = pick(dreams)
 			dreams -= dream_image
-			src << "<span class='notice'><i>... [dream_image] ...</i></span>"
+			src << "\blue <i>... [dream_image] ...</i>"
 			sleep(rand(40,70))
 			if(paralysis <= 0)
 				dreaming = 0

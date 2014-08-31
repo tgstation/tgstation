@@ -4,6 +4,8 @@
 	mouse_opacity
 	density = 0
 
+	robot_talk_understand = 0
+
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 
@@ -11,6 +13,7 @@
 	var/list/software = list()
 	var/userDNA		// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
+	var/obj/item/device/radio/radio		// Our primary radio
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"

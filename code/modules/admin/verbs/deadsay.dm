@@ -8,7 +8,7 @@
 	if(!src.mob)
 		return
 	if(prefs.muted & MUTE_DEADCHAT)
-		src << "<span class='danger'>You cannot send DSAY messages (muted).</span>"
+		src << "\red You cannot send DSAY messages (muted)."
 		return
 
 	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))

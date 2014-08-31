@@ -7,7 +7,7 @@
 
 
 	if(!usr.client || !usr.client.holder)
-		usr << "<span class='danger'>You need to be an administrator to access this.</span>"
+		usr << "\red You need to be an administrator to access this."
 		return
 
 
@@ -609,7 +609,7 @@ body
 						usr << "No objects of this type exist"
 						return
 					log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
-					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) </span>")
+					message_admins("\blue [key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
 				if("Type and subtypes")
 					var/i = 0
 					for(var/obj/Obj in world)
@@ -620,7 +620,7 @@ body
 						usr << "No objects of this type exist"
 						return
 					log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
-					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) </span>")
+					message_admins("\blue [key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
 
 		else if(href_list["addreagent"])
 			if(!check_rights(0))	return
@@ -650,7 +650,7 @@ body
 						if(amount)
 							A.reagents.add_reagent(chosen_id, amount)
 							log_admin("[key_name(usr)] has added [amount] units of [chosen] to \the [A]")
-							message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen] to \the [A]</span>")
+							message_admins("\blue [key_name(usr)] has added [amount] units of [chosen] to \the [A]")
 
 			href_list["datumrefresh"] = href_list["addreagent"]
 
@@ -819,7 +819,7 @@ body
 
 			if(amount != 0)
 				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
+				message_admins("\blue [key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 
 

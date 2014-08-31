@@ -37,7 +37,7 @@
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
-	message = "<span class='notice'>You feel strong! You feel a pressure building behind your eyes!</span>"
+	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
 	range = -1
 	include_user = 1
 	centcom_cancast = 0
@@ -198,7 +198,7 @@
 	clothes_req = 0
 	invocation = "STI KALY"
 	invocation_type = "whisper"
-	message = "<span class='notice'>Your eyes cry out in pain!</span>"
+	message = "\blue Your eyes cry out in pain!"
 	cooldown_min = 50 //12 deciseconds reduction per rank
 
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")

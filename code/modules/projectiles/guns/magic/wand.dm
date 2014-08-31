@@ -53,11 +53,6 @@
 	playsound(user, fire_sound, 50, 1)
 	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> zapped \himself with a <b>[src]</b>"
 
-
-/////////////////////////////////////
-//WAND OF DEATH
-/////////////////////////////////////
-
 /obj/item/weapon/gun/magic/wand/death
 	name = "wand of death"
 	desc = "This deadly wand overwhelms the victim's body with pure energy, slaying them without fail."
@@ -73,10 +68,6 @@
 	charges--
 	..()
 
-/////////////////////////////////////
-//WAND OF HEALING
-/////////////////////////////////////
-
 /obj/item/weapon/gun/magic/wand/resurrection
 	name = "wand of healing"
 	desc = "This wand uses healing magics to heal and revive. They are rarely utilized within the Wizard Federation for some reason."
@@ -90,10 +81,6 @@
 	charges--
 	..()
 
-/////////////////////////////////////
-//WAND OF POLYMORPH
-/////////////////////////////////////
-
 /obj/item/weapon/gun/magic/wand/polymorph
 	name = "wand of polymorph"
 	desc = "This wand is attuned to chaos and will radically alter the victim's form."
@@ -105,10 +92,6 @@
 	..() //because the user mob ceases to exists by the time wabbajack fully resolves
 	wabbajack(user)
 	charges--
-
-/////////////////////////////////////
-//WAND OF TELEPORTATION
-/////////////////////////////////////
 
 /obj/item/weapon/gun/magic/wand/teleport
 	name = "wand of teleportation"
@@ -126,10 +109,6 @@
 	charges--
 	..()
 
-/////////////////////////////////////
-//WAND OF DOOR CREATION
-/////////////////////////////////////
-
 /obj/item/weapon/gun/magic/wand/door
 	name = "wand of door creation"
 	desc = "This particular wand can create doors in any wall for the unscrupulous wizard who shuns teleportation magics."
@@ -140,10 +119,6 @@
 
 /obj/item/weapon/gun/magic/wand/door/zap_self()
 	return
-
-/////////////////////////////////////
-//WAND OF FIREBALL
-/////////////////////////////////////
 
 /obj/item/weapon/gun/magic/wand/fireball
 	name = "wand of fireball"

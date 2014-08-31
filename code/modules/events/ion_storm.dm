@@ -11,7 +11,6 @@
 	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
 	var/ionMessage = null
 	var/ionAnnounceChance = 33
-	announceWhen	= 1
 
 /datum/round_event/ion_storm/New(var/botEmagChance = 10, var/announceEvent = ION_RANDOM, var/ionMessage = null, var/ionAnnounceChance = 33)
 	src.botEmagChance = botEmagChance
@@ -33,7 +32,7 @@
 			if(message)
 				M.add_ion_law(message)
 				M << "<br>"
-				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
+				M << "\red [message] ...LAWS UPDATED"
 				M << "<br>"
 
 	if(botEmagChance)

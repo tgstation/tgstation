@@ -792,10 +792,10 @@ table tr:first-child th:first-child { border: none;}
 				else
 					if(src.allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 						locked = !locked
-						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
+						user << "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface."
 						src.updateUsrDialog()
 					else
-						user << "<span class='danger'>Access denied.</span>"
+						user << "\red Access denied."
 				return
 		if(1)
 			if(istype(W, /obj/item/weapon/crowbar) && wires.wires_status == (2 ** wires.wire_count) - 1)
@@ -892,14 +892,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='danger'>Air Alarm cannot be placed on this spot.</span>"
+		usr << "\red Air Alarm cannot be placed on this spot."
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='danger'>Air Alarm cannot be placed in this area.</span>"
+		usr << "\red Air Alarm cannot be placed in this area."
 		return
 
 	if(gotwallitem(loc, ndir))
-		usr << "<span class='danger'>There's already an item on this wall!</span>"
+		usr << "\red There's already an item on this wall!"
 		return
 
 	new /obj/machinery/alarm(loc, ndir, 1)
@@ -1135,16 +1135,24 @@ FIRE ALARM
 /obj/machinery/firealarm/proc/reset()
 	if (stat & (NOPOWER|BROKEN)) // can't reset alarm if it's unpowered or broken.
 		return
-	var/area/A = get_area(src)
-	A.firereset()
+	var/area/A = src.loc
+	A = A.loc
+	if (!( istype(A, /area) ))
+		return
+	for(var/area/RA in A.related)
+		RA.firereset()
 	update_icon()
 	return
 
 /obj/machinery/firealarm/proc/alarm()
 	if (stat & (NOPOWER|BROKEN))  // can't activate alarm if it's unpowered or broken.
 		return
-	var/area/A = get_area(src)
-	A.firealert()
+	var/area/A = src.loc
+	A = A.loc
+	if (!( istype(A, /area) ))
+		return
+	for(var/area/RA in A.related)
+		RA.firealert()
 	update_icon()
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
@@ -1217,14 +1225,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='danger'>Fire Alarm cannot be placed on this spot.</span>"
+		usr << "\red Fire Alarm cannot be placed on this spot."
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='danger'>Fire Alarm cannot be placed in this area.</span>"
+		usr << "\red Fire Alarm cannot be placed in this area."
 		return
 
 	if(gotwallitem(loc, ndir))
-		usr << "<span class='danger'>There's already an item on this wall!</span>"
+		usr << "\red There's already an item on this wall!"
 		return
 
 	new /obj/machinery/firealarm(loc, ndir, 1)
