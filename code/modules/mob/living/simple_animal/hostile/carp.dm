@@ -75,5 +75,9 @@
 	projectiletype = /obj/item/projectile/beam
 
 /mob/living/simple_animal/hostile/carp/lasercarp/harvest()
-	new /obj/item/weapon/gun/energy/laser/retro(src)
+	var/mob/living/carbon/L = .
+	if(prob(50)
+		new /obj/item/weapon/gun/energy/laser/retro(src)
+	else
+		L.visible_message("<span class='notice'>\the [src]'s laser cannon breaks apart upon being cut away!</span>
 	return ..()
