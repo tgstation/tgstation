@@ -7,9 +7,11 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
-
+razharas = Game Master
+Niknakflak = Game Master
 rolan7 = Game Master
 quarxink = Game Master
+adrix89 = Game Master
 tle = Game Master
 xsi = Game Master
 scaredofshadows = Game Master
@@ -43,10 +45,10 @@ crimsonvision = Game Master
 iamgoofball = Game Master
 zelacks = Game Master
 androidsfv = Game Master
-miauw62 = Game Master
+miggles = Game Master
 jordie0608 = Game Master
 s0ldi3rkr4s0 = Game Master
-ergosavi = Game Master
+ergovisavi = Game Master
 vistapowa = Game Master
 miauw62 = Game Master
 kazeespada = Game Master
