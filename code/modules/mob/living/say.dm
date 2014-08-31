@@ -185,7 +185,7 @@ var/list/department_radio_keys = list(
 			return
 		if(client.handle_spam_prevention(message,MUTE_IC))
 			return
-	
+
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
@@ -194,10 +194,10 @@ var/list/department_radio_keys = list(
 
 	if(sdisabilities & MUTE)
 		return
-	
+
 	if(is_muzzled())
 		return
-	
+
 	if(!IsVocal())
 		return
 
@@ -216,21 +216,27 @@ var/list/department_radio_keys = list(
 
 /mob/living/proc/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_CHANGELING)
-		if(lingcheck())
-			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
-			for(var/mob/M in mob_list)
-				if(M.lingcheck() || M.stat == DEAD)
-					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-			return 1
+		switch(lingcheck())
+			if(2)
+				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
+				for(var/mob/M in mob_list)
+					if((M.lingcheck() == 2) || M.stat == DEAD)
+						M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+					if((M.lingcheck() == 1) && prob(10))
+						M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
+				return 1
+			if(1)
+				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
+				return 1
 	return 0
 
 /mob/living/proc/treat_message(message)
 	if(getBrainLoss() >= 60)
 		message = derpspeech(message, stuttering)
-	
+
 	if(stuttering)
 		message = stutter(message)
-	
+
 	return message
 
 /mob/living/proc/radio(message, message_mode, steps)
@@ -260,9 +266,12 @@ var/list/department_radio_keys = list(
 			return NOPASS
 	return 0
 
-/mob/living/lingcheck()
+/mob/living/lingcheck() //Returns 1 if they are a changeling. Returns 2 if they are a changeling that can communicate through the hivemind
 	if(mind && mind.changeling)
+		if(mind.changeling.changeling_speak)
+			return 2
 		return 1
+	return 0
 
 /mob/living/say_quote()
 	if (stuttering)
