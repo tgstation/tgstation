@@ -17,6 +17,12 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 				"ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 var/list/wood_icons = list("wood","wood-broken")
+var/list/gold_icons = list("gold")
+var/list/silver_icons = list("silver")
+var/list/plasma_icons = list("plasma")
+var/list/diamond_icons = list("diamond")
+var/list/uranium_icons = list("uranium")
+var/list/bananium_icons = list("bananium")
 
 /turf/simulated/floor
 
@@ -161,6 +167,37 @@ turf/simulated/floor/proc/update_icon()
 			if( !(icon_state in wood_icons) )
 				icon_state = "wood"
 				//world << "[icon_state]y's got [icon_state]"
+
+	else if(is_gold_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in gold_icons) )
+				icon_state = "gold"
+
+	else if(is_silver_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in silver_icons) )
+				icon_state = "silver"
+
+	else if(is_plasma_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in plasma_icons) )
+				icon_state = "plasma"
+
+	else if(is_uranium_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in uranium_icons) )
+				icon_state = "uranium"
+
+	else if(is_diamond_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in diamond_icons) )
+				icon_state = "diamond"
+
+	else if(is_bananium_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in bananium_icons) )
+				icon_state = "bananium"
+
 	spawn(1)
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
@@ -218,6 +255,42 @@ turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/floor/is_wood_floor()
 	if(istype(floor_tile,/obj/item/stack/tile/wood))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_gold_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/mineral/gold))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_silver_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/mineral/silver))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_plasma_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/mineral/plasma))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_uranium_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/mineral/uranium))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_diamond_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/mineral/diamond))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_bananium_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/mineral/bananium))
 		return 1
 	else
 		return 0
@@ -396,6 +469,115 @@ turf/simulated/floor/proc/update_icon()
 
 	update_icon()
 	levelupdate()
+
+/////////////////////GOLD FLOOR
+
+/turf/simulated/floor/proc/make_gold_floor(var/obj/item/stack/tile/mineral/gold/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		if(istype(T,/obj/item/stack/tile/mineral/gold))
+			floor_tile = T
+			update_icon()
+			levelupdate()
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/mineral/gold
+
+	update_icon()
+	levelupdate()
+
+//////////////////////////////SILVER FLOOR
+
+/turf/simulated/floor/proc/make_silver_floor(var/obj/item/stack/tile/mineral/silver/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		if(istype(T,/obj/item/stack/tile/mineral/silver))
+			floor_tile = T
+			update_icon()
+			levelupdate()
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/mineral/silver
+
+	update_icon()
+	levelupdate()
+
+/////////////////////////////////URANIUM FLOOR
+
+/turf/simulated/floor/proc/make_uranium_floor(var/obj/item/stack/tile/mineral/uranium/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		if(istype(T,/obj/item/stack/tile/mineral/uranium))
+			floor_tile = T
+			update_icon()
+			levelupdate()
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/mineral/uranium
+
+	update_icon()
+	levelupdate()
+
+////////////////////////////PLASMA FLOOR
+
+/turf/simulated/floor/proc/make_plasma_floor(var/obj/item/stack/tile/mineral/plasma/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		if(istype(T,/obj/item/stack/tile/mineral/plasma))
+			floor_tile = T
+			update_icon()
+			levelupdate()
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/mineral/plasma
+
+	update_icon()
+	levelupdate()
+
+///////////////////////////////BANANIUM FLOOR
+
+/turf/simulated/floor/proc/make_bananium_floor(var/obj/item/stack/tile/mineral/bananium/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		if(istype(T,/obj/item/stack/tile/mineral/bananium))
+			floor_tile = T
+			update_icon()
+			levelupdate()
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/mineral/bananium
+
+	update_icon()
+	levelupdate()
+
+//////////////////////////////////DIAMOND FLOOR
+
+/turf/simulated/floor/proc/make_diamond_floor(var/obj/item/stack/tile/mineral/diamond/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		if(istype(T,/obj/item/stack/tile/mineral/diamond))
+			floor_tile = T
+			update_icon()
+			levelupdate()
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/mineral/diamond
+
+	update_icon()
+	levelupdate()
+
 
 //This proc will make a turf into a carpet floor. Fun eh? Insert the carpet tile to be used as the argument
 //If no argument is given a new one will be made.
