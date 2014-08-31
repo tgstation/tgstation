@@ -149,11 +149,9 @@ var/gang_B_name = null
 		gang_B_name = pick(gang_name_pool)
 
 	if(gang == "A")
-		if(gang_A_name)
-			return gang_A_name
+		return gang_A_name
 	if(gang == "B")
-		if(gang_B_name)
-			return gang_B_name
+		return gang_B_name
 
 
 //Traitors and traitor silicons will get these. Revs will not.
