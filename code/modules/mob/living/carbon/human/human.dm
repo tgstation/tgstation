@@ -213,7 +213,7 @@
 
 /mob/living/carbon/human/blob_act()
 	if(stat == 2)	return
-	show_message("<span class='userdanger'> The blob attacks you!</span>")
+	var/blob_msg = "<span class='userdanger'>The blob attacks you"
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 	var/brute_dmg = rand(15,25)
@@ -221,7 +221,9 @@
 	apply_damage(brute_dmg, BRUTE, affecting, run_armor_check(affecting, "melee"))
 	if(reagents)
 		reagents.add_reagent("spore",spore_amt)
-		src << "<span class='userdanger'>The blob covers you in spores!</span>"
+		blob_msg += ", and covers you in spores"
+	blob_msg += "!</span>"
+	show_message(blob_msg)
 	return
 
 
