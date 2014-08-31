@@ -10,7 +10,7 @@
 	maxHealth = 40
 	melee_damage_lower = 2
 	melee_damage_upper = 4
-	attacktext = "hits"
+	attacktext = "fires spores all over"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	var/obj/effect/blob/factory/factory = null
 	var/is_zombie = 0
@@ -62,7 +62,6 @@
 			if(is_zombie)
 				spore_amt = 9
 			L.reagents.add_reagent("spore", spore_amt)
-			L << "<span class='userdanger'>[src] covers you in spores!</span>"
 
 /mob/living/simple_animal/hostile/blobspore/proc/Zombify(var/mob/living/carbon/human/H)
 	if(H.wear_suit)
