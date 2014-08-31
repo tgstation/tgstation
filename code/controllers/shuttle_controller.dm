@@ -18,7 +18,7 @@
 
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
-datum/shuttle_controller
+/datum/shuttle_controller
 	var/location = UNDOCKED //
 	var/online = 0
 	var/direction = 1 //-1 = going back to central command, 1 = going to SS13.  Only important for recalling
@@ -37,150 +37,149 @@ datum/shuttle_controller
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
-	proc/incall(coeff = 1, var/signal_origin)
+/datum/shuttle_controller/proc/incall(coeff = 1, var/signal_origin)
 
-		if(endtime)
-			if(direction == -1)
-				setdirection(1)
+	if(endtime)
+		if(direction == -1)
+			setdirection(1)
+	else
+		if(signal_origin && prob(60)) //40% chance the signal tracing will fail
+			last_call_loc = signal_origin
 		else
-			if(signal_origin && prob(60)) //40% chance the signal tracing will fail
-				last_call_loc = signal_origin
+			last_call_loc = null
+		settimeleft(SHUTTLEARRIVETIME*coeff)
+		online = 1
+		if(always_fake_recall)
+
+			if ((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
+				fake_recall = rand(SHUTTLEARRIVETIME / 4, SHUTTLEARRIVETIME - 100 / 2)
 			else
-				last_call_loc = null
-			settimeleft(SHUTTLEARRIVETIME*coeff)
-			online = 1
-			if(always_fake_recall)
+				fake_recall = rand(SHUTTLEARRIVETIME / 2, SHUTTLEARRIVETIME - 100)
 
-				if ((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
-					fake_recall = rand(SHUTTLEARRIVETIME / 4, SHUTTLEARRIVETIME - 100 / 2)
-				else
-					fake_recall = rand(SHUTTLEARRIVETIME / 2, SHUTTLEARRIVETIME - 100)
+/datum/shuttle_controller/proc/recall(var/signal_origin)
+	if(direction == 1)
+		var/timeleft = timeleft()
+		if(timeleft >= SHUTTLEARRIVETIME)
+			online = 0
+			direction = 1
+			endtime = null
+			return
 
-	proc/recall(var/signal_origin)
+		recall_count ++
+
+		if(recall_count > 2 && signal_origin && prob(60)) //40% chance the signal tracing will fail
+			last_call_loc = signal_origin
+		else
+			last_call_loc = null
+
+		if(recall_count == 2)
+			priority_announce("The emergency shuttle has been recalled.\n\nExcessive number of emergency shuttle calls detected. We will attempt to trace all future calls and recalls to their source. Tracing results can be viewed on any communications console.", null, 'sound/AI/shuttlerecalled.ogg')
+		else
+			priority_announce("The emergency shuttle has been recalled.", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
+		setdirection(-1)
+		online = 1
+
+
+// returns the time (in seconds) before shuttle arrival
+// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
+/datum/shuttle_controller/proc/timeleft()
+	if(online)
+		var/timeleft = round((endtime - world.timeofday)/10 ,1)
+		if(timeleft > (MIDNIGHT_ROLLOVER/10)) // midnight rollover protection
+			endtime -= MIDNIGHT_ROLLOVER // subtract 24 hours from endtime
+			timeleft = round((endtime - world.timeofday)/10 ,1) // recalculate timeleft
 		if(direction == 1)
-			var/timeleft = timeleft()
-			if(timeleft >= SHUTTLEARRIVETIME)
+			return timeleft
+		else
+			return SHUTTLEARRIVETIME-timeleft
+	else
+		return SHUTTLEARRIVETIME
+
+// sets the time left to a given delay (in seconds)
+/datum/shuttle_controller/proc/settimeleft(var/delay)
+	endtime = world.timeofday + delay * 10
+	timelimit = delay
+
+// sets the shuttle direction
+// 1 = towards SS13, -1 = back to centcom
+/datum/shuttle_controller/proc/setdirection(var/dirn)
+	if(direction == dirn)
+		return
+	direction = dirn
+	// if changing direction, flip the timeleft by SHUTTLEARRIVETIME
+	var/ticksleft = endtime - world.timeofday
+	endtime = world.timeofday + (SHUTTLEARRIVETIME*10 - ticksleft)
+	return
+
+//calls the shuttle if there's no live active AI or powered non broken comms console,
+/datum/shuttle_controller/proc/autoshuttlecall()
+	var/callshuttle = 1
+
+	for(var/SC in shuttle_caller_list)
+		if(istype(SC,/mob/living/silicon/ai))
+			var/mob/living/silicon/ai/AI = SC
+			if(AI.stat || !AI.client)
+				continue
+		if(istype(SC,/obj/machinery/computer/communications))
+			var/obj/machinery/computer/communications/C = SC
+			if(C.stat & BROKEN)
+				continue
+		var/turf/T = get_turf(SC)
+		if(T && T.z == 1)
+			callshuttle = 0 //if there's an alive AI or a powered non broken communication console on the station z level, we don't call the shuttle
+			break
+
+	if(callshuttle)
+		if(!online && direction == 1) //we don't call the shuttle if it's already coming
+			incall(SHUTTLEAUTOCALLTIMER) //X minutes! If they want to recall, they have X-(X-5) minutes to do so
+			log_game("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
+			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.", 1)
+			priority_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+
+/datum/shuttle_controller/proc/move_shuttles()
+	var/datum/shuttle_manager/s
+	for(var/t in pods)
+		s = shuttles[t]
+		s.move_shuttle()
+
+/datum/shuttle_controller/proc/process()
+
+/datum/shuttle_controller/emergency_shuttle/process()
+	if(!online)
+		return
+	var/timeleft = timeleft()
+	if(location == UNDOCKED)
+		if(direction == -1)
+			if(timeleft >= timelimit) // Shuttle reaches CentCom after being recalled.
 				online = 0
 				direction = 1
 				endtime = null
-				return
-
-			recall_count ++
-
-			if(recall_count > 2 && signal_origin && prob(60)) //40% chance the signal tracing will fail
-				last_call_loc = signal_origin
-			else
-				last_call_loc = null
-
-			if(recall_count == 2)
-				priority_announce("The emergency shuttle has been recalled.\n\nExcessive number of emergency shuttle calls detected. We will attempt to trace all future calls and recalls to their source. Tracing results can be viewed on any communications console.", null, 'sound/AI/shuttlerecalled.ogg')
-			else
-				priority_announce("The emergency shuttle has been recalled.", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
-			setdirection(-1)
-			online = 1
-
-
-	// returns the time (in seconds) before shuttle arrival
-	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
-	proc/timeleft()
-		if(online)
-			var/timeleft = round((endtime - world.timeofday)/10 ,1)
-			if(timeleft > (MIDNIGHT_ROLLOVER/10)) // midnight rollover protection
-				endtime -= MIDNIGHT_ROLLOVER // subtract 24 hours from endtime
-				timeleft = round((endtime - world.timeofday)/10 ,1) // recalculate timeleft
-			if(direction == 1)
-				return timeleft
-			else
-				return SHUTTLEARRIVETIME-timeleft
-		else
-			return SHUTTLEARRIVETIME
-
-	// sets the time left to a given delay (in seconds)
-	proc/settimeleft(var/delay)
-		endtime = world.timeofday + delay * 10
-		timelimit = delay
-
-	// sets the shuttle direction
-	// 1 = towards SS13, -1 = back to centcom
-	proc/setdirection(var/dirn)
-		if(direction == dirn)
-			return
-		direction = dirn
-		// if changing direction, flip the timeleft by SHUTTLEARRIVETIME
-		var/ticksleft = endtime - world.timeofday
-		endtime = world.timeofday + (SHUTTLEARRIVETIME*10 - ticksleft)
-		return
-
-	//calls the shuttle if there's no live active AI or powered non broken comms console,
-	proc/autoshuttlecall()
-		var/callshuttle = 1
-
-		for(var/SC in shuttle_caller_list)
-			if(istype(SC,/mob/living/silicon/ai))
-				var/mob/living/silicon/ai/AI = SC
-				if(AI.stat || !AI.client)
-					continue
-			if(istype(SC,/obj/machinery/computer/communications))
-				var/obj/machinery/computer/communications/C = SC
-				if(C.stat & BROKEN)
-					continue
-			var/turf/T = get_turf(SC)
-			if(T && T.z == 1)
-				callshuttle = 0 //if there's an alive AI or a powered non broken communication console on the station z level, we don't call the shuttle
-				break
-
-		if(callshuttle)
-			if(!online && direction == 1) //we don't call the shuttle if it's already coming
-				incall(SHUTTLEAUTOCALLTIMER) //X minutes! If they want to recall, they have X-(X-5) minutes to do so
-				log_game("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
-				message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.", 1)
-				priority_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.", null, 'sound/AI/shuttlecalled.ogg', "Priority")
-
-	proc/move_shuttles()
-		var/datum/shuttle_manager/s
-		for(var/t in pods)
-			s = shuttles[t]
-			s.move_shuttle()
-
-	proc/process()
-
-	emergency_shuttle
-		process()
-			if(!online)
-				return
-			var/timeleft = timeleft()
-			if(location == UNDOCKED)
-				if(direction == -1)
-					if(timeleft >= timelimit) // Shuttle reaches CentCom after being recalled.
-						online = 0
-						direction = 1
-						endtime = null
-						return 0
-				else if(fake_recall && (timeleft <= fake_recall))
-					recall()
-					fake_recall = 0
-					return 0
-				else if(timeleft <= 0)
-					var/datum/shuttle_manager/s = shuttles["escape"]
-					s.move_shuttle()
-					location = DOCKED
-					settimeleft(SHUTTLELEAVETIME)
-					send2irc("Server", "The Emergency Shuttle has docked with the station.")
-					priority_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-			else if(timeleft <= 0) //Nothing happens if time's not up and the ship's docked or later
-				if(location == DOCKED)
-					move_shuttles()
-					location = TRANSIT
-					settimeleft(SHUTTLETRANSITTIME)
-					priority_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
-				else if(location == TRANSIT)
-					move_shuttles()
-					//message_admins("Shuttles have attempted to move to Centcom")
-					location = ENDGAME
-					online = 0
-					endtime = null
-				return 1
+				return 0
+		else if(fake_recall && (timeleft <= fake_recall))
+			recall()
+			fake_recall = 0
 			return 0
+		else if(timeleft <= 0)
+			var/datum/shuttle_manager/s = shuttles["escape"]
+			s.move_shuttle()
+			location = DOCKED
+			settimeleft(SHUTTLELEAVETIME)
+			send2irc("Server", "The Emergency Shuttle has docked with the station.")
+			priority_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+	else if(timeleft <= 0) //Nothing happens if time's not up and the ship's docked or later
+		if(location == DOCKED)
+			move_shuttles()
+			location = TRANSIT
+			settimeleft(SHUTTLETRANSITTIME)
+			priority_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+		else if(location == TRANSIT)
+			move_shuttles()
+			//message_admins("Shuttles have attempted to move to Centcom")
+			location = ENDGAME
+			online = 0
+			endtime = null
+		return 1
+	return 0
 
 /*
 	Some slapped-together star effects for maximum spess immershuns. Basically consists of a
@@ -194,23 +193,23 @@ datum/shuttle_controller
 	var/direction = SOUTH
 	layer = 2 // TURF_LAYER
 
-	New()
-		..()
-		pixel_x += rand(-2,30)
-		pixel_y += rand(-2,30)
-		var/starnum = pick("1", "1", "1", "2", "3", "4")
+/obj/effect/bgstar/New()
+	..()
+	pixel_x += rand(-2,30)
+	pixel_y += rand(-2,30)
+	var/starnum = pick("1", "1", "1", "2", "3", "4")
 
-		icon_state = "star"+starnum
+	icon_state = "star"+starnum
 
-		speed = rand(2, 5)
+	speed = rand(2, 5)
 
-	proc/startmove()
+/obj/effect/bgstar/proc/startmove()
 
-		while(src)
-			sleep(speed)
-			step(src, direction)
-			for(var/obj/effect/starender/E in loc)
-				qdel(src)
+	while(src)
+		sleep(speed)
+		step(src, direction)
+		for(var/obj/effect/starender/E in loc)
+			qdel(src)
 
 
 /obj/effect/starender
@@ -221,17 +220,17 @@ datum/shuttle_controller
 	var/spawndir = SOUTH
 	var/spawning = 0
 
-	West
-		spawndir = WEST
+/obj/effect/starspawner/West
+	spawndir = WEST
 
-	proc/startspawn()
-		spawning = 1
-		while(spawning)
-			sleep(rand(2, 30))
-			var/obj/effect/bgstar/S = new/obj/effect/bgstar(locate(x,y,z))
-			S.direction = spawndir
-			spawn()
-				S.startmove()
+/obj/effect/starspawner/proc/startspawn()
+	spawning = 1
+	while(spawning)
+		sleep(rand(2, 30))
+		var/obj/effect/bgstar/S = new/obj/effect/bgstar(locate(x,y,z))
+		S.direction = spawndir
+		spawn()
+			S.startmove()
 
 
 /proc/push_mob_back(var/mob/living/L, var/dir)

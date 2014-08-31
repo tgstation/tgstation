@@ -19,22 +19,22 @@
 	var/datum/construction/construct
 	construction_cost = list("metal"=20000)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(!construct || !construct.action(W, user))
-			..()
-		return
+/obj/item/mecha_parts/chassis/attackby(obj/item/W as obj, mob/user as mob)
+	if(!construct || !construct.action(W, user))
+		..()
+	return
 
-	attack_hand()
-		return
+/obj/item/mecha_parts/chassis/attack_hand()
+	return
 
 /////////// Ripley
 
 /obj/item/mecha_parts/chassis/ripley
 	name = "\improper Ripley chassis"
 
-	New()
-		..()
-		construct = new /datum/construction/mecha/ripley_chassis(src)
+/obj/item/mecha_parts/chassis/ripley/New()
+	..()
+	construct = new /datum/construction/mecha/ripley_chassis(src)
 
 /obj/item/mecha_parts/part/ripley_torso
 	name = "\improper Ripley torso"
@@ -80,9 +80,10 @@
 
 /obj/item/mecha_parts/chassis/gygax
 	name = "\improper Gygax chassis"
-	New()
-		..()
-		construct = new /datum/construction/mecha/gygax_chassis(src)
+
+/obj/item/mecha_parts/chassis/gygax/New()
+	..()
+	construct = new /datum/construction/mecha/gygax_chassis(src)
 
 /obj/item/mecha_parts/part/gygax_torso
 	name = "\improper Gygax torso"
@@ -132,11 +133,11 @@
 	construction_time = 200
 	construction_cost = list("metal"=15000, "diamond"=2000)
 
-/obj/item/mecha_parts/part/gygax_armour
+/obj/item/mecha_parts/part/gygax_armor
 	gender = PLURAL
-	name = "\improper Gygax armour plates"
-	desc = "A set of armour plates designed for the Gygax. Designed to effectively deflect damage with a lightweight construction."
-	icon_state = "gygax_armour"
+	name = "\improper Gygax armor plates"
+	desc = "A set of armor plates designed for the Gygax. Designed to effectively deflect damage with a lightweight construction."
+	icon_state = "gygax_armor"
 	origin_tech = "materials=6;combat=4;engineering=5"
 	construction_time = 600
 	construction_cost = list("metal"=25000,"diamond"=10000)
@@ -148,9 +149,9 @@
 	name = "\improper Durand chassis"
 	construction_cost = list("metal"=25000)
 
-	New()
-		..()
-		construct = new /datum/construction/mecha/durand_chassis(src)
+/obj/item/mecha_parts/chassis/durand/New()
+	..()
+	construct = new /datum/construction/mecha/durand_chassis(src)
 
 /obj/item/mecha_parts/part/durand_torso
 	name = "\improper Durand torso"
@@ -200,11 +201,11 @@
 	construction_time = 200
 	construction_cost = list("metal"=15000,"silver"=4000)
 
-/obj/item/mecha_parts/part/durand_armour
+/obj/item/mecha_parts/part/durand_armor
 	gender = PLURAL
-	name = "\improper Durand armour plates"
-	desc = "A set of armour plates for the Durand. Built heavy to resist an incredible amount of brute force."
-	icon_state = "durand_armour"
+	name = "\improper Durand armor plates"
+	desc = "A set of armor plates for the Durand. Built heavy to resist an incredible amount of brute force."
+	icon_state = "durand_armor"
 	origin_tech = "materials=5;combat=4;engineering=5"
 	construction_time = 600
 	construction_cost = list("metal"=50000,"uranium"=30000)
@@ -214,9 +215,9 @@
 /obj/item/mecha_parts/chassis/firefighter
 	name = "Firefighter chassis"
 
-	New()
-		..()
-		construct = new /datum/construction/mecha/firefighter_chassis(src)
+/obj/item/mecha_parts/chassis/firefighter/New()
+	..()
+	construct = new /datum/construction/mecha/firefighter_chassis(src)
 /*
 /obj/item/mecha_parts/part/firefighter_torso
 	name="Ripley-on-Fire Torso"
@@ -244,9 +245,9 @@
 /obj/item/mecha_parts/chassis/honker
 	name = "\improper H.O.N.K chassis"
 
-	New()
-		..()
-		construct = new /datum/construction/mecha/honker_chassis(src)
+/obj/item/mecha_parts/chassis/honker/New()
+	..()
+	construct = new /datum/construction/mecha/honker_chassis(src)
 
 /obj/item/mecha_parts/part/honker_torso
 	name = "\improper H.O.N.K torso"
@@ -297,9 +298,9 @@
 	name = "\improper Phazon chassis"
 	origin_tech = "materials=7"
 
-	New()
-		..()
-		construct = new /datum/construction/mecha/phazon_chassis(src)
+/obj/item/mecha_parts/chassis/phazon/New()
+	..()
+	construct = new /datum/construction/mecha/phazon_chassis(src)
 
 /obj/item/mecha_parts/part/phazon_torso
 	name="\improper Phazon torso"
@@ -349,9 +350,9 @@
 /obj/item/mecha_parts/chassis/odysseus
 	name = "\improper Odysseus chassis"
 
-	New()
-		..()
-		construct = new /datum/construction/mecha/odysseus_chassis(src)
+/obj/item/mecha_parts/chassis/odysseus/New()
+	..()
+	construct = new /datum/construction/mecha/odysseus_chassis(src)
 
 /obj/item/mecha_parts/part/odysseus_head
 	name = "\improper Odysseus head"
@@ -401,9 +402,9 @@
 	construction_time = 130
 	construction_cost = list("metal"=7000)
 
-/*/obj/item/mecha_parts/part/odysseus_armour
+/*/obj/item/mecha_parts/part/odysseus_armor
 	name="Odysseus Carapace"
-	icon_state = "odysseus_armour"
+	icon_state = "odysseus_armor"
 	origin_tech = "materials=3;engineering=3"
 	construction_time = 200
 	construction_cost = list("metal"=15000)*/
@@ -424,73 +425,73 @@
 	throw_speed = 3
 	throw_range = 7
 
-	ripley
-		origin_tech = "programming=3"
+/obj/item/weapon/circuitboard/mecha/ripley
+	origin_tech = "programming=3"
 
-	ripley/peripherals
-		name = "circuit board (Ripley Peripherals Control module)"
-		icon_state = "mcontroller"
+/obj/item/weapon/circuitboard/mecha/ripley/peripherals
+	name = "circuit board (Ripley Peripherals Control module)"
+	icon_state = "mcontroller"
 
-	ripley/main
-		name = "circuit board (Ripley Central Control module)"
-		icon_state = "mainboard"
+/obj/item/weapon/circuitboard/mecha/ripley/main
+	name = "circuit board (Ripley Central Control module)"
+	icon_state = "mainboard"
 
-	gygax
-		origin_tech = "programming=4"
+/obj/item/weapon/circuitboard/mecha/gygax
+	origin_tech = "programming=4"
 
-	gygax/peripherals
-		name = "circuit board (Gygax Peripherals Control module)"
-		icon_state = "mcontroller"
+/obj/item/weapon/circuitboard/mecha/gygax/peripherals
+	name = "circuit board (Gygax Peripherals Control module)"
+	icon_state = "mcontroller"
 
-	gygax/targeting
-		name = "circuit board (Gygax Weapon Control and Targeting module)"
-		icon_state = "mcontroller"
-		origin_tech = "programming=4;combat=4"
+/obj/item/weapon/circuitboard/mecha/gygax/targeting
+	name = "circuit board (Gygax Weapon Control and Targeting module)"
+	icon_state = "mcontroller"
+	origin_tech = "programming=4;combat=4"
 
-	gygax/main
-		name = "circuit board (Gygax Central Control module)"
-		icon_state = "mainboard"
+/obj/item/weapon/circuitboard/mecha/gygax/main
+	name = "circuit board (Gygax Central Control module)"
+	icon_state = "mainboard"
 
-	durand
-		origin_tech = "programming=4"
+/obj/item/weapon/circuitboard/mecha/durand
+	origin_tech = "programming=4"
 
-	durand/peripherals
-		name = "circuit board (Durand Peripherals Control module)"
-		icon_state = "mcontroller"
+/obj/item/weapon/circuitboard/mecha/durand/peripherals
+	name = "circuit board (Durand Peripherals Control module)"
+	icon_state = "mcontroller"
 
-	durand/targeting
-		name = "circuit board (Durand Weapon Control and Targeting module)"
-		icon_state = "mcontroller"
-		origin_tech = "programming=4;combat=4"
+/obj/item/weapon/circuitboard/mecha/durand/targeting
+	name = "circuit board (Durand Weapon Control and Targeting module)"
+	icon_state = "mcontroller"
+	origin_tech = "programming=4;combat=4"
 
-	durand/main
-		name = "circuit board (Durand Central Control module)"
-		icon_state = "mainboard"
+/obj/item/weapon/circuitboard/mecha/durand/main
+	name = "circuit board (Durand Central Control module)"
+	icon_state = "mainboard"
 
-	honker
-		origin_tech = "programming=4"
+/obj/item/weapon/circuitboard/mecha/honker
+	origin_tech = "programming=4"
 
-	honker/peripherals
-		name = "circuit board (H.O.N.K Peripherals Control module)"
-		icon_state = "mcontroller"
+/obj/item/weapon/circuitboard/mecha/honker/peripherals
+	name = "circuit board (H.O.N.K Peripherals Control module)"
+	icon_state = "mcontroller"
 
-	honker/targeting
-		name = "circuit board (H.O.N.K Weapon Control and Targeting module)"
-		icon_state = "mcontroller"
+/obj/item/weapon/circuitboard/mecha/honker/targeting
+	name = "circuit board (H.O.N.K Weapon Control and Targeting module)"
+	icon_state = "mcontroller"
 
-	honker/main
-		name = "circuit board (H.O.N.K Central Control module)"
-		icon_state = "mainboard"
+/obj/item/weapon/circuitboard/mecha/honker/main
+	name = "circuit board (H.O.N.K Central Control module)"
+	icon_state = "mainboard"
 
-	odysseus
-		origin_tech = "programming=3"
+/obj/item/weapon/circuitboard/mecha/odysseus
+	origin_tech = "programming=3"
 
-	odysseus/peripherals
-		name = "circuit board (Odysseus Peripherals Control module)"
-		icon_state = "mcontroller"
+/obj/item/weapon/circuitboard/mecha/odysseus/peripherals
+	name = "circuit board (Odysseus Peripherals Control module)"
+	icon_state = "mcontroller"
 
-	odysseus/main
-		name = "circuit board (Odysseus Central Control module)"
-		icon_state = "mainboard"
+/obj/item/weapon/circuitboard/mecha/odysseus/main
+	name = "circuit board (Odysseus Central Control module)"
+	icon_state = "mainboard"
 
 

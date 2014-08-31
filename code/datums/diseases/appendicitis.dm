@@ -35,7 +35,7 @@
 			if(prob(1))
 				if (affected_mob.nutrition > 100)
 					affected_mob.Stun(rand(4,6))
-					affected_mob.visible_message("<span class='warning'>[affected_mob] throws up!</span>")
+					affected_mob.show_message("<span class='warning'>[affected_mob] throws up!</span>")
 					playsound(affected_mob.loc, 'sound/effects/splat.ogg', 50, 1)
 					var/turf/location = affected_mob.loc
 					if(istype(location, /turf/simulated))

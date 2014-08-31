@@ -453,3 +453,10 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			return
 	else
 		return
+
+/proc/broadcast_hud_message(var/message, var/broadcast_source)
+	var/turf/sourceturf = get_turf(broadcast_source)
+	for(var/mob/living/carbon/human/human in mob_list)
+		var/turf/humanturf = get_turf(human)
+		if((humanturf.z == sourceturf.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security))
+			human.show_message("<span class='info'>\icon[human.glasses] [message]</span>", 1)

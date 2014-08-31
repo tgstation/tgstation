@@ -102,7 +102,7 @@
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
 			if(ismob(A))
-				changeNext_move(8)
+				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
 		return
 
@@ -119,7 +119,7 @@
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
 				if(ismob(A))
-					changeNext_move(8)
+					changeNext_move(CLICK_CD_MELEE)
 				UnarmedAttack(A, 1)
 			return
 		else // non-adjacent click
@@ -150,7 +150,7 @@
 */
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
 	if(ismob(A))
-		changeNext_move(8)
+		changeNext_move(CLICK_CD_MELEE)
 	return
 
 /*
@@ -261,7 +261,7 @@
 	return
 
 /mob/living/LaserEyes(atom/A)
-	changeNext_move(4)
+	changeNext_move(CLICK_CD_RANGE)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 
@@ -285,7 +285,7 @@
 		nutrition = max(nutrition - rand(1,5),0)
 		handle_regular_hud_updates()
 	else
-		src << "\red You're out of energy!  You need food!"
+		src << "<span class='danger'>You're out of energy!  You need food!</span>"
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)

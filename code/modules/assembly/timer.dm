@@ -69,7 +69,7 @@
 
 /obj/item/device/assembly/timer/interact(mob/user as mob)//TODO: Have this use the wires
 	if(!secured)
-		user.show_message("\red The [name] is unsecured!")
+		user.show_message("<span class='danger'>The [name] is unsecured!</span>")
 		return 0
 	var/second = time % 60
 	var/minute = (time - second) / 60

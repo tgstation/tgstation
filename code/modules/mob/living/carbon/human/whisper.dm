@@ -1,9 +1,22 @@
 /mob/living/carbon/human/whisper(message as text)
+	if(!IsVocal())
+		return
+
+	if(say_disabled)	//This is here to try to identify lag problems
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		return
+
 	message = trim(copytext(strip_html_simple(message), 1, MAX_MESSAGE_LEN))
 	if(!can_speak(message))
 		return
 
 	message = "<i>[message]</i>"
+	log_whisper("[src.name]/[src.key] : [message]")
+
+	if (src.client)
+		if (src.client.prefs.muted & MUTE_IC)
+			src << "<span class='danger'>You cannot whisper (muted).</span>"
+			return
 
 	log_whisper("[src.name]/[src.key] : [message]")
 

@@ -486,8 +486,6 @@
 	qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
-	if(..())
-		return
 	toggle_open(user)
 	add_fingerprint(user)
 

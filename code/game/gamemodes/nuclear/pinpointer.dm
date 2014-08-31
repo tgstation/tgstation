@@ -13,52 +13,52 @@
 	var/active = 0
 
 
-	attack_self()
-		if(!active)
-			active = 1
-			workdisk()
-			usr << "\blue You activate the pinpointer"
-		else
-			active = 0
-			icon_state = "pinoff"
-			usr << "\blue You deactivate the pinpointer"
+/obj/item/weapon/pinpointer/attack_self()
+	if(!active)
+		active = 1
+		workdisk()
+		usr << "<span class='notice'>You activate the pinpointer.</span>"
+	else
+		active = 0
+		icon_state = "pinoff"
+		usr << "<span class='notice'>You deactivate the pinpointer.</span>"
 
-	proc/point_at(atom/target)
-		if(!active)
-			return
-		if(!target)
-			icon_state = "pinonnull"
-			return
+/obj/item/weapon/pinpointer/proc/point_at(atom/target)
+	if(!active)
+		return
+	if(!target)
+		icon_state = "pinonnull"
+		return
 
-		var/turf/T = get_turf(target)
-		var/turf/L = get_turf(src)
+	var/turf/T = get_turf(target)
+	var/turf/L = get_turf(src)
 
-		if(T.z != L.z)
-			icon_state = "pinonnull"
-		else
-			dir = get_dir(L, T)
-			switch(get_dist(L, T))
-				if(-1)
-					icon_state = "pinondirect"
-				if(1 to 8)
-					icon_state = "pinonclose"
-				if(9 to 16)
-					icon_state = "pinonmedium"
-				if(16 to INFINITY)
-					icon_state = "pinonfar"
-		spawn(5)
-			.()
+	if(T.z != L.z)
+		icon_state = "pinonnull"
+	else
+		dir = get_dir(L, T)
+		switch(get_dist(L, T))
+			if(-1)
+				icon_state = "pinondirect"
+			if(1 to 8)
+				icon_state = "pinonclose"
+			if(9 to 16)
+				icon_state = "pinonmedium"
+			if(16 to INFINITY)
+				icon_state = "pinonfar"
+	spawn(5)
+		.()
 
-	proc/workdisk()
-		if(!the_disk)
-			the_disk = locate()
-		point_at(the_disk)
+/obj/item/weapon/pinpointer/proc/workdisk()
+	if(!the_disk)
+		the_disk = locate()
+	point_at(the_disk)
 
-	examine()
-		..()
-		for(var/obj/machinery/nuclearbomb/bomb in world)
-			if(bomb.timing)
-				usr << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
+/obj/item/weapon/pinpointer/examine()
+	..()
+	for(var/obj/machinery/nuclearbomb/bomb in world)
+		if(bomb.timing)
+			usr << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
 
 
 /obj/item/weapon/pinpointer/advpinpointer
@@ -69,20 +69,20 @@
 	var/turf/location = null
 	var/obj/target = null
 
-	attack_self()
-		if(!active)
-			active = 1
-			if(mode == 0)
-				workdisk()
-			if(mode == 1)
-				point_at(location)
-			if(mode == 2)
-				point_at(target)
-			usr << "\blue You activate the pinpointer"
-		else
-			active = 0
-			icon_state = "pinoff"
-			usr << "\blue You deactivate the pinpointer"
+/obj/item/weapon/pinpointer/advpinpointer/attack_self()
+	if(!active)
+		active = 1
+		if(mode == 0)
+			workdisk()
+		if(mode == 1)
+			point_at(location)
+		if(mode == 2)
+			point_at(target)
+		usr << "<span class='notice'>You activate the pinpointer.,/span>"
+	else
+		active = 0
+		icon_state = "pinoff"
+		usr << "<span class='notice'>You deactivate the pinpointer.</span>"
 
 
 /obj/item/weapon/pinpointer/advpinpointer/verb/toggle_mode()

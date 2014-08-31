@@ -96,19 +96,12 @@
 
 		if(M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform
-			if(!U.hastie) //Check if he is not already wearing an accessory
-				user.drop_item()
-				U.hastie = src
-				src.loc = U
-
+			if(U.attachTie(src, user, 0)) //Attach it, do not notify the user of the attachment
 				if(user == M)
 					user << "<span class='notice'>You attach [src] to [U].</span>"
 				else
 					user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
 										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
-				M.update_inv_w_uniform(0)
-
-			else user << "<span class='warning'>\The [U] already has an accessory.</span>"
 
 		else user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
 	else ..()
@@ -163,6 +156,10 @@
 	desc = "An fancy red armband!"
 	icon_state = "red"
 	item_color = "red"
+
+/obj/item/clothing/tie/armband/deputy
+	name = "security deputy armband"
+	desc = "An armband, worn by personnel authorized to act as a deputy of station security."
 
 /obj/item/clothing/tie/armband/cargo
 	name = "cargo bay guard armband"

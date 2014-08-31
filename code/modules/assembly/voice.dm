@@ -13,20 +13,19 @@
 	if(listening)
 		recorded = raw_message
 		listening = 0
-		var/turf/T = get_turf(src)	//otherwise it won't work in hand
-		T.visible_message("\icon[src] beeps, \"Activation message is '[recorded]'.\"")
+		say("Activation message is '[recorded]'.")
 	else
 		if(findtext(raw_message, recorded))
 			pulse(0)
-
 
 /obj/item/device/assembly/voice/activate()
 	if(secured)
 		if(!holder)
 			listening = !listening
-			var/turf/T = get_turf(src)
-			T.visible_message("\icon[src] beeps, \"[listening ? "Now" : "No longer"] recording input.\"")
+			say("[listening ? "Now" : "No longer"] recording input.")
 
+/obj/machinery/vending/say_quote(text)
+	return "beeps, \"[text]\""
 
 /obj/item/device/assembly/voice/attack_self(mob/user)
 	if(!user)	return 0

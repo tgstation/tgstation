@@ -23,6 +23,7 @@ Note: Must be placed west/left of and R&D console to function.
 	var/clown_amount = 0.0
 	var/adamantine_amount = 0.0
 	var/efficiency_coeff
+	
 	reagents = new()
 
 
@@ -37,6 +38,7 @@ Note: Must be placed west/left of and R&D console to function.
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	RefreshParts()
+	
 	reagents.my_atom = src
 
 /obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
@@ -54,27 +56,26 @@ Note: Must be placed west/left of and R&D console to function.
 		T += (M.rating/3)
 	efficiency_coeff = max(T, 1)
 
-/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)
+/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)	// now returns how many times the item can be built with the material
 	switch(M)
 		if("$metal")
-			return (m_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (m_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$glass")
-			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (g_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$gold")
-			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (gold_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$silver")
-			return (silver_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (silver_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$plasma")
-			return (plasma_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (plasma_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$uranium")
-			return (uranium_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (uranium_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$diamond")
-			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (diamond_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		if("$clown")
-			return (clown_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (clown_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
 		else
-			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
-
+			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)))
 
 /obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (shocked)

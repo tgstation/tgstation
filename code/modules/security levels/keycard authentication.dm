@@ -150,8 +150,7 @@
 		for(var/obj/machinery/door/airlock/D in A)
 			D.emergency = 1
 			D.update_icon(0)
-	world << "<font size=4 color='red'>Attention! Station-wide emergency declared</font>"
-	world << "<font color='red'>Access restrictions on maintenance and external airlocks have been lifted.</font>"
+	minor_announce("Access restrictions on maintenance and external airlocks have been lifted.", "Attention! Station-wide emergency declared!")
 	emergency_access = 1
 
 /proc/revoke_maint_all_access()
@@ -159,6 +158,5 @@
 		for(var/obj/machinery/door/airlock/D in A)
 			D.emergency = 0
 			D.update_icon(0)
-	world << "<font size=4 color='red'>Attention! Emergency maintenance access disabled</font>"
-	world << "<font color='red'>Access restrictions in maintenance areas have been restored.</font>"
+	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
 	emergency_access = 0

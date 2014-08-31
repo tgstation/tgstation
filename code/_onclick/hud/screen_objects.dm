@@ -314,7 +314,7 @@
 		if("Crew Monitorting")
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
-				crewmonitor(AI)
+				crewmonitor(AI,AI)
 
 		if("Show Crew Manifest")
 			if(isAI(usr))
@@ -355,11 +355,17 @@
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
 				AI.aicamera.toggle_camera_mode()
+			else if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.aicamera.toggle_camera_mode()
 
 		if("View Images")
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
 				AI.aicamera.viewpictures()
+			else if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.aicamera.viewpictures()
 
 		else
 			return 0

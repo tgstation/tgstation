@@ -177,7 +177,7 @@ var/list/ingredients_source = list(
 		return
 	if(href_list["dispense"])
 		dispense_flavour = text2num(href_list["dispense"])
-		src.visible_message("\blue[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.")
+		src.visible_message("<span class='notice'>[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.</span>")
 
 	if(href_list["cone"])
 		var/dispense_cone = text2num(href_list["cone"])

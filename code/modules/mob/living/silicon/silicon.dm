@@ -31,7 +31,7 @@
 		alarm_types_clear[type] += 1
 
 	if(!in_cooldown)
-		spawn(3 * 10) // 10 seconds
+		spawn(3 * 10) // 3 seconds
 
 			if(alarms_to_show.len < 5)
 				for(var/msg in alarms_to_show)
@@ -39,6 +39,9 @@
 			else if(alarms_to_show.len)
 
 				var/msg = "--- "
+
+				if(alarm_types_show["Burglar"])
+					msg += "BURGLAR: [alarm_types_show["Burglar"]] alarms detected. - "
 
 				if(alarm_types_show["Motion"])
 					msg += "MOTION: [alarm_types_show["Motion"]] alarms detected. - "
@@ -103,8 +106,8 @@
 			src.take_organ_damage(10)
 			Stun(3)
 	flick("noise", src:flash)
-	src << "\red <B>*BZZZT*</B>"
-	src << "\red Warning: Electromagnetic pulse detected."
+	src << "<span class='userdanger'>*BZZZT*</span>"
+	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
 	..()
 
 /mob/living/silicon/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)

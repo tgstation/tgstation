@@ -109,17 +109,25 @@ var/datum/controller/event/events
 
 
 
-//allows a client to trigger an event (For Debugging Purposes)
-/client/proc/forceEvent(var/datum/round_event_control/E in events.control)
-	set name = "Trigger Event (Debug Only)"
-	set category = "Debug"
+//allows a client to trigger an event
+//aka Badmin Central
+/client/proc/forceEvent()
+	set name = "Trigger Event"
+	set category = "Fun"
 
-	if(!holder)
+	if(!holder ||!check_rights(R_FUN))
 		return
 
-	if(istype(E))
-		E.runEvent()
-		message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])", 1)
+	holder.forceEvent()
+
+/datum/admins/proc/forceEvent()
+	var/dat = ""
+	for(var/datum/round_event_control/E in events.control)
+		dat += "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
+
+	var/datum/browser/popup = new(usr, "forceevent", "Force Random Event", 300, 750)
+	popup.set_content(dat)
+	popup.open()
 
 
 /*
