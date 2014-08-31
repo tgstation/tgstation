@@ -64,7 +64,7 @@
 			I.loc = back
 			return
 		else
-			usr << "\red You are trying to equip this item to an unsupported inventory slot. Report this to a coder."
+			usr << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder.</span>"
 			return
 
 	I.loc = src

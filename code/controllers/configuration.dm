@@ -6,7 +6,8 @@
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
 /datum/configuration
-	var/server_name = null				// server name (for world name / status)
+	var/server_name = null				// server name (the name of the game window)
+	var/station_name = null				// station name (the name of the station in-game)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 
@@ -234,6 +235,8 @@
 					config.respawn = 0
 				if("servername")
 					config.server_name = value
+				if("stationname")
+					config.station_name = value
 				if("serversuffix")
 					config.server_suffix = 1
 				if("hostedby")

@@ -1,5 +1,5 @@
 /datum/round_event_control/treevenge
-	name = "Treevenge"
+	name = "Treevenge (Christmas)"
 	holidayID = "Xmas"
 	typepath = /datum/round_event/treevenge
 	max_occurrences = 1
@@ -16,7 +16,7 @@
 
 //this is an example of a possible round-start event
 /datum/round_event_control/presents
-	name = "Presents under Trees"
+	name = "Presents under Trees (Christmas)"
 	holidayID = "Xmas"
 	typepath = /datum/round_event/presents
 	weight = -1							//forces it to be called, regardless of weight

@@ -71,7 +71,7 @@
 /mob/living/carbon/alien/humanoid/proc/handle_disabilities()
 	if (disabilities & EPILEPSY)
 		if ((prob(1) && paralysis < 10))
-			src << "\red You have a seizure!"
+			src << "<span class='danger'>You have a seizure!</span>"
 			Paralyse(10)
 	if (disabilities & COUGHING)
 		if ((prob(5) && paralysis <= 1))

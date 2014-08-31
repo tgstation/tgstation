@@ -311,10 +311,10 @@ var/list/admin_verbs_hideable = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "\red <b>Invisimin off. Invisibility reset.</b>"
+			mob << "<span class='userdanger'>Invisimin off. Invisibility reset.</span>"
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			mob << "\blue <b>Invisimin on. You are now as invisible as a ghost.</b>"
+			mob << "<span class='boldnotice'>Invisimin on. You are now as invisible as a ghost.</span>"
 
 
 /client/proc/player_panel()
@@ -419,7 +419,7 @@ var/list/admin_verbs_hideable = list(
 			var/light_impact_range = input("Light impact range (in tiles):") as num
 			var/flash_range = input("Flash range (in tiles):") as num
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-	message_admins("\blue [ckey] creating an admin explosion at [epicenter.loc].")
+	message_admins("<span class='notice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in mob_list)
@@ -431,13 +431,13 @@ var/list/admin_verbs_hideable = list(
 		return
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>", 1)
 
 	if(T.mind)
 		T.mind.spell_list += new S
 	else
 		T.mob_spell_list += new S
-		message_admins("\red Spells given to mindless mobs will not be transferred in mindswap or cloning!", 1)
+		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>", 1)
 
 
 /client/proc/give_disease(mob/T as mob in mob_list)
@@ -449,7 +449,7 @@ var/list/admin_verbs_hideable = list(
 	T.contract_disease(new D, 1)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>", 1)
 
 /client/proc/make_sound(var/obj/O in world)
 	set category = "Special Verbs"
@@ -462,7 +462,7 @@ var/list/admin_verbs_hideable = list(
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
 		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
-		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound", 1)
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound</span>", 1)
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -496,7 +496,7 @@ var/list/admin_verbs_hideable = list(
 		usr << "<b>Disabled air processing.</b>"
 	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] used 'kill air'.")
-	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] used 'kill air'.</span>", 1)
 
 /client/proc/deadmin_self()
 	set name = "De-admin self"

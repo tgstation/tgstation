@@ -51,7 +51,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(..())
 		return
 	if (src.z > 1)
-		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		usr << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	usr.set_machine(src)
 
@@ -209,7 +209,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
 				centcom_message_cooldown = 1
-				spawn(6000)//10 minute cooldown
+				spawn(600)//One minute cooldown
 					centcom_message_cooldown = 0
 
 
@@ -226,7 +226,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				centcom_message_cooldown = 1
-				spawn(6000)//10 minute cooldown
+				spawn(600)//One minute cooldown
 					centcom_message_cooldown = 0
 
 		if("RestoreBackup")
@@ -325,7 +325,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(..())
 		return
 	if (src.z > 6)
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		user << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 
 	user.set_machine(src)
@@ -496,7 +496,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
 			dat += "<BR><BR><B>Special Functions</B>"
-			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-announce'>Make a Priority Announcement</A> \]"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-announce'>Make an Announcement</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-changeseclevel'>Change Alert Level</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-emergencyaccess'>Emergency Maintenance Access</A> \]"
 		if(STATE_CALLSHUTTLE)
@@ -557,7 +557,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(!input || !user.canUseTopic(src))
 		return
 	if(is_silicon)
-		priority_announce(input, null, null, "Priority")
+		minor_announce(input)
 		ai_message_cooldown = 1
 		spawn(600)//One minute cooldown
 			ai_message_cooldown = 0

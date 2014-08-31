@@ -96,45 +96,80 @@
 	return 0
 
 /area/proc/firealert()
-	if(src.name == "Space") //no fire alarms in space
+	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
-	if (!( src.fire ))
-		src.fire = 1
-		src.updateicon()
-		src.mouse_opacity = 0
-		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.blocked)
-				if(D.operating)
-					D.nextstate = CLOSED
-				else if(!D.density)
-					spawn(0)
-					D.close()
-		var/list/cameras = list()
-		for (var/obj/machinery/camera/C in src)
+
+	var/list/cameras = list()
+
+	for(var/area/RA in related)
+		if (!( RA.fire ))
+			RA.set_fire_alarm_effect()
+			for(var/obj/machinery/door/firedoor/D in RA)
+				if(!D.blocked)
+					if(D.operating)
+						D.nextstate = CLOSED
+					else if(!D.density)
+						spawn(0)
+							D.close()
+		for (var/obj/machinery/camera/C in RA)
 			cameras += C
-		for (var/mob/living/silicon/ai/aiPlayer in player_list)
-			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-		for (var/obj/machinery/computer/station_alert/a in machines)
-			a.triggerAlarm("Fire", src, cameras, src)
+
+	for (var/obj/machinery/computer/station_alert/a in machines)
+		a.triggerAlarm("Fire", src, cameras, src)
+	for (var/mob/living/silicon/aiPlayer in player_list)
+		aiPlayer.triggerAlarm("Fire", src, cameras, src)
 	return
 
 /area/proc/firereset()
-	if (src.fire)
-		src.fire = 0
-		src.mouse_opacity = 0
-		src.updateicon()
-		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.blocked)
-				if(D.operating)
-					D.nextstate = OPEN
-				else if(D.density)
-					spawn(0)
-					D.open()
-		for (var/mob/living/silicon/ai/aiPlayer in player_list)
-			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/station_alert/a in machines)
-			a.cancelAlarm("Fire", src, src)
+	for(var/area/RA in related)
+		if (RA.fire)
+			RA.fire = 0
+			RA.mouse_opacity = 0
+			RA.updateicon()
+			for(var/obj/machinery/door/firedoor/D in RA)
+				if(!D.blocked)
+					if(D.operating)
+						D.nextstate = OPEN
+					else if(D.density)
+						spawn(0)
+							D.open()
+
+	for (var/mob/living/silicon/aiPlayer in player_list)
+		aiPlayer.cancelAlarm("Fire", src, src)
+	for (var/obj/machinery/computer/station_alert/a in machines)
+		a.cancelAlarm("Fire", src, src)
 	return
+
+/area/proc/burglaralert(var/obj/trigger)
+	if(always_unpowered == 1) //no burglar alarms in space/asteroid
+		return
+
+	var/list/cameras = list()
+
+	for(var/area/RA in related)
+		//Trigger alarm effect
+		RA.set_fire_alarm_effect()
+		//Lockdown airlocks
+		for(var/obj/machinery/door/airlock/DOOR in RA)
+			spawn(0)
+				DOOR.close()
+				if(DOOR.density)
+					DOOR.locked = 1
+					DOOR.update_icon()
+		for (var/obj/machinery/camera/C in RA)
+			cameras += C
+
+	for (var/mob/living/silicon/SILICON in player_list)
+		SILICON.triggerAlarm("Burglar", src, cameras, trigger)
+	//Cancel silicon alert after 1 minute
+	spawn(600)
+		for (var/mob/living/silicon/SILICON in player_list)
+			SILICON.cancelAlarm("Burglar", src, trigger)
+
+/area/proc/set_fire_alarm_effect()
+	fire = 1
+	updateicon()
+	mouse_opacity = 0
 
 /area/proc/readyalert()
 	if(name == "Space")

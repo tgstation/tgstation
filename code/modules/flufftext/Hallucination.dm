@@ -109,7 +109,7 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(41 to 65)
 				//Strange audio
 				//src << "Strange Audio"
-				switch(rand(1,12))
+				switch(rand(1,14))
 					if(1) src << 'sound/machines/airlock.ogg'
 					if(2)
 						if(prob(50))src << 'sound/effects/Explosion1.ogg'
@@ -140,6 +140,12 @@ mob/living/carbon/proc/handle_hallucinations()
 							'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
 							'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 						src << pick(creepyasssounds)
+					if(13)
+						src << "<span class='warning'>You feel a tiny prick!</span>"
+					if(14)
+						src << "<h1 class='alert'>Priority Announcement</h1>"
+						src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
+						src << sound('sound/AI/shuttledock.ogg')
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
@@ -242,8 +248,8 @@ proc/check_panel(mob/M)
 /obj/effect/fake_attacker/attackby(var/obj/item/weapon/P as obj, mob/user as mob)
 	step_away(src,my_target,2)
 	for(var/mob/M in oviewers(world.view,my_target))
-		M << "\red <B>[my_target] flails around wildly.</B>"
-	my_target.show_message("\red <B>[src] has been attacked by [my_target] </B>", 1) //Lazy.
+		M << "<span class='userdanger'>[my_target] flails around wildly.</span>"
+	my_target.show_message("<span class='userdanger'>[src] has been attacked by [my_target] </span>", 1) //Lazy.
 
 	src.health -= P.force
 
@@ -255,7 +261,7 @@ proc/check_panel(mob/M)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				O << "\red <B>[my_target] stumbles around.</B>"
+				O << "<span class='userdanger'>[my_target] stumbles around.</span>"
 
 /obj/effect/fake_attacker/New()
 	..()
@@ -308,7 +314,7 @@ proc/check_panel(mob/M)
 							fake_blood(my_target)
 				else
 					my_target << sound(pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
-					my_target.show_message("\red <B>[src.name] has punched [my_target]!</B>", 1)
+					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)

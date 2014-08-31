@@ -8,7 +8,6 @@
 			..()
 			return
 		if(1)
-			interceptname = "Biohazard Alert"
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
 			intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>"
@@ -26,7 +25,6 @@
 				if(bomb && bomb.r_code)
 					if(bomb.z == 1)
 						nukecode = bomb.r_code
-			interceptname = "Directive 7-12"
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Directive 7-12 has been issued for [station_name()].<BR>"
 			intercepttext += "The biohazard has grown out of control and will soon reach critical mass.<BR>"
@@ -42,7 +40,7 @@
 					aiPlayer.set_zeroth_law(law)
 					aiPlayer << "Laws Updated: [law]"
 
-	print_command_report(intercepttext,interceptname)
+	print_command_report(intercepttext,"Classified [command_name()] Update")
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg');
 	return
 

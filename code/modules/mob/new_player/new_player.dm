@@ -75,11 +75,13 @@
 			stat("Time To Start:", "DELAYED")
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Players: [totalPlayers]", "Players Ready: [totalPlayersReady]")
+			stat("Players:", "[totalPlayers]")
+			if(src.client in admins)
+				stat("Players Ready:", "[totalPlayersReady]")
 			totalPlayers = 0
 			totalPlayersReady = 0
 			for(var/mob/new_player/player in player_list)
-				stat("[player.key]", (player.ready)?("(Playing)"):(null))
+				stat("[player.key]", (player.ready && src.client in admins)?("(Playing)"):(null))
 				totalPlayers++
 				if(player.ready)totalPlayersReady++
 
@@ -112,7 +114,7 @@
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			src << "\blue Now teleporting."
+			src << "<span class='notice'>Now teleporting.</span>"
 			observer.loc = O.loc
 			if(client.prefs.be_random_name)
 				client.prefs.real_name = random_name(gender)
@@ -126,14 +128,14 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			usr << "\red The round is either not ready, or has already finished..."
+			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
 			return
 		LateChoices()
 
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			usr << "\blue There is an administrative lock on entering the game!"
+			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
 			return
 
 		AttemptLateSpawn(href_list["SelectedJob"])

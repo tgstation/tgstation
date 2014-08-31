@@ -161,12 +161,12 @@
 			src.anchored = 0
 			disconnect_from_network()
 		else
-			user << "\red Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!"
+			user << "<span class='danger'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
-			user << "\red There is already a [fueljar] inside!"
+			user << "<span class='danger'>There is already a [fueljar] inside!</span>"
 			return
 		fueljar = W
 		W.loc = src

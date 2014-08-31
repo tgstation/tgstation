@@ -60,14 +60,14 @@
 	..()
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W
-		user << "\blue You add the [C.name] into the bag."
+		user << "<span class='notice'>You add the [C.name] into the bag.</span>"
 		usr.drop_item()
 		contents += C
 	if (istype(W, /obj/item/weapon/moneybag))
 		var/obj/item/weapon/moneybag/C = W
 		for (var/obj/O in C.contents)
 			contents += O;
-		user << "\blue You empty the [C.name] into the bag."
+		user << "<span class='notice'>You empty the [C.name] into the bag.</span>"
 	return
 
 /obj/item/weapon/moneybag/Topic(href, href_list)

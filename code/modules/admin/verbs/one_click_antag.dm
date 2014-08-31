@@ -16,6 +16,7 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
 		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
+		<a href='?src=\ref[src];makeAntag=11'>Make Blob</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Requires Ghosts)</a><br>
@@ -355,20 +356,11 @@ client/proc/one_click_antag()
 			var/mob/living/carbon/human/Commando = new(spawnloc)
 			chosen_candidate.client.prefs.copy_to(Commando)
 			ready_dna(Commando)
-			switch(numagents)
-				if(1)
-					Commando.real_name = "Officer Alpha"
-				if(2)
-					Commando.real_name = "Trooper Beta"
-				if(3)
-					Commando.real_name = "Trooper Charlie"
-				if(4)
-					Commando.real_name = "Trooper Delta"
-				if(5)
-					Commando.real_name = "Trooper Echo"
 			if(numagents == 1) //If Squad Leader
+				Commando.real_name = "Officer [pick(commando_names)]"
 				equip_deathsquad(Commando, 1)
 			else
+				Commando.real_name = "Trooper [pick(commando_names)]"
 				equip_deathsquad(Commando)
 			Commando.key = chosen_candidate.key
 			Commando.mind.assigned_role = "Death Commando"

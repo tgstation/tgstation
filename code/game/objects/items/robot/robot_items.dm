@@ -20,7 +20,8 @@
 
 	for(var/mob/O in viewers(M, null))
 		if (O.client)
-			O.show_message("\red <B>[user] has prodded [M] with an electrically-charged arm!</B>", 1, "\red You hear someone fall", 2)
+			O.show_message("<span class='danger'>[user] has prodded [M] with an electrically-charged arm!</span>", 1,
+							 "<span class='warning'> You hear someone fall</span>", 2)
 	add_logs(user, M, "stunned", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
 
 /obj/item/borg/overdrive

@@ -354,7 +354,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 		var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest(A)
 
-		var printed_station_name = world.name // World name is available in the title bar, station_name can be different based on config.
+		var printed_station_name = station_name()
 		if(prob(5))
 			printed_station_name = new_station_name()
 			slip.erroneous |= MANIFEST_ERROR_NAME // They got our station name wrong.  BASTARDS!
