@@ -75,11 +75,13 @@
 			stat("Time To Start:", "DELAYED")
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Players: [totalPlayers]", "Players Ready: [totalPlayersReady]")
+			stat("Players:", "[totalPlayers]")
+			if(src.client in admins)
+				stat("Players Ready:", "[totalPlayersReady]")
 			totalPlayers = 0
 			totalPlayersReady = 0
 			for(var/mob/new_player/player in player_list)
-				stat("[player.key]", (player.ready)?("(Playing)"):(null))
+				stat("[player.key]", (player.ready && src.client in admins)?("(Playing)"):(null))
 				totalPlayers++
 				if(player.ready)totalPlayersReady++
 
