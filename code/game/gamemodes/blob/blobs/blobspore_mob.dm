@@ -11,7 +11,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	attacktext = "fires spores all over"
-	attack_sound = 'sound/weapons/genhit1.ogg'
+	attack_sound = 'sound/effects/blobattack.ogg'
 	var/obj/effect/blob/factory/factory = null
 	var/is_zombie = 0
 	faction = list("blob")
