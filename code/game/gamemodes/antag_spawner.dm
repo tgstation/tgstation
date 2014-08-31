@@ -66,6 +66,7 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
+	inherit_role(usr,M)
 	M << "<B>You are the [usr.real_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals."
 	switch(type)
 		if("destruction")
@@ -96,13 +97,13 @@
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname
-	var/datum/objective/protect/new_objective = new /datum/objective/protect
+	/*var/datum/objective/protect/new_objective = new /datum/objective/protect
 	new_objective.owner = M:mind
 	new_objective:target = usr:mind
 	new_objective.explanation_text = "Protect [usr.real_name], the wizard."
 	M.mind.objectives += new_objective
 	ticker.mode.traitors += M.mind
-	M.mind.special_role = "apprentice"
+	M.mind.special_role = "apprentice"*/
 	M << sound('sound/effects/magic.ogg')
 
 /obj/item/weapon/antag_spawner/contract/equip_antag(mob/target as mob)
@@ -140,7 +141,8 @@
 	S.start()
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
 	R.key = C.key
-	ticker.mode.syndicates += R.mind
+	inherit_role(usr,R)
+	/*ticker.mode.syndicates += R.mind
 	ticker.mode.update_synd_icons_added(R.mind)
 	R.mind.special_role = "syndicate"
-	R.faction = list("syndicate")
+	R.faction = list("syndicate")*/

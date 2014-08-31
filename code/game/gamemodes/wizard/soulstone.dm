@@ -170,12 +170,13 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 	var/mob/living/simple_animal/construct/newstruct = new ctype(get_turf(target))
 	newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
-	if(stoner && iscultist(stoner) || cultoverride)
+	inherit_role(stoner,newstruct)
+	/*if(stoner && iscultist(stoner) || cultoverride)
 		if(ticker.mode.name == "cult")
 			ticker.mode:add_cultist(newstruct.mind)
 		else
 			ticker.mode.cult+=newstruct.mind
-		ticker.mode.update_cult_icons_added(newstruct.mind)
+		ticker.mode.update_cult_icons_added(newstruct.mind)*/
 	newstruct << newstruct.playstyle_string
 	newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	newstruct.cancel_camera()
@@ -198,8 +199,9 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 	S.real_name = "Shade of [T.real_name]"
 	S.key = T.key
 	S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
-	if(iscultist(U))
-		ticker.mode.add_cultist(S.mind,2)
+	inherit_role(U,S)
+	/*if(iscultist(U))
+		ticker.mode.add_cultist(S.mind,2)*/
 	S.cancel_camera()
 	C.icon_state = "soulstone2"
 	C.name = "Soul Stone: [S.real_name]"
