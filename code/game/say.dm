@@ -3,6 +3,31 @@
 	This file has the basic atom/movable level speech procs.
 	And the base of the send_speech() proc, which is the core of saycode.
 */
+var/list/freqtospan = list(
+	SCI_FREQ = "sciradio",
+	MED_FREQ = "medradio",
+	ENG_FREQ = "engradio",
+	SUPP_FREQ = "suppradio",
+	SERV_FREQ = "servradio",
+	SEC_FREQ = "secradio",
+	COMM_FREQ = "comradio",
+	AIPRIV_FREQ = "aiprivradio",
+	SYND_FREQ = "syndradio",
+	DSQUAD_FREQ = "dsquadradio"
+	)
+
+var/freqtoname = list(
+	SCI_FREQ = "Science",
+	MED_FREQ = "Medical",
+	ENG_FREQ = "Engineering",
+	SUPP_FREQ = "Supply",
+	SERV_FREQ = "Service",
+	SEC_FREQ = "Security",
+	COMM_FREQ = "Command",
+	AIPRIV_FREQ = "AI Private",
+	SYND_FREQ = "#unkn"
+	)
+	
 /atom/movable/proc/say(message)
 	if(!can_speak())
 		return
@@ -78,49 +103,15 @@
 		return "makes a strange sound."
 
 /proc/get_radio_span(freq)
-	switch(freq)
-		if(SCI_FREQ)
-			return "sciradio"
-		if(MED_FREQ)
-			return "medradio"
-		if(ENG_FREQ)
-			return "engradio"
-		if(SEC_FREQ)
-			return "secradio"
-		if(COMM_FREQ)
-			return "comradio"
-		if(SUPP_FREQ)
-			return "suppradio"
-		if(AIPRIV_FREQ)
-			return "aiprivradio"
-		if(SYND_FREQ)
-			return "syndradio"
-		if(SERV_FREQ)
-			return "servradio"
-		if(DSQUAD_FREQ)
-			return "dsquadradio"
+	var/returntext = freqtospan[freq]
+	if(returntext)
+		return returntext
 	return "radio"
 
-/proc/get_radio_name(freq) //There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
-	switch(freq)
-		if(COMM_FREQ)
-			return "Command"
-		if(SCI_FREQ)
-			return "Science"
-		if(MED_FREQ)
-			return "Medical"
-		if(ENG_FREQ)
-			return "Engineering"
-		if(SEC_FREQ)
-			return "Security"
-		if(SUPP_FREQ)
-			return "Supply"
-		if(AIPRIV_FREQ)
-			return "AI Private"
-		if(SYND_FREQ)
-			return "#unkn"
-		if(SERV_FREQ)
-			return "Service"
+/proc/get_radio_name(freq)
+	var/returntext = freqtoname[freq]
+	if(returntext)
+		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
 
 /atom/movable/proc/GetVoice()

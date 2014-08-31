@@ -138,7 +138,7 @@
 	var/list/processed_list = list()
 	var/list/found_mobs = list()
 
-	while(processing_list.len) //APPARENTLY THIS HAS TO BE A WHILE LOOP INSTEAD OF A FOR LOOP. THAT WOULD HAVE BEEN CONVENIENT TO KNOW BEFORE I WASTED SEVERAL HOURS.
+	while(processing_list.len)
 		var/atom/A = processing_list[1]
 
 		if(A.flags & HEAR)

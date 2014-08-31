@@ -14,7 +14,6 @@
 	layer = 2.9
 	anchored = 1
 	density = 1
-	languages = HUMAN
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/vend_delay = 10	//How long does it take to vend?

@@ -1,4 +1,5 @@
 /obj
+	languages = HUMAN
 	//var/datum/module/mod		//not used
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
