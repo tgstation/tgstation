@@ -1606,6 +1606,15 @@
 					spawn(0)
 						H.monkeyize()
 				ok = 1
+			if("allspecies")
+				var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
+				if(result)
+					log_admin("[key_name(usr)] turned all humans into [result]", 1)
+					message_admins("\blue [key_name_admin(usr)] turned all humans into [result]", 1)
+					var/newtype = species_list[result]
+					for(var/mob/living/carbon/human/H in mob_list)
+						H.dna.species = new newtype()
+						H.regenerate_icons()
 			if("corgi")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","M")
