@@ -32,12 +32,6 @@
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
-
-	var/gang_name_pool = list("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib")
-	A_name = pick(gang_name_pool)
-	gang_name_pool -= A_name
-	B_name = pick(gang_name_pool)
-
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -138,19 +132,19 @@
 
 	. = 0
 
-	var/where = mob.equip_in_one_of_slots(T, slots)
-	if (!where)
-		mob << "Your Syndicate benefactors were unfortunately unable to get you a flash."
-	else
-		mob << "The flash in your [where] will help you to persuade the crew to work for you. Keep in mind that your underlings can only identify their bosses, but not each other."
-		. += 1
-
 	var/where2 = mob.equip_in_one_of_slots(recaller, slots)
 	if (!where2)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a Recaller."
 	else
-		mob << "The Recaller in your [where2] will allow you to prevent the station from prematurely evacuating. Use it to recall the emergency shuttle from anywhere on the station."
+		mob << "The <b>Recaller</b> in your [where2] will allow you to prevent the station from prematurely evacuating. Use it to recall the emergency shuttle from anywhere on the station."
 		. += 2
+
+	var/where = mob.equip_in_one_of_slots(T, slots)
+	if (!where)
+		mob << "Your Syndicate benefactors were unfortunately unable to get you a flash."
+	else
+		mob << "The <b>flash</b> in your [where] will help you to persuade the crew to work for you. Keep in mind that your underlings can only identify their bosses, but not each other."
+		. += 1
 
 	mob.update_icons()
 
@@ -176,9 +170,9 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/gang/check_finished()
-	if(finished)
-		return finished
-	return 0
+	if(finished) //Check for Gang Boss death
+		return 1
+	return ..() //Check for evacuation/nuke
 
 ///////////////////////////////////////////
 //Deals with converting players to a gang//
@@ -380,7 +374,7 @@
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/declare_completion()
 	if(!finished)
-		world << "<FONT size=3 color=red><B>The station was evacuated before either gang could claim it!</B></FONT>"
+		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
 	if(finished == "Draw")
 		world << "<FONT size=3 color=red><B>All gang bosses have been killed or exiled!</B></FONT>"
 	else
@@ -408,10 +402,14 @@
 			if(bgangster.current in living_mob_list)
 				num_gangb++
 
+	var/num_survivors = 0
+	for(var/mob/living/carbon/survivor in living_mob_list)
+		if(survivor.key)
+			num_survivors++
+
 	if(A_bosses.len || A_gangsters.len)
 		if(winner == "A" || winner == "B")
-			world << "<br><font size=3><b>The [A_name] Gang was [winner=="A" ? "<font color=green>victorious!</font>" : "<font color=red>defeated.</font>"]</b></font>"
-		world << "[TAB][A_name] Gang strength: <B>[round((num_ganga/living_mob_list.len)*100, 0.1)]%</B>"
+			world << "<br><b>The [A_name] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_ganga/num_survivors)*100, 0.1)]% strength.</b>"
 		world << "<br><font size=2><b>The [A_name] Gang bosses were:</b></font>"
 		gang_membership_report(A_bosses)
 		world << "<br><font size=2><b>The [A_name] Gangsters were:</b></font>"
@@ -419,8 +417,7 @@
 
 	if(B_bosses.len || B_gangsters.len)
 		if(winner == "A" || winner == "B")
-			world << "<br><font size=3><b>The [B_name] Gang was [winner=="B" ? "<font color=green>victorious!</font>" : "<font color=red>defeated.</font>"]</b></font>"
-		world << "[TAB][B_name] Gang strength: <B>[round((num_gangb/living_mob_list.len)*100, 0.1)]%</B>"
+			world << "<br><b>The [B_name] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_gangb/num_survivors)*100, 0.1)]% strength</b>"
 		world << "<br><font size=2><b>The [B_name] Gang bosses were:</b></font>"
 		gang_membership_report(B_bosses)
 		world << "<br><font size=2><b>The [B_name] Gangsters were:</b></font>"
@@ -431,7 +428,7 @@
 	for(var/datum/mind/gang_mind in membership)
 		text += "<br><b>[gang_mind.key]</b> was <b>[gang_mind.name]</b> ("
 		if(gang_mind.current)
-			if(gang_mind.current.stat == DEAD)
+			if(gang_mind.current.stat == DEAD || isbrain(gang_mind.current))
 				text += "died"
 			else if(gang_mind.current.z != 1)
 				text += "fled the station"

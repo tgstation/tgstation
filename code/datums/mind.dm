@@ -201,7 +201,7 @@
 	remove_cultist()
 	remove_rev()
 	remove_malf()
-		remove_gang()
+	remove_gang()
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -230,7 +230,7 @@
 
 	var/list/sections = list(
 		"revolution",
-		"gang"
+		"gang",
 		"cult",
 		"wizard",
 		"changeling",
@@ -806,23 +806,6 @@
 		switch(href_list["cult"])
 			if("clear")
 				remove_cultist()
-				current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT>"
-				message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
-				log_admin("[key_name(usr)] has de-cult'ed [current].")
-			if("cultist")
-				if(!(src in ticker.mode.cult))
-					ticker.mode.add_cultist(src)
-					message_admins("[key_name_admin(usr)] has cult'ed [current].")
-					log_admin("[key_name(usr)] has cult'ed [current].")
-			if("tome")
-				var/mob/living/carbon/human/H = current
-				if (istype(H))
-					var/obj/item/weapon/tome/T = new(H)
-
-	else if (href_list["cult"])
-		switch(href_list["cult"])
-			if("clear")
-				remove_cultist()
 				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a cultist!</FONT></span>"
 				message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
 				log_admin("[key_name(usr)] has de-cult'ed [current].")
@@ -1243,6 +1226,13 @@
 //	fail |= !ticker.mode.equip_traitor(current, 1)
 	fail |= !ticker.mode.equip_revolutionary(current)
 
+
+/datum/mind/proc/make_Gang(var/gang)
+	special_role = "[(gang=="A") ? "[ticker.mode.A_name] Gang (A)" : "[ticker.mode.B_name] Gang (B)"] Boss"
+	ticker.mode.update_gang_icons_added(src, gang)
+	ticker.mode.forge_gang_objectives(src, gang)
+	ticker.mode.greet_gang(src)
+	ticker.mode.equip_gang(current)
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

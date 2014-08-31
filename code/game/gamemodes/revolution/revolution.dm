@@ -398,7 +398,7 @@
 		for(var/datum/mind/rev in revolutionaries)
 			text += "<br><b>[rev.key]</b> was <b>[rev.name]</b> ("
 			if(rev.current)
-				if(rev.current.stat == DEAD)
+				if(rev.current.stat == DEAD || isbrain(rev.current))
 					text += "died"
 				else if(rev.current.z != 1)
 					text += "fled the station"
@@ -424,7 +424,7 @@
 				text += "<font color='red'>"
 			text += "<br><b>[head.key]</b> was <b>[head.name]</b> ("
 			if(head.current)
-				if(head.current.stat == DEAD)
+				if(head.current.stat == DEAD || isbrain(head.current))
 					text += "died"
 				else if(head.current.z != 1)
 					text += "fled the station"

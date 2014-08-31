@@ -874,6 +874,7 @@
 					H.apply_effect(20, PARALYZE, armor)
 					if(H != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(H.mind)
+						ticker.mode.remove_gangster(H.mind)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
@@ -885,7 +886,6 @@
 					if(H.glasses && prob(33))
 						H.glasses.add_blood(H)
 						H.update_inv_glasses(0)
-							ticker.mode.remove_gangster(H.mind)
 
 			if("chest")	//Easier to score a stun but lasts less time
 				if(H.stat == CONSCIOUS && prob(I.force + 10))

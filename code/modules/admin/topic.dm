@@ -56,12 +56,17 @@
 				log_admin("[key_name(usr)] created a death squad.")
 				if(!src.makeDeathsquad())
 					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
-
 			if("11")
 				var/strength = input("Set Blob Strength (1=Weak, 2=Strong, 3=Full)","Set Strength",1) as num
 				message_admins("[key_name(usr)] spawned a blob with strength [strength].")
 				log_admin("[key_name(usr)] spawned a blob with strength [strength].")
 				new/datum/round_event/blob(strength)
+			if("12")
+				message_admins("[key_name(usr)] started a gang war.")
+				log_admin("[key_name(usr)] started a gang war.")
+				if(!src.makeGangsters())
+					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
+
 
 	else if(href_list["forceevent"])
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in events.control
