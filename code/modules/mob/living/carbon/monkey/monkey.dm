@@ -1,12 +1,12 @@
 /mob/living/carbon/monkey
 	name = "monkey"
 	voice_name = "monkey"
-	voice_message = "chimpers"
 	say_message = "chimpers"
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
+	languages = MONKEY
 	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 

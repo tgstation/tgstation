@@ -1,4 +1,5 @@
 /obj
+	languages = HUMAN
 	//var/datum/module/mod		//not used
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
@@ -125,18 +126,6 @@
 
 /obj/proc/hide(h)
 	return
-
-
-/obj/proc/hear_talk(mob/M as mob, text)
-/*
-	var/mob/mo = locate(/mob) in src
-	if(mo)
-		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
-		mo.show_message(rendered, 2)
-		*/
-	return
-
-
 
 //If a mob logouts/logins in side of an object you can use this proc
 /obj/proc/on_log()

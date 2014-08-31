@@ -424,7 +424,6 @@ var/list/sacrificed = list()
 	"<span class='danger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
 	"<span class='danger'>You hear liquid flowing.</span>")
 	D.real_name = "[pick(first_names_male)] [pick(last_names)]"
-	D.universal_speak = 1
 	D.status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH
 
 	D.key = ghost.key

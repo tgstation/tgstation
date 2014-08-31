@@ -32,7 +32,7 @@
 
 // Like view but bypasses luminosity check
 
-/proc/hear(var/range, var/atom/source)
+/proc/get_hear(var/range, var/atom/source)
 
 	var/lum = source.luminosity
 	source.luminosity = 6
@@ -131,13 +131,29 @@
 	return turfs
 
 
+//This is the new version of recursive_mob_check, used for say().
+//The other proc was left intact because morgue trays use it.
+/proc/recursive_hear_check(var/atom/O)
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/list/found_mobs = list()
 
-//var/debug_mob = 0
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
 
+		if(A.flags & HEAR)
+			found_mobs |= A
+		
+		for(var/atom/B in A)
+			if(!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_mobs
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
-
-
 /proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
 
 	var/list/processing_list = list(O)
@@ -178,22 +194,19 @@
 	return found_mobs
 
 
-/proc/get_mobs_in_view(var/R, var/atom/source)
-	// Returns a list of mobs in range of R from source. Used in radio and say code.
-
+/proc/get_hearers_in_view(var/R, var/atom/source)
+	// Returns a list of hearers in range of R from source. Used in saycode.
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
 
 	if(!T)
 		return hear
 
-	var/list/range = hear(R, T)
-
+	var/list/range = get_hear(R, T)
 	for(var/atom/movable/A in range)
-		hear |= recursive_mob_check(A, 1, 0, 1)
+		hear |= recursive_hear_check(A)
 
 	return hear
-
 
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
@@ -208,7 +221,7 @@
 		if(R)
 			var/turf/speaker = get_turf(R)
 			if(speaker)
-				for(var/turf/T in hear(R.canhear_range,speaker))
+				for(var/turf/T in get_hear(R.canhear_range,speaker))
 					speaker_coverage[T] = T
 
 
@@ -221,6 +234,7 @@
 				if(speaker_coverage[ear])
 					. |= M
 	return .
+
 
 #define SIGN(X) ((X<0)?-1:1)
 
@@ -255,6 +269,7 @@
 	return 1
 #undef SIGN
 
+
 /proc/isInSight(var/atom/A, var/atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
@@ -267,6 +282,7 @@
 
 	else
 		return 0
+
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST

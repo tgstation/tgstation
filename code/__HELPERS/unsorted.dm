@@ -283,6 +283,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Turns 1479 into 147.9
 /proc/format_frequency(var/f)
+	f = text2num(f)
 	return "[round(f / 10)].[f % 10]"
 
 

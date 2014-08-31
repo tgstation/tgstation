@@ -2,7 +2,6 @@
 
 /datum/game_mode/blob/send_intercept(var/report = 1)
 	var/intercepttext = ""
-	var/interceptname = "Error"
 	switch(report)
 		if(0)
 			..()
