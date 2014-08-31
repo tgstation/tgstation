@@ -1318,7 +1318,8 @@
 
 	else if(href_list["adminclaimresponse"])
 		var/mob/M = locate(href_list["adminclaimresponse"])
-		message_admins("[key_name(src.owner)] has claimed [key_name(M)]'s adminhelp")
+		log_admin("[key_name(src.owner)] has claimed the response to [key_name(M)]")
+		message_admins("[key_name(src.owner)] has claimed the response to [key_name(M)]")
 
 	else if(href_list["BlueSpaceArtillery"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
