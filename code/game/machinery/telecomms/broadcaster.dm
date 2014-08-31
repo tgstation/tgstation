@@ -213,7 +213,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	var/list/radios = list()
 
-	var/atom/movable/virtualspeaker/virt = new(null) //fuck this code.
+	var/atom/movable/virtualspeaker/virt = new(null)
 	virt.name = name
 	virt.job = job
 	virt.languages = AM.languages
@@ -293,6 +293,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_cargo += blackbox_msg
 				else
 					blackbox.messages += blackbox_msg
+
+	spawn(50)
+		qdel(virt)
 
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
 
