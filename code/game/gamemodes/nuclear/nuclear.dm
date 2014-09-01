@@ -151,8 +151,7 @@
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
-		if (ticker.mode.config_tag=="nuclear")
-			P.loc = synd_mind.current.loc
+		P.loc = synd_mind.current.loc
 		else
 			var/mob/living/carbon/human/H = synd_mind.current
 			P.loc = H.loc
