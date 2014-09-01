@@ -126,6 +126,8 @@
 		else
 			synd_mind.current.real_name = "[syndicate_name()] Operative #[agent_number]"
 			agent_number++
+
+		NukeNameAssign(synd_mind)
 		spawnpos++
 		update_synd_icons_added(synd_mind)
 
@@ -142,8 +144,6 @@
 
 /datum/game_mode/proc/prepare_syndicate_leader(var/datum/mind/synd_mind, var/nuke_code)
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
-	spawn(1)
-		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 	if (nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
@@ -334,26 +334,25 @@
 	return 1
 
 
-/proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(last_names)
-	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
+/proc/NukeNameAssign(var/datum/mind/syndicate)
+	spawn(0)
+		var/randomname = pick(last_names)
+		var/newname = copytext(sanitize(input(syndicate.current,"You are a nuke operative. Please choose a last name.", "Name change",randomname)),1,MAX_NAME_LEN)
 
-	if (!newname)
-		newname = randomname
+		if (!newname)
+			newname = randomname
 
-	else
-		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			M << "That name is reserved."
-			return nukelastname(M)
+		else
+			if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
+				syndicate.current << "That name is reserved."
+				return NukeNameAssign(syndicate)
 
-	return newname
+		var/lastname = newname
 
-/proc/NukeNameAssign(var/lastname,var/list/syndicates)
-	for(var/datum/mind/synd_mind in syndicates)
-		switch(synd_mind.current.gender)
+		switch(syndicate.current.gender)
 			if(MALE)
-				synd_mind.name = "[pick(first_names_male)] [lastname]"
+				syndicate.name = "[pick(first_names_male)] [lastname]"
 			if(FEMALE)
-				synd_mind.name = "[pick(first_names_female)] [lastname]"
-		synd_mind.current.real_name = synd_mind.name
-	return
+				syndicate.name = "[pick(first_names_female)] [lastname]"
+		syndicate.current.real_name = syndicate.name
+		return

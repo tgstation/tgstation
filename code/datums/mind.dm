@@ -324,7 +324,7 @@
 		text = "<i><b>[text]</b></i>: "
 		if (src in ticker.mode.syndicates)
 			text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
-			text += "<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."
+			text += "<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>, <a href='?src=\ref[src];nuclear=rename'>let rename</a>."
 			var/code
 			for (var/obj/machinery/nuclearbomb/bombue in world)
 				if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
@@ -814,6 +814,8 @@
 
 				if (!ticker.mode.equip_syndicate(current))
 					usr << "<span class='danger'>Equipping a syndicate failed!</span>"
+			if("rename")
+				NukeNameAssign(src)
 			if("tellcode")
 				var/code
 				for (var/obj/machinery/nuclearbomb/bombue in world)
@@ -1002,6 +1004,7 @@
 			ticker.mode.prepare_syndicate_leader(src)
 		else
 			current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
+		NukeNameAssign(src)
 		special_role = "Syndicate"
 		assigned_role = "MODE"
 		current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
