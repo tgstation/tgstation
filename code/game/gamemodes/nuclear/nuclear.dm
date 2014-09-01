@@ -151,12 +151,10 @@
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
-		P.loc = synd_mind.current.loc
-		else
-			var/mob/living/carbon/human/H = synd_mind.current
-			P.loc = H.loc
-			H.equip_to_slot_or_del(P, slot_r_store, 0)
-			H.update_icons()
+		var/mob/living/carbon/human/H = synd_mind.current
+		P.loc = H.loc
+		H.equip_to_slot_or_del(P, slot_r_store, 0)
+		H.update_icons()
 
 	else
 		nuke_code = "code will be provided later"
