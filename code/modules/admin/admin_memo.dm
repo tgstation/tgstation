@@ -21,7 +21,7 @@
 			if(null)
 				return
 			if("")
-				message_admins(<span class='admin'>"[src.ckey] removed their own Memo</span>")
+				message_admins("<span class='admin'>[src.ckey] removed their own Memo</span>")
 				log_admin("[src.ckey] removed their own Memo")
 				F.dir.Remove(ckey)
 				return
@@ -49,9 +49,10 @@
 		else
 			ckey = src.ckey
 		if(ckey)
-			message_admins("<span class='admin'>[src.ckey] removed [ckey]'s Memo.</span>")
-			log_admin("[src.ckey] removed Memo created by [ckey]: [memo].")
-			F.dir.Remove(ckey)
+			for(var/memo in F.dir)
+				message_admins("<span class='admin'>[src.ckey] removed [ckey]'s Memo.</span>")
+				log_admin("[src.ckey] removed Memo created by [F[memo]].")
+				F.dir.Remove(ckey)
 
 #undef MEMOFILE
 #undef ENABLE_MEMOS
