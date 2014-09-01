@@ -233,7 +233,7 @@ datum/hSB/Topic(href, href_list)
 					var/list/all_items = typesof(/obj/item/clothing) - /obj/item/clothing
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
-					for(var/O in reverselist(all_items))
+					for(var/O in reverseRange(all_items))
 						clothinfo += "<a href='?src=\ref[src];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
 
 				usr << browse(clothinfo,"window=sandbox")
@@ -247,7 +247,7 @@ datum/hSB/Topic(href, href_list)
 					var/list/all_items = typesof(/obj/item/weapon/reagent_containers) - /obj/item/weapon/reagent_containers
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
-					for(var/O in reverselist(all_items))
+					for(var/O in reverseRange(all_items))
 						reaginfo += "<a href='?src=\ref[src];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
 
 				usr << browse(reaginfo,"window=sandbox")
@@ -262,7 +262,7 @@ datum/hSB/Topic(href, href_list)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 
-					for(var/O in reverselist(all_items))
+					for(var/O in reverseRange(all_items))
 						objinfo += "<a href='?src=\ref[src];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
 
 				usr << browse(objinfo,"window=sandbox")

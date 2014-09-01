@@ -639,7 +639,7 @@ body
 					reagent_options[R.name] = r_id
 
 				if(reagent_options.len)
-					reagent_options = sortAssoc(reagent_options)
+					sortList(reagent_options)
 					reagent_options.Insert(1, "CANCEL")
 
 					var/chosen = input(usr, "Choose a reagent to add.", "Choose a reagent.") in reagent_options
