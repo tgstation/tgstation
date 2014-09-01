@@ -100,7 +100,6 @@
 	for(var/obj/effect/landmark/A in landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
-			qdel(A)
 			continue
 
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
@@ -113,7 +112,7 @@
 
 	for(var/datum/mind/synd_mind in syndicates)
 		if(spawnpos > synd_spawn.len)
-			spawnpos = 1
+			spawnpos = 2
 		synd_mind.current.loc = synd_spawn[spawnpos]
 
 		forge_syndicate_objectives(synd_mind)

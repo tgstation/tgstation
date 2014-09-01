@@ -268,9 +268,26 @@ client/proc/one_click_antag()
 		if(closet_spawn)
 			new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
+		//Let's find the spawn locations
+		var/list/turf/synd_spawn = list()
+		for(var/obj/effect/landmark/A in landmarks_list)
+			if(A.name == "Syndicate-Spawn")
+				synd_spawn += get_turf(A)
+				continue
+
+		var/leader_chosen
+		var/spawnpos = 1 //Decides where they'll spawn. 1=leader.
+
 		for(var/mob/c in chosen)
+			if(spawnpos > synd_spawn.len)
+				spawnpos = 2 //Ran out of spawns. Let's loop back to the first non-leader position
 			var/mob/living/carbon/human/new_character=makeBody(c)
-			new_character.mind.make_Nuke(nuke_code)
+			if(!leader_chosen)
+				leader_chosen = 1
+				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code,1)
+			else
+				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code)
+			spawnpos++
 
 		ticker.mode.update_all_synd_icons()
 
