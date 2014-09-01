@@ -623,6 +623,7 @@
 #include "code\game\objects\structures\OpTable.dm"
 #include "code\game\objects\structures\safe.dm"
 #include "code\game\objects\structures\signs.dm"
+#include "code\game\objects\structures\spirit_board.dm"
 #include "code\game\objects\structures\tables_racks.dm"
 #include "code\game\objects\structures\tank_dispenser.dm"
 #include "code\game\objects\structures\target_stake.dm"
