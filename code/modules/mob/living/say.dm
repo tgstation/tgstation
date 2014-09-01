@@ -220,10 +220,13 @@ var/list/department_radio_keys = list(
 			if(2)
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 				for(var/mob/M in mob_list)
-					if((M.lingcheck() == 2) || M.stat == DEAD)
-						M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-					if((M.lingcheck() == 1) && prob(10))
-						M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
+					switch(M.lingcheck())
+						if(2)
+							if(M.stat == DEAD)
+								M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+						if(1)
+							if(prob(10))
+								M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
 				return 1
 			if(1)
 				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
