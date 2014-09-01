@@ -222,9 +222,7 @@
 			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			user << "<span class='warning'>That was stupid of you.</span>"
-			explosion(O.loc, -1, 0, 2, flame_range = 2)
-			if(O)
-				qdel(O)
+			O.ex_act()
 			return
 
 	if(welding)

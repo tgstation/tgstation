@@ -28,7 +28,7 @@
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/gloves/black(src)
+	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/device/mining_scanner(src)
 	new /obj/item/weapon/storage/bag/ore(src)

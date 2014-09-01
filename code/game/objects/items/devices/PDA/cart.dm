@@ -307,7 +307,7 @@ Code:
 
 
 			if(!powercount)
-				menu += "\red No connection<BR>"
+				menu += "<span class='danger'>No connection<BR></span>"
 			else
 
 				menu += "<FONT SIZE=-1>"
@@ -321,7 +321,7 @@ Code:
 		if (433)
 			menu = "<h4><img src=pda_power.png> Power Monitor </h4><BR>"
 			if(!powmonitor)
-				menu += "\red No connection<BR>"
+				menu += "<span class='danger'>No connection<BR></span>"
 			else
 				var/list/L = list()
 				for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)

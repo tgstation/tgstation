@@ -5,9 +5,9 @@
 	nitrogen = 0.01
 	temperature = TCMB
 
-	New()
-		..()
-		name = "floor"
+/turf/simulated/floor/airless/New()
+	..()
+	name = "floor"
 
 /turf/simulated/floor/light
 	name = "Light floor"
@@ -15,14 +15,14 @@
 	icon_state = "light_on"
 	floor_tile = new/obj/item/stack/tile/light
 
-	New()
-		floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
-		var/n = name //just in case commands rename it in the ..() call
-		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				name = n
+/turf/simulated/floor/light/New()
+	floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
+	var/n = name //just in case commands rename it in the ..() call
+	..()
+	spawn(4)
+		if(src)
+			update_icon()
+			name = n
 
 
 
@@ -54,7 +54,7 @@
 	if(!user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "\blue Removing rods..."
+		user << "<span class='notice'>Removing rods...</span>"
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)
@@ -68,17 +68,16 @@
 	icon_state = "cult"
 
 
-/turf/simulated/floor/engine/n20
-	New()
-		..()
-		var/datum/gas_mixture/adding = new
-		var/datum/gas/sleeping_agent/trace_gas = new
+/turf/simulated/floor/engine/n20/New()
+	..()
+	var/datum/gas_mixture/adding = new
+	var/datum/gas/sleeping_agent/trace_gas = new
 
-		trace_gas.moles = 6000
-		adding.trace_gases += trace_gas
-		adding.temperature = T20C
+	trace_gas.moles = 6000
+	adding.trace_gases += trace_gas
+	adding.temperature = T20C
 
-		assume_air(adding)
+	assume_air(adding)
 
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"
@@ -100,9 +99,9 @@
 	nitrogen = 0.01
 	temperature = TCMB
 
-	New()
-		..()
-		name = "plating"
+/turf/simulated/floor/plating/airless/New()
+	..()
+	name = "plating"
 
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
@@ -163,35 +162,35 @@
 	icon_state = "grass1"
 	floor_tile = new/obj/item/stack/tile/grass
 
-	New()
-		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
-		icon_state = "grass[pick("1","2","3","4")]"
-		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+/turf/simulated/floor/grass/New()
+	floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
+	icon_state = "grass[pick("1","2","3","4")]"
+	..()
+	spawn(4)
+		if(src)
+			update_icon()
+			for(var/direction in cardinal)
+				if(istype(get_step(src,direction),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,direction)
+					FF.update_icon() //so siding get updated properly
 
 /turf/simulated/floor/carpet
 	name = "Carpet"
 	icon_state = "carpet"
 	floor_tile = new/obj/item/stack/tile/carpet
 
-	New()
-		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
-		if(!icon_state)
-			icon_state = "carpet"
-		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+/turf/simulated/floor/carpet/New()
+	floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
+	if(!icon_state)
+		icon_state = "carpet"
+	..()
+	spawn(4)
+		if(src)
+			update_icon()
+			for(var/direction in list(1,2,4,8,5,6,9,10))
+				if(istype(get_step(src,direction),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,direction)
+					FF.update_icon() //so siding get updated properly
 
 
 

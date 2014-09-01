@@ -3,10 +3,10 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
-	voice_message = "skree!"
 	say_message = "hums"
 	ventcrawler = 2
 	var/is_adult = 0
+	languages = SLIME | HUMAN
 
 	layer = 5
 

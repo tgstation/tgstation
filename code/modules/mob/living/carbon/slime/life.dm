@@ -253,7 +253,7 @@
 
 /mob/living/carbon/slime/proc/handle_nutrition()
 
-	if (prob(15))
+	if(prob(15))
 		nutrition -= 1 + is_adult
 
 	if(nutrition <= 0)
@@ -270,6 +270,18 @@
 			Reproduce()
 		else
 			Evolve()
+
+/mob/living/carbon/slime/proc/add_nutrition(var/nutrition_to_add = 0, var/lastnut = 0)
+	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
+	if(nutrition >= (lastnut + 50))
+		if(prob(80))
+			lastnut = nutrition
+			powerlevel++
+			if(powerlevel > 10)
+				powerlevel = 10
+				adjustToxLoss(-10)
+
+
 
 /mob/living/carbon/slime/proc/handle_targets()
 	if(Tempstun)

@@ -281,11 +281,11 @@ var/list/forbidden_varedit_object_types = list(
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
-			usr << "\red It is forbidden to edit this object's variables."
+			usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
 			return
 
 	if(istype(O, /client) && (param_var_name == "ckey" || param_var_name == "key"))
-		usr << "\red You cannot edit ckeys on client objects."
+		usr << "<span class='danger'>You cannot edit ckeys on client objects.</span>"
 		return
 
 	var/class
