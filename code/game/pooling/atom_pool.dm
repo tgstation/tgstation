@@ -7,7 +7,7 @@ By RemieRichards
 Creation/Deletion is laggy, so let's reduce reuse and recycle!
 
 Locked to /atom/movable and it's subtypes due to Loc being a const var on /atom
-being read&write on /movable due to how they... move.
+but being read&write on /movable due to how they... move.
 
 */
 
@@ -17,7 +17,7 @@ var/global/list/GlobalPool = list()
 //It grabs a type from the pool if it can
 //And if it can't, it creates one
 //The pool is flexible and will expand to fit
-//The newley created atom when it eventually
+//The new created atom when it eventually
 //Goes into the pool
 
 /proc/PoolOrNew(var/get_type,var/new_loc)
