@@ -54,7 +54,7 @@
 	name = "diamond tile"
 	singular_name = "diamond floor tile"
 	desc = "A tile made outoff diamond. Wow, just, wow."
-	icon_state = "tile_gold"
+	icon_state = "tile_diamond"
 	w_class = 3.0
 	force = 1.0
 	throwforce = 1.0

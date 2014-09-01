@@ -17,12 +17,12 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 				"ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 var/list/wood_icons = list("wood","wood-broken")
-var/list/gold_icons = list("gold")
-var/list/silver_icons = list("silver")
-var/list/plasma_icons = list("plasma")
-var/list/diamond_icons = list("diamond")
-var/list/uranium_icons = list("uranium")
-var/list/bananium_icons = list("bananium")
+var/list/gold_icons = list("gold","gold_dam")
+var/list/silver_icons = list("silver","silver_dam")
+var/list/plasma_icons = list("plasma","plasma_dam")
+var/list/diamond_icons = list("diamond","diamond_dam")
+var/list/uranium_icons = list("uranium","uranium_dam")
+var/list/bananium_icons = list("bananium","bananium_dam")
 
 /turf/simulated/floor
 
@@ -40,6 +40,7 @@ var/list/bananium_icons = list("bananium")
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
+	var/floortype = "metal"
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
 
 
@@ -248,55 +249,55 @@ turf/simulated/floor/proc/update_icon()
 		return 0
 
 /turf/simulated/floor/is_grass_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/grass))
+	if(istype(floor_tile, /obj/item/stack/tile/grass))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_wood_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/wood))
+	if(istype(floor_tile, /obj/item/stack/tile/wood))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_gold_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/mineral/gold))
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/gold))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_silver_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/mineral/silver))
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/silver))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_plasma_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/mineral/plasma))
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/plasma))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_uranium_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/mineral/uranium))
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/uranium))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_diamond_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/mineral/diamond))
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/diamond))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_bananium_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/mineral/bananium))
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/bananium))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_carpet_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/carpet))
+	if(istype(floor_tile, /obj/item/stack/tile/carpet))
 		return 1
 	else
 		return 0
@@ -329,6 +330,24 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
 		broken = 1
+	else if(is_gold_floor())
+		src.icon_state = "gold_dam"
+		broken = 1
+	else if(is_silver_floor())
+		src.icon_state = "silver_dam"
+		broken = 1
+	else if(is_diamond_floor())
+		src.icon_state = "diamond_dam"
+		broken = 1
+	else if(is_bananium_floor())
+		src.icon_state = "bananium_dam"
+		broken = 1
+	else if(is_uranium_floor())
+		src.icon_state = "uranium_dam"
+		broken = 1
+	else if(is_plasma_floor())
+		src.icon_state = "plasma_dam"
+		broken = 1
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
@@ -351,6 +370,21 @@ turf/simulated/floor/proc/update_icon()
 		burnt = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
+		burnt = 1
+	else if(is_gold_floor())
+		src.icon_state = "gold_dam"
+		burnt = 1
+	else if(is_silver_floor())
+		src.icon_state = "silver_dam"
+		burnt = 1
+	else if(is_diamond_floor())
+		src.icon_state = "diamond_dam"
+		burnt = 1
+	else if(is_bananium_floor())
+		src.icon_state = "bananium_dam"
+		burnt = 1
+	else if(is_uranium_floor())
+		src.icon_state = "uranium_dam"
 		burnt = 1
 
 //This proc will delete the floor_tile and the update_iocn() proc will then change the icon_state of the turf
