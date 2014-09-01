@@ -939,6 +939,16 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 40	// it costs so much because the Space Church is ran by Space Jews
 	containername = "religious supplies crate"
 
+/datum/supply_packs/misc/posters
+	name = "Corporate Posters Crate"
+	contains = list(/obj/item/weapon/contraband/poster/legit,
+					/obj/item/weapon/contraband/poster/legit,
+					/obj/item/weapon/contraband/poster/legit,
+					/obj/item/weapon/contraband/poster/legit,
+					/obj/item/weapon/contraband/poster/legit)
+	cost = 8
+	containername = "Corporate Posters Crate"
+
 
 ///////////// Paper Work
 
