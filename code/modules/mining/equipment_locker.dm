@@ -3,7 +3,7 @@
 
 /obj/machinery/mineral/ore_redemption
 	name = "ore redemption machine"
-	desc = "A machine that accepts ore and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
+	desc = "A machine that accepts ore from inside a ore crate and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
 	density = 1
