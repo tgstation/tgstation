@@ -54,6 +54,8 @@
 	icon_state = "emitter"
 	damage = 30
 
+/obj/item/projectile/beam/emitter/delete() //what projectiles use to set loc = null
+	PlaceInPool(src)
 
 /obj/item/projectile/lasertag
 	name = "laser tag beam"
