@@ -145,9 +145,20 @@
 	spawn(1)
 		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
+
+
 	if (nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 		synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+
+		var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
+
+		if(foundIDs.len)
+			for(var/obj/item/weapon/card/id/ID in foundIDs)
+				ID.access += access_syndicate_leader
+		else
+			message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
+
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
