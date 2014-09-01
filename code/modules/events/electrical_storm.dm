@@ -7,7 +7,7 @@
 /datum/round_event/electrical_storm
 	var/lightsoutAmount	= 1
 	var/lightsoutRange	= 25
-
+	announceWhen	= 1
 
 /datum/round_event/electrical_storm/announce()
 	priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")

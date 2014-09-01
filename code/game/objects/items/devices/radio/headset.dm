@@ -275,13 +275,16 @@
 			src.syndie = 1
 
 
-	for (var/ch_name in channels)
+	for(var/ch_name in channels)
+		//this is the most hilarious piece of code i have seen this week, so im not going to remove it
+		/*
 		if(!radio_controller)
 			sleep(30) // Waiting for the radio_controller to be created.
 		if(!radio_controller)
 			src.name = "broken radio headset"
 			return
+		*/
 
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 	return

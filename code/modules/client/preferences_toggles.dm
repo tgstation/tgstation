@@ -156,3 +156,12 @@ var/list/ghost_forms = list("ghost","ghostking","ghostian2","ghost_red","ghost_b
 		prefs.save_preferences()
 		if(istype(mob,/mob/dead/observer))
 			mob.icon_state = new_form
+
+/client/verb/toggle_intent_style()
+	set name = "Toggle Intent Selection Style"
+	set category = "Preferences"
+	set desc = "Toggle between directly clicking the desired intent or clicking to rotate through."
+	prefs.toggles ^= INTENT_STYLE
+	src << "[(prefs.toggles & INTENT_STYLE) ? "Clicking directly on intents selects them." : "Clicking on intents rotates selection clockwise."]"
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","ITENTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

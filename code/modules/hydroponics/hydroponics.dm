@@ -257,7 +257,7 @@ obj/machinery/hydroponics/update_icon()
 			overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
 
 		if(waterlevel <= 10)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state =" over_lowwater3")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_lowwater3")
 		if(nutrilevel <= 2)
 			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_lownutri3")
 		if(health <= (myseed.endurance / 2))

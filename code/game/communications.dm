@@ -60,6 +60,31 @@
       If receiving object don't know right key, it must ignore encrypted signal in its receive_signal.
 
 */
+/*	the radio controller is a confusing piece of shit and didnt work
+	so i made radios not use the radio controller.
+*/
+var/list/all_radios = list()
+/proc/add_radio(var/obj/item/radio, freq)
+	if(!freq || !radio)
+		return
+	if(!all_radios["[freq]"])
+		all_radios["[freq]"] = list(radio)
+		return freq
+	
+	all_radios["[freq]"] |= radio
+	return freq
+
+/proc/remove_radio(var/obj/item/radio, freq)
+	if(!freq || !radio)
+		return
+	if(!all_radios["[freq]"])
+		return
+
+	all_radios["[freq]"] -= radio
+
+/proc/remove_radio_all(var/obj/item/radio)
+	for(var/freq in all_radios)
+		all_radios["[freq]"] -= radio
 
 /*
 Frequency range: 1200 to 1600
@@ -109,8 +134,23 @@ var/list/radiochannels = list(
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 	"Service" = 1349,
-	"AI Private" = 1447,
+	"AI Private" = 1447
 )
+
+var/list/radiochannelsreverse = list(
+	"1459" = "Common",
+	"1351" = "Science",
+	"1353" = "Command",
+	"1355" = "Medical",
+	"1357" = "Engineering",
+	"1359" = "Security",
+	"1441" = "Deathsquad",
+	"1213" = "Syndicate",
+	"1347" = "Supply",
+	"1349" = "Service",
+	"1447" = "AI Private"
+)
+
 //depenging helpers
 var/const/SYND_FREQ = 1213 //nuke op frequency, coloured dark brown in chat window
 var/const/SUPP_FREQ = 1347 //supply, coloured light brown in chat window
@@ -129,7 +169,7 @@ var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 /* filters */
 var/const/RADIO_TO_AIRALARM = "1"
 var/const/RADIO_FROM_AIRALARM = "2"
-var/const/RADIO_CHAT = "3"
+var/const/RADIO_CHAT = "3" //deprecated
 var/const/RADIO_ATMOSIA = "4"
 var/const/RADIO_NAVBEACONS = "5"
 var/const/RADIO_AIRLOCK = "6"
@@ -282,7 +322,7 @@ var/list/pointers = list()
 			src << S.debug_print()
 
 /obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
-	return null
+	return
 
 /datum/signal
 	var/obj/source

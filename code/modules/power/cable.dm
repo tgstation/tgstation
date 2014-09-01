@@ -130,14 +130,16 @@ By design, d1 is the smallest direction and d2 is the highest
 		if (shock(user, 50))
 			return
 
+		var/obj/newcable
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			new/obj/item/stack/cable_coil(T, 2, cable_color)
+			newcable = new/obj/item/stack/cable_coil(T, 2, cable_color)
 		else
-			new/obj/item/stack/cable_coil(T, 1, cable_color)
+			newcable = new/obj/item/stack/cable_coil(T, 1, cable_color)
 
 		for(var/mob/O in viewers(src, null))
 			O.show_message("<span class='danger'>[user] cuts the cable.</span>", 1)
 
+		newcable.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 
 		qdel(src)
