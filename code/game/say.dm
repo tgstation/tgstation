@@ -103,13 +103,13 @@ var/freqtoname = list(
 		return "makes a strange sound."
 
 /proc/get_radio_span(freq)
-	var/returntext = freqtospan[freq]
+	var/returntext = freqtospan["[freq]"]
 	if(returntext)
 		return returntext
 	return "radio"
 
 /proc/get_radio_name(freq)
-	var/returntext = freqtoname[freq]
+	var/returntext = freqtoname["[freq]"]
 	if(returntext)
 		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
