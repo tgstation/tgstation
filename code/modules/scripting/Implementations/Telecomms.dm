@@ -304,9 +304,7 @@ datum/signal
 
 		//SAY REWRITE RELATED CODE.
 		//This code is a little hacky, but it *should* work. Even though it'll result in a virtual speaker referencing another virtual speaker. vOv
-		//var/atom/movable/virtualspeaker/virt = new(null) //REMIE POOL
 		var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
-		world << "Virtual speaker collected/created from pool |Telecomms.dm|"
 		virt.name = source
 		virt.job = job
 		virt.faketrack = 1
