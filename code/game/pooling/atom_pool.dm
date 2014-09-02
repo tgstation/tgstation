@@ -21,14 +21,21 @@ var/global/list/GlobalPool = list()
 //Goes into the pool
 
 /proc/PoolOrNew(var/get_type,var/new_loc)
-	if(!get_type || !new_loc)
+	if(!get_type)
 		return
 
-	var/atom/movable/AM = GetFromPool(get_type,new_loc)
+	var/atom/movable/AM
+	if(new_loc)
+		AM = GetFromPool(get_type,new_loc)
+	else
+		AM = GetFromPool(get_type,null)
 
 	if(!AM)
 		if(ispath(get_type))
-			AM = new get_type (new_loc)
+			if(new_loc)
+				AM = new get_type (new_loc)
+			else
+				AM = new get_type (null)
 
 	if(AM)
 		return AM
@@ -36,7 +43,7 @@ var/global/list/GlobalPool = list()
 
 
 /proc/GetFromPool(var/get_type,var/new_loc)
-	if(!get_type || !new_loc)
+	if(!get_type)
 		return 0
 
 	if(isnull(GlobalPool[get_type]))
@@ -48,7 +55,8 @@ var/global/list/GlobalPool = list()
 	var/atom/movable/AM = pick_n_take(GlobalPool[get_type])
 	if(AM)
 		AM.ResetVars()
-		AM.loc = new_loc
+		if(new_loc)
+			AM.loc = new_loc
 		return AM
 	return 0
 
