@@ -77,7 +77,7 @@
 	var/allow_random_events = 0			// enables random events mid-round when set to 1
 	var/allow_ai = 0					// allow ai job
 
-	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
+	var/traitor_scaling_coeff = 5		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
 	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 
