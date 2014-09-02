@@ -87,3 +87,6 @@ Pipelines + Other Objects -> Pipe network
 			qdel(src)
 	else
 		return ..()
+
+/obj/machinery/atmospherics/proc/nullifyPipenetwork()
+	return

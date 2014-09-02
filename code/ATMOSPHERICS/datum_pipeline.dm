@@ -8,14 +8,6 @@
 
 	var/alert_pressure = 0
 
-/datum/pipeline/Del()
-	if(network)
-		del(network)
-
-	if(air && air.volume)
-		temporarily_store_air()
-	..()
-
 /datum/pipeline/proc/process()//This use to be called called from the pipe networks
 
 	//Check to see if pressure is within acceptable limits
@@ -146,7 +138,7 @@ var/pipenetwarnings = 10
 
 /datum/pipeline/Destroy()
 	if(network)
-		del(network)
+		qdel(network)
 	if(air && air.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)

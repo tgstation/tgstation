@@ -97,3 +97,6 @@
 		del(network)
 
 	return null
+
+/obj/machinery/atmospherics/unary/nullifyPipenetwork()
+	network = null

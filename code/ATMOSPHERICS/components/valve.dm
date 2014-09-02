@@ -304,3 +304,7 @@ obj/machinery/atmospherics/valve/attack_hand(mob/user as mob)
 				close()
 			else
 				open()
+
+/obj/machinery/atmospherics/valve/nullifyPipenetwork()
+	network_node1 = null
+	network_node2 = null
