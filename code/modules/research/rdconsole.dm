@@ -30,7 +30,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 */
-
+#define RESEARCH_MAX_Q_LEN 30
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
 	icon_state = "rdcomp"
@@ -42,6 +42,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
 	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
 	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
+
+	var/list/obj/machinery/linked_machines = list()
+	var/list/research_machines = list(
+		/obj/machinery/r_n_d/protolathe,
+		/obj/machinery/r_n_d/destructive_analyzer,
+		/obj/machinery/r_n_d/circuit_imprinter,
+		/obj/machinery/r_n_d/fabricator/mech
+		)
 
 	var/screen = 1.0	//Which screen is currently showing.
 	var/id = 0			//ID of the computer (for server restrictions).
@@ -101,24 +109,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
-	for(var/obj/machinery/r_n_d/D in oview(3,src))
+	for(var/obj/machinery/r_n_d/D in area_contents(areaMaster)) //any machine in the room, just for funsies
 		if(D.linked_console != null || D.disabled || D.opened)
 			continue
-		if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
-			if(linked_destroy == null)
-				linked_destroy = D
-				D.linked_console = src
-				D.update_icon()
-		else if(istype(D, /obj/machinery/r_n_d/protolathe))
-			if(linked_lathe == null)
-				linked_lathe = D
-				D.linked_console = src
-				D.update_icon()
-		else if(istype(D, /obj/machinery/r_n_d/circuit_imprinter))
-			if(linked_imprinter == null)
-				linked_imprinter = D
-				D.linked_console = src
-				D.update_icon()
+		if(D.type in research_machines)
+			linked_machines += D
+			D.linked_console = src
+			D.update_icon()
+	for(var/obj/machinery/r_n_d/D in linked_machines)
+		switch(D.type)
+			if(/obj/machinery/r_n_d/protolathe)
+				if(!linked_lathe)
+					linked_lathe = D
+			if(/obj/machinery/r_n_d/destructive_analyzer)
+				if(!linked_destroy)
+					linked_destroy = D
+			if(/obj/machinery/r_n_d/circuit_imprinter)
+				if(!linked_imprinter)
+					linked_imprinter = D
 	return
 
 //Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
@@ -371,7 +379,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(linked_imprinter)
 			var/datum/design/being_built = null
 
-			if(linked_imprinter.production_queue.len >= IMPRINTER_MAX_Q_LEN)
+			if(linked_imprinter.production_queue.len >= RESEARCH_MAX_Q_LEN)
 				usr << "<span class=\"warning\">Maximum number of items in production queue exceeded.</span>"
 				return
 
@@ -732,18 +740,25 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				<A href='?src=\ref[src];find_device=1'>Re-sync with Nearby Devices</A><BR>
 				Linked Devices:<BR>"}
 			// END AUTOFIX
+			var/remain_link = linked_machines
 			if(linked_destroy)
 				dat += "* Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>(Disconnect)</A><BR>"
+				remain_link -= linked_destroy
 			else
 				dat += "* (No Destructive Analyzer Linked)<BR>"
 			if(linked_lathe)
 				dat += "* Protolathe <A href='?src=\ref[src];disconnect=lathe'>(Disconnect)</A><BR>"
+				remain_link -= linked_lathe
 			else
 				dat += "* (No Protolathe Linked)<BR>"
 			if(linked_imprinter)
 				dat += "* Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>(Disconnect)</A><BR>"
+				remain_link -= linked_imprinter
 			else
 				dat += "* (No Circuit Imprinter Linked)<BR>"
+			if(remain_link)
+				for(var/obj/machinery/r_n_d/R in remain_link)
+					dat += "* [R.name] <BR>"
 
 		////////////////////DESTRUCTIVE ANALYZER SCREENS////////////////////////////
 		if(2.0)
@@ -856,7 +871,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(3.4) //Protolathe Queue Management
 			dat += protolathe_header()+"Production Queue<BR><HR><ul>"
 			for(var/i=1;i<=linked_lathe.production_queue.len;i++)
-				var/datum/protolathe_queue_item/I=linked_lathe.production_queue[i]
+				var/datum/rnd_queue_item/I=linked_lathe.production_queue[i]
 				dat += "<li>Name: [I.thing.name]"
 				if(linked_lathe.stopped)
 					dat += "<A href='?src=\ref[src];removeQItem=[i];device=protolathe'>(Remove)</A></li>"
@@ -948,7 +963,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(4.4) //Imprinter Queue Management
 			dat += CircuitImprinterHeader()+"Production Queue<BR><HR><ul>"
 			for(var/i=1;i<=linked_imprinter.production_queue.len;i++)
-				var/datum/circuitimprinter_queue_item/I=linked_imprinter.production_queue[i]
+				var/datum/rnd_queue_item/I=linked_imprinter.production_queue[i]
 				dat += "<li>Name: [I.thing.name]"
 				if(linked_imprinter.stopped)
 					dat += "<A href='?src=\ref[src];removeQItem=[i];device=imprinter'>(Remove)</A></li>"
