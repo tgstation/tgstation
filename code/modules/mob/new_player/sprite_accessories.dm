@@ -280,6 +280,14 @@
 	name = "Spiky"
 	icon_state = "hair_spikey"
 
+/datum/sprite_accessory/hair/spiky2
+	name = "Big Spiky Hair"
+	icon_state = "hair_spiky"
+
+/datum/sprite_accessory/hair/spiky3
+	name = "Big Spiky Hair 2"
+	icon_state = "hair_spiky2"
+
 /datum/sprite_accessory/hair/protagonist
 	name = "Slightly long"
 	icon_state = "hair_protagonist"
@@ -387,14 +395,6 @@
 /datum/sprite_accessory/hair/drillhair
 	name = "Drill Hair"
 	icon_state = "hair_drillhair"
-
-/datum/sprite_accessory/hair/spiky
-	name = "Big Spiky Hair"
-	icon_state = "hair_spiky"
-
-/datum/sprite_accessory/hair/spiky2
-	name = "Big Spiky Hair 2"
-	icon_state = "hair_spiky2"
 
 /datum/sprite_accessory/hair/pigtails
 	name = "Pigtails"
