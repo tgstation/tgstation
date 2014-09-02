@@ -219,7 +219,7 @@ var/list/department_radio_keys = list(
 		if(lingcheck())
 			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 			for(var/mob/M in mob_list)
-				if(M.lingcheck() || M.stat == DEAD)
+				if(M.lingcheck() || (M.stat == DEAD && !istype(M, /mob/new_player)))
 					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 			return 1
 	return 0
