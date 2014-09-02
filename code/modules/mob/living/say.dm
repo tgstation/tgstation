@@ -129,7 +129,7 @@ var/list/department_radio_keys = list(
 	var/deaf_message
 	var/deaf_type
 	if(speaker != src)
-		deaf_message = "<span class='name'>[name]</span> talks but you cannot hear them."
+		deaf_message = "<span class='name'>[speaker]</span> talks but you cannot hear them."
 		deaf_type = 1
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
