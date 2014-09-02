@@ -2,6 +2,28 @@
 ///// Part Fabricator ///////
 /////////////////////////////
 
+#define MECH_SCREEN_MAIN		1
+#define	MECH_SCREEN_QUEUE		2
+
+#define	MECH_SCREEN_ROBOT		3
+#define	MECH_SCREEN_RIPLEY		4
+#define	MECH_SCREEN_ODYSSEUS	5
+#define	MECH_SCREEN_GYGAX		6
+#define	MECH_SCREEN_DURAND		7
+#define	MECH_SCREEN_HONK		8
+#define	MECH_SCREEN_PHAZON		9
+
+#define	MECH_SCREEN_EXOSUIT		10
+#define	MECH_SCREEN_UPGRADE		11
+#define	MECH_SCREEN_SPACE_POD	12
+#define	MECH_SCREEN_MISC		13
+
+
+#define MECH_SCREEN_WIDTH		1040
+#define MECH_SCREEN_HEIGHT		750
+
+
+
 /obj/machinery/mecha_part_fabricator
 	icon = 'icons/obj/robotics.dmi'
 	icon_state = "fab-idle"
@@ -19,13 +41,14 @@
 	var/datum/research/files
 	var/id
 	var/sync = 0
+	var/amount = 5
 	var/part_set
 	var/obj/being_built
 	var/obj/output
 	var/list/queue = list()
 	var/list/datum/material/materials = list()
 	var/processing_queue = 0
-	var/screen = "main"
+	var/screen = MECH_SCREEN_MAIN
 	var/opened = 0
 	var/temp
 	var/list/part_sets = list( //set names must be unique
@@ -82,7 +105,7 @@
 						/obj/item/mecha_parts/part/durand_right_leg,
 						/obj/item/mecha_parts/part/durand_armour
 					),
-	"H.O.N.K"=list(
+	"Honk"=list(
 						/obj/item/mecha_parts/chassis/honker,
 						/obj/item/mecha_parts/part/honker_torso,
 						/obj/item/mecha_parts/part/honker_head,
@@ -100,7 +123,7 @@
 						/obj/item/mecha_parts/part/phazon_left_leg,
 						/obj/item/mecha_parts/part/phazon_right_leg
 						),
-	"Exosuit Equipment"=list(
+	"Exosuit_Equipment"=list(
 						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 						/obj/item/mecha_parts/mecha_equipment/tool/drill,
 						/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
@@ -119,7 +142,7 @@
 						/obj/item/mecha_parts/part/phazon_phase_array
 						),
 
-	"Robotic Upgrade Modules" = list(
+	"Robotic_Upgrade_Modules" = list(
 						/obj/item/borg/upgrade/reset,
 						/obj/item/borg/upgrade/rename,
 						/obj/item/borg/upgrade/restart,
@@ -128,7 +151,7 @@
 						/obj/item/borg/upgrade/jetpack
 						),
 
-	"Space Pod" = list(
+	"Space_Pod" = list(
 						/obj/item/pod_parts/core
 						),
 	"Misc"=list(
@@ -247,15 +270,23 @@
 	return 1
 
 /obj/machinery/mecha_part_fabricator/proc/add_part_to_set(set_name as text,part)
-	if(!part) return 0
+	if(!part)
+		return 0
+
 	src.add_part_set(set_name)//if no "set_name" set exists, create
+
 	var/list/part_set = part_sets[set_name]
+
 	var/atom/apart
+
 	if(ispath(part))
 		apart = new part(src)
 	else
 		apart = part
-	if(!istype(apart)) return 0
+
+	if(!istype(apart))
+		return 0
+
 	for(var/obj/O in part_set)
 		if(O.type == apart.type)
 			del apart
@@ -366,22 +397,33 @@
 	src.updateUsrDialog()
 	return 1
 
-/obj/machinery/mecha_part_fabricator/proc/update_queue_on_page()
-	send_byjax(usr,"mecha_fabricator.browser","queue",src.list_queue())
-	return
+
+/*
+	for(var/i=1;i<=queue.len;i++)
+		var/obj/part_path = text2path(queue[i])
+		var/obj/Part = new part_path()
+		queue_list.Add(list(list("name" = Part.name, "commands" = list("remove_from_queue" = i))))
+*/
+
 
 /obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(set_name)
-	if(set_name in part_sets)
-		var/list/part_set = part_sets[set_name]
-		if(islist(part_set))
-			for(var/obj/item/part in part_set)
-				add_to_queue(part)
+	var/part_set_name = part_sets
+	var/list/set_parts = part_set_name[set_name]
+	if(set_name in part_set_name)
+		for(var/i = 1; i < set_parts.len; i ++)
+			if(part_set_name["Robot"] && i>7)
+				break
+			var/obj/P = set_parts[i]
+			var/obj/Part = P.type
+			add_to_queue("[Part]")
+	src.visible_message("\icon[src] <b>[src]</b> beeps: [set_name] parts were added to the queue\".")
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/add_to_queue(part)
 	if(!istype(queue))
 		queue = list()
 	if(part)
+		//src.visible_message("\icon[src] <b>[src]</b> beeps: [part.name] was added to the queue\".")
 		queue[++queue.len] = part
 	return queue.len
 
@@ -392,7 +434,12 @@
 	return 1
 
 /obj/machinery/mecha_part_fabricator/proc/process_queue()
-	var/obj/item/part = listgetindex(src.queue, 1)
+	if(!queue.len)
+		return
+
+	var/obj/part_path = text2path(src.queue[1])
+	var/obj/item/part = new part_path()
+	//var/obj/item/part = listgetindex(src.queue, 1)
 	if(!part)
 		remove_from_queue(1)
 		if(src.queue.len)
@@ -402,42 +449,23 @@
 	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")))//If it shouldn't be printed
 		remove_from_queue(1)//Take it out of the quene
 		return process_queue()//Then reprocess it
-	temp = null
 	while(part)
 		if(stat&(NOPOWER|BROKEN))
 			return 0
 		if(!check_resources(part))
 			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Not enough resources. Queue processing stopped\".")
-			temp = {"<font color='red'>Not enough resources to build next part.</font><br>
-						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
 			return 0
 		remove_from_queue(1)
 		build_part(part)
-		part = listgetindex(src.queue, 1)
+		if(!queue.len)
+			return
+		else
+			part_path = text2path(src.queue[1])
+			part = new part_path()
 	src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue processing finished successfully\".")
 	return 1
 
-/obj/machinery/mecha_part_fabricator/proc/list_queue()
-	var/output = "<b>Queue contains:</b>"
-	if(!istype(queue) || !queue.len)
-		output += "<br>Nothing"
-	else
-		output += "<ol>"
-		for(var/i=1;i<=queue.len;i++)
-			var/obj/item/part = listgetindex(src.queue, i)
-			if(istype(part))
-				if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
-					output += "<li[!check_resources(part)?" style='color: #f00;'":null]>[part.name] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
-				else//Prevents junk items from even appearing in the list, and they will be silently removed when the fab processes
-					remove_from_queue(i)//Trash it
-					return list_queue()//Rebuild it
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\mecha\mech_fabricator.dm:441: output += "</ol>"
-		output += {"</ol>
-			\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"}
-		// END AUTOFIX
-	return output
 
 /obj/machinery/mecha_part_fabricator/proc/convert_designs()
 	if(!files) return
@@ -529,69 +557,150 @@
 		return 0
 
 
+/obj/machinery/mecha_part_fabricator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(stat & (BROKEN|NOPOWER))
+		return
+	if((user.stat && !isobserver(user)) || user.restrained() || !allowed(user))
+		return
+
+	var/data[0]
+	var/queue_list[0]
+
+	for(var/i=1;i<=queue.len;i++)
+		var/obj/part_path = text2path(queue[i])
+		var/obj/Part = new part_path()
+		queue_list.Add(list(list("name" = Part.name, "commands" = list("remove_from_queue" = i))))
+
+	data["queue"] = queue_list
+	data["screen"]=screen
+	var/materials_list[0]
+		//Get the material names
+	for(var/matID in materials)
+		var/datum/material/material = materials[matID] // get the ID of the materials
+		if(material && material.stored > 0)
+			materials_list.Add(list(list("name" = material.processed_name, "storage" = material.stored, "commands" = list("eject" = matID)))) // get the amount of the materials
+	data["materials"] = materials_list
+
+	var/parts_list[0] // setup a list to get all the information for parts
+	for(var/set_name in part_sets)
+		var/list/set_name_list = list()
+		for(var/obj/Part in part_sets[set_name])
+			set_name_list.Add(list(list("name" = Part.name, "cost" = output_part_cost(Part), "time" = get_construction_time_w_coeff(Part)/10, "command1" = list("add_to_queue" = Part.type), "command2" = list("build" = Part.type))))
+		parts_list[set_name] = set_name_list
+	data["parts"] = parts_list // assigning the parts data to the data sent to UI
+
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
+	if (!ui)
+		ui = new(user, src, ui_key, "exofab.tmpl", "Exosuit Fabricator", MECH_SCREEN_WIDTH, MECH_SCREEN_HEIGHT)
+		ui.set_initial_data(data)
+		ui.open()
+
+
+
+
+/obj/machinery/mecha_part_fabricator/Topic(href, href_list)
+
+	if(..()) // critical exploit prevention, do not remove unless you replace it -walter0o
+		return
+
+	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+
+	if(href_list["remove_from_queue"])
+		remove_from_queue(filter.getNum("remove_from_queue"))
+		return 1
+	if(href_list["eject"])
+		var/num = input("Enter amount to eject", "Amount", "5") as num
+		if(num)
+			amount = round(text2num(num), 5)
+		if(amount < 0)
+			amount = 0
+		if(amount > 50)
+			amount = 50
+
+		remove_material(href_list["eject"], amount)
+		return 1
+	if(href_list["build"])
+		var/obj/part_path = text2path(href_list["build"])
+		var/obj/part = new part_path()
+		if(!processing_queue)
+			if(!check_resources(part))
+				src.visible_message("\icon[src] <b>[src]</b> beeps, \"Not enough resources. Unable to build: [part.name]\".")
+				return 0
+			if(src.exploit_prevention(part, usr))
+				return
+			build_part(part)
+		return 1
+
+	if(href_list["add_to_queue"])
+		var/obj/part = href_list["add_to_queue"]
+		var/obj/part_path = text2path(part)
+		var/obj/real_part = new part_path()
+	//	world << "This is the assigned part: [part]"
+		// critical exploit prevention, do not remove unless you replace it -walter0o
+		if(src.exploit_prevention(real_part, usr))
+			return
+		if(queue.len > 20)
+			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue is full, please clear or finish.\".")
+			return
+
+		add_to_queue(part)
+		return 1
+
+	if(href_list["queue_part_set"])
+		var/set_name = href_list["queue_part_set"]
+		if(queue.len > 20)
+			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue is full, please clear or finish.\".")
+			return
+		add_part_set_to_queue(set_name)
+		return 1
+
+	if(href_list["clear_queue"])
+		queue = list()
+		return 1
+
+	if(href_list["sync"])
+		queue = list()
+		temp = "Updating local R&D database..."
+		src.updateUsrDialog()
+		spawn(30)
+			src.sync()
+		return 1
+
+	if(href_list["process_queue"])
+		spawn(-1)
+			if(processing_queue || being_built)
+				return 0
+			processing_queue = 1
+			process_queue()
+			processing_queue = 0
+			return 1
+
+
+	if(href_list["screen"])
+		var/prevscreen=screen
+		screen = text2num(href_list["screen"])
+		if(prevscreen==screen) return 0
+		ui_interact(usr)
+		return 1
+
+
+
 /obj/machinery/mecha_part_fabricator/attack_hand(mob/user as mob)
-	var/dat, left_part
-	if (..())
-		return
-
-	if(!allowed(user))
-		user << "<span class='warning'>You don't have required permissions to use [src]</span>"
-		return
-
-	user.set_machine(src)
 
 	var/turf/exit = get_turf(output)
 	if(exit.density)
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Error! Part outlet is obstructed\".")
 		return
-	if(temp)
-		left_part = temp
-	else if(src.being_built)
-		left_part = {"<TT>Building [src.being_built.name].<BR>
-							Please wait until completion...</TT>"}
-	else
-		switch(screen)
-			if("main")
-				left_part = output_available_resources()+"<hr>"
-				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
-				for(var/part_set in part_sets)
-					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
-			if("parts")
-				left_part += output_parts_list(part_set)
-				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
-	dat = {"<html>
-			  <head>
-			  <title>[src.name]</title>
-				<style>
-				.res_name {font-weight: bold; text-transform: capitalize;}
-				.red {color: #f00;}
-				.part {margin-bottom: 10px;}
-				.arrow {text-decoration: none; font-size: 10px;}
-				body, table {height: 100%;}
-				td {vertical-align: top; padding: 5px;}
-				html, body {padding: 0px; margin: 0px;}
-				h1 {font-size: 18px; margin: 5px 0px;}
-				</style>
-				<script language='javascript' type='text/javascript'>
-				[js_byjax]
-				</script>
-				</head><body>
-				<body>
-				<table style='width: 100%;'>
-				<tr>
-				<td style='width: 70%; padding-right: 10px;'>
-				[left_part]
-				</td>
-				<td style='width: 30%; background: #ccc;' id='queue'>
-				[list_queue()]
-				</td>
-				<tr>
-				</table>
-				</body>
-				</html>"}
-	user << browse(dat, "window=mecha_fabricator;size=1000x400")
-	onclose(user, "mecha_fabricator")
-	return
+	.
+	if(stat & BROKEN)
+		return
+
+	if(!allowed(user))
+		src.visible_message("<span class='warning'>Unauthorized Access</span>: attempted by <b>[user]</b>")
+		return
+
+	ui_interact(user)
+
 
 /obj/machinery/mecha_part_fabricator/proc/exploit_prevention(var/obj/Part, mob/user as mob, var/desc_exploit)
 // critical exploit prevention, feel free to improve or replace this, but do not remove it -walter0o
@@ -607,48 +716,9 @@
 		return 1
 
 	return null
-
+/*
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
 
-	if(..()) // critical exploit prevention, do not remove unless you replace it -walter0o
-		return
-
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
-	if(href_list["part_set"])
-		var/tpart_set = filter.getStr("part_set")
-		if(tpart_set)
-			if(tpart_set=="clear")
-				src.part_set = null
-			else
-				src.part_set = tpart_set
-				screen = "parts"
-	if(href_list["part"])
-		var/obj/part = filter.getObj("part")
-
-		// critical exploit prevention, do not remove unless you replace it -walter0o
-		if(src.exploit_prevention(part, usr))
-			return
-
-		if(!processing_queue)
-			build_part(part)
-		else
-			add_to_queue(part)
-	if(href_list["add_to_queue"])
-		var/obj/part = filter.getObj("add_to_queue")
-
-		// critical exploit prevention, do not remove unless you replace it -walter0o
-		if(src.exploit_prevention(part, usr))
-			return
-
-		add_to_queue(part)
-
-		return update_queue_on_page()
-	if(href_list["remove_from_queue"])
-		remove_from_queue(filter.getNum("remove_from_queue"))
-		return update_queue_on_page()
-	if(href_list["partset_to_queue"])
-		add_part_set_to_queue(filter.get("partset_to_queue"))
-		return update_queue_on_page()
 	if(href_list["process_queue"])
 		spawn(-1)
 			if(processing_queue || being_built)
@@ -656,14 +726,12 @@
 			processing_queue = 1
 			process_queue()
 			processing_queue = 0
-/*
-		if(href_list["list_queue"])
-			list_queue()
-*/
+
 	if(href_list["clear_temp"])
 		temp = null
 	if(href_list["screen"])
 		src.screen = href_list["screen"]
+
 	if(href_list["queue_move"] && href_list["index"])
 		var/index = filter.getNum("index")
 		var/new_index = index + filter.getNum("queue_move")
@@ -671,6 +739,7 @@
 			if(InRange(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
+
 	if(href_list["clear_queue"])
 		queue = list()
 		return update_queue_on_page()
@@ -697,7 +766,7 @@
 		temp = "Ejected [remove_material(href_list["material"],text2num(href_list["remove_mat"]))] of [href_list["material"]]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 	src.updateUsrDialog()
 	return
-
+*/
 /obj/machinery/mecha_part_fabricator/proc/remove_material(var/matID, var/amount)
 	if(matID in materials)
 		var/datum/material/material = materials[matID]
@@ -802,9 +871,16 @@
 		if(stack && stack.amount)
 			while(material.stored < res_max_amount && stack)
 				if(stack.amount <= 0 || !stack)
-					user.drop_item(stack)
-					qdel(stack)
-					break
+					//user.get_active_hand()
+					if(user.get_active_hand())
+						if(istype(user.get_active_hand(),W))
+							user.drop_item(stack)
+							qdel(stack)
+							break
+						else
+							return 0
+					else
+						return 0
 				material.stored += amnt
 				stack.use(1)
 				count++
