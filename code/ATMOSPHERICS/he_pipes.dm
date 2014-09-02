@@ -71,8 +71,6 @@
 		var/have_node1 = node1?1:0
 		var/have_node2 = node2?1:0
 		icon_state = "exposed[have_node1][have_node2]"
-	if(!node1&&!node2)
-		qdel(src)
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/initialize()
 	for(var/obj/machinery/atmospherics/target in get_step(src,initialize_directions))
