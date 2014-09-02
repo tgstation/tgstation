@@ -164,11 +164,9 @@
 							theAPC = null
 
 	regular_hud_updates()
-	switch(src.sensor_mode)
-		if (SEC_HUD)
-			process_sec_hud(src,0,src.eyeobj)
-		if (MED_HUD)
-			process_med_hud(src,0,src.eyeobj)
+
+	if(sensor_mode) //Data HUDs, such as Security or Medical HUDS. Passes the AI's eye since it seems from that instead of itself.
+		process_data_hud(src,sensor_mode,DATA_HUD_BASIC,src.eyeobj)
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)

@@ -28,7 +28,7 @@
 
 
 /obj/item/clothing/glasses/hud/health/process_hud(var/mob/M)
-	process_med_hud(M, 1)
+	process_data_hud(M,DATA_HUD_MEDICAL,DATA_HUD_ADVANCED)
 
 
 /obj/item/clothing/glasses/hud/health/night
@@ -72,4 +72,4 @@
 	invis_view = 2
 
 /obj/item/clothing/glasses/hud/security/process_hud(var/mob/M)
-	process_sec_hud(M,1)
+	process_data_hud(M,DATA_HUD_SECURITY,DATA_HUD_ADVANCED)

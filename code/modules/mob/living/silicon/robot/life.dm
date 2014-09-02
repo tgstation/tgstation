@@ -167,11 +167,8 @@
 
 	regular_hud_updates() //Handles MED/SEC HUDs for borgs.
 
-	switch(sensor_mode)
-		if (SEC_HUD)
-			process_sec_hud(src, 1)
-		if (MED_HUD)
-			process_med_hud(src, 1)
+	if(sensor_mode)
+		process_data_hud(src,sensor_mode,DATA_HUD_ADVANCED)
 
 	if (src.healths)
 		if (src.stat != 2)

@@ -1038,11 +1038,6 @@
 
 	checklaws()
 
-/mob/living/silicon/robot/sensor_mode() //Medical/Security HUD controller for borgs
-	set category = "Robot Commands"
-	set desc = "Augment visual feed with internal sensor overlays."
-	..()
-
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)
 	if (robot_suit)
