@@ -18,6 +18,7 @@
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
 	m_amt = 50
 	g_amt = 20
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1;engineering=1"
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 

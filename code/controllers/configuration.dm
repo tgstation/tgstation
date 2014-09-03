@@ -64,6 +64,13 @@
 	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
+	var/copy_logs = null
+
+	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
+	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
+
+	var/disable_player_mice = 0
+	var/uneducated_mice = 0 //Set to 1 to prevent newly-spawned mice from understanding human speech
 
 	var/usealienwhitelist = 0
 	var/limitalienplayers = 0
@@ -72,7 +79,10 @@
 	var/server
 	var/banappeals
 	var/wikiurl = "http://baystation12.net/wiki/index.php?title=Main_Page"
+	var/vgws_base_url = "http://vg13.undo.it" // No hanging slashes.
 	var/forumurl = "http://baystation12.net/forums/"
+
+	var/media_base_url = "" // http://ss13.nexisonline.net/media
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -86,6 +96,7 @@
 
 	//game_options.txt configs
 
+	var/health_threshold_softcrit = 0
 	var/health_threshold_crit = 0
 	var/health_threshold_dead = -100
 
@@ -136,22 +147,26 @@
 	var/assistantratio = 2 //how many assistants to security members
 
 /datum/configuration/New()
+	. = ..()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
+
 	for (var/T in L)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
 		var/datum/game_mode/M = new T()
 
 		if (M.config_tag)
-			if(!(M.config_tag in modes))		// ensure each mode is added only once
+			if (!(M.config_tag in modes)) // Ensure each mode is added only once.
 				diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
 				src.modes += M.config_tag
 				src.mode_names[M.config_tag] = M.name
 				src.probabilities[M.config_tag] = M.probability
+
 				if (M.votable)
-					src.votable_modes += M.config_tag
-		del(M)
-	src.votable_modes += "secret"
+					votable_modes += M.config_tag
+		qdel(M)
+
+	votable_modes += "secret"
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	var/list/Lines = file2list(filename)
@@ -435,6 +450,12 @@
 				if("ghost_interaction")
 					config.ghost_interaction = 1
 
+				if("disable_player_mice")
+					config.disable_player_mice = 1
+
+				if("uneducated_mice")
+					config.uneducated_mice = 1
+
 				if("comms_password")
 					config.comms_password = value
 
@@ -455,13 +476,24 @@
 							config.python_path = "/usr/bin/env python2"
 						else //probably windows, if not this should work anyway
 							config.python_path = "python"
+
+				if("allow_cult_ghostwriter")
+					config.cult_ghostwriter = 1
+
+				if("req_cult_ghostwriter")
+					config.cult_ghostwriter_req_cultists = value
 				if("assistant_limit")
 					config.assistantlimit = 1
 				if("assistant_ratio")
 					config.assistantratio = text2num(value)
+				if("copy_logs")
+					copy_logs=value
+				if("media_base_url")
+					media_base_url = value
+				if("vgws_base_url")
+					vgws_base_url = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
-
 
 		else if(type == "game_options")
 			if(!value)
@@ -469,8 +501,12 @@
 			value = text2num(value)
 
 			switch(name)
+				if("max_explosion_range")
+					MAX_EXPLOSION_RANGE = value
 				if("health_threshold_crit")
 					config.health_threshold_crit = value
+				if("health_threshold_softcrit")
+					config.health_threshold_softcrit = value
 				if("health_threshold_dead")
 					config.health_threshold_dead = value
 				if("revival_pod_plants")

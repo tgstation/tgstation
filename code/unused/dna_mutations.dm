@@ -57,7 +57,7 @@ This system could be expanded to migrate all of our current mutations to. Maybe.
 
 		get_mutation(var/mob/living/carbon/M)
 			M << "\blue You feel a searing heat inside your eyes!"
-			M.mutations.Add(LASER)
+			M.mutations.Add(M_LASER)
 
 	Healing
 		/*

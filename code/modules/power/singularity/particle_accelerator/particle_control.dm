@@ -3,7 +3,7 @@
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Computer"
 	desc = "This controls the density of the particles."
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "control_box"
 	reference = "control_box"
 	anchored = 0
@@ -21,11 +21,22 @@
 	var/parts = null
 	var/datum/wires/particle_acc/control_box/wires = null
 
+	l_color = "#0000FF"
+
 /obj/machinery/particle_accelerator/control_box/New()
 	wires = new(src)
 	connected_parts = list()
 	..()
 
+/obj/machinery/particle_accelerator/control_box/Destroy()
+	if(active)
+		toggle_power()
+
+	if(wires)
+		wires.Destroy()
+		wires = null
+
+	..()
 
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user as mob)
 	if(construction_state >= 3)
@@ -136,6 +147,11 @@
 		use_power = 1
 	return
 
+	if(!(stat & (BROKEN|NOPOWER)))
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
+
 
 /obj/machinery/particle_accelerator/control_box/process()
 	if(src.active)
@@ -230,38 +246,26 @@
 	user.set_machine(src)
 
 	var/dat = ""
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:214: dat += "Particle Accelerator Control Panel<BR>"
-	dat += {"Particle Accelerator Control Panel<BR>
-		<A href='?src=\ref[src];close=1'>Close</A><BR><BR>
-		Status:<BR>"}
-	// END AUTOFIX
+	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR><BR>"
+	dat += "<h3>Status</h3>"
 	if(!assembled)
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:218: dat += "Unable to detect all parts!<BR>"
-		dat += {"Unable to detect all parts!<BR>
-			<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"}
-		// END AUTOFIX
+		dat += "Unable to detect all parts!<BR>"
+		dat += "<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"
 	else
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:221: dat += "All parts in place.<BR><BR>"
-		dat += {"All parts in place.<BR><BR>
-			Power:"}
-		// END AUTOFIX
+		dat += "All parts in place.<BR><BR>"
+		dat += "Power:"
 		if(active)
 			dat += "On<BR>"
 		else
 			dat += "Off <BR>"
+		dat += "<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>"
+		dat += "Particle Strength: [src.strength] "
+		dat += "<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:227: dat += "<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>"
-		dat += {"<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>
-			Particle Strength: [src.strength] 
-			<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"}
-		// END AUTOFIX
-	user << browse(dat, "window=pacontrol;size=420x500")
-	onclose(user, "pacontrol")
+	//user << browse(dat, "window=pacontrol;size=420x500")
+	//onclose(user, "pacontrol")
+	var/datum/browser/popup = new(user, "pacontrol", name, 420, 500)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return

@@ -7,18 +7,57 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
 	var/mob/living/affected_mob
+	var/list/ghost_volunteers[0]
+	var/picked=null
 	var/stage = 0
 
 /obj/item/alien_embryo/New()
 	if(istype(loc, /mob/living))
 		affected_mob = loc
 		processing_objects.Add(src)
+
+		for(var/mob/dead/observer/O in player_list)
+			if(O.client && O.client.prefs.be_special & BE_ALIEN)
+				if(check_observer(O))
+					O << "<span class=\"recruit\">[affected_mob] has been infected by \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
 		spawn(0)
 			AddInfectionImages(affected_mob)
 	else
 		del(src)
 
-/obj/item/alien_embryo/Del()
+/obj/item/alien_embryo/Topic(href,href_list)
+	if("signup" in href_list)
+		var/mob/dead/observer/O = locate(href_list["signup"])
+		if(!O) return
+		volunteer(O)
+
+
+/obj/item/alien_embryo/proc/volunteer(var/mob/dead/observer/O)
+	if(!istype(O))
+		O << "\red NO."
+		return
+	if(O in ghost_volunteers)
+		O << "\blue Removed from registration list."
+		ghost_volunteers.Remove(O)
+		return
+	if(!check_observer(O))
+		O << "\red You cannot be \a [src]."
+		return
+	O << "\blue You've been added to the list of ghosts that may become this [src].  Click again to unvolunteer."
+	ghost_volunteers.Add(O)
+
+/obj/item/alien_embryo/proc/check_observer(var/mob/dead/observer/O)
+	if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+		return 0
+	if(jobban_isbanned(O, "Syndicate")) // Antag-banned
+		return 0
+	if(!O.client)
+		return 0
+	if(((O.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER) // Filter AFK
+		return 1
+	return 0
+
+/obj/item/alien_embryo/Destroy()
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		spawn(0)
@@ -72,19 +111,27 @@
 				AttemptGrow()
 
 /obj/item/alien_embryo/proc/AttemptGrow(var/gib_on_success = 1)
-	var/list/candidates = get_alien_candidates()
-	var/picked = null
-
 	// To stop clientless larva, we will check that our host has a client
 	// if we find no ghosts to become the alien. If the host has a client
 	// he will become the alien but if he doesn't then we will set the stage
 	// to 2, so we don't do a process heavy check everytime.
+	var/mob/dead/observer/ghostpicked
+	while(ghost_volunteers.len)
+		ghostpicked = pick_n_take(ghost_volunteers)
+		if(!istype(ghostpicked))
+			continue
+		break
+	if(!ghostpicked || !istype(ghostpicked))
+		var/list/candidates = get_alien_candidates()
+		if(!candidates.len)
+			picked = affected_mob.key
+		else
+			for(var/mob/dead/observer/O in candidates)
+				O << "<span class=\"recruit\">[affected_mob] is about to burst from \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
 
-	if(candidates.len)
-		picked = pick(candidates)
-	else if(affected_mob.client)
-		picked = affected_mob.key
 	else
+		picked = ghostpicked.key
+	if(!picked)
 		stage = 4 // Let's try again later.
 		return
 
@@ -109,7 +156,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 		if(alien.client)
 			for(var/image/I in alien.client.images)
 				if(dd_hasprefix_case(I.icon_state, "infected"))
-					del(I)
+					alien.client.images -= I
 			for(var/mob/living/L in mob_list)
 				if(iscorgi(L) || iscarbon(L))
 					if(L.status_flags & XENO_HOST)

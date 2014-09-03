@@ -9,7 +9,8 @@
 	slot_flags = SLOT_BELT
 	m_amt = 50
 	g_amt = 20
-	icon_action_button = "action_flashlight"
+	w_type = RECYK_ELECTRONIC
+	action_button_name = "Toggle Light"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 
@@ -49,7 +50,7 @@
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 
-		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+		if(((M_CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")	//don't have dexterity
@@ -77,7 +78,8 @@
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
 				user << "<span class='notice'>[M] pupils does not react to the light!</span>"
-			else if(XRAY in M.mutations)	//mob has X-RAY vision
+			else if(M_XRAY in M.mutations)	//mob has X-RAY vision
+				flick("flash", M.flash) //Yes, you can still get flashed wit X-Ray.
 				user << "<span class='notice'>[M] pupils give an eerie glow!</span>"
 			else	//they're okay!
 				if(!M.blinded)
@@ -147,7 +149,7 @@
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
-	icon_action_button = null	//just pull it manually, neckbeard.
+	action_button_name = null //just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
@@ -159,7 +161,7 @@
 /obj/item/device/flashlight/flare/process()
 	var/turf/pos = get_turf(src)
 	if(pos)
-		pos.hotspot_expose(produce_heat, 5)
+		pos.hotspot_expose(produce_heat, 5,surfaces=istype(loc,/turf))
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()

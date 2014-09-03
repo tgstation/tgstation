@@ -16,13 +16,6 @@
 	icon_state = "ash"
 	anchored = 1
 
-/obj/effect/decal/cleanable/greenglow
-
-	New()
-		..()
-		spawn(1200)// 2 minutes
-			del(src)
-
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
@@ -32,6 +25,7 @@
 	layer = 2
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dirt"
+	mouse_opacity = 0
 
 /obj/effect/decal/cleanable/flour
 	name = "flour"
@@ -96,12 +90,13 @@
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
 
-	Del()
+	Destroy()
 		for(var/datum/disease/D in viruses)
 			D.cure(0)
+			D.holder = null
 		..()
 
-/obj/effect/decal/cleanable/vomit/HasEntered(mob/living/carbon/human/perp)
+/obj/effect/decal/cleanable/vomit/Crossed(mob/living/carbon/human/perp)
 	if (!istype(perp))
 		return
 	if(amount < 1)
@@ -152,3 +147,16 @@
 	layer = 2
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
+
+/obj/effect/decal/cleanable/soot
+	name = "soot"
+	desc = "One hell of a party..."
+	gender = PLURAL
+	icon = 'icons/effects/tile_effects.dmi'
+	icon_state = "tile_soot"
+	anchored = 1
+	layer=2
+
+/obj/effect/decal/cleanable/soot/New()
+	..()
+	dir = pick(cardinal)

@@ -110,12 +110,12 @@ var/list/sacrificed = list()
 				if(is_convertable_to_cult(M.mind) && !jobban_isbanned(M, "cultist"))//putting jobban check here because is_convertable uses mind as argument
 					ticker.mode.add_cultist(M.mind)
 					M.mind.special_role = "Cultist"
-					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-					M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+					M << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
+					M << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
 					log_admin("[usr]([ckey(usr.key)]) has converted [M] ([ckey(M.key)]) to the cult at [M.loc.x], [M.loc.y], [M.loc.z]")
 					return 1
 				else
-					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
+					M << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
 					M << "<font color=\"red\"><b>And you were able to force it out of your mind. You now know the truth, there's something horrible out there, stop it and its minions at all costs.</b></font>"
 					return 0
 
@@ -132,7 +132,7 @@ var/list/sacrificed = list()
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
-				new /obj/machinery/singularity/narsie/large(src.loc)
+				new /obj/machinery/singularity/narsie/large(src.loc,cultspawn=1)
 				if(ticker.mode.name == "cult")
 					ticker.mode:eldergod = 0
 				return
@@ -149,7 +149,7 @@ var/list/sacrificed = list()
 			playsound(U, 'sound/items/Welder2.ogg', 25, 1)
 			var/turf/T = get_turf(U)
 			if(T)
-				T.hotspot_expose(700,125)
+				T.hotspot_expose(700,125,surfaces=1)
 			var/rune = src // detaching the proc - in theory
 			empulse(U, (range_red - 2), range_red)
 			del(rune)
@@ -290,8 +290,8 @@ var/list/sacrificed = list()
 //			else
 //				ticker.mode.cult |= corpse_to_raise.mind
 
-			corpse_to_raise << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-			corpse_to_raise << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+			corpse_to_raise << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
+			corpse_to_raise << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
 			return
 
 
@@ -392,8 +392,8 @@ var/list/sacrificed = list()
 				ticker.mode.cult+=D.mind
 
 			D.mind.special_role = "Cultist"
-			D << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-			D << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+			D << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
+			D << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
 
 			var/mob/living/user = usr
 			while(this_rune && user && user.stat==CONSCIOUS && user.client && user.loc==this_rune.loc)
@@ -963,14 +963,14 @@ var/list/sacrificed = list()
 							else
 								M << "\red Rune suddenly ignites, burning you!"
 							var/turf/T = get_turf(R)
-							T.hotspot_expose(700,125)
+							T.hotspot_expose(700,125,surfaces=1)
 				for(var/obj/effect/decal/cleanable/blood/B in world)
 					if(B.blood_DNA == src.blood_DNA)
 						for(var/mob/living/M in orange(1,B))
 							M.take_overall_damage(0,5)
 							M << "\red Blood suddenly ignites, burning you!"
 							var/turf/T = get_turf(B)
-							T.hotspot_expose(700,125)
+							T.hotspot_expose(700,125,surfaces=1)
 							del(B)
 				del(src)
 
@@ -984,7 +984,7 @@ var/list/sacrificed = list()
 					if(iscarbon(L))
 						var/mob/living/carbon/C = L
 						flick("e_flash", C.flash)
-						if(C.stuttering < 1 && (!(HULK in C.mutations)))
+						if(C.stuttering < 1 && (!(M_HULK in C.mutations)))
 							C.stuttering = 1
 						C.Weaken(1)
 						C.Stun(1)
@@ -1011,7 +1011,7 @@ var/list/sacrificed = list()
 					else if(iscarbon(T))
 						var/mob/living/carbon/C = T
 						flick("e_flash", C.flash)
-						if (!(HULK in C.mutations))
+						if (!(M_HULK in C.mutations))
 							C.silent += 15
 						C.Weaken(25)
 						C.Stun(25)

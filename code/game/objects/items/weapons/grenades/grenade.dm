@@ -13,7 +13,7 @@
 	var/det_time = 50
 
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/user)
-	if((CLUMSY in user.mutations) && prob(50))
+	if((M_CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
 
 		activate(user)
@@ -86,7 +86,7 @@
 //	playsound(loc, 'sound/items/Welder2.ogg', 25, 1)
 	var/turf/T = get_turf(src)
 	if(T)
-		T.hotspot_expose(700,125)
+		T.hotspot_expose(700,125,surfaces=istype(loc,/turf))
 
 /obj/item/weapon/grenade/proc/update_mob()
 	if(ismob(loc))

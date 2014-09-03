@@ -9,14 +9,21 @@
 	w_class = 4.0
 	max_w_class = 3
 	max_combined_w_class = 16
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is smashing \his head inside the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /obj/item/weapon/storage/briefcase/New()
+	new /obj/item/weapon/paper/demotion_key(src)
+	new /obj/item/weapon/paper/commendation_key(src)
 	..()
 
 /obj/item/weapon/storage/briefcase/attack(mob/living/M as mob, mob/living/user as mob)
 	//..()
 
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((M_CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.Paralyse(2)

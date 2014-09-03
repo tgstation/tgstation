@@ -23,7 +23,7 @@
 /obj/effect/decal/mecha_wreckage/ex_act(severity)
 	if(severity < 2)
 		spawn
-			del src
+			qdel(src)
 	return
 
 /obj/effect/decal/mecha_wreckage/bullet_act(var/obj/item/projectile/Proj)
@@ -193,6 +193,11 @@
 				welder_salvage += part
 				parts -= part
 		return
+
+
+/obj/effect/decal/mecha_wreckage/durand/old
+	name = "Durand wreckage"
+	icon_state = "old_durand-broken"
 
 /obj/effect/decal/mecha_wreckage/phazon
 	name = "Phazon wreckage"

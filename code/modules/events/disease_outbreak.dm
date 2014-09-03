@@ -1,11 +1,9 @@
 /datum/event/disease_outbreak
 	announceWhen	= 15
-	oneShot			= 1
 
 
 /datum/event/disease_outbreak/announce()
-	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-	world << sound('sound/AI/outbreak7.ogg')
+	biohazard_alert()
 
 /datum/event/disease_outbreak/setup()
 	announceWhen = rand(15, 30)
@@ -30,8 +28,8 @@
 				continue
 			var/datum/disease/dnaspread/D = new
 			D.strain_data["name"] = H.real_name
-			D.strain_data["UI"] = H.dna.UI
-			D.strain_data["SE"] = H.dna.SE
+			D.strain_data["UI"] = H.dna.UI.Copy()
+			D.strain_data["SE"] = H.dna.SE.Copy()
 			D.carrier = 1
 			D.holder = H
 			D.affected_mob = H

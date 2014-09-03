@@ -76,9 +76,7 @@
 
 		return null
 
-	Del()
-		loc = null
-
+	Destroy()
 		if(connected_device)
 			connected_device.disconnect()
 
@@ -168,4 +166,4 @@
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
 			new /obj/item/pipe(loc, make_from=src)
-			del(src)
+			qdel(src)

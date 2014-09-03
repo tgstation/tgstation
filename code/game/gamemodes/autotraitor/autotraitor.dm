@@ -14,7 +14,8 @@
 	world << "<B>Game mode is AutoTraitor. Traitors will be added to the round automagically as needed.<br>Expect bugs.</B>"
 
 /datum/game_mode/traitor/autotraitor/pre_setup()
-
+	if(istype(ticker.mode, /datum/game_mode/mixed))
+		mixed = 1
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -43,6 +44,9 @@
 
 	if(config.traitor_scaling)
 		num_traitors = max_traitors - 1 + prob(traitor_prob)
+		// mixed mode scaling
+		if(mixed)
+			num_traitors = min(3, num_traitors)
 		log_game("Number of traitors: [num_traitors]")
 		message_admins("Players counted: [num_players]  Number of traitors chosen: [num_traitors]")
 	else
@@ -51,6 +55,9 @@
 
 	for(var/i = 0, i < num_traitors, i++)
 		var/datum/mind/traitor = pick(possible_traitors)
+		if(traitor.special_role)
+			possible_traitors.Remove(traitor)
+			continue
 		traitors += traitor
 		possible_traitors.Remove(traitor)
 
@@ -87,7 +94,7 @@
 				playercount += 1
 			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
+			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate") && !isMoMMI(player))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
 			for(var/job in restricted_jobs)

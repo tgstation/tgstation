@@ -22,6 +22,7 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
+	l_color = "#B40000"
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -463,25 +464,25 @@ What a mess.*/
 							active1.fields["age"] = t1
 					if("mi_crim")
 						if (istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input minor disabilities list:", "Secure. records", active2.fields["mi_crim"], null)  as text),1,MAX_MESSAGE_LEN)
+							var/t1 = copytext(sanitize(input("Please input minor crimes list:", "Secure. records", active2.fields["mi_crim"], null)  as text),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["mi_crim"] = t1
 					if("mi_crim_d")
 						if (istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please summarize minor dis.:", "Secure. records", active2.fields["mi_crim_d"], null)  as message),1,MAX_MESSAGE_LEN)
+							var/t1 = copytext(sanitize(input("Please summarize minor crimes:", "Secure. records", active2.fields["mi_crim_d"], null)  as message),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["mi_crim_d"] = t1
 					if("ma_crim")
 						if (istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input major diabilities list:", "Secure. records", active2.fields["ma_crim"], null)  as text),1,MAX_MESSAGE_LEN)
+							var/t1 = copytext(sanitize(input("Please input major crimes list:", "Secure. records", active2.fields["ma_crim"], null)  as text),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["ma_crim"] = t1
 					if("ma_crim_d")
 						if (istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please summarize major dis.:", "Secure. records", active2.fields["ma_crim_d"], null)  as message),1,MAX_MESSAGE_LEN)
+							var/t1 = copytext(sanitize(input("Please summarize major crimes:", "Secure. records", active2.fields["ma_crim_d"], null)  as message),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["ma_crim_d"] = t1
@@ -602,3 +603,5 @@ What a mess.*/
 /obj/machinery/computer/secure_data/detective_computer
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "messyfiles"
+
+	l_color = "#000000"

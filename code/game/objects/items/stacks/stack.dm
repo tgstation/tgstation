@@ -8,12 +8,12 @@
  * Stacks
  */
 /obj/item/stack
+	gender = PLURAL
 	origin_tech = "materials=1"
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
-	var/list/canCombineWith=list()
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
@@ -21,7 +21,7 @@
 		src.amount=amount
 	return
 
-/obj/item/stack/Del()
+/obj/item/stack/Destroy()
 	if (src && usr && usr.machine==src)
 		usr << browse(null, "window=stack")
 	..()
@@ -168,7 +168,7 @@
 		src = null //dont kill proc after del()
 		if(usr)
 			usr.before_take_item(oldsrc)
-		del(oldsrc)
+		qdel(oldsrc)
 	return
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)

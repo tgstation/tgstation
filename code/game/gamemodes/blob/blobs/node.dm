@@ -14,11 +14,10 @@
 	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		return
 
-	Del()
+	Destroy()
 		blob_nodes -= src
 		processing_objects.Remove(src)
 		..()
-		return
 
 	Life()
 		for(var/i = 1; i < 8; i += i)
@@ -27,7 +26,7 @@
 
 	update_icon()
 		if(health <= 0)
-			playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/effects/blobsplatspecial.ogg', 50, 1)
 			Delete()
 			return
 		return

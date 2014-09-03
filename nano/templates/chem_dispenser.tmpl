@@ -7,7 +7,7 @@ Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
 		Energy:
 	</div>
 	<div class="itemContent">
-		{{:~displayBar(energy, 0, maxEnergy, 'good', energy + ' Units')}}
+		{{:helper.displayBar(data.energy, 0, data.maxEnergy, 'good', data.energy + ' Units')}}
 	</div>
 </div>
 
@@ -16,19 +16,17 @@ Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
 		Dispense:
 	</div>
 	<div class="itemContent">
-		{{:~link('5', 'gear', {'amount' : 5}, (amount == 5 && !custom) ? 'selected' : null)}}
-		{{:~link('10', 'gear', {'amount' : 10}, (amount == 10 && !custom) ? 'selected' : null)}}
-		{{:~link('20', 'gear', {'amount' : 20}, (amount == 20 && !custom) ? 'selected' : null)}}
-		{{:~link('30', 'gear', {'amount' : 30}, (amount == 30 && !custom) ? 'selected' : null)}}
-		{{:~link('50', 'gear', {'amount' : 50}, (amount == 50 && !custom) ? 'selected' : null)}}
-		{{:~link('100', 'gear', {'amount' : 100}, (amount == 100 && !custom) ? 'selected' : null)}}
-		{{:~link((custom) ? 'Custom: ' + amount : 'Custom', 'gear', {'amount' : 0}, null, (custom) ? 'selected' : null)}}
+		{{:helper.link('5', 'gear', {'amount' : 5}, (data.amount == 5) ? 'selected' : null)}}
+		{{:helper.link('10', 'gear', {'amount' : 10}, (data.amount == 10) ? 'selected' : null)}}
+		{{:helper.link('20', 'gear', {'amount' : 20}, (data.amount == 20) ? 'selected' : null)}}
+		{{:helper.link('30', 'gear', {'amount' : 30}, (data.amount == 30) ? 'selected' : null)}}
+		{{:helper.link('50', 'gear', {'amount' : 50}, (data.amount == 50) ? 'selected' : null)}}
 	</div>
 </div>
 <div class="item">&nbsp;</div>
 <div class="item">
 	<div class="itemLabel" style="width: 100%;">
-		{{if glass}}
+		{{if data.glass}}
 			Drink Dispenser
 		{{else}}
 			Chemical Dispenser
@@ -37,8 +35,8 @@ Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
 </div>
 <div class="item">
 	<div class="itemContentWide" style="width: 100%;">
-		{{for chemicals}}
-			{{:~link(title, 'circle-arrow-s', commands, null, ~root.glass ? 'fixedLeftWide' : 'fixedLeft')}}
+		{{for data.chemicals}}
+			{{:helper.link(value.title, 'circle-arrow-s', value.commands, null, data.glass ? 'fixedLeftWide' : 'fixedLeft')}}
 		{{/for}}
 		
 	</div>
@@ -46,39 +44,43 @@ Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
 <div class="item">&nbsp;</div>
 <div class="item">
 	<div class="itemLabel">
-		{{if glass}}
+		{{if data.glass}}
 			Glass
 		{{else}}
 			Beaker
 		{{/if}} Contents
 	</div>
 	<div class="itemContent">
-		{{:~link(glass ? 'Eject Glass' : 'Eject Beaker', 'eject', {'ejectBeaker' : 1}, isBeakerLoaded ? null : 'disabled', 'floatRight')}}
+		{{:helper.link(data.glass ? 'Eject Glass' : 'Eject Beaker', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled', 'floatRight')}}
 	</div>
 </div>
-<div class="statusDisplay" style="height: 225px; overflow: auto;">
+<div class="statusDisplay" style="min-height: 180px;">
 	<div class="item">
 		<div class="itemContent" style="width: 100%;">
-			{{if isBeakerLoaded}}
-				<b>Volume:&nbsp;{{:beakerCurrentVolume}}&nbsp;/&nbsp;{{:beakerMaxVolume}}</b><br>
-				{{for beakerContents}}
-					<span class="highlight">{{:volume}} units of {{:name}}</span><br>
-				{{else}}
+			{{if data.isBeakerLoaded}}
+				<b>Volume:&nbsp;{{:data.beakerCurrentVolume}}&nbsp;/&nbsp;{{:data.beakerMaxVolume}}</b><br>
+				{{for data.beakerContents}}
+					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br>
+				{{empty}}
 					<span class="bad">
-							{{if glass}}
-								Glass
-							{{else}}
-								Beaker
-							{{/if}}
-								 is empty</span>
+						{{if data.glass}}
+							Glass
+						{{else}}
+							Beaker
+						{{/if}}
+						is empty
+					</span>
 				{{/for}}
 			{{else}}
-				<span class="average"><i>No 
-							{{if glass}}
-								Glass
-							{{else}}
-								Beaker
-							{{/if}} loaded</i></span>
+				<span class="average"><i>
+					No 
+					{{if data.glass}}
+						Glass
+					{{else}}
+						Beaker
+					{{/if}} 
+					loaded
+				</i></span>
 			{{/if}}
 		</div>
 	</div>

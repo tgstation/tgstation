@@ -11,17 +11,16 @@
 	density = 1
 	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
 
-
 /obj/machinery/sleep_console/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -136,6 +135,13 @@
 	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin")
 	var/amounts = list(5, 10)
 
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)) && occupant)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 /obj/machinery/sleeper/New()
 	..()
@@ -202,6 +208,8 @@
 		for(var/obj/OO in src)
 			OO.loc = src.loc
 		src.add_fingerprint(user)
+		if(user.pulling == L)
+			user.pulling = null
 		return
 	return
 
@@ -268,21 +276,21 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 	return
 /obj/machinery/sleeper/emp_act(severity)

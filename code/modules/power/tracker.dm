@@ -49,10 +49,9 @@
 	// ***TODO: better communication system using network
 	if(powernet)
 		for(var/obj/machinery/power/solar_control/C in get_solars_powernet())
-			if(powernet.nodes[C])
+			if(powernet.nodes.Find(C))
 				if(get_dist(C, src) < SOLAR_MAX_DIST)
 					C.tracker_update(angle)
-
 
 /obj/machinery/power/tracker/attackby(var/obj/item/weapon/W, var/mob/user)
 
@@ -81,6 +80,9 @@
 	else
 		stat |= NOPOWER
 
+/obj/machinery/power/tracker/Destroy()
+	solars_list -= src
+	..()
 
 // Tracker Electronic
 

@@ -7,6 +7,8 @@ var/list/admin_verbs_default = list(
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/client/proc/check_antagonists,		/*shows all antags*/
+	/datum/admins/proc/checkCID,
+	/datum/admins/proc/checkCKEY
 //	/client/proc/deadchat				/*toggles deadchat on/off*/
 	)
 var/list/admin_verbs_admin = list(
@@ -77,7 +79,7 @@ var/list/admin_verbs_admin = list(
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
 	/client/proc/jobbans,
-	/client/proc/unjobban_panel,
+	/client/proc/unjobban_panel
 	// /client/proc/DB_ban_panel
 	)
 var/list/admin_verbs_sounds = list(
@@ -101,7 +103,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
 	/client/proc/editappear,
-	/client/proc/commandname
+	/client/proc/commandname,
+	/client/proc/gib_money // /vg/
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -145,7 +148,15 @@ var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
 	/client/proc/callproc,
-	/client/proc/toggledebuglogs
+	/client/proc/toggledebuglogs,
+	/client/proc/qdel_toggle,              // /vg/
+	/client/proc/cmd_admin_dump_instances, // /vg/
+	/client/proc/disable_bloodvirii,       // /vg/
+	/client/proc/fryer_toggle,
+	/client/proc/fryer_nutriment,
+#ifdef PROFILE_MACHINES
+	/client/proc/cmd_admin_dump_macprofile,
+#endif
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -465,7 +476,7 @@ var/list/admin_verbs_mod = list(
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #define MAX_WARNS 3
-#define AUTOBANTIME 15
+#define AUTOBANTIME 90
 
 /client/proc/warn(warned_ckey)
 	var/reason = "Autobanning due to too many formal warnings"
@@ -486,8 +497,11 @@ var/list/admin_verbs_mod = list(
 		return
 
 	if(++D.warns >= MAX_WARNS)					//uh ohhhh...you'reee iiiiin trouuuubble O:)
-		var/bantime = (++D.warnbans * AUTOBANTIME)
-		D.warns = 1
+		var/bantime = AUTOBANTIME//= (++D.warnbans * AUTOBANTIME)
+		D.warns = 0
+		++D.warnbans
+		for(var/i = 1; i < D.warnbans; i++)
+			bantime *= 2
 		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [bantime] minute autoban.")
 		if(C)
 			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [bantime] minute ban.")
@@ -507,6 +521,37 @@ var/list/admin_verbs_mod = list(
 			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC). They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
 		D.save_preferences()
 	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/unwarn(warned_ckey)
+	if(!check_rights(R_ADMIN))	return
+
+	if(!warned_ckey || !istext(warned_ckey))	return
+	/*if(warned_ckey in admin_datums)
+		usr << "<font color='red'>Error: warn(): You can't warn admins.</font>"
+		return*/
+
+	var/datum/preferences/D
+	var/client/C = directory[warned_ckey]
+	if(C)	D = C.prefs
+	else	D = preferences_datums[warned_ckey]
+
+	if(!D)
+		src << "<font color='red'>Error: unwarn(): No such ckey found.</font>"
+		return
+
+	if(D.warns == 0)
+		src << "<font color='red'>Error: unwarn(): You can't unwarn someone with 0 warnings, you big dummy.</font>"
+		return
+
+	D.warns-=1
+	var/strikesleft = MAX_WARNS-D.warns
+	if(C)
+		C << "<font color='red'><BIG><B>One of your warnings has been removed.</B></BIG><br>You currently have [strikesleft] strike\s left</font>"
+		message_admins("[key_name_admin(src)] has unwarned [key_name_admin(C)]. They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
+	else
+		message_admins("[key_name_admin(src)] has unwarned [warned_ckey] (DC). They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
+	D.save_preferences()
+	feedback_add_details("admin_verb","UNWARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #undef MAX_WARNS
 #undef AUTOBANTIME
@@ -596,11 +641,11 @@ var/list/admin_verbs_mod = list(
 	set category = "Debug"
 	set name = "Kill Air"
 	set desc = "Toggle Air Processing"
-	if(kill_air)
-		kill_air = 0
+	if(air_processing_killed)
+		air_processing_killed = 0
 		usr << "<b>Enabled air processing.</b>"
 	else
-		kill_air = 1
+		air_processing_killed = 1
 		usr << "<b>Disabled air processing.</b>"
 	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] used 'kill air'.")

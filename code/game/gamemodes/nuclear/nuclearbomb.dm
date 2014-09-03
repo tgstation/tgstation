@@ -234,6 +234,7 @@ var/bomb_set
 					src.anchored = !( src.anchored )
 					if(src.anchored)
 						visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring.")
+						playsound(src,'sound/effects/bolt.ogg', 70, 1)
 					else
 						visible_message("\red The anchoring bolts slide back into the depths of [src].")
 
@@ -307,6 +308,8 @@ var/bomb_set
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
 
+				CallHook("Reboot",list())
+
 				if (watchdog.waiting)
 					world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
 					watchdog.signal_ready()
@@ -317,7 +320,7 @@ var/bomb_set
 				return
 	return
 
-/obj/item/weapon/disk/nuclear/Del()
+/obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
 		var/obj/D = new /obj/item/weapon/disk/nuclear(pick(blobstart))
 		message_admins("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")

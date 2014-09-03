@@ -111,7 +111,7 @@
 	src.hit()
 	return
 
-/obj/beam/e_beam/HasEntered(atom/movable/AM as mob|obj)
+/obj/beam/e_beam/Crossed(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/beam))
 		return
 	spawn( 0 )
@@ -120,7 +120,7 @@
 		return
 	return
 
-/obj/beam/e_beam/Del()
+/obj/beam/e_beam/Destroy()
 	if(next)
 		del(next)
 	..()

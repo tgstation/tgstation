@@ -1,8 +1,12 @@
 /atom/movable
+	// Recycling shit
+	var/m_amt = 0	         // metal (CC)
+	var/g_amt = 0	         // glass (CC)
+	var/w_type = NOT_RECYCLABLE  // Waste category for sorters. See setup.dm
+
 	layer = 3
 	var/last_move = null
 	var/anchored = 0
-	// var/elevation = 2    - not used anywhere
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/m_flag = 1
@@ -12,7 +16,35 @@
 	var/moved_recently = 0
 	var/mob/pulledby = null
 
-/atom/movable/Move()
+	var/area/areaMaster
+
+	// Garbage collection (controller).
+	var/gcDestroyed
+	var/timeDestroyed
+
+/atom/movable/New()
+	. = ..()
+	areaMaster = get_area_master(src)
+
+/atom/movable/Destroy()
+	gcDestroyed = "bye world!"
+	tag = null
+	loc = null
+	..()
+
+/atom/movable/Del()
+	// Pass to Destroy().
+	if(!gcDestroyed)
+		Destroy()
+
+	..()
+
+// Used in shuttle movement and AI eye stuff.
+// Primarily used to notify objects being moved by a shuttle/bluespace fuckup.
+/atom/movable/proc/setLoc(var/T, var/teleported=0)
+	loc = T
+
+/atom/movable/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	var/atom/A = src.loc
 	. = ..()
 	src.move_speed = world.timeofday - src.l_move_time
@@ -20,21 +52,25 @@
 	src.m_flag = 1
 	if ((A != src.loc && A && A.z == src.z))
 		src.last_move = get_dir(A, src.loc)
-	return
+	return .
 
-/atom/movable/proc/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+/atom/movable/proc/recycle(var/datum/materials/rec)
 	return 0
 
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
+// Previously known as HasEntered()
+// This is automatically called when something enters your square
+/atom/movable/Crossed(atom/movable/AM)
+	return
+
+/atom/movable/Bump(atom/Obstacle, yes)
 	if(src.throwing)
-		src.throw_impact(A)
+		src.throw_impact(Obstacle)
 		src.throwing = 0
 
-	spawn( 0 )
-		if ((A && yes))
-			A.last_bumped = world.time
-			A.Bumped(src)
-		return
+	if ((Obstacle && yes))
+		Obstacle.last_bumped = world.time
+		Obstacle.Bumped(src)
+	return
 	..()
 	return
 
@@ -44,6 +80,8 @@
 			loc.Exited(src)
 		loc = destination
 		loc.Entered(src)
+		for(var/atom/movable/AM in loc)
+			AM.Crossed(src)
 		return 1
 	return 0
 
@@ -65,10 +103,11 @@
 	if(!target || !src)	return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
-	src.throwing = 1
+	throwing = 1
+	throw_speed = speed
 
 	if(usr)
-		if(HULK in usr.mutations)
+		if(M_HULK in usr.mutations)
 			src.throwing = 2 // really strong throw!
 
 	var/dist_x = abs(target.x - src.x)
@@ -100,11 +139,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check(throw_speed)
 				error += dist_x
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= throw_speed)
 					dist_since_sleep = 0
 					sleep(1)
 			else
@@ -112,11 +151,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check(throw_speed)
 				error -= dist_y
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= throw_speed)
 					dist_since_sleep = 0
 					sleep(1)
 			a = get_area(src.loc)
@@ -129,11 +168,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check(throw_speed)
 				error += dist_y
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= throw_speed)
 					dist_since_sleep = 0
 					sleep(1)
 			else
@@ -141,11 +180,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check(throw_speed)
 				error -= dist_x
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= throw_speed)
 					dist_since_sleep = 0
 					sleep(1)
 
@@ -153,7 +192,7 @@
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
-	if(isobj(src)) src:throw_impact(get_turf(src),speed)
+	if(isobj(src)) src.throw_impact(get_turf(src),throw_speed)
 
 
 //Overlays
@@ -162,9 +201,8 @@
 	anchored = 1
 
 /atom/movable/overlay/New()
-	for(var/x in src.verbs)
-		src.verbs -= x
-	return
+	. = ..()
+	verbs.Cut()
 
 /atom/movable/overlay/attackby(a, b)
 	if (src.master)
@@ -180,3 +218,9 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
+
+/////////////////////////////
+// SINGULOTH PULL REFACTOR
+/////////////////////////////
+/atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
+	return 1

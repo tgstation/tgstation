@@ -158,14 +158,20 @@
 		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
 		return 1
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
-		return
-	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)
 
-/mob/living/fire_act()
+	var/oxy=0
+	var/turf/T=loc
+	if(istype(T))
+		var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
+		if(G)
+			oxy=G.oxygen
+	if(oxy < 1 || fire_stacks <= 0)
+		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		return 1
+	var/turf/location = get_turf(src)
+	location.hotspot_expose(700, 50, 1,surfaces=1)
+
+/mob/living/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	adjust_fire_stacks(0.5)
 	IgniteMob()
 

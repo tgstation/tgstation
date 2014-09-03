@@ -1,3 +1,4 @@
+
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
@@ -11,18 +12,18 @@
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
-	m_amt = 90
+	m_amt = 90 // TODO: Check against autolathe.
+	w_type = RECYK_METAL
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
-	var/list/reagents_to_log=list(
-		"fuel"=    "welder fuel",
-		"plasma"=  "plasma",
-		"pacid"=   "polytrinic acid",
-		"sacid"=   "sulphuric acid"
-	)
 	var/max_water = 50
 	var/last_use = 1.0
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
+
+/obj/item/weapon/extinguisher/New()
+	. = ..()
+	create_reagents(max_water)
+	reagents.add_reagent("water", max_water)
 
 /obj/item/weapon/extinguisher/mini
 	name = "fire extinguisher"
@@ -38,11 +39,12 @@
 	max_water = 30
 	sprite_name = "miniFE"
 
-/obj/item/weapon/extinguisher/New()
-	var/datum/reagents/R = new/datum/reagents(max_water)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("water", max_water)
+/obj/item/weapon/extinguisher/foam
+	name = "foam fire extinguisher"
+	desc = "A modern foam fire supression system."
+	icon_state = "foam_extinguisher0"
+	item_state = "foam_extinguisher"
+	sprite_name = "foam_extinguisher"
 
 /obj/item/weapon/extinguisher/examine()
 	set src in usr
@@ -88,6 +90,9 @@
 		if(locate(/obj) in src)
 			user << "There's already something crammed into the nozzle."
 			return
+		if(isrobot(user) && !isMoMMI(user)) // MoMMI's can but borgs can't
+			user << "You're a robot. No."
+			return
 		user.drop_item()
 		W.loc=src
 		user << "You cram \the [W] into the nozzle of \the [src]."
@@ -103,7 +108,7 @@
 					badshit += reagents_to_log[bad_reagent]
 			if(badshit.len)
 				var/hl="\red <b>([english_list(badshit)])</b> \black"
-				message_admins("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				// message_admins("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 				log_game("[user.name] ([user.ckey]) filled \a [src] with [o.reagents.get_reagent_ids()] [hl]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			o.reagents.trans_to(src, 50)
 			user << "\blue \The [src] is now refilled"
@@ -191,13 +196,103 @@
 				for(var/b=0, b<5, b++)
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return
-					W.reagents.reaction(get_turf(W))
+					W.reagents.reaction(get_turf(W), TOUCH)
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
 						W.reagents.reaction(atm, TOUCH)                      // Touch, since we sprayed it.
 						if(isliving(atm) && W.reagents.has_reagent("water")) // For extinguishing mobs on fire
 							var/mob/living/M = atm                           // Why isn't this handled by the reagent? - N3X
 							M.ExtinguishMob()
+						if(on_fire && W.reagents.has_reagent("water")) // For extinguishing objects on fire
+							W.extinguish()
+					if(W.loc == my_target) break
+					sleep(2)
+
+		if((istype(usr.loc, /turf/space)) || (usr.lastarea && usr.lastarea.has_gravity == 0))
+			user.inertia_dir = get_dir(target, user)
+			step(user, user.inertia_dir)
+	else
+		return ..()
+	return
+
+
+
+
+/obj/item/weapon/extinguisher/foam/afterattack(atom/target, mob/user , flag)
+	if(get_dist(src,target) <= 1)
+		if((istype(target, /obj/structure/reagent_dispensers/watertank)))
+			var/obj/o = target
+			o.reagents.trans_to(src, 50)
+			user << "\blue \The [src] is now refilled"
+			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
+			return
+
+	if (!safety && !is_open_container())
+		if (src.reagents.total_volume < 1)
+			usr << "\red \The [src] is empty."
+			return
+
+		if (world.time < src.last_use + 20)
+			return
+
+		src.last_use = world.time
+
+		playsound(get_turf(src), 'sound/effects/extinguish.ogg', 75, 1, -3)
+
+		var/direction = get_dir(src,target)
+
+		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
+			spawn(0)
+				var/obj/B = usr.buckled
+				var/movementdirection = turn(direction,180)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(1)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(1)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(1)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(2)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(2)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(3)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(3)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(3)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+
+		var/turf/T = get_turf(target)
+		var/turf/T1 = get_step(T,turn(direction, 90))
+		var/turf/T2 = get_step(T,turn(direction, -90))
+
+		var/list/the_targets = list(T,T1,T2)
+
+		for(var/a=0, a<5, a++)
+			spawn(0)
+				var/datum/reagents/R = new/datum/reagents(5)
+				reagents.trans_to_holder(R,1)
+				var/obj/effect/effect/foam/fire/W = new /obj/effect/effect/foam/fire( get_turf(src) , R)
+				var/turf/my_target = pick(the_targets)
+				if(!W || !src) return
+				for(var/b=0, b<5, b++)
+					var/turf/oldturf = get_turf(W)
+					step_towards(W,my_target)
+					if(!W || !W.reagents) return
+					W.reagents.reaction(get_turf(W), TOUCH)
+					for(var/atom/atm in get_turf(W))
+						if(!W) return
+						W.reagents.reaction(atm, TOUCH)                      // Touch, since we sprayed it.
+						if(isliving(atm) && W.reagents.has_reagent("water")) // For extinguishing mobs on fire
+							var/mob/living/M = atm                           // Why isn't this handled by the reagent? - N3X
+							M.ExtinguishMob()
+						if(on_fire && W.reagents.has_reagent("water")) // For extinguishing objects on fire
+							W.extinguish()
+
+					var/obj/effect/effect/foam/fire/F = locate() in oldturf
+					if(!istype(F) && oldturf != get_turf(src))
+						F = new /obj/effect/effect/foam/fire( get_turf(oldturf) , W.reagents)
 					if(W.loc == my_target) break
 					sleep(2)
 

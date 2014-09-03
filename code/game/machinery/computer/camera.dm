@@ -11,6 +11,7 @@
 	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
 
+	l_color = "#B40000"
 
 	attack_ai(var/mob/user as mob)
 		src.add_hiddenprint(user)
@@ -90,6 +91,8 @@
 	density = 0
 	circuit = null
 
+	l_color = "#000000"
+
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
@@ -105,12 +108,14 @@
 	density = 0
 	circuit = null
 
+	l_color = "#000000"
 
 /obj/machinery/computer/security/wooden_tv
 	name = "Security Cameras"
 	desc = "An old TV hooked into the stations camera network."
 	icon_state = "security_det"
 
+	l_color = "#000000"
 
 /obj/machinery/computer/security/mining
 	name = "Outpost Cameras"
@@ -118,6 +123,8 @@
 	icon_state = "miningcameras"
 	network = list("MINE")
 	circuit = "/obj/item/weapon/circuitboard/mining"
+
+	l_color = "#CD00CD"
 
 /obj/machinery/computer/security/engineering
 	name = "Engineering Cameras"

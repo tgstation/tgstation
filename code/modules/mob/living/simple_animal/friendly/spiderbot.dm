@@ -183,7 +183,7 @@
 		src.name = "Spider-bot"
 		update_icon()
 
-/mob/living/simple_animal/spiderbot/Del()
+/mob/living/simple_animal/spiderbot/Destroy()
 	eject_brain()
 	..()
 
@@ -208,8 +208,7 @@
 		held_item = null
 
 	robogibs(src.loc, viruses)
-	src.Del()
-	return
+	del(src)
 
 //copy paste from alien/larva, if that func is updated please update this one also
 /mob/living/simple_animal/spiderbot/verb/ventcrawl()

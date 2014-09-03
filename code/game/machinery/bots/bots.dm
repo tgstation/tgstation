@@ -27,7 +27,7 @@
 	SetLuminosity(0)
 
 /obj/machinery/bot/proc/explode()
-	del(src)
+	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()
 	if (src.health <= 0)
@@ -64,7 +64,7 @@
 	if(M.melee_damage_upper == 0)	return
 	src.health -= M.melee_damage_upper
 	src.visible_message("\red <B>[M] has [M.attacktext] [src]!</B>")
-	M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+	add_logs(M, src, "attacked", admin=0)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	healthcheck()
@@ -143,7 +143,7 @@
 	pulse2.dir = pick(cardinal)
 
 	spawn(10)
-		pulse2.delete()
+		qdel(pulse2)
 	if (on)
 		turn_off()
 	spawn(severity*300)
@@ -210,7 +210,7 @@
 /proc/DirBlockedWithAccess(turf/loc,var/dir,var/obj/item/weapon/card/id/ID)
 	for(var/obj/structure/window/D in loc)
 		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1
+		if(D.is_fulltile())	return 1
 		if(D.dir == dir)		return 1
 
 	for(var/obj/machinery/door/D in loc)

@@ -226,6 +226,7 @@
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = "hurt"
 			new_slime.universal_speak = universal_speak
+			new_slime.universal_understand = universal_understand
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else
@@ -243,6 +244,6 @@
 /mob/living/carbon/slime/verb/ventcrawl()
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
-	set category = "Slime"
+	set category = "Object"
 	if(Victim)	return
 	handle_ventcrawl()

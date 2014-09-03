@@ -6,6 +6,7 @@
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
+	species_fit = list("Vox")
 
 //Monkeys can not take the muzzle off of themself! Call PETA!
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user as mob)
@@ -26,6 +27,7 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
+	species_fit = list("Vox")
 
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"
@@ -93,3 +95,25 @@
 	w_class = 2
 	var/voicechange = 0
 	siemens_coefficient = 0.9
+
+/obj/item/clothing/mask/chapmask
+	name = "venetian mask"
+	desc = "A plain porcelain mask that covers the entire face. Standard attire for particularly unspeakable religions. The eyes are wide shut."
+	icon_state = "chapmask"
+	item_state = "chapmask"
+	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
+	flags_inv = HIDEFACE
+	w_class = 2
+	gas_transfer_coefficient = 0.90
+
+/obj/item/clothing/mask/bandana
+	name = "bandana"
+	desc = "A colorful bandana."
+	action_button_name = "Toggle Bandana"
+	flags_inv = HIDEFACE
+	w_class = 1
+	can_flip = 1
+
+obj/item/clothing/mask/bandana/red
+	name = "red bandana"
+	icon_state = "bandred"

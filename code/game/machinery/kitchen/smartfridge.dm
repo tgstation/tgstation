@@ -19,26 +19,37 @@
 	var/isbroken = 0
 	var/opened = 0.0
 
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 /obj/machinery/smartfridge/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/smartfridge
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/smartfridge,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
 	RefreshParts()
 
 /obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/) || istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat/) || istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/))
+	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O, /obj/item/weapon/grown) || istype(O,/obj/item/seeds/) || istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat/) || istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/))
 		return 1
 	else if (istype(O, /obj/item/weapon/screwdriver))
 		if (!opened)
@@ -72,10 +83,46 @@
 	icon_on = "seeds"
 	icon_off = "seeds-off"
 
+	l_color = "#000000"
+
 /obj/machinery/smartfridge/seeds/accept_check(var/obj/item/O as obj)
 	if(istype(O,/obj/item/seeds/))
 		return 1
 	return 0
+
+/obj/machinery/smartfridge/secure/medbay
+	name = "\improper Refrigerated Medicine Storage"
+	desc = "A refrigerated storage unit for storing medicine and chemicals."
+	icon_state = "smartfridge" //To fix the icon in the map editor.
+	icon_on = "smartfridge_chem"
+	req_one_access = list(access_chemistry, access_medical)
+
+
+/obj/machinery/smartfridge/secure/medbay/accept_check(var/obj/item/O as obj)
+	if(istype(O,/obj/item/weapon/reagent_containers/glass/))
+		return 1
+	if(istype(O,/obj/item/weapon/storage/pill_bottle/))
+		return 1
+	if(istype(O,/obj/item/weapon/reagent_containers/pill/))
+		return 1
+	return 0
+
+/obj/machinery/smartfridge/chemistry
+	name = "\improper Smart Chemical Storage"
+	desc = "A refrigerated storage unit for medicine and chemical storage."
+
+/obj/machinery/smartfridge/chemistry/accept_check(var/obj/item/O as obj)
+	if(istype(O,/obj/item/weapon/storage/pill_bottle) || istype(O,/obj/item/weapon/reagent_containers))
+		return 1
+	return 0
+
+/obj/machinery/smartfridge/drinks
+	name = "\improper Drink Showcase"
+	desc = "A refrigerated storage unit for tasty tasty alcohol."
+
+/obj/machinery/smartfridge/drinks/accept_check(var/obj/item/O as obj)
+	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
+		return 1
 
 /obj/machinery/smartfridge/extract
 	name = "\improper Slime Extract Storage"
@@ -124,26 +171,26 @@
 			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
 								 "<span class='notice'>You add \the [O] to \the [src].")
 
-	else if(istype(O, /obj/item/weapon/storage/bag/plants))
-		var/obj/item/weapon/storage/bag/plants/P = O
-		var/plants_loaded = 0
-		for(var/obj/G in P.contents)
+	else if(istype(O, /obj/item/weapon/storage/bag))
+		var/obj/item/weapon/storage/bag/bag = O
+		var/objects_loaded = 0
+		for(var/obj/G in bag.contents)
 			if(accept_check(G))
 				if(contents.len >= max_n_of_items)
 					user << "<span class='notice'>\The [src] is full.</span>"
 					return 1
 				else
-					P.remove_from_storage(G,src)
+					bag.remove_from_storage(G,src)
 					if(item_quants[G.name])
 						item_quants[G.name]++
 					else
 						item_quants[G.name] = 1
-					plants_loaded++
-		if(plants_loaded)
+					objects_loaded++
+		if(objects_loaded)
 
-			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [P].</span>", \
-								 "<span class='notice'>You load \the [src] with \the [P].</span>")
-			if(P.contents.len > 0)
+			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [bag].</span>", \
+								 "<span class='notice'>You load \the [src] with \the [bag].</span>")
+			if(bag.contents.len > 0)
 				user << "<span class='notice'>Some items are refused.</span>"
 
 	else

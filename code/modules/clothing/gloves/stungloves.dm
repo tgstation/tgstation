@@ -52,3 +52,10 @@
 		overlays += "gloves_wire"
 	if(cell)
 		overlays += "gloves_cell"
+	if(wired && cell)
+		item_state = "stungloves"
+	else
+		item_state = initial(item_state)
+	if(ishuman(src.loc))
+		var/mob/living/carbon/human/H = src.loc
+		H.update_inv_gloves()

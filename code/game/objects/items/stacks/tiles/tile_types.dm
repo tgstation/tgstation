@@ -9,7 +9,7 @@
  * Grass
  */
 /obj/item/stack/tile/grass
-	name = "grass tiles"
+	name = "grass tile"
 	singular_name = "grass floor tile"
 	desc = "A patch of grass like they often use on golf courses"
 	icon_state = "tile_grass"
@@ -26,7 +26,7 @@
  * Wood
  */
 /obj/item/stack/tile/wood
-	name = "wood floor tiles"
+	name = "wood floor tile"
 	singular_name = "wood floor tile"
 	desc = "an easy to fit wood floor tile"
 	icon_state = "tile-wood"

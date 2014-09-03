@@ -83,9 +83,14 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	m_amt = 3750
+	w_type = RECYK_METAL
 	throwforce = 14.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=1"
+
+/obj/item/stack/sheet/metal/recycle(var/datum/materials/rec)
+	rec.addAmount("iron",1*amount)
+	return 1
 
 // Diet metal.
 /obj/item/stack/sheet/metal/cyborg
@@ -116,14 +121,15 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=2"
+	w_type = RECYK_METAL
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 		recipes = plasteel_recipes
 		return ..()
 
-/obj/item/stack/sheet/plasteel/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("plasma",1)
-	rec.addMaterial("iron",1)
+/obj/item/stack/sheet/plasteel/recycle(var/datum/materials/rec)
+	rec.addAmount("plasma",1*amount)
+	rec.addAmount("iron",1*amount)
 	return 1
 
 /*
@@ -134,7 +140,8 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
 	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("barricade kit", /obj/item/weapon/barricade_kit, 5), \
+	new/datum/stack_recipe("bookcase", /obj/structure/bookcase, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = 0, on_floor = 0), \
@@ -186,4 +193,21 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
+		return ..()
+
+/*
+ * /vg/ charcoal
+ */
+var/global/list/datum/stack_recipe/charcoal_recipes = list ()
+
+/obj/item/stack/sheet/charcoal	//N3X15
+	name = "charcoal"
+	desc = "Yum."
+	singular_name = "charcoal sheet"
+	icon_state = "sheet-charcoal"
+	flags = FPRINT | TABLEPASS
+	origin_tech = "materials=1"
+
+/obj/item/stack/sheet/charcoal/New(var/loc, var/amount=null)
+		recipes = charcoal_recipes
 		return ..()

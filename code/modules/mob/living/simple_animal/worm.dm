@@ -28,9 +28,9 @@
 	max_co2 = 0
 	max_tox = 0
 
-	a_intent = "harm" //so they don't get pushed around
+	a_intent = "hurt" //so they don't get pushed around
 
-	wall_smash = 1
+	environment_smash = 2
 
 	speed = -1
 
@@ -96,7 +96,7 @@
 
 		return
 
-	Del() //if a chunk a destroyed, make a new worm out of the split halves
+	Destroy() //if a chunk a destroyed, make a new worm out of the split halves
 		if(previous)
 			previous.Detach()
 		..()

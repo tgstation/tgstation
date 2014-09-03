@@ -15,16 +15,19 @@
 	)
 
 	New()
-		..()
-		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/freezer
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/scanning_module
-		component_parts += new /obj/item/weapon/stock_parts/scanning_module
-		component_parts += new /obj/item/weapon/stock_parts/micro_laser
-		component_parts += new /obj/item/weapon/stock_parts/console_screen
+		. = ..()
+
+		component_parts = newlist(
+			/obj/item/weapon/circuitboard/freezer,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/scanning_module,
+			/obj/item/weapon/stock_parts/scanning_module,
+			/obj/item/weapon/stock_parts/micro_laser,
+			/obj/item/weapon/stock_parts/console_screen
+		)
+
 		RefreshParts()
 
 		if(anchored)
@@ -65,7 +68,7 @@
 						"You hear ratchet.")
 					src.anchored = 0
 
-					// From Del()
+					// From Destroy()
 					// Disconnect
 					if(node)
 						node.disconnect(src)
@@ -209,16 +212,19 @@
 	)
 
 	New()
-		..()
-		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/heater
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/scanning_module
-		component_parts += new /obj/item/weapon/stock_parts/scanning_module
-		component_parts += new /obj/item/weapon/stock_parts/micro_laser
-		component_parts += new /obj/item/weapon/stock_parts/console_screen
+		. = ..()
+
+		component_parts = newlist(
+			/obj/item/weapon/circuitboard/heater,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/scanning_module,
+			/obj/item/weapon/stock_parts/scanning_module,
+			/obj/item/weapon/stock_parts/micro_laser,
+			/obj/item/weapon/stock_parts/console_screen
+		)
+
 		RefreshParts()
 
 		if(anchored)
@@ -259,7 +265,7 @@
 						"You hear ratchet.")
 					src.anchored = 0
 
-					// From Del()
+					// From Destroy()
 					// Disconnect
 					if(node)
 						node.disconnect(src)

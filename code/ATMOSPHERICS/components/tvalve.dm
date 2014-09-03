@@ -98,9 +98,7 @@ obj/machinery/atmospherics/tvalve
 
 		return null
 
-	Del()
-		loc = null
-
+	Destroy()
 		if(node1)
 			node1.disconnect(src)
 			del(network_node1)
@@ -294,7 +292,7 @@ obj/machinery/atmospherics/tvalve
 					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 		var/frequency = 0
-		var/id = null
+		var/id_tag = null
 		var/datum/radio_frequency/radio_connection
 
 		initialize()
@@ -303,7 +301,7 @@ obj/machinery/atmospherics/tvalve
 				set_frequency(frequency)
 
 		receive_signal(datum/signal/signal)
-			if(!signal.data["tag"] || (signal.data["tag"] != id))
+			if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 				return 0
 
 			switch(signal.data["command"])
@@ -414,7 +412,7 @@ obj/machinery/atmospherics/tvalve/mirrored
 					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 		var/frequency = 0
-		var/id = null
+		var/id_tag = null
 		var/datum/radio_frequency/radio_connection
 
 		initialize()
@@ -423,7 +421,7 @@ obj/machinery/atmospherics/tvalve/mirrored
 				set_frequency(frequency)
 
 		receive_signal(datum/signal/signal)
-			if(!signal.data["tag"] || (signal.data["tag"] != id))
+			if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 				return 0
 
 			switch(signal.data["command"])

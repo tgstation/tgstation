@@ -2,6 +2,7 @@
 //
 // consists of light fixtures (/obj/machinery/light) and light tube/bulb items (/obj/item/weapon/light)
 
+#define LIGHTING_POWER_FACTOR 20 // Watt per unit luminosity.
 
 // status values shared between lighting fixtures and items
 #define LIGHT_OK     0
@@ -213,6 +214,8 @@
 	ghost_read=0
 	ghost_write=0
 
+	var/idle = 0 // For process().
+
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
@@ -228,7 +231,7 @@
 	name = "spotlight"
 	fitting = "large tube"
 	light_type = /obj/item/weapon/light/tube/large
-	brightness = 12
+	brightness = 8
 
 /obj/machinery/light/built/New()
 	status = LIGHT_EMPTY
@@ -247,21 +250,16 @@
 	spawn(2)
 		switch(fitting)
 			if("tube")
-				brightness = 8
 				if(prob(2))
 					broken(1)
 			if("bulb")
-				brightness = 4
 				if(prob(5))
 					broken(1)
 		spawn(1)
 			update(0)
 
-/obj/machinery/light/Del()
-	var/area/A = get_area(src)
-	if(A)
-		on = 0
-//		A.update_lights()
+/obj/machinery/light/Destroy()
+	seton(0)
 	..()
 
 /obj/machinery/light/update_icon()
@@ -312,10 +310,12 @@
 		on_gs = on
 
 
-// attempt to set the light's on/off status
-// will not switch on if broken/burned/empty
-/obj/machinery/light/proc/seton(var/s)
-	on = (s && status == LIGHT_OK)
+/*
+ * Attempt to set the light's on/off status.
+ * Will not switch on if broken/burned/empty.
+ */
+/obj/machinery/light/proc/seton(const/s)
+	on = (s && LIGHT_OK == status)
 	update()
 
 // examine verb
@@ -337,7 +337,7 @@
 // attack with item - insert light (if right type), otherwise try to break the light
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
-
+	user.changeNext_move(8)
 	//Light replacer code
 	if(istype(W, /obj/item/device/lightreplacer))
 		var/obj/item/device/lightreplacer/LR = W
@@ -390,14 +390,13 @@
 					continue
 				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 			if(on && (W.flags & CONDUCT))
-				//if(!user.mutations & COLD_RESISTANCE)
+				//if(!user.mutations & M_RESIST_COLD)
 				if (prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
 			broken()
 
 		else
 			user << "You hit the light!"
-
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
@@ -426,16 +425,16 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-			//if(!user.mutations & COLD_RESISTANCE)
+			//if(!user.mutations & M_RESIST_COLD)
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
 
-
-// returns whether this light has power
-// true if area has power and lightswitch is on
+/*
+ * Returns whether this light has power
+ * TRUE if area has power and lightswitch is on otherwise FALSE.
+ */
 /obj/machinery/light/proc/has_power()
-	var/area/A = src.loc.loc
-	return A.master.lightswitch && A.master.power_light
+	return areaMaster.lightswitch && areaMaster.power_light
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
 	if(flickering) return
@@ -451,8 +450,13 @@
 			update(0)
 		flickering = 0
 
-// ai attack - make lights flicker, because why not
+/obj/machinery/light/attack_ghost(mob/user)
+	if(blessed) return
+	src.add_hiddenprint(user)
+	src.flicker(1)
+	return
 
+// ai attack - make lights flicker, because why not
 /obj/machinery/light/attack_ai(mob/user)
 	// attack_robot is flaky.
 	if(isMoMMI(user))
@@ -496,6 +500,8 @@
 	if(isobserver(user))
 		return
 
+	if(!Adjacent(user)) return
+
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
@@ -515,7 +521,7 @@
 		else
 			prot = 1
 
-		if(prot > 0 || (mHeatres in user.mutations))
+		if(prot > 0 || (M_RESIST_HEAT in user.mutations))
 			user << "You remove the light [fitting]"
 		else
 			user << "You try to remove the light [fitting], but it's too hot and you don't want to burn your hand."
@@ -569,7 +575,7 @@
 /obj/machinery/light/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(75))
@@ -585,39 +591,45 @@
 	if(prob(75))
 		broken()
 
+/obj/machinery/light/process()
+	switch (on)
+		if (1)
+			switch (idle)
+				if (1)
+					use_power = 2
+					idle_power_usage = active_power_usage >> 1
+				if (0)
+					use_power = 1
+					active_power_usage = LIGHTING_POWER_FACTOR * luminosity
+					idle = 1
+		if (0)
+			use_power = 0
+			idle = 0
+#undef LIGHTING_POWER_FACTOR
 
-// timed process
-// use power
-
-#define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
-
-/obj/machinery/light/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
-	if(on)
-		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
-
-// called when area power state changes
+/*
+ * Called when area power state changes.
+ */
 /obj/machinery/light/power_change()
 	spawn(10)
-		var/area/A = src.loc.loc
-		A = A.master
-		seton(A.lightswitch && A.power_light)
+		seton(areaMaster.lightswitch && areaMaster.power_light)
 
 // called when on fire
 
-/obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/machinery/light/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
 		broken()
 
-// explode the light
-
+/*
+ * Explode the light.
+ */
 /obj/machinery/light/proc/explode()
-	var/turf/T = get_turf(src.loc)
 	spawn(0)
-		broken()	// break it first to give a warning
+		broken() // Break it first to give a warning.
 		sleep(2)
-		explosion(T, 0, 0, 2, 2)
+		explosion(get_turf(src), 0, 0, 2, 2)
 		sleep(1)
-		del(src)
+		qdel(src)
 
 // the light item
 // can be tube or bulb subtypes
@@ -643,6 +655,7 @@
 	base_state = "ltube"
 	item_state = "c_tube"
 	g_amt = 100
+	w_type = RECYK_GLASS
 	brightness = 8
 
 /obj/item/weapon/light/tube/large
@@ -658,6 +671,7 @@
 	item_state = "contvapour"
 	g_amt = 100
 	brightness = 5
+	w_type = RECYK_GLASS
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()

@@ -27,6 +27,7 @@ Buildable meters
 #define PIPE_THERMAL_PLATE		22
 #define PIPE_INJECTOR    		23
 #define PIPE_DP_VENT    		24
+#define PIPE_PASV_VENT    		25
 
 /obj/item/pipe_spawner
 	name = "Pipe Spawner"
@@ -114,7 +115,7 @@ Buildable meters
 			src.pipe_type = PIPE_MTVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w))
 			src.pipe_type = PIPE_MANIFOLD4W
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/cap))
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/cap))
 			src.pipe_type = PIPE_CAP
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/thermal_plate))
 			src.pipe_type = PIPE_THERMAL_PLATE
@@ -122,6 +123,8 @@ Buildable meters
 			src.pipe_type = PIPE_INJECTOR
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/dp_vent_pump))
 			src.pipe_type = PIPE_DP_VENT
+		else if(istype(make_from, /obj/machinery/atmospherics/pipe/vent))
+			src.pipe_type = PIPE_PASV_VENT
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
@@ -158,6 +161,7 @@ var/global/list/pipeID2State = list(
 	"thermalplate",
 	"injector",
 	"binary vent",
+	"passive vent"
 )
 /obj/item/pipe/proc/update()
 	var/list/nlist = list( \
@@ -185,7 +189,8 @@ var/global/list/pipeID2State = list(
 		"pipe cap", \
 		"thermal plate", \
 		"injector", \
-		"dual-port vent" \
+		"dual-port vent", \
+		"passive vent"
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	icon = 'icons/obj/pipe-item.dmi'
@@ -251,7 +256,7 @@ var/global/list/pipeID2State = list(
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
 			return dir //dir|acw
-		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE,PIPE_INJECTOR)
+		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_PASV_VENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE,PIPE_THERMAL_PLATE,PIPE_INJECTOR)
 			return dir
 		if(PIPE_MANIFOLD4W)
 			return dir|flip|cw|acw
@@ -368,7 +373,7 @@ var/global/list/pipeID2State = list(
 			P=new /obj/machinery/atmospherics/tvalve(src.loc)
 
 		if(PIPE_CAP)
-			P=new /obj/machinery/atmospherics/pipe/cap(src.loc)
+			P=new /obj/machinery/atmospherics/unary/cap(src.loc)
 
 		if(PIPE_PASSIVE_GATE)		//passive gate
 			P=new /obj/machinery/atmospherics/binary/passive_gate(src.loc)
@@ -387,6 +392,9 @@ var/global/list/pipeID2State = list(
 
 		if(PIPE_DP_VENT)		//volume pump
 			P=new /obj/machinery/atmospherics/binary/dp_vent_pump(src.loc)
+
+		if(PIPE_PASV_VENT)
+			P=new /obj/machinery/atmospherics/pipe/vent(src.loc)
 
 	if(P.buildFrom(usr,src))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
@@ -424,4 +432,23 @@ var/global/list/pipeID2State = list(
 	new/obj/machinery/meter( src.loc )
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	user << "\blue You have fastened the meter to the pipe"
+	del(src)
+
+
+/obj/item/pipe_gsensor
+	name = "gas sensor"
+	desc = "A sensor that can be hooked to a computer"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "gsensor0"
+	item_state = "buildpipe"
+	flags = TABLEPASS|FPRINT
+	w_class = 4
+
+/obj/item/pipe_gsensor/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	..()
+	if (!istype(W, /obj/item/weapon/wrench))
+		return ..()
+	new/obj/machinery/air_sensor( src.loc )
+	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+	user << "\blue You have fastened the gas sensor"
 	del(src)

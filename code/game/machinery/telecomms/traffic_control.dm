@@ -1,9 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
-
-
-
-
 /obj/machinery/computer/telecomms/traffic
 	name = "Telecommunications Traffic Control"
 	icon_state = "computer_generic"
@@ -22,6 +16,8 @@
 	var/obj/item/weapon/card/id/auth = null
 	var/list/access_log = list()
 	var/process = 0
+
+	l_color = "#50AB00"
 
 	req_access = list(access_tcomsat)
 
@@ -293,7 +289,7 @@
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/comm_traffic/M = new /obj/item/weapon/circuitboard/comm_traffic( A )
 				for (var/obj/C in src)
 					C.loc = src.loc

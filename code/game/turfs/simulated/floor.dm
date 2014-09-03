@@ -10,14 +10,14 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken", "carpet",
 				"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
 				"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
-				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
+				"ironsand12", "ironsand13", "ironsand14", "ironsand15","arcadecarpet")
 
 var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug",
 				"ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5", "ironsand6", "ironsand7",
 				"ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 var/list/wood_icons = list("wood","wood-broken")
-
+var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_state = "wet_floor"))
 /turf/simulated/floor
 
 	//Note to coders, the 'intact' var can no longer be used to determine if the floor is a plating or not.
@@ -36,6 +36,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/mineral = "metal"
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
 
+	melt_temperature = 1643.15 // Melting point of steel
 
 /turf/simulated/floor/New()
 	..()
@@ -44,7 +45,13 @@ var/list/wood_icons = list("wood","wood-broken")
 	else
 		icon_regular_floor = icon_state
 
-//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/floor/ashify()
+	burn_tile()
+
+/turf/simulated/floor/melt() // Melting is different.
+	burn_tile()
+
+//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
 //		if (!( locate(/obj/machinery/mass_driver, src) ))
 //			return 0
@@ -67,12 +74,12 @@ var/list/wood_icons = list("wood","wood-broken")
 						src.break_tile_to_plating()
 					else
 						src.break_tile()
-					src.hotspot_expose(1000,CELL_VOLUME)
+					src.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(3.0)
 			if (prob(50))
 				src.break_tile()
-				src.hotspot_expose(1000,CELL_VOLUME)
+				src.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
 	return
 
 /turf/simulated/floor/blob_act()
@@ -113,46 +120,45 @@ turf/simulated/floor/proc/update_icon()
 				icon_state = "grass[pick("1","2","3","4")]"
 	else if(is_carpet_floor())
 		if(!broken && !burnt)
-			if(icon_state == "carpet")
-				var/connectdir = 0
-				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						if(FF.is_carpet_floor())
-							connectdir |= direction
+			var/connectdir = 0
+			for(var/direction in cardinal)
+				if(istype(get_step(src,direction),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,direction)
+					if(FF.is_carpet_floor())
+						connectdir |= direction
 
-				//Check the diagonal connections for corners, where you have, for example, connections both north and east. In this case it checks for a north-east connection to determine whether to add a corner marker or not.
-				var/diagonalconnect = 0 //1 = NE; 2 = SE; 4 = NW; 8 = SW
+			//Check the diagonal connections for corners, where you have, for example, connections both north and east. In this case it checks for a north-east connection to determine whether to add a corner marker or not.
+			var/diagonalconnect = 0 //1 = NE; 2 = SE; 4 = NW; 8 = SW
 
-				//Northeast
-				if(connectdir & NORTH && connectdir & EAST)
-					if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
-						if(FF.is_carpet_floor())
-							diagonalconnect |= 1
+			//Northeast
+			if(connectdir & NORTH && connectdir & EAST)
+				if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
+					if(FF.is_carpet_floor())
+						diagonalconnect |= 1
 
-				//Southeast
-				if(connectdir & SOUTH && connectdir & EAST)
-					if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
-						if(FF.is_carpet_floor())
-							diagonalconnect |= 2
+			//Southeast
+			if(connectdir & SOUTH && connectdir & EAST)
+				if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
+					if(FF.is_carpet_floor())
+						diagonalconnect |= 2
 
-				//Northwest
-				if(connectdir & NORTH && connectdir & WEST)
-					if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
-						if(FF.is_carpet_floor())
-							diagonalconnect |= 4
+			//Northwest
+			if(connectdir & NORTH && connectdir & WEST)
+				if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
+					if(FF.is_carpet_floor())
+						diagonalconnect |= 4
 
-				//Southwest
-				if(connectdir & SOUTH && connectdir & WEST)
-					if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
-						if(FF.is_carpet_floor())
-							diagonalconnect |= 8
+			//Southwest
+			if(connectdir & SOUTH && connectdir & WEST)
+				if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
+					if(FF.is_carpet_floor())
+						diagonalconnect |= 8
 
-				icon_state = "carpet[connectdir]-[diagonalconnect]"
+			icon_state = "carpet[connectdir]-[diagonalconnect]"
 
 	else if(is_wood_floor())
 		if(!broken && !burnt)
@@ -280,7 +286,6 @@ turf/simulated/floor/proc/update_icon()
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
 	if(istype(src,/turf/unsimulated/floor/asteroid)) return//Asteroid tiles don't burn
-	if(broken || burnt) return
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
 		burnt = 1
@@ -320,7 +325,7 @@ turf/simulated/floor/proc/update_icon()
 						FF.update_icon() //so siding get updated properly
 
 	if(!floor_tile) return
-	del(floor_tile)
+	qdel(floor_tile)
 	icon_plating = "plating"
 	SetLuminosity(0)
 	floor_tile = null
@@ -558,3 +563,26 @@ turf/simulated/floor/proc/update_icon()
 					broken = 0
 				else
 					user << "\blue You need more welding fuel to complete this task."
+
+/turf/simulated/proc/wet(delay = 800)
+	if(wet >= 1) return
+	wet = 1
+	if(wet_overlay)
+		overlays -= wet_overlay
+		wet_overlay = null
+	wet_overlay = w_overlays["wet"]
+	overlays += wet_overlay
+	spawn() dry(delay)
+
+/turf/simulated/proc/dry(delay = 800)
+	if(drying || wet >= 2)
+		return
+	drying = 1
+	spawn(delay)
+		if (!istype(src)) return
+		if(wet >= 2) return
+		wet = 0
+		drying = 0
+		if(wet_overlay)
+			overlays -= wet_overlay
+			wet_overlay = null

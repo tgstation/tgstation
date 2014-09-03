@@ -65,7 +65,7 @@ LOG_PDA
 ##LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
 ## log world.log and runtime errors to a file
-# LOG_RUNTIME
+# LOG_RUNTIMES
 
 ## sql switching
 # SQL_ENABLED
@@ -96,6 +96,8 @@ PROBABILITY EXTEND-A-TRAITORMONGOUS 0
 PROBABILITY EPIDEMIC 1
 PROBABILITY MEME 0
 PROBABILITY HEIST 0
+PROBABILITY MIXED 0
+PROBABILITY RAGINMAGES 0
 
 ## Hash out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
@@ -241,3 +243,13 @@ RESPAWN_AS_MOMMI
 
 ## ID tag used to identify the server in the channel
 #IRC_BOT_SERVER_ID Server 1
+
+## Copy logs to a location on server startup?
+## IPs are automatically removed.
+## Default: Don't copy logs.
+#COPY_LOGS data/cleaned_logs
+
+## Media URL.
+## The base URL of your media library.  DO NOT ADD A SLASH AT THE END!
+## NOTE that this must be publically-accessible.
+#MEDIA_BASE_URL http://yoursite.tld/media

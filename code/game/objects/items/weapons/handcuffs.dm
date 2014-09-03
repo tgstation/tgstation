@@ -11,6 +11,7 @@
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 500
+	w_type = RECYK_METAL
 	origin_tech = "materials=1"
 	var/dispenser = 0
 	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes
@@ -30,7 +31,7 @@
 					C.update_inv_handcuffed()
 
 	else
-		if ((CLUMSY in usr.mutations) && prob(50))
+		if ((M_CLUMSY in usr.mutations) && prob(50))
 			usr << "\red Uh ... how do those things work?!"
 			if (istype(C, /mob/living/carbon/human))
 				if(!C.handcuffed)

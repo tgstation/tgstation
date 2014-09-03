@@ -158,55 +158,56 @@
 	icon_state = "bandana"
 	item_state = "bandana"
 
-/obj/item/clothing/head/bowler
-	name = "bowler-hat"
-	desc = "Gentleman, elite aboard!"
-	icon_state = "bowler"
-	item_state = "bowler"
-	flags = FPRINT | TABLEPASS
-
 //stylish bs12 hats
 
 /obj/item/clothing/head/bowlerhat
 	name = "bowler hat"
 	icon_state = "bowler_hat"
 	item_state = "bowler_hat"
-	desc = "For the gentleman of distinction."
+	desc = "For that industrial age look."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/beaverhat
 	name = "beaver hat"
 	icon_state = "beaver_hat"
 	item_state = "beaver_hat"
-	desc = "Soft felt makes this hat both comfortable and elegant."
+	desc = "Like a top hat, but made of beavers."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/boaterhat
 	name = "boater hat"
 	icon_state = "boater_hat"
 	item_state = "boater_hat"
-	desc = "The ultimate in summer fashion."
+	desc = "Goes well with celery."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/fedora
 	name = "\improper fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
-	desc = "A sharp, stylish hat."
+	desc = "A great hat ruined by being within fifty yards of you."
 	flags = FPRINT|TABLEPASS
 
-/obj/item/clothing/head/feathertrilby
-	name = "\improper feather trilby"
-	icon_state = "feather_trilby"
-	item_state = "feather_trilby"
-	desc = "A sharp, stylish hat with a feather."
-	flags = FPRINT|TABLEPASS
+/obj/item/clothing/head/fedora/OnMobLife(var/mob/living/carbon/human/wearer)
+	if(!istype(wearer)) return
+	if(wearer.head == src)
+		if(prob(1))
+			wearer << "<span class=\"warning\">You feel positively euphoric!</span>"
+
+//TIPS FEDORA
+/obj/item/clothing/head/fedora/verb/tip_fedora()
+	set name = "Tip Fedora"
+	set category = "Object"
+	set desc = "Show that CIS SCUM who's boss."
+
+	usr << "You tip your fedora."
+	usr.visible_message("[usr] tips his fedora.")
 
 /obj/item/clothing/head/fez
 	name = "\improper fez"
 	icon_state = "fez"
 	item_state = "fez"
-	desc = "You should wear a fez. Fezzes are cool."
+	desc = "Put it on your monkey, make lots of cash money."
 	flags = FPRINT|TABLEPASS
 
 //end bs12 hats
@@ -243,3 +244,34 @@
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
+
+/obj/item/clothing/head/batman
+	name = "bathelmet"
+	desc = "No one cares who you are until you put on the mask."
+	icon_state = "bmhead"
+	item_state = "bmhead"
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+
+/obj/item/clothing/head/stalhelm
+	name = "Stalhelm"
+	desc = "Ein Helm, um die Nazi-Interesse an fremden Raumstationen zu sichern."
+	icon_state = "stalhelm"
+	item_state = "stalhelm"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags_inv = HIDEEARS
+
+/obj/item/clothing/head/panzer
+	name = "Panzer Cap"
+	desc = "Ein Hut passen nur für die größten Tanks."
+	icon_state = "panzercap"
+	item_state = "panzercap"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+
+/obj/item/clothing/head/naziofficer
+	name = "Officer Cap"
+	desc = "Ein Hut von Offizieren in der Nazi-Partei getragen."
+	icon_state = "officercap"
+	item_state = "officercap"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags_inv = HIDEEARS

@@ -15,7 +15,7 @@
 	var/last_used = 0 //last world.time it was used.
 
 /obj/item/device/flash/proc/clown_check(var/mob/user)
-	if(user && (CLUMSY in user.mutations) && prob(50))
+	if(user && (M_CLUMSY in user.mutations) && prob(50))
 		user << "\red \The [src] slips out of your hand."
 		user.drop_item()
 		return 0
@@ -169,6 +169,14 @@
 				for(var/obj/item/weapon/cloaking_device/S in M)
 					S.active = 0
 					S.icon_state = "shield0"
+		if(M.alpha < 255)
+			var/oldalpha = M.alpha
+			if(prob(80))
+				M.alpha = 255
+				M.visible_message("<span class='warning'>[M] suddenly becomes fully visible!</span>",\
+								"<span class='warning'>You see a bright flash of light and are suddenly fully visible again.</span>")
+				spawn(50)
+					M.alpha = oldalpha
 		var/safety = M:eyecheck()
 		if(!safety)
 			if(!M.blinded)

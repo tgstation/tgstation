@@ -11,15 +11,18 @@
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 /obj/machinery/seed_extractor/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/seed_extractor
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/seed_extractor,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
 	RefreshParts()
 
 obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -66,6 +69,17 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		user << "<span class='notice'>You extract some seeds from the [S.name].</span>"
 		S.use(1)
 		new /obj/item/seeds/grassseed(loc)
+
+	if(O)
+		var/obj/item/F = O
+		if(F.nonplant_seed_type)
+			user.drop_item()
+			var/t_amount = 0
+			var/t_max = rand(1,4)
+			while(t_amount < t_max)
+				new F.nonplant_seed_type(src.loc)
+				t_amount++
+			del(F)
 
 	else if (istype(O, /obj/item/weapon/screwdriver))
 		if (!opened)

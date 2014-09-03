@@ -1,77 +1,85 @@
 /obj/machinery/power
 	name = null
 	icon = 'icons/obj/power.dmi'
+
 	anchored = 1.0
-	var/datum/powernet/powernet = null
-	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
-							// if set to 0, requires a 0-X cable on this turf
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
 
-/obj/machinery/power/Del()
+	var/datum/powernet/powernet
+
+	// By default, power machines are connected by a cable in a neighbouring turf.
+	// If set to 0, requires a 0-X cable on this turf.
+	var/directwired = 1
+
+/obj/machinery/power/Destroy()
 	disconnect_from_network()
 	..()
 
-// common helper procs for all power machines
-/obj/machinery/power/proc/add_avail(var/amount)
-	if(powernet)
+/*
+ * Common helper procs for all power machines.
+ */
+/obj/machinery/power/proc/add_avail(const/amount)
+	if (powernet)
 		powernet.newavail += amount
 
-/obj/machinery/power/proc/add_load(var/amount)
-	if(powernet)
+/obj/machinery/power/proc/add_load(const/amount)
+	if (powernet)
 		powernet.newload += amount
 
 /obj/machinery/power/proc/surplus()
-	if(powernet)
+	if (powernet)
 		return powernet.avail-powernet.load
-	else
-		return 0
+
+	return 0
 
 /obj/machinery/power/proc/avail()
-	if(powernet)
+	if (powernet)
 		return powernet.avail
-	else
+
+	return 0
+
+/*
+ * Returns true if the area has power on given channel (or doesn't require power).
+ * Defaults to power_channel.
+ */
+/obj/machinery/proc/powered(chan = power_channel)
+	if (!src.loc)
 		return 0
 
-// returns true if the area has power on given channel (or doesn't require power).
-// defaults to power_channel
-
-/obj/machinery/proc/powered(var/chan = -1)
-
-	if(!src.loc)
-		return 0
-
-	if(!use_power)
+	if (!use_power)
 		return 1
 
-	var/area/A = src.loc.loc		// make sure it's in an area
-	if(!A || !isarea(A) || !A.master)
-		return 0					// if not, then not powered
-	if(chan == -1)
-		chan = power_channel
-	return A.master.powered(chan)	// return power status of the area
+	if (isnull(areaMaster))
+		return 0 // If not, then not powered.
 
-// increment the power usage stats for an area
+	return areaMaster.powered(chan) // Return power status of the area.
 
-/obj/machinery/proc/use_power(var/amount, var/chan = -1) // defaults to power_channel
-	var/area/A = src.loc.loc		// make sure it's in an area
-	if(!A || !isarea(A) || !A.master)
+/*
+ * Increment the power usage stats for an area.
+ * Defaults to power_channel.
+ */
+/obj/machinery/proc/use_power(const/amount, chan = power_channel)
+	if (!src.loc)
+		return 0
+
+	if (isnull(areaMaster))
 		return
-	if(chan == -1)
-		chan = power_channel
-	A.master.use_power(amount, chan)
 
-/obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
-										// by default, check equipment channel & set flag
-										// can override if needed
-	if(powered(power_channel))
-		stat &= ~NOPOWER
-	else
+	areaMaster.use_power(amount, chan)
 
-		stat |= NOPOWER
-	return
-
+/*
+ * Called whenever the power settings of the containing area change.
+ * By default, check equipment channel & set flag.
+ * Can override if needed.
+ */
+/obj/machinery/proc/power_change()
+	switch (powered(power_channel))
+		if (1)
+			stat &= ~NOPOWER
+		if (0)
+			stat |= NOPOWER
 
 // the powernet datum
 // each contiguous network of cables & nodes
@@ -87,7 +95,6 @@
 	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.powernet)
 			PC.powernet = new()
-			powernets += PC.powernet
 //			if(Debug)	world.log << "Starting mpn at [PC.x],[PC.y] ([PC.d1]/[PC.d2])"
 			powernet_nextlink(PC,PC.powernet)
 
@@ -99,7 +106,7 @@
 
 	for(var/obj/machinery/power/M in machines)
 		if(!M.powernet)	continue	// APCs have powernet=0 so they don't count as network nodes directly
-		M.powernet.nodes[M] = M
+		M.powernet.nodes.Add(M)
 
 
 // returns a list of all power-related objects (nodes, cable, junctions) in turf,
@@ -267,7 +274,6 @@
 	if(notlooped)
 		// not looped, so make a new powernet
 		var/datum/powernet/PN = new()
-		powernets += PN
 
 //		if(Debug) world.log << "Was not looped: spliting PN#[number] ([cables.len];[nodes.len])"
 
@@ -287,14 +293,14 @@
 			if(Node && !Node.powernet)
 				Node.powernet = PN
 				nodes.Cut(i,i+1)
-				PN.nodes[Node] = Node
+				PN.nodes.Add(Node)
 				continue
 			i++
 
 	// Disconnect machines connected to nodes
 	if(node)
 		for(var/obj/machinery/power/P in T1)
-			if(P.powernet && !P.powernet.nodes[src])
+			if(P.powernet && !P.powernet.nodes.Find(src))
 				P.disconnect_from_network()
 //		if(Debug)
 //			world.log << "Old PN#[number] : ([cables.len];[nodes.len])"
@@ -387,21 +393,20 @@
 		net1 = net2
 		net2 = temp
 
-	for(var/i=1,i<=net2.nodes.len,i++)		//merge net2 into net1
-		var/obj/machinery/power/Node = net2.nodes[i]
-		if(Node)
-			Node.powernet = net1
-			net1.nodes[Node] = Node
+	for(var/obj/machinery/power/node in net2.nodes)
+		if(node)
+			net2.nodes -= node
+			node.powernet = net1
+			net1.nodes += node
 
-	for(var/i=1,i<=net2.cables.len,i++)
-		var/obj/structure/cable/Cable = net2.cables[i]
-		if(Cable)
-			Cable.powernet = net1
-			net1.cables += Cable
+	for(var/obj/structure/cable/cable in net2.cables)
+		if(cable)
+			net2.cables -= cable
+			cable.powernet = net1
+			net1.cables += cable
 
-	del(net2)
+	net2.Destroy()
 	return net1
-
 
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
@@ -409,7 +414,7 @@
 	if(!C || !C.powernet)	return 0
 //	makepowernets() //TODO: find fast way	//EWWWW what are you doing!?
 	powernet = C.powernet
-	powernet.nodes[src] = src
+	powernet.nodes.Add(src)
 	return 1
 
 /obj/machinery/power/proc/disconnect_from_network()
@@ -501,3 +506,15 @@
 		cell.use(drained_energy)
 	return drained_energy
 
+/datum/powernet/New()
+	..()
+	powernets += src
+
+/datum/powernet/Destroy()
+	for(var/obj/machinery/power/node in nodes)
+		node.powernet = null
+
+	for(var/obj/structure/cable/cable in cables)
+		cable.powernet = null
+
+	powernets -= src

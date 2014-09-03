@@ -77,7 +77,7 @@ other types of metals and chemistry for reagents).
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/seccamera
-	name = "Circuit Design (Security)"
+	name = "Circuit Design (Security Cameras)"
 	desc = "Allows for the construction of circuit boards used to build security camera computers."
 	id = "seccamera"
 	req_tech = list("programming" = 2)
@@ -221,13 +221,22 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/atmos_alert
 
 /datum/design/air_management
-	name = "Circuit Design (Atmospheric Monitor)"
-	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
+	name = "Circuit Design (Atmospheric General Monitor)"
+	desc = "Allows for the construction of circuit boards used to build an Atmospheric General Monitor."
 	id = "air_management"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/air_management
+
+/datum/design/large_tank_control
+	name = "Circuit Design (Atmospheric Tank Control)"
+	desc = "Allows for the construction of circuit boards used to build an Atmospheric Tank Control."
+	id = "large_tank_control"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/large_tank_control
 
 /* Uncomment if someone makes these buildable
 /datum/design/general_alert
@@ -320,6 +329,15 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/condimaster
+
+/datum/design/snackbarmachine
+	name = "Circuit Design (SnackBar Machine)"
+	desc = "Allows for the cosntruction of circuit boards used to build SnackBar Machines"
+	id="snackbarmachine"
+	req_tech = list ("engineering" = 3, "biotech" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/snackbar_machine
 
 /datum/design/clonecontrol
 	name = "Circuit Design (Cloning Machine Console)"
@@ -519,6 +537,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pipedispenser/disposal
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////
@@ -529,7 +548,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3, "materials" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = /obj/item/weapon/aiModule/safeguard
+	build_path = /obj/item/weapon/aiModule/targetted/safeguard
 
 /datum/design/onehuman_module
 	name = "Module Design (OneHuman)"
@@ -538,7 +557,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
-	build_path = /obj/item/weapon/aiModule/oneHuman
+	build_path = /obj/item/weapon/aiModule/targetted/oneHuman
 
 /datum/design/protectstation_module
 	name = "Module Design (ProtectStation)"
@@ -547,7 +566,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = /obj/item/weapon/aiModule/protectStation
+	build_path = /obj/item/weapon/aiModule/standard/protectStation
 
 /datum/design/notele_module
 	name = "Module Design (TeleporterOffline Module)"
@@ -556,7 +575,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = /obj/item/weapon/aiModule/teleporterOffline
+	build_path = /obj/item/weapon/aiModule/standard/teleporterOffline
 
 /datum/design/quarantine_module
 	name = "Module Design (Quarantine)"
@@ -565,7 +584,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = /obj/item/weapon/aiModule/quarantine
+	build_path = /obj/item/weapon/aiModule/standard/quarantine
 
 /datum/design/oxygen_module
 	name = "Module Design (OxygenIsToxicToHumans)"
@@ -574,7 +593,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
-	build_path = /obj/item/weapon/aiModule/oxygen
+	build_path = /obj/item/weapon/aiModule/standard/oxygen
 
 /datum/design/freeform_module
 	name = "Module Design (Freeform)"
@@ -610,7 +629,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
-	build_path = /obj/item/weapon/aiModule/freeformcore
+	build_path = /obj/item/weapon/aiModule/freeform/core
 
 /datum/design/asimov
 	name = "Core Module Design (Asimov)"
@@ -619,7 +638,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 3, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
-	build_path = /obj/item/weapon/aiModule/asimov
+	build_path = /obj/item/weapon/aiModule/core/asimov
 
 /datum/design/paladin_module
 	name = "Core Module Design (P.A.L.A.D.I.N.)"
@@ -628,7 +647,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
-	build_path = /obj/item/weapon/aiModule/paladin
+	build_path = /obj/item/weapon/aiModule/core/paladin
 
 /datum/design/tyrant_module
 	name = "Core Module Design (T.Y.R.A.N.T.)"
@@ -637,9 +656,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 4, "syndicate" = 2, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
-	build_path = /obj/item/weapon/aiModule/tyrant
-
-
+	build_path = /obj/item/weapon/aiModule/core/tyrant
 
 ///////////////////////////////////
 /////Subspace Telecomms////////////
@@ -739,6 +756,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list("$metal" = 2000, "$glass" = 1000, "$silver" = 1000, "$gold" = 500, "$plasma" = 500, "$diamond" = 100)
 	build_path = /obj/item/device/mmi/posibrain
+
+/datum/design/np_dispenser
+	name = "Nano Paper Dispenser"
+	desc = "A machine to create Nano Paper"
+	id = "np_dispenser"
+	req_tech = list("programming" = 2, "materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$glass" = 500, "$metal" = 1000, "$gold" = 500)
+	build_path = /obj/item/weapon/paper_bin/nano
 
 ///////////////////////////////////
 //////////Mecha Module Disks///////
@@ -889,6 +915,15 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/targeting
 
+/datum/design/spacepod_main
+	name = "Circuit Design (Space Pod Mainboard)"
+	desc = "Allows for the construction of a Space Pod mainboard."
+	id = "spacepod_main"
+	req_tech = list("programming" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mecha/pod
+
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////
@@ -900,7 +935,16 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("combat" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
+
+/datum/design/mech_bolas
+	name = "Exosuit Weapon Design (PCMK-6 Bolas Launcher)"
+	desc = "Allows for the construction of PCMK-6 Bolas Launcher."
+	id = "mech_bolas"
+	build_type = MECHFAB
+	req_tech = list("combat" = 3)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_laser
 	name = "Exosuit Weapon Design (CH-PS \"Immolator\" Laser)"
@@ -909,7 +953,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("combat" = 3, "magnets" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_laser_heavy
 	name = "Exosuit Weapon Design (CH-LC \"Solaris\" Laser Cannon)"
@@ -918,7 +962,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "magnets" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_grenade_launcher
 	name = "Exosuit Weapon Design (SGL-6 Grenade Launcher)"
@@ -927,7 +971,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("combat" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/clusterbang_launcher
 	name = "Exosuit Module Design (SOP-6 Clusterbang Launcher)"
@@ -936,7 +980,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("combat"= 5, "materials" = 5, "syndicate" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_wormhole_gen
 	name = "Exosuit Module Design (Localized Wormhole Generator)"
@@ -945,7 +989,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 3, "magnets" = 2)
 	build_path = /obj/item/mecha_parts/mecha_equipment/wormhole_generator
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_teleporter
 	name = "Exosuit Module Design (Teleporter Module)"
@@ -954,7 +998,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 10, "magnets" = 5)
 	build_path = /obj/item/mecha_parts/mecha_equipment/teleporter
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_rcd
 	name = "Exosuit Module Design (RCD Module)"
@@ -963,7 +1007,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "bluespace" = 3, "magnets" = 4, "powerstorage"=4, "engineering" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/rcd
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_gravcatapult
 	name = "Exosuit Module Design (Gravitational Catapult Module)"
@@ -972,7 +1016,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 2, "magnets" = 3, "engineering" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/gravcatapult
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_repair_droid
 	name = "Exosuit Module Design (Repair Droid Module)"
@@ -981,7 +1025,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("magnets" = 3, "programming" = 3, "engineering" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/repair_droid
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /* MISSING
 /datum/design/mech_plasma_generator
@@ -991,7 +1035,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("plasmatech" = 2, "powerstorage"= 2, "engineering" = 2)
 	build_path = /obj/item/mecha_parts/mecha_equipment/plasma_generator
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 */
 
 /datum/design/mech_energy_relay
@@ -1001,7 +1045,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("magnets" = 4, "powerstorage" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_ccw_armor
 	name = "Exosuit Module Design(Reactive Armor Booster Module)"
@@ -1010,7 +1054,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "combat" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_proj_armor
 	name = "Exosuit Module Design(Reflective Armor Booster Module)"
@@ -1019,7 +1063,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "combat" = 5, "engineering"=3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_syringe_gun
 	name = "Exosuit Module Design(Syringe Gun)"
@@ -1028,7 +1072,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("materials" = 3, "biotech"=4, "magnets"=4, "programming"=3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_diamond_drill
 	name = "Exosuit Module Design (Diamond Mining Drill)"
@@ -1037,7 +1081,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "engineering" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_generator_nuclear
 	name = "Exosuit Module Design (ExoNuclear Reactor)"
@@ -1046,7 +1090,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	req_tech = list("powerstorage"= 3, "engineering" = 3, "materials" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
-	category = "Exosuit Equipment"
+	category = "Exosuit_Equipment"
 
 
 ////////////////////////////////////////
@@ -1444,6 +1488,42 @@ other types of metals and chemistry for reagents).
 ////////////Medical Tools////////////////
 /////////////////////////////////////////
 
+/datum/design/bruise_pack
+	name = "Roll of gauze"
+	desc = "Some sterile gauze to wrap around bloody stumps."
+	id = "bruise_pack"
+	req_tech = list("biotech" = 1)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 400, "$glass" = 125)
+	build_path = /obj/item/stack/medical/bruise_pack
+
+/datum/design/ointment
+	name = "Ointment"
+	desc = "Used to treat those nasty burns."
+	id = "ointment"
+	req_tech = list("biotech" = 1)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 400, "$glass" = 125)
+	build_path = /obj/item/stack/medical/ointment
+
+/datum/design/adv_bruise_pack
+	name = "Advanced trauma kit"
+	desc = "Used to treat those nasty burns."
+	id = "adv_bruise_pack"
+	req_tech = list("biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 600, "$glass" = 250)
+	build_path = /obj/item/stack/medical/advanced/bruise_pack
+
+/datum/design/adv_ointment
+	name = "Advanced burn kit"
+	desc = "Used to treat those nasty burns."
+	id = "adv_ointment"
+	req_tech = list("biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 600, "$glass" = 250)
+	build_path = /obj/item/stack/medical/advanced/ointment
+
 /datum/design/mass_spectrometer
 	name = "Mass-Spectrometer"
 	desc = "A device for analyzing chemicals in the blood."
@@ -1498,7 +1578,7 @@ other types of metals and chemistry for reagents).
 	category = "Misc"
 
 /datum/design/nanopaste
-	name = "nanopaste"
+	name = "Nanopaste"
 	desc = "A tube of paste containing swarms of repair nanites. Very effective in repairing robotic machinery."
 	id = "nanopaste"
 	req_tech = list("materials" = 4, "engineering" = 3)
@@ -1514,7 +1594,34 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	materials = list("$metal" = 80000, "$glass" = 20000)
 	build_path = /obj/item/borg/upgrade/medical/surgery
-	category = "Robotic Upgrade Modules"
+	category = "Robotic_Upgrade_Modules"
+
+/datum/design/robotanalyzer
+	name = "Cyborg Analyzer"
+	desc = "A hand-held scanner able to diagnose robotic injuries."
+	id = "robotanalyzer"
+	req_tech = list("magnets" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 8000, "$glass" = 2000)
+	build_path = /obj/item/device/robotanalyzer
+
+/datum/design/defibrillator
+	name = "Defibrillator"
+	desc = "A handheld emergency defibrillator, used to bring people back from the brink of death or put them there."
+	id = "defibrillator"
+	req_tech = list("magnets" = 3, "materials" = 4, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 9000, "$silver" = 250, "$glass" = 10000)
+	build_path = /obj/item/weapon/melee/defibrillator
+
+/datum/design/healthanalyzer
+	name = "Health Analyzer"
+	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
+	id = "healthanalyzer"
+	req_tech = list("magnets" = 2, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$metal" = 1000, "$glass" = 1000)
+	build_path = /obj/item/device/healthanalyzer
 
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
@@ -1551,15 +1658,92 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/energy/lasercannon
 	locked = 1
 
+/datum/design/xcomsquaddiearmor
+	name = "Squaddie Armor"
+	desc = "A set of armor good against ballistics and laser weaponry.."
+	id = "xcomsquaddiearmor"
+	req_tech = list("materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 5000, "$glass" = 1000)
+	build_path = /obj/item/clothing/suit/armor/xcomsquaddie
+
+/datum/design/xcomoriginalarmor
+	name = "Original Armor"
+	desc = "A set of armor good against ballistics and laser weaponry.."
+	id = "xcomoriginalarmor"
+	req_tech = list("materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 5000, "$glass" = 1000)
+	build_path = /obj/item/clothing/suit/armor/xcomarmor
+
+/datum/design/xcomplasmapistol
+	name = "Plasma Pistol"
+	desc = "A plasma pistol."
+	id = "xcomplasmapistol"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 1000)
+	build_path = /obj/item/weapon/gun/energy/plasma/pistol
+	locked = 1
+
+/datum/design/xcomplasmarifle
+	name = "Plasma Rifle"
+	desc = "A plasma rifle."
+	id = "xcomplasmarifle"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 3000)
+	build_path = /obj/item/weapon/gun/energy/plasma/rifle
+	locked = 1
+
+/datum/design/xcomlightplasmarifle
+	name = "Light Plasma Rifle"
+	desc = "A plasma rifle."
+	id = "xcomlightplasmarifle"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 2000)
+	build_path = /obj/item/weapon/gun/energy/plasma/light
+	locked = 1
+
+/datum/design/xcomlaserrifle
+	name = "Laser Cannon"
+	desc = "A laser rifle."
+	id = "xcomlaserrifle"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 2000)
+	build_path = /obj/item/weapon/gun/energy/laser/rifle
+	locked = 1
+
+/datum/design/xcomlaserpistol
+	name = "Laser Pistol"
+	desc = "A laser pistol."
+	id = "xcomlaserpistol"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 1000)
+	build_path = /obj/item/weapon/gun/energy/laser/pistol
+	locked = 1
+
+/datum/design/xcomar
+	name = "Assault Rifle"
+	desc = "An Assault Rifle."
+	id = "xcomar"
+	req_tech = list("combat" = 4, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 1000)
+	build_path = /obj/item/weapon/gun/projectile/automatic/xcom
+	locked = 1
+
 /datum/design/decloner
 	name = "Decloner"
 	desc = "Your opponent will bubble into a messy pile of goop."
 	id = "decloner"
-	req_tech = list("combat" = 8, "materials" = 7, "biotech" = 5, "powerstorage" = 6)
+	req_tech = list("combat" = 4, "materials" = 4, "biotech" = 5, "powerstorage" = 4, "syndicate" = 3) //More reasonable
 	build_type = PROTOLATHE
-	materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
+	materials = list("$metal" = 5000, "$gold" = 5000,"$uranium" = 10000) //, "mutagen" = 40)
 	build_path = /obj/item/weapon/gun/energy/decloner
-	locked = 1
 
 /datum/design/chemsprayer
 	name = "Chem Sprayer"
@@ -1618,6 +1802,16 @@ other types of metals and chemistry for reagents).
 	reliability_base = 79
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 
+/datum/design/ex_grenade
+	name = "EX Grenade"
+	desc = "A large grenade that is designed to hold three containers."
+	id = "ex_Grenade"
+	req_tech = list("combat" = 4, "materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3000)
+	reliability_base = 79
+	build_path = /obj/item/weapon/grenade/chem_grenade/exgrenade
+
 /datum/design/smg
 	name = "Submachine Gun"
 	desc = "A lightweight, fast firing gun."
@@ -1645,6 +1839,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/stunshell
+
+/datum/design/pneumatic
+	name = "Pneumatic Cannon"
+	desc = "A launcher powered by compressed air."
+	id = "pneumatic"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 12000)
+	build_path = /obj/item/weapon/storage/pneumatic
 
 /////////////////////////////////////////
 /////////////////Mining//////////////////
@@ -1739,6 +1942,64 @@ other types of metals and chemistry for reagents).
 	reliability = 100
 	build_path = /obj/item/bluespace_crystal/artificial
 
+/datum/design/bluespacebeaker_small
+	name = "Bluespace Beaker"
+	desc = "A newly-developed high-capacity beaker, courtesy of bluespace research. Can hold up to 200 units."
+	id = "bluespacebeaker_small"
+	req_tech = list("bluespace" = 2, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$glass" = 6000, "$metal" = 6000)
+	reliability = 100
+	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
+
+/datum/design/bluespacebeaker_large
+	name = "Large Bluespace Beaker"
+	desc = "A prototype ultra-capacity beaker, courtesy of bluespace research. Can hold up to 300 units."
+	id = "bluespacebeaker_large"
+	req_tech = list("bluespace" = 3, "materials" = 5)
+	build_type = PROTOLATHE
+	materials = list("$diamond" = 1500, "$metal" = 6000, "$glass" = 6000)
+	reliability = 100
+	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespacelarge
+
+/datum/design/stasisbeaker_small
+	name = "Stasis Beaker"
+	desc = "A beaker powered by experimental bluespace technology. Chemicals are held in stasis and do not react inside of it. Can hold up to 50 units."
+	id = "stasisbeaker_small"
+	req_tech = list("bluespace" = 3, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list("$uranium" = 1500, "$metal" = 3750, "$glass" = 3750)
+	reliability = 100
+	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
+
+/datum/design/stasisbeaker_large
+	name = "Large Stasis Beaker"
+	desc = "A beaker powered by experimental bluespace technology. Chemicals are held in stasis and do not react inside of it. Can hold up to 100 units."
+	id = "stasisbeaker_large"
+	req_tech = list("bluespace" = 4, "materials" = 6)
+	build_type = PROTOLATHE
+	materials = list("$diamond" = 1500, "$metal" = 3750, "$glass" = 3750, "$uranium" = 1500)
+	reliability = 100
+	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreactlarge
+
+/datum/design/reactive_teleport_armor
+	name = "Reactive Teleport Armor"
+	desc = "Someone seperated our Research Director from his own head!"
+	id = "reactive_teleport_armor"
+	req_tech = list("bluespace" = 4, "materials" = 5)
+	build_type = PROTOLATHE
+	materials = list("$diamond" = 2000, "$metal" = 3000, "$uranium" = 3750)
+	build_path = /obj/item/clothing/suit/armor/reactive
+
+/datum/design/gps
+	name = "Global Positioning System"
+	desc = "Helping lost spacemen find their way through the planets since 2016."
+	id = "gps"
+	req_tech = list("bluespace" = 2, "magnets" = 2)
+	build_type = PROTOLATHE
+	materials = list ("$metal" = 800, "$glass" = 200)
+	build_path = /obj/item/device/gps/science
+
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
 /////////////////////////////////////////
@@ -1752,6 +2013,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/health
 
+/*
 /datum/design/security_hud
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
@@ -1760,6 +2022,54 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
+	locked = 1
+*/
+
+/datum/design/sechud_sunglass
+	name = "HUDSunglasses"
+	desc = "Sunglasses with a heads-up display that scans the humans in view and provides accurate data about their ID status."
+	id = "sechud_sunglass"
+	req_tech = list("magnets" = 3, "combat" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 50, "$glass" = 50)
+	build_path = /obj/item/clothing/glasses/sunglasses/sechud
+	locked = 1
+
+/////////////////////////////////////////
+/////////////////Engineering/////////////
+/////////////////////////////////////////
+
+/datum/design/superior_welding_goggles
+	name = "Superior Welding Goggles"
+	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes. Allows for better vision than normal goggles.."
+	id = "superior_welding_goggles"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 500, "$glass" = 1500)
+	build_path = /obj/item/clothing/glasses/welding/superior
+
+/datum/design/night_vision_goggles
+	name = "Night Vision Goggles"
+	desc = "You can totally see in the dark now!."
+	id = "night_vision_goggles"
+	req_tech = list("materials" = 5, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 700, "$glass" = 2000, "$gold" = 100)
+	build_path = /obj/item/clothing/glasses/night
+
+
+/////////////////////////////////////////
+//////////////////Security///////////////
+/////////////////////////////////////////
+
+/datum/design/ablative_armor_vest
+	name = "Ablative Armor Vest"
+	desc = "A vest that excels in protecting the wearer against energy projectiles."
+	id = "ablative vest"
+	req_tech = list("combat" = 4, "materials" = 5)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 1500, "$glass" = 2500, "$diamond" = 3750, "$silver" = 1000, "$uranium" = 500)
+	build_path = /obj/item/clothing/suit/armor/laserproof
 	locked = 1
 
 /////////////////////////////////////////
@@ -1788,6 +2098,7 @@ other types of metals and chemistry for reagents).
 	w_class = 1.0
 	m_amt = 30
 	g_amt = 10
+	w_type = RECYK_ELECTRONIC
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/New()
@@ -1949,6 +2260,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/bhangmeter
 
+
 //////////////////////////////////////////////////////////////////
 // EMBEDDED CONTROLLER BOARDS
 //////////////////////////////////////////////////////////////////
@@ -1970,23 +2282,14 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/ecb/airlock_controller
 
-/datum/design/vent_control
-	name = "Circuit Design (Vent Control)"
-	desc = "Allows for the construction of ECB used to build a vent control panel."
-	id = "vent_control"
+/datum/design/advanced_airlock_control
+	name = "Circuit Design (Advanced)"
+	desc = "Allows for the construction of ECB used to build an advanced control panel."
+	id = "advanced_airlock_control"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/ecb/vent_controller
-
-/datum/design/smart_airlock_control
-	name = "Circuit Design (Smart Airlock Control)"
-	desc = "Allows for the construction of ECB used to build a smart airlock control panel."
-	id = "smart_airlock_control"
-	req_tech = list("programming" = 3)
-	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/ecb/smart_airlock_controller
+	build_path = /obj/item/weapon/circuitboard/ecb/advanced_airlock_controller
 
 /*
 /datum/design/hydroseeds

@@ -1,14 +1,75 @@
+#define XENOARCH_SPAWN_CHANCE 0.5
+#define XENOARCH_SPREAD_CHANCE 15
+#define ARTIFACT_SPAWN_CHANCE 20
+
+proc/SetupXenoarch()
+	for(var/turf/unsimulated/mineral/M in block(locate(1,1,1), locate(world.maxx, world.maxy, world.maxz)))
+		if(!prob(XENOARCH_SPAWN_CHANCE))
+			continue
+
+		var/digsite = get_random_digsite_type()
+		var/list/processed_turfs = list()
+		var/list/turfs_to_process = list(M)
+
+		while(turfs_to_process.len)
+			var/turf/unsimulated/mineral/archeo_turf = turfs_to_process[1]
+
+			for(var/turf/unsimulated/mineral/T in orange(1, archeo_turf))
+				if(T.finds)
+					continue
+
+				if(T in processed_turfs)
+					continue
+
+				if(prob(XENOARCH_SPREAD_CHANCE))
+					turfs_to_process.Add(T)
+
+			turfs_to_process.Remove(archeo_turf)
+			processed_turfs.Add(archeo_turf)
+
+			if(isnull(archeo_turf.finds))
+				archeo_turf.finds = list()
+
+				if(prob(50))
+					archeo_turf.finds.Add(new /datum/find(digsite, rand(5,95)))
+				else if(prob(75))
+					archeo_turf.finds.Add(new /datum/find(digsite, rand(5,45)))
+					archeo_turf.finds.Add(new /datum/find(digsite, rand(55,95)))
+				else
+					archeo_turf.finds.Add(new /datum/find(digsite, rand(5,30)))
+					archeo_turf.finds.Add(new /datum/find(digsite, rand(35,75)))
+					archeo_turf.finds.Add(new /datum/find(digsite, rand(75,95)))
+
+				//sometimes a find will be close enough to the surface to show
+				var/datum/find/F = archeo_turf.finds[1]
+
+				if(F.excavation_required <= F.view_range)
+					archeo_turf.archaeo_overlay = "overlay_archaeo[rand(1,3)]"
+					archeo_turf.overlays += archeo_turf.archaeo_overlay
+
+		//dont create artifact machinery in animal or plant digsites, or if we already have one
+		if(!M.artifact_find && digsite != 1 && digsite != 2 && prob(ARTIFACT_SPAWN_CHANCE))
+			M.artifact_find = new()
+			master_controller.artifact_spawning_turfs.Add(M)
+
+		if(isnull(M.geologic_data))
+			M.geologic_data = new/datum/geosample(M)
+
+#undef XENOARCH_SPAWN_CHANCE
+#undef XENOARCH_SPREAD_CHANCE
+#undef ARTIFACT_SPAWN_CHANCE
 
 //---- Noticeboard
 
-/obj/structure/noticeboard/anomaly/New()
+/obj/structure/noticeboard/anomaly
 	notices = 5
 	icon_state = "nboard05"
 
+/obj/structure/noticeboard/anomaly/New()
 	//add some memos
 	var/obj/item/weapon/paper/P = new()
 	P.name = "Memo RE: proper analysis procedure"
-	P.info = "Rose,<br>activate <i>then</i> analyse the artifacts, the machine will have a much easier time determining their function/s. Remember to employ basic quasi-elemental forces such as heat, energy, force and various chemical mixes - who knows why those ancient aliens made such obscure activation indices.<br><br>And don't forget your suit this time, I can't afford to have any researchers out of commision for as long as that again!.<br>Ward"
+	P.info = "<br>We keep test dummies in pens here for a reason, so standard procedure should be to activate newfound alien artifacts and place the two in close proximity. Promising items I might even approve monkey testing on."
 	P.stamped = list(/obj/item/weapon/stamp/rd)
 	P.overlays = list("paper_stamped_rd")
 	src.contents += P
@@ -29,7 +90,7 @@
 
 	P = new()
 	P.name = "READ ME! Before you people destroy any more samples"
-	P.info = "how many times do i have to tell you people, these xeno-arch samples are del-i-cate, and should be handled so! careful application of a focussed, ceoncentrated heat or some corrosive liquids should clear away the extraneous carbon matter, while application of an energy beam will most decidedly destroy it entirely! W, <b>the one who signs your paychecks</b>"
+	P.info = "how many times do i have to tell you people, these xeno-arch samples are del-i-cate, and should be handled so! careful application of a focussed, concentrated heat or some corrosive liquids should clear away the extraneous carbon matter, while application of an energy beam will most decidedly destroy it entirely - like someone did to the chemical dispenser! W, <b>the one who signs your paychecks</b>"
 	P.stamped = list(/obj/item/weapon/stamp/rd)
 	P.overlays = list("paper_stamped_rd")
 	src.contents += P

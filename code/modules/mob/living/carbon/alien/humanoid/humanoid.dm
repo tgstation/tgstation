@@ -37,11 +37,10 @@
 			now_pushing = 1
 			if (!AM.anchored)
 				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
+				if (istype(AM, /obj/structure/window/full))
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
 				step(AM, t)
 			now_pushing = null
 		return
@@ -133,23 +132,6 @@
 		updatehealth()
 	return
 
-
-/mob/living/carbon/alien/humanoid/hand_p(mob/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (M.a_intent == "hurt")
-		if (istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
-			return
-		if (health > 0)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-			adjustBruteLoss(rand(1, 3))
-
-			updatehealth()
-	return
 
 /mob/living/carbon/alien/humanoid/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.
@@ -244,6 +226,8 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>[M.attacktext] [src.name] ([src.ckey])</font>")
+		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.attacktext] by [M.name] ([M.ckey])</font>")
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
@@ -253,6 +237,7 @@
 		updatehealth()
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
+	//M.changeNext_move(10)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -307,7 +292,7 @@
 		if ("grab")
 			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, M, src)
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
@@ -324,7 +309,7 @@
 		if ("hurt")
 			var/damage = rand(1, 9)
 			if (prob(90))
-				if (HULK in M.mutations)//HULK SMASH
+				if (M_HULK in M.mutations)//M_HULK SMASH
 					damage += 14
 					spawn(0)
 						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.

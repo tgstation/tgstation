@@ -8,11 +8,9 @@
 	invocation = "GIN'YU CAPAN"
 	invocation_type = "whisper"
 	range = 1
+	cooldown_min = 200 //100 deciseconds reduction per rank
 	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
 	var/list/compatible_mobs = list(/mob/living/carbon/human,/mob/living/carbon/monkey) //which types of mobs are affected by the spell. NOTE: change at your own risk
-	var/base_spell_loss_chance = 20 //base probability of the wizard losing a spell in the process
-	var/spell_loss_chance_modifier = 7 //amount of probability of losing a spell added per spell (mind_transfer included)
-	var/spell_loss_amount = 1 //the maximum amount of spells possible to lose during a single transfer
 	var/msg_wait = 500 //how long in deciseconds it waits before telling that body doesn't feel right or mind swap robbed of a spell
 	var/paralysis_amount_caster = 20 //how much the caster is paralysed for after the spell
 	var/paralysis_amount_victim = 20 //how much the victim is paralysed for after the spell
@@ -55,27 +53,6 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	var/mob/living/victim = target//The target of the spell whos body will be transferred to.
 	var/mob/caster = user//The wizard/whomever doing the body transferring.
-
-	//SPELL LOSS BEGIN
-	//NOTE: The caster must ALWAYS keep mind transfer, even when other spells are lost.
-	var/obj/effect/proc_holder/spell/targeted/mind_transfer/m_transfer = locate() in user.spell_list//Find mind transfer directly.
-	var/list/checked_spells = user.spell_list
-	checked_spells -= m_transfer //Remove Mind Transfer from the list.
-
-	if(caster.spell_list.len)//If they have any spells left over after mind transfer is taken out. If they don't, we don't need this.
-		for(var/i=spell_loss_amount,(i>0&&checked_spells.len),i--)//While spell loss amount is greater than zero and checked_spells has spells in it, run this proc.
-			for(var/j=checked_spells.len,(j>0&&checked_spells.len),j--)//While the spell list to check is greater than zero and has spells in it, run this proc.
-				if(prob(base_spell_loss_chance))
-					checked_spells -= pick(checked_spells)//Pick a random spell to remove.
-					spawn(msg_wait)
-						victim << "The mind transfer has robbed you of a spell."
-					break//Spell lost. Break loop, going back to the previous for() statement.
-				else//Or keep checking, adding spell chance modifier to increase chance of losing a spell.
-					base_spell_loss_chance += spell_loss_chance_modifier
-
-	checked_spells += m_transfer//Add back Mind Transfer.
-	user.spell_list = checked_spells//Set user spell list to whatever the new list is.
-	//SPELL LOSS END
 
 	//MIND TRANSFER BEGIN
 	if(caster.mind.special_verbs.len)//If the caster had any special verbs, remove them from the mob verb list.

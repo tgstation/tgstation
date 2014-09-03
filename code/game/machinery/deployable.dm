@@ -86,9 +86,7 @@ for reference:
 				else
 			if (src.health <= 0)
 				visible_message("\red <B>The barricade is smashed apart!</B>")
-				new /obj/item/stack/sheet/wood(get_turf(src))
-				new /obj/item/stack/sheet/wood(get_turf(src))
-				new /obj/item/stack/sheet/wood(get_turf(src))
+				new /obj/item/stack/sheet/wood(get_turf(src, 5))
 				del(src)
 			..()
 
@@ -96,7 +94,7 @@ for reference:
 		switch(severity)
 			if(1.0)
 				visible_message("\red <B>The barricade is blown apart!</B>")
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				src.health -= 25
@@ -105,7 +103,7 @@ for reference:
 					new /obj/item/stack/sheet/wood(get_turf(src))
 					new /obj/item/stack/sheet/wood(get_turf(src))
 					new /obj/item/stack/sheet/wood(get_turf(src))
-					del(src)
+					qdel(src)
 				return
 
 	meteorhit()
@@ -123,7 +121,7 @@ for reference:
 			del(src)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
+	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
 		if(air_group || (height==0))
 			return 1
 		if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -131,6 +129,14 @@ for reference:
 		else
 			return 0
 
+/obj/structure/barricade/wooden/door //Used by the barricade kit when it is placed on doors
+
+	icon = 'icons/policetape.dmi'
+	icon_state = "wood_door"
+	anchored = 1
+	density = 1
+	health = 50 //Can take a few hits
+	maxhealth = 50
 
 //Actual Deployable machinery stuff
 
@@ -247,7 +253,7 @@ for reference:
 			src.explode()
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
+	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
 		if(air_group || (height==0))
 			return 1
 		if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -269,4 +275,4 @@ for reference:
 
 		explosion(src.loc,-1,-1,0)
 		if(src)
-			del(src)
+			qdel(src)

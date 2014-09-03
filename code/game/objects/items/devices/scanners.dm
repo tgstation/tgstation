@@ -6,7 +6,7 @@ HEALTH ANALYZER
 GAS ANALYZER
 PLANT ANALYZER
 MASS SPECTROMETER
-
+REAGENT SCANNER
 */
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
@@ -18,7 +18,13 @@ MASS SPECTROMETER
 	w_class = 2
 	item_state = "electronic"
 	m_amt = 150
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1;engineering=1"
+
+/obj/item/device/t_scanner/Destroy()
+	if(on)
+		processing_objects.Remove(src)
+	..()
 
 /obj/item/device/t_scanner/attack_self(mob/user)
 
@@ -51,6 +57,13 @@ MASS SPECTROMETER
 						var/turf/U = O.loc
 						if(U.intact)
 							O.invisibility = 101
+		for(var/mob/living/M in T.contents)
+			var/oldalpha = M.alpha
+			if(M.alpha < 255 && istype(M))
+				M.alpha = 255
+				spawn(10)
+					if(M)
+						M.alpha = oldalpha
 
 		var/mob/living/M = locate() in T
 		if(M && M.invisibility == 2)
@@ -72,12 +85,13 @@ MASS SPECTROMETER
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
 
 
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
-	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
+	if (( (M_CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
@@ -95,6 +109,7 @@ MASS SPECTROMETER
 	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()
 	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
 	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
+	playsound(get_turf(src), 'sound/items/healthanalyzer.ogg', 50, 1)
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
 		user.show_message("\blue Analyzing Results for [M]:\n\t Overall Status: dead")
@@ -143,7 +158,12 @@ MASS SPECTROMETER
 		if(M:reagents.total_volume > 0)
 			user.show_message(text("\red Warning: Unknown substance detected in subject's blood."))
 		if(M:virus2.len)
-			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
+			var/mob/living/carbon/C = M
+			for (var/ID in C.virus2)
+				if (ID in virusDB)
+					var/datum/data/record/V = virusDB[ID]
+					user.show_message(text("\red Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]"))
+//			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
 	if (M.getCloneLoss())
 		user.show_message("\red Subject appears to have been imperfectly cloned.")
 	for(var/datum/disease/D in M.viruses)
@@ -151,7 +171,9 @@ MASS SPECTROMETER
 			user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
 	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		user.show_message("\blue Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.")
-	if (M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
+	if (M.has_brain_worms())
+		user.show_message("\red Subject suffering from aberrant brain activity. Recommend further scanning.")
+	else if (M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
 		user.show_message("\red Subject is brain dead.")
 	else if (M.getBrainLoss() >= 60)
 		user.show_message("\red Severe brain damage detected. Subject likely to have mental retardation.")
@@ -216,6 +238,7 @@ MASS SPECTROMETER
 	throw_range = 20
 	m_amt = 30
 	g_amt = 20
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1;engineering=1"
 
 /obj/item/device/analyzer/attack_self(mob/user as mob)
@@ -286,15 +309,14 @@ MASS SPECTROMETER
 	throw_range = 20
 	m_amt = 30
 	g_amt = 20
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=2;biotech=2"
 	var/details = 0
 	var/recent_fail = 0
 
 /obj/item/device/mass_spectrometer/New()
-	..()
-	var/datum/reagents/R = new/datum/reagents(5)
-	reagents = R
-	R.my_atom = src
+	. = ..()
+	create_reagents(5)
 
 /obj/item/device/mass_spectrometer/on_reagent_change()
 	if(reagents.total_volume)
@@ -359,6 +381,7 @@ MASS SPECTROMETER
 	throw_range = 20
 	m_amt = 30
 	g_amt = 20
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=2;biotech=2"
 	var/details = 0
 	var/recent_fail = 0

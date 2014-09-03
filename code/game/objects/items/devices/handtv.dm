@@ -23,7 +23,6 @@
 	if (!target)
 		usr.unset_machine()
 		usr.reset_view(usr)
-		src.in_use = 0
 		return
 	for (var/obj/machinery/camera/C in cameras)
 		if (C.c_tag == target)
@@ -34,10 +33,8 @@
 		usr.client.eye = target
 		usr.set_machine(src)
 		src.current = target
-		src.in_use = 1
 	else
 		usr.unset_machine()
-		src.in_use = 0
 		return
 
 /obj/item/device/handtv/check_eye(var/mob/usr as mob)

@@ -109,3 +109,5 @@
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+	new /obj/item/device/gps/paramedic(src)
+	new /obj/item/device/gps/paramedic(src)

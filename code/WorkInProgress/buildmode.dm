@@ -54,8 +54,8 @@
 			if(SOUTH)
 				dir = WEST
 			if(WEST)
-				dir = NORTHWEST
-			if(NORTHWEST)
+				dir = SOUTHWEST
+			if(SOUTHWEST)
 				dir = NORTH
 		return 1
 
@@ -120,7 +120,7 @@
 	screen_loc = "NORTH,WEST+2"
 	var/varholder = "name"
 	var/valueholder = "derp"
-	var/objholder = "/obj/structure/closet"
+	var/objholder = /obj/structure/closet
 
 	Click(location, control, params)
 		var/list/pa = params2list(params)
@@ -145,21 +145,21 @@
 				if(1)
 					return 1
 				if(2)
-					objholder = input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet")
-					var/list/removed_paths = list("/obj/effect/bhole")
-					if(objholder in removed_paths)
+					objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet"))
+					if(!ispath(objholder))
+						objholder = /obj/structure/closet
 						alert("That path is not allowed.")
-						objholder = "/obj/structure/closet"
-					else if (dd_hasprefix(objholder, "/mob") && !check_rights(R_DEBUG,0))
-						objholder = "/obj/structure/closet"
+					else
+						if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
+							objholder = /obj/structure/closet
 				if(3)
 					var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
 
 					master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
 					if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
-						return
+						return 1
 					var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
-					if(!thetype) return
+					if(!thetype) return 1
 					switch(thetype)
 						if("text")
 							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", "value") as text
@@ -171,9 +171,9 @@
 							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as obj in world
 						if("turf-reference")
 							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
+    	return 1
 
-
-/proc/build_click(var/mob/user, buildmode, location, control, params, var/obj/object)
+/proc/build_click(var/mob/user, buildmode, params, var/obj/object)
 	var/obj/effect/bmode/buildholder/holder = null
 	for(var/obj/effect/bmode/buildholder/H)
 		if(H.cl == user.client)
@@ -181,41 +181,49 @@
 			break
 	if(!holder) return
 	var/list/pa = params2list(params)
-
+	var/turf/RT = get_turf(object)
 	switch(buildmode)
 		if(1)
 			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
 				if(istype(object,/turf/space))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/floor)
+					log_admin("[key_name(usr)] made a floor at [formatJumpTo(T)]")
 					return
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall)
+					log_admin("[key_name(usr)] made a wall at [formatJumpTo(T)]")
 					return
 				else if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall/r_wall)
+					log_admin("[key_name(usr)] made a rwall at [formatJumpTo(T)]")
 					return
 			else if(pa.Find("right"))
 				if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/floor)
+					log_admin("[key_name(usr)] removed a wall at [formatJumpTo(T)]")
 					return
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
 					T.ChangeTurf(/turf/space)
+					log_admin("[key_name(usr)] removed flooring at [formatJumpTo(T)]")
 					return
 				else if(istype(object,/turf/simulated/wall/r_wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall)
+					log_admin("[key_name(usr)] downgraded an rwall at [formatJumpTo(T)]")
 					return
 				else if(istype(object,/obj))
 					del(object)
 					return
 			else if(istype(object,/turf) && pa.Find("alt") && pa.Find("left"))
 				new/obj/machinery/door/airlock(get_turf(object))
+				log_admin("[key_name(usr)] made an airlock at [formatJumpTo(RT)]")
 			else if(istype(object,/turf) && pa.Find("ctrl") && pa.Find("left"))
+				log_admin("[key_name(usr)] made a window at [formatJumpTo(RT)]")
 				switch(holder.builddir.dir)
 					if(NORTH)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
@@ -229,14 +237,19 @@
 					if(WEST)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = WEST
-					if(NORTHWEST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = NORTHWEST
+					if(SOUTHWEST)
+						new/obj/structure/window/full/reinforced(get_turf(object))
 		if(2)
 			if(pa.Find("left"))
-				var/obj/A = new holder.buildmode.objholder (get_turf(object))
-				A.dir = holder.builddir.dir
+				if(ispath(holder.buildmode.objholder,/turf))
+					var/turf/T = get_turf(object)
+					T.ChangeTurf(holder.buildmode.objholder)
+				else
+					var/obj/A = new holder.buildmode.objholder (get_turf(object))
+					A.dir = holder.builddir.dir
+				log_admin("[key_name(usr)] made a [holder.buildmode.objholder] at [formatJumpTo(RT)]")
 			else if(pa.Find("right"))
+				log_admin("[key_name(usr)] deleted a [object] at [formatJumpTo(RT)]")
 				if(isobj(object)) del(object)
 
 		if(3)
@@ -255,8 +268,10 @@
 
 		if(4)
 			if(pa.Find("left"))
+				log_admin("[key_name(usr)] is selecting [object] for throwing at [formatJumpTo(RT)]")
 				holder.throw_atom = object
 			if(pa.Find("right"))
 				if(holder.throw_atom)
 					holder.throw_atom.throw_at(object, 10, 1)
+					log_admin("[key_name(usr)] is throwing a [holder.throw_atom] at [object] - [formatJumpTo(RT)]")
 

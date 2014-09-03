@@ -49,6 +49,8 @@
 				<li><b>Core sampler</b> - use this to take core samples from rock faces, which you can then run to the lab for analysis.</li>
 				<li><b>Depth scanner</b> - uses x-ray diffraction to locate anomalous densities in rock, indicating archaeological deposits or mineral veins.
 					Comes with a handy reference log containing co-ordinates and time of each scan.</li>
+				<li><b>Alden-Saraspova counter</b> - uses a patented application of Fourier Transform analysis to determine the difference between background and
+					exotic radiation. Use it to determine how far you are from anomalous energy sources.</li>
 				<li><b>Radio beacon locater</b> - leave a beacon at an item of interest, then track it down later with this handy gadget. Watch for interference from other
 					devices though.</li>
 				<li><b>Flashlight or portable light source</b> - Self explanatory, I hope.</li>
@@ -129,51 +131,50 @@
 				<h1><a name="Contents">Contents</a></h1>
 				<ol>
 					<li><a href="#Terms">A note on terms</a></li>
-					<li><a href="#Isotope">Isotope ratio spectrometer</a></li>
-					<li><a href="#Accelerator">Accelerator spectrometer</a></li>
-					<li><a href="#Gas">Gas chromatography spectrometer</a></li>
-					<li><a href="#Ion">Ion mobility spectrometer</a></li>
+					<li><a href="#Analysis">Analysis progression</a></li>
+					<li><a href="#Heat">Heat management</a></li>
+					<li><a href="#Radiation">Ambient radiation</a></li>
 				</ol>
 
 				<br>
 				<h1><a name="Terms">A note on terms</a></h1>
 				<list>
-				<li><b>Dissonance ratio</b> - This is a pseudoarbitrary value indicating the overal presence of a particular element in a greater composite.
-					It takes into account volume, density, molecular excitation and isotope spread.</li>
 				<li><b>Mass spectrometry</b> - MS is the procedure used used to measure and quantify the components of matter. The most prized tool in the field of
 					'Materials analysis'</li>
 				<li><b>Radiometric dating</b> - MS applied using the right carrier reagents can be used to accurately determine the age of a sample.</li>
-				<li><b>Sample specifity</b> - A pseudoarbitrary value used to indicate how well a sample resonates with the employed carrier reagent. Great specifity
-					(material resonance) indicates that there is much of the carrier reagent present in the sample.</li>
+				<li><b>Dissonance ratio</b> - This is a pseudoarbitrary value indicating the overal presence of a particular element in a greater composite.
+					It takes into account volume, density, molecular excitation and isotope spread.</li>
+				<li><b>Vacuum seal integrity</b> - A reference to how close an airtight seal is to failure.</li>
 				</list><br>
 				<a href="#Contents">Contents</a>
 
-				<h1><a name="Isotope">Isotope ratio spectrometer</a></h1>
-				Isotope ratio mass spectrometers work by coating a small surface with a semiliquid <i>stationary phase</i> consisting of the sample to be
-					analysed, and recording it's interactions with a gaseous <i>mobile phase</i> comprised of an inert or nonreactive gas such as helium or nitrogen.<br>
+				<h1><a name="Analysis">Analysis progression</a></h1>
+				Modern mass spectrometry requires constant attention from the diligant researcher in order to be successul. There are many different elements to juggle,
+					and later chapters will delve into them. For the spectrometry assistant, the first thing you need to know is that the scanner wavelength is automatically
+					calculated for you. Just tweak the settings and try to match it with the actual wavelength as closely as possible.<br>
 				<br>
-				IRMS are employed as radiometric daters, extremely accurate but only so up to ages of one billion years.<br>
 				<a href="#Contents">Contents</a>
 
-				<h1><a name="Accelerator">Accelerator spectrometer</a></h1>
-				The accelerator mass spectrometer works by accelerating ions to extraordinarily high kinetic energies before mass analysis. The special strength of AMS is
-					isolate rare or low-strength isotopes, making it able to determine much greater ages with reasonable accuracy.<br>
+				<h1><a name="Seal">Seal integrity</a></h1>
+				In order to maintain sterile and environmentally static procedures, a special chamber is setup inside the spectrometer. It's protected by a proprietary vacuum seal
+					produced by top tier industrial science. It will only last for a certain number of scans before failing outright, but it can be resealed through use of nanite paste.
+					Unfortunately, it's susceptible to malforming under heat stress so exposing it to higher temperatures will cause it's operation life to drop significantly.<br>
 				<br>
-				AMS are employed as extreme age radiometric daters, able to determine the age of the sample on a scale of billions of years.
-					They are commonly located in geology and archaeology laboratories.<br>
 				<a href="#Contents">Contents</a>
 
-				<h1><a name="Gas">Gas chromatography spectrometer</a></h1>
-				Gas-liquid chromatography mass spectrometers work by coating a small surface with a semiliquid <i>stationary phase</i> consisting of the sample to be
-					analysed, and recording it's interactions with a gaseous <i>mobile phase</i> comprised of an inert or nonreactive gas such as helium or nitrogen.<br>
+				<h1><a name="Heat">Heat management</a></h1>
+				The scanner relies on a gyro-rotational system that varies in speed and intensity. Over the course of an ordinary scan, the RPMs can change dramatically. Higher RPMs
+					means greater heat generation, but is necessary for the ongoing continuation of the scan. To offset heat production, spectrometers have an inbuilt cooling system.
+					Researchers can modify the flow rate of coolant to aid in dropping temperature as necessary, but are advised that frequent coolant replacements may be necessary
+					depending on coolant purity. Water and substances such as cryoxadone are viable substitutes, but nowhere near as effective as pure coolant itself.<br>
 				<br>
-				GLCS are employed in forensic and geological analysis to determine what elements are present in a sample.<br>
 				<a href="#Contents">Contents</a>
 
-				<h1><a name="Ion">Ion mobility spectrometer</a></h1>
-				Ion mobility mass spectrometers work by examining the mobility of ionized molecules in an inert carrier gas<br>
+				<h1><a name="Radiation">Ambient radiation</a></h1>
+				Researchers are warned that while operational, mass spectrometers emit period bursts of radiation and are thus advised to wear protective gear. In the event of
+					radiation spikes, there is also a special shield that can be lowered to block emissions. Lowering this, however, will have the effect of blocking the scanner
+					so use it sparingly.<br>
 				<br>
-				IMS returns a dissonance ratio over the scanned sample and carrier reagent, indicating the average total presence of the sample.<br>
 				<a href="#Contents">Contents</a>
 
 				</body>
@@ -197,67 +198,17 @@
 				</head>
 				<body>
 
-				<h1><a name="Contents">Contents</a></h1>
-				<ol>
-					<li><a href="#Terms">Some useful phrases for you</a></li>
-					<li><a href="#Sample">Sample preparation and analysis</a></li>
-					<li><a href="#Fourier">Fourier transform spectroscope</a></li>
-					<li><a href="#Hyperspectral">Hyperspectral Imager</a></li>
-				</ol>
-
-				<br>
-				<h1><a name="Terms">Some useful phrases for you</a></h1>
-				<list>
-				<li><b>Spectroscopy</b> - Spectroscopy is the study of the behaviour of light, commonly used in the 26th century for analysis of anomalous
-					behaviour of energy or light.</li>
-				<li><b>Sample specifity</b> - A pseudoarbitrary value used to indicate how well a sample resonates with the employed carrier reagent. Great specifity
-					(material resonance) indicates that there is much of the carrier reagent present in the sample.</li>
-				<li><b>Anomalies</b> - Inexplicable or uncategorised occurrences in the cosmos. A fascinating and dangerous study is made to determine the function of
-					these rare finds, and the term is often applied to describe technology left behind by vastly superior ancient alien forerunners.</li>
-				</list><br>
-				<a href="#Contents">Contents</a>
-
-				<h1><a name="Sample">Sample preparation and analysis</a></h1>
-				When you are readying your spectrometry lab for analysis, you'll need to make sure the sample is in a form the machines can glean data from.
-				<list>
-				<li><b>Obtain material sample</b> - This should be an ordinary chunk of matter the size of your finger, a good example is a 6mm rock core.</li>
-				<li><b>Run density separation treatment</b> - Perform the DST procedure on your sample, following generic specifications.</li>
-				<li><b>Ensure sample purity</b> - DST can sometimes leave behind chemical waste or chunks of matter, make sure there aren't any before proceeding.</li>
-				<li><b>Prepare analysis tray</b> - A sample tray holds a miniscule amount of liquid (2u), but that's all that our spectrometers require for a good reading.</li>
-				<li><b>Choose carrier reagent</b> - Standard spectrometers require 1u of the material sample, and 1u of a 'carrier' reagent to provide control comparison
-					and to enable refraction inferencing.</li>
-				<li><b>Insert sample tray into machine</b> - And press the 'Go' button. Now go make a cup of coffee.</li>
-				<li><b>Monitor machine heat levels</b> - The upper end mass spectrometers have quite complex internals, and have a tendency to critically overheat.
-					Make sure the heat limit isn't exceeded, or there may be potentially disastrous consequences.</li>
-				<li><b>Examine analysis report</b> - it won't always make sense or provide the information you hoped for, but if you've been careful during DST and ensured
-					sample integrity, then there's always something to be learnt. Just don't lose the paperwork!</li>
-				</list><br>
-				<a href="#Contents">Contents</a>
-
-				<h1><a name="Fourier">Fourier transform spectroscope</a></h1>
-				The FTS measures temporal coherence of radiating energy, then applies time-and-space domain measurements on the collected emission data. The collective
-					procedure is known as the <i>Fourier Transform Procedure,</i> with the mathematical algorithms dating back to the 19th century on Earth.<br>
-				<br>
-				As well as providing background energy readings, an FTS calculates the approximate distance and direction towards any anomalous energy signatures from
-					the location the scanned sample was taken from.<br>
-				<a href="#Contents">Contents</a>
-
-				<h1><a name="Hyperspectral">Hyperspectral Imager</a></h1>
-				The imager scans and collates spectral energy signatures from across the electromagnetic spectrum. The collected data is then presented to the viewer in
-					graph form, with any anomalous (uncatalogued or unidentified) energy signatures highlighted.<br>
-				<br>
-				As well as visualising background energy readings, a hyperspectral imager will isolate and identify any anomalous energy signatures in the sample.<br>
-				<a href="#Contents">Contents</a>
-
-				</body>
-				</html>
+				It's perhaps one of the most exciting times to be alive, with the recent breakthroughs in understanding and categorisation of things we may one day no longer call
+				'anomalies,' but rather 'infrequent or rare occurrences of certain celestial weather or phenomena.' Perhaps a little more long winded, but no less eloquent all the
+				same! Why, look at the strides we're making in piercing the walls of bluespace or our steadily improving ability to clarify and stabilise subspace emissions; it's
+				certainly an exciting time to be alive. For the moment the Hydrolian hasn't seen two spatial anomalies alike but the day will come and it is soon, I can feel it.
 			"}
 
 /obj/item/weapon/book/manual/materials_chemistry_analysis
-	name = "Chemical preparation for materials analysis"
+	name = "Materials analysis and the chemical implications"
 	icon_state = "chemistry"
 	author = "Jasper Pascal, Senior Lecturer in Materials Analysis at the University of Jol'Nar"
-	title = "Chemical preparation for materials analysis"
+	title = "Materials analysis and the chemical implications"
 	dat = {"<html>
 				<head>
 				<style>
@@ -270,70 +221,13 @@
 				</head>
 				<body>
 
-				<h1><a name="Contents">Contents</a></h1>
-				<ol>
-					<li><a href="#Terms">Relevant words and their meanings</a></li>
-					<li><a href="#Sample">Sample preparation for spectrometry/spectroscopy</a></li>
-					<li><a href="#DST">Density Separation Treatment</a></li>
-					<li><a href="#Carrier">Choosing a carrier reagent</a></li>
-				</ol>
+				In today's high tech research fields, leaps and bounds are being made every day. Whether it's great strides forward in our understanding of the physical universe
+				or the operation of some fancy new piece of equipment, it seems like all the cool fields are producing new toys to play with leaving doddery old fields such as
+				materials analysis and chemistry relegated to the previous few centuries, when we were still learning the makeup and structure of the elements.<br>
 				<br>
-				<h1><a name="Terms">Relevant words and their meanings</a></h1>
-				<list>
-				<li><b>Dissonance ratio</b> - This is a pseudoarbitrary value indicating the overal presence of a particular element in a greater composite.
-					It takes into account volume, density, molecular excitation and isotope spread.</li>
-				<li><b>Density separation treatment</b> - The DST procedure purifies a sample, removing any unwanted matter to ensure the finest scan resolution possible.</li>
-				<li><b>Mass spectrometry</b> - MS is the procedure used used to measure and quantify the components of matter. The most prized tool in the field of
-					'Materials analysis'</li>
-				<li><b>Spectroscopy</b> - Spectroscopy is the study of the behaviour of light, commonly used in the 26th century for analysis of anomalous
-					behaviour of energy or light.</li>
-				<li><b>Sample specifity</b> - A pseudoarbitrary value used to indicate how well a sample resonates with the employed carrier reagent. Great specifity
-					(material resonance) indicates that there is much of the carrier reagent present in the sample.</li>
-				</list><br>
-				<a href="#Contents">Contents</a>
-
-				<h1><a name="Sample">Sample preparation for spectrometry/spectroscopy</a></h1>
-				When you are readying your spectrometry lab for analysis, you'll need to make sure the sample is in a form the machines can glean data from.
-				<list>
-				<li><b>Obtain material sample</b> - This should be an ordinary chunk of matter the size of your finger, a good example is a 6mm rock core.</li>
-				<li><b>Run density separation treatment</b> - Perform the DST procedure on your sample, following generic specifications.</li>
-				<li><b>Ensure sample purity</b> - DST can sometimes leave behind chemical waste or chunks of matter, make sure there aren't any before proceeding.</li>
-				<li><b>Prepare analysis tray</b> - A sample tray holds a miniscule amount of liquid (2u), but that's all that our spectrometers require for a good reading.</li>
-				<li><b>Choose carrier reagent</b> - Standard spectrometers require 1u of the material sample, and 1u of a 'carrier' reagent to provide control comparison
-					and to enable refraction inferencing.</li>
-				</list><br>
-				<a href="#Contents">Contents</a>
-
-				<h1><a name="DST">Density Separation Treatment</a></h1>
-				<list>
-				<li><b>Obtain material sample</b> - This should be an ordinary chunk of matter the size of your finger, a good example is a 6mm rock core.</li>
-				<li><b>Grind material to powder</b> - In order to treat the material, we have to have the sample in it's basest form.</li>
-				<li><b>Prepare separator solution</b> - A chemical solution called LiNa2WO4, or <i>Lithium Sodium Tungstate</i> must be prepared to separate
-					the the denser clumps of matter out of the refined sample. This is done by mixing 1 part lithium, 2 parts sodium, 1 part tungsten, 4 parts oxygen.</li>
-				<li><b>Mix separator with sample</b> - The resulting mixture is very close to the final product, but make sure to extract any leftover reagents and
-					the chemical waste byproduct.</li>
-				<li><b>Bring sample to boil</b> - Using a standard bunsen burner, bring the mixture containing at least 5u of DST to a boil to vaporise the remaining unwanted matter. Remember
-					to again clear out any waste byproducts.</li>
-				</list><br>
-				<a href="#Contents">Contents</a>
-
-				<h1><a name="Carrier">Choosing a carrier reagent</a></h1>
-				Below is a list of the most commonly used scan carrier reagents, and the particular molecules they resonate most strongly with:
-				<list>
-				<li><b>Carbon</b> - Trace organic cells, typically used for carbon dating of organic remains.</li>
-				<li><b>Potassium</b> - Long exposure particles floating in the depths of space, such as meteorites.</li>
-				<li><b>Hydrogen</b> - Trace water particles.</li>
-				<li><b>Nitrogen</b> - Crystalline structures.</li>
-				<li><b>Mercury</b> - Metallic derivatives such as ferritic elements and pure metallic substances.</li>
-				<li><b>Iron</b> - Metallic composites such as alloys and atomic structures that are metallic in nature.</li>
-				<li><b>Chlorine</b> - Metamorphic/igneous rock composite.</li>
-				<li><b>Phosphorus</b> - Metamorphic/sedimentary rock composite.</li>
-				<li><b>Plasma</b> - Anomalous materials such as bluespace phased composites that are not fully understood by modern science.</li>
-				</list><br>
-				<a href="#Contents">Contents</a>
-
-				</body>
-				</html>
+				Well, when you're out there building the next gryo-whatsitron or isotope mobility thingummy, remember how the field of archaeology experienced a massive new rebirth
+				following the excavations at Paranol IV and consider how all of the scientific greats will come crawling back to basic paradigms of natural philosophy when they discover
+				a new element that defies classification. I defy you to classify it without reviving this once great field!
 			"}
 
 /obj/item/weapon/book/manual/anomaly_testing
@@ -391,10 +285,11 @@
 				matter composites that are spatially fixed relative to the source.<br>
 				<br>
 				By taking samples of such 'fixed' matter, we can apply complex analytics such as the modified Fourier Transform Procedure to reverse engineer the path of the
-				energy, and determine the approximate distance and direction that the energy source is, relative to the sample's point in space.<br>
+				energy, and determine the approximate distance and direction that the energy source is, relative to the sample's point in space. Modern portable devices can do
+				all this purely by taking readings of local radiation.<br>
 				<br>
-				A canny researcher can thusly analyse material samples from pre-chosen points strategically scattered around an area, and if there are any anomalous energy
-				emissions in range of those points, combined they can direct the researcher to the source.<br>
+				A canny researcher can thusly analyse radiationat pre-chosen points strategically scattered around an area, and if there are any anomalous energy
+				emissions in range of those points, combined the researcher can triangulate the source.<br>
 				<a href="#Contents">Contents</a>
 
 				<h1><a name="Synthetic">Harvesting and utilising anomalous energy signatures</a></h1>

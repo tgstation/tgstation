@@ -22,6 +22,12 @@
 	var/icon_old = null
 	var/pathweight = 1
 
+	// Bot shit
+	var/targetted_by=null
+
+	// Decal shit.
+	var/list/decals
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
@@ -57,102 +63,69 @@
 	..()
 	return 0
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+/turf/Enter(atom/movable/O, atom/oldloc)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		usr << "\red Movement is admin-disabled." //This is to identify lag problems
-		return
-	if (!mover || !isturf(mover.loc))
-		return 1
-
-
-	//First, check objects to block exit that are not on the border
-	for(var/obj/obstacle in mover.loc)
-		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
-			if(!obstacle.CheckExit(mover, src))
-				mover.Bump(obstacle, 1)
-				return 0
-
-	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle in mover.loc)
-		if((border_obstacle.flags & ON_BORDER) && (mover != border_obstacle) && (forget != border_obstacle))
-			if(!border_obstacle.CheckExit(mover, src))
-				mover.Bump(border_obstacle, 1)
-				return 0
-
-	//Next, check objects to block entry that are on the border
-	for(var/obj/border_obstacle in src)
-		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
-				mover.Bump(border_obstacle, 1)
-				return 0
-
-	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
-		mover.Bump(src, 1)
 		return 0
 
-	//Finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle in src)
-		if(obstacle.flags & ~ON_BORDER)
-			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
-				mover.Bump(obstacle, 1)
+	// first, check objects to block exit that are not on the border
+	for(var/atom/movable/obstacle in oldloc)
+		if((obstacle.flags & ~ON_BORDER) && (obstacle != O))
+			if(!obstacle.CheckExit(O, src))
+				O.Bump(obstacle, 1)
 				return 0
-	return 1 //Nothing found to block so return success!
 
+	// now, check objects to block exit that are on the border
+	for(var/atom/movable/border_obstacle in oldloc)
+		if((border_obstacle.flags & ON_BORDER) && (border_obstacle != O))
+			if(!border_obstacle.CheckExit(O, src))
+				O.Bump(border_obstacle, 1)
+				return 0
 
-/turf/Entered(atom/atom as mob|obj)
-	if(movement_disabled)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
-		return
-	..()
-//vvvvv Infared beam stuff vvvvv
+	// next, check objects to block entry that are on the border
+	for(var/atom/movable/border_obstacle in contents)
+		if(border_obstacle.flags & ON_BORDER)
+			if(!border_obstacle.CanPass(O, oldloc))
+				O.Bump(border_obstacle, 1)
+				return 0
 
-	if ((atom && atom.density && !( istype(atom, /obj/effect/beam) )))
-		for(var/obj/effect/beam/i_beam/I in src)
-			spawn( 0 )
-				if (I)
-					I.hit()
-				break
+	// then, check the turf itself
+	if (!CanPass(O, src))
+		O.Bump(src, 1)
+		return 0
 
-//^^^^^ Infared beam stuff ^^^^^
+	// finally, check objects/mobs to block entry that are not on the border
+	for(var/atom/movable/obstacle in contents)
+		if(obstacle.flags & ~ON_BORDER)
+			if(!obstacle.CanPass(O, oldloc))
+				O.Bump(obstacle, 1)
+				return 0
 
-	if(!istype(atom, /atom/movable))
-		return
+	return 1 // nothing found to block so return success!
 
-	var/atom/movable/M = atom
-
+/turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
-	if(ismob(M))
-		if(!M:lastarea)
-			M:lastarea = get_area(M.loc)
-		if(M:lastarea.has_gravity == 0)
-			inertial_drift(M)
+	if(ismob(Obj))
+		if(!Obj:lastarea)
+			Obj:lastarea = get_area(Obj.loc)
+		if(Obj:lastarea.has_gravity == 0)
+			inertial_drift(Obj)
 
 	/*
-		if(M.flags & NOGRAV)
-			inertial_drift(M)
+		if(Obj.flags & NOGRAV)
+			inertial_drift(Obj)
 	*/
 
-
-
 		else if(!istype(src, /turf/space))
-			M:inertia_dir = 0
+			Obj:inertia_dir = 0
 	..()
 	var/objects = 0
-	for(var/atom/A as mob|obj|turf|area in src)
-		if(objects > loopsanity)	break
-		objects++
-		spawn( 0 )
-			if ((A && M))
-				A.HasEntered(M, 1)
-			return
-	objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))
 		if(objects > loopsanity)	break
 		objects++
 		spawn( 0 )
-			if ((A && M))
-				A.HasProximity(M, 1)
+			if ((A && Obj))
+				A.HasProximity(Obj, 1)
 			return
 	return
 
@@ -177,8 +150,18 @@
 
 /turf/proc/inertial_drift(atom/movable/A as mob|obj)
 	if(!(A.last_move))	return
-	if(istype(A, /obj/structure/stool/bed/chair/janicart/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
-		var/obj/structure/stool/bed/chair/janicart/JC = A //A bomb!
+	if(istype(A, /obj/spacepod) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
+		var/obj/spacepod/SP = A
+		if(SP.Process_Spacemove(1))
+			SP.inertia_dir = 0
+			return
+		spawn(5)
+			if((SP && (SP.loc == src)))
+				if(SP.inertia_dir)
+					step(SP, SP.inertia_dir)
+					return
+	if(istype(A, /obj/structure/stool/bed/chair/vehicle/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
+		var/obj/structure/stool/bed/chair/vehicle/JC = A //A bomb!
 		if(JC.Process_Spacemove(1))
 			JC.inertia_dir = 0
 			return
@@ -221,60 +204,112 @@
 		del L
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/turf/N)
+/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1)
 	if (!N)
 		return
 
+#ifdef ENABLE_TRI_LEVEL
+// Fuck this, for now - N3X
+///// Z-Level Stuff ///// This makes sure that turfs are not changed to space when one side is part of a zone
+	if(N == /turf/space)
+		var/turf/controller = locate(1, 1, src.z)
+		for(var/obj/effect/landmark/zcontroller/c in controller)
+			if(c.down)
+				var/turf/below = locate(src.x, src.y, c.down_target)
+				if((air_master.has_valid_zone(below) || air_master.has_valid_zone(src)) && !istype(below, /turf/space)) // dont make open space into space, its pointless and makes people drop out of the station
+					var/turf/W = src.ChangeTurf(/turf/simulated/floor/open)
+					var/list/temp = list()
+					temp += W
+					c.add(temp,3,1) // report the new open space to the zcontroller
+					return W
+///// Z-Level Stuff
+#endif
+
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 
+	//world << "Replacing [src.type] with [N]"
+
+	if(connections) connections.erase_all()
+
+	if(istype(src,/turf/simulated))
+		//Yeah, we're just going to rebuild the whole thing.
+		//Despite this being called a bunch during explosions,
+		//the zone will only really do heavy lifting once.
+		var/turf/simulated/S = src
+		if(S.zone) S.zone.rebuild()
+
 	if(ispath(N, /turf/simulated/floor))
+		//if the old turf had a zone, connect the new turf to it as well - Cael
+		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.
+		//if(zone)
+		//	zone.RemoveTurf(src)
+		//	if(!zone.CheckStatus())
+		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
-		W.copy_air_from(src)
 		//W.Assimilate_Air()
 
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount || !accepts_lighting)
+		if(old_lumcount != W.lighting_lumcount)
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
 		if (istype(W,/turf/simulated/floor))
 			W.RemoveLattice()
 
-		//if the old turf had a zone, connect the new turf to it as well - Cael
-		if(src.zone)
-			src.zone.RemoveTurf(src)
-			W.zone = src.zone
-			W.zone.AddTurf(W)
+		if(tell_universe)
+			universe.OnTurfChange(W)
 
-		for(var/turf/simulated/T in orange(src,1))
-			air_master.tiles_to_update.Add(T)
+		if(air_master)
+			air_master.mark_for_update(src)
 
 		W.levelupdate()
 		return W
+
 	else
-		/*if(istype(src, /turf/simulated) && src.zone)
-			src.zone.rebuild = 1*/
+		//if(zone)
+		//	zone.RemoveTurf(src)
+		//	if(!zone.CheckStatus())
+		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount || !accepts_lighting)
+		if(old_lumcount != W.lighting_lumcount)
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
-		if(src.zone)
-			src.zone.RemoveTurf(src)
-			W.zone = src.zone
-			W.zone.AddTurf(W)
+		if(tell_universe)
+			universe.OnTurfChange(W)
 
 		if(air_master)
-			for(var/turf/simulated/T in orange(src,1))
-				air_master.tiles_to_update.Add(T)
+			air_master.mark_for_update(src)
 
 		W.levelupdate()
 		return W
 
+/turf/proc/AddDecal(const/image/decal)
+	if(!decals)
+		decals = new
+
+	decals += decal
+	overlays += decal
+
+/turf/proc/ClearDecals()
+	if(!decals)
+		return
+
+	for(var/image/decal in decals)
+		overlays -= decal
+
+	decals = 0
+
+
+//Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
+//  If you are replacing a wall, you have increased the volume of the room without increasing the amount of gas in it.
+//  As such, this will no longer be used.
+
 //////Assimilate Air//////
+/*
 /turf/simulated/proc/Assimilate_Air()
 	var/aoxy = 0//Holders to assimilate air from nearby turfs
 	var/anitro = 0
@@ -318,6 +353,7 @@
 				S.air.toxins = air.toxins
 				S.air.temperature = air.temperature
 				S.air.update_values()
+*/
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)

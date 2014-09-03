@@ -54,7 +54,9 @@
 	name = "adult slime"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey adult slime"
+	speak_emote = list("telepathically chirps")
 
+	maxHealth = 200
 	health = 200
 	gender = NEUTER
 
@@ -163,11 +165,10 @@
 		now_pushing = 1
 		if (!( AM.anchored ))
 			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
+			if (istype(AM, /obj/structure/window/full))
+				for(var/obj/structure/window/win in get_step(AM,t))
+					now_pushing = 0
+					return
 			step(AM, t)
 		now_pushing = null
 
@@ -429,15 +430,32 @@
 
 			return
 
+
+
+
+	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
+		var/obj/item/clothing/gloves/G = M.gloves
+		if(G.cell)
+			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+				if(G.cell.charge >= 2500)
+					G.cell.use(2500)
+					for(var/mob/O in viewers(src, null))
+						if ((O.client && !( O.blinded )))
+							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall.", 2)
+					return
+				else
+					M << "\red Not enough charge! "
+					return
+
 	switch(M.a_intent)
 
 		if ("help")
 			help_shake_act(M)
 
 		if ("grab")
-			if (M == src || anchored)
+			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
 
 			M.put_in_active_hand(G)
 
@@ -457,7 +475,7 @@
 
 			attacked += 10
 			if (prob(90))
-				if (HULK in M.mutations)
+				if (M_HULK in M.mutations)
 					damage += 5
 					if(Victim)
 						Victim = null
@@ -504,7 +522,7 @@
 
 		if ("hurt")
 
-			if (prob(95))
+			if ((prob(95) && health > 0))
 				attacked += 10
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
@@ -526,9 +544,9 @@
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
 
 		if ("grab")
-			if (M == src || anchored)
+			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
 
 			M.put_in_active_hand(G)
 
@@ -604,18 +622,11 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/slime/updatehealth()
 	if(status_flags & GODMODE)
-		if(istype(src, /mob/living/carbon/slime/adult))
-			health = 200
-		else
-			health = 150
+		health = maxHealth
 		stat = CONSCIOUS
 	else
 		// slimes can't suffocate unless they suicide. They are also not harmed by fire
-		if(istype(src, /mob/living/carbon/slime/adult))
-			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-		else
-			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
+		health = maxHealth - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
 /mob/living/carbon/slime/proc/get_obstacle_ok(atom/A)
 	var/direct = get_dir(src, A)
@@ -1011,7 +1022,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
 
-/obj/effect/golemrune
+/obj/effect/golem_rune
 	anchored = 1
 	desc = "a strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
@@ -1019,19 +1030,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	unacidable = 1
 	layer = TURF_LAYER
+	var/list/mob/dead/observer/ghosts[0]
 
 	New()
 		..()
 		processing_objects.Add(src)
 
 	process()
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
-			ghost = O
-			break
-		if(ghost)
+		if(ghosts.len>0)
 			icon_state = "golem2"
 		else
 			icon_state = "golem"
@@ -1039,8 +1045,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	attack_hand(mob/living/user as mob)
 		var/mob/dead/observer/ghost
 		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+			if(!check_observer(O))
+				continue
 			ghost = O
 			break
 		if(!ghost)
@@ -1065,11 +1071,41 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 
 	proc/announce_to_ghosts()
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client)
+		for(var/mob/dead/observer/O in player_list)
+			if(O.client)
 				var/area/A = get_area(src)
 				if(A)
-					G << "<b>Golem rune created in [A.name].</b>"
+					O << "<span class=\"recruit\">Golem rune created in [A.name]. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
+
+	Topic(href,href_list)
+		if("signup" in href_list)
+			var/mob/dead/observer/O = locate(href_list["signup"])
+			volunteer(O)
+
+	attack_ghost(var/mob/dead/observer/O)
+		if(!O) return
+		volunteer(O)
+
+	proc/check_observer(var/mob/dead/observer/O)
+		if(!O)
+			return 0
+		if(!O.client)
+			return 0
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			return 0
+		return 1
+
+	proc/volunteer(var/mob/dead/observer/O)
+		if(O in ghosts)
+			ghosts.Remove(O)
+			O << "\red You are no longer signed up to be a golem."
+		else
+			if(!check_observer(O))
+				O << "\red You are not eligable."
+				return
+			ghosts.Add(O)
+			O << "\blue You are signed up to be a golem."
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*

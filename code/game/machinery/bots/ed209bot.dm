@@ -281,7 +281,7 @@ Auto Patrol: []"},
 					var/mob/living/carbon/M = src.target
 					var/maxstuns = 4
 					if (istype(M, /mob/living/carbon/human))
-						if (M.stuttering < 10 && (!(HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+						if (M.stuttering < 10 && (!(M_HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 							M.stuttering = 10
 						M.Stun(10)
 						M.Weaken(10)
@@ -866,7 +866,7 @@ Auto Patrol: []"},
 		pulse2.anchored = 1
 		pulse2.dir = pick(cardinal)
 		spawn(10)
-			pulse2.delete()
+			qdel(pulse2)
 		var/list/mob/living/carbon/targets = new
 		for (var/mob/living/carbon/C in view(12,src))
 			if (C.stat==2)
@@ -1020,7 +1020,8 @@ Auto Patrol: []"},
 	if((src.lasercolor == "b") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/beam/lastertag/red))
 			src.disabled = 1
-			del (Proj)
+			//del (Proj)
+			returnToPool(Proj)
 			sleep(100)
 			src.disabled = 0
 		else
@@ -1028,7 +1029,8 @@ Auto Patrol: []"},
 	else if((src.lasercolor == "r") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/beam/lastertag/blue))
 			src.disabled = 1
-			del (Proj)
+			//del (Proj)
+			returnToPool(Proj)
 			sleep(100)
 			src.disabled = 0
 		else

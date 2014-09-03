@@ -323,7 +323,8 @@
 		if(doFlushIn>0)
 			if(doFlushIn==1 || num_contents>=50)
 				//testing("[src] FLUSHING")
-				src.flush()
+				spawn(0)
+					src.flush()
 			doFlushIn--
 
 
@@ -336,82 +337,8 @@
 	anchored=1
 
 	var/select_txt
-	var/list/selection=list()
 	var/list/selected_types=list()
-	var/list/types=list(
-		"Carcasses" = list(
-			/mob/living/carbon,
-			/mob/living/simple_animal
-		),
-		"Glasses" = list(
-			/obj/item/weapon/shard,
-			/obj/item/stack/sheet/glass,
-			/obj/item/stack/sheet/rglass,
-			/obj/item/stack/tile/light,
-			/obj/item/weapon/broken_bottle,
-			/obj/item/weapon/reagent_containers/glass/bucket,
-			/obj/item/weapon/reagent_containers/glass/bottle,
-			/obj/item/weapon/reagent_containers/syringe,
-			/obj/item/weapon/reagent_containers/food/drinks/bottle,
-			/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-			/obj/item/weapon/reagent_containers/food/drinks/jar,
-			/obj/item/clothing/head/welding,
-			/obj/item/weapon/stock_parts/console_screen,
-			/obj/item/weapon/light/tube,
-			/obj/item/weapon/light/bulb,
-		),
-		"Electronics" = list(
-			/obj/item/weapon/circuitboard,
-			/obj/item/weapon/aiModule,
-			/obj/item/device/flashlight,
-			/obj/item/device/multitool,
-			/obj/item/device/t_scanner,
-			/obj/item/device/taperecorder,
-			/obj/item/device/assembly/igniter,
-			/obj/item/device/assembly/signaler,
-			/obj/item/device/radio/headset,
-			/obj/item/device/radio,
-			/obj/item/device/assembly/infra,
-			/obj/item/device/assembly/timer,
-			/obj/item/weapon/camera_assembly
-		),
-		"Metals/Minerals" = list(
-			/obj/item/stack/rods,
-			/obj/item/stack/sheet/plasteel,
-			/obj/item/stack/sheet/metal,
-			/obj/item/stack/sheet/metal/cyborg,
-			/obj/item/stack/sheet/mineral,
-			/obj/item/apc_frame,
-			/obj/item/alarm_frame,
-			/obj/item/firealarm_frame,
-			/obj/item/weapon/table_parts,
-			/obj/item/weapon/table_parts/reinforced,
-			/obj/item/weapon/rack_parts,
-			/obj/item/weapon/crowbar,
-			/obj/item/weapon/extinguisher,
-			/obj/item/weapon/weldingtool,
-			/obj/item/weapon/screwdriver,
-			/obj/item/weapon/wirecutters,
-			/obj/item/weapon/wrench,
-			/obj/item/weapon/rcd_ammo,
-			/obj/item/weapon/kitchenknife,
-			/obj/item/weapon/scalpel,
-			/obj/item/weapon/circular_saw,
-			/obj/item/weapon/surgicaldrill,
-			/obj/item/weapon/retractor,
-			/obj/item/weapon/cautery,
-			/obj/item/ammo_casing/shotgun/blank,
-			/obj/item/ammo_casing/shotgun/beanbag,
-			/obj/item/ammo_magazine/c38,
-			/obj/structure/closet, // 2 sheets
-			/obj/machinery/portable_atmospherics/canister, //10 sheets
-			/obj/item/stack/tile/plasteel, //1/4 of a sheet
-			/obj/item/weapon/grenade/chem_grenade,
-			/obj/item/borg/upgrade,
-			/obj/item/robot_parts,
-			/obj/item/weapon/ore
-		)
-	)
+	var/list/types[6]
 
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
@@ -436,10 +363,23 @@
 				break
 		if(i<3)
 			diary << "\a [src] couldn't find an input or output plate."
+
+		// Set up types. BYOND is the dumb and won't let me do this in the var def.
+		types[RECYK_BIOLOGICAL] = "Biological"
+		types[RECYK_ELECTRONIC] = "Electronics"
+		types[RECYK_GLASS]      = "Glasses"
+		types[RECYK_METAL]      = "Metals/Minerals"
+		types[RECYK_MISC]       = "Miscellaneous"
+
 		if(select_txt)
 			for(var/n in text2list(select_txt," "))
-				selected_types += n
-				selection += types[n]
+				if(n=="Carcasses")
+					n="Biological"
+				var/idx = types.Find(n)
+				if(idx)
+					selected_types += idx
+				else
+					warning("Unable to find RECYK_* definition for select_txt item [n]!")
 	return
 
 
@@ -456,8 +396,8 @@
 			if(!A.anchored)
 				if(A.loc == input.loc) // prevents the object from being affected if it's not currently here.
 					var/found=0
-					for(var/t in selection)
-						if(istype(A,t))
+					for(var/wt in selected_types)
+						if(A.w_type)
 							A.loc=selected_output.loc
 							found=1
 							break
@@ -490,12 +430,12 @@ table {
 				<h1>MinerX SortMaster 5000</h1><br>
 				<p>Select the desired items to sort from the line.</p>"}
 	dat += "<ul>"
-	for (var/n in types)
+	for (var/t_id=1;t_id<=types.len;t_id++)
 		dat += "<li>"
-		var/selected = (n in selected_types)
+		var/selected = (t_id in selected_types)
 		if(selected)
 			dat+="<b>"
-		dat+="<a href='?src=\ref[src];set_types=[n]'>[n]</a>"
+		dat+="<a href='?src=\ref[src];set_types=[t_id]'>[types[t_id]]</a>"
 		if(selected)
 			dat+="</b>"
 		dat+="</li>"
@@ -512,10 +452,8 @@ table {
 /obj/machinery/sorting_machine/proc/toggleCategory(var/n)
 	if(n in selected_types)
 		selected_types -= n
-		selection -= types[n]
 	else
 		selected_types += n
-		selection += types[n]
 
 /obj/machinery/sorting_machine/Topic(href, href_list)
 	src.add_fingerprint(usr)

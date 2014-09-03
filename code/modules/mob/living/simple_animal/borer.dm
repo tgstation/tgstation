@@ -38,7 +38,7 @@
 	speed = 5
 	small = 1
 	density = 0
-	a_intent = "harm"
+	a_intent = "hurt"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attacktext = "nips"
@@ -73,9 +73,17 @@
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
 	host_brain = new/mob/living/captive_brain(src)
 
+	if(name == initial(name)) // Easier reporting of griff.
+		name = "[name] ([rand(1, 1000)])"
+		real_name = name
+
 	// Admin spawn.  Request a player.
 	if(!by_gamemode)
-		request_player()
+		var/mob/dead/observer/O = request_player()
+		if(!O)
+			message_admins("[src.name] self-deleting due to lack of appropriate ghosts.")
+			del(src)
+		transfer_personality(O.client)
 
 
 /mob/living/simple_animal/borer/say(var/message)
@@ -185,7 +193,7 @@
 	if(chemicals < 50)
 		src << "You don't have enough chemicals!"
 
-	var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","tramadol","hyperzine")
+	var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","tramadol","hyperzine","alkysine")
 
 	if(chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
 		return
@@ -211,9 +219,6 @@
 
 	src << "You begin disconnecting from [host]'s synapses and prodding at their internal ear canal."
 
-	if(!host.stat)
-		host << "An odd, uncomfortable pressure begins to build inside your skull, behind your ear..."
-
 	spawn(200)
 
 		if(!host || !src) return
@@ -223,8 +228,6 @@
 			return
 
 		src << "You wiggle out of [host]'s ear and plop to the ground."
-		if(!host.stat)
-			host << "Something slimy wiggles out of your ear and plops to the ground!"
 
 		detatch()
 
@@ -274,18 +277,25 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.stat != 2)
+		if(C.stat != 2 && src.Adjacent(C))
 			choices += C
 
 	var/mob/living/carbon/M = input(src,"Who do you wish to infest?") in null|choices
 
 	if(!M || !src) return
 
+	if(!(src.Adjacent(M))) return
+
 	if(M.has_brain_worms())
 		src << "You cannot infest someone who is already infested!"
 		return
 
-	M << "Something slimy begins probing at the opening of your ear canal..."
+	if(istype(M,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		if(H.check_head_coverage(HIDEEARS))
+			src << "You cannot get through that host's protective gear."
+			return
+
 	src << "You slither up [M] and begin probing at their ear canal..."
 
 	if(!do_after(src,50))
@@ -304,10 +314,7 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	if(M in view(1, src))
 		src << "You wiggle into [M]'s ear."
-		if(!M.stat)
-			M << "Something disgusting and slimy wiggles into your ear!"
-
-			src.perform_infestation(M)
+		src.perform_infestation(M)
 
 		return
 	else
@@ -317,7 +324,7 @@ mob/living/simple_animal/borer/proc/detatch()
 /mob/living/simple_animal/borer/proc/perform_infestation(var/mob/living/carbon/M)
 	if(!M || !istype(M))
 		error("[src]: Unable to perform_infestation on [M]!")
-		return
+		return 0
 	src.host = M
 	src.loc = M
 
@@ -389,12 +396,39 @@ mob/living/simple_animal/borer/proc/detatch()
 
 //Procs for grabbing players.
 mob/living/simple_animal/borer/proc/request_player()
-	for(var/mob/dead/observer/O in player_list)
-		if(jobban_isbanned(O, "Syndicate"))
-			continue
-		if(O.client)
-			if(O.client.prefs.be_special & BE_ALIEN)
-				question(O.client)
+	var/list/candidates=list()
+
+	for(var/mob/dead/observer/G in player_list)
+		if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_ALIEN)
+			if(!jobban_isbanned(G, "Syndicate"))
+				candidates += G
+
+	if(!candidates.len)
+		message_admins("No applicable ghosts for [src.name].  Polling.")
+		var/time_passed = world.time
+		for(var/mob/dead/observer/G in player_list)
+			if(!jobban_isbanned(G, "Syndicate"))
+				spawn(0)
+					switch(alert(G, "HEY KID, YOU WANNA BE A BORER?","Please answer in 30 seconds!","Yes","No"))
+						if("Yes")
+							if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+								continue
+							candidates += G
+						if("No")
+							continue
+
+		sleep(300)
+
+	if(!candidates.len)
+		message_admins("Unable to find a mind for [src.name]")
+		return 0
+
+	shuffle(candidates)
+	for(var/mob/i in candidates)
+		if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
+		return i
+
+	return 0
 
 mob/living/simple_animal/borer/proc/question(var/client/C)
 	spawn(0)

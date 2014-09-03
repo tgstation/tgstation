@@ -17,6 +17,7 @@
 	proc/activate()
 		return
 
+
 	// What does the implant do upon injection?
 	// return 0 if the implant fails (ex. Revhead and loyalty implant.)
 	// return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
@@ -44,7 +45,7 @@
 		icon_state = "implant_melted"
 		malfunction = MALFUNCTION_PERMANENT
 
-	Del()
+	Destroy()
 		if(part)
 			part.implants.Remove(src)
 		..()
@@ -168,7 +169,7 @@ Implant Specifics:<BR>"}
 		var/turf/t = get_turf(imp_in)
 
 		if(t)
-			t.hotspot_expose(3500,125)
+			t.hotspot_expose(3500,125,surfaces=1)
 
 	implanted(mob/source as mob)
 		phrase = input("Choose activation phrase:") as text
@@ -241,14 +242,6 @@ Can only be loaded while still in its original case.<BR>
 the implant may become unstable and either pre-maturely inject the subject or simply break."}
 		return dat
 
-
-	New()
-		..()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-
-
 	trigger(emote, source as mob)
 		if(emote == "deathgasp")
 			src.activate(src.reagents.total_volume)
@@ -281,6 +274,10 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 		spawn(20)
 			malfunction--
+
+/obj/item/weapon/implant/chem/New()
+	. = ..()
+	create_reagents(50)
 
 /obj/item/weapon/implant/loyalty
 	name = "loyalty"
@@ -335,6 +332,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(!ishuman(M)) return 0
 		if(!M.mind) return 0
 		var/mob/living/carbon/human/H = M
+		if(M == user)
+			user << "<span class='notice'>You feel quite stupid for doing that.</span>"
+			if(isliving(user))
+				user:brainloss += 10
+			return
 		if(locate(/obj/item/weapon/implant/traitor) in H.contents || locate(/obj/item/weapon/implant/traitor) in H.contents)
 			H.visible_message("[H] seems to resist the implant!", "You feel a strange sensation in your head that quickly dissipates.")
 			return 0

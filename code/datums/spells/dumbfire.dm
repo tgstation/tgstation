@@ -64,7 +64,7 @@
 					break
 
 				var/mob/living/L = locate(/mob/living) in range(projectile, proj_trigger_range) - usr
-				if(L)
+				if(L && L.stat != DEAD)
 					projectile.cast(L.loc)
 					break
 
@@ -76,7 +76,7 @@
 							trail.icon_state = proj_trail_icon_state
 							trail.density = 0
 							spawn(proj_trail_lifespan)
-								del(trail)
+								trail.loc = null
 
 				current_loc = projectile.loc
 

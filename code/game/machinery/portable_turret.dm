@@ -176,7 +176,7 @@
 					egun = 1
 					reqpower = 200
 
-	Del()
+	Destroy()
 		// deletes its own cover with it
 		del(cover)
 		..()
@@ -348,6 +348,7 @@ Status: []<BR>"},
 			user << "\red Access denied."
 
 	else
+		user.changeNext_move(10)
 		// if the turret was attacked with the intention of harming it:
 		src.health -= W.force * 0.5
 		if (src.health <= 0)
@@ -407,7 +408,7 @@ Status: []<BR>"},
 
 /obj/machinery/porta_turret/ex_act(severity)
 	if(severity >= 3) // turret dies if an explosion touches it!
-		del(src)
+		qdel(src)
 	else
 		src.die()
 
@@ -419,7 +420,7 @@ Status: []<BR>"},
 	invisibility=0
 	src.spark_system.start() // creates some sparks because they look cool
 	src.density=1
-	del(cover) // deletes the cover - no need on keeping it there!
+	qdel(cover) // deletes the cover - no need on keeping it there!
 
 
 
@@ -451,8 +452,12 @@ Status: []<BR>"},
 
 	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "crittersssss"(And simple_animals)
 		for(var/mob/living/simple_animal/C in view(7,src))
-			if(!C.stat)
-				targets += C
+			if(C.stat)
+				continue
+			// Ignore lazarus-injected mobs.
+			if(C.faction == "lazarus")
+				continue
+			targets += C
 
 	for (var/mob/living/carbon/C in view(7,src)) // loops through all living carbon-based lifeforms in view(12)
 		if(istype(C, /mob/living/carbon/alien) && src.check_anomalies) // git those fukken xenos

@@ -172,7 +172,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/DirBlocked(turf/loc,var/dir)
 	for(var/obj/structure/window/D in loc)
 		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1
+		if(D.is_fulltile())	return 1
 		if(D.dir == dir)		return 1
 
 	for(var/obj/machinery/door/D in loc)
@@ -291,6 +291,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					PDA.name = "PDA-[newname] ([PDA.ownjob])"
 					if(!search_id)	break
 					search_pda = 0
+
+		//Fixes renames not being reflected in objective text
+		var/list/O = (typesof(/datum/objective)  - /datum/objective)
+		var/length
+		var/pos
+		for(var/datum/objective/objective in O)
+			if(objective.target != mind) continue
+			length = lentext(oldname)
+			pos = findtextEx(objective.explanation_text, oldname)
+			objective.explanation_text = copytext(objective.explanation_text, 1, pos)+newname+copytext(objective.explanation_text, pos+length)
 	return 1
 
 
@@ -350,23 +360,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //When an AI is activated, it can choose from a list of non-slaved borgs to have as a slave.
 /proc/freeborg()
 	var/select = null
-	var/list/names = list()
 	var/list/borgs = list()
-	var/list/namecounts = list()
-	for (var/mob/living/silicon/robot/A in player_list)
-		var/name = A.real_name
-		if (A.stat == 2)
+
+	for(var/mob/living/silicon/robot/A in player_list)
+		if(DEAD == A.stat || A.connected_ai || A.scrambledcodes)
 			continue
-		if (A.connected_ai)
-			continue
-		else
-			if(A.module)
-				name += " ([A.module.name])"
-			names.Add(name)
-			namecounts[name] = 1
+
+		var/name = "[A.real_name] ([A.modtype] [A.braintype])"
 		borgs[name] = A
 
-	if (borgs.len)
+	if(borgs.len)
 		select = input("Unshackled borg signals detected:", "Borg selection", null, null) as null|anything in borgs
 		return borgs[select]
 
@@ -706,7 +709,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		animation.master = target
 		flick(flick_anim, animation)
 	sleep(max(sleeptime, 15))
-	del(animation)
+	animation.loc = null
 
 //Will return the contents of an atom recursivly to a depth of 'searchDepth'
 /atom/proc/GetAllContents(searchDepth = 5)
@@ -790,14 +793,14 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		return 0
 
 	var/delayfraction = round(delay/numticks)
-	var/turf/T = get_turf(user)
+	var/Location = user.loc
 	var/holding = user.get_active_hand()
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
 
 
-		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T))
+		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == Location))
 			return 0
 		if(needhand && !(user.get_active_hand() == holding))	//Sometimes you don't want the user to have to keep their active hand
 			return 0
@@ -819,7 +822,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 //Returns: all the areas in the world, sorted.
 /proc/return_sorted_areas()
-	return sortAtom(return_areas())
+	return sortNames(return_areas())
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -925,10 +928,21 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
 
-					var/turf/X = new T.type(B)
+					var/turf/X = B.ChangeTurf(T.type)
 					X.dir = old_dir1
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
+
+					var/turf/simulated/ST = T
+
+					if(istype(ST) && ST.zone)
+						var/turf/simulated/SX = X
+
+						if(!SX.air)
+							SX.make_air()
+
+						SX.air.copy_from(ST.zone.air)
+						ST.zone.remove(ST)
 
 					/* Quick visual fix for some weird shuttle corner artefacts when on transit space tiles */
 					if(direction && findtext(X.icon_state, "swall_s"))
@@ -964,11 +978,15 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 							del(O) // prevents multiple shuttle corners from stacking
 							continue
 						if(!istype(O,/obj)) continue
-						O.loc = X
+						O.loc.Exited(O)
+						O.setLoc(X,teleported=1)
+						O.loc.Entered(O)
 					for(var/mob/M in T)
 						if(!M.move_on_shuttle)
 							continue
+						M.loc.Exited(M)
 						M.loc = X
+						M.loc.Entered(M)
 
 //					var/area/AR = X.loc
 
@@ -979,16 +997,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 					toupdate += X
 
 					if(turftoleave)
-						var/turf/ttl = new turftoleave(T)
-
-//						var/area/AR2 = ttl.loc
-
-//						if(AR2.lighting_use_dynamic)						//TODO: rewrite this code so it's not messed by lighting ~Carn
-//							ttl.opacity = !ttl.opacity
-//							ttl.sd_SetOpacity(!ttl.opacity)
-
-						fromupdate += ttl
-
+						fromupdate += T.ChangeTurf(turftoleave)
 					else
 						T.ChangeTurf(/turf/space)
 
@@ -1005,7 +1014,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			/*if(T1.parent)
 				air_master.groups_to_rebuild += T1.parent
 			else
-				air_master.tiles_to_update += T1*/
+				air_master.mark_for_update(T1)*/
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
@@ -1014,10 +1023,10 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			/*if(T2.parent)
 				air_master.groups_to_rebuild += T2.parent
 			else
-				air_master.tiles_to_update += T2*/
+				air_master.mark_for_update(T2)*/
 
 	for(var/obj/O in doors)
-		O:update_nearby_tiles(1)
+		O:update_nearby_tiles()
 
 
 
@@ -1105,7 +1114,6 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
-
 					var/list/objs = new/list()
 					var/list/newobjs = new/list()
 					var/list/mobs = new/list()
@@ -1171,10 +1179,10 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 			/*if(T1.parent)
 				air_master.groups_to_rebuild += T1.parent
 			else
-				air_master.tiles_to_update += T1*/
+				air_master.mark_for_update(T1)*/
 
 	for(var/obj/O in doors)
-		O:update_nearby_tiles(1)
+		O:update_nearby_tiles()
 
 
 
@@ -1232,12 +1240,20 @@ proc/get_mob_with_client_list()
 	else return zone
 
 
-/proc/get_turf(turf/location)
-	while(location)
-		if(isturf(location))
-			return location
-		location = location.loc
-	return null
+/proc/get_turf(const/atom/O)
+	if (isnull(O) || isarea(O))
+		return
+
+	var/atom/A = O
+
+	for (var/i = 0, ++i <= 16)
+		if (isturf(A))
+			return A
+
+		if (istype(A))
+			A = A.loc
+		else
+			return
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1339,7 +1355,9 @@ proc/is_hot(obj/item/W as obj)
 
 //Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
 /proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	if(!W) return 1
+	if(!W)
+		return 0
+
 	if(W.sharp) return 1
 	return ( \
 		W.sharp													  || \
@@ -1478,3 +1496,8 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 		result.Insert(temp, "[angle]")
 
 	return result
+
+/proc/iscatwalk(atom/A)
+	if(istype(A, /turf/simulated/floor/plating/airless/catwalk))
+		return 1
+	return 0

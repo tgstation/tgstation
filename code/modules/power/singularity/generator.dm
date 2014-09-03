@@ -10,10 +10,17 @@
 	var/energy = 0
 
 /obj/machinery/the_singularitygen/process()
-	var/turf/T = get_turf(src)
-	if(src.energy >= 200)
-		new /obj/machinery/singularity/(T, 50)
-		if(src) del(src)
+	if (energy < 200)
+		return
+
+	var/prints=""
+	if (fingerprintshidden)
+		prints=", all touchers: "+fingerprintshidden
+
+	log_admin("New singularity made[prints]. Last touched by [fingerprintslast].")
+	message_admins("New singularity made[prints]. Last touched by [fingerprintslast].")
+	new /obj/machinery/singularity(get_turf(src), 50)
+	qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -23,6 +30,7 @@
 			user.visible_message("[user.name] secures [src.name] to the floor.", \
 				"You secure the [src.name] to the floor.", \
 				"You hear a ratchet")
+			src.add_hiddenprint(user)
 		else
 			user.visible_message("[user.name] unsecures [src.name] from the floor.", \
 				"You unsecure the [src.name] from the floor.", \

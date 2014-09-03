@@ -52,4 +52,6 @@
 
 	living_mob_list -= src
 	dead_mob_list += src
+	for(var/obj/item/I in src)
+		I.OnMobDeath(src)
 	return ..(gibbed)

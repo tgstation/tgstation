@@ -11,6 +11,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	New(var/K,var/datum/design/D)
 		key=K
 		thing=D
+
+#define IMPRINTER_MAX_Q_LEN 30
 /obj/machinery/r_n_d/circuit_imprinter
 	name = "Circuit Imprinter"
 	icon_state = "circuit_imprinter"
@@ -19,29 +21,44 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/max_material_amount = 75000.0
 
 	var/list/datum/circuitimprinter_queue_item/production_queue = list()
-	var/list/datum/material/materials = list()
+	var/datum/materials/materials
 	var/stopped=1
 	var/obj/output=null
 	var/allowed_materials=list(
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/mineral/gold,
 		/obj/item/stack/sheet/mineral/diamond,
-		/obj/item/stack/sheet/mineral/uranium
+		/obj/item/stack/sheet/mineral/uranium,
+		/obj/item/stack/sheet/mineral/plasma,
+		/obj/item/stack/sheet/mineral/pharosium,
+		/obj/item/stack/sheet/mineral/char,
+		/obj/item/stack/sheet/mineral/claretine,
+		/obj/item/stack/sheet/mineral/bohrum,
+		/obj/item/stack/sheet/mineral/syreline,
+		/obj/item/stack/sheet/mineral/erebite,
+		/obj/item/stack/sheet/mineral/cytine,
+		/obj/item/stack/sheet/mineral/telecrystal,
+		/obj/item/stack/sheet/mineral/mauxite,
+		/obj/item/stack/sheet/mineral/cobryl,
+		/obj/item/stack/sheet/mineral/cerenkite,
+		/obj/item/stack/sheet/mineral/molitz,
+		/obj/item/stack/sheet/mineral/uqill
 	)
 
 /obj/machinery/r_n_d/circuit_imprinter/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/circuit_imprinter(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/circuit_imprinter,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/reagent_containers/glass/beaker
+	)
+
 	RefreshParts()
 
-	for(var/oredata in typesof(/datum/material) - /datum/material)
-		var/datum/material/ore_datum = new oredata
-		materials[ore_datum.id]=ore_datum
+	materials = new
 
 	// Define initial output.
 	output=src
@@ -53,18 +70,16 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
 	var/total=0
-	for(var/id in materials)
-		var/datum/material/material=materials[id]
-		total += material.stored
+	for(var/id in materials.storage)
+		total += materials.getAmount(id)
 	return total
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		T += G.reagents.maximum_volume
-	var/datum/reagents/R = new/datum/reagents(T)		//Holder for the reagents used as materials.
-	reagents = R
-	R.my_atom = src
+
+	create_reagents(T) // Holder for the reagents used as materials.
 	T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
@@ -86,9 +101,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(var/datum/design/being_built, var/M, var/num_requested=1)
 	if(copytext(M,1,2) == "$")
 		var/matID=copytext(M,2)
-		var/datum/material/material=materials[matID]
+		var/matAmount=materials.getAmount(matID)
 		for(var/n=num_requested,n>=1,n--)
-			if ((material.stored-(being_built.materials[M]*n)) >= 0)
+			if ((matAmount-(being_built.materials[M]*n)) >= 0)
 				return n
 	else
 		for(var/n=num_requested,n>=1,n--)
@@ -148,8 +163,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				if(I.reliability != 100 && crit_fail)
 					I.crit_fail = 1
 				I.loc = src.loc
-			for(var/id in materials)
-				var/datum/material/material=materials[id]
+			for(var/id in materials.storage)
+				var/datum/material/material=materials.getMaterial(id)
 				if(material.stored >= material.cc_per_sheet)
 					var/obj/item/stack/sheet/S=new material.sheettype(src.loc)
 					S.amount = round(material.stored / material.cc_per_sheet)
@@ -165,7 +180,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		user << "\The [name] must be linked to an R&D console first!"
 		return 1
 	if (O.is_open_container())
-		return 1
+		return 0
 	if (!(O.type in allowed_materials))
 		user << "\red You cannot insert this item into the [name]!"
 		return 1
@@ -193,19 +208,21 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	stack.use(amount)
 	if (do_after(user, 16))
 		user << "\blue You add [amount] sheets to the [src.name]."
-		for(var/id in materials)
-			var/datum/material/material=materials[id]
+		for(var/id in materials.storage)
+			var/datum/material/material=materials.getMaterial(id)
 			if(stacktype == material.sheettype)
-				material.stored += (amount * material.cc_per_sheet)
-				materials[id]=material
+				materials.addAmount(id, amount * material.cc_per_sheet)
 	else
 		new stacktype(src.loc, amount)
 	busy = 0
 	src.updateUsrDialog()
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/enqueue(var/key, var/datum/design/thing_to_build)
+	if(production_queue.len>=IMPRINTER_MAX_Q_LEN)
+		return 0
 	production_queue.Add(new /datum/circuitimprinter_queue_item(key,thing_to_build))
-	//stopped=0
+	//stopped=1
+	return 1
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/queue_pop()
 	var/datum/circuitimprinter_queue_item/I = production_queue[1]
@@ -238,9 +255,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				return 0
 			if(copytext(M,1,2) == "$")
 				var/matID=copytext(M,2)
-				var/datum/material/material=materials[matID]
-				material.stored = max(0, (material.stored-being_built.materials[M]))
-				materials[matID]=material
+				materials.removeAmount(matID, being_built.materials[M])
 			else
 				reagents.remove_reagent(M, being_built.materials[M])
 		if(being_built.build_path)

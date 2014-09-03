@@ -36,21 +36,21 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 	return
 
@@ -136,7 +136,7 @@
 	var/obj/structure/morgue/connected = null
 	anchored = 1.0
 
-/obj/structure/m_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/m_tray/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if (istype(mover, /obj/item/weapon/dummy))
 		return 1
 	else
@@ -204,21 +204,21 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 	return
 
@@ -355,7 +355,7 @@
 	var/obj/structure/crematorium/connected = null
 	anchored = 1.0
 
-/obj/structure/c_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/c_tray/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if (istype(mover, /obj/item/weapon/dummy))
 		return 1
 	else

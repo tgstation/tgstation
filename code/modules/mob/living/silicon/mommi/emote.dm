@@ -10,7 +10,7 @@
 
 	switch(act)
 		if ("help")
-			src << "Available emotes: aflap, bow, clap, custom, flap, twitch, twitch_s, salute, nod, deathgasp, me, glare, stare, beep, ping, buzz, look"
+			src << "Available emotes: aflap, bow, clap, custom, flap, twitch, twitch_s, salute, nod, deathgasp, me, glare, stare, shrug, beep, ping, buzz, look"
 			return
 		if ("salute")
 			//if (!src.buckled)
@@ -43,6 +43,21 @@
 					message = "<B>[src]</B> bows to [param]."
 				else
 					message = "<B>[src]</B> bows."
+			m_type = 1
+		if ("shrug")
+			var/M = null
+			if (param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if (!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> shrugs at [param]."
+			else
+				message = "<B>[src]</B> shrugs."
 			m_type = 1
 
 		if ("clap")
@@ -199,6 +214,23 @@
 			else
 				message = "<B>[src]</B> buzzes."
 			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
+			m_type = 1
+
+		if("comment")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> cheerily vocalizes at [param]."
+			else
+				message = "<B>[src]</B> vocalizes."
+			playsound(src, get_sfx("mommicomment"),50, 0)
 			m_type = 1
 
 		else

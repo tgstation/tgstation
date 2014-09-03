@@ -8,6 +8,8 @@
 	var/mode = 0	//off or on.
 
 /obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user as mob)
+	if(!user.Adjacent(A))
+		return 0
 	if(!mode)	//if it's off, give up.
 		return
 	if(A == loc)	// if placing the labeller into something (e.g. backpack)

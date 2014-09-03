@@ -42,3 +42,9 @@
 
 	//This breaks a lot of shit.  - N3X
 	preload_rsc = 1 // This is 0 so we can set it to an URL once the player logs in and have them download the resources from a different server.
+
+
+	/////////////////////////////////////////////
+	// /vg/: MEDIAAAAAAAA
+	// Set on login.
+	var/datum/media_manager/media = null

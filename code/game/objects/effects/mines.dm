@@ -1,8 +1,9 @@
 /obj/effect/mine
 	name = "Mine"
-	desc = "I Better stay away from that thing."
+	desc = "I better stay away from that thing."
 	density = 1
 	anchored = 1
+	w_type=NOT_RECYCLABLE
 	layer = 3
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
@@ -12,7 +13,7 @@
 /obj/effect/mine/New()
 	icon_state = "uglyminearmed"
 
-/obj/effect/mine/HasEntered(AM as mob|obj)
+/obj/effect/mine/Crossed(AM as mob|obj)
 	Bumped(AM)
 
 /obj/effect/mine/Bumped(mob/M as mob|obj)

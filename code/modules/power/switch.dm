@@ -71,7 +71,6 @@
 
 			var/datum/powernet/PN = new()
 			PN.number = powernets.len + 1
-			powernets += PN
 			C.netnum = PN.number
 			PN.cables += C
 

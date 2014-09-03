@@ -44,4 +44,15 @@
 		client.eye = src
 		client.perspective = MOB_PERSPECTIVE
 
+	//Clear ability list and update from mob.
+	client.verbs -= ability_verbs
 
+	if(abilities)
+		client.verbs |= abilities
+
+	if(istype(src,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = src
+		if(H.species && H.species.abilities)
+			H.verbs |= H.species.abilities
+
+	CallHook("Login", list("client" = src.client, "mob" = src))

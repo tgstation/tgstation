@@ -6,7 +6,7 @@
 	icon_state = "infrared"
 	m_amt = 1000
 	g_amt = 500
-	w_amt = 100
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=2"
 
 	wires = WIRE_PULSE
@@ -36,7 +36,7 @@
 			processing_objects.Add(src)
 		else
 			on = 0
-			if(first)	del(first)
+			if(first)	qdel(first)
 			processing_objects.Remove(src)
 		update_icon()
 		return secured
@@ -57,7 +57,7 @@
 	process()//Old code
 		if(!on)
 			if(first)
-				del(first)
+				qdel(first)
 				return
 		if(first || !secured) return
 		var/turf/T = null
@@ -91,7 +91,7 @@
 
 
 	attack_hand()
-		del(first)
+		qdel(first)
 		..()
 		return
 
@@ -100,14 +100,14 @@
 		var/t = dir
 		..()
 		dir = t
-		del(first)
+		qdel(first)
 		return
 
 
 	holder_movement()
 		if(!holder)	return 0
 //		dir = holder.dir
-		del(first)
+		qdel(first)
 		return 1
 
 
@@ -194,8 +194,15 @@
 	if(master)
 		//world << "beam hit \ref[src]: calling master \ref[master].hit"
 		master.trigger_beam()
-	del(src)
+	qdel(src)
 	return
+
+/obj/effect/beam/i_beam/Crossed(atom/movable/O)
+	..(O)
+
+	if(O && O.density && !istype(O, /obj/effect/beam))
+		spawn(0)
+			hit()
 
 /obj/effect/beam/i_beam/proc/vis_spread(v)
 	//world << "i_beam \ref[src] : vis_spread"
@@ -212,7 +219,7 @@
 
 	if((loc.density || !(master)))
 	//	world << "beam hit loc [loc] or no master [master], deleting"
-		del(src)
+		qdel(src)
 		return
 	//world << "proccess: [src.left] left"
 
@@ -252,24 +259,24 @@
 				return
 		else
 			//world << "is a next: \ref[next], deleting beam \ref[I]"
-			del(I)
+			qdel(I)
 	else
 		//world << "step failed, deleting \ref[next]"
-		del(next)
+		qdel(next)
 	spawn(10)
 		process()
 		return
 	return
 
 /obj/effect/beam/i_beam/Bump()
-	del(src)
+	qdel(src)
 	return
 
 /obj/effect/beam/i_beam/Bumped()
 	hit()
 	return
 
-/obj/effect/beam/i_beam/HasEntered(atom/movable/AM as mob|obj)
+/obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
 	if(istype(AM, /obj/effect/beam))
 		return
 	spawn(0)
@@ -277,7 +284,7 @@
 		return
 	return
 
-/obj/effect/beam/i_beam/Del()
-	del(next)
+/obj/effect/beam/i_beam/Destroy()
+	qdel(next)
 	..()
 	return

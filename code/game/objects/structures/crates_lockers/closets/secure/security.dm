@@ -47,8 +47,8 @@
 		..()
 		sleep(2)
 		new /obj/item/clothing/glasses/sunglasses(src)
-		new /obj/item/clothing/suit/armor/vest(src)
-		new /obj/item/clothing/head/helmet(src)
+		new /obj/item/clothing/suit/storage/Hop_Coat(src)
+		new /obj/item/clothing/head/helmet/hopcap(src)
 		new /obj/item/weapon/cartridge/hop(src)
 		new /obj/item/device/radio/headset/heads/hop(src)
 		new /obj/item/weapon/storage/box/ids(src)
@@ -153,6 +153,7 @@
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/taser(src)
+		new /obj/item/weapon/storage/box/bolas(src)
 		return
 
 
@@ -187,6 +188,7 @@
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/taperoll/police(src)
 		new /obj/item/device/hailer(src) //wonder if vg would spam this
+		new /obj/item/clothing/gloves/black(src)
 		return
 
 
@@ -283,7 +285,7 @@
 	name = "Brig Locker"
 	req_access = list(access_brig)
 	anchored = 1
-	var/id = null
+	var/id_tag = null
 
 	New()
 		new /obj/item/clothing/under/color/orange( src )

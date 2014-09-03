@@ -1,6 +1,6 @@
 /obj/machinery/transformer
 	name = "Automatic Robotic Factory 5000"
-	desc = "A large metalic machine with an entrance and an exit. A sign on the side reads, 'human go in, robot come out', human must be lying down and alive. Has to cooldown between each use."
+	desc = "A large metallic machine with an entrance and an exit. A sign on the side reads 'human goes in, robot comes out'. Human must be lying down and alive. Has to cooldown between each use."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = MOB_LAYER+1 // Overhead
@@ -9,11 +9,15 @@
 	var/transform_dead = 0
 	var/transform_standing = 0
 	var/cooldown_duration = 900 // 1.5 minutes
-	var/cooldown = 0
+	var/cooldown_time = 0
+	var/cooldown_state = 0 // Just for icons.
 	var/robot_cell_charge = 5000
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 5000
+
+	// /vg/
+	var/force_borg_module=null
 
 /obj/machinery/transformer/New()
 	// On us
@@ -26,17 +30,16 @@
 
 /obj/machinery/transformer/update_icon()
 	..()
-	if(stat & (BROKEN|NOPOWER) || cooldown == 1)
+	if(stat & (BROKEN|NOPOWER) || cooldown_time > world.time)
 		icon_state = "separator-AO0"
 	else
 		icon_state = initial(icon_state)
 
 /obj/machinery/transformer/Bumped(var/atom/movable/AM)
-
-	if(cooldown == 1)
+	if(cooldown_state)
 		return
 
-	// HasEntered didn't like people lying down.
+	// Crossed didn't like people lying down.
 	if(ishuman(AM))
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)
@@ -53,7 +56,7 @@
 /obj/machinery/transformer/proc/do_transform(var/mob/living/carbon/human/H)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	if(cooldown == 1)
+	if(cooldown_state)
 		return
 
 	if(!transform_dead && H.stat == DEAD)
@@ -75,17 +78,29 @@
 
 	 	// So he can't jump out the gate right away.
 		R.weakened = 5
+
+		// /vg/: Force borg module, if needed.
+		R.pick_module(force_borg_module)
+		R.updateicon()
+
 	spawn(50)
-		playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 0)
 		if(R)
 			R.weakened = 0
 
 	// Activate the cooldown
-	cooldown = 1
+	cooldown_time = world.time + cooldown_duration
+	cooldown_state = 1
 	update_icon()
-	spawn(cooldown_duration)
-		cooldown = 0
+
+/obj/machinery/transformer/process()
+	..()
+	var/old_cooldown_state=cooldown_state
+	cooldown_state = cooldown_time > world.time
+	if(cooldown_state!=old_cooldown_state)
 		update_icon()
+		if(!cooldown_state)
+			playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 
 /obj/machinery/transformer/conveyor/New()
 	..()
@@ -102,3 +117,45 @@
 		var/turf/west = locate(T.x - 1, T.y, T.z)
 		if(istype(west, /turf/simulated/floor))
 			new /obj/machinery/conveyor/auto(west, WEST)
+
+/obj/machinery/transformer/attack_ai(var/mob/user)
+	interact(user)
+
+/obj/machinery/transformer/interact(var/mob/user)
+	var/data=""
+	if(cooldown_state)
+		data += {"<b>Recalibrating.</b> Time left: [(cooldown_time - world.time)/10] seconds."}
+	else
+		data += {"<p style="color:red;font-weight:bold;"><blink>ROBOTICIZER ACTIVE.</blink></p>"}
+	data += {"
+		<h2>Settings</h2>
+		<ul>
+			<li>
+				<b>Next Borg's Module:</b>
+				<a href="?src=\ref[src];act=force_class">[isnull(force_borg_module)?"Not Forced":force_borg_module]</a>
+			</li>
+		</ul>
+	"}
+
+	var/datum/browser/popup = new(user, "transformer", src.name, 400, 300)
+	popup.set_content(data)
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	popup.open()
+
+/obj/machinery/transformer/Topic(href, href_list)
+	if(!isAI(usr))
+		usr << "\red This machine is way above your pay-grade."
+		return 0
+	if(!("act" in href_list))
+		return 0
+	switch(href_list["act"])
+		if("force_class")
+			var/list/modules = list("(Robot's Choice)")
+			modules += getAvailableRobotModules()
+			var/sel_mod = input("Please, select a module!", "Robot", null, null) in modules
+			if(sel_mod == "(Robot's Choice)")
+				force_borg_module = null
+			else
+				force_borg_module = sel_mod
+	interact(usr)
+	return 1

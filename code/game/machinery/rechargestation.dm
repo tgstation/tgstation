@@ -11,17 +11,20 @@
 	var/opened = 0.0
 
 	New()
-		..()
+		. = ..()
 		build_icon()
-		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/recharge_station
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/manipulator
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin
+
+		component_parts = newlist(
+			/obj/item/weapon/circuitboard/recharge_station,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/manipulator,
+			/obj/item/weapon/stock_parts/matter_bin,
+			/obj/item/weapon/stock_parts/matter_bin
+		)
+
 		RefreshParts()
 
-	Del()
+	Destroy()
 		src.go_out()
 		..()
 
@@ -29,12 +32,12 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(50))
 					new /obj/item/weapon/circuitboard/recharge_station(src.loc)
-					del(src)
+					qdel(src)
 					return
 			if(3.0)
 				if (prob(25))
@@ -205,7 +208,9 @@
 							// Engineering
 							if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/stack/sheet/glass) || istype(O,/obj/item/weapon/cable_coil))
 								if(O:amount < 50)
-									O:amount += 1
+									O:amount += 2
+								if(O:amount > 50)
+									O:amount = 50
 							// Security
 							if(istype(O,/obj/item/device/flash))
 								if(O:broken)
@@ -231,6 +236,14 @@
 								var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
 								if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
 									B.reagents.add_reagent(B.reagent, 2)
+							if(istype(O,/obj/item/stack/medical/bruise_pack) || istype(O,/obj/item/stack/medical/ointment))
+								if(O:amount < O:max_amount)
+									O:amount += 2
+								if(O:amount > O:max_amount)
+									O:amount = O:max_amount
+							if(istype(O,/obj/item/weapon/melee/defibrillator))
+								var/obj/item/weapon/melee/defibrillator/D = O
+								D.charges = initial(D.charges)
 							//Janitor
 							if(istype(O, /obj/item/device/lightreplacer))
 								var/obj/item/device/lightreplacer/LR = O

@@ -1,3 +1,5 @@
+
+
 /obj/item/projectile/change
 	name = "bolt of change"
 	icon_state = "ice_1"
@@ -5,6 +7,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
+	var/changetype=null
 
 	on_hit(var/atom/change)
 		wabbajack(change)
@@ -12,7 +15,10 @@
 
 /obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)
-		if(M.monkeyizing)	return
+		if(M.monkeyizing)
+			return
+		if(M.has_brain_worms())
+			return //Borer stuff - RR
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null
@@ -21,7 +27,8 @@
 
 		if(istype(M, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/Robot = M
-			if(Robot.mmi)	del(Robot.mmi)
+			if(Robot.mmi)
+				del(Robot.mmi)
 		else
 			for(var/obj/item/W in M)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
@@ -33,7 +40,8 @@
 
 		var/mob/living/new_mob
 
-		var/randomize = pick("monkey","robot","slime","xeno","human")
+		var/randomize = changetype==null?pick(available_staff_transforms):changetype
+
 		switch(randomize)
 			if("monkey")
 				new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -56,8 +64,34 @@
 				MoMMI.mmi = new /obj/item/device/mmi(new_mob)
 				MoMMI.mmi.transfer_identity(M)	//Does not transfer key/client.
 			if("slime")
-				if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
-				else				new_mob = new /mob/living/carbon/slime(M.loc)
+				var/slimey = pick("",\
+				                 "/purple",\
+				                 "/metal",\
+				                 "/orange",\
+				                 "/blue",\
+				                 "/darkblue",\
+				                 "/darkpurple",\
+				                 "/yellow",\
+				                 "/silver",\
+				                 "/pink",\
+				                 "/red",\
+				                 "/gold",\
+				                 "/green",\
+				                 "/lightpink",\
+				                 "/oil",\
+				                 "/black",\
+				                 "/adamantine",\
+				                 "/bluespace",\
+				                 "/pyrite",\
+				                 "/cerulean",\
+				                 "/sepia"\
+				                 )
+
+				if (prob(50))
+					slimey = "/adult[slimey]"
+
+				slimey = text2path("/mob/living/carbon/slime[slimey]")
+				new_mob = new slimey(M.loc)
 				new_mob.universal_speak = 1
 			if("xeno")
 				var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
@@ -68,15 +102,9 @@
 					else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
 				new_mob.universal_speak = 1
 			if("human")
-				new_mob = new /mob/living/carbon/human(M.loc)
-				if(M.gender == MALE)
-					new_mob.gender = MALE
-					new_mob.name = pick(first_names_male)
-				else
-					new_mob.gender = FEMALE
-					new_mob.name = pick(first_names_female)
-				new_mob.name += " [pick(last_names)]"
-				new_mob.real_name = new_mob.name
+				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
+
+				new_mob.gender = M.gender
 
 				var/datum/preferences/A = new()	//Randomize appearance for the human
 				A.randomize_appearance_for(new_mob)
@@ -84,6 +112,16 @@
 				var/mob/living/carbon/human/H = new_mob
 				var/newspecies = pick(all_species)
 				H.set_species(newspecies)
+				H.generate_name()
+			if("cluwne")
+				new_mob = new /mob/living/simple_animal/hostile/retaliate/cluwne(M.loc)
+				new_mob.universal_speak = 1
+				new_mob.gender=src.gender
+				new_mob.name = pick(clown_names)
+				new_mob.real_name = new_mob.name
+				new_mob.mutations += M_CLUMSY
+				new_mob.mutations += M_FAT
+				new_mob.setBrainLoss(100)
 			else
 				return
 

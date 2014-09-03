@@ -22,7 +22,7 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
+			if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
 				if(prob(70))
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
@@ -40,11 +40,10 @@
 			now_pushing = 1
 			if (!( AM.anchored ))
 				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
+				if (istype(AM, /obj/structure/window/full))
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
 				step(AM, t)
 			now_pushing = null
 		return

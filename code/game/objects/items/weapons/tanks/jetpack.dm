@@ -4,21 +4,14 @@
 	name = "Jetpack (Empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
-	w_class = 4.0
+	w_class = 3.0
 	item_state = "jetpack"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail
 	var/on = 0.0
 	var/stabilization_on = 0
 	var/volume_rate = 500              //Needed for borg jetpack transfer
-	icon_action_button = "action_jetpack"
-
-	New()
-		..()
-		src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
-		src.ion_trail.set_up(src)
-		return
-
+	action_button_name = "Toggle Jetpack"
 
 	examine()
 		set src in usr
@@ -71,6 +64,10 @@
 	ui_action_click()
 		toggle()
 
+/obj/item/weapon/tank/jetpack/New()
+	. = ..()
+	ion_trail = new /datum/effect/effect/system/ion_trail_follow()
+	ion_trail.set_up(src)
 
 /obj/item/weapon/tank/jetpack/void
 	name = "Void Jetpack (Oxygen)"
@@ -78,11 +75,9 @@
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
 
-	New()
-		..()
-		//src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-		air_contents.adjust((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
-		return
+/obj/item/weapon/tank/jetpack/void/New()
+	. = ..()
+	air_contents.adjust((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/jetpack/oxygen
 	name = "Jetpack (Oxygen)"
@@ -90,26 +85,15 @@
 	icon_state = "jetpack"
 	item_state = "jetpack"
 
-	New()
-		..()
-		//src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-		air_contents.adjust((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
-		return
+/obj/item/weapon/tank/jetpack/oxygen/New()
+	. = ..()
+	air_contents.adjust((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/jetpack/nitrogen
 	name = "Jetpack (Nitrogen)"
 	desc = "A tank of compressed nitrogen for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack-red"
 	item_state = "jetpack-red"
-
-	New()
-		..()
-		src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
-		src.ion_trail.set_up(src)
-		//src.air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-		air_contents.nitrogen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-		air_contents.update_values()
-		return
 
 	examine()
 		set src in usr
@@ -119,20 +103,16 @@
 			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 		return
 
+/obj/item/weapon/tank/jetpack/nitrogen/New()
+	. = ..()
+	air_contents.adjust(, , (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "Jetpack (Carbon Dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
 	distribute_pressure = 0
 	icon_state = "jetpack-black"
 	item_state =  "jetpack-black"
-
-	New()
-		..()
-		src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
-		src.ion_trail.set_up(src)
-		//src.air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-		air_contents.adjust(0,(6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
-		return
 
 	examine()
 		set src in usr
@@ -141,3 +121,7 @@
 			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
 			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 		return
+
+/obj/item/weapon/tank/jetpack/carbondioxide/New()
+	. = ..()
+	air_contents.adjust(, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))

@@ -35,17 +35,22 @@
 				new /obj/item/clothing/glasses/thermal/syndi(src)
 				new /obj/item/weapon/card/emag(src)
 				new /obj/item/clothing/shoes/syndigaloshes(src)
+				new /obj/item/weapon/storage/belt/skull(src)
 				return
 
 			if("freedom")
 				var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
 				O.imp = new /obj/item/weapon/implant/freedom(O)
+				O.update()
+				O.name= "Freedom"
 				var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
 				U.imp = new /obj/item/weapon/implant/uplink(U)
+				U.update()
+				U.name = "Uplink"
 				return
 
 			if("hacker")
-				new /obj/item/weapon/aiModule/syndicate(src)
+				new /obj/item/weapon/aiModule/freeform/syndicate(src)
 				new /obj/item/weapon/card/emag(src)
 				new /obj/item/device/encryptionkey/binary(src)
 				return

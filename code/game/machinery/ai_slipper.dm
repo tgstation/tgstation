@@ -1,5 +1,5 @@
 /obj/machinery/ai_slipper
-	name = "AI Liquid Dispenser"
+	name = "AI Foam Dispenser"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
 	layer = 3
@@ -35,7 +35,7 @@
 		src.add_hiddenprint(user)
 		return src.attack_hand(user)
 	else // trying to unlock the interface
-		if (src.allowed(usr))
+		if (src.allowed(user))
 			locked = !locked
 			user << "You [ locked ? "lock" : "unlock"] the device."
 			if (locked)

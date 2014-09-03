@@ -60,16 +60,6 @@ var/global/datum/controller/occupations/job_master
 				player.mind.assigned_role = rank
 				player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 
-				// JOB OBJECTIVES OH SHIT
-				player.mind.job_objectives.Cut()
-				for(var/objectiveType in job.required_objectives)
-					new objectiveType(player.mind)
-
-				// 50/50 chance of getting optional objectives.
-				for(var/objectiveType in job.optional_objectives)
-					if(prob(50))
-						new objectiveType(player.mind)
-
 				unassigned -= player
 				job.current_positions++
 				return 1
@@ -390,6 +380,8 @@ var/global/datum/controller/occupations/job_master
 					H.MoMMIfy()
 					return 1
 				if("AI","Clown")	//don't need bag preference stuff!
+					if(rank=="Clown") // Clowns DO need to breathe, though - N3X
+						H.species.equip(H)
 				else
 					switch(H.backbag) //BS12 EDIT
 						if(1)
@@ -419,7 +411,7 @@ var/global/datum/controller/occupations/job_master
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 
 		spawnId(H, rank, alt_title)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
+		H.equip_or_collect(new /obj/item/device/radio/headset(H), slot_ears)
 
 		//Gives glasses to the vision impaired
 		if(H.disabilities & DISABILITY_FLAG_NEARSIGHTED)
@@ -459,9 +451,9 @@ var/global/datum/controller/occupations/job_master
 			if(H.mind && H.mind.initial_account)
 				C.associated_account_number = H.mind.initial_account.account_number
 
-			H.equip_to_slot_or_del(C, slot_wear_id)
+			H.equip_or_collect(C, slot_wear_id)
 
-		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
+		H.equip_or_collect(new job.pdatype(H), job.pdaslot)
 		if(locate(/obj/item/device/pda,H))
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
@@ -469,6 +461,7 @@ var/global/datum/controller/occupations/job_master
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 
 		return 1
+
 
 
 	proc/LoadJobs(jobsfile) //ran during round setup, reads info from jobs.txt -- Urist

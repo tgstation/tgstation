@@ -44,7 +44,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	world << "<B>There are alien changelings on the station. Do not let the changelings succeed!</B>"
 
 /datum/game_mode/changeling/pre_setup()
-
+	if(istype(ticker.mode, /datum/game_mode/mixed))
+		mixed = 1
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -57,10 +58,17 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	changeling_amount = 1 + round(num_players() / 10)
 
+// mixed mode scaling
+	if(mixed)
+		changeling_amount = min(2, changeling_amount)
+
 	if(possible_changelings.len>0)
 		for(var/i = 0, i < changeling_amount, i++)
 			if(!possible_changelings.len) break
 			var/datum/mind/changeling = pick(possible_changelings)
+			if(changeling.special_role)
+				possible_changelings.Remove(changeling)
+				continue
 			possible_changelings -= changeling
 			changelings += changeling
 			modePlayer += changelings
@@ -74,9 +82,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+	if(!mixed)
+		spawn (rand(waittime_l, waittime_h))
+			send_intercept()
 	..()
 	return
 
@@ -125,7 +133,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if (changeling.current.mind)
 		if (changeling.current.mind.assigned_role == "Clown")
 			changeling.current << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
-			changeling.current.mutations.Remove(CLUMSY)
+			changeling.current.mutations.Remove(M_CLUMSY)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in changeling.objectives)
@@ -165,7 +173,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		for(var/datum/mind/changeling in changelings)
 			var/changelingwin = 1
 
-			text += "<br><br>[changeling.key] was [changeling.name] ("
+			text += "<br>[changeling.key] was [changeling.name] ("
 			if(changeling.current)
 				if(changeling.current.stat == DEAD)
 					text += "died"

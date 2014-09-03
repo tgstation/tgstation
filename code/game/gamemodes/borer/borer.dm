@@ -42,6 +42,10 @@
 		if(!v.welded && v.z == STATION_Z && v.canSpawnMice==1) // No more spawning in atmos.  Assuming the mappers did their jobs, anyway.
 			found_vents.Add(v)
 
+	if(found_vents.len < 2)
+		log_admin("MODE FAILURE: BORER. NOT ENOUGH VENTS.")
+		return 0 // not enough candidates for borer
+
 	// for each 2 possible borers, add one borer and one host
 	while(possible_borers.len >= 2)
 		var/datum/mind/borer = pick(possible_borers)
@@ -86,15 +90,17 @@
 
 		// get the host for this borer
 		var/datum/mind/first_host = assigned_hosts[borer.key]
+
 		// this is a redundant check, but I don't think the above works..
 		// if picking hosts works with this method, remove the method above
 		if(!first_host)
 			first_host = pick(first_hosts)
 			first_hosts.Remove(first_host)
+
 		M.perform_infestation(first_host.current)
 		forge_borer_objectives(borer, first_host)
 
-		del original
+		del(original)
 
 	log_admin("Created [borers.len] borers.")
 

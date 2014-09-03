@@ -22,12 +22,15 @@
 	var/chargecount = 0
 	var/chargelevel = 50000
 	var/online = 1
-	var/n_tag = null
+	var/name_tag = null
 	var/obj/machinery/power/terminal/terminal = null
-
+	//Holders for powerout event.
+	var/last_output = 0
+	var/last_charge = 0
+	var/last_online = 0
 
 /obj/machinery/power/smes/New()
-	..()
+	. = ..()
 	spawn(5)
 		dir_loop:
 			for(var/d in cardinal)
@@ -41,31 +44,52 @@
 			return
 		terminal.master = src
 		updateicon()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/smes
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/smes,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
 	RefreshParts()
 
-	return
-
-/obj/machinery/power/smes/proc/make_terminal()
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	var/tempLoc = get_step(src.loc, WEST)
-	terminal = new/obj/machinery/power/terminal(tempLoc)
-	terminal.dir = EAST
-	terminal.master = src
+/obj/machinery/power/smes/proc/make_terminal(const/mob/user)
+	if (user.loc == loc)
+		user << "<span class='warning'>You must not be on the same tile with SMES.</span>"
+		return 1
+		
+	var/userdir = get_dir(user, src)
+		
+	for(var/dirs in cardinal)	//there shouldn't be any diagonal terminals
+		if(userdir == dirs)
+			var/turf/T = get_turf(user)
+			if(T.intact)
+				user << "<span class='warning'>The floor plating must be removed first.</span>"
+				return 1
+		
+			user << "<span class='notice'>You start adding cable to the SMES.</span>"
+			playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
+			if(do_after(user,100))		
+				terminal = new /obj/machinery/power/terminal(user.loc)
+				terminal.dir = user.dir
+				terminal.master = src
+				return 0
+			else
+				user << "<span class='warning'>You moved!</span>"
+				return 1
+	
+	user << "<span class='warning'>You can't wire the SMES like that!</span>"
+	return 1
 
 /obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -90,16 +114,25 @@
 			del(src)
 			return 1
 		else if(istype(W, /obj/item/weapon/cable_coil) && !terminal)
+			var/obj/item/weapon/cable_coil/CC = W
+
+			if (CC.amount < 10)
+				user << "<span class=\"warning\">You need 10 length cable coil to make a terminal.</span>"
+				return
+
+			if (make_terminal(user))
+				return
+
+			CC.use(10)
 			user.visible_message(\
 				"\red [user.name] has added cables to the SMES!",\
 				"You added cables the SMES.")
-			make_terminal()
 			terminal.connect_to_network()
 			src.stat = 0
 		else if(istype(W, /obj/item/weapon/wirecutters) && terminal)
-			var/tempTDir = get_step(src.loc, WEST)
-			if(tempTDir:intact)
-				user << "\red You must remove the floor plating in front of the SMES first."
+			var/turf/T = get_turf(terminal) 
+			if(T.intact)
+				user << "<span class='warning'>You must remove the floor plating in front of the SMES first.</span>"
 				return
 			user << "You begin to cut the cables..."
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
@@ -111,7 +144,7 @@
 					return
 				new /obj/item/weapon/cable_coil(loc,10)
 				user.visible_message(\
-					"\red [user.name] cut the cables and dismantled the power terminal.",\
+					"<span class='warning'>[user.name] cut the cables and dismantled the power terminal.</span>",\
 					"You cut the cables and dismantle the power terminal.")
 				del(terminal)
 		else
@@ -196,7 +229,6 @@
 	if(last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
 		updateicon()
 
-	updateDialog()
 	return
 
 // called after all power processes are finished
@@ -239,48 +271,44 @@
 /obj/machinery/power/smes/attack_ai(mob/user)
 	src.add_hiddenprint(user)
 	add_fingerprint(user)
-	if(stat & BROKEN) return
-	interact(user)
+	ui_interact(user)
 
 
 /obj/machinery/power/smes/attack_hand(mob/user)
 	add_fingerprint(user)
-	if(stat & BROKEN) return
-
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("SMES",src,user:wear_suit)
-			return
-	interact(user)
+	ui_interact(user)
 
 
-/obj/machinery/power/smes/interact(mob/user)
-	if(get_dist(src, user) > 1 && !istype(user, /mob/living/silicon/ai))
-		user.unset_machine()
-		user << browse(null, "window=smes")
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+
+	if(stat & BROKEN)
 		return
 
-	user.set_machine(src)
+	// this is the data which will be sent to the ui
+	var/data[0]
+	data["nameTag"] = name_tag
+	data["storedCapacity"] = round(100.0*charge/capacity, 0.1)
+	data["charging"] = charging
+	data["chargeMode"] = chargemode
+	data["chargeLevel"] = chargelevel
+	data["chargeMax"] = SMESMAXCHARGELEVEL
+	data["outputOnline"] = online
+	data["outputLevel"] = output
+	data["outputMax"] = SMESMAXOUTPUT
+	data["outputLoad"] = round(loaddemand)
 
-	var/t = "<TT><B>SMES Power Storage Unit</B> [n_tag? "([n_tag])" : null]<HR><PRE>"
-
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\smes.dm:251: t += "Stored capacity : [round(100.0*charge/capacity, 0.1)]%<BR><BR>"
-	t += {"Stored capacity : [round(100.0*charge/capacity, 0.1)]%
-
-Input: [charging ? "Charging" : "Not Charging"]    [chargemode ? "<B>Auto</B> <A href = '?src=\ref[src];cmode=1'>Off</A>" : "<A href = '?src=\ref[src];cmode=1'>Auto</A> <B>Off</B> "]
-Input level:  <A href = '?src=\ref[src];input=-4'>M</A> <A href = '?src=\ref[src];input=-3'>-</A> <A href = '?src=\ref[src];input=-2'>-</A> <A href = '?src=\ref[src];input=-1'>-</A> [add_lspace(chargelevel,5)] <A href = '?src=\ref[src];input=1'>+</A> <A href = '?src=\ref[src];input=2'>+</A> <A href = '?src=\ref[src];input=3'>+</A> <A href = '?src=\ref[src];input=4'>M</A>
-
-Output: [online ? "<B>Online</B> <A href = '?src=\ref[src];online=1'>Offline</A>" : "<A href = '?src=\ref[src];online=1'>Online</A> <B>Offline</B> "]
-Output level: <A href = '?src=\ref[src];output=-4'>M</A> <A href = '?src=\ref[src];output=-3'>-</A> <A href = '?src=\ref[src];output=-2'>-</A> <A href = '?src=\ref[src];output=-1'>-</A> [add_lspace(output,5)] <A href = '?src=\ref[src];output=1'>+</A> <A href = '?src=\ref[src];output=2'>+</A> <A href = '?src=\ref[src];output=3'>+</A> <A href = '?src=\ref[src];output=4'>M</A>
-Output load: [round(loaddemand)] W
-</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
-</TT>"}
-	// END AUTOFIX
-	user << browse(t, "window=smes;size=460x300")
-	onclose(user, "smes")
-	return
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
+	if (!ui)
+		// the ui does not exist, so we'll create a new() one
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+		ui = new(user, src, ui_key, "smes.tmpl", "SMES Power Storage Unit", 540, 380)
+		// when the ui is first opened this is the data it will use
+		ui.set_initial_data(data)
+		// open the new ui window
+		ui.open()
+		// auto update every Master Controller tick
+		ui.set_auto_update(1)
 
 
 /obj/machinery/power/smes/Topic(href, href_list)
@@ -295,84 +323,41 @@ Output load: [round(loaddemand)] W
 
 //world << "[href] ; [href_list[href]]"
 
-	if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+	if (!istype(src.loc, /turf) && !istype(usr, /mob/living/silicon/))
+		return 0 // Do not update ui
 
+	if( href_list["cmode"] )
+		chargemode = !chargemode
+		if(!chargemode)
+			charging = 0
+		updateicon()
 
-		if( href_list["close"] )
-			usr << browse(null, "window=smes")
-			usr.unset_machine()
-			return
+	else if( href_list["online"] )
+		online = !online
+		updateicon()
+	else if( href_list["input"] )
+		switch( href_list["input"] )
+			if("min")
+				chargelevel = 0
+			if("max")
+				chargelevel = SMESMAXCHARGELEVEL		//30000
+			if("set")
+				chargelevel = input(usr, "Enter new input level (0-[SMESMAXCHARGELEVEL])", "SMES Input Power Control", chargelevel) as num
+		chargelevel = max(0, min(SMESMAXCHARGELEVEL, chargelevel))	// clamp to range
 
-		else if( href_list["cmode"] )
-			chargemode = !chargemode
-			if(!chargemode)
-				charging = 0
-			updateicon()
+	else if( href_list["output"] )
+		switch( href_list["output"] )
+			if("min")
+				output = 0
+			if("max")
+				output = SMESMAXOUTPUT		//30000
+			if("set")
+				output = input(usr, "Enter new output level (0-[SMESMAXOUTPUT])", "SMES Output Power Control", output) as num
+		output = max(0, min(SMESMAXOUTPUT, output))	// clamp to range
 
-		else if( href_list["online"] )
-			online = !online
-			updateicon()
-		else if( href_list["input"] )
+	investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
 
-			var/i = text2num(href_list["input"])
-
-			var/d = 0
-			switch(i)
-				if(-4)
-					chargelevel = 0
-				if(4)
-					chargelevel = SMESMAXCHARGELEVEL		//30000
-
-				if(1)
-					d = 100
-				if(-1)
-					d = -100
-				if(2)
-					d = 1000
-				if(-2)
-					d = -1000
-				if(3)
-					d = 10000
-				if(-3)
-					d = -10000
-
-			chargelevel += d
-			chargelevel = max(0, min(SMESMAXCHARGELEVEL, chargelevel))	// clamp to range
-
-		else if( href_list["output"] )
-
-			var/i = text2num(href_list["output"])
-
-			var/d = 0
-			switch(i)
-				if(-4)
-					output = 0
-				if(4)
-					output = SMESMAXOUTPUT		//30000
-
-				if(1)
-					d = 100
-				if(-1)
-					d = -100
-				if(2)
-					d = 1000
-				if(-2)
-					d = -1000
-				if(3)
-					d = 10000
-				if(-3)
-					d = -10000
-
-			output += d
-			output = max(0, min(SMESMAXOUTPUT, output))	// clamp to range
-
-		investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
-		src.updateUsrDialog()
-
-	else
-		usr << browse(null, "window=smes")
-		usr.unset_machine()
-	return
+	return 1
 
 
 /obj/machinery/power/smes/proc/ion_act()
@@ -382,7 +367,7 @@ Output load: [round(loaddemand)] W
 			for(var/mob/M in viewers(src))
 				M.show_message("\red The [src.name] is making strange noises!", 3, "\red You hear sizzling electronics.", 2)
 			sleep(10*pick(4,5,6,7,10,14))
-			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
 			smoke.attach(src)
 			smoke.start()
@@ -400,7 +385,7 @@ Output load: [round(loaddemand)] W
 				emp_act(2)
 		if(prob(5)) //smoke only
 			world << "\red SMES smoke in [src.loc.loc]"
-			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
 			smoke.attach(src)
 			smoke.start()
@@ -437,5 +422,11 @@ Output load: [round(loaddemand)] W
 	if(Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"
 	return rate
 
+/obj/machinery/power/smes/Destroy()
+	if (terminal)
+		terminal.master = null
+		terminal = null
+
+	..()
 
 #undef SMESRATE

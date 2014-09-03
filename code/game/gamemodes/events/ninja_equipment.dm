@@ -40,7 +40,7 @@ ________________________________________________________________________________
 	cell = new/obj/item/weapon/cell/high//The suit should *always* have a battery because so many things rely on it.
 	cell.charge = 9000//Starting charge should not be higher than maximum charge. It leads to problems with recharging.
 
-/obj/item/clothing/suit/space/space_ninja/Del()
+/obj/item/clothing/suit/space/space_ninja/Destroy()
 	if(affecting)//To make sure the window is closed.
 		affecting << browse(null, "window=hack spideros")
 	if(AI)//If there are AIs present when the ninja kicks the bucket.
@@ -49,7 +49,6 @@ ________________________________________________________________________________
 		del(hologram.i_attached)//Delete it and the attached image.
 		del(hologram)
 	..()
-	return
 
 //Simply deletes all the attachments and self, killing all related procs.
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
@@ -529,7 +528,7 @@ ________________________________________________________________________________
 		if("Shock")
 			var/damage = min(cell.charge, rand(50,150))//Uses either the current energy left over or between 50 and 150.
 			if(damage>1)//So they don't spam it when energy is a factor.
-				spark_system.start()//SPARKS THERE SHALL BE SPARKS
+				//spark_system.start()//SPARKS THERE SHALL BE SPARKS
 				U.electrocute_act(damage, src,0.1,1)//The last argument is a safety for the human proc that checks for gloves.
 				cell.charge -= damage
 			else
@@ -824,10 +823,11 @@ ________________________________________________________________________________
 		else if(istype(I, /obj/item/weapon/reagent_containers/glass))//If it's a glass beaker.
 			var/total_reagent_transfer//Keep track of this stuff.
 			for(var/reagent_id in reagent_list)
-				var/datum/reagent/R = I.reagents.has_reagent(reagent_id)//Mostly to pull up the name of the reagent after calculating. Also easier to use than writing long proc paths.
-				if(R&&reagents.get_reagent_amount(reagent_id)<r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)&&R.volume>=a_transfer)//Radium is always special.
+				var/datum/reagent/R = I.reagents.get_reagent(reagent_id)//Mostly to pull up the name of the reagent after calculating. Also easier to use than writing long proc paths.
+				var/ourvolume = reagents.get_reagent_amount(reagent_id) // Why weren't you doing this? -- N3X
+				if(R&&ourvolume<r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)&&R.volume>=a_transfer)//Radium is always special.
 					//Here we determine how much reagent will actually transfer if there is enough to transfer or there is a need of transfer. Minimum of max amount available (using a_transfer) or amount needed.
-					var/amount_to_transfer = min( (r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)-reagents.get_reagent_amount(reagent_id)) ,(round(R.volume/a_transfer))*a_transfer)//In the end here, we round the amount available, then multiply it again.
+					var/amount_to_transfer = min( (r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)-ourvolume) ,(round(R.volume/a_transfer))*a_transfer)//In the end here, we round the amount available, then multiply it again.
 					R.volume -= amount_to_transfer//Remove from reagent volume. Don't want to delete the reagent now since we need to perserve the name.
 					reagents.add_reagent(reagent_id, amount_to_transfer)//Add to suit. Reactions are not important.
 					total_reagent_transfer += amount_to_transfer//Add to total reagent trans.
@@ -1443,7 +1443,7 @@ It is possible to destroy the net by the occupant or someone else.
 		return
 
 	attack_hand()
-		if (HULK in usr.mutations)
+		if (M_HULK in usr.mutations)
 			usr << text("\blue You easily destroy the energy net.")
 			for(var/mob/O in oviewers(src))
 				O.show_message(text("\red [] rips the energy net apart!", usr), 1)

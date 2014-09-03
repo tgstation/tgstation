@@ -366,7 +366,7 @@
 					if ( spot.density )
 						continue
 					src.path = AStar(src.loc, spot, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30,id=botcard)
-					src.path = reverselist(src.path)
+					src.path = reverseRange(src.path)
 					if ( src.path.len > 0 )
 						break
 

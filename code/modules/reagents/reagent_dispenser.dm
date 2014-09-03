@@ -19,14 +19,6 @@
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
 
-	New()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
-		if (!possible_transfer_amounts)
-			src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
-		..()
-
 	examine()
 		set src in view()
 		..()
@@ -49,17 +41,17 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(50))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			if(3.0)
 				if (prob(5))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			else
 		return
@@ -67,13 +59,14 @@
 	blob_act()
 		if(prob(50))
 			new /obj/effect/effect/water(src.loc)
-			del(src)
+			qdel(src)
 
+/obj/structure/reagent_dispensers/New()
+	. = ..()
+	create_reagents(1000)
 
-
-
-
-
+	if (!possible_transfer_amounts)
+		verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank
@@ -82,9 +75,10 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 10
-	New()
-		..()
-		reagents.add_reagent("water",1000)
+
+/obj/structure/reagent_dispensers/watertank/New()
+	. = ..()
+	reagents.add_reagent("water", 1000)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
@@ -94,9 +88,6 @@
 	amount_per_transfer_from_this = 10
 	var/modded = 0
 	var/obj/item/device/assembly_holder/rig = null
-	New()
-		..()
-		reagents.add_reagent("fuel",1000)
 
 	hear_talk(mob/living/M, text)
 		if(rig)
@@ -161,7 +152,7 @@
 	ex_act()
 		explode()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		if(exposed_temperature >= AUTOIGNITION_WELDERFUEL)
 			explode()
 
@@ -176,6 +167,10 @@
 		if(src)
 			del(src)
 
+/obj/structure/reagent_dispensers/fueltank/New()
+	. = ..()
+	reagents.add_reagent("fuel", 1000)
+
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
 	desc = "Refill pepper spray canisters."
@@ -184,10 +179,10 @@
 	anchored = 1
 	density = 0
 	amount_per_transfer_from_this = 45
-	New()
-		..()
-		reagents.add_reagent("condensedcapsaicin",1000)
 
+/obj/structure/reagent_dispensers/peppertank/New()
+	. = ..()
+	reagents.add_reagent("condensedcapsaicin", 1000)
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "Water-Cooler"
@@ -197,10 +192,10 @@
 	icon_state = "water_cooler"
 	possible_transfer_amounts = null
 	anchored = 1
-	New()
-		..()
-		reagents.add_reagent("water",500)
 
+/obj/structure/reagent_dispensers/water_cooler/New()
+	. = ..()
+	reagents.add_reagent("water", 500)
 
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
@@ -208,9 +203,10 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 10
-	New()
-		..()
-		reagents.add_reagent("beer",1000)
+
+/obj/structure/reagent_dispensers/beerkeg/New()
+	. = ..()
+	reagents.add_reagent("beer", 1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
@@ -224,6 +220,6 @@
 	amount_per_transfer_from_this = 10
 	anchored = 1
 
-	New()
-		..()
-		reagents.add_reagent("virusfood", 1000)
+/obj/structure/reagent_dispensers/virusfood/New()
+	. = ..()
+	reagents.add_reagent("virusfood", 1000)

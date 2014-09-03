@@ -30,9 +30,8 @@
 	item_state = "balloon-empty"
 
 /obj/item/toy/balloon/New()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
+	. = ..()
+	create_reagents(10)
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
@@ -113,6 +112,11 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is putting \his head into the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS|TOXLOSS|OXYLOSS)
+
+
 /*
  * Toy gun: Why isnt this an /obj/item/weapon/gun?
  */
@@ -127,6 +131,7 @@
 	w_class = 3.0
 	g_amt = 10
 	m_amt = 10
+	w_type = RECYK_MISC
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -368,10 +373,53 @@
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
+	var/style_type = /datum/writing_style/crayon
+	var/datum/writing_style/style
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
-		return (BRUTELOSS|OXYLOSS)
+/obj/item/toy/crayon/New()
+	..()
+
+	style = new style_type
+
+/obj/item/toy/crayon/proc/Format(var/mob/user,var/text,var/obj/item/weapon/paper/P)
+	return style.Format(text,src,user,P)
+
+/obj/item/toy/crayon/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
+	return (BRUTELOSS|OXYLOSS)
+
+
+
+
+/*
+ * Snap pops viral shit
+ */
+/obj/item/toy/snappop/virus
+	name = "unstable goo"
+	desc = "Your palm is oozing this stuff!"
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "red slime extract"
+	throwforce = 30.0
+	throw_speed = 10
+	throw_range = 30
+	w_class = 1
+
+
+	throw_impact(atom/hit_atom)
+		..()
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
+		new /obj/effect/decal/cleanable/ash(src.loc)
+		src.visible_message("\red The [src.name] explodes!","\red You hear a bang!")
+
+
+		playsound(src, 'sound/effects/snap.ogg', 50, 1)
+		del(src)
+
+
+
+
 
 /*
  * Snap pops
@@ -393,7 +441,7 @@
 		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 		del(src)
 
-/obj/item/toy/snappop/HasEntered(H as mob|obj)
+/obj/item/toy/snappop/Crossed(H as mob|obj)
 	if((ishuman(H))) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(M.m_intent == "run")
@@ -420,17 +468,16 @@
 	flags =  USEDELAY
 
 /obj/item/toy/waterflower/New()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("water", 10)
+	. = ..()
+	create_reagents(10)
+	reagents.add_reagent("water", 10)
 
 /obj/item/toy/waterflower/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
 /obj/item/toy/waterflower/afterattack(atom/A as mob|obj, mob/user as mob)
 
-	if (istype(A, /obj/item/weapon/storage/backpack ))
+	if (istype(A, /obj/item/weapon/storage/backpack ) || istype(A, /obj/structure/stool/bed/chair/vehicle/clowncart))
 		return
 
 	else if (locate (/obj/structure/table, src.loc))
@@ -570,10 +617,65 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
-/obj/item/weapon/toddler
-	icon_state = "toddler"
-	name = "toddler"
-	desc = "This baby looks almost real. Wait, did it just burp?"
-	force = 5
-	w_class = 4.0
-	slot_flags = SLOT_BACK
+
+/*
+ * OMG THEIF
+ */
+/obj/item/toy/gooncode
+	name = "Goonecode"
+	desc = "The holy grail of all programmers."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "gooncode"
+
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</b>"
+		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
+
+
+/obj/item/toy/minimeteor
+	name = "Mini Meteor"
+	desc = "Relive the horror of a meteor shower! SweetMeat-eor. Co is not responsible for any injury caused by Mini Meteor"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "flaming"
+
+	attack_self(mob/user as mob)
+		playsound(user, 'sound/effects/bamf.ogg', 20, 1)
+
+/obj/item/device/whisperphone
+	name = "whipserphone"
+	desc = "A device used to project your voice. Quietly."
+	icon_state = "megaphone"
+	item_state = "radio"
+	w_class = 1.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+
+	var/spamcheck = 0
+
+/obj/item/device/whisperphone/attack_self(mob/living/user as mob)
+	if (user.client)
+		if(user.client.prefs.muted & MUTE_IC)
+			src << "\red You cannot speak in IC (muted)."
+			return
+	if(!ishuman(user))
+		user << "\red You don't know how to use this!"
+		return
+	if(user:miming || user.silent)
+		user << "\red You find yourself unable to speak at all."
+		return
+	if(spamcheck)
+		user << "\red \The [src] needs to recharge!"
+		return
+
+	var/message = copytext(sanitize(input(user, "'Shout' a message?", "Whisperphone", null)  as text),1,MAX_MESSAGE_LEN)
+	if(!message)
+		return
+	message = capitalize(message)
+	if ((src.loc == user && usr.stat == 0))
+
+		for(var/mob/O in (viewers(user)))
+			O.show_message("<B>[user]</B> broadcasts, <i>\"[message]\"</i>",2)
+		spamcheck = 1
+		spawn(20)
+			spamcheck = 0
+		return
+

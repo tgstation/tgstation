@@ -14,21 +14,32 @@
 
 	var/current_heat_capacity = 50
 
+	l_color = "#00FF00"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)) && on)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/machinery/atmospherics/unary/cryo_cell/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/cryo
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/cryo,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
 	RefreshParts()
 
 	initialize_directions = dir
 
-/obj/machinery/atmospherics/unary/cryo_cell/Del()
+/obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	go_out()
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
@@ -74,6 +85,8 @@
 			visible_message("[user] climbs into the cryo cell.", 3)
 		else
 			visible_message("[user] puts [L.name] into the cryo cell.", 3)
+			if(user.pulling == L)
+				user.pulling = null
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
@@ -320,7 +333,7 @@
 		var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
 		var/has_cryo_medicine = has_cryo || has_clonexa
 		if(beaker && !has_cryo_medicine)
-			beaker.reagents.trans_to(occupant, 1, 10)
+			beaker.reagents.trans_to(occupant, 1, 1)
 			beaker.reagents.reaction(occupant)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
@@ -398,7 +411,7 @@
 			return
 		go_out()//and release him from the eternal prison.
 	else
-		if (usr.stat != 0)
+		if (usr.stat != 0 || istype(usr, /mob/living/simple_animal))
 			return
 		go_out()
 	add_fingerprint(usr)

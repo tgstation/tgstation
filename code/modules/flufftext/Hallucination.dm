@@ -252,7 +252,7 @@ proc/check_panel(mob/M)
 
 		return
 
-	HasEntered(var/mob/M, somenumber)
+	Crossed(var/mob/M, somenumber)
 		if(M == my_target)
 			step_away(src,my_target,2)
 			if(prob(30))

@@ -9,4 +9,9 @@ proc
 
 	list2json(list/L)
 		var/static/json_writer/_jsonw = new()
-		return _jsonw.WriteObject(L)
+		// Detect if it's just a list of things, or an associative list
+		// (Used to just assume associative, which broke things.)
+		if(_jsonw.is_associative(L))
+			return _jsonw.WriteObject(L)
+		else
+			return _jsonw.write_array(L)

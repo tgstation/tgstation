@@ -22,18 +22,20 @@
 ********************************************************************/
 
 /obj/machinery/photocopier/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/photocopier
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
-	RefreshParts()
+	. = ..()
 
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/photocopier,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
+	RefreshParts()
 
 /obj/machinery/photocopier/attack_ai(mob/user)
 	src.add_hiddenprint(user)
@@ -78,8 +80,7 @@
 					else			//no toner? shitty copies for you!
 						c.info = "<font color = #808080>"
 					var/copied = html_decode(copy.info)
-					copied = replacetext(copied, "<font face=\"[c.deffont]\" color=", "<font face=\"[c.deffont]\" nocolor=")	//state of the art techniques in action
-					copied = replacetext(copied, "<font face=\"[c.crayonfont]\" color=", "<font face=\"[c.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+					copied = replacetext(copied, "color:", "nocolor:")	//state of the art techniques in action
 					c.info += copied
 					c.info += "</font>"
 					c.name = copy.name
@@ -298,10 +299,10 @@
 /obj/machinery/photocopier/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if(prob(50))
-				del(src)
+				qdel(src)
 			else
 				if(toner > 0)
 					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))

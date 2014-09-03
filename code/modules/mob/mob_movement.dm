@@ -1,15 +1,13 @@
-/mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
 
 	if(ismob(mover))
 		var/mob/moving_mob = mover
+
 		if ((other_mobs && moving_mob.other_mobs))
 			return 1
-		return (!mover.density || !density || lying)
-	else
-		return (!mover.density || !density || lying)
-	return
 
+	return (!mover.density || !density || lying)
 
 /client/North()
 	..()
@@ -176,43 +174,6 @@
 	*/
 	return
 
-
-/atom/movable/Move(NewLoc, direct)
-	if (direct & direct - 1)
-		if (direct & 1)
-			if (direct & 4)
-				if (step(src, NORTH))
-					step(src, EAST)
-				else
-					if (step(src, EAST))
-						step(src, NORTH)
-			else
-				if (direct & 8)
-					if (step(src, NORTH))
-						step(src, WEST)
-					else
-						if (step(src, WEST))
-							step(src, NORTH)
-		else
-			if (direct & 2)
-				if (direct & 4)
-					if (step(src, SOUTH))
-						step(src, EAST)
-					else
-						if (step(src, EAST))
-							step(src, SOUTH)
-				else
-					if (direct & 8)
-						if (step(src, SOUTH))
-							step(src, WEST)
-						else
-							if (step(src, WEST))
-								step(src, SOUTH)
-	else
-		. = ..()
-	return
-
-
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
@@ -223,18 +184,22 @@
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
+/client/Move(loc,dir)
+	if(!mob)
+		return // Moved here to avoid nullrefs below. - N3X
 
-/client/Move(n, direct)
+	// /vg/ - Deny clients from moving certain mobs. (Like cluwnes :^)
+	if(mob.deny_client_move)
+		src << "<span class='warning'>You cannot move this mob.</span>"
+		return
 
-	if(mob.control_object)	Move_object(direct)
+	if(mob.control_object)	Move_object(dir)
 
-	if(isobserver(mob))	return mob.Move(n,direct)
+	if(isobserver(mob))	return mob.Move(loc, dir)
 
 	if(moving)	return 0
 
 	if(world.time < move_delay)	return
-
-	if(!mob)	return
 
 	if(locate(/obj/effect/stop/, mob.loc))
 		for(var/obj/effect/stop/S in mob.loc)
@@ -243,20 +208,20 @@
 
 	if(mob.stat==2)	return
 
-	if(isAI(mob))	return AIMove(n,direct,mob)
+	if(isAI(mob))	return AIMove(loc,dir,mob)
 
 	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
 
 	if(isliving(mob))
 		var/mob/living/L = mob
 		if(L.incorporeal_move)//Move though walls
-			Process_Incorpmove(direct)
+			Process_Incorpmove(dir)
 			return
 
 	if(Process_Grab())	return
 
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
-		return mob.buckled.relaymove(mob, direct)
+		return mob.buckled.relaymove(mob, dir)
 
 	if(!mob.canmove)	return
 
@@ -266,21 +231,24 @@
 	if(!mob.lastarea)
 		mob.lastarea = get_area(mob.loc)
 
-	if((istype(mob.loc, /turf/space)) || (mob.lastarea.has_gravity == 0))
+	if((istype(mob.loc, /turf/space)) || ((mob.lastarea.has_gravity == 0) && (!istype(mob.loc, /obj/spacepod))))  // last section of if statement prevents spacepods being unable to move when the gravity goes down
 		if(!mob.Process_Spacemove(0))	return 0
 
 
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
 		var/atom/O = mob.loc
-		return O.relaymove(mob, direct)
+		return O.relaymove(mob, dir)
 
 	if(isturf(mob.loc))
 
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
-				if(M.pulling == mob && !M.restrained() && M.stat == 0 && M.canmove)
-					src << "\blue You're restrained! You can't move!"
-					return 0
+				if(M.pulling == mob)
+					if(!M.restrained() && M.stat == 0 && M.canmove && mob.Adjacent(M))
+						src << "\blue You're restrained! You can't move!"
+						return 0
+					else
+						M.stop_pulling()
 
 		if(mob.pinned.len)
 			src << "\blue You're pinned to a wall by [mob.pinned[1]]!"
@@ -333,7 +301,7 @@
 							M.animate_movement = 3
 					for(var/mob/M in L)
 						spawn( 0 )
-							step(M, direct)
+							step(M, dir)
 							return
 						spawn( 1 )
 							M.other_mobs = null
@@ -341,9 +309,11 @@
 							return
 
 		else if(mob.confused)
-			step(mob, pick(cardinal))
+			step_rand(mob)
+			mob.last_movement=world.time
 		else
 			. = ..()
+			mob.last_movement=world.time
 
 		moving = 0
 
@@ -460,7 +430,7 @@
 
 
 		else
-			if((istype(turf,/turf/simulated/floor)) && (src.lastarea.has_gravity == 0)) // No one else gets a chance.
+			if((istype(turf,/turf/simulated/floor)) && (src.lastarea && src.lastarea.has_gravity == 0)) // No one else gets a chance.
 				continue
 
 

@@ -3,7 +3,7 @@
 	desc = "It's useful for igniting plasma."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
-	var/id = null
+	var/id_tag = null
 	var/on = 1.0
 	var/obj/item/device/assembly_holder/assembly=null
 	anchored = 1.0
@@ -37,7 +37,7 @@
 	if (src.on && !(stat & NOPOWER) )
 		var/turf/location = src.loc
 		if (isturf(location))
-			location.hotspot_expose(1000,500,1)
+			location.hotspot_expose(1000,500,1,surfaces=0)
 	return 1
 
 /obj/machinery/igniter/proc/toggle_state()
@@ -82,7 +82,7 @@
 	desc = "A wall-mounted ignition device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"
-	var/id = null
+	var/id_tag = null
 	var/disable = 0
 	var/last_spark = 0
 	var/base_state = "migniter"
@@ -122,11 +122,11 @@
 
 /obj/machinery/sparker/attack_ai()
 	if (src.anchored)
-		return src.ignite()
+		return src.spark()
 	else
 		return
 
-/obj/machinery/sparker/proc/ignite()
+/obj/machinery/sparker/proc/spark()
 	if (!(powered()))
 		return
 
@@ -142,14 +142,14 @@
 	use_power(1000)
 	var/turf/location = src.loc
 	if (isturf(location))
-		location.hotspot_expose(1000,500,1)
+		location.hotspot_expose(1000,500,1,surfaces=0)
 	return 1
 
 /obj/machinery/sparker/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
-	ignite()
+	spark()
 	..(severity)
 
 /obj/machinery/ignition_switch/attack_ai(mob/user as mob)
@@ -175,12 +175,12 @@
 	icon_state = "launcheract"
 
 	for(var/obj/machinery/sparker/M in world)
-		if (M.id == src.id)
+		if (M.id_tag == src.id_tag)
 			spawn( 0 )
-				M.ignite()
+				M.spark()
 
 	for(var/obj/machinery/igniter/M in world)
-		if(M.id == src.id)
+		if(M.id_tag == src.id_tag)
 			use_power(50)
 			M.on = !( M.on )
 			M.icon_state = text("igniter[]", M.on)

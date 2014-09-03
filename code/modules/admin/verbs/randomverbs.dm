@@ -59,7 +59,10 @@
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				M << "\bold You hear a voice in your head... \italic [msg]"
+				if(M.mind.assigned_role == "Chaplain")
+					M << "\bold You hear the voice of [ticker.Bible_deity_name] in your head... \italic [msg]"
+				else
+					M << "\bold You hear a voice in your head... \italic [msg]"
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("\blue \bold SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]", 1)
@@ -232,7 +235,7 @@ Ccomp's first proc.
 
 	var/list/mobs = list()
 	var/list/ghosts = list()
-	var/list/sortmob = sortAtom(mob_list)                           // get the mob list.
+	var/list/sortmob = sortNames(mob_list)                           // get the mob list.
 	/var/any=0
 	for(var/mob/dead/observer/M in sortmob)
 		mobs.Add(M)                                             //filter it where it's only ghosts
@@ -430,10 +433,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = G_found.real_name
 
 	if(!new_character.real_name)
-		if(new_character.gender == MALE)
-			new_character.real_name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
-		else
-			new_character.real_name = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+		new_character.generate_name()
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
@@ -621,7 +621,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])", 1)
 		feedback_add_details("admin_verb","DEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		del(O)
+		if(istype(O,/turf))
+			var/turf/T=O
+			T.ChangeTurf(universe.space_type)
+		else
+			qdel(O)
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"

@@ -9,6 +9,8 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/sample = null
 	var/datum/disease2/disease/virus2 = null
 
+	l_color = "#000000"
+
 /obj/machinery/computer/centrifuge/attackby(var/obj/I as obj, var/mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		return ..(I,user)
@@ -26,6 +28,7 @@
 /obj/machinery/computer/centrifuge/update_icon()
 	..()
 	if(! (stat & (BROKEN|NOPOWER)) && (isolating || curing))
+		l_color = "#7BF9FF"
 		icon_state = "centrifuge_moving"
 
 /obj/machinery/computer/centrifuge/attack_hand(var/mob/user as mob)

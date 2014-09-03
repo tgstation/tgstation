@@ -107,6 +107,20 @@ proc/tg_list2text(list/list, glue=",")
 		output += (i!=1? glue : null)+(!isnull(list["[list[i]]"])?"[list["[list[i]]"]]":"[list[i]]")
 	return output
 
+// HTTP GET URL query builder thing.
+// list("a"="b","c"="d") -> ?a=b&c=d
+/proc/buildurlquery(list/list,sep="&")
+	if(!istype(list) || !list.len)
+		return
+	var/output
+	var/i=0
+	var/start
+	var/qmark="?" // God damnit byond
+	for(var/key in list)
+		start = i ? sep : qmark
+		output += "[start][key]=[list[key]]"
+		i++
+	return output
 
 //Converts a text string into a list by splitting the string at each seperator found in text (discarding the seperator)
 //Returns an empty list if the text cannot be split, or the split text in a list.
@@ -248,6 +262,13 @@ proc/tg_list2text(list/list, glue=",")
 /proc/angle2text(var/degree)
 	return dir2text(angle2dir(degree))
 
+//Converts a blend_mode constant to one acceptable to icon.Blend()
+/proc/blendMode2iconMode(blend_mode)
+	switch(blend_mode)
+		if(BLEND_MULTIPLY) return ICON_MULTIPLY
+		if(BLEND_ADD)      return ICON_ADD
+		if(BLEND_SUBTRACT) return ICON_SUBTRACT
+		else               return ICON_OVERLAY
 
 //Converts a rights bitfield into a string
 /proc/rights2text(rights,seperator="")
@@ -272,3 +293,15 @@ proc/tg_list2text(list/list, glue=",")
 		if("old")		return 'icons/mob/screen1_old.dmi'
 		if("Orange")	return 'icons/mob/screen1_Orange.dmi'
 		else			return 'icons/mob/screen1_Midnight.dmi'
+
+/proc/num2septext(var/theNum, var/sigFig = 7,var/sep=",") // default sigFig (1,000,000)
+	var/finalNum = num2text(theNum, sigFig)
+
+	// Start from the end, or from the decimal point
+	var/end = findtextEx(finalNum, ".") || length(finalNum) + 1
+
+	// Moving towards start of string, insert comma every 3 characters
+	for(var/pos = end - 3, pos > 1, pos -= 3)
+		finalNum = copytext(finalNum, 1, pos) + sep + copytext(finalNum, pos)
+
+	return finalNum

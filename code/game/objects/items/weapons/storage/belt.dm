@@ -54,6 +54,15 @@
 		"/obj/item/device/analyzer",
 		"/obj/item/taperoll/engineering")
 
+/obj/item/weapon/storage/belt/utility/complete/New()
+	..()
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow","orange"))
 
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()
@@ -131,6 +140,11 @@
 		"/obj/item/taperoll/police",
 		"/obj/item/weapon/gun/energy/taser"
 		)
+/obj/item/weapon/storage/belt/security/batmanbelt
+	name = "batbelt"
+	desc = "For all your crime-fighting bat needs."
+	icon_state = "bmbelt"
+	item_state = "bmbelt"
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
@@ -161,3 +175,49 @@
 	can_hold = list(
 		"/obj/item/clothing/mask/luchador"
 		)
+
+
+/obj/item/weapon/storage/belt/skull
+	name = "trophy-belt" //FATALITY
+	desc = "Excellent for holding the heads of your fallen foes."
+	icon_state = "utilitybelt"
+	item_state = "utility"
+	max_w_class = 4
+	max_combined_w_class = 28
+	can_hold = list(
+ 		"/obj/item/weapon/organ/head"
+ 	)
+
+
+/obj/item/weapon/storage/belt/mining
+	name = "mining gear belt"
+	desc = "Can hold various mining gear like pickaxes or drills."
+	icon_state = "miningbelt"
+	item_state = "mining"
+	w_class = 4 //Lets it hold mining satchels.
+	max_w_class = 4
+	max_combined_w_class = 28
+	can_hold = list(
+		"/obj/item/weapon/storage/bag/ore",
+		"/obj/item/weapon/shovel",
+		"/obj/item/weapon/storage/box/samplebags",
+		"/obj/item/device/core_sampler",
+		"/obj/item/device/beacon_locator",
+		"/obj/item/device/radio/beacon",
+		"/obj/item/device/gps",
+		"/obj/item/device/measuring_tape",
+		"/obj/item/device/flashlight",
+		"/obj/item/weapon/pickaxe",
+		"/obj/item/device/depth_scanner",
+		"/obj/item/weapon/paper",
+		"/obj/item/weapon/pen",
+		"/obj/item/clothing/glasses",
+		"/obj/item/weapon/wrench",
+		"/obj/item/device/mining_scanner",
+		"/obj/item/weapon/crowbar",
+		"/obj/item/weapon/storage/box/excavation",
+		"/obj/item/weapon/gun/energy/kinetic_accelerator",
+		"/obj/item/weapon/resonator",
+		"/obj/item/device/wormhole_jaunter",
+		"/obj/item/weapon/lazarus_injector",
+		"/obj/item/weapon/anobattery")

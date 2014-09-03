@@ -52,26 +52,50 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(config.ghost_interaction)
-		src.dir = turn(src.dir, 90)
-		handle_rotation()
+	if(!usr || !isturf(usr.loc))
 		return
-	else
-		if(!usr || !isturf(usr.loc))
-			return
+
+	if(!config.ghost_interaction && !blessed)
 		if(usr.stat || usr.restrained())
 			return
 
-		src.dir = turn(src.dir, 90)
-		handle_rotation()
-		return
+	src.dir = turn(src.dir, 90)
+	handle_rotation()
+	return
+
 
 /obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
-	buckle_mob(M, user)
+	var/mob/living/carbon/human/target = M
+	if(target.op_stage.butt == 4) //Butt surgery is at stage 4
+		if(!M.weakened)	//Spam prevention
+			if(M == usr)
+				M.visible_message(\
+					"\blue [M.name] has no butt, and slides right out of [src]!",\
+					"Having no butt, you slide right out of the [src]",\
+					"You hear metal clanking")
+
+			else
+				M.visible_message(\
+					"\blue [M.name] has no butt, and slides right out of [src]!",\
+					"Having no butt, you slide right out of the [src]",\
+					"You hear metal clanking")
+
+			M.Weaken(5)
+		else
+			user << "You can't buckle [M.name] to [src], They just fell out!"
+
+	else
+		buckle_mob(M, user)
+
 	return
 
 // Chair types
+/obj/structure/stool/bed/chair/wood
+	autoignition_temperature = AUTOIGNITION_WOOD
+	fire_fuel = 3
+	// TODO:  Special ash subtype that looks like charred chair legs
+
 /obj/structure/stool/bed/chair/wood/normal
 	icon_state = "wooden_chair"
 	name = "wooden chair"

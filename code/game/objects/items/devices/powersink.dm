@@ -11,7 +11,7 @@
 	throw_speed = 1
 	throw_range = 2
 	m_amt = 750
-	w_amt = 750
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "powerstorage=3;syndicate=5"
 	var/drain_rate = 600000		// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
@@ -31,6 +31,7 @@
 						user << "No exposed cable here to attach to."
 						return
 					else
+						attached.attached = src
 						anchored = 1
 						mode = 1
 						user << "You attach the device to the cable."
@@ -47,6 +48,8 @@
 				anchored = 0
 				mode = 0
 				user << "You detach	the device from the cable."
+				attached.attached = null
+				attached = null
 				for(var/mob/M in viewers(user))
 					if(M == user) continue
 					M << "[user] detaches the power sink from the cable."
@@ -57,7 +60,12 @@
 		else
 			..()
 
-
+	Destroy()
+		SetLuminosity(0)
+		processing_objects.Remove(src)
+		attached.attached = null
+		attached = null
+		..()
 
 	attack_paw()
 		return
@@ -77,6 +85,7 @@
 					M << "[user] activates the power sink!"
 				mode = 2
 				icon_state = "powersink1"
+				playsound(get_turf(src), 'sound/effects/phasein.ogg', 30, 1)
 				processing_objects.Add(src)
 
 			if(2)  //This switch option wasn't originally included. It exists now. --NeoFite
@@ -87,6 +96,7 @@
 				mode = 1
 				SetLuminosity(0)
 				icon_state = "powersink0"
+				playsound(get_turf(src), 'sound/effects/teleport.ogg', 50, 1)
 				processing_objects.Remove(src)
 
 	process()
@@ -117,4 +127,4 @@
 			if(power_drained >= max_power)
 				processing_objects.Remove(src)
 				explosion(src.loc, 3,6,9,12)
-				del(src)
+				qdel(src)

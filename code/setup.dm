@@ -1,6 +1,15 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 #define DEBUG
+#define PROFILE_MACHINES // Disable when not debugging.
+
+#ifdef PROFILE_MACHINES
+#define CHECK_DISABLED(TYPE) if(disable_##TYPE) return
+var/global/disable_scrubbers = 0
+var/global/disable_vents     = 0
+#else
+#define CHECK_DISABLED(TYPE) /* DO NOTHINK */
+#endif
 
 #define PI 3.1415
 
@@ -128,7 +137,7 @@
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	20
 #define PLASMA_OXYGEN_FULLBURN				10
 
-#define T0C 273.15					// 0degC
+#define T0C  273.15					// 0degC
 #define T20C 293.15					// 20degC
 #define TCMB 2.7					// -270.3degC
 
@@ -171,7 +180,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define SLOT_BACK 1024
 #define SLOT_POCKET 2048		//this is to allow items with a w_class of 3 or 4 to fit in pockets.
 #define SLOT_DENYPOCKET 4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
-
+#define SLOT_TWOEARS 8192
+#define SLOT_LEGS = 16384
 
 //FLAGS BITMASK
 #define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
@@ -187,6 +197,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define CONDUCT		64		// conducts electricity (metal etc.)
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
+#define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
+#define NOBLOODY	2048	// used to items if they don't want to get a blood overlay
 
 #define GLASSESCOVERSEYES	1024
 #define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
@@ -247,6 +259,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define slot_s_store 17
 #define slot_in_backpack 18
 #define slot_legcuffed 19
+#define slot_legs 21
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -303,56 +316,76 @@ var/MAX_EXPLOSION_RANGE = 14
 
 // mob/var/list/mutations
 
-#define STRUCDNASIZE 27
-#define UNIDNASIZE 13
-
 // Used in preferences.
 #define DISABILITY_FLAG_NEARSIGHTED 1
 #define DISABILITY_FLAG_FAT         2
 #define DISABILITY_FLAG_EPILEPTIC   4
 #define DISABILITY_FLAG_DEAF        8
 
-	// Generic mutations:
-#define	TK				1
-#define COLD_RESISTANCE	2
-#define XRAY			3
-#define HULK			4
-#define CLUMSY			5
-#define FAT				6
-#define HUSK			7
-#define NOCLONE			8
+///////////////////////////////////////
+// MUTATIONS
+///////////////////////////////////////
+
+// Generic mutations:
+#define	M_TK			1
+#define M_RESIST_COLD	2
+#define M_XRAY			3
+#define M_HULK			4
+#define M_CLUMSY			5
+#define M_FAT				6
+#define M_HUSK			7
+#define M_NOCLONE			8
 
 
-	// Extra powers:
-#define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
-#define HEAL			10 	// healing people with hands
-#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
-#define SCREAM			12 	// supersonic screaming (25%)
-#define EXPLOSIVE		13 	// exploding on-demand (15%)
-#define REGENERATION	14 	// superhuman regeneration (30%)
-#define REPROCESSOR		15 	// eat anything (50%)
-#define SHAPESHIFTING	16 	// take on the appearance of anything (40%)
-#define PHASING			17 	// ability to phase through walls (40%)
-#define SHIELD			18 	// shielding from all projectile attacks (30%)
-#define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
-#define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
+// Extra powers:
+#define M_LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
+//#define HEAL			10 	// (Not implemented) healing people with hands
+//#define SHADOW		11 	// (Not implemented) shadow teleportation (create in/out portals anywhere) (25%)
+//#define SCREAM		12 	// (Not implemented) supersonic screaming (25%)
+//#define EXPLOSIVE		13 	// (Not implemented) exploding on-demand (15%)
+//#define REGENERATION	14 	// (Not implemented) superhuman regeneration (30%)
+//#define REPROCESSOR	15 	// (Not implemented) eat anything (50%)
+//#define SHAPESHIFTING	16 	// (Not implemented) take on the appearance of anything (40%)
+//#define PHASING		17 	// (Not implemented) ability to phase through walls (40%)
+//#define SHIELD		18 	// (Not implemented) shielding from all projectile attacks (30%)
+//#define SHOCKWAVE		19 	// (Not implemented) attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
+//#define ELECTRICITY	20 	// (Not implemented) ability to shoot electric attacks (15%)
 
 	//2spooky
 #define SKELETON 29
 #define PLANT 30
 
 // Other Mutations:
-#define mNobreath		100 	// no need to breathe
-#define mRemote			101 	// remote viewing
-#define mRegen			102 	// health regen
-#define mRun			103 	// no slowdown
-#define mRemotetalk		104 	// remote talking
-#define mMorph			105 	// changing appearance
-#define mHeatres		106 	// nothing (seriously nothing)
-#define mHallucination	107 	// hallucinations
-#define mFingerprints	108 	// no fingerprints
-#define mShock			109 	// insulated hands
-#define mSmallsize		110 	// table climbing
+#define M_NO_BREATH		100 	// no need to breathe
+#define M_REMOTE_VIEW	101 	// remote viewing
+#define M_REGEN			102 	// health regen
+#define M_RUN			103 	// no slowdown
+#define M_REMOTE_TALK	104 	// remote talking
+#define M_MORPH			105 	// changing appearance
+#define M_RESIST_HEAT	106 	// heat resistance
+#define M_HALLUCINATE	107 	// hallucinations
+#define M_FINGERPRINTS	108 	// no fingerprints
+#define M_NO_SHOCK		109 	// insulated hands
+#define M_DWARF			110 	// table climbing
+
+// Goon muts
+#define M_OBESITY       200		// Decreased metabolism
+#define M_TOXIC_FARTS   201		// Duh
+#define M_STRONG        202		// (Nothing)
+#define M_SOBER         203		// Increased alcohol metabolism
+#define M_PSY_RESIST    204		// Block remoteview
+#define M_SUPER_FART    205		// Duh
+#define M_SMILE         206		// :)
+#define M_ELVIS         207		// You ain't nothin' but a hound dog.
+
+// /vg/ muts
+#define M_LOUD		208		// CAUSES INTENSE YELLING
+#define M_WHISPER	209		// causes quiet whispering
+#define M_DIZZY		210		// Trippy.
+#define M_SANS		211		// IF YOU SEE THIS WHILST BROWSING CODE, YOU HAVE BEEN VISITED BY: THE FONT OF SHITPOSTING. GREAT LUCK AND WEALTH WILL COME TO YOU, BUT ONLY IF YOU SAY 'fuck comic sans' IN YOUR PR.
+
+// Bustanuts
+#define M_HARDCORE      300
 
 //disabilities
 #define NEARSIGHTED		1
@@ -462,6 +495,13 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg','sound/items/Welder.ogg','sound/items/Welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
 
+//Grab levels
+#define GRAB_PASSIVE	1
+#define GRAB_AGGRESSIVE	2
+#define GRAB_NECK		3
+#define GRAB_UPGRADING	4
+#define GRAB_KILL		5
+
 //Security levels
 #define SEC_LEVEL_GREEN	0
 #define SEC_LEVEL_BLUE	1
@@ -533,12 +573,12 @@ var/list/liftable_structures = list(\
 
 #define INVISIBILITY_MAXIMUM 100
 
-//Object specific defines
-#define CANDLE_LUM 3 //For how bright candles are
+// Object specific defines.
+#define CANDLE_LUM 2 //For how bright candles are.
 
 
-//Some mob defines below
-#define AI_CAMERA_LUMINOSITY 6
+// Some mob defines below.
+#define AI_CAMERA_LUMINOSITY 5
 
 #define BORGMESON 1
 #define BORGTHERM 2
@@ -619,10 +659,6 @@ var/list/TAGGERLOCATIONS = list(
 #define ORGAN_MUTATED		2048
 #define ORGAN_PEG			4096 // ROB'S MAGICAL PEGLEGS v2
 
-#define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
-
-
-
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
 #define R_BUILDMODE		1
@@ -658,9 +694,11 @@ var/list/TAGGERLOCATIONS = list(
 #define CHAT_ATTACKLOGS	1024
 #define CHAT_DEBUGLOGS	2048
 #define CHAT_LOOC		4096
+#define CHAT_GHOSTRADIO 8192
+#define SOUND_STREAMING 16384 // /vg/
 
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC|SOUND_STREAMING)
 
 #define BE_TRAITOR		1
 #define BE_OPERATIVE	2
@@ -711,13 +749,15 @@ var/list/be_special_flags = list(
 #define RIGHT 2
 
 // for secHUDs and medHUDs and variants. The number is the location of the image on the list hud_list of humans.
-#define HEALTH_HUD		1 // dead, alive, sick, health status
-#define STATUS_HUD		2 // a simple line rounding the mob's number health
-#define ID_HUD			3 // the job asigned to your ID
-#define WANTED_HUD		4 // wanted, released, parroled, security status
-#define IMPLOYAL_HUD	5 // loyality implant
-#define IMPCHEM_HUD		6 // chemical implant
-#define IMPTRACK_HUD	7 // tracking implant
+#define HEALTH_HUD          1 // a simple line rounding the mob's number health
+#define STATUS_HUD          2 // alive, dead, diseased, etc.
+#define ID_HUD              3 // the job asigned to your ID
+#define WANTED_HUD          4 // wanted, released, parroled, security status
+#define IMPLOYAL_HUD		5 // loyality implant
+#define IMPCHEM_HUD		    6 // chemical implant
+#define IMPTRACK_HUD		7 // tracking implant
+#define SPECIALROLE_HUD 	8 // AntagHUD image
+#define STATUS_HUD_OOC		9 // STATUS_HUD without virus db check for someone being ill.
 
 //Pulse levels, very simplified
 #define PULSE_NONE		0	//so !M.pulse checks would be possible
@@ -729,6 +769,8 @@ var/list/be_special_flags = list(
 //feel free to add shit to lists below
 var/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
 var/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
+var/list/heartstopper = list("potassium_phorochloride", "zombie_powder") //this stops the heart
+var/list/cheartstopper = list("potassium_chloride") //this stops the heart when overdose is met -- c = conditional
 
 //proc/get_pulse methods
 #define GETPULSE_HAND	0	//less accurate (hand)
@@ -742,19 +784,23 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 	)
 
 //Species flags.
-#define NO_EAT 1
+#define NO_BLOOD 1
 #define NO_BREATHE 2
-#define NO_SLEEP 4
-#define RAD_ABSORB 8
-#define NO_SCAN 16
-#define NON_GENDERED 32
-#define REQUIRE_LIGHT 64
-#define WHITELISTED 128
-#define HAS_SKIN_TONE 256
-#define HAS_LIPS 512
-#define HAS_UNDERWEAR 1024
-#define HAS_TAIL 2048
-#define IS_PLANT 4096
+#define NO_SCAN 4
+#define NO_PAIN 8
+
+#define HAS_SKIN_TONE 16
+#define HAS_LIPS 32
+#define HAS_UNDERWEAR 64
+#define HAS_TAIL 128
+
+#define IS_SLOW 256
+#define IS_PLANT 512
+#define IS_WHITELISTED 1024
+
+#define RAD_ABSORB 2048
+#define REQUIRE_LIGHT 4096
+
 #define CAN_BE_FAT 8192 // /vg/
 
 //Language flags.
@@ -797,3 +843,32 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 // Unfortunately, it created incredible amounts of lag.
 // Comment the following line if you want it anyway.
 #define USE_BROKEN_RECURSIVE_MOBCHECK
+
+
+//////////////////
+// RECYCLING SHIT
+//////////////////
+
+// Sorting categories
+#define NOT_RECYCLABLE   0
+#define RECYK_MISC       1
+#define RECYK_GLASS      2
+#define RECYK_BIOLOGICAL 3
+#define RECYK_METAL      4
+#define RECYK_ELECTRONIC 5
+
+////////////////
+// job.info_flags
+#define JINFO_SILICON 1 // Silicon job
+
+// The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
+// 1 will enable set background. 0 will disable set background.
+#define BACKGROUND_ENABLED 0
+
+// multitool_topic() shit
+#define MT_ERROR  -1
+#define MT_UPDATE 1
+#define MT_REINIT 2
+
+#define AUTOIGNITION_WOOD  573.15
+#define AUTOIGNITION_PAPER 519.15

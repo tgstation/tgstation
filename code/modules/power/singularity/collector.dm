@@ -16,25 +16,26 @@ var/global/list/rad_collectors = list()
 	var/active = 0
 	var/locked = 0
 	var/drainratio = 1
+	ghost_read=0
+	ghost_write=0
 
 /obj/machinery/power/rad_collector/New()
 	..()
 	rad_collectors += src
 
-/obj/machinery/power/rad_collector/Del()
+/obj/machinery/power/rad_collector/Destroy()
 	rad_collectors -= src
+	eject()
 	..()
 
 /obj/machinery/power/rad_collector/process()
-	if(P)
-		if(P.air_contents.toxins <= 0)
-			investigate_log("<font color='red'>out of fuel</font>.","singulo")
+	if (P)
+		if (P.air_contents.toxins <= 0)
+			investigate_log("<font color='red'>out of fuel</font>.", "singulo")
 			P.air_contents.toxins = 0
 			eject()
 		else
-			P.air_contents.toxins -= 0.001*drainratio
-	return
-
+			P.air_contents.toxins -= (0.001 * drainratio)
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user as mob)
 	if(anchored)
@@ -48,7 +49,6 @@ var/global/list/rad_collectors = list()
 			user << "\red The controls are locked!"
 			return
 ..()
-
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
@@ -97,36 +97,33 @@ var/global/list/rad_collectors = list()
 		..()
 		return 1
 
-
 /obj/machinery/power/rad_collector/ex_act(severity)
 	switch(severity)
 		if(2, 3)
 			eject()
-	return ..()
 
+	return ..()
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
-	var/obj/item/weapon/tank/plasma/Z = src.P
-	if (!Z)
+
+	if (isnull(P))
 		return
-	Z.loc = get_turf(src)
-	Z.layer = initial(Z.layer)
-	src.P = null
-	if(active)
+
+	P.loc = get_turf(src)
+	P.layer = initial(P.layer)
+	P = null
+
+	if (active)
 		toggle_power()
 	else
 		update_icons()
 
-/obj/machinery/power/rad_collector/proc/receive_pulse(var/pulse_strength)
-	if(P && active)
-		var/power_produced = 0
-		power_produced = P.air_contents.toxins*pulse_strength*20
+/obj/machinery/power/rad_collector/proc/receive_pulse(const/pulse_strength)
+	if (P && active)
+		var/power_produced = P.air_contents.toxins * pulse_strength * 20
 		add_avail(power_produced)
 		last_power = power_produced
-		return
-	return
-
 
 /obj/machinery/power/rad_collector/proc/update_icons()
 	overlays.Cut()
@@ -137,15 +134,15 @@ var/global/list/rad_collectors = list()
 	if(active)
 		overlays += image('icons/obj/singularity.dmi', "on")
 
-
 /obj/machinery/power/rad_collector/proc/toggle_power()
 	active = !active
-	if(active)
+
+	if (active)
 		icon_state = "ca_on"
 		flick("ca_active", src)
 	else
 		icon_state = "ca"
 		flick("ca_deactive", src)
+
 	update_icons()
-	return
 

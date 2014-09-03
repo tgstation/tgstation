@@ -12,18 +12,7 @@
 	var/obj/item/weapon/circuitboard/airlock/electronics = null
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
-
-
-/obj/machinery/door/window/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
-
-	var/turf/simulated/source = get_turf(src)
-	var/turf/simulated/target = get_step(source,dir)
-
-	if(istype(source)) air_master.tiles_to_update |= source
-	if(istype(target)) air_master.tiles_to_update |= target
-
-	return 1
+	ghost_read=0
 
 /obj/machinery/door/window/New()
 	..()
@@ -33,13 +22,13 @@
 		src.base_state = src.icon_state
 	return
 
-/obj/machinery/door/window/Del()
+/obj/machinery/door/window/Destroy()
 	density = 0
 	playsound(src, "shatter", 70, 1)
 	..()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
-	if (!( ismob(AM) ))
+	if (!ismob(AM))
 		var/obj/machinery/bot/bot = AM
 		if(istype(bot))
 			if(density && src.check_access(bot.botcard))
@@ -60,6 +49,7 @@
 		return
 	if (src.density && src.allowed(AM))
 		open()
+		// What.
 		if(src.check_access(null))
 			sleep(50)
 		else //secure doors close faster
@@ -67,7 +57,7 @@
 		close()
 	return
 
-/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
@@ -127,7 +117,7 @@
 /obj/machinery/door/window/proc/take_damage(var/damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		new /obj/item/weapon/shard(src.loc)
+		getFromPool(/obj/item/weapon/shard, loc)
 		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
 		CC.amount = 2
 		src.density = 0
@@ -154,7 +144,6 @@
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
 
-
 /obj/machinery/door/window/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
@@ -163,11 +152,12 @@
 	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/adult))
 		if(src.operating)
 			return
+		user.changeNext_move(8)
 		src.health = max(0, src.health - 25)
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
 		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
+			getFromPool(/obj/item/weapon/shard, loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
@@ -203,12 +193,13 @@
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		var/aforce = I.force
+		user.changeNext_move(8)
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if (src.health <= 0)
-			new /obj/item/weapon/shard(src.loc)
+			getFromPool(/obj/item/weapon/shard, loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
@@ -240,7 +231,7 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)
-	var/id = null
+	var/id_tag = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
 

@@ -14,9 +14,9 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "pokes the"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "hits"
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 60
 	health = 60
@@ -43,17 +43,20 @@
 	desc = ""
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
-	response_harm   = "pokes"
+	response_harm   = "hits"
+
+/mob/living/simple_animal/hostile/bear/Move()
+	..()
+	if(stat != DEAD)
+		if(loc && istype(loc,/turf/space))
+			icon_state = "bear"
+		else
+			icon_state = "bearfloor"
 
 /mob/living/simple_animal/hostile/bear/Life()
 	. =..()
 	if(!.)
 		return
-
-	if(loc && istype(loc,/turf/space))
-		icon_state = "bear"
-	else
-		icon_state = "bearfloor"
 
 	switch(stance)
 
@@ -61,7 +64,7 @@
 			stop_automated_movement = 1
 			stance_step++
 			if(stance_step >= 10) //rests for 10 ticks
-				if(target_mob && target_mob in ListTargets(10))
+				if(target && target in ListTargets())
 					stance = HOSTILE_STANCE_ATTACK //If the mob he was chasing is still nearby, resume the attack, otherwise go idle.
 				else
 					stance = HOSTILE_STANCE_IDLE
@@ -69,15 +72,15 @@
 		if(HOSTILE_STANCE_ALERT)
 			stop_automated_movement = 1
 			var/found_mob = 0
-			if(target_mob && target_mob in ListTargets(10))
-				if(!(SA_attackable(target_mob)))
+			if(target && target in ListTargets())
+				if(CanAttack(target))
 					stance_step = max(0, stance_step) //If we have not seen a mob in a while, the stance_step will be negative, we need to reset it to 0 as soon as we see a mob again.
 					stance_step++
 					found_mob = 1
-					src.dir = get_dir(src,target_mob)	//Keep staring at the mob
+					src.dir = get_dir(src,target)	//Keep staring at the mob
 
 					if(stance_step in list(1,4,7)) //every 3 ticks
-						var/action = pick( list( "growls at [target_mob]", "stares angrily at [target_mob]", "prepares to attack [target_mob]", "closely watches [target_mob]" ) )
+						var/action = pick( list( "growls at [target]", "stares angrily at [target]", "prepares to attack [target]", "closely watches [target]" ) )
 						if(action)
 							emote(action)
 			if(!found_mob)
@@ -102,18 +105,18 @@
 	if(stance != HOSTILE_STANCE_ATTACK && stance != HOSTILE_STANCE_ATTACKING)
 		stance = HOSTILE_STANCE_ALERT
 		stance_step = 6
-		target_mob = user
+		target = user
 	..()
 
 /mob/living/simple_animal/hostile/bear/attack_hand(mob/living/carbon/human/M as mob)
 	if(stance != HOSTILE_STANCE_ATTACK && stance != HOSTILE_STANCE_ATTACKING)
 		stance = HOSTILE_STANCE_ALERT
 		stance_step = 6
-		target_mob = M
+		target = M
 	..()
 
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(var/check_drift = 0)
-	return	//No drifting in space for space bears!
+	return 1	//No drifting in space for space bears!
 
 /mob/living/simple_animal/hostile/bear/FindTarget()
 	. = ..()
@@ -125,22 +128,22 @@
 	..(5)
 
 /mob/living/simple_animal/hostile/bear/AttackingTarget()
-	emote( pick( list("slashes at [target_mob]", "bites [target_mob]") ) )
+	emote( pick( list("slashes at [target]", "bites [target]") ) )
 
 	var/damage = rand(20,30)
 
-	if(ishuman(target_mob))
-		var/mob/living/carbon/human/H = target_mob
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/datum/organ/external/affecting = H.get_organ(ran_zone(dam_zone))
 		H.apply_damage(damage, BRUTE, affecting, H.run_armor_check(affecting, "melee"))
 		return H
-	else if(isliving(target_mob))
-		var/mob/living/L = target_mob
+	else if(isliving(target))
+		var/mob/living/L = target
 		L.adjustBruteLoss(damage)
 		return L
-	else if(istype(target_mob,/obj/mecha))
-		var/obj/mecha/M = target_mob
+	else if(istype(target,/obj/mecha))
+		var/obj/mecha/M = target
 		M.attack_animal(src)
 		return M
 

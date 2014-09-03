@@ -19,11 +19,13 @@
 	item_state = "welding"
 	m_amt = 3000
 	g_amt = 1000
+	w_type = RECYK_MISC
 	var/up = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
-	icon_action_button = "action_welding"
+	action_button_name = "Toggle Welding Helmet"
 	siemens_coefficient = 0.9
+	species_fit = list("Vox")
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -172,3 +174,30 @@
 		var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")
 		mob.Blend(earbit, ICON_OVERLAY)
 		mob2.Blend(earbit2, ICON_OVERLAY)
+
+
+
+
+
+/obj/item/clothing/head/butt
+	name = "butt"
+	desc = "So many butts, so little time."
+	icon_state = "butt"
+	item_state = "butt"
+	flags = TABLEPASS
+	force = 4.0
+	w_class = 1.0
+	throwforce = 2
+	throw_speed = 3
+	throw_range = 5
+
+	wizard_garb = 1
+
+	var/s_tone = 0.0
+	var/created_name = "Buttbot"
+	nonplant_seed_type = /obj/item/seeds/synthbuttseed
+
+	proc
+		transfer_buttdentity(var/mob/living/carbon/H)
+			name = "[H]'s butt"
+			return

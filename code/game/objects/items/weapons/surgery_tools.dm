@@ -17,10 +17,16 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	m_amt = 10000
-	g_amt = 5000
+	g_amt = 5000 // OH COME ON, WHERE THE FUCK IS THERE ANY GLASS IN A GODDAMN RETRACTOR
+	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /*HAHA, SUCK IT, 2000 LINES OF SPAGHETTI CODE!
 
@@ -132,10 +138,16 @@ LOOK FOR SURGERY.DM*/
 	icon_state = "hemostat"
 	m_amt = 5000
 	g_amt = 2500
+	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /*
 /obj/item/weapon/hemostat/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -267,10 +279,15 @@ LOOK FOR SURGERY.DM*/
 	icon_state = "cautery"
 	m_amt = 5000
 	g_amt = 2500
+	w_type = RECYK_ELECTRONIC
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is burning \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
 
 /*
 /obj/item/weapon/cautery/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -358,6 +375,7 @@ LOOK FOR SURGERY.DM*/
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	m_amt = 15000
 	g_amt = 10000
+	w_type = RECYK_ELECTRONIC
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0
@@ -377,6 +395,7 @@ LOOK FOR SURGERY.DM*/
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
+	hitsound = "sound/weapons/bladeslice.ogg"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 10.0
 	w_class = 1.0
@@ -385,6 +404,7 @@ LOOK FOR SURGERY.DM*/
 	throw_range = 5
 	m_amt = 10000
 	g_amt = 5000
+	w_type = RECYK_METAL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -399,9 +419,9 @@ LOOK FOR SURGERY.DM*/
 	if(!istype(M))
 		return ..()
 
-	//if(M.mutations & HUSK)	return ..()
+	//if(M.mutations & M_HUSK)	return ..()
 
-	if((CLUMSY in user.mutations) && prob(50))
+	if((M_CLUMSY in user.mutations) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -637,15 +657,21 @@ LOOK FOR SURGERY.DM*/
 	throw_range = 5
 	m_amt = 20000
 	g_amt = 10000
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is sawing \his head in two with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
 
 /*
 /obj/item/weapon/circular_saw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
 
-	if((CLUMSY in user.mutations) && prob(50))
+	if((M_CLUMSY in user.mutations) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -798,6 +824,11 @@ LOOK FOR SURGERY.DM*/
 	icon_state = "bone-gel"
 	force = 0
 	throwforce = 1.0
+	
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is eating the [src.name]! It looks like \he's  trying to commit suicide!</b>" //Don't eat glue kids.
+		return (TOXLOSS)
+
 
 /obj/item/weapon/FixOVein
 	name = "FixOVein"

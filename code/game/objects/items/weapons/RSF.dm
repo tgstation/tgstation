@@ -7,13 +7,12 @@ RSF
 	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "rcd"
+	icon_state = "rsf"
 	opacity = 0
 	density = 0
 	anchored = 0.0
 	var/matter = 0
 	var/mode = 1
-	flags = TABLEPASS
 	w_class = 3.0
 
 /obj/item/weapon/rsf/New()

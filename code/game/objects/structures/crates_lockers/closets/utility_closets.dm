@@ -64,7 +64,7 @@
 	if(src.type == /obj/structure/closet/emcloset)
 		if(firstopen && has_whitelist_entries("vox"))
 			new /obj/item/weapon/tank/emergency_nitrogen(src)
-			new /obj/item/clothing/mask/breath/vox(src)
+			new /obj/item/clothing/mask/breath(src) //Vox can wear normal breath masks fine.
 			firstopen=0
 	return ..()
 

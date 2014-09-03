@@ -264,7 +264,7 @@
 			reagents.add_reagent("uranium", 3+round(potency / 5, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
+/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Destroy()
 	if(istype(loc,/mob))
 		loc.SetLuminosity(round(loc.luminosity - potency/5,1))
 	..()
@@ -346,6 +346,18 @@
 			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+	if(istype(O, /obj/item/weapon/paper))
+		del(O)
+		user << "<span class='notice'>You roll a blunt.</span>"
+		var/obj/item/clothing/mask/cigarette/blunt/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/rolled(src.loc)
+		reagents.trans_to(B, (reagents.total_volume))
+		user.put_in_hands(B)
+		user.drop_from_inventory(src)
+		del(src)
+	else
+		return ..()
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus
 	seed = "/obj/item/seeds/ambrosiavulgaris/cruciatus"
 	name = "ambrosia vulgaris branch"
@@ -363,6 +375,18 @@
 			reagents.add_reagent("spiritbreaker", 10)
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+	if(istype(O, /obj/item/weapon/paper))
+		del(O)
+		user << "<span class='notice'>You roll a blunt.</span>"
+		var/obj/item/clothing/mask/cigarette/blunt/cruciatus/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/cruciatus/rolled(src.loc)
+		reagents.trans_to(B, (reagents.total_volume))
+		user.put_in_hands(B)
+		user.drop_from_inventory(src)
+		del(src)
+	else
+		return ..()
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	seed = "/obj/item/seeds/ambrosiadeus"
 	name = "ambrosia deus branch"
@@ -378,6 +402,18 @@
 			reagents.add_reagent("hyperzine", 1+round(potency / 10, 1))
 			reagents.add_reagent("space_drugs", 1+round(potency / 10, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+	if(istype(O, /obj/item/weapon/paper))
+		del(O)
+		user << "<span class='notice'>You roll a godly blunt.</span>"
+		var/obj/item/clothing/mask/cigarette/blunt/deus/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/deus/rolled(src.loc)
+		reagents.trans_to(B, (reagents.total_volume))
+		user.put_in_hands(B)
+		user.drop_from_inventory(src)
+		del(src)
+	else
+		return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	seed = "/obj/item/seeds/appleseed"
@@ -703,7 +739,7 @@
 		del(src)
 		return
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/HasEntered(AM as mob|obj)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
@@ -827,20 +863,18 @@
 	name = "destroying angel"
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
-	potency = 35
+	potency = 15
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
-			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
-			reagents.add_reagent("amatoxin", 13+round(potency / 3, 1))
-			reagents.add_reagent("psilocybin", 1+round(potency / 25, 1))
+			reagents.add_reagent("nutriment", 1+round(potency / 50, 1))
+			reagents.add_reagent("amanatin", 1+round(potency / 3, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>"
-		user << "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>"
+		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amanatin")]%</i></span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	seed = "/obj/item/seeds/libertymycelium"
@@ -894,7 +928,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	new /mob/living/simple_animal/mushroom(user.loc)
+	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
+	M.maxHealth += round(endurance / 4)
+	M.melee_damage_lower += round(potency / 20)
+	M.melee_damage_upper += round(potency / 20)
+	M.move_to_delay -= round(production / 50)
+	M.health = M.maxHealth
 	del(src)
 
 	user << "<span class='notice'>You plant the walking mushroom.</span>"
@@ -944,7 +983,7 @@
 
 	user << "<span class='notice'>You plant the glowshroom.</span>"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Del()
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
 	if(istype(loc,/mob))
 		loc.SetLuminosity(round(loc.luminosity - potency/10,1))
 	..()
@@ -985,25 +1024,47 @@
 	icon_state = "spawner"
 	potency = 10
 	New()
-		switch(rand(1,100))//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
-			if(0 to 10)
-				new/obj/item/weapon/spacecash/(src.loc)
-			if(11 to 20)
-				new/obj/item/weapon/spacecash/c10(src.loc)
-			if(21 to 30)
-				new/obj/item/weapon/spacecash/c20(src.loc)
-			if(31 to 40)
-				new/obj/item/weapon/spacecash/c50(src.loc)
-			if(41 to 50)
-				new/obj/item/weapon/spacecash/c100(src.loc)
-			if(51 to 60)
-				new/obj/item/weapon/spacecash/c200(src.loc)
-			if(61 to 80)
-				new/obj/item/weapon/spacecash/c500(src.loc)
-			else
-				new/obj/item/weapon/spacecash/c1000(src.loc)
+		..()
+		dispense_cash(rand(1,100)*10,src.loc)//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
 		spawn(5) //Workaround to keep harvesting from working weirdly.
 			del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/meat
+	seed = "/obj/item/seeds/synthmeatseed"
+	name = "synthmeat"
+	desc = "Tasty?"
+	icon_state = "spawner"
+	potency = 10
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/butt
+	seed = "/obj/item/seeds/synthbuttseed"
+	name = "synthbutt"
+	desc = "Tasty?"
+	icon_state = "spawner"
+	potency = 10
+	New()
+		..()
+		new /obj/item/clothing/head/butt(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/brain
+	seed = "/obj/item/seeds/synthbrainseed"
+	name = "synthmeat"
+	desc = "Tasty?"
+	icon_state = "spawner"
+	potency = 10
+	New()
+		..()
+		new /obj/item/brain(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
 	seed = "/obj/item/seeds/bluespacetomatoseed"

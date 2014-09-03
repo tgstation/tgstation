@@ -6,6 +6,7 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 	w_class = 3.0
 	m_amt = 2000
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "combat=3;magnets=2"
 	projectile_type = "/obj/item/projectile/beam"
 
@@ -14,6 +15,20 @@
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	projectile_type = "/obj/item/projectile/beam/practice"
 	clumsy_check = 0
+
+/obj/item/weapon/gun/energy/laser/pistol
+	name = "laser pistol"
+	desc = "A laser pistol issued to high ranking members of a certain shadow corporation."
+	icon_state = "xcomlaserpistol"
+	projectile_type = /obj/item/projectile/beam
+	charge_cost = 100 // holds less "ammo" then the rifle variant.
+
+/obj/item/weapon/gun/energy/laser/rifle
+	name = "laser rifle"
+	desc = "A laser rifle issued to high ranking members of a certain shadow corporation."
+	icon_state = "xcomlasergun"
+	projectile_type = /obj/item/projectile/beam
+	charge_cost = 50
 
 obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
@@ -35,7 +50,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -69,7 +84,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -124,6 +139,36 @@ obj/item/weapon/gun/energy/laser/retro
 	charge_cost = 50
 
 
+/obj/item/weapon/gun/energy/plasma
+	name = "plasma gun"
+	desc = "A high-power plasma gun. You shouldn't ever see this."
+	icon_state = "xray"
+	fire_sound = 'sound/weapons/elecfire.ogg'
+	origin_tech = "combat=5;materials=3;magnets=2"
+	projectile_type = /obj/item/projectile/energy/plasma
+	charge_cost = 50
+
+/obj/item/weapon/gun/energy/plasma/pistol
+	name = "plasma pistol"
+	desc = "Plasma pistol that is given to members of an unknown shadow organization."
+	icon_state = "alienpistol"
+	projectile_type = /obj/item/projectile/energy/plasma/pistol
+	charge_cost = 50
+
+/obj/item/weapon/gun/energy/plasma/light
+	name = "light plasma rifle"
+	desc = "Light plasma rifle that is given to members of an unknown shadow organization."
+	icon_state = "lightalienrifle"
+	projectile_type = /obj/item/projectile/energy/plasma/light
+	charge_cost = 100
+
+/obj/item/weapon/gun/energy/plasma/rifle
+	name = "plasma rifle"
+	desc = "Plasma rifle that is given to members of an unknown shadow organization."
+	icon_state = "alienrifle"
+	projectile_type = /obj/item/projectile/energy/plasma/rifle
+	charge_cost = 150
+
 ////////Laser Tag////////////////////
 
 /obj/item/weapon/gun/energy/laser/bluetag
@@ -147,7 +192,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -184,7 +229,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 

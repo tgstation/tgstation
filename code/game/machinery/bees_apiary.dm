@@ -100,7 +100,7 @@
 		angry_swarm(user)
 		..()
 
-/obj/machinery/apiary/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/apiary/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -210,7 +210,7 @@
 /obj/machinery/apiary/proc/angry_swarm(var/mob/M)
 	for(var/mob/living/simple_animal/bee/B in owned_bee_swarms)
 		B.feral = 25
-		B.target_mob = M
+		B.target = M
 
 	swarming = 25
 
@@ -220,7 +220,7 @@
 			spawn_strength = 6
 
 		var/mob/living/simple_animal/bee/B = new(get_turf(src), src)
-		B.target_mob = M
+		B.target = M
 		B.strength = spawn_strength
 		B.feral = 25
 		B.mut = mut

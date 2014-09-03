@@ -15,6 +15,7 @@
 		return 0
 
 /obj/item/projectile/bullet/weakbullet
+	icon_state = "bbshell"
 	damage = 10
 	stun = 5
 	weaken = 5
@@ -70,6 +71,7 @@
 
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
+	icon_state = "sshell"
 	damage = 5
 	stun = 10
 	weaken = 10

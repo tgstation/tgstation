@@ -1,25 +1,25 @@
 /obj/item/stack/tile/plasteel
-	name = "floor tiles"
+	name = "floor tile"
 	singular_name = "floor tile"
 	desc = "Those could work as a pretty decent throwing weapon"
 	icon_state = "tile"
 	w_class = 3.0
 	force = 6.0
 	m_amt = 937.5
+	w_type = RECYK_METAL
 	throwforce = 15.0
 	throw_speed = 5
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
 	max_amount = 60
 
-/obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
-	..()
-	src.pixel_x = rand(1, 14)
-	src.pixel_y = rand(1, 14)
-	return
+/obj/item/stack/tile/plasteel/New()
+	. = ..()
+	pixel_x = rand(1, 14)
+	pixel_y = rand(1, 14)
 
-/obj/item/stack/tile/plasteel/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("iron",amount/4)
+/obj/item/stack/tile/plasteel/recycle(var/datum/materials/rec)
+	rec.addAmount("iron",amount/4)
 	return 1
 
 /*

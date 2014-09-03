@@ -23,6 +23,7 @@
 	return
 
 /obj/item/weapon/shard/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -35,7 +36,7 @@
 				G.attackby(NG, user)
 				usr << "You add the newly-formed plasma glass to the stack. It now contains [NG.amount] sheets."
 			//SN src = null
-			del(src)
+			returnToPool(src)
 			return
 	return ..()
 

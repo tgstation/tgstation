@@ -13,6 +13,11 @@
 	origin_tech = "combat=1"
 	attack_verb = list("robusted")
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is [pick("stoving","robusting")] \his head in with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (BRUTELOSS)
+
+	
 	New()
 		..()
 		if (src.type == /obj/item/weapon/storage/toolbox)

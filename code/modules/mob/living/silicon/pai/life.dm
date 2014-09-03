@@ -20,8 +20,7 @@
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
 	else
-		health = 100 - getBruteLoss() - getFireLoss()
-
+		health = maxHealth - getBruteLoss() - getFireLoss()

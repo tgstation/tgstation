@@ -20,23 +20,46 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS * 3
+	var/biomass = CLONE_BIOMASS // * 3 - N3X
 	var/opened = 0
+	var/time_coeff = 1 //Upgraded via part upgrading
+	var/resource_efficiency = 1
+
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)) && attempting)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 /obj/machinery/clonepod/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonepod
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/console_screen
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/clonepod,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
 	RefreshParts()
 
+/obj/machinery/clonepod/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/scanning_module/SM in component_parts)
+		T += SM.rating //First rank is two times more efficient, second rank is two and a half times, third is three times. For reference, there's TWO scanning modules
+	time_coeff = T/2
+	T = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/MA in component_parts)
+		T += MA.rating //Ditto above
+	resource_efficiency = T/2
+	T = 0
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -76,10 +99,10 @@
 		Initialize()
 		buf.types=DNA2_BUF_SE
 		var/list/new_SE=list(0x098,0x3E8,0x403,0x44C,0x39F,0x4B0,0x59D,0x514,0x5FC,0x578,0x5DC,0x640,0x6A4)
-		for(var/i=new_SE.len;i<=STRUCDNASIZE;i++)
+		for(var/i=new_SE.len;i<=DNA_SE_LENGTH;i++)
 			new_SE += rand(1,1024)
 		buf.dna.SE=new_SE
-		buf.dna.SetSEValue(MONKEYBLOCK,0xFFF)
+		buf.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
 
 
 //Find a dead mob with a brain and client.
@@ -178,15 +201,14 @@
 	spawn(30)
 		src.eject_wait = 0
 
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, delay_ready_dna=1)
 	occupant = H
 
-	if(!R.dna.real_name)	//to prevent null names
-		R.dna.real_name = "clone ([rand(0,999)])"
-	H.real_name = R.dna.real_name
-
 	src.icon_state = "pod_1"
+
 	//Get the clone body ready
+	H.dna = R.dna.Clone()
+
 	H.adjustCloneLoss(150) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
 	H.adjustBrainLoss(src.heal_level + 50 + rand(10, 30)) // The rand(10, 30) will come out as extra brain damage
 	H.Paralyse(4)
@@ -214,23 +236,12 @@
 
 	// -- End mode specific stuff
 
-	if(!R.dna)
-		H.dna = new /datum/dna()
-		H.dna.real_name = H.real_name
-	else
-		H.dna=R.dna
 	H.UpdateAppearance()
-	randmutb(H) //Sometimes the clones come out wrong.
-	H.dna.UpdateSE()
-	H.dna.UpdateUI()
+	H.set_species()
+	randmutb(H) // sometimes the clones come out wrong.
+	H.update_mutantrace()
+	H.real_name = H.dna.real_name
 
-	H.f_style = "Shaved"
-	if(R.dna.species == "Human") //no more xenos losing ears/tentacles
-		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
-
-	H.set_species(R.dna.species)
-	//for(var/datum/language/L in languages)
-	//	H.add_language(L.name)
 	H.suiciding = 0
 	src.attempting = 0
 	return 1
@@ -255,10 +266,10 @@
 			src.occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
-			src.occupant.adjustCloneLoss(-2)
+			src.occupant.adjustCloneLoss(-0.2*time_coeff) //Very slow, new parts = much faster
 
 			//Premature clones may have brain damage.
-			src.occupant.adjustBrainLoss(-1)
+			src.occupant.adjustBrainLoss(-0.1*time_coeff) //Ditto above
 
 			//So clones don't die of oxyloss in a running pod.
 			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
@@ -333,14 +344,12 @@
 				I.loc = src.loc
 			del(src)
 			return
-/*Removing cloning pod biomass
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "\blue \The [src] processes \the [W]."
 		biomass += 50
 		user.drop_item()
 		del(W)
 		return
-*/
 	else
 		..()
 
@@ -399,7 +408,7 @@
 	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
 
-	//src.biomass -= CLONE_BIOMASS
+	src.biomass -= CLONE_BIOMASS/resource_efficiency //Improve parts to use less biomass
 
 	return
 
@@ -429,21 +438,21 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -457,7 +466,7 @@
 	icon_state = "disk_kit"
 
 /obj/item/weapon/storage/box/disks/New()
-	..()
+	. = ..()
 	new /obj/item/weapon/disk/data(src)
 	new /obj/item/weapon/disk/data(src)
 	new /obj/item/weapon/disk/data(src)

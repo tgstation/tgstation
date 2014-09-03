@@ -2,7 +2,7 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
 	icon_state = "ionrifle"
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/ion.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
@@ -26,13 +26,16 @@
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/declone"
 
-obj/item/weapon/gun/energy/staff
+var/available_staff_transforms=list("monkey","robot","slime","xeno","human","cluwne")
+#define SOC_CHANGETYPE_COOLDOWN 2 MINUTES
+
+/obj/item/weapon/gun/energy/staff
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
-	fire_sound = 'sound/weapons/emitter.ogg'
+	fire_sound = 'sound/weapons/radgun.ogg'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
 	w_class = 4.0
@@ -41,14 +44,15 @@ obj/item/weapon/gun/energy/staff
 	origin_tech = null
 	clumsy_check = 0
 	var/charge_tick = 0
-
+	var/changetype=null
+	var/next_changetype=0
 
 	New()
 		..()
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -63,6 +67,30 @@ obj/item/weapon/gun/energy/staff
 
 	update_icon()
 		return
+
+	load_into_chamber()
+		if(!..()) return 0
+		var/obj/item/projectile/change/P=in_chamber
+		if(P && istype(P))
+			P.changetype=changetype
+		return 1
+
+	attack_self(var/mob/living/user)
+		if(world.time < next_changetype)
+			user << "<span class='warning'>[src] is still recharging.</span>"
+			return
+		var/selected = input("Select a form for your next victim","Staff of Change") as null|anything in list("random")+available_staff_transforms
+		if(!selected)
+			return
+
+		switch(selected)
+			if("random")
+				changetype=null
+			else
+				changetype=selected
+		user << "You have selected to make your next victim have a [selected] form."
+		next_changetype=world.time+SOC_CHANGETYPE_COOLDOWN
+
 /obj/item/weapon/gun/energy/staff/animate
 	name = "staff of animation"
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
@@ -87,7 +115,7 @@ obj/item/weapon/gun/energy/staff
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -136,7 +164,7 @@ obj/item/weapon/gun/energy/staff
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -185,3 +213,62 @@ obj/item/weapon/gun/energy/staff/focus
 			charge_cost = 100
 			user << "\red The [src.name] will now strike only a single person."
 			projectile_type = "/obj/item/projectile/forcebolt"
+
+/obj/item/weapon/gun/energy/kinetic_accelerator
+	name = "proto-kinetic accelerator"
+	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
+	icon_state = "kineticgun"
+	item_state = "kineticgun"
+	projectile_type = "/obj/item/projectile/kinetic"
+	cell_type = "/obj/item/weapon/cell/crap"
+	charge_cost = 50
+	var/overheat = 0
+	var/recent_reload = 1
+/*
+/obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
+	overheat = 1
+	spawn(20)
+		overheat = 0
+		recent_reload = 0
+	..()
+*/
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(var/mob/living/user/L)
+	if(overheat || recent_reload)
+		return
+	power_supply.give(500)
+	playsound(src.loc, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	recent_reload = 1
+	update_icon()
+	return
+
+// /vg/ - Broken until we update to /tg/ guncode.
+/obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
+	return
+
+
+/obj/item/weapon/gun/energy/radgun
+	name = "radgun"
+	desc = "An experimental energy gun that fires radioactive projectiles that deal toxin damage, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
+	icon_state = "radgun"
+	fire_sound = 'sound/weapons/radgun.ogg'
+	charge_cost = 100
+	var/charge_tick = 0
+	projectile_type = "/obj/item/projectile/energy/rad"
+
+	New()
+		..()
+		processing_objects.Add(src)
+
+
+	Destroy()
+		processing_objects.Remove(src)
+		..()
+
+	process()
+		charge_tick++
+		if(charge_tick < 4) return 0
+		charge_tick = 0
+		if(!power_supply) return 0
+		power_supply.give(100)
+		update_icon()
+		return 1

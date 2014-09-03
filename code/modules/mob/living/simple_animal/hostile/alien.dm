@@ -17,7 +17,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
-	a_intent = "harm"
+	a_intent = "hurt"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	min_oxy = 0
 	max_oxy = 0
@@ -29,7 +29,7 @@
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
 	faction = "alien"
-	wall_smash = 1
+	environment_smash = 2
 	status_flags = CANPUSH
 	minbodytemp = 0
 	heat_damage_per_tick = 20

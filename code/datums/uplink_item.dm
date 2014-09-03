@@ -184,6 +184,14 @@ var/list/uplink_items = list()
 	cost = 7
 	job = list("Station Engineer","Chief Engineer")
 
+//Geneticist
+/datum/uplink_item/jobspecific/radgun
+	name = "Radgun"
+	desc = "An experimental energy gun that fires radioactive projectiles that burn, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
+	item = /obj/item/weapon/gun/energy/radgun
+	cost = 6
+	job = list("Geneticist")
+
 // DANGEROUS WEAPONS
 
 /datum/uplink_item/dangerous
@@ -219,6 +227,11 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/emps
 	cost = 3
 
+/datum/uplink_item/dangerous/viscerator
+	name = "Viscerator Grenade"
+	desc = "A single grenade containing a pair of incredibly destructive viscerators. Be aware that they will attack any nearby targets, including yourself. Emits a blinding flash upon detonation."
+	item = /obj/item/weapon/grenade/spawnergrenade/manhacks/syndicate
+	cost = 3
 
 // STEALTHY WEAPONS
 
@@ -272,6 +285,12 @@ var/list/uplink_items = list()
 	desc = "A conspicuous gas mask that mimics the voice named on your identification card. When no identification is worn, the mask will render your voice unrecognizable."
 	item = /obj/item/clothing/mask/gas/voice
 	cost = 4
+
+/datum/uplink_item/stealthy_tools/dnascrambler
+	name = "DNA Scrambler"
+	desc = "A syringe with one injection that randomizes appearance and name upon use. A cheaper but less versatile alternative to an agent card and voice changer."
+	item = /obj/item/weapon/dnascrambler
+	cost = 2
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
@@ -337,7 +356,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
-	item = /obj/item/weapon/aiModule/syndicate
+	item = /obj/item/weapon/aiModule/freeform/syndicate
 	cost = 7
 
 /datum/uplink_item/device_tools/plastic_explosives
@@ -357,6 +376,12 @@ var/list/uplink_items = list()
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/radio/beacon/syndicate
 	cost = 7
+
+/datum/uplink_item/device_tools/pdapinpointer
+	name = "PDA Pinpointer"
+	desc = "A pinpointer that tracks any PDA on the station. Useful for locating assassination targets or other high-value targets that you can't find. WARNING: Can only set once."
+	item = /obj/item/weapon/pinpointer/pdapinpointer
+	cost = 2
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
@@ -399,7 +424,7 @@ var/list/uplink_items = list()
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass
-	category = "(Pointless) Badassery"
+	category = "Badassery"
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
@@ -412,6 +437,12 @@ var/list/uplink_items = list()
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
+
+/datum/uplink_item/badass/trophybelt
+ 	name = "Trophy Belt"
+ 	desc = "A belt for holding the heads you've collected."
+ 	item = /obj/item/weapon/storage/belt/skull
+ 	cost = 2
 
 /datum/uplink_item/badass/random
 	name = "Random Item"

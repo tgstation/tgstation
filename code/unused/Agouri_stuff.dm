@@ -726,7 +726,7 @@
 		dismantle_wall()
 
 /turf/simulated/wall/attack_paw(mob/user as mob)
-	if ((user.mutations & HULK))
+	if ((user.mutations & M_HULK))
 		if (prob(40))
 			usr << text("\blue You smash through the wall.")
 			dismantle_wall(1)
@@ -756,7 +756,7 @@
 	return
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
-	if ((user.mutations & HULK))
+	if ((user.mutations & M_HULK))
 		if (prob(40))
 			usr << text("\blue You smash through the wall.")
 			dismantle_wall(1)

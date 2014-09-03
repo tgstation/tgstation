@@ -20,9 +20,9 @@
 		..()
 		icon_state = mineralType
 		name = "[mineralType] door"
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles()
 
-	Del()
+	Destroy()
 		update_nearby_tiles()
 		..()
 
@@ -45,7 +45,7 @@
 	attack_hand(mob/user as mob)
 		return TryToSwitchState(user)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 		if(air_group) return 0
 		if(istype(mover, /obj/effect/beam))
 			return !opacity
@@ -138,7 +138,7 @@
 				var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
 				for(var/i = 3, i <= oreAmount, i++)
 					new ore(get_turf(src))
-		del(src)
+		qdel(src)
 
 	ex_act(severity = 1)
 		switch(severity)
@@ -155,20 +155,14 @@
 				CheckHardness()
 		return
 
-	proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
-		if(!air_master) return 0
+	proc/update_nearby_tiles() //Copypasta from airlock code
+		if (isnull(air_master))
+			return 0
 
-		var/turf/simulated/source = loc
-		var/turf/simulated/north = get_step(source,NORTH)
-		var/turf/simulated/south = get_step(source,SOUTH)
-		var/turf/simulated/east = get_step(source,EAST)
-		var/turf/simulated/west = get_step(source,WEST)
+		var/T = loc
 
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(north)) air_master.tiles_to_update += north
-		if(istype(south)) air_master.tiles_to_update += south
-		if(istype(east)) air_master.tiles_to_update += east
-		if(istype(west)) air_master.tiles_to_update += west
+		if (isturf(T))
+			air_master.mark_for_update(T)
 
 		return 1
 
@@ -209,7 +203,7 @@
 				TemperatureAct(100)
 		..()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		if(exposed_temperature > 300)
 			TemperatureAct(exposed_temperature)
 
@@ -224,7 +218,7 @@
 			napalm.temperature = 200+T0C
 
 			target_tile.assume_air(napalm)
-			spawn (0) target_tile.hotspot_expose(temperature, 400)
+			spawn (0) target_tile.hotspot_expose(temperature, 400,surfaces=1)
 
 			hardness -= toxinsToDeduce/100
 			CheckHardness()

@@ -7,7 +7,7 @@ var/const/CHUNK_SIZE = 16 // Only chunk sizes that are to the power of 2. E.g: 2
 var/datum/cameranet/cameranet = new()
 
 /datum/cameranet
-	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Del().
+	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Destroy().
 	var/list/cameras = list()
 	// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()

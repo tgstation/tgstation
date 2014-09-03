@@ -44,9 +44,9 @@
 		if(O)
 			for(var/ore_id in ore)
 				var/datum/material/po =ore[ore_id]
-				if (istype(O,po.sheettype))
+				if (po.cointype && istype(O,po.sheettype))
 					po.stored += 5 * O.amount // 100/20 = 5 coins per sheet.
-					del(O)
+					qdel(O)
 					break
 
 
@@ -113,7 +113,7 @@ a.notsmelting {
 	var/nloaded=0
 	for(var/ore_id in ore)
 		var/datum/material/ore_info=ore[ore_id]
-		if(ore_info.stored)
+		if(ore_info.stored && ore_info.cointype)
 			html += {"
 			<tr>
 				<td class="clmName">[ore_info.processed_name]</td>

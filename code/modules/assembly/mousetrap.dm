@@ -3,7 +3,7 @@
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
 	m_amt = 100
-	w_amt = 10
+	w_type = RECYK_METAL
 	origin_tech = "combat=1"
 	var/armed = 0
 	wires = WIRE_PULSE
@@ -54,7 +54,7 @@
 		if(!armed)
 			user << "<span class='notice'>You arm [src].</span>"
 		else
-			if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
+			if(((user.getBrainLoss() >= 60 || (M_CLUMSY in user.mutations)) && prob(50)))
 				var/which_hand = "l_hand"
 				if(!user.hand)
 					which_hand = "r_hand"
@@ -70,7 +70,7 @@
 
 	attack_hand(mob/living/user as mob)
 		if(armed)
-			if(((user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
+			if(((user.getBrainLoss() >= 60 || M_CLUMSY in user.mutations)) && prob(50))
 				var/which_hand = "l_hand"
 				if(!user.hand)
 					which_hand = "r_hand"
@@ -81,7 +81,7 @@
 		..()
 
 
-	HasEntered(AM as mob|obj)
+	Crossed(AM as mob|obj)
 		if(armed)
 			if(ishuman(AM))
 				var/mob/living/carbon/H = AM

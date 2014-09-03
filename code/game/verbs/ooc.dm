@@ -1,4 +1,3 @@
-
 var/global/normal_ooc_colour = "#002eb8"
 
 /client/verb/ooc(msg as text)
@@ -46,6 +45,8 @@ var/global/normal_ooc_colour = "#002eb8"
 		display_colour = "#0099cc"	//light blue
 		if(holder.rights & R_MOD && !(holder.rights & R_ADMIN))
 			display_colour = "#184880"	//dark blue
+		if(holder.rights & R_DEBUG && !(holder.rights & R_ADMIN))
+			display_colour = "#1b521f"	//dark green
 		else if(holder.rights & R_ADMIN)
 			if(config.allow_admin_ooccolor)
 				display_colour = src.prefs.ooccolor
@@ -62,7 +63,6 @@ var/global/normal_ooc_colour = "#002eb8"
 					else
 						display_name = holder.fakekey
 			C << "<font color='[display_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
-
 			/*
 			if(holder)
 				if(!holder.fakekey || C.holder)

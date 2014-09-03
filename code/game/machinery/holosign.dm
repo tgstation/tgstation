@@ -9,7 +9,7 @@
 	ghost_read = 0 // Deactivate ghost touching.
 	ghost_write = 0
 	var/lit = 0
-	var/id = null
+	var/id_tag = null
 	var/on_icon = "sign_on"
 
 	proc/toggle()
@@ -40,7 +40,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	desc = "A remote control switch for holosign."
-	var/id = null
+	var/id_tag = null
 	var/active = 0
 	anchored = 1.0
 	use_power = 1
@@ -74,7 +74,7 @@ obj/machinery/holosign_switch/attack_paw(mob/user as mob)
 		icon_state = "light0"
 
 	for(var/obj/machinery/holosign/M in world)
-		if (M.id == src.id)
+		if (M.id_tag == src.id_tag)
 			spawn( 0 )
 				M.toggle()
 				return

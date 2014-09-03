@@ -3,7 +3,7 @@
 /obj/structure/computerframe
 	density = 1
 	anchored = 0
-	name = "Computer-frame"
+	name = "Computer Frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "0"
 	var/state = 0
@@ -19,9 +19,10 @@
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
-	g_amt=2000 // Recycle glass
+	g_amt=2000 // Recycle glass only
+	w_type = RECYK_ELECTRONIC
 
-	var/id = null
+	var/id_tag = null
 	var/frequency = null
 	var/build_path = null
 	var/board_type = "computer"
@@ -92,8 +93,11 @@
 	name = "Circuit board (Atmosphere siphon control)"
 	build_path = "/obj/machinery/computer/atmosphere/siphonswitch"
 /obj/item/weapon/circuitboard/air_management
-	name = "Circuit board (Atmospheric monitor)"
+	name = "Circuit board (Atmospheric General Monitor)"
 	build_path = "/obj/machinery/computer/general_air_control"
+/obj/item/weapon/circuitboard/large_tank_control
+	name = "Circuit board (Atmospheric Tank Control)"
+	build_path = "/obj/machinery/computer/general_air_control/large_tank_control"
 /obj/item/weapon/circuitboard/injector_control
 	name = "Circuit board (Injector control)"
 	build_path = "/obj/machinery/computer/general_air_control/fuel_injection"
@@ -362,7 +366,7 @@
 				user << "\blue You connect the monitor."
 				var/B = new src.circuit.build_path ( src.loc )
 				if(circuit.powernet) B:powernet = circuit.powernet
-				if(circuit.id) B:id = circuit.id
+				if(circuit.id_tag) B:id_tag = circuit.id_tag
 				if(circuit.records) B:records = circuit.records
 				if(circuit.frequency) B:frequency = circuit.frequency
 				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))

@@ -9,9 +9,9 @@
 	speak_chance = 0
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
-	response_help = "brushes the"
-	response_disarm = "pushes the"
-	response_harm = "hits the"
+	response_help = "brushes"
+	response_disarm = "pushes"
+	response_harm = "hits"
 	speed = -1
 	maxHealth = 250
 	health = 250
@@ -54,4 +54,18 @@
 	..()
 	visible_message("\red <b>[src]</b> is hacked into pieces!")
 	new /obj/item/stack/sheet/wood(loc)
+	del(src)
+
+/mob/living/simple_animal/hostile/tree/festivus
+	name = "festivus pole"
+	desc = "serenity now... SERENITY NOW!"
+	icon_state = "festivus_pole"
+	icon_living = "festivus_pole"
+	icon_dead = "festivus_pole"
+	icon_gib = "festivus_pole"
+
+/mob/living/simple_animal/hostile/tree/festivus/Die()
+	..()
+	visible_message("\red <b>[src]</b> is hacked into pieces!")
+	new /obj/item/stack/rods(loc)
 	del(src)

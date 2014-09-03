@@ -22,6 +22,7 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 400
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
 /obj/item/weapon/locator/attack_self(mob/user as mob)
@@ -100,7 +101,7 @@ Frequency:
 									direct = "weak"
 							src.temp += "[W.id]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
-				src.temp += "<B>You are at \[[sr.x+WORLD_X_OFFSET],[sr.y+WORLD_Y_OFFSET],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
+				src.temp += "<B>You are at \[[sr.x-WORLD_X_OFFSET],[sr.y-WORLD_Y_OFFSET],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
 			else
 				src.temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
 		else
@@ -133,6 +134,7 @@ Frequency:
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1;bluespace=3"
 
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)

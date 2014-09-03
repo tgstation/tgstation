@@ -4,12 +4,8 @@
 	if(blob_points < cost)
 		src << "<span class='warning'>You cannot afford this.</span>"
 		return 0
-	blob_points -= cost
+	add_points(-cost)
 	return 1
-
-/mob/camera/blob/proc/add_points(var/points = 0)
-	if(points)
-		blob_points = min(max_blob_points, blob_points + points)
 
 // Power verbs
 
@@ -35,16 +31,15 @@
 		if(chosen_node)
 			src.loc = chosen_node.loc
 
-/mob/camera/blob/verb/create_shield()
+/mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
 	set name = "Create Shield Blob (10)"
 	set desc = "Create a shield blob."
 
-
 	var/turf/T = get_turf(src)
+	create_shield(T)
 
-	if(!T)
-		return
+/mob/camera/blob/proc/create_shield(var/turf/T)
 
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
@@ -62,6 +57,7 @@
 
 	B.change_to(/obj/effect/blob/shield)
 	return
+
 
 
 /mob/camera/blob/verb/create_resource()
@@ -85,7 +81,7 @@
 		src << "Unable to use this blob, find a normal one."
 		return
 
-	for(var/obj/effect/blob/resource/blob in orange(4))
+	for(var/obj/effect/blob/resource/blob in orange(4, T))
 		src << "There is a resource blob nearby, move more than 4 tiles away from it!"
 		return
 
@@ -154,7 +150,7 @@
 		src << "Unable to use this blob, find a normal one."
 		return
 
-	for(var/obj/effect/blob/node/blob in orange(5))
+	for(var/obj/effect/blob/node/blob in orange(5, T))
 		src << "There is another node nearby, move more than 5 tiles away from it!"
 		return
 
@@ -186,7 +182,7 @@
 		src << "Unable to use this blob, find a normal one."
 		return
 
-	for(var/obj/effect/blob/factory/blob in orange(7))
+	for(var/obj/effect/blob/factory/blob in orange(7, T))
 		src << "There is a factory blob nearby, move more than 7 tiles away from it!"
 		return
 
@@ -219,49 +215,15 @@
 	return
 
 
-/mob/camera/blob/verb/spawn_blob()
+/mob/camera/blob/verb/expand_blob_power()
 	set category = "Blob"
-	set name = "Expand Blob (5)"
+	set name = "Expand/Attack Blob (5)"
 	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear we will attack it, which might clear it."
 
 	var/turf/T = get_turf(src)
+	expand_blob(T)
 
-	if(!T)
-		return
-
-	var/obj/effect/blob/B = locate() in T
-	if(B)
-		src << "There is a blob here!"
-		return
-
-	var/obj/effect/blob/OB = locate() in circlerange(src, 1)
-	if(!OB)
-		src << "There is no blob adjacent to you."
-		return
-
-	if(!can_buy(5))
-		return
-	OB.expand(T, 0)
-	return
-
-/mob/camera/blob/proc/click_create_shield(obj/effect/blob/B)
-	if(!B)//We are on a blob
-		src << "There is no blob here!"
-		return
-
-	if(!istype(B, /obj/effect/blob/normal))
-		src << "Unable to use this blob, find a normal one."
-		return
-
-	if(!can_buy(10))
-		return
-
-
-	B.change_to(/obj/effect/blob/shield)
-	return
-
-/mob/camera/blob/proc/click_expand_blob(var/turf/T)
-
+/mob/camera/blob/proc/expand_blob(var/turf/T)
 	if(!T)
 		return
 
@@ -272,7 +234,7 @@
 
 	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
 	if(!OB)
-		src << "There is no blob adjacent to that tile."
+		src << "There is no blob adjacent to you."
 		return
 
 	if(!can_buy(5))
@@ -280,20 +242,37 @@
 	OB.expand(T, 0)
 	return
 
-/mob/camera/blob/verb/rally_spores()
+
+/mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"
 	set name = "Rally Spores (5)"
 	set desc = "Rally the spores to move to your location."
 
+	var/turf/T = get_turf(src)
+	rally_spores(T)
+
+/mob/camera/blob/proc/rally_spores(var/turf/T)
+
 	if(!can_buy(5))
 		return
 
-	var/list/surrounding_turfs = block(locate(x - 1, y - 1, z), locate(x + 1, y + 1, z))
+	src << "You rally your spores."
+
+	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
 		return
 
 	for(var/mob/living/simple_animal/hostile/blobspore/BS in living_mob_list)
-		if(isturf(BS.loc) && get_dist(BS, src) <= 20)
+		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 	return
+	
+/mob/camera/blob/verb/telepathy(message as text)
+	set category = "Blob"
+	set name = "Psionic Message (15)"
+	set desc = "Give a psionic message to all creatures on and around the station."
+
+	world << "\red Your vision becomes cloudy, and your mind becomes clear."
+	spawn(5)
+	world << "<span class='blob'>[message]</span>"

@@ -41,12 +41,8 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.set_machine(src)
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\artifact_harvester.dm:44: var/dat = "<B>Artifact Power Harvester</B><BR>"
-	var/dat = {"<B>Artifact Power Harvester</B><BR>
-<HR><BR>"}
-	// END AUTOFIX
+	var/dat = "<B>Artifact Power Harvester</B><BR>"
+	dat += "<HR><BR>"
 	//
 	if(owned_scanner)
 		if(harvesting)
@@ -57,26 +53,19 @@
 			dat += "<A href='?src=\ref[src];stopharvest=1'>Halt early</A><BR>"
 		else
 			if(inserted_battery)
+				dat += "<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>"
+				dat += "<b>Energy signature ID:</b>[inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]"]<BR>"
+				dat += "<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
+				dat += "<A href='?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>"
+				dat += "<A href='?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\artifact_harvester.dm:56: dat += "<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>"
-				dat += {"<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>
-					<b>Energy signature ID:</b>[inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]"]<BR>
-					<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>
-					<A href='?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>
-					<A href='?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"}
-				// END AUTOFIX
 			else
 				dat += "No battery inserted.<BR>"
 	else
 		dat += "<B><font color=red>Unable to locate analysis pad.</font><BR></b>"
 	//
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\artifact_harvester.dm:67: dat += "<HR>"
-	dat += {"<HR>
-		<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close<BR>"}
-	// END AUTOFIX
+	dat += "<HR>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close<BR>"
 	user << browse(dat, "window=artharvester;size=450x500")
 	onclose(user, "artharvester")
 

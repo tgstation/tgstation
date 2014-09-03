@@ -18,6 +18,7 @@
 	var/update_shield_icons = 0
 	var/stability = 100
 	var/exploding = 0
+	var/exploded = 0
 
 	var/active = 0//On or not
 	var/fuel_injection = 2//How much fuel to inject
@@ -38,17 +39,19 @@
 	linked_cores = list()
 
 
-/obj/machinery/power/am_control_unit/Del()//Perhaps damage and run stability checks rather than just del on the others
+/obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 		del(AMS)
 	..()
 
 
 /obj/machinery/power/am_control_unit/process()
-	if(exploding)
+	if(exploding && !exploded)
 		message_admins("AME explosion at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) - Last touched by [fingerprintslast]",0,1)
+		exploded=1
 		explosion(get_turf(src),8,10,12,15)
-		if(src) del(src)
+		if(src)
+			del(src)
 
 	if(update_shield_icons && !shield_icon_delay)
 		check_shield_icons()

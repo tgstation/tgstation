@@ -1,6 +1,6 @@
 /obj/item/blueprints
 	name = "station blueprints"
-	desc = "Blueprints of the station. There's stamp \"Classified\" and several coffee stains on it."
+	desc = "Blueprints of the station. There is a \"Classified\" stamp and several coffee stains on it."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
 	attack_verb = list("attacked", "bapped", "hit")
@@ -21,7 +21,7 @@
 
 /obj/item/blueprints/attack_self(mob/M as mob)
 	if (!istype(M,/mob/living/carbon/human))
-		M << "This is stack of useless pieces of harsh paper." //monkeys cannot into projecting
+		M << "This stack of blue paper means nothing to you." //monkeys cannot into projecting
 		return
 	interact()
 	return
@@ -53,18 +53,18 @@
 	switch (get_area_type())
 		if (AREA_SPACE)
 			text += {"
-<p>According this blueprints you are in <b>open space</b> now.</p>
+<p>According the blueprints, you are now in <b>outer space</b>.  Hold your breath.</p>
 <p><a href='?src=\ref[src];action=create_area'>Mark this place as new area.</a></p>
 "}
 		if (AREA_STATION)
 			text += {"
-<p>According this blueprints you are in <b>[A.name]</b> now.</p>
+<p>According the blueprints, you are now in <b>\"[A.name]\"</b>.</p>
 <p>You may <a href='?src=\ref[src];action=edit_area'>
 move an amendment</a> to the drawing.</p>
 "}
 		if (AREA_SPECIAL)
 			text += {"
-<p>This place isn't noted on these blueprints.</p>
+<p>This place isn't noted on the blueprint.</p>
 "}
 		else
 			return
@@ -75,8 +75,7 @@ move an amendment</a> to the drawing.</p>
 
 /obj/item/blueprints/proc/get_area()
 	var/turf/T = get_turf_loc(usr)
-	var/area/A = T.loc
-	A = A.master
+	var/area/A = get_area_master(T)
 	return A
 
 /obj/item/blueprints/proc/get_area_type(var/area/A = get_area())
@@ -105,24 +104,24 @@ move an amendment</a> to the drawing.</p>
 	if(!istype(res,/list))
 		switch(res)
 			if(ROOM_ERR_SPACE)
-				usr << "\red New area must be complete airtight!"
+				usr << "\red The new area must be completely airtight!"
 				return
 			if(ROOM_ERR_TOOLARGE)
-				usr << "\red New area too large!"
+				usr << "\red The new area too large!"
 				return
 			else
 				usr << "\red Error! Please notify administration!"
 				return
 	var/list/turf/turfs = res
-	var/str = trim(stripped_input(usr,"New area title","Blueprints editing", "", MAX_NAME_LEN))
+	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", "", MAX_NAME_LEN))
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
-		usr << "\red Text too long."
+		usr << "\red Name too long."
 		return
 	var/area/A = new
 	A.name = str
-	A.tag="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
+	A.tagbase = "[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
 	//var/ma
 	//ma = A.master ? "[A.master]" : "(null)"
 	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
@@ -130,6 +129,7 @@ move an amendment</a> to the drawing.</p>
 	A.power_light = 0
 	A.power_environ = 0
 	A.always_unpowered = 0
+	A.SetDynamicLighting()
 	move_turfs_to_area(turfs, A)
 
 	A.always_unpowered = 0
@@ -153,8 +153,8 @@ move an amendment</a> to the drawing.</p>
 /obj/item/blueprints/proc/edit_area()
 	var/area/A = get_area()
 	//world << "DEBUG: edit_area"
-	var/prevname = A.name
-	var/str = trim(stripped_input(usr,"New area title","Blueprints editing", prevname, MAX_NAME_LEN))
+	var/prevname = "[A.name]"
+	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", prevname, MAX_NAME_LEN))
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
@@ -200,7 +200,7 @@ move an amendment</a> to the drawing.</p>
 	for (var/obj/structure/window/W in T2)
 		if(turn(dir,180) == W.dir)
 			return BORDER_BETWEEN
-		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
+		if (W.is_fulltile())
 			return BORDER_2NDTILE
 	for(var/obj/machinery/door/window/D in T2)
 		if(turn(dir,180) == D.dir)
@@ -225,7 +225,7 @@ move an amendment</a> to the drawing.</p>
 		for (var/dir in cardinal)
 			var/skip = 0
 			for (var/obj/structure/window/W in T)
-				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
+				if(dir == W.dir || (W.is_fulltile()))
 					skip = 1; break
 			if (skip) continue
 			for(var/obj/machinery/door/window/D in T)

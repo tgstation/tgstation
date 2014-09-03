@@ -2,7 +2,7 @@
 	name = "\improper IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	anchored = 0
-	density = 1
+	density = 0 //Tired of these blocking up the station
 
 
 /obj/machinery/iv_drip/var/mob/living/carbon/human/attached = null
@@ -37,6 +37,7 @@
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
+	if(isobserver(usr)) return
 	if(usr.stat) // Stop interacting with shit while dead pls
 		return
 	if(isanimal(usr))
@@ -54,8 +55,17 @@
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(isobserver(user)) return
 	if(user.stat)
 		return
+	if(istype(W, /obj/item/weapon/wrench))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		new /obj/item/stack/sheet/metal(src.loc,2)
+		if(src.beaker)
+			src.beaker.loc = get_turf(src)
+			src.beaker = null
+		user << "\blue You dismantle \the [name]."
+		del(src)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(src.beaker))
 			user << "There is already a reagent container loaded!"
@@ -107,7 +117,7 @@
 			if(!istype(T)) return
 			if(!T.dna)
 				return
-			if(NOCLONE in T.mutations)
+			if(M_NOCLONE in T.mutations)
 				return
 
 			// If the human is losing too much blood, beep.
@@ -124,6 +134,7 @@
 				update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user as mob)
+	if(isobserver(usr)) return
 	if(user.stat) return
 	if(src.beaker)
 		src.beaker.loc = get_turf(src)
@@ -145,14 +156,14 @@
 		return
 
 	mode = !mode
-	usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
+	usr << "The [src] is now [mode ? "injecting" : "taking blood"]."
 
 /obj/machinery/iv_drip/examine()
 	set src in view()
 	..()
 	if (!(usr in view(2)) && usr!=src.loc) return
 
-	usr << "The IV drip is [mode ? "injecting" : "taking blood"]."
+	usr << "The [src] is [mode ? "injecting" : "taking blood"]."
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)

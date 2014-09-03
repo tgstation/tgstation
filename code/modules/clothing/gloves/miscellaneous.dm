@@ -8,6 +8,7 @@
 	var/candrain = 0
 	var/mindrain = 200
 	var/maxdrain = 400
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/captain
 	desc = "Regal blue gloves, with a nice gold trim. Swanky."
@@ -19,6 +20,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
@@ -26,6 +28,7 @@
 	icon_state = "black"
 	item_state = "r_hands"
 	siemens_coefficient = 1.0
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/swat
 	desc = "These tactical gloves are somewhat fire and impact-resistant."
@@ -39,6 +42,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/combat //Combined effect of SWAT gloves and insulated gloves
 	desc = "These tactical gloves are somewhat fire and impact resistant."
@@ -51,6 +55,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE
+	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/latex
 	name = "latex gloves"
@@ -60,6 +65,7 @@
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
 	_color="white"
+	species_fit = list("Vox")
 
 	cmo
 		_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
@@ -71,3 +77,12 @@
 	item_state = "ggloves"
 	permeability_coefficient = 0.9
 	siemens_coefficient = 0.9
+	species_fit = list("Vox")
+
+/obj/item/clothing/gloves/batmangloves
+	desc = "Used for handling all things bat related."
+	name = "batgloves"
+	icon_state = "bmgloves"
+	item_state = "bmgloves"
+	_color="bmgloves"
+	species_fit = list("Vox")

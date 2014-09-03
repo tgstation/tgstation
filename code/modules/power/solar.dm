@@ -10,7 +10,7 @@ var/list/solars_list = list()
 /obj/machinery/power/proc/get_solars_powernet()
 	if(!powernet)
 		return list()
-	if(solars_list.len < powernet.nodes)
+	if(solars_list.len < powernet.nodes.len)
 		return solars_list
 	else
 		return powernet.nodes
@@ -26,78 +26,65 @@ var/list/solars_list = list()
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
-	var/id = 0
+	var/id_tag = 0
 	var/health = 10
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH
 	var/ndir = SOUTH
 	var/turn_angle = 0
-	var/obj/machinery/power/solar_control/control = null
+	var/obj/machinery/power/solar_control/control
+	var/obj/item/solar_assembly/solar_assembly
 
-/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S, var/process = 1)
-	..(loc)
-	Make(S)
-	connect_to_network(process)
-
+/obj/machinery/power/solar/New()
+	. = ..()
+	make()
+	connect_to_network()
 
 /obj/machinery/power/solar/disconnect_from_network()
 	..()
-	solars_list.Remove(src)
+	solars_list -= src
 
-/obj/machinery/power/solar/connect_to_network(var/process)
+/obj/machinery/power/solar/connect_to_network()
 	..()
-	if(process)
-		solars_list.Add(src)
+	solars_list += src
 
+/obj/machinery/power/solar/proc/make()
+	if(!solar_assembly)
+		solar_assembly = new /obj/item/solar_assembly()
+		solar_assembly.glass_type = /obj/item/stack/sheet/glass
+		solar_assembly.anchored = 1
 
-/obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
-	if(!S)
-		S = new /obj/item/solar_assembly(src)
-		S.glass_type = /obj/item/stack/sheet/glass
-		S.anchored = 1
-	S.loc = src
+	solar_assembly.loc = src
 	update_icon()
 
-
-
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
-
 	if(iscrowbar(W))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+
 		if(do_after(user, 50))
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.loc = src.loc
-				S.give_glass()
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
-			del(src)
-		return
-	else if (W)
-		src.add_fingerprint(user)
-		src.health -= W.force
-		src.healthcheck()
+			qdel(src)
+	else if(W)
+		add_fingerprint(user)
+		health -= W.force
+		healthcheck()
+
 	..()
 
-
 /obj/machinery/power/solar/blob_act()
-	src.health--
-	src.healthcheck()
-	return
-
+	health--
+	healthcheck()
 
 /obj/machinery/power/solar/proc/healthcheck()
-	if (src.health <= 0)
+	if(health <= 0)
 		if(!(stat & BROKEN))
 			broken()
 		else
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
-			del(src)
-			return
-	return
-
+			getFromPool(/obj/item/weapon/shard, loc)
+			getFromPool(/obj/item/weapon/shard, loc)
+			qdel(src)
 
 /obj/machinery/power/solar/update_icon()
 	..()
@@ -109,7 +96,6 @@ var/list/solars_list = list()
 		src.dir = angle2dir(adir)
 	return
 
-
 /obj/machinery/power/solar/proc/update_solar_exposure()
 	if(!sun)
 		return
@@ -117,11 +103,11 @@ var/list/solars_list = list()
 		sunfrac = 0
 		return
 	var/p_angle = abs((360+adir)%360 - (360+sun.angle)%360)
+
 	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
 		sunfrac = 0
 		return
 	sunfrac = cos(p_angle) ** 2
-
 
 /obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
 	if(stat & BROKEN)	return
@@ -137,56 +123,58 @@ var/list/solars_list = list()
 	var/sgen = SOLARGENRATE * sunfrac
 	add_avail(sgen)
 	if(powernet && control)
-		if(powernet.nodes[control])
+		if(powernet.nodes.Find(control))
 			control.gen += sgen
-
 
 /obj/machinery/power/solar/proc/broken()
 	stat |= BROKEN
 	update_icon()
-	return
-
 
 /obj/machinery/power/solar/meteorhit()
 	if(stat & !BROKEN)
 		broken()
 	else
-		del(src)
-
+		qdel(src)
 
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
 			if(prob(15))
-				new /obj/item/weapon/shard( src.loc )
-			return
+				getFromPool(/obj/item/weapon/shard, loc)
+
+			qdel(src)
 		if(2.0)
-			if (prob(25))
-				new /obj/item/weapon/shard( src.loc )
-				del(src)
-				return
-			if (prob(50))
+			if(prob(25))
+				getFromPool(/obj/item/weapon/shard, loc)
+				qdel(src)
+			else
 				broken()
 		if(3.0)
-			if (prob(25))
+			if(prob(35))
 				broken()
-	return
-
 
 /obj/machinery/power/solar/blob_act()
 	if(prob(75))
 		broken()
-		src.density = 0
+		density = 0
 
+/obj/machinery/power/solar/Destroy()
+	if(control)
+		control = null
 
-/obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
-	..(loc, S, 0)
+	if(solar_assembly)
+		solar_assembly.loc = get_turf(src)
+		solar_assembly.give_glass()
+		solar_assembly = null
+
+	..()
+
+/obj/machinery/power/solar/fake/New()
+	. = ..()
+	disconnect_from_network()
 
 /obj/machinery/power/solar/fake/process()
-	. = PROCESS_KILL
-	return
-
+	return PROCESS_KILL
 
 //
 // Solar Assembly - For construction of solar arrays.
@@ -210,10 +198,9 @@ var/list/solars_list = list()
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass()
 	if(glass_type)
-		var/obj/item/stack/sheet/S = new glass_type(src.loc)
+		var/obj/item/stack/sheet/S = new glass_type(get_turf(src))
 		S.amount = 2
 		glass_type = null
-
 
 /obj/item/solar_assembly/attackby(var/obj/item/weapon/W, var/mob/user)
 
@@ -240,7 +227,8 @@ var/list/solars_list = list()
 				if(tracker)
 					new /obj/machinery/power/tracker(get_turf(src), src)
 				else
-					new /obj/machinery/power/solar(get_turf(src), src)
+					var/obj/machinery/power/solar/solar = new /obj/machinery/power/solar(get_turf(src))
+					solar.solar_assembly = src
 			return 1
 
 	if(!tracker)
@@ -273,7 +261,7 @@ var/list/solars_list = list()
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 20
-	var/id = 0
+	var/id_tag = 0
 	var/cdir = 0
 	var/gen = 0
 	var/lastgen = 0
@@ -282,16 +270,24 @@ var/list/solars_list = list()
 	var/trackdir = 1		// -1=CCW, 1=CW
 	var/nexttime = 0		// Next clock time that manual tracking will move the array
 
+	l_color = "#FF9933"
+
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 /obj/machinery/power/solar_control/New()
-	..()
+	. = ..()
 	if(ticker)
 		initialize()
 	connect_to_network()
 
 /obj/machinery/power/solar_control/disconnect_from_network()
 	..()
-	solars_list.Remove(src)
+	solars_list -= src
 
 /obj/machinery/power/solar_control/connect_to_network()
 	..()
@@ -318,13 +314,10 @@ var/list/solars_list = list()
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 	return
 
-
 /obj/machinery/power/solar_control/attack_ai(mob/user)
-	src.add_hiddenprint(user)
-	add_fingerprint(user)
+	add_hiddenprint(user)
 	if(stat & (BROKEN | NOPOWER)) return
 	interact(user)
-
 
 /obj/machinery/power/solar_control/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -339,7 +332,7 @@ var/list/solars_list = list()
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
@@ -470,10 +463,10 @@ Manual Tracking Direction:"}
 		if(src.trackrate) nexttime = world.time + 6000/trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
-			if(!solars_list.Find(src,1,0))
+			if(!solars_list.Find(src,1,0) || !(locate(src) in solars_list) || !(src in solars_list))
 				solars_list.Add(src)
 			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
-				if(powernet.nodes[T])
+				if(powernet.nodes.Find(T))
 					cdir = T.sun_angle
 					break
 
@@ -485,16 +478,14 @@ Manual Tracking Direction:"}
 	src.updateUsrDialog()
 	return
 
-
 /obj/machinery/power/solar_control/proc/set_panels(var/cdir)
 	if(!powernet) return
 	for(var/obj/machinery/power/solar/S in get_solars_powernet())
-		if(powernet.nodes[S])
+		if(powernet.nodes.Find(S))
 			if(get_dist(S, src) < SOLAR_MAX_DIST)
 				if(!S.control)
 					S.control = src
 				S.ndir = cdir
-
 
 /obj/machinery/power/solar_control/power_change()
 	if(powered())
@@ -505,37 +496,29 @@ Manual Tracking Direction:"}
 			stat |= NOPOWER
 			update_icon()
 
-
 /obj/machinery/power/solar_control/proc/broken()
 	stat |= BROKEN
 	update_icon()
-
 
 /obj/machinery/power/solar_control/meteorhit()
 	broken()
 	return
 
-
 /obj/machinery/power/solar_control/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			//SN src = null
-			del(src)
-			return
+			qdel(src)
 		if(2.0)
 			if (prob(50))
 				broken()
 		if(3.0)
 			if (prob(25))
 				broken()
-	return
-
 
 /obj/machinery/power/solar_control/blob_act()
 	if (prob(75))
 		broken()
 		src.density = 0
-
 
 //
 // MISC

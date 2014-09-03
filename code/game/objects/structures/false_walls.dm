@@ -14,9 +14,9 @@
 	var/minp=16777216;
 	var/maxp=0;
 	for(var/dir in cardinal)
-		var/turf/T=get_turf(get_step(loc,dir))
+		var/turf/simulated/T=get_turf(get_step(loc,dir))
 		var/cp=0
-		if(T && istype(T,/turf/simulated) && T.zone)
+		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
 			cp = environment.return_pressure()
 		else
@@ -76,11 +76,17 @@
 	var/mineral = "metal"
 	var/opening = 0
 
+	canSmoothWith = list(
+		/turf/simulated/wall,
+		/obj/structure/falsewall,
+		/obj/structure/falserwall // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	)
+
 /obj/structure/falsewall/New()
 	relativewall_neighbours()
 	..()
 
-/obj/structure/falsewall/Del()
+/obj/structure/falsewall/Destroy()
 
 	var/temploc = src.loc
 
@@ -102,22 +108,8 @@
 		icon_state = "[mineral]fwall_open"
 		return
 
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
-
-	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falserwall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
+	var/junction=findSmoothingNeighbors(check_minerals=1)
 	icon_state = "[mineral][junction]"
-	return
 
 /obj/structure/falsewall/attack_ai(mob/user as mob)
 	if(isMoMMI(user))
@@ -241,6 +233,11 @@
 	anchored = 1
 	var/mineral = "metal"
 	var/opening = 0
+	canSmoothWith = list(
+		/turf/simulated/wall,
+		/obj/structure/falsewall,
+		/obj/structure/falserwall // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	)
 
 /obj/structure/falserwall/New()
 	relativewall_neighbours()
@@ -280,25 +277,8 @@
 	if(!density)
 		icon_state = "frwall_open"
 		return
-
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
-
-	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falserwall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
+	var/junction=findSmoothingNeighbors()
 	icon_state = "rwall[junction]"
-	return
-
-
 
 /obj/structure/falserwall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opening)

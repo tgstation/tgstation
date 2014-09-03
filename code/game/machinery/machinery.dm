@@ -49,7 +49,7 @@ Class Variables:
 Class Procs:
    New()                     'game/machinery/machine.dm'
 
-   Del()                     'game/machinery/machine.dm'
+   Destroy()                     'game/machinery/machine.dm'
 
    auto_use_power()            'game/machinery/machine.dm'
       This proc determines how power mode power is deducted by the machine.
@@ -95,6 +95,8 @@ Class Procs:
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
 
+	w_type = NOT_RECYCLABLE
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -103,24 +105,34 @@ Class Procs:
 		//2 = run auto, use active
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
-	var/power_channel = EQUIP
-		//EQUIP,ENVIRON or LIGHT
-	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
+	var/power_channel = EQUIP // EQUIP, ENVIRON or LIGHT.
+	var/list/component_parts // List of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
 	var/global/gl_uid = 1
 	var/custom_aghost_alerts=0
 	var/panel_open = 0
 
+	var/inMachineList = 1 // For debugging.
+
 /obj/machinery/New()
-	..()
 	machines += src
+	return ..()
 
-/obj/machinery/Del()
-	machines -= src
+/obj/machinery/Destroy()
+	if(src in machines)
+		machines -= src
+
+	if(component_parts)
+		for(var/atom/movable/AM in component_parts)
+			AM.loc = loc
+			component_parts -= AM
+
+		component_parts = null
+
 	..()
 
-/obj/machinery/process()//If you dont use process or power why are you here
+/obj/machinery/process() // If you dont use process or power why are you here
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
@@ -135,21 +147,21 @@ Class Procs:
 		pulse2.dir = pick(cardinal)
 
 		spawn(10)
-			pulse2.delete()
+			qdel(pulse2)
 	..()
 
 /obj/machinery/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -161,11 +173,113 @@ Class Procs:
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
 		return 0
-	if(src.use_power == 1)
-		use_power(idle_power_usage,power_channel)
-	else if(src.use_power >= 2)
-		use_power(active_power_usage,power_channel)
+
+	switch (use_power)
+		if (1)
+			use_power(idle_power_usage, power_channel)
+		if (2)
+			use_power(active_power_usage, power_channel)
+
 	return 1
+
+/obj/machinery/proc/multitool_topic(var/mob/user,var/list/href_list,var/obj/O)
+	if("set_id" in href_list)
+		if(!("id_tag" in vars))
+			warning("set_id: [type] has no id_tag var.")
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, src:id_tag) as null|text),1,MAX_MESSAGE_LEN)
+		if(newid)
+			src:id_tag = newid
+			return MT_UPDATE|MT_REINIT
+	if("set_freq" in href_list)
+		if(!("frequency" in vars))
+			warning("set_freq: [type] has no frequency var.")
+		var/newfreq=src:frequency
+		if(href_list["set_freq"]!="-1")
+			newfreq=text2num(href_list["set_freq"])
+		else
+			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, src:frequency) as null|num
+		if(newfreq)
+			if(findtext(num2text(newfreq), "."))
+				newfreq *= 10 // shift the decimal one place
+			if(newfreq < 10000)
+				src:frequency = newfreq
+				return MT_UPDATE|MT_REINIT
+	return 0
+
+/obj/machinery/proc/handle_multitool_topic(var/href, var/list/href_list, var/mob/user)
+	var/obj/item/device/multitool/P = get_multitool(usr)
+	if(P && istype(P))
+		var/update_mt_menu=0
+		var/re_init=0
+		if("set_tag" in href_list)
+			if(!(href_list["set_tag"] in vars))
+				usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
+				return 1
+			var/current_tag = src.vars[href_list["set_tag"]]
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
+			if(newid)
+				vars[href_list["set_tag"]] = newid
+				re_init=1
+
+		if("unlink" in href_list)
+			var/idx = text2num(href_list["unlink"])
+			if (!idx)
+				return 1
+
+			var/obj/O = getLink(idx)
+			if(!O)
+				return 1
+			if(!canLink(O))
+				usr << "\red You can't link with that device."
+				return 1
+
+			if(unlinkFrom(usr, O))
+				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
+			else
+				usr << "\red A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices."
+			update_mt_menu=1
+
+		if("link" in href_list)
+			var/obj/O = P.buffer
+			if(!O)
+				return 1
+			if(!canLink(O,href_list))
+				usr << "\red You can't link with that device."
+				return 1
+			if (isLinkedWith(O))
+				usr << "\red A red light flashes on \the [P]. The two devices are already linked."
+				return 1
+
+			if(linkWith(usr, O, href_list))
+				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
+			else
+				usr << "\red A red light flashes on \the [P].  It appears something went wrong when linking the two devices."
+			update_mt_menu=1
+
+		if("buffer" in href_list)
+			P.buffer = src
+			usr << "\blue A green light flashes, and the device appears in the multitool buffer."
+			update_mt_menu=1
+
+		if("flush" in href_list)
+			usr << "\blue A green light flashes, and the device disappears from the multitool buffer."
+			P.buffer = null
+			update_mt_menu=1
+
+		var/ret = multitool_topic(usr,href_list,P.buffer)
+		if(ret == MT_ERROR)
+			return 1
+		if(ret & MT_UPDATE)
+			update_mt_menu=1
+		if(ret & MT_REINIT)
+			re_init=1
+
+		if(re_init)
+			initialize()
+		if(update_mt_menu)
+			//usr.set_machine(src)
+			update_multitool_menu(usr)
+			return 1
 
 /obj/machinery/Topic(href, href_list)
 	..()
@@ -198,6 +312,8 @@ Class Procs:
 		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
 
 	src.add_fingerprint(usr)
+
+	handle_multitool_topic(href,href_list,usr)
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)

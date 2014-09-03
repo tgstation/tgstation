@@ -4,7 +4,7 @@
 	icon_state = "prox"
 	m_amt = 800
 	g_amt = 200
-	w_amt = 50
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
 	wires = WIRE_PULSE

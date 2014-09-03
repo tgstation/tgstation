@@ -123,10 +123,9 @@ var/list/ai_list = list()
 	..()
 	return
 
-/mob/living/silicon/ai/Del()
+/mob/living/silicon/ai/Destroy()
 	ai_list -= src
 	..()
-
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -155,7 +154,7 @@ var/list/ai_list = list()
 	var/icontype = ""
 	/* Nuked your hidden shit.*/
 	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
-	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static")
+	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Broken Output", "Triumvirate", "Triumvirate Static", "Searif", "Ravensdale", "Serithi", "Static", "Wasp", "Robert House", "Red October", "Fabulous")
 	switch(icontype)
 		if("Custom") icon_state = "[src.ckey]-ai"
 		if("Clown") icon_state = "ai-clown2"
@@ -164,7 +163,7 @@ var/list/ai_list = list()
 		if("Firewall") icon_state = "ai-magma"
 		if("Green") icon_state = "ai-wierd"
 		if("Red") icon_state = "ai-malf"
-		if("Static") icon_state = "ai-static"
+		if("Broken Output") icon_state = "ai-static"
 		if("Text") icon_state = "ai-text"
 		if("Smiley") icon_state = "ai-smiley"
 		if("Matrix") icon_state = "ai-matrix"
@@ -173,9 +172,14 @@ var/list/ai_list = list()
 		if("Bliss") icon_state = "ai-bliss"
 		if("Triumvirate") icon_state = "ai-triumvirate"
 		if("Triumvirate Static") icon_state = "ai-triumvirate-malf"
-		if("M00X-BC") icon_state = "ai-searif"
-		if("Skuld") icon_state = "ai-ravensdale"
-		if("REMNANT") icon_state = "ai-serithi"
+		if("Searif") icon_state = "ai-searif"
+		if("Ravensdale") icon_state = "ai-ravensdale"
+		if("Serithi") icon_state = "ai-serithi"
+		if("Static") icon_state = "ai-fuzz"
+		if("Wasp") icon_state = "ai-wasp"
+		if("Robert House") icon_state = "ai-president"
+		if("Red October") icon_state = "ai-soviet"
+		if("Fabulous") icon_state = "ai-fabulous"
 		else icon_state = "ai"
 	//else
 			//usr <<"You can only change your display once!"
@@ -273,7 +277,7 @@ var/list/ai_list = list()
 		if(AI.control_disabled)
 			src	 << "Wireless control is disabled!"
 			return
-	cancel_call_proc(src)
+	recall_shuttle(src)
 	return
 
 /mob/living/silicon/ai/check_eye(var/mob/user as mob)
@@ -658,17 +662,30 @@ var/list/ai_list = list()
 
 	else
 		var/icon_list[] = list(
-		"default",
-		"floating face"
+		"Default",
+		"Floating face",
+		"Cortano",
+		"Spoopy",
+		"343",
+		"Auto"
 		)
 		input = input("Please select a hologram:") as null|anything in icon_list
 		if(input)
 			del(holo_icon)
 			switch(input)
-				if("default")
+				if("Default")
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
-				if("floating face")
+				if("Floating face")
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo2"))
+				if("Cortano")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo3"))
+				if("Spoopy")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
+				if("343")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo5"))
+				if("Auto")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo6"))
+
 	return
 
 /mob/living/silicon/ai/proc/corereturn()

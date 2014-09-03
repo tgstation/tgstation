@@ -1,7 +1,7 @@
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
 /obj/machinery/power/monitor
-	name = "power monitoring computer"
+	name = "Power Monitoring Computer"
 	desc = "It monitors power levels across the station."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
@@ -11,8 +11,11 @@
 	idle_power_usage = 20
 	active_power_usage = 80
 
+	l_color = "#FF9933"
+
 //fix for issue 521, by QualityVan.
 //someone should really look into why circuits have a powernet var, it's several kinds of retarded.
+
 /obj/machinery/power/monitor/New()
 	..()
 	var/obj/structure/cable/attached = null
@@ -45,7 +48,7 @@
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/powermonitor/M = new /obj/item/weapon/circuitboard/powermonitor( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
@@ -97,27 +100,39 @@
 				var/obj/machinery/power/apc/A = term.master
 				L += A
 
-
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\power.dm:97: t += "<PRE>Total power: [powernet.avail] W<BR>Total load:  [num2text(powernet.viewload,10)] W<BR>"
-		t += {"<PRE>Total power: [powernet.avail] W<BR>Total load:  [num2text(powernet.viewload,10)] W<BR>
+		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\power.dm:97: t += "<PRE>Total power: [powernet.avail] W<BR>Total load:	[num2text(powernet.viewload,10)] W<BR>"
+		t += {"<PRE>Total power: [powernet.avail] W<BR>Total load:	[num2text(powernet.viewload,10)] W<BR>
 			<FONT SIZE=-1>"}
 		// END AUTOFIX
+
+		var/list/State = list("<font color=red> Off</font>",
+								"<font color=red>AOff</font>",
+								"<font color=green>  On</font>",
+								"<font color=green> AOn</font>")
+		var/list/chg   = list("Not charging",
+								"Charging",
+								"Fully charged")
+		// Start of power report table
+		// Table header
+		t += {"<TABLE>
+		       <TH><TR><B><TD>Area</TD><TD>Eqp.</TD><TD>Lgt.</TD><TD>Env.</TD><TD>Load</TD><TD>Cell</TD></B></TR></TH>"}
 		if(L.len > 0)
-
-			t += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
-
-			var/list/S = list(" Off","AOff","  On", " AOn")
-			var/list/chg = list("N","C","F")
-
+			// Each entry
 			for(var/obj/machinery/power/apc/A in L)
+				t += {"<TR>
+				<TD> [A.areaMaster        ]</TD>
+				<TD> [State[A.equipment+1]]</TD>
+				<TD> [State[A.lighting+1 ]]</TD>
+				<TD> [State[A.environ+1  ]]</TD>
+				<TD> [A.lastused_total    ]</TD>
+				<TD>[A.cell ? "[round(A.cell.percent())]% [chg[A.charging+1]]" : "  N/C"] </TD>
+				</TR>"}
 
-				t += copytext(add_tspace("\The [A.area]", 30), 1, 30)
-				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+		t += "</TABLE></FONT></PRE></TT>"
+		// End of powa report
 
-		t += "</FONT></PRE></TT>"
-
-	user << browse(t, "window=powcomp;size=420x900")
+	user << browse(t, "window=powcomp;size=640x800")
 	onclose(user, "powcomp")
 
 
@@ -133,6 +148,11 @@
 
 
 /obj/machinery/power/monitor/power_change()
+
+	if(!(stat & (BROKEN|NOPOWER)))
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
 
 	if(stat & BROKEN)
 		icon_state = "broken"

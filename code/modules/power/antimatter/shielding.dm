@@ -68,7 +68,7 @@ proc/cardinalrange(var/center)
 	return
 
 
-/obj/machinery/am_shielding/Del()
+/obj/machinery/am_shielding/Destroy()
 	if(control_unit)	control_unit.remove_shielding(src)
 	if(processing)	shutdown_core()
 	visible_message("\red The [src.name] melts!")
@@ -77,7 +77,7 @@ proc/cardinalrange(var/center)
 	return
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0))	return 1
 	return 0
 
@@ -238,8 +238,8 @@ proc/cardinalrange(var/center)
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	m_amt = 100
-	w_amt = 2000
+	m_amt = CC_PER_SHEET_METAL*2
+	w_type = RECYK_METAL
 
 /obj/item/device/am_shielding_container/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))

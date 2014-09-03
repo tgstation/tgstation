@@ -19,12 +19,14 @@
 	var/list/can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
+		/obj/machinery/snackbar_machine/,
 		/obj/machinery/reagentgrinder,
 		/obj/structure/table,
 		/obj/structure/closet,
 		/obj/structure/sink,
 		/obj/item/weapon/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
+		/obj/machinery/dna_scannernew,
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
@@ -35,7 +37,9 @@
 		/obj/machinery/apiary,
 		/mob/living/simple_animal/cow,
 		/mob/living/simple_animal/hostile/retaliate/goat,
-		/obj/machinery/computer/centrifuge	)
+		/obj/machinery/computer/centrifuge,
+		/obj/machinery/icemachine,
+		/obj/machinery/sleeper	)
 
 	New()
 		..()
@@ -65,7 +69,8 @@
 		update_icon()
 
 	afterattack(obj/target, mob/user , flag)
-		if (!is_open_container())
+
+		if (!is_open_container() || !flag)
 			return
 
 		for(var/type in src.can_be_placed_into)
@@ -118,6 +123,17 @@
 			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user << "\blue You transfer [trans] units of the solution to [target]."
 
+			// /vg/: Logging transfers of bad things
+			if(target.reagents_to_log.len)
+				var/list/badshit=list()
+				for(var/bad_reagent in target.reagents_to_log)
+					if(reagents.has_reagent(bad_reagent))
+						badshit += reagents_to_log[bad_reagent]
+				if(badshit.len)
+					var/hl="\red <b>([english_list(badshit)])</b> \black"
+					message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
+
 		//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 		else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
 			return
@@ -161,6 +177,7 @@
 	item_state = "beaker"
 	m_amt = 0
 	g_amt = 500
+	w_type = RECYK_GLASS
 
 	on_reagent_change()
 		update_icon()
@@ -210,6 +227,45 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
+/obj/item/weapon/reagent_containers/glass/beaker/noreact
+	name = "stasis beaker"
+	desc = "A beaker powered by experimental bluespace technology. Chemicals are held in stasis and do not react inside of it. Can hold up to 50 units."
+	icon_state = "beakernoreact"
+	g_amt = 500
+	volume = 50
+	amount_per_transfer_from_this = 10
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
+
+/obj/item/weapon/reagent_containers/glass/beaker/noreactlarge
+	name = "large stasis beaker"
+	desc = "A beaker powered by experimental bluespace technology. Chemicals are held in stasis and do not react inside of it. Can hold up to 100 units."
+	icon_state = "beakernoreactlarge"
+	g_amt = 5000
+	volume = 100
+	amount_per_transfer_from_this = 10
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
+
+/obj/item/weapon/reagent_containers/glass/beaker/bluespace
+	name = "bluespace beaker"
+	desc = "A newly-developed high-capacity beaker, courtesy of bluespace research. Can hold up to 200 units."
+	icon_state = "beakerbluespace"
+	g_amt = 5000
+	volume = 200
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,50,100,200)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+
+/obj/item/weapon/reagent_containers/glass/beaker/bluespacelarge
+	name = "large bluespace beaker"
+	desc = "A prototype ultra-capacity beaker, courtesy of bluespace research. Can hold up to 300 units."
+	icon_state = "beakerbluespacelarge"
+	g_amt = 5000
+	volume = 300
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,50,100,150,200,300)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+
+
 /obj/item/weapon/reagent_containers/glass/beaker/vial
 	name = "vial"
 	desc = "A small glass vial. Can hold up to 25 units."
@@ -246,6 +302,7 @@
 	item_state = "bucket"
 	m_amt = 200
 	g_amt = 0
+	w_type = RECYK_METAL
 	w_class = 3.0
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
@@ -260,6 +317,8 @@
 			user.drop_from_inventory(src)
 			del(src)
 
+// vials are defined twice, what?
+/*
 /obj/item/weapon/reagent_containers/glass/beaker/vial
 	name = "vial"
 	desc = "Small glass vial. Looks fragile."
@@ -268,7 +327,7 @@
 	volume = 15
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1,5,15)
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER */
 
 /*
 /obj/item/weapon/reagent_containers/glass/blender_jug

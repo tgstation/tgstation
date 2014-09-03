@@ -33,6 +33,8 @@
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
 
+	l_color = "#50AB00"
+
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O as obj, mob/living/user as mob)
 	if(stat & (NOPOWER|BROKEN))
@@ -431,7 +433,7 @@
 							if(!P.owner || P.toff || P.hidden) continue
 							sendPDAs += P
 						if(PDAs && PDAs.len > 0)
-							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortAtom(sendPDAs)
+							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortNames(sendPDAs)
 						else
 							customrecepient = null
 

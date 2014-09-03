@@ -7,13 +7,21 @@
 		return
 
 	var/skipgloves = 0
-	var/skipsuitstorage = 0
 	var/skipjumpsuit = 0
 	var/skipshoes = 0
 	var/skipmask = 0
-	var/skipears = 0
-	var/skipeyes = 0
+	var/list/obscured = check_obscured_slots()
 	var/skipface = 0
+
+
+
+
+
+
+
+/*
+
+
 
 	//exosuits and helmets obscure our view and stuff.
 	if(wear_suit)
@@ -28,6 +36,14 @@
 		skipears = head.flags_inv & HIDEEARS
 		skipface = head.flags_inv & HIDEFACE
 
+
+*/
+
+
+
+
+
+
 	if(wear_mask)
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
@@ -40,7 +56,7 @@
 
 	var/msg = "<span class='info'>*---------*\nThis is "
 
-	if( skipjumpsuit && skipface ) //big suits/masks/helmets make it hard to tell their gender
+	if( slot_w_uniform in obscured && skipface )
 		t_He = "They"
 		t_his = "their"
 		t_him = "them"
@@ -62,7 +78,7 @@
 	msg += "<EM>[src.name]</EM>!\n"
 
 	//uniform
-	if(w_uniform && !skipjumpsuit)
+	if(w_uniform && !(slot_w_uniform in obscured))
 		//Ties
 		var/tie_msg
 		if(istype(w_uniform,/obj/item/clothing/under))
@@ -90,7 +106,7 @@
 			msg += "[t_He] [t_is] wearing \icon[wear_suit] \a [wear_suit].\n"
 
 		//suit/armour storage
-		if(s_store && !skipsuitstorage)
+		if(s_store)
 			if(s_store.blood_DNA)
 				msg += "<span class='warning'>[t_He] [t_is] carrying \icon[s_store] [s_store.gender==PLURAL?"some":"a"] blood-stained [s_store.name] on [t_his] [wear_suit.name]!</span>\n"
 			else
@@ -118,7 +134,7 @@
 			msg += "[t_He] [t_is] holding \icon[r_hand] \a [r_hand] in [t_his] right hand.\n"
 
 	//gloves
-	if(gloves && !skipgloves)
+	if(gloves && !(slot_gloves in obscured))
 		if(gloves.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[gloves] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
 		else
@@ -143,28 +159,28 @@
 			msg += "[t_He] [t_has] \icon[belt] \a [belt] about [t_his] waist.\n"
 
 	//shoes
-	if(shoes && !skipshoes)
+	if(shoes && !(slot_shoes in obscured))
 		if(shoes.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[shoes] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[shoes] \a [shoes] on [t_his] feet.\n"
 
 	//mask
-	if(wear_mask && !skipmask)
+	if(wear_mask && !(slot_wear_mask in obscured))
 		if(wear_mask.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[wear_mask] [wear_mask.gender==PLURAL?"some":"a"] blood-stained [wear_mask.name] on [t_his] face!</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[wear_mask] \a [wear_mask] on [t_his] face.\n"
 
 	//eyes
-	if(glasses && !skipeyes)
+	if(glasses && !(slot_glasses in obscured))
 		if(glasses.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[glasses] [glasses.gender==PLURAL?"some":"a"] blood-stained [glasses] covering [t_his] eyes!</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[glasses] \a [glasses] covering [t_his] eyes.\n"
 
 	//ears
-	if(ears && !skipears)
+	if(ears && !(slot_ears in obscured))
 		msg += "[t_He] [t_has] \icon[ears] \a [ears] on [t_his] ears.\n"
 
 	//ID
@@ -194,11 +210,12 @@
 	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
 		var/datum/organ/external/o = get_organ(organ)
 		if(o && o.status & ORGAN_SPLINTED)
-			msg += "<span class='warning'>[t_He] [t_has] a splint on his [o.display_name]!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [o.display_name]!</span>\n"
+
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
-	if(mSmallsize in mutations)
+	if(M_DWARF in mutations)
 		msg += "[t_He] [t_is] a halfling!\n"
 
 	var/distance = get_dist(usr,src)

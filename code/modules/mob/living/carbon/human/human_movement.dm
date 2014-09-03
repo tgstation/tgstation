@@ -1,15 +1,22 @@
 /mob/living/carbon/human/movement_delay()
 	var/tally = 0
 
+	if(species && species.flags & IS_SLOW)
+		tally = 7
+
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
 	//(VG EDIT disabling for now) handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
-	if(reagents.has_reagent("hyperzine")) return -1
+	if(reagents.has_reagent("hyperzine"))
+		if(dna.mutantrace == "slime")
+			tally *= 2
+		else
+			return -1
 
 	if(reagents.has_reagent("nuka_cola")) return -1
 
-	if((mRun in mutations)) return -1
+	if((M_RUN in mutations)) return -1
 
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
@@ -25,6 +32,9 @@
 	if(shoes)
 		tally += shoes.slowdown
 
+	if(reagents.has_reagent("frostoil") && dna.mutantrace == "slime")
+		tally *= 5
+
 	for(var/organ_name in list("l_foot","r_foot","l_leg","r_leg"))
 		var/datum/organ/external/E = get_organ(organ_name)
 		if(!E || (E.status & ORGAN_DESTROYED))
@@ -36,10 +46,19 @@
 
 	if(shock_stage >= 50) tally += 3
 
-	if(FAT in src.mutations)
+	if(M_FAT in src.mutations)
 		tally += 1.5
-	if (bodytemperature < 283.222)
+	if(dna.mutantrace == "slime")
+		if (bodytemperature >= 330.23) // 135 F
+			return -1	// slimes become supercharged at high temperatures
+		if (bodytemperature < 183.222)
+			tally += (283.222 - bodytemperature) / 10 * 1.75
+	else if (bodytemperature < 283.222)
+
 		tally += (283.222 - bodytemperature) / 10 * 1.75
+
+	if(M_RUN in mutations)
+		tally = 0
 
 	return (tally+config.human_delay)
 

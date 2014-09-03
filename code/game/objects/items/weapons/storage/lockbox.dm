@@ -65,6 +65,44 @@
 			..()
 		return
 
+	bullet_act(var/obj/item/projectile/Proj)
+		// WHY MUST WE DO THIS
+		// WHY
+		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+			if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+				health -= Proj.damage
+		..()
+		if(health <= 0)
+			for(var/atom/movable/A as mob|obj in src)
+				A.loc = src.loc
+			del(src)
+		return
+
+	ex_act(severity)
+		var/newsev = max(3,severity+1)
+		for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
+			A.loc = src.loc
+			A.ex_act(newsev)
+		newsev=4-severity
+		if(prob(newsev*25)+25) // 1=100, 2=75, 3=50
+			qdel(src)
+
+/obj/item/weapon/storage/lockbox/emp_act(severity)
+	..()
+	if(!broken)
+		switch(severity)
+			if(1)
+				if(prob(80))
+					locked = !locked
+					src.update_icon()
+			if(2)
+				if(prob(50))
+					locked = !locked
+					src.update_icon()
+			if(3)
+				if(prob(25))
+					locked = !locked
+					src.update_icon()
 
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "Lockbox (Loyalty Implants)"
@@ -77,6 +115,29 @@
 		new /obj/item/weapon/implantcase/loyalty(src)
 		new /obj/item/weapon/implanter/loyalty(src)
 
+/obj/item/weapon/storage/lockbox/tracking
+	name = "Lockbox (Tracking Implants)"
+	req_access = list(access_security)
+
+	New()
+		..()
+		new /obj/item/weapon/implantcase/tracking(src)
+		new /obj/item/weapon/implantcase/tracking(src)
+		new /obj/item/weapon/implantcase/tracking(src)
+		new /obj/item/weapon/implantpad(src)
+		new /obj/item/weapon/implanter(src)
+
+/obj/item/weapon/storage/lockbox/chem
+	name = "Lockbox (Chemical Implants)"
+	req_access = list(access_security)
+
+	New()
+		..()
+		new /obj/item/weapon/implantcase/chem(src)
+		new /obj/item/weapon/implantcase/chem(src)
+		new /obj/item/weapon/implantcase/chem(src)
+		new /obj/item/weapon/reagent_containers/syringe(src)
+		new /obj/item/weapon/implanter(src)
 
 /obj/item/weapon/storage/lockbox/clusterbang
 	name = "lockbox (clusterbang)"

@@ -8,6 +8,7 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 	siemens_coefficient = 0.8
+	species_fit = list("Vox")
 
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
@@ -54,6 +55,8 @@
 	name = "sandals"
 	icon_state = "wizard"
 
+	wizard_garb = 1
+
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic, black shoes."
 	name = "magic shoes"
@@ -66,6 +69,7 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
+	species_fit = list("Vox")
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"
@@ -83,6 +87,10 @@
 	item_state = "jackboots"
 	_color = "hosred"
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/shoes/jackboots/batmanboots
+	name = "batboots"
+	desc = "Criminal stomping boots for fighting crime and looking good."
 
 /obj/item/clothing/shoes/cult
 	name = "boots"
@@ -118,9 +126,22 @@
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
+	species_fit = list("Vox")
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
 	icon_state = "roman"
 	item_state = "roman"
+
+/obj/item/clothing/shoes/simonshoes
+	name = "Simon's Shoes"
+	desc = "Simon's Shoes"
+	icon_state = "simonshoes"
+	item_state = "simonshoes"
+
+/obj/item/clothing/shoes/kneesocks
+	name = "Kneesocks"
+	desc = "For only the most kawaii tsundres."
+	icon_state = "kneesock"
+	item_state = "kneesock"

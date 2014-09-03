@@ -60,7 +60,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 /obj/structure/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "none"
 	anchored = 0
 	density = 1
@@ -70,6 +70,12 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	var/powered = 0
 	var/strength = null
 	var/desc_holder = null
+
+/obj/structure/particle_accelerator/Destroy()
+	construction_state = 0
+	if(master)
+		master.part_scan()
+	..()
 
 /obj/structure/particle_accelerator/end_cap
 	name = "Alpha Particle Generation Array"
@@ -137,15 +143,15 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 /obj/structure/particle_accelerator/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -258,7 +264,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 /obj/machinery/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "none"
 	anchored = 0
 	density = 1
@@ -324,15 +330,15 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 /obj/machinery/particle_accelerator/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 		else
 	return

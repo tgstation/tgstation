@@ -7,16 +7,14 @@
 	var/id = null
 	var/one_time_use = 0 //Used for one-time-use teleport cards (such as clown planet coordinates.)
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
+	ghost_read=0 // #430
+	ghost_write=0
+
+	l_color = "#0000FF"
 
 /obj/machinery/computer/teleporter/New()
-	src.id = "[rand(1000, 9999)]"
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/teleporter
-	RefreshParts()
-
-	return
-
+	. = ..()
+	id = "[rand(1000, 9999)]"
 
 /obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob)
 	if(istype(I, /obj/item/weapon/card/data/))
@@ -66,13 +64,13 @@
 
 	return
 
-/obj/machinery/computer/teleporter/attack_paw()
-	src.attack_hand()
+/obj/machinery/computer/teleporter/attack_paw(var/mob/user)
+	src.attack_hand(user)
 
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
+/obj/machinery/teleport/station/attack_ai(var/mob/user)
+	src.attack_hand(user)
 
-/obj/machinery/computer/teleporter/attack_hand()
+/obj/machinery/computer/teleporter/attack_hand(var/mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 
@@ -143,6 +141,8 @@
 	density = 1
 	anchored = 1.0
 	var/lockeddown = 0
+	ghost_read=0 // #519
+	ghost_write=0
 
 
 /obj/machinery/teleport/hub
@@ -183,25 +183,28 @@
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 /obj/machinery/teleport/hub/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telehub
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module/phasic
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module/phasic
-	component_parts += new /obj/item/weapon/stock_parts/capacitor/super
-	component_parts += new /obj/item/weapon/stock_parts/capacitor/super
-	component_parts += new /obj/item/weapon/stock_parts/capacitor/super
-	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible
-	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible
-	component_parts += new /obj/item/weapon/stock_parts/subspace/filter
-	component_parts += new /obj/item/weapon/stock_parts/subspace/filter
-	component_parts += new /obj/item/weapon/stock_parts/subspace/treatment
-	component_parts += new /obj/item/weapon/stock_parts/subspace/crystal
-	component_parts += new /obj/item/weapon/stock_parts/subspace/crystal
-	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
-	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
-	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
-	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/telehub,
+		/obj/item/weapon/stock_parts/scanning_module/phasic,
+		/obj/item/weapon/stock_parts/scanning_module/phasic,
+		/obj/item/weapon/stock_parts/capacitor/super,
+		/obj/item/weapon/stock_parts/capacitor/super,
+		/obj/item/weapon/stock_parts/capacitor/super,
+		/obj/item/weapon/stock_parts/subspace/ansible,
+		/obj/item/weapon/stock_parts/subspace/ansible,
+		/obj/item/weapon/stock_parts/subspace/filter,
+		/obj/item/weapon/stock_parts/subspace/filter,
+		/obj/item/weapon/stock_parts/subspace/treatment,
+		/obj/item/weapon/stock_parts/subspace/crystal,
+		/obj/item/weapon/stock_parts/subspace/crystal,
+		/obj/item/weapon/stock_parts/subspace/transmitter,
+		/obj/item/weapon/stock_parts/subspace/transmitter,
+		/obj/item/weapon/stock_parts/subspace/transmitter,
+		/obj/item/weapon/stock_parts/subspace/transmitter
+	)
+
 	RefreshParts()
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
@@ -339,21 +342,23 @@
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 obj/machinery/teleport/station/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telestation
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module/phasic
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module/phasic
-	component_parts += new /obj/item/weapon/stock_parts/capacitor/super
-	component_parts += new /obj/item/weapon/stock_parts/capacitor/super
-	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible
-	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible
-	component_parts += new /obj/item/weapon/stock_parts/subspace/analyzer
-	component_parts += new /obj/item/weapon/stock_parts/subspace/analyzer
-	component_parts += new /obj/item/weapon/stock_parts/subspace/analyzer
-	component_parts += new /obj/item/weapon/stock_parts/subspace/analyzer
-	RefreshParts()
+	. = ..()
 
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/telestation,
+		/obj/item/weapon/stock_parts/scanning_module/phasic,
+		/obj/item/weapon/stock_parts/scanning_module/phasic,
+		/obj/item/weapon/stock_parts/capacitor/super,
+		/obj/item/weapon/stock_parts/capacitor/super,
+		/obj/item/weapon/stock_parts/subspace/ansible,
+		/obj/item/weapon/stock_parts/subspace/ansible,
+		/obj/item/weapon/stock_parts/subspace/analyzer,
+		/obj/item/weapon/stock_parts/subspace/analyzer,
+		/obj/item/weapon/stock_parts/subspace/analyzer,
+		/obj/item/weapon/stock_parts/subspace/analyzer
+	)
+
+	RefreshParts()
 
 /obj/machinery/teleport/station/attackby(var/obj/item/weapon/W, var/mob/user as mob)
 	if (istype(W, /obj/item/weapon/screwdriver))
@@ -380,13 +385,13 @@ obj/machinery/teleport/station/New()
 			return 1
 	else src.attack_hand()
 
-/obj/machinery/teleport/station/attack_paw()
-	src.attack_hand()
+/obj/machinery/teleport/station/attack_paw(var/mob/user)
+	src.attack_hand(user)
 
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
+/obj/machinery/teleport/station/attack_ai(var/mob/user)
+	src.attack_hand(user)
 
-/obj/machinery/teleport/station/attack_hand()
+/obj/machinery/teleport/station/attack_hand(var/mob/user)
 	if(engaged)
 		src.disengage()
 	else

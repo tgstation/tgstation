@@ -1,0 +1,138 @@
+<!-- 
+Title: Communications
+Used In File(s): /code/game/machinery/computers/communications.dm
+-->
+<!--
+#define COMM_SCREEN_MAIN		1
+#define COMM_SCREEN_STAT		2
+#define COMM_SCREEN_MESSAGES	3
+#define COMM_SCREEN_SECLEVEL	4
+-->
+{{if !data.authenticated}}
+<div class="notice">Please swipe your ID card. {{:helper.link('Log In','unlocked',{'operation':'login'},null,'fixed')}}</div>
+{{else}}
+	{{if !data.is_ai}}
+	<div class="notice">Please remember to {{:helper.link('Log Out','locked',{'operation':'logout'},null,'fixed')}}</div>
+	{{/if}}
+	
+	<div class="item">
+		<h3>Emergency Shuttle:</h3>
+		{{if data.shuttle.eta}}
+			<div class="itemLabel">ETA:</div>
+			<div class="itemContents">
+				{{>data.shuttle.eta}}
+			</div>
+		{{/if}}<!-- SHUTTLE ETA -->
+		<div class="itemLabel">Options:</div>
+		<div class="itemContents">
+			{{if data.shuttle.pos == 0}}
+				{{if data.shuttle.on && !data.is_ai}}
+					{{:helper.link('Cancel Shuttle','arrowreturnthick-1-w',{'operation':'cancelshuttle'})}}
+				{{else !data.shuttle.on}}
+					{{:helper.link('Call Shuttle','arrowthickstop-1-s',{'operation':'callshuttle'})}}
+				{{/if}}
+			{{/if}}
+		</div>
+	</div>
+
+	{{if data.screen==1}}
+		<!-- MAIN SCREEN -->
+		<h3>Menu</h3>
+		<div class="item">
+			{{if data.authenticated==2}}
+				<div class="line">
+					{{:helper.link('Make an Announcement','alert',{'operation':'announce'})}}
+				</div>
+				<div class="line">
+				{{if data.emagged}}
+					{{:helper.link('Message [UNKNOWN]','mail-closed',{'operation':'MessageSyndicate'})}}
+					</div>
+					<div class="line">
+					{{:helper.link('Reset Relays','refresh',{'operation':'MessageCentcomm'})}}
+				{{else}}
+					{{:helper.link('Message CentComm','mail-closed',{'operation':'MessageCentcomm'})}}
+				{{/if}}
+				</div>
+			{{/if}}
+			<div class="line">
+				{{:helper.link('Change Alert Level','signal-diag',{'operation':'changeseclevel'})}}
+			</div>
+			<div class="line">
+				{{:helper.link('Change Status Displays','info',{'operation':'status'})}}
+			</div>
+			<div class="line">
+				{{:helper.link('Message List','comment',{'operation':'messagelist'})}}
+			</div>
+		</div>
+	{{else data.screen==2}}
+		<!-- STATUS DISPLAYS -->
+		<h2>Status Displays</h2>
+		{{:helper.link('Back','home',{'operation':'main'})}}
+		<h3>Presets</h3>
+		{{for data.stat_display.presets}}
+			<div class="line">
+				<div class="statusLabel">{{:helper.link(value.label,'info',{'operation':'setstat','statdisp':value.name},null,(value.name==data.stat_display.type?'linkOn':''))}}</div>
+			</div>
+		{{/for}}
+		<h3>Alerts</h3>
+		{{for data.stat_display.alerts}}
+			<div class="line">
+				<div class="statusLabel">{{:helper.link(value.label,'alert',{'operation':'setstat','statdisp':'alert','alert':value.alert},null,(value.alert==data.stat_display.type?'linkOn':''))}}</div>
+			</div>
+		{{/for}}
+		<h3>Messages</h3>
+		<div class="item">
+			{{if data.stat_display.type}}
+			<div class="line">
+				<div class="statusLabel">{{:helper.link('Line 1:','gear',{'operation':'setmsg1'})}}</div>
+				<div class="statusValue">{{>data.stat_display.line_1}}</div>
+			</div>
+			<div class="line">
+				<div class="statusLabel">{{:helper.link('Line 2:','gear',{'operation':'setmsg2'})}}</div>
+				<div class="statusValue">{{>data.stat_display.line_2}}</div>
+			</div>
+			{{/if}}
+		</div>
+	{{else data.screen==3}}
+		<!-- MESSAGES -->
+		<h3>Messages</h3>
+		{{if data.current_message}}
+			{{for data.messages}}
+				{{if value.id == data.current_message}}
+					{{:helper.link('Messages','home',{'operation':'messagelist'})}}
+					<h3>{{>value.title}}</h3>
+					<div class="item">
+						{{>value.body}}
+					</div>
+				{{/if}}
+			{{/for}}
+		{{else}}
+			{{:helper.link('Back','home',{'operation':'main'})}}
+			{{for data.messages}}
+				<div class="line">
+					{{:helper.link('Open','mail-open',{'operation':'messagelist','msgid':value.id})}}
+					{{:helper.link('Delete','close',{'operation':'delmessage','msgid':value.id},null,'red')}}
+					{{>value.title}}
+				</div>
+			{{/for}}
+		{{/if}}
+	{{else data.screen==4}}
+		<!-- ALERT LEVEL -->
+		<h3>Security Level</h3>
+		{{:helper.link('Back','home',{'operation':'main'})}}
+		<div class="item">
+			<div class="line">
+				<div class="itemLabel">Security Level:</div>
+				<div class="itemContents {{:data.str_security_level}}">{{>data.str_security_level}}</div>
+			</div>
+			<div class="line">
+				<div class="itemLabel">Presets:</div>
+				<div class="itemContents">
+					{{for data.levels}}
+						{{:helper.link(value.name,'comment',{'operation':'newalertlevel','level':value.id},null,(value.id==data.security_level?'linkOn':''))}}
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	{{/if}}<!-- SCREEN -->
+{{/if}}<!-- AUTHENTICATED -->

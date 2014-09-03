@@ -8,7 +8,7 @@
 /*
  * Banana Peals
  */
-/obj/item/weapon/bananapeel/HasEntered(AM as mob|obj)
+/obj/item/weapon/bananapeel/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
@@ -23,7 +23,7 @@
 /*
  * Soap
  */
-/obj/item/weapon/soap/HasEntered(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
+/obj/item/weapon/soap/Crossed(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
@@ -38,6 +38,8 @@
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob)
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+	if(!user.Adjacent(target))
+		return
 	if(user.client && (target in user.client.screen))
 		user << "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>"
 	else if(istype(target,/obj/effect/decal/cleanable))

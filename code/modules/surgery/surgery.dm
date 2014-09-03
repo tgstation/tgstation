@@ -84,7 +84,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 	if(!istype(M,/mob/living/carbon))
 		return 0
-	if (user.a_intent == "harm")	//check for Hippocratic Oath
+	if (user.a_intent == "hurt")	//check for Hippocratic Oath
 		return 0
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check if tool is right or close enough and if this step is possible
@@ -119,3 +119,4 @@ proc/sort_surgeries()
 	var/face	=	0
 	var/appendix =	0
 	var/ribcage =	0
+	var/butt	=	0

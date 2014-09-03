@@ -29,6 +29,7 @@
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/device/multitool(src)
 		new /obj/item/device/flash(src)
+		new /obj/item/device/gps/engineering(src)
 		return
 
 
@@ -114,6 +115,7 @@
 		new /obj/item/clothing/glasses/meson(src)
 		new /obj/item/taperoll/engineering(src)
 		new /obj/item/taperoll/engineering(src)
+		new /obj/item/device/gps/engineering(src)
 		return
 
 /obj/structure/closet/secure_closet/engineering_general
@@ -125,3 +127,11 @@
 	icon_opened = "secureengopen"
 	icon_broken = "secureengbroken"
 	icon_off = "secureengoff"
+
+
+/obj/structure/closet/crate/secure/large/reinforced/shard
+	name = "Supermatter Shard Crate"
+	New()
+		..()
+		sleep(2)
+		new /obj/machinery/power/supermatter/shard(src)

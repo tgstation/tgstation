@@ -5,14 +5,13 @@
 	icon_closed = "blue"
 
 /obj/structure/closet/wardrobe/New()
+	. = ..()
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/brown(src)
-	return
-
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"
@@ -35,6 +34,9 @@
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
 	return
 
 
@@ -121,7 +123,7 @@
 
 /obj/structure/closet/wardrobe/orange
 	name = "prison wardrobe"
-	desc = "It's a storage unit for Nanotrasen-regulation prisoner attire."
+	desc = "It's a storage unit for Nanotrasen-regulated prisoner attire."
 	icon_state = "orange"
 	icon_closed = "orange"
 
@@ -265,6 +267,20 @@
 	new /obj/item/clothing/suit/storage/labcoat/chemist(src)
 	return
 
+
+/obj/structure/closet/wardrobe/oncology_white
+	name = "oncology wardrobe"
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/oncology_white/New()
+	new /obj/item/clothing/under/rank/medical(src)
+	new /obj/item/clothing/under/rank/medical(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/suit/storage/labcoat/oncologist(src)
+	new /obj/item/clothing/suit/storage/labcoat/oncologist(src)
+	return
 
 /obj/structure/closet/wardrobe/genetics_white
 	name = "genetics wardrobe"

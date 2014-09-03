@@ -11,6 +11,12 @@
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 
+/mob/living/silicon/hasFullAccess()
+	return 1
+
+/mob/living/silicon/GetAccess()
+	return get_all_accesses()
+
 /mob/living/silicon/proc/cancelAlarm()
 	return
 
@@ -145,34 +151,34 @@
 	if (bot.connected_ai == ai)
 		return 1
 	return 0
-	
-	
+
+
 // this function shows the health of the pAI in the Status panel
 /mob/living/silicon/proc/show_system_integrity()
 	if(!src.stat)
-		stat(null, text("System integrity: [(src.health+100)/2]%"))
+		stat(null, text("System integrity: [round((health / maxHealth) * 100)]%"))
 	else
 		stat(null, text("Systems nonfunctional"))
 
-	
+
 // This is a pure virtual function, it should be overwritten by all subclasses
 /mob/living/silicon/proc/show_malf_ai()
 	return 0
 
-	
+
 // this function displays the station time in the status panel
 /mob/living/silicon/proc/show_station_time()
 	stat(null, "Station Time: [worldtime2text()]")
-	
-	
+
+
 // this function displays the shuttles ETA in the status panel if the shuttle has been called
 /mob/living/silicon/proc/show_emergency_shuttle_eta()
 	if(emergency_shuttle.online && emergency_shuttle.location < 2)
 		var/timeleft = emergency_shuttle.timeleft()
 		if (timeleft)
 			stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-				
-				
+
+
 // This adds the basic clock, shuttle recall timer, and malf_ai info to all silicon lifeforms
 /mob/living/silicon/Stat()
 	..()
@@ -182,13 +188,40 @@
 		show_emergency_shuttle_eta()
 		show_system_integrity()
 		show_malf_ai()
-		
+
 // this function displays the stations manifest in a separate window
 /mob/living/silicon/proc/show_station_manifest()
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"
 	if(data_core)
-		dat += data_core.get_manifest(0) // make it monochrome
+		dat += data_core.get_manifest(1) // make it monochrome
 	dat += "<br>"
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
+
+/mob/living/silicon/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0)
+	if(istype(source, /obj/machinery/containment_field))
+		var/damage = shock_damage * siemens_coeff * 0.75 // take reduced damage
+
+		if(damage <= 0)
+			damage = 0
+
+		if(take_overall_damage(0, damage, "[source]") == 0) // godmode
+			return 0
+
+		visible_message( \
+			"<span class='warning'>[src] was shocked by the [source]!</span>", \
+			"<span class='danger'>Energy pulse detected, system damaged!</span>", \
+			"<span class='warning'>You hear a heavy electrical crack.</span>" \
+		)
+
+		if(prob(20))
+			Stun(2)
+
+		var/datum/effect/effect/system/spark_spread/SparkSpread = new
+		SparkSpread.set_up(5, 1, loc)
+		SparkSpread.start()
+
+		return damage
+
+	return 0

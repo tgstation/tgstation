@@ -31,8 +31,8 @@
 		return ..() && target.op_stage.appendix == 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("[user] starts to separating [target]'s appendix from the abdominal wall with \the [tool].", \
-		"You start to separating [target]'s appendix from the abdominal wall with \the [tool]." )
+		user.visible_message("[user] starts to separate [target]'s appendix from the abdominal wall with \the [tool].", \
+		"You start to separate [target]'s appendix from the abdominal wall with \the [tool]." )
 		target.custom_pain("The pain in your abdomen is living hell!",1)
 		..()
 

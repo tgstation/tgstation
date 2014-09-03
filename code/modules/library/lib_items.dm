@@ -18,6 +18,10 @@
 	anchored = 1
 	density = 1
 	opacity = 1
+	var/health = 50
+
+	autoignition_temperature = AUTOIGNITION_WOOD
+	fire_fuel = 10
 
 /obj/structure/bookcase/initialize()
 	for(var/obj/item/I in loc)
@@ -30,6 +34,18 @@
 		user.drop_item()
 		O.loc = src
 		update_icon()
+	else if(istype(O, /obj/item/weapon/wrench))
+		user << "\blue Now disassembling bookcase"
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user,50))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			density = 0
+			qdel(src)
+		return
 	else if(istype(O, /obj/item/weapon/pen))
 		var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
 		if(!newname)
@@ -37,6 +53,18 @@
 		else
 			name = ("bookcase ([sanitize(newname)])")
 	else
+		switch(O.damtype)
+			if("fire")
+				src.health -= O.force * 1
+			if("brute")
+				src.health -= O.force * 0.75
+			else
+		if (src.health <= 0)
+			visible_message("<span class=warning>The bookcase is smashed apart!</span>")
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			qdel(src)
 		..()
 
 /obj/structure/bookcase/attack_hand(var/mob/user as mob)
@@ -56,20 +84,20 @@
 	switch(severity)
 		if(1.0)
 			for(var/obj/item/weapon/book/b in contents)
-				del(b)
-			del(src)
+				qdel(b)
+			qdel(src)
 			return
 		if(2.0)
 			for(var/obj/item/weapon/book/b in contents)
 				if (prob(50)) b.loc = (get_turf(src))
-				else del(b)
-			del(src)
+				else qdel(b)
+			qdel(src)
 			return
 		if(3.0)
 			if (prob(50))
 				for(var/obj/item/weapon/book/b in contents)
 					b.loc = (get_turf(src))
-				del(src)
+				qdel(src)
 			return
 		else
 	return
@@ -124,6 +152,10 @@
 	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	flags = FPRINT | TABLEPASS
 	attack_verb = list("bashed", "whacked", "educated")
+
+	autoignition_temperature = AUTOIGNITION_PAPER
+	fire_fuel = 3
+
 	var/dat			 // Actual page content
 	var/due_date = 0 // Game time in 1/10th seconds
 	var/author		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -179,7 +211,7 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = strip_html(input(usr, "Write your book's contents (HTML NOT allowed):"),8192) as message|null
+				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null)
 				if(!content)
 					usr << "The content is invalid."
 					return

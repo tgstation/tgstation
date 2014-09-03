@@ -30,7 +30,7 @@
 
 /datum/game_mode/malfunction/pre_setup()
 	for(var/mob/new_player/player in player_list)
-		if(player.mind && player.mind.assigned_role == "AI")
+		if(player.mind && player.mind.assigned_role == "AI" && (player.client.prefs.be_special & BE_MALF))
 			malf_ai+=player.mind
 	if(malf_ai.len)
 		return 1
@@ -47,6 +47,7 @@
 
 			if(blackbox)
 				blackbox.save_all_data_to_sql()
+			CallHook("Reboot",list())
 			if (watchdog.waiting)
 				world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
 				watchdog.signal_ready()
@@ -55,7 +56,10 @@
 			world.Reboot()
 			return
 		AI_mind.current.verbs += /mob/living/silicon/ai/proc/choose_modules
-		AI_mind.current:laws = new /datum/ai_laws/malfunction
+		//AI_mind.current:laws = new /datum/ai_laws/malfunction
+		AI_mind.current:laws_sanity_check()
+		var/datum/ai_laws/laws = AI_mind.current:laws
+		laws.malfunction()
 		AI_mind.current:malf_picker = new /datum/module_picker
 		AI_mind.current:show_laws()
 

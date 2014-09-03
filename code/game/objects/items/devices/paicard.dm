@@ -15,7 +15,7 @@
 	..()
 	overlays += "pai-off"
 
-/obj/item/device/paicard/Del()
+/obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
 	if(!isnull(pai))
 		pai.death(0)
@@ -139,11 +139,21 @@
 			if(7) src.overlays += "pai-sad"
 			if(8) src.overlays += "pai-angry"
 			if(9) src.overlays += "pai-what"
+			if(10) src.overlays += "pai-longface"
+			if(11) src.overlays += "pai-sick"
+			if(12) src.overlays += "pai-high"
+			if(13) src.overlays += "pai-love"
+			if(14) src.overlays += "pai-electric"
+			if(15) src.overlays += "pai-pissed"
+			if(16) src.overlays += "pai-nose"
+			if(17) src.overlays += "pai-kawaii"
+			if(18) src.overlays += "pai-cry"
 
 /obj/item/device/paicard/proc/alertUpdate()
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))
 		M.show_message("\blue [src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "\blue [src] bleeps electronically.", 2)
+		playsound(loc, 'sound/machines/paistartup.ogg', 50, 1)
 
 /obj/item/device/paicard/emp_act(severity)
 	for(var/mob/M in src)

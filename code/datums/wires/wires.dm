@@ -16,8 +16,10 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 	var/holder_type = null // The holder type; used to make sure that the holder is the correct type.
 	var/wire_count = 0 // Max is 16
 	var/wires_status = 0 // BITFLAG OF WIRES
+	var/check_wires = 0
 
 	var/list/wires = list()
+	var/list/wire_names = null
 	var/list/signallers = list()
 
 	var/table_options = " align='center'"
@@ -46,6 +48,10 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 			var/list/wires = same_wires[holder_type]
 			src.wires = wires // Reference the wires list.
 
+/datum/wires/Destroy()
+	if(holder)
+		holder = null
+
 /datum/wires/proc/GenerateWires()
 	var/list/colours_to_pick = wireColours.Copy() // Get a copy, not a reference.
 	var/list/indexes_to_pick = list()
@@ -64,7 +70,6 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 		src.wires[colour] = index
 		//wires = shuffle(wires)
 
-
 /datum/wires/proc/Interact(var/mob/living/user)
 
 	var/html = null
@@ -79,6 +84,9 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 	popup.set_title_image(user.browse_rsc_icon(holder.icon, holder.icon_state))
 	popup.open()
 
+/datum/wires/proc/GetWireName(var/i)
+	return wire_names["[i]"]
+
 /datum/wires/proc/GetInteractWindow()
 	var/html = "<div class='block'>"
 	html += "<h3>Exposed Wires</h3>"
@@ -86,7 +94,10 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 	for(var/colour in wires)
 		html += "<tr>"
-		html += "<td[row_options1]><font color='[colour]'>[capitalize(colour)]</font></td>"
+		html += "<td[row_options1]><font color='[colour]'>[capitalize(colour)]</font>"
+		if(check_wires && wire_names && wires[colour])
+			html += " ([GetWireName(wires[colour])])"
+		html += "</td>"
 		html += "<td[row_options2]>"
 		html += "<A href='?src=\ref[src];action=1;cut=[colour]'>[IsColourCut(colour) ? "Mend" :  "Cut"]</A>"
 		html += " <A href='?src=\ref[src];action=1;pulse=[colour]'>Pulse</A>"

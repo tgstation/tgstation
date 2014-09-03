@@ -118,7 +118,7 @@
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = 3
 	flags = FPRINT | TABLEPASS
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
@@ -349,3 +349,36 @@
 	icon_state = "swim_red"
 	_color = "swim_red"
 	siemens_coefficient = 1
+
+/obj/item/clothing/suit/simonjacket
+	name = "Simon's Jacket"
+	desc = "Now you too can pierce the heavens"
+	icon_state = "simonjacket"
+	item_state = "simonjacket"
+
+/obj/item/clothing/suit/kaminacape
+	name = "Kamina's Cape"
+	desc = "Don't believe in yourself, dumbass. Believe in me. Believe in the Kamina who believes in you."
+	icon_state = "kaminacape"
+	item_state = "kaminacape"
+
+/obj/item/clothing/suit/storage/bandolier
+	name = "bandolier"
+	desc = "A bandolier designed to hold up to eight shotgun shells."
+	icon_state = "bandolier"
+	item_state = "bandolier"
+	storage_slots = 8
+	max_combined_w_class = 20
+	can_hold = list("/obj/item/ammo_casing/shotgun")
+
+/obj/item/clothing/suit/officercoat
+	name = "Officer's Coat"
+	desc = "Ein Mantel gemacht, um die Juden zu bestrafen."
+	icon_state = "officersuit"
+	item_state = "officersuit"
+
+/obj/item/clothing/suit/soldiercoat
+	name = "Soldier's Coat"
+	desc = "Ein Mantel gemacht, um die Verbündeten zu zerstören."
+	icon_state = "soldiersuit"
+	item_state = "soldiersuit"

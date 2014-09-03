@@ -11,7 +11,7 @@
 	protected_jobs = list()
 	required_players = 1
 	required_players_secret = 15
-	required_enemies = 1
+	required_enemies = 2
 	recommended_enemies = 4
 
 	uplink_welcome = "Syndicate Uplink Console:"
@@ -45,7 +45,12 @@
 	world << "<B>There are Vampires from Space Transylvania on the station, keep your blood close and neck safe!</B>"
 
 /datum/game_mode/vampire/pre_setup()
-
+	// mixed mode scaling
+	if(istype(ticker.mode, /datum/game_mode/mixed))
+		mixed = 1
+	if(mixed)
+		recommended_enemies = 2
+		required_enemies = 1
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -56,13 +61,14 @@
 			if(player.assigned_role == job)
 				possible_vampires -= player
 
-	vampire_amount = max(1,round(num_players() / 10)) //1 + round(num_players() / 10)
+	vampire_amount = min(recommended_enemies, max(required_enemies,round(num_players() / 10))) //1 + round(num_players() / 10)
 
 	if(possible_vampires.len>0)
 		for(var/i = 0, i < vampire_amount, i++)
 			if(!possible_vampires.len) break
 			var/datum/mind/vampire = pick(possible_vampires)
 			possible_vampires -= vampire
+			if(vampire.special_role) continue
 			vampires += vampire
 			modePlayer += vampires
 		return 1
@@ -75,9 +81,9 @@
 		vampire.special_role = "Vampire"
 		forge_vampire_objectives(vampire)
 		greet_vampire(vampire)
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+	if(!mixed)
+		spawn (rand(waittime_l, waittime_h))
+			send_intercept()
 	..()
 	return
 
@@ -133,15 +139,15 @@
 /datum/game_mode/proc/auto_declare_completion_enthralled()
 	if(enthralled.len)
 		var/text = "<FONT size = 2><B>The Enthralled were:</B></FONT>"
-		for(var/datum/mind/enthralled in enthralled)
-			text += "<br>[enthralled.key] was [enthralled.name] ("
-			if(enthralled.current)
-				if(enthralled.current.stat == DEAD)
+		for(var/datum/mind/Mind in enthralled)
+			text += "<br>[Mind.key] was [Mind.name] ("
+			if(Mind.current)
+				if(Mind.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
-				if(enthralled.current.real_name != enthralled.name)
-					text += " as [enthralled.current.real_name]"
+				if(Mind.current.real_name != Mind.name)
+					text += " as [Mind.current.real_name]"
 			else
 				text += "body destroyed"
 			text += ")"
@@ -196,7 +202,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	if (vampire.current.mind)
 		if (vampire.current.mind.assigned_role == "Clown")
 			vampire.current << "Your lust for blood has allowed you to overcome your clumsy nature allowing you to wield weapons without harming yourself."
-			vampire.current.mutations.Remove(CLUMSY)
+			vampire.current.mutations.Remove(M_CLUMSY)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in vampire.objectives)
@@ -277,6 +283,9 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		if(!mind.vampire || !(mind in ticker.mode.vampires))
 			src << "\red Your fangs have disappeared!"
 			return 0
+		if(H.flags & NO_BLOOD)
+			src << "<span class='warning'>Not a drop of blood here</span>"
+			return 0
 		bloodtotal = src.mind.vampire.bloodtotal
 		bloodusable = src.mind.vampire.bloodusable
 		if(!H.vessel.get_reagent_amount("blood"))
@@ -286,7 +295,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			blood = min(10, H.vessel.get_reagent_amount("blood"))// if they have less than 10 blood, give them the remnant else they get 10 blood
 			src.mind.vampire.bloodtotal += blood
 			src.mind.vampire.bloodusable += blood
-			H.adjustCloneLoss(5) // beep boop 10 damage
+			H.adjustCloneLoss(10) // beep boop 10 damage
 		else
 			blood = min(5, H.vessel.get_reagent_amount("blood"))// The dead only give 5 bloods
 			src.mind.vampire.bloodtotal += blood

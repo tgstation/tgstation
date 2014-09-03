@@ -1,3 +1,4 @@
+var/list/camera_names=list()
 /obj/machinery/camera
 	name = "security camera"
 	desc = "It's used to monitor rooms."
@@ -33,12 +34,7 @@
 
 	assembly = new(src)
 	assembly.state = 4
-	/* // Use this to look for cameras that have the same c_tag.
-	for(var/obj/machinery/camera/C in cameranet.cameras)
-		var/list/tempnetwork = C.network&src.network
-		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
-			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
-	*/
+
 	if(!src.network || src.network.len < 1)
 		if(loc)
 			error("[src.name] in [get_area(src)] (x:[src.x] y:[src.y] z:[src.z] has errored. [src.network?"Empty network list":"Null network list"]")
@@ -46,6 +42,27 @@
 			error("[src.name] in [get_area(src)]has errored. [src.network?"Empty network list":"Null network list"]")
 		ASSERT(src.network)
 		ASSERT(src.network.len > 0)
+
+	if(!c_tag)
+		var/area/A=get_area(src)
+		var/basename=A.name
+		var/nethash=english_list(network)
+		var/suffix = 0
+		while(1)
+			c_tag = "[basename]"
+			if(suffix)
+				c_tag += " [suffix]"
+			if(!(nethash+c_tag in camera_names))
+				camera_names[nethash+c_tag]=src
+				break
+			suffix++
+	..()
+
+/obj/machinery/camera/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+
 	..()
 
 /obj/machinery/camera/emp_act(severity)

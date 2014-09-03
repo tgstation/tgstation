@@ -20,7 +20,7 @@
  HOW IT WORKS
 
  It works by first creating a camera network datum. Inside of this camera network are "chunks" (which will be
- explained later) and "cameras". The cameras list is kept up to date by obj/machinery/camera/New() and Del().
+ explained later) and "cameras". The cameras list is kept up to date by obj/machinery/camera/New() and Destroy().
 
  Next the camera network has chunks. These chunks are a 16x16 tile block of turfs and cameras contained inside the chunk.
  These turfs are then sorted out based on what the cameras can and cannot see. If none of the cameras can see the turf, inside

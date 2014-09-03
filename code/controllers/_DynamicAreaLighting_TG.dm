@@ -5,9 +5,10 @@
 	ShadowDarke's respective lighting libraries. Credits, where due, to them.
 
 	Like sd_DAL (what we used to use), it changes the shading overlays of areas by splitting each type of area into sub-areas
-	by using the var/tag variable and moving turfs into the contents list of the correct sub-area.
+	by using the var/tag variable and moving turfs into the contents list of the correct sub-area. This method is
+	much less costly than using overlays or objects.
 
-	Unlike sd_DAL however it uses a queueing system. Everytime we  call a change to opacity or luminosity
+	Unlike sd_DAL however it uses a queueing system. Everytime we call a change to opacity or luminosity
 	(through SetOpacity() or SetLuminosity()) we are  simply updating variables and scheduling certain lights/turfs for an
 	update. Actual updates are handled periodically by the lighting_controller. This carries additional overheads, however it
 	means that each thing is changed only once per lighting_controller.processing_interval ticks. Allowing for greater control
@@ -15,50 +16,45 @@
 	setting lighting_controller.processing = 0 at say, the start of a large explosion, waiting for it to finish, and then
 	turning it back on with lighting_controller.processing = 1.
 
-	Unlike our old system there is a hardcoded maximum luminosity. This is to discourage coders using large luminosity values
-	for dynamic lighting, as the cost of lighting grows rapidly at large luminosity levels (especially when changing opacity
-	at runtime)
+	Unlike our old system there are hardcoded maximum luminositys (different for certain atoms).
+	This is to cap the cost of creating lighting effects.
+	(without this, an atom with luminosity of 20 would have to update 41^2 turfs!) :s
 
 	Also, in order for the queueing system to work, each light remembers the effect it casts on each turf. This is going to
-	have larger memory requirements than our previous system but hopefully it's worth the hassle for the greater control we
-	gain. Besides, there are far far worse uses of needless lists in the game, it'd be worth pruning some of them to offset
-	costs.
+	have larger memory requirements than our previous system but it's easily worth the hassle for the greater control we
+	gain. It also reduces cost of removing lighting effects by a lot!
 
 	Known Issues/TODO:
-		admin-spawned turfs will have broken lumcounts. Not willing to fix it at this moment
-		mob luminosity will be lower than expected when one of multiple light sources is dropped after exceeding the maximum luminosity
 		Shuttles still do not have support for dynamic lighting (I hope to fix this at some point)
-		No directional lighting support. Fairly easy to add this and the code is ready.
+		No directional lighting support. (prototype looked ugly)
 */
 
-#define LIGHTING_MAX_LUMINOSITY 12	//Hard maximum luminosity to prevet lag which could be caused by coders making mini-suns
-#define LIGHTING_MAX_LUMINOSITY_MOB 7	//Mobs get their own max because 60-odd human suns running around would be pretty silly
-#define LIGHTING_LAYER 10			//Drawing layer for lighting overlays
-#define LIGHTING_ICON 'icons/effects/ss13_dark_alpha7.dmi'	//Icon used for lighting shading effects
+#define LIGHTING_CIRCULAR 1									//comment this out to use old square lighting effects.
+#define LIGHTING_LAYER 10									//Drawing layer for lighting overlays
+#define LIGHTING_ICON 'icons/effects/ss13_dark_alpha6.dmi'	//Icon used for lighting shading effects
 
 datum/light_source
 	var/atom/owner
 	var/changed = 1
-	var/mobile = 1
 	var/list/effect = list()
+	var/__x = 0		// x coordinate at last update
+	var/__y = 0		// y coordinate at last update
+	var/__z = 0		// z coordinate at last update
 
-	var/__x = 0		//x coordinate at last update
-	var/__y = 0		//y coordinate at last update
-
+	var/_l_color // do not use directly, only used as reference for updating
+	var/col_r
+	var/col_g
+	var/col_b
 
 	New(atom/A)
 		if(!istype(A))
 			CRASH("The first argument to the light object's constructor must be the atom that is the light source. Expected atom, received '[A]' instead.")
-
 		..()
 		owner = A
-
-		if(istype(owner, /atom/movable))	mobile = 1		//apparantly this is faster than type-checking
-		else								mobile = 0		//Perhaps removing support for luminous turfs would be a good idea.
-
+		readrgb(owner.l_color)
 		__x = owner.x
 		__y = owner.y
-
+		__z = owner.z
 		// the lighting object maintains a list of all light sources
 		lighting_controller.lights += src
 
@@ -69,12 +65,15 @@ datum/light_source
 			remove_effect()
 			return 1	//causes it to be removed from our list of lights. The garbage collector will then destroy it.
 
-		if(mobile)
-			// check to see if we've moved since last update
-			if(owner.x != __x || owner.y != __y)
-				__x = owner.x
-				__y = owner.y
-				changed = 1
+		// check to see if we've moved since last update
+		if(owner.x != __x || owner.y != __y || owner.z != __z)
+			__x = owner.x
+			__y = owner.y
+			__z = owner.z
+			changed = 1
+
+		if (owner.l_color != _l_color)
+			changed = 1
 
 		if(changed)
 			changed = 0
@@ -82,210 +81,269 @@ datum/light_source
 			return add_effect()
 		return 0
 
-
 	proc/remove_effect()
 		// before we apply the effect we remove the light's current effect.
-		if(effect.len)
-			for(var/turf in effect)	// negate the effect of this light source
-				var/turf/T = turf
-				T.update_lumcount(-effect[T])
-			effect.Cut()					// clear the effect list
+		for(var/turf/T in effect)	// negate the effect of this light source
+			T.update_lumcount(-effect[T], col_r, col_g, col_b, 1)
+		effect.Cut()					// clear the effect list
 
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map
 		if(owner.loc && owner.luminosity > 0)
-			effect = new_effect()						// identify the effects of this light source
-			for(var/turf in effect)
-				var/turf/T = turf
-				T.update_lumcount(effect[T])			// apply the effect
+			readrgb(owner.l_color)
+			effect = list()
+			for(var/turf/T in view(owner.get_light_range(),owner))
+				var/delta_lumen = lum(T)
+				if(delta_lumen > 0)
+					effect[T] = delta_lumen
+					T.update_lumcount(delta_lumen, col_r, col_g, col_b, 0)
+
 			return 0
 		else
 			owner.light = null
 			return 1	//cause the light to be removed from the lights list and garbage collected once it's no
 						//longer referenced by the queue
 
-	proc/new_effect()
-		. = list()
-
-		for(var/turf/T in view(owner.luminosity, owner))
-//			var/area/A = T.loc
-//			if(!A) continue
-			var/change_in_lumcount = lum(T)
-			if(change_in_lumcount > 0)
-				.[T] = change_in_lumcount
-
-		return .
-
-
 	proc/lum(turf/A)
-		return owner.luminosity - max(abs(A.x-__x),abs(A.y-__y))
-//		var/dist = cheap_hypotenuse(A.x,A.y,__x,__y) //fetches the pythagorean distance between A and the light
-//		if(owner.luminosity < dist)	//if the turf is outside the radius the light doesn't illuminate it
-//			return 0
-//		return round(owner.luminosity - (dist/2),0.1)
+		if (owner.trueLuminosity < 1)
+			return 0
+		var/dist
+		if(!A)
+			dist = 0
+		else
+#ifdef LIGHTING_CIRCULAR
+			dist = cheap_hypotenuse(A.x, A.y, __x, __y)
+#else
+			dist = max(abs(A.x - __x), abs(A.y - __y))
+#endif
+		if (owner.trueLuminosity > 100) // This will never happen... right?
+			return sqrt(owner.trueLuminosity) - dist
+		else
+			return sqrtTable[owner.trueLuminosity] - dist
+
+	proc/readrgb(const/col)
+		_l_color = col
+
+		if(col)
+			col_r = GetRedPart(col)
+			col_g = GetGreenPart(col)
+			col_b = GetBluePart(col)
+		else
+			col_r = null
 
 atom
 	var/datum/light_source/light
+	var/trueLuminosity = 0  // Typically 'luminosity' squared.  The builtin luminosity must remain linear.
+	                        // We may read it, but NEVER set it directly.
+	var/l_color
 
 //Turfs with opacity when they are constructed will trigger nearby lights to update
-//Turfs atoms with luminosity when they are constructed will create a light_source automatically
-//TODO: lag reduction
+//Turfs and atoms with luminosity when they are constructed will create a light_source automatically
 turf/New()
 	..()
-	if(opacity)
-		UpdateAffectingLights()
 	if(luminosity)
-		world.log << "[type] has luminosity at New()"
-		if(light)	world.log << "## WARNING: [type] - Don't set lights up manually during New(), We do it automatically."
+		if(light)	WARNING("[type] - Don't set lights up manually during New(), We do it automatically.")
+		trueLuminosity = luminosity * luminosity
 		light = new(src)
 
 //Movable atoms with opacity when they are constructed will trigger nearby lights to update
 //Movable atoms with luminosity when they are constructed will create a light_source automatically
-//TODO: lag reduction
 atom/movable/New()
 	..()
 	if(opacity)
-		UpdateAffectingLights()
+		if(isturf(loc))
+			if(loc:lighting_lumcount > 1)
+				UpdateAffectingLights()
 	if(luminosity)
-		if(light)	world.log << "## WARNING: [type] - Don't set lights up manually during New(), We do it automatically."
+		if(light)	WARNING("[type] - Don't set lights up manually during New(), We do it automatically.")
+		trueLuminosity = luminosity * luminosity
 		light = new(src)
 
-//Turfs with opacity will trigger nearby lights to update at next lighting process.
-//TODO: is this really necessary? Removing it could help reduce lag during singulo-mayhem somewhat
-turf/Del()
-	if(opacity)
-		UpdateAffectingLights()
-	..()
-
 //Objects with opacity will trigger nearby lights to update at next lighting process.
-atom/movable/Del()
+atom/movable/Destroy()
 	if(opacity)
-		UpdateAffectingLights()
+		if(isturf(loc))
+			if(loc:lighting_lumcount > 1)
+				UpdateAffectingLights()
+
 	..()
 
-//Sets our luminosity. Enforces a hardcoded maximum luminosity by default. This maximum can be overridden but it is extremely
-//unwise to do so.
+//Sets our luminosity.
 //If we have no light it will create one.
-//If we are setting luminosity to 0 the light will be cleaned up and delted once all its queues are complete
-//if we have a light already it is merely updated
-atom/proc/SetLuminosity(new_luminosity, max_luminosity = LIGHTING_MAX_LUMINOSITY)
+//If we are setting luminosity to 0 the light will be cleaned up by the controller and garbage collected once all its
+//queues are complete.
+//if we have a light already it is merely updated, rather than making a new one.
+atom/proc/SetLuminosity(new_luminosity, trueLum = FALSE)
 	if(new_luminosity < 0)
 		new_luminosity = 0
-//		world.log << "## WARNING: [type] - luminosity cannot be negative"
-	else if(max_luminosity < new_luminosity)
-		new_luminosity = max_luminosity
-//		if(luminosity != new_luminosity)
-//			world.log << "## WARNING: [type] - LIGHT_MAX_LUMINOSITY exceeded"
+	if(!trueLum)
+		new_luminosity *= new_luminosity
+	if(light)
+		if(trueLuminosity != new_luminosity)	//non-luminous lights are removed from the lights list in add_effect()
+			light.changed = 1
+	else
+		if(new_luminosity)
+			light = new(src)
+	trueLuminosity = new_luminosity
+	if (trueLuminosity < 1)
+		luminosity = 0
+	else if (trueLuminosity <= 100)
+		luminosity = sqrtTable[trueLuminosity]
+	else
+		luminosity = sqrt(trueLuminosity)
 
-	if(isturf(loc))
-		if(light)
-			if(luminosity != new_luminosity)	//TODO: remove lights from the light list when they're not luminous? DONE in add_effect
-				light.changed = 1
-		else
-			if(new_luminosity)
-				light = new(src)
+atom/proc/AddLuminosity(delta_luminosity)
+	if(delta_luminosity > 0)
+		SetLuminosity(trueLuminosity + delta_luminosity*delta_luminosity, TRUE)
+	else if(delta_luminosity < 0)
+		SetLuminosity(trueLuminosity - delta_luminosity*delta_luminosity, TRUE)
 
-	luminosity = new_luminosity
+area/SetLuminosity(new_luminosity)			//we don't want dynamic lighting for areas
+	luminosity = !!new_luminosity
+	trueLuminosity = luminosity
 
-//Snowflake code to prevent mobs becoming suns (lag-prevention)
-mob/SetLuminosity(new_luminosity)
-	..(new_luminosity,LIGHTING_MAX_LUMINOSITY_MOB)
 
 //change our opacity (defaults to toggle), and then update all lights that affect us.
-atom/proc/SetOpacity(var/new_opacity)
-	if(new_opacity == null)			new_opacity = !opacity
-	else if(opacity == new_opacity)	return
-	opacity = new_opacity
+atom/proc/SetOpacity(new_opacity)
+	if(new_opacity == null)
+		new_opacity = !opacity			//default = toggle opacity
+	else if(opacity == new_opacity)
+		return 0						//opacity hasn't changed! don't bother doing anything
+	opacity = new_opacity				//update opacity, the below procs now call light updates.
+	return 1
 
-	UpdateAffectingLights()
+turf/SetOpacity(new_opacity)
+	if(..()==1)							//only bother if opacity changed
+		if(lighting_lumcount)			//only bother with an update if our turf is currently affected by a light
+			UpdateAffectingLights()
 
-//set the changed status of all lights which could have possibly lit this atom.
-//We don't need to worry about lights which lit us but moved away, since they will have change status set already
-atom/proc/UpdateAffectingLights()
-	var/turf/T = src
-	if(!isturf(T))
-		T = loc
-		if(!isturf(T))	return
-	for(var/atom in range(LIGHTING_MAX_LUMINOSITY,T))	//TODO: this will probably not work very well :(
-		var/atom/A = atom
-		if(A.light && A.luminosity)
-			A.light.changed = 1			//force it to update at next process()
+/atom/movable/SetOpacity(new_opacity)
+	if(..()==1)							//only bother if opacity changed
+		if(isturf(loc))					//only bother with an update if we're on a turf
+			var/turf/T = loc
+			if(T.lighting_lumcount)		//only bother with an update if our turf is currently affected by a light
+				UpdateAffectingLights()
 
-//	for(var/light in lighting_controller.lights)		//TODO: this will probably laaaaaag
-//		var/datum/light_source/L = light
-//		if(L.changed)	continue
-//		if(!L.owner)	continue
-//		if(!L.owner.luminosity)	continue
-//		if(src in L.effect)
-//			L.changed = 1
 
 turf
 	var/lighting_lumcount = 0
-	var/accepts_lighting = 1
 	var/lighting_changed = 0
+	var/color_lighting_lumcount = 0
+
+	var/lumcount_r = 0
+	var/lumcount_g = 0
+	var/lumcount_b = 0
+	var/light_col_sources = 0
 
 turf/space
 	lighting_lumcount = 4		//starlight
-	accepts_lighting=0 			// Don't apply overlays
 
-turf/proc/update_lumcount(amount)
-	//if(accepts_lighting)
-	//	lighting_lumcount += amount
-	//else if(lighting_lumcount != initial(lighting_lumcount))
-	//	lighting_lumcount = initial(lighting_lumcount)
-	//else
-	//	return
+turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
 	lighting_lumcount += amount
-//	if(lighting_lumcount < 0 || lighting_lumcount > 100)
-//		world.log << "## WARNING: [type] ([src]) lighting_lumcount = [lighting_lumcount]"
+
+	if(!isnull(col_r)) //col_r is the "key" var, if it's null so will the rest
+		if(removing)
+			light_col_sources--
+			lumcount_r -= col_r
+			lumcount_g -= col_g
+			lumcount_b -= col_b
+		else
+			light_col_sources++
+			lumcount_r += col_r
+			lumcount_g += col_g
+			lumcount_b += col_b
+
+		if(light_col_sources)
+			var/r_avg = max(0, min(255, round(lumcount_r / light_col_sources, 16) + 15))
+			var/g_avg = max(0, min(255, round(lumcount_g / light_col_sources, 16) + 15))
+			var/b_avg = max(0, min(255, round(lumcount_b / light_col_sources, 16) + 15))
+			l_color = rgb(r_avg, g_avg, b_avg)
+		else
+			l_color = null
+
+		color_lighting_lumcount = max(color_lighting_lumcount + amount, 0) // Minimum of 0.
+
 	if(!lighting_changed)
 		lighting_controller.changed_turfs += src
 		lighting_changed = 1
+
+turf/proc/lighting_tag(const/level)
+	var/area/A = loc
+	return A.tagbase + "sd_L[level]"
+
+turf/proc/build_lighting_area(const/tag, const/level, const/color_light)
+	var/area/Area = loc
+	var/area/A = new Area.type()    // create area if it wasn't found
+	// replicate vars
+	for(var/V in Area.vars)
+		switch(V)
+			if ("contents","lighting_overlay", "color_overlay", "overlays")
+				continue
+			else
+				if(issaved(Area.vars[V])) A.vars[V] = Area.vars[V]
+
+	A.tag = tag
+	A.lighting_subarea = 1
+	A.lighting_space = 0 // in case it was copied from a space subarea
+
+	if (l_color != A.l_color)
+		A.l_color = l_color
+		//color_light = min(max(round(color_lighting_lumcount, 1), 0), lighting_controller.lighting_states)
+		//world << "[color_light] [color_lighting_lumcount]"
+
+	A.SetLightLevel(level, color_light)
+	Area.related += A
+	return A
 
 turf/proc/shift_to_subarea()
 	lighting_changed = 0
 	var/area/Area = loc
 
-	if(!istype(Area) || !Area.lighting_use_dynamic /*|| !accepts_lighting*/) return
+	if(!istype(Area) || !Area.lighting_use_dynamic) return
 
-	// change the turf's area depending on its brightness
-	// restrict light to valid levels
-	var/light = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
+	var/level = Clamp(round(lighting_lumcount, 1), 0, lighting_controller.lighting_states)
+	var/new_tag = lighting_tag(level)
 
-	var/find = findtextEx(Area.tag, "sd_L")
-	var/new_tag = copytext(Area.tag, 1, find)
-	//if(accepts_lighting)
-	//	new_tag += "sd_L[light]"
-	new_tag += "sd_L[light]"
+	// pomf - If we have a lighting color that is not null, apply the new tag to seperate the areas.
+	if (l_color)
+		// pomf - We append the (rounded!) color lighting lumcount so we can have colored lights.
+		new_tag += "[l_color][Clamp(round(color_lighting_lumcount, 1), 0, lighting_controller.lighting_states)]"
 
-	if(Area.tag!=new_tag)	//skip if already in this area
-
+	if(Area.tag != new_tag)	//skip if already in this area
 		var/area/A = locate(new_tag)	// find an appropriate area
+		var/color_light = Clamp(round(color_lighting_lumcount, 1), 0, lighting_controller.lighting_states)
 
 		if(!A)
-
-			A = new Area.type()    // create area if it wasn't found
-			// replicate vars
-			for(var/V in Area.vars)
-				switch(V)
-					if("contents","lighting_overlay","overlays")	continue
-					else
-						if(issaved(Area.vars[V])) A.vars[V] = Area.vars[V]
-
-			A.tag = new_tag
-			A.lighting_subarea = 1
-			A.SetLightLevel(light)
-
-			Area.related += A
+			A = build_lighting_area(new_tag, level, color_light)
+		else if(l_color != A.l_color)
+			A.l_color = l_color
+			A.SetLightLevel(level, color_light)
 
 		A.contents += src	// move the turf into the area
+	universe.OnTurfTick(src)
+
+// Dedicated lighting sublevel for space turfs
+// helps us depower things in space, remove space fire alarms,
+// and evens out space lighting
+turf/space/lighting_tag(var/level)
+	var/area/A = loc
+	return A.tagbase + "sd_L_space"
+turf/space/build_lighting_area(var/tag,var/level)
+	var/area/A = ..(tag,4)
+	A.lighting_space = 1
+	A.SetLightLevel(4)
+	A.icon_state = null
+	return A
 
 area
 	var/lighting_use_dynamic = 1	//Turn this flag off to prevent sd_DynamicAreaLighting from affecting this area
 	var/image/lighting_overlay		//tracks the darkness image of the area for easy removal
 	var/lighting_subarea = 0		//tracks whether we're a lighting sub-area
+	var/lighting_space = 0			// true for space-only lighting subareas
+	var/tagbase
+	var/image/color_overlay //Tracks the color image.
 
-	proc/SetLightLevel(light)
+	proc/SetLightLevel(light, color_light = 0)
 		if(!src) return
 		if(light <= 0)
 			light = 0
@@ -301,17 +359,115 @@ area
 		else
 			lighting_overlay = image(LIGHTING_ICON,,num2text(light),LIGHTING_LAYER)
 
-		overlays += lighting_overlay
+		if (color_overlay)
+			overlays.Remove(color_overlay)
+			color_overlay.icon_state = "white"
+		else
+			if (l_color)
+				color_overlay = image('icons/obj/weapons.dmi', ,"white", 10.1)
+
+		if (istype(color_overlay))
+			color_overlay.color = l_color
+
+			/*
+			if (light < 6)
+				switch (level)
+					if (6)
+						color_overlay.alpha = 140
+					if (5)
+						color_overlay.alpha = 120
+					if (4)
+						color_overlay.alpha = 100
+					if (3)
+						color_overlay.alpha = 80
+					if (2)
+						color_overlay.alpha = 60
+					if (1)
+						color_overlay.alpha = 40
+					if (-INFINITY to 0)
+					//world << "Zero or below, [color_light]."
+					color_overlay.alpha = 0
+					else
+						//world << "Setting the alpha to max... color_light [color_light]."
+						color_overlay.alpha = 140
+
+				color_overlay.blend_mode = BLEND_MULTIPLY
+			*/
+
+			if (1)
+				switch (color_light)
+					if (6)
+						color_overlay.alpha = 180
+					if (5)
+						color_overlay.alpha = 140
+					if (4)
+						color_overlay.alpha = 120
+					if (3)
+						color_overlay.alpha = 80
+					if (2)
+						color_overlay.alpha = 60
+					if (1)
+						color_overlay.alpha = 20
+					if (-INFINITY to 0)
+						//world << "Zero or below, [color_light]."
+						color_overlay.alpha = 0
+					else
+						//world << "Setting the alpha to max... color_light [color_light]."
+						color_overlay.alpha = 180
+
+			color_overlay.blend_mode = BLEND_ADD
+
+			if (color_overlay.color)
+				overlays.Add(color_overlay)
+
+		if (isnull(color_overlay))
+			overlays.Add(lighting_overlay)
+		else if (light < 6)
+			overlays.Add(lighting_overlay)
+
+	proc/SetDynamicLighting()
+
+		src.lighting_use_dynamic = 1
+		for(var/turf/T in src.contents)
+			T.update_lumcount(0)
 
 	proc/InitializeLighting()	//TODO: could probably improve this bit ~Carn
-		if(!tag) tag = "[type]"
+		tagbase = "[type]"
+		if(!tag) tag = tagbase
 		if(!lighting_use_dynamic)
 			if(!lighting_subarea)	// see if this is a lighting subarea already
 			//show the dark overlay so areas, not yet in a lighting subarea, won't be bright as day and look silly.
 				SetLightLevel(4)
 
-
-#undef LIGHTING_MAX_LUMINOSITY
-#undef LIGHTING_MAX_LUMINOSITY_MOB
 //#undef LIGHTING_LAYER
+#undef LIGHTING_CIRCULAR
 //#undef LIGHTING_ICON
+
+#define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.
+#define LIGHTING_MAX_LUMINOSITY_MOBILE	5	//Moving objects have a lower max luminosity since these update more often. (lag reduction)
+#define LIGHTING_MAX_LUMINOSITY_TURF	1	//turfs have a severely shortened range to protect from inevitable floor-lighttile spam.
+
+//set the changed status of all lights which could have possibly lit this atom.
+//We don't need to worry about lights which lit us but moved away, since they will have change status set already
+//This proc can cause lots of lights to be updated. :(
+atom/proc/UpdateAffectingLights()
+	for(var/atom/A in oview(LIGHTING_MAX_LUMINOSITY_STATIC-1,src))
+		if(A.light)
+			A.light.changed = 1			//force it to update at next process()
+
+//caps luminosity effects max-range based on what type the light's owner is.
+atom/proc/get_light_range()
+	return min(luminosity, LIGHTING_MAX_LUMINOSITY_STATIC)
+
+atom/movable/get_light_range()
+	return min(luminosity, LIGHTING_MAX_LUMINOSITY_MOBILE)
+
+obj/machinery/light/get_light_range()
+	return min(luminosity, LIGHTING_MAX_LUMINOSITY_STATIC)
+
+turf/get_light_range()
+	return min(luminosity, LIGHTING_MAX_LUMINOSITY_TURF)
+
+#undef LIGHTING_MAX_LUMINOSITY_STATIC
+#undef LIGHTING_MAX_LUMINOSITY_MOBILE
+#undef LIGHTING_MAX_LUMINOSITY_TURF

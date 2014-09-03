@@ -66,3 +66,5 @@
 
 /mob/proc/update_targeted()
 	return
+
+/mob/proc/update_transform()

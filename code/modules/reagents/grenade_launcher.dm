@@ -12,13 +12,20 @@
 	var/list/grenades = new/list()
 	var/max_grenades = 3
 	m_amt = 2000
+	w_type = RECYK_METAL
 
 	examine()
 		set src in view()
-		..()
+		//..() //Redundant
 		if (!(usr in view(2)) && usr!=src.loc) return
-		usr << "\icon [src] Grenade launcher:"
-		usr << "\blue [grenades] / [max_grenades] Grenades."
+		usr << "This is a \icon [src] [src.name]."
+		if(!(grenades.len))
+			usr << "It is empty."
+			return
+		usr << "\blue It has [grenades.len] / [max_grenades] grenades loaded."
+		for(var/obj/item/weapon/grenade/G in grenades)
+			usr << "\icon [G] [G.name]"
+		return
 
 	attackby(obj/item/I as obj, mob/user as mob)
 
@@ -27,10 +34,10 @@
 				user.drop_item()
 				I.loc = src
 				grenades += I
-				user << "\blue You put the grenade in the grenade launcher."
-				user << "\blue [grenades.len] / [max_grenades] Grenades."
+				user << "\blue You load the [I.name] into the [src.name]."
+				user << "\blue [grenades.len] / [max_grenades] grenades loaded."
 			else
-				usr << "\red The grenade launcher cannot hold more grenades."
+				user << "\red The [src.name] cannot hold more grenades."
 
 	afterattack(obj/target, mob/user , flag)
 
@@ -46,7 +53,7 @@
 		if(grenades.len)
 			spawn(0) fire_grenade(target,user)
 		else
-			usr << "\red The grenade launcher is empty."
+			usr << "\red The [src.name] is empty."
 
 	proc
 		fire_grenade(atom/target, mob/user)
@@ -57,10 +64,10 @@
 			grenades -= F
 			F.loc = user.loc
 			F.throw_at(target, 30, 2)
-			message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).")
-			log_game("[key_name_admin(user)] used a grenade ([src.name]).")
+			message_admins("[key_name_admin(user)] fired [F.name] from [src.name].")
+			log_game("[key_name_admin(user)] launched [F.name] from [src.name].")
 			F.active = 1
 			F.icon_state = initial(icon_state) + "_active"
-			playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+			playsound(user.loc, 'sound/weapons/grenadelauncher.ogg', 50, 1, -3)
 			spawn(15)
 				F.prime()

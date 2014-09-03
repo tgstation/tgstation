@@ -15,6 +15,7 @@
 	artifact_find_type = pick(\
 	5;/obj/structure/constructshell,\
 	5;/obj/machinery/syndicate_beacon,\
+	25;/obj/machinery/power/supermatter/shard,\
 	50;/obj/structure/cult/pylon,\
 	100;/obj/machinery/auto_cloner,\
 	100;/obj/machinery/giga_drill,\
@@ -33,6 +34,7 @@
 	icon_state = "boulder1"
 	density = 1
 	opacity = 1
+	anchored = 1
 	var/excavation_level = 0
 	var/datum/geosample/geological_data
 	var/datum/artifact_find/artifact_find
@@ -73,17 +75,14 @@
 		user << "\blue You finish [P.drill_verb] [src]."
 		excavation_level += P.excavation_amount
 
-		var/reveal_prob = 1
-		if(excavation_level >= 95)
-			reveal_prob = 50 + (excavation_level - 90) * (excavation_level - 90)
-		else if(excavation_level >= 90)
-			reveal_prob = 5
-		if(excavation_level >= 100)
+		if(excavation_level > 100)
 			//failure
 			user.visible_message("<font color='red'><b>[src] suddenly crumbles away.</b></font>",\
-			"\red [src] has disintegrated under your onslaught, any secrets it was holding long gone.")
+			"\red [src] has disintegrated under your onslaught, any secrets it was holding are long gone.")
 			del(src)
-		else if(prob(reveal_prob))
+			return
+
+		if(prob(excavation_level))
 			//success
 			if(artifact_find)
 				var/spawn_type = artifact_find.artifact_find_type
@@ -97,3 +96,22 @@
 				user.visible_message("<font color='red'><b>[src] suddenly crumbles away.</b></font>",\
 				"\blue [src] has been whittled away under your careful excavation, but there was nothing of interest inside.")
 			del(src)
+
+/obj/structure/boulder/Bumped(AM)
+	. = ..()
+	if(istype(AM,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = AM
+		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
+			attackby(H.l_hand,H)
+		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
+			attackby(H.r_hand,H)
+
+	else if(istype(AM,/mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = AM
+		if(istype(R.module_active,/obj/item/weapon/pickaxe))
+			attackby(R.module_active,R)
+
+	else if(istype(AM,/obj/mecha))
+		var/obj/mecha/M = AM
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+			M.selected.action(src)

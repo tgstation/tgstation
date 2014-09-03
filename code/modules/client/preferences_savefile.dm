@@ -1,5 +1,5 @@
 #define SAVEFILE_VERSION_MIN	8
-#define SAVEFILE_VERSION_MAX	10
+#define SAVEFILE_VERSION_MAX	11
 
 //handles converting savefiles to new formats
 //MAKE SURE YOU KEEP THIS UP TO DATE!
@@ -54,18 +54,23 @@
 	S["be_special"]			>> be_special
 	S["default_slot"]		>> default_slot
 	S["toggles"]			>> toggles
+	S["UI_style_color"]		>> UI_style_color
+	S["UI_style_alpha"]		>> UI_style_alpha
 	S["warns"]				>> warns
 	S["warnbans"]			>> warnbans
 	S["randomslot"]			>> randomslot
-
+	S["volume"]				>> volume
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	UI_style		= sanitize_inlist(UI_style, list("Midnight","Orange","old"), initial(UI_style))
+	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
 	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
+	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
+	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
+	volume			= sanitize_integer(volume, 0, 100, initial(volume))
 	return 1
 
 /datum/preferences/proc/save_preferences()
@@ -83,9 +88,22 @@
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
+	S["UI_style_color"]		<< UI_style_color
+	S["UI_style_alpha"]		<< UI_style_alpha
 	S["warns"]				<< warns
 	S["warnbans"]			<< warnbans
 	S["randomslot"]			<< randomslot
+	S["volume"]				<< volume
+	return 1
+
+//saving volume changes
+/datum/preferences/proc/save_volume()
+	if(!path)				return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	S.cd = "/"
+
+	S["volume"]				<< volume
 	return 1
 
 /datum/preferences/proc/load_save(dir)
@@ -153,7 +171,7 @@
 	if(isnull(species)) species = "Human"
 	if(isnull(language)) language = "None"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
-	if(!real_name) real_name = random_name(gender)
+	if(!real_name) real_name = random_name(gender,species)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))

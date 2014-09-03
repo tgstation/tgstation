@@ -7,10 +7,10 @@
 	icon_gib = "syndicate_gib"
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "pokes the"
-	response_disarm = "shoves the"
-	response_harm = "hits the"
-	speed = 4
+	response_help = "pokes"
+	response_disarm = "shoves"
+	response_harm = "hits"
+	speed = -1
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
@@ -18,7 +18,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "punches"
-	a_intent = "harm"
+	a_intent = "hurt"
 	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
 	var/weapon1
 	var/weapon2
@@ -31,7 +31,6 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
-	wall_smash = 1
 	faction = "syndicate"
 	status_flags = CANPUSH
 
@@ -65,12 +64,12 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
-			visible_message("\red \b [src] has been attacked with the [O] by [user]. ")
+			visible_message("\red \b [src] has been attacked with [O] by [user]. ")
 		else
-			visible_message("\red \b [src] blocks the [O] with its shield! ")
+			visible_message("\red \b [src] blocks [O] with its shield! ")
 	else
 		usr << "\red This weapon is ineffective, it does no damage."
-		visible_message("\red [user] gently taps [src] with the [O]. ")
+		visible_message("\red [user] gently taps [src] with [O]. ")
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
@@ -104,6 +103,8 @@
 /mob/living/simple_animal/hostile/syndicate/ranged
 	ranged = 1
 	rapid = 1
+	retreat_distance = 5
+	minimum_distance = 5
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/a12mm
@@ -136,7 +137,6 @@
 /mob/living/simple_animal/hostile/viscerator
 	name = "viscerator"
 	desc = "A small, twin-bladed machine capable of inflicting very deadly lacerations."
-	icon = 'icons/mob/critter.dmi'
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE

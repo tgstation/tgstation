@@ -19,6 +19,7 @@ em						{font-style: normal;	font-weight: bold;}
 
 .adminobserver			{color: #996600;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
+.adminsay				{color: #9611D4;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
 
@@ -35,6 +36,7 @@ em						{font-style: normal;	font-weight: bold;}
 .medradio				{color: #008160;}
 .sciradio				{color: #993399;}
 .supradio				{color: #5F4519;}
+.serradio				{color: #3399CC;}
 
 .mommi					{color: navy;}
 
@@ -51,9 +53,12 @@ h1.alert, h2.alert		{color: #000000;}
 
 .danger					{color: #ff0000;	font-weight: bold;}
 .warning				{color: #ff0000;	font-style: italic;}
+.sinister				{color: #800080;	font-weight: bold;	font-style: italic;} /* /vg/ */
+.blob					{color: #006221;	font-weight: bold;	font-style: italic;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
+.sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 
 .alien					{color: #543354;}
 .newscaster				{color: #800000;}
@@ -65,7 +70,17 @@ h1.alert, h2.alert		{color: #000000;}
 .skrell					{color: #00CED1;}
 .soghun					{color: #228B22;}
 .vox					{color: #AA00AA;}
+.rough					{font-family: "Trebuchet MS", cursive, sans-serif;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}
 
 .interface				{color: #330033;}
+
+/* /vg/ */
+
+/* Recruiting stuff */
+.recruit {
+	color: #5c00e6;
+	font-weight: bold;
+	font-style: italic;
+}
 </style>"}

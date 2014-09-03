@@ -38,6 +38,11 @@
 	icon_state = "wood"
 	floor_tile = new/obj/item/stack/tile/wood
 
+	autoignition_temperature = AUTOIGNITION_WOOD
+	fire_fuel = 10
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
+
 /turf/simulated/floor/light
 	name = "Light floor"
 	luminosity = 5
@@ -53,12 +58,15 @@
 				update_icon()
 				name = n
 
-
-
 /turf/simulated/floor/wood
 	name = "floor"
 	icon_state = "wood"
 	floor_tile = new/obj/item/stack/tile/wood
+
+	autoignition_temperature = AUTOIGNITION_WOOD
+	fire_fuel = 10
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
@@ -79,6 +87,9 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
+
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob)
 	if(!C)
@@ -148,7 +159,9 @@
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 	layer = 2
-	accepts_lighting=0
+
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/shuttle/wall
 	name = "wall"
@@ -173,6 +186,8 @@
 /turf/simulated/floor/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
@@ -212,20 +227,25 @@
 	name = "Carpet"
 	icon_state = "carpet"
 	floor_tile = new/obj/item/stack/tile/carpet
-
+	var/has_siding=1
 	New()
 		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
 		if(!icon_state)
-			icon_state = "carpet"
+			icon_state = initial(icon_state)
 		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+		if(has_siding)
+			spawn(4)
+				if(src)
+					update_icon()
+					for(var/direction in list(1,2,4,8,5,6,9,10))
+						if(istype(get_step(src,direction),/turf/simulated/floor))
+							var/turf/simulated/floor/FF = get_step(src,direction)
+							FF.update_icon() //so siding get updated properly
 
+/turf/simulated/floor/carpet/arcade
+	name = "Arcade Carpet"
+	icon_state = "arcadecarpet"
+	has_siding=0
 
 
 /turf/simulated/floor/plating/ironsand/New()
@@ -260,7 +280,7 @@
 
 // CATWALKS
 // Space and plating, all in one buggy fucking turf!
-/turf/unsimulated/floor/airless/catwalk
+/turf/simulated/floor/plating/airless/catwalk
 	icon = 'icons/turf/catwalks.dmi'
 	icon_state = "catwalk0"
 	name = "catwalk"
@@ -271,9 +291,11 @@
 	heat_capacity = 700000
 
 	lighting_lumcount = 4		//starlight
-	accepts_lighting=0 			// Don't apply overlays
 
 	intact = 0
+
+	soot_type = null
+	melt_temperature = 0 // Doesn't melt.
 
 	New()
 		..()
@@ -281,7 +303,7 @@
 		name = "catwalk"
 		update_icon(1)
 
-	proc/update_icon(var/propogate=1)
+	update_icon(var/propogate=1)
 		underlays.Cut()
 		underlays += new /icon('icons/turf/space.dmi',"[((x + y) ^ ~(x * y) + z) % 25]")
 
@@ -289,7 +311,7 @@
 		for(var/direction in cardinal)
 			var/turf/T = get_step(src,direction)
 			if(T.is_catwalk())
-				var/turf/unsimulated/floor/airless/catwalk/C=T
+				var/turf/simulated/floor/plating/airless/catwalk/C=T
 				dirs |= direction
 				if(propogate)
 					C.update_icon(0)
@@ -300,8 +322,10 @@
 		if(!C || !user)
 			return 0
 		if(istype(C, /obj/item/weapon/screwdriver))
-			ReplaceWithLattice()
 			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+			if(do_after(user, 30))
+				new /obj/item/stack/rods(src, 2)
+				ReplaceWithLattice()
 			return
 
 		if(istype(C, /obj/item/weapon/cable_coil))

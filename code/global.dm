@@ -1,6 +1,9 @@
 //#define TESTING
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+// List of types and how many instances of each type there are.
+var/global/list/type_instances[0]
+
 var/global/obj/effect/datacore/data_core = null
 var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null
@@ -15,6 +18,9 @@ var/global/list/events = list()
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 
 var/global/list/global_map = null
+
+var/global/datum/universal_state/universe = new
+
 	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
 	//Resulting sector map looks like
 	//|_1_|_4_|
@@ -47,7 +53,7 @@ var/GLASSESBLOCK = 0
 var/EPILEPSYBLOCK = 0
 var/TWITCHBLOCK = 0
 var/NERVOUSBLOCK = 0
-var/MONKEYBLOCK = 27
+var/MONKEYBLOCK = 50 // Monkey block will always be the DNA_SE_LENGTH
 
 var/BLOCKADD = 0
 var/DIFFMUT = 0
@@ -64,6 +70,48 @@ var/HALLUCINATIONBLOCK = 0
 var/NOPRINTSBLOCK = 0
 var/SHOCKIMMUNITYBLOCK = 0
 var/SMALLSIZEBLOCK = 0
+
+///////////////////////////////
+// Goon Stuff
+///////////////////////////////
+// Disabilities
+var/LISPBLOCK = 0
+var/MUTEBLOCK = 0
+var/RADBLOCK = 0
+var/FATBLOCK = 0
+var/CHAVBLOCK = 0
+var/SWEDEBLOCK = 0
+var/SCRAMBLEBLOCK = 0
+var/TOXICFARTBLOCK = 0
+var/STRONGBLOCK = 0
+var/HORNSBLOCK = 0
+var/SMILEBLOCK = 0
+var/ELVISBLOCK = 0
+
+// Powers
+var/SOBERBLOCK = 0
+var/PSYRESISTBLOCK = 0
+var/SHADOWBLOCK = 0
+var/CHAMELEONBLOCK = 0
+var/CRYOBLOCK = 0
+var/EATBLOCK = 0
+var/JUMPBLOCK = 0
+var/MELTBLOCK = 0
+var/EMPATHBLOCK = 0
+var/SUPERFARTBLOCK = 0
+var/IMMOLATEBLOCK = 0
+var/POLYMORPHBLOCK = 0
+
+///////////////////////////////
+// /vg/ Mutations
+///////////////////////////////
+var/LOUDBLOCK = 0
+var/WHISPERBLOCK = 0
+var/DIZZYBLOCK = 0
+var/SANSBLOCK = 0
+
+
+
 
 var/skipupdate = 0
 	///////////////
@@ -135,7 +183,19 @@ var/list/latejoin = list()
 var/list/prisonwarp = list()	//prisoners go to these
 var/list/holdingfacility = list()	//captured people go here
 var/list/xeno_spawn = list()//Aliens spawn at these.
-//	list/mazewarp = list()
+var/list/endgame_safespawns = list()
+var/list/endgame_exits = list()
+var/list/meteor_materialkit = list()
+var/list/meteor_bombkit = list()
+var/list/meteor_bombkitextra = list()
+var/list/meteor_tankkit = list()
+var/list/meteor_canisterkit = list()
+var/list/meteor_buildkit = list()
+var/list/meteor_pizzakit = list()
+var/list/meteor_panickit = list()
+var/list/meteor_shieldkit = list()
+var/list/meteor_genkit = list()
+var/list/meteor_breachkit = list()
 var/list/tdome1 = list()
 var/list/tdome2 = list()
 var/list/tdomeobserve = list()
@@ -238,3 +298,46 @@ var/DBConnection/dbcon = new()	//Feedback database (New database)
 var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the files in the SQL folder for information what goes where.
 
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
+
+// Recall time limit:  2 hours
+var/recall_time_limit=72000
+
+//Goonstyle scoreboard
+// NOW AN ASSOCIATIVE LIST
+// NO FUCKING EXCUSE FOR THE ATROCITY THAT WAS
+var/list/score=list(
+	"crewscore"      = 0, // this is the overall var/score for the whole round
+	"stuffshipped"   = 0, // how many useful items have cargo shipped out?
+	"stuffharvested" = 0, // how many harvests have hydroponics done?
+	"oremined"       = 0, // obvious
+	"researchdone"   = 0,
+	"eventsendured"  = 0, // how many random events did the station survive?
+	"powerloss"      = 0, // how many APCs have poor charge?
+	"escapees"       = 0, // how many people got out alive?
+	"deadcrew"       = 0, // dead bodies on the station, oh no
+	"mess"           = 0, // how much poo, puke, gibs, etc went uncleaned
+	"meals"          = 0,
+	"disease"        = 0, // how many rampant, uncured diseases are on board the station
+	"deadcommand"    = 0, // used during rev, how many command staff perished
+	"arrested"       = 0, // how many traitors/revs/whatever are alive in the brig
+	"traitorswon"    = 0, // how many traitors were successful?
+	"allarrested"    = 0, // did the crew catch all the enemies alive?
+	"opkilled"       = 0, // used during nuke mode, how many operatives died?
+	"disc"           = 0, // is the disc safe and secure?
+	"nuked"          = 0, // was the station blown into little bits?
+
+	// these ones are mainly for the stat panel
+	"powerbonus"    = 0, // if all APCs on the station are running optimally, big bonus
+	"messbonus"     = 0, // if there are no messes on the station anywhere, huge bonus
+	"deadaipenalty" = 0, // is the AI dead? if so, big penalty
+	"foodeaten"     = 0, // nom nom nom
+	"clownabuse"    = 0, // how many times a clown was punched, struck or otherwise maligned
+	"richestname"   = null, // this is all stuff to show who was the richest alive on the shuttle
+	"richestjob"    = null,  // kinda pointless if you dont have a money system i guess
+	"richestcash"   = 0,
+	"richestkey"    = null,
+	"dmgestname"    = null, // who had the most damage on the shuttle (but was still alive)
+	"dmgestjob"     = null,
+	"dmgestdamage"  = 0,
+	"dmgestkey"     = null
+)

@@ -9,8 +9,7 @@
 
 /datum/event/grid_check/announce()
 	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Automated Grid Check")
-	for(var/mob/M in player_list)
-		M << sound('sound/AI/poweroff.ogg')
+	world << sound('sound/AI/poweroff.ogg')
 
 /datum/event/grid_check/end()
 	power_restore()

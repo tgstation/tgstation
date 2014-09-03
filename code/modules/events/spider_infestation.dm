@@ -2,7 +2,6 @@
 
 /datum/event/spider_infestation
 	announceWhen	= 400
-	oneShot			= 1
 
 	var/spawncount = 1
 
@@ -26,6 +25,6 @@
 
 	while((spawncount >= 1) && vents.len)
 		var/obj/vent = pick(vents)
-		new /obj/effect/spider/spiderling(vent.loc)
+		new /mob/living/simple_animal/hostile/giant_spider/spiderling(vent.loc)
 		vents -= vent
 		spawncount--

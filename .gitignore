@@ -22,7 +22,9 @@ info.json
 /dmis
 /interface-indented
 /code-indented
+*.new.dmi
 
 .metadata
 /bot/config.yml
 /bot/data
+/analysis

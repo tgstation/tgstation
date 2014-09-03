@@ -10,12 +10,18 @@ var/global/list/cached_icons = list()
 	item_state = "paintcan"
 	m_amt = 200
 	g_amt = 0
+	w_type = RECYK_METAL
 	w_class = 3.0
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
 	flags = FPRINT | OPENCONTAINER
 	var/paint_type = ""
+
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is taking \his hand and eating the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		return (TOXLOSS|OXYLOSS)
+
 
 	afterattack(turf/simulated/target, mob/user , flag)
 		if(istype(target) && reagents.total_volume > 5)

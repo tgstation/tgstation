@@ -30,7 +30,7 @@
 
 
 /obj/item/projectile/energy/dart
-	name = "dart"
+	name = "dshell"
 	icon_state = "toxin"
 	damage = 5
 	damage_type = TOX
@@ -51,6 +51,18 @@
 	name = "largebolt"
 	damage = 20
 
+/obj/item/projectile/energy/plasma
+	name = "plasma"
+	icon_state = "declone"
+
+/obj/item/projectile/energy/plasma/pistol
+	damage = 5
+
+/obj/item/projectile/energy/plasma/light
+	damage = 10
+
+/obj/item/projectile/energy/plasma/rifle
+	damage = 20
 
 /obj/item/projectile/energy/neurotoxin
 	name = "neuro"
@@ -59,5 +71,23 @@
 	damage_type = TOX
 	weaken = 5
 
+/obj/item/projectile/energy/rad
+	name = "rad"
+	icon_state = "rad"
+	damage = 30
+	damage_type = BURN
+	nodamage = 0
+	weaken = 10
+	stutter = 10
 
+	on_hit(var/atom/hit)
+		if(ishuman(hit))
 
+			var/mob/living/carbon/human/H = hit
+
+			H.generate_name()
+
+			scramble(1, H, 100) // Scramble all UIs
+			scramble(null, H, 5) // Scramble SEs, 5% chance for each block
+
+			H.apply_effect((rand(50, 250)),IRRADIATE)

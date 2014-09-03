@@ -12,6 +12,20 @@
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/walltype = "metal"
+	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
+	var/engraving, engraving_quality //engraving on the wall
+	var/del_suppress_resmoothing = 0 // Do not resmooth neighbors on Destroy. (smoothwall.dm)
+	canSmoothWith = list(
+		/turf/simulated/wall,
+		/obj/structure/falsewall,
+		/obj/structure/falserwall // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	)
+
+	soot_type = null
+
+/turf/simulated/wall/examine()
+	..()
+	if(src.engraving) usr << src.engraving
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(istype(src,/turf/simulated/wall/r_wall))
@@ -60,7 +74,6 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/ex_act(severity)
@@ -91,8 +104,9 @@
 		dismantle_wall()
 
 /turf/simulated/wall/attack_paw(mob/user as mob)
-	if ((HULK in user.mutations))
-		if (prob(40))
+	user.changeNext_move(8)
+	if ((M_HULK in user.mutations))
+		if (prob(hardness))
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
@@ -103,27 +117,24 @@
 
 	return src.attack_hand(user)
 
-
-/turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
-	if(M.wall_smash)
-		if (istype(src, /turf/simulated/wall/r_wall) && !rotting)
-			M << text("\blue This wall is far too strong for you to destroy.")
-			return
-		else
-			if (prob(40) || rotting)
-				M << text("\blue You smash through the wall.")
+/turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
+	M.changeNext_move(8)
+	if(M.environment_smash >= 2)
+		if(istype(src, /turf/simulated/wall/r_wall))
+			if(M.environment_smash == 3)
 				dismantle_wall(1)
-				return
+				M << "<span class='info'>You smash through the wall.</span>"
 			else
-				M << text("\blue You smash against the wall.")
-				return
-
-	M << "\blue You push the wall but nothing happens!"
-	return
+				M << "<span class='info'>This wall is far too strong for you to destroy.</span>"
+		else
+			M << "<span class='info'>You smash through the wall.</span>"
+			dismantle_wall(1)
+			return
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
-	if (HULK in user.mutations)
-		if (prob(40) || rotting)
+	user.changeNext_move(8)
+	if (M_HULK in user.mutations)
+		if (prob(hardness) || rotting)
 			usr << text("\blue You smash through the wall.")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
@@ -143,7 +154,7 @@
 	return
 
 /turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	user.changeNext_move(8)
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
@@ -302,7 +313,12 @@
 		var/obj/item/airlock_sensor_frame/AH = W
 		AH.try_build(src)
 		return
-
+	/*
+	else if(istype(W,/obj/item/newscaster_frame))
+		var/obj/item/newscaster_frame/AH = W
+		AH.try_build(src)
+		return
+	*/
 	else if(istype(W,/obj/item/alarm_frame))
 		var/obj/item/alarm_frame/AH = W
 		AH.try_build(src)
@@ -360,7 +376,7 @@
 			O.layer = 5
 			O.mouse_opacity = 0
 
-/turf/simulated/wall/proc/thermitemelt(mob/user as mob)
+/turf/simulated/wall/proc/thermitemelt(var/mob/user)
 	if(mineral == "diamond")
 		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
@@ -394,6 +410,21 @@
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 
+// Generic wall melting proc.
+/turf/simulated/wall/melt()
+	if(mineral == "diamond")
+		return
+
+	src.ChangeTurf(/turf/simulated/floor/plating)
+
+	var/turf/simulated/floor/F = src
+	if(!F)
+		return
+	F.burn_tile()
+	F.icon_state = "wall_thermite"
+//	F.sd_LumReset()		//TODO: ~Carn
+	return
+
 /turf/simulated/wall/meteorhit(obj/M as obj)
 	if (prob(15) && !rotting)
 		dismantle_wall()
@@ -403,7 +434,7 @@
 		ReplaceWithLattice()
 	return 0
 
-/turf/simulated/wall/Del()
+/turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
 	..()
 

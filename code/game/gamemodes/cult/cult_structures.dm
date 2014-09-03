@@ -51,7 +51,73 @@
 		return
 	return
 
-/obj/effect/gateway/HasEntered(AM as mob|obj)
+/obj/effect/gateway/Crossed(AM as mob|obj)
 	spawn(0)
 		return
 	return
+
+/obj/effect/gateway/active
+	luminosity=5
+	l_color="#ff0000"
+	var/spawnable=list(
+		/mob/living/simple_animal/hostile/scarybat,
+		/mob/living/simple_animal/hostile/creature,
+		/mob/living/simple_animal/hostile/faithless
+	)
+/obj/effect/gateway/active/New()
+	spawn(rand(30,60) SECONDS)
+		var/t = pick(spawnable)
+		new t(src.loc)
+		qdel(src)
+
+/obj/effect/gateway/active/Crossed(var/atom/A)
+	if(!istype(A, /mob/living))
+		return
+
+	var/mob/living/M = A
+
+	if(M.stat != DEAD)
+		if(M.monkeyizing)
+			return
+		if(M.has_brain_worms())
+			return //Borer stuff - RR
+
+		if(iscultist(M)) return
+		if(!ishuman(M) && !isrobot(M)) return
+
+		M.monkeyizing = 1
+		M.canmove = 0
+		M.icon = null
+		M.overlays.Cut()
+		M.invisibility = 101
+
+		if(istype(M, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/Robot = M
+			if(Robot.mmi)
+				del(Robot.mmi)
+		else
+			for(var/obj/item/W in M)
+				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
+					del(W)
+					continue
+				W.layer = initial(W.layer)
+				W.loc = M.loc
+				W.dropped(M)
+
+		var/mob/living/new_mob = new /mob/living/simple_animal/hostile/retaliate/cluwne(A.loc)
+		new_mob.universal_speak = 1
+		new_mob.gender=src.gender
+		new_mob.name = pick(clown_names)
+		new_mob.real_name = new_mob.name
+		new_mob.mutations += M_CLUMSY
+		new_mob.mutations += M_FAT
+		new_mob.setBrainLoss(100)
+
+
+		new_mob.a_intent = "hurt"
+		if(M.mind)
+			M.mind.transfer_to(new_mob)
+		else
+			new_mob.key = M.key
+
+		new_mob << "<B>Your form morphs into that of a cluwne.</B>"

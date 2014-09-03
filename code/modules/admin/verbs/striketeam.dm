@@ -124,7 +124,7 @@ var/global/sent_strike_team = 0
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	R.set_frequency(1441)
+	R.set_frequency(1341)
 	equip_to_slot_or_del(R, slot_ears)
 	if (leader_selected == 0)
 		equip_to_slot_or_del(new /obj/item/clothing/under/color/green(src), slot_w_uniform)

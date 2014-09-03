@@ -49,16 +49,27 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/opened = 0
 
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)) && src.occupant)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/machinery/dna_scannernew/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonescanner(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/clonescanner,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/cable_coil,
+		/obj/item/weapon/cable_coil
+	)
+
 	RefreshParts()
 
 /obj/machinery/dna_scannernew/allow_drop()
@@ -75,7 +86,7 @@
 	set category = "Object"
 	set name = "Eject DNA Scanner"
 
-	if (usr.stat != 0)
+	if (usr.stat != 0 || istype(usr, /mob/living/simple_animal))
 		return
 
 	eject_occupant()
@@ -160,6 +171,8 @@
 		return
 	visible_message("[user] puts [L.name] into the DNA Scanner.", 3)
 	put_in(L)
+	if(user.pulling == L)
+		user.pulling = null
 
 /obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)
 	if (istype(item, /obj/item/weapon/screwdriver))
@@ -230,6 +243,7 @@
 		if(!M.client && M.mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == M.mind)
+					ghost << 'sound/effects/adminhelp.ogg'
 					ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
 					break
 	return
@@ -253,7 +267,7 @@
 				ex_act(severity)
 				//Foreach goto(35)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -262,7 +276,7 @@
 					ex_act(severity)
 					//Foreach goto(108)
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
@@ -271,7 +285,7 @@
 					ex_act(severity)
 					//Foreach goto(181)
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -289,6 +303,11 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
 	density = 1
+
+	anchored = 1
+	idle_power_usage = 200
+	active_power_usage = 400
+
 	var/selected_ui_block = 1.0
 	var/selected_ui_subblock = 1.0
 	var/selected_se_block = 1.0
@@ -299,15 +318,18 @@
 	var/radiation_intensity = 1.0
 	var/list/datum/dna2/record/buffers[3]
 	var/irradiating = 0
-	var/injector_ready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
-	var/obj/machinery/dna_scannernew/connected = null
-	var/obj/item/weapon/disk/data/disk = null
-	var/selected_menu_key = null
-	anchored = 1
-	use_power = 1
-	idle_power_usage = 10
-	active_power_usage = 400
-	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
+
+	// Quick fix for issue 286 (screwdriver the screen twice to restore injector) -Pete.
+	var/injector_ready = 0
+
+	var/obj/machinery/dna_scannernew/connected
+	var/obj/item/weapon/disk/data/disk
+	var/selected_menu_key
+
+	// Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X.
+	var/waiting_for_user_input = 0
+
+	l_color = "#0000FF"
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -316,7 +338,7 @@
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/scan_consolenew/M = new /obj/item/weapon/circuitboard/scan_consolenew( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
@@ -353,12 +375,12 @@
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -415,14 +437,25 @@
 		src.disk = W
 		user << "You insert [W]."
 		nanomanager.update_uis(src) // update all UIs attached to src()
+
+/obj/machinery/computer/scan_consolenew/process()
+	if (stat & (BROKEN | NOPOWER | MAINT | EMPED))
+		use_power = 0
+		return
+
+	if (connected && connected.occupant)
+		use_power = 2
+	else
+		use_power = 1
+
 /*
-/obj/machinery/computer/scan_consolenew/process() //not really used right now
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!( src.status )) //remove this
 		return
 	return
 */
+
 /obj/machinery/computer/scan_consolenew/attack_paw(user as mob)
 	ui_interact(user)
 
@@ -504,7 +537,7 @@
 		occupantData["name"] = connected.occupant.name
 		occupantData["stat"] = connected.occupant.stat
 		occupantData["isViableSubject"] = 1
-		if (NOCLONE in connected.occupant.mutations || !src.connected.occupant.dna)
+		if (M_NOCLONE in connected.occupant.mutations || !src.connected.occupant.dna)
 			occupantData["isViableSubject"] = 0
 		occupantData["health"] = connected.occupant.health
 		occupantData["maxHealth"] = connected.occupant.maxHealth
@@ -707,7 +740,7 @@
 	if (href_list["selectSEBlock"] && href_list["selectSESubblock"]) // This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
 		var/select_block = text2num(href_list["selectSEBlock"])
 		var/select_subblock = text2num(href_list["selectSESubblock"])
-		if ((select_block <= STRUCDNASIZE) && (select_block >= 1))
+		if ((select_block <= DNA_SE_LENGTH) && (select_block >= 1))
 			src.selected_se_block = select_block
 		if ((select_subblock <= DNA_BLOCK_SIZE) && (select_subblock >= 1))
 			src.selected_se_subblock = select_subblock
@@ -735,9 +768,9 @@
 				var/real_SE_block=selected_se_block
 				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
 				if(prob(20))
-					if (src.selected_se_block > 1 && src.selected_se_block < STRUCDNASIZE/2)
+					if (src.selected_se_block > 1 && src.selected_se_block < DNA_SE_LENGTH/2)
 						real_SE_block++
-					else if (src.selected_se_block > STRUCDNASIZE/2 && src.selected_se_block < STRUCDNASIZE)
+					else if (src.selected_se_block > DNA_SE_LENGTH/2 && src.selected_se_block < DNA_SE_LENGTH)
 						real_SE_block--
 
 				//testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
@@ -801,7 +834,7 @@
 		if (bufferOption == "saveUI")
 			if(src.connected.occupant && src.connected.occupant.dna)
 				var/datum/dna2/record/databuf=new
-				databuf.types = DNA2_BUF_UE
+				databuf.types = DNA2_BUF_UI // DNA2_BUF_UE
 				databuf.dna = src.connected.occupant.dna.Clone()
 				if(ishuman(connected.occupant))
 					databuf.dna.real_name=connected.occupant.name
@@ -843,7 +876,7 @@
 			return 1
 
 		if (bufferOption == "transfer")
-			if (!src.connected.occupant || (NOCLONE in src.connected.occupant.mutations) || !src.connected.occupant.dna)
+			if (!src.connected.occupant || (M_NOCLONE in src.connected.occupant.mutations) || !src.connected.occupant.dna)
 				return
 
 			irradiating = 2
@@ -851,7 +884,7 @@
 			src.connected.locked = 1//lock it
 			nanomanager.update_uis(src) // update all UIs attached to src
 
-			sleep(10*2) // sleep for 2 seconds
+			sleep(2 SECONDS)
 
 			irradiating = 0
 			src.connected.locked = lock_state
@@ -884,21 +917,22 @@
 					else
 						selectedbuf=buf.dna.UI
 					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(selectedbuf)
-					success = setInjectorBlock(I,blk,buf)
+					if(injector_ready)
+						success = setInjectorBlock(I,blk,buf)
+					else
+						qdel(I)
+						success = FALSE
+
+
 				else
 					I.buf = buf
 				waiting_for_user_input=0
 				if(success)
 					I.loc = src.loc
 					I.name += " ([buf.name])"
-					//src.temphtml = "Injector created."
 					src.injector_ready = 0
 					spawn(300)
 						src.injector_ready = 1
-				//else
-					//src.temphtml = "Error in injector creation."
-			//else
-				//src.temphtml = "Replicator not ready yet."
 			return 1
 
 		if (bufferOption == "loadDisk")

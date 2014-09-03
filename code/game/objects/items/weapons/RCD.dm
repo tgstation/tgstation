@@ -19,6 +19,7 @@ RCD
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
@@ -27,6 +28,9 @@ RCD
 	var/canRwall = 0
 	var/disabled = 0
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is using the deconstruct function on the [src.name] on \himself! It looks like \he's  trying to commit suicide!</b>"
+		return (user.death(1)) 
 
 	New()
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
@@ -80,6 +84,8 @@ RCD
 
 	afterattack(atom/A, mob/user)
 		if(disabled && !isrobot(user))
+			return 0
+		if(get_dist(user,A)>1)
 			return 0
 		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 			return 0
@@ -165,7 +171,7 @@ RCD
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "An RCD. It currently holds [matter]/30 matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
@@ -197,3 +203,4 @@ RCD
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000
+	w_type = RECYK_ELECTRONIC

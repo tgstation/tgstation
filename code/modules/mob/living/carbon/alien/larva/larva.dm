@@ -33,7 +33,7 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
+			if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
 				if(prob(70))
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
@@ -140,32 +140,12 @@
 	return
 
 
-/mob/living/carbon/alien/larva/hand_p(mob/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (M.a_intent == "hurt")
-		if (istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
-			return
-		if (health > 0)
-
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-			var/damage = rand(1, 3)
-
-			adjustBruteLoss(damage)
-
-			updatehealth()
-
-	return
-
-
 /mob/living/carbon/alien/larva/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>[M.attacktext] [src.name] ([src.ckey])</font>")
+		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.attacktext] by [M.name] ([M.ckey])</font>")
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -248,7 +228,7 @@
 		if(G.cell)
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
-					G.cell.charge -= 2500
+					G.cell.use(2500)
 
 					Weaken(5)
 					if (stuttering < 5)
@@ -287,10 +267,9 @@
 		if ("grab")
 			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
 
 			M.put_in_active_hand(G)
-
 			grabbed_by += G
 			G.synch()
 
@@ -304,7 +283,7 @@
 		else
 			var/damage = rand(1, 9)
 			if (prob(90))
-				if (HULK in M.mutations)
+				if (M_HULK in M.mutations)
 					damage += 5
 					spawn(0)
 						Paralyse(1)

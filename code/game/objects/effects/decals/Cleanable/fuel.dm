@@ -19,6 +19,12 @@ obj/effect/decal/cleanable/liquid_fuel
 		Spread()
 		. = ..()
 
+	getFireFuel()
+		return amount
+
+	burnFireFuel(var/used_fuel_ratio, var/used_reactants_ratio)
+		amount -= (amount * used_fuel_ratio * used_reactants_ratio) * 5 // liquid fuel burns 5 times as quick
+
 	proc/Spread()
 		//Allows liquid fuels to sometimes flow into other tiles.
 		if(amount < 0.5) return
@@ -52,6 +58,6 @@ obj/effect/decal/cleanable/liquid_fuel
 					continue
 				if(O.CanPass(null, S, 0, 0) && S.CanPass(null, O, 0, 0))
 					new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(O,amount*0.25,d)
-					O.hotspot_expose((T20C*2) + 380,500) //Light flamethrower fuel on fire immediately.
+					O.hotspot_expose((T20C*2) + 380,500,surfaces=1) //Light flamethrower fuel on fire immediately.
 
 			amount *= 0.25

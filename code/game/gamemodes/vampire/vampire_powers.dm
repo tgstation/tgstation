@@ -48,7 +48,7 @@
 /mob/proc/vampire_can_reach(mob/M as mob, active_range = 1)
 	if(M.loc == src.loc) return 1 //target and source are in the same thing
 	if(!isturf(src.loc) || !isturf(M.loc)) return 0 //One is inside, the other is outside something.
-	if(AStar(src.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, active_range)) //If a path exists, good!
+	if(Adjacent(M))//if(AStar(src.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, active_range)) //If a path exists, good!
 		return 1
 	return 0
 
@@ -58,7 +58,7 @@
 	var/datum/vampire/vampire = mind.vampire
 	if(!vampire) return
 	var/list/victims = list()
-	for(var/mob/living/carbon/C in oview(active_range))
+	for(var/mob/living/carbon/C in view(active_range))
 		victims += C
 	var/mob/living/carbon/T = input(src, "Victim?") as null|anything in victims
 
@@ -146,7 +146,7 @@
 	if(!C.vampire_affected(M))
 		M.current << "\red They seem to be unaffected."
 		return
-	var/datum/disease2/disease/shutdown = new /datum/disease2/disease
+	var/datum/disease2/disease/shutdown = new /datum/disease2/disease("Created by vamp [key_name(C)].")
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
 	var/datum/disease2/effect/organs/vampire/O = new /datum/disease2/effect/organs/vampire
 	holder.effect += O
@@ -180,7 +180,7 @@
 		if(istype(M.current:glasses, /obj/item/clothing/glasses/sunglasses/blindfold))
 			M.current << "<span class='warning'>You're blindfolded!</span>"
 			return
-		for(var/mob/living/carbon/C in oview(1))
+		for(var/mob/living/carbon/C in view(1))
 			if(!C.vampire_affected(M)) continue
 			if(!M.current.vampire_can_reach(C, 1)) continue
 			C.Stun(8)
@@ -196,7 +196,7 @@
 	if(!M) return
 	if(M.current.vampire_power(50, 0))
 		M.current.visible_message("<span class='warning'>[M.current.name] transforms!</span>")
-		M.current.client.prefs.real_name = random_name(M.current.gender)
+		M.current.client.prefs.real_name = M.current.generate_name() //random_name(M.current.gender)
 		M.current.client.prefs.randomize_appearance_for(M.current)
 		M.current.regenerate_icons()
 		M.current.remove_vampire_blood(50)
@@ -211,9 +211,9 @@
 	if(!M) return
 	if(M.current.vampire_power(30, 0))
 		M.current.visible_message("\red [M.current.name] lets out an ear piercing shriek!", "\red You let out a loud shriek.", "\red You hear a loud painful shriek!")
-		for(var/mob/living/carbon/C in ohearers(4, M.current))
+		for(var/mob/living/carbon/C in hearers(4, M.current))
 			if(C == M.current) continue
-			if(ishuman(C) && C:ears && istype(C:ears, /obj/item/clothing/ears/earmuffs)) continue
+			if(ishuman(C) && C:is_on_ears(/obj/item/clothing/ears/earmuffs)) continue
 			if(!C.vampire_affected(M)) continue
 			C << "<span class='warning'><font size='3'><b>You hear a ear piercing shriek and your senses dull!</font></b></span>"
 			C.Weaken(8)
@@ -221,10 +221,8 @@
 			C.stuttering = 20
 			C.Stun(8)
 			C.make_jittery(150)
-		for(var/obj/structure/window/W in oview(3))
-			new W.shardtype(W.loc)
-			if(W.reinf) new /obj/item/stack/rods(W.loc)
-			del(W)
+		for(var/obj/structure/window/W in view(4))
+			W.destroy()
 		playsound(M.current.loc, 'sound/effects/creepyshriek.ogg', 100, 1)
 		M.current.remove_vampire_blood(30)
 		M.current.verbs -= /client/proc/vampire_screech
@@ -285,13 +283,22 @@
 		alpha = round((255 * 0.80))
 
 /mob/proc/can_enthrall(mob/living/carbon/C)
+	var/enthrall_safe = 0
+	for(var/obj/item/weapon/implant/loyalty/L in C)
+		if(L && L.implanted)
+			enthrall_safe = 1
+			break
+	for(var/obj/item/weapon/implant/traitor/T in C)
+		if(T && T.implanted)
+			enthrall_safe = 1
+			break
 	if(!C)
 		world.log << "something bad happened on enthralling a mob src is [src] [src.key] \ref[src]"
 		return 0
 	if(!C.mind)
 		src << "\red [C.name]'s mind is not there for you to enthrall."
 		return 0
-	if((/obj/item/weapon/implant/traitor in C.contents) || (/obj/item/weapon/implant/loyalty in C.contents )||( C.mind in ticker.mode.vampires )||( C.mind.vampire )||( C.mind in ticker.mode.enthralled ))
+	if(enthrall_safe || ( C.mind in ticker.mode.vampires )||( C.mind.vampire )||( C.mind in ticker.mode.enthralled ))
 		C.visible_message("\red [C] seems to resist the takeover!", "\blue You feel a familiar sensation in your skull that quickly dissipates.")
 		return 0
 	if(!C.vampire_affected(mind))

@@ -18,6 +18,16 @@
 			return
 
 	. = src.say_dead(message)
+	
+/mob/dead/observer/say_quote(var/text)
+	var/ending = copytext(text, length(text))
+
+	if (ending == "?")
+		return "[pick("moans", "gripes", "grumps", "murmurs", "mumbles", "bleats")], \"[text]\"";
+	else if (ending == "!")
+		return "[pick("screams", "screeches", "howls")], \"[text]\"";
+
+	return "[pick("whines", "cries", "spooks", "complains", "drones", "mutters")], \"[text]\"";
 
 
 /mob/dead/observer/emote(var/act, var/type, var/message)

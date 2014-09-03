@@ -16,17 +16,6 @@
 #define DNA_HARDER_BOUNDS  list(1,3049,3050,4095)
 #define DNA_HARD_BOUNDS    list(1,3490,3500,4095)
 
-// Defines which values mean "on" or "off".
-//  This is to make some of the more OP superpowers a larger PITA to activate,
-//  and to tell our new DNA datum which values to set in order to turn something
-//  on or off.
-var/global/list/dna_activity_bounds[STRUCDNASIZE]
-
-// Used to determine what each block means (admin hax and species stuff on /vg/, mostly)
-var/global/list/assigned_blocks[STRUCDNASIZE]
-
-var/global/list/datum/dna/gene/dna_genes[0]
-
 // UI Indices (can change to mutblock style, if desired)
 #define DNA_UI_HAIR_R      1
 #define DNA_UI_HAIR_G      2
@@ -43,13 +32,36 @@ var/global/list/datum/dna/gene/dna_genes[0]
 #define DNA_UI_HAIR_STYLE  13
 #define DNA_UI_LENGTH      13 // Update this when you add something, or you WILL break shit.
 
+#define DNA_SE_LENGTH 50 // Was STRUCDNASIZE, size 27. 15 new blocks added = 42, plus room to grow.
+
+// Defines which values mean "on" or "off".
+//  This is to make some of the more OP superpowers a larger PITA to activate,
+//  and to tell our new DNA datum which values to set in order to turn something
+//  on or off.
+var/global/list/dna_activity_bounds[DNA_SE_LENGTH]
+var/global/list/assigned_gene_blocks[DNA_SE_LENGTH]
+
+// Used to determine what each block means (admin hax and species stuff on /vg/, mostly)
+var/global/list/assigned_blocks[DNA_SE_LENGTH]
+
+var/global/list/datum/dna/gene/dna_genes[0]
+
+var/global/list/good_blocks[0]
+var/global/list/bad_blocks[0]
+
 /////////////////
 // GENE DEFINES
 /////////////////
 
 // Skip checking if it's already active.
 // Used for genes that check for value rather than a binary on/off.
-#define GENE_ALWAYS_ACTIVATE 1
+#define GENE_ALWAYS_ACTIVATE   1
+
+// One of the genes that can't be handed out at roundstart
+#define GENE_UNNATURAL         2
+
+#define GENETYPE_BAD  0
+#define GENETYPE_GOOD 1
 
 /datum/dna
 	// READ-ONLY, GETS OVERWRITTEN
@@ -64,7 +76,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 	// Okay to read, but you're an idiot if you do.
 	// BLOCK = VALUE
-	var/list/SE[STRUCDNASIZE]
+	var/list/SE[DNA_SE_LENGTH]
 	var/list/UI[DNA_UI_LENGTH]
 
 	// From old dna.
@@ -84,13 +96,16 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	new_dna.mutantrace=mutantrace
 	new_dna.real_name=real_name
 	new_dna.species=species
-	for(var/b=1;b<=STRUCDNASIZE;b++)
+	for(var/b=1;b<=DNA_SE_LENGTH;b++)
 		new_dna.SE[b]=SE[b]
 		if(b<=DNA_UI_LENGTH)
 			new_dna.UI[b]=UI[b]
 	new_dna.UpdateUI()
 	new_dna.UpdateSE()
 	return new_dna
+
+/datum/dna/proc/GiveRandomSE(var/notflags = 0, var/flags = 0, var/genetype = -1)
+	SetSEState(pick(query_genes(notflags,flags,genetype)), 1)
 
 ///////////////////////////////////////
 // UNIQUE IDENTITY
@@ -224,13 +239,13 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // "Zeroes out" all of the blocks.
 /datum/dna/proc/ResetSE()
-	for(var/i = 1, i <= STRUCDNASIZE, i++)
+	for(var/i = 1, i <= DNA_SE_LENGTH, i++)
 		SetSEValue(i,rand(1,1024),1)
 	UpdateSE()
 
 // Set a DNA SE block's raw value.
 /datum/dna/proc/SetSEValue(var/block,var/value,var/defer=0)
-	//testing("SetSEBlock([block],[value],[defer]): [value] -> [nval]")
+
 	if (block<=0) return
 	ASSERT(value>=0)
 	ASSERT(value<=4095)
@@ -238,6 +253,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	dirtySE=1
 	if(!defer)
 		UpdateSE()
+	//testing("SetSEBlock([block],[value],[defer]): [value] -> [GetSEValue(block)]")
 
 // Get a DNA SE block's raw value.
 /datum/dna/proc/GetSEValue(var/block)
@@ -264,7 +280,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	if (block<=0) return 0
 	var/list/BOUNDS=GetDNABounds(block)
 	var/value=GetSEValue(block)
-	return (value > BOUNDS[DNA_ON_LOWERBOUND])
+	return (value >= BOUNDS[DNA_ON_LOWERBOUND])
 
 // Set a block "on" or "off".
 /datum/dna/proc/SetSEState(var/block,var/on,var/defer=0)
@@ -335,7 +351,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 		if(UI.len != DNA_UI_LENGTH)
 			ResetUIFrom(character)
 
-		if(length(struc_enzymes)!= 3*STRUCDNASIZE)
+		if(length(struc_enzymes)!= 3*DNA_SE_LENGTH)
 			ResetSE()
 
 		if(length(unique_enzymes) != 32)
@@ -343,7 +359,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	else
 		if(length(uni_identity) != 3*DNA_UI_LENGTH)
 			uni_identity = "00600200A00E0110148FC01300B0095BD7FD3F4"
-		if(length(struc_enzymes)!= 3*STRUCDNASIZE)
+		if(length(struc_enzymes)!= 3*DNA_SE_LENGTH)
 			struc_enzymes = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B0FD6"
 
 // BACK-COMPAT!
@@ -355,4 +371,3 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 	unique_enzymes = md5(character.real_name)
 	reg_dna[unique_enzymes] = character.real_name
-

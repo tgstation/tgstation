@@ -5,12 +5,13 @@
 	icon_state = "blank"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
+	w_type=RECYK_ELECTRONIC
 	var/construction_time = 100
 	var/list/construction_cost = list("metal"=20000,"glass"=5000)
 	var/list/part = null
 	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
 
-/obj/item/robot_parts/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
+/obj/item/robot_parts/recycle(var/datum/materials/rec)
 	for(var/material in construction_cost)
 		var/rec_mat=material
 		var/CCPS=CC_PER_SHEET_MISC
@@ -19,7 +20,7 @@
 			CCPS=CC_PER_SHEET_METAL
 		if(rec_mat=="glass")
 			CCPS=CC_PER_SHEET_GLASS
-		rec.addMaterial(material,construction_cost[material]/CCPS)
+		rec.addAmount(material,construction_cost[material]/CCPS)
 	return 1
 
 /obj/item/robot_parts/l_arm
@@ -211,10 +212,6 @@
 
 			user.drop_item()
 
-			var/datum/job_objective/make_cyborg/task = user.mind.findJobTask(/datum/job_objective/make_cyborg)
-			if(istype(task))
-				task.unit_completed()
-
 			O.mmi = W
 			O.invisibility = 0
 			O.custom_name = created_name
@@ -229,7 +226,7 @@
 
 			O.cell = chest.cell
 			O.cell.loc = O
-			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			W.loc = O //Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 
 			// Since we "magically" installed a cell, we also have to update the correct component.
 			if(O.cell)

@@ -497,4 +497,8 @@
 		name = "Circuit board (Phazon Central Control module)"
 		icon_state = "mainboard"
 
+	pod
+		name = "Circuit board (Space Pod Mainboard)"
+		icon_state = "mainboard"
+
 

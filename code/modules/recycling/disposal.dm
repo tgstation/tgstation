@@ -28,19 +28,54 @@
 	New()
 		..()
 		spawn(5)
-			trunk = locate() in src.loc
-			if(!trunk)
+			trunk = locate() in loc
+
+			if(trunk)
+				if(trunk.disposal != src)
+					trunk.disposal = src
+
+				if(trunk.linked != trunk.disposal)
+					trunk.linked = trunk.disposal
+			else
 				mode = 0
 				flush = 0
-			else
-				trunk.linked = src	// link the pipe trunk to self
 
 			air_contents = new/datum/gas_mixture()
 			//gas.volume = 1.05 * CELLSTANDARD
-			update()
+		update()
+
+	Destroy()
+		if(trunk)
+			if(trunk.disposal)
+				trunk.disposal = null
+			if(trunk.linked)
+				trunk.linked = null
+
+			trunk = null
+
+		..()
 
 	MouseDrop_T(var/obj/item/target, mob/user)
 		src.attackby(target,user)
+
+
+	ex_act(var/severity,var/child=null)
+		var/child_severity=severity
+		if(!child)
+			child_severity++
+		if(child_severity <= 3)
+			for(var/obj/O in contents)
+				O.ex_act(child_severity)
+		switch(severity)
+			if(2 to INFINITY)
+				if(prob(50))
+					eject()
+					if(severity==2)
+						qdel(src)
+			if(1)
+				eject()
+				qdel(src)
+
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
@@ -106,6 +141,8 @@
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
 				var/mob/GM = G.affecting
+				user.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
+				GM.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
 				for (var/mob/V in viewers(usr))
 					V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
 				if(do_after(usr, 20))
@@ -363,7 +400,8 @@
 		src.updateDialog()
 
 		if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
-			flush()
+			spawn(0)
+				flush()
 
 		if(stat & NOPOWER)			// won't charge if no power
 			return
@@ -456,9 +494,9 @@
 						AM.throw_at(target, 5, 1)
 
 			H.vent_gas(loc)
-			del(H)
+			qdel(H)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 		if (istype(mover,/obj/item) && mover.throwing)
 			var/obj/item/I = mover
 			if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
@@ -515,7 +553,7 @@
 			AM.loc = src
 			if(istype(AM, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = AM
-				if(FAT in H.mutations)		// is a human and fat?
+				if(M_FAT in H.mutations)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
 			if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 				var/obj/structure/bigDelivery/T = AM
@@ -544,6 +582,12 @@
 	proc/move()
 		var/obj/structure/disposalpipe/last
 		while(active)
+			/* vg edit
+			if(hasmob && prob(3))
+				for(var/mob/living/H in src)
+					H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
+					*/
+
 			if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
 				active = 0
 				// find the fat guys
@@ -593,7 +637,7 @@
 
 		if(other.has_fat_guy)
 			has_fat_guy = 1
-		del(other)
+		qdel(other)
 
 
 	// called when player tries to move while in a pipe
@@ -636,7 +680,7 @@
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
-	Del()
+	Destroy()
 		var/obj/structure/disposalholder/H = locate() in src
 		if(H)
 			// holder was present
@@ -649,7 +693,7 @@
 				for(var/atom/movable/AM in H)
 					AM.loc = T
 					AM.pipe_eject(0)
-				del(H)
+				qdel(H)
 				..()
 				return
 
@@ -745,7 +789,7 @@
 						if(AM)
 							AM.throw_at(target, 100, 1)
 				H.vent_gas(T)
-				del(H)
+				qdel(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -761,7 +805,7 @@
 							AM.throw_at(target, 5, 1)
 
 				H.vent_gas(T)	// all gas vent to turf
-				del(H)
+				qdel(H)
 
 		return
 
@@ -789,7 +833,7 @@
 				for(var/atom/movable/AM in H)
 					AM.loc = T
 					AM.pipe_eject(0)
-				del(H)
+				qdel(H)
 				return
 
 			// otherwise, do normal expel from turf
@@ -1102,31 +1146,53 @@
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
-	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
+	var/obj/machinery/disposal/disposal
+	var/obj/structure/disposaloutlet/disposaloutlet
+	var/obj/linked
 
 /obj/structure/disposalpipe/trunk/New()
-	..()
+	. = ..()
 	dpdir = dir
+
 	spawn(1)
 		getlinked()
 
 	update()
-	return
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
-	linked = null
-	var/obj/machinery/disposal/D = locate() in src.loc
-	if(D)
-		linked = D
-		if (!D.trunk)
-			D.trunk = src
+	disposal = locate() in loc
 
-	var/obj/structure/disposaloutlet/O = locate() in src.loc
-	if(O)
-		linked = O
+	if(disposal)
+		if(disposal.trunk != src)
+			disposal.trunk = src
 
-	update()
-	return
+		linked = disposal
+
+	disposaloutlet = locate() in loc
+
+	if(disposaloutlet)
+		if(disposaloutlet.trunk != src)
+			disposaloutlet.trunk = src
+
+		linked = disposaloutlet
+
+/obj/structure/disposalpipe/trunk/Destroy()
+	if(disposal)
+		if(disposal.trunk)
+			disposal.trunk = null
+
+		disposal = null
+
+	if(disposaloutlet)
+		if(disposaloutlet.trunk)
+			disposaloutlet.trunk = null
+
+		disposaloutlet = null
+
+	if(linked)
+		linked = null
+
+	..()
 
 	// Override attackby so we disallow trunkremoval when somethings ontop
 /obj/structure/disposalpipe/trunk/attackby(var/obj/item/I, var/mob/user)
@@ -1234,17 +1300,34 @@
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
+	var/obj/structure/disposalpipe/trunk/trunk
 
 	New()
-		..()
+		. = ..()
 
 		spawn(1)
 			target = get_ranged_target_turf(src, dir, 10)
 
+			trunk = locate() in loc
 
-			var/obj/structure/disposalpipe/trunk/trunk = locate() in src.loc
 			if(trunk)
-				trunk.linked = src	// link the pipe trunk to self
+				if(trunk.disposaloutlet != src)
+					trunk.disposaloutlet = src
+
+				if(trunk.linked != trunk.disposaloutlet)
+					trunk.linked = trunk.disposaloutlet
+
+	Destroy()
+		if(trunk)
+			if(trunk.disposaloutlet)
+				trunk.disposaloutlet = null
+
+			if(trunk.linked)
+				trunk.linked = null
+
+			trunk = null
+
+		..()
 
 	// expel the contents of the holder object, then delete it
 	// called when the holder exits the outlet
@@ -1262,7 +1345,7 @@
 				spawn(5)
 					AM.throw_at(target, 3, 1)
 			H.vent_gas(src.loc)
-			del(H)
+			qdel(H)
 
 		return
 
@@ -1326,7 +1409,7 @@
 
 	src.streak(dirs)
 
-/obj/effect/decal/cleanable/blood/robot/gib/pipe_eject(var/direction)
+/obj/effect/decal/cleanable/blood/gibs/robot/pipe_eject(var/direction)
 	var/list/dirs
 	if(direction)
 		dirs = list( direction, turn(direction, -45), turn(direction, 45))

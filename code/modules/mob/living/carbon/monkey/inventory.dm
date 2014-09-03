@@ -5,34 +5,34 @@
 		switch(place)
 			if("head")
 				if (!( target.wear_mask ))
-					del(src)
+					qdel(src)
 					return
 			if("l_hand")
 				if (!( target.l_hand ))
-					del(src)
+					qdel(src)
 					return
 			if("r_hand")
 				if (!( target.r_hand ))
-					del(src)
+					qdel(src)
 					return
 			if("back")
 				if (!( target.back ))
-					del(src)
+					qdel(src)
 					return
 			if("handcuff")
 				if (!( target.handcuffed ))
-					del(src)
+					qdel(src)
 					return
 			if("internal")
 				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.back, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
-					del(src)
+					qdel(src)
 					return
 
 	if (item)
 		if(isrobot(source) && place != "handcuff")
 			var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel")
 			if(!(L.Find(place)))
-				del(src)
+				qdel(src)
 				return
 		for(var/mob/O in viewers(target, null))
 			if ((O.client && !( O.blinded )))
@@ -187,7 +187,7 @@
 		else
 	source.regenerate_icons()
 	target.regenerate_icons()
-	del(src)
+	qdel(src)
 	return
 
 

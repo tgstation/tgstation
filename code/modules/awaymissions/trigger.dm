@@ -31,11 +31,11 @@
 		s.start()
 
 	if(entersmoke)
-		var/datum/effect/effect/system/harmless_smoke_spread/s = new /datum/effect/effect/system/harmless_smoke_spread
+		var/datum/effect/effect/system/smoke_spread/s = new /datum/effect/effect/system/smoke_spread
 		s.set_up(4, 1, src, 0)
 		s.start()
 	if(exitsmoke)
-		var/datum/effect/effect/system/harmless_smoke_spread/s = new /datum/effect/effect/system/harmless_smoke_spread
+		var/datum/effect/effect/system/smoke_spread/s = new /datum/effect/effect/system/smoke_spread
 		s.set_up(4, 1, dest, 0)
 		s.start()
 

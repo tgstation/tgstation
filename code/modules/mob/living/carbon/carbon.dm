@@ -2,15 +2,19 @@
 	..()
 	update_hud()
 	return
-/mob/living/carbon/Move(NewLoc, direct)
+
+/mob/living/carbon/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
+
 	if(.)
-		if(src.nutrition && src.stat != 2)
-			src.nutrition -= HUNGER_FACTOR/10
-			if(src.m_intent == "run")
-				src.nutrition -= HUNGER_FACTOR/10
-		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
-			src.bodytemperature += 2
+		if(nutrition && stat != DEAD)
+			nutrition -= HUNGER_FACTOR / 10
+
+			if(m_intent == "run")
+				nutrition -= HUNGER_FACTOR / 10
+
+		if((M_FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
+			bodytemperature += 2
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
@@ -52,6 +56,14 @@
 				N.show_message(text("\red <B>[M] bursts out of [src]!</B>"), 2)
 	. = ..()
 
+/mob/living/carbon/proc/share_contact_diseases(var/mob/M)
+	for(var/datum/disease/D in viruses)
+		if(D.spread_by_touch())
+			M.contract_disease(D, 0, 1, CONTACT_HANDS)
+	for(var/datum/disease/D in M.viruses)
+		if(D.spread_by_touch())
+			contract_disease(D, 0, 1, CONTACT_HANDS)
+
 /mob/living/carbon/attack_hand(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
 	if (hasorgans(M))
@@ -61,57 +73,47 @@
 		if(temp && !temp.is_usable())
 			M << "\red You can't use your [temp.display_name]"
 			return
-
-	for(var/datum/disease/D in viruses)
-
-		if(D.spread_by_touch())
-
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in M.viruses)
-
-		if(D.spread_by_touch())
-
-			contract_disease(D, 0, 1, CONTACT_HANDS)
-
+	share_contact_diseases(M)
 	return
 
 
 /mob/living/carbon/attack_paw(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
-
-	for(var/datum/disease/D in viruses)
-
-		if(D.spread_by_touch())
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in M.viruses)
-
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
-
+	share_contact_diseases(M)
 	return
 
-/mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
-	if(status_flags & GODMODE)	return 0	//godmode
-	shock_damage *= siemens_coeff
-	if (shock_damage<1)
+/mob/living/carbon/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0)
+	var/damage = shock_damage * siemens_coeff
+
+	if(damage <= 0)
+		damage = 0
+
+	if(take_overall_damage(0, damage, "[source]") == 0) // godmode
 		return 0
-	src.take_overall_damage(0,shock_damage,used_weapon="Electrocution")
+
 	//src.burn_skin(shock_damage)
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
-	src.visible_message(
-		"\red [src] was shocked by the [source]!", \
-		"\red <B>You feel a powerful shock course through your body!</B>", \
-		"\red You hear a heavy electrical crack." \
-	)
-//	if(src.stunned < shock_damage)	src.stunned = shock_damage
-	Stun(10)//This should work for now, more is really silly and makes you lay there forever
-//	if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
-	Weaken(10)
-	return shock_damage
 
+	visible_message( \
+		"<span class='warning'>[src] was shocked by the [source]!</span>", \
+		"<span class='danger'>You feel a powerful shock course through your body!</span>", \
+		"<span class='warning'>You hear a heavy electrical crack.</span>" \
+	)
+
+	//if(src.stunned < shock_damage)	src.stunned = shock_damage
+
+	Stun(10) // this should work for now, more is really silly and makes you lay there forever
+
+	//if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
+
+	Weaken(10)
+
+	var/datum/effect/effect/system/spark_spread/SparkSpread = new
+	SparkSpread.set_up(5, 1, loc)
+	SparkSpread.start()
+
+	return damage
 
 /mob/living/carbon/proc/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
@@ -139,10 +141,10 @@
 	if(istext(selhand))
 		selhand = lowertext(selhand)
 
-	if(selhand == "right" || selhand == "r")
-		selhand = 0
-	if(selhand == "left" || selhand == "l")
-		selhand = 1
+		if(selhand == "right" || selhand == "r")
+			selhand = 0
+		if(selhand == "left" || selhand == "l")
+			selhand = 1
 
 	if(selhand != src.hand)
 		swap_hand()
@@ -190,7 +192,7 @@
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.display_name,status),1)
 			if((SKELETON in H.mutations) && (!H.w_uniform) && (!H.wear_suit))
 				H.play_xylophone()
-		else
+		else if(lying) // /vg/: For hugs. This is how update_icon figgers it out, anyway.  - N3X15
 			var/t_him = "it"
 			if (src.gender == MALE)
 				t_him = "him"
@@ -210,6 +212,23 @@
 				"\blue [M] shakes [src] trying to wake [t_him] up!", \
 				"\blue You shake [src] trying to wake [t_him] up!", \
 				)
+		// BEGIN HUGCODE - N3X
+		else
+			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+				var/mob/living/carbon/human/H = src
+				H.w_uniform.add_fingerprint(M)
+			playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			M.visible_message( \
+				"\blue [M] gives [src] a [pick("hug","warm embrace")].", \
+				"\blue You hug [src].", \
+				)
+			if(prob(10))
+				src.emote("fart")
+			/* VG-EDIT Killing people through hugs, one overdose at a time.
+			reagents.add_reagent("paracetamol", 1)
+			*/
+			share_contact_diseases(M)
+
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
@@ -335,24 +354,6 @@
 //Throwing stuff
 
 /mob/living/carbon/proc/toggle_throw_mode()
-	var/obj/item/W = get_active_hand()
-	if( !W )//Not holding anything
-		if( client && (TK in mutations) )
-			if(ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if(H.remoteview_target)
-					H << "\red Your mind is too busy remote viewing."
-					return
-			var/obj/item/tk_grab/O = new(src)
-			put_in_active_hand(O)
-			O.host = src
-		return
-
-	if( istype(W,/obj/item/tk_grab) )
-		if(hand)	del(l_hand)
-		else		del(r_hand)
-		return
-
 	if (src.in_throw_mode)
 		throw_mode_off()
 	else
@@ -366,20 +367,29 @@
 	src.in_throw_mode = 1
 	src.throw_icon.icon_state = "act_throw_on"
 
-/mob/living/carbon/proc/throw_item(atom/target)
+/mob/proc/throw_item(var/atom/target,var/atom/movable/what=null)
+	return
+
+/mob/living/carbon/throw_item(var/atom/target,var/atom/movable/what=null)
 	src.throw_mode_off()
 	if(usr.stat || !target)
 		return
+
+	if(!istype(loc,/turf))
+		src << "\red You can't do that now!"
+		return
+
 	if(target.type == /obj/screen) return
 
 	var/atom/movable/item = src.get_active_hand()
+	if(what)
+		item=what
 
 	if(!item) return
 
 	if (istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.throw() //throw the person instead of the grab
-		del(G)
 		if(ismob(item))
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
@@ -396,7 +406,7 @@
 					M.LAssailant = null
 				else
 					M.LAssailant = usr
-
+				del(G)
 	if(!item) return //Grab processing has a chance of returning null
 
 	//item.layer = initial(item.layer)
@@ -404,8 +414,9 @@
 	update_icons()
 
 //	if (istype(usr, /mob/living/carbon/monkey)) //Check if a monkey is throwing. Modify/remove this line as required.
+	var/turf/T=get_turf(loc)
 	if(istype(item, /obj/item))
-		item.loc = src.loc
+		item.loc = T
 		if(src.client)
 			src.client.screen -= item
 		if(istype(item, /obj/item))
@@ -417,10 +428,17 @@
 		src.visible_message("\red [src] has thrown [item].")
 
 		if(!src.lastarea)
-			src.lastarea = get_area(src.loc)
+			src.lastarea = get_area(T)
 		if((istype(src.loc, /turf/space)) || (src.lastarea.has_gravity == 0))
-			src.inertia_dir = get_dir(target, src)
-			step(src, inertia_dir)
+			var/mob/space_obj=src
+			// If we're being held, make the guy holding us move.
+			if(istype(loc,/obj/item/weapon/holder))
+				var/obj/item/weapon/holder/Ho=loc
+				// Who holds the holder?
+				if(ismob(Ho.loc))
+					space_obj=Ho.loc
+			space_obj.inertia_dir = get_dir(target, src)
+			step(space_obj, inertia_dir)
 
 
 /*
@@ -430,7 +448,13 @@
 */
 
 
-		item.throw_at(target, item.throw_range, item.throw_speed)
+		var/throw_mult=1
+		if(istype(src,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H=src
+			throw_mult = H.species.throw_mult
+			if(M_HULK in H.mutations || M_STRONG in H.mutations)
+				throw_mult+=0.5
+		item.throw_at(target, item.throw_range*throw_mult, item.throw_speed*throw_mult)
 
 /*mob/living/carbon/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
@@ -462,7 +486,7 @@
 	 ..()
 
 	return
-
+/*
 /mob/living/carbon/show_inv(mob/living/carbon/user as mob)
 	user.set_machine(src)
 	var/dat = {"
@@ -481,6 +505,44 @@
 	user << browse(dat, text("window=mob\ref[src];size=325x500"))
 	onclose(user, "mob\ref[src]")
 	return
+*/
+
+
+/mob/living/carbon/show_inv(mob/living/carbon/user as mob)
+	user.set_machine(src)
+	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
+	var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
+
+	var/dat = {"
+	<B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>		[(l_hand && !( src.l_hand.abstract ))		? l_hand	: "<font color=grey>Empty</font>"]</A><BR>
+	<B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>		[(r_hand && !( src.r_hand.abstract ))		? r_hand	: "<font color=grey>Empty</font>"]</A><BR>
+	"}
+
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=back'> [(back && !(src.back.abstract)) ? back : "<font color=grey>Empty</font>"]</A>"
+	if(has_breathable_mask && istype(back, /obj/item/weapon/tank))
+		dat += "<BR>[TAB]&#8627;<A href='?src=\ref[src];item=internal'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+
+	dat += "<BR>"
+
+
+	dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=mask'>		[(wear_mask && !(src.wear_mask.abstract))	? wear_mask	: "<font color=grey>Empty</font>"]</A>"
+
+
+	if(handcuffed)
+		dat += "<BR><B>Handcuffed:</B> <A href='?src=\ref[src];item=handcuff'>Remove</A>"
+
+	dat += {"
+	<BR>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	"}
+
+	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 340, 500)
+	popup.set_content(dat)
+	popup.open()
+
+
+
+
 
 //generates realistic-ish pulse output based on preset levels
 /mob/living/carbon/proc/get_pulse(var/method)	//method 0 is for hands, 1 is for machines, more accurate
@@ -504,6 +566,15 @@
 			return method ? ">250" : "extremely weak and fast, patient's artery feels like a thread"
 //			output for machines^	^^^^^^^output for people^^^^^^^^^
 
+/mob/living/carbon/verb/mob_sleep()
+	set name = "Sleep"
+	set category = "IC"
+
+	if(usr.sleeping)
+		usr << "\red You are already sleeping"
+		return
+	if(alert(src,"Are you sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+		usr.sleeping = 150 //Long nap of 5 minutes. Those are MC TICKS. Don't get fooled
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
@@ -548,7 +619,7 @@
 		B.host_brain << "\red <B><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></B>"
 
 //Check for brain worms in head.
-/mob/living/carbon/proc/has_brain_worms()
+/mob/proc/has_brain_worms()
 
 	for(var/I in contents)
 		if(istype(I,/mob/living/simple_animal/borer))
@@ -567,13 +638,21 @@
 		return
 
 	if(B.chemicals >= 100)
-		src << "\red <B>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</B>"
-		visible_message("\red <B>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</B>")
-		B.chemicals -= 100
+		src << "\red You strain, trying to push out your young..."
+		var/mob/dead/observer/O = B.request_player()
+		if(!O)
+			// No spaceghoasts.
+			src << "<span class='warning'>Your young are not ready yet.</span>"
+		else
+			src << "\red <B>Your host twitches and quivers as you rapidly excrete several larvae from your sluglike body.</B>"
+			visible_message("\red <B>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</B>")
+			B.chemicals -= 100
 
-		new /obj/effect/decal/cleanable/vomit(get_turf(src))
-		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-		new /mob/living/simple_animal/borer(get_turf(src))
+			new /obj/effect/decal/cleanable/vomit(get_turf(src))
+			playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+
+			var/mob/living/simple_animal/borer/nB = new (get_turf(src),by_gamemode=1) // We've already chosen.
+			nB.transfer_personality(O.client)
 
 	else
 		src << "You do not have enough chemicals stored to reproduce."

@@ -13,36 +13,29 @@
 /obj/machinery/shield/New()
 	src.dir = pick(1,2,3,4)
 	..()
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
-/obj/machinery/shield/Del()
+/obj/machinery/shield/Destroy()
 	opacity = 0
 	density = 0
 	update_nearby_tiles()
 	..()
 
-/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
+/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(!height || air_group) return 0
 	else return ..()
 
 //Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
-/obj/machinery/shield/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
+/obj/machinery/shield/proc/update_nearby_tiles()
+	if (isnull(air_master))
+		return 0
 
-	var/turf/simulated/source = get_turf(src)
-	var/turf/simulated/north = get_step(source,NORTH)
-	var/turf/simulated/south = get_step(source,SOUTH)
-	var/turf/simulated/east = get_step(source,EAST)
-	var/turf/simulated/west = get_step(source,WEST)
+	var/T = loc
 
-	if(istype(source)) air_master.tiles_to_update |= source
-	if(istype(north)) air_master.tiles_to_update |= north
-	if(istype(south)) air_master.tiles_to_update |= south
-	if(istype(east)) air_master.tiles_to_update |= east
-	if(istype(west)) air_master.tiles_to_update |= west
+	if (isturf(T))
+		air_master.mark_for_update(T)
 
 	return 1
-
 
 /obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!istype(W)) return
@@ -92,13 +85,13 @@
 	switch(severity)
 		if(1.0)
 			if (prob(75))
-				del(src)
+				qdel(src)
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 	return
 
 /obj/machinery/shield/emp_act(severity)
@@ -162,9 +155,9 @@
 		var/is_open = 0 //Whether or not the wires are exposed
 		var/locked = 0
 
-/obj/machinery/shieldgen/Del()
+/obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
-		del(shield_tile)
+		qdel(shield_tile)
 	..()
 
 
@@ -536,7 +529,7 @@
 			if(!G.active)
 				break
 
-/obj/machinery/shieldwallgen/Del()
+/obj/machinery/shieldwallgen/Destroy()
 	src.cleanup(1)
 	src.cleanup(2)
 	src.cleanup(4)
@@ -634,7 +627,7 @@
 	return
 
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))

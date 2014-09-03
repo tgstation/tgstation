@@ -179,6 +179,7 @@
 	icon_state = "red_suit"
 	item_state = "r_suit"
 	_color = "red_suit"
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
@@ -330,7 +331,7 @@
 //wedding stuff
 
 /obj/item/clothing/under/wedding/bride_orange
-	name = "orange wedding dress"
+	name = "white wedding dress"
 	desc = "A big and puffy orange dress."
 	icon_state = "bride_orange"
 	_color = "bride_orange"
@@ -379,3 +380,31 @@
 	_color = "roman"
 	item_state = "armor"
 	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
+
+/obj/item/clothing/under/simonpants
+	name = "Simon's Pants"
+	desc = "Simon's pants, clad with belt and whatever the fuck that thing is around his neck"
+	icon_state = "spants"
+	_color = "simonpants"
+	item_state = "spants"
+
+/obj/item/clothing/under/batmansuit
+	name = "batsuit"
+	desc = "You are the night."
+	icon_state = "bmuniform"
+	_color = "bmuniform"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/under/officeruniform
+	name = "officer's uniform"
+	desc = "Bestraft die Juden fur ihre Verbrechen."
+	icon_state = "officeruniform"
+	item_state = "officeruniform"
+	_color = "officeruniform"
+
+/obj/item/clothing/under/soldieruniform
+	name = "soldier's uniform"
+	desc = "Bestraft die Verbundeten fur ihren Widerstand."
+	icon_state = "soldieruniform"
+	item_state = "soldieruniform"
+	_color = "soldieruniform"

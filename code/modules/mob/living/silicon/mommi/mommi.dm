@@ -34,18 +34,18 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-
 	ident = rand(1, 999)
 	updatename()
 	updateicon()
 
 	if(!cell)
 		cell = new /obj/item/weapon/cell(src)
-		cell.maxcharge = 7500
-		cell.charge = 7500
-	..()
+		cell.maxcharge = 15000
+		cell.charge = 15000
+	..(loc,startup_sound='sound/misc/interference.ogg')
 	module = new /obj/item/weapon/robot_module/mommi(src)
 	laws = new mommi_base_law_type
+
 	// Don't sync if we're a KEEPER.
 	if(!istype(laws,/datum/ai_laws/keeper))
 		connected_ai = select_active_ai_with_fewest_borgs()
@@ -74,15 +74,16 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	if(connected_ai && keeper)
 		world << "\red ASSERT FAILURE: connected_ai && keeper in mommi.dm"
 
-	//playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
-	playsound(loc, 'sound/misc/interference.ogg', 75, 1)
-
 
 /mob/living/silicon/robot/mommi/choose_icon()
-	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Keeper")
+	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "RepairBot", "Replicator", "Prime")
 	switch(icontype)
-		if("Basic")	subtype = "mommi"
-		else		subtype = "keeper"
+		if("Replicator") subtype = "replicator"
+		if("Keeper")	 subtype = "keeper"
+		if("RepairBot")	 subtype = "repairbot"
+		if("Hover")	     subtype = "hovermommi"
+		if("Prime")	     subtype = "mommiprime"
+		else			 subtype = "mommi"
 	updateicon()
 	var/answer = input("Is this what you want?", "Mobile MMI", null) in list("Yes", "No")
 	switch(answer)
@@ -112,6 +113,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			module = new /obj/item/weapon/robot_module/standard(src)
 			module_sprites["Basic"] = "mommi"
 			module_sprites["Keeper"] = "keeper"
+			module_sprites["Replicator"] = "replicator"
+			module_sprites["RepairBot"] = "repairbot"
+			module_sprites["Hover"] = "hovermommi"
+			module_sprites["Prime"] = "mommiprime"
 
 	//Custom_sprite check and entry
 	if (custom_sprite == 1)
@@ -127,7 +132,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
-/mob/living/silicon/robot/mommi/Del()
+/mob/living/silicon/robot/mommi/Destroy()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/obj/item/device/mmi/nmmi = mmi
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
@@ -311,6 +316,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		else if(U.locked)
 			usr << "The upgrade is locked and cannot be used yet!"
 		else
+			if(istype(U, /obj/item/borg/upgrade/reset))
+				usr << "<span class='warning'>No.</span>"
+				return
 			if(U.action(src))
 				usr << "You apply the upgrade to [src]!"
 				usr.drop_item()
@@ -336,7 +344,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			updateicon()
 			return
 
-
 	if(ishuman(user))
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
@@ -344,8 +351,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if(user.a_intent == "help")
 			user.visible_message("\blue [user.name] pats [src.name] on the head.")
 			return
-
-
 
 	if(!istype(user, /mob/living/silicon))
 		switch(user.a_intent)
@@ -396,16 +401,15 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			overlays += "ov-openpanel +c"
 		else
 			overlays += "ov-openpanel -c"
+
 	// Put our eyes just on top of the lighting, so it looks emissive in maint tunnels.
-	if(layer==MOB_LAYER)
-		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",LIGHTING_LAYER+1)
-		if(anchored)
-			overlays+=image(icon,"[subtype]-park", LIGHTING_LAYER+1)
-	else
-		overlays+=image(icon,"eyes-[subtype][emagged?"-emagged":""]",TURF_LAYER+0.2) // Fixes floating eyes
-		if(anchored)
-			overlays+=image(icon,"[subtype]-park", TURF_LAYER+0.2)
-	return
+	var/overlay_layer = LIGHTING_LAYER+1
+	if(layer != MOB_LAYER)
+		overlay_layer=TURF_LAYER+0.2
+
+	overlays += image(icon,"eyes-[subtype][emagged?"-emagged":""]",overlay_layer)
+	if(anchored)
+		overlays += image(icon,"[subtype]-park",overlay_layer)
 
 
 
@@ -443,7 +447,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			dat += text("[module.emag]: <B>Activated</B><BR>")
 		else
 			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
-	src << browse(dat, "window=robotmod")
+	src << browse(dat, "window=robotmod&can_close=1")
 	onclose(src,"robotmod") // Register on-close shit, which unsets machinery.
 
 
@@ -515,9 +519,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 
 /mob/living/silicon/robot/mommi/Move(a, b, flag)
-
 	..()
 
+/*
 /mob/living/silicon/robot/mommi/proc/ActivateKeeper()
 	set category = "Robot Commands"
 	set name = "Activate KEEPER"
@@ -532,8 +536,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		R.UnlinkSelf()
 		var/obj/item/weapon/aiModule/keeper/mdl = new
 
-		mdl.transmitInstructions(src, src)
+		mdl.upload(src.laws,src,src)
 		src << "These are your laws now:"
 		src.show_laws()
 
 		src.verbs -= /mob/living/silicon/robot/mommi/proc/ActivateKeeper
+*/

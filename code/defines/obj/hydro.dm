@@ -103,30 +103,6 @@
 	plant_type = 2
 	growthstages = 3
 
-/obj/item/seeds/replicapod
-	name = "pack of replica pod seeds"
-	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
-	icon_state = "seed-replicapod"
-	mypath = "/obj/item/seeds/replicapod"
-	species = "replicapod"
-	plantname = "Replica Pod"
-	productname = "/mob/living/carbon/human" //verrry special -- Urist
-	lifespan = 50 //no idea what those do
-	endurance = 8
-	maturation = 10
-	production = 10
-	yield = 1 //seeds if there isn't a dna inside
-	oneharvest = 1
-	potency = 30
-	plant_type = 0
-	growthstages = 6
-	var/list/ui = null //for storing the guy
-	var/list/se = null
-	var/ckey = null
-	var/realName = null
-	var/datum/mind/mind = null
-	gender = MALE
-
 /obj/item/seeds/grapeseed
 	name = "pack of grape seeds"
 	desc = "These seeds grow into grape vines."
@@ -177,6 +153,40 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 1
+
+/obj/item/seeds/shandseed
+	name = "pack of s'rendarr's hand seeds"
+	desc = "These seeds grow into a helpful herb called S'Rendarr's Hand, native to Ahdomai."
+	icon_state = "seed-shand"
+	mypath = "/obj/item/seeds/shandseed"
+	species = "shand"
+	plantname = "S'Rendarr's Hand"
+	productname = "/obj/item/stack/medical/bruise_pack/tajaran"
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 3
+
+/obj/item/seeds/mtearseed
+	name = "pack of messa's tear seeds"
+	desc = "These seeds grow into a helpful herb called Messa's Tear, native to Ahdomai."
+	icon_state = "seed-mtear"
+	mypath = "/obj/item/seeds/mtearseed"
+	species = "mtear"
+	plantname = "Messa's Tear"
+	productname = "/obj/item/stack/medical/ointment/tajaran"
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 3
 
 /obj/item/seeds/berryseed
 	name = "pack of berry seeds"
@@ -544,7 +554,7 @@
 
 /obj/item/seeds/angelmycelium
 	name = "pack of destroying angel mycelium"
-	desc = "This mycelium grows into something devestating."
+	desc = "This mycelium grows into something devastating."
 	icon_state = "mycelium-angel"
 	mypath = "/obj/item/seeds/angelmycelium"
 	species = "angel"
@@ -1153,6 +1163,57 @@
 	growthstages = 4
 	plant_type = 1
 
+/obj/item/seeds/synthmeatseed
+	name = "pack of synthmeat seeds"
+	desc = "These seeds grow into a synthmeat tree."
+	icon_state = "seed-synthmeat"
+	mypath = "/obj/item/seeds/synthmeatseed"
+	species = "synthmeat"
+	plantname = "Synthmeat Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/meat"
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 2
+
+/obj/item/seeds/synthbuttseed //*fart
+	name = "pack of synthbutt seeds"
+	desc = "These butts butt into a synthbutt butt."
+	icon_state = "seed-synthbutt"
+	mypath = "/obj/item/seeds/synthbuttseed"
+	species = "synthbutt"
+	plantname = "Synthbutt Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/butt"
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 2
+
+/obj/item/seeds/synthbrainseed
+	name = "pack of synthbrain seeds"
+	desc = "These seeds grow into a synthbrain tree."
+	icon_state = "seed-synthbrain"
+	mypath = "/obj/item/seeds/synthbrainseed"
+	species = "synthbrain"
+	plantname = "Synthbrain Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/brain"
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 2
+
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
@@ -1223,10 +1284,10 @@
 	var/yield = 2
 	var/potency = 1
 	var/plant_type = 0
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
+
+/obj/item/weapon/grown/New()
+	. = ..()
+	create_reagents(50)
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
 	potency = newValue
@@ -1262,7 +1323,6 @@
 			del(src)
 			return
 
-
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
@@ -1294,12 +1354,14 @@
 	plant_type = 0
 	seed = "/obj/item/seeds/novaflower"
 	attack_verb = list("seared", "heated", "whacked", "steamed")
-	New()
-		..()
-		spawn(5)	//So potency can be set in the proc that creates these crops
-			reagents.add_reagent("nutriment", 1)
-			reagents.add_reagent("capsaicin", round(potency, 1))
-			force = round((5+potency/5), 1)
+
+/obj/item/weapon/grown/novaflower/New()
+	. = ..()
+
+	spawn(5) // So potency can be set in the proc that creates these crops
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("capsaicin", round(potency, 1))
+		force = round((5 + potency / 5), 1)
 
 /*
 /obj/item/weapon/grown/gibtomato
@@ -1341,12 +1403,14 @@
 	plant_type = 1
 	origin_tech = "combat=1"
 	seed = "/obj/item/seeds/nettleseed"
-	New()
-		..()
-		spawn(5)	//So potency can be set in the proc that creates these crops
-			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
-			reagents.add_reagent("sacid", round(potency, 1))
-			force = round((5+potency/5), 1)
+
+/obj/item/weapon/grown/nettle/New()
+	. = ..()
+
+	spawn(5) //So potency can be set in the proc that creates these crops
+		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
+		reagents.add_reagent("sacid", round(potency, 1))
+		force = round((5 + potency / 5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
@@ -1364,16 +1428,19 @@
 	seed = "/obj/item/seeds/deathnettleseed"
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
-	New()
-		..()
-		spawn(5)	//So potency can be set in the proc that creates these crops
-			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
-			reagents.add_reagent("pacid", round(potency, 1))
-			force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS|TOXLOSS)
+
+/obj/item/weapon/grown/deathnettle/New()
+	. = ..()
+
+	spawn(5) //So potency can be set in the proc that creates these crops
+		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
+		reagents.add_reagent("pacid", round(potency, 1))
+		force = round((5 + potency / 2.5), 1)
+
 
 // *************************************
 // Pestkiller defines for hydroponics
@@ -1381,47 +1448,33 @@
 
 /obj/item/pestkiller
 	name = "bottle of pestkiller"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
+	flags = FPRINT | TABLEPASS
 	var/toxicity = 0
 	var/PestKillStr = 0
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/pestkiller/New()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 /obj/item/pestkiller/carbaryl
 	name = "bottle of carbaryl"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 4
 	PestKillStr = 2
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/pestkiller/lindane
 	name = "bottle of lindane"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 6
 	PestKillStr = 4
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/pestkiller/phosmet
 	name = "bottle of phosmet"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 8
 	PestKillStr = 7
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 // *************************************
 // Hydroponics Tools
@@ -1433,7 +1486,7 @@
 	name = "weed-spray"
 	icon_state = "weedspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -1452,7 +1505,7 @@
 	name = "pest-spray"
 	icon_state = "pestspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -1471,11 +1524,12 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hoe"
 	item_state = "hoe"
-	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | NOBLUDGEON
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 50
+	w_type = RECYK_METAL
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 
 // *************************************
@@ -1486,31 +1540,25 @@
 	name = "bottle of weedkiller"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
+	flags = FPRINT | TABLEPASS
 	var/toxicity = 0
 	var/WeedKillStr = 0
 
 /obj/item/weedkiller/triclopyr
 	name = "bottle of glyphosate"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 4
 	WeedKillStr = 2
 
 /obj/item/weedkiller/lindane
 	name = "bottle of triclopyr"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 6
 	WeedKillStr = 4
 
 /obj/item/weedkiller/D24
 	name = "bottle of 2,4-D"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 8
 	WeedKillStr = 7
 
@@ -1522,45 +1570,30 @@
 	name = "bottle of nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
+	flags = FPRINT | TABLEPASS
 	w_class = 1.0
 	var/mutmod = 0
 	var/yieldmod = 0
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/nutrient/New()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 /obj/item/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	mutmod = 1
 	yieldmod = 1
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/nutrient/l4z
 	name = "bottle of Left 4 Zed"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
 	mutmod = 2
 	yieldmod = 0
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/nutrient/rh
 	name = "bottle of Robust Harvest"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
 	mutmod = 0
 	yieldmod = 2
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
-

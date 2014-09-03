@@ -77,6 +77,9 @@ field_generator power level display
 
 
 /obj/machinery/field_generator/attack_hand(mob/user as mob)
+	if(isobserver(user) && !isAdminGhost(user))
+		return 0
+
 	if(state == 2)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(src.active >= 1)
@@ -92,7 +95,7 @@ field_generator power level display
 				src.add_fingerprint(user)
 	else
 		user << "The [src] needs to be firmly secured to the floor first."
-		return
+		return 0
 
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
@@ -173,7 +176,7 @@ field_generator power level display
 	return 0
 
 
-/obj/machinery/field_generator/Del()
+/obj/machinery/field_generator/Destroy()
 	src.cleanup()
 	..()
 

@@ -71,7 +71,7 @@
 				if(synd_mind.current.client)
 					for(var/image/I in synd_mind.current.client.images)
 						if(I.icon_state == "synd")
-							del(I)
+							synd_mind.current.client.images -= I
 
 		for(var/datum/mind/synd_mind in syndicates)
 			if(synd_mind.current)
@@ -208,17 +208,19 @@
 	synd_mob.equip_to_slot_or_del(R, slot_ears)
 
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(synd_mob), slot_shoes)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(synd_mob), slot_wear_suit)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(synd_mob), slot_gloves)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), slot_shoes)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/bulletproof(synd_mob), slot_wear_suit)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(synd_mob), slot_glasses)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
-	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
-	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
-	if(synd_mob.backbag == 4) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), slot_back)
+	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(synd_mob), slot_back)
+	if(synd_mob.backbag == 3 || synd_mob.backbag == 4) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(synd_mob), slot_back)
+	//if(synd_mob.backbag == 4) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), slot_back)
 	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_magazine/a12mm(synd_mob), slot_in_backpack)
 	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_magazine/a12mm(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack)
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack) // For those who hate fun
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/creatine(synd_mob), slot_in_backpack) // HOOOOOO HOOHOHOHOHOHO - N3X
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), slot_belt)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/dexplosive(synd_mob)

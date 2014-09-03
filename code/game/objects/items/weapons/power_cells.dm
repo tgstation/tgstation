@@ -15,6 +15,7 @@
 	var/maxcharge = 1000
 	m_amt = 700
 	g_amt = 50
+	w_type = RECYK_ELECTRONIC
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 	var/construction_cost = list("metal"=750,"glass"=75)
@@ -99,6 +100,7 @@
 	maxcharge = 300
 	m_amt = 0
 	g_amt = 0
+	w_type = RECYK_BIOLOGICAL
 	minor_fault = 1
 
 
@@ -109,6 +111,13 @@
 	icon = 'icons/mob/slimes.dmi' //'icons/obj/harvest.dmi'
 	icon_state = "yellow slime extract" //"potato_battery"
 	maxcharge = 10000
-	maxcharge = 10000
 	m_amt = 0
 	g_amt = 0
+	w_type = RECYK_BIOLOGICAL
+
+
+/obj/item/weapon/cell/temperaturegun
+	name = "temperature gun cell"
+	desc = "A specially designed power cell for heating and cooling projectiles"
+	icon_state = "icell"
+	maxcharge = 900

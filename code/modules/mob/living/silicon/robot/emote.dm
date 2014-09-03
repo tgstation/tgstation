@@ -204,6 +204,15 @@
 				m_type = 2
 			else
 				src << "You are not security."
+				
+		/*
+		if ("fart")
+			var/list/robotfarts = list("makes a farting noise","vents excess methane","shakes violently, then vents methane.")
+			var/robofart = pick(robotfarts)
+			message = "<B>[src]</B> [robofart]."
+			m_type = 1 	
+			
+		*/
 
 		if ("help")
 			src << "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt"

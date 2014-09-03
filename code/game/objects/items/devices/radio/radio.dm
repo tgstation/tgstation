@@ -33,10 +33,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	w_class = 2
 	g_amt = 25
 	m_amt = 75
+	w_type = RECYK_ELECTRONIC
 
 	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
 	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
+
+	var/always_talk=0 // ALWAYS catch signals. Useful for covert listening devices.
 
 /obj/item/device/radio
 	var/datum/radio_frequency/radio_connection
@@ -49,10 +52,12 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/New()
 	wires = new(src)
+
 	if(prison_radio)
 		wires.CutWireIndex(WIRE_TRANSMIT)
+
 	secure_radio_connections = new
-	..()
+	..(loc)
 	if(radio_controller)
 		initialize()
 
@@ -69,9 +74,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	set_frequency(frequency)
 
-	for (var/ch_name in channels)
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
-
+	for (var/channel in channels)
+		secure_radio_connections[channel] = radio_controller.add_object(src, radiochannels[channel], RADIO_CHAT)
 
 /obj/item/device/radio/attack_self(mob/user as mob)
 	user.set_machine(src)
@@ -243,6 +247,24 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	   //#### Grab the connection datum ####//
 		var/datum/radio_frequency/connection = null
+		/* NEW
+		//testing("[src]: talk_into([M], [message], [channel])")
+		if(channel == "headset")
+			channel = null
+		if(channel) // If a channel is specified, look for it.
+			if(channels && channels.len > 0)
+				if (channel == "department")
+					//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
+					channel = channels[1]
+				connection = secure_radio_connections[channel]
+				if (!channels[channel]) // if the channel is turned off, don't broadcast
+					return
+			else
+				// If we were to send to a channel we don't have, drop it.
+				return
+		else // If a channel isn't specified, send to common.
+		*/
+		// OLD
 		if(channel && channels && channels.len > 0)
 			if (channel == "department")
 				//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
@@ -497,8 +519,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					freq_text = "Engineering"
 				if(1359)
 					freq_text = "Security"
-//				if(1349)
-//					freq_text = "Mining"
+				if(1349)
+					freq_text = "Service"
 				if(1347)
 					freq_text = "Supply"
 			//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
@@ -543,7 +565,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					if(1213)
 						blackbox.msg_syndicate += blackbox_msg
 					if(1349)
-						blackbox.msg_mining += blackbox_msg
+						blackbox.msg_service += blackbox_msg
 					if(1347)
 						blackbox.msg_cargo += blackbox_msg
 					else
@@ -810,3 +832,16 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/off
 	listening = 0
+
+/obj/item/device/radio/Destroy()
+	if(radio_connection)
+		radio_connection.remove_listener(src)
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		R.radio = null
+
+	if(wires)
+		wires.Destroy()
+		wires = null
+
+	..()

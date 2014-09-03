@@ -37,7 +37,7 @@ var/global/floorIsLava = 0
 		usr << "Error: you are not an admin!"
 		return
 
-
+	checkSessionKey()
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:40: var/body = "<html><head><title>Options for [M.key]</title></head>"
 	var/body = {"<html><head><title>Options for [M.key]</title></head>
@@ -59,12 +59,14 @@ var/global/floorIsLava = 0
 		<br><br>\[
 		<a href='?_src_=vars;Vars=\ref[M]'>VV</a> -
 		<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> -
+		<a href='?src=\ref[src];rapsheet=1;rsckey=[M.ckey]'>Bans</a> -
 		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
 		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
 		<b>Mob type</b> = [M.type]<br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
+		<A href='?_src_=holder;unwarn=[M.ckey]'>UNWarn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
 		<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> |
@@ -122,7 +124,8 @@ var/global/floorIsLava = 0
 					<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> |
 					<A href='?src=\ref[src];makemommi=\ref[M]'>Make MoMMI</A> |
 					<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> |
-					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A>
+					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A> |
+					<A href='?src=\ref[src];makecluwne=\ref[M]'>Make Cluwne</A> |
 				"}
 
 			//Simple Animals
@@ -131,12 +134,12 @@ var/global/floorIsLava = 0
 			else
 				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> | "
 
-			// MUTATIONS
-			if(iscarbon(M))
+			// DNA2 - Admin Hax
+			if(iscarbon(M) && !isalien(M))
 				body += "<br><br>"
 				body += "<b>DNA Blocks:</b><br><table border='0'><tr><th>&nbsp;</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>"
 				var/bname
-				for(var/block=1;block<STRUCDNASIZE;block++)
+				for(var/block=1;block<=DNA_SE_LENGTH;block++)
 					if(((block-1)%5)==0)
 						body += "</tr><tr><th>[block-1]</th>"
 					bname = assigned_blocks[block]
@@ -149,6 +152,16 @@ var/global/floorIsLava = 0
 						body += "[block]"
 					body+="</td>"
 				body += "</tr></table>"
+
+			// Law Admin Hax
+			if(issilicon(M) && M:laws)
+				body += "<br><br>"
+				body += "<b>Laws:</b><br />"
+				var/datum/ai_laws/L = M:laws
+				body += L.display_admin_tools(M)
+				body += "<br /><a href='?src=\ref[src];mob=\ref[M];add_law=1'>Add Law</a>"
+				body += " | <a href='?src=\ref[src];mob=\ref[M];clear_laws=1'>Clear Laws</a>"
+				body += "<br /><a href='?src=\ref[src];mob=\ref[M];announce_laws=1'><b>Send Laws</b></a> - User is not notified of changes until this button pushed!<br />"
 
 			body += {"<br><br>
 				<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
@@ -210,6 +223,38 @@ var/global/floorIsLava = 0
 		usr << "Error: you are not an admin!"
 		return
 	PlayerNotesPage(1)
+
+/datum/admins/proc/checkCID()
+	set category = "Admin"
+	set name = "Lookup bans on Computer ID"
+	if(!usr)
+		return
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		usr << "Error: you are not an admin!"
+		return
+	checkSessionKey()
+	var/cid = input("Type computer ID", "CID", 0)
+	usr << link(getVGPanel("rapsheet",admin=1,query=list("cid"=cid)))
+	//usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&cid=[cid]")
+	return
+
+/datum/admins/proc/checkCKEY()
+	set category = "Admin"
+	set name = "Lookup bans on CKEY"
+	if(!usr)
+		return
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		usr << "Error: you are not an admin!"
+		return
+	checkSessionKey()
+	var/ckey = lowertext(input("Type player ckey", "ckey", null) as text | null)
+	usr << link(getVGPanel("rapsheet",admin=1,query=list("ckey"=ckey)))
+	//usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&ckey=[ckey]")
+	return
 
 /datum/admins/proc/PlayerNotesPage(page)
 	var/dat = "<B>Player notes</B><HR>"
@@ -575,16 +620,28 @@ var/global/floorIsLava = 0
 		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
 
 	dat += {"
-		<BR>
+		<hr />
+		<ul>
+			<li>
+				<b>Default Cyborg/AI Laws:</b>
+				<a href="?src=\ref[src];set_base_laws=ai">[base_law_type]</a>
+			</li>
+			<li>
+				<b>Default MoMMI Laws:</b>
+				<a href="?src=\ref[src];set_base_laws=mommi">[mommi_base_law_type]</a>
+			</li>
+		</ul>
+		<hr />
 		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
 		<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
 		<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>
 		<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>
-		<br><A href='?src=\ref[src];vsc=airflow'>Edit ZAS Settings</A><br>
+		<hr />
+		<A href='?src=\ref[src];vsc=airflow'>Edit ZAS Settings</A><br>
 		<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
-	usr << browse(dat, "window=admin2;size=210x280")
+	usr << browse(dat, "window=admin2;size=280x370")
 	return
 
 /datum/admins/proc/Secrets()
@@ -711,6 +768,8 @@ var/global/floorIsLava = 0
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
 
+		CallHook("Reboot",list())
+
 		if (watchdog.waiting)
 			world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
 			watchdog.signal_ready()
@@ -736,7 +795,7 @@ var/global/floorIsLava = 0
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
-	set desc="Toggle dis bitch"
+	set desc="Globally Toggles OOC"
 	set name="Toggle OOC"
 	ooc_allowed = !( ooc_allowed )
 	if (ooc_allowed)
@@ -902,6 +961,8 @@ var/global/floorIsLava = 0
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 
+	CallHook("Reboot",list())
+
 	if (watchdog.waiting)
 		world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
 		watchdog.signal_ready()
@@ -1012,7 +1073,11 @@ var/global/floorIsLava = 0
 		if(!chosen)
 			return
 
-	new chosen(usr.loc)
+	if(ispath(chosen,/turf))
+		var/turf/T = get_turf(usr.loc)
+		T.ChangeTurf(chosen)
+	else
+		new chosen(usr.loc)
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

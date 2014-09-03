@@ -73,7 +73,7 @@
 /mob/living/simple_animal/mouse/verb/ventcrawl()
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
-	set category = "Mouse"
+	set category = "Object"
 
 //	if(!istype(V,/obj/machinery/atmoalter/siphs/fullairsiphon/air_vent))
 //		return
@@ -129,7 +129,7 @@
 /mob/living/simple_animal/mouse/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
-	set category = "Mouse"
+	set category = "Object"
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
@@ -175,7 +175,7 @@
 	src << "<span class='warning'>You are too small to pull anything.</span>"
 	return
 
-/mob/living/simple_animal/mouse/HasEntered(AM as mob|obj)
+/mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM

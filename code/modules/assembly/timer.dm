@@ -4,7 +4,7 @@
 	icon_state = "timer"
 	m_amt = 500
 	g_amt = 50
-	w_amt = 10
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
 	wires = WIRE_PULSE
@@ -20,7 +20,7 @@
 
 	activate()
 		if(!..())	return 0//Cooldown check
-		
+
 		timing = !timing
 
 		update_icon()

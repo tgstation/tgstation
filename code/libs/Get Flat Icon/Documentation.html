@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Get Flat Icon - Documentation</title>
+		<style type="text/css">
+			#page {
+				width: 600px;
+				margin: 0px auto;
+			}
+		
+			.title {
+				font-size: 44px;
+			}
+			.subtitle {
+				font-size: 30px;
+			}
+			.title, .subtitle {
+				font-weight: bold;
+				font-family: tahoma;
+				text-align: center;
+			}
+			.subsubtitle {
+				font-size: 12px;
+				font-family: tahoma;
+				text-align: center;
+				margin: 6px;
+			}
+			.section {
+				font-weight: bold;
+				font-family: tahoma;
+				text-decoration: underline;
+				margin: 20px 0px 6px 0px;
+			}
+			.code {
+				white-space: pre;
+				overflow: auto;
+				font-family: courier;
+				padding: 6px 6px 6px 12px;
+				background: #DDDDDD;
+				border: 1px solid #999999;
+				margin: 6px;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div id="page">
+			<div class="title">Get Flat Icon</div>
+			<div class="subsubtitle">Created by David "DarkCampainger" Braun</div>
+			<div class="subsubtitle">Released under the Unlicense (see Unlicense.txt)</div>
+			<div class="subsubtitle">Version 2.0 - August 27, 2013</div>
+			<div class="subsubtitle">Please see 'demo/demo.dm' for the example usage</div>
+			
+			<div class="section">Summary</div>
+			<p>The Get Flat Icon library flattens an object's appearance into a single dynamic icon at runtime. The icon can then easily be shown in a browser, output, label, ect.</p>
+			<p>The library fully supports all types of overlays: icon files, icon states, objects, object types, images, dynamic icons, and images with dynamic icons. It correctly handles inheriting the icon, icon_state, and dir* from the base mob; as well as FLOAT_LAYER. It can even handle pixel_x/y values that move overlays outside of the base icon's bounds.</p>
+			<p>The library also has a fully functional cache, to avoid flattening the same icon twice.</p>
+			<p>(*note: there is a limitation with the <tt>dir</tt> variable where the library cannot distinguish between an overlay that inherits its direction from its parent and one that is set to face SOUTH. If an overlay's direction is set to SOUTH, the library will always assume it inherits from the parent)</p>
+			
+			<div class="section">Reference</div>
+			<dl>
+				<dt><b>getFlatIcon(atom/A, dir, cache=1)</b></dt>
+				<dd>Return value: /icon object</dd>
+				<dd>Parameters:<br>
+					<ul>
+						<li>atom/A - the atom you want a flattened icon of</li>
+						<li>dir - the direction you want the atom rendered in (defaults to current direction)</li>
+						<li>cache - determines how the cache is used (default 1)
+							<ul>
+								<li>0 - Cache is ignored and not written to</li>
+								<li>1 - Cache is checked</li>
+								<li>2 - Cache is not checked, but generated icon is written to it</li>
+							</ul>
+						</li>
+					</ul>
+				</dd>
+			</dl>
+			
+			<div class="section">Version History</div>
+			<dl>
+				<dt>Version 2 (August 27, 2013)</dt>
+				<dd>Improved handling of overlays that inherit directions, as much as can be done</dd>
+				<dt>Version 1 (December 27th, 2011)</dt>
+				<dd>Improved the handling of directions</dd>
+				<dd>Changed internal variable names to make them more readable</dd>
+				<dt>Version 0 (May 31th, 2011)</dt>
+				<dd>Initial release</dd>
+			</dl>
+			
+			
+		</div>
+	</body>
+</html>

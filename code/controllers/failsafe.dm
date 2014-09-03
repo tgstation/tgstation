@@ -1,68 +1,78 @@
-var/datum/controller/failsafe/Failsafe
+var/global/datum/controller/failsafe/failsafe
 
-/datum/controller/failsafe // This thing pretty much just keeps poking the master controller
-	var/processing = 0
-	var/processing_interval = 100	//poke the MC every 10 seconds
+/datum/controller/failsafe // This thing pretty much just keeps poking the controllers.
+	processing_interval = 100 // Poke the controllers every 10 seconds.
 
-	var/MC_iteration = 0
-	var/MC_defcon = 0			//alert level. For every poke that fails this is raised by 1. When it reaches 5 the MC is replaced with a new one. (effectively killing any master_controller.process() and starting a new one)
+	/*
+	 * Controller alert level.
+	 * For every poke that fails this is raised by 1.
+	 * When it reaches 5 the MC is replaced with a new one
+	 * (effectively killing any controller process() and starting a new one).
+	 */
 
-	var/lighting_iteration = 0
-	var/lighting_defcon = 0		//alert level for lighting controller.
+	// master
+	var/masterControllerIteration = 0
+	var/masterControllerAlertLevel = 0
+
+	// lighting
+	var/lightingControllerIteration = 0
+	var/lightingControllerAlertLevel = 0
 
 /datum/controller/failsafe/New()
-	//There can be only one failsafe. Out with the old in with the new (that way we can restart the Failsafe by spawning a new one)
-	if(Failsafe != src)
-		if(istype(Failsafe))
-			del(Failsafe)
-	Failsafe = src
-	Failsafe.process()
+	. = ..()
 
+	// There can be only one failsafe. Out with the old in with the new (that way we can restart the Failsafe by spawning a new one).
+	if (failsafe != src)
+		if (istype(failsafe))
+			recover()
+			qdel(failsafe)
+
+		failsafe = src
+
+	failsafe.process()
 
 /datum/controller/failsafe/proc/process()
 	processing = 1
+
 	spawn(0)
-		//set background = 1
-		while(1)	//more efficient than recursivly calling ourself over and over. background = 1 ensures we do not trigger an infinite loop
-			if(!master_controller)		new /datum/controller/game_controller()	//replace the missing master_controller! This should never happen.
-			if(!lighting_controller)	new /datum/controller/lighting()		//replace the missing lighting_controller
+		set background = BACKGROUND_ENABLED
+
+		while(1) // More efficient than recursivly calling ourself over and over. background = 1 ensures we do not trigger an infinite loop.
+			iteration++
 
 			if(processing)
-				if(master_controller.processing)	//only poke if these overrides aren't in effect
-					if(MC_iteration == controller_iteration)	//master_controller hasn't finished processing in the defined interval
-						switch(MC_defcon)
+				if(master_controller.processing) // Only poke if these overrides aren't in effect
+					if(masterControllerIteration == master_controller.iteration) // Master controller hasn't finished processing in the defined interval.
+						switch(masterControllerAlertLevel)
 							if(0 to 3)
-								MC_defcon++
+								masterControllerAlertLevel++
 							if(4)
-								admins << "<font color='red' size='2'><b>Warning. The Master Controller has not fired in the last [MC_defcon*processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
-								MC_defcon = 5
+								admins << "<font color='red' size='2'><b>Warning. The master Controller has not fired in the last [masterControllerAlertLevel * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
+								masterControllerAlertLevel = 5
 							if(5)
-								admins << "<font color='red' size='2'><b>Warning. The Master Controller has still not fired within the last [MC_defcon*processing_interval] ticks. Killing and restarting...</b></font>"
-								new /datum/controller/game_controller()	//replace the old master_controller (hence killing the old one's process)
-								master_controller.process()				//Start it rolling again
-								MC_defcon = 0
+								admins << "<font color='red' size='2'><b>Warning. The master Controller has still not fired within the last [masterControllerAlertLevel * processing_interval] ticks. Killing and restarting...</b></font>"
+								new /datum/controller/game_controller() // Replace the old master controller (hence killing the old one's process).
+								master_controller.process() // Start it rolling again.
+								masterControllerAlertLevel = 0
 					else
-						MC_defcon = 0
-						MC_iteration = controller_iteration
+						masterControllerAlertLevel = 0
+						masterControllerIteration = master_controller.iteration
 
 				if(lighting_controller.processing)
-					if(lighting_iteration == lighting_controller.iteration)	//master_controller hasn't finished processing in the defined interval
-						switch(lighting_defcon)
+					if(lightingControllerIteration == lighting_controller.iteration) // Lighting controller hasn't finished processing in the defined interval.
+						switch(lightingControllerAlertLevel)
 							if(0 to 3)
-								lighting_defcon++
+								lightingControllerAlertLevel++
 							if(4)
-								admins << "<font color='red' size='2'><b>Warning. The Lighting Controller has not fired in the last [lighting_defcon*processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
-								lighting_defcon = 5
+								admins << "<font color='red' size='2'><b>Warning. The lighting_controller controller has not fired in the last [lightingControllerAlertLevel * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
+								lightingControllerAlertLevel = 5
 							if(5)
-								admins << "<font color='red' size='2'><b>Warning. The Lighting Controller has still not fired within the last [lighting_defcon*processing_interval] ticks. Killing and restarting...</b></font>"
-								new /datum/controller/lighting()	//replace the old lighting_controller (hence killing the old one's process)
-								lighting_controller.process()		//Start it rolling again
-								lighting_defcon = 0
+								admins << "<font color='red' size='2'><b>Warning. The lighting_controller controller has still not fired within the last [lightingControllerAlertLevel * processing_interval] ticks. Killing and restarting...</b></font>"
+								new /datum/controller/lighting() // Replace the old lighting_controller (hence killing the old one's process).
+								lighting_controller.process() // Start it rolling again.
+								lightingControllerAlertLevel = 0
 					else
-						lighting_defcon = 0
-						lighting_iteration = lighting_controller.iteration
-			else
-				MC_defcon = 0
-				lighting_defcon = 0
+						lightingControllerAlertLevel = 0
+						lightingControllerIteration = lighting_controller.iteration
 
 			sleep(processing_interval)

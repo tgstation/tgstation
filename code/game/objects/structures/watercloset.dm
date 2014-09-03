@@ -13,13 +13,13 @@
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
 /obj/structure/toilet/New()
+	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
 
-
-/obj/structure/toilet/attack_hand(mob/living/user)
+/obj/structure/toilet/attack_hand(mob/living/user as mob)
 	if(swirlie)
-		user.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie]'s head!</span>", "You hear reverberating porcelain.")
+		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)
 		return
 
@@ -43,8 +43,7 @@
 /obj/structure/toilet/update_icon()
 	icon_state = "toilet[open][cistern]"
 
-
-/obj/structure/toilet/attackby(obj/item/I, mob/living/user)
+/obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
@@ -168,6 +167,7 @@
 				if("boiling")
 					watertemp = "normal"
 			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I].</span>")
+			add_fingerprint(user)
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
@@ -194,7 +194,7 @@
 				del(mymist)
 				ismist = 0
 
-/obj/machinery/shower/HasEntered(atom/movable/O)
+/obj/machinery/shower/Crossed(atom/movable/O)
 	..()
 	wash(O)
 	if(ismob(O))
@@ -326,19 +326,20 @@
 	if(isrobot(M) || isAI(M))
 		return
 
+	if(!Adjacent(M))
+		return
+
 	if(busy)
 		M << "\red Someone's already washing here."
 		return
 
-	var/turf/location = M.loc
-	if(!isturf(location)) return
 	usr << "\blue You start washing your hands."
 
 	busy = 1
 	sleep(40)
 	busy = 0
 
-	if(M.loc != location) return		//Person has moved away from the sink
+	if(!Adjacent(M)) return		//Person has moved away from the sink
 
 	M.clean_blood()
 	if(ishuman(M))
@@ -354,26 +355,25 @@
 	if (istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user << "<span class='notice'>You fill [RG] from [src].</span>"
+		user.visible_message("\blue [user] fills the [RG] using \the [src].","\blue You fill the [RG] using \the [src].")
 		return
 
-	else if(istype(O, /obj/item/weapon/melee/baton))
+	else if (istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
-		if(B.bcell)
-			if(B.bcell.charge > 0 && B.status == 1)
-				flick("baton_active", src)
-				user.Stun(10)
-				user.stuttering = 10
-				user.Weaken(10)
-				if(isrobot(user))
-					var/mob/living/silicon/robot/R = user
-					R.cell.charge -= 20
-				else
-					B.deductcharge(B.hitcost)
-				user.visible_message( \
-					"<span class='danger'>[user] was stunned by \his wet [O]!</span>", \
-					"<span class='userdanger'>[user] was stunned by \his wet [O]!</span>")
-				return
+		if (B.bcell && B.bcell.charge > 0 && B.status == 1)
+			flick("baton_active", src)
+			user.Stun(10)
+			user.stuttering = 10
+			user.Weaken(10)
+			if(isrobot(user))
+				var/mob/living/silicon/robot/R = user
+				R.cell.charge -= 20
+			else
+				B.deductcharge(1)
+			user.visible_message( \
+				"[user] was stunned by his wet [O].", \
+				"\red You have wet \the [O], it shocks you!")
+			return
 
 	var/turf/location = user.loc
 	if(!isturf(location)) return

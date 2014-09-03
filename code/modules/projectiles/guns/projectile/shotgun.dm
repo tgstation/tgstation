@@ -1,6 +1,7 @@
 /obj/item/weapon/gun/projectile/shotgun/pump
 	name = "shotgun"
 	desc = "Useful for sweeping alleys."
+	fire_sound = 'sound/weapons/shotgun.ogg'
 	icon_state = "shotgun"
 	item_state = "shotgun"
 	max_shells = 4

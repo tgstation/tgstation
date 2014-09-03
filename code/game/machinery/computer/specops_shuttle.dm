@@ -22,6 +22,8 @@ var/specops_shuttle_timeleft = 0
 	var/allowedtocall = 0
 	var/specops_shuttle_timereset = 0
 
+	l_color = "#7BF9FF"
+
 /proc/specops_return()
 	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
 	announcer.config(list("Response Team" = 0))
@@ -135,7 +137,7 @@ var/specops_shuttle_timeleft = 0
 	//Begin Marauder launchpad.
 	spawn(0)//So it parallel processes it.
 		for(var/obj/machinery/door/poddoor/M in special_ops)
-			switch(M.id)
+			switch(M.id_tag)
 				if("ASSAULT0")
 					spawn(10)//1 second delay between each.
 						M.open()
@@ -166,7 +168,7 @@ var/specops_shuttle_timeleft = 0
 		sleep(10)
 
 		for(var/obj/machinery/mass_driver/M in special_ops)
-			switch(M.id)
+			switch(M.id_tag)
 				if("ASSAULT0")
 					spawn(10)
 						M.drive()
@@ -183,7 +185,7 @@ var/specops_shuttle_timeleft = 0
 		sleep(50)//Doors remain open for 5 seconds.
 
 		for(var/obj/machinery/door/poddoor/M in special_ops)
-			switch(M.id)//Doors close at the same time.
+			switch(M.id_tag)//Doors close at the same time.
 				if("ASSAULT0")
 					spawn(0)
 						M.close()
@@ -320,6 +322,8 @@ var/specops_shuttle_timeleft = 0
 
 		var/area/centcom/specops/special_ops = locate()
 		if(special_ops)
+			if(special_ops.master)
+				special_ops=special_ops.master
 			special_ops.readyalert()//Trigger alarm for the spec ops area.
 		specops_shuttle_moving_to_station = 1
 
@@ -563,6 +567,8 @@ var/specops_shuttle_timeleft = 0
 
 		var/area/centcom/specops/special_ops = locate()
 		if(special_ops)
+			if(special_ops.master)
+				special_ops=special_ops.master
 			special_ops.readyalert()//Trigger alarm for the spec ops area.
 		specops_shuttle_moving_to_station = 1
 

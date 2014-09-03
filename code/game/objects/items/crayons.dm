@@ -65,7 +65,8 @@
 	shadeColour = input(user, "Please select the shade colour.", "Crayon colour") as color
 	return
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user as mob)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
+	if(!proximity) return
 	if(istype(target,/turf/simulated/floor))
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
 		switch(drawtype)
@@ -79,6 +80,7 @@
 		if(instant || do_after(user, 50))
 			new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 			user << "You finish drawing."
+			target.add_fingerprint(user)		// Adds their fingerprints to the floor the crayon is drawn on.
 			if(uses)
 				uses--
 				if(!uses)

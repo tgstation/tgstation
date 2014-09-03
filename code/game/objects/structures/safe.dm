@@ -87,6 +87,7 @@ FLOOR SAFES
 			dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[P.name]</a></td></tr>"
 		dat += "</table></center>"
 	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=safe;size=350x300")
+	onclose(user, "safe")
 
 
 /obj/structure/safe/Topic(href, href_list)

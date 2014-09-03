@@ -27,7 +27,7 @@ RPD
 	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
 
 /datum/pipe_info/meter
-	icon = 'icons/obj/meter.dmi'
+	icon = 'icons/obj/pipes.dmi'
 	icon_state = "meterX"
 
 /datum/pipe_info/meter/New()
@@ -35,6 +35,16 @@ RPD
 
 /datum/pipe_info/meter/Render(var/dispenser,var/label)
 	return "<li><a href='?src=\ref[dispenser];makemeter=1;type=3'>[label]</a></li>"
+
+/datum/pipe_info/gsensor
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "gsensor1"
+
+/datum/pipe_info/gsensor/New()
+	return
+
+/datum/pipe_info/gsensor/Render(var/dispenser,var/label)
+	return "<li><a href='?src=\ref[dispenser];makegsensor=1;type=3'>[label]</a></li>"
 
 var/global/list/disposalpipeID2State=list(
 	"pipe-s",
@@ -78,11 +88,13 @@ var/global/list/RPD_recipes=list(
 	"Devices"=list(
 		"Connector"      = new /datum/pipe_info(4, 1, PIPE_UNARY),
 		"Unary Vent"     = new /datum/pipe_info(7, 1, PIPE_UNARY),
+		"Passive Vent"   = new /datum/pipe_info(PIPE_PASV_VENT,    1, PIPE_UNARY),
 		"Gas Pump"       = new /datum/pipe_info(9, 1, PIPE_UNARY),
 		"Passive Gate"   = new /datum/pipe_info(15,1, PIPE_UNARY),
 		"Volume Pump"    = new /datum/pipe_info(16,1, PIPE_UNARY),
 		"Scrubber"       = new /datum/pipe_info(10,1, PIPE_UNARY),
 		"Meter"          = new /datum/pipe_info/meter(),
+		"Gas Sensor"     = new /datum/pipe_info/gsensor(),
 		"Gas Filter"     = new /datum/pipe_info(13,1, PIPE_TRINARY),
 		"Gas Mixer"      = new /datum/pipe_info(14,1, PIPE_TRINARY),
 		"Thermal Plate"  = new /datum/pipe_info(PIPE_THERMAL_PLATE,1, PIPE_UNARY),
@@ -123,7 +135,9 @@ var/global/list/RPD_recipes=list(
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 50000
+	m_amt = 75000
+	g_amt = 37500
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/working = 0
@@ -144,7 +158,8 @@ var/global/list/RPD_recipes=list(
 	var/paint_color="grey"
 
 /obj/item/weapon/pipe_dispenser/New()
-	src.spark_system = new /datum/effect/effect/system/spark_spread
+	. = ..()
+	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
@@ -228,7 +243,7 @@ var/global/list/RPD_recipes=list(
 			if(preview)
 				user << browse_rsc(new /icon(preview, dir=NORTHWEST),  "nw.png")
 				user << browse_rsc(new /icon(preview, dir=NORTHEAST),  "ne.png")
-				user << browse_rsc(new /icon(preview, dir=SOUTHWEST), "sw.png")
+				user << browse_rsc(new /icon(preview, dir=SOUTHWEST),  "sw.png")
 				user << browse_rsc(new /icon(preview, dir=SOUTHEAST),  "se.png")
 
 				dirsel += "<p>"
@@ -251,9 +266,9 @@ var/global/list/RPD_recipes=list(
 		if(PIPE_TRINARY) // Manifold
 			if(preview)
 				user << browse_rsc(new /icon(preview, dir=NORTH), "s.png")
-				user << browse_rsc(new /icon(preview, dir=EAST), "w.png")
+				user << browse_rsc(new /icon(preview, dir=EAST),  "w.png")
 				user << browse_rsc(new /icon(preview, dir=SOUTH), "n.png")
-				user << browse_rsc(new /icon(preview, dir=WEST), "e.png")
+				user << browse_rsc(new /icon(preview, dir=WEST),  "e.png")
 
 				dirsel += "<p>"
 				dirsel += render_dir_img(1,"s.png","West South East")
@@ -311,6 +326,7 @@ var/global/list/RPD_recipes=list(
 
 			a img {
 				border:1px solid #0066cc;
+				background:#dfdfdf;
 			}
 
 			a.color {
@@ -386,6 +402,14 @@ var/global/list/RPD_recipes=list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
+	if(href_list["makegsensor"])
+		p_class = 3
+		p_conntype=-1
+		p_dir=1
+		src.spark_system.start()
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+		show_menu(usr)
+
 	if(href_list["dmake"])
 		p_type = text2num(href_list["dmake"])
 		p_conntype = text2num(href_list["type"])
@@ -397,6 +421,10 @@ var/global/list/RPD_recipes=list(
 
 
 /obj/item/weapon/pipe_dispenser/afterattack(atom/A, mob/user)
+	if(!in_range(A,user))
+		return
+	if(loc != user)
+		return
 	if(!isrobot(user) && !ishuman(user))
 		return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
@@ -408,15 +436,18 @@ var/global/list/RPD_recipes=list(
 				// Avoid spewing errors about invalid mode -2 when clicking on stuff that aren't pipes.
 				user << "\The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
 				return 0
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			var/obj/machinery/atmospherics/pipe/P = A
+			if(!(paint_color in P.available_colors))
+				user << "\red This [P] can't be painted [paint_color]. Available colors: [english_list(P.available_colors)]"
+				return 0
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			P._color = paint_color
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			P.update_icon()
 			return 1
 		if(-1) // Eating pipes
 			// Must click on an actual pipe or meter.
-			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct))
+			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct) || istype(A,/obj/item/pipe_gsensor))
 				user << "Destroying Pipe..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5))
@@ -430,6 +461,7 @@ var/global/list/RPD_recipes=list(
 			return 0
 		if(0)
 			if(!(istype(A, /turf)))
+				user << "The [src]'s error light flickers."
 				return 0
 			user << "Building Pipes ..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -443,6 +475,7 @@ var/global/list/RPD_recipes=list(
 
 		if(1)
 			if(!(istype(A, /turf)))
+				user << "The [src]'s error light flickers."
 				return 0
 			user << "Building Meter..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -454,6 +487,7 @@ var/global/list/RPD_recipes=list(
 
 		if(2)
 			if(!(istype(A, /turf)))
+				user << "The [src]'s error light flickers."
 				return 0
 			user << "Building Pipes..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -485,6 +519,17 @@ var/global/list/RPD_recipes=list(
 						C.density = 1
 				C.add_fingerprint(usr)
 				C.update()
+				return 1
+			return 0
+		if(3)
+			if(!(istype(A, /turf)))
+				user << "The [src]'s error light flickers."
+				return 0
+			user << "Building Sensor..."
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+			if(do_after(user, 20))
+				activate()
+				new /obj/item/pipe_gsensor(A)
 				return 1
 			return 0
 		else

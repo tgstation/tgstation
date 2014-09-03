@@ -20,20 +20,19 @@
 		..(loc, h)
 
 
-	Del()
+	Destroy()
 		blob_cores -= src
 		if(overmind)
 			del(overmind)
 		processing_objects.Remove(src)
 		..()
-		return
 
 	fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		return
 
 	update_icon()
 		if(health <= 0)
-			playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/effects/blobkill.ogg', 50, 1)
 			Delete()
 			return
 		return

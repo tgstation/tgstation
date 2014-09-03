@@ -7,10 +7,10 @@
 	icon_gib = "syndicate_gib"
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "pokes the"
-	response_disarm = "shoves the"
-	response_harm = "hits the"
-	speed = 4
+	response_help = "pokes"
+	response_disarm = "shoves"
+	response_harm = "hits"
+	speed = -1
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
@@ -18,7 +18,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "punches"
-	a_intent = "harm"
+	a_intent = "hurt"
 	var/corpse = /obj/effect/landmark/mobcorpse/russian
 	var/weapon1 = /obj/item/weapon/kitchenknife
 	min_oxy = 5
@@ -40,6 +40,8 @@
 	corpse = /obj/effect/landmark/mobcorpse/russian/ranged
 	weapon1 = /obj/item/weapon/gun/projectile/mateba
 	ranged = 1
+	retreat_distance = 5
+	minimum_distance = 5
 	projectiletype = /obj/item/projectile/bullet
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/a357

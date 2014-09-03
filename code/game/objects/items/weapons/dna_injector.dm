@@ -19,6 +19,8 @@
 	var/value=0
 
 /obj/item/weapon/dnainjector/New()
+	. = ..()
+
 	if(datatype && block)
 		buf=new
 		buf.dna=new
@@ -69,7 +71,8 @@
 	if(istype(M,/mob/living))
 		M.radiation += rand(5,20)
 
-	if (!(NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
+	if (!(M_NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
+		// UI in syringe.
 		if (buf.types & DNA2_BUF_UI)
 			if (!block) //isolated block?
 				M.UpdateAppearance(buf.dna.UI.Copy())
@@ -87,7 +90,7 @@
 				M.dna.UpdateSE()
 			else
 				M.dna.SetSEValue(block,src.GetValue())
-			domutcheck(M, null, block!=null)
+			domutcheck(M, null)
 			uses--
 			if(prob(5))
 				trigger_side_effect(M)
@@ -461,6 +464,209 @@
 		block = SMALLSIZEBLOCK
 		..()
 
+/obj/item/weapon/dnainjector/sober
+	name = "DNA-Injector (Sober)"
+	desc = "Makes you not fun."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = SOBERBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antisober
+	name = "DNA-Injector (Anti-Sober)"
+	desc = "Makes you fun as hell."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = SOBERBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/psychic_resist
+	name = "DNA-Injector (Psychic Resist)"
+	desc = "Not today, mind hippies."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = PSYRESISTBLOCK
+		..()
+
+
+/obj/item/weapon/dnainjector/antipsychic_resist
+	name = "DNA-Injector (Anti-Psychic Resist)"
+	desc = "Im thinking about furry porn 24/7. Come at me, faggots."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = PSYRESISTBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/darkcloak
+	name = "DNA-Injector (Dark Cloak)"
+	desc = "BLEH BLEH, I AM HERE TO SUCK YOUR BLOOD!"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = SHADOWBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antidarkcloak
+	name = "DNA-Injector (Anti-Dark Cloak)"
+	desc = "THE LIGHT, IT BUUURNS!"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = SHADOWBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/chameleon
+	name = "DNA-Injector (Chameleon)"
+	desc = "You cant see me."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = CHAMELEONBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antichameleon
+	name = "DNA-Injector (Anti-Chameleon)"
+	desc = "OH GOD EVERYONE CAN SEE ME!"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = CHAMELEONBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/cryo
+	name = "DNA-Injector (Cryokinesis)"
+	desc = "Its about to get chilly."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = CRYOBLOCK
+		..()
+
+
+/obj/item/weapon/dnainjector/anticryo
+	name = "DNA-Injector (Anti-Cryokinesis)"
+	desc = "Fuck, its hot in here!"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = CRYOBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/mattereater
+	name = "DNA-Injector (Matter Eater)"
+	desc = "OM NOM NOM."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = EATBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antimattereater
+	name = "DNA-Injector (Anti-Matter Eater)"
+	desc = "Oh god I'm gonna puke."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = EATBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/jumpy
+	name = "DNA-Injector (Jumpy)"
+	desc = "WEEEEEEEEEEEE!"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = JUMPBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antijumpy
+	name = "DNA-Injector (Anti-Jumpy)"
+	desc = "Awwe.."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = JUMPBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/polymorph
+	name = "DNA-Injector (Polymorph)"
+	desc = "A clone of myself? Now neither of us will be virgins!"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = POLYMORPHBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antipolymorph
+	name = "DNA-Injector (Anti-Polymorph)"
+	desc = "Damn, friendzoned by my own clone."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = POLYMORPHBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/empath
+	name = "DNA-Injector (Empathic Thought)"
+	desc = "What will I have for dinner?"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = EMPATHBLOCK
+		..()
+
+
+/obj/item/weapon/dnainjector/antiempath
+	name = "DNA-Injector (Anti-Empathic Thought)"
+	desc = "Damn tin foil hats."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = EMPATHBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/superfart
+	name = "DNA-Injector (Super Fart)"
+	desc = "Really?"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = SUPERFARTBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antisuperfart
+	name = "DNA-Injector (Anti-Super Fart)"
+	desc = "No, really!?"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = SUPERFARTBLOCK
+		..()
+
 /////////////////////////////////////
 /obj/item/weapon/dnainjector/antiglasses
 	name = "DNA-Injector (Anti-Glasses)"
@@ -660,4 +866,328 @@
 	//block = 14
 	New()
 		block = MONKEYBLOCK
+		..()
+
+
+/obj/item/weapon/dnainjector/mute
+	name = "DNA-Injector (Mute)"
+	desc = "Hell."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = MUTEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antimute
+	name = "DNA-Injector (Anti-Mute)"
+	desc = "Shut up."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = MUTEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/radioactive
+	name = "DNA-Injector (Radioactive)"
+	desc = "Welcome to the new age."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = RADBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antiradioactive
+	name = "DNA-Injector (Anti-Radioactive)"
+	desc = "All systems go."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = RADBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/fat
+	name = "DNA-Injector (Fat)"
+	desc = "Gives you big bones."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = FATBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antifat
+	name = "DNA-Injector (Anti-Fat)"
+	desc = "Feeds you subway."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = FATBLOCK
+		..()
+
+
+/obj/item/weapon/dnainjector/chav
+	name = "DNA-Injector (Chav)"
+	desc = "Makes you a real arsehole."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = CHAVBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antichav
+	name = "DNA-Injector (Anti-Chav)"
+	desc = "Put it back, I liked you better that way."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = CHAVBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/sweedish
+	name = "DNA-Injector (Sweedish)"
+	desc = "BORK! BORK! BORK!"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = SWEDEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antisweedish
+	name = "DNA-Injector (Anti-Sweedish)"
+	desc = "You're no fun."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = SWEDEBLOCK
+		..()
+
+
+/obj/item/weapon/dnainjector/unintelligable
+	name = "DNA-Injector (Unintelligable)"
+	desc = "At?wh"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = SCRAMBLEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antiunintelligable
+	name = "DNA-Injector (Anti-Unintelligable)"
+	desc = "What?"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = SCRAMBLEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/strong
+	name = "DNA-Injector (Strong)"
+	desc = "HEY BRO, WANNA HIT THE GYM?"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = STRONGBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antistrong
+	name = "DNA-Injector (Anti-Strong)"
+	desc = "Spot me!"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = STRONGBLOCK
+		..()
+
+
+/obj/item/weapon/dnainjector/horns
+	name = "DNA-Injector (Horns)"
+	desc = "Feelin' horny?"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = HORNSBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antihorns
+	name = "DNA-Injector (Anti-Horns)"
+	desc = "Right, lets just watch Law & Order."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = HORNSBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/immolate
+	name = "DNA-Injector (Immolate)"
+	desc = "We didn't start the fire."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = IMMOLATEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antiimmolate
+	name = "DNA-Injector (Anti-Immolate)"
+	desc = "It was always burnin' since the world was turnin'"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = IMMOLATEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/melt
+	name = "DNA-Injector (Dissolve)"
+	desc = "Win the game."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = MELTBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antimelt
+	name = "DNA-Injector (Dissolve)"
+	desc = "You just lost the game."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = MELTBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/smile
+	name = "DNA-Injector (Smile)"
+	desc = ":)"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = SMILEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antismile
+	name = "DNA-Injector (Anti-Smile)"
+	desc = ":("
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = SMILEBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/elvis
+	name = "DNA-Injector (Elvis)"
+	desc = "Tell the folks back home this is the promised land calling"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = ELVISBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antielvis
+	name = "DNA-Injector (Anti-Elvis)"
+	desc = "And the poor boy is on the line."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = ELVISBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/loud
+	name = "DNA-Injector (Loud)"
+	desc = "CAPS LOCK IS CRUISE CONRTOL FOR COOL!"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = LOUDBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antiloud
+	name = "DNA-Injector (Anti-Loud)"
+	desc = "EVEN WITH CRUISE CONTROL, YOU STILL HAVE TO STEER!"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = LOUDBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/whisper
+	name = "DNA-Injector (Quiet)"
+	desc = "Shhh..."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = WHISPERBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antiwhisper
+	name = "DNA-Injector (Anti-Quiet)"
+	desc = "WOOOO HOOOO!"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = WHISPERBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/dizzy
+	name = "DNA-Injector (Dizzy)"
+	desc = "Touch fuzzy,"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = DIZZYBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antidizzy
+	name = "DNA-Injector (Anti-Dizzy)"
+	desc = "Get dizzy."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = DIZZYBLOCK
+		..()
+		
+/obj/item/weapon/dnainjector/sans
+	name = "DNA-Injector (Wacky)"
+	desc = "<span class='sans'>#wow #woah</span>"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = SANSBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antisans
+	name = "DNA-Injector (Anti-Wacky)"
+	desc = "Worst font."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = SANSBLOCK
 		..()

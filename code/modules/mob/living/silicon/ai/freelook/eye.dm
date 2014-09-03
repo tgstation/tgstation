@@ -13,7 +13,7 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/aiEye/proc/setLoc(var/T)
+/mob/camera/aiEye/setLoc(var/T)
 
 	if(ai)
 		if(!isturf(ai.loc))
@@ -51,7 +51,7 @@
 	spawn(5)
 		eyeobj.loc = src.loc
 
-/mob/living/silicon/ai/Del()
+/mob/living/silicon/ai/Destroy()
 	eyeobj.ai = null
 	del(eyeobj) // No AI, no Eye
 	..()

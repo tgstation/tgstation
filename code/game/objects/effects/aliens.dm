@@ -15,6 +15,7 @@
 	desc = "theres something alien about this"
 	icon = 'icons/mob/alien.dmi'
 //	unacidable = 1 //Aliens won't ment their own.
+	w_type=NOT_RECYCLABLE
 
 
 /*
@@ -29,7 +30,7 @@
 	opacity = 1
 	anchored = 1
 	var/health = 200
-	//var/mob/living/affecting = null
+	var/turf/linked_turf
 
 	wall
 		name = "resin wall"
@@ -45,18 +46,19 @@
 
 /obj/effect/alien/resin/New()
 	..()
-	var/turf/T = get_turf(src)
-	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+	linked_turf = get_turf(src)
+	linked_turf.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
-/obj/effect/alien/resin/Del()
-	var/turf/T = get_turf(src)
-	T.thermal_conductivity = initial(T.thermal_conductivity)
+/obj/effect/alien/resin/Destroy()
+	if(linked_turf)
+		linked_turf.thermal_conductivity = initial(linked_turf.thermal_conductivity)
 	..()
+
 
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
 		density = 0
-		del(src)
+		qdel(src)
 	return
 
 /obj/effect/alien/resin/bullet_act(var/obj/item/projectile/Proj)
@@ -105,11 +107,17 @@
 	return
 
 /obj/effect/alien/resin/attack_hand()
-	if (HULK in usr.mutations)
+	usr.changeNext_move(10)
+	if (M_HULK in usr.mutations)
 		usr << "\blue You easily destroy the [name]."
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] destroys the [name]!", 1)
 		health = 0
+	else
+		usr << "\blue You claw at the [name]."
+		for(var/mob/O in oviewers(src))
+			O.show_message("\red [usr] claws at the [name]!", 1)
+		health -= rand(5,10)
 	healthcheck()
 	return
 
@@ -152,7 +160,7 @@
 			else
 				user << "\red This wall is already occupied."
 		return */
-
+	user.changeNext_move(10)
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
@@ -160,7 +168,7 @@
 	..()
 	return
 
-/obj/effect/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/effect/alien/resin/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group) return 0
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
@@ -179,26 +187,45 @@
 
 	anchored = 1
 	density = 0
+	layer = 2
 	var/health = 15
 	var/obj/effect/alien/weeds/node/linked_node = null
+
+/obj/effect/alien/weeds/Destroy()
+	if(linked_node)
+		linked_node.connected_weeds.Remove(src)
+		linked_node = null
+	..()
 
 /obj/effect/alien/weeds/node
 	icon_state = "weednode"
 	name = "purple sac"
 	desc = "Weird purple octopus-like thing."
+	layer = 3
 	luminosity = NODERANGE
 	var/node_range = NODERANGE
+	var/list/obj/effect/alien/weeds/connected_weeds
+
+/obj/effect/alien/weeds/node/Destroy()
+	for(var/obj/effect/alien/weeds/W in connected_weeds)
+		W.linked_node = null
+	..()
 
 /obj/effect/alien/weeds/node/New()
+	connected_weeds = new()
 	..(src.loc, src)
 
-
-/obj/effect/alien/weeds/New(pos, node)
+/obj/effect/alien/weeds/New(pos, var/obj/effect/alien/weeds/node/N)
 	..()
-	linked_node = node
+
 	if(istype(loc, /turf/space))
-		del(src)
+		qdel(src)
 		return
+
+	linked_node = N
+	if(linked_node)
+		linked_node.connected_weeds.Add(src)
+
 	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
 	spawn(rand(150, 200))
 		if(src)
@@ -225,15 +252,16 @@ Alien plants should do something if theres a lot of poison
 		del(src)
 		return
 
+	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
+		return
+
 	direction_loop:
 		for(var/dirn in cardinal)
+
 			var/turf/T = get_step(src, dirn)
 
 			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
 				continue
-
-			if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-				return
 
 	//		if (locate(/obj/movable, T)) // don't propogate into movables
 	//			continue
@@ -248,16 +276,17 @@ Alien plants should do something if theres a lot of poison
 /obj/effect/alien/weeds/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 	return
 
 /obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
+	user.changeNext_move(10)
 	if(W.attack_verb.len)
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
@@ -277,10 +306,10 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/weeds/proc/healthcheck()
 	if(health <= 0)
-		del(src)
+		qdel(src)
 
 
-/obj/effect/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effect/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		health -= 5
 		healthcheck()
@@ -445,6 +474,7 @@ Alien plants should do something if theres a lot of poison
 /obj/effect/alien/egg/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(health <= 0)
 		return
+	user.changeNext_move(10)
 	if(W.attack_verb.len)
 		src.visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
@@ -466,7 +496,7 @@ Alien plants should do something if theres a lot of poison
 	if(health <= 0)
 		Burst()
 
-/obj/effect/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effect/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)
 		health -= 5
 		healthcheck()

@@ -93,12 +93,13 @@ PriorityQueue
 			if(ind)
 				Remove(ind)
 PathNode
-	var/datum/source
+	var/turf/source
 	var/PathNode/prevNode
 	var/f
 	var/g
 	var/h
 	var/nt		// Nodes traversed
+	var/bestF
 	New(s,p,pg,ph,pnt)
 		source = s
 		prevNode = p
@@ -108,7 +109,7 @@ PathNode
 		source.bestF = f
 		nt = pnt
 
-datum
+turf
 	var/bestF
 proc
 	PathWeightCompare(PathNode/a, PathNode/b)
@@ -121,7 +122,8 @@ proc
 		var/closed[] = new()
 		var/path[]
 		start = get_turf(start)
-		if(!start) return 0
+		if(!start)
+			return 0
 
 		open.Enqueue(new /PathNode(start,null,0,call(start,dist)(end)))
 
@@ -150,7 +152,7 @@ proc
 				if(cur.nt >= maxnodedepth)
 					continue
 
-			for(var/datum/d in L)
+			for(var/turf/d in L)
 				if(d == exclude)
 					continue
 				var/ng = cur.g + call(cur.source,dist)(d)
@@ -165,10 +167,7 @@ proc
 						continue
 
 				open.Enqueue(new /PathNode(d,cur,ng,call(d,dist)(end),cur.nt+1))
-				if(maxnodes && open.L.len > maxnodes)
-					open.L.Cut(open.L.len)
 		}
-
 		var/PathNode/temp
 		while(!open.IsEmpty())
 			temp = open.Dequeue()
@@ -178,6 +177,8 @@ proc
 			temp.bestF = 0
 			closed.Cut(closed.len)
 
+		if(path && maxnodes && path.len > maxnodes+1)
+			return 0
 		if(path)
 			for(var/i = 1; i <= path.len/2; i++)
 				path.Swap(i,path.len-i+1)

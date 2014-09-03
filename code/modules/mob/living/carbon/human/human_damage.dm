@@ -1,7 +1,7 @@
 //Updates the mob's health from organs and mob damage variables
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
 		return
 	var/total_burn	= 0
@@ -9,9 +9,9 @@
 	for(var/datum/organ/external/O in organs)	//hardcoded to streamline things a bit
 		total_brute	+= O.brute_dam
 		total_burn	+= O.burn_dam
-	health = 100 - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	//TODO: fix husking
-	if( ((100 - total_burn) < config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
+	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
 		ChangeToHusk()
 	return
 
@@ -47,20 +47,20 @@
 
 /mob/living/carbon/human/adjustFireLoss(var/amount)
 	if(amount > 0)
-		take_overall_damage(0, amount)
+		take_overall_damage(0, amount * species.fireloss_mult)
 	else
 		heal_overall_damage(0, -amount)
 
 /mob/living/carbon/human/Stun(amount)
-	if(HULK in mutations)	return
+	if(M_HULK in mutations)	return
 	..()
 
 /mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)	return
+	if(M_HULK in mutations)	return
 	..()
 
 /mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)	return
+	if(M_HULK in mutations)	return
 	..()
 
 /mob/living/carbon/human/adjustCloneLoss(var/amount)
@@ -173,6 +173,21 @@
 
 
 ////////////////////////////////////////////
+
+/*
+This function restores the subjects blood to max.
+*/
+/mob/living/carbon/human/proc/restore_blood()
+	var/blood_volume = vessel.get_reagent_amount("blood")
+	vessel.add_reagent("blood",560.0-blood_volume)
+
+
+/*
+This function restores all organs.
+*/
+/mob/living/carbon/human/restore_all_organs()
+	for(var/datum/organ/external/current_organ in organs)
+		current_organ.rejuvenate()
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/datum/organ/external/E = get_organ(zone)

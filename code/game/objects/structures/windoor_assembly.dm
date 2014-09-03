@@ -29,9 +29,9 @@ obj/structure/windoor_assembly
 obj/structure/windoor_assembly/New(dir=NORTH)
 	..()
 	src.ini_dir = src.dir
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
-obj/structure/windoor_assembly/Del()
+obj/structure/windoor_assembly/Destroy()
 	density = 0
 	update_nearby_tiles()
 	..()
@@ -39,7 +39,7 @@ obj/structure/windoor_assembly/Del()
 /obj/structure/windoor_assembly/update_icon()
 	icon_state = "[facing]_[secure]windoor_assembly[state]"
 
-/obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
@@ -161,7 +161,7 @@ obj/structure/windoor_assembly/Del()
 						src.name = "Wired Windoor Assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/weapon/circuitboard/airlock))
+			else if(istype(W, /obj/item/weapon/circuitboard/airlock) && W:icon_state != "door_electronics_smoked")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
@@ -257,12 +257,12 @@ obj/structure/windoor_assembly/Del()
 		usr << "It is fastened to the floor; therefore, you can't rotate it!"
 		return 0
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1) //Compel updates before
+		update_nearby_tiles() //Compel updates before
 
 	src.dir = turn(src.dir, 270)
 
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles()
 
 	src.ini_dir = src.dir
 	update_icon()
@@ -284,13 +284,13 @@ obj/structure/windoor_assembly/Del()
 	update_icon()
 	return
 
-/obj/structure/windoor_assembly/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
+/obj/structure/windoor_assembly/proc/update_nearby_tiles()
+	if (isnull(air_master))
+		return 0
 
-	var/turf/simulated/source = loc
-	var/turf/simulated/target = get_step(source,dir)
+	var/T = loc
 
-	if(istype(source)) air_master.tiles_to_update += source
-	if(istype(target)) air_master.tiles_to_update += target
+	if (isturf(T))
+		air_master.mark_for_update(T)
 
 	return 1

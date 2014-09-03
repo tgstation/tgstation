@@ -2,13 +2,25 @@
 
 
 /obj/machinery/bodyscanner
-	var/mob/living/carbon/occupant
-	var/locked
 	name = "Body Scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scanner_0"
 	density = 1
+
 	anchored = 1
+	idle_power_usage = 125
+	active_power_usage = 250
+
+	var/mob/living/carbon/occupant
+	var/locked
+
+	l_color = "#00FF00"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)) && src.occupant)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 /obj/machinery/bodyscanner/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if(O.loc == user) //no you can't pull things out of your ass
@@ -153,7 +165,7 @@
 				ex_act(severity)
 				//Foreach goto(35)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -162,7 +174,7 @@
 					ex_act(severity)
 					//Foreach goto(108)
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
@@ -171,7 +183,7 @@
 					ex_act(severity)
 					//Foreach goto(181)
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -187,12 +199,12 @@
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -231,25 +243,35 @@
 		return
 	return
 
-/obj/machinery/body_scanconsole/process() //not really used right now
+/obj/machinery/body_scanconsole/process()
+	if (stat & (BROKEN | NOPOWER | MAINT | EMPED))
+		use_power = 0
+		return
+
+	if (connected && connected.occupant)
+		use_power = 2
+	else
+		use_power = 1
+
+/*
 	if(stat & (NOPOWER|BROKEN))
 		return
 	use_power(250) // power stuff
 
-//	var/mob/M //occupant
-//	if (!( src.status )) //remove this
-//		return
-//	if ((src.connected && src.connected.occupant)) //connected & occupant ok
-//		M = src.connected.occupant
-//	else
-//		if (istype(M, /mob))
-//		//do stuff
-//		else
-///			src.temphtml = "Process terminated due to lack of occupant in scanning chamber."
-//			src.status = null
-//	src.updateDialog()
-//	return
-
+	var/mob/M //occupant
+	if (!( src.status )) //remove this
+		return
+	if ((src.connected && src.connected.occupant)) //connected & occupant ok
+		M = src.connected.occupant
+	else
+		if (istype(M, /mob))
+		//do stuff
+		else
+			src.temphtml = "Process terminated due to lack of occupant in scanning chamber."
+			src.status = null
+	src.updateDialog()
+	return
+*/
 
 /obj/machinery/body_scanconsole/attack_paw(user as mob)
 	return src.attack_hand(user)

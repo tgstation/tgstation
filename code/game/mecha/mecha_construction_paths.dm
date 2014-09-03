@@ -2,72 +2,7 @@
 ///// Construction datums //////
 ////////////////////////////////
 
-/datum/construction/mecha/custom_action(step, atom/used_atom, mob/user)
-	if(istype(used_atom, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = used_atom
-		if (W.remove_fuel(0, user))
-			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
-		else
-			return 0
-	else if(istype(used_atom, /obj/item/weapon/wrench))
-		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
-
-	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
-
-	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
-
-	else if(istype(used_atom, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = used_atom
-		if(C.amount<4)
-			user << ("There's not enough cable to finish the task.")
-			return 0
-		else
-			C.use(4)
-			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
-	else if(istype(used_atom, /obj/item/stack))
-		var/obj/item/stack/S = used_atom
-		if(S.amount < 5)
-			user << ("There's not enough material in this stack.")
-			return 0
-		else
-			S.use(5)
-	return 1
-
-/datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user as mob)
-	if(istype(used_atom, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = used_atom
-		if (W.remove_fuel(0, user))
-			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
-		else
-			return 0
-	else if(istype(used_atom, /obj/item/weapon/wrench))
-		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
-
-	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
-
-	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
-
-	else if(istype(used_atom, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = used_atom
-		if(C.amount<4)
-			user << "\red There's not enough cable to finish the task."
-			return 0
-		else
-			C.use(4)
-			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
-	else if(istype(used_atom, /obj/item/stack))
-		var/obj/item/stack/S = used_atom
-		if(S.amount < 5)
-			user << "\red There's not enough material in this stack."
-			return 0
-		else
-			S.use(5)
-	return 1
-
+// custom_actions moved to construction_datum - N3X
 
 /datum/construction/mecha/ripley_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
@@ -100,7 +35,6 @@
 
 /datum/construction/reversible/mecha/ripley
 	result = "/obj/mecha/working/ripley"
-	taskpath = /datum/job_objective/make_ripley
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -865,12 +799,12 @@
 
 /datum/construction/mecha/durand_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/durand_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/durand_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/durand_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/durand_right_leg),//5
-					 list("key"=/obj/item/mecha_parts/part/durand_head)
-					)
+				 list("key"=/obj/item/mecha_parts/part/durand_left_arm),//2
+				 list("key"=/obj/item/mecha_parts/part/durand_right_arm),//3
+				 list("key"=/obj/item/mecha_parts/part/durand_left_leg),//4
+				 list("key"=/obj/item/mecha_parts/part/durand_right_leg),//5
+				 list("key"=/obj/item/mecha_parts/part/durand_head)
+				)
 
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
@@ -1411,7 +1345,7 @@
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Phase_array is secured"),
+					 		"desc"="Phase array is secured"),
 					 //7
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -1524,33 +1458,33 @@
 					user.visible_message("[user] unfastens the peripherals control module.", "You unfasten the peripherals control module.")
 			if(5)
 				if(diff==FORWARD)
-					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
+					user.visible_message("[user] secures the internal armor layer.", "You secure the internal armor layer.")
 				else
-					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
+					user.visible_message("[user] pries the internal armor layer from [holder].", "You pry the internal armor layer from [holder].")
 					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
 			if(4)
 				if(diff==FORWARD)
-					user.visible_message("[user] welds internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
+					user.visible_message("[user] welds the internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
 				else
 					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
 			if(3)
 				if(diff==FORWARD)
-					user.visible_message("[user] installs external armor layer to [holder].", "You install internal armor layer to [holder].")
+					user.visible_message("[user] installs external armor layer to [holder].", "You install the external armor layer to [holder].")
 				else
-					user.visible_message("[user] unfastens the peripherals control module.", "You unfasten the peripherals control module.")
+					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
 			if(2)
 				if(diff==FORWARD)
-					user.visible_message("[user] secures external armor layer.", "You secure internal armor layer.")
+					user.visible_message("[user] secures the external armor layer.", "You secure the the external armor layer.")
 				else
-					user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
+					user.visible_message("[user] pries the external armor layer from [holder].", "You pry the external armor layer from [holder].")
 					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
 			if(1)
 				if(diff==FORWARD)
-					user.visible_message("[user] welds external armor layer to [holder].", "You weld the internal armor layer to [holder].")
+					user.visible_message("[user] welds the external armor layer to [holder].", "You weld the external armor layer to [holder].")
 				else
-					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
+					user.visible_message("[user] unfastens the external armor layer.", "You unfasten the external armor layer.")
 		holder.icon_state="phazon_[16-(index+diff)]"
 		return 1
 

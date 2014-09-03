@@ -9,6 +9,7 @@
 	var/obj/item/target = null
 	var/creator = null
 	anchored = 1.0
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)
 	spawn(0)
@@ -16,7 +17,7 @@
 		return
 	return
 
-/obj/effect/portal/HasEntered(AM as mob|obj)
+/obj/effect/portal/Crossed(AM as mob|obj)
 	spawn(0)
 		src.teleport(AM)
 		return
@@ -24,7 +25,7 @@
 
 /obj/effect/portal/New()
 	spawn(300)
-		del(src)
+		qdel(src)
 		return
 	return
 

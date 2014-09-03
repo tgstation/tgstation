@@ -89,7 +89,7 @@
 	mechas_list += src //global mech list
 	return
 
-/obj/mecha/Del()
+/obj/mecha/Destroy()
 	src.go_out()
 	mechas_list -= src //global mech list
 	..()
@@ -315,14 +315,14 @@
 /obj/mecha/proc/mechstep(direction)
 	var/result = step(src,direction)
 	if(result)
-		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+	 playsound(src, get_sfx("mechstep"),40,1)
 	return result
 
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
 	if(result)
-		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+	 playsound(src, get_sfx("mechstep"),40,1)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
@@ -331,7 +331,7 @@
 		var/obj/O = obstacle
 		if(istype(O, /obj/effect/portal)) //derpfix
 			src.anchored = 0
-			O.HasEntered(src)
+			O.Crossed(src)
 			spawn(0)//countering portal teleport spawn(0), hurr
 				src.anchored = 1
 		else if(!O.anchored)
@@ -373,7 +373,7 @@
 	internal_damage |= int_dam_flag
 	pr_internal_damage.start()
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
-	occupant << sound('sound/machines/warning-buzzer.ogg',wait=0)
+	occupant << sound('sound/machines/warning.ogg',wait=0)
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -423,7 +423,7 @@
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("MECHA",src,user:wear_suit)
 			return
 
-	if ((HULK in user.mutations) && !prob(src.deflect_chance))
+	if ((M_HULK in user.mutations) && !prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		user.visible_message("<font color='red'><b>[user] hits [src.name], doing some damage.</b></font>", "<font color='red'><b>You hit [src.name] with all your might. The metal creaks and bends.</b></font>")
@@ -626,7 +626,7 @@
 	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 	return
 
-/obj/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/mecha/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature>src.max_temperature)
 		src.log_message("Exposed to dangerous temperature.",1)
 		src.take_damage(5,"fire")
@@ -944,6 +944,10 @@
 	src.log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	return
 
+/obj/mecha/MouseDrop_T(mob/M as mob, mob/user as mob)
+	if(M != user)
+		return
+	move_inside(M, user)
 
 /obj/mecha/verb/move_inside()
 	set category = "Object"
@@ -1006,9 +1010,9 @@
 		src.log_append_to_last("[H] moved in as pilot.")
 		src.icon_state = src.reset_icon()
 		dir = dir_in
-		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+		playsound(src, 'sound/mecha/mechentry.ogg', 50, 1)
 		if(!hasInternalDamage())
-			src.occupant << sound('sound/mecha/nominal.ogg',volume=50)
+			src.occupant << sound('sound/mecha/nominalsyndi.ogg',volume=50)
 		return 1
 	else
 		return 0
@@ -1067,7 +1071,7 @@
 		dir = dir_in
 		src.log_message("[mmi_as_oc] moved in as pilot.")
 		if(!hasInternalDamage())
-			src.occupant << sound('sound/mecha/nominal.ogg',volume=50)
+			src.occupant << sound('sound/mecha/nominalsyndi.ogg',volume=50)
 		return 1
 	else
 		return 0

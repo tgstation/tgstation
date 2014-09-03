@@ -13,11 +13,9 @@
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
 	var/affected_area = 3
 
-	New()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
-
+	hear_talk(mob/M as mob, message)
+		if(detonator)
+			detonator.hear_talk(M, message)
 	attack_self(mob/user as mob)
 		if(!stage || stage==1)
 			if(detonator)
@@ -58,7 +56,7 @@
 				return
 			path = 1
 			user << "\blue You add [W] to the metal casing."
-			playsound(get_turf(src), 'sound/items/Screwdriver2.ogg', 25, -3)
+			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 			user.remove_from_mob(det)
 			det.loc = src
 			detonator = det
@@ -150,7 +148,7 @@
 			playsound(get_turf(src), 'sound/items/Screwdriver2.ogg', 50, 1)
 			return
 
-		playsound(get_turf(src), 'sound/effects/bamf.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/bamfgas.ogg', 50, 1)
 
 		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 			G.reagents.trans_to(src, G.reagents.total_volume)
@@ -175,6 +173,9 @@
 			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 				G.loc = get_turf(src.loc)*/
 
+/obj/item/weapon/grenade/chem_grenade/New()
+	. = ..()
+	create_reagents(1000)
 
 /obj/item/weapon/grenade/chem_grenade/large
 	name = "Large Chem Grenade"
@@ -183,6 +184,73 @@
 	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
 	origin_tech = "combat=3;materials=3"
 	affected_area = 4
+
+obj/item/weapon/grenade/chem_grenade/exgrenade
+	name = "EX Chem Grenade"
+	desc = "A specially designed large grenade that can hold three containers."
+	icon_state = "ex_grenade"
+	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
+	origin_tech = "combat=4;materials=3;engineering=2"
+	affected_area = 4
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+		if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
+			var/obj/item/device/assembly_holder/det = W
+			if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
+				user << "\red Assembly must contain one igniter."
+				return
+			if(!det.secured)
+				user << "\red Assembly must be secured with screwdriver."
+				return
+			path = 1
+			user << "\blue You insert [W] into the grenade."
+			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
+			user.remove_from_mob(det)
+			det.loc = src
+			detonator = det
+			icon_state = initial(icon_state) +"_ass"
+			name = "unsecured EX grenade with [beakers.len] containers[detonator?" and detonator":""]"
+			stage = 1
+		else if(istype(W,/obj/item/weapon/screwdriver) && path != 2)
+			if(stage == 1)
+				path = 1
+				if(beakers.len)
+					user << "\blue You lock the assembly."
+					name = "EX Grenade"
+				else
+					user << "\blue You lock the empty assembly."
+					name = "fake grenade"
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
+				icon_state = initial(icon_state) +"_locked"
+				stage = 2
+			else if(stage == 2)
+				if(active && prob(95))
+					user << "\red You trigger the assembly!"
+					prime()
+					return
+				else
+					user << "\blue You unlock the assembly."
+					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
+					name = "unsecured EX grenade with [beakers.len] containers[detonator?" and detonator":""]"
+					icon_state = initial(icon_state) + (detonator?"_ass":"")
+					stage = 1
+					active = 0
+		else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
+			path = 1
+			if(beakers.len == 3)
+				user << "\red The grenade can not hold more containers."
+				return
+			else
+				if(W.reagents.total_volume)
+					user << "\blue You add \the [W] to the assembly."
+					user.drop_item()
+					W.loc = src
+					beakers += W
+					stage = 1
+					name = "unsecured EX grenade with [beakers.len] containers[detonator?" and detonator":""]"
+				else
+					user << "\red \the [W] is empty."
 
 /obj/item/weapon/grenade/chem_grenade/metalfoam
 	name = "Metal-Foam Grenade"

@@ -4,7 +4,7 @@
 	icon_state = "igniter"
 	m_amt = 500
 	g_amt = 50
-	w_amt = 10
+	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
 	secured = 1
@@ -19,7 +19,7 @@
 		else
 			var/turf/location = get_turf(loc)
 			if(location)
-				location.hotspot_expose(1000,1000)
+				location.hotspot_expose(1000,1000,surfaces=istype(loc,/turf))
 			if (istype(src.loc,/obj/item/device/assembly_holder))
 				if (istype(src.loc.loc, /obj/structure/reagent_dispensers/fueltank/))
 					var/obj/structure/reagent_dispensers/fueltank/tank = src.loc.loc

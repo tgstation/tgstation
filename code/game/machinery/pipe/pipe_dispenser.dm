@@ -11,18 +11,20 @@
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
 /obj/machinery/pipedispenser/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/pipedispenser
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/capacitor
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	RefreshParts()
+	. = ..()
 
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/pipedispenser,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator
+	)
+
+	RefreshParts()
 
 /obj/machinery/pipedispenser/attack_paw(user as mob)
 	return src.attack_hand(user)
@@ -46,11 +48,13 @@
 <ul>
 	<li><a href='?src=\ref[src];make=4;dir=1'>Connector</a></li>
 	<li><a href='?src=\ref[src];make=7;dir=1'>Unary Vent</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_PASV_VENT];dir=1'>Passive Vent</a></li>
 	<li><a href='?src=\ref[src];make=9;dir=1'>Gas Pump</a></li>
 	<li><a href='?src=\ref[src];make=15;dir=1'>Passive Gate</a></li>
 	<li><a href='?src=\ref[src];make=16;dir=1'>Volume Pump</a></li>
 	<li><a href='?src=\ref[src];make=10;dir=1'>Scrubber</a></li>
 	<li><a href='?src=\ref[src];makemeter=1'>Meter</a></li>
+	<li><a href='?src=\ref[src];makegsensor=1'>Gas Sensor</a></li>
 	<li><a href='?src=\ref[src];make=13;dir=1'>Gas Filter</a></li>
 	<li><a href='?src=\ref[src];make=14;dir=1'>Gas Mixer</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_THERMAL_PLATE];dir=1'>Thermal Plate</a></li>
@@ -99,11 +103,17 @@
 			wait = 1
 			spawn(15)
 				wait = 0
+	if(href_list["makegsensor"])
+		if(!wait)
+			new /obj/item/pipe_gsensor(/*usr.loc*/ src.loc)
+			wait = 1
+			spawn(15)
+				wait = 0
 	return
 
 /obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	src.add_fingerprint(usr)
-	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
+	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter) || istype(W, /obj/item/pipe_gsensor))
 		usr << "\blue You put [W] back to [src]."
 		user.drop_item()
 		del(W)
@@ -146,20 +156,24 @@
 	anchored = 1.0
 
 /obj/machinery/pipedispenser/disposal/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/pipedispenser/disposal
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin
-	component_parts += new /obj/item/weapon/stock_parts/capacitor
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
-	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/pipedispenser/disposal,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator
+	)
+
 	RefreshParts()
+
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
-/obj/machinery/pipedispenser/disposal/HasEntered(var/obj/structure/disposalconstruct/pipe as obj)
+/obj/machinery/pipedispenser/disposal/Crossed(var/obj/structure/disposalconstruct/pipe as obj)
 	if(istype(pipe) && !pipe.anchored)
 		del(pipe)
 

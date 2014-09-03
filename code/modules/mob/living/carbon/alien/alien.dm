@@ -48,7 +48,7 @@
 	return 2
 
 // MULEBOT SMASH
-/mob/living/carbon/alien/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/alien/Crossed(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOverCreature(src,"#00ff00")
@@ -135,7 +135,7 @@
 /mob/living/carbon/alien/proc/handle_mutations_and_radiation()
 
 	if(getFireLoss())
-		if((mHeatres in mutations) || prob(5))
+		if((M_RESIST_HEAT in mutations) || prob(5))
 			adjustFireLoss(-1)
 
 	// Aliens love radiation nom nom nom

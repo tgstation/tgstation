@@ -22,7 +22,6 @@ VOX HEIST ROUNDTYPE
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/list/raid_objectives = list()     //Raid objectives.
-	var/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
 
 /datum/game_mode/heist/announce()
 	world << {"
@@ -88,22 +87,13 @@ VOX HEIST ROUNDTYPE
 		raider.current.loc = raider_spawn[index]
 		index++
 
-		var/sounds = rand(2,8)
-		var/i = 0
-		var/newname = ""
-
-		while(i<=sounds)
-			i++
-			newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
 
 		var/mob/living/carbon/human/vox = raider.current
-
-		vox.real_name = capitalize(newname)
-		vox.name = vox.real_name
 		raider.name = vox.name
 		vox.age = rand(12,20)
 		vox.dna.mutantrace = "vox"
 		vox.set_species("Vox")
+		vox.generate_name()
 		vox.languages = list() // Removing language from chargen.
 		vox.flavor_text = ""
 		vox.add_language("Vox-pidgin")
@@ -122,17 +112,20 @@ VOX HEIST ROUNDTYPE
 
 /datum/game_mode/heist/proc/is_raider_crew_safe()
 
-	if(cortical_stacks.len == 0)
+	if(raiders.len == 0)
 		return 0
 
-	for(var/obj/stack in cortical_stacks)
-		if (get_area(stack) != locate(/area/shuttle/vox/station))
+	for(var/datum/mind/M in raiders)
+		if(!M || !M.current) continue
+		if (get_area(M.current) != locate(/area/shuttle/vox/station))
 			return 0
 	return 1
 
 /datum/game_mode/heist/proc/is_raider_crew_alive()
-
+	if(raiders.len == 0)
+		return 0
 	for(var/datum/mind/raider in raiders)
+		if(!raider) continue
 		if(raider.current)
 			if(istype(raider.current,/mob/living/carbon/human) && raider.current.stat != 2)
 				return 1
@@ -165,16 +158,19 @@ VOX HEIST ROUNDTYPE
 	//-All- vox raids have these two objectives. Failing them loses the game.
 	objs += new /datum/objective/heist/inviolate_crew
 	objs += new /datum/objective/heist/inviolate_death */
-	
+
 	if(prob(25))
 		raid_objectives += new /datum/objective/heist/kidnap
-	raid_objectives += new /datum/objective/heist/loot
-	raid_objectives += new /datum/objective/heist/salvage
+	raid_objectives += new /datum/objective/steal/heist
+	raid_objectives += new /datum/objective/steal/salvage
 	raid_objectives += new /datum/objective/heist/inviolate_crew
 	raid_objectives += new /datum/objective/heist/inviolate_death
 
 	for(var/datum/objective/heist/O in raid_objectives)
 		O.choose_target()
+
+	for(var/datum/objective/steal/O in raid_objectives)
+		O.find_target()
 
 	return raid_objectives
 

@@ -23,7 +23,7 @@ obj/machinery/atmospherics/binary/volume_pump
 	var/transfer_rate = 200
 
 	var/frequency = 0
-	var/id = null
+	var/id_tag = null
 	var/datum/radio_frequency/radio_connection
 
 	on
@@ -48,7 +48,7 @@ obj/machinery/atmospherics/binary/volume_pump
 //		..()
 		if(stat & (NOPOWER|BROKEN))
 			return
-		if(!on)
+		if(!on || transfer_rate < 1)
 			return 0
 
 // Pump mechanism just won't do anything if the pressure is too high/too low
@@ -89,7 +89,7 @@ obj/machinery/atmospherics/binary/volume_pump
 			signal.source = src
 
 			signal.data = list(
-				"tag" = id,
+				"tag" = id_tag,
 				"device" = "APV",
 				"power" = on,
 				"transfer_rate" = transfer_rate,
@@ -116,7 +116,7 @@ obj/machinery/atmospherics/binary/volume_pump
 		set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
-		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 			return 0
 
 		if("power" in signal.data)

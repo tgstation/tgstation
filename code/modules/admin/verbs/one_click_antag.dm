@@ -148,7 +148,7 @@ client/proc/one_click_antag()
 	for(var/mob/dead/observer/G in player_list)
 		if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
 			spawn(0)
-				switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+				switch(G.timed_alert("Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","No",300,"Yes","No"))//alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
 					if("Yes")
 						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 							return
@@ -384,7 +384,7 @@ client/proc/one_click_antag()
 	return 1
 
 
-/datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
+/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
 
 	//First we spawn a dude.
@@ -394,11 +394,7 @@ client/proc/one_click_antag()
 
 	var/datum/preferences/A = new()
 	A.randomize_appearance_for(new_character)
-	if(new_character.gender == MALE)
-		new_character.real_name = "[pick(first_names_male)] [pick(last_names)]"
-	else
-		new_character.real_name = "[pick(first_names_female)] [pick(last_names)]"
-	new_character.name = new_character.real_name
+	new_character.generate_name()
 	new_character.age = rand(17,45)
 
 	new_character.dna.ready_dna(new_character)
@@ -500,26 +496,17 @@ client/proc/one_click_antag()
 	new_vox.h_style = "Short Vox Quills"
 	new_vox.regenerate_icons()
 
-	var/sounds = rand(2,10)
-	var/i = 0
-	var/newname = ""
-
-	while(i<=sounds)
-		i++
-		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
-
-	new_vox.real_name = capitalize(newname)
-	new_vox.name = new_vox.real_name
 	new_vox.age = rand(12,20)
 
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
 	new_vox.dna.mutantrace = "vox"
 	new_vox.set_species("Vox") // Actually makes the vox! How about that.
+	new_vox.generate_name()
 	new_vox.add_language("Vox-pidgin")
 	new_vox.mind_initialize()
 	new_vox.mind.assigned_role = "MODE"
 	new_vox.mind.special_role = "Vox Raider"
-	new_vox.mutations |= NOCLONE //Stops the station crew from messing around with their DNA.
+	new_vox.mutations |= M_NOCLONE //Stops the station crew from messing around with their DNA.
 
 	ticker.mode.traitors += new_vox.mind
 	new_vox.equip_vox_raider()

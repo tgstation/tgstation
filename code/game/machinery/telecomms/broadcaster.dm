@@ -95,7 +95,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		/* --- Do a snazzy animation! --- */
 		flick("broadcaster_send", src)
 
-/obj/machinery/telecomms/broadcaster/Del()
+/obj/machinery/telecomms/broadcaster/Destroy()
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
 	if(message_delay)
 		message_delay = 0
@@ -347,8 +347,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Engineering"
 			if(1359)
 				freq_text = "Security"
-//			if(1349)
-//				freq_text = "Mining"
+			if(1349)
+				freq_text = "Service"
 			if(1347)
 				freq_text = "Supply"
 			if(1441)
@@ -376,7 +376,24 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		else if (display_freq==COMM_FREQ)
 			part_a = "<span class='comradio'><span class='name'>"
 		else if (display_freq in DEPT_FREQS)
-			part_a = "<span class='deptradio'><span class='name'>"
+			switch(display_freq)
+				if(1351)
+					part_a = "<span class='sciradio'><span class='name'>"
+				if(1355)
+					part_a = "<span class='medradio'><span class='name'>"
+				if(1357)
+					part_a = "<span class='engradio'><span class='name'>"
+				if(1359)
+					part_a = "<span class='secradio'><span class='name'>"
+				if(1349)
+					part_a = "<span class='serradio'><span class='name'>"
+				if(1347)
+					part_a = "<span class='supradio'><span class='name'>"
+				if(1441)
+					part_a = "<span class='deptradio'><span class='name'>"
+				if(1443)
+					part_a = "<span class='deptradio'><span class='name'>"
+
 
 
 		// --- Filter the message; place it in quotes apply a verb ---
@@ -412,8 +429,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
-//				if(1349)
-//					blackbox.msg_mining += blackbox_msg
+				if(1349)
+					blackbox.msg_service += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else
@@ -696,8 +713,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
-//				if(1349)
-//					blackbox.msg_mining += blackbox_msg
+				if(1349)
+					blackbox.msg_service += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else

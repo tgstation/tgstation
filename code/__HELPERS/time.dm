@@ -1,3 +1,8 @@
+// So you can be all 10 SECONDS
+#define SECONDS * 10
+#define MINUTES * 600
+#define HOURS   * 36000
+
 //Returns the world time in english
 proc/worldtime2text()
 	return "[round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"

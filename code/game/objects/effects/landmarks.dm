@@ -2,12 +2,12 @@
 	name = "landmark"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
-	anchored = 1.0
+	anchored = 1
 	unacidable = 1
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/landmark/New()
-
-	..()
+	. = ..()
 	tag = text("landmark*[]", name)
 	invisibility = 101
 
@@ -69,10 +69,52 @@
 			xeno_spawn += loc
 			del(src)
 
+		if("endgame_exit")
+			endgame_safespawns += loc
+			del(src)
+		if("bluespacerift")
+			endgame_exits += loc
+			del(src)
+
+		//Meteor stuff
+		if("meteormaterialkit")
+			meteor_materialkit += loc
+			del(src)
+		if("meteorbombkit")
+			meteor_bombkit += loc
+			del(src)
+		if("meteorbombkitextra")
+			meteor_bombkitextra += loc
+			del(src)
+		if("meteortankkit")
+			meteor_tankkit += loc
+			del(src)
+		if("meteorcanisterkit")
+			meteor_canisterkit += loc
+			del(src)
+		if("meteorbuildkit")
+			meteor_buildkit += loc
+			del(src)
+		if("meteorpizzakit")
+			meteor_pizzakit += loc
+			del(src)
+		if("meteorpanickit")
+			meteor_panickit += loc
+			del(src)
+		if("meteorshieldkit")
+			meteor_shieldkit += loc
+			del(src)
+		if("meteorgenkit")
+			meteor_genkit += loc
+			del(src)
+		if("meteorbreachkit")
+			meteor_breachkit += loc
+			del(src)
+
 	landmarks_list += src
 	return 1
 
-/obj/effect/landmark/Del()
+/obj/effect/landmark/Destroy()
 	landmarks_list -= src
 	..()
 
@@ -158,7 +200,7 @@
 /obj/effect/landmark/costume/prig/New()
 	new /obj/item/clothing/suit/wcoat(src.loc)
 	new /obj/item/clothing/glasses/monocle(src.loc)
-	var/CHOICE= pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/that)
+	var/CHOICE= pick( /obj/item/clothing/head/bowlerhat, /obj/item/clothing/head/that)
 	new CHOICE(src.loc)
 	new /obj/item/clothing/shoes/black(src.loc)
 	new /obj/item/weapon/cane(src.loc)

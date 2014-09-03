@@ -40,7 +40,7 @@
 			if(ishuman(M))
 				if(istype(M:ears, /obj/item/clothing/ears/earmuffs))
 					ear_safety += 2
-				if(HULK in M.mutations)
+				if(M_HULK in M.mutations)
 					ear_safety += 1
 				if(istype(M:head, /obj/item/clothing/head/helmet))
 					ear_safety += 1
@@ -48,7 +48,6 @@
 //Flashing everyone
 		if(eye_safety < 1)
 			flick("e_flash", M.flash)
-			M.eye_stat += rand(1, 3)
 			M.Stun(2)
 			M.Weaken(10)
 
@@ -80,13 +79,14 @@
 			M.ear_deaf = max(M.ear_deaf,5)
 
 //This really should be in mob not every check
-		if (M.eye_stat >= 20)
-			M << "\red Your eyes start to burn badly!"
-			M.disabilities |= NEARSIGHTED
-			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
-				if (prob(M.eye_stat - 20 + 1))
-					M << "\red You can't see anything!"
-					M.sdisabilities |= BLIND
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/datum/organ/internal/eyes/E = H.internal_organs["eyes"]
+			if (E.damage >= E.min_bruised_damage)
+				M << "\red Your eyes start to burn badly!"
+				if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
+					if (E.damage >= E.min_broken_damage)
+						M << "\red You can't see anything!"
 		if (M.ear_damage >= 15)
 			M << "\red Your ears start to ring badly!"
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))

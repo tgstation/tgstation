@@ -535,7 +535,7 @@ datum/reagent/zed
 //			return
 
 	if(usr) message_admins("[key_name_admin(usr)] has spawned a zombie", 1)
-//	command_alert("Confirmed outbreak of level 13 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+	biohazard_alert(7)
 	var/list/t = list()
 	for(var/obj/landmark/zspawn/O in world)
 		t += O

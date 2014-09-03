@@ -38,9 +38,14 @@
 
 
 	// Escape
-	var/datum/objective/escape/escape_objective = new
-	escape_objective.owner = traitor
-	traitor.objectives += escape_objective
+	if(prob(25))
+		var/datum/objective/die/die_objective = new
+		die_objective.owner = traitor
+		traitor.objectives += die_objective
+	else
+		var/datum/objective/escape/escape_objective = new
+		escape_objective.owner = traitor
+		traitor.objectives += escape_objective
 	return
 
 /datum/game_mode/traitor/double_agents/greet_traitor(var/datum/mind/traitor)
