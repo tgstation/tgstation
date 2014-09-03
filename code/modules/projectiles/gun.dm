@@ -29,7 +29,7 @@
 	return 1
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	user.visible_message("*click*", "<span class='danger'>*click*</span>")
+	user << "<span class='danger'>*click*</span>"
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
 
