@@ -166,23 +166,3 @@
 	)
 
 	RefreshParts()
-
-/obj/machinery/r_n_d/fabricator/mech/RefreshParts()
-	var/T = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	max_material_storage = (187500+(T * 37500))
-	T = 0
-	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
-		T += Ma.rating
-	if(T >= 1)
-		T -= 1
-	var/diff
-	diff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/25,0.01)
-	if(resource_coeff!=diff)
-		resource_coeff = diff
-	T = 0
-	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
-		T += Ml.rating
-	if(T>= 2)
-		T -= 2

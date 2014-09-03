@@ -38,7 +38,7 @@
 		convert_part_set(part_set)
 	files = new /datum/research(src) //Setup the research data holder.
 
-/obj/machinery/r_n_d/fabricator/mech/RefreshParts()
+/obj/machinery/r_n_d/fabricator/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
