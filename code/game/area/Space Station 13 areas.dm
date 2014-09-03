@@ -833,11 +833,10 @@ proc/process_ghost_teleport_locs()
 /area/engine/engine_smes
 	name = "\improper Engineering SMES"
 	icon_state = "engine_smes"
-	requires_power = 0//This area only covers the batteries and they deal with their own power
 
 /area/engine/engineering
 	name = "Engineering"
-	icon_state = "engine_smes"
+	icon_state = "engine"
 
 /area/engine/break_room
 	name = "\improper Engineering Foyer"
@@ -854,7 +853,6 @@ proc/process_ghost_teleport_locs()
 /area/engine/gravity_generator
 	name = "Gravity Generator Room"
 	icon_state = "blue"
-
 
 //Solars
 
