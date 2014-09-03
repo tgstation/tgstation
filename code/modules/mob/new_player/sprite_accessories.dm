@@ -120,23 +120,19 @@
 	name = "Ponytail 4"
 	icon_state = "hair_ponytail4"
 
-/datum/sprite_accessory/hair/ponytail5
-	name = "Ponytail 5"
-	icon_state = "hair_ponytail5"
-
-/datum/sprite_accessory/hair/side_tail
+/datum/sprite_accessory/hair/sidetail
 	name = "Side Pony"
 	icon_state = "hair_sidetail"
 
-/datum/sprite_accessory/hair/side_tail2
+/datum/sprite_accessory/hair/sidetail2
 	name = "Side Pony 2"
 	icon_state = "hair_sidetail2"
 
-/datum/sprite_accessory/hair/side_tail3
+/datum/sprite_accessory/hair/sidetail3
 	name = "Side Pony 3"
 	icon_state = "hair_sidetail3"
 
-/datum/sprite_accessory/hair/side_tail4
+/datum/sprite_accessory/hair/sidetail4
 	name = "Side Pony 4"
 	icon_state = "hair_sidetail4"
 
@@ -244,7 +240,7 @@
 	name = "Emo"
 	icon_state = "hair_emo"
 
-/datum/sprite_accessory/hair/emo
+/datum/sprite_accessory/hair/longemo
 	name = "Long Emo"
 	icon_state = "hair_longemo"
 
