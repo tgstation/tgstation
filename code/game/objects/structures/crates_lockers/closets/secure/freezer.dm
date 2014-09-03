@@ -14,7 +14,6 @@
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen Cabinet"
-	req_access = list(access_kitchen)
 
 /obj/structure/closet/secure_closet/freezer/kitchen/New()
 	..()
