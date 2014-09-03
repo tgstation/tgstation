@@ -443,27 +443,6 @@
 		else
 			H.hud_used.lingchemdisplay.invisibility = 101
 
-		if(istype(H.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-			var/obj/item/clothing/mask/gas/voice/space_ninja/O = H.wear_mask
-			switch(O.mode)
-				if(0)
-					var/target_list[] = list()
-					for(var/mob/living/target in oview(H))
-						if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
-							target_list += target
-					if(target_list.len)//Everything else is handled by the ninja mask proc.
-						O.assess_targets(target_list, H)
-					H.see_invisible = SEE_INVISIBLE_LIVING
-				if(1)
-					H.see_in_dark = 5
-					H.see_invisible = SEE_INVISIBLE_LIVING
-				if(2)
-					H.sight |= SEE_MOBS
-					H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-				if(3)
-					H.sight |= SEE_TURFS
-					H.see_invisible = SEE_INVISIBLE_LIVING
-
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))
 				var/obj/item/clothing/glasses/G = H.glasses
