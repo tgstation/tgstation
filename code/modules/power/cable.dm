@@ -145,17 +145,15 @@
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
-
 /obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
-	if(!prob(prb))
-		return 0
-	if (electrocute_mob(user, powernet, src, siemens_coeff))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-		return 1
-	else
-		return 0
+	if(src.powernet && (src.powernet.avail > 0))
+		if(prob(prb))
+			if(electrocute_mob(user,powernet,src,siemens_coeff))
+				var/datum/effect/effect/system/spark_spread/s = new
+				s.set_up(5,1,src)
+				s.start()
+				return 1
+	return
 
 /obj/structure/cable/ex_act(severity)
 	switch(severity)
