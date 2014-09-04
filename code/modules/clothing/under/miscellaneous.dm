@@ -387,6 +387,7 @@
 	icon_state = "spants"
 	_color = "simonpants"
 	item_state = "spants"
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/batmansuit
 	name = "batsuit"

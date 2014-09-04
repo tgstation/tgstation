@@ -139,6 +139,7 @@
 	desc = "Simon's Shoes"
 	icon_state = "simonshoes"
 	item_state = "simonshoes"
+	species_fit = list("Vox")
 
 /obj/item/clothing/shoes/kneesocks
 	name = "Kneesocks"
