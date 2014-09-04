@@ -186,7 +186,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 2
-	w_class = 3.0
+	w_class = 2
 	w_type = RECYK_METAL
 	origin_tech = "materials=1"
 	attack_verb = list("lashed", "bludgeoned", "whipped")
