@@ -1272,4 +1272,12 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	else
 		return 0
 
+/obj/machinery/power/apc/magic
+	name = "magic power controller"
+	desc = "A control terminal for the area electrical systems."
+	process()
+		start_charge = INFINITY
+		cell_type = INFINITY
+		..()
+
 #undef APC_UPDATE_ICON_COOLDOWN

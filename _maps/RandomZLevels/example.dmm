@@ -4,7 +4,7 @@
 "ad" = (/obj/machinery/light{dir = 1},/turf/simulated/floor,/area/awaymission/example)
 "ae" = (/obj/machinery/power/smes{charge = 5e+006},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/example)
 "af" = (/obj/machinery/power/terminal{dir = 8},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/example)
-"ag" = (/obj/machinery/power/apc{dir = 1; name = "area power controller"; pixel_x = 0; pixel_y = 24},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/example)
+"ag" = (/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/power/apc/magic{dir = 1; pixel_y = 25},/turf/simulated/floor,/area/awaymission/example)
 "ah" = (/obj/machinery/gateway{dir = 9},/turf/simulated/floor,/area/awaymission/example)
 "ai" = (/obj/machinery/gateway{dir = 1},/turf/simulated/floor,/area/awaymission/example)
 "aj" = (/obj/machinery/gateway{dir = 5},/turf/simulated/floor,/area/awaymission/example)
