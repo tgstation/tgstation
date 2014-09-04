@@ -73,16 +73,17 @@
 
 	var/client/C = null
 
-	if(!new_overmind)
-		C = pick_from_candidates(BE_BLOB)
-	else
-		C = new_overmind
+	spawn(0)
+		if(!new_overmind)
+			C = pick_from_candidates(BE_BLOB)
+		else
+			C = new_overmind
 
-	if(C)
-		var/mob/camera/blob/B = new(src.loc)
-		B.key = C.key
-		B.blob_core = src
-		src.overmind = B
-		return 1
-	return 0
+		if(C)
+			var/mob/camera/blob/B = new(src.loc)
+			B.key = C.key
+			B.blob_core = src
+			src.overmind = B
+			return 1
+		return 0
 
