@@ -85,6 +85,9 @@ var/global/super_fryer = 1
 		user << "You attempt to interact with the deep fryer. You notice your hand goes straight through the fryer. You wonder why you tried this." // WHO THE HELL MADE GHOSTS CALL ATTACK_HAND I NEVER ACCOUNTED FOR THIS - Iamgoofball
 		return
 	if(on && frying)
+		if(istype(user,/mob/living/silicon)) //Sanity
+			user << "<SPAN CLASS='ROSE'>You can't pull out the [frying] with no hands.</SPAN>"
+			return
 		user << "<span class='notice'>You pull [frying] from [src]! It looks like you were just in time!</span>"
 		user.put_in_hands(frying)
 		frying = null

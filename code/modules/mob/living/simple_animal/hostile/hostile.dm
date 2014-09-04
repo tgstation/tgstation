@@ -82,6 +82,8 @@
 			Targets = FoundTarget
 			break
 		if(CanAttack(A))//Can we attack it?
+			if(isMoMMI(A))
+				continue
 			if(istype(src, /mob/living/simple_animal/hostile/scarybat))
 				if(A == src:owner)
 					continue

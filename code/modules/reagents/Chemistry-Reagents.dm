@@ -1145,7 +1145,8 @@ datum
 				if(!M) M = holder.my_atom
 
 				var/needs_update = M.mutations.len > 0
-
+				if(M.active_genes.Find(/datum/dna/gene/basic/stealth/chameleon))
+					M.alpha = 255
 				M.mutations = list()
 				M.active_genes = list()
 
