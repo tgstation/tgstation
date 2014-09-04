@@ -111,10 +111,24 @@
 	origin_tech = "bluespace=1;syndicate=7"
 	w_class = 2
 	var/droptype = /obj/machinery/singularity_beacon/syndicate
+	var/time_avalibility
 
+/obj/item/device/sbeacondrop/New()
+	time_avalibility = round_start_time + 24000 //40 minutes into the round
+	..()
+/obj/item/device/sbeacondrop/examine()
+	..()
+	if(time_avalibility > world.time)
+		var/timer = round((time_avalibility - world.time)/600) //return time to use device in minutes
+		usr << "A digital display on it reads \"[timer]\"."
+	else
+		usr << "A digital display on it blinks zero."
 
 /obj/item/device/sbeacondrop/attack_self(mob/user as mob)
 	if(user)
+		if(time_avalibility > world.time && ticker.mode.syndicates.len == 0)
+			user << "<span class='notice'>The device buzzes quietly. It doesn't seem to be responding right now...</span>"
+			return
 		user << "<span class='notice'>Locked In.</span>"
 		new droptype( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
