@@ -112,21 +112,23 @@
 	w_class = 2
 	var/droptype = /obj/machinery/singularity_beacon/syndicate
 	var/time_avalibility
+	var/is_time_restricted = 0
 
 /obj/item/device/sbeacondrop/New()
 	time_avalibility = round_start_time + 24000 //40 minutes into the round
 	..()
 /obj/item/device/sbeacondrop/examine()
 	..()
-	if(time_avalibility > world.time)
-		var/timer = round((time_avalibility - world.time)/600) //return time to use device in minutes
-		usr << "A digital display on it reads \"[timer]\"."
-	else
-		usr << "A digital display on it blinks zero."
+	if(is_time_restricted)
+		if(time_avalibility > world.time)
+			var/timer = round((time_avalibility - world.time)/600) //return time to use device in minutes
+			usr << "A digital display on it reads \"[timer]\"."
+		else
+			usr << "A digital display on it blinks zero."
 
 /obj/item/device/sbeacondrop/attack_self(mob/user as mob)
 	if(user)
-		if(time_avalibility > world.time && ticker.mode.syndicates.len == 0)
+		if(is_time_restricted && time_avalibility > world.time)
 			user << "<span class='notice'>The device buzzes quietly. It doesn't seem to be responding right now...</span>"
 			return
 		user << "<span class='notice'>Locked In.</span>"
