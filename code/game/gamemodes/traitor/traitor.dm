@@ -121,7 +121,7 @@
 			objective_count += 1					//Exchange counts towards number of objectives
 		var/list/active_ais = active_ais()
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
-			if(active_ais.len && prob(1))
+			if(active_ais.len && prob(100/ticker.minds.len))
 				var/datum/objective/destroy/destroy_objective = new
 				destroy_objective.owner = traitor
 				destroy_objective.find_target()
