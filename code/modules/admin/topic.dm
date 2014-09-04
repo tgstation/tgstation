@@ -1340,6 +1340,11 @@
 		feedback_inc("admin_cookies_spawned",1)
 		H << "<span class='notice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>"
 
+	else if(href_list["adminclaimresponse"])
+		var/mob/M = locate(href_list["adminclaimresponse"])
+		log_admin("[key_name(src.owner)] has claimed response to [key_name(M)]")
+		message_admins("[key_name(src.owner)] has claimed response to [key_name(M)]")
+
 	else if(href_list["BlueSpaceArtillery"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
 
@@ -1352,7 +1357,7 @@
 			return
 
 		if(BSACooldown)
-			src.owner << "Standby!  Reload cycle in progress!  Gunnary crews ready in five seconds!"
+			src.owner << "Standby!  Reload cycle in progress!  Gunnery crews ready in five seconds!"
 			return
 
 		BSACooldown = 1
