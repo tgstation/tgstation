@@ -122,7 +122,7 @@
 		var/list/active_ais = active_ais()
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 			if(prob(50))
-				if(active_ais.len && prob(100/ticker.minds.len))
+				if(active_ais.len && prob(100/joined_player_list.len))
 					var/datum/objective/destroy/destroy_objective = new
 					destroy_objective.owner = traitor
 					destroy_objective.find_target()
