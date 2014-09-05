@@ -686,6 +686,8 @@
 
 
 /obj/machinery/mecha_part_fabricator/attack_hand(mob/user as mob)
+	if((user.stat && !isobserver(user)) || user.restrained() || !allowed(user))
+		return
 
 	var/turf/exit = get_turf(output)
 	if(exit.density)
