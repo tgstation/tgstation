@@ -117,4 +117,3 @@
 				/obj/item/weapon/wrench = 4,
 				"" = 11
 				)
-
