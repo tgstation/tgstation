@@ -198,13 +198,7 @@
 	if(efficiency < 3 && prob(50))
 		randmutb(H)
 
-	if(H.gender == MALE)
-		H.facial_hair_style = "Full Beard"
-	else
-		H.facial_hair_style = "Shaved"
-	H.hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
-
-	H.regenerate_icons()
+	H.set_cloned_appearance()
 
 	H.suiciding = 0
 	src.attempting = 0

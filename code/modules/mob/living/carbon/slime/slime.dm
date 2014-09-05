@@ -920,6 +920,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		var/mob/living/carbon/human/G = new /mob/living/carbon/human
 		if(prob(50))	G.gender = "female"
 		hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
+
+		G.set_cloned_appearance()
 		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 		G.dna.species.auto_equip(G)
 		G.loc = src.loc
