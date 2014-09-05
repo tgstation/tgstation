@@ -86,21 +86,21 @@
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(connected_port)
 			disconnect()
-			user << "\blue You disconnect [name] from the port."
+			user << "<span class='notice'>You disconnect [name] from the port.</span>"
 			update_icon()
 			return
 		else
 			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 			if(possible_port)
 				if(connect(possible_port))
-					user << "\blue You connect [name] to the port."
+					user << "<span class='notice'>You connect [name] to the port.</span>"
 					update_icon()
 					return
 				else
-					user << "\blue [name] failed to connect to the port."
+					user << "<span class='notice'>[name] failed to connect to the port.</span>"
 					return
 			else
-				user << "\blue Nothing happens."
+				user << "<span class='notice'>Nothing happens.</span>"
 				return
 
 	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)

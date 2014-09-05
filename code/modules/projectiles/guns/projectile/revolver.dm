@@ -207,7 +207,7 @@
 
 	if(target == user)
 		if(!chambered)
-			user.visible_message("\red *click*", "\red *click*")
+			user.visible_message("<span class='danger'>*click*</span>", "<span class='danger'>*click*</span>")
 			return
 
 		if(isliving(target) && isliving(user))
@@ -220,7 +220,7 @@
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 					return
 				else
-					user.visible_message("\red *click*", "\red *click*")
+					user.visible_message("<span class='danger'>*click*</span>", "<span class='danger'>*click*</span>")
 					return
 	..()
 

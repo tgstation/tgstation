@@ -64,6 +64,7 @@
 	if(stat & (NOPOWER|BROKEN))	return
 	if(timing)
 		if(world.time > src.releasetime)
+			broadcast_hud_message("[src]'s timer has expired. Releasing prisoner.", src)
 			src.timer_end() // open doors, reset timer, clear status screen
 			timing = 0
 			timeset(0)

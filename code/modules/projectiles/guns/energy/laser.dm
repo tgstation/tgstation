@@ -78,6 +78,10 @@ obj/item/weapon/gun/energy/laser/retro
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
 	item_state = "laser"
+	w_class = 4.0
+	force = 10
+	flags =  CONDUCT
+	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 
@@ -106,7 +110,7 @@ obj/item/weapon/gun/energy/laser/retro
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
 			return 1
-		M << "\red You need to be wearing your laser tag vest!"
+		M << "<span class='danger'>You need to be wearing your laser tag vest!</span>"
 	return 0
 
 /obj/item/weapon/gun/energy/laser/bluetag/New()
@@ -143,7 +147,7 @@ obj/item/weapon/gun/energy/laser/retro
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
 			return 1
-		M << "\red You need to be wearing your laser tag vest!"
+		M << "<span class='danger'>You need to be wearing your laser tag vest!</span>"
 	return 0
 
 /obj/item/weapon/gun/energy/laser/redtag/New()

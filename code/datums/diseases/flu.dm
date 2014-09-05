@@ -22,7 +22,7 @@
 				return
 */
 			if(affected_mob.lying && prob(20))  //added until sleeping is fixed --Blaank
-				affected_mob << "\blue You feel better."
+				affected_mob << "<span class='notice'>You feel better.</span>"
 				stage--
 				return
 			if(prob(1))
@@ -30,11 +30,11 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your muscles ache."
+				affected_mob << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(1))
-				affected_mob << "\red Your stomach hurts."
+				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
@@ -47,7 +47,7 @@
 				return
 */
 			if(affected_mob.lying && prob(15))  //added until sleeping is fixed
-				affected_mob << "\blue You feel better."
+				affected_mob << "<span class='notice'>You feel better.</span>"
 				stage--
 				return
 			if(prob(1))
@@ -55,11 +55,11 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your muscles ache."
+				affected_mob << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(1))
-				affected_mob << "\red Your stomach hurts."
+				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()

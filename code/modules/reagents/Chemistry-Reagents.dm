@@ -1922,7 +1922,7 @@ datum/reagent/condensedcapsaicin/reaction_mob(var/mob/living/M, var/method=TOUCH
 				victim.eye_blind = max(M.eye_blind, 1)
 				victim.confused = max(M.confused, 3)
 				victim.damageoverlaytemp = 60
-				victim.Weaken(1)
+				victim.Weaken(3)
 				victim.drop_item()
 				return
 			else if ( eyes_covered ) // Eye cover is better than mouth cover
@@ -1936,7 +1936,7 @@ datum/reagent/condensedcapsaicin/reaction_mob(var/mob/living/M, var/method=TOUCH
 				victim.eye_blind = max(M.eye_blind, 2)
 				victim.confused = max(M.confused, 6)
 				victim.damageoverlaytemp = 75
-				victim.Weaken(3)
+				victim.Weaken(5)
 				victim.drop_item()
 
 datum/reagent/condensedcapsaicin/on_mob_life(var/mob/living/M as mob)

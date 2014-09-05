@@ -56,7 +56,7 @@
 	if(usr /*&& !usr.stat*/)
 		usr << "This cell has a power rating of [maxcharge], and you should not swallow it.\nThe charge meter reads [round(src.percent() )]%."
 	if(crit_fail)
-		usr << "\red This power cell seems to be faulty."
+		usr << "<span class='danger'>This power cell seems to be faulty.</span>"
 
 /obj/item/weapon/stock_parts/cell/attack_self(mob/user as mob)
 	src.add_fingerprint(user)

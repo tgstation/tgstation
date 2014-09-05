@@ -4,8 +4,6 @@
 	icon_state = "basic"
 	health = 80
 	var/health_max = 80
-	robot_talk_understand = 2
-
 //HUD
 	var/obj/screen/cells = null
 	var/obj/screen/inv1 = null
@@ -37,7 +35,6 @@
 	icon_state = "hive_main"
 	health = 200
 	var/health_max = 200
-	robot_talk_understand = 2
 
 	anchored = 1
 	var/online = 1

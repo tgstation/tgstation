@@ -59,6 +59,10 @@
 		SetOpacity(0)
 		update_icon(0)
 	else
+		var/srcturf = get_turf(src)
+		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
+			opening = 0
+			return
 		do_the_flick()
 		density = 1
 		sleep(4)

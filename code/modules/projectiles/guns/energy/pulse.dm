@@ -2,8 +2,11 @@
 	name = "pulse rifle"
 	desc = "A heavy-duty, multifaceted energy rifle with three modes. Preferred by front-line combat personnel."
 	icon_state = "pulse"
-	item_state = null	//so the human update icon uses the icon_state instead.
+	item_state = "pulse"
+	w_class = 4.0
 	force = 10
+	flags =  CONDUCT
+	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = "/obj/item/weapon/stock_parts/cell/super"
 
@@ -18,7 +21,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
 /obj/item/weapon/gun/energy/pulse_rifle/destroyer/attack_self(mob/living/user as mob)
-	user << "\red [src.name] has three settings, and they are all DESTROY."
+	user << "<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>"
 
 
 

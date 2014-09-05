@@ -153,6 +153,7 @@
 /obj/machinery/shower/attack_hand(mob/M)
 	on = !on
 	update_icon()
+	add_fingerprint(M)
 	if(on)
 		for (var/atom/movable/G in loc)
 			Crossed(G)
@@ -171,7 +172,9 @@
 					watertemp = "boiling"
 				if("boiling")
 					watertemp = "normal"
-			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I].</span>")
+			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I] to [watertemp] temperature.</span>")
+			log_game("[key_name(user)] has wrenched a shower to [watertemp] at ([x],[y],[z])")
+			add_hiddenprint(user)
 
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up

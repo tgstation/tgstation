@@ -5,6 +5,7 @@
 	gibamounts = list(2,2,1)
 
 /obj/effect/gibspawner/generic/New()
+	playsound(src, 'sound/effects/blobattack.ogg', 40, 1)
 	gibdirections = list(list(WEST, NORTHWEST, SOUTHWEST, NORTH),list(EAST, NORTHEAST, SOUTHEAST, SOUTH), list())
 	..()
 
@@ -13,6 +14,7 @@
 	gibamounts = list(1,1,1,1,1,1,1)
 
 /obj/effect/gibspawner/human/New()
+	playsound(src, 'sound/effects/blobattack.ogg', 50, 1)
 	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), alldirs, alldirs, list())
 	gibamounts[6] = pick(0,1,2)
 	..()
@@ -22,6 +24,7 @@
 	gibamounts = list(1,1,1,1,1,1,1)
 
 /obj/effect/gibspawner/xeno/New()
+	playsound(src, 'sound/effects/blobattack.ogg', 60, 1)
 	gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), alldirs, alldirs, list())
 	gibamounts[6] = pick(0,1,2)
 	..()

@@ -30,7 +30,7 @@
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
-			usr << "\red It is forbidden to edit this object's variables."
+			usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
 			return
 
 	var/list/names = list()

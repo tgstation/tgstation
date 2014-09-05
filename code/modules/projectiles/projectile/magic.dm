@@ -18,14 +18,24 @@
 /obj/item/projectile/magic/fireball
 	name = "bolt of fireball"
 	icon_state = "fireball"
-	damage = 25 //The spell fireball additionally does 20 burn, so the wand fireball is marginally less painful
+	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
 	flag = "magic"
 
+/obj/item/projectile/magic/fireball/Range()
+	var/mob/living/L = locate(/mob/living) in (range(src, 1) - firer)
+	if(L && L.stat != DEAD)
+		Bump(L) //Magic Bullet #teachthecontroversy
+		return
+	..()
+
 /obj/item/projectile/magic/fireball/on_hit(var/target)
 	var/turf/T = get_turf(target)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
+	if(ismob(target)) //multiple flavors of pain
+		var/mob/living/M = target
+		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -133,7 +143,7 @@ proc/wabbajack(mob/living/M)
 			switch(randomize)
 				if("monkey")
 					new_mob = new /mob/living/carbon/monkey(M.loc)
-					new_mob.universal_speak = 1
+					new_mob.languages |= HUMAN
 				if("robot")
 					if(prob(30))
 						new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
@@ -150,13 +160,13 @@ proc/wabbajack(mob/living/M)
 					if(prob(50))
 						var/mob/living/carbon/slime/Slime = new_mob
 						Slime.is_adult = 1
-					new_mob.universal_speak = 1
+					new_mob.languages |= HUMAN
 				if("xeno")
 					if(prob(50))
 						new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 					else
 						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-					new_mob.universal_speak = 1
+					new_mob.languages |= HUMAN
 
 					/*var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
 					switch(alien_caste)
@@ -164,7 +174,7 @@ proc/wabbajack(mob/living/M)
 						if("Sentinel")	new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 						if("Drone")		new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
 						else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
-					new_mob.universal_speak = 1*/
+					new_mob.languages |= HUMAN*/
 				if("animal")
 					if(prob(50))
 						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato")
@@ -189,7 +199,7 @@ proc/wabbajack(mob/living/M)
 							if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
 							if("lizard")	new_mob = new /mob/living/simple_animal/lizard(M.loc)
 							else			new_mob = new /mob/living/simple_animal/chick(M.loc)
-					new_mob.universal_speak = 1
+					new_mob.languages |= HUMAN
 				if("human")
 					new_mob = new /mob/living/carbon/human(M.loc)
 

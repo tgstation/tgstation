@@ -283,6 +283,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Turns 1479 into 147.9
 /proc/format_frequency(var/f)
+	f = text2num(f)
 	return "[round(f / 10)].[f % 10]"
 
 
@@ -418,13 +419,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		. += R
 
 //Returns a list of AI's
-/proc/active_ais()
+/proc/active_ais(var/check_mind=0)
 	. = list()
 	for(var/mob/living/silicon/ai/A in living_mob_list)
 		if(A.stat == DEAD)
 			continue
 		if(A.control_disabled == 1)
 			continue
+		if(check_mind)
+			if(!A.mind)
+				continue
 		. += A
 	return .
 
@@ -433,7 +437,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/mob/living/silicon/ai/selected
 	var/list/active = active_ais()
 	for(var/mob/living/silicon/ai/A in active)
-		if(!selected || (selected.connected_robots > A.connected_robots))
+		if(!selected || (selected.connected_robots.len > A.connected_robots.len))
 			selected = A
 
 	return selected
@@ -645,12 +649,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-proc/arctan(x)
+/proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
 
-proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,flick_anim as text,sleeptime = 0,direction as num)
+/proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,flick_anim as text,sleeptime = 0,direction as num)
 //This proc throws up either an icon or an animation for a specified amount of time.
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
@@ -668,7 +672,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	qdel(animation)
 
 
-atom/proc/GetAllContents()
+/atom/proc/GetAllContents()
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
 
@@ -685,7 +689,7 @@ atom/proc/GetAllContents()
 	return assembled
 
 
-atom/proc/GetTypeInAllContents(typepath)
+/atom/proc/GetTypeInAllContents(typepath)
 	var/list/processing_list = list(src)
 	var/list/processed = list()
 
@@ -1012,7 +1016,7 @@ atom/proc/GetTypeInAllContents(typepath)
 
 
 
-proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
+/proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	if(!original)
 		return null
 
@@ -1160,16 +1164,16 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 
 
-proc/get_cardinal_dir(atom/A, atom/B)
+/proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
 	var/dy = abs(B.y - A.y)
 	return get_dir(A, B) & (rand() * (dx+dy) < dy ? 3 : 12)
 
 //chances are 1:value. anyprob(1) will always return true
-proc/anyprob(value)
+/proc/anyprob(value)
 	return (rand(1,value)==value)
 
-proc/view_or_range(distance = world.view , center = usr , type)
+/proc/view_or_range(distance = world.view , center = usr , type)
 	switch(type)
 		if("view")
 			. = view(distance,center)
@@ -1177,7 +1181,7 @@ proc/view_or_range(distance = world.view , center = usr , type)
 			. = range(distance,center)
 	return
 
-proc/oview_or_orange(distance = world.view , center = usr , type)
+/proc/oview_or_orange(distance = world.view , center = usr , type)
 	switch(type)
 		if("view")
 			. = oview(distance,center)
@@ -1225,7 +1229,7 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-proc/is_hot(obj/item/W as obj)
+/proc/is_hot(obj/item/W as obj)
 	switch(W.type)
 		if(/obj/item/weapon/weldingtool)
 			var/obj/item/weapon/weldingtool/WT = W
@@ -1331,11 +1335,11 @@ var/list/WALLITEMS = list(
 
 /obj/proc/atmosanalyzer_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/target = src)
 	var/obj/icon = target
-	user.visible_message("\red [user] has used the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("<span class='danger'>[user] has used the analyzer on \icon[icon] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	user << "\blue Results of analysis of \icon[icon] [target]."
+	user << "<span class='notice'>Results of analysis of \icon[icon] [target].</span>"
 	if(total_moles>0)
 		var/o2_concentration = air_contents.oxygen/total_moles
 		var/n2_concentration = air_contents.nitrogen/total_moles
@@ -1344,16 +1348,16 @@ var/list/WALLITEMS = list(
 
 		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 
-		user << "\blue Pressure: [round(pressure,0.1)] kPa"
-		user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-		user << "\blue Oxygen: [round(o2_concentration*100)]%"
-		user << "\blue CO2: [round(co2_concentration*100)]%"
-		user << "\blue Plasma: [round(plasma_concentration*100)]%"
+		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
+		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)]</span>%"
+		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)]%</span>"
+		user << "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>"
+		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)]%</span>"
 		if(unknown_concentration>0.01)
-			user << "\red Unknown: [round(unknown_concentration*100)]%"
-		user << "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C"
+			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)]%</span>"
+		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)]&deg;C</span>"
 	else
-		user << "\blue [target] is empty!"
+		user << "<span class='notice'>[target] is empty!</span>"
 	return
 
 /proc/check_target_facings(mob/living/initator, mob/living/target)

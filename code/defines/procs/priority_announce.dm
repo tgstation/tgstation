@@ -24,6 +24,24 @@
 	announcement += "<br>"
 
 	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
+		if(!istype(M,/mob/new_player) && !M.ear_deaf)
 			M << announcement
 			M << sound(sound)
+
+/proc/print_command_report(var/text = "", var/title = "Central Command Update")
+	for (var/obj/machinery/computer/communications/C in machines)
+		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == 1)
+			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
+			P.name = "paper- '[title]'"
+			P.info = text
+			C.messagetitle.Add("[title]")
+			C.messagetext.Add(text)
+
+/proc/minor_announce(var/message, var/title = "Attention:")
+	if(!message)
+		return
+
+	for(var/mob/M in player_list)
+		if(!istype(M,/mob/new_player) && !M.ear_deaf)
+			M << "<b><font size = 3><font color = red>[title]</font color> [message]</font size></b>"
+			M << sound('sound/misc/notice2.ogg')

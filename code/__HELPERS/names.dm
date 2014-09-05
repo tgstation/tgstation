@@ -48,12 +48,13 @@ var/religion_name = null
 		return station_name
 
 	if(events)
-		var/short_name = pick("Station", "Fortress", "Frontier", "Suffix", "Death-trap", "Space-hulk", "Lab", "Hazard","Spess Junk", "Fishery", "No-Moon", "Tomb", "Crypt", "Hut", "Monkey", "Bomb", "Trade Post", "Fortress", "Village", "Town", "City", "Edition", "Hive", "Complex", "Base", "Facility", "Depot", "Outpost", "Installation", "Drydock", "Observatory", "Array", "Relay", "Monitor", "Platform", "Construct", "Hangar", "Prison", "Center", "Port", "Waystation", "Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object", "Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp")
-
-		station_name = new_station_name()
+		if (config && config.station_name)
+			station_name = config.station_name
+		else
+			station_name = new_station_name()
 
 		if (config && config.server_name)
-			world.name = "[config.server_name]: [short_name]"
+			world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
 		else
 			world.name = station_name
 
@@ -107,17 +108,6 @@ var/religion_name = null
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
 	return new_station_name
-
-/proc/world_name(var/name)
-
-	station_name = name
-
-	if (config && config.server_name)
-		world.name = "[config.server_name]: [name]"
-	else
-		world.name = name
-
-	return name
 
 var/syndicate_name = null
 /proc/syndicate_name()

@@ -15,25 +15,20 @@
 		feedback_set_details("round_end_result","loss - blob took over")
 		world << "<FONT size = 3><B>The blob has taken over the station!</B></FONT>"
 		world << "<B>The entire station was eaten by the Blob</B>"
-		log_game("Blob mode was lost.")
+		log_game("Blob mode completed with a blob victory.")
 
 	else if(station_was_nuked)
 		feedback_set_details("round_end_result","halfwin - nuke")
 		world << "<FONT size = 3><B>Partial Win: The station has been destroyed!</B></FONT>"
 		world << "<B>Directive 7-12 has been successfully carried out preventing the Blob from spreading.</B>"
-		log_game("Blob mode was tie (station destroyed).")
+		log_game("Blob mode completed with a tie (station destroyed).")
 
 	else if(!blob_cores.len)
 		feedback_set_details("round_end_result","win - blob eliminated")
 		world << "<FONT size = 3><B>The staff has won!</B></FONT>"
 		world << "<B>The alien organism has been eradicated from the station</B>"
-
-		var/datum/station_state/end_state = new /datum/station_state()
-		end_state.count()
-		var/percent = round( 100.0 *  start_state.score(end_state), 0.1)
-		world << "<B>The station is [percent]% intact.</B>"
-		log_game("Blob mode was won with station [percent]% intact.")
-		world << "\blue Rebooting in 30s"
+		log_game("Blob mode completed with a crew victory.")
+		world << "<span class='notice'>Rebooting in 30s</span>"
 	..()
 	return 1
 

@@ -103,6 +103,32 @@
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 20
 
+/datum/table_recipe/meteorshot
+	name = "Meteorshot Shell"
+	result_path = /obj/item/ammo_casing/shotgun/meteorshot
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/rcd_ammo = 1,
+				/obj/item/weapon/stock_parts/manipulator = 2)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/pulseslug
+	name = "Pulse Slug Shell"
+	result_path = /obj/item/ammo_casing/shotgun/pulseslug
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/stock_parts/capacitor/adv = 2,
+				/obj/item/weapon/stock_parts/micro_laser/ultra = 1)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/dragonsbreath
+	name = "Dragonsbreath Shell"
+	result_path = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/datum/reagent/phosphorus = 5,)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
 
 /obj/structure/table
 	name = "table"
@@ -269,7 +295,7 @@
 	var/dat = "<h3>Construction menu</h3>"
 	dat += "<div class='statusDisplay'>"
 	if(busy)
-		dat += "Construction inprogress...</div>"
+		dat += "Construction in progress...</div>"
 	else
 		for(var/datum/table_recipe/R in table_recipes)
 			if(check_contents(R))
@@ -559,8 +585,14 @@
 		return
 
 	if (istype(I, /obj/item/weapon/wrench))
-		table_destroy(2, user)
-		return
+		if(istype(src, /obj/structure/table/reinforced))
+			var/obj/structure/table/reinforced/RT = src
+			if(RT.status == 1)
+				table_destroy(2, user)
+				return
+		else
+			table_destroy(2, user)
+			return
 
 	if (istype(I, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = I
@@ -606,24 +638,13 @@ Destroy type values:
 		return
 
 	if(destroy_type == 2)
-		if(istype(src, /obj/structure/table/reinforced))
-			var/obj/structure/table/reinforced/RT = src
-			if(RT.status == 1)
-				user << "<span class='notice'>Now disassembling the reinforced table</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if (do_after(user, 50))
-					new parts( src.loc )
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					qdel(src)
-				return
-		else
-			user << "<span class='notice'>Now disassembling table</span>"
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 50))
-				new parts( src.loc )
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				qdel(src)
-			return
+		user << "<span class='notice'>Now disassembling the [src.name]</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if (do_after(user, 50))
+			new parts( src.loc )
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			qdel(src)
+		return
 
 
 
@@ -659,18 +680,18 @@ Destroy type values:
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				user << "\blue Now weakening the reinforced table"
+				user << "<span class='notice'>Now weakening the reinforced table</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table weakened"
+					user << "<span class='notice'>Table weakened</span>"
 					src.status = 1
 			else
-				user << "\blue Now strengthening the reinforced table"
+				user << "<span class='notice'>Now strengthening the reinforced table</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table strengthened"
+					user << "<span class='notice'>Table strengthened</span>"
 					src.status = 2
 			return
 	..()
@@ -779,4 +800,3 @@ Destroy type values:
 		qdel(src)
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
-
