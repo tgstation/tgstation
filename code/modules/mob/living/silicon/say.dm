@@ -52,7 +52,7 @@
 	. = ..()
 	if(.)
 		return .
-
+	
 	if(message_mode == MODE_BINARY)
 		if(binarycheck())
 			robot_talk(message)

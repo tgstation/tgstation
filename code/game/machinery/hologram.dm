@@ -72,7 +72,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it
 		if (istype(user.current, /obj/machinery/hologram/holopad))
-			user << "\red ERROR: \black Image feed in progress."
+			user << "<span class='danger'>ERROR:</span> \black Image feed in progress."
 			return
 		create_holo(user)//Create one.
 		src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
@@ -86,8 +86,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(speaker && masters.len && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for (var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				if(!master.languages & speaker.languages)//The AI will be able to understand most mobs talking through the holopad.
-					raw_message = master.lang_treat(speaker, message_langs, raw_message)
+				raw_message = master.lang_treat(speaker, message_langs, raw_message)
 				var/name_used = speaker.GetVoice()
 				var/rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> <span class='message'>[speaker.say_quote(raw_message)]</span></span></i>"
 				master.show_message(rendered, 2)
