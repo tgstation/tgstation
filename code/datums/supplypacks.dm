@@ -494,6 +494,15 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 25
 	containername = "particle accelerator crate"
 
+/datum/supply_packs/engineering/engine/spacesuit
+	name = "Space Suit crate"
+	contains = list(/obj/item/clothing/suit/space,
+					/obj/item/clothing/head/helmet/space,
+					/obj/item/clothing/mask/breath,)
+	cost = 80
+	containertype = /obj/structure/closet/crate/secure
+	containername = "space suit crate"
+	access = access_eva
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
