@@ -179,6 +179,9 @@ var/list/department_radio_keys = list(
 	if(!message || message == "")
 		return
 
+	if(silent)
+		return
+
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "<span class='danger'>You cannot speak in IC (muted).</span>"

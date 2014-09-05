@@ -1719,12 +1719,27 @@ datum/reagent/toxin/teapowder
 datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
 	id = "mutetoxin"
+	description = "A toxin that temporarily paralyzes the vocal cords."
 	reagent_state = LIQUID
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 
-datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
-	M.silent += 2 * REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
+datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
+	M.silent += REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
+	..()
+
+datum/reagent/toxin/staminatoxin
+	name = "Tirizene"
+	id = "tirizene"
+	description = "A toxin that affects the stamina of a person when injected into the bloodstream."
+	reagent_state = LIQUID
+	color = "#6E2828"
+	data = 13
+	toxpwr = 0
+
+datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(REM * data)
+	data = max(data - 1, 3)
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
