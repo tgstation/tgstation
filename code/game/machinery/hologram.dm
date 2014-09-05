@@ -11,7 +11,7 @@ How it works:
 AI clicks on holopad in camera view. View centers on holopad.
 AI clicks again on the holopad to display a hologram. Hologram stays as long as AI is looking at the pad and it (the hologram) is in range of the pad.
 AI can use the directional keys to move the hologram around, provided the above conditions are met and the AI in question is the holopad's master.
-Any number of AIs can use a holopad, however, they will not be able to hear each other talk through it. /Lo6
+Any number of AIs can use a holopad. /Lo6
 AI may cancel the hologram at any time by clicking on the holopad once more.
 
 Possible to do for anyone motivated enough:
