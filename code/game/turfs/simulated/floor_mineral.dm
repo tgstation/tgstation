@@ -1,7 +1,6 @@
 
 /turf/simulated/floor/mineral
 	name = "mineral floor"
-	desc = "Yell at firecage if this somehow exists."
 	icon_state = ""
 	var/last_event = 0
 	var/active = null
