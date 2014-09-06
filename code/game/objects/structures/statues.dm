@@ -20,60 +20,12 @@
 	..()
 
 /obj/structure/statue/attackby(obj/item/weapon/W, mob/user)
-	if(/obj/structure/statue/uranium/)
-		radiate()
-		..()
-	if(/obj/structure/statue/bananium/)
-		if(spam_flag == 0)
-			spam_flag = 1
-			playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-			src.add_fingerprint(user)
-			spawn(20)
-				spam_flag = 0
-		..()
 	hardness -= W.force/100
 	user << "You hit the [name] with your [W.name]!"
 	CheckHardness()
 
 /obj/structure/statue/attack_hand(mob/user)
-	if(/obj/structure/statue/uranium/)
-		radiate()
-		..()
-	if(/obj/structure/statue/bananium/)
-		if(spam_flag == 0)
-			spam_flag = 1
-			playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-			src.add_fingerprint(user)
-			spawn(20)
-				spam_flag = 0
-		..()
 	visible_message("<span class='danger'>[user] rubs some dust off from the [name]'s surface.</span>")
-
-/obj/structure/statue/attack_paw(mob/user)
-	if(/obj/structure/statue/uranium/)
-		radiate()
-		..()
-	if(/obj/structure/statue/bananium/)
-		if(spam_flag == 0)
-			spam_flag = 1
-			playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-			src.add_fingerprint(user)
-			spawn(20)
-				spam_flag = 0
-		..()
-
-/obj/structure/statue/Bumped(atom/user)
-	if(/obj/structure/statue/uranium/)
-		radiate()
-		..()
-	if(/obj/structure/statue/bananium/)
-		if(spam_flag == 0)
-			spam_flag = 1
-			playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-			src.add_fingerprint(user)
-			spawn(20)
-				spam_flag = 0
-		..()
 
 /obj/structure/statue/CanAtmosPass()
 	return !density
@@ -124,27 +76,6 @@
 			CheckHardness()
 	return
 
-/obj/structure/statue/proc/radiate()
-	if(!active)
-		if(world.time > last_event+15)
-			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.apply_effect(12,IRRADIATE,0)
-			last_event = world.time
-			active = null
-			return
-	return
-
-
-/obj/structure/statue/proc/PlasmaBurn(temperature)
-	spawn(2)
-	Dismantle(1)
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
-
-/obj/structure/statue/proc/ignite(exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
-
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////
 
@@ -162,6 +93,31 @@
 	name = "Statue of an engineer"
 	desc = "This statue has a sickening green colour."
 	icon_state = "eng"
+
+/obj/structure/statue/uranium/attackby(obj/item/weapon/W, mob/user)
+	radiate()
+	..()
+
+/obj/structure/statue/uranium/Bumped(atom/user)
+	radiate()
+
+/obj/structure/statue/uranium/attack_hand(mob/user)
+	radiate()
+	..()
+
+/obj/structure/statue/uranium/attack_paw(mob/user)
+	radiate()
+
+/obj/structure/statue/uranium/proc/radiate()
+	if(!active)
+		if(world.time > last_event+15)
+			active = 1
+			for(var/mob/living/L in range(3,src))
+				L.apply_effect(12,IRRADIATE,0)
+			last_event = world.time
+			active = null
+			return
+	return
 
 ////////////////////////////plasma///////////////////////////////////////////////////////////////////////
 
@@ -198,6 +154,15 @@
 		ignite(is_hot(W))
 		return
 	..()
+
+/obj/structure/statue/plasma/proc/PlasmaBurn(temperature)
+	Dismantle(1)
+	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
+
+/obj/structure/statue/plasma/proc/ignite(exposed_temperature)
+	if(exposed_temperature > 300)
+		PlasmaBurn(exposed_temperature)
+
 //////////////////////gold///////////////////////////////////////
 
 /obj/structure/statue/gold
@@ -286,6 +251,27 @@
 	name = "Statue of a clown"
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	icon_state = "clown"
+
+/obj/structure/statue/bananium/Bumped(atom/user)
+	honk()
+
+/obj/structure/statue/bananium/attackby(obj/item/weapon/W, mob/user)
+	honk()
+	..()
+
+/obj/structure/statue/bananium/attack_hand(mob/user)
+	honk()
+	..()
+
+/obj/structure/statue/bananium/attack_paw(mob/user)
+	honk()
+
+/obj/structure/statue/bananium/proc/honk()
+	if(spam_flag == 0)
+		spam_flag = 1
+		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+		spawn(20)
+			spam_flag = 0
 
 /////////////////////sandstone/////////////////////////////////////////
 
