@@ -36,6 +36,7 @@
 	var/treatment_fire = "tricordrazine"
 	var/treatment_tox = "tricordrazine"
 	var/treatment_virus = "spaceacillin"
+	var/declare_treatment = 0 //When attempting to treat a patient, should it notify everyone wearing medhuds?
 	var/shut_up = 0 //self explanatory :)
 
 /obj/machinery/bot/medbot/mysterious
@@ -130,7 +131,9 @@
 		dat += "Reagent Source: "
 		dat += "<a href='?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
 
-		dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+		dat += "Treatment report is [src.declare_treatment ? "on" : "off"]. <a href='?src=\ref[src];declaretreatment=[1]'>Toggle</a><br>"
+
+		dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a><br>"
 
 	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[dat]", "window=automed")
 	onclose(user, "automed")
@@ -175,6 +178,9 @@
 
 	else if ((href_list["togglevoice"]) && (!src.locked || issilicon(usr)))
 		src.shut_up = !src.shut_up
+
+	else if ((href_list["declaretreatment"]) && (!src.locked || issilicon(usr)))
+		src.declare_treatment = !src.declare_treatment
 
 	src.updateUsrDialog()
 	return
@@ -278,6 +284,9 @@
 						var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!")
 						src.speak(message)
 						src.last_newpatient_speak = world.time
+						if(declare_treatment)
+							var/area/location = get_area(src)
+							broadcast_medical_hud_message("[src.name] is treating <b>[C]</b> in <b>[location]</b>", src)
 					src.visible_message("<b>[src]</b> points at [C.name]!")
 				break
 			else
