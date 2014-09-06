@@ -128,7 +128,7 @@ TRAITOR_OBJECTIVES_AMOUNT 2
 ## implants from being most antagonists.
 #PROTECT_ROLES_FROM_ANTAGONIST
 
-## Comment to allow non-human species to join the game as a head/security
+## If non-human species are barred from joining as a head/security
 ENFORCE_HUMAN_AUTHORITY
 
 ## If late-joining players have a chance to become a traitor/changeling
