@@ -449,10 +449,7 @@ turf/simulated/floor/proc/update_icon()
 	update_icon()
 	levelupdate()
 
-//This proc will make the turf a light floor tile. The expected argument is the tile to make the turf with
-//If none is given it will make a new object. dropping or unequipping must be handled before or after calling
-//this proc.
-/turf/simulated/floor/proc/make_light_floor(var/obj/item/stack/tile/light/T = null)
+/turf/simulated/floor/proc/make_floor(floor_tile, T)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -462,174 +459,54 @@ turf/simulated/floor/proc/update_icon()
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/light
-
-	update_icon()
-	levelupdate()
-
-//This proc will make a turf into a grass patch. Fun eh? Insert the grass tile to be used as the argument
-//If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_grass_floor(var/obj/item/stack/tile/grass/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
 		if(istype(T,/obj/item/stack/tile/grass))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/grass
-
-	update_icon()
-	levelupdate()
-
-//This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
-//If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_wood_floor(var/obj/item/stack/tile/wood/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
 		if(istype(T,/obj/item/stack/tile/wood))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/wood
-
-	update_icon()
-	levelupdate()
-
-/////////////////////GOLD FLOOR
-
-/turf/simulated/floor/proc/make_gold_floor(var/obj/item/stack/tile/mineral/gold/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
 		if(istype(T,/obj/item/stack/tile/mineral/gold))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/mineral/gold
-
-	update_icon()
-	levelupdate()
-
-//////////////////////////////SILVER FLOOR
-
-/turf/simulated/floor/proc/make_silver_floor(var/obj/item/stack/tile/mineral/silver/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
 		if(istype(T,/obj/item/stack/tile/mineral/silver))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/mineral/silver
-
-	update_icon()
-	levelupdate()
-
-/////////////////////////////////URANIUM FLOOR
-
-/turf/simulated/floor/proc/make_uranium_floor(var/obj/item/stack/tile/mineral/uranium/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
 		if(istype(T,/obj/item/stack/tile/mineral/uranium))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/mineral/uranium
-
-	update_icon()
-	levelupdate()
-
-////////////////////////////PLASMA FLOOR
-
-/turf/simulated/floor/proc/make_plasma_floor(var/obj/item/stack/tile/mineral/plasma/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
 		if(istype(T,/obj/item/stack/tile/mineral/plasma))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/mineral/plasma
-
-	update_icon()
-	levelupdate()
-
-///////////////////////////////BANANIUM FLOOR
-
-/turf/simulated/floor/proc/make_bananium_floor(var/obj/item/stack/tile/mineral/bananium/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
 		if(istype(T,/obj/item/stack/tile/mineral/bananium))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/mineral/bananium
-
-	update_icon()
-	levelupdate()
-
-//////////////////////////////////DIAMOND FLOOR
-
-/turf/simulated/floor/proc/make_diamond_floor(var/obj/item/stack/tile/mineral/diamond/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
 		if(istype(T,/obj/item/stack/tile/mineral/diamond))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/mineral/diamond
-
-	update_icon()
-	levelupdate()
-
-
-//This proc will make a turf into a carpet floor. Fun eh? Insert the carpet tile to be used as the argument
-//If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_carpet_floor(var/obj/item/stack/tile/carpet/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
 		if(istype(T,/obj/item/stack/tile/carpet))
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/carpet
-
-	update_icon()
-	levelupdate()
+//This proc will make the turf a light floor tile. The expected argument is the tile to make the turf with
+//If none is given it will make a new object. dropping or unequipping must be handled before or after calling
+//this proc.
 
 /turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
 
