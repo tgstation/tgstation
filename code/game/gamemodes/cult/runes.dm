@@ -412,7 +412,7 @@ var/list/sacrificed = list()
 
 /////////////////////////////////////////TWELFTH RUNE
 
-		talisman()//only hide, emp, teleport, deafen, blind and tome runes can be imbued atm
+		talisman()//only tome, communicate, hide, reveal, emp, teleport, deafen, blind, stun and armor runes can be imbued
 			var/obj/item/weapon/paper/newtalisman
 			var/unsuitable_newtalisman = 0
 			for(var/obj/item/weapon/paper/P in src.loc)
@@ -472,12 +472,12 @@ var/list/sacrificed = list()
 					T.imbue = "blind"
 					imbued_from = R
 					break
-				if(R.word1==cultwords["self"] && R.word2==cultwords["other"] && R.word3==cultwords["technology"]) //communicat
+				if(R.word1==cultwords["self"] && R.word2==cultwords["other"] && R.word3==cultwords["technology"]) //communicate
 					T = new(src.loc)
 					T.imbue = "communicate"
 					imbued_from = R
 					break
-				if(R.word1==cultwords["join"] && R.word2==cultwords["hide"] && R.word3==cultwords["technology"]) //communicat
+				if(R.word1==cultwords["join"] && R.word2==cultwords["hide"] && R.word3==cultwords["technology"]) //stun
 					T = new(src.loc)
 					T.imbue = "runestun"
 					imbued_from = R
@@ -1022,9 +1022,9 @@ var/list/sacrificed = list()
 		armor()
 			var/mob/living/carbon/human/user = usr
 			if(istype(src,/obj/effect/rune))
-				usr.say("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+				usr.say("Sa tatha najin")
 			else
-				usr.whisper("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+				usr.whisper("Sa tatha najin")
 			usr.visible_message("\red The rune disappears with a flash of red light, and a set of armor appears on [usr]...", \
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
 
