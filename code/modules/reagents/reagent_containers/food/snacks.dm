@@ -2910,7 +2910,6 @@ var/global/deepfry_nutriment = 1
 		reagents.add_reagent("nutriment", 3)
 /obj/item/weapon/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
-	desc = "If you can see this description the code for the deep fryer fucked up."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "deepfried_holder_icon"
 	bitesize = 2
