@@ -153,7 +153,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_admin_dump_instances, // /vg/
 	/client/proc/disable_bloodvirii,       // /vg/
 	/client/proc/configFood,
-	/client/proc/fryer_nutriment,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
 #endif

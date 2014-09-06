@@ -12,6 +12,7 @@
 // Globals /////////////////////////////////////////////////////
 
 var/global/deepFriedEverything = 1
+var/global/deepFriedNutriment = 1
 var/global/foodNesting = 1
 
 /client/proc/configFood()
@@ -23,8 +24,12 @@ var/global/foodNesting = 1
 	. = (alert("Cereal Cereal Cereal?",,"Yes","No")=="Yes")
 	if(.)	foodNesting = 1
 	else	foodNesting = 0
+	. = (input("Deep Fried Nutriment? (1 to 50)"))
+	if(isnum(.) && (. in 1 to 50)) deepFriedNutriment = .
+	else usr << "That wasn't a valid number."
 	log_admin("[key_name(usr)] set deepFriedEverything to [deepFriedEverything].")
 	log_admin("[key_name(usr)] set foodNesting to [foodNesting].")
+	log_admin("[key_name(usr)] set deepFriedNutriment to [deepFriedNutriment]")
 	return
 
 // Base (Oven) /////////////////////////////////////////////////
@@ -156,7 +161,7 @@ var/global/foodNesting = 1
 				. = "It's already candy."
 				break
 	return
-	
+
 /obj/machinery/cooking/candy/makeFood(var/foodType)
 	var/obj/item/I = new foodType(src.loc,src.ingredient)
 	I.name = "[src.ingredient.name] [I.name]"
@@ -199,7 +204,7 @@ var/global/foodNesting = 1
 	if((. == "valid") && (!foodNesting))
 		if(findtext(I.name,"cereal")) . = "It's already cereal."
 	return
-	
+
 /obj/machinery/cooking/cerealmaker/makeFood()
 	var/obj/item/weapon/reagent_containers/food/snacks/cereal/C = new(src.loc)
 	if(istype(src.ingredient,/obj/item/weapon/reagent_containers))
@@ -226,7 +231,7 @@ var/global/foodNesting = 1
 	. = ..()
 	if((. == "valid") && (!foodNesting))
 		if(findtext(I.name,"fried")) . = "It's already deep-fried."
-		else if(findtext(I.name,"grilled")) . = "It's already grilled." 
+		else if(findtext(I.name,"grilled")) . = "It's already grilled."
 	return
 
 /obj/machinery/cooking/deepfryer/makeFood(var/item/I)
