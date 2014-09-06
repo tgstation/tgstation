@@ -454,52 +454,52 @@ turf/simulated/floor/proc/update_icon()
 	burnt = 0
 	intact = 1
 	if(T)
-		if(istype(T,/obj/item/stack/tile/light))
+		if(/obj/item/stack/tile/light)
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-		if(istype(T,/obj/item/stack/tile/grass))
+		if(/obj/item/stack/tile/grass)
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-		if(istype(T,/obj/item/stack/tile/wood))
+		if(/obj/item/stack/tile/wood)
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-		if(istype(T,/obj/item/stack/tile/mineral/gold))
+		if(/obj/item/stack/tile/mineral/gold)
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-		if(istype(T,/obj/item/stack/tile/mineral/silver))
+		if(/obj/item/stack/tile/mineral/silver)
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-		if(istype(T,/obj/item/stack/tile/mineral/uranium))
+		if(/obj/item/stack/tile/mineral/uranium)
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-		if(istype(T,/obj/item/stack/tile/mineral/plasma))
+		if(/obj/item/stack/tile/mineral/plasma)
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-		if(istype(T,/obj/item/stack/tile/mineral/bananium))
+		if(/obj/item/stack/tile/mineral/bananium)
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-		if(istype(T,/obj/item/stack/tile/mineral/diamond))
+		if(/obj/item/stack/tile/mineral/diamond)
 			floor_tile = T
 			update_icon()
 			levelupdate()
 			return
-		if(istype(T,/obj/item/stack/tile/carpet))
+		if(/obj/item/stack/tile/carpet)
 			floor_tile = T
 			update_icon()
 			levelupdate()
