@@ -144,7 +144,8 @@
 	spawn(1)
 		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
-
+	synd_mind.current << "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>"
+	synd_mind.current << "<B>If you feel you are not up to this task, give your ID to another operative.</B>"
 
 	if (nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
