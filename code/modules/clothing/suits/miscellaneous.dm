@@ -37,6 +37,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	flags = FPRINT | TABLEPASS
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/suit/hgpirate
@@ -355,6 +356,7 @@
 	desc = "Now you too can pierce the heavens"
 	icon_state = "simonjacket"
 	item_state = "simonjacket"
+	species_fit = list("Vox")
 
 /obj/item/clothing/suit/kaminacape
 	name = "Kamina's Cape"

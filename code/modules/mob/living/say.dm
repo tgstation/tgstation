@@ -86,9 +86,7 @@ var/list/department_radio_keys = list(
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	message = capitalize(message)
 
-	if (!message)
-		src << "\red You cannot say that ...? \black (SAYDEBUG: message == null)"
-		return
+	if(!message) return
 
 	if(silent)
 		src << "\red You can't speak while silenced."
@@ -188,9 +186,7 @@ var/list/department_radio_keys = list(
 	if(src.stunned > 2 || (traumatic_shock > 61 && prob(50)))
 		message_mode = null //Stunned people shouldn't be able to physically turn on their radio/hold down the button to speak into it
 */
-	if (!message)
-		src << "\red You cannot say that ...? \black (SAYDEBUG: living/say.dm: message == null, before brainloss)"
-		return
+	if(!message) return
 
 	// :downs:
 	if (getBrainLoss() >= 60)

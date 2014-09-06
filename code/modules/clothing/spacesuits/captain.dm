@@ -8,6 +8,7 @@
 	flags_inv = HIDEFACE
 	permeability_coefficient = 0.01
 	armor = list(melee = 65, bullet = 50, laser = 50,energy = 25, bomb = 50, bio = 100, rad = 50)
+	species_fit = list("Vox")
 
 //Captain's space suit This is not the proper path but I don't currently know enough about how this all works to mess with it.
 /obj/item/clothing/suit/armor/captain
