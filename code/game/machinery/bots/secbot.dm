@@ -127,7 +127,7 @@ Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"},
 
 	if(!src.locked || issilicon(user))
 		dat += text({"<BR>
-Arrest for No ID: []<BR>
+Arrest Unidentifiable Persons: []<BR>
 Arrest for Unauthorized Weapons: []<BR>
 Arrest for Warrant: []<BR>
 <BR>
@@ -142,7 +142,7 @@ Auto Patrol: []"},
 "<A href='?src=\ref[src];operation=declarearrests'>[src.declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
-	var/datum/browser/popup = new(user, "autosec", "Securitron v1.5 controls")
+	var/datum/browser/popup = new(user, "autosec", "Securitron v1.5.1 controls")
 	popup.set_content(dat)
 	popup.open()
 	return
@@ -210,7 +210,7 @@ Auto Patrol: []"},
 		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 			threatlevel = user.assess_threat(src)
 			threatlevel += 6
-			if(threatlevel > 0)
+			if(threatlevel >= 4)
 				src.target = user
 				src.mode = SECBOT_HUNT
 
