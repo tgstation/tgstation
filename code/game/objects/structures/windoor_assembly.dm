@@ -89,7 +89,6 @@ obj/structure/windoor_assembly/Destroy()
 							R.add_fingerprint(user)
 						qdel(src)
 				else
-					user << "<span class='notice'>You need more welding fuel to dissassemble the windoor assembly.</span>"
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete

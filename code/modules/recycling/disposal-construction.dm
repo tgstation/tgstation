@@ -255,9 +255,6 @@
 
 					qdel(src)
 					return
-			else
-				user << "You need more welding fuel to complete this task."
-				return
 		else
 			user << "You need to attach it to the plating first!"
 			return

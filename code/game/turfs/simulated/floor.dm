@@ -541,5 +541,3 @@ turf/simulated/floor/proc/update_icon()
 					icon_state = icon_plating
 					burnt = 0
 					broken = 0
-				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"

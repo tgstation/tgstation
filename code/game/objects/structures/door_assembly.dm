@@ -457,7 +457,6 @@ obj/structure/door_assembly/New()
 						new M(get_turf(src))
 				qdel(src)
 		else
-			user << "<span class='warning'> You need more welding fuel to dissassemble the airlock assembly.</span>"
 			return
 
 	else if(istype(W, /obj/item/weapon/wrench) && !anchored )
