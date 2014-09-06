@@ -570,7 +570,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					usr.whisper("[input]")
 					for(var/datum/mind/H in ticker.mode.cult)
 						if (H.current)
-							H.current << "<span class='danger'>[input]</span>"
+							H.current << "<span class='userdanger'>[input]</span>"
 					return
 				if("Notes")
 					if(usr.get_active_hand() != src)

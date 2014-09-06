@@ -129,7 +129,7 @@ var/list/department_radio_keys = list(
 	var/deaf_message
 	var/deaf_type
 	if(speaker != src)
-		deaf_message = "<span class='name'>[name]</span> talks but you cannot hear them."
+		deaf_message = "<span class='name'>[speaker]</span> talks but you cannot hear them."
 		deaf_type = 1
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
@@ -218,15 +218,18 @@ var/list/department_radio_keys = list(
 	if(message_mode == MODE_CHANGELING)
 		switch(lingcheck())
 			if(2)
+				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 				for(var/mob/M in mob_list)
-					switch(M.lingcheck())
-						if(2)
-							if(M.stat == DEAD)
-								M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-						if(1)
-							if(prob(10))
-								M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
+					if(M.stat == DEAD && !istype(M, /mob/new_player))
+						M << msg
+					else
+						switch(M.lingcheck())
+							if(2)
+								M << msg
+							if(1)
+								if(prob(20))
+									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
 				return 1
 			if(1)
 				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
