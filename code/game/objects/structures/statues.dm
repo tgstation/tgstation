@@ -13,6 +13,7 @@
 	var/mineralType = "metal"
 	var/last_event = 0
 	var/active = null
+	var/spam_flag = 0
 
 /obj/structure/statue/Destroy()
 	density = 0
@@ -22,7 +23,14 @@
 	if(/obj/structure/statue/uranium/)
 		radiate()
 		..()
-
+	if(/obj/structure/statue/bananium/)
+		if(spam_flag == 0)
+			spam_flag = 1
+			playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+			src.add_fingerprint(user)
+			spawn(20)
+				spam_flag = 0
+		..()
 	hardness -= W.force/100
 	user << "You hit the [name] with your [W.name]!"
 	CheckHardness()
@@ -31,11 +39,40 @@
 	if(/obj/structure/statue/uranium/)
 		radiate()
 		..()
+	if(/obj/structure/statue/bananium/)
+		if(spam_flag == 0)
+			spam_flag = 1
+			playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+			src.add_fingerprint(user)
+			spawn(20)
+				spam_flag = 0
+		..()
 	visible_message("<span class='danger'>[user] rubs some dust off from the [name]'s surface.</span>")
 
 /obj/structure/statue/attack_paw(mob/user)
 	if(/obj/structure/statue/uranium/)
 		radiate()
+		..()
+	if(/obj/structure/statue/bananium/)
+		if(spam_flag == 0)
+			spam_flag = 1
+			playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+			src.add_fingerprint(user)
+			spawn(20)
+				spam_flag = 0
+		..()
+
+/obj/structure/statue/Bumped(atom/user)
+	if(/obj/structure/statue/uranium/)
+		radiate()
+		..()
+	if(/obj/structure/statue/bananium/)
+		if(spam_flag == 0)
+			spam_flag = 1
+			playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+			src.add_fingerprint(user)
+			spawn(20)
+				spam_flag = 0
 		..()
 
 /obj/structure/statue/CanAtmosPass()
@@ -111,37 +148,36 @@
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////
 
+/obj/structure/statue/uranium
+	hardness = 3
+	luminosity = 2
+	mineralType = "uranium"
+
 /obj/structure/statue/uranium/nuke
 	name = "Statue of a Nuclear Fission Explosive"
 	desc = "This is a grand statue of a Nuclear Explosive. It has a sickening green colour."
 	icon_state = "nuke"
-	hardness = 3
-	mineralType = "uranium"
-	luminosity = 2
 
 /obj/structure/statue/uranium/eng
 	name = "Statue of an engineer"
 	desc = "This statue has a sickening green colour."
 	icon_state = "eng"
-	hardness = 3
-	mineralType = "uranium"
-	luminosity = 2
 
 ////////////////////////////plasma///////////////////////////////////////////////////////////////////////
+
+/obj/structure/statue/plasma
+	hardness = 2
+	mineralType = "plasma"
 
 /obj/structure/statue/plasma/scientist
 	name = "Statue of a Scientist"
 	desc = "This statue is suitably made from plasma."
 	icon_state = "scientist"
-	hardness = 2
-	mineralType = "plasma"
 
 /obj/structure/statue/plasma/xenomorph
 	name = "Statue of a Xenomorph"
 	desc = "This statue is suitably made from plasma."
 	icon_state = "xenomorph"
-	hardness = 2
-	mineralType = "plasma"
 
 /obj/structure/statue/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -164,108 +200,100 @@
 	..()
 //////////////////////gold///////////////////////////////////////
 
+/obj/structure/statue/gold
+	hardness = 3
+	mineralType = "gold"
+
 /obj/structure/statue/gold/hos
 	name = "Statue of the Head of Security"
 	desc = "This is a highly valuable statue made from gold."
 	icon_state = "hos"
-	hardness = 3
-	mineralType = "gold"
 
 /obj/structure/statue/gold/hop
 	name = "Statue of the Head of Personnel"
 	desc = "This is a highly valuable statue made from gold."
 	icon_state = "hop"
-	hardness = 3
-	mineralType = "gold"
 
 /obj/structure/statue/gold/cmo
 	name = "Statue of the Chief Medical Officer"
 	desc = "This is a highly valuable statue made from gold."
 	icon_state = "cmo"
-	hardness = 3
-	mineralType = "gold"
 
 /obj/structure/statue/gold/ce
 	name = "Statue of the Chief Engineer"
 	desc = "This is a highly valuable statue made from gold."
 	icon_state = "ce"
-	hardness = 3
-	mineralType = "gold"
 
 /obj/structure/statue/gold/rd
 	name = "Statue of the Research Director"
 	desc = "This is a highly valuable statue made from gold."
 	icon_state = "rd"
-	hardness = 3
-	mineralType = "gold"
 
 //////////////////////////silver///////////////////////////////////////
+
+/obj/structure/statue/silver
+	hardness = 3
+	mineralType = "silver"
 
 /obj/structure/statue/silver/md
 	name = "Statue of a Medical Officer"
 	desc = "This is a valuable statue made from silver."
 	icon_state = "md"
-	hardness = 3
-	mineralType = "silver"
 
 /obj/structure/statue/silver/chem
 	name = "Statue of a Chemist"
 	desc = "This is a valuable statue made from silver."
 	icon_state = "chem"
-	hardness = 3
-	mineralType = "silver"
 
 /obj/structure/statue/silver/sec
 	name = "Statue of a Security Officer"
 	desc = "This is a valuable statue made from silver."
 	icon_state = "sec"
-	hardness = 3
-	mineralType = "silver"
 
 /obj/structure/statue/silver/borgs
 	name = "Statue of a Security Cyborg"
 	desc = "This is a valuable statue made from silver."
 	icon_state = "borgs"
-	hardness = 3
-	mineralType = "silver"
 
 /obj/structure/statue/silver/borgm
 	name = "Statue of a Medical Cyborg"
 	desc = "This is a valuable statue made from silver."
 	icon_state = "borgm"
-	hardness = 3
-	mineralType = "silver"
 
 /////////////////////////diamond/////////////////////////////////////////
+
+/obj/structure/statue/diamond
+	hardness = 10
+	mineralType = "diamond"
 
 /obj/structure/statue/diamond/captain
 	name = "Statue of THE Captain."
 	desc = "This is a very expensive diamond statue"
 	icon_state = "captain"
-	hardness = 10
-	mineralType = "diamond"
 
 /obj/structure/statue/diamond/ai
 	name = "Statue of the AI."
 	desc = "This is a very expensive diamond statue"
 	icon_state = "ai"
-	hardness = 10
-	mineralType = "diamond"
 
 ////////////////////////bananium///////////////////////////////////////
+
+/obj/structure/statue/bananium
+	hardness = 3
+	mineralType = "clown"
 
 /obj/structure/statue/bananium/clown
 	name = "Statue of a clown"
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	icon_state = "clown"
-	hardness = 3
-	mineralType = "clown"
 
 /////////////////////sandstone/////////////////////////////////////////
+
+/obj/structure/statue/sandstone
+	hardness = 0.5
+	mineralType = "sandstone"
 
 /obj/structure/statue/sandstone/assistant
 	name = "Statue of an assistant"
 	desc = "A cheap statue of sandstone for a greyshirt."
 	icon_state = "assistant"
-	hardness = 0.5
-	mineralType = "sandstone"
