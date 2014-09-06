@@ -140,6 +140,18 @@
 	return 0
 /turf/proc/is_wood_floor()
 	return 0
+/turf/proc/is_gold_floor()
+	return 0
+/turf/proc/is_silver_floor()
+	return 0
+/turf/proc/is_plasma_floor()
+	return 0
+/turf/proc/is_uranium_floor()
+	return 0
+/turf/proc/is_bananium_floor()
+	return 0
+/turf/proc/is_diamond_floor()
+	return 0
 /turf/proc/is_carpet_floor()
 	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
