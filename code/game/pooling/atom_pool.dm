@@ -55,6 +55,7 @@ var/global/list/GlobalPool = list()
 	var/atom/movable/AM = pick_n_take(GlobalPool[get_type])
 	if(AM)
 		AM.ResetVars()
+		AM.New()
 		if(new_loc)
 			AM.loc = new_loc
 		return AM
