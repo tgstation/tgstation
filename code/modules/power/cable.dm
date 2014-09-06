@@ -146,7 +146,7 @@
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
-	if(src.powernet && (src.powernet.avail > 0))
+	if(src.powernet && (src.powernet.avail > 1000))
 		if(prob(prb))
 			if(electrocute_mob(user,powernet,src,siemens_coeff))
 				var/datum/effect/effect/system/spark_spread/s = new
