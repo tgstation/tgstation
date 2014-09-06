@@ -454,56 +454,10 @@ turf/simulated/floor/proc/update_icon()
 	burnt = 0
 	intact = 1
 	if(T)
-		if(/obj/item/stack/tile/light)
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-		if(/obj/item/stack/tile/grass)
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-		if(/obj/item/stack/tile/wood)
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-		if(/obj/item/stack/tile/mineral/gold)
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-		if(/obj/item/stack/tile/mineral/silver)
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-		if(/obj/item/stack/tile/mineral/uranium)
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-		if(/obj/item/stack/tile/mineral/plasma)
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-		if(/obj/item/stack/tile/mineral/bananium)
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-		if(/obj/item/stack/tile/mineral/diamond)
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-		if(/obj/item/stack/tile/carpet)
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
+		floor_tile = T
+		update_icon()
+		levelupdate()
+		return
 //This proc will make the turf a light floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
