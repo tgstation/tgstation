@@ -1268,6 +1268,10 @@
 		statelaws()
 	return
 
+/mob/living/silicon/robot/sensor_mode() //Medical/Security HUD controller for borgs
+	set category = "Robot Commands"
+	set desc = "Augment visual feed with internal sensor overlays."
+	..()
 /mob/living/silicon/robot/proc/radio_menu()
 	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
 

@@ -396,3 +396,8 @@ proc/listclearnulls(list/list)
 			L.Swap(start++,end--)
 
 	return L
+
+/proc/find_record(field, value, list/L)
+	for(var/datum/data/record/R in L)
+		if(R.fields[field] == value)
+			return R

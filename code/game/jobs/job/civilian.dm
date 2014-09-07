@@ -8,8 +8,8 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
-	minimal_access = list(access_bar)
+	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons)
+	minimal_access = list(access_bar,access_weapons)
 
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/bar

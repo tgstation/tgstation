@@ -13,6 +13,13 @@
 	var/brute_dam_coeff = 1.0
 	var/open = 0//Maint panel
 	var/locked = 1
+	var/bot_type
+	var/declare_message = "" //What the bot will display to the HUD user.
+	#define SEC_BOT 1 // Secutritrons (Beepsky) and ED-209s
+	#define MULE_BOT 2 // MULEbots
+	#define FLOOR_BOT 3 // Floorbots
+	#define CLEAN_BOT 4 // Cleanbots
+	#define MED_BOT 5 // Medibots
 	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
 
 
@@ -69,7 +76,18 @@
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	healthcheck()
 
-
+/obj/machinery/bot/proc/declare() //Signals a medical or security HUD user to a relevant bot's activity.
+	var/hud_user_list = list() //Determines which userlist to use.
+	switch(bot_type) //Made into a switch so more HUDs can be added easily.
+		if(SEC_BOT) //Securitrons and ED-209
+			hud_user_list = sec_hud_users
+		if(MED_BOT) //Medibots
+			hud_user_list = med_hud_users
+	var/area/myturf = get_turf(src)
+	for(var/mob/huduser in hud_user_list)
+		var/turf/mobturf = get_turf(huduser)
+		if(mobturf.z == myturf.z)
+			huduser.show_message(declare_message,1)
 
 
 /obj/machinery/bot/attackby(obj/item/weapon/W as obj, mob/user as mob)

@@ -27,13 +27,13 @@
 	var/last_found //There's a delay
 	var/frustration = 0
 //var/emagged = 0 //Emagged Secbots view everyone as a criminal
-	var/idcheck = 1 //If false, all station IDs are authorized for weapons.
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
-	var/declare_arrests = 0 //When making an arrest, should it notify everyone wearing sechuds?
+
 	var/projectile = null//Holder for projectile type, to avoid so many else if chains
 
 	var/mode = 0
+	bot_type = SEC_BOT
 #define SECBOT_IDLE 		0		// idle
 #define SECBOT_HUNT 		1		// found target, hunting
 #define SECBOT_PREP_ARREST 	2		// at target, preparing to arrest
@@ -59,6 +59,14 @@
 
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
+	var/declare_arrests = 1 //When making an arrest, should it notify everyone wearing sechuds?
+	var/idcheck = 1 //If true, arrest people with no IDs
+	var/weaponscheck = 1 //If true, arrest people for weapons if they don't have access
+	//List of weapons that secbots will not arrest for
+	var/safe_weapons = list(\
+	/obj/item/weapon/gun/energy/laser/bluetag,\
+	/obj/item/weapon/gun/energy/laser/redtag,\
+	/obj/item/weapon/gun/energy/laser/practice)
 
 
 /obj/item/weapon/ed209_assembly
@@ -129,13 +137,16 @@ Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 	if(!src.locked || issilicon(user))
 		if(!lasercolor)
 			dat += text({"<BR>
-Check for Weapon Authorization: []<BR>
-Check Security Records: []<BR>
+Arrest for No ID: [] <BR>
+Arrest for Unauthorized Weapons: [] <BR>
+Arrest for Warrant: [] <BR>
+<BR>
 Operating Mode: []<BR>
 Report Arrests: []<BR>
 Auto Patrol: []"},
 
 "<A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A>",
 "<A href='?src=\ref[src];operation=declarearrests'>[src.declare_arrests ? "Yes" : "No"]</A>",
@@ -173,6 +184,9 @@ Auto Patrol: []"},
 		if ("idcheck")
 			src.idcheck = !src.idcheck
 			src.updateUsrDialog()
+		if("weaponscheck")
+			weaponscheck = !weaponscheck
+			updateUsrDialog()
 		if ("ignorerec")
 			src.check_records = !src.check_records
 			src.updateUsrDialog()
@@ -203,10 +217,13 @@ Auto Patrol: []"},
 		..()
 		if (!istype(W, /obj/item/weapon/screwdriver) && (!src.target))
 			if(hasvar(W,"force") && W.force)//If force is defined and non-zero
-				src.target = user
-				if(lasercolor)//To make up for the fact that lasertag bots don't hunt
-					src.shootAt(user)
-				src.mode = SECBOT_HUNT
+				threatlevel = user.assess_threat(src)
+				threatlevel +=6
+				if(threatlevel > 0)
+					src.target = user
+					if(lasercolor)//To make up for the fact that lasertag bots don't hunt
+						src.shootAt(user)
+					src.mode = SECBOT_HUNT
 
 /obj/machinery/bot/ed209/Emag(mob/user as mob)
 	..()
@@ -224,6 +241,7 @@ Auto Patrol: []"},
 		src.icon_state = "[lasercolor]ed209[src.on]"
 		src.projectile = null
 		mode = SECBOT_IDLE
+		declare_arrests = 0
 
 /obj/machinery/bot/ed209/process()
 	//set background = 1
@@ -236,7 +254,7 @@ Auto Patrol: []"},
 		if ((C.stat) || (C.lying))
 			continue
 		if (istype(C, /mob/living/carbon/human))
-			threatlevel = src.assess_perp(C)
+			threatlevel = C.assess_threat(src,lasercolor)
 		else if ((istype(C, /mob/living/carbon/monkey)) && (C.client) && (ticker.mode.name == "monkey"))
 			threatlevel = 4
 		//src.speak(C.real_name + text(": threat: []", threatlevel))
@@ -1056,3 +1074,14 @@ Auto Patrol: []"},
 /obj/machinery/bot/ed209/redtag/New()
 	new /obj/machinery/bot/ed209(get_turf(src),null,"r")
 	del(src)
+
+/obj/machinery/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
+	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
+		if(!(slot_item.type in safe_weapons))
+			return 1
+	return 0
+
+/obj/machinery/bot/ed209/declare()
+	var/area/location = get_area(src)
+	declare_message = "<span class='info'>\icon[src] [name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>"
+	..()

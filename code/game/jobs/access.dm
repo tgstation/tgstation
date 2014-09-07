@@ -65,7 +65,7 @@
 /var/const/access_sec_doors = 63 // Security front doors
 /var/const/access_psychiatrist = 64 // Psychiatrist's office
 /var/const/access_salvage_captain = 65 // Salvage ship captain's quarters
-
+/var/const/access_weapons = 66 //Weapon authorization for secbots
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
 /var/const/Mostly for admin fun times.*/
@@ -214,7 +214,7 @@
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
-	            access_theatre, access_research, access_mining, access_mailsorting,
+	            access_theatre, access_research, access_mining, access_mailsorting,access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway, /*vg paramedic*/, access_paramedic)
 
@@ -229,7 +229,7 @@
 		if(0)
 			return get_all_accesses()
 		if(1) //security
-			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
+			return list(access_sec_doors, access_weapons, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
 		if(2) //medbay
 			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_paramedic, access_virology, access_surgery, access_cmo)
 		if(3) //research
@@ -396,6 +396,8 @@
 // /vg/ shit
 		if(access_paramedic)
 			return "Paramedic Station"
+		if(access_weapons)
+			return "Weapon Permit"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

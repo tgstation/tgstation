@@ -689,7 +689,8 @@
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
 	var/list/ourlist = list()
-	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
+	var/able = (!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
+
 	/*
 
 	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
@@ -702,7 +703,7 @@
 
 	*/
 
-		if(href_list["item"])
+		if(href_list["item"] && able)
 			var/slot = href_list["item"]
 			var/obj/item/place_item = usr.get_active_hand()
 			var/obj/item/id_item = src.wear_id
@@ -756,7 +757,7 @@
 						return
 
 
-		if(href_list["pockets"])
+		if(href_list["pockets"] && able)
 			var/pocket_side = href_list["pockets"]
 			var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
 			var/obj/item/pocket_item = (pocket_id == slot_r_store ? src.r_store : src.l_store)
@@ -789,9 +790,6 @@
 					// Display a warning if the user mocks up
 				src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
 
-		..()
-		return
-
 
 	if (href_list["refresh"])
 		if((machine)&&(in_range(src, usr)))
@@ -821,10 +819,11 @@
 			return
 */
 	if (href_list["criminal"])
+		var/sechud = hasHUD(usr,"security")
 		if(hasHUD(usr,"security"))
-
-			var/modified = 0
 			var/perpname = "wot"
+			var/modified
+
 			if(wear_id)
 				var/obj/item/weapon/card/id/I = wear_id.GetID()
 				if(I)
@@ -836,6 +835,7 @@
 
 			if(perpname)
 				for (var/datum/data/record/E in data_core.general)
+					usr << E.fields["name"]
 					if (E.fields["name"] == perpname)
 						for (var/datum/data/record/R in data_core.security)
 							if (R.fields["id"] == E.fields["id"])
@@ -1771,3 +1771,75 @@ mob/living/carbon/human/yank_out_object()
 	if(wear_id)
 		ACL |= wear_id.GetAccess()
 	return ACL
+
+/mob/living/carbon/human/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
+	if(judgebot.emagged == 2)
+		return 10 //Everyone is a criminal!
+
+	var/threatcount = 0
+
+	//Lasertag
+	if(lasercolor)
+		if(lasercolor == "b")//Lasertag turrets target the opposing team.
+			if(istype(wear_suit, /obj/item/clothing/suit/redtag))
+				threatcount += 4
+			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+				threatcount += 4
+			if(istype(belt, /obj/item/weapon/gun/energy/laser/redtag))
+				threatcount += 2
+
+		if(lasercolor == "r")
+			if(istype(wear_suit, /obj/item/clothing/suit/bluetag))
+				threatcount += 4
+			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+				threatcount += 4
+			if(istype(belt, /obj/item/weapon/gun/energy/laser/bluetag))
+				threatcount += 2
+
+		return threatcount
+
+	//Check for ID
+	var/obj/item/weapon/card/id/idcard = get_idcard()
+	if(judgebot.idcheck && !idcard)
+		threatcount += 4
+
+	//Check for weapons
+	if(judgebot.weaponscheck)
+		if(!idcard || !(access_weapons in idcard.access))
+			if(judgebot.check_for_weapons(l_hand))
+				threatcount += 4
+			if(judgebot.check_for_weapons(r_hand))
+				threatcount += 4
+			if(judgebot.check_for_weapons(belt))
+				threatcount += 2
+
+	//Check for arrest warrant
+	if(judgebot.check_records)
+		var/perpname = get_face_name(get_id_name())
+		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		if(R && R.fields["criminal"])
+			switch(R.fields["criminal"])
+				if("*Arrest*")
+					threatcount += 5
+				if("Incarcerated")
+					threatcount += 2
+				if("Parolled")
+					threatcount += 2
+
+	//Check for dresscode violations
+	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/rig/wizard))
+		threatcount += 2
+
+	//Loyalty implants imply trustworthyness
+	if(isloyal(src))
+		threatcount -= 1
+
+	//Secbots are racist!
+	if(dna && dna.mutantrace && dna.mutantrace != "none")
+		threatcount += 2
+
+	//Agent cards lower threatlevel.
+	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
+		threatcount -= 2
+
+	return threatcount

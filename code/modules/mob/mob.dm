@@ -1456,3 +1456,6 @@ mob/verb/yank_out_object()
 // Skip over all the complex list checks.
 /mob/proc/hasFullAccess()
 	return 0
+
+mob/proc/assess_threat()
+	return 0

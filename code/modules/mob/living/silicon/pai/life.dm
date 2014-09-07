@@ -9,10 +9,10 @@
 			del(src.cable)
 
 	regular_hud_updates()
-	if(src.secHUD == 1)
-		src.securityHUD()
-	if(src.medHUD == 1)
-		src.medicalHUD()
+	if(src.secHUD)
+		process_sec_hud(src)
+	if(src.medHUD)
+		process_med_hud(src)
 	if(silence_time)
 		if(world.timeofday >= silence_time)
 			silence_time = null

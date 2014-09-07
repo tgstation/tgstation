@@ -8,6 +8,9 @@
 	var/list/alarms_to_clear = list()
 	immune_to_ssd = 1
 
+	var/sensor_mode = 0 //Determines the current HUD.
+	#define SEC_HUD 1 //Security HUD mode
+	#define MED_HUD 2 //Medical HUD mode
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 
@@ -225,3 +228,23 @@
 		return damage
 
 	return 0
+
+/mob/living/silicon/assess_threat() //Secbots will not target silicons!
+	return -10
+
+/mob/living/silicon/verb/sensor_mode()
+	set name = "Set Sensor Augmentation"
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical"/*,"Light Amplification"*/,"Disable")
+	switch(sensor_type)
+		if ("Security")
+			sensor_mode = SEC_HUD
+			src << "<span class='notice'>Security records overlay enabled.</span>"
+		if ("Medical")
+			sensor_mode = MED_HUD
+			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"/*
+		if ("Light Amplification")
+			src.sensor_mode = NIGHT
+			src << "<span class='notice'>Light amplification mode enabled.</span>"*/
+		if ("Disable")
+			sensor_mode = 0
+			src << "Sensor augmentations disabled."
