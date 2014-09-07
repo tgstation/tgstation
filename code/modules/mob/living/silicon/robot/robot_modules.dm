@@ -97,49 +97,70 @@
 	..()
 	modules += new /obj/item/borg/sight/meson(src)
 	emag = new /obj/item/borg/stun(src)
-	modules += new /obj/item/weapon/rcd/borg(src)
 	modules += new /obj/item/weapon/extinguisher(src)
 	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
-	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wrench(src)
-	modules += new /obj/item/weapon/crowbar(src)
-	modules += new /obj/item/weapon/wirecutters(src)
-	modules += new /obj/item/device/multitool(src)
-	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/device/analyzer(src)
+	modules += new /obj/item/device/t_scanner(src)
+	modules += new /obj/item/weapon/wirecutters(src)
+	modules += new /obj/item/weapon/screwdriver(src)
+	modules += new /obj/item/weapon/multitool(src)
+
+	var/datum/robot_energy_storage/wire/wirestore = new /datum/robot_energy_storage/wire(src)
+	var/datum/robot_energy_storage/metal/metstore = new /datum/robot_energy_storage/metal(src)
+
+	var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src)
+	W.source = wirestore
+	modules += W
+
+	var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/metal/cyborg(src)
+	G.metsource = metstore
+	modules += M
+
+	var/obj/item/stack/sheet/glass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
+	G.glasource = glastore
+	modules += G
+
+	storages += wirestore
+	storages += metstore
+	storages += glastore
+
+obj/item/weapon/robot_module/construction
+	name = "construction robot module"
+
+/obj/item/weapon/robot_module/construction/New()
+	..()
+	emag = new /obj/item/borg/stun(src)
+	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/wirecutters(src)
+	modules += new /obj/item/weapon/rcd/borg(src)
+	modules += new /obj/item/weapon/screwdriver(src)
 
 	var/datum/robot_energy_storage/metal/metstore = new /datum/robot_energy_storage/metal(src)
 	var/datum/robot_energy_storage/glass/glastore = new /datum/robot_energy_storage/glass(src)
 	var/datum/robot_energy_storage/wire/wirestore = new /datum/robot_energy_storage/wire(src)
 
-	var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
-	M.source = metstore
-	modules += M
+	var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused - RR
+	F.source = metstore
+	modules += F //'F' for floor tile - RR(src)
 
-	var/obj/item/stack/sheet/glass/cyborg/Q = new /obj/item/stack/sheet/glass/cyborg(src)
-	Q.source = glastore
-	modules += Q
+	var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
+	R.source = metstore
+	modules += R
 
 	var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
 	G.metsource = metstore
 	G.glasource = glastore
 	modules += G
 
-	var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
-	R.source = metstore
-	modules += R
-
 	var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src)
 	W.source = wirestore
 	modules += W
 
-	var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused - RR
-	F.source = metstore
-	modules += F //'F' for floor tile - RR(src)
-
 	storages += metstore
 	storages += glastore
 	storages += wirestore
+
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
