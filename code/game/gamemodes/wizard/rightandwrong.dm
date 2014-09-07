@@ -1,7 +1,7 @@
 
 
 /mob/proc/rightandwrong(var/summon_type) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
 
@@ -49,9 +49,9 @@
 					new /obj/item/weapon/gun/projectile/automatic/gyropistol(get_turf(H))
 				if("pulse")
 					new /obj/item/weapon/gun/energy/pulse_rifle(get_turf(H))
-				if("silenced")
+				if("suppressed")
 					new /obj/item/weapon/gun/projectile/automatic/pistol(get_turf(H))
-					new /obj/item/weapon/silencer(get_turf(H))
+					new /obj/item/weapon/suppressor(get_turf(H))
 				if("cannon")
 					new /obj/item/weapon/gun/energy/lasercannon(get_turf(H))
 				if("doublebarrel")
@@ -105,8 +105,8 @@
 				if("staffdoor")
 					new /obj/item/weapon/gun/magic/staff/door(get_turf(H))
 				if("armor")
-					new /obj/item/clothing/suit/space/rig/wizard(get_turf(H))
-					new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(H))
+					new /obj/item/clothing/suit/space/hardsuit/wizard(get_turf(H))
+					new /obj/item/clothing/head/helmet/space/hardsuit/wizard(get_turf(H))
 				if("scrying")
 					new /obj/item/weapon/scrying(get_turf(H))
 					if (!(XRAY in H.mutations))

@@ -101,7 +101,7 @@
 
 		//paralysis += 1
 
-	show_message("\red The blob attacks you!")
+	show_message("<span class='userdanger'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 
@@ -117,8 +117,8 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
+				"<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		add_logs(M, src, "attacked", admin=0)
@@ -142,13 +142,12 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+			if (is_muzzled())
 				return
 			if (health > 0)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='danger'>[M.name] bites [src]!</span>"), 1)
+				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+						"<span class='userdanger'>[M.name] bites [src]!</span>")
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -163,9 +162,8 @@
 
 	if (health > -100)
 
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
+		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
+				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
 
 		var/damage = rand(1, 3)
 
@@ -209,9 +207,7 @@
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 
 		else
 			var/damage = rand(1, 9)
@@ -224,21 +220,19 @@
 						sleep(3)
 						step_away(src,M,15)
 				playsound(loc, "punch", 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has kicked []!</B>", M, src), 1)
+				visible_message("<span class='danger'>[M] has kicked [src]!</span>", \
+						"<span class='userdanger'>[M] has kicked [src]!</span>")
 				if ((stat != DEAD) && (damage > 4.9))
 					Weaken(rand(5,10))
-					for(var/mob/O in viewers(M, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
+					visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
+							"<span class='userdanger'>[M] has weakened [src]!</span>", \
+							"<span class='danger'>You hear someone fall.</span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to kick []!</B>", M, src), 1)
+				visible_message("<span class='danger'>[M] has attempted to kick [src]!</span>", \
+						"<span class='userdanger'>[M] has attempted to kick [src]!</span>")
 	return
 
 /mob/living/carbon/alien/larva/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -260,21 +254,18 @@
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M.name] nuzzles [] trying to wake it up!", src), 1)
+			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake it up!</span>")
 
 		else
 			if (health > 0)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				var/damage = rand(1, 3)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='danger'>[M.name] bites []!</span>", src), 1)
+				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+						"<span class='userdanger'>[M.name] bites [src]!</span>")
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				M << "\green <B>[name] is too injured for that.</B>"
+				M << "<span class='warning'>[name] is too injured for that.</span>"
 	return
 
 /mob/living/carbon/alien/larva/restrained()
@@ -301,3 +292,11 @@
 		var/mob/living/carbon/alien/humanoid/A = new(loc)
 		A.key = key
 		qdel(src) */
+
+/mob/living/carbon/alien/larva/stripPanelUnequip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
+
+/mob/living/carbon/alien/larva/stripPanelEquip(obj/item/what, mob/who)
+	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return

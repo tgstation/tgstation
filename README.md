@@ -97,6 +97,14 @@ All maps have their own code file that is in the base of the _maps directory. In
 
 If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all of the other map code files are unticked in the file tree, in the left side of the screen, and then make sure the map code file you want is ticked.
 
+##AWAY MISSIONS
+
+/tg/station supports loading away missions however they are disabled by default.
+
+Map files for away missions are located in the _maps/RandomZLevels directory. Each away mission includes it's own code definitions located in /code/modules/awaymissions/mission_code. These files must be included and compiled with the server beforehand otherwise the server will crash upon trying to load away missions that lack their code.
+
+To enable an away mission open fileList.txt in the _maps/RandomZLevels directory and uncomment one of the .dmm lines by removing the #. If more than one away mission is uncommented then the away mission loader will randomly select one the enabled ones to load.
+
 ##SQL SETUP
 
 The SQL backend for the library and stats tracking requires a 
@@ -105,7 +113,7 @@ schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are lo
 
 ##IRC BOT SETUP
 
-Included in the SVN is an IRC bot capable of relaying adminhelps to a specified
+Included in the repository is an IRC bot capable of relaying adminhelps to a specified
 IRC channel/server (thanks to Skibiliano).
 Instructions for bot setup are included in the /bot folder along with the script
 itself

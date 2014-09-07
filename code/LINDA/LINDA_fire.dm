@@ -144,9 +144,9 @@
 /obj/effect/hotspot/proc/Kill()
 	air_master.hotspots -= src
 	DestroyTurf()
-	garbage_collect()
+	qdel(src)
 
-/obj/effect/hotspot/proc/garbage_collect()
+/obj/effect/hotspot/Destroy()
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc
 		if(T.active_hotspot == src)

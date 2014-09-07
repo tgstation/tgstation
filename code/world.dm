@@ -1,7 +1,7 @@
 /world
 	mob = /mob/new_player
 	turf = /turf/space
-	area = /area
+	area = /area/space
 	view = "15x15"
 	cache_lifespan = 1
 
@@ -204,7 +204,7 @@
 				if(C.is_afk(INACTIVITY_KICK))
 					if(!istype(C.mob, /mob/dead))
 						log_access("AFK: [key_name(C)]")
-						C << "\red You have been inactive for more than 10 minutes and have been disconnected."
+						C << "<span class='danger'>You have been inactive for more than 10 minutes and have been disconnected.</span>"
 						del(C)
 #undef INACTIVITY_KICK
 

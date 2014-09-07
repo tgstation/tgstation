@@ -39,6 +39,15 @@
 	ce
 		item_color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
 
+/obj/item/clothing/gloves/black/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wirecutters))
+		user << "<span class='notice'>You snip the fingertips off of [src].</span>"
+		playsound(user.loc,'sound/items/Wirecutter.ogg', rand(10,50), 1)
+		var/obj/item/clothing/gloves/fingerless/fingerless_gloves = new /obj/item/clothing/gloves/fingerless(user.loc)
+		fingerless_gloves.icon_state = icon_state
+		qdel(src)
+	..()
+
 /obj/item/clothing/gloves/orange
 	name = "orange gloves"
 	desc = "A pair of gloves, they don't look special in any way."

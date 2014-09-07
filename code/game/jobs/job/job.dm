@@ -74,7 +74,13 @@
 	equip_backpack(H)
 
 	//Equip the rest of the gear
+	if(H.dna)
+		H.dna.species.before_equip_job(src, H)
+
 	equip_items(H)
+
+	if(H.dna)
+		H.dna.species.after_equip_job(src, H)
 
 	//Equip ID
 	var/obj/item/weapon/card/id/C = new default_id(H)

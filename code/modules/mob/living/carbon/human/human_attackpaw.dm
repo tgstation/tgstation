@@ -3,7 +3,7 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
+		if (is_muzzled())
 			return
 
 		visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
@@ -15,9 +15,5 @@
 		apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
 
 		for(var/datum/disease/D in M.viruses)
-			if(istype(D, /datum/disease/jungle_fever))
-				var/mob/living/carbon/human/H = src
-				if(src.stat != 2)
-					H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
-					contract_disease(D,1,0)
+			contract_disease(D,1,0)
 	return

@@ -62,14 +62,14 @@
 		else
 			msg += "[t_He] [t_is] wearing \icon[head] \a [head] on [t_his] head.\n"
 
-	//suit/armour
+	//suit/armor
 	if(wear_suit)
 		if(wear_suit.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_suit] [wear_suit.gender==PLURAL?"some":"a"] blood-stained [wear_suit.name]!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[wear_suit] \a [wear_suit].\n"
 
-		//suit/armour storage
+		//suit/armor storage
 		if(s_store)
 			if(s_store.blood_DNA)
 				msg += "<span class='warning'>[t_He] [t_is] carrying \icon[s_store] [s_store.gender==PLURAL?"some":"a"] blood-stained [s_store.name] on [t_his] [wear_suit.name]!</span>\n"
@@ -253,7 +253,7 @@
 				msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 		if(digitalcamo)
-			msg += "[t_He] [t_is] repulsively uncanny!\n"
+			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
 
 	if(istype(usr, /mob/living/carbon/human))

@@ -47,19 +47,19 @@
 
 	if(M.can_inject(user, 1))
 		user << "<span class='warning'>You stab [M] with the pen.</span>"
-		M << "\red You feel a tiny prick!"
+		M << "<span class='danger'>You feel a tiny prick!</span>"
 		. = 1
 
 	add_logs(user, M, "stabbed", object="[name]")
 
 /*
- * Parapens
+ * Sleepypens
  */
- /obj/item/weapon/pen/paralysis
+/obj/item/weapon/pen/sleepy
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
+/obj/item/weapon/pen/sleepy/attack(mob/living/M, mob/user)
 	if(!istype(M))	return
 
 	if(..())
@@ -68,9 +68,8 @@
 				reagents.trans_to(M, 50)
 
 
-/obj/item/weapon/pen/paralysis/New()
-	create_reagents(50)
-	reagents.add_reagent("zombiepowder", 10)
-	reagents.add_reagent("impedrezene", 25)
-	reagents.add_reagent("cryptobiolin", 15)
+/obj/item/weapon/pen/sleepy/New()
+	create_reagents(60)
+	reagents.add_reagent("stoxin", 30)
+	reagents.add_reagent("mutetoxin", 30)
 	..()

@@ -55,7 +55,14 @@
 			blobstart += loc
 			qdel(src)
 			return
-
+		if("secequipment")
+			secequipment += loc
+			qdel(src)
+			return
+		if("Deathsquad")
+			deathsquadspawn += loc
+			qdel(src)
+			return
 		if("xeno_spawn")
 			xeno_spawn += loc
 			qdel(src)

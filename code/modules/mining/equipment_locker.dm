@@ -3,12 +3,12 @@
 
 /obj/machinery/mineral/ore_redemption
 	name = "ore redemption machine"
-	desc = "A machine that accepts ore and instantly transforms it into workable material sheets, but cannot produce alloys such as Plasteel. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
+	desc = "A machine that accepts ore and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
 	density = 1
 	anchored = 1.0
-	input_dir = WEST
+	input_dir = NORTH
 	output_dir = SOUTH
 	req_access = list(access_mineral_storeroom)
 	var/stk_types = list()
@@ -18,6 +18,15 @@
 	var/points = 0
 	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("gold" = 20), ("silver" = 20), ("uranium" = 20), ("bananium" = 30), ("diamond" = 40), ("plasma" = 40))
 
+/obj/machinery/mineral/ore_redemption/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/ore_redemption(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/device/assembly/igniter(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
+
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
@@ -25,30 +34,36 @@
 			var/obj/item/stack/sheet/s = new processed_sheet(src,0)
 			s.amount = 0
 			stack_list[processed_sheet] = s
+			if(s.name != "glass" && s.name != "metal")		//we can get these from cargo anyway
+				var/msg = "[capitalize(s.name)] sheets are now available in the Cargo Bay."
+				for(var/obj/machinery/requests_console/D in allConsoles)
+					if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || (D.department == "Chemistry" && (s.name == "uranium" || s.name == "solid plasma")))
+						D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
 		storage.amount += 1 //Stack the sheets
 		O.loc = null //Let the old sheet garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()
-	var/turf/T = get_turf(get_step(src, input_dir))
-	var/i
-	if(T)
-		if(locate(/obj/item/weapon/ore) in T)
-			for (i = 0; i < 10; i++)
-				var/obj/item/weapon/ore/O = locate() in T
-				if(O)
-					process_sheet(O)
-				else
-					break
-		else
-			var/obj/structure/ore_box/B = locate() in T
-			if(B)
+	if(!panel_open) //If the machine is partially dissassembled, it should not process minerals
+		var/turf/T = get_turf(get_step(src, input_dir))
+		var/i
+		if(T)
+			if(locate(/obj/item/weapon/ore) in T)
 				for (i = 0; i < 10; i++)
-					var/obj/item/weapon/ore/O = locate() in B.contents
+					var/obj/item/weapon/ore/O = locate() in T
 					if(O)
 						process_sheet(O)
 					else
 						break
+			else
+				var/obj/structure/ore_box/B = locate() in T
+				if(B)
+					for (i = 0; i < 10; i++)
+						var/obj/item/weapon/ore/O = locate() in B.contents
+						if(O)
+							process_sheet(O)
+						else
+							break
 
 /obj/machinery/mineral/ore_redemption/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(istype(W,/obj/item/weapon/card/id))
@@ -58,6 +73,18 @@
 			I.loc = src
 			inserted_id = I
 			interact(user)
+		return
+	if(panel_open)
+		if(istype(W, /obj/item/weapon/crowbar))
+			for (var/obj/O in src.contents)
+				O.loc = src.loc //Drop item to the floor
+				O.layer = initial(O.layer)
+			default_deconstruction_crowbar(W)
+		return 1
+	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
+		updateUsrDialog()
+		return
+	..()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.refined_type)
@@ -90,6 +117,12 @@
 		s = stack_list[O]
 		if(s.amount > 0)
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
+
+	if((/obj/item/stack/sheet/metal in stack_list) && (/obj/item/stack/sheet/mineral/plasma in stack_list))
+		var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
+		var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
+		if(min(metalstack.amount, plasmastack.amount))
+			dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];plasteel=1'>Smelt</A><BR>")
 
 	dat += text("<HR><b>Mineral Value List:</b><BR>[get_ore_values()]")
 
@@ -139,11 +172,42 @@
 				unload_mineral(out)
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
+	if(href_list["plasteel"] && istype(inserted_id))
+		if(check_access(inserted_id))
+			if(!(/obj/item/stack/sheet/metal in stack_list)) return
+			if(!(/obj/item/stack/sheet/mineral/plasma in stack_list)) return
+			var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
+			var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
+
+			var/desired = input("How much?", "How much would you like to smelt?", 1) as num
+			var/obj/item/stack/sheet/plasteel/plasteelout = new
+			plasteelout.amount = min(desired,50,metalstack.amount,plasmastack.amount)
+			if(plasteelout.amount >= 1)
+				metalstack.amount -= plasteelout.amount
+				plasmastack.amount -= plasteelout.amount
+				unload_mineral(plasteelout)
+		else
+			usr << "<span class='warning'>Required access not found.</span>"
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/ore_redemption/ex_act()
-	return //So some chucklefuck doesn't ruin miners reward with an explosion
+/obj/machinery/mineral/ore_redemption/ex_act(severity)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	if(severity == 1)
+		if(prob(50))
+			for (var/obj/O in src.contents)
+				O.loc = src.loc //Drop item to the floor
+				O.layer = initial(O.layer)
+			qdel(src)
+	else if(severity == 2)
+		if(prob(25))
+			for (var/obj/O in src.contents)
+				O.loc = src.loc //Drop item to the floor
+				O.layer = initial(O.layer)
+			qdel(src)
+	return
 
 /**********************Mining Equipment Vendor**************************/
 
@@ -160,18 +224,18 @@
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    100),
 		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    150),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           150),
-		new /datum/data/mining_equipment("Stimulant pills",     /obj/item/weapon/storage/pill_bottle/stimulant, 				   350),
-		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                   250),
-		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                   500),
-		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			   500),
-		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                1000),
-		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			  5000),
-		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               500),
-		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                   500),
-		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 200),
+		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   500),
+		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   500),
+		new /datum/data/mining_equipment("Stimulant Pills",     /obj/item/weapon/storage/pill_bottle/stimulant, 				   350),
+		new /datum/data/mining_equipment("Sonic Jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               500),
+		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone/,                   500),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                        750),
-		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  1000),
+		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  1000),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               2000),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 200),
+		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
+		new /datum/data/mining_equipment("Point Card",    		/obj/item/weapon/card/mining_point_card,               			   500),
+		new /datum/data/mining_equipment("Space Cash",    		/obj/item/weapon/spacecash/c1000,                    			  5000),
 		)
 
 /datum/data/mining_equipment/
@@ -183,6 +247,16 @@
 	src.equipment_name = name
 	src.equipment_path = path
 	src.cost = cost
+
+/obj/machinery/mineral/equipment_vendor/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
 
 /obj/machinery/mineral/equipment_vendor/attack_hand(user as mob)
 	if(..())
@@ -221,7 +295,7 @@
 				usr.drop_item()
 				I.loc = src
 				inserted_id = I
-			else usr << "\red No valid ID."
+			else usr << "<span class='danger'>No valid ID.</span>"
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
@@ -246,6 +320,13 @@
 			inserted_id = C
 			interact(user)
 		return
+	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
+		updateUsrDialog()
+		return
+	if(panel_open)
+		if(istype(I, /obj/item/weapon/crowbar))
+			default_deconstruction_crowbar(I)
+		return 1
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
@@ -262,8 +343,16 @@
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_vendor/ex_act()
-	return
+/obj/machinery/mineral/equipment_vendor/ex_act(severity)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	if(severity == 1)
+		if(prob(50))
+			qdel(src)
+	else if(severity == 2)
+		if(prob(25))
+			qdel(src)
 
 /**********************Mining Equipment Vendor Items**************************/
 
@@ -457,7 +546,7 @@
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	stop_automated_movement_when_pulled = 1
 	mouse_opacity = 1
-	faction = "neutral"
+	faction = list("neutral")
 	a_intent = "harm"
 	min_oxy = 0
 	max_oxy = 0
@@ -601,12 +690,12 @@
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
-				M.faction = "neutral"
+				M.faction = list("neutral")
 				M.revive()
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
-						M.faction = "lazarus"
+						M.faction = list("lazarus")
 						H.friends += user
 						H.attack_same = 1
 						log_game("[user] has revived hostile mob [target] with a malfunctioning lazarus injector")

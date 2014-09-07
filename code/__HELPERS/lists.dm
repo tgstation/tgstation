@@ -31,7 +31,7 @@
 		return "[output][and_text][input[index]]"
 
 //Returns list element or null. Should prevent "index out of bounds" error.
-proc/listgetindex(list/L, index)
+/proc/listgetindex(list/L, index)
 	if(istype(L))
 		if(isnum(index))
 			if(IsInRange(index,1,L.len))
@@ -40,18 +40,18 @@ proc/listgetindex(list/L, index)
 			return L[index]
 	return
 
-proc/islist(list/L)
+/proc/islist(list/L)
 	if(istype(L))
 		return 1
 	return 0
 
 //Return either pick(list) or null if list is not of type /list or is empty
-proc/safepick(list/L)
+/proc/safepick(list/L)
 	if(istype(L) && L.len)
 		return pick(L)
 
 //Checks if the list is empty
-proc/isemptylist(list/L)
+/proc/isemptylist(list/L)
 	if(!L.len)
 		return 1
 	return 0
@@ -64,13 +64,13 @@ proc/isemptylist(list/L)
 	return 0
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
-proc/clearlist(list/list)
+/proc/clearlist(list/list)
 	if(istype(list))
 		list.len = 0
 	return
 
 //Removes any null entries from the list
-proc/listclearnulls(list/list)
+/proc/listclearnulls(list/list)
 	if(istype(list))
 		while(null in list)
 			list -= null
@@ -143,6 +143,26 @@ proc/listclearnulls(list/list)
 	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)
 		pos--
 	L.Insert(pos+1, thing)
+
+// Returns the next item in a list
+/proc/next_list_item(var/item, var/list/L)
+	var/i
+	i = L.Find(item)
+	if(i == L.len)
+		i = 1
+	else
+		i++
+	return L[i]
+
+// Returns the previous item in a list
+/proc/previous_list_item(var/item, var/list/L)
+	var/i
+	i = L.Find(item)
+	if(i == 1)
+		i = L.len
+	else
+		i--
+	return L[i]
 
 /*
  * Sorting

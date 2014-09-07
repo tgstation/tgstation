@@ -91,7 +91,7 @@
 		return
 	user.set_machine(src)
 	var/dat = "<TITLE>Telecommunication Traffic Control</TITLE><center><b>Telecommunications Traffic Control</b></center>"
-	dat += "<br><b><font color='[(auth ? "green" : "red")]'>[(auth ? "AUTHED" : "NOT AUTHED")]:</font></b> <A href='?src=\ref[src];auth=1'>[(!auth ? "Insert ID" : auth.registered_name)]</A><BR>"
+	dat += "<br><b><font color='[(auth ? "green" : "red")]'>[(auth ? "AUTHED" : "NOT AUTHED")]:</font></b> <A href='?src=\ref[src];auth=1'>[(!auth ? "Insert ID" : auth)]</A><BR>"
 	dat += "<A href='?src=\ref[src];print=1'>View System Log</A><HR>"
 
 	if(issilicon(user) || auth)
@@ -190,7 +190,7 @@
 		return
 
 	if(!auth && !issilicon(usr) && !emagged)
-		usr << "\red ACCESS DENIED."
+		usr << "<span class='danger'>ACCESS DENIED.</span>"
 		return
 
 	if(href_list["viewserver"])
@@ -277,7 +277,7 @@
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "\blue You you disable the security protocols"
+		user << "<span class='notice'>You you disable the security protocols.</span>"
 	else
 		..()
 	src.updateUsrDialog()

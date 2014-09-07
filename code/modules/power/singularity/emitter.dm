@@ -37,7 +37,6 @@
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
-		src.directwired = 1
 
 /obj/machinery/power/emitter/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
@@ -74,9 +73,9 @@
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 			update_icon()
 		else
-			user << "\red The controls are locked!"
+			user << "<span class='danger'>The controls are locked!</span>"
 	else
-		user << "\red The [src] needs to be firmly secured to the floor first."
+		user << "<span class='danger'>The [src] needs to be firmly secured to the floor first.</span>"
 		return 1
 
 
@@ -109,6 +108,8 @@
 				powered = 0
 				update_icon()
 				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+				log_game("Emitter lost power in ([x],[y],[z])")
+				message_admins("Emitter lost power in ([x],[y],[z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			return
 
 		src.last_shot = world.time
@@ -163,7 +164,7 @@
 					"You hear a ratchet")
 				src.anchored = 0
 			if(2)
-				user << "\red The [src.name] needs to be unwelded from the floor."
+				user << "<span class='danger'>The [src.name] needs to be unwelded from the floor.</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/weldingtool))
@@ -173,7 +174,7 @@
 			return
 		switch(state)
 			if(0)
-				user << "\red The [src.name] needs to be wrenched to the floor."
+				user << "<span class='danger'>The [src.name] needs to be wrenched to the floor.</span>"
 			if(1)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -185,9 +186,6 @@
 						state = 2
 						user << "You weld the [src] to the floor."
 						connect_to_network()
-						src.directwired = 1
-				else
-					user << "\red You need more welding fuel to complete this task."
 			if(2)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -199,14 +197,11 @@
 						state = 1
 						user << "You cut the [src] free from the floor."
 						disconnect_from_network()
-						src.directwired = 0
-				else
-					user << "\red You need more welding fuel to complete this task."
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
-			user << "\red The lock seems to be broken"
+			user << "<span class='danger'>The lock seems to be broken.</span>"
 			return
 		if(src.allowed(user))
 			if(active)
@@ -214,16 +209,16 @@
 				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "\red The controls can only be locked when the [src] is online"
+				user << "<span class='danger'>The controls can only be locked when the [src] is online.</span>"
 		else
-			user << "\red Access denied."
+			user << "<span class='danger'>Access denied.</span>"
 		return
 
 
 	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		locked = 0
 		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
+		user.visible_message("[user.name] emags the [src.name].","<span class='danger'>You short out the lock.</span>")
 		return
 
 	..()

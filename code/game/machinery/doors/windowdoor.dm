@@ -86,6 +86,10 @@
 	else
 		return 1
 
+//used in the AStar algorithm to determinate if the turf the door is on is passable
+/obj/machinery/door/window/CanAStarPass(var/obj/item/weapon/card/id/ID, var/to_dir)
+	return !density || (dir != to_dir) || check_access(ID)
+
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
@@ -150,10 +154,14 @@
 /obj/machinery/door/window/proc/take_damage(var/damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/stack/rods(src.loc, 2)
-		new /obj/item/stack/cable_coil(src.loc, 2)
+		var/debris = list(
+			new /obj/item/weapon/shard(src.loc),
+			new /obj/item/weapon/shard(src.loc),
+			new /obj/item/stack/rods(src.loc, 2),
+			new /obj/item/stack/cable_coil(src.loc, 2)
+			)
+		for(var/obj/fragment in debris)
+			transfer_fingerprints_to(fragment)
 		src.density = 0
 		qdel(src)
 		return
@@ -186,7 +194,7 @@
 /obj/machinery/door/window/proc/attack_generic(mob/user as mob, damage = 0)
 	if(src.operating)
 		return
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	user.visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", \
 				"<span class='userdanger'>[user] smashes against the [src.name].</span>")
@@ -223,6 +231,8 @@
 	if (src.operating)
 		return
 
+	add_fingerprint(user)
+
 	//Emags and ninja swords? You may pass.
 	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		src.operating = -1
@@ -241,7 +251,7 @@
 		open()
 		emagged = 1
 		return 1
-	
+
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
 	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(stat & NOPOWER)
@@ -253,15 +263,14 @@
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card) )
-		user.changeNext_move(8)
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("<span class='danger'>\The [src] has been hit by [user] with [I].</span>")
 		if(I.damtype == BURN || I.damtype == BRUTE)
 			take_damage(aforce)
 		return
-	
-	src.add_fingerprint(user)
+
 	if (!src.requiresID())
 		//don't care who they are or what they have, act as if they're NOTHING
 		user = null
@@ -284,7 +293,6 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
-	req_access = list(access_security)
 	var/id = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 

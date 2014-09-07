@@ -18,27 +18,35 @@
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
 	if (istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
+			user << "<span class='warning'>There is already a lattice.</span>"
 			return
-		var/obj/item/stack/rods/R = C
-		user << "\blue Constructing support lattice ..."
-		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-		ReplaceWithLattice()
-		R.use(1)
+		if (R.use(1))
+			user << "<span class='notice'>Constructing support lattice...</span>"
+			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+			ReplaceWithLattice()
+		else
+			user << "<span class='warning'>You need one rod to build lattice.</span>"
+			return
 		return
 
 	if (istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
-			qdel(L)
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-			S.build(src)
-			S.use(1)
+			if (S.use(1))
+				qdel(L)
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				user << "<span class='notice'>You build a floor.</span>"
+				S.build(src)
+			else
+				user << "<span class='warning'>You need one floor tile to build a floor.</span>"
+				return
 			return
 		else
-			user << "\red The plating is going to need some support."
+			user << "<span class='danger'>The plating is going to need some support. Place metal rods first.</span>"
 	return
 
 
@@ -46,7 +54,7 @@
 
 /turf/space/Entered(atom/movable/A as mob|obj)
 	if(movement_disabled)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		usr << "<span class='danger'>Movement is admin-disabled.</span>" //This is to identify lag problems
 		return
 	..()
 	if ((!(A) || src != A.loc))	return
@@ -63,34 +71,16 @@
 				qdel(A)
 				return
 
-			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-				qdel(A) //The disk's Del() proc ensures a new one is created
-				return
-
-			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
-			if(!isemptylist(disk_search))
-				if(istype(A, /mob/living))
-					var/mob/living/MM = A
-					if(MM.client && !MM.stat)
-						MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
-						if(MM.x <= TRANSITIONEDGE)
-							MM.inertia_dir = 4
-						else if(MM.x >= world.maxx -TRANSITIONEDGE)
-							MM.inertia_dir = 8
-						else if(MM.y <= TRANSITIONEDGE)
-							MM.inertia_dir = 1
-						else if(MM.y >= world.maxy -TRANSITIONEDGE)
-							MM.inertia_dir = 2
-					else
-						for(var/obj/item/weapon/disk/nuclear/N in disk_search)
-							qdel(N)//Make the disk respawn it is on a clientless mob or corpse
-				else
-					for(var/obj/item/weapon/disk/nuclear/N in disk_search)
-						qdel(N)//Make the disk respawn if it is floating on its own
-				return
-
 			var/move_to_z = src.z
 			var/safety = 1
+
+			//Check if it's a mob pulling an object
+			var/atom/movable/was_pulling = null
+			var/mob/living/MOB = null
+			if(isliving(A))
+				MOB = A
+				if(MOB.pulling)
+					was_pulling = MOB.pulling //Store the object to transition later
 
 			while(move_to_z == src.z)
 				var/move_to_z_str = pickweight(accessable_z_levels)
@@ -120,10 +110,10 @@
 				A.y = TRANSITIONEDGE + 1
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
-
-
-
 			spawn (0)
+				if(was_pulling && MOB) //Carry the object they were pulling over when they transition
+					was_pulling.loc = MOB.loc
+					MOB.start_pulling(was_pulling)
 				if ((A && A.loc))
 					A.loc.Entered(A)
 

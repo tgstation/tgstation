@@ -250,6 +250,10 @@ var/list/blood_splatter_icons = list()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/M)
+	if(ishuman(M) && M.dna)
+		var/mob/living/carbon/human/H = M
+		if(NOBLOOD in H.dna.species.specflags)
+			return 0
 	if(rejects_blood())
 		return 0
 	if(!istype(M))
@@ -270,7 +274,7 @@ var/list/blood_splatter_icons = list()
 		//try to find a pre-processed blood-splatter. otherwise, make a new one
 		var/index = blood_splatter_index()
 		var/icon/blood_splatter_icon = blood_splatter_icons[index]
-		if(!blood_splatter_icon )
+		if(!blood_splatter_icon)
 			blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 			blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 			blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant

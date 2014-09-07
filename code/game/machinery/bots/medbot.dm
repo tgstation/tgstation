@@ -49,7 +49,7 @@
 	treatment_tox = "anti_toxin"
 
 /obj/item/weapon/firstaid_arm_assembly
-	name = "first aid/robot arm assembly"
+	name = "incomplete medibot assembly."
 	desc = "A first aid kit with a robot arm permanently grafted to it."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "firstaid_arm"

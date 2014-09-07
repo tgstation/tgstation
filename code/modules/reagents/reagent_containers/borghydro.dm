@@ -135,7 +135,7 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 
-	reagent_ids = list("orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "beer", "whiskey", "vodka", "rum", "gin", "tequilla", "vermouth", "wine", "kahlua", "cognac", "ale")
+	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequilla", "vermouth", "wine", "kahlua", "cognac", "ale")
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/attack(mob/M as mob, mob/user as mob)
 	return //Can't inject stuff with a shaker, can we?
@@ -187,3 +187,15 @@ Borg Shaker
 
 	if(empty)
 		usr << "<span class='notice'>It is currently empty. Please allow some time for the synthesizer to produce more.</span>"
+
+/obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked
+	..()
+	name = "cyborg shaker"
+	desc = "Will mix drinks that knock them dead."
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "threemileislandglass"
+	possible_transfer_amounts = list(5,10,20)
+	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
+	recharge_time = 3
+
+	reagent_ids = list("beer2")

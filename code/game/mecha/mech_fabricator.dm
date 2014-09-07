@@ -73,7 +73,7 @@
 						/obj/item/mecha_parts/part/gygax_right_arm,
 						/obj/item/mecha_parts/part/gygax_left_leg,
 						/obj/item/mecha_parts/part/gygax_right_leg,
-						/obj/item/mecha_parts/part/gygax_armour
+						/obj/item/mecha_parts/part/gygax_armor
 					),
 	"Durand"=list(
 						/obj/item/mecha_parts/chassis/durand,
@@ -83,7 +83,7 @@
 						/obj/item/mecha_parts/part/durand_right_arm,
 						/obj/item/mecha_parts/part/durand_left_leg,
 						/obj/item/mecha_parts/part/durand_right_leg,
-						/obj/item/mecha_parts/part/durand_armour
+						/obj/item/mecha_parts/part/durand_armor
 					),
 	"H.O.N.K"=list(
 						/obj/item/mecha_parts/chassis/honker,
@@ -291,7 +291,7 @@
 /*
 	New()
 		..()
-		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000))
+		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armor","time"=600,"metal"=75000,"diamond"=10000))
 		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000))
 		src.remove_part_set("Gygax")
 		return
@@ -313,7 +313,7 @@
 /obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/obj/item/part)
 	var/i = 0
 	var/output
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))//The most efficient way to go about this. Not all objects have these vars, but if they don't then they CANNOT be made by the mech fab. Doing it this way reduces a major amount of typecasting and switches, while cutting down maintenece for them as well -Sieve
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))//The most efficient way to go about this. Not all objects have these vars, but if they don't then they CANNOT be made by the mech fab. Doing it this way reduces a major amount of typecasting and switches, while cutting down maintenece for them as well -Sieve
 		for(var/c in part:construction_cost)//The check should ensure that anything without the var doesn't make it to this point
 			if(c in resources)
 				output += "[i?" | ":null][get_resource_cost_w_coeff(part,c)] [c]"
@@ -334,7 +334,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/remove_resources(var/obj/item/part)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		for(var/resource in part:construction_cost)
 			if(resource in src.resources)
 				src.resources[resource] -= get_resource_cost_w_coeff(part,resource)
@@ -344,7 +344,7 @@
 /obj/machinery/mecha_part_fabricator/proc/check_resources(var/obj/item/part)
 //		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts) || istype(part,/obj/item/borg/upgrade))
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		for(var/resource in part:construction_cost)
 			if(resource in src.resources)
 				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
@@ -355,6 +355,11 @@
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(var/obj/item/part)
 	if(!part) return
+
+	 // critical exploit prevention, do not remove unless you replace it
+	if( (part.loc != src) || !(hasvar(part, "construction_time")) || !(hasvar(part, "construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
+		return
+
 	src.being_built = new part.type(src)
 	src.desc = "It's building \a [src.being_built]."
 	src.remove_resources(part)
@@ -407,7 +412,7 @@
 			return process_queue()
 		else
 			return
-	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")))//If it shouldn't be printed
+	if(!(hasvar(part, "construction_time")) || !(hasvar(part, "construction_cost")))//If it shouldn't be printed
 		remove_from_queue(1)//Take it out of the quene
 		return process_queue()//Then reprocess it
 	temp = null
@@ -434,7 +439,7 @@
 		for(var/i=1;i<=queue.len;i++)
 			var/obj/item/part = listgetindex(src.queue, i)
 			if(istype(part))
-				if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+				if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 					output += "<li[!check_resources(part)?" style='color: #f00;'":null]>[part.name] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
 				else//Prevents junk items from even appearing in the list, and they will be silently removed when the fab processes
 					remove_from_queue(i)//Trash it
@@ -524,7 +529,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		var/list/L = part_sets["Misc"]
 		if(L.Find(part.type))
 			return round(part:construction_cost[resource]*(resource_coeff/2)*resource_coeff_tech, roundto)             //hacky scary skeletons send shivers down your spine
@@ -534,7 +539,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/obj/item/part as obj, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		return round(part:construction_time*time_coeff*time_coeff_tech, roundto)
 	else
 		return 0
@@ -603,6 +608,20 @@
 	onclose(user, "mecha_fabricator")
 	return
 
+/obj/machinery/mecha_part_fabricator/proc/exploit_prevention(var/obj/Part, mob/user as mob, var/desc_exploit)
+// critical exploit prevention, feel free to improve or replace this, but do not remove it
+
+	if(!istype(Part) || !istype(user)) // sanity
+		return 1
+
+	if( (Part.loc != src) || !(hasvar(Part, "construction_time")) || !(hasvar(Part, "construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
+
+		var/turf/LOC = get_turf(user)
+		message_admins("[key_name_admin(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] <a href='?_src_=vars;Vars=\ref[Part]'>[Part]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
+		log_admin("EXPLOIT : [key_name(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] [Part] !")
+		return 1
+
+	return null
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
 	if(..())
@@ -617,13 +636,25 @@
 				src.part_set = tpart_set
 				screen = "parts"
 	if(href_list["part"])
-		var/list/part = filter.getObj("part")
+		var/obj/part = filter.getObj("part")
+
+		// critical exploit prevention, do not remove unless you replace it
+		if(src.exploit_prevention(part, usr))
+			return
+
 		if(!processing_queue)
 			build_part(part)
 		else
 			add_to_queue(part)
 	if(href_list["add_to_queue"])
-		add_to_queue(filter.getObj("add_to_queue"))
+		var/obj/part = filter.getObj("add_to_queue")
+
+		// critical exploit prevention, do not remove unless you replace it
+		if(src.exploit_prevention(part, usr))
+			return
+
+		add_to_queue(part)
+
 		return update_queue_on_page()
 	if(href_list["remove_from_queue"])
 		remove_from_queue(filter.getNum("remove_from_queue"))
@@ -657,11 +688,14 @@
 		queue = list()
 		return update_queue_on_page()
 	if(href_list["sync"])
-		queue = list()
 		src.sync()
-		return update_queue_on_page()
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")
+
+		// critical exploit prevention, do not remove unless you replace it
+		if(src.exploit_prevention(part, usr, 1))
+			return
+
 		if(part)
 			temp = {"<h1>[part] description:</h1>
 						[part.desc]<br>
@@ -758,7 +792,7 @@
 			default_deconstruction_crowbar(W)
 			return 1
 		else
-			user << "\red You can't load \the [src.name] while it's opened."
+			user << "<span class='danger'>You can't load \the [src.name] while it's opened.</span>"
 			return 1
 
 	if(istype(W, /obj/item/weapon/card/emag))

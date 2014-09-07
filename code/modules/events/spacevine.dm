@@ -248,7 +248,7 @@
 
 /obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!W || !user || !W.type) return
-	user.changeNext_move(8)
+	user.changeNext_move(CLICK_CD_MELEE)
 
 	var/override = 0
 

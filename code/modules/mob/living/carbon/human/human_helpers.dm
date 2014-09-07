@@ -118,5 +118,15 @@
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
 
+/mob/living/carbon/human/SpeciesCanConsume()
+	return 1 // Humans can eat, drink, and be forced to do so
+
 /mob/living/carbon/human/InCritical()
 	return (health <= config.health_threshold_crit && stat == UNCONSCIOUS)
+
+/mob/living/carbon/human/reagent_check(datum/reagent/R)
+	if(dna)
+		var/bypass = dna.species.handle_chemicals(R,src)
+		return bypass	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
+	else
+		return 0

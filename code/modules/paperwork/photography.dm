@@ -4,6 +4,7 @@
  *		Camera Film
  *		Photos
  *		Photo Albums
+ *		AI Photography
  */
 
 /*
@@ -30,6 +31,7 @@
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
+	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
 
 
 /obj/item/weapon/photo/attack_self(mob/user)
@@ -77,6 +79,11 @@
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
+/obj/item/weapon/photo/proc/photocreate(var/inicon, var/inimg, var/indesc, var/inblueprints)
+	icon = inicon
+	img = inimg
+	desc = indesc
+	blueprints = inblueprints
 
 /*
  * Photo album
@@ -106,27 +113,25 @@
 	var/pictures_left = 10
 	var/on = 1
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
-	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info
+	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info. Keeping this here allows us to share some procs w/ regualar camera
 
 
-/obj/item/device/camera/ai_camera //camera AI can take pictures with
-	name = "AI photo camera"
+/obj/item/device/camera/siliconcam //camera AI can take pictures with
+	name = "silicon photo camera"
 	var/in_camera_mode = 0
 
-	verb/picture()
-		set category ="AI Commands"
-		set name = "Take Image"
-		set src in usr
+/obj/item/device/camera/siliconcam/ai_camera //camera AI can take pictures with
+	name = "AI photo camera"
 
-		toggle_camera_mode()
+/obj/item/device/camera/siliconcam/robot_camera //camera cyborgs can take pictures with.. needs it's own because of verb CATEGORY >.>
+	name = "Cyborg photo camera"
 
-	verb/viewpicture()
-		set category ="AI Commands"
-		set name = "View Images"
-		set src in usr
+/obj/item/device/camera/siliconcam/robot_camera/verb/borgprinting()
+	set category ="Robot Commands"
+	set name = "Print Image"
+	set src in usr
 
-		viewpictures()
-
+	borgprint()
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -194,7 +199,7 @@
 
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/mob_detail
-	for(var/mob/living/carbon/A in the_turf)
+	for(var/mob/living/A in the_turf)
 		if(A.invisibility) continue
 		var/holding = null
 		if(A.l_hand || A.r_hand)
@@ -218,11 +223,11 @@
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
-			seen = hear(world.view, user.client.eye) //To make shooting through security cameras possible
+			seen = get_hear(world.view, user.client.eye) //To make shooting through security cameras possible
 		else
-			seen = hear(world.view, user)
+			seen = get_hear(world.view, user)
 	else
-		seen = hear(world.view, target)
+		seen = get_hear(world.view, target)
 
 	var/list/turfs = list()
 	for(var/turf/T in range(1, target))
@@ -237,10 +242,10 @@
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
-	if(!isAi)
+	if(!issilicon(user))
 		printpicture(user, temp, mobs, flag)
 	else
-		aipicture(user, temp, mobs, blueprints)
+		aipicture(user, temp, mobs, isAi, blueprints)
 
 
 
@@ -263,7 +268,7 @@
 		blueprints = 0
 
 
-/obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs) //instead of printing a picture like a regular camera would, we do this instead for the AI
+/obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs, isAi) //instead of printing a picture like a regular camera would, we do this instead for the AI
 
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
@@ -280,7 +285,11 @@
 		injectblueprints = 1
 		blueprints = 0
 
-	injectaialbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
+	if(isAi)
+		injectaialbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
+	else
+		injectmasteralbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
+
 
 
 /datum/picture
@@ -293,7 +302,7 @@
 	for(var/datum/picture in src.aipictures)
 		numberer++
 	var/datum/picture/P = new()
-	P.fields["name"] = "Image [numberer]"
+	P.fields["name"] = "Image [numberer] (taken by [src.loc.name])"
 	P.fields["icon"] = icon
 	P.fields["img"] = img
 	P.fields["desc"] = desc
@@ -302,33 +311,65 @@
 	P.fields["blueprints"] = blueprintsinject
 
 	aipictures += P
-	usr << "<FONT COLOR=blue><B>Image recorded</B>"	//feedback to the AI player that the picture was taken
+	usr << "<span class='unconscious'>Image recorded</span>"	//feedback to the AI player that the picture was taken
+
+/obj/item/device/camera/proc/injectmasteralbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
+	var/numberer = 1
+	var/mob/living/silicon/robot/C = src.loc
+	if(C.connected_ai)
+		for(var/datum/picture in C.connected_ai.aicamera.aipictures)
+			numberer++
+		var/datum/picture/P = new()
+		P.fields["name"] = "Image [numberer] (taken by [src.loc.name])"
+		P.fields["icon"] = icon
+		P.fields["img"] = img
+		P.fields["desc"] = desc
+		P.fields["pixel_x"] = pixel_x
+		P.fields["pixel_y"] = pixel_y
+		P.fields["blueprints"] = blueprintsinject
+
+		C.connected_ai.aicamera.aipictures += P
+		usr << "<span class='unconscious'>Image recorded and saved to remote database</span>"	//feedback to the Cyborg player that the picture was taken
+	else
+		injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject)
 
 
-/obj/item/device/camera/ai_camera/proc/viewpictures() //AI proc for viewing pictures they have taken
+obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
 	var/list/nametemp = list()
 	var/find
 	var/datum/picture/selection
-	if(src.aipictures.len == 0)
-		usr << "<FONT COLOR=red><B>No images saved</B>"
+	if(targetloc.aipictures.len == 0)
+		usr << "<span class='userdanger'>No images saved</span>"
 		return
-	for(var/datum/picture/t in src.aipictures)
+	for(var/datum/picture/t in targetloc.aipictures)
 		nametemp += t.fields["name"]
 	find = input("Select image (numbered in order taken)") in nametemp
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-	for(var/datum/picture/q in src.aipictures)
+	for(var/datum/picture/q in targetloc.aipictures)
 		if(q.fields["name"] == find)
 			selection = q
 			break  	// just in case some AI decides to take 10 thousand pictures in a round
-	P.icon = selection.fields["icon"]
-	P.img = selection.fields["img"]
-	P.desc = selection.fields["desc"]
+	P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
 	P.pixel_x = selection.fields["pixel_x"]
 	P.pixel_y = selection.fields["pixel_y"]
 
 	P.show(usr)
 	usr << P.desc
-	qdel(P)    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
+	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
+
+obj/item/device/camera/siliconcam/proc/viewpictures(user)
+	if(isrobot(user)) // Cyborg
+		var/mob/living/silicon/robot/C = src.loc
+		var/obj/item/device/camera/siliconcam/Cinfo
+		if(C.connected_ai)
+			Cinfo = C.connected_ai.aicamera
+			viewpichelper(Cinfo)
+		else
+			Cinfo = C.aicamera
+			viewpichelper(Cinfo)
+	else // AI
+		var/Ainfo = src
+		viewpichelper(Ainfo)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || ismob(target.loc)) return
@@ -344,16 +385,47 @@
 		icon_state = "camera"
 		on = 1
 
-/obj/item/device/camera/ai_camera/proc/toggle_camera_mode()
+/obj/item/device/camera/siliconcam/proc/toggle_camera_mode()
 	if(in_camera_mode)
 		camera_mode_off()
 	else
 		camera_mode_on()
 
-/obj/item/device/camera/ai_camera/proc/camera_mode_off()
+/obj/item/device/camera/siliconcam/proc/camera_mode_off()
 	src.in_camera_mode = 0
 	usr << "<B>Camera Mode deactivated</B>"
 
-/obj/item/device/camera/ai_camera/proc/camera_mode_on()
+/obj/item/device/camera/siliconcam/proc/camera_mode_on()
 	src.in_camera_mode = 1
 	usr << "<B>Camera Mode activated</B>"
+
+obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
+	var/list/nametemp = list()
+	var/find
+	var/datum/picture/selection
+	var/mob/living/silicon/robot/C = src.loc
+	var/obj/item/device/camera/siliconcam/targetcam = null
+	if(C.toner < 20)
+		usr << "Insufficent toner to print image."
+		return
+	if(C.connected_ai)
+		targetcam = C.connected_ai.aicamera
+	else
+		targetcam = C.aicamera
+	if(targetcam.aipictures.len == 0)
+		usr << "<span class='userdanger'>No images saved</span>"
+		return
+	for(var/datum/picture/t in targetcam.aipictures)
+		nametemp += t.fields["name"]
+	find = input("Select image (numbered in order taken)") in nametemp
+	for(var/datum/picture/q in targetcam.aipictures)
+		if(q.fields["name"] == find)
+			selection = q
+			break
+	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(C.loc)
+	p.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"], selection.fields["blueprints"])
+	p.pixel_x = rand(-10, 10)
+	p.pixel_y = rand(-10, 10)
+	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
+	visible_message("[C.name] spits out a photograph from a narrow slot on it's chassis.")
+	usr << "You print a photograph."

@@ -59,13 +59,13 @@
 
 /obj/item/clothing/suit/wizrobe/magusblue
 	name = "\improper Magus robe"
-	desc = "A set of armoured robes that seem to radiate a dark power"
+	desc = "A set of armored robes that seem to radiate a dark power"
 	icon_state = "magusblue"
 	item_state = "magusblue"
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
-	desc = "A set of armoured robes that seem to radiate a dark power"
+	desc = "A set of armored robes that seem to radiate a dark power"
 	icon_state = "magusred"
 	item_state = "magusred"
 

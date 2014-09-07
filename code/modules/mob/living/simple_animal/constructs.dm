@@ -9,6 +9,7 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 	icon_dead = "shade_dead"
+	icon = 'icons/mob/mob.dmi'
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -23,8 +24,9 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
-	faction = "cult"
+	faction = list("cult")
 	var/list/construct_spells = list()
+	var/playstyle_string = "<B>You are a generic construct! Your job is to not exist.</B>"
 
 /mob/living/simple_animal/construct/New()
 	..()
@@ -115,11 +117,10 @@
 
 
 
-/mob/living/simple_animal/construct/armoured
+/mob/living/simple_animal/construct/armored
 	name = "Juggernaut"
 	real_name = "Juggernaut"
-	desc = "A possessed suit of armour driven by the will of the restless dead"
-	icon = 'icons/mob/mob.dmi'
+	desc = "A possessed suit of armor driven by the will of the restless dead."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
 	maxHealth = 250
@@ -128,16 +129,17 @@
 	harm_intent_damage = 0
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	attacktext = "smashes their armoured gauntlet into"
+	attacktext = "smashes their armored gauntlet into"
 	speed = 3
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
 	force_threshold = 11
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
+	playstyle_string = "<B>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
+						create shield walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
 
-
-/mob/living/simple_animal/construct/armoured/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/construct/armored/bullet_act(var/obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
@@ -174,7 +176,6 @@
 	name = "Wraith"
 	real_name = "Wraith"
 	desc = "A wicked bladed shell contraption piloted by a bound spirit"
-	icon = 'icons/mob/mob.dmi'
 	icon_state = "floating"
 	icon_living = "floating"
 	maxHealth = 75
@@ -186,18 +187,16 @@
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
+	playstyle_string = "<B>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
 
 
 
 /////////////////////////////Artificer/////////////////////////
 
-
-
 /mob/living/simple_animal/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
 	desc = "A bulbous construct dedicated to building and maintaining The Cult of Nar-Sie's armies"
-	icon = 'icons/mob/mob.dmi'
 	icon_state = "artificer"
 	icon_living = "artificer"
 	maxHealth = 50
@@ -215,60 +214,31 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+	playstyle_string = "<B>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
+						use magic missile, repair allied constructs (by clicking on them), \
+						</B><I>and most important of all create new constructs</I><B> \
+						(Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
 
+/////////////////////////////Harvester/////////////////////////
 
-/////////////////////////////Behemoth/////////////////////////
+/mob/living/simple_animal/construct/harvester
+	name = "Harvester"
+	real_name = "Harvester"
+	desc = "A harbinger of Nar-Sie's enlightenment. It'll be all over soon."
+	icon_state = "harvester"
+	icon_living = "harvester"
+	maxHealth = 60
+	health = 60
+	melee_damage_lower = 1
+	melee_damage_upper = 5
+	attacktext = "prods"
+	speed = 0
+	environment_smash = 1
+	see_in_dark = 7
+	attack_sound = 'sound/weapons/tap.ogg'
+	construct_spells = list(/obj/effect/proc_holder/spell/targeted/smoke/disable)
+	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
+						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
-
-/mob/living/simple_animal/construct/behemoth
-	name = "Behemoth"
-	real_name = "Behemoth"
-	desc = "The pinnacle of occult technology, Behemoths are the ultimate weapon in the Cult of Nar-Sie's arsenal."
-	icon = 'icons/mob/mob.dmi'
-	icon_state = "behemoth"
-	icon_living = "behemoth"
-	maxHealth = 750
-	health = 750
-	speak_emote = list("rumbles")
-	response_harm   = "harmlessly punches"
-	harm_intent_damage = 0
-	melee_damage_lower = 50
-	melee_damage_upper = 50
-	attacktext = "brutally crushes"
-	speed = 5
-	environment_smash = 2
-	attack_sound = 'sound/weapons/punch4.ogg'
-	force_threshold = 11
-	var/energy = 0
-	var/max_energy = 1000
-
-
-////////////////Powers//////////////////
-
-
-/*
-/client/proc/summon_cultist()
-	set category = "Behemoth"
-	set name = "Summon Cultist (300)"
-	set desc = "Teleport a cultist to your location"
-	if (istype(usr,/mob/living/simple_animal/constructbehemoth))
-
-		if(usr.energy<300)
-			usr << "\red You do not have enough power stored!"
-			return
-
-		if(usr.stat)
-			return
-
-		usr.energy -= 300
-	var/list/mob/living/cultists = new
-	for(var/datum/mind/H in ticker.mode.cult)
-		if (istype(H.current,/mob/living))
-			cultists+=H.current
-			var/mob/cultist = input("Choose the one who you want to summon", "Followers of Geometer") as null|anything in (cultists - usr)
-			if(!cultist)
-				return
-			if (cultist == usr) //just to be sure.
-				return
-			cultist.loc = usr.loc
-			usr.visible_message("/red [cultist] appears in a flash of red light as [usr] glows with power")*/
+/mob/living/simple_animal/construct/harvester/Process_Spacemove(var/check_drift = 0)
+	return 1

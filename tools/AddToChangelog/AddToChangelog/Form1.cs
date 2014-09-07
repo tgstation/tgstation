@@ -190,7 +190,7 @@ namespace AddToChangelog
 
             string[] changelogFile = null;
 
-            changelogFile = editBox.Text.Split('\n');
+            changelogFile = Regex.Split(editBox.Text, "\r\n");
 
             if (changelogFile != null)
             {
@@ -218,7 +218,7 @@ namespace AddToChangelog
                 }
                 else
                 {
-                    editBox.Text = String.Join("\n", changelogFile);
+                    editBox.Text = String.Join("\r\n", changelogFile);
                     ScrollToMarker();
                 }
   

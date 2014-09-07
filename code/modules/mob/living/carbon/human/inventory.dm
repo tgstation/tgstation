@@ -1,153 +1,156 @@
 /mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = 0)
-	switch(slot)
-		if(slot_l_hand)
-			if(l_hand)
-				return 0
-			return 1
-		if(slot_r_hand)
-			if(r_hand)
-				return 0
-			return 1
-		if(slot_wear_mask)
-			if(wear_mask)
-				return 0
-			if( !(I.slot_flags & SLOT_MASK) )
-				return 0
-			return 1
-		if(slot_back)
-			if(back)
-				return 0
-			if( !(I.slot_flags & SLOT_BACK) )
-				return 0
-			return 1
-		if(slot_wear_suit)
-			if(wear_suit)
-				return 0
-			if( !(I.slot_flags & SLOT_OCLOTHING) )
-				return 0
-			return 1
-		if(slot_gloves)
-			if(gloves)
-				return 0
-			if( !(I.slot_flags & SLOT_GLOVES) )
-				return 0
-			return 1
-		if(slot_shoes)
-			if(shoes)
-				return 0
-			if( !(I.slot_flags & SLOT_FEET) )
-				return 0
-			return 1
-		if(slot_belt)
-			if(belt)
-				return 0
-			if(!w_uniform)
-				if(!disable_warning)
-					src << "\red You need a jumpsuit before you can attach this [I.name]."
-				return 0
-			if( !(I.slot_flags & SLOT_BELT) )
-				return
-			return 1
-		if(slot_glasses)
-			if(glasses)
-				return 0
-			if( !(I.slot_flags & SLOT_EYES) )
-				return 0
-			return 1
-		if(slot_head)
-			if(head)
-				return 0
-			if( !(I.slot_flags & SLOT_HEAD) )
-				return 0
-			return 1
-		if(slot_ears)
-			if(ears)
-				return 0
-			if( !(I.slot_flags & SLOT_EARS) )
-				return 0
-			return 1
-		if(slot_w_uniform)
-			if(w_uniform)
-				return 0
-			if( !(I.slot_flags & SLOT_ICLOTHING) )
-				return 0
-			return 1
-		if(slot_wear_id)
-			if(wear_id)
-				return 0
-			if(!w_uniform)
-				if(!disable_warning)
-					src << "\red You need a jumpsuit before you can attach this [I.name]."
-				return 0
-			if( !(I.slot_flags & SLOT_ID) )
-				return 0
-			return 1
-		if(slot_l_store)
-			if(I.flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
-				return 0
-			if(l_store)
-				return 0
-			if(!w_uniform)
-				if(!disable_warning)
-					src << "\red You need a jumpsuit before you can attach this [I.name]."
-				return 0
-			if(I.slot_flags & SLOT_DENYPOCKET)
-				return
-			if( I.w_class <= 2 || (I.slot_flags & SLOT_POCKET) )
+	if(dna)
+		return dna.species.can_equip(I, slot, disable_warning, src)
+	else
+		switch(slot)
+			if(slot_l_hand)
+				if(l_hand)
+					return 0
 				return 1
-		if(slot_r_store)
-			if(I.flags & NODROP)
-				return 0
-			if(r_store)
-				return 0
-			if(!w_uniform)
-				if(!disable_warning)
-					src << "\red You need a jumpsuit before you can attach this [I.name]."
-				return 0
-			if(I.slot_flags & SLOT_DENYPOCKET)
-				return 0
-			if( I.w_class <= 2 || (I.slot_flags & SLOT_POCKET) )
+			if(slot_r_hand)
+				if(r_hand)
+					return 0
 				return 1
-			return 0
-		if(slot_s_store)
-			if(I.flags & NODROP) //Suit storage NODROP items drop if you take a suit off, this is to prevent people exploiting this.
-				return 0
-			if(s_store)
-				return 0
-			if(!wear_suit)
-				if(!disable_warning)
-					src << "\red You need a suit before you can attach this [I.name]."
-				return 0
-			if(!wear_suit.allowed)
-				if(!disable_warning)
-					usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."  //should be src?
-				return 0
-			if(I.w_class > 4)
-				if(!disable_warning)
-					usr << "The [I.name] is too big to attach."  //should be src?
-				return 0
-			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, wear_suit.allowed) )  //ugly and un-polymorphic.
+			if(slot_wear_mask)
+				if(wear_mask)
+					return 0
+				if( !(I.slot_flags & SLOT_MASK) )
+					return 0
 				return 1
-			return 0
-		if(slot_handcuffed)
-			if(handcuffed)
-				return 0
-			if(!istype(I, /obj/item/weapon/handcuffs))
-				return 0
-			return 1
-		if(slot_legcuffed)
-			if(legcuffed)
-				return 0
-			if(!istype(I, /obj/item/weapon/legcuffs))
-				return 0
-			return 1
-		if(slot_in_backpack)
-			if (back && istype(back, /obj/item/weapon/storage/backpack))
-				var/obj/item/weapon/storage/backpack/B = back
-				if(B.contents.len < B.storage_slots && I.w_class <= B.max_w_class)
+			if(slot_back)
+				if(back)
+					return 0
+				if( !(I.slot_flags & SLOT_BACK) )
+					return 0
+				return 1
+			if(slot_wear_suit)
+				if(wear_suit)
+					return 0
+				if( !(I.slot_flags & SLOT_OCLOTHING) )
+					return 0
+				return 1
+			if(slot_gloves)
+				if(gloves)
+					return 0
+				if( !(I.slot_flags & SLOT_GLOVES) )
+					return 0
+				return 1
+			if(slot_shoes)
+				if(shoes)
+					return 0
+				if( !(I.slot_flags & SLOT_FEET) )
+					return 0
+				return 1
+			if(slot_belt)
+				if(belt)
+					return 0
+				if(!w_uniform)
+					if(!disable_warning)
+						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					return 0
+				if( !(I.slot_flags & SLOT_BELT) )
+					return
+				return 1
+			if(slot_glasses)
+				if(glasses)
+					return 0
+				if( !(I.slot_flags & SLOT_EYES) )
+					return 0
+				return 1
+			if(slot_head)
+				if(head)
+					return 0
+				if( !(I.slot_flags & SLOT_HEAD) )
+					return 0
+				return 1
+			if(slot_ears)
+				if(ears)
+					return 0
+				if( !(I.slot_flags & SLOT_EARS) )
+					return 0
+				return 1
+			if(slot_w_uniform)
+				if(w_uniform)
+					return 0
+				if( !(I.slot_flags & SLOT_ICLOTHING) )
+					return 0
+				return 1
+			if(slot_wear_id)
+				if(wear_id)
+					return 0
+				if(!w_uniform)
+					if(!disable_warning)
+						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					return 0
+				if( !(I.slot_flags & SLOT_ID) )
+					return 0
+				return 1
+			if(slot_l_store)
+				if(I.flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
+					return 0
+				if(l_store)
+					return 0
+				if(!w_uniform)
+					if(!disable_warning)
+						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					return 0
+				if(I.slot_flags & SLOT_DENYPOCKET)
+					return
+				if( I.w_class <= 2 || (I.slot_flags & SLOT_POCKET) )
 					return 1
-			return 0
-	return 0 //Unsupported slot
+			if(slot_r_store)
+				if(I.flags & NODROP)
+					return 0
+				if(r_store)
+					return 0
+				if(!w_uniform)
+					if(!disable_warning)
+						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					return 0
+				if(I.slot_flags & SLOT_DENYPOCKET)
+					return 0
+				if( I.w_class <= 2 || (I.slot_flags & SLOT_POCKET) )
+					return 1
+				return 0
+			if(slot_s_store)
+				if(I.flags & NODROP) //Suit storage NODROP items drop if you take a suit off, this is to prevent people exploiting this.
+					return 0
+				if(s_store)
+					return 0
+				if(!wear_suit)
+					if(!disable_warning)
+						src << "<span class='danger'>You need a suit before you can attach this [I.name].</span>"
+					return 0
+				if(!wear_suit.allowed)
+					if(!disable_warning)
+						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."  //should be src?
+					return 0
+				if(I.w_class > 4)
+					if(!disable_warning)
+						usr << "The [I.name] is too big to attach."  //should be src?
+					return 0
+				if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, wear_suit.allowed) )  //ugly and un-polymorphic.
+					return 1
+				return 0
+			if(slot_handcuffed)
+				if(handcuffed)
+					return 0
+				if(!istype(I, /obj/item/weapon/handcuffs))
+					return 0
+				return 1
+			if(slot_legcuffed)
+				if(legcuffed)
+					return 0
+				if(!istype(I, /obj/item/weapon/legcuffs))
+					return 0
+				return 1
+			if(slot_in_backpack)
+				if (back && istype(back, /obj/item/weapon/storage/backpack))
+					var/obj/item/weapon/storage/backpack/B = back
+					if(B.contents.len < B.storage_slots && I.w_class <= B.max_w_class)
+						return 1
+				return 0
+		return 0 //Unsupported slot
 
 
 
@@ -180,7 +183,7 @@
 				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))
 					S.handle_item_insertion(I)
 				else
-					H << "\red You are unable to equip that."
+					H << "<span class='danger'>You are unable to equip that.</span>"
 
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
@@ -382,6 +385,5 @@
 			I.loc = back
 			return
 		else
-			src << "\red You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"
+			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return
-

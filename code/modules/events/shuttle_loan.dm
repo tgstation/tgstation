@@ -15,6 +15,7 @@
 	var/bonus_points = 100
 	var/thanks_msg = "Have some supply points as thanks (the shuttle will be returned in 5 minutes)."
 	var/dispatched = 0
+	announceWhen	= 1
 
 /datum/round_event/shuttle_loan/start()
 	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY)

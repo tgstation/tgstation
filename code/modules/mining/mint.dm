@@ -25,28 +25,28 @@
 	var/turf/T = get_step(src,input_dir)
 	if(T)
 		for(var/obj/item/stack/sheet/O in T)
-			if (istype(O,/obj/item/stack/sheet/mineral/gold))
+			if (istype(O, /obj/item/stack/sheet/mineral/gold))
 				amt_gold += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/silver))
+			if (istype(O, /obj/item/stack/sheet/mineral/silver))
 				amt_silver += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/diamond))
+			if (istype(O, /obj/item/stack/sheet/mineral/diamond))
 				amt_diamond += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/plasma))
+			if (istype(O, /obj/item/stack/sheet/mineral/plasma))
 				amt_plasma += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/uranium))
+			if (istype(O, /obj/item/stack/sheet/mineral/uranium))
 				amt_uranium += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/metal))
+			if (istype(O, /obj/item/stack/sheet/metal))
 				amt_iron += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/clown))
+			if (istype(O, /obj/item/stack/sheet/mineral/clown))
 				amt_clown += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/adamantine))
+			if (istype(O, /obj/item/stack/sheet/mineral/adamantine))
 				amt_adamantine += 100 * O.amount
 				O.loc = null //Commented out for now. -Durandan
 			return
@@ -117,7 +117,7 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(processing==1)
-		usr << "\blue The machine is processing."
+		usr << "<span class='notice'>The machine is processing.</span>"
 		return
 	if(href_list["choose"])
 		chosen = href_list["choose"]

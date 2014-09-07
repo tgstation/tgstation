@@ -1,5 +1,8 @@
-## Server name: This appears at the top of the screen in-game. In this case it will read "tgstation: station_name" where station_name is the randomly generated name of the station for the round. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice
+## Server name: This appears at the top of the screen in-game. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice
 # SERVERNAME tgstation
+
+## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
+STATIONNAME Space Station 13
 
 # Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
@@ -111,10 +114,16 @@ GUEST_BAN
 # SERVER ss13.example.com:2506
 
 ## forum address
-# FORUMURL http://justanotherday.example.com
+# FORUMURL http://tgstation13.org/phpBB/index.php
 
 ## Wiki address
 # WIKIURL http://www.tgstation13.org/wiki
+
+##Rules address
+# RULESURL http://www.tgstation13.org/wiki/Rules
+
+##Github address
+# GITHUBURL https://www.github.com/tgstation/-tg-station
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com

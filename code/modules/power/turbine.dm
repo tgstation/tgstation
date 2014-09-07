@@ -49,7 +49,6 @@
 	density = 1
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
-	directwired = 1
 	var/turf/simulated/outturf
 	var/lastgen
 	var/productivity = 1

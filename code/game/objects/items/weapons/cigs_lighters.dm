@@ -30,29 +30,44 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/turf/location = get_turf(src)
 	smoketime--
 	if(smoketime < 1)
+		matchburnout()
+		return
+	if(location)
+		location.hotspot_expose(700, 5)
+		return
+
+/obj/item/weapon/match/fire_act()
+	matchignite()
+
+/obj/item/weapon/match/proc/matchignite()
+	if(lit == 0)
+		lit = 1
+		icon_state = "match_lit"
+		damtype = "fire"
+		force = 3
+		hitsound = 'sound/items/welder.ogg'
+		item_state = "cigon"
+		name = "lit match"
+		desc = "A match. This one is lit."
+		attack_verb = list("burnt","singed")
+		processing_objects.Add(src)
+		update_icon()
+	return
+
+/obj/item/weapon/match/proc/matchburnout()
+	if(lit == 1)
 		lit = -1
 		damtype = "brute"
-		force = 0
+		force = initial(force)
 		icon_state = "match_burnt"
 		item_state = "cigoff"
 		name = "burnt match"
 		desc = "A match. This one has seen better days."
 		attack_verb = null
 		processing_objects.Remove(src)
-		return
-	if(location)
-		location.hotspot_expose(700, 5)
-		return
 
 /obj/item/weapon/match/dropped(mob/user as mob)
-	if(lit == 1)
-		lit = -1
-		damtype = "brute"
-		icon_state = "match_burnt"
-		item_state = "cigoff"
-		name = "burnt match"
-		desc = "A match. This one has seen better days."
-		attack_verb = null
+	matchburnout()
 	return ..()
 
 //////////////////
@@ -78,7 +93,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/New()
 	..()
 	flags |= NOREACT // so it doesn't react until you light it
-	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
+	create_reagents(chem_volume) // making the cigarette a chemical holder with a maximum volume of 15
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -118,8 +133,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/obj/item/candle/C = W
 		if(C.lit)
 			light("<span class='notice'>[user] lights their [name] with [W].</span>")
+	else if(istype(W, /obj/item/device/flashlight/flare))
+		var/obj/item/device/flashlight/flare/F = W
+		if(F.on)
+			light("<span class='notice'>[user] lights their [name] with [W] like a real badass.</span>")
 	return
-
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user as mob, proximity)
 	if(!proximity) return
@@ -134,15 +152,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user << "<span class='notice'>[src] is full.</span>"
 
 
-/obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights the [name].")
+/obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = null)
 	if(!src.lit)
 		src.lit = 1
 		name = "lit [name]"
-		if(!istype(src, /obj/item/clothing/mask/cigarette/pipe)) //can't burn people with pipes
-			attack_verb = list("burnt", "singed")
-			hitsound = 'sound/items/welder.ogg'
-			damtype = "fire"
-			force = 4
+		attack_verb = list("burnt", "singed")
+		hitsound = 'sound/items/welder.ogg'
+		damtype = "fire"
+		force = 4
 		if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
 			var/datum/effect/effect/system/reagents_explosion/e = new()
 			e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
@@ -165,8 +182,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.handle_reactions()
 		icon_state = icon_on
 		item_state = icon_on
-		var/turf/T = get_turf(src)
-		T.visible_message(flavor_text)
+		if(flavor_text)
+			var/turf/T = get_turf(src)
+			T.visible_message(flavor_text)
 		processing_objects.Add(src)
 
 		//can't think of any other way to update the overlays :<
@@ -176,6 +194,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			M.update_inv_l_hand(0)
 			M.update_inv_r_hand(0)
 
+
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
@@ -183,10 +202,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			if(prob(15)) // so it's not an instarape in case of acid
 				reagents.reaction(C, INGEST)
 			reagents.trans_to(C, REAGENTS_METABOLISM)
-		else
-			reagents.remove_any(REAGENTS_METABOLISM)
-	else
-		reagents.remove_any(REAGENTS_METABOLISM)
+			return
+	reagents.remove_any(REAGENTS_METABOLISM)
+
 
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
@@ -230,6 +248,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else
 		return ..()
+
+/obj/item/clothing/mask/cigarette/fire_act()
+	light()
 
 /obj/item/clothing/mask/cigarette/rollie
 	name = "rollie"
@@ -536,27 +557,3 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user << "<span class='warning'>You need to dry this first.</span>"
 	else
 		..()
-
-/obj/item/weapon/rollingpaperpack
-	name = "rolling paper pack"
-	desc = "A pack of NanoTrasen brand rolling papers."
-	icon = 'icons/obj/cigarettes.dmi'
-	icon_state = "cig_paper_pack"
-	w_class = 1
-	var/papers = 25
-
-/obj/item/weapon/rollingpaperpack/attack_self(mob/user)
-	if(papers > 1)
-		var/obj/item/weapon/rollingpaper/P = new /obj/item/weapon/rollingpaper(user.loc)
-		user.put_in_inactive_hand(P)
-		user << "You take a paper out of the pack."
-		papers --
-	else
-		var/obj/item/weapon/rollingpaper/P = new /obj/item/weapon/rollingpaper(user.loc)
-		user.put_in_inactive_hand(P)
-		user << "You take the last paper out of the pack, and throw the pack away."
-		qdel(src)
-
-/obj/item/weapon/rollingpaperpack/examine()
-	..()
-	usr << "There are [src.papers] left"

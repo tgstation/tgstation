@@ -187,7 +187,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(src.emagged && prob(5)) //Spawns foam!
 		visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
 		new /obj/effect/effect/foam(src.loc)
-		
+
 	if(!src.target || src.target == null)
 		for (var/obj/effect/decal/cleanable/D in view(7,src))
 			for(var/T in src.target_types)
@@ -232,7 +232,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(target && path.len == 0)
 		spawn(0)
 			if(!src || !target) return
-			src.path = AStar(src.loc, src.target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 0, 30)
+			src.path = AStar(src.loc, src.target.loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30)
 			if(!src.path)
 				src.path = list()
 			if(src.path.len == 0)

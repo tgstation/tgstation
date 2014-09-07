@@ -16,7 +16,7 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
-	var/silenced = 0
+	var/suppressed = 0
 	var/recoil = 0
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
@@ -29,7 +29,8 @@
 	return 1
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	user << "<span class='warning'>*click*</span>"
+	user << "<span class='danger'>*click*</span>"
+	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, var/pointblank = 0, var/mob/pbtarget = null)
@@ -37,7 +38,7 @@
 		spawn()
 			shake_camera(user, recoil + 1, recoil)
 
-	if(silenced)
+	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
 	else
 		playsound(user, fire_sound, 50, 1)
@@ -80,8 +81,8 @@
 				return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.dna && H.dna.mutantrace == "adamantine")
-				user << "<span class='notice'>Your metal fingers don't fit in the trigger guard!</span>"
+			if(H.dna && NOGUNS in H.dna.species.specflags)
+				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
 				return
 
 	add_fingerprint(user)
@@ -89,7 +90,7 @@
 	if(!special_check(user))
 		return
 	if(chambered)
-		if(!chambered.fire(target, user, params, , silenced))
+		if(!chambered.fire(target, user, params, , suppressed))
 			shoot_with_empty_chamber(user)
 		else
 			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot

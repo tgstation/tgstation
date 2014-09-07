@@ -21,6 +21,10 @@
 	force = 45
 	max_equip = 4
 
+/obj/mecha/combat/marauder/Destroy()
+	qdel(smoke_system)
+	..()
+
 /obj/mecha/combat/marauder/seraph
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
 	name = "\improper Seraph"
@@ -106,7 +110,7 @@
 			src.occupant_message("Unable to move while connected to the air system port")
 			last_message = world.time
 		return 0
-	if(!thrusters && src.pr_inertial_movement.active())
+	if(!thrusters && pr_inertial_movement && src.pr_inertial_movement.active())
 		return 0
 	if(state || !has_charge(step_energy_drain))
 		return 0
@@ -121,7 +125,7 @@
 		move_result	= mechstep(direction)
 	if(move_result)
 		if(istype(src.loc, /turf/space))
-			if(!src.check_for_support())
+			if(!src.check_for_support() && pr_inertial_movement)
 				src.pr_inertial_movement.start(list(src,direction))
 				if(thrusters)
 					src.pr_inertial_movement.set_process_args(list(src,direction))

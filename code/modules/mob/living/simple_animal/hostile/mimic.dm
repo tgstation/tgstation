@@ -33,7 +33,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-	faction = "mimic"
+	faction = list("mimic")
 	move_to_delay = 9
 
 /mob/living/simple_animal/hostile/mimic/FindTarget()
@@ -43,7 +43,7 @@
 
 /mob/living/simple_animal/hostile/mimic/Die()
 	..()
-	visible_message("\red <b>[src]</b> stops moving!")
+	visible_message("<span class='danger'><b>[src]</b> stops moving!</span>")
 	qdel(src)
 
 
@@ -161,7 +161,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	if(owner != creator)
 		LoseTarget()
 		creator = owner
-		faction = "\ref[owner]"
+		faction |= "\ref[owner]"
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(var/obj/O)
 	if((istype(O, /obj/item) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
@@ -196,7 +196,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		maxHealth = health
 		if(creator)
 			src.creator = creator
-			faction = "\ref[creator]" // very unique
+			faction += "\ref[creator]" // very unique
 		if(destroy_original)
 			qdel(O)
 		return 1

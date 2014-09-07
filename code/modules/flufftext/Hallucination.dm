@@ -109,7 +109,7 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(41 to 65)
 				//Strange audio
 				//src << "Strange Audio"
-				switch(rand(1,12))
+				switch(rand(1,14))
 					if(1) src << 'sound/machines/airlock.ogg'
 					if(2)
 						if(prob(50))src << 'sound/effects/Explosion1.ogg'
@@ -140,6 +140,12 @@ mob/living/carbon/proc/handle_hallucinations()
 							'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
 							'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 						src << pick(creepyasssounds)
+					if(13)
+						src << "<span class='warning'>You feel a tiny prick!</span>"
+					if(14)
+						src << "<h1 class='alert'>Priority Announcement</h1>"
+						src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
+						src << sound('sound/AI/shuttledock.ogg')
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
@@ -239,87 +245,87 @@ proc/check_panel(mob/M)
 
 	var/health = 100
 
-	attackby(var/obj/item/weapon/P as obj, mob/user as mob)
+/obj/effect/fake_attacker/attackby(var/obj/item/weapon/P as obj, mob/user as mob)
+	step_away(src,my_target,2)
+	for(var/mob/M in oviewers(world.view,my_target))
+		M << "<span class='userdanger'>[my_target] flails around wildly.</span>"
+	my_target.show_message("<span class='userdanger'>[src] has been attacked by [my_target] </span>", 1) //Lazy.
+
+	src.health -= P.force
+
+
+	return
+
+/obj/effect/fake_attacker/Crossed(var/mob/M, somenumber)
+	if(M == my_target)
 		step_away(src,my_target,2)
-		for(var/mob/M in oviewers(world.view,my_target))
-			M << "\red <B>[my_target] flails around wildly.</B>"
-		my_target.show_message("\red <B>[src] has been attacked by [my_target] </B>", 1) //Lazy.
+		if(prob(30))
+			for(var/mob/O in oviewers(world.view , my_target))
+				O << "<span class='userdanger'>[my_target] stumbles around.</span>"
 
-		src.health -= P.force
-
-
-		return
-
-	Crossed(var/mob/M, somenumber)
-		if(M == my_target)
-			step_away(src,my_target,2)
-			if(prob(30))
-				for(var/mob/O in oviewers(world.view , my_target))
-					O << "\red <B>[my_target] stumbles around.</B>"
-
-	New()
-		..()
-		spawn(300)
-			if(my_target)
-				my_target.hallucinations -= src
-			qdel(src)
-		step_away(src,my_target,2)
-		spawn attack_loop()
+/obj/effect/fake_attacker/New()
+	..()
+	spawn(300)
+		if(my_target)
+			my_target.hallucinations -= src
+		qdel(src)
+	step_away(src,my_target,2)
+	spawn attack_loop()
 
 
-	proc/updateimage()
-	//	del src.currentimage
+/obj/effect/fake_attacker/proc/updateimage()
+//	del src.currentimage
 
 
-		if(src.dir == NORTH)
-			del src.currentimage
-			src.currentimage = new /image(up,src)
-		else if(src.dir == SOUTH)
-			del src.currentimage
-			src.currentimage = new /image(down,src)
-		else if(src.dir == EAST)
-			del src.currentimage
-			src.currentimage = new /image(right,src)
-		else if(src.dir == WEST)
-			del src.currentimage
-			src.currentimage = new /image(left,src)
-		my_target << currentimage
+	if(src.dir == NORTH)
+		del src.currentimage
+		src.currentimage = new /image(up,src)
+	else if(src.dir == SOUTH)
+		del src.currentimage
+		src.currentimage = new /image(down,src)
+	else if(src.dir == EAST)
+		del src.currentimage
+		src.currentimage = new /image(right,src)
+	else if(src.dir == WEST)
+		del src.currentimage
+		src.currentimage = new /image(left,src)
+	my_target << currentimage
 
 
-	proc/attack_loop()
-		while(1)
-			sleep(rand(5,10))
-			if(src.health < 0)
-				collapse()
-				continue
-			if(get_dist(src,my_target) > 1)
-				src.dir = get_dir(src,my_target)
-				step_towards(src,my_target)
-				updateimage()
-			else
-				if(prob(15))
-					if(weapon_name)
-						my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
-						my_target.show_message("<span class='danger'>[my_target] has been attacked with [weapon_name] by [src.name]!</span>", 1)
-						my_target.staminaloss += 30
-						if(prob(20)) my_target.eye_blurry += 3
-						if(prob(33))
-							if(!locate(/obj/effect/overlay) in my_target.loc)
-								fake_blood(my_target)
-					else
-						my_target << sound(pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
-						my_target.show_message("\red <B>[src.name] has punched [my_target]!</B>", 1)
-						my_target.staminaloss += 30
-						if(prob(33))
-							if(!locate(/obj/effect/overlay) in my_target.loc)
-								fake_blood(my_target)
-
+/obj/effect/fake_attacker/proc/attack_loop()
+	while(1)
+		sleep(rand(5,10))
+		if(src.health < 0)
+			collapse()
+			continue
+		if(get_dist(src,my_target) > 1)
+			src.dir = get_dir(src,my_target)
+			step_towards(src,my_target)
+			updateimage()
+		else
 			if(prob(15))
-				step_away(src,my_target,2)
+				if(weapon_name)
+					my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
+					my_target.show_message("<span class='danger'>[my_target] has been attacked with [weapon_name] by [src.name]!</span>", 1)
+					my_target.staminaloss += 30
+					if(prob(20)) my_target.eye_blurry += 3
+					if(prob(33))
+						if(!locate(/obj/effect/overlay) in my_target.loc)
+							fake_blood(my_target)
+				else
+					my_target << sound(pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
+					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
+					my_target.staminaloss += 30
+					if(prob(33))
+						if(!locate(/obj/effect/overlay) in my_target.loc)
+							fake_blood(my_target)
 
-	proc/collapse()
-		collapse = 1
-		updateimage()
+		if(prob(15))
+			step_away(src,my_target,2)
+
+/obj/effect/fake_attacker/proc/collapse()
+	collapse = 1
+	updateimage()
 
 /proc/fake_blood(var/mob/target)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)

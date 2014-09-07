@@ -568,7 +568,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	spawn(waittime)
 		src.wait = null
 		update_icon()
-		playsound(src.loc, 'sound/items/timer.ogg', 30, 1)
+		playsound(src.loc, 'sound/machines/ping.ogg', 30, 1)
 
 /obj/machinery/computer/pandemic/update_icon()
 	if(stat & BROKEN)
@@ -808,7 +808,6 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		icon = 'icons/obj/kitchen.dmi'
 		icon_state = "juicer1"
 		layer = 2.9
-		density = 1
 		anchored = 1
 		use_power = 1
 		idle_power_usage = 5
@@ -831,7 +830,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 				/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
 				/obj/item/weapon/grown/nettle = list("sacid" = 0),
-				/obj/item/weapon/grown/deathnettle = list("pacid" = 0),
+				/obj/item/weapon/grown/nettle/death = list("pacid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0),
 
 				//Crayons (for overriding colours)
@@ -851,10 +850,10 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 
 				//Grinder stuff, but only if dry
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica = list("coffeepowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta = list("coffeepowder" = 0, "hyperzine" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera = list("teapowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra = list("teapowder" = 0, "kelotane" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "hyperzine" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera = list("teapowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "kelotane" = 0),
 
 
 
@@ -871,20 +870,20 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list("banana" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list("potato" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = list("lemonjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/orange = list("orangejuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/lime = list("limejuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = list("lemonjuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = list("orangejuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime = list("limejuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list("poisonberryjuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = list("poisonberryjuice" = 0),
 		)
 
 		var/list/dried_items = list(
 
 				//Grinder stuff, but only if dry
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica = list("coffeepowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta = list("coffeepowder" = 0, "hyperzine" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera = list("teapowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra = list("teapowder" = 0, "kelotane" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "hyperzine" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera = list("teapowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "kelotane" = 0),
 		)
 
 		var/list/holdingitems = list()

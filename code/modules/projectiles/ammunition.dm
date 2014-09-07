@@ -28,7 +28,7 @@
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
 
-/obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
+/obj/item/ammo_casing/proc/newshot() //For energy weapons, shotgun shells and wands (!).
 	if (!BB)
 		BB = new projectile_type(src)
 	return

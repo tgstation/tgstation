@@ -56,7 +56,7 @@
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
 				else
-					user << "<span class='danger'>You need more cable to do that.</span>"
+					user << "<span class='danger'>You need five lengths of cable for this machine.</span>"
 			if(istype(P, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You begin prying out the circuit board and components...</span>"
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)

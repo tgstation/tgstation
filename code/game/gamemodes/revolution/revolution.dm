@@ -27,8 +27,6 @@
 	var/finished = 0
 	var/checkwin_counter = 0
 	var/const/max_headrevs = 3
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
@@ -91,8 +89,6 @@
 	modePlayer += head_revolutionaries
 	if(emergency_shuttle)
 		emergency_shuttle.always_fake_recall = 1
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
 	..()
 
 
@@ -117,7 +113,7 @@
 /datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		rev_mind.current << "\red <FONT size = 3><B>You are a member of the revolutionaries' leadership!</B></FONT>"
+		rev_mind.current << "<span class='userdanger'><FONT size = 3>You are a member of the revolutionaries' leadership!</FONT></span>"
 	for(var/datum/objective/objective in rev_mind.objectives)
 		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		rev_mind.special_role = "Head Revolutionary"
@@ -189,7 +185,7 @@
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
 	revolutionaries += rev_mind
-	rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
+	rev_mind.current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
 	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
@@ -204,10 +200,10 @@
 		rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has renounced the revolution!</font>"
 
 		if(beingborged)
-			rev_mind.current << "\red <FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing from the moment you were flashed until now.</B></FONT>"
+			rev_mind.current << "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing from the moment you were flashed until now.</FONT></span>"
 
 		else
-			rev_mind.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</B></FONT>"
+			rev_mind.current << "<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>"
 
 		update_rev_icons_removed(rev_mind)
 		for(var/mob/living/M in view(rev_mind.current))
@@ -344,10 +340,22 @@
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - heads killed")
-		world << "\red <FONT size = 3><B> The heads of staff were killed or abandoned the station! The revolutionaries win!</B></FONT>"
+		world << "<span class='danger'><FONT size = 3>The heads of staff were killed or abandoned the station! The revolutionaries win!</FONT></span>"
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
-		world << "\red <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT>"
+		world << "<span class='danger'><FONT size = 3>The heads of staff managed to stop the revolution!</FONT></span>"
+
+	var/num_revs = 0
+	for(var/mob/living/carbon/mob in living_mob_list)
+		if(mob.mind)
+			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
+				num_revs++
+	var/num_survivors = 0
+	for(var/mob/living/carbon/survivor in living_mob_list)
+		if(survivor.key)
+			num_survivors++
+
+	world << "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" // % of loyal crew
 	..()
 	return 1
 

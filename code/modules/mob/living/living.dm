@@ -17,7 +17,7 @@
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
 		if(!whispered)
-			src << "\blue You have given up life and succumbed to death."
+			src << "<span class='notice'>You have given up life and succumbed to death.</span>"
 		death()
 
 /mob/living/proc/InCritical()
@@ -361,7 +361,7 @@
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 							if (istype(G, /obj/item/weapon/grab))
 								for(var/mob/O in viewers(M, null))
-									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
+									O.show_message(text("<span class='danger'>[] has been pulled from []'s grip by []</span>", G.affecting, G.assailant, src), 1)
 								//G = null
 								qdel(G)
 						else
@@ -420,6 +420,62 @@
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
     return null
+
+/mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
+
+	if(HULK in usr.mutations)
+		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+
+	C.visible_message("<span class='danger'>[C] manages to break [I]!</span>", \
+				"<span class='notice'>You successfully break [I].</span>")
+	qdel(I)
+
+	if(C.handcuffed)
+		C.handcuffed = null
+		C.update_inv_handcuffed(0)
+	else
+		C.legcuffed = null
+		C.update_inv_legcuffed(0)
+
+
+/mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)
+	var/breakouttime = 600
+	var/displaytime = 1
+	if(istype(I, /obj/item/weapon/handcuffs))
+		var/obj/item/weapon/handcuffs/HC = C.handcuffed
+		breakouttime = HC.breakouttime
+	else if(istype(I, /obj/item/weapon/legcuffs))
+		var/obj/item/weapon/legcuffs/LC = C.legcuffed
+		breakouttime = LC.breakouttime
+	displaytime = breakouttime / 600
+
+	if(isalienadult(C) || HULK in usr.mutations)
+		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>", \
+				"<span class='warning'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>")
+		spawn(0)
+			if(do_after(C, 50))
+				if(!I || C.buckled)
+					return
+				cuff_break(I, C)
+	else
+
+		C.visible_message("<span class='warning'>[usr] attempts to remove [I]!</span>", \
+				"<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
+		spawn(0)
+			if(do_after(C, breakouttime))
+				if(!I || C.buckled)
+					return
+				C.visible_message("<span class='danger'>[C] manages to remove [I]!</span>", \
+						"<span class='notice'>You successfully remove [I].</span>")
+
+				if(C.handcuffed)
+					C.handcuffed.loc = usr.loc
+					C.handcuffed = null
+					C.update_inv_handcuffed(0)
+				if(C.legcuffed)
+					C.legcuffed.loc = usr.loc
+					C.legcuffed = null
+					C.update_inv_legcuffed(0)
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -487,83 +543,42 @@
 		var/mob/living/carbon/CM = L
 		if(CM.on_fire && CM.canmove)
 			CM.fire_stacks -= 5
-			CM.weakened = 5
+			CM.Weaken(3)
+			CM.spin(32,2)
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
 				"<span class='notice'>You stop, drop, and roll!</span>")
+			sleep(30)
 			if(fire_stacks <= 0)
 				CM.visible_message("<span class='danger'>[CM] has successfully extinguished themselves!</span>", \
 					"<span class='notice'>You extinguish yourself.</span>")
 				ExtinguishMob()
 			return
-		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
-			CM.changeNext_move(100)
-			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				CM.visible_message("<span class='warning'>[CM] is trying to break [CM.handcuffed]!</span>", \
-							"<span class='notice'>You attempt to break [CM.handcuffed]. (This will take around 5 seconds and you need to stand still.)</span>")
-				spawn(0)
-					if(do_after(CM, 50))
-						if(!CM.handcuffed || CM.buckled)
-							return
-						CM.visible_message("<span class='danger'>[CM] manages to break [CM.handcuffed]!</span>" , \
-										"<span class='notice'>You successfully break [CM.handcuffed]!</span>")
-						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						qdel(CM.handcuffed)
-						CM.handcuffed = null
-						CM.update_inv_handcuffed(0)
-			else
-				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
-				var/breakouttime = 600 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
-				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
-				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
-					breakouttime = HC.breakouttime
-					displaytime = breakouttime / 600 //Minutes
-				CM.visible_message("<span class='warning'>[usr] attempts to remove [HC]!</span>", \
-						"<span class='notice'>You attempt to remove [HC]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
-				spawn(0)
-					if(do_after(CM, breakouttime))
-						if(!CM.handcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server
-						CM.visible_message("<span class='danger'>[CM] manages to remove [CM.handcuffed]!</span>", \
-										"<span class='notice'>You successfully remove [CM.handcuffed].</span>")
-						CM.handcuffed.loc = usr.loc
-						CM.handcuffed = null
-						CM.update_inv_handcuffed(0)
-		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
-			CM.changeNext_move(100)
-			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				CM.visible_message("<span class='warning'>[CM] is trying to break [CM.legcuffed]!</span>", \
-						"<span class='notice'>You attempt to break [CM.legcuffed]. (This will take around 5 seconds and you need to stand still.)</span>")
-				spawn(0)
-					if(do_after(CM, 50))
-						if(!CM.legcuffed || CM.buckled)
-							return
-						CM.visible_message("<span class='danger'>[CM] manages to break [CM.legcuffed]!</span>", \
-											"<span class='notice'>You successfully break [CM.legcuffed].</span>")
-						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						qdel(CM.legcuffed)
-						CM.legcuffed = null
-						CM.update_inv_legcuffed(0)
-			else
-				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
-				var/breakouttime = 600 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
-				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
-				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
-					breakouttime = HC.breakouttime
-					displaytime = breakouttime / 600 //Minutes
-				CM.visible_message("<span class='warning'>[CM] attempts to remove [HC]!</span>", \
-						"<span class='notice'>You attempt to remove [HC]. (This will take around [displaytime] minutes and you need to stand still.)</span>")
-				spawn(0)
-					if(do_after(CM, breakouttime))
-						if(!CM.legcuffed || CM.buckled)
-							return	//time leniency for lag which also might make this whole thing pointless but the server
-						CM.visible_message("<span class='danger'>[CM] manages to remove [CM.legcuffed]!</span>", \
-											"<span class='notice'>You successfully remove [CM.legcuffed].</span>")
-						CM.legcuffed.loc = usr.loc
-						CM.legcuffed = null
-						CM.update_inv_legcuffed(0)
+		if(CM.canmove && (CM.last_special <= world.time))
+			if(CM.handcuffed || CM.legcuffed)
+				CM.changeNext_move(100)
+				CM.last_special = world.time + 100
+				if(CM.handcuffed)
+					cuff_resist(CM.handcuffed, CM)
+				else
+					cuff_resist(CM.legcuffed, CM)
 
+/mob/living/carbon/proc/spin(spintime, speed)
+	spawn()
+		var/D = dir
+		while(spintime >= speed)
+			sleep(speed)
+			switch(D)
+				if(NORTH)
+					D = EAST
+				if(SOUTH)
+					D = WEST
+				if(EAST)
+					D = SOUTH
+				if(WEST)
+					D = NORTH
+			dir = D
+			spintime -= speed
+	return
 
 /mob/living/proc/get_visible_name()
 	return name
@@ -581,22 +596,36 @@
 	src << "<span class='notice'>You're too exhausted to keep going...</span>"
 	Weaken(5)
 
+/mob/living/update_gravity(has_gravity)
+	if(!ticker)
+		return
+	float(!has_gravity)
+
+/mob/living/proc/float(on)
+	if(on && !floating)
+		animate(src, pixel_y = 2, time = 10, loop = -1)
+		floating = 1
+	else if(!on && floating)
+		animate(src, pixel_y = initial(pixel_y), time = 10)
+		floating = 0
+
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
-/mob/living/stripPanelUnequip(mob/who, obj/item/what, where)
+/mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(what.flags & NODROP)
 		src << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
 		return
-	visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
+	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
 	what.add_fingerprint(src)
 	if(do_mob(src, who, STRIP_DELAY))
 		if(what && Adjacent(who))
 			who.unEquip(what)
+			add_logs(src, who, "stripped", addition="of [what]")
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
-/mob/living/stripPanelEquip(mob/who, obj/item/what, where)
+/mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_hand()
 	if(what && (what.flags & NODROP))
 		src << "<span class='notice'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
@@ -607,4 +636,4 @@
 			if(what && Adjacent(who))
 				src.unEquip(what)
 				who.equip_to_slot_if_possible(what, where, 0, 1)
-
+				add_logs(src, who, "equipped", object=what)

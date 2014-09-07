@@ -247,8 +247,28 @@
 									C.internals.icon_state = "internal1"
 							else
 								C << "<span class='notice'>You don't have an oxygen tank.</span>"
+
 		if("act_intent")
-			usr.a_intent_change("right")
+			if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
+
+				var/_x = text2num(params2list(params)["icon-x"])
+				var/_y = text2num(params2list(params)["icon-y"])
+
+				if(_x<=16 && _y<=16)
+					usr.a_intent_change("harm")
+
+				else if(_x<=16 && _y>=17)
+					usr.a_intent_change("help")
+
+				else if(_x>=17 && _y<=16)
+					usr.a_intent_change("grab")
+
+				else if(_x>=17 && _y>=17)
+					usr.a_intent_change("disarm")
+
+			else
+				usr.a_intent_change("right")
+
 		if("pull")
 			usr.stop_pulling()
 		if("throw/catch")
@@ -276,7 +296,6 @@
 			if(isrobot(usr))
 				var/mob/living/silicon/robot/R = usr
 				R.uneq_active()
-				R.hud_used.update_robot_modules_display()
 
 		if("module1")
 			if(istype(usr, /mob/living/silicon/robot))
@@ -289,6 +308,84 @@
 		if("module3")
 			if(istype(usr, /mob/living/silicon/robot))
 				usr:toggle_module(3)
+
+		if("AI Core")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.view_core()
+
+		if("Show Camera List")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/camera = input(AI, "Choose which camera you want to view", "Cameras") as null|anything in AI.get_camera_list()
+				AI.ai_camera_list(camera)
+
+		if("Track With Camera")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/target_name = input(AI, "Choose who you want to track", "Tracking") as null|anything in AI.trackable_mobs()
+				AI.ai_camera_track(target_name)
+
+		if("Toggle Camera Light")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.toggle_camera_light()
+
+		if("Crew Monitorting")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				crewmonitor(AI,AI)
+
+		if("Show Crew Manifest")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_roster()
+
+		if("Show Alerts")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_alerts()
+
+		if("Announcement")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.announcement()
+
+		if("Call Emergency Shuttle")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_call_shuttle()
+
+		if("State Laws")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.checklaws()
+
+		if("PDA - Send Message")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.cmd_send_pdamesg(usr)
+
+		if("PDA - Show Message Log")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.cmd_show_message_log(usr)
+
+		if("Take Image")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.aicamera.toggle_camera_mode()
+			else if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.aicamera.toggle_camera_mode()
+
+		if("View Images")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.aicamera.viewpictures()
+			else if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.aicamera.viewpictures()
 
 		else
 			return 0
@@ -322,4 +419,3 @@
 				usr.update_inv_l_hand(0)
 				usr.update_inv_r_hand(0)
 	return 1
-

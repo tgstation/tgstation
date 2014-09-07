@@ -19,6 +19,6 @@
 			if("Yes")	config.Tickcomp = 1
 			else		config.Tickcomp = 0
 	else
-		src << "\red Error: ticklag(): Invalid world.ticklag value. No changes made."
+		src << "<span class='danger'>Error: ticklag(): Invalid world.ticklag value. No changes made.</span>"
 
 

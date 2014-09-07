@@ -82,23 +82,23 @@
 	var/target_temp = T0C - 40
 	var/cooling_power = 40
 
-	return_air()
-		var/datum/gas_mixture/gas = (..())
-		if(!gas)	return null
-		var/datum/gas_mixture/newgas = new/datum/gas_mixture()
-		newgas.oxygen = gas.oxygen
-		newgas.carbon_dioxide = gas.carbon_dioxide
-		newgas.nitrogen = gas.nitrogen
-		newgas.toxins = gas.toxins
-		newgas.volume = gas.volume
-		newgas.temperature = gas.temperature
-		if(newgas.temperature <= target_temp)	return
+/obj/structure/closet/crate/freezer/return_air()
+	var/datum/gas_mixture/gas = (..())
+	if(!gas)	return null
+	var/datum/gas_mixture/newgas = new/datum/gas_mixture()
+	newgas.oxygen = gas.oxygen
+	newgas.carbon_dioxide = gas.carbon_dioxide
+	newgas.nitrogen = gas.nitrogen
+	newgas.toxins = gas.toxins
+	newgas.volume = gas.volume
+	newgas.temperature = gas.temperature
+	if(newgas.temperature <= target_temp)	return
 
-		if((newgas.temperature - cooling_power) > target_temp)
-			newgas.temperature -= cooling_power
-		else
-			newgas.temperature = target_temp
-		return newgas
+	if((newgas.temperature - cooling_power) > target_temp)
+		newgas.temperature -= cooling_power
+	else
+		newgas.temperature = target_temp
+	return newgas
 
 
 /obj/structure/closet/crate/radiation
@@ -189,11 +189,12 @@
 	icon_opened = "hydrocrateopen"
 	icon_closed = "hydrocrate"
 	density = 1*/
-	New()
-		..()
-		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-		new /obj/item/weapon/minihoe(src)
+
+/obj/structure/closet/crate/hydroponics/prespawned/New()
+	..()
+	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
+	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
+	new /obj/item/weapon/minihoe(src)
 //		new /obj/item/weapon/reagent_containers/spray/weedspray(src)
 //		new /obj/item/weapon/reagent_containers/spray/weedspray(src)
 //		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
@@ -290,6 +291,7 @@
 			src.locked = 0
 			overlays.Cut()
 			overlays += greenlight
+			add_fingerprint(user)
 			return
 		else
 			user << "<span class='notice'>[src] is locked.</span>"
@@ -303,6 +305,7 @@
 		src.locked = 1
 		overlays.Cut()
 		overlays += redlight
+		add_fingerprint(user)
 		return
 	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
 		overlays.Cut()
@@ -313,6 +316,7 @@
 		src.locked = 0
 		src.broken = 1
 		user << "<span class='notice'>You unlock \the [src].</span>"
+		add_fingerprint(user)
 		return
 
 	return ..()
@@ -335,10 +339,12 @@
 		if(rigged)
 			user << "<span class='notice'>[src] is already rigged!</span>"
 			return
-		user  << "<span class='notice'>You rig [src].</span>"
-		user.drop_item()
-		qdel(W)
-		rigged = 1
+		var/obj/item/stack/cable_coil/C = W
+		if (C.use(5))
+			user << "<span class='notice'>You rig [src].</span>"
+			rigged = 1
+		else
+			user << "<span class='warning'>You need 5 lengths of cable to rig [src].</span>"
 		return
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)

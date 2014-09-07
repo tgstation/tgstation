@@ -9,7 +9,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	icon_state = "comm"
 	req_access = list(access_heads)
 	circuit = /obj/item/weapon/circuitboard/communications
-	var/prints_intercept = 1
 	var/authenticated = 0
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/messagetitle = list()
@@ -52,7 +51,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(..())
 		return
 	if (src.z > 1)
-		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		usr << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	usr.set_machine(src)
 
@@ -210,7 +209,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
 				centcom_message_cooldown = 1
-				spawn(6000)//10 minute cooldown
+				spawn(600)//One minute cooldown
 					centcom_message_cooldown = 0
 
 
@@ -227,7 +226,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				centcom_message_cooldown = 1
-				spawn(6000)//10 minute cooldown
+				spawn(600)//One minute cooldown
 					centcom_message_cooldown = 0
 
 		if("RestoreBackup")
@@ -326,7 +325,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(..())
 		return
 	if (src.z > 6)
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		user << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 
 	user.set_machine(src)
@@ -355,9 +354,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if (src.authenticated)
 				if(emergency_shuttle.recall_count > 1)
 					if(emergency_shuttle.last_call_loc)
-						dat += "<BR>Latest emergency signal trace attempt successful.<BR>Last signal origin: <b>[format_text(emergency_shuttle.last_call_loc.name)]</b>.<BR>"
+						dat += "<BR>Last emergency shuttle call/recall traced to: <b>[format_text(emergency_shuttle.last_call_loc.name)]</b>.<BR>"
 					else
-						dat += "<BR>Latest emergency signal trace attempt failed.<BR>"
+						dat += "<BR>Last emergency shuttle call/recall trace failed.<BR>"
 				dat += "Logged in as: [auth_id]"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<BR>"
 				dat += "<BR><B>General Functions</B>"
@@ -497,7 +496,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
 			dat += "<BR><BR><B>Special Functions</B>"
-			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-announce'>Make a Priority Announcement</A> \]"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-announce'>Make an Announcement</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-changeseclevel'>Change Alert Level</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-emergencyaccess'>Emergency Maintenance Access</A> \]"
 		if(STATE_CALLSHUTTLE)
@@ -558,7 +557,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(!input || !user.canUseTopic(src))
 		return
 	if(is_silicon)
-		priority_announce(input, null, null, "Priority")
+		minor_announce(input)
 		ai_message_cooldown = 1
 		spawn(600)//One minute cooldown
 			ai_message_cooldown = 0

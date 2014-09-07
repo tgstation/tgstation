@@ -76,7 +76,7 @@ datum/objective_item/steal/reactive
 	excludefromjob = list("Research Director")
 
 datum/objective_item/steal/documents
-	name = "a set of secret documents"
+	name = "any set of secret documents of any organization"
 	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's
 	difficulty = 5
 

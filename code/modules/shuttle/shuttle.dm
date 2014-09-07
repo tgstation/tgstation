@@ -21,33 +21,7 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 		fromArea = locate(location) //the location of the shuttle
 		toArea = locate(fromArea.destination)
 
-		var/list/dstturfs = list()
-		var/throwy = world.maxy
-
-		for(var/turf/T in toArea)
-			dstturfs += T
-			if(T.y < throwy)
-				throwy = T.y
-
-		// hey you, get out of the way!
-		for(var/turf/T in dstturfs)
-			// find the turf to move things to
-			var/turf/D = locate(T.x, throwy - 1, 1)
-			//var/turf/E = get_step(D, SOUTH)
-			for(var/atom/movable/AM as mob|obj in T)
-				AM.Move(D)
-				// NOTE: Commenting this out to avoid recreating mass driver glitch
-				/*
-				spawn(0)
-					AM.throw_at(E, 1, 1)
-					return
-				*/
-
-			if(istype(T, /turf/simulated))
-				del(T)
-
-		for(var/mob/living/carbon/bug in toArea) // If someone somehow is still in the shuttle's docking area...
-			bug.gib()
+		toArea.clear_docking_area()
 
 		fromArea.move_contents_to(toArea)
 		location = toArea.type
@@ -72,8 +46,6 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 
 		moving = 0
 	return 1
-
-
 
 
 /obj/machinery/computer/shuttle
@@ -102,17 +74,17 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(!allowed(usr))
-		usr << "\red Access denied."
+		usr << "<span class='danger'>Access denied.</span>"
 		return
 	if(href_list["move"])
 		if(id in shuttles)
 			var/datum/shuttle_manager/s = shuttles[id]
 			if (s.move_shuttle())
-				usr << "\blue Shuttle recieved message and will be sent shortly."
+				usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
 			else
-				usr << "\blue Shuttle is already moving."
+				usr << "<span class='notice'>Shuttle is already moving.</span>"
 		else
-			usr << "\red Invalid shuttle requested."
+			usr << "<span class='warning'>Invalid shuttle requested.</span>"
 
 
 /obj/machinery/computer/shuttle/attackby(I as obj, user as mob)
@@ -120,7 +92,28 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 	if (istype(I, /obj/item/weapon/card/emag))
 		src.req_access = list()
 		emagged = 1
-		usr << "You fried the consoles ID checking system. It's now available to everyone!"
+		usr << "You fried the consoles ID checking system."
 	else
 		..()
 	return
+
+/obj/machinery/computer/shuttle/ferry
+	name = "transport ferry console"
+	circuit = /obj/item/weapon/circuitboard/ferry
+	id = "ferry"
+
+/obj/machinery/computer/shuttle/ferry/request
+	name = "ferry console"
+	circuit = /obj/item/weapon/circuitboard/ferry/request
+	var/cooldown //prevents spamming admins
+
+/obj/machinery/computer/shuttle/ferry/request/Topic(href, href_list)
+	if(href_list["move"])
+		if(cooldown)
+			return
+		cooldown = 1
+		usr << "<span class='notice'>Docking locks are engaged. Sending request to leave..."
+		var/datum/shuttle_manager/s = shuttles["ferry"]
+		admins << "<b>FERRY: <font color='blue'>[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;secretsadmin=moveferry'>Move</a>)</b> is requesting to move the transport ferry to [s.location == /area/shuttle/transport1/centcom ? "the station" : "Centcom"].</font>"
+		spawn(600) //One minute cooldown
+			cooldown = 0

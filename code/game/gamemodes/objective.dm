@@ -13,10 +13,19 @@ datum/objective/New(var/text)
 datum/objective/proc/check_completion()
 	return completed
 
+datum/objective/proc/is_unique_objective(possible_target)
+	for(var/datum/objective/O in owner.objectives)
+		if(istype(O, type) && O.get_target() == possible_target)
+			return 0
+	return 1
+
+datum/objective/proc/get_target()
+	return target
+
 datum/objective/proc/find_target()
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in ticker.minds)
-		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2))
+		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
 		target = pick(possible_targets)
@@ -82,6 +91,42 @@ datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target && target.current)
 		explanation_text = "Assassinate [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role]."
+	else
+		explanation_text = "Free Objective"
+
+
+
+datum/objective/maroon
+	var/target_role_type=0
+	dangerrating = 5
+
+datum/objective/maroon/find_target_by_role(role, role_type=0)
+	target_role_type = role_type
+	..(role, role_type)
+	return target
+
+datum/objective/maroon/check_completion()
+	if(target && target.current)
+		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+			return 1
+		var/area/A = get_area(target.current)
+		if(istype(A, /area/shuttle/escape/centcom))
+			return 0
+		if(istype(A, /area/shuttle/escape_pod1/centcom))
+			return 0
+		if(istype(A, /area/shuttle/escape_pod2/centcom))
+			return 0
+		if(istype(A, /area/shuttle/escape_pod3/centcom))
+			return 0
+		if(istype(A, /area/shuttle/escape_pod4/centcom))
+			return 0
+		else
+			return 1
+	return 1
+
+datum/objective/maroon/update_explanation_text()
+	if(target && target.current)
+		explanation_text = "Prevent [target.current.real_name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
 	else
 		explanation_text = "Free Objective"
 
@@ -196,7 +241,7 @@ datum/objective/block/check_completion()
 
 
 datum/objective/escape
-	explanation_text = "Escape on the shuttle or an escape pod alive."
+	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 	dangerrating = 5
 
 datum/objective/escape/check_completion()
@@ -255,21 +300,32 @@ datum/objective/steal
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
 	dangerrating = 5 //Overridden by the individual item's difficulty, but defaults to 5 for custom objectives.
 
+datum/objective/steal/get_target()
+	return steal_target
+
 datum/objective/steal/New()
 	..()
 	if(!possible_items.len)//Only need to fill the list when it's needed.
 		init_subtypes(/datum/objective_item/steal,possible_items)
 
 datum/objective/steal/find_target()
-	return set_target(pick(possible_items))
+	var/approved_targets = list()
+	for(var/datum/objective_item/possible_item in possible_items)
+		if(is_unique_objective(possible_item.targetitem))
+			approved_targets += possible_item
+	return set_target(safepick(possible_items))
 
 datum/objective/steal/proc/set_target(var/datum/objective_item/item)
-	targetinfo = item
+	if(item)
+		targetinfo = item
 
-	steal_target = targetinfo.targetitem
-	explanation_text = "Steal [targetinfo.name]."
-	dangerrating = targetinfo.difficulty
-	return steal_target
+		steal_target = targetinfo.targetitem
+		explanation_text = "Steal [targetinfo.name]."
+		dangerrating = targetinfo.difficulty
+		return steal_target
+	else
+		explanation_text = "Free objective"
+		return
 
 datum/objective/steal/proc/select_target() //For admins setting objectives manually.
 	var/list/possible_items_all = possible_items+"custom"
@@ -292,7 +348,7 @@ datum/objective/steal/proc/select_target() //For admins setting objectives manua
 	return steal_target
 
 datum/objective/steal/check_completion()
-	if(!steal_target || !owner.current)	return 0
+	if(!steal_target)	return 1
 	if(!isliving(owner.current))	return 0
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 
@@ -324,29 +380,35 @@ datum/objective/steal/special/find_target()
 
 datum/objective/steal/exchange
 	dangerrating = 10
-	var/faction //Exchange objectives: Which side are we on?
-	var/datum/mind/otheragent //Exchange objectives: The mind of the other party
 
-datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
+datum/objective/steal/exchange/proc/set_faction(var/faction,var/otheragent)
+	target = otheragent
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_blue
 	else if(faction == "blue")
 		targetinfo = new/datum/objective_item/unique/docs_red
-	explanation_text = "Acquire [targetinfo.name] held by [otheragent], the Syndicate Agent"
+	explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
 	steal_target = targetinfo.targetitem
+
+
+datum/objective/steal/exchange/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
+	else
+		explanation_text = "Free Objective"
 
 
 datum/objective/steal/exchange/backstab
 	dangerrating = 3
 
-datum/objective/steal/exchange/backstab/set_faction(faction)
+datum/objective/steal/exchange/backstab/set_faction(var/faction)
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_red
 	else if(faction == "blue")
 		targetinfo = new/datum/objective_item/unique/docs_blue
 	explanation_text = "Do not give up or lose [targetinfo.name]."
 	steal_target = targetinfo.targetitem
-
 
 
 datum/objective/download
@@ -441,3 +503,29 @@ datum/objective/absorb/check_completion()
 		return 1
 	else
 		return 0
+
+
+
+datum/objective/destroy
+	dangerrating = 10
+
+datum/objective/destroy/find_target()
+	var/list/possible_targets = active_ais(1)
+	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
+	target = target_ai.mind
+	update_explanation_text()
+	return target
+
+datum/objective/destroy/check_completion()
+	if(target && target.current)
+		if(target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+			return 1
+		return 0
+	return 1
+
+datum/objective/destroy/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Destroy [target.current.real_name], the experimental AI."
+	else
+		explanation_text = "Free Objective"

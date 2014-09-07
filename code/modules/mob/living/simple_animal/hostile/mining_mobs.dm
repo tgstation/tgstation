@@ -9,7 +9,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
-	faction = "mining"
+	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
 	heat_damage_per_tick = 20
@@ -421,7 +421,7 @@
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /obj/item/clothing/suit/space/rig/mining) || istype(target, /obj/item/clothing/head/helmet/space/rig/mining))
+		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining))
 			var/obj/item/clothing/C = target
 			var/current_armor = C.armor
 			if(current_armor.["melee"] < 80)

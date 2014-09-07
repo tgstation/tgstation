@@ -13,7 +13,7 @@
 		if(W.remove_fuel(15))
 			new refined_type(get_turf(src.loc))
 			qdel(src)
-		else
+		else if(W.isOn())
 			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
 	..()
 
@@ -175,12 +175,13 @@
 	icon_state = "coin"
 	flags = CONDUCT
 	force = 1
-	throwforce = 0
+	throwforce = 2
 	w_class = 1.0
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cmineral = null
 	var/cooldown = 0
+	var/value = 10
 
 /obj/item/weapon/coin/New()
 	pixel_x = rand(0,16)-8
@@ -192,53 +193,62 @@
 
 /obj/item/weapon/coin/gold
 	cmineral = "gold"
+	value = 160
 
 /obj/item/weapon/coin/silver
 	cmineral = "silver"
+	value = 40
 
 /obj/item/weapon/coin/diamond
 	cmineral = "diamond"
+	value = 120
 
 /obj/item/weapon/coin/iron
 	cmineral = "iron"
+	value = 20
 
 /obj/item/weapon/coin/plasma
 	cmineral = "plasma"
+	value = 80
 
 /obj/item/weapon/coin/uranium
 	cmineral = "uranium"
+	value = 160
 
 /obj/item/weapon/coin/clown
 	cmineral = "bananium"
+	value = 600 //makes the clown cri
 
 /obj/item/weapon/coin/adamantine
 	cmineral = "adamantine"
+	value = 400
 
 /obj/item/weapon/coin/mythril
 	cmineral = "mythril"
+	value = 400
 
 /obj/item/weapon/coin/twoheaded
 	cmineral = "iron"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
+	value = 20
 
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/stack/cable_coil) )
+	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
-			user << "\blue There already is a string attached to this coin."
+			user << "<span class='notice'>There already is a string attached to this coin.</span>"
 			return
 
-		if(CC.amount <= 0)
-			user << "\blue This cable coil appears to be empty."
-			qdel(CC)
+		if (CC.use(1))
+			overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
+			string_attached = 1
+			user << "<span class='notice'>You attach a string to the coin.</span>"
+		else
+			user << "<span class='warning'>You need one length of cable to attach a string to the coin.</span>"
 			return
 
-		overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
-		string_attached = 1
-		user << "\blue You attach a string to the coin."
-		CC.use(1)
 	else if(istype(W,/obj/item/weapon/wirecutters))
 		if(!string_attached)
 			..()
@@ -249,7 +259,7 @@
 		CC.update_icon()
 		overlays = list()
 		string_attached = null
-		user << "\blue You detach the string from the coin."
+		user << "<span class='notice'>You detach the string from the coin.</span>"
 	else ..()
 
 /obj/item/weapon/coin/attack_self(mob/user as mob)

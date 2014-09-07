@@ -46,54 +46,12 @@
 		dx = s/abs(s)
 		dy = c / abs(s)
 
-
-	for(var/obj/machinery/power/M in solars_list)
-
-		if(!M.powernet)
-			solars_list.Remove(M)
+	//now tell the solar control computers to update their status and linked devices
+	for(var/obj/machinery/power/solar_control/SC in solars_list)
+		if(!SC.powernet)
+			solars_list.Remove(SC)
 			continue
-
-		// Solar Tracker
-		if(istype(M, /obj/machinery/power/tracker))
-			var/obj/machinery/power/tracker/T = M
-			T.set_angle(angle)
-
-		// Solar Control
-		else if(istype(M, /obj/machinery/power/solar_control))
-			var/obj/machinery/power/solar_control/C = M
-			if(C.track == 1) //if manual tracking...
-				C.tracker_update() //...update the position (not passing an angle, it is handled internally for manual tracking)
-
-		// Solar Panel
-		else if(istype(M, /obj/machinery/power/solar))
-			var/obj/machinery/power/solar/S = M
-			if(S.control)
-				occlusion(S)
-
-
-// for a solar panel, trace towards sun to see if we're in shadow
-/datum/sun/proc/occlusion(var/obj/machinery/power/solar/S)
-
-	var/ax = S.x		// start at the solar panel
-	var/ay = S.y
-	var/turf/T = null
-
-	for(var/i = 1 to 20)		// 20 steps is enough
-		ax += dx	// do step
-		ay += dy
-
-		T = locate( round(ax,0.5),round(ay,0.5),S.z)
-
-		if(T.x == 1 || T.x==world.maxx || T.y==1 || T.y==world.maxy)		// not obscured if we reach the edge
-			break
-
-		if(T.density)			// if we hit a solid turf, panel is obscured
-			S.obscured = 1
-			return
-
-	S.obscured = 0		// if hit the edge or stepped 20 times, not obscured
-	S.update_solar_exposure()
-
+		SC.update()
 
 
 

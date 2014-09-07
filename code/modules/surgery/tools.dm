@@ -50,12 +50,6 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
-/obj/item/weapon/scalpel/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is pressing [src] to \his temple and activating it! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is pressing [src] to \his chest and activating it! It looks like \he's trying to commit suicide.</span>"))
-	return (BRUTELOSS)
-
-
 /obj/item/weapon/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."

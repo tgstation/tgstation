@@ -282,6 +282,16 @@
 	var/mineral = "wood"
 	doortype = 35
 
+/obj/machinery/door/airlock/virology
+	icon = 'icons/obj/doors/Doorviro.dmi'
+	doortype = 36
+
+/obj/machinery/door/airlock/glass_virology
+	icon = 'icons/obj/doors/Doorviroglass.dmi'
+	opacity = 0
+	doortype = 37
+	glass = 1
+
 /*
 About the new airlock wires panel:
 *	An airlock wire dialog can be accessed by the normal way or by using wirecutters or a multitool on the door while the wire-panel is open. This would show the following wires, which you can either wirecut/mend or send a multitool pulse through. There are 9 wires.
@@ -310,7 +320,7 @@ About the new airlock wires panel:
 			else /*if(src.justzap)*/
 				return
 		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
-			user << "\red <B>You feel a powerful shock course through your body!</B>"
+			user << "<span class='userdanger'>You feel a powerful shock course through your body!</span>"
 			user.staminaloss += 50
 			user.stunned += 5
 			return
@@ -630,14 +640,14 @@ About the new airlock wires panel:
 		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				visible_message("\red [user] headbutts the airlock.")
+				visible_message("<span class='danger'>[user] headbutts the airlock.</span>")
 				var/obj/item/organ/limb/affecting = H.get_organ("head")
 				H.Stun(5)
 				H.Weaken(5)
 				if(affecting.take_damage(10, 0))
 					H.update_damage_overlays(0)
 			else
-				visible_message("\red [user] headbutts the airlock. Good thing they're wearing a helmet.")
+				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 			return
 
 	if(src.p_open)
@@ -868,7 +878,6 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
-	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
 	if(!istype(usr, /mob/living/silicon))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
@@ -879,15 +888,17 @@ About the new airlock wires panel:
 	src.add_fingerprint(user)
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
-		if(W.remove_fuel(0,user))
-			if(!src.welded)
-				src.welded = 1
-			else
-				src.welded = null
-			src.update_icon()
-			return
-		else
-			return
+		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>"
+		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+		if(do_after(user,40,5,1))
+			if(density && !operating)//Door must be closed to weld.
+				if(W.remove_fuel(0,user))
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					welded = !welded
+					user << "<span class='notice'>You [welded ? "welded the airlock shut":"unwelded the airlock"]</span>"
+					update_icon()
+					user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
+		return
 	else if(istype(C, /obj/item/weapon/screwdriver))
 		src.p_open = !( src.p_open )
 		user << "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the airlock.</span>"
@@ -948,6 +959,8 @@ About the new airlock wires panel:
 					if(33) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
 					if(34) new/obj/structure/door_assembly/door_assembly_shuttle(src.loc)
 					if(35) new/obj/structure/door_assembly/door_assembly_wood(src.loc)
+					if(36) new/obj/structure/door_assembly/door_assembly_viro(src.loc)
+					if(37) new/obj/structure/door_assembly/door_assembly_viro/glass(src.loc)
 				if(emagged)
 					user << "<span class='warning'>You discard the damaged electronics.</span>"
 					qdel(src)
@@ -1024,6 +1037,8 @@ About the new airlock wires panel:
 			playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
 		if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 			src.closeOther.close()
+	else
+		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
 	if(autoclose  && normalspeed)
 		spawn(150)
@@ -1060,6 +1075,9 @@ About the new airlock wires panel:
 			playsound(src.loc, 'sound/items/bikehorn.ogg', 30, 1)
 		else
 			playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+	else
+		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
+
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
 		killthis.ex_act(2)//Smashin windows

@@ -123,7 +123,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/mcolor)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
@@ -188,7 +188,8 @@
 
 	// -- End mode specific stuff
 
-	hardset_dna(H, ui, se, null, mrace)
+	hardset_dna(H, ui, se, null, null, mrace, mcolor)
+
 	if(efficiency > 2)
 		for(var/A in bad_se_blocks)
 			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
@@ -197,11 +198,7 @@
 	if(efficiency < 3 && prob(50))
 		randmutb(H)
 
-	if(H.gender == MALE)
-		H.facial_hair_style = "Full Beard"
-	else
-		H.facial_hair_style = "Shaved"
-	H.hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+	H.set_cloned_appearance()
 
 	H.suiciding = 0
 	src.attempting = 0

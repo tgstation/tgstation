@@ -6,67 +6,67 @@
 	var/list/authorized = list(  )
 
 
-	attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)
-		if(stat & (BROKEN|NOPOWER))	return
-		if (!( istype(W, /obj/item/weapon/card) ) || !( ticker ) || emergency_shuttle.location != DOCKED || !( user ) || emergency_shuttle.timeleft() < 11)	return
-		if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-			if (istype(W, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = W
-				W = pda.id
-			if (!W:access) //no access
-				user << "The access level of [W:registered_name]\'s card is not high enough. "
-				return
+/obj/machinery/computer/emergency_shuttle/attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)
+	if(stat & (BROKEN|NOPOWER))	return
+	if (!( istype(W, /obj/item/weapon/card) ) || !( ticker ) || emergency_shuttle.location != DOCKED || !( user ) || emergency_shuttle.timeleft() < 11)	return
+	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if (istype(W, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = W
+			W = pda.id
+		if (!W:access) //no access
+			user << "The access level of [W:registered_name]\'s card is not high enough. "
+			return
 
-			var/list/cardaccess = W:access
-			if(!istype(cardaccess, /list) || !cardaccess.len) //no access
-				user << "The access level of [W:registered_name]\'s card is not high enough. "
-				return
+		var/list/cardaccess = W:access
+		if(!istype(cardaccess, /list) || !cardaccess.len) //no access
+			user << "The access level of [W:registered_name]\'s card is not high enough. "
+			return
 
-			if(!(access_heads in W:access)) //doesn't have this access
-				user << "The access level of [W:registered_name]\'s card is not high enough. "
-				return 0
+		if(!(access_heads in W:access)) //doesn't have this access
+			user << "The access level of [W:registered_name]\'s card is not high enough. "
+			return 0
 
-			var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
-			if(emergency_shuttle.location != DOCKED && user.get_active_hand() != W)
-				return 0
-			switch(choice)
-				if("Authorize")
-					src.authorized -= W:registered_name
-					src.authorized += W:registered_name
-					if (src.auth_need - src.authorized.len > 0)
-						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has authorized early shuttle launch in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-						log_game("[user.ckey]([user]) has authorized early shuttle launch in ([x],[y],[z])")
-						priority_announce("[src.auth_need - src.authorized.len] more authorization(s) needed until shuttle is launched early", null, null, "Priority")
-					else
-						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has launched the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-						log_game("[user.ckey]([user]) has launched the emergency shuttle in ([x],[y],[z])")
-						priority_announce("The emergency shuttle will launch in 10 seconds", null, null, "Priority")
-						emergency_shuttle.online = 1
-						emergency_shuttle.settimeleft(10)
-						//src.authorized = null
-						del(src.authorized)
-						src.authorized = list(  )
-
-				if("Repeal")
-					src.authorized -= W:registered_name
-					priority_announce("[src.auth_need - src.authorized.len] authorizations needed until shuttle is launched early", null, null, "Priority")
-
-				if("Abort")
-					priority_announce("All authorizations to launch the shuttle early have been revoked.", null, null, "Priority")
-					src.authorized.len = 0
+		var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
+		if(emergency_shuttle.location != DOCKED && user.get_active_hand() != W)
+			return 0
+		switch(choice)
+			if("Authorize")
+				src.authorized -= W:registered_name
+				src.authorized += W:registered_name
+				if (src.auth_need - src.authorized.len > 0)
+					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has authorized early shuttle launch in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+					log_game("[user.ckey]([user]) has authorized early shuttle launch in ([x],[y],[z])")
+					minor_announce("[src.auth_need - src.authorized.len] more authorization(s) needed until shuttle is launched early")
+				else
+					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has launched the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+					log_game("[user.ckey]([user]) has launched the emergency shuttle in ([x],[y],[z])")
+					minor_announce("The emergency shuttle will launch in 10 seconds")
+					emergency_shuttle.online = 1
+					emergency_shuttle.settimeleft(10)
+					//src.authorized = null
+					del(src.authorized)
 					src.authorized = list(  )
 
-		else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
-			var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
+			if("Repeal")
+				src.authorized -= W:registered_name
+				minor_announce("[src.auth_need - src.authorized.len] authorizations needed until shuttle is launched early")
 
-			if(!emagged && emergency_shuttle.location == DOCKED && user.get_active_hand() == W)
-				switch(choice)
-					if("Launch")
-						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has emagged the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-						log_game("[user.ckey]([user]) has emagged the emergency shuttle in ([x],[y],[z])")
-						priority_announce("System Error: The emergency shuttle will launch in 10 seconds", null, null, "Priority")
-						emergency_shuttle.settimeleft( 10 )
-						emagged = 1
-					if("Cancel")
-						return
-		return
+			if("Abort")
+				minor_announce("All authorizations to launch the shuttle early have been revoked.")
+				src.authorized.len = 0
+				src.authorized = list(  )
+
+	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+		var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
+
+		if(!emagged && emergency_shuttle.location == DOCKED && user.get_active_hand() == W)
+			switch(choice)
+				if("Launch")
+					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has emagged the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+					log_game("[user.ckey]([user]) has emagged the emergency shuttle in ([x],[y],[z])")
+					minor_announce("The emergency shuttle will launch in 10 seconds", "System Error:")
+					emergency_shuttle.settimeleft( 10 )
+					emagged = 1
+				if("Cancel")
+					return
+	return

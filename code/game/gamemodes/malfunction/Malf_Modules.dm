@@ -74,7 +74,7 @@
 		return
 
 	var/obj/machinery/door/airlock/AL
-	for(var/obj/machinery/door/D in portals)
+	for(var/obj/machinery/door/D in airlocks)
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
@@ -109,7 +109,7 @@
 		return
 
 	var/obj/machinery/door/airlock/AL
-	for(var/obj/machinery/door/D in portals)
+	for(var/obj/machinery/door/D in airlocks)
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
@@ -165,7 +165,7 @@
 			if(overload.uses > 0)
 				overload.uses --
 				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
+					V.show_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>", 2)
 				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
@@ -192,7 +192,7 @@
 			if(override.uses > 0)
 				override.uses --
 				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
+					V.show_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>", 2)
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
 					if(M)
@@ -283,22 +283,6 @@
 				else apc.overload++
 			src << "<span class='notice'>Overcurrent applied to the powernet.</span>"
 		else src << "<span class='notice'>Out of uses.</span>"
-
-/datum/AI_Module/small/interhack
-	module_name = "Hack intercept"
-	mod_pick_name = "interhack"
-	description = "Hacks the status update from Centcom, removing any information about malfunctioning electrical systems."
-	cost = 15
-	one_time = 1
-
-	power_type = /mob/living/silicon/ai/proc/interhack
-
-/mob/living/silicon/ai/proc/interhack()
-	set category = "Malfunction"
-	set name = "Hack intercept"
-	src.verbs -= /mob/living/silicon/ai/proc/interhack
-	ticker.mode:hack_intercept()
-	src << "<span class='notice'>Status update intercepted and modified.</span>"
 
 /datum/AI_Module/small/reactivate_camera
 	module_name = "Reactivate camera"

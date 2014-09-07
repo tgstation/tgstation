@@ -1,13 +1,13 @@
 /mob/living/silicon
 	gender = NEUTER
-	robot_talk_understand = 1
 	voice_name = "synthesized voice"
+	languages = ROBOT | HUMAN
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
 	var/designation = ""
-
+	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
 
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
@@ -31,7 +31,7 @@
 		alarm_types_clear[type] += 1
 
 	if(!in_cooldown)
-		spawn(3 * 10) // 10 seconds
+		spawn(3 * 10) // 3 seconds
 
 			if(alarms_to_show.len < 5)
 				for(var/msg in alarms_to_show)
@@ -39,6 +39,9 @@
 			else if(alarms_to_show.len)
 
 				var/msg = "--- "
+
+				if(alarm_types_show["Burglar"])
+					msg += "BURGLAR: [alarm_types_show["Burglar"]] alarms detected. - "
 
 				if(alarm_types_show["Motion"])
 					msg += "MOTION: [alarm_types_show["Motion"]] alarms detected. - "
@@ -103,8 +106,8 @@
 			src.take_organ_damage(10)
 			Stun(3)
 	flick("noise", src:flash)
-	src << "\red <B>*BZZZT*</B>"
-	src << "\red Warning: Electromagnetic pulse detected."
+	src << "<span class='userdanger'>*BZZZT*</span>"
+	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
 	..()
 
 /mob/living/silicon/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
@@ -276,29 +279,29 @@
 	usr << browse(list, "window=laws")
 
 /mob/living/silicon/Bump(atom/movable/AM as mob|obj, yes)  //Allows the AI to bump into mobs if it's itself pushed
-        if ((!( yes ) || now_pushing))
-                return
-        now_pushing = 1
-        if(ismob(AM))
-                var/mob/tmob = AM
-                if(!(tmob.status_flags & CANPUSH))
-                        now_pushing = 0
-                        return
-        now_pushing = 0
-        ..()
-        if (!istype(AM, /atom/movable))
-                return
-        if (!now_pushing)
-                now_pushing = 1
-                if (!AM.anchored)
-                        var/t = get_dir(src, AM)
-                        if (istype(AM, /obj/structure/window))
-                                if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-                                        for(var/obj/structure/window/win in get_step(AM,t))
-                                                now_pushing = 0
-                                                return
-                        step(AM, t)
-                now_pushing = null
+	if ((!( yes ) || now_pushing))
+		return
+	now_pushing = 1
+	if(ismob(AM))
+		var/mob/tmob = AM
+		if(!(tmob.status_flags & CANPUSH))
+			now_pushing = 0
+			return
+	now_pushing = 0
+	..()
+	if (!istype(AM, /atom/movable))
+		return
+	if (!now_pushing)
+		now_pushing = 1
+		if (!AM.anchored)
+			var/t = get_dir(src, AM)
+			if (istype(AM, /obj/structure/window))
+				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
+			step(AM, t)
+		now_pushing = null
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return 0
@@ -307,3 +310,7 @@
 // But the src mob is a silicon!!  Disable.
 /mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
 	return 0
+
+
+/mob/living/silicon/assess_threat() //Secbots won't hunt silicon units
+	return -10

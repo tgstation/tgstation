@@ -174,7 +174,7 @@
 
 
 /datum/song/Topic(href, href_list)
-	if(usr.canUseTopic(src))
+	if(!usr.canUseTopic(instrumentObj))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return

@@ -86,7 +86,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		return
 
 	if(clong && prob(25))
-		src.loc = clong.loc
+		x = clong.x
+		y = clong.y
 
 	if (istype(clong, /turf) || istype(clong, /obj))
 		if(clong.density)

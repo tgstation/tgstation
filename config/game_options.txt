@@ -92,6 +92,7 @@ PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
 PROBABILITY MALFUNCTION 1
 PROBABILITY BLOB 2
+PROBABILITY MONKEY 1
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 
@@ -114,9 +115,21 @@ SHUTTLE_REFUEL_DELAY 12000
 TRAITOR_SCALING_COEFF 6
 CHANGELING_SCALING_COEFF 7
 
+## Variables calculate how number of open security officer positions will scale to population.
+## Used as (Officers = Population / Coeff)
+## Set to 0 to disable scaling and use default numbers instead.
+SECURITY_SCALING_COEFF 8
+
+# The number of objectives traitors get.
+# Not including escaping/hijacking.
+TRAITOR_OBJECTIVES_AMOUNT 2
+
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
 #PROTECT_ROLES_FROM_ANTAGONIST
+
+## If non-human species are barred from joining as a head/security
+#ENFORCE_HUMAN_AUTHORITY
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
@@ -187,5 +200,9 @@ SEC_START_BRIG
 ## Set to 2 for "random", silicons will start with a random lawset picked from (at the time of writing): P.A.L.A.D.I.N., Corporate, Asimov. More can be added by changing the law datum paths in ai_laws.dm.
 DEFAULT_LAWS 1
 
-## Uncoment to give players the choice of their mutantrace before they join the game
+## Uncoment to give players the choice of their species before they join the game
 #JOIN_WITH_MUTANT_RACE
+
+## Uncomment to allow certain species to have custom colors
+
+#MUTANT_COLORS

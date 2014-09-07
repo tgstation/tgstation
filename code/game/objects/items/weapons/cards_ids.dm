@@ -142,7 +142,7 @@ update_label("John Doe", "Clowny")
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
-				usr << "\blue The card's microscanners activate as you pass it over the ID, copying its access."
+				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
 
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
@@ -161,7 +161,7 @@ update_label("John Doe", "Clowny")
 			return
 		src.assignment = u
 		update_label()
-		user << "\blue You successfully forge the ID card."
+		user << "<span class='notice'>You successfully forge the ID card.</span>"
 	else
 		..()
 

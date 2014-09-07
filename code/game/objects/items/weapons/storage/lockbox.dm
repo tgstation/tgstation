@@ -18,22 +18,22 @@
 
 
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/card/id))
+	if (W.GetID())
 		if(src.broken)
-			user << "\red It appears to be broken."
+			user << "<span class='danger'>It appears to be broken.</span>"
 			return
 		if(src.allowed(user))
 			src.locked = !( src.locked )
 			if(src.locked)
 				src.icon_state = src.icon_locked
-				user << "\red You lock the [src.name]!"
+				user << "<span class='danger'>You lock the [src.name]!</span>"
 				return
 			else
 				src.icon_state = src.icon_closed
-				user << "\red You unlock the [src.name]!"
+				user << "<span class='danger'>You unlock the [src.name]!</span>"
 				return
 		else
-			user << "\red Access Denied."
+			user << "<span class='danger'>Access Denied.</span>"
 			return
 	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
 		broken = 1
@@ -47,21 +47,21 @@
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("\blue \The [src] has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+				O.show_message(text("<span class='notice'>\The [src] has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class='danger'>You hear metal being sliced and sparks flying.</span>"), 2)
 			return
 		else
 			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("\blue \The [src] has been broken by [] with an electromagnetic card!", user), 1, text("You hear a faint electrical spark."), 2)
+				O.show_message(text("<span class='notice'>\The [src] has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
 			return
 	if(!locked)
 		..()
 	else
-		user << "\red It's locked!"
+		user << "<span class='danger'>It's locked!</span>"
 	return
 
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
 	if(locked)
-		user << "\red It's locked!"
+		user << "<span class='danger'>It's locked!</span>"
 	else
 		..()
 	return
@@ -75,12 +75,12 @@
 	name = "lockbox of loyalty implants"
 	req_access = list(access_security)
 
-	New()
-		..()
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implantcase/loyalty(src)
-		new /obj/item/weapon/implanter/loyalty(src)
+/obj/item/weapon/storage/lockbox/loyalty/New()
+	..()
+	new /obj/item/weapon/implantcase/loyalty(src)
+	new /obj/item/weapon/implantcase/loyalty(src)
+	new /obj/item/weapon/implantcase/loyalty(src)
+	new /obj/item/weapon/implanter/loyalty(src)
 
 
 /obj/item/weapon/storage/lockbox/clusterbang
@@ -88,9 +88,9 @@
 	desc = "You have a bad feeling about opening this."
 	req_access = list(access_security)
 
-	New()
-		..()
-		new /obj/item/weapon/grenade/flashbang/clusterbang(src)
+/obj/item/weapon/storage/lockbox/clusterbang/New()
+	..()
+	new /obj/item/weapon/grenade/flashbang/clusterbang(src)
 
 /obj/item/weapon/storage/lockbox/medal
 	name = "medal box"
@@ -105,11 +105,11 @@
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 
-	New()
-		..()
-		new /obj/item/clothing/tie/medal/silver/valor(src)
-		new /obj/item/clothing/tie/medal/bronze_heart(src)
-		new /obj/item/clothing/tie/medal/conduct(src)
-		new /obj/item/clothing/tie/medal/conduct(src)
-		new /obj/item/clothing/tie/medal/conduct(src)
-		new /obj/item/clothing/tie/medal/gold/captain(src)
+/obj/item/weapon/storage/lockbox/medal/New()
+	..()
+	new /obj/item/clothing/tie/medal/silver/valor(src)
+	new /obj/item/clothing/tie/medal/bronze_heart(src)
+	new /obj/item/clothing/tie/medal/conduct(src)
+	new /obj/item/clothing/tie/medal/conduct(src)
+	new /obj/item/clothing/tie/medal/conduct(src)
+	new /obj/item/clothing/tie/medal/gold/captain(src)

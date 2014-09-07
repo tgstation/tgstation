@@ -108,7 +108,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm magazines and is compatible with silencers."
+	desc = "A small, easily concealable handgun that uses 10mm magazines and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 5
 
@@ -213,8 +213,8 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-12mm"
-	desc = "A 20-round 12mm magazine for use in the C-20r submachine gun."
-	item = /obj/item/ammo_box/magazine/m12mm
+	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
+	item = /obj/item/ammo_box/magazine/c20m
 	cost = 1
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -236,11 +236,11 @@ var/list/uplink_items = list()
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
 
-/datum/uplink_item/stealthy_weapons/para_pen
-	name = "Paralysis Pen"
-	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. \
-	Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
-	item = /obj/item/weapon/pen/paralysis
+/datum/uplink_item/stealthy_weapons/sleepy_pen
+	name = "Sleepy Pen"
+	desc = "A syringe disguised as a functional pen, filled with a potent mix of drugs, including a strong anaesthetic and a chemical that is capable of blocking the movement of the vocal chords. \
+	The pen holds one dose of the mixture, and cannot be refilled."
+	item = /obj/item/weapon/pen/sleepy
 	cost = 3
 	excludefrom = list(/datum/game_mode/nuclear)
 
@@ -257,10 +257,10 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
 
-/datum/uplink_item/stealthy_weapons/silencer
-	name = "Stetchkin Silencer"
-	desc = "Fitted for use on the Stetchkin pistol, this silencer will make its shots quieter when equipped onto it."
-	item = /obj/item/weapon/silencer
+/datum/uplink_item/stealthy_weapons/suppressor
+	name = "Stetchkin Suppressor"
+	desc = "Fitted for use on the Stetchkin pistol, this suppressor will make its shots quieter when equipped onto it."
+	item = /obj/item/weapon/suppressor
 	cost = 2
 
 // STEALTHY TOOLS
@@ -370,10 +370,10 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/plastic_explosives
 	name = "Composition C-4"
-	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, attach it to organisms to destroy them, or connect a signaler to its wiring to make it remotely detonable. \
+	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls or connect a signaler to its wiring to make it remotely detonable. \
 	It has a modifiable timer with a minimum setting of 10 seconds."
 	item = /obj/item/weapon/plastique
-	cost = 2
+	cost = 1
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power sink"
@@ -395,8 +395,15 @@ var/list/uplink_items = list()
 	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 60 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
-	cost = 5
+	cost = 6
 	excludefrom = list(/datum/game_mode/traitor/double_agents)
+
+/datum/uplink_item/device_tools/rad_laser
+	name = "Radioactive Microlaser"
+	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a powerful burst of radiation, which, after a short delay, can incapitate all but the most protected of humanoids. \
+	It has two settings: intensity, which controls the power of the radiation, and wavelength, which controls how long the radiation delay is."
+	item = /obj/item/device/rad_laser
+	cost = 4
 
 /datum/uplink_item/device_tools/syndicate_detonator
 	name = "Syndicate Detonator"

@@ -151,7 +151,7 @@
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
-		visible_message("\red [user] destroys the [src]. ")
+		visible_message("<span class='danger'>[user] destroys the [src].</span>")
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		qdel(src)
@@ -179,13 +179,16 @@
 
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(!WT.remove_fuel(0,user))
-				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
-				return
-			new /obj/item/stack/sheet/metal(src.loc)
-			for(var/mob/M in viewers(src))
-				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
-			qdel(src)
+			user << "<span class='notice'>You begin cutting the [src] apart...</span>"
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			if(do_after(user,40,5,1))
+				if(src.opened)
+					if(WT.remove_fuel(0,user))
+						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+						new /obj/item/stack/sheet/metal(src.loc)
+						for(var/mob/M in viewers(src))
+							M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
+						qdel(src)
 			return
 
 		if(isrobot(user))
@@ -198,13 +201,17 @@
 		return
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(!WT.remove_fuel(0,user))
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
-			return
-		src.welded =! src.welded
-		src.update_icon()
-		for(var/mob/M in viewers(src))
-			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
+		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the [src]...</span>"
+		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+		if(do_after(user,40,5,1))
+			if(!src.opened)
+				if(WT.remove_fuel(0,user))
+					playsound(loc, 'sound/items/welder.ogg', 50, 1)
+					welded = !welded
+					user << "<span class='notice'>You [welded ? "welded the [src] shut":"unwelded the [src]"]</span>"
+					update_icon()
+					user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
+		return
 	else if(!place(user, W))
 		src.attack_hand(user)
 	return

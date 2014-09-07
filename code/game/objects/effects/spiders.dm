@@ -54,9 +54,10 @@
 
 /obj/effect/spider/stickyweb
 	icon_state = "stickyweb1"
-	New()
-		if(prob(50))
-			icon_state = "stickyweb2"
+
+/obj/effect/spider/stickyweb/New()
+	if(prob(50))
+		icon_state = "stickyweb2"
 
 /obj/effect/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
@@ -64,7 +65,7 @@
 		return 1
 	else if(istype(mover, /mob/living))
 		if(prob(50))
-			mover << "\red You get stuck in \the [src] for a moment."
+			mover << "<span class='danger'>You get stuck in \the [src] for a moment.</span>"
 			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
@@ -75,10 +76,11 @@
 	desc = "They seem to pulse slightly with an inner life"
 	icon_state = "eggs"
 	var/amount_grown = 0
-	New()
-		pixel_x = rand(3,-3)
-		pixel_y = rand(3,-3)
-		processing_objects.Add(src)
+
+/obj/effect/spider/eggcluster/New()
+	pixel_x = rand(3,-3)
+	pixel_y = rand(3,-3)
+	processing_objects.Add(src)
 
 /obj/effect/spider/eggcluster/process()
 	amount_grown += rand(0,2)
@@ -99,10 +101,11 @@
 	var/grow_as = null
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
-	New()
-		pixel_x = rand(6,-6)
-		pixel_y = rand(6,-6)
-		processing_objects.Add(src)
+
+/obj/effect/spider/spiderling/New()
+	pixel_x = rand(6,-6)
+	pixel_y = rand(6,-6)
+	processing_objects.Add(src)
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -147,7 +150,7 @@
 							return
 
 						if(prob(50))
-							src.visible_message("\blue You hear something squeezing through the ventilation ducts.",2)
+							src.visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
 						sleep(travel_time)
 
 						if(!exit_vent || exit_vent.welded)
@@ -169,7 +172,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom)
 			if(prob(40))
-				src.visible_message("\blue \The [src] skitters[pick(" away"," around","")].")
+				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
 	else if(prob(10))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
@@ -209,7 +212,7 @@
 
 
 /obj/effect/spider/cocoon/Destroy()
-	src.visible_message("\red \The [src] splits open.")
+	src.visible_message("<span class='danger'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	..()

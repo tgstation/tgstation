@@ -22,13 +22,6 @@
 	transfer_soul("VICTIM", M, user)
 	return
 
-/*/obj/item/device/soulstone/attack(mob/living/simple_animal/shade/M as mob, mob/user as mob)//APPARENTLY THEY NEED THEIR OWN SPECIAL SNOWFLAKE CODE IN THE LIVING ANIMAL DEFINES
-	if(!istype(M, /mob/living/simple_animal/shade))//If target is not a shade
-		return ..()
-	user.attack_log += text("\[[time_stamp()]\] <span class='danger'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</span>")
-
-	transfer_soul("SHADE", M, user)
-	return*/
 ///////////////////Options for using captured souls///////////////////////////////////////
 
 /obj/item/device/soulstone/attack_self(mob/user)
@@ -44,8 +37,6 @@
 	user << browse(dat, "window=aicard")
 	onclose(user, "aicard")
 	return
-
-
 
 
 /obj/item/device/soulstone/Topic(href, href_list)
@@ -160,52 +151,35 @@
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 				switch(construct_class)
 					if("Juggernaut")
-						var/mob/living/simple_animal/construct/armoured/Z = new /mob/living/simple_animal/construct/armoured (get_turf(T.loc))
-						Z.key = A.key
-						if(iscultist(U))
-							if(ticker.mode.name == "cult")
-								ticker.mode:add_cultist(Z.mind)
-							else
-								ticker.mode.cult+=Z.mind
-							ticker.mode.update_cult_icons_added(Z.mind)
-						qdel(T)
-						Z << "<B>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, create shield walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
-						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
-						Z.cancel_camera()
-						qdel(C)
+						makeNewConstruct(/mob/living/simple_animal/construct/armored, A, U)
 
 					if("Wraith")
-						var/mob/living/simple_animal/construct/wraith/Z = new /mob/living/simple_animal/construct/wraith (get_turf(T.loc))
-						Z.key = A.key
-						if(iscultist(U))
-							if(ticker.mode.name == "cult")
-								ticker.mode:add_cultist(Z.mind)
-							else
-								ticker.mode.cult+=Z.mind
-							ticker.mode.update_cult_icons_added(Z.mind)
-						qdel(T)
-						Z << "<B>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
-						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
-						Z.cancel_camera()
-						qdel(C)
+						makeNewConstruct(/mob/living/simple_animal/construct/wraith, A, U)
 
 					if("Artificer")
-						var/mob/living/simple_animal/construct/builder/Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))
-						Z.key = A.key
-						if(iscultist(U))
-							if(ticker.mode.name == "cult")
-								ticker.mode:add_cultist(Z.mind)
-							else
-								ticker.mode.cult+=Z.mind
-							ticker.mode.update_cult_icons_added(Z.mind)
-						qdel(T)
-						Z << "<B>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, use magic missile, repair allied constructs (by clicking on them), </B><I>and most important of all create new constructs</I><B> (Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
-						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
-						Z.cancel_camera()
-						qdel(C)
+						makeNewConstruct(/mob/living/simple_animal/construct/builder, A, U)
+
+				qdel(T)
+				qdel(C)
 			else
 				U << "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!"
 	return
+
+
+proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/target, var/mob/stoner = null, cultoverride = 0)
+	var/mob/living/simple_animal/construct/newstruct = new ctype(get_turf(target))
+	newstruct.faction |= "\ref[stoner]"
+	newstruct.key = target.key
+	if(stoner && iscultist(stoner) || cultoverride)
+		if(ticker.mode.name == "cult")
+			ticker.mode:add_cultist(newstruct.mind)
+		else
+			ticker.mode.cult+=newstruct.mind
+		ticker.mode.update_cult_icons_added(newstruct.mind)
+	newstruct << newstruct.playstyle_string
+	newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
+	newstruct.cancel_camera()
+
 
 /obj/item/device/soulstone/proc/init_shade(var/obj/item/device/soulstone/C, var/mob/living/carbon/human/T, var/mob/U as mob, var/vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
@@ -223,6 +197,7 @@
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = T.key
+	S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
 	if(iscultist(U))
 		ticker.mode.add_cultist(S.mind,2)
 	S.cancel_camera()

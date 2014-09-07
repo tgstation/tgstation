@@ -69,8 +69,8 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/shoes/swat(src)
 	new /obj/item/clothing/shoes/swat(src)
-	new /obj/item/clothing/suit/armor/swat(src)
-	new /obj/item/clothing/suit/armor/swat(src)
+	new /obj/item/clothing/suit/space/deathsquad(src)
+	new /obj/item/clothing/suit/space/deathsquad(src)
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 

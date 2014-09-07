@@ -116,6 +116,8 @@ Class Procs:
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
+	if(occupant)
+		open_machine()
 	..()
 
 /obj/machinery/process()//If you dont use process or power why are you here
@@ -211,11 +213,15 @@ Class Procs:
 	return
 
 /mob/dead/observer/canUseTopic()
-	if(check_rights(R_ADMIN))
+	if(check_rights(R_ADMIN, 0))
 		return
 
-/mob/living/canUseTopic()
-	src << "<span class='notice'>You don't have the dexterity to do this!</span>"
+/mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(no_dextery)
+		if(be_close && in_range(M, src))
+			return 1
+	else
+		src << "<span class='notice'>You don't have the dexterity to do this!</span>"
 	return
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M)
@@ -227,13 +233,17 @@ Class Procs:
 		return
 	return 1
 
-/mob/living/silicon/ai/canUseTopic()
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat)
+		return
+	if(be_close && !in_range(M, src))
 		return
 	return 1
 
-/mob/living/silicon/robot/canUseTopic()
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat || lockcharge || stunned || weakened)
+		return
+	if(be_close && !in_range(M, src))
 		return
 	return 1
 
@@ -267,7 +277,7 @@ Class Procs:
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			visible_message("\red [H] stares cluelessly at [src] and drools.")
+			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
 			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
