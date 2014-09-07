@@ -484,23 +484,22 @@
 
 						if(href_list["view"])
 							if(R)
-								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
-									usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
-									usr << "<b>Minor Crimes:</b>"
-									for(var/datum/data/crime/c in R.fields["mi_crim"])
-										usr << "<b>Crime:</b> [c.crimeName]"
-										usr << "<b>Details:</b> [c.crimeDetails]"
-										usr << "Added by [c.author] at [c.time]"
-										usr << "----------"
-									usr << "<b>Major Crimes:</b>"
-									for(var/datum/data/crime/c in R.fields["ma_crim"])
-										usr << "<b>Crime:</b> [c.crimeName]"
-										usr << "<b>Details:</b> [c.crimeDetails]"
-										usr << "Added by [c.author] at [c.time]"
-										usr << "----------"
-									usr << "<b>Notes:</b> [R.fields["notes"]]"
-
-									//usr << "<a href='?src=\ref[src];secrecordComment=`'>\[View Comment Log\]</a>"
+								if(usr.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+									return
+								usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
+								usr << "<b>Minor Crimes:</b>"
+								for(var/datum/data/crime/c in R.fields["mi_crim"])
+									usr << "<b>Crime:</b> [c.crimeName]"
+									usr << "<b>Details:</b> [c.crimeDetails]"
+									usr << "Added by [c.author] at [c.time]"
+									usr << "----------"
+								usr << "<b>Major Crimes:</b>"
+								for(var/datum/data/crime/c in R.fields["ma_crim"])
+									usr << "<b>Crime:</b> [c.crimeName]"
+									usr << "<b>Details:</b> [c.crimeDetails]"
+									usr << "Added by [c.author] at [c.time]"
+									usr << "----------"
+								usr << "<b>Notes:</b> [R.fields["notes"]]"
 								return
 
 						if(href_list["add_crime"])
@@ -509,26 +508,30 @@
 									if(R)
 										var/t1 = copytext(sanitize(input("Please input minor crime names:", "Security HUD", "", null)  as text),1,MAX_MESSAGE_LEN)
 										var/t2 = copytext(sanitize(input("Please input minor crime details:", "Security HUD", "", null)  as message),1,MAX_MESSAGE_LEN)
-										if (!t1 || !t2 || !R || !allowed_access || usr.stat || usr.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+										if(R)
+											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+												return
+											var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+											data_core.addMinorCrime(R.fields["id"], crime)
+											usr << "<span class='notice'>Successfully added a minor crime.</span>"
 											return
-										var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
-										data_core.addMinorCrime(R.fields["id"], crime)
-										usr << "<span class='notice'>Successfully added a minor crime.</span>"
-										return
 								if("Major Crime")
 									if(R)
 										var/t1 = copytext(sanitize(input("Please input major crime names:", "Security HUD", "", null)  as text),1,MAX_MESSAGE_LEN)
 										var/t2 = copytext(sanitize(input("Please input major crime details:", "Security HUD", "", null)  as message),1,MAX_MESSAGE_LEN)
-										if (!t1 || !t2 || !R || !allowed_access || usr.stat || usr.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+										if(R)
+											if (!t1 || !t2 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+												return
+											var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+											data_core.addMajorCrime(R.fields["id"], crime)
+											usr << "<span class='notice'>Successfully added a major crime.</span>"
 											return
-										var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
-										data_core.addMajorCrime(R.fields["id"], crime)
-										usr << "<span class='notice'>Successfully added a major crime.</span>"
-										return
 								else return
 
 						if(href_list["view_comment"])
 							if(R)
+								if(H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+									return
 								usr << "<b>Comments/Log:</b>"
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
@@ -540,13 +543,15 @@
 						if(href_list["add_comment"])
 							if(R)
 								var/t1 = copytext(sanitize(input("Add Comment:", "Secure. records", null, null)  as message),1,MAX_MESSAGE_LEN)
-								if (!t1 || !R || !allowed_access || usr.stat || usr.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+								if(R)
+									if (!t1 || !allowed_access || H.stat || H.weakened || H.stunned || H.restrained() || !istype(H.glasses, /obj/item/clothing/glasses/hud/security) || !istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
+										return
+									var/counter = 1
+									while(R.fields[text("com_[]", counter)])
+										counter++
+									R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
+									usr << "<span class='notice'>Successfully added comment.</span>
 									return
-								var/counter = 1
-								while(R.fields[text("com_[]", counter)])
-									counter++
-								R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
-								return
 					usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
 
 /mob/living/carbon/human/proc/play_xylophone()
