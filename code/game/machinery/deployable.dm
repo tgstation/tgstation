@@ -64,6 +64,7 @@ for reference:
 	var/maxhealth = 100.0
 
 /obj/structure/barricade/wooden/attackby(obj/item/W as obj, mob/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/stack/sheet/mineral/wood))
 		if (src.health < src.maxhealth)
 			visible_message("<span class='danger'>[user] begins to repair the [src]!</span>")

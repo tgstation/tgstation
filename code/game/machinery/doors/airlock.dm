@@ -889,11 +889,11 @@ About the new airlock wires panel:
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
 		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>"
-		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 		if(do_after(user,40,5,1))
 			if(density && !operating)//Door must be closed to weld.
 				if(W.remove_fuel(0,user))
-					playsound(loc, 'sound/items/welder.ogg', 50, 1)
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					welded = !welded
 					user << "<span class='notice'>You [welded ? "welded the airlock shut":"unwelded the airlock"]</span>"
 					update_icon()

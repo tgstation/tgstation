@@ -353,6 +353,10 @@
 		return 10 //Everyone is a criminal!
 	var/threatcount = 0
 
+	//Securitrons can't identify monkeys
+	if(judgebot.idcheck)
+		threatcount += 4
+
 	//Lasertag bullshit
 	if(lasercolor)
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
