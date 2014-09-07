@@ -703,92 +703,92 @@
 
 	*/
 
-		if(href_list["item"] && able)
-			var/slot = href_list["item"]
-			var/obj/item/place_item = usr.get_active_hand()
-			var/obj/item/id_item = src.wear_id
+	if(href_list["item"] && able)
+		var/slot = href_list["item"]
+		var/obj/item/place_item = usr.get_active_hand()
+		var/obj/item/id_item = src.wear_id
 
-			for(var/things in check_obscured_slots())
-				ourlist += num2slotname(things)
-			for(var/thingsa in ourlist)
+		for(var/things in check_obscured_slots())
+			ourlist += num2slotname(things)
+		for(var/thingsa in ourlist)
 
-			if(slot in ourlist)
-				usr << "<span class='warning'>You can't reach that. Something is covering it.</span>"
-				return
-			else
-				if(isanimal(usr)) return //Animals can't do that
-				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-				if(ishuman(usr) && usr:gloves)
-					var/obj/item/clothing/gloves/G = usr:gloves
-					pickpocket = G.pickpocket
-				O.source = usr
-				O.target = src
-				O.item = usr.get_active_hand()
-				O.s_loc = usr.loc
-				O.t_loc = loc
-				O.place = href_list["item"]
-				O.pickpocket = pickpocket //Stealthy
-				requests += O
-				//world << O.place
-				if(O.place == "id")
-					if(id_item)
-						usr << "<span class='notice'>You try to take [src]'s ID.</span>"
-					else if(place_item && place_item.mob_can_equip(src, slot_wear_id, 1))
-						usr << "<span class='notice'>You try to place [place_item] on [src].</span>"
-
-					if(do_mob(usr, src, HUMAN_STRIP_DELAY))
-						if(id_item)
-							u_equip(id_item)
-							if(pickpocket) usr.put_in_hands(id_item)
-						else
-							if(place_item)
-								usr.u_equip(place_item)
-								equip_to_slot_if_possible(place_item, slot_wear_id, 0, 1)
-						// Update strip window
-						if(usr.machine == src && in_range(src, usr))
-							show_inv(usr)
-
-					else if(!pickpocket)
-						// Display a warning if the user mocks up
-						src << "<span class='warning'>You feel your ID being fumbled with!</span>"
-				else
-					spawn( 0 )
-						O.process()
-						return
-
-
-		if(href_list["pockets"] && able)
-			var/pocket_side = href_list["pockets"]
-			var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
-			var/obj/item/pocket_item = (pocket_id == slot_r_store ? src.r_store : src.l_store)
-			var/obj/item/place_item = usr.get_active_hand() // Item to place in the pocket, if it's empty
+		if(slot in ourlist)
+			usr << "<span class='warning'>You can't reach that. Something is covering it.</span>"
+			return
+		else
 			if(isanimal(usr)) return //Animals can't do that
-			if(ishuman(usr) && (usr:gloves))
+			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
+			if(ishuman(usr) && usr:gloves)
 				var/obj/item/clothing/gloves/G = usr:gloves
 				pickpocket = G.pickpocket
+			O.source = usr
+			O.target = src
+			O.item = usr.get_active_hand()
+			O.s_loc = usr.loc
+			O.t_loc = loc
+			O.place = href_list["item"]
+			O.pickpocket = pickpocket //Stealthy
+			requests += O
+			//world << O.place
+			if(O.place == "id")
+				if(id_item)
+					usr << "<span class='notice'>You try to take [src]'s ID.</span>"
+				else if(place_item && place_item.mob_can_equip(src, slot_wear_id, 1))
+					usr << "<span class='notice'>You try to place [place_item] on [src].</span>"
 
-			if(pocket_item)
-				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
-			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1))
-				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
-			else
-				return
+				if(do_mob(usr, src, HUMAN_STRIP_DELAY))
+					if(id_item)
+						u_equip(id_item)
+						if(pickpocket) usr.put_in_hands(id_item)
+					else
+						if(place_item)
+							usr.u_equip(place_item)
+							equip_to_slot_if_possible(place_item, slot_wear_id, 0, 1)
+					// Update strip window
+					if(usr.machine == src && in_range(src, usr))
+						show_inv(usr)
 
-			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
-				if(pocket_item)
-					u_equip(pocket_item)
-					if(pickpocket) usr.put_in_hands(pocket_item)
-				else
-					if(place_item)
-						usr.u_equip(place_item)
-						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
-				// Update strip window
-				if(usr.machine == src && in_range(src, usr))
-					show_inv(usr)
-
-			else if(!pickpocket)
+				else if(!pickpocket)
 					// Display a warning if the user mocks up
-				src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
+					src << "<span class='warning'>You feel your ID being fumbled with!</span>"
+			else
+				spawn( 0 )
+					O.process()
+					return
+
+
+	if(href_list["pockets"] && able)
+		var/pocket_side = href_list["pockets"]
+		var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
+		var/obj/item/pocket_item = (pocket_id == slot_r_store ? src.r_store : src.l_store)
+		var/obj/item/place_item = usr.get_active_hand() // Item to place in the pocket, if it's empty
+		if(isanimal(usr)) return //Animals can't do that
+		if(ishuman(usr) && (usr:gloves))
+			var/obj/item/clothing/gloves/G = usr:gloves
+			pickpocket = G.pickpocket
+
+		if(pocket_item)
+			usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
+		else if(place_item && place_item.mob_can_equip(src, pocket_id, 1))
+			usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
+		else
+			return
+
+		if(do_mob(usr, src, HUMAN_STRIP_DELAY))
+			if(pocket_item)
+				u_equip(pocket_item)
+				if(pickpocket) usr.put_in_hands(pocket_item)
+			else
+				if(place_item)
+					usr.u_equip(place_item)
+					equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
+			// Update strip window
+			if(usr.machine == src && in_range(src, usr))
+				show_inv(usr)
+
+		else if(!pickpocket)
+				// Display a warning if the user mocks up
+			src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
 
 
 	if (href_list["refresh"])
@@ -819,7 +819,6 @@
 			return
 */
 	if (href_list["criminal"])
-		var/sechud = hasHUD(usr,"security")
 		if(hasHUD(usr,"security"))
 			var/perpname = "wot"
 			var/modified
