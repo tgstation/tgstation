@@ -898,8 +898,6 @@ About the new airlock wires panel:
 					user << "<span class='notice'>You [welded ? "welded the airlock shut":"unwelded the airlock"]</span>"
 					update_icon()
 					user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
-				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 		return
 	else if(istype(C, /obj/item/weapon/screwdriver))
 		src.p_open = !( src.p_open )

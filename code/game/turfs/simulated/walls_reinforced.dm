@@ -102,8 +102,6 @@
 						src.d_state = 3
 						src.icon_state = "r_wall-3"
 						user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
-				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 
 			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
@@ -166,8 +164,6 @@
 						src.icon_state = "r_wall-6"
 						new /obj/item/stack/rods( src )
 						user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
-				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 
 			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )

@@ -412,7 +412,6 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("<span class='danger'>[user] has fixed some of the dents on [src]!</span>"), 1)
 		else
-			user << "Need more welding fuel!"
 			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
