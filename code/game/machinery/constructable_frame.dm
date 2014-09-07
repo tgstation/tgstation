@@ -373,7 +373,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/mechfab
 	name = "Circuit board (Exosuit Fabricator)"
-	build_path = "/obj/machinery/mecha_part_fabricator"
+	build_path = "/obj/machinery/r_n_d/fabricator/mech"
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=3"
 	frame_desc = "Requires 2 Matter Bins, 1 Manipulator, 1 Micro-Laser and 1 Console Screen."
