@@ -533,6 +533,8 @@
 
 
 /obj/machinery/r_n_d/fabricator/attack_hand(mob/user as mob)
+	if((user.stat && !isobserver(user)) || user.restrained()) //allowed is later on, so we don't check it
+		return
 
 	var/turf/exit = get_turf(output)
 	if(exit.density)
