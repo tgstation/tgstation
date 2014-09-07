@@ -238,31 +238,3 @@
 	item_state = "xenos_helm"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
-/*
- * Plugsuit Costumes
- */
-
-/obj/item/clothing/suit/plugsuitred
-	name = "red plugsuit"
-	desc = "A red plugsuit. It has a number two on it. It looks like it was made for a female."
-	icon_state = "plugsuitred"
-	item_state = "plugsuitred"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
-/obj/item/clothing/suit/plugsuitblue
-	name = "blue plugsuit"
-	desc = "A blue plugsuit. It has a number one on it. It looks like it was made for a male."
-	icon_state = "plugsuitblue"
-	item_state = "plugsuitblue"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
-/obj/item/clothing/suit/plugsuitwhite
-	name = "white plugsuit"
-	desc = "A white plugsuit. It has a number zero on it. It looks like it was made for a female."
-	icon_state = "plugsuitwhite"
-	item_state = "plugsuitwhite"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
