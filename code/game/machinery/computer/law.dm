@@ -110,6 +110,9 @@
 
 
 	attack_hand(var/mob/user as mob)
+		if(istype(user,/mob/dead))
+			usr << "<span class='rose'>Your ghostly hand goes right through!</span>"
+			return
 		if(src.stat & NOPOWER)
 			usr << "The upload computer has no power!"
 			return
@@ -223,6 +226,9 @@
 
 
 	attack_hand(var/mob/user as mob)
+		if(istype(user,/mob/dead))
+			usr << "<span class='rose'>Your ghostly hand goes right through!</span>"
+			return
 		if(src.stat & NOPOWER)
 			usr << "The upload computer has no power!"
 			return
