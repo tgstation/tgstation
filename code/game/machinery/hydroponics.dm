@@ -40,6 +40,10 @@
 
 	RefreshParts()
 
+/obj/machinery/hydroponics/Del()
+	for(. in src.component_parts) qdel(.)
+	return ..()
+	
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
 		if(planted)
@@ -846,7 +850,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if(I.reliability != 100 && crit_fail)
 					I.crit_fail = 1
 				I.loc = src.loc
-			del(src)
+			qdel(src)
 		return 1
 	return
 
