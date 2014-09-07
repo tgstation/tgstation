@@ -3,7 +3,7 @@
 
 /obj/machinery/mineral/ore_redemption
 	name = "ore redemption machine"
-	desc = "A machine that accepts ore and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
+	desc = "A machine that accepts ore from inside a ore crate and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
 	density = 1
@@ -392,7 +392,7 @@
 
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
-	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
+	desc = "A device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
@@ -401,13 +401,14 @@
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
+	var/use_amt = 1 //change this per object for MANY USES.
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user as mob)
 	var/turf/device_turf = get_turf(user)
-	if(!device_turf||device_turf.z==2||device_turf.z>=7)
+	if(!device_turf||device_turf.z==2||device_turf.z>=99999999) //limiting things to a few zlevels is FUCKING ANNOYING STOP IT YOU CUNTS
 		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
 		return
-	else
+	else if(use_amt > 0)
 		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
 		var/list/L = list()
 		for(var/obj/item/device/radio/beacon/B in world)
@@ -422,7 +423,19 @@
 		J.target = chosen_beacon
 		try_move_adjacent(J)
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
-		qdel(src)
+		src.use_amt = (use_amt - 1)
+	else
+		user << "<span class='warning'>The [src.name] is out of uses!</span>"
+		return
+
+/obj/item/device/wormhole_jaunter/examine()
+	..()
+	if(use_amt > 1)
+		usr << "<span class='notice'>There are [use_amt] charges left. </span>"
+	else if(use_amt == 1)
+		usr << "<span class='notice'>There is one charge left. </span>"
+	else
+		usr << "<span class='notice'>There are no charges left. </span>"
 
 /obj/effect/portal/wormhole/jaunt_tunnel
 	name = "jaunt tunnel"

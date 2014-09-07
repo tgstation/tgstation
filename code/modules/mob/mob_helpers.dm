@@ -110,11 +110,6 @@ proc/isobserver(A)
 		return 1
 	return 0
 
-proc/isnewplayer(A)
-	if(istype(A, /mob/new_player))
-		return 1
-	return 0
-
 proc/isovermind(A)
 	if(istype(A, /mob/camera/blob))
 		return 1

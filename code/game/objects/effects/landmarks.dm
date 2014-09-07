@@ -234,3 +234,37 @@
 	new /obj/item/clothing/mask/gas/sexymime(src.loc)
 	new /obj/item/clothing/under/sexymime(src.loc)
 	qdel(src)
+
+
+
+/obj/effect/landmark/vault/New() //spawns random shit for the vault
+
+	var/list/options = typesof(/obj/effect/landmark/vault)
+	var/PICK= options[rand(1,options.len)]
+	new PICK(src.loc)
+	del(src)
+
+//SUBCLASSES.  Spawn a bunch of items and disappear likewise
+/obj/effect/landmark/vault/oldvault/New()
+	new /obj/item/clothing/head/bearpelt(src.loc)
+	new /obj/item/weapon/twohanded/fireaxe(src.loc)
+	del(src)
+
+/obj/effect/landmark/vault/bigboss/New()
+//also patriot gunz... when I get around to that on this codebase :v: -reds
+	new /obj/item/clothing/mask/cigarette/cigar/havana(src.loc)
+	new /obj/item/clothing/glasses/eyepatch(src.loc)
+	new /obj/item/clothing/gloves/black(src.loc)
+	new /obj/item/clothing/under/suit_jacket/really_black(src.loc)
+	new /obj/item/clothing/suit/det_suit(src.loc)
+	new /obj/item/clothing/shoes/syndigaloshes(src.loc)
+	del(src)
+/*
+/obj/effect/landmark/vault/clownemperor/New()
+	new /obj/item/clothing/mask/gas/clown_hat(src.loc)
+	new /obj/item/clothing/head/helmet/space/rig/wizard/clown(src.loc)
+	new /obj/item/clothing/gloves/rainbow(src.loc)
+	new /obj/item/clothing/under/rank/clown(src.loc)
+	new /obj/item/clothing/suit/space/rig/wizard/clown(src.loc)
+	new /obj/item/clothing/shoes/sandal/clown(src.loc)
+*/ //removed because no clown emperor gear

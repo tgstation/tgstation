@@ -21,15 +21,13 @@
 			if(null)
 				return
 			if("")
-				message_admins("<span class='admin'>[src.ckey] removed their own Memo</span>")
-				log_admin("[src.ckey] removed their own Memo")
 				F.dir.Remove(ckey)
+				src << "<b>Memo removed</b>"
 				return
 		if( findtext(memo,"<script",1,0) )
 			return
 		F[ckey] << "[key] on [time2text(world.realtime,"(DDD) DD MMM hh:mm")]<br>[memo]"
 		message_admins("[key] set an admin memo:<br>[memo]")
-		log_admin("[key] set an admin memo:[memo]")
 
 //show all memos
 /client/proc/admin_memo_show()
@@ -37,7 +35,7 @@
 		var/savefile/F = new(MEMOFILE)
 		if(F)
 			for(var/ckey in F.dir)
-				src << "<center><span class='motd'><span class='prefix'>Admin Memo</span><span class='emote'> by [F[ckey]]</span></span></center>"
+				src << "<center><span class='motd'><b>Admin Memo</b><i> by [F[ckey]]</i></span></center>"
 
 //delete your own or somebody else's memo
 /client/proc/admin_memo_delete()
@@ -49,10 +47,8 @@
 		else
 			ckey = src.ckey
 		if(ckey)
-			for(var/memo in F.dir)
-				message_admins("<span class='admin'>[src.ckey] removed [ckey]'s Memo.</span>")
-				log_admin("[src.ckey] removed Memo created by [F[memo]].")
-				F.dir.Remove(ckey)
+			F.dir.Remove(ckey)
+			src << "<b>Removed Memo created by [ckey].</b>"
 
 #undef MEMOFILE
 #undef ENABLE_MEMOS

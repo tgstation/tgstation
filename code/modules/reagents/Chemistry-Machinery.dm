@@ -808,6 +808,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		icon = 'icons/obj/kitchen.dmi'
 		icon_state = "juicer1"
 		layer = 2.9
+		density = 1
 		anchored = 1
 		use_power = 1
 		idle_power_usage = 5

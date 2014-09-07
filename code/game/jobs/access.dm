@@ -79,7 +79,6 @@
 
 	//The Syndicate
 /var/const/access_syndicate = 150//General Syndicate Access
-/var/const/access_syndicate_leader = 151//Nuke Op Leader Access
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
@@ -207,7 +206,7 @@
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
 
 /proc/get_all_syndicate_access()
-	return list(access_syndicate, access_syndicate)
+	return list(access_syndicate)
 
 /proc/get_region_accesses(var/code)
 	switch(code)

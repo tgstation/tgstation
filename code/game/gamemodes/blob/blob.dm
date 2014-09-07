@@ -11,7 +11,7 @@ var/list/blob_nodes = list()
 	config_tag = "blob"
 	antag_flag = BE_BLOB
 
-	required_players = 30
+	required_players = 25
 	required_enemies = 1
 	recommended_enemies = 1
 

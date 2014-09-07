@@ -374,7 +374,6 @@ ________________________________________________________________________________
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
 	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), slot_head)
 	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), slot_wear_mask)
-	equip_to_slot_or_del(new /obj/item/clothing/glasses/night(src), slot_glasses)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_belt)
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_r_store)
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
@@ -2522,6 +2521,7 @@ ________________________________________________________________________________
 
 /obj/item/clothing/mask/gas/voice/space_ninja/New()
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev
+	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm
 
 //This proc is linked to human life.dm. It determines what hud icons to display based on mind special role for most mobs.
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/assess_targets(list/target_list, mob/living/carbon/U)
@@ -2586,8 +2586,46 @@ ________________________________________________________________________________
 		voice = "Unknown"
 	return
 
+/obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm()
+	set name = "Switch Mode"
+	set desc = "Switches between Night Vision, Meson, or Thermal vision modes."
+	set category = "Ninja Equip"
+	//Have to reset these manually since life.dm is retarded like that. Go figure.
+	//This will only work for humans because only they have the appropriate code for the mask.
+	var/mob/U = loc
+	switch(mode)
+		if(0)
+			mode=1
+			U << "Switching mode to <B>Night Vision</B>."
+		if(1)
+			mode=2
+			U.see_in_dark = 2
+			U << "Switching mode to <B>Thermal Scanner</B>."
+		if(2)
+			mode=3
+			U.see_invisible = SEE_INVISIBLE_LIVING
+			U.sight &= ~SEE_MOBS
+			U << "Switching mode to <B>Meson Scanner</B>."
+		if(3)
+			mode=0
+			U.sight &= ~SEE_TURFS
+			U << "Switching mode to <B>Scouter</B>."
+
 /obj/item/clothing/mask/gas/voice/space_ninja/examine()
+	set src in view()
 	..()
+
+	var/mode
+	switch(mode)
+		if(0)
+			mode = "Scouter"
+		if(1)
+			mode = "Night Vision"
+		if(2)
+			mode = "Thermal Scanner"
+		if(3)
+			mode = "Meson Scanner"
+	usr << "<B>[mode]</B> is active."//Leaving usr here since it may be on the floor or on a person.
 	usr << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
 
 /*

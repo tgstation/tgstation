@@ -245,6 +245,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	//#### Tagging the signal with all appropriate identity values ####//
 
 	// ||-- The mob's name identity --||
+	var/displayname = M.name	// grab the display name (name you get when you hover over someone's icon)
 	var/real_name = M.name // mob's real name
 	var/mobkey = "none" // player key associated with mob
 	var/voicemask = 0 // the speaker is wearing a voice mask
@@ -264,6 +265,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/datum/data/record/findjob = find_record("name", voice, data_core.general)
 
 		if(voice != real_name)
+			displayname = voice
 			voicemask = 1
 		if(findjob)
 			jobname = findjob.fields["rank"]
@@ -308,7 +310,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			"mob" = M, // store a reference to the mob
 			"mobtype" = M.type, 	// the mob's type
 			"realname" = real_name, // the mob's real name
-			"name" = voice,			// the mob's voice name
+			"name" = voice,			// the mob's display name
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
@@ -354,17 +356,17 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	/* --- Try to send a normal subspace broadcast first */
 
 	signal.data = list(
-		"mob" = M, 				// store a reference to the mob
+		"mob" = M, // store a reference to the mob
 		"mobtype" = M.type, 	// the mob's type
 		"realname" = real_name, // the mob's real name
-		"name" = voice,			// the mob's voice name
+		"name" = displayname,	// the mob's display name
 		"job" = jobname,		// the mob's job
 		"key" = mobkey,			// the mob's key
 		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
 
-		"compression" = 0,		// uncompressed radio signal
-		"message" = message, 	// the actual sent message
-		"radio" = src, 			// stores the radio used for transmission
+		"compression" = 0, // uncompressed radio signal
+		"message" = message, // the actual sent message
+		"radio" = src, // stores the radio used for transmission
 		"slow" = 0,
 		"traffic" = 0,
 		"type" = 0,
@@ -386,7 +388,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
 		// Send a mundane broadcast with limited targets:
 		Broadcast_Message(M, voicemask,
-						  src, message, voice, jobname, real_name,
+						  src, message, displayname, jobname, real_name,
 						  filter_type, signal.data["compression"], list(position.z), freq)
 
 /obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)

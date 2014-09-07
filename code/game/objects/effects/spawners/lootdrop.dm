@@ -48,13 +48,13 @@
 
 	//table data:
 	//-----------
-	//aft maintenance: 		24 items, 18 spots 2 extra (28/08/2014)
+	//aft maintenance: 		23 items, 17 spots 2 extra (08/08/2014)
 	//asmaint: 				16 items, 11 spots 0 extra (08/08/2014)
-	//asmaint2:			 	36 items, 26 spots 2 extra (28/08/2014)
+	//asmaint2:			 	36 items, 25 spots 2 extra (08/08/2014)
 	//fpmaint:				5  items,  4 spots 0 extra (08/08/2014)
-	//fpmaint2:				12 items, 11 spots 2 extra (28/08/2014)
+	//fpmaint2:				11 items, 10 spots 2 extra (08/08/2014)
 	//fsmaint:				0  items,  0 spots 0 extra (08/08/2014)
-	//fsmaint2:				40 items, 27 spots 5 extra (28/08/2014)
+	//fsmaint2:				40 items, 30 spots 5 extra (11/08/2014)
 	//maintcentral:			2  items,  2 spots 0 extra (08/08/2014)
 	//port:					5  items,  5 spots 0 extra (08/08/2014)
 	loot = list(

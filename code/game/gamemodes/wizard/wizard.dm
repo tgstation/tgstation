@@ -5,7 +5,7 @@
 	name = "wizard"
 	config_tag = "wizard"
 	antag_flag = BE_WIZARD
-	required_players = 20
+	required_players = 18
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
