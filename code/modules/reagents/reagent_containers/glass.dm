@@ -16,6 +16,7 @@
 
 	var/label_text = ""
 
+	//This is absolutely terrible
 	var/list/can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
@@ -38,7 +39,7 @@
 		/mob/living/simple_animal/cow,
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/obj/machinery/computer/centrifuge,
-		/obj/machinery/icemachine,
+		/obj/machinery/cooking/icemachine,
 		/obj/machinery/sleeper	)
 
 	New()

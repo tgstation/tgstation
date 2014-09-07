@@ -152,8 +152,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/qdel_toggle,              // /vg/
 	/client/proc/cmd_admin_dump_instances, // /vg/
 	/client/proc/disable_bloodvirii,       // /vg/
-	/client/proc/fryer_toggle,
-	/client/proc/fryer_nutriment,
+	/client/proc/configFood,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
 #endif
