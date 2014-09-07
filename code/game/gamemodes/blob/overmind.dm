@@ -14,6 +14,7 @@
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
+	var/maxjumprange = 20 //how far you can go in terms of non-blob tiles in a jump attempt
 
 /mob/camera/blob/New()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
@@ -108,6 +109,15 @@
 	if(B)
 		loc = NewLoc
 	else
+		B = locate() in range("3x3", src.loc)
+	if(!B) //PANIC, WE'RE NOWHERE NEAR ANYTHING
+		var/newrange = 3 //slowly grows outwards, looking for the nearest blob tile. Should not take very long to find it.
+		while (1)
+			newrange++
+			B = locate() in range("[newrange]x[newrange]", src.loc)
+			if(B)
+				loc = B.loc
+				break
+			if(newrange > maxjumprange) //to avoid going in an infinite loop
+				break
 		return 0
-
-
