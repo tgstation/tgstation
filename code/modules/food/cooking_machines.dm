@@ -14,6 +14,7 @@
 var/global/deepFriedEverything = 1
 var/global/deepFriedNutriment = 1
 var/global/foodNesting = 1
+var/global/ingredientLimit = 100
 
 /client/proc/configFood()
 	set name = "Configure Food"
@@ -27,9 +28,13 @@ var/global/foodNesting = 1
 	. = (input("Deep Fried Nutriment? (1 to 50)"))
 	if(isnum(.) && (. in 1 to 50)) deepFriedNutriment = .
 	else usr << "That wasn't a valid number."
+	. = (input("Ingredient Limit? (1 to 1000)"))
+	if(isnum(.) && (. in 1 to 1000)) ingredientLimit = .
+	else usr << "That wasn't a valid number."
 	log_admin("[key_name(usr)] set deepFriedEverything to [deepFriedEverything].")
 	log_admin("[key_name(usr)] set foodNesting to [foodNesting].")
 	log_admin("[key_name(usr)] set deepFriedNutriment to [deepFriedNutriment]")
+	log_admin("[key_name(usr)] set ingredientLimit to [ingredientLimit]")
 	return
 
 // Base (Oven) /////////////////////////////////////////////////
