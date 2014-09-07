@@ -103,15 +103,27 @@
 	modules += new /obj/item/device/analyzer(src)
 	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/weapon/wirecutters(src)
+	modules += new /obj/item/weapon/screwdriver(src)
+	modules += new /obj/item/weapon/multitool(src)
 
 	var/datum/robot_energy_storage/wire/wirestore = new /datum/robot_energy_storage/wire(src)
+	var/datum/robot_energy_storage/metal/metstore = new /datum/robot_energy_storage/metal(src)
 
 	var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src)
 	W.source = wirestore
 	modules += W
 
-	storages += wirestore
+	var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/metal/cyborg(src)
+	G.metsource = metstore
+	modules += M
 
+	var/obj/item/stack/sheet/glass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
+	G.glasource = glastore
+	modules += G
+
+	storages += wirestore
+	storages += metstore
+	storages += glastore
 
 obj/item/weapon/robot_module/construction
 	name = "construction robot module"
