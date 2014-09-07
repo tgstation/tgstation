@@ -184,3 +184,18 @@
 
 /obj/item/weapon/melee/energy/blade/proc/throw()
 	qdel(src)
+
+/obj/item/weapon/melee/energy/sword/sord
+	color
+	name = "emergy suord"
+	desc = "May the farce be within you."
+
+/obj/item/weapon/melee/energy/sword/sord/attack_self(mob/living/user)
+	if (active)
+		force = 5
+		hitsound = 'sound/weapons/blade1.ogg'
+		..()
+	else
+		..()
+	add_fingerprint(user)
+	return

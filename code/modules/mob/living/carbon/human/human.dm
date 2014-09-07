@@ -564,7 +564,7 @@
 
 	//Check for ID
 	var/obj/item/weapon/card/id/idcard = get_idcard()
-	if(judgebot.idcheck && !idcard && name=="Unknown")
+	if(judgebot.idcheck && !idcard)
 		threatcount += 4
 
 	//Check for weapons
@@ -604,17 +604,6 @@
 
 	//Agent cards lower threatlevel.
 	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
-		threatcount -= 5
+		threatcount -= 2
 
 	return threatcount
-
-
-//Used for new human mobs created by cloning/goleming/podding
-/mob/living/carbon/human/proc/set_cloned_appearance()
-	if(gender == MALE)
-		facial_hair_style = "Full Beard"
-	else
-		facial_hair_style = "Shaved"
-	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
-	underwear = "Nude"
-	regenerate_icons()

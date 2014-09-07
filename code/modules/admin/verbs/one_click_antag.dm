@@ -256,40 +256,53 @@ client/proc/one_click_antag()
 		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
 		if(agentcount < 3)
 			return 0
+		else
+			for(var/mob/c in chosen)
+				var/mob/living/carbon/human/new_character=makeBody(c)
+				new_character.mind.make_Nuke()
 
-		var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-		var/obj/effect/landmark/closet_spawn = locate("landmark*Syndicate-Uplink")
+		var/obj/effect/landmark/nuke_spawn = locate("landmark*Syndicate-Uplink")
+		var/obj/effect/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
+
 		var/nuke_code = "[rand(10000, 99999)]"
 
 		if(nuke_spawn)
-			var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
-			the_bomb.r_code = nuke_code
+			var/obj/item/weapon/paper/P = new
+			P.info = "Sadly, the Syndicate could not get you a nuclear bomb.  We have, however, acquired the arming code for the station's onboard nuke.  The nuclear authorization code is: <b>[nuke_code]</b>"
+			P.name = "nuclear bomb code and instructions"
+			P.loc = nuke_spawn.loc
 
 		if(closet_spawn)
 			new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
-		//Let's find the spawn locations
-		var/list/turf/synd_spawn = list()
-		for(var/obj/effect/landmark/A in landmarks_list)
-			if(A.name == "Syndicate-Spawn")
-				synd_spawn += get_turf(A)
+		for (var/obj/effect/landmark/A in /area/syndicate_station/start)//Because that's the only place it can BE -Sieve
+			if (A.name == "Syndicate-Gear-Closet")
+				new /obj/structure/closet/syndicate/personal(A.loc)
+				qdel(A)
 				continue
 
-		var/leader_chosen
-		var/spawnpos = 1 //Decides where they'll spawn. 1=leader.
+			if (A.name == "Syndicate-Bomb")
+				new /obj/effect/spawner/newbomb/timer/syndicate(A.loc)
+				qdel(A)
+				continue
 
-		for(var/mob/c in chosen)
-			if(spawnpos > synd_spawn.len)
-				spawnpos = 2 //Ran out of spawns. Let's loop back to the first non-leader position
-			var/mob/living/carbon/human/new_character=makeBody(c)
-			if(!leader_chosen)
-				leader_chosen = 1
-				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code,1)
-			else
-				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code)
-			spawnpos++
+		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
+			if(synd_mind.current)
+				if(synd_mind.current.client)
+					for(var/image/I in synd_mind.current.client.images)
+						if(I.icon_state == "synd")
+							del(I)
 
-		ticker.mode.update_all_synd_icons()
+		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
+			if(synd_mind.current)
+				if(synd_mind.current.client)
+					for(var/datum/mind/synd_mind_1 in ticker.mode.syndicates)
+						if(synd_mind_1.current)
+							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
+							synd_mind.current.client.images += I
+
+		for (var/obj/machinery/nuclearbomb/bomb in world)
+			bomb.r_code = nuke_code						// All the nukes are set to this code.
 
 	return 1
 

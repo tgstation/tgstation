@@ -1232,6 +1232,24 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Test Room"
 	icon_state = "storage"
 
+//HANGAR BAYS
+
+/area/hangar/assistant
+	name = "Construction Bay"
+	icon_state = "hangar"
+
+/area/hangar/engi
+	name = "Engineering Hangar Bay"
+	icon_state = "hangar_engi"
+
+/area/hangar/sec
+	name = "Security Hangar Bay"
+	icon_state = "hangar_sec"
+
+/area/hangar/ghetto
+	name = "Maintenence Hangar Bay"
+	icon_state = "hangar"
+
 //DJSTATION
 
 /area/djstation
@@ -1403,6 +1421,22 @@ proc/process_ghost_teleport_locs()
 	name = "\improper AI Satellite"
 	icon_state = "ai"
 
+/area/turret_protected/aisat_N
+	name = "\improper AI Satellite"
+	icon_state = "ai_foyer"
+
+/area/turret_protected/aisat_S
+	name = "\improper AI Satellite"
+	icon_state = "ai_foyer"
+
+/area/turret_protected/aisat_E
+	name = "\improper AI Satellite"
+	icon_state = "ai_foyer"
+
+/area/turret_protected/aisat_W
+	name = "\improper AI Satellite"
+	icon_state = "ai_foyer"
+
 /area/aisat
 	name = "\improper AI Satellite Exterior"
 	icon_state = "storage"
@@ -1466,6 +1500,30 @@ proc/process_ghost_teleport_locs()
 	icon_state = "storage"
 
 
+/area/spaceareas/teleportsat
+	name = "Teleportation Satellite"
+	icon_state = "teleporter"
+	has_gravity = 0
+
+/area/spaceareas/spacebeaconsat
+	name = "Wormhole Beacon Satellite"
+	icon_state = "teleporter"
+	has_gravity = 0
+
+/area/spaceareas/abandoned_ship/engine
+	name = "Abandoned Ship Engineering"
+	icon_state = "engine"
+	has_gravity = 0
+
+/area/spaceareas/abandoned_ship/engistorage
+	name = "Abandoned Ship Engineering Storage"
+	icon_state = "storage"
+	has_gravity = 0
+
+/area/spaceareas/abandoned_ship/enginehallway
+	name = "Abandoned Ship Engineering Hallway"
+	icon_state = "green"
+	has_gravity = 0
 
 // Telecommunications Satellite
 

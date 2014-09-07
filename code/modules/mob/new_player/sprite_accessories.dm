@@ -72,21 +72,17 @@
 	name = "Long Hair"
 	icon_state = "hair_vlong"
 
-/datum/sprite_accessory/hair/over_eye
-	name = "Over Eye"
-	icon_state = "hair_overeye"
-
 /datum/sprite_accessory/hair/long_over_eye
-	name = "Long Over Eye"
+	name = "Over eye"
 	icon_state = "hair_longovereye"
-
-/datum/sprite_accessory/hair/longest2
-	name = "Very Long Over Eye"
-	icon_state = "hair_longest2"
 
 /datum/sprite_accessory/hair/longest
 	name = "Very Long Hair"
 	icon_state = "hair_longest"
+
+/datum/sprite_accessory/hair/longest2
+	name = "Very Long Over Eye"
+	icon_state = "hair_longest2"
 
 /datum/sprite_accessory/hair/longfringe
 	name = "Long Fringe"
@@ -128,20 +124,19 @@
 	name = "Ponytail 5"
 	icon_state = "hair_ponytail5"
 
-
-/datum/sprite_accessory/hair/sidetail
+/datum/sprite_accessory/hair/side_tail
 	name = "Side Pony"
 	icon_state = "hair_sidetail"
 
-/datum/sprite_accessory/hair/sidetail2
+/datum/sprite_accessory/hair/side_tail2
 	name = "Side Pony 2"
 	icon_state = "hair_sidetail2"
 
-/datum/sprite_accessory/hair/sidetail3
+/datum/sprite_accessory/hair/side_tail3
 	name = "Side Pony 3"
 	icon_state = "hair_sidetail3"
 
-/datum/sprite_accessory/hair/sidetail4
+/datum/sprite_accessory/hair/side_tail4
 	name = "Side Pony 4"
 	icon_state = "hair_sidetail4"
 
@@ -249,7 +244,7 @@
 	name = "Emo"
 	icon_state = "hair_emo"
 
-/datum/sprite_accessory/hair/longemo
+/datum/sprite_accessory/hair/emo
 	name = "Long Emo"
 	icon_state = "hair_longemo"
 
@@ -285,14 +280,6 @@
 	name = "Spiky"
 	icon_state = "hair_spikey"
 
-/datum/sprite_accessory/hair/spiky2
-	name = "Spiky 2"
-	icon_state = "hair_spiky"
-
-/datum/sprite_accessory/hair/spiky3
-	name = "Spiky 3"
-	icon_state = "hair_spiky2"
-
 /datum/sprite_accessory/hair/protagonist
 	name = "Slightly long"
 	icon_state = "hair_protagonist"
@@ -304,14 +291,6 @@
 /datum/sprite_accessory/hair/kagami
 	name = "Pigtails"
 	icon_state = "hair_kagami"
-
-/datum/sprite_accessory/hair/pigtail
-	name = "Pigtails 2"
-	icon_state = "hair_pigtails"
-
-/datum/sprite_accessory/hair/pigtail
-	name = "Pigtails 3"
-	icon_state = "hair_pigtails2"
 
 /datum/sprite_accessory/hair/himecut
 	name = "Hime Cut"
@@ -328,6 +307,10 @@
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
+
+/datum/sprite_accessory/hair/pigtail
+	name = "Pig tails"
+	icon_state = "hair_pigtails"
 
 /datum/sprite_accessory/hair/front_braid
 	name = "Braided front"
@@ -404,6 +387,18 @@
 /datum/sprite_accessory/hair/drillhair
 	name = "Drill Hair"
 	icon_state = "hair_drillhair"
+
+/datum/sprite_accessory/hair/spiky
+	name = "Big Spiky Hair"
+	icon_state = "hair_spiky"
+
+/datum/sprite_accessory/hair/spiky2
+	name = "Big Spiky Hair 2"
+	icon_state = "hair_spiky2"
+
+/datum/sprite_accessory/hair/pigtails
+	name = "Pigtails"
+	icon_state = "hair_pigtails"
 
 /datum/sprite_accessory/hair/keanu
 	name = "Keanu Hair"

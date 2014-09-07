@@ -213,7 +213,7 @@ Class Procs:
 	return
 
 /mob/dead/observer/canUseTopic()
-	if(check_rights(R_ADMIN, 0))
+	if(check_rights(R_ADMIN))
 		return
 
 /mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)

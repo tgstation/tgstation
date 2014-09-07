@@ -91,7 +91,7 @@
 				name = "glass of vodka"
 				desc = "The glass contain wodka. Xynta."
 			if("goldschlager")
-				icon_state = "goldschlagerglass"
+				icon_state = "ginvodkaglass"
 				name = "glass of Goldschlager"
 				desc = "100 proof that teen girls will drink anything with gold in it."
 			if("wine")
