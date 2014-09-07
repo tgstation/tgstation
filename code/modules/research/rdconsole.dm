@@ -271,11 +271,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				flick("d_analyzer_process", linked_destroy)
 				spawn(24)
 					if(linked_destroy)
-						linked_destroy.busy = 0
 						if(!linked_destroy.hacked)
 							if(!linked_destroy.loaded_item)
 								usr <<"\red The destructive analyzer appears to be empty."
 								screen = 1.0
+								linked_destroy.busy = 0
 								return
 							if(linked_destroy.loaded_item.reliability >= 90)
 								var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
@@ -309,6 +309,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						use_power(250)
 						screen = 1.0
 						updateUsrDialog()
+						linked_destroy.busy = 0
 
 	else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
 		if(src.allowed(usr))
