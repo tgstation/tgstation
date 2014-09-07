@@ -294,10 +294,6 @@
 					user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
 					welded = 0
 					update_icon()
-			else
-				user << "<span class='notice'>The welding tool needs to be on to start this task.</span>"
-		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return 1
 	else
 		return ..()

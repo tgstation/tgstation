@@ -241,7 +241,7 @@ var/list/uplink_items = list()
 	desc = "A syringe disguised as a functional pen, filled with a potent mix of drugs, including a strong anaesthetic and a chemical that is capable of blocking the movement of the vocal chords. \
 	The pen holds one dose of the mixture, and cannot be refilled."
 	item = /obj/item/weapon/pen/sleepy
-	cost = 3
+	cost = 2
 	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/soap

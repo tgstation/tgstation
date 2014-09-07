@@ -318,7 +318,6 @@
 				qdel(src)
 			return
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 
 /obj/machinery/disposal/deliveryChute/process()

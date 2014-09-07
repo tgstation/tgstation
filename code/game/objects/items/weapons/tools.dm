@@ -176,7 +176,6 @@
 			item_heal_robotic(H, user, 30, 0)
 			return
 		else
-			user << "<span class='warning'>Need more welding fuel!</span>"
 			return
 	else
 		return ..()
