@@ -237,6 +237,18 @@ Buildable meters
 /obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	..()
 	//*
+	if (istype(W, /obj/item/weapon/pen))
+		var/t = input(user, "What would you like the label to be?", name, null) as text
+		if(user.get_active_hand() != W)
+			return
+		if(!in_range(src, user) && loc != user)
+			return
+		t = copytext(sanitize(t), 1, 63) //We're replacing entire name here.
+		if(t)
+			pipename = t
+		else
+			pipename = null
+		return //You already did what you wanted, so...
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!isturf(src.loc))
@@ -259,6 +271,8 @@ Buildable meters
 			var/obj/machinery/atmospherics/pipe/simple/P = new( src.loc )
 			P.dir = src.dir
 			P.initialize_directions = pipe_dir
+			if (pipename)
+				P.name = pipename
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
@@ -275,6 +289,8 @@ Buildable meters
 			P.dir = src.dir
 			P.initialize_directions = pipe_dir
 			P.initialize_directions_he = pipe_dir
+			if (pipename)
+				P.name = pipename
 			//var/turf/T = P.loc
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
@@ -326,6 +342,8 @@ Buildable meters
 			P.dir = src.dir
 			P.initialize_directions = src.get_pdir()
 			P.initialize_directions_he = src.get_hdir()
+			if (pipename)
+				P.name = pipename
 			//var/turf/T = P.loc
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
@@ -463,6 +481,8 @@ Buildable meters
 			var/obj/machinery/atmospherics/pipe/simple/insulated/P = new( src.loc )
 			P.dir = src.dir
 			P.initialize_directions = pipe_dir
+			if (pipename)
+				P.name = pipename
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
