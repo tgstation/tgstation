@@ -114,7 +114,7 @@
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator))
 		GibtoniteReaction(user)
 		return
-	if(istype(I, /obj/item/device/mining_scanner) && primed)
+	if(istype(I, /obj/item/device/t_scanner/mining_scanner) && primed)
 		primed = 0
 		user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
 		icon_state = "Gibtonite ore"

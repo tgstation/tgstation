@@ -22,7 +22,7 @@ MASS SPECTROMETER
 /obj/item/device/t_scanner/attack_self(mob/user)
 
 	on = !on
-	icon_state = "t-ray[on]"
+	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
 		processing_objects.Add(src)
@@ -32,6 +32,9 @@ MASS SPECTROMETER
 	if(!on)
 		processing_objects.Remove(src)
 		return null
+	scan()
+
+/obj/item/device/t_scanner/proc/scan()
 
 	for(var/turf/T in range(1, src.loc) )
 
