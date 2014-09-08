@@ -48,7 +48,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/num_changelings = 1
 
 	if(config.changeling_scaling_coeff)
-		num_changelings = max(1, round((num_players())/(config.changeling_scaling_coeff)))
+		num_changelings = max(1, min( round(num_players()/(config.changeling_scaling_coeff*2))+2, round(num_players()/config.changeling_scaling_coeff) ))
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
 
@@ -79,10 +79,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	return
 
 /datum/game_mode/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
-	var/changelingcap = round(joined_player_list.len / config.changeling_scaling_coeff)
+	var/changelingcap = min( round(num_players()/(config.changeling_scaling_coeff*2))+2, round(num_players()/config.changeling_scaling_coeff) )
 	if(changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
-	if(changelings.len <= (changelingcap - 2) || prob(100 / config.changeling_scaling_coeff))
+	if(changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
 		if(character.client.prefs.be_special & BE_CHANGELING)
 			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))
@@ -100,22 +100,34 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	absorb_objective.gen_amount_goal(6, 8)
 	changeling.objectives += absorb_objective
 
-	var/datum/objective/assassinate/kill_objective = new
-	kill_objective.owner = changeling
-	kill_objective.find_target()
-	changeling.objectives += kill_objective
-
-	switch(rand(1,100))
-		if(1 to 60)
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = changeling
-			steal_objective.find_target()
-			changeling.objectives += steal_objective
+	var/list/active_ais = active_ais()
+	if(active_ais.len && prob(100/joined_player_list.len))
+		var/datum/objective/destroy/destroy_objective = new
+		destroy_objective.owner = changeling
+		destroy_objective.find_target()
+		changeling.objectives += destroy_objective
+	else
+		if(prob(70))
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = changeling
+			kill_objective.find_target()
+			changeling.objectives += kill_objective
 		else
-			var/datum/objective/debrain/debrain_objective = new
-			debrain_objective.owner = changeling
-			debrain_objective.find_target()
-			changeling.objectives += debrain_objective
+			var/datum/objective/maroon/maroon_objective = new
+			maroon_objective.owner = changeling
+			maroon_objective.find_target()
+			changeling.objectives += maroon_objective
+
+	if(prob(60))
+		var/datum/objective/steal/steal_objective = new
+		steal_objective.owner = changeling
+		steal_objective.find_target()
+		changeling.objectives += steal_objective
+	else
+		var/datum/objective/debrain/debrain_objective = new
+		debrain_objective.owner = changeling
+		debrain_objective.find_target()
+		changeling.objectives += debrain_objective
 
 	if (!(locate(/datum/objective/escape) in changeling.objectives))
 		var/datum/objective/escape/escape_objective = new
@@ -126,8 +138,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
 	if (you_are)
-		changeling.current << "<b>\red You are a changeling! You have absorbed and taken the form of a human.</b>"
-	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings.</b>"
+		changeling.current << "<span class='userdanger'>You are a changeling! You have absorbed and taken the form of a human.</span>"
+	changeling.current << "<span class='userdanger'>Use say \":g message\" to communicate with your fellow changelings.</span>"
 	changeling.current << "<b>You must complete the following tasks:</b>"
 
 	if (changeling.current.mind)
@@ -193,7 +205,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
 						feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
 					else
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
 						feedback_add_details("changeling_objective","[objective.type]|FAIL")
 						changelingwin = 0
 					count++
@@ -202,7 +214,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				text += "<br><font color='green'><b>The changeling was successful!</b></font>"
 				feedback_add_details("changeling_success","SUCCESS")
 			else
-				text += "<br><font color='red'><b>The changeling has failed.</b></font>"
+				text += "<br><span class='userdanger'>The changeling has failed.</span>"
 				feedback_add_details("changeling_success","FAIL")
 			text += "<br>"
 

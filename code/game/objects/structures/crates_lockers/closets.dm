@@ -151,7 +151,7 @@
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
-		visible_message("\red [user] destroys the [src]. ")
+		visible_message("<span class='danger'>[user] destroys the [src].</span>")
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		qdel(src)
@@ -180,11 +180,11 @@
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			user << "<span class='notice'>You begin cutting the [src] apart...</span>"
-			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			if(do_after(user,40,5,1))
 				if(src.opened)
 					if(WT.remove_fuel(0,user))
-						playsound(loc, 'sound/items/welder.ogg', 50, 1)
+						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 						new /obj/item/stack/sheet/metal(src.loc)
 						for(var/mob/M in viewers(src))
 							M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)

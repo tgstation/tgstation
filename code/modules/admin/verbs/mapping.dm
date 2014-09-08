@@ -140,7 +140,6 @@ var/intercom_range_display_status = 0
 	src.verbs += /datum/admins/proc/show_traitor_panel
 	src.verbs += /client/proc/print_jobban_old
 	src.verbs += /client/proc/print_jobban_old_filter
-	src.verbs += /client/proc/forceEvent
 	src.verbs += /client/proc/kill_pipe_processing
 	src.verbs += /client/proc/kill_air_processing
 	src.verbs += /client/proc/disable_communication

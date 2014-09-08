@@ -93,8 +93,8 @@
 	if(!check_monkey_victory())
 		feedback_set_details("round_end_result","win - monkey win")
 		feedback_set("round_end_result",escaped_monkeys)
-		world << "\red <FONT size = 3><B> The monkeys have overthrown their captors! Eeek eeeek!!</B></FONT>"
+		world << "<span class='userdanger'><FONT size = 3>The monkeys have overthrown their captors! Eeek eeeek!!</FONT></span>"
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the monkeys")
 		feedback_set("round_end_result",escaped_monkeys)
-		world << "\red <FONT size = 3><B> The staff managed to contain the monkey infestation!</B></FONT>"
+		world << "<span class='userdanger'><FONT size = 3>The staff managed to contain the monkey infestation!</FONT></span>"

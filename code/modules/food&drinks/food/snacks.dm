@@ -882,7 +882,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn/On_Consume()
 	if(prob(unpopped))	//lol ...what's the point? << AINT SO POINTLESS NO MORE
-		usr << "\red You bite down on an un-popped kernel, and it hurts your teeth!"
+		usr << "<span class='danger'>You bite down on an un-popped kernel, and it hurts your teeth!</span>"
 		unpopped = max(0, unpopped-1)
 		reagents.add_reagent("sacid",0.1) //only a little tingle.
 	..()

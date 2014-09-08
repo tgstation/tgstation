@@ -127,11 +127,11 @@
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY)
 		if ((prob(1) && paralysis < 1))
-			src << "\red You have a seizure!"
+			src << "<span class='danger'>You have a seizure!</span>"
 			for(var/mob/O in viewers(src, null))
 				if(O == src)
 					continue
-				O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
+				O.show_message(text("<span class='userdanger'>[src] starts having a seizure!</span>"), 1)
 			Paralyse(10)
 			Jitter(1000)
 	if (disabilities & COUGHING)
@@ -594,9 +594,7 @@
 /mob/living/carbon/human/proc/handle_regular_hud_updates()
 	if(!client)	return 0
 
-	for(var/image/hud in client.images)
-		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-			client.images.Remove(hud)
+	regular_hud_updates() //For MED/SEC HUD icon deletion
 
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 
@@ -697,7 +695,7 @@
 				Stun(5)
 
 				for(var/mob/O in viewers(world.view, src))
-					O.show_message(text("<b>\red [] throws up!</b>", src), 1)
+					O.show_message("<span class='danger'>[O] throws up!</span>")
 				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 				var/turf/location = loc

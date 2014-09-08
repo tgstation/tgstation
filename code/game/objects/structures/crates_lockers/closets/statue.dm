@@ -126,7 +126,7 @@
 
 /obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob)
 	health -= I.force
-	visible_message("\red [user] strikes [src] with [I].")
+	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
 	if(health <= 0)
 		for(var/mob/M in src)
 			shatter(M)
@@ -153,7 +153,7 @@
 	if (user)
 		user.dust()
 	dump_contents()
-	visible_message("\red [src] shatters!. ")
+	visible_message("<span class='danger'>[src] shatters!.</span>")
 	qdel(src)
 
 /obj/structure/closet/statue/container_resist()

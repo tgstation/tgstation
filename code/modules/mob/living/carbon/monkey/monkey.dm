@@ -1,12 +1,12 @@
 /mob/living/carbon/monkey
 	name = "monkey"
 	voice_name = "monkey"
-	voice_message = "chimpers"
 	say_message = "chimpers"
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
+	languages = MONKEY
 	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 
@@ -352,6 +352,10 @@
 	if(judgebot.emagged == 2)
 		return 10 //Everyone is a criminal!
 	var/threatcount = 0
+
+	//Securitrons can't identify monkeys
+	if(judgebot.idcheck)
+		threatcount += 4
 
 	//Lasertag bullshit
 	if(lasercolor)

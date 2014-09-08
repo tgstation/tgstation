@@ -156,6 +156,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "special ops crate"
 	hidden = 1
 
+/datum/supply_packs/emergency/syndicate
+	name = "#ERROR_NULL_ENTRY"
+	contains = list(/obj/item/weapon/storage/box/syndicate)
+	cost = 140
+	containertype = /obj/structure/closet/crate
+	containername = "crate"
+	hidden = 1
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////
@@ -649,6 +656,15 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	access = access_teleporter
 
 
+/datum/supply_packs/science/transfer_valves
+	name = "Tank Transfer Valves"
+	contains = list(/obj/item/device/transfer_valve,
+					/obj/item/device/transfer_valve)
+	cost = 60
+	containertype = /obj/structure/closet/crate/secure
+	containername = "transfer valves crate"
+	access = access_rd
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -929,6 +945,16 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/chaplain_hood)
 	cost = 40	// it costs so much because the Space Church is ran by Space Jews
 	containername = "religious supplies crate"
+
+/datum/supply_packs/misc/posters
+	name = "Corporate Posters Crate"
+	contains = list(/obj/item/weapon/contraband/poster/legit,
+					/obj/item/weapon/contraband/poster/legit,
+					/obj/item/weapon/contraband/poster/legit,
+					/obj/item/weapon/contraband/poster/legit,
+					/obj/item/weapon/contraband/poster/legit)
+	cost = 8
+	containername = "Corporate Posters Crate"
 
 
 ///////////// Paper Work

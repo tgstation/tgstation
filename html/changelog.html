@@ -410,6 +410,552 @@
 			<h3 class="author">Ikarrus updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">A security review committee has approved an update to all Nanotrasen airlocks to better resist cryptographic attacks by the enemy.
+<!-- NOTE TO UPDATERS!! Please only list things which are important to players. 
+Stuff which is in development and not yet visible to players or just code related 
+(ie. code improvements for expandability, etc.) should not be listed here. They 
+should be listed in the changelog upon commit tho. Thanks. -->
+
+<!-- You can simply add changelogs using AddToChangelog.exe -->
+
+<!-- DO NOT REMOVE OR MOVE THIS COMMENT! THIS MUST BE THE LAST NON-EMPTY LINE BEFORE THE LOGS #ADDTOCHANGELOGMARKER# -->
+
+<div class='commit sansserif'>
+	<h2 class='date'>7 September 2014</h2>
+	<h3 class='author'>Gun Hog updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Nanotrasen scientists have released a Heads-Up-Display (HUD) upgrade for all AI and Cyborg units! Cyborgs have had Medical sensors and a Security datacore integrated into their core hardware, replacing the need for a specific module.</li>
+		<li class='rscadd'>AI units are now able to have suit sensor or crew manifest data displayed to them as a visual overlay. When viewing a crewmember with suit sensors set to health monitoring, the health status will be available on the AI's medical HUD. In Security mode, the role as printed on the crewmember's ID card will be displayed to the AI.</li>
+		<li class='rscadd'>Any entity with a Security or Medical HUD active will recieve appropriate messages on that HUD.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>7 September 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Server Operators: A new config option added to restrict command and security roles to humans only. Simply add/uncomment the line ENFORCE_HUMAN_AUTHORITY in game_options.txt.
+		<li class='rscadd'>Players: To check if this config option is enabled on your server, type show-server-revision into the game's command line.
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>6 September 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Tampered supply ordering consoles can now order dangerous devices directly from the Syndicate for 140 points.
+		<li class='tweak'>Securitrons line units will no longer arrest individuals without IDs if their faces can still be read. 
+		<li class='tweak'>Enemy Agent ID cards have been reported to be able to interfere with the new securitron threat assessment protocols.
+		<li class='tweak'>The Syndicate base has been modified to only allow the leading operative to launch the mission.
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>4 September 2014</h2>
+	<h3 class='author'>KyrahAbattoir updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>All the objects found in BoxStation maintenance are now randomized at round start.
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>3 September 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>Cost of Syndicate bombs increased to 6 telecrystals.
+	</ul>
+    <h3 class='author'>JStheguy updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Many new posters have been added.
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>1 September 2014</h2>
+	<h3 class='author'>ChuckTheSheep updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Adds preference toggle for intent selection mode.
+		<li class='rscadd'>Direct selection mode switches intent to the one you click on instead of cycling them.
+	</ul>
+		<h3 class='author'>Miauw updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='wip'>A major rework of saycode has been completed which fixes numerous issues and improves functionality.
+		<li class='bugfix'>Please report any issues you notice with any form of messaging to Github.
+	</ul>
+		<h3 class='author'>Jordie0608 updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Virology has been made the right color.
+	</ul>
+		<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>New more detailed End-Round report.
+		<li class='rscdel'>Removes count of readied players from the lobby.
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>31 August 2014</h2>
+	<h3 class='author'>Tokiko1 updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Adds two new hairstyles.
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>30 August 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Space Station 13 has been authorized to requisition additional Tank Transfer Valves from Centcom's supply lines for the price of 60 cargo points.
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>26 August 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Security forces are advised to increase scrutiny on personnel coming into contact with AI systems. Central Intelligence suggests that Syndicate terrorist groups may have begun targeting our AIs for destruction.
+		<li class='rscadd'>For the preservation of corporate assets, Central Command would like to remind all personnel that evacuating during an emergency is mandatory. We suspect that terrorist groups may be attempting to abduct marooned personnel who failed to evacuate.
+		<li class='rscadd'>R&D teams have released an urgent update to station teleporters. To eliminate the risk of mutation, personnel are advised to calibrate teleporters before attempting each use.
+		<li class='rscadd'>Centcom has approved the Captain's request to rig the display case in his office with a burglar alarm. Any attempts to breach the case will now trigger a lockdown of the room.
+		<li class='bugfix'>**Crew Monitoring Consoles now scan their own Z-level for suit sensors, instead of only scanning Z1.
+		<li class='rscadd'>**Server operators can now set a name for the station in config.txt. Simply add the line "STATIONNAME Space Station 13" anywhere on the text file. Replace Space Station 13 with your station name of choice.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>24 August 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Ore redemption machine can now smelt plasteel.</li>
+		<li class='tweak'>Mulebot speed has been vastly increased by up to 300%.</li>
+		<li class='bugfix'>Removed exploit where false walls can be used to cheese the AI chamber's defenses</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>21 August 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>The Phase Shift ability will no longer instantly gib players. Instead, they will be knocked out for a few seconds. Mechas will be damaged.</li>
+		<li class='tweak'>The Phase Slayer ability will no longer instantly gib players. Instead, they will be dealt 190 brute damage. Mechas will be dealt 380 damage.</li>
+		<li class='tweak'>ADMIN: Most Event buttons have been moved out of the secrets menu and into a Fun verb.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>20 August 2014</h2>
+	<h3 class='author'>Cheridan updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Three new shotgun shells added. Create them by first researching and printing an unloaded tech shell in R&D. Afterwards, use table-crafting with the appropriate components with a screwdriver in-hand.</li>
+		<li class='rscadd'>Meteorshot: tech shell + compressed matter cartridge +  micro(or better) manipulator.</li>
+		<li class='rscadd'>Pulse Slug: tech shell + advanced capacitor + ultra micro-laser.</li>
+		<li class='rscadd'>Dragonsbreath: tech shell + 5 phosphorus (in container).</li>
+		<li class='tweak'>Incendiary rounds now leave a blazing trail as they pass. This includes existing incendiary rounds, new dragonsbreath rounds, and the Dark Gygax's carbine.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>19 August 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Brig cells and labour shuttle have both been modified to send a message to all security HUDs whenever a prisoner is automatically released.</li>
+		<li class='rscadd'>The labour camp has been outfitted with a points checking console to allow prisoners to check their quota progress easier and better explain the punishment system of forced labour.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>18 August 2014</h2>
+	<h3 class='author'>Iamgoofball updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>25 new hairstyles have been added.
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>15 August 2014</h2>
+	<h3 class='author'>AndroidSFV updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>AI photography has been extended to Cyborgs. While connected to an AI, all images taken by cyborgs will be placed in the AI's album, and viewable by the AI and all linked Cyborgs.</li>
+		<li class='rscadd'>When a Cyborgs AI link wire is pulsed, the images from the Cyborgs image album will be synced with the AI it gets linked to.</li>
+		<li class='rscadd'>Additonally, Cyborgs are able to attach images to newscaster feeds from whichever album is active for them. Cyborgs are also mobile, inefficent, printers of same images.
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>11 August 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'><B>Boxstation map updates:</B><BR>
+		-Singularity engine walled from from outer space<BR>
+		-Shutters for exterior Science windows<BR>
+		-Teleporter board moved from RD's Office to Tech Storage now that the teleporter can be built again.<BR>
+		-Security Deputy Armbands (red) added in HoS's Office</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>14 July 2014</h2>
+	<h3 class='author'>Miauw updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Added a new mutetoxin that can be made with 2 parts uranium, 1 part water and 1 part carbon and makes people mute temporarily</li>
+		<li class='rscdel'>Parapens were renamed to sleepy pens and now contain 30 units of mutetoxin and 30 units of sleeptoxin instead of zombie powder.</li>
+		<li class='rscdel'>C4 can no longer be attached to mobs</li>
+		<li class='tweak'>Reduced the C4 price to 1 telecrystal</li>
+	</ul>
+</div>
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>7 July 2014</h2>
+	<h3 class='author'>Paprika updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>Tweaked mining turf mineral droprates and reverted mesons to the 'old' style of mesons. This means mesons will be more powerful with the added side effect of not being able to track individual light sources through walls and such. This is a trial run; please provide feedback on the /tg/ codebase section of the forum.</li>
+	</ul>
+</div>
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>7 July 2014</h2>
+	<h3 class='author'>Firecage updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>We, of the NanoTrasen Botany Research and Developent(NTBiRD), has some important announcements for the Botany staff aboard our stations.</li>
+		<li class='rscadd'>We have recently released a new strain of Tower Cap. It is now ensured that more planks can be gotten from a single log.</li>
+		<li class='rscadd'>Head Scientist [REDACTED] is thanked for his new strain of Blood Tomatoes. It now not only contains human blood, but also chunks of human flesh!</li>
+		<li class='rscadd'>We have also discovered a way to replant the infamous Cash Trees and 'Eggy' plants. We can now harvest their seeds, and the rare products are inside the fruit shells.</li>
+		<li class='rscadd'>Similar to the new variety of Tower Caps, it is now possible to get various grass flooring depending on the plants potency!</li>
+		<li class='rscadd'>Our sponsors at Knitters United has released a new variation of the botany Aprons and Coveralls which can hold a larger variety of items!</li>
+		<li class='rscadd'>A new version of Plant-B-Gone was produced which are much more lethal to plants, yet at the same time has no extra effect on humans besides the norm.</li>
+	</ul>
+</div>
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>5 July 2014</h2>
+	<h3 class='author'>Firecage updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Recently the Space Wizard Federation, with some assistance from the Cult of Nar-Sie, recently created a new strain of Killer Tomato. A sad side effect is this effected all current and future Killer Tomato strains in our galaxy. They are now reported to be extremely violent and deadly, use extreme caution when growing them.</li>
+	</ul>
+</div>
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>1 July 2014</h2>
+	<h3 class='author'>Rolan7 updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Fixed the irrigation system in hydroponics trays.  Adding at least 30 units of liquid at once will activate the system, sharing the reagents between all connected trays.</li>
+		<li class='bugfix'>Changelings can communicate while muzzled or monkified, and being monkified doesn't stop them from taking human form.</li>
+		<li class='bugfix'>Mimes cannot break the laws of physics unless their vow is currently active.</li>
+		<li class='rscadd'>Trays are rewritten to make sense and so borgs can actually use them.  Service borgs can discretely carry small objects, hint hint.  The items are easily knocked out of them.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>3 july 2014</h2>
+	<h3 class='author'>Miauw updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Added slot machines to the game</li>
+		<li class='rscadd'>Slot machines use reels. All prizes except for jackpots can be won on all lines</li>
+		<li class='rscadd'>Simply put a coin into one of the slot machines in the bar to play!</li>
+		<li class='rscadd'>Slot machines can also be emagged.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>01 July 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='wip'><B>Central Security has approved an upgrade of the Securitron line of bots to a newer model.</B><BR> Highlights include:</li>
+		<li class='rscadd'>-An optional setting to arrest personnel without an ID on their uniform (Disabled by default)</li>
+		<li class='rscadd'>-An optional setting to notify security personnel of arrests made by the bots (Enabled by default)</li>
+		<li class='rscadd'>-A new "Weapon Permit" access type that securitrons will use during their weapons checks. Personnel who work with weapons will be granted this access by default. More can be assigned by the station's Head of Security and Personnel.</li>
+		<li class='tweak'>-A more robust threat assessment algorithm to improve accuracy in identifying perpetrators.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>20 June 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>The 'Enter Exosuit' button was removed, and you have to click + drag yourself to enter a mech now; like you would to enter a disposal unit.</li>
+	</ul>
+</div>
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>12 June 2014</h2>
+	<h3 class='author'>Cheridan updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>NT Baton Refurbishment Team Notice: 'Released' option in security records has been renamed 'Discharged', and the sechud icon has been changed from a blue R to a blue D. Stop beating your released prisoners, dummies; they're not revheads.</li>
+		<li class='tweak'>NT Entertainment Department Notice: The prize-dispensing mechanism in Arcade machines has been replaced with a cheaper gas-powered motor. It should still be completely safe, unless an electromagnetic field disrupts it!</li>
+
+		<li class='tweak'>Pill code tweaked. In short, you can feed monkeys pills now #whoa</li>
+		<li class='rscadd'>Casings ejected from guns will now spin #wow</li>
+	</ul>
+</div>
+
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>11 June 2014</h2>
+	<h3 class='author'>Malkevin updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscdel'>IEDs have been removed</li>
+		<li class='rscadd'>Firebombs have been added</li>
+		<li class='experiment'>They're as reliable and predictable as you would expect from a soda can filled with flammable liquid and set off with an igniter contected to two wires. Use your branes and take proper precautions or leave a charred corpse, your choice.</li>
+	</ul>
+</div>
+
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>11 June 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='bugfix'>Having the nuke disk will no longer prevent you from using teleporters or crossing Z-levels. Leaving the Z-level however, will cause you to "suddenly lose" the disk.</li>
+		<li class='rscadd'>Pulled objects will now transition with you when as you transition Z-levels in space.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>6 June 2014</h2>
+	<h3 class='author'>Gun Hog updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Nanotrasen programmers have discovered a potential exploit involving a station's door control networks. With sufficient computing power, the network can be overloaded and forced to open or bolt closed every airlock at once.</li>
+		<li class='experiment'>Some reports suggest that the latest firmware update to Artifical Intelligence units installed in our research stations may contain this exploit. Any such reports that state that should a station's AI unit "malfunction", it may gain the ability to use this exploit to initate a full lockdown of the station. Fire locks and blast doors are also said to be affected.</li>
+		<li class='rscadd'>Nanotrasen officially holds no validity to these reports. We recommend that station personnel disregard such rumors.</li>
+	</ul>
+</div>
+<div class='commit sansserif'>
+	<h2 class='date'>20 May 2014</h2>
+	<h3 class='author'>Kelenius updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>After the years of extensive research into xenobiology, and thousands of scientists lost to the slimes, we have finally come to admitting that we don't have a clue how they work. However, we've outlined a few facts, and managed to breed a new kind of slimes. They will be shipped to your station on the next shifts. They are different from the ones they are used to in the following:</li>
+		<li class='rscadd'>Their sight is better than ever, and now they can finally see things that are not directly pressed against them. Beware, they may appear more aggressive!</li>
+		<li class='rscadd'>Their memory has also become better, and they will now remember the people who fed them. As a note, you need to grab the monkey or push it to show to the slime that you're giving it to them, and it's not just walking in.</li>
+		<li class='rscadd'>Apparently, not only we have studied them, but they have also studied us. Slimes are now capable of showing various emotions, mimicking humans. Use it to your advantage.</li>
+		<li class='rscadd'>There are reports of slimes showing signs of sentience. Further research is recommended.</li>
+		<li class='rscadd'>One of the reported signs is their speech capability. Following facts have been gathered: they talk more often to those who feed them; they react to being called by the number, but 'slimes' is also acceptable; they are able to understand being ordered to "follow" someone, or "stop". There is a report of slime releasing the assistant after a scientist shouted at it, and then calmly ordered a slime to stop.</li>
+		<li class='rscadd'>We've made a modification of a health scanner that is intended for the use on slimes. Two are available in the smartfridge.</li>
+		<li class='tweak'>We've come to a conclusion that 5 units of reagents are not necessary to cause slime core reactions. You actually only need one unit.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>16 May 2014</h2>
+	<h3 class='author'>Menshin updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Thanks to Nanotrasen's Engineering division, the power wiring of the station has a received a complete overhaul. Here are the highlight features in CentCom report : </li>
+		<li class='tweak'>Improved way of connecting cables! Finished is the time of "laying and praying" : it's now as simple as matching ends of each cables! </li>
+		<li class='tweak'>Unified way of connecting machines! Every machine is connected to a powernet through a node cable (it still needs to be anchored to receive power though)!</li>
+		<li class='tweak'>Lots of improvements in the cable cutting tools! Gone is the odd magic of physically separated yet still connected powernets (contact CentCom Engineering Division if you still witness something weird, we always have a fired form ready for our engineers!)!</li>
+		<li class='rscadd'>Any conscientious (or not!) Station Engineer may check an "updated wiring manual" at http://www.tgstation13.org/wiki/Wiring#Power_Wires</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>14 May 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>In an effort to increase information security, Nanotrasen has moved away from digital information systems in matters requiring maintaining corporate secrecy.</li>
+		<li class='rscadd'>Station administrators are ordered to store all sensitive information in paper document form within their Station Vaults. Unauthorized distribution of these documents is punishable by death.</li>
+		<li class='rscadd'>NT Corporate Security has noticed a similar trend within the Syndicate. It is predicted that enemy agents will attempt to secretly exchange sensitive information in person within Nanotrasen Space. NT Security has posted a generous reward for any stations that are able to capture enemy intelligence and send them to Centcom via supply shuttle.</li>
+	</ul>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>A recent breakthrough in Plasma Materials Research has led to the development of a stronger, tougher plasteel alloy that can better resist extreme heat by up to four times. A live demonstration preformed during a press conference earlier today showed a segment of reinforced wall resisting an attack by Thermite. The corporation also announces that upgrades to its existing stations is already underway.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>07 May 2014</h2>
+	<h3 class='author'>/Tg/station Code Management updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='wip'>/tg/station code is now under a feature freeze until 7th June 2014. This means that the team will be concentrating on fixing bugs instead of adding features for the month.</li>
+		<li class='bugfix'>You can find more information about the feature freeze here. http://tgstation13.org/phpBB/viewtopic.php?f=5&t=273</li>
+		<li class='bugfix'>This is the perfect time to report bugs, which you can do so here. https://github.com/tgstation/-tg-station/issues/new</li>
+	</ul>
+</div>
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>30 April 2014</h2>
+	<h3 class='author'>Gun Hog updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Certain Enemies of the Corporation have discovered a critical exploit in the firmware of several NanoTrasen robots that could prevent the safe shutdown of units corrupted by illegally modified ID cards, dubbed "cryptographic sequencers".</li>
+		<li class='rscadd'>NanoTrasen requires more research into this exploit, this we have issued a patch for AI and Cyborg software to simulate this malfunction. All NanoTrasen AI units are advised to only allow testing in a safe and contained environment. The robot can safely be reset at any time.</li>
+		<li class='experiment'>Unfortunately, a robot corrupted by a "cryptographic sequencer" still cannot be reset by any means. NanoTrasen urges regular maintenance and care of all robots to reduce replacement costs.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>30 April 2014</h2>
+	<h3 class='author'>Giacom updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='imageadd'>You now have to give a reason when calling the shuttle.</li>
+		<li class='imageadd'>The amount of time it takes for the shuttle to refuel is now a config option, the default is 20 minutes.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>27 April 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='imageadd'>NT Human Resources announces an expansion of the List of Company-Approved Hair Styles, as well as more relaxed gender restrictions on hair styles. Check with your local company-sponsored hairstylist to learn more.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>22 April 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>ID Computers have been modified to allow Station Heads of Staff to assign and remove access to their departments, as well as stripping the rank of their subordinates. An ID computer on the bridge is available for the use of this function.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>20 April 2014</h2>
+	<h3 class='author'>Steelpoint updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='wip'>A new AI satellite has been constructed in orbit of Space Station 13!</li>
+		<li class='rscadd'>The satellite exclusivly is used to hold a station's Artifical Intelligence Unit, the satellite contains a miried of turret and motion sensor defences. A transit tube network is used to connect the satellite to the station, with the transit room being located at engineering south of the engi escape pod.</li>
+		<li class='rscadd'>The AI Upload however has been moved north slightly and is connected directly to the bridge.</li>		
+		<li class='rscadd'>In addition, the Gravity Generator has been relocated from its prior position in engineering to the location of the old AI Upload, increasing its defence and logical positioning.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>20 April 2014</h2>
+	<h3 class='author'>Gun Hog updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>NanoTrasen Emergency Alerts System 4.20 has been released!</li>
+		<li class='rscadd'>In the unfortunate event of any nuclear device being armed, the station will enter Code Delta Alert.</li>
+		<li class='rscadd'>Should the nuclear explosive be disarmed, the station shall automatically return to its previous alert level.</li>
+	</ul>
+</div>
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>11 April 2014</h2>
+	<h3 class='author'>Jordie0608 updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Wood planks can be used to make wood walls and airlocks; flammability not included</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>10 April 2014</h2>
+	<h3 class='author'>Steelpoint updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Thanks to Nanotrasen's Construction division, the brig has recieved a overhaul in its design, to increase ease of movement, including an addition of a "prisioner release room" and a insanity ward.
+		<li class='tweak'>Furthing concerns among commentators, Nanotrasen has shipped out additional security equipment to station armories, including Riot Shotguns, tear gas grenades, additional securitron units and military grade Ion Guns.</li>
+		<li class='rscadd'>JaniCo have released a new unique product called the JaniBelt. Capable of holding most standard issue janitorial equipment, designed to help relive inventory management among station janitors. In addition the Jani Water Tank has had its reserve of space clenaer increased to 500 units, up from 250.
+	</ul>
+		<h3 class='author'>Validsalad updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>After concerns raised by security personel, new armor has been shipped that covers the lower waist and readjusts the helmet for comfort.
+		<li class='tweak'>In addition, the aging riot shield has been replaced with a newer, more modern, apperance. 
+	</ul>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Centcom officials have announced a new initiative to combat misuse of their Emergency Shuttle Service. After the shuttle has been recalled several times over the course of a simple work shift, Centcom will attempt to trace the signal origin and pinpoint its source for station authorities.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>3 April 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>NT AI Firmware version 2554.03.03 includes a function to notify the master AI when a new cyborg is slaved to it.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>2 April 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='wip'><b>Nanotrasen Construction division is pleased to announce the unveiling of our brand now state-of-the-art Space Station 13 v2.1.3!</b></li>
+		<li class='rscadd'>-Scaffolding used during construction has been repurposed as an expanded maintenance around the station.</li>
+		<li class='tweak'>-Our new Emergency Transport Shuttle Mk III will be making its debut in times of crisis. Includes a new cargo area and extra security features.</li>
+		<li class='tweak'>-A redesigned brig will give security staff more peace of mind with added security features</li>
+		<li class='rscadd'>-The armory is now protected by a motion alarm.</li>
+		<li class='rscadd'>-The armory is now equipped with security hardsuits.</li>
+		<li class='rscadd'>-A new command EVA wing has been added to EVA Storage. Station heads of staff will be able to make use of suits stored here.</li>
+		<li class='rscadd'>-A new garden area will be made publicly available for everyone to enjoy some R&R during their company-endorsed break periods</li>
+		<li class='rscadd'>-A new Testing Lab has been added to the Science department for any field experiments that need to be run.</li>
+		<li class='tweak'>-The mining ore redemption machine has been relocated to the Cargo Delivery Office.</li>
+	</ul>
+	<h3 class='author'>Giacom updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>The syndicate suit is now black and red, because black and red is the new red.</li>
+		<li class='rscadd'>The Ruskie DJ Station now has a classy orange syndicate suit.</li>
+		<li class='rscadd'>Security officers have been equipped with the latest in flashlight technology. You can find a SecLite™ inside your security belt or you can dispense one from the security vending machine.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>1 April 2014</h2>
+	<h3 class='author'>Malkevin updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='experiment'><b>Sacrifice Cult - Cult has received a massive overhaul to how it works, focusing more on cult magics and sacrificing unbelievers. The most important changes are:</b></li>
+		<li class='tweak'>Cult starts off with alot more cultists, 6 cultists below 30 players and 9 above. The HoP can no longer be a round start cultist but is still convertible.</li>
+		<li class='tweak'>Cultists start off with join, blood, self, and hell. These give the runes for the sacrifice and convert.</li>
+		<li class='tweak'>Conversions now require three cultists and converts no longer reward words, words must be obtained via sacrifice</li>
+		<li class='tweak'>Sacrificing players traps their soul in a soul stone, which can then be used on construct shells to implant the souls in them</li>
+		<li class='tweak'>Constructs shells can be summoned via a new rune (travel, hell, technology)</li>
+		<li class='bugfix'>You can no longer convert the sacrifice target, you dozzy sods</li>
+		<li class='experiment'>Summoning Narsie when she is not an objective leads to !!FUN!!</li>
+		<li class='wip'>Wrote a system to allow all mob types to be sacrificable - currently only corgis are in the new system</li>
+		<li class='experiment'>Holy Water will DECONVERT cultists, takes around 35 units and two minutes to succeed</li>
+		<li class='experiment'>Hitting a mob that contains holy water with a tome will convert that water to unholy water, conversely hitting any container that contains unholy water with a bible as chaplain will 'cleanse' the taint.</li>
+		<li class='experiment'>Unholy water works like a combination synaptazine and hyperzine, with a twist of branes dimarge and highly toxic to non-cultists</li>
+		<li class='rscadd'>Cargo can order a religious supplies crate - it contains flasks of holy water, candles, bibles, and robes </li>
+		<li class='experiment'>Cultists have an innate ability to communicate to the cult hive mind (BE AWARE - THIS DOES A LOT OF DAMAGE), cultists can also communicate via the new Commune option on their tomes (the Read Tome option has been shifted under the Notes option)</li>
+	</ul>
+	<h3 class='author'>MrStonedOne updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Cyborgs can now use AI click shortcuts. (shift click on doors opens them, etc) (including ones added below)</li>
+		<li class='rscadd'>New silicon click shortcut: Control+Shift click on doors toggles access override</li>
+		<li class='rscadd'>New silicon click shortcut: Control click turret controls toggles them on or off</li>
+		<li class='rscadd'>New silicon click shortcut: Alt click turret controls toggles lethal on or off</li>
+		<li class='tweak'>Cyborg hotkey mode was massively improved. 1-3 selects module slot, q unloads the active module. use hotkeys-help as cyborg for more details</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>1 Aphril 2014</h2>
+	<h3 class='author'>Aranclanos updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>Made combat more hardcore for hardcore players like myself. This won't be reverted.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>31 March 2014</h2>
+	<h3 class='author'>MrPerson updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Toggling the "Play admin midis" preference will pause any playing songs. Turning midis back on will resume the current song where it was.</li>
+		<li class='rscadd'>If there's a song playing while you have midis off and you then turn midis on, the current song will begin playing for you.</li>
+	</ul>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Fabricator blueprints for cyborg parts have been updated to allow the debugging of cyborg units prior to boot. To access the debug functions, assemble a cyborg following standard procedure. Before inserting the MMI, use a multitool on the cyborg body. Note that this update also moves designation data into the system files, so pens can no longer be used to name cyborgs.</li>
+	</ul>
+</div>
+
+
+<div class='commit sansserif'>
+	<h2 class='date'>28 March 2014</h2>
+	<h3 class='author'>Aranclanos updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>Workaround with the click cooldowns. They should feel faster. If you think that anything needs a click cooldown (like grilles, mobs, etc.), report it to me.</li>
+		<li class='experiment'>Here's the fun part, this is a test for the community and players, I hope I won't be forced to revert this and hear "this is why we can't have nice things". Again, if anything needs a cooldown, report it to me. Have fun with your fast clicks spessmans.</li>
+	</ul>
+</div>
+
+<div class='commit sansserif'>
+	<h2 class='date'>25 March 2014</h2>
+	<h3 class='author'>Ikarrus updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='tweak'>A security review committee has approved an update to all Nanotrasen airlocks to better resist cryptographic attacks by the enemy.
 			<br><br>*New internal wiring will be able to withstand attacks, and panel wires will no longer be left unusable after an attack.
 			<br>*Welding tools will now be able to cut through welded doors that have been damaged.
 			<br>*Damaged electronics are now removable and replaceable following standard procedure.

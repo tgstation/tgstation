@@ -78,7 +78,7 @@
 						return
 				M.updatehealth()
 			src.occupant_message("You hit [target].")
-			src.visible_message("<font color='red'><b>[src.name] hits [target].</b></font>")
+			src.visible_message("<span class='userdanger'>[src.name] hits [target].</span>")
 			add_logs(occupant, M, "attacked", object=src, addition="(INTENT: [uppertext(occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else
 			step_away(M,src)
@@ -95,12 +95,12 @@
 			for(var/target_type in src.destroyable_obj)
 				if(istype(target, target_type) && hascall(target, "attackby"))
 					src.occupant_message("You hit [target].")
-					src.visible_message("<font color='red'><b>[src.name] hits [target]</b></font>")
+					src.visible_message("<span class='userdanger'>[src.name] hits [target]</span>")
 					if(!istype(target, /turf/simulated/wall))
 						target:attackby(src,src.occupant)
 					else if(prob(5))
 						target:dismantle_wall(1)
-						src.occupant_message("\blue You smash through the wall.")
+						src.occupant_message("<span class='notice'>You smash through the wall.</span>")
 						src.visible_message("<b>[src.name] smashes through the wall</b>")
 						playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 					melee_can_hit = 0

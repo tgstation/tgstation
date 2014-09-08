@@ -10,6 +10,7 @@
 /datum/round_event/radiation_storm/setup()
 	startWhen = rand(10, 20)
 	endWhen = startWhen + 5
+	announceWhen	= 1
 
 /datum/round_event/radiation_storm/announce()
 	priority_announce("High levels of radiation detected near the station. Maintenance is best shielded from radiation.", "Anomaly Alert", 'sound/AI/radiation.ogg')

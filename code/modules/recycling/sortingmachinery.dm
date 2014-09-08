@@ -29,7 +29,7 @@
 
 		if(sortTag != O.currTag)
 			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-			user << "\blue *[tag]*"
+			user << "<span class='notice'>*[tag]*</span>"
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
@@ -75,7 +75,7 @@
 
 		if(sortTag != O.currTag)
 			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-			user << "\blue *[tag]*"
+			user << "<span class='notice'>*[tag]*</span>"
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
@@ -318,7 +318,6 @@
 				qdel(src)
 			return
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 
 /obj/machinery/disposal/deliveryChute/process()

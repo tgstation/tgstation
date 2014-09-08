@@ -8,16 +8,6 @@
 
 	var/alert_pressure = 0
 
-/datum/pipeline/Del()
-	if(network)
-		del(network)
-
-	if(air && air.volume)
-		temporarily_store_air()
-		del(air)
-
-	..()
-
 /datum/pipeline/proc/process()//This use to be called called from the pipe networks
 
 	//Check to see if pressure is within acceptable limits
@@ -51,9 +41,10 @@
 
 				corresponding.moles = trace_gas.moles*member.volume/air.volume
 
+var/pipenetwarnings = 10
+
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
 	air = new
-
 	var/list/possible_expansions = list(base)
 	members = list(base)
 	edges = list()
@@ -67,7 +58,6 @@
 		base.air_temporary = null
 	else
 		air = new
-
 	while(possible_expansions.len>0)
 		for(var/obj/machinery/atmospherics/pipe/borderline in possible_expansions)
 
@@ -77,6 +67,13 @@
 			if(result.len>0)
 				for(var/obj/machinery/atmospherics/pipe/item in result)
 					if(!members.Find(item))
+
+						if(item.parent)
+							if(pipenetwarnings > 0)
+								error("[item.type] added to a pipenet while still having one. ([item.x], [item.y], [item.z])")
+								pipenetwarnings -= 1
+								if(pipenetwarnings == 0)
+									error("further messages about pipenets will be supressed")
 						members += item
 						possible_expansions += item
 
@@ -96,6 +93,57 @@
 			possible_expansions -= borderline
 
 	air.volume = volume
+
+/datum/pipeline/proc/addMember(obj/machinery/atmospherics/pipe/P)
+	P.parent = src
+	var/list/adjacent = P.pipeline_expansion()
+	var/list/oldedges = list()
+	for(var/obj/machinery/atmospherics/pipe/I in adjacent)
+		oldedges += I
+		if(I.parent == src)
+			continue
+		var/datum/pipeline/E = I.parent
+		if(E.members.len > members.len)
+			members.Add(E.members)
+			for(var/obj/machinery/atmospherics/pipe/S in E.members)
+				S.parent = src
+			edges.Add(E.edges)
+			air.merge(E.air)
+		adjacent -= I
+	if(adjacent.len)
+		edges |= P
+	members |= P
+	if(oldedges.len)
+		for(var/obj/machinery/atmospherics/pipe/O in oldedges)
+			var/list/Oedges = O.pipeline_expansion()
+			for(var/obj/machinery/atmospherics/pipe/Oedgepipes in Oedges)
+				Oedges -= Oedgepipes
+			if(Oedges.len)
+				edges |= O
+			else
+				edges -= O
+
+/datum/pipeline/proc/removeLastMember(obj/machinery/atmospherics/pipe/P)
+	if(members.len == 1 && members.Find(P))
+		qdel()
+		if(P.air_temporary)
+			var/turf/T = P.loc
+			T.assume_air(P.air_temporary)
+
+/obj/machinery/atmospherics/proc/addMember(obj/machinery/atmospherics/pipe/P)
+	return
+
+/obj/machinery/atmospherics/pipe/addMember(obj/machinery/atmospherics/pipe/P)
+	parent.addMember(P)
+
+/datum/pipeline/Destroy()
+	if(network)
+		qdel(network)
+	if(air && air.volume)
+		temporarily_store_air()
+	for(var/obj/machinery/atmospherics/pipe/P in members)
+		P.parent = null
+	..()
 
 /datum/pipeline/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 

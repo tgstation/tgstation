@@ -137,7 +137,7 @@ var/round_start_time = 0
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+		world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
 		if(events.holiday)
@@ -198,6 +198,11 @@ var/round_start_time = 0
 					world << sound('sound/effects/explosionfar.ogg')
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
+				if("fake") //The round isn't over, we're just freaking people out for fun
+					flick("intro_nuke",cinematic)
+					sleep(35)
+					world << sound('sound/items/bikehorn.ogg')
+					flick("summary_selfdes",cinematic)
 				else
 					flick("intro_nuke",cinematic)
 					sleep(35)
@@ -325,25 +330,60 @@ var/round_start_time = 0
 
 
 /datum/controller/gameticker/proc/declare_completion()
+	var/station_evacuated
+	if(emergency_shuttle.location > 0)
+		station_evacuated = 1
+	var/num_survivors = 0
+	var/num_escapees = 0
 
+	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
+
+	//Player status report
+	for(var/mob/Player in mob_list)
+		if(Player.mind && !isnewplayer(Player))
+			if(Player.stat != DEAD && !isbrain(Player))
+				num_survivors++
+				if(station_evacuated) //If the shuttle has already left the station
+					var/turf/playerTurf = get_turf(Player)
+					if(playerTurf.z != 2)
+						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
+					else
+						num_escapees++
+						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
+				else
+					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
+			else
+				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>"
+
+	//Round statistics report
+	var/datum/station_state/end_state = new /datum/station_state()
+	end_state.count()
+	var/station_integrity = round( 100.0 *  start_state.score(end_state), 0.1)
+
+	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
+	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	if(joined_player_list.len)
+		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
+		if(station_evacuated)
+			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
+		else
+			world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
+	world << "<BR>"
+
+	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2 && aiPlayer.mind)
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the game were:</b>"
+			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>"
 			aiPlayer.show_laws(1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
 			aiPlayer.show_laws(1)
 
 		if (aiPlayer.connected_robots.len)
-			var/robolist = "<b>[aiPlayer.real_name]'s loyal minions were:</b> "
-			var/vsrobolist = "\red <b>[aiPlayer.real_name]'s disloyal minions were:</b> \black"
+			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				if (is_special_character(robo) && robo.mind)
-					vsrobolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
-					continue
 				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			world << "[robolist]"
-			world << "[vsrobolist]"
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)

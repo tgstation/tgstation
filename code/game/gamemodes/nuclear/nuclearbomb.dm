@@ -114,7 +114,7 @@ var/bomb_set
 				if (src.timing == -1.0)
 					return
 				if (src.safety)
-					usr << "\red The safety is still on."
+					usr << "<span class='danger'>The safety is still on.</span>"
 					return
 				src.timing = !( src.timing )
 				if (src.timing)
@@ -208,7 +208,7 @@ var/bomb_set
 					blackbox.save_all_data_to_sql()
 				sleep(300)
 				log_game("Rebooting due to nuclear detonation")
-				kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
+				kick_clients_in_lobby("<span class='danger'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
 				world.Reboot()
 				return
 	return

@@ -37,7 +37,7 @@
 	var/num_traitors = 1
 
 	if(config.traitor_scaling_coeff)
-		num_traitors = max(1, round((num_players())/((config.traitor_scaling_coeff * scale_modifier))))
+		num_traitors = max(1, min( round(num_players()/(config.traitor_scaling_coeff*scale_modifier*2))+2, round(num_players()/(config.traitor_scaling_coeff*scale_modifier)) ))
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
@@ -74,10 +74,10 @@
 	return 1
 
 /datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	var/traitorcap = round(joined_player_list.len / (config.traitor_scaling_coeff * scale_modifier))
+	var/traitorcap = round(joined_player_list.len / (config.traitor_scaling_coeff * scale_modifier * 2))
 	if(traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
-	if(traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * scale_modifier)))
+	if(traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * scale_modifier * 2)))
 		if(character.client.prefs.be_special & BE_TRAITOR)
 			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))
@@ -90,19 +90,23 @@
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
 	if(istype(traitor.current, /mob/living/silicon))
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = traitor
-		kill_objective.find_target()
-		traitor.objectives += kill_objective
-
-		var/datum/objective/survive/survive_objective = new
-		survive_objective.owner = traitor
-		traitor.objectives += survive_objective
+		var/objective_count = 0
 
 		if(prob(10))
 			var/datum/objective/block/block_objective = new
 			block_objective.owner = traitor
 			traitor.objectives += block_objective
+			objective_count++
+
+		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = traitor
+			kill_objective.find_target()
+			traitor.objectives += kill_objective
+
+		var/datum/objective/survive/survive_objective = new
+		survive_objective.owner = traitor
+		traitor.objectives += survive_objective
 
 	else
 		var/is_hijacker = prob(10)
@@ -115,12 +119,24 @@
 				assign_exchange_role(exchange_red)
 				assign_exchange_role(exchange_blue)
 			objective_count += 1					//Exchange counts towards number of objectives
+		var/list/active_ais = active_ais()
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 			if(prob(50))
-				var/datum/objective/assassinate/kill_objective = new
-				kill_objective.owner = traitor
-				kill_objective.find_target()
-				traitor.objectives += kill_objective
+				if(active_ais.len && prob(100/joined_player_list.len))
+					var/datum/objective/destroy/destroy_objective = new
+					destroy_objective.owner = traitor
+					destroy_objective.find_target()
+					traitor.objectives += destroy_objective
+				else if(prob(30))
+					var/datum/objective/maroon/maroon_objective = new
+					maroon_objective.owner = traitor
+					maroon_objective.find_target()
+					traitor.objectives += maroon_objective
+				else
+					var/datum/objective/assassinate/kill_objective = new
+					kill_objective.owner = traitor
+					kill_objective.find_target()
+					traitor.objectives += kill_objective
 			else
 				var/datum/objective/steal/steal_objective = new
 				steal_objective.owner = traitor

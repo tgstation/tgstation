@@ -36,11 +36,11 @@
 				if (src.auth_need - src.authorized.len > 0)
 					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has authorized early shuttle launch in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 					log_game("[user.ckey]([user]) has authorized early shuttle launch in ([x],[y],[z])")
-					priority_announce("[src.auth_need - src.authorized.len] more authorization(s) needed until shuttle is launched early", null, null, "Priority")
+					minor_announce("[src.auth_need - src.authorized.len] more authorization(s) needed until shuttle is launched early")
 				else
 					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has launched the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 					log_game("[user.ckey]([user]) has launched the emergency shuttle in ([x],[y],[z])")
-					priority_announce("The emergency shuttle will launch in 10 seconds", null, null, "Priority")
+					minor_announce("The emergency shuttle will launch in 10 seconds")
 					emergency_shuttle.online = 1
 					emergency_shuttle.settimeleft(10)
 					//src.authorized = null
@@ -49,10 +49,10 @@
 
 			if("Repeal")
 				src.authorized -= W:registered_name
-				priority_announce("[src.auth_need - src.authorized.len] authorizations needed until shuttle is launched early", null, null, "Priority")
+				minor_announce("[src.auth_need - src.authorized.len] authorizations needed until shuttle is launched early")
 
 			if("Abort")
-				priority_announce("All authorizations to launch the shuttle early have been revoked.", null, null, "Priority")
+				minor_announce("All authorizations to launch the shuttle early have been revoked.")
 				src.authorized.len = 0
 				src.authorized = list(  )
 
@@ -64,7 +64,7 @@
 				if("Launch")
 					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has emagged the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 					log_game("[user.ckey]([user]) has emagged the emergency shuttle in ([x],[y],[z])")
-					priority_announce("System Error: The emergency shuttle will launch in 10 seconds", null, null, "Priority")
+					minor_announce("The emergency shuttle will launch in 10 seconds", "System Error:")
 					emergency_shuttle.settimeleft( 10 )
 					emagged = 1
 				if("Cancel")

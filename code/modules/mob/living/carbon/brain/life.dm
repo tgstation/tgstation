@@ -38,9 +38,9 @@
 		if (radiation > 100)
 			radiation = 100
 			if(!container)//If it's not in an MMI
-				src << "\red You feel weak."
+				src << "<span class='danger'>You feel weak.</span>"
 			else//Fluff-wise, since the brain can't detect anything itself, the MMI handles thing like that
-				src << "\red STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED."
+				src << "<span class='danger'>STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED.</span>"
 
 		switch(radiation)
 			if(1 to 49)
@@ -55,9 +55,9 @@
 				if(prob(5))
 					radiation -= 5
 					if(!container)
-						src << "\red You feel weak."
+						src << "<span class='danger'>You feel weak.</span>"
 					else
-						src << "\red STATUS: DANGEROUS LEVELS OF RADIATION DETECTED."
+						src << "<span class='danger'>STATUS: DANGEROUS LEVELS OF RADIATION DETECTED.</span>"
 				updatehealth()
 
 			if(75 to 100)
@@ -147,7 +147,7 @@
 					silent = 1
 					if(!alert)//Sounds an alarm, but only once per 'level'
 						emote("alarm")
-						src << "\red Major electrical distruption detected: System rebooting."
+						src << "<span class='danger'>Major electrical distruption detected: System rebooting.</span>"
 						alert = 1
 					if(prob(75))
 						emp_damage -= 1
@@ -163,7 +163,7 @@
 					ear_damage = 1
 					if(!alert)
 						emote("alert")
-						src << "\red Primary systems are now online."
+						src << "<span class='danger'>Primary systems are now online.</span>"
 						alert = 1
 					if(prob(50))
 						emp_damage -= 1
@@ -175,13 +175,13 @@
 				if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
 					if(!alert)
 						emote("notice")
-						src << "\red System reboot nearly complete."
+						src << "<span class='danger'>System reboot nearly complete.</span>"
 						alert = 1
 					if(prob(25))
 						emp_damage -= 1
 				if(1)
 					alert = 0
-					src << "\red All systems restored."
+					src << "<span class='danger'>All systems restored.</span>"
 					emp_damage -= 1
 
 		//Other

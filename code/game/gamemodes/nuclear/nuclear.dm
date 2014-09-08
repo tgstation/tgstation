@@ -100,7 +100,6 @@
 	for(var/obj/effect/landmark/A in landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
-			qdel(A)
 			continue
 
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
@@ -113,7 +112,7 @@
 
 	for(var/datum/mind/synd_mind in syndicates)
 		if(spawnpos > synd_spawn.len)
-			spawnpos = 1
+			spawnpos = 2
 		synd_mind.current.loc = synd_spawn[spawnpos]
 
 		forge_syndicate_objectives(synd_mind)
@@ -145,19 +144,27 @@
 	spawn(1)
 		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
+
+
 	if (nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 		synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+
+		var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
+
+		if(foundIDs.len)
+			for(var/obj/item/weapon/card/id/ID in foundIDs)
+				ID.access += access_syndicate_leader
+		else
+			message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
+
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
-		if (ticker.mode.config_tag=="nuclear")
-			P.loc = synd_mind.current.loc
-		else
-			var/mob/living/carbon/human/H = synd_mind.current
-			P.loc = H.loc
-			H.equip_to_slot_or_del(P, slot_r_store, 0)
-			H.update_icons()
+		var/mob/living/carbon/human/H = synd_mind.current
+		P.loc = H.loc
+		H.equip_to_slot_or_del(P, slot_r_store, 0)
+		H.update_icons()
 
 	else
 		nuke_code = "code will be provided later"
@@ -172,7 +179,7 @@
 
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
 	if (you_are)
-		syndicate.current << "\blue You are a [syndicate_name()] agent!"
+		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
 		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"

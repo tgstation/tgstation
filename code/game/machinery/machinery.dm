@@ -213,7 +213,7 @@ Class Procs:
 	return
 
 /mob/dead/observer/canUseTopic()
-	if(check_rights(R_ADMIN))
+	if(check_rights(R_ADMIN, 0))
 		return
 
 /mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
@@ -277,7 +277,7 @@ Class Procs:
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			visible_message("\red [H] stares cluelessly at [src] and drools.")
+			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
 			user << "<span class='danger'>You momentarily forget how to use [src].</span>"

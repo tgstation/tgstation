@@ -17,6 +17,12 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 				"ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 var/list/wood_icons = list("wood","wood-broken")
+var/list/gold_icons = list("gold","gold_dam")
+var/list/silver_icons = list("silver","silver_dam")
+var/list/plasma_icons = list("plasma","plasma_dam")
+var/list/diamond_icons = list("diamond","diamond_dam")
+var/list/uranium_icons = list("uranium","uranium_dam")
+var/list/bananium_icons = list("bananium","bananium_dam")
 
 /turf/simulated/floor
 
@@ -34,6 +40,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
+	var/floortype = "metal"
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
 
 
@@ -161,6 +168,37 @@ turf/simulated/floor/proc/update_icon()
 			if( !(icon_state in wood_icons) )
 				icon_state = "wood"
 				//world << "[icon_state]y's got [icon_state]"
+
+	else if(is_gold_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in gold_icons) )
+				icon_state = "gold"
+
+	else if(is_silver_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in silver_icons) )
+				icon_state = "silver"
+
+	else if(is_plasma_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in plasma_icons) )
+				icon_state = "plasma"
+
+	else if(is_uranium_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in uranium_icons) )
+				icon_state = "uranium"
+
+	else if(is_diamond_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in diamond_icons) )
+				icon_state = "diamond"
+
+	else if(is_bananium_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in bananium_icons) )
+				icon_state = "bananium"
+
 	spawn(1)
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
@@ -211,19 +249,55 @@ turf/simulated/floor/proc/update_icon()
 		return 0
 
 /turf/simulated/floor/is_grass_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/grass))
+	if(istype(floor_tile, /obj/item/stack/tile/grass))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_wood_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/wood))
+	if(istype(floor_tile, /obj/item/stack/tile/wood))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_gold_floor()
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/gold))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_silver_floor()
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/silver))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_plasma_floor()
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/plasma))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_uranium_floor()
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/uranium))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_diamond_floor()
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/diamond))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_bananium_floor()
+	if(istype(floor_tile, /obj/item/stack/tile/mineral/bananium))
 		return 1
 	else
 		return 0
 
 /turf/simulated/floor/is_carpet_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/carpet))
+	if(istype(floor_tile, /obj/item/stack/tile/carpet))
 		return 1
 	else
 		return 0
@@ -256,6 +330,24 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
 		broken = 1
+	else if(is_gold_floor())
+		src.icon_state = "gold_dam"
+		broken = 1
+	else if(is_silver_floor())
+		src.icon_state = "silver_dam"
+		broken = 1
+	else if(is_diamond_floor())
+		src.icon_state = "diamond_dam"
+		broken = 1
+	else if(is_bananium_floor())
+		src.icon_state = "bananium_dam"
+		broken = 1
+	else if(is_uranium_floor())
+		src.icon_state = "uranium_dam"
+		broken = 1
+	else if(is_plasma_floor())
+		src.icon_state = "plasma_dam"
+		broken = 1
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
@@ -278,6 +370,21 @@ turf/simulated/floor/proc/update_icon()
 		burnt = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
+		burnt = 1
+	else if(is_gold_floor())
+		src.icon_state = "gold_dam"
+		burnt = 1
+	else if(is_silver_floor())
+		src.icon_state = "silver_dam"
+		burnt = 1
+	else if(is_diamond_floor())
+		src.icon_state = "diamond_dam"
+		burnt = 1
+	else if(is_bananium_floor())
+		src.icon_state = "bananium_dam"
+		burnt = 1
+	else if(is_uranium_floor())
+		src.icon_state = "uranium_dam"
 		burnt = 1
 
 //This proc will delete the floor_tile and the update_iocn() proc will then change the icon_state of the turf
@@ -342,78 +449,18 @@ turf/simulated/floor/proc/update_icon()
 	update_icon()
 	levelupdate()
 
+/turf/simulated/floor/proc/make_floor(floor_tile, T)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		floor_tile = T
+		update_icon()
+		levelupdate()
+		return
 //This proc will make the turf a light floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
-/turf/simulated/floor/proc/make_light_floor(var/obj/item/stack/tile/light/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
-		if(istype(T,/obj/item/stack/tile/light))
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/light
-
-	update_icon()
-	levelupdate()
-
-//This proc will make a turf into a grass patch. Fun eh? Insert the grass tile to be used as the argument
-//If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_grass_floor(var/obj/item/stack/tile/grass/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
-		if(istype(T,/obj/item/stack/tile/grass))
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/grass
-
-	update_icon()
-	levelupdate()
-
-//This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
-//If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_wood_floor(var/obj/item/stack/tile/wood/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
-		if(istype(T,/obj/item/stack/tile/wood))
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/wood
-
-	update_icon()
-	levelupdate()
-
-//This proc will make a turf into a carpet floor. Fun eh? Insert the carpet tile to be used as the argument
-//If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_carpet_floor(var/obj/item/stack/tile/carpet/T = null)
-	broken = 0
-	burnt = 0
-	intact = 1
-	if(T)
-		if(istype(T,/obj/item/stack/tile/carpet))
-			floor_tile = T
-			update_icon()
-			levelupdate()
-			return
-	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/carpet
-
-	update_icon()
-	levelupdate()
 
 /turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
 
@@ -428,18 +475,18 @@ turf/simulated/floor/proc/update_icon()
 				qdel(C)
 				T.state = C //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				user << "\blue You replace the light bulb."
+				user << "<span class='notice'>You replace the light bulb.</span>"
 			else
-				user << "\blue The lightbulb seems fine, no need to replace it."
+				user << "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>"
 
 	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
 		if(broken || burnt)
-			user << "\red You remove the broken plating."
+			user << "<span class='danger'>You remove the broken plating.</span>"
 		else
 			if(is_wood_floor())
-				user << "\red You forcefully pry off the planks, destroying them in the process."
+				user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
 			else
-				user << "\red You remove the [floor_tile.name]."
+				user << "<span class='danger'>You remove the [floor_tile.name].</span>"
 				new floor_tile.type(src)
 
 		make_plating()
@@ -452,7 +499,7 @@ turf/simulated/floor/proc/update_icon()
 			return
 		else
 			if(is_wood_floor())
-				user << "\red You unscrew the planks."
+				user << "<span class='danger'>You unscrew the planks.</span>"
 				new floor_tile.type(src)
 
 		make_plating()
@@ -508,7 +555,7 @@ turf/simulated/floor/proc/update_icon()
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			else
-				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
+				user << "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
 
 
 	if(istype(C, /obj/item/stack/cable_coil))
@@ -526,20 +573,18 @@ turf/simulated/floor/proc/update_icon()
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			user << "\blue You shovel the grass."
+			user << "<span class='notice'>You shovel the grass.</span>"
 			make_plating()
 		else
-			user << "\red You cannot shovel this."
+			user << "<span class='danger'>You cannot shovel this.</span>"
 
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))
-					user << "\red You fix some dents on the broken plating."
+					user << "<span class='danger'>You fix some dents on the broken plating.</span>"
 					playsound(src, 'sound/items/Welder.ogg', 80, 1)
 					icon_state = icon_plating
 					burnt = 0
 					broken = 0
-				else
-					user << "\blue You need more welding fuel to complete this task."

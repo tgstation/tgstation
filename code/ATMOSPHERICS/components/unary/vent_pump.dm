@@ -276,12 +276,13 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
-		user << "\red You cannot unwrench this [src], turn it off first."
+		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
 		return 1
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
-			user << "\blue Now welding the vent."
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			user << "<span class='notice'>Now welding the vent.</span>"
 			if(do_after(user, 20))
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -293,10 +294,6 @@
 					user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
 					welded = 0
 					update_icon()
-			else
-				user << "\blue The welding tool needs to be on to start this task."
-		else
-			user << "\blue You need more welding fuel to complete this task."
 			return 1
 	else
 		return ..()
@@ -361,7 +358,7 @@
 		L << "<span class='warning'> There are no available vents to travel to, they could be welded. </span>"
 		return
 
-	var/obj/selection = input(L,"Select a destination.", "Duct System") as null|anything in sortAssoc(vents)
+	var/obj/selection = input(L,"Select a destination.", "Duct System") as null|anything in sortList(vents)
 	if(!selection)	return
 
 	if(!Adjacent(L))

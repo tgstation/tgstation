@@ -6,7 +6,8 @@
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
 /datum/configuration
-	var/server_name = null				// server name (for world name / status)
+	var/server_name = null				// server name (the name of the game window)
+	var/station_name = null				// station name (the name of the station in-game)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 
@@ -82,8 +83,9 @@
 
 	var/traitor_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
-	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
-	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
+	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head/security
+	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
+	var/continuous_round_rev = 0		// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
 	var/shuttle_refuel_delay = 12000
@@ -234,6 +236,8 @@
 					config.respawn = 0
 				if("servername")
 					config.server_name = value
+				if("stationname")
+					config.station_name = value
 				if("serversuffix")
 					config.server_suffix = 1
 				if("hostedby")
@@ -374,6 +378,8 @@
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist	= 1
+				if("enforce_human_authority")
+					config.enforce_human_authority	= 1
 				if("allow_latejoin_antagonists")
 					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")

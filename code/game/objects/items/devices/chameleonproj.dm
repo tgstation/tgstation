@@ -14,7 +14,8 @@
 	var/saved_item = /obj/item/weapon/cigbutt
 	var/saved_icon = 'icons/obj/clothing/masks.dmi'
 	var/saved_icon_state = "cigbutt"
-	var/saved_overlays
+	var/saved_overlays = null
+	var/saved_underlays = null
 
 /obj/item/device/chameleon/dropped()
 	disrupt()
@@ -30,11 +31,12 @@
 	if(!active_dummy)
 		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
-			user << "\blue Scanned [target]."
+			user << "<span class='notice'>Scanned [target].</span>"
 			saved_item = target.type
 			saved_icon = target.icon
 			saved_icon_state = target.icon_state
 			saved_overlays = target.overlays
+			saved_underlays = target.underlays
 
 /obj/item/device/chameleon/proc/toggle()
 	if(!can_use || !saved_item) return
@@ -43,7 +45,7 @@
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		qdel(active_dummy)
 		active_dummy = null
-		usr << "\blue You deactivate the [src]."
+		usr << "<span class='notice'>You deactivate the [src].</span>"
 		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
 		flick("emppulse",T)
@@ -53,9 +55,9 @@
 		var/obj/O = new saved_item(src)
 		if(!O) return
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
-		C.activate(O, usr, saved_icon, saved_icon_state, saved_overlays, src)
+		C.activate(O, usr, saved_icon, saved_icon_state, saved_overlays, saved_underlays, src)
 		qdel(O)
-		usr << "\blue You activate the [src]."
+		usr << "<span class='notice'>You activate the [src].</span>"
 		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
 		flick("emppulse",T)
@@ -89,12 +91,13 @@
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
 
-/obj/effect/dummy/chameleon/proc/activate(var/obj/O, var/mob/M, new_icon, new_iconstate, new_overlays, var/obj/item/device/chameleon/C)
+/obj/effect/dummy/chameleon/proc/activate(var/obj/O, var/mob/M, new_icon, new_iconstate, new_overlays, new_underlays, var/obj/item/device/chameleon/C)
 	name = O.name
 	desc = O.desc
 	icon = new_icon
 	icon_state = new_iconstate
 	overlays = new_overlays
+	underlays = new_underlays
 	dir = O.dir
 	M.loc = src
 	master = C
@@ -102,22 +105,22 @@
 
 /obj/effect/dummy/chameleon/attackby()
 	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
+		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/attack_hand()
 	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
+		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/ex_act()
 	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
+		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
 	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
+		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	..()
 	master.disrupt()
 

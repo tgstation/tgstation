@@ -227,7 +227,7 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
-				"<span class='userdanger'>[M] [M.attacktext]!</span>")
+				"<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
@@ -403,7 +403,7 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			if(slot in check_obscured_slots())
@@ -564,7 +564,7 @@
 
 	//Check for ID
 	var/obj/item/weapon/card/id/idcard = get_idcard()
-	if(judgebot.idcheck && !idcard)
+	if(judgebot.idcheck && !idcard && name=="Unknown")
 		threatcount += 4
 
 	//Check for weapons
@@ -604,6 +604,17 @@
 
 	//Agent cards lower threatlevel.
 	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
-		threatcount -= 2
+		threatcount -= 5
 
 	return threatcount
+
+
+//Used for new human mobs created by cloning/goleming/podding
+/mob/living/carbon/human/proc/set_cloned_appearance()
+	if(gender == MALE)
+		facial_hair_style = "Full Beard"
+	else
+		facial_hair_style = "Shaved"
+	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+	underwear = "Nude"
+	regenerate_icons()

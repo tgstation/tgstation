@@ -37,7 +37,7 @@
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
-
+	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 
@@ -442,27 +442,6 @@
 			H.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[H.mind.changeling.chem_charges]</font></div>"
 		else
 			H.hud_used.lingchemdisplay.invisibility = 101
-
-		if(istype(H.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-			var/obj/item/clothing/mask/gas/voice/space_ninja/O = H.wear_mask
-			switch(O.mode)
-				if(0)
-					var/target_list[] = list()
-					for(var/mob/living/target in oview(H))
-						if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
-							target_list += target
-					if(target_list.len)//Everything else is handled by the ninja mask proc.
-						O.assess_targets(target_list, H)
-					H.see_invisible = SEE_INVISIBLE_LIVING
-				if(1)
-					H.see_in_dark = 5
-					H.see_invisible = SEE_INVISIBLE_LIVING
-				if(2)
-					H.sight |= SEE_MOBS
-					H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-				if(3)
-					H.sight |= SEE_TURFS
-					H.see_invisible = SEE_INVISIBLE_LIVING
 
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))

@@ -65,7 +65,7 @@
 		return 1
 	else if(istype(mover, /mob/living))
 		if(prob(50))
-			mover << "\red You get stuck in \the [src] for a moment."
+			mover << "<span class='danger'>You get stuck in \the [src] for a moment.</span>"
 			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
@@ -150,7 +150,7 @@
 							return
 
 						if(prob(50))
-							src.visible_message("\blue You hear something squeezing through the ventilation ducts.",2)
+							src.visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
 						sleep(travel_time)
 
 						if(!exit_vent || exit_vent.welded)
@@ -172,7 +172,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom)
 			if(prob(40))
-				src.visible_message("\blue \The [src] skitters[pick(" away"," around","")].")
+				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
 	else if(prob(10))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
@@ -212,7 +212,7 @@
 
 
 /obj/effect/spider/cocoon/Destroy()
-	src.visible_message("\red \The [src] splits open.")
+	src.visible_message("<span class='danger'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	..()

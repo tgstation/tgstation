@@ -78,7 +78,7 @@
 
 	var/turf/T = get_turf(user.loc)
 	if(T.z != current.z || (!skip_bugcheck && current.bug != src) || !current.can_use())
-		user << "\red [src] has lost the signal."
+		user << "<span class='danger'>[src] has lost the signal.</span>"
 		current = null
 		user.reset_view(null)
 		user.unset_machine()
@@ -103,7 +103,7 @@
 				if(NETWORK_BUG,ADMIN_BUG)
 					if(length(list("SS13","MINE")&camera.network))
 						bugged_cameras[camera.c_tag] = camera
-	bugged_cameras = sortAssoc(bugged_cameras)
+	sortList(bugged_cameras)
 	return bugged_cameras
 
 
@@ -249,11 +249,11 @@
 		var/obj/machinery/camera/C = locate(href_list["view"])
 		if(istype(C))
 			if(!C.can_use())
-				usr << "\red Something's wrong with that camera.  You can't get a feed."
+				usr << "<span class='danger'>Something's wrong with that camera.  You can't get a feed.</span>"
 				return
 			var/turf/T = get_turf(loc)
 			if(!T || C.z != T.z)
-				usr << "\red You can't get a signal."
+				usr << "<span class='danger'>You can't get a signal.</span>"
 				return
 			current = C
 			spawn(6)

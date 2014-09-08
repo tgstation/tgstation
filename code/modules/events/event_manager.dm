@@ -9,6 +9,7 @@ var/datum/controller/event/events
 	var/frequency_upper = 9000	//15 minutes upper bound. Basically an event will happen every 15 to 30 minutes.
 
 	var/holiday					//This will be a string of the name of any realworld holiday which occurs today (GMT time)
+	var/wizardmode = 0			//If the summon events spell is in effect this is true
 
 //Initial controller setup.
 /datum/controller/event/New()
@@ -20,7 +21,7 @@ var/datum/controller/event/events
 
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/E = new type()
-		if(!E.typepath)
+		if(!E.typepath || E.typepath in typesof(/datum/round_event/wizard/))
 			continue				//don't want this one! leave it for the garbage collector
 		control += E				//add it to the list of all events (controls)
 	reschedule()
@@ -109,17 +110,25 @@ var/datum/controller/event/events
 
 
 
-//allows a client to trigger an event (For Debugging Purposes)
-/client/proc/forceEvent(var/datum/round_event_control/E in events.control)
-	set name = "Trigger Event (Debug Only)"
-	set category = "Debug"
+//allows a client to trigger an event
+//aka Badmin Central
+/client/proc/forceEvent()
+	set name = "Trigger Event"
+	set category = "Fun"
 
-	if(!holder)
+	if(!holder ||!check_rights(R_FUN))
 		return
 
-	if(istype(E))
-		E.runEvent()
-		message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])", 1)
+	holder.forceEvent()
+
+/datum/admins/proc/forceEvent()
+	var/dat = ""
+	for(var/datum/round_event_control/E in events.control)
+		dat += "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
+
+	var/datum/browser/popup = new(usr, "forceevent", "Force Random Event", 300, 750)
+	popup.set_content(dat)
+	popup.open()
 
 
 /*
