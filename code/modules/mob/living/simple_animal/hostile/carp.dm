@@ -61,3 +61,19 @@
 /mob/living/simple_animal/hostile/carp/holocarp/Die()
 	qdel(src)
 	return
+
+/mob/living/simple_animal/hostile/carp/lasercarp
+	icon_state = "lasercarp"
+	icon_living = "lasercarp"
+	name = "Space Laser Carp"
+	desc = "A ferocious, fang-bearing creature that resembles a fish. This one has a laser rifle welded to it."
+	ranged = 1
+	maxHealth = 80 //It makes a laser when it dies. It should be bad news.
+	health = 80
+	retreat_distance = 4
+	minimum_distance = 4
+	projectiletype = /obj/item/projectile/beam
+
+/mob/living/simple_animal/hostile/carp/lasercarp/harvest()
+	new /obj/item/weapon/gun/energy/laser/retro(src)
+	return ..()
