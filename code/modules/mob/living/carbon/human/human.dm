@@ -834,7 +834,6 @@
 
 			if(perpname)
 				for (var/datum/data/record/E in data_core.general)
-					usr << E.fields["name"]
 					if (E.fields["name"] == perpname)
 						for (var/datum/data/record/R in data_core.security)
 							if (R.fields["id"] == E.fields["id"])
