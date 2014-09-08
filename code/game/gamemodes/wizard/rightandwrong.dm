@@ -100,6 +100,8 @@
 					new /obj/item/weapon/gun/magic/wand/teleport(get_turf(H))
 				if("wanddoor")
 					new /obj/item/weapon/gun/magic/wand/door(get_turf(H))
+				if("wandfireball")
+					new /obj/item/weapon/gun/magic/wand/fireball(get_turf(H))
 				if("staffhealing")
 					new /obj/item/weapon/gun/magic/staff/healing(get_turf(H))
 				if("staffdoor")
