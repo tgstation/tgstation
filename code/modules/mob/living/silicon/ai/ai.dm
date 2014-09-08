@@ -19,6 +19,7 @@ var/list/ai_list = list()
 	anchored = 1
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
+	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()

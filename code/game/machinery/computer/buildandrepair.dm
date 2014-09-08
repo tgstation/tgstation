@@ -289,7 +289,8 @@
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.remove_fuel(0, user))
-					user << "<span class='warning'>The welding tool must be on to complete this task.</span>"
+					if(!WT.isOn())
+						user << "<span class='warning'>The welding tool must be on to complete this task.</span>"
 					return
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				user << "<span class='notice'>You start deconstructing the frame.</span>"

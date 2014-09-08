@@ -107,7 +107,7 @@
 		item_quants[n]++
 	else
 		item_quants[n] = 1
-	item_quants = sortAssoc(item_quants)
+	sortList(item_quants)
 
 /obj/machinery/smartfridge/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

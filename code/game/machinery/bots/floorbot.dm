@@ -379,7 +379,7 @@
 
 /obj/machinery/bot/floorbot/explode()
 	src.on = 0
-	src.visible_message("<span class='userdanger'>[src] blows apart!</span", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/storage/toolbox/mechanical/N = new /obj/item/weapon/storage/toolbox/mechanical(Tsec)

@@ -186,6 +186,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 					user << "<span class='notice'>You mend the damaged framework.</span>"
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					broken_state++
+				else if(WT.isOn())
+					user << "<span class='notice'>You don't have enough fuel to mend the damaged framework.</span>"
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
 				var/obj/item/stack/sheet/plasteel/PS = I

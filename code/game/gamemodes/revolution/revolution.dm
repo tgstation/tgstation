@@ -344,6 +344,18 @@
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
 		world << "<span class='danger'><FONT size = 3>The heads of staff managed to stop the revolution!</FONT></span>"
+
+	var/num_revs = 0
+	for(var/mob/living/carbon/mob in living_mob_list)
+		if(mob.mind)
+			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
+				num_revs++
+	var/num_survivors = 0
+	for(var/mob/living/carbon/survivor in living_mob_list)
+		if(survivor.key)
+			num_survivors++
+
+	world << "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" // % of loyal crew
 	..()
 	return 1
 

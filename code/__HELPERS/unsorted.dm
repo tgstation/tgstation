@@ -283,6 +283,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Turns 1479 into 147.9
 /proc/format_frequency(var/f)
+	f = text2num(f)
 	return "[round(f / 10)].[f % 10]"
 
 
@@ -484,7 +485,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
-	var/list/sortmob = sortAtom(mob_list)
+	var/list/sortmob = sortNames(mob_list)
 	for(var/mob/living/silicon/ai/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/camera/M in sortmob)
@@ -817,7 +818,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns: all the areas in the world, sorted.
 /proc/return_sorted_areas()
-	return sortAtom(return_areas())
+	return sortNames(return_areas())
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.

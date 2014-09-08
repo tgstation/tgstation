@@ -332,7 +332,7 @@
 		feedback_set("round_end_result",acolytes_survived)
 		world << "<span class='danger'><FONT size = 3>The staff managed to stop the cult!</FONT></span>"
 
-	var/text = "<b>Cultists escaped:</b> [acolytes_survived]"
+	var/text = "[TAB]Cultists escaped: <b>[acolytes_survived]</b><BR>"
 
 	if(cult_objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"

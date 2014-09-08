@@ -103,7 +103,7 @@
 				if(NETWORK_BUG,ADMIN_BUG)
 					if(length(list("SS13","MINE")&camera.network))
 						bugged_cameras[camera.c_tag] = camera
-	bugged_cameras = sortAssoc(bugged_cameras)
+	sortList(bugged_cameras)
 	return bugged_cameras
 
 

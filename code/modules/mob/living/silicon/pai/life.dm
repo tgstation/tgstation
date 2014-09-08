@@ -10,10 +10,10 @@
 			cable = null
 
 	regular_hud_updates()
-	if(src.secHUD == 1)
-		src.securityHUD()
-	if(src.medHUD == 1)
-		src.medicalHUD()
+	if(secHUD == 1)
+		process_data_hud(src, DATA_HUD_SECURITY,DATA_HUD_ADVANCED)
+	if(medHUD == 1)
+		process_data_hud(src, DATA_HUD_MEDICAL,DATA_HUD_ADVANCED)
 	if(silence_time)
 		if(world.timeofday >= silence_time)
 			silence_time = null

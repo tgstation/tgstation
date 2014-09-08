@@ -282,6 +282,16 @@
 	var/mineral = "wood"
 	doortype = 35
 
+/obj/machinery/door/airlock/virology
+	icon = 'icons/obj/doors/Doorviro.dmi'
+	doortype = 36
+
+/obj/machinery/door/airlock/glass_virology
+	icon = 'icons/obj/doors/Doorviroglass.dmi'
+	opacity = 0
+	doortype = 37
+	glass = 1
+
 /*
 About the new airlock wires panel:
 *	An airlock wire dialog can be accessed by the normal way or by using wirecutters or a multitool on the door while the wire-panel is open. This would show the following wires, which you can either wirecut/mend or send a multitool pulse through. There are 9 wires.
@@ -879,17 +889,15 @@ About the new airlock wires panel:
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
 		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>"
-		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 		if(do_after(user,40,5,1))
 			if(density && !operating)//Door must be closed to weld.
 				if(W.remove_fuel(0,user))
-					playsound(loc, 'sound/items/welder.ogg', 50, 1)
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					welded = !welded
 					user << "<span class='notice'>You [welded ? "welded the airlock shut":"unwelded the airlock"]</span>"
 					update_icon()
 					user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
-				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 		return
 	else if(istype(C, /obj/item/weapon/screwdriver))
 		src.p_open = !( src.p_open )
@@ -951,6 +959,8 @@ About the new airlock wires panel:
 					if(33) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
 					if(34) new/obj/structure/door_assembly/door_assembly_shuttle(src.loc)
 					if(35) new/obj/structure/door_assembly/door_assembly_wood(src.loc)
+					if(36) new/obj/structure/door_assembly/door_assembly_viro(src.loc)
+					if(37) new/obj/structure/door_assembly/door_assembly_viro/glass(src.loc)
 				if(emagged)
 					user << "<span class='warning'>You discard the damaged electronics.</span>"
 					qdel(src)

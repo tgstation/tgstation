@@ -1,19 +1,21 @@
 /mob/living/silicon
 	gender = NEUTER
-	robot_talk_understand = 1
 	voice_name = "synthesized voice"
+	languages = ROBOT | HUMAN
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
 	var/designation = ""
-
+	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
 
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 
 	var/lawcheck[1]
 	var/ioncheck[1]
+
+	var/sensor_mode = 0 //Determines the current HUD.
 
 /mob/living/silicon/proc/cancelAlarm()
 	return
@@ -314,3 +316,17 @@
 
 /mob/living/silicon/assess_threat() //Secbots won't hunt silicon units
 	return -10
+
+/mob/living/silicon/verb/sensor_mode()
+	set name = "Set Sensor Augmentation"
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
+	switch(sensor_type)
+		if ("Security")
+			sensor_mode = DATA_HUD_SECURITY
+			src << "<span class='notice'>Security records overlay enabled.</span>"
+		if ("Medical")
+			sensor_mode = DATA_HUD_MEDICAL
+			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
+		if ("Disable")
+			sensor_mode = 0
+			src << "Sensor augmentations disabled."

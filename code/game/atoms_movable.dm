@@ -10,6 +10,7 @@
 	var/throw_range = 7
 	var/moved_recently = 0
 	var/mob/pulledby = null
+	var/languages = 0 //For say() and Hear()
 	glide_size = 8
 
 /atom/movable/Move()

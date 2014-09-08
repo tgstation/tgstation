@@ -594,9 +594,7 @@
 /mob/living/carbon/human/proc/handle_regular_hud_updates()
 	if(!client)	return 0
 
-	for(var/image/hud in client.images)
-		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-			client.images.Remove(hud)
+	regular_hud_updates() //For MED/SEC HUD icon deletion
 
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 

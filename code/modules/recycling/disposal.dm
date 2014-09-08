@@ -101,7 +101,6 @@
 					qdel(src)
 				return
 			else
-				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
@@ -824,7 +823,6 @@
 				welded()
 				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
 		else
-			user << "<span class='notice'>You need more welding fuel to cut the pipe.</span>"
 			return
 
 // called when pipe is cut with welder
@@ -1141,8 +1139,6 @@
 				welded()
 				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
 		else
-			user << "<span class='notice'>You need more welding fuel to cut the pipe.</span>"
-
 			return
 
 	// would transfer to next pipe segment, but we are in a trunk
@@ -1276,7 +1272,6 @@
 				qdel(src)
 			return
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 
 

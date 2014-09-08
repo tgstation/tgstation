@@ -26,7 +26,6 @@
 	var/module_state_2 = null
 	var/module_state_3 = null
 
-	var/obj/item/device/radio/borg/radio = null
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/stock_parts/cell/cell = null
 	var/obj/machinery/camera/camera = null
@@ -413,7 +412,6 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("<span class='danger'>[user] has fixed some of the dents on [src]!</span>"), 1)
 		else
-			user << "Need more welding fuel!"
 			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)

@@ -1,11 +1,4 @@
-/mob/proc/say()
-	return
-
-/mob/verb/whisper()
-	set name = "Whisper"
-	set category = "IC"
-	return
-
+//Speech verbs.
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
@@ -13,6 +6,11 @@
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 	usr.say(message)
+
+/mob/verb/whisper(message as text)
+	set name = "Whisper"
+	set category = "IC"
+	return
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"
@@ -53,42 +51,14 @@
 		if(M.client && M.client.holder && (M.client.prefs.toggles & CHAT_DEAD)) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
 			M << rendered	//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
 		else if(M.stat == DEAD)
-			M.show_message(rendered, 2) //Takes into account blindness and such.
-	return
-
-/mob/proc/say_understands(var/mob/other)
-	if (src.stat == 2)
-		return 1
-	else if (istype(other, src.type))
-		return 1
-	else if(other.universal_speak || src.universal_speak)
-		return 1
-	return 0
-
-/mob/proc/say_quote(var/text)
-	if(!text)
-		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
-	var/ending = copytext(text, length(text))
-	if (src.stuttering)
-		return "stammers, \"[text]\"";
-	if(isliving(src))
-		var/mob/living/L = src
-		if (L.getBrainLoss() >= 60)
-			return "gibbers, \"[text]\"";
-	if (ending == "?")
-		return "asks, \"[text]\"";
-	if (ending == "!")
-		return "exclaims, \"[text]\"";
-
-	return "says, \"[text]\"";
+			//M.show_message(rendered, 2) //Takes into account blindness and such. //preserved so you can look at it and cry at the stupidity of oldcoders. whoever coded this should be punched into the sun
+			M << rendered
 
 /mob/proc/emote(var/act)
 	return
 
-/mob/proc/get_ear()
-	// returns an atom representing a location on the map from which this
-	// mob can hear things
+/mob/proc/hivecheck()
+	return 0
 
-	// should be overloaded for all mobs whose "ear" is separate from their "mob"
-
-	return get_turf(src)
+/mob/proc/lingcheck()
+	return 0
