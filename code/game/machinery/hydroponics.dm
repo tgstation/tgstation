@@ -41,7 +41,8 @@
 	RefreshParts()
 
 /obj/machinery/hydroponics/Del()
-	for(. in src.component_parts) qdel(.)
+	for(var/obj/O in src.component_parts) O.loc = null
+	src.component_parts.Cut()
 	return ..()
 	
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
