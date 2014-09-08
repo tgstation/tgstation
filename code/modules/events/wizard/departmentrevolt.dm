@@ -33,7 +33,7 @@
 			jobs_to_revolt = list("Bartender", "Chef", "Botanist", "Clown", "Mime", "Janitor", "Chaplain")
 			nation = pick("Honka", "Boozo", "Fatu", "Danka")
 
-	nation += pick("stan", "topia", "land")
+	nation += pick("stan", "topia", "land", "nia")
 
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(H.mind)
