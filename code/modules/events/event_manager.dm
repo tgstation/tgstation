@@ -9,6 +9,7 @@ var/datum/controller/event/events
 	var/frequency_upper = 9000	//15 minutes upper bound. Basically an event will happen every 15 to 30 minutes.
 
 	var/holiday					//This will be a string of the name of any realworld holiday which occurs today (GMT time)
+	var/wizardmode = 0			//If the summon events spell is in effect this is true
 
 //Initial controller setup.
 /datum/controller/event/New()
@@ -20,7 +21,7 @@ var/datum/controller/event/events
 
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/E = new type()
-		if(!E.typepath)
+		if(!E.typepath || E.typepath in typesof(/datum/round_event/wizard/))
 			continue				//don't want this one! leave it for the garbage collector
 		control += E				//add it to the list of all events (controls)
 	reschedule()
