@@ -5,7 +5,6 @@
 	var/obj/item/l_store = null
 	var/caste = ""
 	update_icon = 1
-	nightvision = 1
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()

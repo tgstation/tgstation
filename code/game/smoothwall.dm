@@ -15,6 +15,7 @@
 		for(var/obj/structure/falsewall/W in orange(src,1))
 			if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 				junction |= get_dir(src,W)
+
 /* Commenting this out for now until we figure out what to do with shuttle smooth walls, if anything.
    As they are now, they sort of work screwy and may need further coding. Or just be scrapped.*/
 	/*else
@@ -40,7 +41,6 @@
 		else
 			var/obj/structure/falsewall/fwall = src
 			fwall.icon_state = "[fwall.mineral][junction]"
-
 /*	else if(istype(src,/turf/simulated/shuttle/wall))
 		var/newicon = icon;
 		var/newiconstate = icon_state;

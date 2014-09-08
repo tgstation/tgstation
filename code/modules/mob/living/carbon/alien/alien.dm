@@ -12,7 +12,7 @@
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2
-
+	nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
 
