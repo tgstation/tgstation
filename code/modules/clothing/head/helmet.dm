@@ -110,3 +110,15 @@ obj/item/clothing/head/helmet/bluetaghelm
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES
+
+obj/item/clothing/head/helmet/loudhat
+	name = "beepsky hat"
+	desc = "Officer down, you mouthbreathing scumbag."
+	icon_state = "alarmhelm"
+	flags = HEADCOVERSEYES
+	item_state = "alarmhelm"
+	armor = list(melee = 40, bullet = 10, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
+	//The front is replaced with a flashy light, less tough.
+	flags_inv = HIDEEARS|HIDEEYES
+
+obj/item/clothing/head/helmet/loudhat/alert
