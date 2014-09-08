@@ -387,6 +387,10 @@
 				var/mob/living/silicon/robot/R = usr
 				R.aicamera.viewpictures()
 
+		if("Sensor Augmentation")
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.sensor_mode()
 		else
 			return 0
 	return 1
