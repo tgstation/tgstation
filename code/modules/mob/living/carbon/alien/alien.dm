@@ -11,7 +11,9 @@
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2
-languages = ALIENnightvision = 1	var/storedPlasma = 250
+	languages = ALIEN
+	nightvision = 1
+	var/storedPlasma = 250
 	var/max_plasma = 500
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
