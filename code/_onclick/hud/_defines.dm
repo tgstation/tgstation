@@ -81,6 +81,7 @@
 #define ui_alien_toxin "EAST-1:28,CENTER+5:25"
 #define ui_alien_fire "EAST-1:28,CENTER+4:25"
 #define ui_alien_oxygen "EAST-1:28,CENTER+3:25"
+#define ui_alien_nightvision "EAST-1:28,CENTER+2:25"
 
 //Middle right (status indicators)
 #define ui_nutrition "EAST-1:28,CENTER-3:11"
