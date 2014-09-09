@@ -42,7 +42,7 @@
 
 /obj/machinery/hydroponics/Del()
 	for(var/obj/O in src.component_parts) O.loc = null
-	src.component_parts.Cut()
+	src.component_parts.len = 0
 	return ..()
 	
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
