@@ -100,7 +100,7 @@
 		icon_state = "secborg"
 		modtype = "Security"
 	else
-		laws = new base_law_type // Was NT Default
+		src.laws = getLawset(src)
 		connected_ai = select_active_ai_with_fewest_borgs()
 		if(connected_ai)
 			connected_ai.connected_robots += src

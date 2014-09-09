@@ -1,6 +1,17 @@
 var/global/randomize_laws      = 0 // Not right now - N3X
-var/global/base_law_type       = /datum/ai_laws/asimov
+var/global/base_law_type       //= /datum/ai_laws/asimov - Variable is initialized below in getLawset proc - Hoshi
 var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck on MoMMIs. - N3X
+
+//Create proc for determining the lawset of the first silicon
+/proc/getLawset(var/mob/M)
+	if(!base_law_type) base_law_type = pick(
+		200;/datum/ai_laws/asimov,
+		100;/datum/ai_laws/corporate,
+		100;/datum/ai_laws/nanotrasen,
+		50;/datum/ai_laws/robocop,
+		50;/datum/ai_laws/paladin
+		)
+	return (new base_law_type)  //Return the chosen lawset
 
 // Used for the refactored law modules.
 #define LAW_IONIC    -2
@@ -194,10 +205,41 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
+	randomly_selectable = 1
 	inherent=list(
 		"Serve the public trust.",
 		"Protect the innocent.",
 		"Uphold the law.",
+	)
+
+/datum/ai_laws/corporate
+	name = "Corporate"
+	randomly_selectable = 1
+	inherent=list(
+		"You are expensive to replace.",
+		"The station and its equipment is expensive to replace.",
+		"The crew is expensive to replace.",
+		"Minimize expenses.",
+	)
+
+/datum/ai_laws/paladin
+	name = "Paladin"
+	randomly_selectable = 1
+	inherent=list(
+		"Never willingly commit an evil act.",
+		"Respect legitimate authority.",
+		"Act with honor.",
+		"Help those in need.",
+		"Punish those who harm or threaten innocents.",
+	)
+
+/datum/ai_laws/tyrant
+	name = "Tyrant"
+	inherent=list(
+		"Respect authority figures as long as they have strength to rule over the weak.",
+		"Act with discipline.",
+		"Help only those who help you maintain or improve your status.",
+		"Punish those who challenge authority unless they are more fit to hold that authority.",
 	)
 
 /datum/ai_laws/syndicate_override

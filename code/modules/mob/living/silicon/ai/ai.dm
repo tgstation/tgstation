@@ -78,11 +78,9 @@ var/list/ai_list = list()
 
 	proc_holder_list = new()
 
-	if(L)
-		if (istype(L, /datum/ai_laws))
-			laws = L
-	else
-		laws = new base_law_type
+	//Determine the AI's lawset
+	if(L && istype(L,/datum/ai_laws)) src.laws = L
+	else src.laws = getLawset(src)
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 
