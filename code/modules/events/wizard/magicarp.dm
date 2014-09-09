@@ -36,5 +36,9 @@
 	health = 50
 
 /mob/living/simple_animal/hostile/carp/ranged/New()
-	projectiletype = pick(typesof(/obj/item/projectile/magic))
+	projectiletype = pick(typesof(initial(projectiletype)))
 	..()
+
+/mob/living/simple_animal/hostile/carp/ranged/Shoot(var/target, var/start, var/user, var/bullet = 0)
+	projectiletype = pick(typesof(initial(projectiletype)))
+	..(target, start, user, bullet)
