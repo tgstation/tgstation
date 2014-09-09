@@ -72,7 +72,7 @@ var/global/datum/controller/occupations/job_master
 		if(flag && (!player.client.prefs.be_special & flag))
 			Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
-		if(config.enforce_human_authority && ((job.title in command_positions) || (job.title in security_positions)) && player.client.prefs.pref_species.id != "human")
+		if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
 			Debug("FOC non-human failed, Player: [player]")
 			continue
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
@@ -100,7 +100,7 @@ var/global/datum/controller/occupations/job_master
 			Debug("GRJ player not old enough, Player: [player]")
 			continue
 
-		if(config.enforce_human_authority && ((job.title in command_positions) || (job.title in security_positions)) && player.client.prefs.pref_species.id != "human")
+		if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
 			Debug("GRJ non-human failed, Player: [player]")
 			continue
 
@@ -255,7 +255,7 @@ var/global/datum/controller/occupations/job_master
 					Debug("DO player not old enough, Player: [player], Job:[job.title]")
 					continue
 
-				if(config.enforce_human_authority && ((job.title in command_positions) || (job.title in security_positions)) && player.client.prefs.pref_species.id != "human")
+				if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
 					Debug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
