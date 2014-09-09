@@ -698,9 +698,9 @@ Destroy type values:
 
 /obj/structure/table/MouseDrop_T(mob/target, mob/user)
 	if(istype(target) && user == target)
-		stuff_mob_in(target, user)
+		climb_table(target, user)
 
-/obj/structure/table/proc/stuff_mob_in(mob/target, mob/user)
+/obj/structure/table/proc/climb_table(mob/target, mob/user)
 	if (!user.canUseTopic(target) || istype(user, /mob/living/silicon))
 		return
 	src.add_fingerprint(user)
