@@ -84,12 +84,6 @@
 				user << "<span class='notice'>Terminal found.</span>"
 				break
 		if(!terminal)
-			for(var/obj/structure/cable/C in T)
-				if(C.d1 == turn(dir, 180) || C.d2 == turn(dir, 180))
-					terminal = C
-					user << "<span class='notice'>Cable found.</span>"
-					break
-		if(!terminal)
 			user << "<span class='alert'>No power source found.</span>"
 			return
 		stat &= ~BROKEN
