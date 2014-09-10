@@ -376,7 +376,7 @@
 		var/text = "<br><font size=3><b>The cultists were:</b></font>"
 		for(var/datum/mind/cultist in cult)
 
-			text += "<br><b>[cultist.key]</b> was <b>[cultist.name]</b> ("
+			text += "<br><b>[cultist.key]</b> was <b>[cultist.name]</b>. Joined as <b>[cultist.assigned_role]</b> ("
 			if(cultist.current)
 				if(cultist.current.stat == DEAD)
 					text += "died"

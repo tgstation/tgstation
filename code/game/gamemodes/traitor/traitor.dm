@@ -204,7 +204,7 @@
 		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
 
-			text += "<br><b>[traitor.key]</b> was <b>[traitor.name]</b> ("
+			text += "<br><b>[traitor.key]</b> was <b>[traitor.name]</b>. Joined as <b>[traitor.assigned_role]</b> ("
 			if(traitor.current)
 				if(traitor.current.stat == DEAD)
 					text += "died"
