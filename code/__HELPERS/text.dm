@@ -77,7 +77,7 @@
 	if(text_length > max_length)
 		return // message too long
 
-	var/non_whitespace = 0
+	var/non_whitespace = FALSE
 
 	for(var/i = 1 to text_length)
 		switch(text2ascii(text, i))
@@ -90,7 +90,7 @@
 			if(32)
 				continue //whitespace
 			else
-				non_whitespace = 1
+				non_whitespace = TRUE
 
 	if(non_whitespace)
 		return text // only accepts the text if it has some non-spaces
