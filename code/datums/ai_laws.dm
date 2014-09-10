@@ -7,8 +7,8 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 //Paladin needs to be revised before becoming a roundstart lawset
 /proc/getLawset(var/mob/M)
 	if(!base_law_type) base_law_type = pick(
-		200;/datum/ai_laws/asimov,
-		100;/datum/ai_laws/corporate,
+		70;/datum/ai_laws/asimov,
+		30;/datum/ai_laws/corporate,
 		//100;/datum/ai_laws/nanotrasen,
 		//50;/datum/ai_laws/robocop,
 		//50;/datum/ai_laws/paladin
