@@ -18,7 +18,10 @@
 /datum/round_event/wizard/magicarp/start()
 	for(var/obj/effect/landmark/C in landmarks_list)
 		if(C.name == "carpspawn")
-			new /mob/living/simple_animal/hostile/carp/ranged(C.loc)
+			if(prob(5))
+				new /mob/living/simple_animal/hostile/carp/ranged/chaos(C.loc)
+			else
+				new /mob/living/simple_animal/hostile/carp/ranged(C.loc)
 
 /mob/living/simple_animal/hostile/carp/ranged
 	name = "magicarp"
@@ -39,6 +42,13 @@
 	projectiletype = pick(typesof(initial(projectiletype)))
 	..()
 
-/mob/living/simple_animal/hostile/carp/ranged/Shoot(var/target, var/start, var/user, var/bullet = 0)
+/mob/living/simple_animal/hostile/carp/ranged/chaos
+	name = "chaos magicarp"
+	desc = "50% carp, 100% magic, 150% horrible."
+	color = "#00FFFF"
+	maxHealth = 75
+	health = 75
+
+/mob/living/simple_animal/hostile/carp/ranged/chaos/Shoot(var/target, var/start, var/user, var/bullet = 0)
 	projectiletype = pick(typesof(initial(projectiletype)))
 	..(target, start, user, bullet)
