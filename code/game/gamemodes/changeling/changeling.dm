@@ -181,7 +181,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		for(var/datum/mind/changeling in changelings)
 			var/changelingwin = 1
 
-			text += "<br><b>[changeling.key]</b> was <b>[changeling.name]</b>. Joined as <b>[changeling.assigned_role]</b> ("
+			text += "<br><b>[changeling.name]</b>(<b>[changeling.key]</b>) was \a <b>[changeling.assigned_role]</b> ("
 			if(changeling.current)
 				if(changeling.current.stat == DEAD)
 					text += "died"
