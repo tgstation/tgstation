@@ -141,3 +141,9 @@
 	icon_state = "simonshoes"
 	item_state = "simonshoes"
 	species_fit = list("Vox")
+
+/obj/item/clothing/shoes/kneesocks
+	name = "kneesocks"
+	desc = "A pair of girly knee-high socks"
+	icon_state = "kneesock"
+	item_state = "kneesock"
