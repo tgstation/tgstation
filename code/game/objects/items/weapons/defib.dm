@@ -135,10 +135,10 @@
 					status = 0
 				update_icon()
 
-				if(w_uniform && istype(w_uniform, /obj/item/clothing/under))
+				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under))
 					uni = TRUE
 
-				if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor))
+				if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor))
 					armor = TRUE
 
 				if(armor) //I'm sure I should apply the paddles on hardsuit plating
