@@ -124,7 +124,7 @@ var/global/ingredientLimit = 30
 	else if(istype(I,/obj/item/weapon/disk/nuclear)) . = "It's the fucking nuke disk!"
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks) || deepFriedEverything) . = "valid"
 	else . = "It's not edible food."
-	return .
+	return
 
 /obj/machinery/cooking/proc/takeIngredient(var/obj/item/I,mob/user)
 	. = src.validateIngredient(I)
