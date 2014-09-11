@@ -88,14 +88,17 @@
 	return !density || check_access(ID)
 
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
-	if(operating)	return
+	if(operating)
+		return
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
 
 	if(density && !emagged)
-		if(allowed(user) || src.emergency == 1)	open()
-		else				flick("door_deny", src)
+		if(allowed(user) || src.emergency == 1)
+			open()
+		else
+			flick("door_deny", src)
 	return
 
 
@@ -126,7 +129,7 @@
 		user = null
 	if(!src.requiresID())
 		user = null
-	if(src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		flick("door_spark", src)
 		sleep(6)
 		open()
@@ -268,6 +271,9 @@
 
 /obj/machinery/door/proc/requiresID()
 	return 1
+
+/obj/machinery/door/proc/hasPower()
+	return !(stat & NOPOWER)
 
 /obj/machinery/door/BlockSuperconductivity()
 	if(opacity || heat_proof)
