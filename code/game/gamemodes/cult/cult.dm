@@ -30,8 +30,6 @@
 	required_enemies = 6
 	recommended_enemies = 6
 
-	uplink_welcome = "Nar-Sie Uplink Console:"
-	uplink_uses = 10
 
 	var/finished = 0
 

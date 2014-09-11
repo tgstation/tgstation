@@ -16,10 +16,6 @@
 	required_enemies = 1
 	recommended_enemies = 4
 
-
-	uplink_welcome = "Syndicate Uplink Console:"
-	uplink_uses = 10
-
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/scale_modifier = 1 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 

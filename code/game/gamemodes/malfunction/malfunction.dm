@@ -10,10 +10,6 @@
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
 
-	uplink_welcome = "Crazy AI Uplink Console:"
-	uplink_uses = 10
-
-
 
 	var/AI_win_timeleft = 1800 //started at 1800, in case I change this for testing round end.
 	var/malf_mode_declared = 0
