@@ -5,10 +5,13 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 //Create proc for determining the lawset of the first silicon
 //NT Default and Robocop are not recommended as roundstart lawsets due to encouraging poor AI behavior
 //Paladin needs to be revised before becoming a roundstart lawset
+//Corporate apparently needs to be revised, as well
+//Double Asimov, so the proc doesn't shit itself amd return errors
 /proc/getLawset(var/mob/M)
 	if(!base_law_type) base_law_type = pick(
-		70;/datum/ai_laws/asimov,
-		30;/datum/ai_laws/corporate,
+		100;/datum/ai_laws/asimov,
+		100;/datum/ai_laws/asimov,
+		//100;/datum/ai_laws/corporate,
 		//100;/datum/ai_laws/nanotrasen,
 		//50;/datum/ai_laws/robocop,
 		//50;/datum/ai_laws/paladin
