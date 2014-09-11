@@ -236,8 +236,8 @@ var/bomb_set
 	if(blobstart.len > 0)
 		var/obj/item/weapon/disk/nuclear/NEWDISK = new(pick(blobstart))
 		transfer_fingerprints_to(NEWDISK)
-		message_admins("[src] has been destroyed.  Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
-		log_game("[src] has been destroyed.  Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
+		message_admins("[src] has been destroyed in ([x], [y] ,[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[NEWDISK.x];Y=[NEWDISK.y];Z=[NEWDISK.z]'>JMP</a>).")
+		log_game("[src] has been destroyed in ([x], [y] ,[z]). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
 		del(src) //Needed to clear all references to it
 	else
 		ERROR("[src] was supposed to be destroyed, but we were unable to locate a blobstart landmark to spawn a new one.")
