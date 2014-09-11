@@ -1103,6 +1103,10 @@ proc/process_ghost_teleport_locs()
 /area/maintenance/fstarboardsolar
 	name = "Fore Starboard Solar Maintenance"
 	icon_state = "SolarcontrolA"
+	
+/area/maintenance/virology_maint
+	name = "Virology Maintenance"
+	icon_state = "asmaint"
 
 /area/assembly/showroom
 	name = "\improper Robotics Showroom"
@@ -1185,10 +1189,6 @@ proc/process_ghost_teleport_locs()
 /area/medical/virology_break
 	name = "Virology Break Room"
 	icon_state = "virology"
-
-/area/medical/virology_maint
-	name = "Virology Maintenance"
-	icon_state = "asmaint"
 
 /area/medical/morgue
 	name = "\improper Morgue"
