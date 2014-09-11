@@ -17,10 +17,6 @@ var/bomb_set
 	use_power = 0
 	var/previous_level = ""
 
-/obj/machinery/nuclearbomb/New()
-	..()
-	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
-
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
