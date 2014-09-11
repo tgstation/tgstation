@@ -16,7 +16,7 @@
  */
 /obj/structure/alien/resin
 	name = "resin"
-	desc = "Looks like some kind of slimy growth."
+	desc = "Looks like some kind of thick resin."
 	icon_state = "resin"
 	density = 1
 	opacity = 1
@@ -45,7 +45,7 @@
 
 /obj/structure/alien/resin/wall
 	name = "resin wall"
-	desc = "Purple slime solidified into a wall."
+	desc = "Thick resin solidified into a wall."
 	icon_state = "resinwall"	//same as resin, but consistency ho!
 	resintype = "wall"
 
@@ -58,7 +58,7 @@
 
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
-	desc = "Purple slime just thin enough to let light pass through."
+	desc = "Resin just thin enough to let light pass through."
 	icon_state = "resinmembrane"
 	opacity = 0
 	health = 120

@@ -33,6 +33,11 @@
 	floortype = "clown"
 	floor_tile = new/obj/item/stack/tile/mineral/bananium
 
+/turf/simulated/floor/mineral/bananium/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
 /turf/simulated/floor/mineral/diamond
 	name = "diamond floor"
 	icon_state = "diamond"

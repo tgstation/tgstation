@@ -318,7 +318,7 @@ datum/preferences
 			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
-			if(config.enforce_human_authority && ((rank in command_positions) || (rank in security_positions)) && user.client.prefs.pref_species.id != "human")
+			if(config.enforce_human_authority && (rank in command_positions) && user.client.prefs.pref_species.id != "human")
 				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
 				continue
 			if((rank in command_positions) || (rank == "AI"))//Bold head jobs
