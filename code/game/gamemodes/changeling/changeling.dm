@@ -180,19 +180,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		var/text = "<br><font size=3><b>The changelings were:</b></font>"
 		for(var/datum/mind/changeling in changelings)
 			var/changelingwin = 1
-
-			text += "<br><b>[changeling.name]</b>(<b>[changeling.key]</b>) was \a <b>[changeling.assigned_role]</b> ("
-			if(changeling.current)
-				if(changeling.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(changeling.current.real_name != changeling.name)
-					text += " as <b>[changeling.current.real_name]</b>"
-			else
-				text += "body destroyed"
+			if(!changeling.current)
 				changelingwin = 0
-			text += ")"
+
+			text += printplayer(changeling)
 
 			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 			text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]."

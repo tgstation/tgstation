@@ -387,3 +387,19 @@ proc/display_roundstart_logout_report()
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
 			M << msg
+
+/datum/game_mode/proc/printplayer(var/datum/mind/ply)
+	var/role = "\improper[ply.assigned_role]"
+	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) was \a <b>[role]</b> ("
+	if(ply.current)
+		if(ply.current.stat == DEAD)
+			text += "died"
+		else
+			text += "survived"
+		if(ply.current.real_name != ply.name)
+			text += " as <b>[ply.current.real_name]</b>"
+	else
+		text += "body destroyed"
+	text += ")"
+
+	return text
