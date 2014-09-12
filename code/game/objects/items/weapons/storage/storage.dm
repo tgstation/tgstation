@@ -68,7 +68,7 @@
 
 
 /obj/item/weapon/storage/proc/show_to(mob/user)
-	if(user.s_active != src)
+	if(user.s_active != src && !isobserver(user))
 		for(var/obj/item/I in src)
 			if(I.on_found(user))
 				return
