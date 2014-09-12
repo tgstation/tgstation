@@ -122,8 +122,8 @@
 		H.visible_message("<span class='notice'>[user] starts setting up the defibrillator paddles on [M.name]'s chest.</span>", "<span class='notice'>You start setting up the defibrillator paddles on [M.name]'s chest.</span>")
 		if(do_after(user, 50))
 			if(H.stat == 2 || H.stat == DEAD)
-				var/uni = 0
-				var/armor = 0
+				var/uni = FALSE
+				var/armor = FALSE
 				var/fixable = H.getOxyLoss() //Simple but efficient. You'd have popped a Dex+ pill anyways
 				playsound(get_turf(src), 'sound/items/defib.ogg', 50, 1)
 				spark_system.attach(M)
@@ -134,11 +134,13 @@
 					charges = 0
 					status = 0
 				update_icon()
-				for(var/obj/item/carried_item in H.contents)
-					if(istype(carried_item, /obj/item/clothing/under))
-						uni = 1
-					if(istype(carried_item, /obj/item/clothing/suit/armor))
-						armor = 1
+
+				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under))
+					uni = TRUE
+
+				if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor))
+					armor = TRUE
+
 				if(armor) //I'm sure I should apply the paddles on hardsuit plating
 					if(prob(95))
 						viewers(M) << "<span class='warning'>[src] buzzes: Resuscitation failed. Please apply on bare skin.</span>"
