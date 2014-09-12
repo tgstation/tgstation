@@ -276,6 +276,7 @@
 		if("help")
 			if (health > 0)
 				visible_message("<span class='notice'> [M] [response_help] [src].</span>")
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if("grab")
 			if (M == src || anchored)
@@ -292,10 +293,12 @@
 			LAssailant = M
 
 			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if("harm", "disarm")
 			adjustBruteLoss(harm_intent_damage)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
+			playsound(loc, "punch", 25, 1, -1)
 
 	return
 
@@ -326,6 +329,7 @@
 			var/damage = rand(15, 30)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 					"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			adjustBruteLoss(damage)
 
 	return
@@ -407,6 +411,7 @@
 				adjustBruteLoss(damage)
 				visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>",\
 								"<span class='userdanger'>[src] has been attacked with [O] by [user]!</span>")
+				playsound(loc, O.hitsound, 25, 1, -1)
 			else
 				visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>",\
 								"<span class='userdanger'>[O] bounces harmlessly off of [src].</span>")

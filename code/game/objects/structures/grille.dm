@@ -172,12 +172,13 @@
 		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 		health -= W.force * 0.1
 	else if(!shock(user, 70))
-		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 		switch(W.damtype)
 			if("fire")
 				health -= W.force
+				playsound(loc, 'sound/items/welder.ogg', 80, 1)
 			if("brute")
 				health -= W.force * 0.1
+				playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	healthcheck()
 	..()
 	return
