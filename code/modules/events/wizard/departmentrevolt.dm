@@ -16,7 +16,7 @@
 	switch(tidecolor)
 		if("grey") //God help you
 			jobs_to_revolt = list("Assistant")
-			nation = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Xám", "Grigio", "Ass", "Assi")
+			nation = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 		if("white")
 			jobs_to_revolt = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist")
 			nation = pick("Mede", "Healtha", "Recova", "Chemi", "Geneti", "Viro", "Psych")
@@ -33,7 +33,7 @@
 			jobs_to_revolt = list("Bartender", "Chef", "Botanist", "Clown", "Mime", "Janitor", "Chaplain")
 			nation = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 
-	nation += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotska")
+	nation += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
 
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(H.mind)
