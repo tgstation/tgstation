@@ -67,7 +67,7 @@
 			user.update_mutations()
 
 			ticker.mode.traitors += user.mind
-			user.mind.special_role = "Avatar of [src]" //Custom naming ahoy !
+			user.mind.special_role = "Avatar of \the [src]" //Custom naming ahoy !
 
 			var/datum/objective/silence/silence = new
 			silence.owner = user.mind
