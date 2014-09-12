@@ -737,33 +737,37 @@
 	var/cutDownOnSpam = 0
 
 /obj/item/device/t_scanner/mining_scanner/scan()
-	var/mob/living/user = locate() in get_turf(src)
-	if(!user || !user.client)
+	var/turf/t = get_turf(src)
+	var/list/mobs = recursive_mob_check(t, 1,0,0)
+	if(!mobs.len)
 		return
 	if(!cooldown)
 		cooldown = 1
 		spawn(100)
 			cooldown = 0
-		var/client/C = user.client
 		var/list/L = list()
 		var/turf/simulated/mineral/M
-		for(M in range(7, user))
+		for(M in range(7, t))
 			if(M.scan_state)
 				L += M
 		if(!L.len)
 			if(cutDownOnSpam==0)
-				user << "<span class='info'>[src] reports that nothing was detected nearby.</span>"
+				for(var/mob/user in mobs)
+					user << "<span class='info'>[src] reports that nothing was detected nearby.</span>"
 			cutDownOnSpam = 1
 			return
 		else
 			cutDownOnSpam = 0
-			for(M in L)
-				var/turf/T = get_turf(M)
-				var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
-				C.images += I
-				spawn(30)
-					if(C)
-						C.images -= I
+			for(var/mob/user in mobs)
+				if(user.client)
+					var/client/C = user.client
+					for(M in L)
+						var/turf/T = get_turf(M)
+						var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+						C.images += I
+						spawn(30)
+							if(C)
+								C.images -= I
 
 //Debug item to identify all ore spread quickly
 /obj/item/device/t_scanner/mining_scanner/admin
