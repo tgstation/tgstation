@@ -937,7 +937,7 @@ About the new airlock wires panel:
 	return dat
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
-	if (!istype(user, /mob/living/silicon))
+	if (!istype(user, /mob/living/silicon) && !isobserver(user))
 		if (isElectrified())
 			// TODO: analyze the called proc
 			if (shock(user, 100))
