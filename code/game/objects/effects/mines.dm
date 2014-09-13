@@ -13,7 +13,7 @@
 /obj/effect/mine/New()
 	icon_state = "uglyminearmed"
 
-/obj/effect/mine/HasEntered(AM as mob|obj)
+/obj/effect/mine/Crossed(AM as mob|obj)
 	Bumped(AM)
 
 /obj/effect/mine/Bumped(mob/M as mob|obj)

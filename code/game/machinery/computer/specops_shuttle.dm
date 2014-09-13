@@ -22,6 +22,8 @@ var/specops_shuttle_timeleft = 0
 	var/allowedtocall = 0
 	var/specops_shuttle_timereset = 0
 
+	l_color = "#7BF9FF"
+
 /proc/specops_return()
 	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
 	announcer.config(list("Response Team" = 0))

@@ -121,7 +121,7 @@ for reference:
 			del(src)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
+	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
 		if(air_group || (height==0))
 			return 1
 		if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -129,6 +129,14 @@ for reference:
 		else
 			return 0
 
+/obj/structure/barricade/wooden/door //Used by the barricade kit when it is placed on doors
+
+	icon = 'icons/policetape.dmi'
+	icon_state = "wood_door"
+	anchored = 1
+	density = 1
+	health = 50 //Can take a few hits
+	maxhealth = 50
 
 //Actual Deployable machinery stuff
 
@@ -245,7 +253,7 @@ for reference:
 			src.explode()
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
+	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
 		if(air_group || (height==0))
 			return 1
 		if(istype(mover) && mover.checkpass(PASSTABLE))

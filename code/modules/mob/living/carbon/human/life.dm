@@ -1,25 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-//NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
-#define HUMAN_MAX_OXYLOSS 1 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-#define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /5) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
-
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 1000K point
-
-#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
-#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
-#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
-
-//Note that gas heat damage is only applied once every FOUR ticks.
-#define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
-#define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
-#define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
-
-#define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
-#define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
-#define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
 var/global/list/unconscious_overlays = list("1" = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage1"),\
 	"2" = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage2"),\
@@ -55,6 +35,7 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 	var/do_deferred_species_setup=0
 	var/exposedtimenow = 0
 	var/firstexposed = 0
+
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
 	var/mut_update=0
@@ -239,7 +220,25 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 					if(1)
 						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
 					if(2)
-						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!", "SARAH HALE DID IT!!!"))
+						say(pick( \
+							"FUS RO DAH", \
+							"fucking 4rries!", \
+							"stat me", \
+							">my face", \
+							"roll it easy!", \
+							"waaaaaagh!!!", \
+							"red wonz go fasta", \
+							"FOR TEH EMPRAH", \
+							"lol2cat", \
+							"dem dwarfs man, dem dwarfs", \
+							"SPESS MAHREENS", \
+							"hwee did eet fhor khayosss", \
+							"lifelike texture ;_;", \
+							"luv can bloooom", \
+							"PACKETS!!!", \
+							"SARAH HALE DID IT!!!", \
+							"Don't tell Chase", \
+							"not so tough now huh"))
 					if(3)
 						emote("drool")
 
@@ -419,6 +418,23 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 
 		handle_breath(breath)
 
+		if(species.name=="Plasmaman")
+
+			// Check if we're wearing our biosuit and mask.
+			if (!istype(wear_suit,/obj/item/clothing/suit/space/plasmaman) || !istype(head,/obj/item/clothing/head/helmet/space/plasmaman))
+				//testing("Plasmaman [src] leakin'.  coverflags=[cover_flags]")
+				// OH FUCK HE LEAKIN'.
+				// This was OP.
+				//environment.adjust(tx = environment.total_moles()*BREATH_PERCENTAGE) // About one breath's worth. (I know we aren't breathing it out, but this should be about the right amount)
+				if(!on_fire)
+					src << "<span class='warning'>Your body reacts with the atmosphere and bursts into flame!</span>"
+				adjust_fire_stacks(0.5)
+				IgniteMob()
+			else
+				if(fire_stacks)
+					var/obj/item/clothing/suit/space/plasmaman/PS=wear_suit
+					PS.Extinguish(src)
+
 		if(breath)
 			loc.assume_air(breath)
 
@@ -447,14 +463,13 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		// Health is in deep shit and we're not already dead
 		return health <= config.health_threshold_crit && stat != 2
 
-
-	proc/handle_breath(datum/gas_mixture/breath)
+	proc/handle_breath(var/datum/gas_mixture/breath)
 		if(status_flags & GODMODE)
-			return
+			return 0
 
 		if(!breath || (breath.total_moles() == 0) || suiciding)
 			if(reagents.has_reagent("inaprovaline"))
-				return
+				return 0
 			if(suiciding)
 				adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
 				failed_last_breath = 1
@@ -471,156 +486,7 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 
 			return 0
 
-		var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-		//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
-		var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-		var/safe_toxins_max = 0.5
-		var/safe_toxins_mask = 5
-		var/SA_para_min = 1
-		var/SA_sleep_min = 5
-		var/oxygen_used = 0
-		var/nitrogen_used = 0
-		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
-		var/vox_oxygen_max = 1 // For vox.
-
-		//Partial pressure of the O2 in our breath
-		var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
-		// Same, but for the toxins
-		var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
-		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-		var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
-		//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
-		// Nitrogen, for Vox.
-		var/Nitrogen_pp = (breath.nitrogen/breath.total_moles())*breath_pressure
-
-		if(O2_pp < safe_oxygen_min && species.name != "Vox") 	// Too little oxygen
-			if(prob(20))
-				spawn(0) emote("gasp")
-			if(O2_pp > 0)
-				var/ratio = safe_oxygen_min/O2_pp
-				adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
-				failed_last_breath = 1
-				oxygen_used = breath.oxygen*ratio/6
-			else
-				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-				failed_last_breath = 1
-			oxygen_alert = max(oxygen_alert, 1)
-		/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
-			spawn(0) emote("cough")
-			var/ratio = O2_pp/safe_oxygen_max
-			oxyloss += 5*ratio
-			oxygen_used = breath.oxygen*ratio/6
-			oxygen_alert = max(oxygen_alert, 1)*/
-		else if(Nitrogen_pp < safe_oxygen_min && species.name == "Vox")  //Vox breathe nitrogen, not oxygen.
-
-			if(prob(20))
-				spawn(0) emote("gasp")
-			if(Nitrogen_pp > 0)
-				var/ratio = safe_oxygen_min/Nitrogen_pp
-				adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS))
-				failed_last_breath = 1
-				nitrogen_used = breath.nitrogen*ratio/6
-			else
-				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-				failed_last_breath = 1
-			oxygen_alert = max(oxygen_alert, 1)
-
-		else								// We're in safe limits
-			failed_last_breath = 0
-			adjustOxyLoss(-5)
-			oxygen_used = breath.oxygen/6
-			oxygen_alert = 0
-
-		breath.oxygen -= oxygen_used
-		breath.nitrogen -= nitrogen_used
-		breath.carbon_dioxide += oxygen_used
-
-		//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
-		if(CO2_pp > safe_co2_max)
-			if(!co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
-				co2overloadtime = world.time
-			else if(world.time - co2overloadtime > 120)
-				Paralyse(3)
-				adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
-				if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
-					adjustOxyLoss(8)
-			if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-				spawn(0) emote("cough")
-
-		else
-			co2overloadtime = 0
-
-		if(Toxins_pp > safe_toxins_max) // Too much toxins
-			var/ratio = (breath.toxins/safe_toxins_max) * 10
-			//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
-			if(wear_mask)
-				if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
-					if(breath.toxins > safe_toxins_mask)
-						ratio = (breath.toxins/safe_toxins_mask) * 10
-					else
-						ratio = 0
-			if(ratio)
-				if(reagents)
-					reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-				toxins_alert = max(toxins_alert, 1)
-		else if(O2_pp > vox_oxygen_max && species.name == "Vox") //Oxygen is toxic to vox.
-			var/ratio = (breath.oxygen/vox_oxygen_max) * 1000
-			adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-			toxins_alert = max(toxins_alert, 1)
-		else
-			toxins_alert = 0
-
-		if(breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
-			for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-				var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
-				if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-					Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-					if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-						sleeping = min(sleeping+2, 10)
-				else if(SA_pp > 0.15)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if(prob(20))
-						spawn(0) emote(pick("giggle", "laugh"))
-				SA.moles = 0
-
-		if( (abs(310.15 - breath.temperature) > 50) && !(M_RESIST_HEAT in mutations)) // Hot air hurts :(
-			if(status_flags & GODMODE)	return 1	//godmode
-			if(breath.temperature < species.cold_level_1)
-				if(prob(20))
-					src << "\red You feel your face freezing and an icicle forming in your lungs!"
-			else if(breath.temperature > species.heat_level_1)
-				if(prob(20))
-					if(dna.mutantrace == "slime")
-						src << "\red You feel supercharged by the extreme heat!"
-					else
-						src << "\red You feel your face burning and a searing heat in your lungs!"
-			if(dna.mutantrace == "slime")
-				if(breath.temperature < species.cold_level_1)
-					adjustToxLoss(round(species.cold_level_1 - breath.temperature))
-					fire_alert = max(fire_alert, 1)
-			if(dna.mutantrace != "slime")
-				switch(breath.temperature)
-					if(-INFINITY to species.cold_level_3)
-						apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
-						fire_alert = max(fire_alert, 1)
-					if(species.cold_level_3 to species.cold_level_2)
-						apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
-						fire_alert = max(fire_alert, 1)
-					if(species.cold_level_2 to species.cold_level_1)
-						apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
-						fire_alert = max(fire_alert, 1)
-					if(species.heat_level_1 to species.heat_level_2)
-						apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
-						fire_alert = max(fire_alert, 2)
-					if(species.heat_level_2 to species.heat_level_3)
-						apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Heat")
-						fire_alert = max(fire_alert, 2)
-					if(species.heat_level_3 to INFINITY)
-						apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
-						fire_alert = max(fire_alert, 2)
-
-		//Temporary fixes to the alerts.
-
-		return 1
+		return species.handle_breath(breath, src)
 
 	proc/handle_environment(datum/gas_mixture/environment)
 		if(!environment)
@@ -951,6 +817,24 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 				apply_damage(0.4*discomfort, BURN, "r_arm")
 	*/
 
+	proc/get_covered_bodyparts()
+		var/covered = 0
+
+		if(head)
+			covered |= head.body_parts_covered
+		if(wear_suit)
+			covered |= wear_suit.body_parts_covered
+		if(w_uniform)
+			covered |= w_uniform.body_parts_covered
+		if(shoes)
+			covered |= shoes.body_parts_covered
+		if(gloves)
+			covered |= gloves.body_parts_covered
+		if(wear_mask)
+			covered |= wear_mask.body_parts_covered
+
+		return covered
+
 	proc/handle_chemicals_in_body()
 		if(reagents)
 
@@ -1209,19 +1093,10 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		return 1
 
 	proc/handle_regular_hud_updates()
-		if(hud_updateflag)
-			handle_hud_list()
-
-
 		if(!client)	return 0
 
-		if(hud_updateflag)
-			handle_hud_list()
+		regular_hud_updates()
 
-
-		for(var/image/hud in client.images)
-			if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-				client.images.Remove(hud)
 
 		client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask/*, global_hud.nvg*/)
 
@@ -1516,14 +1391,14 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 			if(B.virus2.len)
 				for (var/ID in B.virus2)
 					var/datum/disease2/disease/V = B.virus2[ID]
-					if (infect_virus2(src,V))
+					if (infect_virus2(src,V, notes="(Airborne from blood)"))
 						return 1
 
 		for(var/obj/effect/decal/cleanable/mucus/M in get_turf(src))
 			if(M.virus2.len)
 				for (var/ID in M.virus2)
 					var/datum/disease2/disease/V = M.virus2[ID]
-					if (infect_virus2(src,V))
+					if (infect_virus2(src,V, notes="(Airborne from mucus)"))
 						return 1
 		return 0
 	proc/handle_virus_updates()
@@ -1641,26 +1516,22 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		if(status_flags & FAKEDEATH)
 			temp = PULSE_NONE		//pretend that we're dead. unlike actual death, can be inflienced by meds
 
+		//handles different chems' influence on pulse
 		for(var/datum/reagent/R in reagents.reagent_list)
 			if(R.id in bradycardics)
 				if(temp <= PULSE_THREADY && temp >= PULSE_NORM)
 					temp--
-					break		//one reagent is enough
-								//comment out the breaks to make med effects stack
-		for(var/datum/reagent/R in reagents.reagent_list)				//handles different chems' influence on pulse
+
 			if(R.id in tachycardics)
 				if(temp <= PULSE_FAST && temp >= PULSE_NONE)
 					temp++
-					break
-		for(var/datum/reagent/R in reagents.reagent_list) //To avoid using fakedeath
-			if(R.id in heartstopper)
+
+			if(R.id in heartstopper) //To avoid using fakedeath
 				temp = PULSE_NONE
-				break
-		for(var/datum/reagent/R in reagents.reagent_list) //Conditional heart-stoppage
-			if(R.id in cheartstopper)
+
+			if(R.id in cheartstopper)  //Conditional heart-stoppage
 				if(R.volume >= R.overdose)
 					temp = PULSE_NONE
-					break
 
 		return temp
 
@@ -1822,6 +1693,6 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 			hud_list[SPECIALROLE_HUD] = holder
 	hud_updateflag = 0
 
-
-#undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS
+// Need this in species.
+//#undef HUMAN_MAX_OXYLOSS
+//#undef HUMAN_CRIT_MAX_OXYLOSS

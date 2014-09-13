@@ -28,7 +28,7 @@
 	max_co2 = 0
 	max_tox = 0
 
-	a_intent = "harm" //so they don't get pushed around
+	a_intent = "hurt" //so they don't get pushed around
 
 	environment_smash = 2
 

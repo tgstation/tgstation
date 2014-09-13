@@ -1345,7 +1345,7 @@
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Phase_array is secured"),
+					 		"desc"="Phase array is secured"),
 					 //7
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -1458,33 +1458,33 @@
 					user.visible_message("[user] unfastens the peripherals control module.", "You unfasten the peripherals control module.")
 			if(5)
 				if(diff==FORWARD)
-					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
+					user.visible_message("[user] secures the internal armor layer.", "You secure the internal armor layer.")
 				else
-					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
+					user.visible_message("[user] pries the internal armor layer from [holder].", "You pry the internal armor layer from [holder].")
 					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
 			if(4)
 				if(diff==FORWARD)
-					user.visible_message("[user] welds internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
+					user.visible_message("[user] welds the internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
 				else
 					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
 			if(3)
 				if(diff==FORWARD)
-					user.visible_message("[user] installs external armor layer to [holder].", "You install internal armor layer to [holder].")
+					user.visible_message("[user] installs external armor layer to [holder].", "You install the external armor layer to [holder].")
 				else
-					user.visible_message("[user] unfastens the peripherals control module.", "You unfasten the peripherals control module.")
+					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
 			if(2)
 				if(diff==FORWARD)
-					user.visible_message("[user] secures external armor layer.", "You secure internal armor layer.")
+					user.visible_message("[user] secures the external armor layer.", "You secure the the external armor layer.")
 				else
-					user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
+					user.visible_message("[user] pries the external armor layer from [holder].", "You pry the external armor layer from [holder].")
 					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
 			if(1)
 				if(diff==FORWARD)
-					user.visible_message("[user] welds external armor layer to [holder].", "You weld the internal armor layer to [holder].")
+					user.visible_message("[user] welds the external armor layer to [holder].", "You weld the external armor layer to [holder].")
 				else
-					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
+					user.visible_message("[user] unfastens the external armor layer.", "You unfasten the external armor layer.")
 		holder.icon_state="phazon_[16-(index+diff)]"
 		return 1
 

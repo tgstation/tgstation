@@ -315,14 +315,14 @@
 /obj/mecha/proc/mechstep(direction)
 	var/result = step(src,direction)
 	if(result)
-		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+	 playsound(src, get_sfx("mechstep"),40,1)
 	return result
 
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
 	if(result)
-		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+	 playsound(src, get_sfx("mechstep"),40,1)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
@@ -331,7 +331,7 @@
 		var/obj/O = obstacle
 		if(istype(O, /obj/effect/portal)) //derpfix
 			src.anchored = 0
-			O.HasEntered(src)
+			O.Crossed(src)
 			spawn(0)//countering portal teleport spawn(0), hurr
 				src.anchored = 1
 		else if(!O.anchored)
@@ -373,7 +373,7 @@
 	internal_damage |= int_dam_flag
 	pr_internal_damage.start()
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
-	occupant << sound('sound/machines/warning-buzzer.ogg',wait=0)
+	occupant << sound('sound/machines/warning.ogg',wait=0)
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -1010,9 +1010,9 @@
 		src.log_append_to_last("[H] moved in as pilot.")
 		src.icon_state = src.reset_icon()
 		dir = dir_in
-		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+		playsound(src, 'sound/mecha/mechentry.ogg', 50, 1)
 		if(!hasInternalDamage())
-			src.occupant << sound('sound/mecha/nominal.ogg',volume=50)
+			src.occupant << sound('sound/mecha/nominalsyndi.ogg',volume=50)
 		return 1
 	else
 		return 0
@@ -1071,7 +1071,7 @@
 		dir = dir_in
 		src.log_message("[mmi_as_oc] moved in as pilot.")
 		if(!hasInternalDamage())
-			src.occupant << sound('sound/mecha/nominal.ogg',volume=50)
+			src.occupant << sound('sound/mecha/nominalsyndi.ogg',volume=50)
 		return 1
 	else
 		return 0

@@ -31,6 +31,9 @@
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
 
+	autoignition_temperature = 530 // Kelvin
+	fire_fuel = 1
+
 
 /obj/item/weapon/photo/attack_self(mob/user)
 	examine()

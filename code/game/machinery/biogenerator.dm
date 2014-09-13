@@ -153,37 +153,13 @@
 	var/list/recipes[0]
 	var/list/recipe_categories[0]
 
-	New()
-		. = ..()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
-		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-
-		component_parts = newlist(
-			/obj/item/weapon/circuitboard/biogenerator,
-			/obj/item/weapon/stock_parts/manipulator,
-			/obj/item/weapon/stock_parts/manipulator,
-			/obj/item/weapon/stock_parts/matter_bin,
-			/obj/item/weapon/stock_parts/matter_bin,
-			/obj/item/weapon/stock_parts/micro_laser,
-			/obj/item/weapon/stock_parts/micro_laser,
-			/obj/item/weapon/stock_parts/micro_laser,
-			/obj/item/weapon/stock_parts/scanning_module,
-			/obj/item/weapon/stock_parts/scanning_module,
-			/obj/item/weapon/stock_parts/console_screen,
-			/obj/item/weapon/stock_parts/console_screen
-		)
-
-		RefreshParts()
-
-		for(var/biotype in typesof(/datum/biogen_recipe))
-			var/datum/biogen_recipe/recipe = new biotype
-			if(recipe.id=="") continue
-			if(!(recipe.category in recipe_categories))
-				recipe_categories[recipe.category]=list()
-			recipe_categories[recipe.category] += recipe.id
-			recipes[recipe.id]=recipe
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 	on_reagent_change()			//When the reagents change, change the icon as well.
 		update_icon()
@@ -197,6 +173,35 @@
 			icon_state = "biogen-work"
 		return
 
+/obj/machinery/biogenerator/New()
+	. = ..()
+	create_reagents(1000)
+	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+
+	component_parts = newlist(\
+		/obj/item/weapon/circuitboard/biogenerator,\
+		/obj/item/weapon/stock_parts/manipulator,\
+		/obj/item/weapon/stock_parts/manipulator,\
+		/obj/item/weapon/stock_parts/matter_bin,\
+		/obj/item/weapon/stock_parts/matter_bin,\
+		/obj/item/weapon/stock_parts/micro_laser,\
+		/obj/item/weapon/stock_parts/micro_laser,\
+		/obj/item/weapon/stock_parts/micro_laser,\
+		/obj/item/weapon/stock_parts/scanning_module,\
+		/obj/item/weapon/stock_parts/scanning_module,\
+		/obj/item/weapon/stock_parts/console_screen,\
+		/obj/item/weapon/stock_parts/console_screen\
+	)
+
+	RefreshParts()
+
+	for(var/biotype in typesof(/datum/biogen_recipe))
+		var/datum/biogen_recipe/recipe = new biotype
+		if(recipe.id=="") continue
+		if(!(recipe.category in recipe_categories))
+			recipe_categories[recipe.category]=list()
+		recipe_categories[recipe.category] += recipe.id
+		recipes[recipe.id]=recipe
 
 /obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))

@@ -184,7 +184,7 @@ emp_act
 			affecting.sabotaged = 1
 		return
 
-	if(I.attack_verb.len)
+	if(I.attack_verb && I.attack_verb.len)
 		visible_message("\red <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B>")
 	else
 		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")

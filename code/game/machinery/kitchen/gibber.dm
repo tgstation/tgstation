@@ -12,7 +12,7 @@
 	var/mob/living/occupant // Mob who has been put inside
 	var/opened = 0.0
 	use_power = 1
-	idle_power_usage = 2
+	idle_power_usage = 20
 	active_power_usage = 500
 
 /********************************************************************
@@ -42,6 +42,25 @@ obj/machinery/gibber/New()
 	RefreshParts()
 
 /obj/machinery/gibber/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(operating)
+		user << "<span class='notice'>[src] is currently gibbing something!</span>"
+		return
+	if(istype(O,/obj/item/weapon/wrench))
+		if(!anchored)
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 30))
+				anchored = 1
+				user << "You wrench [src] in place."
+			return
+		else
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 30))
+				anchored = 0
+				user << "You unwrench [src]."
+			return
+	if(!anchored)
+		user << "<span class='warning'>[src] must be anchored first!</span>"
+		return
 	if (istype(O, /obj/item/weapon/screwdriver))
 		if (!opened)
 			user << "You open the maintenance hatch of [src]."
@@ -142,22 +161,31 @@ obj/machinery/gibber/New()
 /obj/machinery/gibber/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN))
 		return
+	if(!anchored)
+		user << "<span class='warning'>[src] must be anchored first!</span>"
+		return
 	if(operating)
-		user << "\red It's locked and running"
+		user << "<span class='warning'>[src] is locked and running</span>"
+		return
+	if(!(src.occupant))
+		user << "<span class='warning'>[src] is empty!</span>"
 		return
 	else
 		src.startgibbing(user)
 
 // OLD /obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
 /obj/machinery/gibber/proc/handleGrab(obj/item/weapon/grab/G as obj, mob/user as mob)
+	if(!anchored)
+		user << "<span class='warning'>[src] must be anchored first!</span>"
+		return
 	if(src.occupant)
-		user << "\red The gibber is full, empty it first!"
+		user << "<span class='warning'>[src] is full! Empty it first.</span>"
 		return
 	if (!( istype(G, /obj/item/weapon/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
-		user << "\red This item is not suitable for the gibber!"
+		user << "<span class='warning'>This item is not suitable for [src]!</span>"
 		return
 	if(G.affecting.abiotic(1))
-		user << "\red Subject may not have abiotic items on."
+		user << "<span class='warning'>Subject may not have abiotic items on.</span>"
 		return
 
 	user.visible_message("\red [user] starts to put [G.affecting] into the gibber!")
@@ -176,11 +204,14 @@ obj/machinery/gibber/New()
 /obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
 	if(target != user || !istype(user, /mob/living/carbon/human) || user.stat || user.weakened || user.stunned || user.paralysis || user.buckled || get_dist(user, src) > 1)
 		return
+	if(!anchored)
+		user << "<span class='warning'>[src] must be anchored first!</span>"
+		return
 	if(src.occupant)
-		user << "\red The gibber is full, empty it first!"
+		user << "<span class='warning'>[src] is full! Empty it first.</span>"
 		return
 	if(user.abiotic(1))
-		user << "\red Subject may not have abiotic items on."
+		user << "<span class='warning'>Subject may not have abiotic items on.</span>"
 		return
 
 	src.add_fingerprint(user)
@@ -259,7 +290,6 @@ obj/machinery/gibber/New()
 	src.occupant.ghostize()
 	del(src.occupant)
 	spawn(src.gibtime)
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
 			var/obj/item/meatslab = allmeat[i]
@@ -324,7 +354,7 @@ obj/machinery/gibber/New()
 			new /obj/effect/decal/cleanable/blood/gibs(Tx,2)
 	del(victim)
 	spawn(src.gibtime)
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/gib2.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
 			var/obj/item/meatslab = allmeat[i]

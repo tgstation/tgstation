@@ -11,7 +11,6 @@
 	density = 1
 	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
 
-
 /obj/machinery/sleep_console/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -136,6 +135,13 @@
 	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin")
 	var/amounts = list(5, 10)
 
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)) && occupant)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 /obj/machinery/sleeper/New()
 	..()

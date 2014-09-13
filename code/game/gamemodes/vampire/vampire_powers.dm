@@ -146,7 +146,7 @@
 	if(!C.vampire_affected(M))
 		M.current << "\red They seem to be unaffected."
 		return
-	var/datum/disease2/disease/shutdown = new /datum/disease2/disease
+	var/datum/disease2/disease/shutdown = new /datum/disease2/disease("Created by vamp [key_name(C)].")
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
 	var/datum/disease2/effect/organs/vampire/O = new /datum/disease2/effect/organs/vampire
 	holder.effect += O

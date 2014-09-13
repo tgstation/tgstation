@@ -76,12 +76,13 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 
 /mob/living/silicon/robot/mommi/choose_icon()
-	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "RepairBot", "Replicator")
+	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "RepairBot", "Replicator", "Prime")
 	switch(icontype)
 		if("Replicator") subtype = "replicator"
 		if("Keeper")	 subtype = "keeper"
 		if("RepairBot")	 subtype = "repairbot"
 		if("Hover")	     subtype = "hovermommi"
+		if("Prime")	     subtype = "mommiprime"
 		else			 subtype = "mommi"
 	updateicon()
 	var/answer = input("Is this what you want?", "Mobile MMI", null) in list("Yes", "No")
@@ -115,6 +116,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			module_sprites["Replicator"] = "replicator"
 			module_sprites["RepairBot"] = "repairbot"
 			module_sprites["Hover"] = "hovermommi"
+			module_sprites["Prime"] = "mommiprime"
 
 	//Custom_sprite check and entry
 	if (custom_sprite == 1)

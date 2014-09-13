@@ -6,6 +6,10 @@
 	var/happensonce = 0
 	var/multiplier = 1 //The chance the effects are WORSE
 	var/stage = 0
+	var/datum/disease2/disease/virus
+
+/datum/disease2/effectholder/New(var/datum/disease2/disease/D)
+	virus=D
 
 /datum/disease2/effectholder/proc/runeffect(var/mob/living/carbon/human/mob,var/stage)
 	if(happensonce > -1 && effect.stage <= stage && prob(chance))
@@ -14,6 +18,10 @@
 			happensonce = -1
 
 /datum/disease2/effectholder/proc/getrandomeffect(var/badness = 1)
+	if(effect)
+		virus.log += "<br />[timestamp()] Effect [effect.name] [chance]% is now "
+	else
+		virus.log += "<br />[timestamp()] Added effect "
 	var/list/datum/disease2/effect/list = list()
 	for(var/e in (typesof(/datum/disease2/effect) - /datum/disease2/effect))
 		var/datum/disease2/effect/f = new e
@@ -23,6 +31,7 @@
 			list += f
 	effect = pick(list)
 	chance = rand(1,6)
+	virus.log += "[effect.name] [chance]%:"
 
 /datum/disease2/effectholder/proc/minormutate()
 	switch(pick(1,2,3,4,5))
@@ -831,5 +840,5 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	stage = 1
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob << "<span class = 'notice'> You feel optimistic!</span>"
-		if (mob.reagents.get_reagent_amount("tricordazine") < 1)
-			mob.reagents.add_reagent("tricordazine", 1)
+		if (mob.reagents.get_reagent_amount("tricordrazine") < 1)
+			mob.reagents.add_reagent("tricordrazine", 1)

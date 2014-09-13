@@ -218,7 +218,7 @@
 	range = 1
 	selection_type = "view"
 
-	var/list/types_allowed=list(/obj/item,/mob/living/simple_animal, /mob/living/carbon/monkey, /mob/living/carbon/human)
+	var/list/types_allowed=list(/obj/item,/mob/living/simple_animal/hostile,/mob/living/simple_animal/parrot,/mob/living/simple_animal/cat,/mob/living/simple_animal/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/mouse, /mob/living/carbon/monkey, /mob/living/carbon/human)
 
 /obj/effect/proc_holder/spell/targeted/eat/choose_targets(mob/user = usr)
 	var/list/targets = list()
@@ -524,7 +524,7 @@
 			usr << "\blue <b>Mood</b>: You sense cautious thoughts from [M.name]."
 		if ("grab")
 			usr << "\blue <b>Mood</b>: You sense hostile thoughts from [M.name]."
-		if ("harm")
+		if ("hurt")
 			usr << "\blue <b>Mood</b>: You sense cruel thoughts from [M.name]."
 			for(var/mob/living/L in view(7,M))
 				if (L == M)

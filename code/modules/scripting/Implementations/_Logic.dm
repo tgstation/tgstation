@@ -152,7 +152,7 @@ proc/string_tolist(var/string)
 	var/list/L = new/list()
 
 	var/i
-	for(i=1, i<=lentext(string), i++)
+	for(i=1, i<=length(string), i++)
 		L.Add(copytext(string, i, i))
 
 	return L
@@ -165,12 +165,12 @@ proc/string_explode(var/string, var/separator)
 		var/lasti = 1
 		var/list/L = new/list()
 
-		for(i=1, i<=lentext(string)+1, i++)
+		for(i=1, i<=length(string)+1, i++)
 			if(copytext(string, i, i+1) == separator) // We found a separator
 				L.Add(copytext(string, lasti, i))
 				lasti = i+1
 
-		L.Add(copytext(string, lasti, lentext(string)+1)) // Adds the last segment
+		L.Add(copytext(string, lasti, length(string)+1)) // Adds the last segment
 
 		return L
 
@@ -199,7 +199,7 @@ proc/n_reverse(var/string)
 	if(istext(string))
 		var/newstring = ""
 		var/i
-		for(i=lentext(string), i>0, i--)
+		for(i=length(string), i>0, i--)
 			if(i>=1000)
 				break
 			newstring = newstring + copytext(string, i, i+1)
@@ -264,9 +264,9 @@ proc/n_inrange(var/num, var/min=-1, var/max=1)
 /proc/string_replacetext(var/haystack,var/a,var/b)
 	if(istext(haystack)&&istext(a)&&istext(b))
 		var/i = 1
-		var/lenh=lentext(haystack)
-		var/lena=lentext(a)
-		//var/lenb=lentext(b)
+		var/lenh=length(haystack)
+		var/lena=length(a)
+		//var/lenb=length(b)
 		var/count = 0
 		var/list/dat = list()
 		while (i < lenh)

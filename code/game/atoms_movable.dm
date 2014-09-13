@@ -17,18 +17,34 @@
 	var/mob/pulledby = null
 
 	var/area/areaMaster
-	var/global/guid = 0
-	var/area/lastarea
 
 	// Garbage collection (controller).
+	var/gcDestroyed
 	var/timeDestroyed
 
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)
-	tag = "[++guid]"
 
-/atom/movable/Move()
+/atom/movable/Destroy()
+	gcDestroyed = "bye world!"
+	tag = null
+	loc = null
+	..()
+
+/atom/movable/Del()
+	// Pass to Destroy().
+	if(!gcDestroyed)
+		Destroy()
+
+	..()
+
+// Used in shuttle movement and AI eye stuff.
+// Primarily used to notify objects being moved by a shuttle/bluespace fuckup.
+/atom/movable/proc/setLoc(var/T, var/teleported=0)
+	loc = T
+
+/atom/movable/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	var/atom/A = src.loc
 	. = ..()
 	src.move_speed = world.timeofday - src.l_move_time
@@ -36,19 +52,24 @@
 	src.m_flag = 1
 	if ((A != src.loc && A && A.z == src.z))
 		src.last_move = get_dir(A, src.loc)
-	return
+	return .
 
 /atom/movable/proc/recycle(var/datum/materials/rec)
 	return 0
 
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
+// Previously known as HasEntered()
+// This is automatically called when something enters your square
+/atom/movable/Crossed(atom/movable/AM)
+	return
+
+/atom/movable/Bump(atom/Obstacle, yes)
 	if(src.throwing)
-		src.throw_impact(A)
+		src.throw_impact(Obstacle)
 		src.throwing = 0
 
-	if ((A && yes))
-		A.last_bumped = world.time
-		A.Bumped(src)
+	if ((Obstacle && yes))
+		Obstacle.last_bumped = world.time
+		Obstacle.Bumped(src)
 	return
 	..()
 	return
@@ -59,6 +80,8 @@
 			loc.Exited(src)
 		loc = destination
 		loc.Entered(src)
+		for(var/atom/movable/AM in loc)
+			AM.Crossed(src)
 		return 1
 	return 0
 
@@ -195,11 +218,6 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
-
-/atom/movable/Destroy()
-	areaMaster = null
-	loc = null
-	..()
 
 /////////////////////////////
 // SINGULOTH PULL REFACTOR

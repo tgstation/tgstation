@@ -3,12 +3,12 @@
 		Attachment One:
 	</div>
 	<div class="itemContent">
-		{{if attachmentOne}}
-			{{:attachmentOne}}
+		{{if data.attachmentOne}}
+			{{:data.attachmentOne}}
 		{{else}}
 			<i>None</i>
 		{{/if}}
-		{{:~link('Remove', 'eject', {'tankone' : 1}, attachmentOne ? null : 'disabled')}}
+		{{:helper.link('Remove', 'eject', {'tankone' : 1}, data.attachmentOne ? null : 'disabled')}}
 	</div>
 </div>
 
@@ -17,12 +17,12 @@
 		Attachment Two:
 	</div>
 	<div class="itemContent">
-		{{if attachmentTwo}}
-			{{:attachmentTwo}}
+		{{if data.attachmentTwo}}
+			{{:data.attachmentTwo}}
 		{{else}}
 			<i>None</i>
 		{{/if}}
-		{{:~link('Remove', 'eject', {'tanktwo' : 1}, attachmentTwo ? null : 'disabled')}}
+		{{:helper.link('Remove', 'eject', {'tanktwo' : 1}, data.attachmentTwo ? null : 'disabled')}}
 	</div>
 </div>
 
@@ -31,12 +31,15 @@
 		Valve Attachment:
 	</div>
 	<div class="itemContent">
-		{{if valveAttachment}}
-			{{:valveAttachment}}
+		{{if data.valveAttachment}}
+			{{:data.valveAttachment}}
 		{{else}}
 			<i>None</i>
 		{{/if}}		
-		{{:~link('Remove', 'eject', {'rem_device' : 1}, valveAttachment ? null : 'disabled')}}
+		{{:helper.link('Remove', 'eject', {'rem_device' : 1}, data.valveAttachment ? null : 'disabled')}}
+		{{if data.valveAttachment}}
+			{{:helper.link('View', 'wrench', {'device' : 1})}}
+		{{/if}}		
 	</div>
 </div>
 
@@ -47,7 +50,7 @@
 		Valve Status:
 	</div>
 	<div class="itemContent">
-		{{:~link('Open', 'unlocked', {'open' : 1}, (!attachmentOne || !attachmentTwo) ? 'disabled' : (valveOpen ? 'selected' : null))}}{{:~link('Close', 'locked', {'open' : 1}, (!attachmentOne || !attachmentTwo) ? 'disabled' : (valveOpen ? null : 'selected'))}}
+		{{:helper.link('Open', 'unlocked', {'open' : 1}, (!data.attachmentOne || !data.attachmentTwo) ? 'disabled' : (data.valveOpen ? 'selected' : null))}}{{:helper.link('Close', 'locked', {'open' : 1}, (!data.attachmentOne || !data.attachmentTwo) ? 'disabled' : (data.valveOpen ? null : 'selected'))}}
 	</div>
 </div>
 

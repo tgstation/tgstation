@@ -132,7 +132,7 @@ var/list/sacrificed = list()
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
-				new /obj/machinery/singularity/narsie/large(src.loc)
+				new /obj/machinery/singularity/narsie/large(src.loc,cultspawn=1)
 				if(ticker.mode.name == "cult")
 					ticker.mode:eldergod = 0
 				return
@@ -149,7 +149,7 @@ var/list/sacrificed = list()
 			playsound(U, 'sound/items/Welder2.ogg', 25, 1)
 			var/turf/T = get_turf(U)
 			if(T)
-				T.hotspot_expose(700,125)
+				T.hotspot_expose(700,125,surfaces=1)
 			var/rune = src // detaching the proc - in theory
 			empulse(U, (range_red - 2), range_red)
 			del(rune)
@@ -412,7 +412,7 @@ var/list/sacrificed = list()
 
 /////////////////////////////////////////TWELFTH RUNE
 
-		talisman()//only hide, emp, teleport, deafen, blind and tome runes can be imbued atm
+		talisman()//only tome, communicate, hide, reveal, emp, teleport, deafen, blind, stun and armor runes can be imbued
 			var/obj/item/weapon/paper/newtalisman
 			var/unsuitable_newtalisman = 0
 			for(var/obj/item/weapon/paper/P in src.loc)
@@ -472,12 +472,12 @@ var/list/sacrificed = list()
 					T.imbue = "blind"
 					imbued_from = R
 					break
-				if(R.word1==cultwords["self"] && R.word2==cultwords["other"] && R.word3==cultwords["technology"]) //communicat
+				if(R.word1==cultwords["self"] && R.word2==cultwords["other"] && R.word3==cultwords["technology"]) //communicate
 					T = new(src.loc)
 					T.imbue = "communicate"
 					imbued_from = R
 					break
-				if(R.word1==cultwords["join"] && R.word2==cultwords["hide"] && R.word3==cultwords["technology"]) //communicat
+				if(R.word1==cultwords["join"] && R.word2==cultwords["hide"] && R.word3==cultwords["technology"]) //stun
 					T = new(src.loc)
 					T.imbue = "runestun"
 					imbued_from = R
@@ -963,14 +963,14 @@ var/list/sacrificed = list()
 							else
 								M << "\red Rune suddenly ignites, burning you!"
 							var/turf/T = get_turf(R)
-							T.hotspot_expose(700,125)
+							T.hotspot_expose(700,125,surfaces=1)
 				for(var/obj/effect/decal/cleanable/blood/B in world)
 					if(B.blood_DNA == src.blood_DNA)
 						for(var/mob/living/M in orange(1,B))
 							M.take_overall_damage(0,5)
 							M << "\red Blood suddenly ignites, burning you!"
 							var/turf/T = get_turf(B)
-							T.hotspot_expose(700,125)
+							T.hotspot_expose(700,125,surfaces=1)
 							del(B)
 				del(src)
 
@@ -1022,9 +1022,9 @@ var/list/sacrificed = list()
 		armor()
 			var/mob/living/carbon/human/user = usr
 			if(istype(src,/obj/effect/rune))
-				usr.say("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+				usr.say("Sa tatha najin")
 			else
-				usr.whisper("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+				usr.whisper("Sa tatha najin")
 			usr.visible_message("\red The rune disappears with a flash of red light, and a set of armor appears on [usr]...", \
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
 

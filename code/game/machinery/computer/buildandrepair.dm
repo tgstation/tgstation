@@ -3,7 +3,7 @@
 /obj/structure/computerframe
 	density = 1
 	anchored = 0
-	name = "Computer-frame"
+	name = "Computer Frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "0"
 	var/state = 0

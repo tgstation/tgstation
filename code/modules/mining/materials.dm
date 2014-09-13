@@ -145,3 +145,118 @@
 	oretype=null
 	sheettype=/obj/item/stack/sheet/mineral/plastic
 	cointype=null
+
+/datum/material/pharosium
+	name="Pharosium"
+	id="pharosium"
+	value=10
+	oretype=/obj/item/weapon/ore/pharosium
+	sheettype=/obj/item/stack/sheet/mineral/pharosium
+	cointype=null
+
+
+/datum/material/char
+	name="Char"
+	id="char"
+	value=5
+	oretype=/obj/item/weapon/ore/char
+	sheettype=/obj/item/stack/sheet/mineral/char
+	cointype=null
+
+
+/datum/material/claretine
+	name="Claretine"
+	id="claretine"
+	value=50
+	oretype=/obj/item/weapon/ore/claretine
+	sheettype=/obj/item/stack/sheet/mineral/claretine
+	cointype=null
+
+
+/datum/material/bohrum
+	name="Bohrum"
+	id="bohrum"
+	value=50
+	oretype=/obj/item/weapon/ore/bohrum
+	sheettype=/obj/item/stack/sheet/mineral/bohrum
+	cointype=null
+
+
+/datum/material/syreline
+	name="Syreline"
+	id="syreline"
+	value=70
+	oretype=/obj/item/weapon/ore/syreline
+	sheettype=/obj/item/stack/sheet/mineral/syreline
+	cointype=null
+
+
+/datum/material/erebite
+	name="Erebite"
+	id="erebite"
+	value=50
+	oretype=/obj/item/weapon/ore/erebite
+	sheettype=/obj/item/stack/sheet/mineral/erebite
+	cointype=null
+
+
+/datum/material/cytine
+	name="Cytine"
+	id="cytine"
+	value=30
+	oretype=/obj/item/weapon/ore/cytine
+	sheettype=/obj/item/stack/sheet/mineral/cytine
+	cointype=null
+
+
+/datum/material/uqill
+	name="Uqill"
+	id="uqill"
+	value=90
+	oretype=/obj/item/weapon/ore/uqill
+	sheettype=/obj/item/stack/sheet/mineral/uqill
+	cointype=null
+
+
+/datum/material/telecrystal
+	name="Telecrystal"
+	id="telecrystal"
+	value=30
+	oretype=/obj/item/weapon/ore/telecrystal
+	sheettype=/obj/item/stack/sheet/mineral/telecrystal
+	cointype=null
+
+
+/datum/material/mauxite
+	name="Mauxite"
+	id="mauxite"
+	value=5
+	oretype=/obj/item/weapon/ore/mauxite
+	sheettype=/obj/item/stack/sheet/mineral/mauxite
+	cointype=null
+
+
+/datum/material/cobryl
+	name="Cobryl"
+	id="cobryl"
+	value=30
+	oretype=/obj/item/weapon/ore/cobryl
+	sheettype=/obj/item/stack/sheet/mineral/cobryl
+	cointype=null
+
+
+/datum/material/cerenkite
+	name="Cerenkite"
+	id="cerenkite"
+	value=50
+	oretype=/obj/item/weapon/ore/cerenkite
+	sheettype=/obj/item/stack/sheet/mineral/cerenkite
+	cointype=null
+
+/datum/material/molitz
+	name="Molitz"
+	id="molitz"
+	value=10
+	oretype=/obj/item/weapon/ore/molitz
+	sheettype=/obj/item/stack/sheet/mineral/molitz
+	cointype=null

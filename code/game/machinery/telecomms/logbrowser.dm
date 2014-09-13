@@ -1,12 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 /obj/machinery/computer/telecomms
-	l_color = "#50A900"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(3)
-		else
-			SetLuminosity(0)
+
+	l_color = "#50AB00"
 
 /obj/machinery/computer/telecomms/server
 	name = "Telecommunications Server Monitor"

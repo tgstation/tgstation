@@ -109,7 +109,7 @@
 	TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 	TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20) /* kpa */
-	TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
+	TLV["temperature"] =	list(T0C-30, T0C, T0C+40, T0C+70) // K
 	target_temperature = T0C+20
 	switch(preset)
 		if(AALARM_PRESET_VOX) // Same as usual, s/nitrogen/oxygen
@@ -150,6 +150,12 @@
 
 	first_run()
 
+/obj/machinery/alarm/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+
+	..()
 
 /obj/machinery/alarm/proc/first_run()
 	area_uid = areaMaster.uid
@@ -202,21 +208,22 @@
 			target_temperature = T0C + MIN_TEMPERATURE
 
 		var/datum/gas_mixture/gas = location.remove_air(0.25 * environment.total_moles)
-		var/heat_capacity = gas.heat_capacity()
-		var/energy_used = max(abs(heat_capacity * (gas.temperature - target_temperature)), MAX_ENERGY_CHANGE)
+		if(gas)
+			var/heat_capacity = gas.heat_capacity()
+			var/energy_used = max(abs(heat_capacity * (gas.temperature - target_temperature)), MAX_ENERGY_CHANGE)
 
-		// We need to cool ourselves.
-		if (environment.temperature > target_temperature)
-			gas.temperature -= energy_used / heat_capacity
-		else
-			gas.temperature += energy_used / heat_capacity
+			// We need to cool ourselves.
+			if (environment.temperature > target_temperature)
+				gas.temperature -= energy_used / heat_capacity
+			else
+				gas.temperature += energy_used / heat_capacity
 
-		environment.merge(gas)
+			environment.merge(gas)
 
-		if (abs(environment.temperature - target_temperature) <= 0.5)
-			regulating_temperature = 0
-			visible_message("\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
-			"You hear a click as a faint electronic humming stops.")
+			if (abs(environment.temperature - target_temperature) <= 0.5)
+				regulating_temperature = 0
+				visible_message("\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
+				"You hear a click as a faint electronic humming stops.")
 
 	var/old_level = local_danger_level
 	var/new_danger = calculate_local_danger_level(environment)
@@ -971,7 +978,7 @@ Code shamelessly copied from apc_frame
 FIRE ALARM
 */
 /obj/machinery/firealarm
-	name = "fire alarm"
+	name = "Fire Alarm"
 	desc = "<i>\"Pull this in case of emergency\"<i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"

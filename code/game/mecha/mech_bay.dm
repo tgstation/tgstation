@@ -137,6 +137,8 @@
 	var/turf/simulated/floor/mech_bay_recharge_floor/recharge_floor
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 
+	l_color = "#CD00CD"
+
 	proc/mecha_in(var/obj/mecha/mecha)
 		if(stat&(NOPOWER|BROKEN))
 			mecha.occupant_message("<font color='red'>Control console not responding. Terminating...</font>")

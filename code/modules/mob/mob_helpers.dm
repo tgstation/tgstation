@@ -115,6 +115,11 @@
 		return 1
 	return 0
 
+/proc/isconstruct(A)
+	if(istype(A, /mob/living/simple_animal/construct))
+		return 1
+	return 0
+
 /proc/isAdminGhost(A)
 	if(isobserver(A))
 		var/mob/dead/observer/O = A
@@ -258,7 +263,10 @@ proc/hasorgans(A)
 
 	return zone
 
-
+// adds stars to a text to obfuscate it
+// var/n -> text to obfuscate
+// var/pr -> percent of the text to obfuscate
+// return -> obfuscated text
 /proc/stars(n, pr)
 	if (pr == null)
 		pr = 25
@@ -282,8 +290,8 @@ proc/hasorgans(A)
 
 proc/slur(phrase)
 	phrase = html_decode(phrase)
-	var/leng=lentext(phrase)
-	var/counter=lentext(phrase)
+	var/leng=length(phrase)
+	var/counter=length(phrase)
 	var/newphrase=""
 	var/newletter=""
 	while(counter>=1)
@@ -473,3 +481,23 @@ proc/is_blind(A)
 	if(!istype(P))
 		return null
 	return P
+
+
+
+/proc/iscluwne(A)
+	if(A && istype(A, /mob/living/simple_animal/hostile/retaliate/cluwne))
+		return 1
+	return 0
+
+/proc/broadcast_security_hud_message(var/message, var/broadcast_source)
+	broadcast_hud_message(message, broadcast_source, sec_hud_users, /obj/item/clothing/glasses/hud/security)
+
+/proc/broadcast_medical_hud_message(var/message, var/broadcast_source)
+	broadcast_hud_message(message, broadcast_source, med_hud_users, /obj/item/clothing/glasses/hud/health)
+
+/proc/broadcast_hud_message(var/message, var/broadcast_source, var/list/targets, var/icon)
+	var/turf/sourceturf = get_turf(broadcast_source)
+	for(var/mob/M in targets)
+		var/turf/targetturf = get_turf(M)
+		if((targetturf.z == sourceturf.z))
+			M.show_message("<span class='info'>\icon[icon] [message]</span>", 1)

@@ -1018,28 +1018,40 @@ proc/process_ghost_teleport_locs()
 
 	engine
 		name = "Engineering"
-		icon_state = "engine_smes"
+		icon_state = "engine"
+
+	engine_storage
+		name = "Engineering Secure Storage"
+		icon_state = "engine_storage"
 
 	break_room
 		name = "\improper Engineering Foyer"
-		icon_state = "engine"
+		icon_state = "engine_lobby"
 
 	ce
-		name = "\improper Chief Engineer's office"
-		icon_state = "engine_control"
+		name = "\improper Chief Engineer's Office"
+		icon_state = "head_quarters"
 		jammed=1
 
 	burn_chamber
 		name = "Burn Chamber"
-		icon_state = "engine_control"
+		icon_state = "thermo_engine"
 
 	atmos
 		name = "Atmospherics"
 		icon_state = "atmos"
 
+	atmos_control
+		name = "Atmospherics Monitoring"
+		icon_state = "atmos_monitor"
+
 	supermatter_room
 		name = "Supermatter Room"
-		icon_state = "engine_control"
+		icon_state = "supermatter"
+
+	antimatter_room
+		name = "Antimatter Engine Room"
+		icon_state = "antimatter"
 
 	engineering_auxiliary
 		name = "Auxiliary Engineering"
@@ -1091,6 +1103,10 @@ proc/process_ghost_teleport_locs()
 /area/maintenance/fstarboardsolar
 	name = "Fore Starboard Solar Maintenance"
 	icon_state = "SolarcontrolA"
+	
+/area/maintenance/virology_maint
+	name = "Virology Maintenance"
+	icon_state = "asmaint"
 
 /area/assembly/showroom
 	name = "\improper Robotics Showroom"
@@ -1136,7 +1152,7 @@ proc/process_ghost_teleport_locs()
 
 /area/medical/surgery_ghetto
 	name = "Ghetto Surgery"
-	icon_state = "medbay2"
+	icon_state = "medbay_ghetto"
 	music = 'sound/ambience/signal.ogg'
 
 /area/medical/medbay3
@@ -1146,7 +1162,7 @@ proc/process_ghost_teleport_locs()
 
 /area/medical/break_room
 	name = "Medbay Break Room"
-	icon_state = "medbay3"
+	icon_state = "medbay_break"
 	music = 'sound/ambience/signal.ogg'
 
 /area/medical/patients_rooms
@@ -1173,10 +1189,6 @@ proc/process_ghost_teleport_locs()
 /area/medical/virology_break
 	name = "Virology Break Room"
 	icon_state = "virology"
-
-/area/medical/virology_maint
-	name = "Virology Maintenance"
-	icon_state = "asmaint"
 
 /area/medical/morgue
 	name = "\improper Morgue"
@@ -1222,7 +1234,7 @@ proc/process_ghost_teleport_locs()
 
 /area/security/lobby
 	name = "\improper Security Lobby"
-	icon_state = "security"
+	icon_state = "sec_lobby"
 
 /area/security/brig
 	name = "\improper Brig"
@@ -1239,15 +1251,15 @@ proc/process_ghost_teleport_locs()
 
 /area/security/medical
 	name = "\improper Brig Medbay"
-	icon_state = "medbay"
+	icon_state = "sec_medbay"
 
 /area/security/rec_room
 	name = "\improper Brig Recording Room"
-	icon_state = "green"
+	icon_state = "rec"
 
 /area/security/interrogation
 	name = "\improper Interrogation Room"
-	icon_state = "security"
+	icon_state = "interrog"
 
 /obj/item/weapon/paper/Gaschamber
 	name = "paper - 'Gas Chambers for Idiots'"
@@ -1369,6 +1381,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Mining Storage"
 	icon_state = "green"
 
+/area/supply/miningdelivery
+	name = "\improper Mining Delivery"
+	icon_state = "mining_delivery"
+
 /area/supply/mechbay
 	name = "\improper Mech Bay"
 	icon_state = "yellow"
@@ -1388,8 +1404,8 @@ proc/process_ghost_teleport_locs()
 	icon_state = "toxlab"
 
 /area/science/hallway
-	name = "\improper Research Lab"
-	icon_state = "toxlab"
+	name = "\improper Research Division"
+	icon_state = "tox_hall"
 
 /area/science/rd
 	name = "\improper Research Director's Office"
@@ -1402,7 +1418,7 @@ proc/process_ghost_teleport_locs()
 
 /area/science/xenobiology
 	name = "\improper Xenobiology Lab"
-	icon_state = "toxlab"
+	icon_state = "xenobio"
 
 /area/science/xenobiology/specimen_1
 	name = "\improper Xenobiology Specimen Cage 1"
@@ -1454,7 +1470,7 @@ proc/process_ghost_teleport_locs()
 
 /area/science/podbay
 	name = "\improper Pod Bay"
-	icon_state = "toxmisc"
+	icon_state = "pod"
 
 /area/science/server
 	name = "\improper Server Room"
@@ -2065,8 +2081,8 @@ var/list/the_station_areas = list (
 
 
 
-/area/beach
-	name = "Keelin's private beach"
+/area/beach/
+	name = "The metaclub's private beach"
 	icon_state = "null"
 	luminosity = 1
 	lighting_use_dynamic = 0
@@ -2105,7 +2121,7 @@ var/list/the_station_areas = list (
 		var/sound/S = null
 		var/sound_delay = 0
 		if(prob(25))
-			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
+			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=50)
 			sound_delay = rand(0, 50)
 
 		for(var/mob/living/carbon/human/H in src)

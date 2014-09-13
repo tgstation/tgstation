@@ -74,6 +74,16 @@
 						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 						H.Stun(4)
 						H.Weaken(5)
+		else if(iscluwne(M))
+			var/mob/living/simple_animal/hostile/retaliate/cluwne/C=M
+			if(C.m_intent == "run")
+				if(C.footstep >= 2)
+					C.footstep = 0
+					playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
+				else
+					C.footstep++
+			else
+				playsound(src, "clownstep", 20, 1)
 
 		switch (src.wet)
 			if(1)

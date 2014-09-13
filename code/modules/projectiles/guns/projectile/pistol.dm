@@ -56,7 +56,7 @@
 	icon_state = "gyropistol"
 	max_shells = 8
 	caliber = "75"
-	fire_sound = 'sound/effects/Explosion1.ogg'
+	fire_sound = 'sound/weapons/elecfire.ogg'
 	origin_tech = "combat=3"
 	ammo_type = "/obj/item/ammo_casing/a75"
 	load_method = 2

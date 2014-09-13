@@ -10,7 +10,7 @@ var/list/solars_list = list()
 /obj/machinery/power/proc/get_solars_powernet()
 	if(!powernet)
 		return list()
-	if(solars_list.len < powernet.nodes)
+	if(solars_list.len < powernet.nodes.len)
 		return solars_list
 	else
 		return powernet.nodes
@@ -103,6 +103,7 @@ var/list/solars_list = list()
 		sunfrac = 0
 		return
 	var/p_angle = abs((360+adir)%360 - (360+sun.angle)%360)
+
 	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
 		sunfrac = 0
 		return
@@ -122,7 +123,7 @@ var/list/solars_list = list()
 	var/sgen = SOLARGENRATE * sunfrac
 	add_avail(sgen)
 	if(powernet && control)
-		if(powernet.nodes[control])
+		if(powernet.nodes.Find(control))
 			control.gen += sgen
 
 /obj/machinery/power/solar/proc/broken()
@@ -268,6 +269,15 @@ var/list/solars_list = list()
 	var/trackrate = 60		// Measured in tenths of degree per minute (i.e. defaults to 6.0 deg/min)
 	var/trackdir = 1		// -1=CCW, 1=CW
 	var/nexttime = 0		// Next clock time that manual tracking will move the array
+
+	l_color = "#FF9933"
+
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 /obj/machinery/power/solar_control/New()
 	. = ..()
@@ -456,7 +466,7 @@ Manual Tracking Direction:"}
 			if(!solars_list.Find(src,1,0) || !(locate(src) in solars_list) || !(src in solars_list))
 				solars_list.Add(src)
 			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
-				if(powernet.nodes[T])
+				if(powernet.nodes.Find(T))
 					cdir = T.sun_angle
 					break
 
@@ -471,7 +481,7 @@ Manual Tracking Direction:"}
 /obj/machinery/power/solar_control/proc/set_panels(var/cdir)
 	if(!powernet) return
 	for(var/obj/machinery/power/solar/S in get_solars_powernet())
-		if(powernet.nodes[S])
+		if(powernet.nodes.Find(S))
 			if(get_dist(S, src) < SOLAR_MAX_DIST)
 				if(!S.control)
 					S.control = src

@@ -8,12 +8,39 @@
 	origin_tech = "combat=4;materials=2"
 	ammo_type = "/obj/item/ammo_casing/c9mm"
 	automatic = 1
-
 	fire_delay = 0
+	var/unload_directly = 1
 
-	isHandgun()
-		return 0
+/obj/item/weapon/gun/projectile/automatic/isHandgun()
+	return 0
 
+/obj/item/weapon/gun/projectile/automatic/attack_self(mob/user as mob)
+	if (unload_directly == 1 && loaded.len)
+		empty_mag = new /obj/item/ammo_magazine/mc9mm(src)
+		empty_mag.stored_ammo = loaded
+		empty_mag.icon_state = "9x19p"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
+		empty_mag.loc = get_turf(src.loc)
+		user.put_in_hands(empty_mag)
+		empty_mag = null
+		loaded = list()
+		update_icon()
+		user << "<span class='notice'>You remove the magazine from [src].</span>"
+
+/obj/item/weapon/gun/projectile/automatic/attackby(obj/item/ammo_magazine/mc9mm/A as obj, mob/user as mob)
+	if(loaded.len)
+		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
+		return
+	else
+		user << "<span class='notice'>You insert the magazine!</span>"
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = A.stored_ammo
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
+		loaded = A.stored_ammo
+		update_icon()
+		del(A)
+		return
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Uzi"
@@ -25,8 +52,36 @@
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	ammo_type = "/obj/item/ammo_casing/c45"
 
-	isHandgun()
-		return 1
+/obj/item/weapon/gun/projectile/automatic/mini_uzi/attack_self(mob/user as mob)
+	if (unload_directly == 1 && loaded.len)
+		empty_mag = new /obj/item/ammo_magazine/mc9mm(src)
+		empty_mag.stored_ammo = loaded
+		empty_mag.icon_state = "9x19p"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
+		empty_mag.loc = get_turf(src.loc)
+		user.put_in_hands(empty_mag)
+		empty_mag = null
+		loaded = list()
+		update_icon()
+		user << "<span class='notice'>You remove the magazine from [src].</span>"
+
+/obj/item/weapon/gun/projectile/automatic/mini_uzi/attackby(obj/item/ammo_magazine/mc9mm/A as obj, mob/user as mob)
+	if(loaded.len)
+		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
+		return
+	else
+		user << "<span class='notice'>You insert the magazine!</span>"
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = A.stored_ammo
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
+		loaded = A.stored_ammo
+		update_icon()
+		del(A)
+		return
+
+/obj/item/weapon/gun/projectile/automatic/mini_uzi/isHandgun()
+	return 1
 
 
 /obj/item/weapon/gun/projectile/automatic/c20r
@@ -39,34 +94,111 @@
 	caliber = "12mm"
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	ammo_type = "/obj/item/ammo_casing/a12mm"
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/Gunshot_c20.ogg'
 	load_method = 2
 
+/obj/item/weapon/gun/projectile/automatic/c20r/attack_self(mob/user as mob)
+	if (unload_directly == 1 && loaded.len)
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = loaded
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
+		empty_mag.loc = get_turf(src.loc)
+		user.put_in_hands(empty_mag)
+		empty_mag = null
+		loaded = list()
+		update_icon()
+		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
-	New()
+/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/ammo_magazine/a12mm/A as obj, mob/user as mob)
+	if(loaded.len)
+		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
+		return
+	else
+		user << "<span class='notice'>You insert the magazine!</span>"
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = A.stored_ammo
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
+		loaded = A.stored_ammo
+		update_icon()
+		del(A)
+		return
+
+/obj/item/weapon/gun/projectile/automatic/c20r/New()
 		..()
 		empty_mag = new /obj/item/ammo_magazine/a12mm/empty(src)
 		update_icon()
 		return
 
 
-	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
-		..()
-		if(!loaded.len && empty_mag)
-			empty_mag.loc = get_turf(src.loc)
-			empty_mag = null
-			playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
-			update_icon()
-		return
+/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+	..()
+	if(!loaded.len && empty_mag)
+		empty_mag.loc = get_turf(src.loc)
+		empty_mag = null
+		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		update_icon()
+	return
 
 
-	update_icon()
-		..()
-		if(empty_mag)
-			icon_state = "c20r-[round(loaded.len,4)]"
-		else
-			icon_state = "c20r"
+/obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
+	..()
+	if(empty_mag)
+		icon_state = "c20r-[round(loaded.len,4)]"
+	else
+		icon_state = "c20r"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/xcom
+	name = "\improper Assault Rifle"
+	desc = "A lightweight, fast firing gun, issued to shadow organization members."
+	icon_state = "xcomassaultrifle"
+	origin_tech = "combat=5;materials=2"
+	item_state = "c20r"
+	w_class = 3.0
+	max_shells = 20
+	caliber = "12mm"
+	ammo_type = "/obj/item/ammo_casing/a12mm"
+	fire_sound = 'sound/weapons/Gunshot_c20.ogg'
+	load_method = 2
+
+/obj/item/weapon/gun/projectile/automatic/xcom/attack_self(mob/user as mob)
+	if (unload_directly == 1 && loaded.len)
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = loaded
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
+		empty_mag.loc = get_turf(src.loc)
+		user.put_in_hands(empty_mag)
+		empty_mag = null
+		loaded = list()
+		update_icon()
+		user << "<span class='notice'>You remove the magazine from [src].</span>"
+
+/obj/item/weapon/gun/projectile/automatic/xcom/attackby(obj/item/ammo_magazine/a12mm/A as obj, mob/user as mob)
+	if(loaded.len)
+		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
 		return
+	else
+		user << "<span class='notice'>You insert the magazine!</span>"
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = A.stored_ammo
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
+		loaded = A.stored_ammo
+		update_icon()
+		del(A)
+		return
+
+/obj/item/weapon/gun/projectile/automatic/xcom/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+	..()
+	if(!loaded.len && empty_mag)
+		empty_mag.loc = get_turf(src.loc)
+		empty_mag = null
+		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		update_icon()
+	return
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "\improper L6 SAW"
@@ -82,6 +214,7 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	load_method = 2
 	var/cover_open = 0
+	unload_directly = 0
 	var/mag_inserted = 1
 
 
@@ -118,24 +251,29 @@
 		empty_mag.loc = get_turf(src.loc)
 		user.put_in_hands(empty_mag)
 		empty_mag = null
-		mag_inserted = 0
 		loaded = list()
 		update_icon()
+		mag_inserted = 0
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/ammo_magazine/a762/A as obj, mob/user as mob)
 	if(!cover_open)
 		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
 		return
-	else if(cover_open && mag_inserted)
+	else if(cover_open && loaded.len)
 		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
 		return
-	else if(cover_open && !mag_inserted)
-		mag_inserted = 1
+	else if(cover_open && !loaded.len)
 		user << "<span class='notice'>You insert the magazine!</span>"
+		empty_mag = new /obj/item/ammo_magazine/a12mm(src)
+		empty_mag.stored_ammo = A.stored_ammo
+		empty_mag.icon_state = "12mm"
+		empty_mag.desc = "There are [loaded.len] bullets left!"
+		loaded = A.stored_ammo
 		update_icon()
-	..()
+		del(A)
+		return
 
 
 /* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.

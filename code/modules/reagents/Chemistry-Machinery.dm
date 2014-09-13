@@ -265,6 +265,8 @@
 	var/pillsprite = "1"
 	var/client/has_sprites = list()
 
+	l_color = "#0000FF"
+
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
@@ -677,6 +679,8 @@
 	var/temphtml = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
+
+	l_color = "#0000FF"
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **

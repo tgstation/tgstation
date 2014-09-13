@@ -18,7 +18,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "punches"
-	a_intent = "harm"
+	a_intent = "hurt"
 	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
 	var/weapon1
 	var/weapon2

@@ -1,0 +1,13 @@
+<!--
+Title: Atmos Control (Map content)
+Used In File(s): \code\workinprogress\mini\atmos_control.dm
+ -->
+{{for data.alarms}}
+	{{if value.z == config.mapZLevel}}
+		<div class="linkActive mapIcon mapIcon16 icon-airalarm {{:helper.dangerToClass(value.danger)}}" style="left: {{:(value.x)}}px; bottom: {{:(value.y)}}px;" unselectable="on" data-href="{{:NanoUtility.generateHref({"alarm":value.ID, "showMap":0})}}">
+			<div class="tooltip hidden">
+				{{:value.name}} ({{:helper.dangerToSpan(value.danger)}} {{:value.area}}: {{:value.x}}, {{:value.y}})
+			</div>
+		</div>
+	{{/if}}
+{{/for}}

@@ -55,7 +55,6 @@ proc/move_mining_shuttle()
 		if (mining_shuttle_location == 1)
 			fromArea = locate(/area/shuttle/mining/outpost)
 			toArea = locate(/area/shuttle/mining/station)
-
 		else
 			fromArea = locate(/area/shuttle/mining/station)
 			toArea = locate(/area/shuttle/mining/outpost)
@@ -75,12 +74,6 @@ proc/move_mining_shuttle()
 			//var/turf/E = get_step(D, SOUTH)
 			for(var/atom/movable/AM as mob|obj in T)
 				AM.Move(D)
-				// NOTE: Commenting this out to avoid recreating mass driver glitch
-				/*
-				spawn(0)
-					AM.throw_at(E, 1, 1)
-					return
-				*/
 
 			if(istype(T, /turf/simulated))
 				del(T)
@@ -124,12 +117,13 @@ proc/move_mining_shuttle()
 	var/hacked = 0
 	var/location = 0 //0 = station, 1 = mining base
 
+	l_color = "#7BF9FF"
+
 /obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
 	if(..(user))
 		return
 	src.add_fingerprint(usr)
-	var/dat
-	dat = text("<center>Mining shuttle:<br> <b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>")
+	var/dat = "<center>Mining shuttle:<br> <b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
 	user << browse("[dat]", "window=miningshuttle;size=200x100")
 
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
@@ -149,20 +143,18 @@ proc/move_mining_shuttle()
 		else
 			usr << "\blue Shuttle is already moving."
 
-	updateUsrDialog()
-
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/card/emag))
 		src.req_access = list()
 		hacked = 1
-		usr << "You fried the consoles ID checking system. It's now available to everyone!"
+		usr << "You disable the console's access requirement."
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
-			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			var/obj/item/weapon/circuitboard/mining_shuttle/M = new /obj/item/weapon/circuitboard/mining_shuttle( A )
+			var/obj/structure/computerframe/A = new /obj/structure/computerframe(src.loc)
+			var/obj/item/weapon/circuitboard/mining_shuttle/M = new /obj/item/weapon/circuitboard/mining_shuttle(A)
 			for (var/obj/C in src)
 				C.loc = src.loc
 			A.circuit = M

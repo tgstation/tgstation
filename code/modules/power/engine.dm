@@ -22,12 +22,10 @@
 	switch(severity)
 		if(1.0)
 			ChangeTurf(/turf/space)
-			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				ChangeTurf(/turf/space)
-				qdel(src)
 				return
 		else
 	return

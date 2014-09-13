@@ -34,6 +34,9 @@
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
 	return
 
 
@@ -120,7 +123,7 @@
 
 /obj/structure/closet/wardrobe/orange
 	name = "prison wardrobe"
-	desc = "It's a storage unit for Nanotrasen-regulation prisoner attire."
+	desc = "It's a storage unit for Nanotrasen-regulated prisoner attire."
 	icon_state = "orange"
 	icon_closed = "orange"
 

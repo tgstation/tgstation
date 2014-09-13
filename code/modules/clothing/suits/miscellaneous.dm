@@ -37,6 +37,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	flags = FPRINT | TABLEPASS
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/suit/hgpirate
@@ -355,6 +356,7 @@
 	desc = "Now you too can pierce the heavens"
 	icon_state = "simonjacket"
 	item_state = "simonjacket"
+	species_fit = list("Vox")
 
 /obj/item/clothing/suit/kaminacape
 	name = "Kamina's Cape"
@@ -370,3 +372,15 @@
 	storage_slots = 8
 	max_combined_w_class = 20
 	can_hold = list("/obj/item/ammo_casing/shotgun")
+
+/obj/item/clothing/suit/officercoat
+	name = "Officer's Coat"
+	desc = "Ein Mantel gemacht, um die Juden zu bestrafen."
+	icon_state = "officersuit"
+	item_state = "officersuit"
+
+/obj/item/clothing/suit/soldiercoat
+	name = "Soldier's Coat"
+	desc = "Ein Mantel gemacht, um die Verbündeten zu zerstören."
+	icon_state = "soldiersuit"
+	item_state = "soldiersuit"

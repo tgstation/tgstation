@@ -227,6 +227,11 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/emps
 	cost = 3
 
+/datum/uplink_item/dangerous/viscerator
+	name = "Viscerator Grenade"
+	desc = "A single grenade containing a pair of incredibly destructive viscerators. Be aware that they will attack any nearby targets, including yourself. Emits a blinding flash upon detonation."
+	item = /obj/item/weapon/grenade/spawnergrenade/manhacks/syndicate
+	cost = 3
 
 // STEALTHY WEAPONS
 

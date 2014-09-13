@@ -114,7 +114,7 @@ mob/living/parasite/meme/say(message as text)
 	return host.say(message)
 
 // Same as speak, just with whisper
-mob/living/parasite/meme/whisper(message as text)
+mob/living/parasite/meme/whisper(var/message as text, var/unheard=" whispers something", var/heard="whispers,", var/apply_filters=1, var/allow_lastwords=1)
 	if(dormant)
 		usr << "\red You're dormant!"
 		return

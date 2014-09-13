@@ -138,3 +138,94 @@
 		"plastic"=1
 	)
 	yieldtype=/obj/item/stack/sheet/mineral/plastic
+
+/datum/smelting_recipe/pharosium
+	name="pharosium"
+	ingredients=list(
+		"pharosium"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/pharosium
+
+/datum/smelting_recipe/char
+	name="char"
+	ingredients=list(
+		"char"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/char
+
+/datum/smelting_recipe/claretine
+	name="claretine"
+	ingredients=list(
+		"claretine"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/claretine
+
+/datum/smelting_recipe/bohrum
+	name="bohrum"
+	ingredients=list(
+		"bohrum"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/bohrum
+
+/datum/smelting_recipe/syreline
+	name="syreline"
+	ingredients=list(
+		"syreline"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/syreline
+
+/datum/smelting_recipe/erebite
+	name="erebite"
+	ingredients=list(
+		"erebite"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/erebite
+
+/datum/smelting_recipe/cytine
+	name="cytine"
+	ingredients=list(
+		"cytine"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/cytine
+
+/datum/smelting_recipe/telecrystal
+	name="telecrystal"
+	ingredients=list(
+		"telecrystal"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/telecrystal
+
+/datum/smelting_recipe/mauxite
+	name="mauxite"
+	ingredients=list(
+		"mauxite"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/mauxite
+
+/datum/smelting_recipe/cobryl
+	name="cobryl"
+	ingredients=list(
+		"cobryl"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/cobryl
+
+/datum/smelting_recipe/cerenkite
+	name="cerenkite"
+	ingredients=list(
+		"cerenkite"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/cerenkite
+
+/datum/smelting_recipe/molitz
+	name="molitz"
+	ingredients=list(
+		"molitz"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/molitz
+
+/datum/smelting_recipe/uqill
+	name="uqill"
+	ingredients=list(
+		"uqill"=1
+	)
+	yieldtype=/obj/item/stack/sheet/mineral/uqill

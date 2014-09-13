@@ -61,7 +61,7 @@
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/ion.ogg'
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
@@ -194,7 +194,7 @@
 	icon_state = "mecha_scatter"
 	equip_cooldown = 20
 	projectile = /obj/item/projectile/bullet/midbullet
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/shotgun.ogg'
 	projectiles = 40
 	projectile_energy_cost = 25
 	var/projectiles_per_shot = 4
@@ -233,7 +233,7 @@
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/item/projectile/bullet/weakbullet
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	projectiles = 300
 	projectile_energy_cost = 20
 	var/projectiles_per_shot = 3
@@ -273,7 +273,7 @@
 	name = "SRM-8 Missile Rack"
 	icon_state = "mecha_missilerack"
 	projectile = /obj/item/missile
-	fire_sound = 'sound/effects/bang.ogg'
+	fire_sound = 'sound/weapons/rocket.ogg'
 	projectiles = 8
 	projectile_energy_cost = 1000
 	equip_cooldown = 60
@@ -311,7 +311,7 @@
 	name = "SGL-6 Grenade Launcher"
 	icon_state = "mecha_grenadelnchr"
 	projectile = /obj/item/weapon/grenade/flashbang
-	fire_sound = 'sound/effects/bang.ogg'
+	fire_sound = 'sound/weapons/grenadelauncher.ogg'
 	projectiles = 6
 	missile_speed = 1.5
 	projectile_energy_cost = 800
@@ -399,5 +399,36 @@
 		M.throw_at(target, missile_range, missile_speed)
 		projectiles--
 		log_message("Launched a mouse-trap from [src.name], targeting [target]. HONK!")
+		do_after_cooldown()
+		return
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas
+	name = "PCMK-6 Bolas Launcher"
+	icon_state = "mecha_bolas"
+	projectile = /obj/item/weapon/legcuffs/bolas
+	fire_sound = 'sound/weapons/whip.ogg'
+	projectiles = 10
+	missile_speed = 1
+	missile_range = 30
+	projectile_energy_cost = 50
+	equip_cooldown = 10
+	construction_time = 300
+	construction_cost = list("iron"=20000)
+
+	can_attach(obj/mecha/combat/gygax/M as obj)
+		if(..())
+			if(istype(M))
+				return 1
+		return 0
+
+	action(target)
+		if(!action_checks(target)) return
+		set_ready_state(0)
+		var/obj/item/weapon/legcuffs/bolas/M = new projectile(chassis.loc)
+		playsound(chassis, fire_sound, 50, 1)
+		M.thrown_from = src
+		M.throw_at(target, missile_range, missile_speed)
+		projectiles--
+		log_message("Fired from [src.name], targeting [target].")
 		do_after_cooldown()
 		return

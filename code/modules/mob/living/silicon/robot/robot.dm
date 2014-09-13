@@ -204,6 +204,7 @@
 			module_sprites["Rich"] = "maximillion"
 			module_sprites["Default"] = "Service2"
 			module_sprites["R2-D2"] = "r2d2"
+			module_sprites["Marina-SV"] = "marinaSV"
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -214,6 +215,7 @@
 			module_sprites["Advanced Droid"] = "droid-miner"
 			module_sprites["Treadhead"] = "Miner"
 			module_sprites["Wall-A"] = "wall-a"
+			module_sprites["Marina-MN"] = "marinaMN"
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
@@ -235,6 +237,7 @@
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
 			module_sprites["Securitron"] = "securitron"
+			module_sprites["Marina-SC"] = "marinaSC"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -246,6 +249,7 @@
 			module_sprites["Engiseer"] = "Engiseer"
 			module_sprites["Landmate"] = "landmate"
 			module_sprites["Wall-E"] = "wall-e"
+			module_sprites["Marina-EN"] = "marinaEN"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -254,6 +258,7 @@
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
 			module_sprites["Mechaduster"] = "mechaduster"
 			module_sprites["HAN-D"] = "han-d"
+			module_sprites["Marina-JN"] = "marinaJN"
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
@@ -1263,6 +1268,10 @@
 		statelaws()
 	return
 
+/mob/living/silicon/robot/sensor_mode() //Medical/Security HUD controller for borgs
+	set category = "Robot Commands"
+	set desc = "Augment visual feed with internal sensor overlays."
+	..()
 /mob/living/silicon/robot/proc/radio_menu()
 	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
 

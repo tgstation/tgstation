@@ -11,6 +11,17 @@
 	var/amount = 30					//How much paper is in the bin.
 	var/list/papers = new/list()	//List of papers put in the bin for reference.
 
+	autoignition_temperature = 519.15 // Kelvin
+
+
+/obj/item/weapon/paper_bin/ashify()
+		new ashtype(src.loc)
+		papers=0
+		amount=0
+		update_icon()
+
+/obj/item/weapon/paper_bin/getFireFuel()
+	return amount
 
 /obj/item/weapon/paper_bin/MouseDrop(mob/user as mob)
 	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
@@ -41,7 +52,7 @@
 			P = new /obj/item/weapon/paper
 			if(Holiday == "April Fool's Day")
 				if(prob(30))
-					P.info = "<font face=\"[P.crayonfont]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
+					P.info = "<font face=\"MS Comic Sans\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 					P.rigged = 1
 					P.updateinfolinks()
 

@@ -14,7 +14,6 @@
 	if(ticker)
 		initialize()
 
-
 /obj/machinery/computer/initialize()
 	power_change()
 
@@ -89,6 +88,10 @@
 /obj/machinery/computer/power_change()
 	..()
 	update_icon()
+	if(!(stat & (BROKEN|NOPOWER)))
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
 
 
 /obj/machinery/computer/proc/set_broken()

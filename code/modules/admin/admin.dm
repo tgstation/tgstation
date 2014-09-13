@@ -124,7 +124,8 @@ var/global/floorIsLava = 0
 					<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> |
 					<A href='?src=\ref[src];makemommi=\ref[M]'>Make MoMMI</A> |
 					<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> |
-					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A>
+					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A> |
+					<A href='?src=\ref[src];makecluwne=\ref[M]'>Make Cluwne</A> |
 				"}
 
 			//Simple Animals
@@ -640,7 +641,7 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
-	usr << browse(dat, "window=admin2;size=210x280")
+	usr << browse(dat, "window=admin2;size=280x370")
 	return
 
 /datum/admins/proc/Secrets()
@@ -717,10 +718,21 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<BR>
+			<B>Final Soloutions</B><BR>
+			<I>(Warning, these will end the round!)</I><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsfun=hellonearth'>Summon Nar-Sie</A><BR>
+			<A href='?src=\ref[src];secretsfun=supermattercascade'>Start a Supermatter Cascade</A><BR>
 			"}
 
 	if(check_rights(R_SERVER,0))
-		dat += "<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"
+
+		dat += {"
+			<BR>
+			<B>Server</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"}
 
 	dat += "<BR>"
 
@@ -766,6 +778,8 @@ var/global/floorIsLava = 0
 
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
+
+		CallHook("Reboot",list())
 
 		if (watchdog.waiting)
 			world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
@@ -957,6 +971,8 @@ var/global/floorIsLava = 0
 
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
+
+	CallHook("Reboot",list())
 
 	if (watchdog.waiting)
 		world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"

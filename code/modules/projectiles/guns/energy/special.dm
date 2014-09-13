@@ -2,7 +2,7 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
 	icon_state = "ionrifle"
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/ion.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
@@ -26,13 +26,16 @@
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/declone"
 
-obj/item/weapon/gun/energy/staff
+var/available_staff_transforms=list("monkey","robot","slime","xeno","human","cluwne")
+#define SOC_CHANGETYPE_COOLDOWN 2 MINUTES
+
+/obj/item/weapon/gun/energy/staff
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
-	fire_sound = 'sound/weapons/emitter.ogg'
+	fire_sound = 'sound/weapons/radgun.ogg'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
 	w_class = 4.0
@@ -41,7 +44,8 @@ obj/item/weapon/gun/energy/staff
 	origin_tech = null
 	clumsy_check = 0
 	var/charge_tick = 0
-
+	var/changetype=null
+	var/next_changetype=0
 
 	New()
 		..()
@@ -63,6 +67,30 @@ obj/item/weapon/gun/energy/staff
 
 	update_icon()
 		return
+
+	load_into_chamber()
+		if(!..()) return 0
+		var/obj/item/projectile/change/P=in_chamber
+		if(P && istype(P))
+			P.changetype=changetype
+		return 1
+
+	attack_self(var/mob/living/user)
+		if(world.time < next_changetype)
+			user << "<span class='warning'>[src] is still recharging.</span>"
+			return
+		var/selected = input("Select a form for your next victim","Staff of Change") as null|anything in list("random")+available_staff_transforms
+		if(!selected)
+			return
+
+		switch(selected)
+			if("random")
+				changetype=null
+			else
+				changetype=selected
+		user << "You have selected to make your next victim have a [selected] form."
+		next_changetype=world.time+SOC_CHANGETYPE_COOLDOWN
+
 /obj/item/weapon/gun/energy/staff/animate
 	name = "staff of animation"
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
@@ -222,7 +250,7 @@ obj/item/weapon/gun/energy/staff/focus
 	name = "radgun"
 	desc = "An experimental energy gun that fires radioactive projectiles that deal toxin damage, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
 	icon_state = "radgun"
-	fire_sound = 'sound/weapons/pulse3.ogg'
+	fire_sound = 'sound/weapons/radgun.ogg'
 	charge_cost = 100
 	var/charge_tick = 0
 	projectile_type = "/obj/item/projectile/energy/rad"

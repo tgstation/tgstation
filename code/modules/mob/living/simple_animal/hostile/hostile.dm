@@ -35,7 +35,7 @@
 	if(!.)
 		walk(src, 0)
 		return 0
-	if(client)
+	if(client && !deny_client_move)
 		return 0
 	if(!stat)
 		switch(stance)
@@ -82,6 +82,8 @@
 			Targets = FoundTarget
 			break
 		if(CanAttack(A))//Can we attack it?
+			if(isMoMMI(A))
+				continue
 			if(istype(src, /mob/living/simple_animal/hostile/scarybat))
 				if(A == src:owner)
 					continue

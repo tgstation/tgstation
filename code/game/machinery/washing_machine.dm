@@ -72,6 +72,7 @@
 			var/new_sheet_name = ""
 			var/new_softcap_icon_state = ""
 			var/new_softcap_name = ""
+			var/ccoil_test = null
 			var/new_desc = "The colors are a bit dodgy."
 			for(var/T in typesof(/obj/item/clothing/under))
 				var/obj/item/clothing/under/J = new T
@@ -125,6 +126,16 @@
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				del(H)
+				
+			for(var/T in typesof(/obj/item/weapon/cable_coil))
+				var/obj/item/weapon/cable_coil/test = new T
+				if(test._color == color)
+					//world << "Found the right cable coil, _color: [test._color]"
+					ccoil_test = 1
+					del(test)
+					break
+				del(test)
+				
 			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
 				for(var/obj/item/clothing/under/J in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
@@ -167,6 +178,12 @@
 					H._color = color
 					H.name = new_softcap_name
 					H.desc = new_desc
+					
+			if(ccoil_test) 
+				for(var/obj/item/weapon/cable_coil/H in contents)
+					//world << "DEBUG: YUP! FOUND IT!"
+					H._color = color
+					H.icon_state = "coil_[color]"
 		del(crayon)
 		crayon = null
 
@@ -221,6 +238,7 @@
 		istype(W,/obj/item/clothing/gloves) || \
 		istype(W,/obj/item/clothing/shoes) || \
 		istype(W,/obj/item/clothing/suit) || \
+		istype(W,/obj/item/weapon/cable_coil) || \
 		istype(W,/obj/item/weapon/bedsheet))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.

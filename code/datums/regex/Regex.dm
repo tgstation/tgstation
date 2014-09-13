@@ -750,7 +750,7 @@ regex
 			if(!(first.flags&2)) anyline=1
 			for(i in groups) groups[i]=null
 		ee=length(txt)+1
-		e=(start>=ee || (first.flags&2) || anyline)?(ee):(findText(txt,"\n",start)||ee)
+		e=(start>=ee || (first.flags&2) || anyline)?(ee):(findtextEx(txt,"\n",start)||ee)
 		REGEX_DEBUG("Find([TrueBlock()]) ([start],[e]/[ee]) ([ptype])")
 		sleep()
 		i=FirstPossible(txt,start,first,stop,anyline)
@@ -773,7 +773,7 @@ regex
 			if(!(first.flags&2)) anyline=1
 			for(i in groups) groups[i]=null
 		ee=length(txt)+1
-		e=(start>=ee || (first.flags&2) || anyline)?(ee):(findText(txt,"\n",start)||ee)
+		e=(start>=ee || (first.flags&2) || anyline)?(ee):(findtextEx(txt,"\n",start)||ee)
 		REGEX_DEBUG("FindLast([TrueBlock()]) ([start],[e]/[ee]) ([ptype])")
 		sleep()
 		var/list/stack=new
@@ -797,7 +797,7 @@ regex
 		i=start
 		var/regex/o=option
 		var/ee=length(txt)+1
-		var/e=(start>=ee || (first.flags&2))?(ee):(findText(txt,"\n",start)||ee)
+		var/e=(start>=ee || (first.flags&2))?(ee):(findtextEx(txt,"\n",start)||ee)
 		var/regex/after
 		while(src)
 			REGEX_DEBUG("FindHere([TrueBlock()]) ([start],[e]/[ee]) ([ptype])")
@@ -842,7 +842,7 @@ regex
 						if(!greedy && !after && times>n)
 							times=n; i=src.start+n*l
 						// update e because a literal string may cross a line break
-						if(times>=n && !(first.flags&2)) e=(findText(txt,"\n",i)||ee)
+						if(times>=n && !(first.flags&2)) e=(findtextEx(txt,"\n",i)||ee)
 						goto done
 					// non-greedy, and another subpattern must follow this
 					// if any early match may be found, take it!
@@ -925,7 +925,7 @@ regex
 				src.start=0;end=0
 				if(o)
 					src=o;o=option;i=start
-					if(first.flags&2) e=(findText(txt,"\n",i)||ee)
+					if(first.flags&2) e=(findtextEx(txt,"\n",i)||ee)
 					continue
 				return 0
 			end=i
@@ -953,7 +953,7 @@ regex
 	proc/FirstPossible(txt,start=1,regex/first,stop,anyline)
 		var/i,j,k,ch,ch2
 		var/ee=length(txt)+1
-		var/e=(start>=ee || (first.flags&2))?(ee):(findText(txt,"\n",start)||ee)
+		var/e=(start>=ee || (first.flags&2))?(ee):(findtextEx(txt,"\n",start)||ee)
 		if(!stop) stop=ee
 		var/regex/after
 		.=0
@@ -976,7 +976,7 @@ regex
 								if(!(p.pattern in first.namedvars)) {i=0;goto found}
 								str=(first.namedvars[p.pattern]||"")
 					if(anyline) e=ee
-					i=(first.flags&1)?findtext(txt,str,i):findText(txt,str,i)
+					i=(first.flags&1)?findtext(txt,str,i):findtextEx(txt,str,i)
 					if(!i || i>stop || i>e) i=0
 
 				if(2)
@@ -989,7 +989,7 @@ regex
 							if(j>=i+p.n) goto found
 							i=j+1
 						if(anyline)
-							i=++e;e=(findText(txt,"\n",e)||ee)
+							i=++e;e=(findtextEx(txt,"\n",e)||ee)
 					i=0
 				if(3)
 					while(i+p.n<=ee)
@@ -1001,7 +1001,7 @@ regex
 							if(j>=i+p.n) goto found
 							i=j+1
 						if(anyline)
-							i=++e;e=(findText(txt,"\n",e)||ee)
+							i=++e;e=(findtextEx(txt,"\n",e)||ee)
 					i=0
 
 				if(4)
@@ -1012,12 +1012,12 @@ regex
 					while(i && i+p.n<=ee)
 						if(anyline)
 							while(i+p.n>e && e<ee)
-								i=++e;e=(findText(txt,"\n",e)||ee)
+								i=++e;e=(findtextEx(txt,"\n",e)||ee)
 						if(i+p.n>e) {i=0; break}
 						if(!after) break
 						k=(p.m<0)?(e):min(e,i+p.m)
 						j=after.Find(txt,i+p.n,first,k)
-						if(!j) {i=++e;e=(findText(txt,"\n",e)||ee)}
+						if(!j) {i=++e;e=(findtextEx(txt,"\n",e)||ee)}
 						else {if(p.m>0) i=max(i,j-p.m);break}
 					if(i+p.n>ee) i=0
 
@@ -1038,13 +1038,13 @@ regex
 					if(i>1)
 						if(p.ptype&first.flags&2) i=0
 						else
-							i=findText(txt,"\n",i-1)
+							i=findtextEx(txt,"\n",i-1)
 							if(i) ++i
 
 				if(17,19)
 					if(i<ee)
 						if(p.ptype&first.flags&2) i=ee
-						else i=(findText(txt,"\n",i)||ee)
+						else i=(findtextEx(txt,"\n",i)||ee)
 
 				if(0)
 					if(first.error) world.log << "Regex [first.pattern] did not compile:\n[first.error]"

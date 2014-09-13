@@ -69,6 +69,48 @@
 			xeno_spawn += loc
 			del(src)
 
+		if("endgame_exit")
+			endgame_safespawns += loc
+			del(src)
+		if("bluespacerift")
+			endgame_exits += loc
+			del(src)
+
+		//Meteor stuff
+		if("meteormaterialkit")
+			meteor_materialkit += loc
+			del(src)
+		if("meteorbombkit")
+			meteor_bombkit += loc
+			del(src)
+		if("meteorbombkitextra")
+			meteor_bombkitextra += loc
+			del(src)
+		if("meteortankkit")
+			meteor_tankkit += loc
+			del(src)
+		if("meteorcanisterkit")
+			meteor_canisterkit += loc
+			del(src)
+		if("meteorbuildkit")
+			meteor_buildkit += loc
+			del(src)
+		if("meteorpizzakit")
+			meteor_pizzakit += loc
+			del(src)
+		if("meteorpanickit")
+			meteor_panickit += loc
+			del(src)
+		if("meteorshieldkit")
+			meteor_shieldkit += loc
+			del(src)
+		if("meteorgenkit")
+			meteor_genkit += loc
+			del(src)
+		if("meteorbreachkit")
+			meteor_breachkit += loc
+			del(src)
+
 	landmarks_list += src
 	return 1
 

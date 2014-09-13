@@ -53,7 +53,7 @@ proc/airborne_can_reach(turf/source, turf/target, var/radius=5)
 	return rval
 
 //Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothing.  Returns 1 if successful.
-/proc/infect_virus2(var/mob/living/carbon/M,var/datum/disease2/disease/disease,var/forced = 0)
+/proc/infect_virus2(var/mob/living/carbon/M,var/datum/disease2/disease/disease,var/forced = 0, var/notes="")
 	if(!istype(disease))
 //		log_debug("Bad virus")
 		return 0
@@ -76,20 +76,21 @@ proc/airborne_can_reach(turf/source, turf/target, var/radius=5)
 		var/datum/disease2/disease/D = disease.getcopy()
 		D.minormutate()
 //		log_debug("Adding virus")
+		D.log += "<br />[timestamp()] Infected [key_name(M)] [notes]"
 		M.virus2["[D.uniqueID]"] = D
 		return 1
 	return 0
 
 //Infects mob M with random lesser disease, if he doesn't have one
 /proc/infect_mob_random_lesser(var/mob/living/carbon/M)
-	var/datum/disease2/disease/D = new /datum/disease2/disease
+	var/datum/disease2/disease/D = new /datum/disease2/disease("infect_mob_random_lesser")
 	D.makerandom()
 	D.infectionchance = 1
 	M.virus2["[D.uniqueID]"] = D
 
 //Infects mob M with random greated disease, if he doesn't have one
 /proc/infect_mob_random_greater(var/mob/living/carbon/M)
-	var/datum/disease2/disease/D = new /datum/disease2/disease
+	var/datum/disease2/disease/D = new /datum/disease2/disease("infect_mob_random_greater")
 	D.makerandom(1)
 	M.virus2["[D.uniqueID]"] = D
 
@@ -111,14 +112,14 @@ proc/airborne_can_reach(turf/source, turf/target, var/radius=5)
 			if (vector == "Airborne")
 				if(airborne_can_reach(get_turf(src), get_turf(victim)))
 //					log_debug("In range, infecting")
-					infect_virus2(victim,V)
+					infect_virus2(victim,V, notes="(Airborne, from [key_name(src)])")
 				else
 //					log_debug("Could not reach target")
 
 			if (vector == "Contact")
 				if (in_range(src, victim))
 //					log_debug("In range, infecting")
-					infect_virus2(victim,V)
+					infect_virus2(victim,V, notes="(Contact with [key_name(src)])")
 
 	//contact goes both ways
 	if (victim.virus2.len > 0 && vector == "Contact")
@@ -137,4 +138,4 @@ proc/airborne_can_reach(turf/source, turf/target, var/radius=5)
 			for (var/ID in victim.virus2)
 				var/datum/disease2/disease/V = victim.virus2[ID]
 				if(V && V.spreadtype != vector) continue
-				infect_virus2(src,V)
+				infect_virus2(src,V, notes="(Contact with [key_name(victim)])")

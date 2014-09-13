@@ -79,4 +79,6 @@
 			if("whisper")
 				usr.whisper("[invocation] [uppertext(chosenarea.name)]")
 
+	playsound(get_turf(src), 'sound/effects/teleport.ogg', 50, 0)
+
 	return

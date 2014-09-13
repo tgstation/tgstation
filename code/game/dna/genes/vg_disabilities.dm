@@ -54,3 +54,18 @@
 		if(!istype(M)) return
 		if(M_DIZZY in M.mutations)
 			M.make_dizzy(300)
+
+
+/datum/dna/gene/disability/speech/sans
+	name = "Wacky"
+	desc = "Forces the subject to talk in an odd manner."
+	activation_message = "You feel an off sensation in your voicebox.."
+	deactivation_message = "The off sensation passes.."
+
+	New()
+		..()
+		block=SANSBLOCK
+
+
+	OnSay(var/mob/M, var/message)
+		return "<span class='sans'>message</span>"

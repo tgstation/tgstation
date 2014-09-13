@@ -65,7 +65,7 @@
 	if(!src)
 		return
 	if(status)
-		bombtank.ignite()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
+		bombtank.detonate()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
 		bombtank.release()
 
@@ -73,9 +73,9 @@
 	if(bombassembly)
 		bombassembly.HasProximity(AM)
 
-/obj/item/device/onetankbomb/HasEntered(AM as mob|obj)
+/obj/item/device/onetankbomb/Crossed(AM as mob|obj)
 	if(bombassembly)
-		bombassembly.HasEntered(AM)
+		bombassembly.Crossed(AM)
 
 /obj/item/device/onetankbomb/on_found(mob/finder as mob)
 	if(bombassembly)
@@ -107,7 +107,7 @@
 	R.update_icon()
 	return
 
-/obj/item/weapon/tank/proc/ignite()	//This happens when a bomb is told to explode
+/obj/item/weapon/tank/proc/detonate()	//This happens when a bomb is told to explode
 	var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
 	var/strength = 1
 
@@ -125,7 +125,7 @@
 			explosion(ground_zero, -1, 0, 1, 2)
 		else
 			ground_zero.assume_air(air_contents)
-			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.hotspot_expose(1000, 125,surfaces=1)
 
 	else if(air_contents.temperature > (T0C + 250))
 		strength = (fuel_moles/20)
@@ -136,7 +136,7 @@
 			explosion(ground_zero, -1, 0, 1, 2)
 		else
 			ground_zero.assume_air(air_contents)
-			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.hotspot_expose(1000, 125,surfaces=1)
 
 	else if(air_contents.temperature > (T0C + 100))
 		strength = (fuel_moles/25)
@@ -145,11 +145,11 @@
 			explosion(ground_zero, -1, 0, round(strength,1), round(strength*3,1))
 		else
 			ground_zero.assume_air(air_contents)
-			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.hotspot_expose(1000, 125,1)
 
 	else
 		ground_zero.assume_air(air_contents)
-		ground_zero.hotspot_expose(1000, 125)
+		ground_zero.hotspot_expose(1000, 125,surfaces=1)
 
 	if(master)
 		del(master)

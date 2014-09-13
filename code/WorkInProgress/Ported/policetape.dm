@@ -60,18 +60,18 @@
 	if(icon_state == "[icon_base]_start")
 		start = get_turf(src)
 		if(istype(start,/turf/space))
-			usr << "\red You can't place tape in space"
+			usr << "<span class='warning'>You can't place [src] in space</span>"
 			return
-		usr << "\blue You place the first end of the [src]."
+		usr << "<span class='notice'>You place the first end of [src].</span>"
 		icon_state = "[icon_base]_stop"
 	else
 		icon_state = "[icon_base]_start"
 		end = get_turf(src)
 		if(istype(end,/turf/space))
-			usr << "\red You can't place tape in space"
+			usr << "<span class='warning'>You can't place [src] in space</span>"
 			return
 		if(start.y != end.y && start.x != end.x || start.z != end.z)
-			usr << "\blue [src] can only be laid horizontally or vertically."
+			usr << "<span class='notice'>[src] can only be laid in a straight line.</span>"
 			return
 
 		var/turf/cur = start
@@ -98,7 +98,7 @@
 						break
 			cur = get_step_towards(cur,end)
 		if (!can_place)
-			usr << "\blue You can't run \the [src] through that!"
+			usr << "<span class='warning'>You can't run [src] through that!</span>"
 			return
 
 		cur = start
@@ -112,23 +112,28 @@
 				P.icon_state = "[P.icon_base]_[dir]"
 			cur = get_step_towards(cur,end)
 	//is_blocked_turf(var/turf/T)
-		usr << "\blue You finish placing the [src]."	//Git Test
+		usr << "<span class='notice'>You finish placing [src].</span>"
+		user.visible_message("<span class='warning'>[user] finishes placing [src].</span>") //Now you know who to whack with a stun baton
 
 /obj/item/taperoll/afterattack(var/atom/A, mob/user as mob)
-	if (istype(A, /obj/machinery/door/airlock))
+	if (istype(A, /obj/machinery/door/airlock)) //Airlocks
+		if(!user.Adjacent(A)) //There, it's unfucked
+			return
 		var/turf/T = get_turf(A)
 		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
+		if(P in T) //Don't you dare stack tape
+			return
 		P.loc = locate(T.x,T.y,T.z)
 		P.icon_state = "[src.icon_base]_door"
 		P.layer = 3.2
-		user << "\blue You finish placing the [src]."
+		user << "<span class='notice'>You finish placing [src].</span>"
 
 /obj/item/tape/Bumped(M as mob)
 	if(src.allowed(M))
 		var/turf/T = get_turf(src)
 		M:loc = T
 
-/obj/item/tape/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/item/tape/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(!density) return 1
 	if(air_group || (height==0)) return 1
 
@@ -142,11 +147,15 @@
 
 /obj/item/tape/attack_hand(mob/user as mob)
 	if (user.a_intent == "help" && src.allowed(user))
-		user.show_viewers("\blue [user] lifts [src], allowing passage.")
-		src.density = 0
-		spawn(200)
+		if(density == 0)
+			user.visible_message("<span class='notice'>[user] pulls [src] back down.</span>")
 			src.density = 1
+		else
+			user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
+			src.density = 0
 	else
+		if(density == 0) //You can pass through it, moron
+			return
 		breaktape(null, user)
 
 /obj/item/tape/attack_paw(mob/user as mob)
@@ -154,9 +163,9 @@
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W as obj, mob/user as mob)
 	if(user.a_intent == "help" && ((!is_sharp(W) && src.allowed(user))))
-		user << "You can't break the [src] with that!"
+		user << "<span class='notice'>You can't break [src] with that!</span>"
 		return
-	user.show_viewers("\blue [user] breaks the [src]!")
+	user.visible_message("<span class='warning'>[user] breaks [src]!</span>")
 
 	var/dir[2]
 	var/icon_dir = src.icon_state

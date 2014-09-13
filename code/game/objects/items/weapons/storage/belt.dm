@@ -54,6 +54,15 @@
 		"/obj/item/device/analyzer",
 		"/obj/item/taperoll/engineering")
 
+/obj/item/weapon/storage/belt/utility/complete/New()
+	..()
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow","orange"))
 
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()
@@ -129,7 +138,8 @@
 		"/obj/item/device/radio/headset",
 		"/obj/item/weapon/melee/baton",
 		"/obj/item/taperoll/police",
-		"/obj/item/weapon/gun/energy/taser"
+		"/obj/item/weapon/gun/energy/taser",
+		"/obj/item/weapon/legcuffs/bolas"
 		)
 /obj/item/weapon/storage/belt/security/batmanbelt
 	name = "batbelt"

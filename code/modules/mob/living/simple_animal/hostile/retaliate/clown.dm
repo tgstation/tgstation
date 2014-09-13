@@ -13,7 +13,7 @@
 	speak = list("HONK", "Honk!", "Welcome to clown planet!")
 	emote_see = list("honks")
 	speak_chance = 1
-	a_intent = "harm"
+	a_intent = "hurt"
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 75
 	health = 75

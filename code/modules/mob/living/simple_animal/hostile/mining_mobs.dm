@@ -17,7 +17,7 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
-	a_intent = "harm"
+	a_intent = "hurt"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 
@@ -71,8 +71,8 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	attacktext = "bites into"
-	a_intent = "harm"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	a_intent = "hurt"
+	attack_sound = 'sound/weapons/spiderlunge.ogg'
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
@@ -324,7 +324,7 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = 'sound/weapons/punch4.ogg'
+	attack_sound = 'sound/weapons/heavysmash.ogg'
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
@@ -344,6 +344,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
+	playsound(loc, 'sound/weapons/whip.ogg', 50, 1, -1)
 	var/tturf = get_turf(target)
 	new /obj/effect/goliath_tentacle/original(tturf)
 	ranged_cooldown = ranged_cooldown_cap
@@ -382,13 +383,14 @@
 	for(var/mob/living/M in src.loc)
 		M.Weaken(5)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
-	del(src)
 
-/obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
-	if(isliving(AM))
+	qdel(src)
+
+/obj/effect/goliath_tentacle/Crossed(atom/movable/O)
+	..(O)
+
+	if(isliving(O))
 		Trip()
-		return
-	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Die()
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)

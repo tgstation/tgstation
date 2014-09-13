@@ -145,7 +145,9 @@
 			src.card.radio.attack_self(src)
 
 		if("image")
-			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy",
+								 "Face", "Laugh", "Off", "Sad", "Angry", "What", "longface", "sick", "high", "love", "electric", "pissed",
+								 "nose", "kawaii", "cry")
 			var/pID = 1
 
 			switch(newImage)
@@ -167,6 +169,24 @@
 					pID = 8
 				if("What")
 					pID = 9
+				if("longface")
+					pID = 10
+				if("sick")
+					pID = 11
+				if("high")
+					pID = 12
+				if("love")
+					pID = 13
+				if("electric")
+					pID = 14
+				if("pissed")
+					pID = 15
+				if("nose")
+					pID = 16
+				if("kawaii")
+					pID = 17
+				if("cry")
+					pID = 18
 			src.card.setEmotion(pID)
 
 		if("signaller")
@@ -675,7 +695,7 @@ Cable status :"}
 	[(pda.silent) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!pda.toff)
-		for (var/obj/item/device/pda/P in sortAtom(PDAs))
+		for (var/obj/item/device/pda/P in sortNames(PDAs))
 			if (!P.owner||P.toff||P == src.pda||P.hidden)	continue
 
 			// AUTOFIXED BY fix_string_idiocy.py

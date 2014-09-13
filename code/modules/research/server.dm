@@ -208,6 +208,8 @@
 	var/list/consoles = list()
 	var/badmin = 0
 
+	l_color = "#CD00CD"
+
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
 		return
@@ -330,7 +332,7 @@
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:316: dat += "[temp_server.name] Data ManagementP<BR><BR>"
-			dat += {"[temp_server.name] Data ManagementP<BR><BR>
+			dat += {"[temp_server.name] Data Management<BR><BR>
 				Known Technologies<BR>"}
 			// END AUTOFIX
 			for(var/datum/tech/T in temp_server.files.known_tech)
@@ -338,7 +340,7 @@
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:319: dat += "* [T.name] "
 				dat += {"* [T.name]
-					<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings"}
+					<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>"} //FYI, these are all strings
 				// END AUTOFIX
 			dat += "Known Designs<BR>"
 			for(var/datum/design/D in temp_server.files.known_designs)

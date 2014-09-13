@@ -10,7 +10,7 @@
 	var/on = 0
 	var/no_light=0 // Disable the light on the atmos suit
 	_color = "engineering" //Determines used sprites: rig[on]-[_color] and rig[on]-[_color]2 (lying down sprite)
-	icon_action_button = "action_hardhat"
+	action_button_name = "Toggle Helmet Light"
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 
@@ -166,7 +166,7 @@
 	//Security
 /obj/item/clothing/head/helmet/space/rig/security
 	name = "security hardsuit helmet"
-	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
+	desc = "A special helmet designed for work in a hazardous low pressure environment. Has an additional layer of armor."
 	icon_state = "rig0-sec"
 	item_state = "sec_helm"
 	_color = "sec"
@@ -176,7 +176,7 @@
 /obj/item/clothing/suit/space/rig/security
 	icon_state = "rig-sec"
 	name = "security hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
+	desc = "A special suit that protects against hazardous low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
 	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/baton)
@@ -185,7 +185,7 @@
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos
-	desc = "A special helmet designed for work in a hazardou, low pressure environments. Has reduced radiation shielding and protective plating to allow for greater mobility."
+	desc = "A special helmet designed for work in hazardous low pressure environments. Has reduced radiation shielding to allow for greater mobility."
 	name = "atmospherics hardsuit helmet"
 	icon_state = "rig0-atmos"
 	item_state = "atmos_helm"
@@ -194,7 +194,7 @@
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/suit/space/rig/atmos
-	desc = "A special suit that protects against hazardous, low pressure environments. Has reduced radiation shielding to allow for greater mobility."
+	desc = "A special suit that protects against hazardous low pressure environments. Has reduced radiation shielding to allow for greater mobility."
 	icon_state = "rig-atmos"
 	name = "atmos hardsuit"
 	item_state = "atmos_hardsuit"
@@ -203,7 +203,7 @@
 
 //Firefighting/Atmos RIG (old /vg/)
 /obj/item/clothing/head/helmet/space/rig/atmos/gold
-	desc = "A special suit that protects against hazardous, low pressure environments, and extremely high heat.  In other words, perfect for atmos."
+	desc = "A special helmet designed for work in hazardous low pressure environments and extreme temperatures. In other words, perfect for atmos."
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE*2
 	name = "atmos hardsuit helmet"
@@ -213,7 +213,7 @@
 	no_light=1
 
 /obj/item/clothing/suit/space/rig/atmos/gold
-	desc = "A special suit that protects against hazardous, low pressure environments, and extremely high heat.  In other words, perfect for atmos."
+	desc = "A special suit that protects against hazardous low pressure environments and extreme temperatures. In other words, perfect for atmos."
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE*4
 	gas_transfer_coefficient = 0.80

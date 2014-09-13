@@ -56,6 +56,8 @@ var/shuttle_call/shuttle_calls[0]
 	var/stat_msg2
 	var/display_type="blank"
 
+	l_color = "#0000FF"
+
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..(href, href_list))
 		return
@@ -185,15 +187,16 @@ var/shuttle_call/shuttle_calls[0]
 					post_status("message", stat_msg1, stat_msg2)
 				if("alert")
 					post_status("alert", href_list["alert"])
+					display_type = href_list["alert"]
 				else
 					post_status(href_list["statdisp"])
 			setMenuState(usr,COMM_SCREEN_STAT)
 
 		if("setmsg1")
-			stat_msg1 = input("Line 1", "Enter Message Text", stat_msg1) as text|null
+			stat_msg1 = reject_bad_text(trim(copytext(sanitize(input("Line 1", "Enter Message Text", stat_msg1) as text|null), 1, 40)), 40)
 			setMenuState(usr,COMM_SCREEN_STAT)
 		if("setmsg2")
-			stat_msg2 = input("Line 2", "Enter Message Text", stat_msg2) as text|null
+			stat_msg2 = reject_bad_text(trim(copytext(sanitize(input("Line 2", "Enter Message Text", stat_msg2) as text|null), 1, 40)), 40)
 			setMenuState(usr,COMM_SCREEN_STAT)
 
 		// OMG CENTCOMM LETTERHEAD
@@ -305,6 +308,7 @@ var/shuttle_call/shuttle_calls[0]
 		var/cur_msg[0]
 		cur_msg["title"]=messagetitle[i]
 		cur_msg["body"]=messagetext[i]
+		cur_msg["id"] = i
 		msg_data += list(cur_msg)
 	data["messages"] = msg_data
 	data["current_message"] = data["is_ai"] ? aicurrmsg : currmsg
@@ -364,6 +368,9 @@ var/shuttle_call/shuttle_calls[0]
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
 
+	if(!universe.OnShuttleCall(user))
+		return
+
 	if(sent_strike_team == 1)
 		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
 		return
@@ -406,6 +413,9 @@ var/shuttle_call/shuttle_calls[0]
 
 	// if force is 0, some things may stop the shuttle call
 	if(!force)
+		if(!universe.OnShuttleCall(user))
+			return
+
 		if(emergency_shuttle.deny_shuttle)
 			user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
 			return

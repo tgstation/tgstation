@@ -95,7 +95,6 @@
 	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.powernet)
 			PC.powernet = new()
-			powernets += PC.powernet
 //			if(Debug)	world.log << "Starting mpn at [PC.x],[PC.y] ([PC.d1]/[PC.d2])"
 			powernet_nextlink(PC,PC.powernet)
 
@@ -107,7 +106,7 @@
 
 	for(var/obj/machinery/power/M in machines)
 		if(!M.powernet)	continue	// APCs have powernet=0 so they don't count as network nodes directly
-		M.powernet.nodes[M] = M
+		M.powernet.nodes.Add(M)
 
 
 // returns a list of all power-related objects (nodes, cable, junctions) in turf,
@@ -275,7 +274,6 @@
 	if(notlooped)
 		// not looped, so make a new powernet
 		var/datum/powernet/PN = new()
-		powernets += PN
 
 //		if(Debug) world.log << "Was not looped: spliting PN#[number] ([cables.len];[nodes.len])"
 
@@ -295,14 +293,14 @@
 			if(Node && !Node.powernet)
 				Node.powernet = PN
 				nodes.Cut(i,i+1)
-				PN.nodes[Node] = Node
+				PN.nodes.Add(Node)
 				continue
 			i++
 
 	// Disconnect machines connected to nodes
 	if(node)
 		for(var/obj/machinery/power/P in T1)
-			if(P.powernet && !P.powernet.nodes[src])
+			if(P.powernet && !P.powernet.nodes.Find(src))
 				P.disconnect_from_network()
 //		if(Debug)
 //			world.log << "Old PN#[number] : ([cables.len];[nodes.len])"
@@ -395,32 +393,20 @@
 		net1 = net2
 		net2 = temp
 
-	for(var/i=1,i<=net2.nodes.len,i++)		//merge net2 into net1
-		var/obj/machinery/power/Node = net2.nodes[i]
-		if(Node)
-			Node.powernet = net1
-			net1.nodes[Node] = Node
+	for(var/obj/machinery/power/node in net2.nodes)
+		if(node)
+			net2.nodes -= node
+			node.powernet = net1
+			net1.nodes += node
 
-	for(var/i=1,i<=net2.cables.len,i++)
-		var/obj/structure/cable/Cable = net2.cables[i]
-		if(Cable)
-			Cable.powernet = net1
-			net1.cables += Cable
+	for(var/obj/structure/cable/cable in net2.cables)
+		if(cable)
+			net2.cables -= cable
+			cable.powernet = net1
+			net1.cables += cable
 
-	del(net2)
-	//net2.garbageCollect()
+	net2.Destroy()
 	return net1
-
-/datum/powernet/proc/garbageCollect()
-	if(nodes.len)
-		for(var/obj/machinery/power/N in nodes)
-			N.powernet = null
-		nodes.Cut()
-	if(cables.len)
-		for(var/obj/structure/cable/C in cables)
-			C.powernet = null
-		cables.Cut()
-	powernets -= src
 
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
@@ -428,7 +414,7 @@
 	if(!C || !C.powernet)	return 0
 //	makepowernets() //TODO: find fast way	//EWWWW what are you doing!?
 	powernet = C.powernet
-	powernet.nodes[src] = src
+	powernet.nodes.Add(src)
 	return 1
 
 /obj/machinery/power/proc/disconnect_from_network()
@@ -520,3 +506,15 @@
 		cell.use(drained_energy)
 	return drained_energy
 
+/datum/powernet/New()
+	..()
+	powernets += src
+
+/datum/powernet/Destroy()
+	for(var/obj/machinery/power/node in nodes)
+		node.powernet = null
+
+	for(var/obj/structure/cable/cable in cables)
+		cable.powernet = null
+
+	powernets -= src

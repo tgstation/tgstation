@@ -14,6 +14,14 @@
 	var/mob/living/carbon/occupant
 	var/locked
 
+	l_color = "#00FF00"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)) && src.occupant)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /obj/machinery/bodyscanner/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if(O.loc == user) //no you can't pull things out of your ass
 		return

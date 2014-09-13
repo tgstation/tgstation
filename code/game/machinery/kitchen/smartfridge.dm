@@ -19,6 +19,14 @@
 	var/isbroken = 0
 	var/opened = 0.0
 
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
+
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
@@ -74,6 +82,8 @@
 	icon_state = "seeds"
 	icon_on = "seeds"
 	icon_off = "seeds-off"
+
+	l_color = "#000000"
 
 /obj/machinery/smartfridge/seeds/accept_check(var/obj/item/O as obj)
 	if(istype(O,/obj/item/seeds/))

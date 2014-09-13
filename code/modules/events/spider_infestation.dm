@@ -2,7 +2,6 @@
 
 /datum/event/spider_infestation
 	announceWhen	= 400
-	oneShot			= 1
 
 	var/spawncount = 1
 

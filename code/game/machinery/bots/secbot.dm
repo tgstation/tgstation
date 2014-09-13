@@ -18,10 +18,13 @@
 	var/target_lastloc //Loc of target when arrested.
 	var/last_found //There's a delay
 	var/frustration = 0
+	var/check_records = 1
 //	var/emagged = 0 //Emagged Secbots view everyone as a criminal
-	var/idcheck = 0 //If false, all station IDs are authorized for weapons.
-	var/check_records = 1 //Does it check security records?
+
+	var/idcheck = 0 //If true, arrest people with no IDs
+	var/weaponscheck = 0 //If true, arrest people for weapons if they lack access	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
+	var/declare_arrests = 0 //When making an arrest, should it notify everyone wearing sechuds?
 	var/next_harm_time = 0
 
 	var/mode = 0
@@ -50,6 +53,18 @@
 
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
+	var/weapons_check = 0
+	var/safe_weapons = list(\
+		/obj/item/weapon/gun/energy/laser/bluetag,\
+		/obj/item/weapon/gun/energy/laser/redtag,\
+		/obj/item/weapon/gun/energy/laser/practice)
+	l_color = "#B40000"
+	power_change()
+		..()
+		if(src.on)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 
 /obj/machinery/bot/secbot/beepsky
@@ -57,6 +72,7 @@
 	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
 	idcheck = 0
 	auto_patrol = 1
+	weapons_check = 0
 
 /obj/item/weapon/secbot_assembly
 	name = "helmet/signaler assembly"
@@ -115,14 +131,19 @@ Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 
 	if(!src.locked || issilicon(user))
 		dat += text({"<BR>
-Check for Weapon Authorization: []<BR>
-Check Security Records: []<BR>
+Arrest for No ID: [] <BR>
+Arrest for Unauthorized Weapons: []<BR>
+Arrest for Warrant: []<BR>
+<BR>
 Operating Mode: []<BR>
+Report Arrests: []<BR>
 Auto Patrol: []"},
 
 "<A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A>",
+"<A href='?src=\ref[src];operation=declarearrests'>[src.declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
 
@@ -144,6 +165,9 @@ Auto Patrol: []"},
 		if("idcheck")
 			src.idcheck = !src.idcheck
 			src.updateUsrDialog()
+		if("weaponscheck")
+			weaponscheck = !weaponscheck
+			updateUsrDialog()
 		if("ignorerec")
 			src.check_records = !src.check_records
 			src.updateUsrDialog()
@@ -154,6 +178,9 @@ Auto Patrol: []"},
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
 			updateUsrDialog()
+		if("declarearrests")
+			src.declare_arrests = !src.declare_arrests
+			src.updateUsrDialog()
 
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -169,9 +196,14 @@ Auto Patrol: []"},
 				user << "\red Access denied."
 	else
 		..()
-		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
-			src.target = user
-			src.mode = SECBOT_HUNT
+	if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
+		return
+	if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!target) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+		threatlevel = user.assess_threat(src)
+		threatlevel += 6
+		if(threatlevel > 0)
+			target = user
+			mode = SECBOT_HUNT
 
 /obj/machinery/bot/secbot/Emag(mob/user as mob)
 	..()
@@ -236,10 +268,18 @@ Auto Patrol: []"},
 							M.Weaken(10)
 							M.stuttering = 10
 							M.Stun(10)
+						if(declare_arrests)
+							declare()
+						target.visible_message("<span class='danger'>[target] has been stunned by [src]!</span>",\
+						"<span class='userdanger'>[target] has been stunned by [src]!</span>")
 						maxstuns--
 						if(maxstuns <= 0)
 							target = null
-						visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
+
+						if(declare_arrests)
+							var/area/location = get_area(src)
+							broadcast_security_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] suspect <b>[target]</b> in <b>[location]</b>", src)
+						//visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
 
 						mode = SECBOT_PREP_ARREST
 						src.anchored = 1
@@ -805,3 +845,14 @@ Auto Patrol: []"},
 		if(!in_range(src, usr) && src.loc != usr)
 			return
 		src.created_name = t
+
+/obj/machinery/bot/secbot/declare()
+	var/area/location = get_area(src)
+	declare_message = "<span class='info'>\icon[src] [name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>"
+	..()
+
+/obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
+	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
+		if(!(slot_item.type in safe_weapons))
+			return 1
+	return 0

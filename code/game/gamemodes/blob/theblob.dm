@@ -27,7 +27,7 @@
 	blobs -= src
 	..()
 
-/obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0))	return 1
 	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
 	return 0
@@ -133,7 +133,7 @@
 		if("fire")
 			damage = (W.force / max(src.fire_resist,1))
 			if(istype(W, /obj/item/weapon/weldingtool))
-				playsound(get_turf(src), 'sound/items/Welder.ogg', 100, 1)
+				playsound(get_turf(src), 'sound/effects/blobweld.ogg', 100, 1)
 		if("brute")
 			damage = (W.force / max(src.brute_resist,1))
 
@@ -165,7 +165,7 @@
 
 /obj/effect/blob/normal/update_icon()
 	if(health <= 0)
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/blobsplat.ogg', 50, 1)
 		Delete()
 		return
 	if(health <= 15)

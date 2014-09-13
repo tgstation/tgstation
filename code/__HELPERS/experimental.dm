@@ -1,5 +1,5 @@
 /*
- * Experimental procs by ESwordTheCat.
+ * Experimental procs by ESwordTheCat!
  */
 
 /*
@@ -45,10 +45,10 @@
 
 #define MAINTAINING_OBJECT_POOL_COUNT 20
 
-var/list/masterPool = list()
+var/list/masterPool = new
 
 // Read-only or compile-time vars and special exceptions.
-var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
+var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z")
 
 /*
  * @args
@@ -58,23 +58,19 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
  * Example call: getFromPool(/obj/item/weapon/shard, loc)
  */
 /proc/getFromPool(const/A, const/B)
-	if (isnull(masterPool[A]))
+	if(length(masterPool["[A]"]) <= 0)
 		#ifdef DEBUG_OBJECT_POOL
-		world << "DEBUG_OBJECT_POOL: new proc has been called ([A])."
+		world << text("DEBUG_OBJECT_POOL: new proc has been called ([]).", A)
 		#endif
 
 		return new A(B)
 
-	var/atom/movable/O = masterPool[A][1]
-	masterPool[A] -= O
-	var/objectLength = length(masterPool[A])
+	var/atom/movable/O = masterPool["[A]"][1]
+	masterPool["[A]"] -= O
 
 	#ifdef DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: getFromPool([A]) [objectLength] left."
+	world << text("DEBUG_OBJECT_POOL: getFromPool([]) [] left.", A, length(masterPool[A]))
 	#endif
-
-	if (!objectLength)
-		masterPool[A] = null
 
 	O.loc = B
 	return O
@@ -89,29 +85,22 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
  * Example call: returnToPool(src)
  */
 /proc/returnToPool(const/atom/movable/AM)
-	if(isnull(AM))
-		return -1
+	if(length(masterPool["[AM.type]"]) > MAINTAINING_OBJECT_POOL_COUNT)
+		#ifdef DEBUG_OBJECT_POOL
+		world << text("DEBUG_OBJECT_POOL: returnToPool([]) exceeds [] discarding...", AM.type, MAINTAINING_OBJECT_POOL_COUNT)
+		#endif
 
-	switch(length(masterPool[AM.type]))
-		if(MAINTAINING_OBJECT_POOL_COUNT to 1.#INF)
-			#ifdef DEBUG_OBJECT_POOL
-			world << "DEBUG_OBJECT_POOL: returnToPool([AM.type]) exceeds [MAINTAINING_OBJECT_POOL_COUNT] discarding..."
-			#endif
+		qdel(AM)
+		return
 
-			qdel(AM)
-			return
-		if(0) // In a numeric context (like a mathematical operation), null evaluates to 0.
-			#ifdef DEBUG_OBJECT_POOL
-			world << "DEBUG_OBJECT_POOL: [AM.type] pool is empty, recreating pool."
-			#endif
+	if(isnull(masterPool["[AM.type]"]))
+		masterPool["[AM.type]"] = new
 
-			masterPool[AM.type] = new
-
+	masterPool["[AM.type]"] += AM
 	AM.resetVariables()
-	masterPool[AM.type] += AM
 
 	#ifdef DEBUG_OBJECT_POOL
-	world << "DEBUG_OBJECT_POOL: returnToPool([AM.type]) [length(masterPool[AM.type])] left."
+	world << text("DEBUG_OBJECT_POOL: returnToPool([]) [] left.", AM.type, length(masterPool["[AM.type]"]))
 	#endif
 
 #undef MAINTAINING_OBJECT_POOL_COUNT
@@ -121,20 +110,29 @@ var/list/exclude = list("loc", "locs", "parent_type", "vars", "verbs", "type")
 #endif
 
 /*
- * Override this if the object variables needed to reset.
+ * if you have a variable that needed to be preserve, override this and call ..
  *
- * Example: see, code\game\objects\items\stacks\sheets\glass.dm
- *				 /obj/item/weapon/shard/resetVariables()
+ * example
+ *
+ * /obj/item/resetVariables()
+ * 	..("var1", "var2", "var3")
+ *
+ * however, if the object has a child type an it has overridden resetVariables()
+ * this should be
+ *
+ * /obj/item/resetVariables()
+ * 	..("var1", "var2", "var3", args)
+ *
+ * /obj/item/weapon/resetVariables()
+ * 	..("var4")
  */
 /atom/movable/proc/resetVariables()
-	var/list/exclude = global.exclude + args // Explicit var exclusion.
+	loc = null
 
-	var/key
+	var/list/exclude = global.exclude + args // explicit var exclusion
 
-	for (key in vars)
-		if (key in exclude)
+	for(var/key in vars)
+		if(key in exclude)
 			continue
 
 		vars[key] = initial(vars[key])
-
-	vars["loc"] = null // Making sure the loc is null not a compile-time var value.

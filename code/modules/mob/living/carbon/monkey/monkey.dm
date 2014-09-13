@@ -523,3 +523,34 @@
 	if(istype(I))
 		ACL |= I.GetAccess()
 	return ACL
+
+
+/mob/living/carbon/monkey/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
+	if(judgebot.emagged == 2)
+		return 10 //Everyone is a criminal!
+	var/threatcount = 0
+
+	//Lasertag bullshit
+	if(lasercolor)
+		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
+			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+				threatcount += 4
+
+		if(lasercolor == "r")
+			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+				threatcount += 4
+
+		return threatcount
+
+	//Check for weapons
+	if(judgebot.weaponscheck)
+		if(judgebot.check_for_weapons(l_hand))
+			threatcount += 4
+		if(judgebot.check_for_weapons(r_hand))
+			threatcount += 4
+
+	//Loyalty implants imply trustworthyness
+	if(isloyal(src))
+		threatcount -= 1
+
+	return threatcount

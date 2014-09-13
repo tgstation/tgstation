@@ -33,6 +33,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/SQLquery
 
 /obj/machinery/librarypubliccomp/attack_hand(var/mob/user as mob)
+	if(istype(user,/mob/dead))
+		user << "<span class='danger'>Nope.</span>"
+		return
 	usr.set_machine(src)
 	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
@@ -140,6 +143,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
 
 /obj/machinery/librarycomp/attack_hand(var/mob/user as mob)
+	if(istype(user,/mob/dead))
+		user << "<span class='danger'>Nope.</span>"
+		return
 	usr.set_machine(src)
 	var/dat = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
@@ -196,9 +202,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:180: dat += "<h3>Check Out a Book</h3><BR>"
 			dat += {"<h3>Check Out a Book</h3><BR>
-				Book: [src.buffer_book] 
+				Book: [src.buffer_book]
 				<A href='?src=\ref[src];editbook=1'>\[Edit\]</A><BR>
-				Recipient: [src.buffer_mob] 
+				Recipient: [src.buffer_mob]
 				<A href='?src=\ref[src];editmob=1'>\[Edit\]</A><BR>
 				Checkout Date : [world.time/600]<BR>
 				Due Date: [(world.time + checkoutperiod)/600]<BR>
@@ -439,6 +445,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		O.loc = src
 
 /obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
+	if(istype(user,/mob/dead))
+		user << "<span class='danger'>Nope.</span>"
+		return
 	usr.set_machine(src)
 	var/dat = "<HEAD><TITLE>Scanner Control Interface</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)
@@ -484,7 +493,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	density = 1
 
 /obj/machinery/bookbinder/attackby(var/obj/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/paper))
+	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/paper/nano))
 		user.drop_item()
 		O.loc = src
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")

@@ -123,6 +123,29 @@ datum
 				R.handle_reactions()
 				src.handle_reactions()
 				return amount
+			trans_to_holder(var/datum/reagents/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+				if (!target || src.total_volume<=0)
+					return
+				var/datum/reagents/R = target
+				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
+				var/part = amount / src.total_volume
+				var/trans_data = null
+				for (var/datum/reagent/current_reagent in src.reagent_list)
+					if (!current_reagent)
+						continue
+					var/current_reagent_transfer = current_reagent.volume * part
+					if(preserve_data)
+						trans_data = current_reagent.data
+
+					R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+					src.remove_reagent(current_reagent.id, current_reagent_transfer)
+
+				// Called from add/remove_agent. -- N3X
+				//src.update_total()
+				//R.update_total()
+				R.handle_reactions()
+				src.handle_reactions()
+				return amount
 /*
 			trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 				if (!target )
@@ -603,18 +626,20 @@ datum
 						//world << "reagent data set ([reagent_id])"
 						D.data = new_data
 
-			delete()
-				for(var/datum/reagent/R in reagent_list)
-					R.holder = null
-				if(my_atom)
-					my_atom.reagents = null
+/datum/reagents/Destroy()
+	for(var/datum/reagent/reagent in reagent_list)
+		reagent.Destroy()
 
+	if(my_atom)
+		my_atom = null
 
 ///////////////////////////////////////////////////////////////////////////////////
 
 
-// Convenience proc to create a reagents holder for an atom
-// Max vol is maximum volume of holder
-atom/proc/create_reagents(var/max_vol)
+/*
+ * Convenience proc to create a reagents holder for an atom
+ * max_vol is maximum volume of holder
+ */
+/atom/proc/create_reagents(const/max_vol)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src

@@ -280,36 +280,36 @@ var/global/list/PDA_Manifest = list()
 	var/d1 = 0
 	var/d2 = 1
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
-	var/_color = "red"
+	l_color = "red"
 	var/obj/structure/powerswitch/power_switch
 	var/obj/item/device/powersink/attached // holding this here for qdel
 
 /obj/structure/cable/yellow
-	_color = "yellow"
+	l_color = "yellow"
 	icon = 'icons/obj/power_cond_yellow.dmi'
 
 /obj/structure/cable/green
-	_color = "green"
+	l_color = "green"
 	icon = 'icons/obj/power_cond_green.dmi'
 
 /obj/structure/cable/blue
-	_color = "blue"
+	l_color = "blue"
 	icon = 'icons/obj/power_cond_blue.dmi'
 
 /obj/structure/cable/pink
-	_color = "pink"
+	l_color = "pink"
 	icon = 'icons/obj/power_cond_pink.dmi'
 
 /obj/structure/cable/orange
-	_color = "orange"
+	l_color = "orange"
 	icon = 'icons/obj/power_cond_orange.dmi'
 
 /obj/structure/cable/cyan
-	_color = "cyan"
+	l_color = "cyan"
 	icon = 'icons/obj/power_cond_cyan.dmi'
 
 /obj/structure/cable/white
-	_color = "white"
+	l_color = "white"
 	icon = 'icons/obj/power_cond_white.dmi'
 
 /obj/effect/projection

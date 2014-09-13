@@ -109,6 +109,7 @@ REAGENT SCANNER
 	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()
 	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
 	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
+	playsound(get_turf(src), 'sound/items/healthanalyzer.ogg', 50, 1)
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
 		user.show_message("\blue Analyzing Results for [M]:\n\t Overall Status: dead")
@@ -314,10 +315,8 @@ REAGENT SCANNER
 	var/recent_fail = 0
 
 /obj/item/device/mass_spectrometer/New()
-	..()
-	var/datum/reagents/R = new/datum/reagents(5)
-	reagents = R
-	R.my_atom = src
+	. = ..()
+	create_reagents(5)
 
 /obj/item/device/mass_spectrometer/on_reagent_change()
 	if(reagents.total_volume)

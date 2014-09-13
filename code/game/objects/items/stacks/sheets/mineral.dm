@@ -316,3 +316,158 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=4"
 	perunit = 2000
+
+/obj/item/stack/sheet/mineral/pharosium
+	name = "pharosium"
+	icon_state = "sheet-pharosium"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+/obj/item/stack/sheet/mineral/char
+	name = "char"
+	icon_state = "sheet-char"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/claretine
+	name = "claretine"
+	icon_state = "sheet-claretine"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/cobryl
+	name = "cobryl"
+	icon_state = "sheet-cobryl"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/bohrum
+	name = "bohrum"
+	icon_state = "sheet-bohrum"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/syreline
+	name = "syreline"
+	icon_state = "sheet-syreline"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/erebite
+	name = "erebite"
+	icon_state = "sheet-erebite"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/cerenkite
+	name = "cerenkite"
+	icon_state = "sheet-cerenkite"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/cytine
+	name = "cytine"
+	icon_state = "sheet-cytine"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/uqill
+	name = "uqill"
+	icon_state = "sheet-uqill"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/telecrystal
+	name = "telecrystal"
+	icon_state = "sheet-telecrystal"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/mauxite
+	name = "mauxite"
+	icon_state = "sheet-mauxite"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+
+
+/obj/item/stack/sheet/mineral/molitz
+	name = "molitz"
+	icon_state = "sheet-molitz"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+	perunit = 3750
+

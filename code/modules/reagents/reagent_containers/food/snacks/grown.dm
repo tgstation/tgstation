@@ -739,7 +739,7 @@
 		del(src)
 		return
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/HasEntered(AM as mob|obj)
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
@@ -863,20 +863,18 @@
 	name = "destroying angel"
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
-	potency = 35
+	potency = 15
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
-			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
-			reagents.add_reagent("amatoxin", 13+round(potency / 3, 1))
-			reagents.add_reagent("psilocybin", 1+round(potency / 25, 1))
+			reagents.add_reagent("nutriment", 1+round(potency / 50, 1))
+			reagents.add_reagent("amanatin", 1+round(potency / 3, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>"
-		user << "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>"
+		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amanatin")]%</i></span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	seed = "/obj/item/seeds/libertymycelium"
@@ -1026,9 +1024,47 @@
 	icon_state = "spawner"
 	potency = 10
 	New()
+		..()
 		dispense_cash(rand(1,100)*10,src.loc)//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
 		spawn(5) //Workaround to keep harvesting from working weirdly.
 			del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/meat
+	seed = "/obj/item/seeds/synthmeatseed"
+	name = "synthmeat"
+	desc = "Tasty?"
+	icon_state = "spawner"
+	potency = 10
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/butt
+	seed = "/obj/item/seeds/synthbuttseed"
+	name = "synthbutt"
+	desc = "Tasty?"
+	icon_state = "spawner"
+	potency = 10
+	New()
+		..()
+		new /obj/item/clothing/head/butt(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/brain
+	seed = "/obj/item/seeds/synthbrainseed"
+	name = "synthmeat"
+	desc = "Tasty?"
+	icon_state = "spawner"
+	potency = 10
+	New()
+		..()
+		new /obj/item/brain(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
 	seed = "/obj/item/seeds/bluespacetomatoseed"

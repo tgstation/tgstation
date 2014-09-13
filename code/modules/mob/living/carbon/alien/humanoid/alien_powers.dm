@@ -123,6 +123,7 @@ Doesn't work on other aliens/AI.*/
 			return
 		adjustToxLoss(-50)
 		src << "\green You spit neurotoxin at [target]."
+		playsound(get_turf(src), 'sound/weapons/pierce.ogg', 30, 1)
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
 				O << "\red [src] spits neurotoxin at [target]!"

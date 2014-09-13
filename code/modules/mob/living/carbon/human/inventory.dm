@@ -614,7 +614,7 @@
 
 		for(var/mob/M in viewers(target, null))
 			M.show_message(message, 1)
-	spawn( HUMAN_STRIP_DELAY )
+	spawn(HUMAN_STRIP_DELAY)
 		done()
 		return
 	return

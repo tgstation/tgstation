@@ -13,7 +13,6 @@
 	artifact_id = "[pick("kappa","sigma","antaeres","beta","omicron","iota","epsilon","omega","gamma","delta","tau","alpha")]-[rand(100,999)]"
 
 	artifact_find_type = pick(\
-	5;/obj/machinery/power/supermatter,\
 	5;/obj/structure/constructshell,\
 	5;/obj/machinery/syndicate_beacon,\
 	25;/obj/machinery/power/supermatter/shard,\
@@ -97,3 +96,22 @@
 				user.visible_message("<font color='red'><b>[src] suddenly crumbles away.</b></font>",\
 				"\blue [src] has been whittled away under your careful excavation, but there was nothing of interest inside.")
 			del(src)
+
+/obj/structure/boulder/Bumped(AM)
+	. = ..()
+	if(istype(AM,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = AM
+		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
+			attackby(H.l_hand,H)
+		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
+			attackby(H.r_hand,H)
+
+	else if(istype(AM,/mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = AM
+		if(istype(R.module_active,/obj/item/weapon/pickaxe))
+			attackby(R.module_active,R)
+
+	else if(istype(AM,/obj/mecha))
+		var/obj/mecha/M = AM
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+			M.selected.action(src)

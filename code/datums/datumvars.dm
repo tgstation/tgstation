@@ -275,7 +275,8 @@ client
 					<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>
 					<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>
 					<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>
-					<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"}
+					<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>
+					<option value='?_src_=vars;makecluwne=\ref[D]'>Make cluwne</option>"}
 			// END AUTOFIX
 
 			// AUTOFIXED BY fix_string_idiocy.py

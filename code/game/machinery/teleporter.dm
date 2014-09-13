@@ -10,15 +10,11 @@
 	ghost_read=0 // #430
 	ghost_write=0
 
+	l_color = "#0000FF"
+
 /obj/machinery/computer/teleporter/New()
 	. = ..()
 	id = "[rand(1000, 9999)]"
-
-	component_parts = newlist(
-		/obj/item/weapon/circuitboard/teleporter
-	)
-
-	RefreshParts()
 
 /obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob)
 	if(istype(I, /obj/item/weapon/card/data/))

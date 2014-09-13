@@ -21,6 +21,7 @@ var/global/list/moneytypes=list(
 	throw_speed = 1
 	throw_range = 2
 	w_class = 1.0
+	nonplant_seed_type = /obj/item/seeds/cashseed
 	var/access = list()
 	access = access_crate_cash
 	var/worth = 1 // Per chip
@@ -28,7 +29,7 @@ var/global/list/moneytypes=list(
 	var/stack_color = "#4E054F"
 
 /obj/item/weapon/spacecash/New(var/new_loc,var/new_amount=1)
-	loc = new_loc
+	. = ..(new_loc)
 	name = "[worth] credit chip"
 	amount = new_amount
 	update_icon()

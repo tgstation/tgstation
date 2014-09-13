@@ -1,0 +1,42 @@
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel" style="width: 150px">
+			Exterior Door Status: 
+		</div>
+		<div class="statusValue">
+		{{if data.exterior_status.state == "closed"}}
+			Locked
+		{{else}}
+			Open
+		{{/if}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel" style="width: 150px">
+			Interior Door Status: 
+		</div>
+		<div class="statusValue">
+		{{if data.interior_status.state == "closed"}}
+			Locked
+		{{else}}
+			Open
+		{{/if}}
+		</div>
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemContent" style="width: 100%">
+		{{if data.exterior_status.state == "open"}}
+			{{:helper.link('Lock Exterior Door', 'alert', {'command' : 'force_ext'}, data.processing ? 'disabled' : null)}}
+		{{else}}
+			{{:helper.link('Cycle to Exterior', 'arrowthickstop-1-w', {'command' : 'cycle_ext_door'}, data.processing ? 'disabled' : null)}}
+		{{/if}}
+		{{if data.interior_status.state == "open"}}
+			{{:helper.link('Lock Interior Door', 'alert', {'command' : 'force_int'}, data.processing ? 'disabled' : null)}}
+		{{else}}
+			{{:helper.link('Cycle to Interior', 'arrowthickstop-1-e', {'command' : 'cycle_int_door'}, data.processing ? 'disabled' : null)}}
+		{{/if}}
+		</div>
+	</div>
+</div>

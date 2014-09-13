@@ -36,6 +36,8 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 	var/mineral = "metal"
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
 
+	melt_temperature = 1643.15 // Melting point of steel
+
 /turf/simulated/floor/New()
 	..()
 	if(icon_state in icons_to_ignore_at_floor_init) //so damaged/burned tiles or plating icons aren't saved as the default
@@ -43,7 +45,13 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 	else
 		icon_regular_floor = icon_state
 
-//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/floor/ashify()
+	burn_tile()
+
+/turf/simulated/floor/melt() // Melting is different.
+	burn_tile()
+
+//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
 //		if (!( locate(/obj/machinery/mass_driver, src) ))
 //			return 0
@@ -66,12 +74,12 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 						src.break_tile_to_plating()
 					else
 						src.break_tile()
-					src.hotspot_expose(1000,CELL_VOLUME)
+					src.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(3.0)
 			if (prob(50))
 				src.break_tile()
-				src.hotspot_expose(1000,CELL_VOLUME)
+				src.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
 	return
 
 /turf/simulated/floor/blob_act()
@@ -278,7 +286,6 @@ turf/simulated/floor/proc/update_icon()
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
 	if(istype(src,/turf/unsimulated/floor/asteroid)) return//Asteroid tiles don't burn
-	if(broken || burnt) return
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
 		burnt = 1

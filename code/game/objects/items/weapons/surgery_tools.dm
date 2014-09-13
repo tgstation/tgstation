@@ -395,6 +395,7 @@ LOOK FOR SURGERY.DM*/
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
+	hitsound = "sound/weapons/bladeslice.ogg"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 10.0
 	w_class = 1.0

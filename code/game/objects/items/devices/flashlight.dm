@@ -10,7 +10,7 @@
 	m_amt = 50
 	g_amt = 20
 	w_type = RECYK_ELECTRONIC
-	icon_action_button = "action_flashlight"
+	action_button_name = "Toggle Light"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 
@@ -149,7 +149,7 @@
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
-	icon_action_button = null	//just pull it manually, neckbeard.
+	action_button_name = null //just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
@@ -161,7 +161,7 @@
 /obj/item/device/flashlight/flare/process()
 	var/turf/pos = get_turf(src)
 	if(pos)
-		pos.hotspot_expose(produce_heat, 5)
+		pos.hotspot_expose(produce_heat, 5,surfaces=istype(loc,/turf))
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()

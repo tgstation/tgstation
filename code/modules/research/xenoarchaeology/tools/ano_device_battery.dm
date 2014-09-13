@@ -9,6 +9,7 @@
 	var/effect_id = ""
 
 /obj/item/weapon/anobattery/New()
+	. = ..()
 	battery_effect = new()
 
 /obj/item/weapon/anobattery/proc/UpdateSprite()
@@ -29,7 +30,7 @@
 	var/turf/archived_loc
 
 /obj/item/weapon/anodevice/New()
-	..()
+	. = ..()
 	processing_objects.Add(src)
 
 /obj/item/weapon/anodevice/attackby(var/obj/I as obj, var/mob/user as mob)

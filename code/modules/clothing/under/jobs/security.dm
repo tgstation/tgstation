@@ -17,6 +17,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	siemens_coefficient = 0.9
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/rank/security
 	name = "security officer's jumpsuit"
@@ -27,6 +28,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	siemens_coefficient = 0.9
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/rank/dispatch
 	name = "dispatcher's uniform"
@@ -82,6 +84,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	siemens_coefficient = 0.8
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/head/helmet/HoS

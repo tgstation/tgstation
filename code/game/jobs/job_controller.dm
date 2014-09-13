@@ -380,6 +380,8 @@ var/global/datum/controller/occupations/job_master
 					H.MoMMIfy()
 					return 1
 				if("AI","Clown")	//don't need bag preference stuff!
+					if(rank=="Clown") // Clowns DO need to breathe, though - N3X
+						H.species.equip(H)
 				else
 					switch(H.backbag) //BS12 EDIT
 						if(1)

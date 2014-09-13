@@ -14,6 +14,7 @@
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
+	var/maxjumprange = 20 //how far you can go in terms of non-blob tiles in a jump attempt
 
 /mob/camera/blob/New()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
@@ -30,7 +31,7 @@
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
-	src << "<span class='notice'>You are the overmind!</span>"
+	src << "<span class='blob'>You are the overmind!</span>"
 	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as..."
 	src << "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions."
 	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires."
@@ -108,6 +109,15 @@
 	if(B)
 		loc = NewLoc
 	else
+		B = locate() in range("3x3", src.loc)
+	if(!B) //PANIC, WE'RE NOWHERE NEAR ANYTHING
+		var/newrange = 3 //slowly grows outwards, looking for the nearest blob tile. Should not take very long to find it.
+		while (1)
+			newrange++
+			B = locate() in range("[newrange]x[newrange]", src.loc)
+			if(B)
+				loc = B.loc
+				break
+			if(newrange > maxjumprange) //to avoid going in an infinite loop
+				break
 		return 0
-
-

@@ -1,3 +1,5 @@
+
+
 /obj/item/projectile/change
 	name = "bolt of change"
 	icon_state = "ice_1"
@@ -5,6 +7,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
+	var/changetype=null
 
 	on_hit(var/atom/change)
 		wabbajack(change)
@@ -12,8 +15,10 @@
 
 /obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)
-		if(M.monkeyizing)	return
-		if(M.has_brain_worms()) return //Borer stuff - RR
+		if(M.monkeyizing)
+			return
+		if(M.has_brain_worms())
+			return //Borer stuff - RR
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null
@@ -22,7 +27,8 @@
 
 		if(istype(M, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/Robot = M
-			if(Robot.mmi)	del(Robot.mmi)
+			if(Robot.mmi)
+				del(Robot.mmi)
 		else
 			for(var/obj/item/W in M)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
@@ -34,7 +40,7 @@
 
 		var/mob/living/new_mob
 
-		var/randomize = pick("monkey","robot","slime","xeno","human")
+		var/randomize = changetype==null?pick(available_staff_transforms):changetype
 
 		switch(randomize)
 			if("monkey")
@@ -96,7 +102,7 @@
 					else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
 				new_mob.universal_speak = 1
 			if("human")
-				new_mob = new /mob/living/carbon/human(M.loc)
+				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
 
 				new_mob.gender = M.gender
 
@@ -107,6 +113,15 @@
 				var/newspecies = pick(all_species)
 				H.set_species(newspecies)
 				H.generate_name()
+			if("cluwne")
+				new_mob = new /mob/living/simple_animal/hostile/retaliate/cluwne(M.loc)
+				new_mob.universal_speak = 1
+				new_mob.gender=src.gender
+				new_mob.name = pick(clown_names)
+				new_mob.real_name = new_mob.name
+				new_mob.mutations += M_CLUMSY
+				new_mob.mutations += M_FAT
+				new_mob.setBrainLoss(100)
 			else
 				return
 

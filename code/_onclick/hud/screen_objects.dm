@@ -82,9 +82,8 @@
 
 /obj/screen/grab/Destroy()
 	if(master)
-		var/obj/item/weapon/grab/G = master
-		if(G.assailant)
-			G.assailant.client.images -= src
+		master = null
+
 	..()
 
 /obj/screen/storage
@@ -323,6 +322,13 @@
 										if ("carbon dioxide")
 											if(t.air_contents.carbon_dioxide && !t.air_contents.toxins)
 												contents.Add(t.air_contents.carbon_dioxide)
+											else
+												contents.Add(0)
+
+										// ACK ACK ACK Plasmen
+										if ("plasma")
+											if(t.air_contents.toxins)
+												contents.Add(t.air_contents.toxins)
 											else
 												contents.Add(0)
 

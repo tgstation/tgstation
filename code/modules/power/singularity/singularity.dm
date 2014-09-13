@@ -298,6 +298,9 @@ var/global/list/uneatable = list(
 
 		if (dist <= consume_range && !istype(A, /turf/space))
 			var/turf/T = A
+			if(istype(T,/turf/simulated/wall))
+				var/turf/simulated/wall/W = T
+				W.del_suppress_resmoothing=1 // Reduce lag from wallsmoothing.
 			T.ChangeTurf(/turf/space)
 			gain = 2
 
@@ -478,12 +481,18 @@ var/global/list/uneatable = list(
 
 	current_size = 12
 	consume_range = 12 // How many tiles out do we eat.
+	var/announce=1
 
-/obj/machinery/singularity/narsie/large/New()
+/obj/machinery/singularity/narsie/large/New(var/cultspawn=0)
 	..()
-	world << "<font size='15' color='red'><b>[uppertext(name)] HAS RISEN</b></font>"
+	if(announce)
+		world << "<font size='15' color='red'><b>[uppertext(name)] HAS RISEN</b></font>"
+
 	if (emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall.
+
+	if(cultspawn)
+		SetUniversalState(/datum/universal_state/hell)
 
 /obj/machinery/singularity/narsie/process()
 	eat()
@@ -540,6 +549,9 @@ var/global/list/uneatable = list(
 
 		if (dist <= consume_range && !istype(A, /turf/space))
 			var/turf/T = A
+			if(istype(T,/turf/simulated/wall))
+				var/turf/simulated/wall/W = T
+				W.del_suppress_resmoothing=1 // Reduce lag from wallsmoothing.
 			T.ChangeTurf(/turf/space)
 
 /obj/machinery/singularity/narsie/ex_act(severity) //No throwing bombs at it either. --NEO

@@ -156,6 +156,7 @@ obj/machinery/airlock_sensor
 	var/id_tag
 	var/master_tag
 	var/frequency = 1449
+	var/command = "cycle"
 
 	var/datum/radio_frequency/radio_connection
 
@@ -181,7 +182,7 @@ obj/machinery/airlock_sensor/attack_hand(mob/user)
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = master_tag
-	signal.data["command"] = "cycle"
+	signal.data["command"] = command
 
 	radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 	flick("airlock_sensor_cycle", src)
@@ -217,6 +218,12 @@ obj/machinery/airlock_sensor/New()
 
 	if(radio_controller)
 		set_frequency(frequency)
+
+obj/machinery/airlock_sensor/airlock_interior
+	command = "cycle_interior"
+
+obj/machinery/airlock_sensor/airlock_exterior
+	command = "cycle_exterior"
 
 /obj/machinery/airlock_sensor/New(turf/loc, var/ndir, var/building=0)
 	..()
@@ -388,6 +395,16 @@ obj/machinery/access_button/New()
 
 	if(radio_controller)
 		set_frequency(frequency)
+
+obj/machinery/access_button/airlock_interior
+	frequency = 1449
+	command = "cycle_interior"
+
+obj/machinery/access_button/airlock_exterior
+	frequency = 1449
+	command = "cycle_exterior"
+
+
 
 obj/machinery/access_button/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return {"

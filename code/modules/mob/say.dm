@@ -1,9 +1,14 @@
 /mob/proc/say()
+	src << "\red /MOB/SAY NOT OVERRIDDEN WHAT THE FUCK MAN"
 	return
 
-/mob/verb/whisper()
+/mob/verb/whisper_verb(var/message as text)
 	set name = "Whisper"
 	set category = "IC"
+
+	whisper(message)
+
+/mob/proc/whisper(var/message, var/unheard=" whispers something", var/heard="whispers,", var/apply_filters=1, var/allow_lastwords=1)
 	return
 
 /mob/verb/say_verb(message as text)

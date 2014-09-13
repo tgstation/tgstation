@@ -8,29 +8,26 @@
 	layer = 2.3 //under pipes
 	//	flags = CONDUCT
 
-/obj/structure/lattice/New()
-	..()
-	if(!(istype(src.loc, /turf/space)))
-		del(src)
-	for(var/obj/structure/lattice/LAT in src.loc)
-		if(LAT != src)
-			del(LAT)
+/obj/structure/lattice/New(loc)
+	..(loc)
+
+	if(!(istype(loc, /turf/space)))
+		qdel(src)
+
+	for(var/obj/structure/lattice/ExistingLattice in loc)
+		if(ExistingLattice != src)
+			qdel(ExistingLattice)
+
 	icon = 'icons/obj/smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()
-	for (var/dir in cardinal)
-		var/obj/structure/lattice/L
-		if(locate(/obj/structure/lattice, get_step(src, dir)))
-			L = locate(/obj/structure/lattice, get_step(src, dir))
-			L.updateOverlays()
 
-/obj/structure/lattice/Destroy()
-	for (var/dir in cardinal)
-		var/obj/structure/lattice/L
-		if(locate(/obj/structure/lattice, get_step(src, dir)))
-			L = locate(/obj/structure/lattice, get_step(src, dir))
-			L.updateOverlays(src.loc)
-	..()
+	for(var/direction in cardinal)
+		var/obj/structure/lattice/NearbyLattice = \
+			locate(/obj/structure/lattice) in get_step(src, direction)
+
+		if(istype(NearbyLattice))
+			NearbyLattice.updateOverlays()
 
 /obj/structure/lattice/blob_act()
 	del(src)
@@ -56,29 +53,30 @@
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
 		return
-	if (istype(C, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = C
-		if(WT.remove_fuel(0, user))
-			user << "\blue Slicing lattice joints ..."
-		new /obj/item/stack/rods(src.loc)
-		del(src)
 
-	return
+	if(istype(C, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WeldingTool = C
+
+		if(WeldingTool.remove_fuel(0, user))
+			user << "<span class='notice'>Slicing lattice joints...</span>"
+
+		new/obj/item/stack/rods(loc)
+		qdel(src)
 
 /obj/structure/lattice/proc/updateOverlays()
-	//if(!(istype(src.loc, /turf/space)))
-	//	del(src)
-	spawn(1)
-		overlays = list()
+	set waitfor = 0
 
-		var/dir_sum = 0
+	overlays.len = 0
 
-		for (var/direction in cardinal)
-			if(locate(/obj/structure/lattice, get_step(src, direction)))
+	var/dir_sum = 0
+
+	for(var/direction in cardinal)
+		var/location = get_step(src, direction)
+
+		if(locate(/obj/structure/lattice) in location)
+			dir_sum += direction
+		else
+			if(!istype(location, /turf/space))
 				dir_sum += direction
-			else
-				if(!(istype(get_step(src, direction), /turf/space)))
-					dir_sum += direction
 
-		icon_state = "lattice[dir_sum]"
-		return
+	icon_state = "lattice[dir_sum]"

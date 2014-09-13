@@ -6,11 +6,13 @@
 			continue
 		drop_from_inventory(W)
 	regenerate_icons()
+
 	monkeyizing = 1
 	canmove = 0
 	stunned = 1
 	icon = null
 	invisibility = 101
+
 	for(var/t in organs)
 		del(t)
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
@@ -50,6 +52,37 @@
 	del(animation)
 
 	return O
+
+/mob/living/carbon/human/proc/Cluwneize()
+	if (monkeyizing)
+		return
+	for(var/obj/item/W in src)
+		drop_from_inventory(W)
+	regenerate_icons()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	for(var/t in organs)	//this really should not be necessary
+		del(t)
+
+	var/mob/living/simple_animal/hostile/retaliate/cluwne/new_mob = new (src.loc)
+	new_mob.universal_speak = 1
+	new_mob.gender=src.gender
+	new_mob.name = pick(clown_names)
+	new_mob.real_name = new_mob.name
+	new_mob.mutations += M_CLUMSY
+	new_mob.mutations += M_FAT
+	new_mob.setBrainLoss(100)
+	new_mob.a_intent = "hurt"
+	new_mob.key = key
+
+	new_mob << "<span class='sinister'>Instantly, what was your clothes fall off, and are replaced with a mockery of all that is clowning; Disgusting-looking garb that the foulest of creatures would be afraid of wearing. Your very face begins to shape, mold, into something truely disgusting. A mask made of flesh. Your body is feeling the worst pain it has ever felt. As you think it cannot get any worse, one of your arms turns into a horrific meld of flesh and plastic, making a limb made entirely of bike horns.</span>"
+	new_mob << "<span class='sinister'>Your very soul is being torn apart. What was organs, blood, flesh, is now darkness. And inside the infernal void that was once a living being, something sinister takes root. As what you were goes away, you try to let out a frantic plea of 'Help me! Please god help me!' but your god has abandoned you, and all that leaves your horrible mouth is a strangled 'HONK!'.</span>"
+	new_mob.say("HONK!")
+	spawn(0)//To prevent the proc from returning null.
+		del(src)
+	return
 
 /mob/new_player/AIize()
 	spawning = 1
