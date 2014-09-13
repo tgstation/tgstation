@@ -405,6 +405,8 @@
 		if (src.health >= src.maxHealth)
 			user << "<span class='warning'>[src] is already in good condition.</span>"
 			return
+
+		user.changeNext_move(CLICK_CD_MELEE)
 		if (WT.remove_fuel(0))
 			adjustBruteLoss(-30)
 			updatehealth()
@@ -415,6 +417,7 @@
 			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
 			adjustFireLoss(-30)

@@ -447,6 +447,7 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 
 	if(affecting.status == ORGAN_ROBOTIC)
 		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
+			user.changeNext_move(CLICK_CD_MELEE)
 			affecting.heal_damage(brute,burn,1)
 			H.update_damage_overlays(0)
 			H.updatehealth()
