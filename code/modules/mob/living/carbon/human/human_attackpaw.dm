@@ -3,11 +3,12 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if (is_muzzled())
+		if (M.is_muzzled())
 			return
 
 		visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 			"<span class='userdanger'>[M.name] bites [src]!</span>")
+		playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 
 		var/damage = rand(1, 3)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
