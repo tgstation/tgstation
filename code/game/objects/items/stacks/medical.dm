@@ -31,6 +31,7 @@
 		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 
+	user.changeNext_move(CLICK_CD_MELEE)
 	if (user)
 		if (M != user)
 			user.visible_message( \
