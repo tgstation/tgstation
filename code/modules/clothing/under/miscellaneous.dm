@@ -209,6 +209,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	_color = "pirate"
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/soviet
 	name = "soviet uniform"

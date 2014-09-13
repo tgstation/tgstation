@@ -47,6 +47,7 @@
 	item_state = "hgpirate"
 	flags = FPRINT | TABLEPASS
 	flags_inv = HIDEJUMPSUIT
+	species_fit = list("Vox")
 
 
 /obj/item/clothing/suit/cyborg_suit
