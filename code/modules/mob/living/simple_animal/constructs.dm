@@ -130,7 +130,7 @@
 
 /mob/living/simple_animal/construct/airflow_stun()
 	return
-	
+
 /mob/living/simple_animal/construct/airflow_hit(atom/A)
 	return
 
@@ -334,3 +334,57 @@
 				return
 			cultist.loc = usr.loc
 			usr.visible_message("\red [cultist] appears in a flash of red light as [usr] glows with power")*/
+
+/mob/living/simple_animal/construct/Life()
+	. = ..()
+	if(.)
+		if(fire)
+			if(fire_alert)							fire.icon_state = "fire1" //fire_alert is either 0 if no alert, 1 for cold and 2 for heat.
+			else									fire.icon_state = "fire0"
+		if(pullin)
+			if(pulling)								pullin.icon_state = "pull1"
+			else									pullin.icon_state = "pull0"
+
+/mob/living/simple_animal/construct/armoured/Life()
+	if(..())
+		switch(health)
+			if(maxHealth to INFINITY)		healths.icon_state = "juggernaut_health0"
+			if((maxHealth * 0.8) to maxHealth)			healths.icon_state = "juggernaut_health1"
+			if((maxHealth * 0.6) to (maxHealth * 0.8))			healths.icon_state = "juggernaut_health2"
+			if((maxHealth * 0.4) to (maxHealth * 0.6))			healths.icon_state = "juggernaut_health3"
+			if((maxHealth * 0.2) to (maxHealth * 0.4))			healths.icon_state = "juggernaut_health4"
+			if(1 to (maxHealth * 0.2))				healths.icon_state = "juggernaut_health5"
+			else					healths.icon_state = "juggernaut_health7"
+
+/mob/living/simple_animal/construct/behemoth/Life()
+	if(..())
+		switch(health)
+			if(maxHealth to INFINITY)		healths.icon_state = "juggernaut_health0"
+			if((maxHealth * 0.8) to maxHealth)			healths.icon_state = "juggernaut_health1"
+			if((maxHealth * 0.6) to (maxHealth * 0.8))			healths.icon_state = "juggernaut_health2"
+			if((maxHealth * 0.4) to (maxHealth * 0.6))			healths.icon_state = "juggernaut_health3"
+			if((maxHealth * 0.2) to (maxHealth * 0.4))			healths.icon_state = "juggernaut_health4"
+			if(1 to (maxHealth * 0.2))				healths.icon_state = "juggernaut_health5"
+			else					healths.icon_state = "juggernaut_health7"
+
+/mob/living/simple_animal/construct/builder/Life()
+	if(..())
+		switch(health)
+			if(maxHealth to INFINITY)		healths.icon_state = "artificer_health0"
+			if((maxHealth * 0.8) to maxHealth)			healths.icon_state = "artificer_health1"
+			if((maxHealth * 0.6) to (maxHealth * 0.8))			healths.icon_state = "artificer_health2"
+			if((maxHealth * 0.4) to (maxHealth * 0.6))			healths.icon_state = "artificer_health3"
+			if((maxHealth * 0.2) to (maxHealth * 0.4))			healths.icon_state = "artificer_health4"
+			if(1 to (maxHealth * 0.2))				healths.icon_state = "artificer_health5"
+			else					healths.icon_state = "artificer_health7"
+
+/mob/living/simple_animal/construct/wraith/Life()
+	if(..())
+		switch(health)
+			if(maxHealth to INFINITY)		healths.icon_state = "wraith_health0"
+			if((maxHealth * 0.8) to maxHealth)			healths.icon_state = "wraith_health1"
+			if((maxHealth * 0.6) to (maxHealth * 0.8))			healths.icon_state = "wraith_health2"
+			if((maxHealth * 0.4) to (maxHealth * 0.6))			healths.icon_state = "wraith_health3"
+			if((maxHealth * 0.2) to (maxHealth * 0.4))			healths.icon_state = "wraith_health4"
+			if(1 to (maxHealth * 0.2))				healths.icon_state = "wraith_health5"
+			else					healths.icon_state = "wraith_health7"

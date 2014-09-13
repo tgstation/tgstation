@@ -115,6 +115,11 @@
 		return 1
 	return 0
 
+/proc/isconstruct(A)
+	if(istype(A, /mob/living/simple_animal/construct))
+		return 1
+	return 0
+
 /proc/isAdminGhost(A)
 	if(isobserver(A))
 		var/mob/dead/observer/O = A

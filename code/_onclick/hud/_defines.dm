@@ -85,6 +85,9 @@
 #define ui_borg_health "14:28,6:13" //borgs have the health display where humans have the pressure damage indicator.
 #define ui_alien_health "14:28,6:13" //aliens have the health display where humans have the pressure damage indicator.
 
+#define ui_construct_health "14:28,6:13" //constructs have health at same spot as aliens
+#define ui_construct_fire "14:28,7:13" //Above health
+#define ui_construct_pull "14:28,5:13" //below health
 //Pop-up inventory
 #define ui_shoes "2:8,1:5"
 
