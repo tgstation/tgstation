@@ -33,6 +33,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/SQLquery
 
 /obj/machinery/librarypubliccomp/attack_hand(var/mob/user as mob)
+	if(istype(user,/mob/dead))
+		user << "<span class='danger'>Nope.</span>"
+		return
 	usr.set_machine(src)
 	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
@@ -140,6 +143,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
 
 /obj/machinery/librarycomp/attack_hand(var/mob/user as mob)
+	if(istype(user,/mob/dead))
+		user << "<span class='danger'>Nope.</span>"
+		return
 	usr.set_machine(src)
 	var/dat = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
@@ -439,6 +445,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		O.loc = src
 
 /obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
+	if(istype(user,/mob/dead))
+		user << "<span class='danger'>Nope.</span>"
+		return
 	usr.set_machine(src)
 	var/dat = "<HEAD><TITLE>Scanner Control Interface</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)

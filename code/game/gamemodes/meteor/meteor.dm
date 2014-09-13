@@ -41,7 +41,7 @@
 	meteordelay = rand((meteordelay_l/600), (meteordelay_h/600))*600 //Ditto above
 	spawn(450) //Give everything 45 seconds to initialize, this does not delay the rest of post_setup() nor the game and ensures deadmins aren't aware in advance and the admins are
 
-		message_admins("Meteor storm confirmed by Space Weather Incorporated. Announcement arrives in [round((meteorannouncedelay/600)-450)] minutes, actual meteors in [round(((meteordelay/600)+(meteorannouncedelay/600))-450)] minutes. Shuttle will take [10*meteorshuttlemultiplier] minutes to arrive when and supplies will be dispatched in the Bar.")
+		message_admins("Meteor storm confirmed by Space Weather Incorporated. Announcement arrives in [round((meteorannouncedelay-450)/600)] minutes, actual meteors in [round((meteordelay+meteorannouncedelay-450)/600)] minutes. Shuttle will take [10*meteorshuttlemultiplier] minutes to arrive when and supplies will be dispatched in the Bar.")
 
 
 	spawn(rand(waittime_l, waittime_h))
