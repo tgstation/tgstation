@@ -467,8 +467,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
-			for(var/mob/V in hearers(src))
-				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
+			audible_message("<b>[src]</b>'s monitor beeps, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"",\
+							"<b>[src]</b>'s monitor flashes.")
 			return
 
 		//Find the correct supply_pack datum
@@ -657,8 +657,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
-			for(var/mob/V in hearers(src))
-				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
+			audible_message("<b>[src]</b>'s monitor beeps, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"", \
+							"<b>[src]</b>'s monitor flashes.")
 			return
 
 		//Find the correct supply_pack datum

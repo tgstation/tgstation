@@ -481,8 +481,7 @@ var/list/admin_verbs_hideable = list(
 	if(mob.control_object)
 		if(!msg)
 			return
-		for (var/mob/V in hearers(mob.control_object))
-			V.show_message("<b>[mob.control_object.name]</b> says: \"" + msg + "\"", 2)
+		mob.control_object.audible_message("<b>[mob.control_object.name]</b> says: \"" + msg + "\"")
 	feedback_add_details("admin_verb","OT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/kill_air()
