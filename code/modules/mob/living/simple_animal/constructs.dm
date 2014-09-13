@@ -109,7 +109,7 @@
 				playsound(loc, M.attack_sound, 50, 1, 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
-			add_logs(M, src, "attacked", admin=0)
+			add_logs(M, src, "attacked", admin=1)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			adjustBruteLoss(damage)
 
@@ -346,45 +346,42 @@
 			else									pullin.icon_state = "pull0"
 
 /mob/living/simple_animal/construct/armoured/Life()
-	if(..())
-		switch(health)
-			if(maxHealth to INFINITY)		healths.icon_state = "juggernaut_health0"
-			if((maxHealth * 0.8) to maxHealth)			healths.icon_state = "juggernaut_health1"
-			if((maxHealth * 0.6) to (maxHealth * 0.8))			healths.icon_state = "juggernaut_health2"
-			if((maxHealth * 0.4) to (maxHealth * 0.6))			healths.icon_state = "juggernaut_health3"
-			if((maxHealth * 0.2) to (maxHealth * 0.4))			healths.icon_state = "juggernaut_health4"
-			if(1 to (maxHealth * 0.2))				healths.icon_state = "juggernaut_health5"
-			else					healths.icon_state = "juggernaut_health7"
+	switch(health)
+		if(250 to INFINITY)		healths.icon_state = "juggernaut_health0"
+		if(200 to 250)			healths.icon_state = "juggernaut_health1"
+		if(150 to 200)			healths.icon_state = "juggernaut_health2"
+		if(100 to 150)			healths.icon_state = "juggernaut_health3"
+		if(50 to 100)			healths.icon_state = "juggernaut_health4"
+		if(1 to 50)				healths.icon_state = "juggernaut_health5"
+		else					healths.icon_state = "juggernaut_health7"
+
 
 /mob/living/simple_animal/construct/behemoth/Life()
-	if(..())
-		switch(health)
-			if(maxHealth to INFINITY)		healths.icon_state = "juggernaut_health0"
-			if((maxHealth * 0.8) to maxHealth)			healths.icon_state = "juggernaut_health1"
-			if((maxHealth * 0.6) to (maxHealth * 0.8))			healths.icon_state = "juggernaut_health2"
-			if((maxHealth * 0.4) to (maxHealth * 0.6))			healths.icon_state = "juggernaut_health3"
-			if((maxHealth * 0.2) to (maxHealth * 0.4))			healths.icon_state = "juggernaut_health4"
-			if(1 to (maxHealth * 0.2))				healths.icon_state = "juggernaut_health5"
-			else					healths.icon_state = "juggernaut_health7"
+	switch(health)
+		if(250 to INFINITY)		healths.icon_state = "juggernaut_health0"
+		if(200 to 250)			healths.icon_state = "juggernaut_health1"
+		if(150 to 200)			healths.icon_state = "juggernaut_health2"
+		if(100 to 150)			healths.icon_state = "juggernaut_health3"
+		if(50 to 100)			healths.icon_state = "juggernaut_health4"
+		if(1 to 50)				healths.icon_state = "juggernaut_health5"
+		else					healths.icon_state = "juggernaut_health7"
 
 /mob/living/simple_animal/construct/builder/Life()
-	if(..())
-		switch(health)
-			if(maxHealth to INFINITY)		healths.icon_state = "artificer_health0"
-			if((maxHealth * 0.8) to maxHealth)			healths.icon_state = "artificer_health1"
-			if((maxHealth * 0.6) to (maxHealth * 0.8))			healths.icon_state = "artificer_health2"
-			if((maxHealth * 0.4) to (maxHealth * 0.6))			healths.icon_state = "artificer_health3"
-			if((maxHealth * 0.2) to (maxHealth * 0.4))			healths.icon_state = "artificer_health4"
-			if(1 to (maxHealth * 0.2))				healths.icon_state = "artificer_health5"
-			else					healths.icon_state = "artificer_health7"
+	switch(health)
+		if(50 to INFINITY)		healths.icon_state = "artificer_health0"
+		if(40 to 50)			healths.icon_state = "artificer_health1"
+		if(30 to 40)			healths.icon_state = "artificer_health2"
+		if(20 to 30)			healths.icon_state = "artificer_health3"
+		if(10 to 20)			healths.icon_state = "artificer_health4"
+		if(1 to 10)				healths.icon_state = "artificer_health5"
+		else					healths.icon_state = "artificer_health7"
 
 /mob/living/simple_animal/construct/wraith/Life()
-	if(..())
-		switch(health)
-			if(maxHealth to INFINITY)		healths.icon_state = "wraith_health0"
-			if((maxHealth * 0.8) to maxHealth)			healths.icon_state = "wraith_health1"
-			if((maxHealth * 0.6) to (maxHealth * 0.8))			healths.icon_state = "wraith_health2"
-			if((maxHealth * 0.4) to (maxHealth * 0.6))			healths.icon_state = "wraith_health3"
-			if((maxHealth * 0.2) to (maxHealth * 0.4))			healths.icon_state = "wraith_health4"
-			if(1 to (maxHealth * 0.2))				healths.icon_state = "wraith_health5"
-			else					healths.icon_state = "wraith_health7"
+	switch(health)
+		if(75 to INFINITY)		healths.icon_state = "wraith_health0"
+		if(60 to 75)			healths.icon_state = "wraith_health1"
+		if(45 to 60)			healths.icon_state = "wraith_health2"
+		if(30 to 45)			healths.icon_state = "wraith_health3"
+		if(15 to 30)			healths.icon_state = "wraith_health4"
+		if(1 to 15)				healths.icon_state = "wraith_health5"
+		else					healths.icon_state = "wraith_health7"
