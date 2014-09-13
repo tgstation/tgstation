@@ -2653,18 +2653,15 @@
 
 		return
 
-	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/) ) // Long ass fucking object name
-
-		if( src.open )
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/)) // Long ass fucking object name
+		if(src.pizza) user << "<span class='warning'>[src] already has a pizza in it.</span>"
+		else if(src.open)
 			user.drop_item()
 			I.loc = src
 			src.pizza = I
-
-			update_icon()
-
-			user << "\red You put the [I] in the [src]!"
-		else
-			user << "\red You try to push the [I] through the lid but it doesn't work!"
+			src.update_icon()
+			user << "<span class='notice'>You put [I] in [src].</span>"
+		else user << "<span class='warning'>Open [src] first.</span>"
 		return
 
 	if( istype(I, /obj/item/weapon/pen/) )
