@@ -32,7 +32,7 @@
 	if(A)
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
 
-	sleep(50)
+	sleep(70)
 	if(emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall
 
