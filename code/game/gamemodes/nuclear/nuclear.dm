@@ -11,9 +11,6 @@
 	pre_setup_before_jobs = 1
 	antag_flag = BE_OPERATIVE
 
-	uplink_welcome = "Corporate Backed Uplink Console:"
-	uplink_uses = 10
-
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
