@@ -20,7 +20,7 @@
 
 	var/sqltext = dbcon.Quote(t)
 	//testing("sanitizeSQL(): BEFORE copytext(): [sqltext]")
-	sqltext = copytext(sqltext, 2, lentext(sqltext))//Quote() adds quotes around input, we already do that
+	sqltext = copytext(sqltext, 2, length(sqltext))//Quote() adds quotes around input, we already do that
 	//testing("sanitizeSQL(): AFTER copytext(): [sqltext]")
 	return sqltext
 
@@ -338,9 +338,9 @@ proc/checkhtml(var/t)
 //is in the other string at the same spot (assuming it is not a replace char).
 //This is used for fingerprints
 	var/newtext = text
-	if(lentext(text) != lentext(compare))
+	if(length(text) != length(compare))
 		return 0
-	for(var/i = 1, i < lentext(text), i++)
+	for(var/i = 1, i < length(text), i++)
 		var/a = copytext(text,i,i+1)
 		var/b = copytext(compare,i,i+1)
 //if it isn't both the same letter, or if they are both the replacement character
@@ -360,7 +360,7 @@ proc/checkhtml(var/t)
 	if(!text || !character)
 		return 0
 	var/count = 0
-	for(var/i = 1, i <= lentext(text), i++)
+	for(var/i = 1, i <= length(text), i++)
 		var/a = copytext(text,i,i+1)
 		if(a == character)
 			count++

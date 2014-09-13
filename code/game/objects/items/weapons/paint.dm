@@ -36,7 +36,7 @@ var/global/list/cached_icons = list()
 	New()
 		if(paint_type == "remover")
 			name = "paint remover bucket"
-		else if(paint_type && lentext(paint_type) > 0)
+		else if(paint_type && length(paint_type) > 0)
 			name = paint_type + " " + name
 		..()
 		reagents.add_reagent("paint_[paint_type]", volume)
