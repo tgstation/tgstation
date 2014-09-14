@@ -79,14 +79,6 @@
 
 			return
 
-		if(internal_storage)
-			var/obj/item/dummy_item = internal_storage
-			if(D.put_in_hands(dummy_item))
-				D.visible_message("<span class='notice'>[D] retrieves \a [dummy_item] from their internal storage.</span>")
-			else
-				D.visible_message("<span class='notice'>\A [dummy_item] falls out of [D]'s internal storage and onto the floor.</span>")
-			internal_storage = null
-			return
 
 	if(ishuman(user))
 		if(user.get_active_hand())
@@ -121,29 +113,30 @@
 	A.attack_hand(src)
 
 
-/mob/living/simple_animal/drone/attackby(var/obj/item/I, var/mob/user)
-	if(!I || !user)
-		return
-
-	if(user == src)
-		if(!internal_storage)
-			user.drop_item()
-			internal_storage = I
-			I.loc = user
-			user.visible_message("<span class='notice'>[user] places \a [I] into their internal storage.</span>")
+/mob/living/simple_animal/drone/attack_ui(slot_id)
+	if(slot_id == "drone_storage_slot")
+		var/obj/item/I = get_active_hand()
+		var/mob/user = src
+		if(I)
+			if(!internal_storage)
+				user.drop_item()
+				internal_storage = I
+				I.loc = user
+				user.visible_message("<span class='notice'>[user] places \a [I] into their internal storage.</span>")
+			else
+				user << "<span class='notice'>Your internal storage is full.</span>"
 		else
-			user << "<span class='notice'>Your internal storage is full.</span>"
-
+			var/obj/item/dummy_item = internal_storage
+			if(user.put_in_hands(dummy_item))
+				user.visible_message("<span class='notice'>[user] retrieves \a [dummy_item] from their internal storage.</span>")
+			else
+				user.visible_message("<span class='notice'>\A [dummy_item] falls out of [user]'s internal storage and onto the floor.</span>")
+			internal_storage = null
+		update_inv_internal_storage()
+		return 1
 	else
-		..(I,user)
+		..(slot_id)
 
-
-/mob/living/simple_animal/drone/Stat()
-	statpanel("Status")
-	..()
-	if(client.statpanel == "Status")
-		if(internal_storage)
-			stat(null, "Internal storage: [internal_storage]")
 
 /mob/living/simple_animal/drone/swap_hand()
 	var/obj/item/held_item = get_active_hand()
@@ -212,6 +205,7 @@
 		dummy_item.loc = get_turf(src)
 		visible_message("<span class='notice'>\A [dummy_item] falls out of [src]!</span>")
 		internal_storage = null
+		update_inv_internal_storage()
 
 /mob/living/simple_animal/drone/unEquip(obj/item/I, force)
 	if(..(I,force))
@@ -260,8 +254,18 @@
 		drone_overlays[HANDS_LAYER] = hands_overlays
 	apply_overlay(HANDS_LAYER)
 
+/mob/living/simple_animal/drone/proc/update_inv_internal_storage()
+	if(client && hud_used)
+		for(var/obj/screen/inventory/drone_storage in client.screen)
+			if(drone_storage.slot_id == "drone_storage_slot")
+				drone_storage.overlays = list()
+				if(internal_storage)
+					drone_storage.overlays += image("icon"=internal_storage.icon, "icon_state"=internal_storage.icon_state)
+				break
+
 
 #undef HANDS_LAYER
+#undef TOTAL_LAYERS
 
 /mob/living/simple_animal/drone/canUseTopic()
 	if(stat)
