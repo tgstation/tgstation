@@ -1,4 +1,4 @@
-// Process the MoMMI's visual HuD
+// Process the MoMMI's visual HuD 
 /datum/hud/proc/mommi_hud()
 	// Typecast the mymob to a MoMMI type
 	var/mob/living/silicon/robot/mommi/M=mymob
