@@ -71,7 +71,7 @@ var/list/department_radio_keys = list(
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
 
-/mob/living/proc/binarycheck()
+/mob/proc/binarycheck()
 	return 0
 
 /mob/living/say(message, bubble_type)
