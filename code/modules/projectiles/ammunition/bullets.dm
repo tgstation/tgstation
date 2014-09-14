@@ -37,6 +37,13 @@
 	projectile_type = "/obj/item/projectile/bullet/weakbullet"
 	w_type = RECYK_METAL
 
+/* Not entirely ready to be implemented yet. Get a server vote on bringing these in
+/obj/item/ammo_casing/c38/lethal
+	desc = "A .38 bullet casing. This is the lethal variant."
+	caliber = "38"
+	projectile_type = "/obj/item/projectile/bullet" //HAHA, why is this a good idea
+	w_type = RECYK_METAL
+*/
 
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
@@ -77,6 +84,14 @@
 	m_amt = 250
 	w_type = RECYK_METAL
 
+/obj/item/ammo_casing/shotgun/empty
+	name = "shotgun shell"
+	desc = "This one has been spent."
+	icon_state = "emptyshell"
+	projectile_type = ""
+	m_amt = 250
+	spent = 1 //just to stop people loading a gun with it. This should never go to 0 on the empty
+	w_type = RECYK_METAL
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
