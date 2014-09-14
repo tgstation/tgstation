@@ -29,6 +29,7 @@
 		return // Not supposed to be destroyed
 	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
+	src.loc = null
 	..()
 
 /obj/item/stack/examine()
@@ -176,7 +177,6 @@
 	if (amount <= 0)
 		if(usr)
 			usr.unEquip(src, 1)
-		src.loc = null
 		qdel(src)
 	return 1
 
