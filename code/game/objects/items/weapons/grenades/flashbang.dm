@@ -8,7 +8,7 @@
 /obj/item/weapon/grenade/flashbang/prime()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
-	for(var/obj/structure/closet/L in view(7, flashbang_turf))
+	for(var/obj/structure/closet/L in get_hear(7, flashbang_turf))
 		for(var/mob/living/M in L)
 			bang(get_turf(M), M)
 
