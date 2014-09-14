@@ -200,18 +200,7 @@
 		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
 
-			text += "<br><b>[traitor.key]</b> was <b>[traitor.name]</b> ("
-			if(traitor.current)
-				if(traitor.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(traitor.current.real_name != traitor.name)
-					text += " as <b>[traitor.current.real_name]</b>"
-			else
-				text += "body destroyed"
-			text += ")"
-
+			text += printplayer(traitor)
 
 			var/TC_uses = 0
 			var/uplink_true = 0
