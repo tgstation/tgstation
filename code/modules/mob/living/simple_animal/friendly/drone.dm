@@ -126,12 +126,10 @@
 			else
 				user << "<span class='notice'>Your internal storage is full.</span>"
 		else
-			var/obj/item/dummy_item = internal_storage
-			if(user.put_in_hands(dummy_item))
-				user.visible_message("<span class='notice'>[user] retrieves \a [dummy_item] from their internal storage.</span>")
-			else
-				user.visible_message("<span class='notice'>\A [dummy_item] falls out of [user]'s internal storage and onto the floor.</span>")
-			internal_storage = null
+			if(internal_storage)
+				var/obj/item/dummy_item = internal_storage
+				user.put_in_hands(dummy_item)
+				internal_storage = null
 		update_inv_internal_storage()
 		return 1
 	else
@@ -203,7 +201,6 @@
 	if(internal_storage)
 		var/obj/item/dummy_item = internal_storage
 		dummy_item.loc = get_turf(src)
-		visible_message("<span class='notice'>\A [dummy_item] falls out of [src]!</span>")
 		internal_storage = null
 		update_inv_internal_storage()
 
