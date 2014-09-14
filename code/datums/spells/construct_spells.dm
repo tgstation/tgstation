@@ -68,7 +68,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list(/obj/effect/forcefield)
+	summon_type = list(/obj/effect/forcefield/cult)
 	summon_lifespan = 200
 
 
