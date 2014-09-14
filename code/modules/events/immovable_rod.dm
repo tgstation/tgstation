@@ -27,26 +27,25 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	switch(startside)
 		if(NORTH)
-			starty = 187
+			starty = 245
 			startx = rand(41, 199)
-			endy = 38
+			endy = 1
 			endx = rand(41, 199)
 		if(EAST)
 			starty = rand(38, 187)
-			startx = 199
+			startx = 245
 			endy = rand(38, 187)
-			endx = 41
+			endx = 1
 		if(SOUTH)
-			starty = 38
+			starty = 10
 			startx = rand(41, 199)
-			endy = 187
+			endy = 255
 			endx = rand(41, 199)
 		else
 			starty = rand(38, 187)
-			startx = 41
+			startx = 10
 			endy = rand(38, 187)
-			endx = 199
-
+			endx = 255
 	//rod time!
 	new /obj/effect/immovablerod(locate(startx, starty, 1), locate(endx, endy, 1))
 
