@@ -291,8 +291,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						bibledelay = 0
 
 				else
-					audible_message("<b>[src]</b>'s monitor beeps, \"Bible printer currently unavailable, please wait a moment.\"", \
-									"<b>[src]</b>'s monitor flashes.")
+					say("Bible printer currently unavailable, please wait a moment.")
 
 			if("7")
 				screenstate = 7
@@ -363,8 +362,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
 		if(bibledelay)
-			audible_message("<b>[src]</b>'s monitor beeps, \"Printer unavailable. Please allow a short time before attempting to print.\"", \
-							"<b>[src]</b>'s monitor flashes.")
+			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
 			bibledelay = 1
 			spawn(60)

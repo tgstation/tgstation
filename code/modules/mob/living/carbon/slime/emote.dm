@@ -54,6 +54,6 @@
 		if (m_type & 1)
 			visible_message(message)
 		else
-			audible_message(message)
+			src.loc.audible_message(message)
 
 	return

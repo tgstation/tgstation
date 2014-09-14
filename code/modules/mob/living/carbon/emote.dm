@@ -195,4 +195,4 @@
 		if (m_type & 1)
 			visible_message(message)
 		else if (m_type & 2)
-			audible_message(message)
+			src.loc.audible_message(message)
