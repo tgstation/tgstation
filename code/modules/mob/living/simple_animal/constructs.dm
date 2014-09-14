@@ -32,6 +32,7 @@
 	real_name = name
 	for(var/spell in construct_spells)
 		spell_list += new spell(src)
+	updateicon()
 
 /mob/living/simple_animal/construct/Die()
 	..()
@@ -304,6 +305,14 @@
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
+////////////////Glow//////////////////
+/mob/living/simple_animal/construct/proc/updateicon()
+	overlays.Cut()
+	var/overlay_layer = LIGHTING_LAYER+1
+	if(layer != MOB_LAYER)
+		overlay_layer=TURF_LAYER+0.2
+
+	overlays += image(icon,"glow-[icon_state]",overlay_layer)
 
 ////////////////Powers//////////////////
 
@@ -334,6 +343,8 @@
 				return
 			cultist.loc = usr.loc
 			usr.visible_message("\red [cultist] appears in a flash of red light as [usr] glows with power")*/
+
+////////////////HUD//////////////////////
 
 /mob/living/simple_animal/construct/Life()
 	. = ..()
