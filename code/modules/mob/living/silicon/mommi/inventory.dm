@@ -1,4 +1,4 @@
-//These procs handle putting stuff in your hand. It's probably best to use these rather than setting stuff manually
+//These procs handle putting stuff in your hand. It's probably best to use these rather than setting stuff manually 
 //as they handle all relevant stuff like adding it to the player's screen and such
 
 //Returns the thing in our active hand (whatever is in our active module-slot, in this case)
@@ -68,6 +68,8 @@
 		if(module_active==sight_state)
 			module_active=null
 		unequip_sight()
+	else if (W == head_state)
+		unequip_head()
 
 // Override the default /mob version since we only have one hand slot.
 /mob/living/silicon/robot/mommi/put_in_active_hand(var/obj/item/W)
@@ -158,6 +160,7 @@
 
 	unequip_sight()
 	unequip_tool()
+	unequip_head()
 
 /mob/living/silicon/robot/mommi/proc/unequip_sight()
 	if(sight_state)
@@ -168,6 +171,31 @@
 		contents -= sight_state
 		sight_state = null
 		inv_sight.icon_state = "sight"
+
+// Unequips an object from the MoMMI's head
+/mob/living/silicon/robot/mommi/proc/unequip_head()
+	// If there is a hat on the MoMMI's head
+	if(head_state)
+		// Select the MoMMI's claw
+		select_module(INV_SLOT_TOOL)
+		
+		// Put the hat in the MoMMI's claw
+		put_in_active_hand(head_state)
+
+		// Do that thing that unequip_sight and unequip_tool do
+		if(istype(head_state,/obj/item/borg/sight))
+			sight_mode &= ~head_state:sight_mode
+		contents -= head_state
+			
+		// Remove the head_state icon from the client's screen
+		if (client)
+			client.screen -= head_state
+			
+		// Delete the hat from the head
+		head_state = null
+		
+		// Update the MoMMI's head inventory icons
+		update_inv_head()
 
 /mob/living/silicon/robot/mommi/proc/unequip_tool()
 	if(tool_state)
@@ -281,3 +309,82 @@
 //cycle_modules() - Cycles through the list of selected modules.
 /mob/living/silicon/robot/mommi/cycle_modules()
 	return
+
+// Equip an item to the MoMMI. Currently the only thing you can equip is hats
+// Returns a 0 or 1 based on whether or not the equipping worked
+/mob/living/silicon/robot/mommi/equip_to_slot(obj/item/W as obj, slot, redraw_mob = 1)
+	// If the parameters were given incorrectly, return an error
+	if(!slot) return 0
+	if(!istype(W)) return 0
+
+	// If this item does not equip to this slot type, return
+	if (0 == W.mob_can_equip(src, slot, 0, 0))
+		return 0
+
+	// If the item is in the MoMMI's claw, handle removing the item from the MoMMI's claw
+	if(W == tool_state)
+		// Don't allow the MoMMI to equip tools to their head. I mean, they cant anyways, but stop them here
+		if(is_in_modules(tool_state))
+			src << "\red You cannot equip a module to your head."
+			return 0
+		// Remove the item in the MoMMI's claw from their HuD
+		if (client)
+			client.screen -= tool_state
+		// Delete the item from their claw and de-activate the claw
+		tool_state = null
+		deselect_module(INV_SLOT_TOOL)
+		inv_tool.icon_state = "inv1"
+		module_active = null
+
+	// For each equipment slot that the MoMMI can equip to
+	switch(slot)
+		// If equipping to the head
+		if(slot_head)
+			// Grab whatever the MoMMI might already be wearing and cast it
+			var/obj/item/wearing = head_state
+			// If the MoMMI is already wearing a hat, put the active hat back in their claw
+			if(wearing)
+				// Put it in their hand
+				put_in_active_hand(wearing)
+				tool_state = wearing
+				// Activate their hand
+				select_module(INV_SLOT_TOOL)
+
+			// Put the item on the MoMMI's head
+			src.head_state = W
+			W.equipped(src, slot)
+			// Add the item to the MoMMI's hud
+			if (client)
+				client.screen += head_state
+		else
+			src << "\red You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
+			return 0
+	// Set the item layer and update the MoMMI's icons
+	W.layer = 20
+	update_inv_head()
+	return 1
+
+// Quickly equip a hat by pressing "e"
+/mob/living/silicon/robot/mommi/verb/quick_equip()
+	set name = "quick-equip"
+	set hidden = 1
+
+	// Only allow equipping if the tool slot is activated
+	if(!module_selected(INV_SLOT_TOOL))
+		return
+
+	// If yes we are a MoMMI
+	if(isMoMMI(src))
+		// Typecast ourselves as a MOMMI
+		var/mob/living/silicon/robot/mommi/M = src
+		// Check to see if we are holding something
+		var/obj/item/I = M.tool_state
+		if(!I)
+			M << "<span class='notice'>You are not holding anything to equip.</span>"
+			return
+		// Attempt to equip it and, if it succedes, update our icon
+		if(M.equip_to_slot(I, slot_head))
+			update_items()
+		else
+			M << "\red You are unable to equip that."
+
