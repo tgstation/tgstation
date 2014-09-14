@@ -52,13 +52,14 @@
 	if(findtext(icon_state, "fireaxe"))
 		item_state = "fireaxe[wielded]"
 
-
 	else if(findtext(icon_state, "dualsaber"))
 		item_state = "dualsaber[wielded]"
 
-
 	else if(findtext(icon_state, "hfrequency"))
 		item_state = "hfrequency[wielded]"
+
+	else if(findtext(icon_state, "Gibtonite Ore"))
+	//Do nothing. Gibtonite ore has no wielded sprites
 
 	else
 		item_state = "spearglass[wielded]"
