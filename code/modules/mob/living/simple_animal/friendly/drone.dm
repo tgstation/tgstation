@@ -24,7 +24,7 @@
 	sight = (SEE_TURFS | SEE_OBJS)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
-	languages = ROBOT | HUMAN
+	languages = DRONE
 	var/picked = FALSE
 	var/list/drone_overlays[TOTAL_LAYERS]
 	var/laws = \
@@ -89,7 +89,7 @@
 		if(do_after(user, 20, needhand = 1))
 			drop_l_hand()
 			drop_r_hand()
-			var/obj/item/drone_holder/DH = new /obj/item/drone_holder(src)
+			var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
 			DH.contents += src
 			DH.drone = src
 			user.put_in_hands(DH)
@@ -210,9 +210,6 @@
 		return 1
 	return 0
 
-/mob/living/simple_animal/drone/say(message)
-	return 0
-
 /mob/living/simple_animal/drone/proc/pick_colour()
 	var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
 	icon_state = "drone_[colour]"
@@ -306,17 +303,21 @@
 
 //DRONE HOLDER
 
-/obj/item/drone_holder //Only exists in someones hand.
+/obj/item/clothing/head/drone_holder//Only exists in someones hand.or on their head
 	name = "drone (hiding)"
 	desc = "This drone is scared and has curled up into a ball"
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_item"
 	var/mob/living/simple_animal/drone/drone //stored drone
 
-/obj/item/drone_holder/dropped()
+/obj/item/clothing/head/drone_holder/proc/uncurl()
+	if(istype(loc, /mob/living))
+		var/mob/living/L = loc
+		L.unEquip(src)
 	if(drone)
 		contents -= drone
 		drone.loc = get_turf(src)
+		drone.reset_view()
 		drone.dir = SOUTH //Looks better
 		drone.visible_message("<span class='notice'>[drone] uncurls!</span>")
 		drone = null
@@ -324,6 +325,8 @@
 	else
 		..()
 
+/obj/item/clothing/head/drone_holder/relaymove()
+	uncurl()
 
-
-
+/obj/item/clothing/head/drone_holder/container_resist()
+	uncurl()
