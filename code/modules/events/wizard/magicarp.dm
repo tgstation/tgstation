@@ -49,6 +49,6 @@
 	maxHealth = 75
 	health = 75
 
-/mob/living/simple_animal/hostile/carp/ranged/chaos/Shoot(var/target, var/start, var/user, var/bullet = 0)
+/mob/living/simple_animal/hostile/carp/ranged/chaos/Shoot()
 	projectiletype = pick(typesof(initial(projectiletype)))
-	..(target, start, user, bullet)
+	..()
