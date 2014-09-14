@@ -64,7 +64,7 @@
 	helptext = "Does not provide a warning to others. The victim will transform much like a changeling would."
 	sting_icon = "sting_transform"
 	chemical_cost = 40
-	dna_cost = 1
+	dna_cost = 2
 	var/datum/dna/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -117,7 +117,7 @@ obj/effect/proc_holder/changeling/sting/mute
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
 	sting_icon = "sting_mute"
 	chemical_cost = 20
-	dna_cost = 1
+	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(var/mob/user, var/mob/living/carbon/target)
 	add_logs(user, target, "stung", object="mute sting")
@@ -128,10 +128,10 @@ obj/effect/proc_holder/changeling/sting/mute
 obj/effect/proc_holder/changeling/sting/blind
 	name = "Blind Sting"
 	desc = "Temporarily blinds the target."
-	helptext = "This sting completely blinds a target for a short time. The target does not notice they have been stung."
+	helptext = "This sting completely blinds a target for a short time."
 	sting_icon = "sting_blind"
 	chemical_cost = 25
-	dna_cost = 1
+	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(var/mob/user, var/mob/target)
 	add_logs(user, target, "stung", object="blind sting")
@@ -145,9 +145,9 @@ obj/effect/proc_holder/changeling/sting/blind
 obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucination Sting"
 	desc = "Causes terror in the target."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
+	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
-	chemical_cost = 5
+	chemical_cost = 10
 	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(var/mob/user, var/mob/living/carbon/target)
@@ -163,8 +163,8 @@ obj/effect/proc_holder/changeling/sting/cryo
 	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
 	sting_icon = "sting_cryo"
-	chemical_cost = 15
-	dna_cost = 1
+	chemical_cost = 20
+	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(var/mob/user, var/mob/target)
 	add_logs(user, target, "stung", object="cryo sting")

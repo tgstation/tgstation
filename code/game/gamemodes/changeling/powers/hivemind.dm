@@ -55,7 +55,7 @@ var/list/datum/dna/hivemind_bank = list()
 /obj/effect/proc_holder/changeling/hivemind_download
 	name = "Hive Absorb DNA"
 	desc = "Allows us to absorb DNA that has been channeled to the airwaves. Does not count towards absorb objectives."
-	chemical_cost = 20
+	chemical_cost = 10
 	dna_cost = -1
 
 /obj/effect/proc_holder/changeling/hivemind_download/can_sting(var/mob/living/carbon/user)
