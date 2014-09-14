@@ -359,40 +359,44 @@
 /mob/living/simple_animal/construct/armoured/Life()
 	switch(health)
 		if(250 to INFINITY)		healths.icon_state = "juggernaut_health0"
-		if(200 to 250)			healths.icon_state = "juggernaut_health1"
-		if(150 to 200)			healths.icon_state = "juggernaut_health2"
-		if(100 to 150)			healths.icon_state = "juggernaut_health3"
-		if(50 to 100)			healths.icon_state = "juggernaut_health4"
-		if(1 to 50)				healths.icon_state = "juggernaut_health5"
+		if(208 to 249)			healths.icon_state = "juggernaut_health1"
+		if(167 to 207)			healths.icon_state = "juggernaut_health2"
+		if(125 to 166)			healths.icon_state = "juggernaut_health3"
+		if(84 to 124)			healths.icon_state = "juggernaut_health4"
+		if(42 to 83)				healths.icon_state = "juggernaut_health5"
+		if(1 to 41)				healths.icon_state = "juggernaut_health6"
 		else					healths.icon_state = "juggernaut_health7"
 
 
 /mob/living/simple_animal/construct/behemoth/Life()
 	switch(health)
-		if(250 to INFINITY)		healths.icon_state = "juggernaut_health0"
-		if(200 to 250)			healths.icon_state = "juggernaut_health1"
-		if(150 to 200)			healths.icon_state = "juggernaut_health2"
-		if(100 to 150)			healths.icon_state = "juggernaut_health3"
-		if(50 to 100)			healths.icon_state = "juggernaut_health4"
-		if(1 to 50)				healths.icon_state = "juggernaut_health5"
+		if(750 to INFINITY)		healths.icon_state = "juggernaut_health0"
+		if(625 to 749)			healths.icon_state = "juggernaut_health1"
+		if(500 to 624)			healths.icon_state = "juggernaut_health2"
+		if(375 to 499)			healths.icon_state = "juggernaut_health3"
+		if(250 to 374)			healths.icon_state = "juggernaut_health4"
+		if(125 to 249)			healths.icon_state = "juggernaut_health5"
+		if(1 to 124)			healths.icon_state = "juggernaut_health6"
 		else					healths.icon_state = "juggernaut_health7"
 
 /mob/living/simple_animal/construct/builder/Life()
 	switch(health)
 		if(50 to INFINITY)		healths.icon_state = "artificer_health0"
-		if(40 to 50)			healths.icon_state = "artificer_health1"
-		if(30 to 40)			healths.icon_state = "artificer_health2"
-		if(20 to 30)			healths.icon_state = "artificer_health3"
-		if(10 to 20)			healths.icon_state = "artificer_health4"
-		if(1 to 10)				healths.icon_state = "artificer_health5"
+		if(42 to 49)			healths.icon_state = "artificer_health1"
+		if(34 to 41)			healths.icon_state = "artificer_health2"
+		if(26 to 33)			healths.icon_state = "artificer_health3"
+		if(18 to 25)			healths.icon_state = "artificer_health4"
+		if(10 to 17)			healths.icon_state = "artificer_health5"
+		if(1 to 9)				healths.icon_state = "artificer_health6"
 		else					healths.icon_state = "artificer_health7"
 
 /mob/living/simple_animal/construct/wraith/Life()
 	switch(health)
 		if(75 to INFINITY)		healths.icon_state = "wraith_health0"
-		if(60 to 75)			healths.icon_state = "wraith_health1"
-		if(45 to 60)			healths.icon_state = "wraith_health2"
-		if(30 to 45)			healths.icon_state = "wraith_health3"
-		if(15 to 30)			healths.icon_state = "wraith_health4"
-		if(1 to 15)				healths.icon_state = "wraith_health5"
+		if(62 to 74)			healths.icon_state = "wraith_health1"
+		if(50 to 61)			healths.icon_state = "wraith_health2"
+		if(37 to 49)			healths.icon_state = "wraith_health3"
+		if(25 to 36)			healths.icon_state = "wraith_health4"
+		if(12 to 24)			healths.icon_state = "wraith_health5"
+		if(1 to 11)				healths.icon_state = "wraith_health6"
 		else					healths.icon_state = "wraith_health7"
