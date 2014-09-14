@@ -31,8 +31,8 @@ n_scriptOptions
 		IsValidID(id)    //returns true if all the characters in the string are okay to be in an identifier name
 			if(!CanStartID(id)) //don't need to grab first char in id, since text2ascii does it automatically
 				return 0
-			if(lentext(id)==1) return 1
-			for(var/i=2 to lentext(id))
+			if(length(id)==1) return 1
+			for(var/i=2 to length(id))
 				if(!IsValidIDChar(copytext(id, i, i+1)))
 					return 0
 			return 1
