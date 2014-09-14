@@ -40,7 +40,8 @@
 		affecting.grabbed_by -= src
 		affecting = null
 	if(assailant)
-		assailant.client.screen -= hud
+		if(assailant.client)
+			assailant.client.screen -= hud
 		assailant = null
 	qdel(hud)
 	..()
@@ -171,9 +172,10 @@
 					assailant.changeNext_move(10)
 					affecting.losebreath += 1
 				else
-					assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
-					hud.icon_state = "disarm/kill"
-					state = GRAB_NECK
+					if(assailant)
+						assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
+						hud.icon_state = "disarm/kill"
+						state = GRAB_NECK
 
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
