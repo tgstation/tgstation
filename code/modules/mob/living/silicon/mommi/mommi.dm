@@ -18,7 +18,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/obj/screen/inv_tool = null
 	var/obj/screen/inv_sight = null
 
-//one tool and one sightmod can be activated at any one time.
+//one tool and one sightmod can be activated at any one time. 
 	var/tool_state = null
 	var/sight_state = null
 	var/head_state = null
