@@ -21,6 +21,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 //one tool and one sightmod can be activated at any one time.
 	var/tool_state = null
 	var/sight_state = null
+	var/head_state = null
 
 	modtype = "robot" // Not sure what this is, but might be cool to have seperate loadouts for MoMMIs (e.g. paintjobs and tools)
 	//Cyborgs will sync their laws with their AI by default, but we may want MoMMIs to be mute independents at some point, kinda like the Keepers in Ass Effect.
@@ -389,28 +390,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("\red <B>[user] attempted to disarm [src]!</B>")
-
-/mob/living/silicon/robot/mommi/updateicon()
-	icon_state=subtype
-	// Clear all overlays.
-	overlays.Cut()
-	if(opened) // TODO:  Open the front "head" panel
-		if(wiresexposed)
-			overlays += "ov-openpanel +w"
-		else if(cell)
-			overlays += "ov-openpanel +c"
-		else
-			overlays += "ov-openpanel -c"
-
-	// Put our eyes just on top of the lighting, so it looks emissive in maint tunnels.
-	var/overlay_layer = LIGHTING_LAYER+1
-	if(layer != MOB_LAYER)
-		overlay_layer=TURF_LAYER+0.2
-
-	overlays += image(icon,"eyes-[subtype][emagged?"-emagged":""]",overlay_layer)
-	if(anchored)
-		overlays += image(icon,"[subtype]-park",overlay_layer)
-
 
 
 /mob/living/silicon/robot/mommi/installed_modules()
