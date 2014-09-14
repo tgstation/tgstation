@@ -1,4 +1,4 @@
-//Xeno Overlays Indexes//////////
+//MoMMI Overlays Indexes//////////
 #define MOMMI_HEAD_LAYER		1
 #define MOMMI_TOTAL_LAYERS		2
 /////////////////////////////////
