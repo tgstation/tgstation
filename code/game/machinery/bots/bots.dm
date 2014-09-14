@@ -170,4 +170,3 @@
 		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>",2)
 	return
 
-

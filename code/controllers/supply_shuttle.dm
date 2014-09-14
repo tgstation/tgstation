@@ -467,8 +467,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
-			audible_message("<b>[src]</b>'s monitor beeps, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"",\
-							"<b>[src]</b>'s monitor flashes.")
+			say("[world.time - reqtime] seconds remaining until another requisition form may be printed.")
 			return
 
 		//Find the correct supply_pack datum
@@ -657,8 +656,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
-			audible_message("<b>[src]</b>'s monitor beeps, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"", \
-							"<b>[src]</b>'s monitor flashes.")
+			say("[world.time - reqtime] seconds remaining until another requisition form may be printed.")
 			return
 
 		//Find the correct supply_pack datum
