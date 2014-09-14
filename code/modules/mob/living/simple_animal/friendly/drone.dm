@@ -84,7 +84,7 @@
 		if(user.get_active_hand())
 			user << "<span class='notice'>Your hands are full.</span>"
 			return
-		src << "<span class='warning'>[user] is trying to pick you up!</span"
+		src << "<span class='warning'>[user] is trying to pick you up!</span>"
 		user << "<span class='notice'>You start picking [src] up...</span>"
 		if(do_after(user, 20, needhand = 1))
 			drop_l_hand()
