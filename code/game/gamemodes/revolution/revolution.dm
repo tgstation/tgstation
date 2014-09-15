@@ -26,7 +26,7 @@
 
 	var/finished = 0
 	var/checkwin_counter = 0
-	var/const/max_headrevs = 3
+	var/max_headrevs = 3
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
@@ -53,6 +53,10 @@
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)
 				antag_candidates -= player
+
+	var/list/heads = get_living_heads()
+	if(heads.len < max_headrevs)
+		max_headrevs = heads.len
 
 	for (var/i=1 to max_headrevs)
 		if (antag_candidates.len==0)
