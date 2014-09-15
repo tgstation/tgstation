@@ -8,19 +8,6 @@
 
 /var/list/meteorsC = list(/obj/effect/meteor/dust) //for space dust event
 
-/*
-/proc/meteor_wave(var/number = 50) //this proc's unused now.
-	if(!ticker || wavesecret)
-		return
-
-	wavesecret = 1
-	for(var/i = 0 to number)
-		spawn(rand(10,100))
-			spawn_meteor()
-	spawn(meteor_wave_delay)
-		wavesecret = 0
-
-*/
 /proc/spawn_meteors(var/number = 10, var/list/meteortypes)
 	for(var/i = 0; i < number; i++)
 		spawn_meteor(meteortypes)

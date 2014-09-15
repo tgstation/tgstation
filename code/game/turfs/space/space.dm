@@ -51,7 +51,6 @@
 	inertial_drift(A)
 
 	if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
-		A << "start entered [A.x], [A.y], [A.z]"
 		var/move_to_z = src.z
 		var/safety = 1
 
@@ -84,7 +83,6 @@
 			A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
 		if(isliving(A))
-			A << "end entered [A.x], [A.y], [A.z]"
 			var/mob/living/L = A
 			if(L.pulling)
 				var/turf/T = get_step(L.loc,turn(A.dir, 180))
