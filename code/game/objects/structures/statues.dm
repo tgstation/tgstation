@@ -150,9 +150,10 @@
 		return
 	..()
 
-/obj/structure/statue/plasma/proc/PlasmaBurn(temperature)
-	Dismantle(1)
+/obj/structure/statue/plasma/proc/PlasmaBurn()
 	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
+	hardness = 0
+	CheckHardness()
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)

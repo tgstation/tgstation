@@ -211,6 +211,7 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	)
 
 /obj/item/stack/sheet/mineral/clown/New(var/loc, var/amount=null)
+	recipes = clown_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
