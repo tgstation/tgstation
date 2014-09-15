@@ -43,6 +43,7 @@
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
+	meat_amount = 1
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 
@@ -150,7 +151,7 @@
 			if (ears)
 				ears.talk_into(src, message, message_mode)
 			return ITALICS | REDUCE_RANGE
-	
+
 	if(message_mode in radiochannels)
 		if(ears)
 			ears.talk_into(src, message, message_mode)

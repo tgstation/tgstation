@@ -10,6 +10,7 @@
 	health = 30
 	see_in_dark = 3
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
+	meat_amount = 1
 	response_help  = "prods"
 	response_disarm = "pushes aside"
 	response_harm   = "smacks"

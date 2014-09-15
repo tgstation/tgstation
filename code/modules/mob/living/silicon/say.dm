@@ -9,14 +9,13 @@
 		desig = trim_left(S.designation + " " + S.job)
 	var/message_a = say_quote(message)
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
-
-	for (var/mob/living/S in living_mob_list)
-		if(S.binarycheck() || S.stat == DEAD)
-			if(istype(S , /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
-				S << renderedAI
+	for(var/mob/M in player_list)
+		if(M.binarycheck() || (M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && !istype(M, /mob/new_player)))
+			if(istype(M, /mob/living/silicon/ai))
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[M];track2=\ref[M];track=\ref[src]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
+				M << renderedAI
 			else
-				S << rendered
+				M << rendered
 
 /mob/living/silicon/binarycheck()
 	return 1

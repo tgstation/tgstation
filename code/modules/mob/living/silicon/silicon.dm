@@ -15,6 +15,8 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 
+	var/sensor_mode = 0 //Determines the current HUD.
+
 /mob/living/silicon/proc/cancelAlarm()
 	return
 
@@ -314,3 +316,17 @@
 
 /mob/living/silicon/assess_threat() //Secbots won't hunt silicon units
 	return -10
+
+/mob/living/silicon/verb/sensor_mode()
+	set name = "Set Sensor Augmentation"
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
+	switch(sensor_type)
+		if ("Security")
+			sensor_mode = DATA_HUD_SECURITY
+			src << "<span class='notice'>Security records overlay enabled.</span>"
+		if ("Medical")
+			sensor_mode = DATA_HUD_MEDICAL
+			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
+		if ("Disable")
+			sensor_mode = 0
+			src << "Sensor augmentations disabled."

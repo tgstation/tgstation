@@ -180,7 +180,6 @@
 				if ((!( ticker ) || emergency_shuttle.location))
 					return
 				emergency_shuttle.incall()
-				priority_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.", null,'sound/AI/shuttlecalled.ogg', "Priority")
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>", 1)
 
@@ -190,7 +189,6 @@
 				switch(emergency_shuttle.direction)
 					if(-1)
 						emergency_shuttle.incall()
-						priority_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
 						log_admin("[key_name(usr)] called the Emergency Shuttle")
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>", 1)
 					if(1)

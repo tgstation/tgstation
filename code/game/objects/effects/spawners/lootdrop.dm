@@ -96,7 +96,7 @@
 				/obj/item/weapon/crowbar = 1,
 				/obj/item/weapon/crowbar/red = 1,
 				/obj/item/weapon/extinguisher = 11,
-				/obj/item/weapon/gun/projectile/revolver/russian = 1,
+				//obj/item/weapon/gun/projectile/revolver/russian = 1, //disabled until lootdrop is a proper world proc.
 				/obj/item/weapon/hand_labeler = 1,
 				/obj/item/weapon/paper/crumpled = 1,
 				/obj/item/weapon/pen = 1,

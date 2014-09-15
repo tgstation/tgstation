@@ -266,6 +266,7 @@
 		qdel(A)
 		return
 	A.current = target
+	A.firer = src
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
 	spawn( 0 )

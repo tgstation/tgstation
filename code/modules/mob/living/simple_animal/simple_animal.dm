@@ -242,10 +242,11 @@
 /mob/living/simple_animal/emote(var/act)
 	if(stat)
 		return
-	if(act)
-		if(act == "scream")	act = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
+	if(act == "scream")
+		act = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
 		visible_message("<B>[src]</B> [act].")
-
+		return
+	..(act)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)

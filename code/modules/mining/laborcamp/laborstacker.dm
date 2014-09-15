@@ -40,7 +40,7 @@
 	else if(istype(inserted_id)) //There's an ID in there.
 		dat += text("ID: [inserted_id.registered_name] <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>")
 		dat += text("Points Collected:[inserted_id.points]<br>")
-		dat += text("Point Quota: [inserted_id.goal ? inserted_id.goal : "Unlimited"] - Reach your quota to earn your release<br>")
+		dat += text("Point Quota: [inserted_id.goal] - Reach your quota to earn your release<br>")
 		dat += text("Unclaimed Collection Points: [machine.points].  <A href='?src=\ref[src];choice=claim'>Claim points.</A><br>")
 	else	//No ID in sight.  Complain about it.
 		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>")
@@ -157,7 +157,7 @@
 			var/obj/item/weapon/card/id/prisoner/prisoner_id = I
 			user << "<span class='notice'><B>ID: [prisoner_id.registered_name]</B></span>"
 			user << "<span class='notice'>Points Collected:[prisoner_id.points]</span>"
-			user << "<span class='notice'>Point Quota: [prisoner_id.goal ? prisoner_id.goal : "Unlimited"]</span>"
+			user << "<span class='notice'>Point Quota: [prisoner_id.goal]</span>"
 			user << "<span class='notice'>Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.</span>"
 		else
 			user << "<span class='warning'>Error: Invalid ID</span>"

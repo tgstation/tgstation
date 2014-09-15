@@ -397,7 +397,7 @@
 						//Get out list of viable PDAs
 						var/list/obj/item/device/pda/sendPDAs = get_viewable_pdas()
 						if(PDAs && PDAs.len > 0)
-							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortAtom(sendPDAs)
+							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortNames(sendPDAs)
 						else
 							customrecepient = null
 

@@ -316,6 +316,10 @@ var/list/sting_paths
 		user << "We have already evolved this ability!"
 		return
 
+	if(thepower.dna_cost < 0)
+		user << "We cannot evolve this ability."
+		return
+
 	if(geneticpoints < thepower.dna_cost)
 		user << "We have reached our capacity for abilities."
 		return

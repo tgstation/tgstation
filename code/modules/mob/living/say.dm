@@ -71,7 +71,7 @@ var/list/department_radio_keys = list(
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
 
-/mob/living/proc/binarycheck()
+/mob/proc/binarycheck()
 	return 0
 
 /mob/living/say(message, bubble_type)
@@ -129,8 +129,9 @@ var/list/department_radio_keys = list(
 	var/deaf_message
 	var/deaf_type
 	if(speaker != src)
-		deaf_message = "<span class='name'>[speaker]</span> talks but you cannot hear them."
-		deaf_type = 1
+		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
+			deaf_message = "<span class='name'>[speaker]</span> talks but you cannot hear them."
+			deaf_type = 1
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
@@ -185,7 +186,7 @@ var/list/department_radio_keys = list(
 			return 0
 		if(client.handle_spam_prevention(message,MUTE_IC))
 			return 0
-	
+
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
@@ -216,21 +217,33 @@ var/list/department_radio_keys = list(
 
 /mob/living/proc/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_CHANGELING)
-		if(lingcheck())
-			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
-			for(var/mob/M in mob_list)
-				if(M.lingcheck() || (M.stat == DEAD && !istype(M, /mob/new_player)))
-					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-			return 1
+		switch(lingcheck())
+			if(2)
+				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
+				for(var/mob/M in mob_list)
+					if(M.stat == DEAD && !istype(M, /mob/new_player))
+						M << msg
+					else
+						switch(M.lingcheck())
+							if(2)
+								M << msg
+							if(1)
+								if(prob(20))
+									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
+				return 1
+			if(1)
+				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
+				return 1
 	return 0
 
 /mob/living/proc/treat_message(message)
 	if(getBrainLoss() >= 60)
 		message = derpspeech(message, stuttering)
-	
+
 	if(stuttering)
 		message = stutter(message)
-	
+
 	return message
 
 /mob/living/proc/radio(message, message_mode, steps)
@@ -260,9 +273,12 @@ var/list/department_radio_keys = list(
 			return NOPASS
 	return 0
 
-/mob/living/lingcheck()
+/mob/living/lingcheck() //Returns 1 if they are a changeling. Returns 2 if they are a changeling that can communicate through the hivemind
 	if(mind && mind.changeling)
+		if(mind.changeling.changeling_speak)
+			return 2
 		return 1
+	return 0
 
 /mob/living/say_quote()
 	if (stuttering)
