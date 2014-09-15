@@ -52,7 +52,7 @@
 		if(V.vchange)
 			return V.voice
 		else
-			return name
+			return real_name
 	if(mind && mind.changeling && mind.changeling.mimicing)
 		return mind.changeling.mimicing
 	if(GetSpecialVoice())

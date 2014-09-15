@@ -386,7 +386,14 @@
 			else if(isrobot(usr))
 				var/mob/living/silicon/robot/R = usr
 				R.aicamera.viewpictures()
-
+		if("nightvision")
+			if(isalien(usr))
+				var/mob/living/carbon/alien/humanoid/A = usr
+				A.nightvisiontoggle()
+		if("Sensor Augmentation")
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.sensor_mode()
 		else
 			return 0
 	return 1

@@ -760,7 +760,7 @@
 					ticker.mode.changelings += src
 					current.make_changeling()
 					special_role = "Changeling"
-					current << "<span class='userdanger'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</span>"
+					current << "<span class='userdanger'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>"
 					message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 					log_admin("[key_name(usr)] has changeling'ed [current].")
 			if("autoobjectives")
@@ -994,21 +994,16 @@
 		ticker.mode.finalize_traitor(src)
 		ticker.mode.greet_traitor(src)
 
-/datum/mind/proc/make_Nuke()
+/datum/mind/proc/make_Nuke(var/turf/spawnloc,var/nuke_code,var/leader=0)
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)
-		if (ticker.mode.syndicates.len==1)
-			ticker.mode.prepare_syndicate_leader(src)
-		else
-			current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 		special_role = "Syndicate"
 		assigned_role = "MODE"
-		current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 		ticker.mode.forge_syndicate_objectives(src)
 		ticker.mode.greet_syndicate(src)
 
-		current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
+		current.loc = spawnloc
 
 		var/mob/living/carbon/human/H = current
 		qdel(H.belt)
@@ -1022,6 +1017,11 @@
 		qdel(H.w_uniform)
 
 		ticker.mode.equip_syndicate(current)
+
+		if (leader)
+			ticker.mode.prepare_syndicate_leader(src,nuke_code)
+		else
+			current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 
 /datum/mind/proc/make_Changling()
 	if(!(src in ticker.mode.changelings))
