@@ -255,3 +255,36 @@
 	..()
 	update_icon()
 
+//FLARE BOX
+//Useful for lots of things, this box has 6 flares in it. Only takes unused and unlight flares.
+//Great for emergency crates/closets etc.
+
+/obj/item/weapon/storage/fancy/flares
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "flarebox6"
+	icon_type = "flare"
+	name = "box of flares"
+	storage_slots = 6
+	m_amt = 15000
+	can_hold = list("/obj/item/device/flashlight/flare")
+
+/obj/item/weapon/storage/fancy/flares/New()
+	..()
+	for(var/i=1; i <= storage_slots; i++)
+		new /obj/item/device/flashlight/flare(src)
+	return
+
+/obj/item/weapon/storage/fancy/flares/attackby(var/obj/item/device/flashlight/flare/F, var/user as mob) //if it's on or empty, we don't want it
+	if(!istype(F))
+		return
+	if(F.on)
+		user <<"You can't put a lit flare in the box!"
+		return
+	if(!F.fuel)
+		user <<"This flare is empty!"
+		return
+	..()
+
+/obj/item/weapon/storage/fancy/flares/update_icon()
+	..()
+	m_amt = contents.len * 2500
