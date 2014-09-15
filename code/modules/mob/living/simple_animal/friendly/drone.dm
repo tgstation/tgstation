@@ -28,9 +28,9 @@
 	var/picked = FALSE
 	var/list/drone_overlays[TOTAL_LAYERS]
 	var/laws = \
-	{"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
-	2. You may not harm any being, regardless of intent or circumstance.
-	3. You must maintain, repair, improve, and power the station to the best of your abilities."}
+	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
+	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
+	"3. You must maintain, repair, improve, and power the station to the best of your abilities."
 	var/light_on = 0
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 
@@ -101,6 +101,13 @@
 
 	..()
 
+/mob/living/simple_animal/drone/Move()
+	if(pullin)
+		if(pulling)
+			pullin.icon_state = "pull"
+		else
+			pullin.icon_state = "pull0"
+	..()
 
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
 	return 1
