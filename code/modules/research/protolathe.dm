@@ -127,22 +127,22 @@ Note: Must be placed west/left of and R&D console to function.
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "\The protolathe must be linked to an R&D console first!"
+		user << "<span class='warning'> The [src.name] must be linked to an R&D console first!</span>"
 		return 1
 	if (busy)
-		user << "<span class='warning'>The protolathe is busy. Please wait for completion of previous operation.</span>"
+		user << "<span class='warning'>The [src.name] is busy. Please wait for completion of previous operation.</span>"
 		return 1
 	if (O.is_open_container())
 		return
 	if (!istype(O, /obj/item/stack/sheet) || istype(O, /obj/item/stack/sheet/mineral/wood))
-		user << "<span class='warning'>You cannot insert this item into the protolathe!</span>"
+		user << "<span class='warning'>You cannot insert this item into the [src.name]!</span>"
 		return 1
 	if (stat)
 		return 1
 	if(istype(O,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = O
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "<span class='warning'>The protolathe's material bin is full. Please remove material before adding more.</span>"
+			user << "<span class='warning'>The [src.name]'s material bin is full. Please remove material before adding more.</span>"
 			return 1
 
 	var/obj/item/stack/sheet/stack = O
