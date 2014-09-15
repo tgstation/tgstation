@@ -49,6 +49,42 @@ var/global/list/datum/dna/gene/dna_genes[0]
 var/global/list/good_blocks[0]
 var/global/list/bad_blocks[0]
 
+var/global/list/skin_styles_female_list = list() //Unused
+
+// Hair Lists //////////////////////////////////////////////////
+
+var/global/list/hair_styles_list				= list()
+var/global/list/hair_styles_male_list			= list()
+var/global/list/hair_styles_female_list			= list()
+var/global/list/facial_hair_styles_list			= list()
+var/global/list/facial_hair_styles_male_list	= list()
+var/global/list/facial_hair_styles_female_list	= list()
+
+/proc/buildHairLists()
+	var/list/paths
+	var/datum/sprite_accessory/hair/H
+	paths = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	for(. in paths)
+		H = new .
+		hair_styles_list[H.name] = H
+		switch(H.gender)
+			if(MALE)	hair_styles_male_list += H.name
+			if(FEMALE)	hair_styles_female_list += H.name
+			else
+				hair_styles_male_list += H.name
+				hair_styles_female_list += H.name
+	paths = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+	for(. in paths)
+		H = new .
+		facial_hair_styles_list[H.name] = H
+		switch(H.gender)
+			if(MALE)	facial_hair_styles_male_list += H.name
+			if(FEMALE)	facial_hair_styles_female_list += H.name
+			else
+				facial_hair_styles_male_list += H.name
+				facial_hair_styles_female_list += H.name
+	return
+	
 /////////////////
 // GENE DEFINES
 /////////////////
