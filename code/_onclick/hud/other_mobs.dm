@@ -63,6 +63,11 @@
 		mymob.pullin.name = "pull"
 		mymob.pullin.screen_loc = ui_construct_pull
 
+		mymob.zone_sel = new /obj/screen/zone_sel()
+		mymob.zone_sel.icon = 'icons/mob/screen1_construct.dmi'
+		mymob.zone_sel.overlays.Cut()
+		mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+
 	mymob.client.screen = null
 
-	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin)
+	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin, mymob.zone_sel)
