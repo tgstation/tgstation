@@ -16,16 +16,13 @@
 	fire_delay = 5
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
-	caliber = "rpg"
+	caliber = list("rpg" = 1)
 	origin_tech = "combat=4;materials=2;syndicate=2"
 	ammo_type = "/obj/item/ammo_casing/rocket_rpg"
 	attack_verb = list("struck", "hit", "bashed")
 
 /obj/item/weapon/gun/projectile/rocketlauncher/isHandgun()
 	return 0
-
-/obj/item/weapon/gun/projectile/rocketlauncher/attack_self(mob/user as mob)
-	update_icon()
 
 /obj/item/weapon/gun/projectile/rocketlauncher/update_icon()
 	if(!loaded.len)

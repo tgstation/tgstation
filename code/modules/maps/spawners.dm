@@ -6,7 +6,7 @@
 // Enjoy.
 //
 //**************************************************************
-	
+
 /obj/map/spawner
 	icon = 'icons/obj/map/spawners.dmi'
 	var/amount = 1
@@ -150,7 +150,7 @@
 		/obj/item/stack/rods{amount=50},
 		/obj/item/stack/tile/grass{amount=50},
 		)
-		
+
 /obj/map/spawner/engi/dispensers
 	name = "engie dispenser spawner"
 	icon_state = "engi_dispensers"
@@ -159,7 +159,7 @@
 		/obj/structure/reagent_dispensers/fueltank,
 		/obj/structure/reagent_dispensers/watertank,
 		)
-		
+
 /obj/map/spawner/engi/machinery
 	name = "engie machinery spawner"
 	icon_state = "engi_machinery"
@@ -257,7 +257,7 @@
 		/obj/item/weapon/storage/belt/utility,
 		/obj/item/weapon/storage/toolbox/electrical,
 		)
-		
+
 /obj/map/spawner/assistant/materials
 	name = "assistant materials spawner"
 	icon_state = "ass_materials"
@@ -324,13 +324,13 @@
 		/obj/item/device/soundsynth,
 		/obj/item/latexballon,
 		/obj/item/weapon/storage/toolbox/electrical,
-		/obj/item/ammo_magazine/a12mm,
-		/obj/item/ammo_magazine/c45,
-		/obj/item/ammo_magazine/a418,
-		/obj/item/ammo_magazine/a75,
-		/obj/item/ammo_magazine/c38,
-		/obj/item/ammo_magazine/c9mm,
-		/obj/item/ammo_magazine/mc9mm,
+		/obj/item/ammo_storage/magazine/a12mm,
+		/obj/item/ammo_storage/box/c45,
+		/obj/item/ammo_storage/box/a418,
+		/obj/item/ammo_storage/magazine/a75,
+		/obj/item/ammo_storage/speedloader/c38,
+		/obj/item/ammo_storage/box/c9mm,
+		/obj/item/ammo_storage/magazine/mc9mm,
 		/obj/item/bodybag,
 		/obj/item/clothing/ears/earmuffs,
 		/obj/item/clothing/glasses/eyepatch,
@@ -670,7 +670,7 @@
 		/obj/item/weapon/silencer,
 		/obj/item/weapon/storage/backpack/holding,
 		)
-		
+
 /obj/map/spawner/space/gear
 	name = "space gear spawner"
 	icon_state = "space_gear"
@@ -698,7 +698,7 @@
 		/obj/item/weapon/organ/l_arm,
 		/obj/item/weapon/organ/l_foot,
 		)
-		
+
 /obj/map/spawner/space/supply
 	name = "space supply spawner"
 	icon_state = "space_supply"

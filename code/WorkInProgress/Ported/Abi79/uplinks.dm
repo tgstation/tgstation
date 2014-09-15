@@ -134,9 +134,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 						if(istype(I,/obj/item/weapon/gun/projectile))
 							hasRevolver = 1
 
-					if(hasRevolver) randomItems.Add("/obj/item/ammo_magazine/a357") //Revolver ammo
+					if(hasRevolver) randomItems.Add("/obj/item/ammo_storage/box/a357") //Revolver ammo
 */
-					randomItems.Add("/obj/item/ammo_magazine/a357") //Revolver ammo
+					randomItems.Add("/obj/item/ammo_storage/box/a357") //Revolver ammo
 					randomItems.Add("/obj/item/clothing/shoes/syndigaloshes") //No-Slip Syndicate Shoes
 					randomItems.Add("/obj/item/weapon/plastique") //C4
 
@@ -167,7 +167,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 						"/obj/item/weapon/card/id/syndicate" , "/obj/item/weapon/card/emag" , "/obj/item/weapon/storage/syndie_kit/space" , "/obj/item/device/encryptionkey/binary" , \
 						"/obj/item/weapon/storage/syndie_kit/imp_freedom" , "/obj/item/clothing/glasses/thermal")
 							uses -= 3
-						if("/obj/item/ammo_magazine/a357" , "/obj/item/clothing/shoes/syndigaloshes" , "/obj/item/weapon/plastique")
+						if("/obj/item/ammo_storage/box/a357" , "/obj/item/clothing/shoes/syndigaloshes" , "/obj/item/weapon/plastique")
 							uses -= 2
 						if("/obj/item/weapon/soap/syndie" , "/obj/item/weapon/storage/toolbox/syndicate")
 							uses -= 1

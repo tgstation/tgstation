@@ -7833,7 +7833,7 @@
 "cUG" = (/obj/structure/table,/obj/item/weapon/hand_labeler,/turf/simulated/shuttle/floor,/area/centcom/evac)
 "cUH" = (/obj/machinery/vending/cigarette,/turf/simulated/shuttle/floor,/area/centcom/evac)
 "cUI" = (/obj/structure/dispenser/oxygen,/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
-"cUJ" = (/obj/structure/closet/crate,/obj/item/ammo_magazine/c45,/obj/item/ammo_magazine/c45,/obj/item/weapon/storage/box/dartshells,/obj/item/weapon/storage/box/lethalshells{pixel_x = -5},/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
+"cUJ" = (/obj/structure/closet/crate,/obj/item/ammo_storage/magazine/c45,/obj/item/ammo_storage/magazine/c45,/obj/item/weapon/storage/box/dartshells,/obj/item/weapon/storage/box/lethalshells{pixel_x = -5},/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "cUK" = (/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"},/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "gravsnow_surround"; dir = 8},/area/syndicate_mothership)
 "cUL" = (/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"},/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "gravsnow_corner"; dir = 6},/area/syndicate_mothership)
 "cUM" = (/obj/structure/window/full/reinforced,/turf/unsimulated/wall/fakeglass,/area/syndicate_mothership)
