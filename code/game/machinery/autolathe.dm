@@ -5,6 +5,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/reagent_containers/glass/bucket(), \
 		new /obj/item/weapon/crowbar(), \
 		new /obj/item/device/flashlight(), \
+		new /obj/item/weapon/storage/fancy/flares(), \
 		new /obj/item/weapon/extinguisher(), \
 		new /obj/item/device/multitool(), \
 		new /obj/item/device/analyzer(), \
@@ -34,6 +35,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/reagent_containers/syringe(), \
 		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
+		new /obj/item/ammo_casing/shotgun/flare(), \
 		new /obj/item/ammo_storage/speedloader/c38/empty(), \
 		new /obj/item/ammo_storage/box/c38(), \
 		new /obj/item/device/taperecorder(), \
@@ -57,6 +59,7 @@ var/global/list/autolathe_recipes = list( \
 
 var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/weapon/flamethrower/full(), \
+		new /obj/item/ammo_storage/box/flare(), \
 		new /obj/item/weapon/rcd(), \
 		new /obj/item/weapon/pipe_dispenser(),\
 		new /obj/item/device/radio/electropack(), \

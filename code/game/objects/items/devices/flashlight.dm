@@ -26,13 +26,13 @@
 /obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		if(loc == user)
+		if(user && loc == user)
 			user.SetLuminosity(user.luminosity + brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		if(loc == user)
+		if(user && loc == user)
 			user.SetLuminosity(user.luminosity - brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(0)
@@ -153,9 +153,12 @@
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
+	var/H_color = ""
+
+	l_color = "#AA0033"
 
 /obj/item/device/flashlight/flare/New()
-	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
+	fuel = rand(300, 500) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	..()
 
 /obj/item/device/flashlight/flare/process()
@@ -177,7 +180,7 @@
 		var/mob/U = loc
 		update_brightness(U)
 	else
-		update_brightness(null)
+		update_brightness()
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
 
@@ -187,11 +190,31 @@
 		return
 	if(on)
 		return
-
-	. = ..()
 	// All good, turn it on.
-	if(.)
-		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
-		src.force = on_damage
-		src.damtype = "fire"
-		processing_objects += src
+	user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
+	Light(user)
+
+/obj/item/device/flashlight/flare/proc/Light(var/mob/user as mob)
+	if(user)
+		if(!isturf(user.loc))
+			user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
+			return 0
+	on = 1
+	src.force = on_damage
+	src.damtype = "fire"
+	processing_objects += src
+	if(user)
+		user.l_color = l_color
+		update_brightness(user)
+	else
+		update_brightness()
+
+/obj/item/device/flashlight/flare/pickup(mob/user)
+	..()
+	if(on)
+		user.l_color = l_color
+
+
+/obj/item/device/flashlight/flare/dropped(mob/user)
+	..()
+	user.l_color = initial(user.l_color)

@@ -169,3 +169,12 @@
 	new /obj/item/ammo_storage/speedloader/a357/empty(src)
 	new /obj/item/ammo_storage/box/a357(src)
 	return
+
+/obj/item/weapon/storage/box/syndie_kit/flaregun
+	name = "box (modified flare gun)"
+
+/obj/item/weapon/storage/box/syndie_kit/flaregun/New()
+	..()
+	new /obj/item/weapon/gun/projectile/flare/syndicate(src)
+	new /obj/item/ammo_storage/box/flare(src)
+	return

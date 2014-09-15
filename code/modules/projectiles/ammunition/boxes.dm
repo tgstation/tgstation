@@ -48,3 +48,10 @@
 	origin_tech = "combat=2"
 	ammo_type = "/obj/item/ammo_casing/c45"
 	max_ammo = 30
+
+/obj/item/ammo_storage/box/flare
+	name = "ammo box (flare shells)"
+	icon_state = "flarebox"
+	ammo_type = "/obj/item/ammo_casing/shotgun/flare"
+	max_ammo = 7
+	multiple_sprites = 1
