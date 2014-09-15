@@ -124,16 +124,11 @@
 /obj/structure/statue/plasma
 	hardness = 2
 	mineralType = "plasma"
+	desc = "This statue is suitably made from plasma."
 
 /obj/structure/statue/plasma/scientist
 	name = "Statue of a Scientist"
-	desc = "This statue is suitably made from plasma."
-	icon_state = "scientist"
-
-/obj/structure/statue/plasma/xenomorph
-	name = "Statue of a Xenomorph"
-	desc = "This statue is suitably made from plasma."
-	icon_state = "xenomorph"
+	icon_state = "sci"
 
 /obj/structure/statue/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -168,30 +163,26 @@
 /obj/structure/statue/gold
 	hardness = 3
 	mineralType = "gold"
+	desc = "This is a highly valuable statue made from gold."
 
 /obj/structure/statue/gold/hos
 	name = "Statue of the Head of Security"
-	desc = "This is a highly valuable statue made from gold."
 	icon_state = "hos"
 
 /obj/structure/statue/gold/hop
 	name = "Statue of the Head of Personnel"
-	desc = "This is a highly valuable statue made from gold."
 	icon_state = "hop"
 
 /obj/structure/statue/gold/cmo
 	name = "Statue of the Chief Medical Officer"
-	desc = "This is a highly valuable statue made from gold."
 	icon_state = "cmo"
 
 /obj/structure/statue/gold/ce
 	name = "Statue of the Chief Engineer"
-	desc = "This is a highly valuable statue made from gold."
 	icon_state = "ce"
 
 /obj/structure/statue/gold/rd
 	name = "Statue of the Research Director"
-	desc = "This is a highly valuable statue made from gold."
 	icon_state = "rd"
 
 //////////////////////////silver///////////////////////////////////////
@@ -199,57 +190,56 @@
 /obj/structure/statue/silver
 	hardness = 3
 	mineralType = "silver"
+	desc = "This is a valuable statue made from silver."
 
 /obj/structure/statue/silver/md
 	name = "Statue of a Medical Officer"
-	desc = "This is a valuable statue made from silver."
 	icon_state = "md"
 
-/obj/structure/statue/silver/chem
-	name = "Statue of a Chemist"
-	desc = "This is a valuable statue made from silver."
-	icon_state = "chem"
+/obj/structure/statue/silver/janitor
+	name = "Statue of a Janitor"
+	icon_state = "jani"
 
 /obj/structure/statue/silver/sec
 	name = "Statue of a Security Officer"
-	desc = "This is a valuable statue made from silver."
 	icon_state = "sec"
 
-/obj/structure/statue/silver/borgs
+/obj/structure/statue/silver/secborg
 	name = "Statue of a Security Cyborg"
-	desc = "This is a valuable statue made from silver."
-	icon_state = "borgs"
+	icon_state = "secborg"
 
-/obj/structure/statue/silver/borgm
+/obj/structure/statue/silver/medborg
 	name = "Statue of a Medical Cyborg"
-	desc = "This is a valuable statue made from silver."
-	icon_state = "borgm"
+	icon_state = "medborg"
 
 /////////////////////////diamond/////////////////////////////////////////
 
 /obj/structure/statue/diamond
 	hardness = 10
 	mineralType = "diamond"
+	desc = "This is a very expensive diamond statue"
 
 /obj/structure/statue/diamond/captain
 	name = "Statue of THE Captain."
-	desc = "This is a very expensive diamond statue"
-	icon_state = "captain"
+	icon_state = "cap"
 
-/obj/structure/statue/diamond/ai
-	name = "Statue of the AI."
-	desc = "This is a very expensive diamond statue"
-	icon_state = "ai"
+/obj/structure/statue/diamond/ai1
+	name = "Statue of the AI hologram."
+	icon_state = "ai1"
+
+/obj/structure/statue/diamond/ai2
+	name = "Statue of the AI core."
+	icon_state = "ai2"
 
 ////////////////////////bananium///////////////////////////////////////
 
 /obj/structure/statue/bananium
 	hardness = 3
 	mineralType = "clown"
+	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 
 /obj/structure/statue/bananium/clown
 	name = "Statue of a clown"
-	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	icon_state = "clown"
 
 /obj/structure/statue/bananium/Bumped(atom/user)
@@ -282,4 +272,4 @@
 /obj/structure/statue/sandstone/assistant
 	name = "Statue of an assistant"
 	desc = "A cheap statue of sandstone for a greyshirt."
-	icon_state = "assistant"
+	icon_state = "assist"
