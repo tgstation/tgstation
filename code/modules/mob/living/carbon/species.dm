@@ -2,6 +2,26 @@
 	Datum-based species. Should make for much cleaner and easier to maintain mutantrace code.
 */
 
+// Global Lists ////////////////////////////////////////////////
+
+var/global/list/all_species = list()
+var/global/list/all_languages = list()
+var/global/list/whitelisted_species = list("Human")
+
+/proc/buildSpeciesLists()
+	var/datum/language/L
+	var/datum/species/S
+	for(. in (typesof(/datum/language)-/datum/language))
+		L = new .
+		all_languages[L.name] = L
+	for(. in (typesof(/datum/species)-/datum/species))
+		S = new .
+		all_species[S.name] = S
+		if(S.flags & WHITELISTED) whitelisted_species += S.name
+	return
+
+////////////////////////////////////////////////////////////////
+
 /datum/species
 	var/name                     // Species name.
 
