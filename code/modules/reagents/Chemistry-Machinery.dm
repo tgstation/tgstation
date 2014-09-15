@@ -158,8 +158,8 @@
 		else
 			custom = 0
 			amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
-		if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
-			amount = 0
+		if (amount < 5) // Since the user can actually type the commands himself, some sanity checking
+			amount = 5
 		if (amount > 100)
 			amount = 100
 
