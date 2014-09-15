@@ -41,9 +41,16 @@
 	using.name = "drop"
 	using.icon = ui_style
 	using.icon_state = "act_drop"
-	using.screen_loc = ui_storage1
+	using.screen_loc = ui_drone_drop
 	using.layer = 19
 	adding += using
+
+	mymob.pullin = new /obj/screen()
+	mymob.pullin.icon = ui_style
+	mymob.pullin.icon_state = "pull0"
+	mymob.pullin.name = "pull"
+	mymob.pullin.screen_loc = ui_drone_pull
+	adding += mymob.pullin
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "r_hand"

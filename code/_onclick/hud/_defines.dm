@@ -60,6 +60,8 @@
 #define ui_alien_storage_l "CENTER-2:14,SOUTH:5"//alien
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"//alien
 
+#define ui_drone_drop "CENTER+1:18,SOUTH:5"     //maintenance drones
+#define ui_drone_pull "CENTER+2:2,SOUTH:5"      //maintenance drones
 #define ui_drone_storage "CENTER-2:14,SOUTH:5"  //maintenance drones
 
 //Lower right, persistant menu
