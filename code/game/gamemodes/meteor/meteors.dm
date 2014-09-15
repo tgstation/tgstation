@@ -8,7 +8,7 @@
 
 /var/list/meteorsC = list(/obj/effect/meteor/dust) //for space dust event
 
-
+/*
 /proc/meteor_wave(var/number = 50) //this proc's unused now.
 	if(!ticker || wavesecret)
 		return
@@ -20,60 +20,67 @@
 	spawn(meteor_wave_delay)
 		wavesecret = 0
 
-
+*/
 /proc/spawn_meteors(var/number = 10, var/list/meteortypes)
 	for(var/i = 0; i < number; i++)
-		spawn(0)
-			spawn_meteor(meteortypes)
+		spawn_meteor(meteortypes)
 
 /proc/spawn_meteor(var/list/meteortypes)
-
-	var/startx
-	var/starty
-	var/endx
-	var/endy
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
-
-	do
-		switch(pick(1,2,3,4))
-			if(1) //NORTH
-				starty = world.maxy-(TRANSITIONEDGE+1)
-				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
-				endy = TRANSITIONEDGE
-				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
-			if(2) //EAST
-				starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
-				startx = world.maxx-(TRANSITIONEDGE+1)
-				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
-				endx = TRANSITIONEDGE
-			if(3) //SOUTH
-				starty = (TRANSITIONEDGE+1)
-				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
-				endy = world.maxy-TRANSITIONEDGE
-				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
-			if(4) //WEST
-				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
-				startx = (TRANSITIONEDGE+1)
-				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
-				endx = world.maxx-TRANSITIONEDGE
-
-		pickedstart = locate(startx, starty, 1)
-		pickedgoal = locate(endx, endy, 1)
+	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" )
+		var/startSide = pick(cardinal)
+		pickedstart = spaceDebrisStartLoc(startSide, 1)
+		pickedgoal = spaceDebrisFinishLoc(startSide, 1)
 		max_i--
-		if(max_i<=0) return
-	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
-
-
+		if(max_i<=0)
+			return
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart)
-
 	M.dest = pickedgoal
+	M.z_original = 1
 	spawn(0)
 		walk_towards(M, M.dest, 1)
 	return
 
+/proc/spaceDebrisStartLoc(startSide, Z)
+	var/starty
+	var/startx
+	switch(startSide)
+		if(1) //NORTH
+			starty = world.maxy-(TRANSITIONEDGE+1)
+			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+		if(2) //EAST
+			starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+			startx = world.maxx-(TRANSITIONEDGE+1)
+		if(3) //SOUTH
+			starty = (TRANSITIONEDGE+1)
+			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+		if(4) //WEST
+			starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+			startx = (TRANSITIONEDGE+1)
+	var/turf/T = locate(startx, starty, Z)
+	return T
+
+/proc/spaceDebrisFinishLoc(startSide, Z)
+	var/endy
+	var/endx
+	switch(startSide)
+		if(1) //NORTH
+			endy = TRANSITIONEDGE
+			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+		if(2) //EAST
+			endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
+			endx = TRANSITIONEDGE
+		if(3) //SOUTH
+			endy = world.maxy-TRANSITIONEDGE
+			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+		if(4) //WEST
+			endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+			endx = world.maxx-TRANSITIONEDGE
+	var/turf/T = locate(endx, endy, Z)
+	return T
 
 
 /obj/effect/meteor
@@ -89,9 +96,15 @@
 	pass_flags = PASSTABLE
 	var/heavy = 0
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
+	var/z_original
 
 	var/meteordrop = /obj/item/weapon/ore/iron
 	var/dropamt = 2
+
+/obj/effect/meteor/Move()
+	if(z != z_original || loc == dest)
+		qdel(src)
+	return ..()
 
 /obj/effect/meteor/dust
 	name = "space dust"

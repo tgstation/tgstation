@@ -330,11 +330,10 @@
 				t7 = null
 	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
 		var/turf/T = loc
-		var/turf/P = pulling.loc
 		. = ..()
 
 		if (pulling && pulling.loc)
-			if(!isturf(pulling.loc) || pulling.loc != P)
+			if(!isturf(pulling.loc))
 				stop_pulling()
 				return
 			else
@@ -362,7 +361,6 @@
 							if (istype(G, /obj/item/weapon/grab))
 								for(var/mob/O in viewers(M, null))
 									O.show_message(text("<span class='danger'>[] has been pulled from []'s grip by []</span>", G.affecting, G.assailant, src), 1)
-								//G = null
 								qdel(G)
 						else
 							ok = 0
@@ -397,17 +395,12 @@
 										if(check_dna_integrity(M)) //blood DNA
 											var/mob/living/carbon/DNA_helper = pulling
 											H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
-						step(pulling, get_dir(pulling.loc, T))
+						pulling.Move(T)
 						if(M)
 							M.start_pulling(t)
 				else
 					if (pulling)
-						if (istype(pulling, /obj/structure/window))
-							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
-									stop_pulling()
-					if (pulling)
-						step(pulling, get_dir(pulling.loc, T))
+						pulling.Move(T)
 	else
 		stop_pulling()
 		. = ..()
