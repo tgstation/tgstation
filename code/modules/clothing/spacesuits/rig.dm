@@ -13,6 +13,7 @@
 	action_button_name = "Toggle Helmet Light"
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
+	species_restricted = list("exclude","Vox")
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))
@@ -57,6 +58,7 @@
 	icon_state = "rig0-white"
 	item_state = "ce_helm"
 	_color = "white"
+	species_restricted = list("exclude","Vox")
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/suit/space/rig/elite
@@ -74,6 +76,7 @@
 	icon_state = "rig0-mining"
 	item_state = "mining_helm"
 	_color = "mining"
+	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/suit/space/rig/mining
 	icon_state = "rig-mining"
@@ -93,6 +96,7 @@
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.6
 	var/obj/machinery/camera/camera
+	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
@@ -128,6 +132,7 @@
 	icon_state = "rig0-wiz"
 	item_state = "wiz_helm"
 	_color = "wiz"
+	species_restricted = list("exclude","Vox")
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.7
@@ -154,6 +159,7 @@
 	icon_state = "rig0-medical"
 	item_state = "medical_helm"
 	_color = "medical"
+	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/suit/space/rig/medical
 	icon_state = "rig-medical"
@@ -170,6 +176,7 @@
 	icon_state = "rig0-sec"
 	item_state = "sec_helm"
 	_color = "sec"
+	species_restricted = list("exclude","Vox")
 	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
 	siemens_coefficient = 0.7
 
@@ -190,6 +197,7 @@
 	icon_state = "rig0-atmos"
 	item_state = "atmos_helm"
 	_color = "atmos"
+	species_restricted = list("exclude","Vox")
 	armor = list(melee = 40, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 0)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
@@ -210,6 +218,7 @@
 	icon_state = "rig0-atmos_gold"
 	item_state = "atmos_gold_helm"
 	_color = "atmos"
+	species_restricted = list("exclude","Vox")
 	no_light=1
 
 /obj/item/clothing/suit/space/rig/atmos/gold

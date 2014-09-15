@@ -13,7 +13,7 @@
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
 	icon_state = "luchag"
 	item_state = "luchag"
-	flags = FPRINT|TABLEPASS|BLOCKHAIR
+	flags = FPRINT|TABLEPASS|BLOCKHAIR|MASKINTERNALS
 	flags_inv = HIDEFACE
 	w_class = 2
 	siemens_coefficient = 3.0

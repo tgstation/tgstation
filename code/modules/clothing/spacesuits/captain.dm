@@ -4,7 +4,7 @@
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Only for the most fashionable of military figureheads."
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | STOPSPRESSUREDMAGE
 	flags_inv = HIDEFACE
 	permeability_coefficient = 0.01
 	armor = list(melee = 65, bullet = 50, laser = 50,energy = 25, bomb = 50, bio = 100, rad = 50)
@@ -16,6 +16,7 @@
 	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
 	icon_state = "caparmor"
 	item_state = "capspacesuit"
+	species_fit = list("Vox")
 	w_class = 4
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
