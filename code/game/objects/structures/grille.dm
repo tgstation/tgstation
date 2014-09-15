@@ -94,7 +94,7 @@
 	if(!Proj)
 		return
 	..()
-	if((!Proj.damage_type == STAMINA)) //Grilles can't be exhausted to death
+	if((Proj.damage_type != STAMINA)) //Grilles can't be exhausted to death
 		src.health -= Proj.damage*0.3
 		healthcheck()
 	return
