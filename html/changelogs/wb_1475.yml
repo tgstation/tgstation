@@ -1,0 +1,7 @@
+
+author: Wild Bill
+
+delete-after: True
+
+changes: 
+  - bugfix: Fixed missing custom food sprites/overlays
