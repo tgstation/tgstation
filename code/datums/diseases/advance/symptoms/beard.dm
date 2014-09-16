@@ -22,6 +22,7 @@ BONUS
 	stage_speed = -3
 	transmittable = -1
 	level = 4
+	severity = 1
 
 /datum/symptom/beard/Activate(var/datum/disease/advance/A)
 	..()
