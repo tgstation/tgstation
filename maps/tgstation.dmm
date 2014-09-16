@@ -7524,7 +7524,7 @@
 "cOJ" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
 "cOK" = (/obj/structure/flora/ausbushes/grassybush,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
 "cOL" = (/obj/structure/rack,/obj/item/clothing/under/dress/dress_saloon,/obj/item/clothing/head/hairflower,/turf/simulated/floor/holofloor{icon_state = "cult"},/area/holodeck/source_theatre)
-"cOM" = (/obj/structure/rack,/obj/effect/landmark/costume,/turf/simulated/floor/holofloor{icon_state = "cult"},/area/holodeck/source_theatre)
+"cOM" = (/obj/structure/rack,/obj/map/spawner/set_spawner/theater,/turf/simulated/floor/holofloor{icon_state = "cult"},/area/holodeck/source_theatre)
 "cON" = (/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"},/area/holodeck/source_plating)
 "cOO" = (/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Burn-Mix Floor"; nitrogen = 0; oxygen = 2500; temperature = 370; toxins = 5000},/area/holodeck/source_burntest)
 "cOP" = (/turf/simulated/floor/holofloor{dir = 9; icon_state = "red"},/area/holodeck/source_emptycourt)
