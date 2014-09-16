@@ -138,7 +138,7 @@
 		new /obj/item/clothing/under/rank/atmospheric_technician(src)
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
-		new /obj/item/weapon/extinguisher/foam
+		new /obj/item/weapon/extinguisher/foam(src)
 		// new /obj/item/weapon/cartridge/engineering(src)
 		new /obj/item/device/radio/headset/headset_eng(src)
 		new /obj/item/clothing/suit/storage/hazardvest(src)
