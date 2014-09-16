@@ -3,4 +3,4 @@ author: Lo6a4evskiy
 delete-after: True
 
 changes: 
-  - rscdel: Malfunction detected in station's crayons. Switching to manual graffiti control.
+  - rscadd: Malfunction detected in station's crayons. Switching to manual graffiti control.
