@@ -163,6 +163,12 @@
 /obj/machinery/mineral/ore_redemption/ex_act()
 	return //So some chucklefuck doesn't ruin miners reward with an explosion
 
+/obj/machinery/mineral/ore_redemption/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(air_group) return 0
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return !opacity
+	return !density
+
 /**********************Mining Equipment Locker**************************/
 
 /obj/machinery/mineral/equipment_locker
