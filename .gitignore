@@ -1,13 +1,10 @@
-#Files and folders specified here will never be tracked.
+###Files and folders specified here will never be tracked.
 
-*.ban
-*.bdb
-*.log
-*.sav
+#Ignore everything in datafolder and subdirectories
+data/**/*
 
-#Compiled files and other files generated during compilation.
+#Ignore compiled files and other files generated during compilation.
 *.dmb
 *.rsc
 *.lk
 *.int
-/data/mode.txt
