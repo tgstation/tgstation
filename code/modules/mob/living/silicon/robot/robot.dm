@@ -927,9 +927,7 @@
 
 
 /mob/living/silicon/robot/Move(a, b, flag)
-
 	. = ..()
-
 	if(module)
 		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
@@ -959,7 +957,16 @@
 								cleaned_human.update_inv_shoes(0)
 							cleaned_human.clean_blood()
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
-		return
+			return
+
+		if(module.type == /obj/item/weapon/robot_module/miner)
+			if(istype(loc, /turf/simulated/floor/plating/asteroid))
+				if(istype(module_state_1,/obj/item/weapon/storage/bag/ore))
+					loc.attackby(module_state_1,src)
+				else if(istype(module_state_2,/obj/item/weapon/storage/bag/ore))
+					loc.attackby(module_state_2,src)
+				else if(istype(module_state_3,/obj/item/weapon/storage/bag/ore))
+					loc.attackby(module_state_3,src)
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)

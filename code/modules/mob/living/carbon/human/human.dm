@@ -108,13 +108,10 @@
 		now_pushing = 1
 
 		if (!AM.anchored)
+			if(pulling == AM)
+				stop_pulling()
 			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-			step(AM, t)
+			AM.Move(get_step(AM, t))
 		now_pushing = 0
 
 /mob/living/carbon/human/Stat()
