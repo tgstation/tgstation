@@ -23,8 +23,6 @@
 	switch(type)
 		if("rune")
 			type = "rune[rand(1,6)]"
-		if("graffiti")
-			type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
 
 
 	icon_state = type
