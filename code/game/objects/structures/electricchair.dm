@@ -28,6 +28,11 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.stat || usr.restrained())
+		return
+
 	if(on)
 		on = 0
 		icon_state = "echair0"
