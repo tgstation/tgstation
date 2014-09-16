@@ -392,6 +392,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	src.updateUsrDialog()
 	return
 
+/obj/machinery/librarycomp/say_quote(text)
+	return "flashes, \"[text]\""
+
+
+
 /*
  * Library Scanner
  */

@@ -791,5 +791,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	frequency.post_signal(src, status_signal)
 
 
+/obj/machinery/computer/supplycomp/say_quote(text)
+	return "flashes, \"[text]\""
 
 
