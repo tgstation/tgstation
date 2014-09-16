@@ -10,7 +10,7 @@
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 
-	var/mineralType = "metal"
+	var/mineralType = "iron"
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
 	var/close_delay = -1 //-1 if does not auto close.
@@ -152,8 +152,8 @@
 
 /obj/structure/mineral_door/proc/Dismantle(devastated = 0)
 	if(!devastated)
-		if (mineralType == "metal")
-			var/ore = /obj/item/stack/sheet/metal
+		if (mineralType == "iron")
+			var/ore = /obj/item/stack/sheet/iron
 			for(var/i = 1, i <= oreAmount, i++)
 				new ore(get_turf(src))
 		else
@@ -161,8 +161,8 @@
 			for(var/i = 1, i <= oreAmount, i++)
 				new ore(get_turf(src))
 	else
-		if (mineralType == "metal")
-			var/ore = /obj/item/stack/sheet/metal
+		if (mineralType == "iron")
+			var/ore = /obj/item/stack/sheet/iron
 			for(var/i = 3, i <= oreAmount, i++)
 				new ore(get_turf(src))
 		else
@@ -189,7 +189,7 @@
 
 
 /obj/structure/mineral_door/iron
-	mineralType = "metal"
+	mineralType = "iron"
 	hardness = 3
 
 /obj/structure/mineral_door/silver

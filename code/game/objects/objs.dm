@@ -1,7 +1,7 @@
 /obj
 	languages = HUMAN
 	//var/datum/module/mod		//not used
-	var/m_amt = 0	// metal
+	var/m_amt = 0	// iron
 	var/g_amt = 0	// glass
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.

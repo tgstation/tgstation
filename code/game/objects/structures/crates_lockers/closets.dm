@@ -185,7 +185,7 @@
 				if(src.opened)
 					if(WT.remove_fuel(0,user))
 						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-						new /obj/item/stack/sheet/metal(src.loc)
+						new /obj/item/stack/sheet/iron(src.loc)
 						for(var/mob/M in viewers(src))
 							M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
 						qdel(src)

@@ -119,7 +119,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Internal armor is installed"),
 					 //6
-					 list("key"=/obj/item/stack/sheet/metal,
+					 list("key"=/obj/item/stack/sheet/iron,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Peripherals control module is secured"),
 					 //7
@@ -235,7 +235,7 @@
 				holder.icon_state = "ripley10"
 			else
 				user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
-				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
+				var/obj/item/stack/sheet/iron/MS = new /obj/item/stack/sheet/iron(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "ripley8"
 		if(4)
@@ -328,7 +328,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Internal armor is installed"),
 					 //6
-					 list("key"=/obj/item/stack/sheet/metal,
+					 list("key"=/obj/item/stack/sheet/iron,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Advanced capacitor is secured"),
 					 //7
@@ -516,7 +516,7 @@
 				holder.icon_state = "gygax16"
 			else
 				user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
-				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
+				var/obj/item/stack/sheet/iron/MS = new /obj/item/stack/sheet/iron(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "gygax14"
 		if(4)
@@ -906,7 +906,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Internal armor is installed"),
 					 //6
-					 list("key"=/obj/item/stack/sheet/metal,
+					 list("key"=/obj/item/stack/sheet/iron,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Advanced capacitor is secured"),
 					 //7
@@ -1095,7 +1095,7 @@
 				holder.icon_state = "durand16"
 			else
 				user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
-				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
+				var/obj/item/stack/sheet/iron/MS = new /obj/item/stack/sheet/iron(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "durand14"
 		if(4)
@@ -1209,7 +1209,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Internal armor is installed"),
 					 //6
-					 list("key"=/obj/item/stack/sheet/metal,
+					 list("key"=/obj/item/stack/sheet/iron,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Peripherals control module is secured"),
 					 //7
@@ -1325,7 +1325,7 @@
 				holder.icon_state = "odysseus10"
 			else
 				user.visible_message("[user] pries internal armor layer from [holder].", "You pry internal armor layer from [holder].")
-				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
+				var/obj/item/stack/sheet/iron/MS = new /obj/item/stack/sheet/iron(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "odysseus8"
 		if(4)

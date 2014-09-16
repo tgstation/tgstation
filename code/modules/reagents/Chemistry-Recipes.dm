@@ -993,7 +993,7 @@ datum/chemical_reaction/pestkiller
 	required_other = 1
 /datum/chemical_reaction/slimemetal/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal
+	var/obj/item/stack/sheet/iron/M = new /obj/item/stack/sheet/iron
 	M.amount = 15
 	M.loc = get_turf(holder.my_atom)
 	var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel

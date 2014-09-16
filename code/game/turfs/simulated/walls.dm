@@ -2,7 +2,7 @@
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'icons/turf/walls.dmi'
-	var/mineral = "metal"
+	var/mineral = "iron"
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -10,7 +10,7 @@
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
-	var/walltype = "metal"
+	var/walltype = "iron"
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
@@ -21,8 +21,8 @@
 			newgirder = new /obj/structure/girder/reinforced(src)
 			new /obj/item/stack/sheet/plasteel( src )
 		else
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
+			new /obj/item/stack/sheet/iron( src )
+			new /obj/item/stack/sheet/iron( src )
 			new /obj/item/stack/sheet/plasteel( src )
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
@@ -37,23 +37,23 @@
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			newgirder = new /obj/structure/girder(src)
-			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
+			if (mineral == "iron")
+				new /obj/item/stack/sheet/iron( src )
+				new /obj/item/stack/sheet/iron( src )
 			else
 				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 				new M( src )
 				new M( src )
 		else
-			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
+			if (mineral == "iron")
+				new /obj/item/stack/sheet/iron( src )
+				new /obj/item/stack/sheet/iron( src )
+				new /obj/item/stack/sheet/iron( src )
 			else
 				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 				new M( src )
 				new M( src )
-				new /obj/item/stack/sheet/metal( src )
+				new /obj/item/stack/sheet/iron( src )
 
 	if(newgirder)
 		transfer_fingerprints_to(newgirder)

@@ -8,7 +8,7 @@ datum/design/basic_cell
 	id = "basic_cell"
 	req_tech = list("powerstorage" = 1)
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
-	materials = list("$metal" = 700, "$glass" = 50)
+	materials = list("$iron" = 700, "$glass" = 50)
 	build_path = /obj/item/weapon/stock_parts/cell
 	category = "Misc"
 
@@ -18,7 +18,7 @@ datum/design/high_cell
 	id = "high_cell"
 	req_tech = list("powerstorage" = 2)
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
-	materials = list("$metal" = 700, "$glass" = 60)
+	materials = list("$iron" = 700, "$glass" = 60)
 	build_path = /obj/item/weapon/stock_parts/cell/high
 	category = "Misc"
 
@@ -29,7 +29,7 @@ datum/design/super_cell
 	req_tech = list("powerstorage" = 3, "materials" = 2)
 	reliability = 75
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 700, "$glass" = 70)
+	materials = list("$iron" = 700, "$glass" = 70)
 	build_path = /obj/item/weapon/stock_parts/cell/super
 	category = "Misc"
 
@@ -40,7 +40,7 @@ datum/design/hyper_cell
 	req_tech = list("powerstorage" = 5, "materials" = 4)
 	reliability = 70
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
+	materials = list("$iron" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
 	build_path = /obj/item/weapon/stock_parts/cell/hyper
 	category = "Misc"
 
@@ -50,7 +50,7 @@ datum/design/light_replacer
 	id = "light_replacer"
 	req_tech = list("magnets" = 3, "materials" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 1500, "$silver" = 150, "$glass" = 3000)
+	materials = list("$iron" = 1500, "$silver" = 150, "$glass" = 3000)
 	build_path = /obj/item/device/lightreplacer
 
 datum/design/pacman

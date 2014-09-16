@@ -31,7 +31,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
-	desc = "This spell constructs a reinforced metal wall"
+	desc = "This spell constructs a plasteel wall"
 
 	school = "conjuration"
 	charge_max = 300

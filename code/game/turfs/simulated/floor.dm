@@ -39,8 +39,8 @@ var/list/bananium_icons = list("bananium","bananium_dam")
 	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
-	var/mineral = "metal"
-	var/floortype = "metal"
+	var/mineral = "iron"
+	var/floortype = "iron"
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
 
 
@@ -66,7 +66,7 @@ var/list/bananium_icons = list("bananium","bananium_dam")
 			switch(pick(1,2;75,3))
 				if (1)
 					src.ReplaceWithLattice()
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33)) new /obj/item/stack/sheet/iron(src)
 				if(2)
 					src.ChangeTurf(/turf/space)
 				if(3)
@@ -75,7 +75,7 @@ var/list/bananium_icons = list("bananium","bananium_dam")
 					else
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33)) new /obj/item/stack/sheet/iron(src)
 		if(3.0)
 			if (prob(50))
 				src.break_tile()

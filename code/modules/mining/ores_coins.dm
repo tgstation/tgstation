@@ -29,7 +29,7 @@
 	icon_state = "Iron ore"
 	origin_tech = "materials=1"
 	points = 1
-	refined_type = /obj/item/stack/sheet/metal
+	refined_type = /obj/item/stack/sheet/iron
 
 /obj/item/weapon/ore/glass
 	name = "Sand"

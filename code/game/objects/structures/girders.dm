@@ -14,7 +14,7 @@
 			if(do_after(user,40))
 				if(!src) return
 				user << "<span class='notice'>You dissasembled the girder!</span>"
-				new /obj/item/stack/sheet/metal(get_turf(src))
+				new /obj/item/stack/sheet/iron(get_turf(src))
 				qdel(src)
 		else if(!anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -31,12 +31,12 @@
 		if(do_after(user,30))
 			if(!src) return
 			user << "<span class='notice'>You slice apart the girder!</span>"
-			new /obj/item/stack/sheet/metal(get_turf(src))
+			new /obj/item/stack/sheet/iron(get_turf(src))
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
 		user << "<span class='notice'>You drill through the girder!</span>"
-		new /obj/item/stack/sheet/metal(get_turf(src))
+		new /obj/item/stack/sheet/iron(get_turf(src))
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
@@ -72,7 +72,7 @@
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
 
-			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
+			if(/obj/item/stack/sheet/iron, /obj/item/stack/sheet/iron/cyborg)
 				if(!anchored)
 					if (S.use(2))
 						user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
@@ -186,13 +186,13 @@
 			return
 		if(2.0)
 			if (prob(30))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/iron)
 				new remains(loc)
 				qdel(src)
 			return
 		if(3.0)
 			if (prob(5))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/iron)
 				new remains(loc)
 				qdel(src)
 			return

@@ -70,7 +70,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user << "<span class='notice'>You dismantle the frame.</span>"
-				new /obj/item/stack/sheet/metal(src.loc, 5)
+				new /obj/item/stack/sheet/iron(src.loc, 5)
 				qdel(src)
 		if(2)
 			if(istype(P, /obj/item/weapon/circuitboard))

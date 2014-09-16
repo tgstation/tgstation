@@ -7,7 +7,7 @@ For the materials datum, it assumes you need reagents unless specified otherwise
 you use one of the material IDs below. These are NOT ids in the usual sense (they aren't defined in the object or part of a datum),
 they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
 The currently supporting non-reagent materials. All material amounts are set as the define MINERAL_MATERIAL_AMOUNT, which defaults to 2000
-- $metal (/obj/item/stack/metal).
+- $iron (/obj/item/stack/iron).
 - $glass (/obj/item/stack/glass).
 - $plasma (/obj/item/stack/plasma).
 - $silver (/obj/item/stack/silver).
@@ -81,7 +81,7 @@ datum/design/paicard
 	id = "paicard"
 	req_tech = list("programming" = 2)
 	build_type = PROTOLATHE
-	materials = list("$glass" = 500, "$metal" = 500)
+	materials = list("$glass" = 500, "$iron" = 500)
 	build_path = /obj/item/device/paicard
 
 
@@ -94,7 +94,7 @@ datum/design/design_disk
 	id = "design_disk"
 	req_tech = list("programming" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
-	materials = list("$metal" = 30, "$glass" = 10)
+	materials = list("$iron" = 30, "$glass" = 10)
 	build_path = /obj/item/weapon/disk/design_disk
 
 datum/design/tech_disk
@@ -103,7 +103,7 @@ datum/design/tech_disk
 	id = "tech_disk"
 	req_tech = list("programming" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
-	materials = list("$metal" = 30, "$glass" = 10)
+	materials = list("$iron" = 30, "$glass" = 10)
 	build_path = /obj/item/weapon/disk/tech_disk
 
 
@@ -117,7 +117,7 @@ datum/design/jackhammer
 	id = "jackhammer"
 	req_tech = list("materials" = 3, "powerstorage" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 2000, "$glass" = 500, "$silver" = 500)
+	materials = list("$iron" = 2000, "$glass" = 500, "$silver" = 500)
 	build_path = /obj/item/weapon/pickaxe/jackhammer
 
 datum/design/drill
@@ -126,7 +126,7 @@ datum/design/drill
 	id = "drill"
 	req_tech = list("materials" = 2, "powerstorage" = 3, "engineering" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 6000, "$glass" = 1000) //expensive, but no need for miners.
+	materials = list("$iron" = 6000, "$glass" = 1000) //expensive, but no need for miners.
 	build_path = /obj/item/weapon/pickaxe/drill
 
 datum/design/plasmacutter
@@ -135,7 +135,7 @@ datum/design/plasmacutter
 	id = "plasmacutter"
 	req_tech = list("materials" = 4, "plasmatech" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 1500, "$glass" = 500, "$gold" = 500, "$plasma" = 500)
+	materials = list("$iron" = 1500, "$glass" = 500, "$gold" = 500, "$plasma" = 500)
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/plasmacutter
 
@@ -154,7 +154,7 @@ datum/design/drill_diamond
 	id = "drill_diamond"
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
+	materials = list("$iron" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/diamonddrill
 
@@ -168,7 +168,7 @@ datum/design/beacon
 	id = "beacon"
 	req_tech = list("bluespace" = 1)
 	build_type = PROTOLATHE
-	materials = list ("$metal" = 20, "$glass" = 10)
+	materials = list ("$iron" = 20, "$glass" = 10)
 	build_path = /obj/item/device/radio/beacon
 
 datum/design/bag_holding
@@ -197,7 +197,7 @@ datum/design/telesci_gps
 	id = "telesci_gps"
 	req_tech = list("materials" = 2, "magnets" = 3, "bluespace" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 500, "$glass" = 1000)
+	materials = list("$iron" = 500, "$glass" = 1000)
 	build_path = /obj/item/device/gps
 
 
@@ -212,7 +212,7 @@ datum/design/health_hud
 	id = "health_hud"
 	req_tech = list("biotech" = 2, "magnets" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 50, "$glass" = 50)
+	materials = list("$iron" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/health
 
 datum/design/health_hud_night
@@ -221,7 +221,7 @@ datum/design/health_hud_night
 	id = "health_hud_night"
 	req_tech = list("biotech" = 4, "magnets" = 5)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$silver" = 250)
+	materials = list("$iron" = 200, "$glass" = 200, "$uranium" = 1000, "$silver" = 250)
 	build_path = /obj/item/clothing/glasses/hud/health/night
 
 datum/design/security_hud
@@ -230,7 +230,7 @@ datum/design/security_hud
 	id = "security_hud"
 	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 50, "$glass" = 50)
+	materials = list("$iron" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
 
 datum/design/security_hud_night
@@ -239,7 +239,7 @@ datum/design/security_hud_night
 	id = "security_hud_night"
 	req_tech = list("magnets" = 5, "combat" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$gold" = 350)
+	materials = list("$iron" = 200, "$glass" = 200, "$uranium" = 1000, "$gold" = 350)
 	build_path = /obj/item/clothing/glasses/hud/security/night
 
 /////////////////////////////////////////
@@ -299,7 +299,7 @@ datum/design/welding_mask
 	id = "weldingmask"
 	req_tech = list("materials" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 4000, "$glass" = 1000)
+	materials = list("$iron" = 4000, "$glass" = 1000)
 	build_path = /obj/item/clothing/mask/gas/welding
 
 datum/design/mesons
@@ -308,7 +308,7 @@ datum/design/mesons
 	id = "mesons"
 	req_tech = list("materials" = 3, "magnets" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
+	materials = list("$iron" = 200, "$glass" = 300, "$plasma" = 100)
 	build_path = /obj/item/clothing/glasses/meson
 
 datum/design/night_vision_goggles
@@ -317,7 +317,7 @@ datum/design/night_vision_goggles
 	id = "night_visision_goggles"
 	req_tech = list("magnets" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 100, "$glass" = 100, "$uranium" = 1000)
+	materials = list("$iron" = 100, "$glass" = 100, "$uranium" = 1000)
 	build_path = /obj/item/clothing/glasses/night
 
 datum/design/magboots
@@ -326,5 +326,5 @@ datum/design/magboots
 	id = "magboots"
 	req_tech = list("materials" = 4, "magnets" = 4, "engineering" = 5)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 4500, "$silver" = 1500, "$gold" = 2500)
+	materials = list("$iron" = 4500, "$silver" = 1500, "$gold" = 2500)
 	build_path = /obj/item/clothing/shoes/magboots

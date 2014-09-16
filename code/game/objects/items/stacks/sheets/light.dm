@@ -24,8 +24,8 @@
 			user.unEquip(src, 1)
 			qdel(src)
 
-	if(istype(O, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = O
+	if(istype(O, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/iron/M = O
 		if (M.use(1))
 			use(1)
 			var/obj/item/stack/tile/light/L = new (user.loc)

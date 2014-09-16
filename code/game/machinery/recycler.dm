@@ -95,7 +95,7 @@ var/const/SAFETY_COOLDOWN = 100
 	I.loc = src.loc
 	qdel(I)
 	if(prob(15))
-		new /obj/item/stack/sheet/metal(loc)
+		new /obj/item/stack/sheet/iron(loc)
 	if(prob(10))
 		new /obj/item/stack/sheet/glass(loc)
 	if(prob(2))

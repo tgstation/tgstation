@@ -1,6 +1,6 @@
 /turf/simulated/wall/r_wall
-	name = "reinforced wall"
-	desc = "A huge chunk of reinforced metal used to seperate rooms."
+	name = "plasteel wall"
+	desc = "A huge chunk of plasmatic steel used to seperate rooms."
 	icon_state = "r_wall"
 	opacity = 1
 	density = 1
@@ -210,8 +210,8 @@
 			dismantle_wall()
 
 	//REPAIRING
-	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)
-		var/obj/item/stack/sheet/metal/MS = W
+	else if(istype(W, /obj/item/stack/sheet/iron) && d_state)
+		var/obj/item/stack/sheet/iron/MS = W
 
 		if (MS.get_amount() < 1)
 			user << "<span class='warning'>You need one sheet of metal to repair the wall.</span>"

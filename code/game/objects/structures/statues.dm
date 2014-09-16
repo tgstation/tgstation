@@ -10,7 +10,7 @@
 	anchored = 1
 	var/hardness = 1
 	var/oreAmount = 7
-	var/mineralType = "metal"
+	var/mineralType = "iron"
 	var/last_event = 0
 	var/active = null
 	var/spam_flag = 0
@@ -42,8 +42,8 @@
 
 /obj/structure/statue/proc/Dismantle(devastated = 0)
 	if(!devastated)
-		if (mineralType == "metal")
-			var/ore = /obj/item/stack/sheet/metal
+		if (mineralType == "iron")
+			var/ore = /obj/item/stack/sheet/iron
 			for(var/i = 1, i <= oreAmount, i++)
 				new ore(get_turf(src))
 		else
@@ -51,8 +51,8 @@
 			for(var/i = 1, i <= oreAmount, i++)
 				new ore(get_turf(src))
 	else
-		if (mineralType == "metal")
-			var/ore = /obj/item/stack/sheet/metal
+		if (mineralType == "iron")
+			var/ore = /obj/item/stack/sheet/iron
 			for(var/i = 3, i <= oreAmount, i++)
 				new ore(get_turf(src))
 		else

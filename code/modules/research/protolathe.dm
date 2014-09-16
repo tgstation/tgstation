@@ -59,7 +59,7 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)	// now returns how many times the item can be built with the material
 	var/A = 0
 	switch(M)
-		if("$metal")
+		if("$iron")
 			A = m_amount
 		if("$glass")
 			A = g_amount
@@ -97,7 +97,7 @@ Note: Must be placed west/left of and R&D console to function.
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
 			if(m_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
+				var/obj/item/stack/sheet/iron/G = new /obj/item/stack/sheet/iron(src.loc)
 				G.amount = round(m_amount / G.perunit)
 			if(g_amount >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
@@ -163,7 +163,7 @@ Note: Must be placed west/left of and R&D console to function.
 	use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount/10)))
 	user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
 	icon_state = "protolathe"
-	if(istype(stack, /obj/item/stack/sheet/metal))
+	if(istype(stack, /obj/item/stack/sheet/iron))
 		m_amount += amount * MINERAL_MATERIAL_AMOUNT
 	else if(istype(stack, /obj/item/stack/sheet/glass))
 		g_amount += amount * MINERAL_MATERIAL_AMOUNT
