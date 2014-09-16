@@ -11,3 +11,6 @@
 	alpha = 255
 	invisibility = 101
 	mouse_opacity = 0
+
+/obj/map/Destroy()
+	return
