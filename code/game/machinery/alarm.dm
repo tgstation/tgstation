@@ -876,7 +876,7 @@ Code shamelessly copied from apc_frame
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
+		new /obj/item/stack/sheet/iron( get_turf(src.loc), 2 )
 		qdel(src)
 		return
 	..()
@@ -1200,7 +1200,7 @@ Code shamelessly copied from apc_frame
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
+		new /obj/item/stack/sheet/iron( get_turf(src.loc), 2 )
 		qdel(src)
 		return
 	..()

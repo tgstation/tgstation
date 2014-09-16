@@ -12,7 +12,7 @@
 	active_power_usage = 5000
 
 /obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (istype(O, /obj/item/stack/sheet/metal))
+	if (istype(O, /obj/item/stack/sheet/iron))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
 			src.overlays += "fab-load-metal"

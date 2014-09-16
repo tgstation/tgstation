@@ -67,7 +67,7 @@
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/Laser.ogg'
-	construction_cost = list("metal"=20000,"silver"=6000,"uranium"=2000)
+	construction_cost = list("iron"=20000,"silver"=6000,"uranium"=2000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
@@ -113,7 +113,7 @@
 	equip_cooldown = 150
 	range = MELEE|RANGED
 	construction_time = 500
-	construction_cost = list("metal"=20000,"bananium"=10000)
+	construction_cost = list("iron"=20000,"bananium"=10000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M as obj)
 	if(..())
@@ -319,7 +319,7 @@
 	equip_cooldown = 60
 	var/missile_speed = 2
 	var/missile_range = 30
-	construction_cost = list("metal"=22000,"gold"=6000,"silver"=8000)
+	construction_cost = list("iron"=22000,"gold"=6000,"silver"=8000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/action(target)
 	if(!action_checks(target)) return
@@ -387,7 +387,7 @@
 	projectile = /obj/item/weapon/grenade/flashbang/clusterbang
 	projectile_energy_cost = 1600 //getting off cheap seeing as this is 3 times the flashbangs held in the grenade launcher.
 	equip_cooldown = 90
-	construction_cost = list("metal"=20000,"gold"=10000,"uranium"=10000) //now as expensive as a Honkblast.
+	construction_cost = list("iron"=20000,"gold"=10000,"uranium"=10000) //now as expensive as a Honkblast.
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "banana mortar"
@@ -400,7 +400,7 @@
 	projectile_energy_cost = 100
 	equip_cooldown = 20
 	construction_time = 300
-	construction_cost = list("metal"=20000,"bananium"=5000)
+	construction_cost = list("iron"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/can_attach(obj/mecha/combat/honker/M as obj)
 	if(..())
@@ -431,7 +431,7 @@
 	projectile_energy_cost = 100
 	equip_cooldown = 10
 	construction_time = 300
-	construction_cost = list("metal"=20000,"bananium"=5000)
+	construction_cost = list("iron"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar/can_attach(obj/mecha/combat/honker/M as obj)
 	if(..())

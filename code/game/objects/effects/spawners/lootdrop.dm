@@ -84,7 +84,7 @@
 				/obj/item/stack/rods{amount = 23} = 1,
 				/obj/item/stack/rods{amount = 50} = 1,
 				/obj/item/stack/sheet/cardboard = 2,
-				/obj/item/stack/sheet/metal{amount = 20} = 1,
+				/obj/item/stack/sheet/iron{amount = 20} = 1,
 				/obj/item/stack/sheet/mineral/plasma{layer = 2.9} = 1,
 				/obj/item/stack/sheet/rglass = 1,
 				/obj/item/weapon/book/manual/wiki/engineering_construction = 1,

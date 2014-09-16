@@ -150,7 +150,7 @@
 	desc = "Equipment for engineering and combat exosuits. This is an upgraded version of the drill that'll pierce the heavens!"
 	icon_state = "mecha_diamond_drill"
 	origin_tech = "materials=4;engineering=3"
-	construction_cost = list("metal"=10000,"diamond"=6500)
+	construction_cost = list("iron"=10000,"diamond"=6500)
 	equip_cooldown = 20
 	force = 15
 
@@ -285,7 +285,7 @@
 	energy_drain = 250
 	range = MELEE|RANGED
 	construction_time = 1200
-	construction_cost = list("metal"=30000,"gold"=20000,"plasma"=25000,"silver"=20000)
+	construction_cost = list("iron"=30000,"gold"=20000,"plasma"=25000,"silver"=20000)
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 	var/disabled = 0 //malf
 
@@ -529,7 +529,7 @@
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
-	construction_cost = list("metal"=20000,"silver"=5000)
+	construction_cost = list("iron"=20000,"silver"=5000)
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
 
@@ -580,7 +580,7 @@
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
-	construction_cost = list("metal"=20000,"gold"=5000)
+	construction_cost = list("iron"=20000,"gold"=5000)
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
 
@@ -652,7 +652,7 @@
 	equip_cooldown = 20
 	energy_drain = 100
 	range = 0
-	construction_cost = list("metal"=10000,"glass"=5000,"gold"=1000,"silver"=2000)
+	construction_cost = list("iron"=10000,"glass"=5000,"gold"=1000,"silver"=2000)
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay
@@ -747,7 +747,7 @@
 	equip_cooldown = 10
 	energy_drain = 0
 	range = 0
-	construction_cost = list("metal"=10000,"glass"=2000,"gold"=2000,"silver"=3000)
+	construction_cost = list("iron"=10000,"glass"=2000,"gold"=2000,"silver"=3000)
 	var/datum/global_iterator/pr_energy_relay
 	var/coeff = 100
 	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
@@ -864,7 +864,7 @@
 	equip_cooldown = 10
 	energy_drain = 0
 	range = MELEE
-	construction_cost = list("metal"=10000,"glass"=1000,"silver"=500)
+	construction_cost = list("iron"=10000,"glass"=1000,"silver"=500)
 	var/datum/global_iterator/pr_mech_generator
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
@@ -1006,7 +1006,7 @@
 	desc = "An exosuit module that generates power using uranium as fuel. Pollutes the environment."
 	icon_state = "tesla"
 	origin_tech = "powerstorage=3;engineering=3"
-	construction_cost = list("metal"=10000,"glass"=1000,"silver"=500)
+	construction_cost = list("iron"=10000,"glass"=1000,"silver"=500)
 	max_fuel = 50000
 	fuel_per_cycle_idle = 10
 	fuel_per_cycle_active = 30

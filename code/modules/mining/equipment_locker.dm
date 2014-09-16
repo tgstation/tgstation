@@ -34,7 +34,7 @@
 			var/obj/item/stack/sheet/s = new processed_sheet(src,0)
 			s.amount = 0
 			stack_list[processed_sheet] = s
-			if(s.name != "glass" && s.name != "metal")		//we can get these from cargo anyway
+			if(s.name != "glass" && s.name != "iron")		//we can get these from cargo anyway
 				var/msg = "[capitalize(s.name)] sheets are now available in the Cargo Bay."
 				for(var/obj/machinery/requests_console/D in allConsoles)
 					if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || (D.department == "Chemistry" && (s.name == "uranium" || s.name == "solid plasma")))
@@ -118,10 +118,10 @@
 		if(s.amount > 0)
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
-	if((/obj/item/stack/sheet/metal in stack_list) && (/obj/item/stack/sheet/mineral/plasma in stack_list))
-		var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
+	if((/obj/item/stack/sheet/iron in stack_list) && (/obj/item/stack/sheet/mineral/plasma in stack_list))
+		var/obj/item/stack/sheet/ironstack = stack_list[/obj/item/stack/sheet/iron]
 		var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
-		if(min(metalstack.amount, plasmastack.amount))
+		if(min(ironstack.amount, plasmastack.amount))
 			dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];plasteel=1'>Smelt</A><BR>")
 
 	dat += text("<HR><b>Mineral Value List:</b><BR>[get_ore_values()]")
@@ -174,16 +174,16 @@
 			usr << "<span class='warning'>Required access not found.</span>"
 	if(href_list["plasteel"] && istype(inserted_id))
 		if(check_access(inserted_id))
-			if(!(/obj/item/stack/sheet/metal in stack_list)) return
+			if(!(/obj/item/stack/sheet/iron in stack_list)) return
 			if(!(/obj/item/stack/sheet/mineral/plasma in stack_list)) return
-			var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
+			var/obj/item/stack/sheet/ironstack = stack_list[/obj/item/stack/sheet/iron]
 			var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
 
 			var/desired = input("How much?", "How much would you like to smelt?", 1) as num
 			var/obj/item/stack/sheet/plasteel/plasteelout = new
-			plasteelout.amount = min(desired,50,metalstack.amount,plasmastack.amount)
+			plasteelout.amount = min(desired,50,ironstack.amount,plasmastack.amount)
 			if(plasteelout.amount >= 1)
-				metalstack.amount -= plasteelout.amount
+				ironstack.amount -= plasteelout.amount
 				plasmastack.amount -= plasteelout.amount
 				unload_mineral(plasteelout)
 		else

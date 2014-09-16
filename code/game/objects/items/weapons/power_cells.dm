@@ -16,7 +16,7 @@
 	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
-	var/construction_cost = list("metal"=750,"glass"=75)
+	var/construction_cost = list("iron"=750,"glass"=75)
 	var/construction_time=100
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
@@ -64,7 +64,7 @@
 	icon_state = "scell"
 	maxcharge = 20000
 	g_amt = 70
-	construction_cost = list("metal"=750,"glass"=100)
+	construction_cost = list("iron"=750,"glass"=100)
 	rating = 4
 
 /obj/item/weapon/stock_parts/cell/super/empty/New()
@@ -77,7 +77,7 @@
 	icon_state = "hpcell"
 	maxcharge = 30000
 	g_amt = 80
-	construction_cost = list("metal"=500,"glass"=150,"gold"=200,"silver"=200)
+	construction_cost = list("iron"=500,"glass"=150,"gold"=200,"silver"=200)
 	rating = 5
 
 /obj/item/weapon/stock_parts/cell/hyper/empty/New()

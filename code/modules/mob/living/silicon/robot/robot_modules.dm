@@ -107,11 +107,11 @@
 	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/device/analyzer(src)
 
-	var/datum/robot_energy_storage/metal/metstore = new /datum/robot_energy_storage/metal(src)
+	var/datum/robot_energy_storage/iron/metstore = new /datum/robot_energy_storage/iron(src)
 	var/datum/robot_energy_storage/glass/glastore = new /datum/robot_energy_storage/glass(src)
 	var/datum/robot_energy_storage/wire/wirestore = new /datum/robot_energy_storage/wire(src)
 
-	var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
+	var/obj/item/stack/sheet/iron/cyborg/M = new /obj/item/stack/sheet/iron/cyborg(src)
 	M.source = metstore
 	modules += M
 
@@ -253,8 +253,8 @@
 /datum/robot_energy_storage/proc/add_charge(var/amount)
 	energy = min(energy + amount, max_energy)
 
-/datum/robot_energy_storage/metal
-	name = "Metal Synthesizer"
+/datum/robot_energy_storage/iron
+	name = "Iron Synthesizer"
 
 /datum/robot_energy_storage/glass
 	name = "Glass Synthesizer"

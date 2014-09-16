@@ -447,7 +447,7 @@ obj/structure/door_assembly/New()
 				if( !WT.isOn() )
 					return
 				user << "<span class='notice'> You've disassembled the airlock assembly.</span>"
-				new /obj/item/stack/sheet/metal(get_turf(src), 4)
+				new /obj/item/stack/sheet/iron(get_turf(src), 4)
 				if (mineral)
 					if (mineral == "glass")
 						new /obj/item/stack/sheet/rglass(get_turf(src))

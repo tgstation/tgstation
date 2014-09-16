@@ -8,9 +8,9 @@
  */
 
 /*
- * Metal
+ * Iron
  */
-var/global/list/datum/stack_recipe/metal_recipes = list ( \
+var/global/list/datum/stack_recipe/iron_recipes = list ( \
 	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("chair", /obj/structure/stool/bed/chair, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("swivel chair", /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
@@ -43,23 +43,23 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = 1, on_floor = 1), \
 )
 
-/obj/item/stack/sheet/metal
-	name = "metal"
-	desc = "Sheets made out of metal."
-	singular_name = "metal sheet"
+/obj/item/stack/sheet/iron
+	name = "iron"
+	desc = "Sheets made out of iron."
+	singular_name = "iron sheet"
 	icon_state = "sheet-metal"
 	m_amt = MINERAL_MATERIAL_AMOUNT
 	throwforce = 10.0
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
-/obj/item/stack/sheet/metal/cyborg
+/obj/item/stack/sheet/iron/cyborg
 	m_amt = 0
 	is_cyborg = 1
 	cost = 500
 
-/obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
-	recipes = metal_recipes
+/obj/item/stack/sheet/iron/New(var/loc, var/amount=null)
+	recipes = iron_recipes
 	return ..()
 
 

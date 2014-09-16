@@ -257,7 +257,7 @@
 					Gun.update_icon()
 					lasercolor = null
 				if(prob(50))
-					new /obj/item/stack/sheet/metal(loc, rand(1,4))
+					new /obj/item/stack/sheet/iron(loc, rand(1,4))
 				if(prob(50))
 					new /obj/item/device/assembly/prox_sensor(loc)
 			else
@@ -656,13 +656,13 @@
 			else if(istype(I, /obj/item/weapon/crowbar) && !anchored)
 				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 				user << "<span class='notice'>You dismantle the turret construction.</span>"
-				new /obj/item/stack/sheet/metal( loc, 5)
+				new /obj/item/stack/sheet/iron( loc, 5)
 				qdel(src)
 				return
 
 		if(1)
-			if(istype(I, /obj/item/stack/sheet/metal))
-				var/obj/item/stack/sheet/metal/M = I
+			if(istype(I, /obj/item/stack/sheet/iron))
+				var/obj/item/stack/sheet/iron/M = I
 				if(M.use(2))
 					user << "<span class='notice'>You add some metal armor to the interior frame.</span>"
 					build_step = 2
@@ -699,7 +699,7 @@
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 1
 					user << "You remove the turret's interior metal armor."
-					new /obj/item/stack/sheet/metal( loc, 2)
+					new /obj/item/stack/sheet/iron( loc, 2)
 					return
 
 
@@ -747,8 +747,8 @@
 			//attack_hand() removes the prox sensor
 
 		if(6)
-			if(istype(I, /obj/item/stack/sheet/metal))
-				var/obj/item/stack/sheet/metal/M = I
+			if(istype(I, /obj/item/stack/sheet/iron))
+				var/obj/item/stack/sheet/iron/M = I
 				if(M.use(2))
 					user << "<span class='notice'>You add some metal armor to the exterior frame.</span>"
 					build_step = 7
@@ -791,7 +791,7 @@
 			else if(istype(I, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 				user << "<span class='notice'>You pry off the turret's exterior armor.</span>"
-				new /obj/item/stack/sheet/metal(loc, 2)
+				new /obj/item/stack/sheet/iron(loc, 2)
 				build_step = 6
 				return
 

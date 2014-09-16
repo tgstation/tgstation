@@ -548,7 +548,7 @@
 		if(do_after(user, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
-				new /obj/item/stack/sheet/metal(loc)
+				new /obj/item/stack/sheet/iron(loc)
 				user.visible_message(\
 					"<span class='danger'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
 					"You disassembled the broken APC frame.",\

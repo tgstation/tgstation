@@ -40,7 +40,7 @@
 			if (istype(O, /obj/item/stack/sheet/mineral/uranium))
 				amt_uranium += 100 * O.amount
 				O.loc = null
-			if (istype(O, /obj/item/stack/sheet/metal))
+			if (istype(O, /obj/item/stack/sheet/iron))
 				amt_iron += 100 * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/clown))
@@ -67,10 +67,10 @@
 	else
 		dat += text("<A href='?src=\ref[src];choose=silver'>Choose</A>")
 	dat += text("<br><font color='#555555'><b>Iron inserted: </b>[amt_iron]</font> ")
-	if (chosen == "metal")
+	if (chosen == "iron")
 		dat += text("chosen")
 	else
-		dat += text("<A href='?src=\ref[src];choose=metal'>Choose</A>")
+		dat += text("<A href='?src=\ref[src];choose=iron'>Choose</A>")
 	dat += text("<br><font color='#8888FF'><b>Diamond inserted: </b>[amt_diamond]</font> ")
 	if (chosen == "diamond")
 		dat += text("chosen")
@@ -128,7 +128,7 @@
 		processing = 1;
 		icon_state = "coinpress1"
 		switch(chosen)
-			if("metal")
+			if("iron")
 				while(amt_iron > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/iron)
 					amt_iron -= 20

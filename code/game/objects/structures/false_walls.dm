@@ -6,7 +6,7 @@
 	desc = "A huge chunk of metal used to seperate rooms."
 	anchored = 1
 	icon = 'icons/turf/walls.dmi'
-	var/mineral = "metal"
+	var/mineral = "iron"
 	var/opening = 0
 	density = 1
 	opacity = 1
@@ -86,7 +86,7 @@
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
-	if(!mineral || mineral == "metal")
+	if(!mineral || mineral == "iron")
 		T.ChangeTurf(/turf/simulated/wall)
 	else
 		T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
@@ -123,13 +123,13 @@
 /obj/structure/falsewall/proc/dismantle(mob/user)
 	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='warning'>You dismantle the false wall.</span>")
 	new /obj/structure/girder/displaced(loc)
-	if(mineral == "metal")
+	if(mineral == "iron")
 		if(istype(src, /obj/structure/falsewall/reinforced))
 			new /obj/item/stack/sheet/plasteel(loc)
 			new /obj/item/stack/sheet/plasteel(loc)
 		else
-			new /obj/item/stack/sheet/metal(loc)
-			new /obj/item/stack/sheet/metal(loc)
+			new /obj/item/stack/sheet/iron(loc)
+			new /obj/item/stack/sheet/iron(loc)
 	else
 		var/P = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 		new P(loc)
@@ -142,8 +142,8 @@
  */
 
 /obj/structure/falsewall/reinforced
-	name = "reinforced wall"
-	desc = "A huge chunk of reinforced metal used to seperate rooms."
+	name = "plasteel wall"
+	desc = "A huge chunk of plasmatic steel used to seperate rooms."
 	icon_state = "r_wall"
 
 /obj/structure/falsewall/reinforced/ChangeToWall(delete = 1)

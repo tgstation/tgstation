@@ -297,7 +297,7 @@
 				if(do_after(user, 20))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You've deconstructed the frame.</span>"
-					var/obj/item/stack/sheet/metal/M = new (loc, 5)
+					var/obj/item/stack/sheet/iron/M = new (loc, 5)
 					M.add_fingerprint(user)
 					qdel(src)
 		if(1)

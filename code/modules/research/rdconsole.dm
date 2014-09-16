@@ -70,8 +70,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if (copytext(ID, 1, 2) == "$")
 		return_name = copytext(ID, 2)
 		switch(return_name)
-			if("metal")
-				return_name = "Metal"
+			if("iron")
+				return_name = "Iron"
 			if("glass")
 				return_name = "Glass"
 			if("gold")
@@ -370,7 +370,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							g2g = 0
 							break
 						switch(M)
-							if("$metal")
+							if("$iron")
 								linked_lathe.m_amount = max(0, (linked_lathe.m_amount-(being_built.materials[M]/coeff * amount)))
 							if("$glass")
 								linked_lathe.g_amount = max(0, (linked_lathe.g_amount-(being_built.materials[M]/coeff * amount)))
@@ -481,8 +481,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/desired_num_sheets = text2num(href_list["lathe_ejectsheet_amt"])
 		var/res_amount, type
 		switch(href_list["lathe_ejectsheet"])
-			if("metal")
-				type = /obj/item/stack/sheet/metal
+			if("iron")
+				type = /obj/item/stack/sheet/iron
 				res_amount = "m_amount"
 			if("glass")
 				type = /obj/item/stack/sheet/glass
@@ -807,11 +807,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A><div class='statusDisplay'>"
 			dat += "<h3>Material Storage:</h3><BR><HR>"
-			//Metal
-			dat += "* [linked_lathe.m_amount] of Metal: "
-			if(linked_lathe.m_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=1'>Eject</A> "
-			if(linked_lathe.m_amount >= 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=5'>5x</A> "
-			if(linked_lathe.m_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=50'>All</A>"
+			//Iron
+			dat += "* [linked_lathe.m_amount] of Iron: "
+			if(linked_lathe.m_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=iron;lathe_ejectsheet_amt=1'>Eject</A> "
+			if(linked_lathe.m_amount >= 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=iron;lathe_ejectsheet_amt=5'>5x</A> "
+			if(linked_lathe.m_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=iron;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "<BR>"
 			//Glass
 			dat += "* [linked_lathe.g_amount] of Glass: "
