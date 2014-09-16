@@ -131,7 +131,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	helptext = "This sting completely blinds a target for a short time."
 	sting_icon = "sting_blind"
 	chemical_cost = 25
-	dna_cost = 2
+	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(var/mob/user, var/mob/target)
 	add_logs(user, target, "stung", object="blind sting")
@@ -163,7 +163,7 @@ obj/effect/proc_holder/changeling/sting/cryo
 	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
 	sting_icon = "sting_cryo"
-	chemical_cost = 20
+	chemical_cost = 15
 	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(var/mob/user, var/mob/target)

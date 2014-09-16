@@ -109,7 +109,7 @@
 	name = "Arm Blade"
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "Cannot be used while in lesser form."
-	chemical_cost = 25
+	chemical_cost = 20
 	dna_cost = 2
 	genetic_damage = 10
 	req_human = 1
@@ -288,7 +288,7 @@
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
-	chemical_cost = 25
+	chemical_cost = 20
 	dna_cost = 2
 	genetic_damage = 11
 	req_human = 1
