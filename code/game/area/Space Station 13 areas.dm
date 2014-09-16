@@ -1103,7 +1103,7 @@ proc/process_ghost_teleport_locs()
 /area/maintenance/fstarboardsolar
 	name = "Fore Starboard Solar Maintenance"
 	icon_state = "SolarcontrolA"
-	
+
 /area/maintenance/virology_maint
 	name = "Virology Maintenance"
 	icon_state = "asmaint"
@@ -1356,21 +1356,25 @@ proc/process_ghost_teleport_locs()
 
 /area/supply/sorting
 	name = "\improper Delivery Office"
-	icon_state = "quartstorage"
+	icon_state = "cargo_delivery"
 
 ////////////WORK IN PROGRESS//////////
 
+/area/supply/lobby
+	name ="\improper Cargo Lobby"
+	icon_state = "cargo_lobby"
+
 /area/supply/office
 	name = "\improper Cargo Office"
-	icon_state = "quartoffice"
+	icon_state = "cargo_office"
 
 /area/supply/storage
 	name = "\improper Cargo Bay"
-	icon_state = "quartstorage"
+	icon_state = "cargo_bay"
 
 /area/supply/qm
 	name = "\improper Quartermaster's Office"
-	icon_state = "quart"
+	icon_state = "cargo_quart"
 	jammed=1
 
 /area/supply/miningdock
