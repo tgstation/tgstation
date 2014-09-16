@@ -110,6 +110,11 @@ proc/isobserver(A)
 		return 1
 	return 0
 
+proc/isnewplayer(A)
+	if(istype(A, /mob/new_player))
+		return 1
+	return 0
+
 proc/isovermind(A)
 	if(istype(A, /mob/camera/blob))
 		return 1
@@ -453,3 +458,12 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			return
 	else
 		return
+
+/proc/broadcast_hud_message(var/message, var/broadcast_source)
+	var/turf/sourceturf = get_turf(broadcast_source)
+	var/user_list = sec_hud_users //A local var is used for easy addition of other HUD types.
+	var/hud_icon = /obj/item/weapon/handcuffs //Icon displayed when the HUD triggered. Handcuffs for Sec HUDs.
+	for(var/mob/hud_user in user_list)
+		var/turf/userturf = get_turf(hud_user)
+		if(userturf.z == sourceturf.z) //Must have same z-level.
+			hud_user.show_message("<span class='info'>\icon[hud_icon] [message]</span>", 1)

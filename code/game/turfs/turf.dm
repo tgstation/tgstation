@@ -51,7 +51,7 @@
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		usr << "<span class='danger'>Movement is admin-disabled.</span>" //This is to identify lag problems
 		return
 	if (!mover)
 		return 1
@@ -87,7 +87,7 @@
 
 /turf/Entered(atom/atom as mob|obj)
 	if(movement_disabled)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		usr << "<span class='danger'>Movement is admin-disabled.</span>" //This is to identify lag problems
 		return
 	..()
 //vvvvv Infared beam stuff vvvvv
@@ -139,6 +139,18 @@
 /turf/proc/is_grass_floor()
 	return 0
 /turf/proc/is_wood_floor()
+	return 0
+/turf/proc/is_gold_floor()
+	return 0
+/turf/proc/is_silver_floor()
+	return 0
+/turf/proc/is_plasma_floor()
+	return 0
+/turf/proc/is_uranium_floor()
+	return 0
+/turf/proc/is_bananium_floor()
+	return 0
+/turf/proc/is_diamond_floor()
 	return 0
 /turf/proc/is_carpet_floor()
 	return 0
@@ -245,15 +257,14 @@
 	src.ChangeTurf(/turf/space)
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 
-/turf/proc/kill_creatures(mob/U = null)//Will kill people/creatures and damage mechs./N
-//Useful to batch-add creatures to the list.
+/turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf
 	for(var/mob/living/M in src)
-		if(M==U)	continue//Will not harm U. Since null != M, can be excluded to kill everyone.
-		spawn(0)
-			M.gib()
-	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
-		spawn(0)
-			M.take_damage(100, "brute")
+		if(M==U)
+			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
+		M.adjustBruteLoss(damage)
+		M.Paralyse(damage/5)
+	for(var/obj/mecha/M in src)
+		M.take_damage(damage*2, "brute")
 
 /turf/proc/Bless()
 	flags |= NOJAUNT
@@ -371,13 +382,15 @@
 		if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 			return 0
 		if(!M.lying)
+			var/olddir = M.dir
+			M.Stun(s_amount)
+			M.Weaken(w_amount)
 			M.stop_pulling()
-			if(lube&STEP)
-				step(M, M.dir)
 			if(lube&SLIDE)
 				for(var/i=1, i<5, i++)
 					spawn (i)
-						step(M, M.dir)
+						step(M, olddir)
+						M.spin(1,1)
 				if(M.lying) //did I fall over?
 					M.adjustBruteLoss(2)
 			if(O)
@@ -385,7 +398,5 @@
 			else
 				M << "<span class='notice'>You slipped!</span>"
 			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-			M.Stun(s_amount)
-			M.Weaken(w_amount)
 			return 1
 	return 0 // no success. Used in clown pda and wet floors

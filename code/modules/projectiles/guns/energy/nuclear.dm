@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
-	desc = "A basic energy-based gun with two settings: Stun and kill."
+	desc = "A basic hybrid energy gun with two settings: Stun and kill."
 	icon_state = "energy"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
@@ -14,8 +14,8 @@
 
 
 /obj/item/weapon/gun/energy/gun/nuclear
-	name = "Advanced Energy Gun"
-	desc = "An energy gun with an experimental miniaturized reactor."
+	name = "advanced energy gun"
+	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
 	icon_state = "nucgun"
 	origin_tech = "combat=3;materials=5;powerstorage=3"
 	var/lightfail = 0
@@ -50,16 +50,16 @@
 	if (prob(src.reliability))
 		for (var/mob/living/M in range(0,src)) //Only a minor failure, enjoy your radiation if you're in the same tile or carrying it
 			if (src in M.contents)
-				M << "\red Your gun feels pleasantly warm for a moment."
+				M << "<span class='danger'>Your gun feels pleasantly warm for a moment.</span>"
 			else
-				M << "\red You feel a warm sensation."
+				M << "<span class='danger'>You feel a warm sensation.</span>"
 			M.apply_effect(rand(3,120), IRRADIATE)
 		lightfail = 1
 	else
 		for (var/mob/living/M in range(rand(1,4),src)) //Big failure, TIME FOR RADIATION BITCHES
 			if (src in M.contents)
-				M << "\red Your gun's reactor overloads!"
-			M << "\red You feel a wave of heat wash over you."
+				M << "<span class='danger'>Your gun's reactor overloads!</span>"
+			M << "<span class='danger'>You feel a wave of heat wash over you.</span>"
 			M.apply_effect(300, IRRADIATE)
 		crit_fail = 1 //break the gun so it stops recharging
 		processing_objects.Remove(src)

@@ -45,6 +45,33 @@
 
 //End of module select
 
+//Photography stuff
+
+	using = new /obj/screen()
+	using.icon = 'icons/mob/screen_ai.dmi'
+	using.icon_state = "take_picture"
+	using.name = "Take Image"
+	using.screen_loc = ui_borg_camera
+	using.layer = 20
+	adding += using
+
+	using = new /obj/screen()
+	using.icon = 'icons/mob/screen_ai.dmi'
+	using.icon_state = "view_images"
+	using.name = "View Images"
+	using.screen_loc = ui_borg_album
+	using.layer = 20
+	adding += using
+
+//Sec/Med HUDs
+	using = new /obj/screen()
+	using.name = "Sensor Augmentation"
+	using.icon = 'icons/mob/screen_ai.dmi'
+	using.icon_state = "ai_sensor"
+	using.screen_loc = ui_borg_sensor
+	using.layer = 20
+	adding += using
+
 //Intent
 	using = new /obj/screen()
 	using.name = "act_intent"

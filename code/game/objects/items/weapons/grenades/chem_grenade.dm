@@ -154,12 +154,6 @@
 	if(nadeassembly)
 		nadeassembly.on_found(finder)
 
-/obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M, msg)
-	if(nadeassembly)
-		nadeassembly.hear_talk(M, msg)
-
-
-
 /obj/item/weapon/grenade/chem_grenade/prime()
 	if(stage != READY)
 		return
@@ -248,18 +242,18 @@
 	desc = "Used for emergency sealing of air breaches."
 	stage = READY
 
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+/obj/item/weapon/grenade/chem_grenade/metalfoam/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("aluminium", 30)
-		B2.reagents.add_reagent("foaming_agent", 10)
-		B2.reagents.add_reagent("pacid", 10)
+	B1.reagents.add_reagent("aluminium", 30)
+	B2.reagents.add_reagent("foaming_agent", 10)
+	B2.reagents.add_reagent("pacid", 10)
 
-		beakers += B1
-		beakers += B2
-		icon_state = "grenade"
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/incendiary
@@ -267,18 +261,18 @@
 	desc = "Used for clearing rooms of living things."
 	stage = READY
 
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+/obj/item/weapon/grenade/chem_grenade/incendiary/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("aluminium", 25)
-		B2.reagents.add_reagent("plasma", 25)
-		B2.reagents.add_reagent("sacid", 25)
+	B1.reagents.add_reagent("aluminium", 25)
+	B2.reagents.add_reagent("plasma", 25)
+	B2.reagents.add_reagent("sacid", 25)
 
-		beakers += B1
-		beakers += B2
-		icon_state = "grenade"
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/antiweed
@@ -286,19 +280,19 @@
 	desc = "Used for purging large areas of invasive plant species. Contents under pressure. Do not directly inhale contents."
 	stage = READY
 
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+/obj/item/weapon/grenade/chem_grenade/antiweed/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("plantbgone", 25)
-		B1.reagents.add_reagent("potassium", 25)
-		B2.reagents.add_reagent("phosphorus", 25)
-		B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent("plantbgone", 25)
+	B1.reagents.add_reagent("potassium", 25)
+	B2.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("sugar", 25)
 
-		beakers += B1
-		beakers += B2
-		icon_state = "grenade"
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/cleaner
@@ -306,18 +300,18 @@
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
 	stage = READY
 
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+/obj/item/weapon/grenade/chem_grenade/cleaner/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("fluorosurfactant", 40)
-		B2.reagents.add_reagent("water", 40)
-		B2.reagents.add_reagent("cleaner", 10)
+	B1.reagents.add_reagent("fluorosurfactant", 40)
+	B2.reagents.add_reagent("water", 40)
+	B2.reagents.add_reagent("cleaner", 10)
 
-		beakers += B1
-		beakers += B2
-		icon_state = "grenade"
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/teargas
@@ -325,19 +319,19 @@
 	desc = "Used for nonlethal riot control. Contents under pressure. Do not directly inhale contents."
 	stage = READY
 
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+/obj/item/weapon/grenade/chem_grenade/teargas/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("condensedcapsaicin", 25)
-		B1.reagents.add_reagent("potassium", 25)
-		B2.reagents.add_reagent("phosphorus", 25)
-		B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent("condensedcapsaicin", 25)
+	B1.reagents.add_reagent("potassium", 25)
+	B2.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("sugar", 25)
 
-		beakers += B1
-		beakers += B2
-		icon_state = "grenade"
+	beakers += B1
+	beakers += B2
+	icon_state = "grenade"
 
 #undef EMPTY
 #undef WIRED

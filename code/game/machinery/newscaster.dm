@@ -788,36 +788,50 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)
 	if(photo)
-		photo.loc = src.loc
-		user.put_in_inactive_hand(photo)
+		if(!photo.sillynewscastervar)
+			photo.loc = src.loc
+			if(!issilicon(user))
+				user.put_in_inactive_hand(photo)
+		else
+			qdel(photo)
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
 		user.drop_item()
 		photo.loc = src
-	if(istype(usr,/mob/living/silicon/ai))
+	if(istype(user,/mob/living/silicon))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
-		var/mob/living/silicon/ai/tempAI = user
-		if(tempAI.aicamera.aipictures.len == 0)
-			usr << "<FONT COLOR=red><B>No images saved</B>"
+		var/obj/item/device/camera/siliconcam/targetcam = null
+
+		if(istype(user,/mob/living/silicon/ai))
+			var/mob/living/silicon/ai/R = user
+			targetcam = R.aicamera
+		else if(istype(user,/mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = user
+			if(R.connected_ai)
+				targetcam = R.connected_ai.aicamera
+			else
+				targetcam = R.aicamera
+		else
+			user << "You cannot interface with silicon photo uploading"	//gtfo pAIs
+
+		if(targetcam.aipictures.len == 0)
+			usr << "<span class='userdanger'>No images saved</span>"
 			return
-		for(var/datum/picture/t in tempAI.aicamera.aipictures)
+		for(var/datum/picture/t in targetcam.aipictures)
 			nametemp += t.fields["name"]
 		find = input("Select image (numbered in order taken)") in nametemp
 		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-		for(var/datum/picture/q in tempAI.aicamera.aipictures)
+		for(var/datum/picture/q in targetcam.aipictures)
 			if(q.fields["name"] == find)
 				selection = q
-				break  	// just in case some AI decides to take 10 thousand pictures in a round
-		P.icon = selection.fields["icon"]
-		P.img = selection.fields["img"]
-		P.desc = selection.fields["desc"]
+				break
+		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		P.sillynewscastervar = 1
 		photo = P
-
-
-
+		qdel(P)
 
 
 //########################################################################################################################
@@ -1013,10 +1027,8 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	return                                  //bode well with a newscaster network of 10+ machines. Let's just return it, as it's added in the machines list.
 
 /obj/machinery/newscaster/proc/newsAlert(channel)   //This isn't Agouri's work, for it is ugly and vile.
-	var/turf/T = get_turf(src)                      //Who the fuck uses spawn(600) anyway, jesus christ
-	if(channel)
-		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Breaking news from [channel]!\"</span>",2)
+	if(channel) 									//Who the fuck uses spawn(600) anyway, jesus christ
+		say("Breaking news from [channel]!")
 		src.alert = 1
 		src.update_icon()
 		spawn(300)
@@ -1024,7 +1036,9 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 			src.update_icon()
 		playsound(src.loc, 'sound/machines/twobeep.ogg', 75, 1)
 	else
-		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Attention! Wanted issue distributed!\"</span>",2)
+		say("Attention! Wanted issue distributed!")
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 75, 1)
 	return
+
+/obj/machinery/newscaster/say_quote(text)
+	return "beeps, \"[text]\""

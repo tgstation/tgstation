@@ -202,14 +202,14 @@
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 	else if (istype(W, /obj/item/device/camera_bug))
 		if (!src.can_use())
-			user << "\blue Camera non-functional"
+			user << "<span class='notice'>Camera non-functional.</span>"
 			return
 		if(istype(src.bug))
-			user << "\blue Camera bug removed."
+			user << "<span class='notice'>Camera bug removed.</span>"
 			src.bug.bugged_cameras -= src.c_tag
 			src.bug = null
 		else
-			user << "\blue Camera bugged."
+			user << "<span class='notice'>Camera bugged.</span>"
 			src.bug = W
 			src.bug.bugged_cameras[src.c_tag] = src
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
@@ -219,7 +219,7 @@
 		spark_system.start()
 		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(loc, "sparks", 50, 1)
-		visible_message("\blue The camera has been sliced apart by [] with an energy blade!")
+		visible_message("<span class='notice'>The camera has been sliced apart by [] with an energy blade!</span>")
 		qdel(src)
 	else if(istype(W, /obj/item/device/laser_pointer))
 		var/obj/item/device/laser_pointer/L = W
@@ -233,19 +233,19 @@
 		status = !( src.status )
 		if (!(src.status))
 			if(user)
-				visible_message("\red [user] deactivates [src]!")
+				visible_message("<span class='danger'>[user] deactivates [src]!</span>")
 				add_hiddenprint(user)
 			else
-				visible_message("\red \The [src] deactivates!")
+				visible_message("<span class='danger'>\The [src] deactivates!</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
 
 		else
 			if(user)
-				visible_message("\red [user] reactivates [src]!")
+				visible_message("<span class='danger'>[user] reactivates [src]!</span>")
 				add_hiddenprint(user)
 			else
-				visible_message("\red \The [src] reactivates!")
+				visible_message("<span class='danger'>\The [src] reactivates!</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
 
@@ -282,7 +282,7 @@
 	if(isXRay())
 		see = range(view_range, pos)
 	else
-		see = hear(view_range, pos)
+		see = get_hear(view_range, pos)
 	return see
 
 /atom/proc/auto_turn()

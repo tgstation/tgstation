@@ -269,6 +269,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.pixel_x = rand(-5.0, 5)
 	src.pixel_y = rand(-5.0, 5)
 
+/obj/item/clothing/mask/cigarette/rollie/trippy/New()
+	..()
+	reagents.add_reagent("mushroomhallucinogen", 50)
+	light()
+	//for(var/mob/M in player_list)	M << 'sound/misc/Smoke_Weed_Everyday.ogg'
+
 
 /obj/item/weapon/cigbutt/roach
 	name = "roach"

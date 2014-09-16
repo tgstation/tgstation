@@ -6,7 +6,8 @@
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
 /datum/configuration
-	var/server_name = null				// server name (for world name / status)
+	var/server_name = null				// server name (the name of the game window)
+	var/station_name = null				// station name (the name of the station in-game)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 
@@ -22,7 +23,6 @@
 	var/log_emote = 0					// log emotes
 	var/log_attack = 0					// log attack messages
 	var/log_adminchat = 0				// log admin chat messages
-	var/log_adminwarn = 0				// log warnings admins get about bomb construction and such
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/sql_enabled = 0					// for sql switching
@@ -82,8 +82,9 @@
 
 	var/traitor_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
-	var/allow_latejoin_antagonists = 0 // If late-joining players can be traitor/changeling
-	var/continuous_round_rev = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
+	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
+	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
+	var/continuous_round_rev = 0		// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
 	var/shuttle_refuel_delay = 12000
@@ -210,8 +211,6 @@
 					config.log_emote = 1
 				if("log_adminchat")
 					config.log_adminchat = 1
-				if("log_adminwarn")
-					config.log_adminwarn = 1
 				if("log_pda")
 					config.log_pda = 1
 				if("log_hrefs")
@@ -234,6 +233,8 @@
 					config.respawn = 0
 				if("servername")
 					config.server_name = value
+				if("stationname")
+					config.station_name = value
 				if("serversuffix")
 					config.server_suffix = 1
 				if("hostedby")
@@ -374,6 +375,8 @@
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist	= 1
+				if("enforce_human_authority")
+					config.enforce_human_authority	= 1
 				if("allow_latejoin_antagonists")
 					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")

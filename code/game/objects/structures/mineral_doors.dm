@@ -249,25 +249,3 @@
 		for(var/i = 1, i <= oreAmount, i++)
 			new/obj/item/stack/sheet/mineral/wood(get_turf(src))
 	qdel(src)
-
-/obj/structure/mineral_door/resin
-	mineralType = "resin"
-	hardness = 1
-	close_delay = 100
-	openSound = 'sound/effects/attackblob.ogg'
-	closeSound = 'sound/effects/attackblob.ogg'
-
-/obj/structure/mineral_door/resin/TryToSwitchState(atom/user)
-	if(isalien(user))
-		return ..()
-
-/obj/structure/mineral_door/resin/Dismantle(devastated = 0)
-	qdel(src)
-
-/obj/structure/mineral_door/resin/CheckHardness()
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	..()
-
-/obj/structure/mineral_door/resin/BlockSuperconductivity()
-	if(opacity)
-		return 1

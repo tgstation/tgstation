@@ -231,7 +231,7 @@
 /mob/living/simple_animal/hostile/proc/OpenFire(var/the_target)
 
 	var/target = the_target
-	visible_message("\red <b>[src]</b> [ranged_message] at [target]!", 1)
+	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
 
 	var/tturf = get_turf(target)
 	if(rapid)
@@ -266,6 +266,7 @@
 		qdel(A)
 		return
 	A.current = target
+	A.firer = src
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
 	spawn( 0 )

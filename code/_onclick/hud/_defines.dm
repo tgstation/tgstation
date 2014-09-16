@@ -44,11 +44,15 @@
 #define ui_storage1 "CENTER+1:18,SOUTH:5"
 #define ui_storage2 "CENTER+2:20,SOUTH:5"
 
+#define ui_borg_sensor "CENTER-3:16, SOUTH:5"	//borgs
 #define ui_inv1 "CENTER-2:16,SOUTH:5"			//borgs
 #define ui_inv2 "CENTER-1  :16,SOUTH:5"			//borgs
 #define ui_inv3 "CENTER  :16,SOUTH:5"			//borgs
 #define ui_borg_module "CENTER+1:16,SOUTH:5"
 #define ui_borg_store "CENTER+2:16,SOUTH:5"		//borgs
+
+#define ui_borg_camera "CENTER+3:21,SOUTH:5"	//borgs
+#define ui_borg_album "CENTER+4:21,SOUTH:5"		//borgs
 
 #define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
 #define ui_monkey_back "CENTER-2:15,SOUTH:5"	//monkey
@@ -77,6 +81,7 @@
 #define ui_alien_toxin "EAST-1:28,CENTER+5:25"
 #define ui_alien_fire "EAST-1:28,CENTER+4:25"
 #define ui_alien_oxygen "EAST-1:28,CENTER+3:25"
+#define ui_alien_nightvision "EAST-1:28,CENTER+2:25"
 
 //Middle right (status indicators)
 #define ui_nutrition "EAST-1:28,CENTER-3:11"
@@ -91,20 +96,21 @@
 
 // AI
 
-#define ui_ai_core "SOUTH:6,WEST:16"
-#define ui_ai_camera_list "SOUTH:6,WEST+1:16"
-#define ui_ai_track_with_camera "SOUTH:6,WEST+2:16"
-#define ui_ai_camera_light "SOUTH:6,WEST+3:16"
-#define ui_ai_crew_monitor "SOUTH:6,WEST+4:16"
-#define ui_ai_crew_manifest "SOUTH:6,WEST+5:16"
-#define ui_ai_alerts "SOUTH:6,WEST+6:16"
-#define ui_ai_announcement "SOUTH:6,WEST+7:16"
-#define ui_ai_shuttle "SOUTH:6,WEST+8:16"
-#define ui_ai_state_laws "SOUTH:6,WEST+9:16"
-#define ui_ai_pda_send "SOUTH:6,WEST+10:16"
-#define ui_ai_pda_log "SOUTH:6,WEST+11:16"
-#define ui_ai_take_picture "SOUTH:6,WEST+12:16"
-#define ui_ai_view_images "SOUTH:6,WEST+13:16"
+#define ui_ai_core "SOUTH:6,WEST"
+#define ui_ai_camera_list "SOUTH:6,WEST+1"
+#define ui_ai_track_with_camera "SOUTH:6,WEST+2"
+#define ui_ai_camera_light "SOUTH:6,WEST+3"
+#define ui_ai_crew_monitor "SOUTH:6,WEST+4"
+#define ui_ai_crew_manifest "SOUTH:6,WEST+5"
+#define ui_ai_alerts "SOUTH:6,WEST+6"
+#define ui_ai_announcement "SOUTH:6,WEST+7"
+#define ui_ai_shuttle "SOUTH:6,WEST+8"
+#define ui_ai_state_laws "SOUTH:6,WEST+9"
+#define ui_ai_pda_send "SOUTH:6,WEST+10"
+#define ui_ai_pda_log "SOUTH:6,WEST+11"
+#define ui_ai_take_picture "SOUTH:6,WEST+12"
+#define ui_ai_view_images "SOUTH:6,WEST+13"
+#define ui_ai_sensor "SOUTH:6,WEST+14"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"

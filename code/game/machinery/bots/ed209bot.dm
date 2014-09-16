@@ -134,7 +134,7 @@ Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"},
 	if(!src.locked || issilicon(user))
 		if(!lasercolor)
 			dat += text({"<BR>
-Arrest for No ID: []<BR>
+Arrest Unidentifiable Persons: []<BR>
 Arrest for Unauthorized Weapons: []<BR>
 Arrest for Warrant: []<BR>
 <BR>
@@ -223,7 +223,7 @@ Auto Patrol: []"},
 			if(hasvar(W,"force") && W.force)//If force is defined and non-zero
 				threatlevel = user.assess_threat(src)
 				threatlevel += 6
-				if(threatlevel > 0)
+				if(threatlevel >= 4)
 					src.target = user
 					if(lasercolor)//To make up for the fact that lasertag bots don't hunt
 						src.shootAt(user)
@@ -235,7 +235,7 @@ Auto Patrol: []"},
 		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+				O.show_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -315,7 +315,8 @@ Auto Patrol: []"},
 						M.Stun(5)
 
 					if(declare_arrests)
-						declare_arrest()
+						var/area/location = get_area(src)
+						broadcast_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b>", src)
 					target.visible_message("<span class='danger'>[src.target] has been stunned by [src]!</span>",\
 											"<span class='userdanger'>[src.target] has been stunned by [src]!</span></span>")
 
@@ -714,7 +715,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
@@ -1015,12 +1016,3 @@ Auto Patrol: []"},
 /obj/machinery/bot/ed209/redtag/New()
 	new /obj/machinery/bot/ed209(get_turf(src),null,"r")
 	qdel(src)
-
-
-/obj/machinery/bot/ed209/proc/declare_arrest()
-	var/area/location = get_area(src)
-	var/turf/myturf = get_turf(src)
-	for(var/mob/living/carbon/human/human in mob_list)
-		var/turf/humanturf = get_turf(human)
-		if((humanturf.z == myturf.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security))
-			human.show_message("<span class='info'>\icon[human.glasses] [src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>", 1)

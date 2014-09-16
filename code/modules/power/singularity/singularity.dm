@@ -438,12 +438,12 @@
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
-					H << "\blue You look directly into The [src.name], good thing you had your protective eyewear on!"
+					H << "<span class='notice'>You look directly into The [src.name], good thing you had your protective eyewear on!</span>"
 					return
-		M << "\red You look directly into The [src.name] and feel weak."
+		M << "<span class='danger'>You look directly into The [src.name] and feel weak.</span>"
 		M.apply_effect(3, STUN)
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red <B>[] stares blankly at The []!</B>", M, src), 1)
+			O.show_message(text("<span class='userdanger'>[] stares blankly at The []!</span>", M, src), 1)
 	return
 
 

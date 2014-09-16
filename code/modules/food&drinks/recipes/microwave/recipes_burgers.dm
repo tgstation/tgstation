@@ -184,11 +184,11 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/superbite
 
 /datum/recipe/burger/slime
-	reagents = list("slimejelly" = 5, "flour" = 15)
+	reagents = list("slimejelly" = 5, "flour" = 5)
 	items = list()
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/slime
 
 /datum/recipe/burger/jelly
-	reagents = list("cherryjelly" = 5, "flour" = 15)
+	reagents = list("cherryjelly" = 5, "flour" = 5)
 	items = list()
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/cherry

@@ -84,7 +84,7 @@
 			ML.contract_disease(D,1,0)
 	else
 		for(var/mob/O in viewers(ML, null))
-			O.show_message("\red <B>[src] has attempted to bite [ML]!</B>", 1)
+			O.show_message("<span class='userdanger'>[src] has attempted to bite [ML]!</span>", 1)
 
 /*
 	Aliens

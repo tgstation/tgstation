@@ -34,7 +34,7 @@ effective or pretty fucking useless.
 /obj/item/device/batterer/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
 	if(!user) 	return
 	if(times_used >= max_uses)
-		user << "\red The mind batterer has been burnt out!"
+		user << "<span class='danger'>The mind batterer has been burnt out!</span>"
 		return
 
 	add_logs(user, null, "knocked down people in the area", admin=0, object="[src]")
@@ -46,13 +46,13 @@ effective or pretty fucking useless.
 				M.Weaken(rand(10,20))
 				if(prob(25))
 					M.Stun(rand(5,10))
-				M << "\red <b>You feel a tremendous, paralyzing wave flood your mind.</b>"
+				M << "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>"
 
 			else
-				M << "\red <b>You feel a sudden, electric jolt travel through your head.</b>"
+				M << "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>"
 
 	playsound(src.loc, 'sound/misc/interference.ogg', 50, 1)
-	user << "\blue You trigger [src]."
+	user << "<span class='notice'>You trigger [src].</span>"
 	times_used += 1
 	if(times_used >= max_uses)
 		icon_state = "battererburnt"

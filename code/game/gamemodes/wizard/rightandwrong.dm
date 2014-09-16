@@ -1,7 +1,7 @@
-
+//In this file: Summon Magic/Summon Guns/Summon Events
 
 /mob/proc/rightandwrong(var/summon_type) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
 
@@ -49,9 +49,9 @@
 					new /obj/item/weapon/gun/projectile/automatic/gyropistol(get_turf(H))
 				if("pulse")
 					new /obj/item/weapon/gun/energy/pulse_rifle(get_turf(H))
-				if("silenced")
+				if("suppressed")
 					new /obj/item/weapon/gun/projectile/automatic/pistol(get_turf(H))
-					new /obj/item/weapon/silencer(get_turf(H))
+					new /obj/item/weapon/suppressor(get_turf(H))
 				if("cannon")
 					new /obj/item/weapon/gun/energy/lasercannon(get_turf(H))
 				if("doublebarrel")
@@ -100,6 +100,8 @@
 					new /obj/item/weapon/gun/magic/wand/teleport(get_turf(H))
 				if("wanddoor")
 					new /obj/item/weapon/gun/magic/wand/door(get_turf(H))
+				if("wandfireball")
+					new /obj/item/weapon/gun/magic/wand/fireball(get_turf(H))
 				if("staffhealing")
 					new /obj/item/weapon/gun/magic/staff/healing(get_turf(H))
 				if("staffdoor")
@@ -130,3 +132,25 @@
 						if("staffchaos")
 							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
 					H << "<span class='notice'>You suddenly feel lucky.</span>"
+
+/mob/proc/summonevents()
+	if(events) 																//if there isn't something is very wrong
+		if(!events.wizardmode) 												//lets get this party started
+			events.control = list()											//out with the old
+			for(var/type in typesof(/datum/round_event_control/wizard) - /datum/round_event_control/wizard)	//in with the new
+				var/datum/round_event_control/wizard/W = new type()
+				if(!W.typepath)
+					continue												//don't want this one! leave it for the garbage collector
+				events.control += W											//add it to the list of all events (controls)
+			events.frequency_lower = 600									//1 minute lower bound
+			events.frequency_upper = 3000									//5 minutes upper bound
+			events.wizardmode = 1
+			events.reschedule()
+
+		else 																//Speed it up
+			events.frequency_lower = round(events.frequency_lower * 0.8)	//1 minute | 48 seconds | 34.8 seconds | 30.7 seconds | 24.6 seconds
+			events.frequency_upper = round(events.frequency_upper * 0.6)	//5 minutes | 3 minutes | 1 minute 48 seconds | 1 minute 4.8 seconds | 38.9 seconds
+			if(events.frequency_upper < events.frequency_lower)
+				events.frequency_upper = events.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
+
+			events.reschedule()

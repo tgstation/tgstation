@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/laser
 	name = "laser gun"
-	desc = "a basic weapon designed kill with concentrated energy bolts"
+	desc = "A basic energy-based laser gun that fires concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser"
 	item_state = "laser"
 	w_class = 3.0
@@ -18,7 +18,7 @@
 obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
 	icon_state = "retro"
-	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
+	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 
 
 /obj/item/weapon/gun/energy/laser/captain
@@ -47,7 +47,8 @@ obj/item/weapon/gun/energy/laser/retro
 	update_icon()
 	return 1
 
-
+/obj/item/weapon/gun/energy/laser/cyborg
+	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 
 /obj/item/weapon/gun/energy/laser/cyborg/newshot()
 	if(isrobot(src.loc))
@@ -76,14 +77,20 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser cannon"
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
+	item_state = "laser"
+	w_class = 4.0
+	force = 10
+	flags =  CONDUCT
+	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
-	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
+	desc = "A high-power laser gun capable of expelling concentrated xray blasts that pass through multiple soft targets and heavier materials"
 	icon_state = "xray"
+	item_state = "laser"
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 
@@ -93,7 +100,7 @@ obj/item/weapon/gun/energy/laser/retro
 /obj/item/weapon/gun/energy/laser/bluetag
 	name = "laser tag gun"
 	icon_state = "bluetag"
-	desc = "Standard issue weapon of the Imperial Guard"
+	desc = "A retro laser gun modified to fire harmless blue beams of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
@@ -103,7 +110,7 @@ obj/item/weapon/gun/energy/laser/retro
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
 			return 1
-		M << "\red You need to be wearing your laser tag vest!"
+		M << "<span class='danger'>You need to be wearing your laser tag vest!</span>"
 	return 0
 
 /obj/item/weapon/gun/energy/laser/bluetag/New()
@@ -130,7 +137,7 @@ obj/item/weapon/gun/energy/laser/retro
 /obj/item/weapon/gun/energy/laser/redtag
 	name = "laser tag gun"
 	icon_state = "redtag"
-	desc = "Standard issue weapon of the Imperial Guard"
+	desc = "A retro laser gun modified to fire harmless beams red of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
@@ -140,7 +147,7 @@ obj/item/weapon/gun/energy/laser/retro
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
 			return 1
-		M << "\red You need to be wearing your laser tag vest!"
+		M << "<span class='danger'>You need to be wearing your laser tag vest!</span>"
 	return 0
 
 /obj/item/weapon/gun/energy/laser/redtag/New()

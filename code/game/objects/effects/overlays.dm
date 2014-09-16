@@ -8,9 +8,10 @@
 	icon='icons/effects/beam.dmi'
 	icon_state="b_beam"
 	var/atom/BeamSource
-	New()
-		..()
-		spawn(10) qdel(src)
+
+/obj/effect/overlay/beam/New()
+	..()
+	spawn(10) qdel(src)
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

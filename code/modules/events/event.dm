@@ -26,12 +26,14 @@
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 
+	return E
+
 /datum/round_event	//NOTE: Times are measured in master controller ticks!
 	var/processing = 1
 	var/datum/round_event_control/control
 
 	var/startWhen		= 0	//When in the lifetime to call start().
-	var/announceWhen	= 0	//When in the lifetime to call announce().
+	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to >0 if there is an announcement.
 	var/endWhen			= 0	//When in the lifetime the event should end.
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
@@ -81,7 +83,7 @@
 /datum/round_event/proc/process()
 	if(!processing)
 		return
-	
+
 	if(activeFor == startWhen)
 		start()
 

@@ -9,7 +9,6 @@
 	icon_state = "crate"
 	icon_living = "crate"
 
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	response_help = "touches"
 	response_disarm = "pushes"
 	response_harm = "hits"
@@ -43,7 +42,7 @@
 
 /mob/living/simple_animal/hostile/mimic/Die()
 	..()
-	visible_message("\red <b>[src]</b> stops moving!")
+	visible_message("<span class='danger'><b>[src]</b> stops moving!</span>")
 	qdel(src)
 
 
@@ -196,7 +195,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		maxHealth = health
 		if(creator)
 			src.creator = creator
-			faction = list("\ref[creator]") // very unique
+			faction += "\ref[creator]" // very unique
 		if(destroy_original)
 			qdel(O)
 		return 1

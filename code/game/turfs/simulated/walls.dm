@@ -228,7 +228,6 @@
 				user << "<span class='notice'>You remove the outer plating.</span>"
 				dismantle_wall()
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 
 	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )

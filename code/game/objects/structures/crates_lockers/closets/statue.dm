@@ -23,6 +23,8 @@
 			L.client.eye = src
 		L.loc = src
 		L.sdisabilities += MUTE
+		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
+
 		health = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		intialTox = L.getToxLoss()
 		intialFire = L.getFireLoss()
@@ -79,6 +81,7 @@
 		M.loc = src.loc
 		M.sdisabilities -= MUTE
 		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurred is transfered to the mob
+		M.faction -= "mimic"
 		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
@@ -123,7 +126,7 @@
 
 /obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob)
 	health -= I.force
-	visible_message("\red [user] strikes [src] with [I].")
+	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
 	if(health <= 0)
 		for(var/mob/M in src)
 			shatter(M)
@@ -150,7 +153,7 @@
 	if (user)
 		user.dust()
 	dump_contents()
-	visible_message("\red [src] shatters!. ")
+	visible_message("<span class='danger'>[src] shatters!.</span>")
 	qdel(src)
 
 /obj/structure/closet/statue/container_resist()

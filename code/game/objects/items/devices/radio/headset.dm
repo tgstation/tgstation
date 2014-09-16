@@ -34,6 +34,9 @@
 
 /obj/item/device/radio/headset/syndicate
 	origin_tech = "syndicate=3"
+	icon_state = "syndie_headset"
+	item_state = "syndie_headset"
+
 /obj/item/device/radio/headset/syndicate/New()
 	..()
 	qdel(keyslot1)
@@ -55,6 +58,11 @@
 	icon_state = "sec_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sec
+
+/obj/item/device/radio/headset/headset_sec/alt
+	name = "security bowman headset"
+	icon_state = "sec_headset_alt"
+	item_state = "sec_headset_alt"
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -100,10 +108,16 @@
 
 /obj/item/device/radio/headset/heads/captain
 	name = "\proper the captain's headset"
-	desc = "The headset of the boss. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	desc = "The headset of the king. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
+
+/obj/item/device/radio/headset/heads/captain/alt
+	name = "\proper the captain's bowman headset"
+	desc = "The headset of the boss. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	icon_state = "com_headset_alt"
+	item_state = "com_headset_alt"
 
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -118,6 +132,11 @@
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/hos
+
+/obj/item/device/radio/headset/heads/hos/alt
+	name = "\proper the head of security's bowman headset"
+	icon_state = "com_headset_alt"
+	item_state = "com_headset_alt"
 
 /obj/item/device/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -256,13 +275,16 @@
 			src.syndie = 1
 
 
-	for (var/ch_name in channels)
+	for(var/ch_name in channels)
+		//this is the most hilarious piece of code i have seen this week, so im not going to remove it
+		/*
 		if(!radio_controller)
 			sleep(30) // Waiting for the radio_controller to be created.
 		if(!radio_controller)
 			src.name = "broken radio headset"
 			return
+		*/
 
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 	return

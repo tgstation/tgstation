@@ -8,7 +8,6 @@
 	icon_gib = "pine_1"
 	speak_chance = 0
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	response_help = "brushes"
 	response_disarm = "pushes"
 	response_harm = "hits"
@@ -52,7 +51,7 @@
 
 /mob/living/simple_animal/hostile/tree/Die()
 	..()
-	visible_message("\red <b>[src]</b> is hacked into pieces!")
+	visible_message("<span class='danger'><b>[src]</b> is hacked into pieces!</span>")
 	new /obj/item/stack/sheet/mineral/wood(loc)
 	qdel(src)
 
@@ -66,6 +65,6 @@
 
 /mob/living/simple_animal/hostile/tree/festivus/Die()
 	..()
-	visible_message("\red <b>[src]</b> is hacked into pieces!")
+	visible_message("<span class='danger'><b>[src]</b> is hacked into pieces!</span>")
 	new /obj/item/stack/rods(loc)
 	qdel(src)

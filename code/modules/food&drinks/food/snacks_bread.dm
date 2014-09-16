@@ -5,10 +5,11 @@
 	icon_state = "meatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
 	slices_num = 5
-	New()
-		..()
-		reagents.add_reagent("nutriment", 30)
-		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/meatbread/New()
+	..()
+	reagents.add_reagent("nutriment", 30)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
 	name = "meatbread slice"
@@ -23,10 +24,11 @@
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice
 	slices_num = 5
-	New()
-		..()
-		reagents.add_reagent("nutriment", 30)
-		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/xenomeatbread/New()
+	..()
+	reagents.add_reagent("nutriment", 30)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice
 	name = "xenomeatbread slice"
@@ -41,11 +43,12 @@
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
 	slices_num = 5
-	New()
-		..()
-		reagents.add_reagent("nutriment", 30)
-		reagents.add_reagent("toxin", 15)
-		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/spidermeatbread/New()
+	..()
+	reagents.add_reagent("nutriment", 30)
+	reagents.add_reagent("toxin", 15)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
 	name = "spider meat bread slice"
@@ -53,9 +56,10 @@
 	icon_state = "xenobreadslice"
 	trash = /obj/item/trash/plate
 	bitesize = 2
-	New()
-		..()
-		reagents.add_reagent("toxin", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice/New()
+	..()
+	reagents.add_reagent("toxin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/store/bananabread
 	name = "banana-nut bread"
@@ -63,11 +67,12 @@
 	icon_state = "bananabread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
 	slices_num = 5
-	New()
-		..()
-		reagents.add_reagent("banana", 20)
-		reagents.add_reagent("nutriment", 20)
-		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/bananabread/New()
+	..()
+	reagents.add_reagent("banana", 20)
+	reagents.add_reagent("nutriment", 20)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
 	name = "banana-nut bread slice"
@@ -82,10 +87,11 @@
 	icon_state = "tofubread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
 	slices_num = 5
-	New()
-		..()
-		reagents.add_reagent("nutriment", 30)
-		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/tofubread/New()
+	..()
+	reagents.add_reagent("nutriment", 30)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
 	name = "tofubread slice"
@@ -100,10 +106,11 @@
 	icon_state = "bread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	slices_num = 5
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/bread/New()
+	..()
+	reagents.add_reagent("nutriment", 6)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	name = "bread slice"
@@ -119,10 +126,11 @@
 	icon_state = "creamcheesebread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
 	slices_num = 5
-	New()
-		..()
-		reagents.add_reagent("nutriment", 20)
-		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/creamcheesebread/New()
+	..()
+	reagents.add_reagent("nutriment", 20)
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
 	name = "cream cheese bread slice"
@@ -135,9 +143,10 @@
 	name = "baguette"
 	desc = "Bon appetit!"
 	icon_state = "baguette"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("blackpepper", 1)
-		reagents.add_reagent("sodiumchloride", 1)
-		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/baguette/New()
+	..()
+	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("blackpepper", 1)
+	reagents.add_reagent("sodiumchloride", 1)
+	bitesize = 3

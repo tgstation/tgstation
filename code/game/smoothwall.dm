@@ -81,6 +81,9 @@
 	for(var/obj/structure/falsewall/W in range(src,1))
 		W.relativewall()
 		W.update_icon()//Refreshes the wall to make sure the icons don't desync
+	for(var/obj/structure/alien/resin/W in range(src,1))
+		W.relativewall()
+		W.update_icon()
 	return
 
 /turf/simulated/wall/New()
@@ -97,14 +100,11 @@
 	..()*/
 
 /turf/simulated/wall/Del()
-
-	var/temploc = src.loc
-
 	spawn(10)
-		for(var/turf/simulated/wall/W in range(temploc,1))
+		for(var/turf/simulated/wall/W in range(src,1))
 			W.relativewall()
 
-		for(var/obj/structure/falsewall/W in range(temploc,1))
+		for(var/obj/structure/falsewall/W in range(src,1))
 			W.relativewall()
 
 	for(var/direction in cardinal)
@@ -114,18 +114,7 @@
 				shroom.icon_state = "glowshroomf"
 				shroom.pixel_x = 0
 				shroom.pixel_y = 0
-
 	..()
-
-/*/turf/simulated/shuttle/wall/Del()
-
-	var/temploc = src.loc
-
-	spawn(10)
-		for(var/turf/simulated/shuttle/wall/W in range(temploc,1))
-			W.relativewall()
-
-	..()*/
 
 /turf/simulated/wall/relativewall()
 	if(istype(src,/turf/simulated/wall/vault)) //HACK!!!
@@ -143,4 +132,17 @@
 				junction |= get_dir(src,W)
 	var/turf/simulated/wall/wall = src
 	wall.icon_state = "[wall.walltype][junction]"
+	return
+
+
+/obj/structure/alien/resin/relativewall()
+
+	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+
+	for(var/obj/structure/alien/resin/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			junction |= get_dir(src,W)
+	var/obj/structure/alien/resin/resin = src
+	resin.icon_state = "[resin.resintype][junction]"
+
 	return

@@ -41,6 +41,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/used_equip = 0
 	var/used_light = 0
 	var/used_environ = 0
+	var/static_equip
+	var/static_light = 0
+	var/static_environ
 
 	var/has_gravity = 0
 
@@ -830,11 +833,10 @@ proc/process_ghost_teleport_locs()
 /area/engine/engine_smes
 	name = "\improper Engineering SMES"
 	icon_state = "engine_smes"
-	requires_power = 0//This area only covers the batteries and they deal with their own power
 
 /area/engine/engineering
 	name = "Engineering"
-	icon_state = "engine_smes"
+	icon_state = "engine"
 
 /area/engine/break_room
 	name = "\improper Engineering Foyer"
@@ -851,7 +853,6 @@ proc/process_ghost_teleport_locs()
 /area/engine/gravity_generator
 	name = "Gravity Generator Room"
 	icon_state = "blue"
-
 
 //Solars
 
