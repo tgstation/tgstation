@@ -123,7 +123,7 @@
 	cure_chance = 5
 	agent = "R2D2 Nanomachines"
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
-	severity = "BIOHAZARD THREAT!"
+	severity = "Dangerous!"
 	hidden = list(0, 0)
 	stage1	= null
 	stage2	= list("Your joints feel stiff.", "<span class='danger'>Beep...boop..</span>")
@@ -210,7 +210,6 @@
 	cure = "Death"
 	agent = "Fell Doge Majicks"
 	desc = "This disease transforms the victim into a corgi."
-	severity = "BIOHAZARD THREAT!"
 	hidden = list(0, 0)
 	stage1	= list("BARK.")
 	stage2	= list("You feel the need to wear silly hats.")
