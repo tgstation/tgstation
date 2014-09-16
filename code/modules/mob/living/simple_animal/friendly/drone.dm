@@ -113,6 +113,13 @@
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
 	return 1
 
+/mob/living/simple_animal/drone/binarycheck()
+	return 1
+
+/mob/living/simple_animal/drone/radio(message, message_mode)
+	if(message_mode != MODE_BINARY) //so they can hear binary but can't talk in it
+		..()
+
 /mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity)
 	if(istype(A,/obj/item/weapon/gun))
 		src << "<span class='warning'>Your subroutines prevent you from picking up [A].</span>"
@@ -141,7 +148,7 @@
 		update_inv_internal_storage()
 		return 1
 	else
-		..(slot_id)
+		..()
 
 
 /mob/living/simple_animal/drone/swap_hand()
