@@ -22,6 +22,7 @@
 	density = 0
 	pass_flags = PASSTABLE
 	sight = (SEE_TURFS | SEE_OBJS)
+	status_flags = (CANPUSH | CANSTUN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	languages = DRONE
@@ -112,6 +113,13 @@
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
 	return 1
 
+/mob/living/simple_animal/drone/binarycheck()
+	return 1
+
+/mob/living/simple_animal/drone/radio(message, message_mode)
+	if(message_mode != MODE_BINARY) //so they can hear binary but can't talk in it
+		..()
+
 /mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity)
 	if(istype(A,/obj/item/weapon/gun))
 		src << "<span class='warning'>Your subroutines prevent you from picking up [A].</span>"
@@ -140,7 +148,7 @@
 		update_inv_internal_storage()
 		return 1
 	else
-		..(slot_id)
+		..()
 
 
 /mob/living/simple_animal/drone/swap_hand()
@@ -216,6 +224,13 @@
 		update_inv_hands()
 		return 1
 	return 0
+
+/mob/living/simple_animal/drone/emp_act()
+	Stun(5)
+	src << "<span class='alert'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>"
+	while(stunned)
+		sleep(5)
+	check_laws()
 
 /mob/living/simple_animal/drone/proc/pick_colour()
 	var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
