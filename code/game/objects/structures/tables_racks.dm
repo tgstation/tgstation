@@ -696,22 +696,19 @@ Destroy type values:
 			return
 	..()
 
-/obj/structure/table/MouseDrop_T(mob/target, mob/user)
+/obj/structure/table/MouseDrop_T(mob/target, mob/living/carbon/human/user)
 	if(istype(target) && user == target)
-		climb_table(target, user)
+		climb_table(user)
 
-/obj/structure/table/proc/climb_table(mob/target, mob/user)
-	if (!user.canUseTopic(target) || istype(user, /mob/living/silicon))
-		return
+/obj/structure/table/proc/climb_table(mob/user)
 	src.add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
 								"<span class='notice'>[user] starts climbing onto [src].</span>")
-	if(do_mob(usr, target, 20))
-		target.loc = src.loc
-		if(user == target)
-			user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
+	if(do_mob(user, user, 20))
+		user.loc = src.loc
+		user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>[user] climbs onto [src].</span>")
-			add_logs(user, target, "climbed", addition="onto [src]")
+		add_logs(user, src, "climbed onto")
 
 /*
  * Racks
