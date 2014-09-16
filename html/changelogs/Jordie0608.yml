@@ -1,0 +1,3 @@
+author: Jordie0608
+changes: 
+  - tweak: Replaced all AI turrets with porta-turrets that work on LoS instead of area and can be individually configured
