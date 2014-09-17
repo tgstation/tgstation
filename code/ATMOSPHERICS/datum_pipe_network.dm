@@ -12,7 +12,14 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 /datum/pipe_network/New()
 	air_transient = new()
+	..()
 
+/datum/pipe_network/Destroy()
+	pipe_networks -= src
+	for(var/datum/pipeline/P in line_members)
+		P.network = null
+	for(var/obj/machinery/atmospherics/A in normal_members)
+		A.nullifyPipenetwork()
 	..()
 
 /datum/pipe_network/proc/process()
@@ -30,7 +37,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	//Notes: Assuming that members will add themselves to appropriate roster in network_expand()
 
 	if(!start_normal)
-		del(src)
+		qdel(src)
 
 	start_normal.network_expand(src, reference)
 
@@ -39,7 +46,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	if((normal_members.len>0)||(line_members.len>0))
 		pipe_networks += src
 	else
-		del(src)
+		qdel(src)
 
 /datum/pipe_network/proc/merge(datum/pipe_network/giver)
 	if(giver==src) return 0
@@ -55,8 +62,6 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 	for(var/datum/pipeline/line_member in giver.line_members)
 		line_member.network = src
-
-	del(giver)
 
 	update_network_gases()
 	return 1

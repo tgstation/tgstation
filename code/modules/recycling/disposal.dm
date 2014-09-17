@@ -101,7 +101,6 @@
 					qdel(src)
 				return
 			else
-				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
@@ -453,7 +452,7 @@
 				M.show_message("\the [I] lands in \the [src].", 3)
 		else
 			for(var/mob/M in viewers(src))
-				M.show_message("\the [I] bounces off of \the [src]'s rim!.", 3)
+				M.show_message("\the [I] bounces off of \the [src]'s rim!", 3)
 		return 0
 	else
 		return ..(mover, target, height, air_group)
@@ -583,7 +582,7 @@
 		return
 	if (src.loc)
 		for (var/mob/M in hearers(src.loc.loc))
-			M << "<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>"
+			M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", 2)
 
 	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
 
@@ -824,7 +823,6 @@
 				welded()
 				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
 		else
-			user << "<span class='notice'>You need more welding fuel to cut the pipe.</span>"
 			return
 
 // called when pipe is cut with welder
@@ -1141,8 +1139,6 @@
 				welded()
 				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
 		else
-			user << "<span class='notice'>You need more welding fuel to cut the pipe.</span>"
-
 			return
 
 	// would transfer to next pipe segment, but we are in a trunk
@@ -1276,7 +1272,6 @@
 				qdel(src)
 			return
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 
 

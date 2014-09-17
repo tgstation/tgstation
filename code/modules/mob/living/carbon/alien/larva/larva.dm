@@ -117,6 +117,8 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
+		if(M.attack_sound)
+			playsound(loc, M.attack_sound, 50, 1, 1)
 		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
 				"<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -142,12 +144,12 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			if (is_muzzled())
+			if (M.is_muzzled())
 				return
-			if (health > 0)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>")
+			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+					"<span class='userdanger'>[M.name] bites [src]!</span>")
+			if (health > -100)
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -158,13 +160,12 @@
 		M << "You cannot attack people before the game has started."
 		return
 
-	if(M.Victim) return // can't attack while eating!
+	if(M.Victim)
+		return // can't attack while eating!
 
-	if (health > -100)
-
+	if (stat != DEAD)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
-
 		var/damage = rand(1, 3)
 
 		if(M.is_adult)
@@ -172,9 +173,8 @@
 		else
 			damage = rand(5, 35)
 
+
 		adjustBruteLoss(damage)
-
-
 		updatehealth()
 
 	return
@@ -259,7 +259,7 @@
 		else
 			if (health > 0)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				var/damage = rand(1, 3)
+				var/damage = 1
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 						"<span class='userdanger'>[M.name] bites [src]!</span>")
 				adjustBruteLoss(damage)

@@ -100,6 +100,7 @@ var/datum/global_hud/global_hud = new()
 	var/obj/screen/blobpwrdisplay
 	var/obj/screen/blobhealthdisplay
 	var/obj/screen/alien_plasma_display
+	var/obj/screen/nightvisionicon
 	var/obj/screen/r_hand_hud_object
 	var/obj/screen/l_hand_hud_object
 	var/obj/screen/action_intent
@@ -194,6 +195,8 @@ datum/hud/New(mob/owner)
 		ghost_hud()
 	else if(isovermind(mymob))
 		blob_hud()
+	else if(isdrone(mymob))
+		drone_hud(ui_style)
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)

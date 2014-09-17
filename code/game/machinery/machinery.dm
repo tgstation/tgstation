@@ -213,7 +213,7 @@ Class Procs:
 	return
 
 /mob/dead/observer/canUseTopic()
-	if(check_rights(R_ADMIN))
+	if(check_rights(R_ADMIN, 0))
 		return
 
 /mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
@@ -264,9 +264,7 @@ Class Procs:
 		return 1
 	if(user.lying || user.stat)
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey)) )
+	if(!user.IsAdvancedToolUser())
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 /*

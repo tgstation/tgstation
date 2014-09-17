@@ -269,7 +269,7 @@ MASS SPECTROMETER
 	if (crit_fail)
 		user << "<span class='warning'> This device has critically failed and is no longer functional!</span>"
 		return
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'> You don't have the dexterity to do this!</span>"
 		return
 	if(reagents.total_volume)

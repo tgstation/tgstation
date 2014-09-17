@@ -89,7 +89,6 @@ obj/structure/windoor_assembly/Destroy()
 							R.add_fingerprint(user)
 						qdel(src)
 				else
-					user << "<span class='notice'>You need more welding fuel to dissassemble the windoor assembly.</span>"
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
@@ -166,7 +165,7 @@ obj/structure/windoor_assembly/Destroy()
 				if(do_after(user, 40))
 					if(!src) return
 
-					user << "<span class='notice'>You cut the windoor wires.!</span>"
+					user << "<span class='notice'>You cut the windoor wires!</span>"
 					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)

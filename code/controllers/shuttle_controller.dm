@@ -37,16 +37,19 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
-/datum/shuttle_controller/proc/incall(coeff = 1, var/signal_origin)
+/datum/shuttle_controller/proc/incall(coeff = 1, var/signal_origin, var/emergency_reason, var/red_alert)
 
 	if(endtime)
 		if(direction == -1)
 			setdirection(1)
 	else
-		if(signal_origin && prob(60)) //40% chance the signal tracing will fail
+		if(recall_count > 2 && signal_origin && prob(70)) //30% chance the signal tracing will fail
 			last_call_loc = signal_origin
 		else
 			last_call_loc = null
+
+		priority_announce("The emergency shuttle has been called. [red_alert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[emergency_reason][emergency_shuttle.last_call_loc ? "\n\nCall signal traced. Results can be viewed on any communcations console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+
 		settimeleft(SHUTTLEARRIVETIME*coeff)
 		online = 1
 		if(always_fake_recall)
@@ -67,15 +70,15 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
 		recall_count ++
 
-		if(recall_count > 2 && signal_origin && prob(60)) //40% chance the signal tracing will fail
+		if(recall_count > 2 && signal_origin && prob(70)) //30% chance the signal tracing will fail
 			last_call_loc = signal_origin
 		else
 			last_call_loc = null
 
 		if(recall_count == 2)
-			priority_announce("The emergency shuttle has been recalled.\n\nExcessive number of emergency shuttle calls detected. We will attempt to trace all future calls and recalls to their source. Tracing results can be viewed on any communications console.", null, 'sound/AI/shuttlerecalled.ogg')
+			priority_announce("The emergency shuttle has been recalled.\n\nExcessive number of emergency shuttle calls detected. We will attempt to trace all future calls and recalls to their source. Tracing results may be viewed on any communications console.", null, 'sound/AI/shuttlerecalled.ogg')
 		else
-			priority_announce("The emergency shuttle has been recalled.", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
+			priority_announce("The emergency shuttle has been recalled.[last_call_loc ? " Recall signal traced. Results can be viewed on any communcations console." : "" ]", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
 		setdirection(-1)
 		online = 1
 
@@ -134,7 +137,6 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 			incall(SHUTTLEAUTOCALLTIMER) //X minutes! If they want to recall, they have X-(X-5) minutes to do so
 			log_game("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.", 1)
-			priority_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
 /datum/shuttle_controller/proc/move_shuttles()
 	var/datum/shuttle_manager/s

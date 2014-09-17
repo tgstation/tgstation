@@ -4,30 +4,31 @@
 	And the base of the send_speech() proc, which is the core of saycode.
 */
 var/list/freqtospan = list(
-	SCI_FREQ = "sciradio",
-	MED_FREQ = "medradio",
-	ENG_FREQ = "engradio",
-	SUPP_FREQ = "suppradio",
-	SERV_FREQ = "servradio",
-	SEC_FREQ = "secradio",
-	COMM_FREQ = "comradio",
-	AIPRIV_FREQ = "aiprivradio",
-	SYND_FREQ = "syndradio",
-	DSQUAD_FREQ = "dsquadradio"
+	"1351" = "sciradio",
+	"1355" = "medradio",
+	"1357" = "engradio",
+	"1347" = "suppradio",
+	"1349" = "servradio",
+	"1359" = "secradio",
+	"1353" = "comradio",
+	"1447" = "aiprivradio",
+	"1213" = "syndradio",
+	"1441" = "dsquadradio"
 	)
 
-var/freqtoname = list(
-	SCI_FREQ = "Science",
-	MED_FREQ = "Medical",
-	ENG_FREQ = "Engineering",
-	SUPP_FREQ = "Supply",
-	SERV_FREQ = "Service",
-	SEC_FREQ = "Security",
-	COMM_FREQ = "Command",
-	AIPRIV_FREQ = "AI Private",
-	SYND_FREQ = "#unkn"
-	)
-	
+var/list/freqtoname = list(
+	"1351" = "Science",
+	"1353" = "Command",
+	"1355" = "Medical",
+	"1357" = "Engineering",
+	"1359" = "Security",
+	"1441" = "Deathsquad",
+	"1213" = "Syndicate",
+	"1347" = "Supply",
+	"1349" = "Service",
+	"1447" = "AI Private"
+)
+
 /atom/movable/proc/say(message)
 	if(!can_speak())
 		return
@@ -46,7 +47,7 @@ var/freqtoname = list(
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
 		AM.Hear(rendered, src, languages, message)
 
-/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq) 
+/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -99,17 +100,19 @@ var/freqtoname = list(
 		return "hisses."
 	else if(message_langs & ROBOT)
 		return "beeps rapidly."
+	else if(message_langs & DRONE)
+		return "chitters."
 	else
 		return "makes a strange sound."
 
 /proc/get_radio_span(freq)
-	var/returntext = freqtospan[freq]
+	var/returntext = freqtospan["[freq]"]
 	if(returntext)
 		return returntext
 	return "radio"
 
 /proc/get_radio_name(freq)
-	var/returntext = freqtoname[freq]
+	var/returntext = radiochannelsreverse["[freq]"]
 	if(returntext)
 		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
