@@ -118,7 +118,7 @@
 		user << "<span class='warning'>You can't reach, close it first!</span>"
 
 	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter) || istype(W, /obj/item/weapon/pickaxe/diamonddrill) || istype(W, /obj/item/weapon/melee/energy/blade))
-		dismantle(user)
+		dismantle()
 
 /obj/structure/falsewall/proc/dismantle(mob/user)
 	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='warning'>You dismantle the false wall.</span>")

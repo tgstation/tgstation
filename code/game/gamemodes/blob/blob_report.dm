@@ -19,12 +19,11 @@
 			intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12.<BR>"
 			intercepttext += "Message ends."
 		if(2)
-			var/nukecode = rand(10000, 99999)
+			var/nukecode = "ERROR"
 			for(var/obj/machinery/nuclearbomb/bomb in world)
 				if(bomb && bomb.r_code)
 					if(bomb.z == 1)
-						bomb.r_code = nukecode
-
+						nukecode = bomb.r_code
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Directive 7-12 has been issued for [station_name()].<BR>"
 			intercepttext += "The biohazard has grown out of control and will soon reach critical mass.<BR>"

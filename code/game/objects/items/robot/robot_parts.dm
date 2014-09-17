@@ -253,8 +253,6 @@
 		else
 			user << "<span class='notice'>The MMI must go in after everything else!</span>"
 
-	if(istype(W,/obj/item/weapon/pen))
-		user << "<span class='warning'>You need to use a multitool to name [src].</span>"
 	return
 
 /obj/item/robot_parts/robot_suit/proc/Interact(mob/user)

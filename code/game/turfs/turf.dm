@@ -27,8 +27,10 @@
 
 /turf/New()
 	..()
-	for(var/atom/movable/AM in src)
-		Entered(AM)
+	for(var/atom/movable/AM as mob|obj in src)
+		spawn( 0 )
+			src.Entered(AM)
+			return
 	return
 
 // Adds the adjacent turfs to the current atmos processing
@@ -48,6 +50,9 @@
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+	if(movement_disabled && usr.ckey != movement_disabled_exception)
+		usr << "<span class='danger'>Movement is admin-disabled.</span>" //This is to identify lag problems
+		return
 	if (!mover)
 		return 1
 	// First, make sure it can leave its square
@@ -80,7 +85,28 @@
 			return 0
 	return 1 //Nothing found to block so return success!
 
-/turf/Entered(atom/movable/M)
+/turf/Entered(atom/atom as mob|obj)
+	if(movement_disabled)
+		usr << "<span class='danger'>Movement is admin-disabled.</span>" //This is to identify lag problems
+		return
+	..()
+//vvvvv Infared beam stuff vvvvv
+
+	if ((atom && atom.density && !( istype(atom, /obj/effect/beam) )))
+		for(var/obj/effect/beam/i_beam/I in src)
+			spawn( 0 )
+				if (I)
+					I.hit()
+				break
+
+//^^^^^ Infared beam stuff ^^^^^
+
+	if(!istype(atom, /atom/movable))
+		return
+
+	var/atom/movable/M = atom
+
+	var/loopsanity = 100
 	if(ismob(M))
 		var/mob/O = M
 		if(!O.lastarea)
@@ -91,13 +117,16 @@
 			inertial_drift(O)
 		else if(!istype(src, /turf/space))
 			O.inertia_dir = 0
-
-	var/loopsanity = 100
-	for(var/atom/A in range(1))
-		if(loopsanity == 0)
-			break
-		loopsanity--
-		A.HasProximity(M, 1)
+	..()
+	var/objects = 0
+	for(var/atom/A as mob|obj|turf|area in range(1))
+		if(objects > loopsanity)	break
+		objects++
+		spawn( 0 )
+			if ((A && M))
+				A.HasProximity(M, 1)
+			return
+	return
 
 /turf/proc/is_plating()
 	return 0

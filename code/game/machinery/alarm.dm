@@ -1032,6 +1032,7 @@ FIRE ALARM
 					qdel(src)
 		return
 
+	src.alarm()
 	return
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed

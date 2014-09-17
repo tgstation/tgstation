@@ -665,7 +665,7 @@
 			<li>Try to get a fingerprint card of your perp, as if used in the computer, the prints will be completed on their dossier.</li>
 			<li>Assuming you have enough of a print to see it, grab the biggest complete piece of the print and search the security records for it. </li>
 			<li>Since you now have both your dossier and the name of the person, print both out as evidence, and get security to nab your baddie.</li>
-			<li>Give yourself a pat on the back and a bottle of the ships finest vodka, you did it!</li>
+			<li>Give yourself a pat on the back and a bottle of the ships finest vodka, you did it!. </li>
 			</ol>
 			<p>
 			It really is that easy! Good luck!

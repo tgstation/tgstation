@@ -17,8 +17,8 @@
 	var/min_health = 25
 	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
 	var/list/possible_chems = list(list("stoxin", "dexalin", "bicaridine", "kelotane"),
-								   list("stoxin", "dexalinp", "bicaridine", "dermaline", "imidazoline"),
-								   list("stoxin", "dexalinp", "bicaridine", "dermaline", "imidazoline", "anti_toxin", "ryetalyn", "alkysine", "arithrazine"))
+								   list("stoxin", "dexalinp", "imidazoline", "dermaline", "bicaridine"),
+								   list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline", "alkysine", "arithrazine"))
 
 /obj/machinery/sleeper/New()
 	..()

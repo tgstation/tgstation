@@ -246,16 +246,20 @@
 
 	if (Victim) return // can't attack while eating!
 
-	visible_message("<span class='danger'> The [M.name] has glomped [src]!</span>", \
-			"<span class='userdanger'> The [M.name] has glomped [src]!</span>")
-	var/damage = rand(1, 3)
-	attacked += 5
-	if(M.is_adult)
-		damage = rand(1, 6)
-	else
-		damage = rand(1, 3)
 	if (health > -100)
+
+		visible_message("<span class='danger'> The [M.name] has glomped [src]!</span>", \
+				"<span class='userdanger'> The [M.name] has glomped [src]!</span>")
+		var/damage = rand(1, 3)
+		attacked += 5
+
+		if(M.is_adult)
+			damage = rand(1, 6)
+		else
+			damage = rand(1, 3)
+
 		adjustBruteLoss(damage)
+
 		updatehealth()
 	return
 
@@ -275,7 +279,7 @@
 
 /mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(!(istype(M, /mob/living/carbon/monkey)))
-		return // Fix for aliens receiving double messages when attacking slimes.
+		return // Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
@@ -292,37 +296,16 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			if (M.is_muzzled())
+			if (is_muzzled())
 				return
-
-			attacked += 10
-			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites [src]!</span>")
-			if (health > -100)
+			if (health > 0)
+				attacked += 10
+				//playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				visible_message("<span class='danger'>[M.name] has attacked [src]!</span>", \
+						"<span class='userdanger'>[M.name] has attacked [src]!</span>")
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
-
-/mob/living/carbon/slime/attack_larva(mob/living/carbon/alien/larva/L as mob)
-
-	switch(L.a_intent)
-
-		if("help")
-			visible_message("<span class='notice'>[L] rubs its head against [src].</span>")
-
-
-		else
-
-			attacked += 10
-			visible_message("<span class='danger'>[L] bites [src]!</span>", \
-					"<span class='userdanger'>[L] bites [src]!</span>")
-			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-
-			if(stat != DEAD)
-				var/damage = rand(1, 3)
-				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-				adjustBruteLoss(damage)
 
 
 /mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M as mob)
@@ -433,9 +416,8 @@
 				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 						"<span class='userdanger'>[M] has punched [src]!</span>")
 
-				if (health > -100)
-					adjustBruteLoss(damage)
-					updatehealth()
+				adjustBruteLoss(damage)
+				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
@@ -464,15 +446,13 @@
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
-					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
-							"<span class='userdanger'>[M] has slashed [name]!</span>")
+					visible_message("<span class='danger'>[M] has attacked [name]!</span>", \
+							"<span class='userdanger'>[M] has attacked [name]!</span>")
 				else
 					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
 							"<span class='userdanger'>)[M] has wounded [name]!</span>")
-
-				if (health > -100)
-					adjustBruteLoss(damage)
-					updatehealth()
+				adjustBruteLoss(damage)
+				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \

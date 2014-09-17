@@ -14,6 +14,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	required_enemies = 1
 	recommended_enemies = 4
 
+	uplink_welcome = "Syndicate Uplink Console:"
+	uplink_uses = 10
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
 	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
@@ -177,10 +179,19 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		var/text = "<br><font size=3><b>The changelings were:</b></font>"
 		for(var/datum/mind/changeling in changelings)
 			var/changelingwin = 1
-			if(!changeling.current)
-				changelingwin = 0
 
-			text += printplayer(changeling)
+			text += "<br><b>[changeling.key]</b> was <b>[changeling.name]</b> ("
+			if(changeling.current)
+				if(changeling.current.stat == DEAD)
+					text += "died"
+				else
+					text += "survived"
+				if(changeling.current.real_name != changeling.name)
+					text += " as <b>[changeling.current.real_name]</b>"
+			else
+				text += "body destroyed"
+				changelingwin = 0
+			text += ")"
 
 			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 			text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]."

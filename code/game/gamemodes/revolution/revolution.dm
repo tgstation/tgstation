@@ -20,6 +20,10 @@
 	required_enemies = 3
 	recommended_enemies = 3
 
+
+	uplink_welcome = "Revolutionary Uplink Console:"
+	uplink_uses = 10
+
 	var/finished = 0
 	var/checkwin_counter = 0
 	var/const/max_headrevs = 3

@@ -16,6 +16,10 @@
 	required_enemies = 1
 	recommended_enemies = 4
 
+
+	uplink_welcome = "Syndicate Uplink Console:"
+	uplink_uses = 10
+
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/scale_modifier = 1 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 
@@ -200,7 +204,18 @@
 		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
 
-			text += printplayer(traitor)
+			text += "<br><b>[traitor.key]</b> was <b>[traitor.name]</b> ("
+			if(traitor.current)
+				if(traitor.current.stat == DEAD)
+					text += "died"
+				else
+					text += "survived"
+				if(traitor.current.real_name != traitor.name)
+					text += " as <b>[traitor.current.real_name]</b>"
+			else
+				text += "body destroyed"
+			text += ")"
+
 
 			var/TC_uses = 0
 			var/uplink_true = 0

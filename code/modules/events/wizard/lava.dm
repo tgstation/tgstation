@@ -7,7 +7,7 @@
 
 /datum/round_event/wizard/lava/
 
-	endWhen = 30 //half a minutes
+	endWhen = 120 //2 minutes
 
 /datum/round_event/wizard/lava/start()
 

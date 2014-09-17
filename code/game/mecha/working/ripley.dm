@@ -17,7 +17,10 @@
 
 /obj/mecha/working/ripley/Destroy()
 	for(var/atom/movable/A in src.cargo)
-		A.loc = loc
+		A.loc = get_turf(src)
+		var/turf/T = get_turf(A)
+		if(T)
+			T.Entered(A)
 		step_rand(A)
 	cargo.Cut()
 	..()
@@ -79,8 +82,11 @@
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && O in src.cargo)
 			src.occupant_message("<span class='notice'>You unload [O].</span>")
-			O.loc = loc
+			O.loc = get_turf(src)
 			src.cargo -= O
+			var/turf/T = get_turf(O)
+			if(T)
+				T.Entered(O)
 			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
 

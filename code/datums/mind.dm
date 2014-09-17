@@ -1018,10 +1018,6 @@
 
 		ticker.mode.equip_syndicate(current)
 
-		if (nuke_code)
-			store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-			current << "The nuclear authorization code is: <B>[nuke_code]</B>"
-
 		if (leader)
 			ticker.mode.prepare_syndicate_leader(src,nuke_code)
 		else

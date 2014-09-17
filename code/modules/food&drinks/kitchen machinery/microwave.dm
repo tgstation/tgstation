@@ -183,8 +183,6 @@
 	return 0
 
 /obj/machinery/microwave/attack_hand(mob/user as mob)
-	if(..())
-		return
 	user.set_machine(src)
 	interact(user)
 

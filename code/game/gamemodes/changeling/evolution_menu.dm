@@ -380,7 +380,6 @@ var/list/sting_paths
 	if(ishuman(src) || ismonkey(src))
 		if(mind && mind.changeling)
 			digitalcamo = 0
-			mind.changeling.changeling_speak = 0
 			mind.changeling.reset()
 			for(var/obj/effect/proc_holder/changeling/p in mind.changeling.purchasedpowers)
 				if(!(p.dna_cost == 0 && keep_free_powers))

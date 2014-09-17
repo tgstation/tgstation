@@ -71,7 +71,7 @@ var/list/department_radio_keys = list(
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
 
-/mob/proc/binarycheck()
+/mob/living/proc/binarycheck()
 	return 0
 
 /mob/living/say(message, bubble_type)
@@ -144,7 +144,7 @@ var/list/department_radio_keys = list(
 	var/list/listening = get_hearers_in_view(message_range, source)
 	var/list/listening_dead = list()
 	for(var/mob/M in player_list)
-		if(M.stat == DEAD && ((M.client.prefs.toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7))&& client) // client is so that ghosts don't have to listen to mice
+		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && client) // client is so that ghosts don't have to listen to mice
 			listening_dead |= M
 
 	listening -= listening_dead //so ghosts dont hear stuff twice
@@ -229,7 +229,7 @@ var/list/department_radio_keys = list(
 							if(2)
 								M << msg
 							if(1)
-								if(prob(30))
+								if(prob(20))
 									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
 				return 1
 			if(1)

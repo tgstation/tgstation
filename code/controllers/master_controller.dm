@@ -236,53 +236,83 @@ var/global/pipe_processing_killed = 0
 */
 
 /datum/controller/game_controller/proc/process_mobs()
-	for(var/mob/M in mob_list)
-		if(!M.gc_destroyed)
+	var/i = 1
+	while(i<=mob_list.len)
+		var/mob/M = mob_list[i]
+		if(M && !M.gc_destroyed)
 			last_thing_processed = M.type
 			M.Life()
+			i++
 			continue
-		mob_list -= M
+		mob_list.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/process_diseases()
-	for(var/datum/disease/Disease in active_diseases)
-		last_thing_processed = Disease.type
-		Disease.process()
+	var/i = 1
+	while(i<=active_diseases.len)
+		var/datum/disease/Disease = active_diseases[i]
+		if(Disease)
+			last_thing_processed = Disease.type
+			Disease.process()
+			i++
+			continue
+		active_diseases.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/process_machines()
-	for(var/obj/machinery/Machine in machines)
-		if(!Machine.gc_destroyed)
+	var/i = 1
+	while(i<=machines.len)
+		var/obj/machinery/Machine = machines[i]
+		if(Machine && !Machine.gc_destroyed)
 			last_thing_processed = Machine.type
 			if(Machine.process() != PROCESS_KILL)
 				if(Machine)
 					if(Machine.use_power)
 						Machine.auto_use_power()
+					i++
 					continue
-		machines -= Machine
+		machines.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/process_objects()
-	for(var/obj/Object in processing_objects)
-		if(!Object.gc_destroyed)
+	var/i = 1
+	while(i<=processing_objects.len)
+		var/obj/Object = processing_objects[i]
+		if(Object && !Object.gc_destroyed)
 			last_thing_processed = Object.type
 			Object.process()
+			i++
 			continue
-		processing_objects -= Object
+		processing_objects.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/process_pipenets()
 	last_thing_processed = /datum/pipe_network
-	for(var/datum/pipe_network/Network in pipe_networks)
-		Network.process()
+	var/i = 1
+	while(i<=pipe_networks.len)
+		var/datum/pipe_network/Network = pipe_networks[i]
+		if(Network)
+			Network.process()
+			i++
+			continue
+		pipe_networks.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/process_powernets()
 	last_thing_processed = /datum/powernet
-	for(var/datum/powernet/Powernet in powernets)
-		Powernet.reset()
+	var/i = 1
+	while(i<=powernets.len)
+		var/datum/powernet/Powernet = powernets[i]
+		if(Powernet)
+			Powernet.reset()
+			i++
+			continue
+		powernets.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/process_nano()
-	for(var/datum/nanoui/ui in nanomanager.processing_uis)
-		if(ui.src_object && ui.user)
+	var/i = 1
+	while(i<=nanomanager.processing_uis.len)
+		var/datum/nanoui/ui = nanomanager.processing_uis[i]
+		if(ui && ui.src_object && ui.user)
 			ui.process()
+			i++
 			continue
-		nanomanager.processing_uis -= ui
+		nanomanager.processing_uis.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"

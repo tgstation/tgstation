@@ -2,6 +2,7 @@
 	name = "electric chair"
 	desc = "Looks absolutely SHOCKING!"
 	icon_state = "echair0"
+	var/on = 0
 	var/obj/item/assembly/shock_kit/part = null
 	var/last_time = 1.0
 
@@ -22,6 +23,20 @@
 		return
 	return
 
+/obj/structure/stool/bed/chair/e_chair/verb/toggle()
+	set name = "Toggle Electric Chair"
+	set category = "Object"
+	set src in oview(1)
+
+	if(on)
+		on = 0
+		icon_state = "echair0"
+	else
+		on = 1
+		icon_state = "echair1"
+	usr << "<span class='notice'>You switch [on ? "on" : "off"] [src].</span>"
+	return
+
 /obj/structure/stool/bed/chair/e_chair/rotate()
 	..()
 	overlays.Cut()
@@ -29,6 +44,8 @@
 	return
 
 /obj/structure/stool/bed/chair/e_chair/proc/shock()
+	if(!on)
+		return
 	if(last_time + 50 > world.time)
 		return
 	last_time = world.time

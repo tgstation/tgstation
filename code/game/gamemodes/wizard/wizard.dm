@@ -10,6 +10,9 @@
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
 
+	uplink_welcome = "Wizardly Uplink Console:"
+	uplink_uses = 10
+
 	var/finished = 0
 
 /datum/game_mode/wizard/announce()

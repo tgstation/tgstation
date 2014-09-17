@@ -25,7 +25,7 @@
 	time = 32
 
 /datum/surgery_step/remove_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to extract [target]'s loose fat!</span>")
+	user.visible_message("<span class='notice'>[user] begins to extract [target]'s loose fat!.</span>")
 
 /datum/surgery_step/remove_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] extracts [target]'s fat!</span>")

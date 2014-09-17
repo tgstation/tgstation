@@ -20,7 +20,6 @@
 	faction = list("neutral")
 	attack_same = 1
 	attacktext = "kicks"
-	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 40
 	melee_damage_lower = 1
 	melee_damage_upper = 2

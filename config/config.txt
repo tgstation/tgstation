@@ -59,6 +59,9 @@ LOG_LAW
 ## log all Topic() calls (for use by coders in tracking down Topic issues)
 # LOG_HREFS
 
+## log admin warning messages
+##LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
+
 ## disconnect players who did nothing during 10 minutes
 # KICK_INACTIVE
 

@@ -31,7 +31,7 @@ var/list/sacrificed = list()
 		user.loc = allrunesloc[rand(1,index)]
 		return
 	if(istype(src,/obj/effect/rune))
-		return fizzle(user) //Use friggin manuals, Dorf, your list was of zero length.
+		return	fizzle() //Use friggin manuals, Dorf, your list was of zero length.
 	else
 		call(/obj/effect/rune/proc/fizzle)()
 		return
@@ -53,7 +53,7 @@ var/list/sacrificed = list()
 			IP = R
 			runecount++
 	if(runecount >= 2)
-		user << "<span class='danger'>You feel pain, as the rune disappears in reality shift caused by too much wear of space-time fabric</span>"
+		user << "<span class='danger'>You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric</span>"
 		if (istype(user, /mob/living))
 			user.take_overall_damage(5, 0)
 		qdel(src)
@@ -61,7 +61,7 @@ var/list/sacrificed = list()
 		if(iscultist(C) && !C.stat)
 			culcount++
 	if(user.loc==src.loc)
-		return fizzle(user)
+		return fizzle()
 	if(culcount>=1)
 		user.say("Sas[pick("'","`")]so c'arta forbici tarem!")
 		user.visible_message("<span class='danger'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
@@ -74,7 +74,7 @@ var/list/sacrificed = list()
 			M.loc = IP.loc
 		return
 
-	return fizzle(user)
+	return fizzle()
 
 /////////////////////////////////////////SECOND RUNE
 
@@ -110,7 +110,7 @@ var/list/sacrificed = list()
 				C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
 		if(cultsinrange.len >= 3)
 			M.visible_message("<span class='danger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
-			"<span class='danger'>AAAAAAHHHH!</span>", \
+			"<span class='danger'>AAAAAAHHHH!.</span>", \
 			"<span class='danger'>You hear an anguished scream.</span>")
 			if(is_convertable_to_cult(M.mind))
 				ticker.mode.add_cultist(M.mind)
@@ -152,10 +152,9 @@ var/list/sacrificed = list()
 
 /obj/effect/rune/proc/tearreality()
 	var/list/mob/living/carbon/human/cultist_count = list()
-	var/mob/living/user = usr
-	user.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 	for(var/mob/M in range(1,src))
 		if(iscultist(M) && !M.stat)
+			M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 			cultist_count += M
 	if(cultist_count.len >= 9)
 		if(ticker.mode.name == "cult")
@@ -375,7 +374,7 @@ var/list/sacrificed = list()
 
 		return
 	if(istype(src,/obj/effect/rune))
-		return fizzle()
+		return	fizzle()
 	else
 		call(/obj/effect/rune/proc/fizzle)()
 		return
@@ -770,7 +769,7 @@ var/list/sacrificed = list()
 			return
 		return
 	if(istype(W,/obj/effect/rune))
-		return fizzle()
+		return	fizzle()
 	if(istype(W,/obj/item/weapon/paper/talisman))
 		call(/obj/effect/rune/proc/fizzle)()
 		return
@@ -803,7 +802,7 @@ var/list/sacrificed = list()
 	if(users.len>=1)
 		var/mob/living/carbon/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - users)
 		if(!cultist)
-			return fizzle(user)
+			return fizzle()
 		if (cultist == user) //just to be sure.
 			return
 		if(!(cultist.buckled || \
@@ -836,7 +835,7 @@ var/list/sacrificed = list()
 			user.take_overall_damage(15, 0)
 			C.say("Khari[pick("'","`")]d! Gual'te nikka!")
 		qdel(src)
-	return fizzle(user)
+	return fizzle()
 
 /////////////////////////////////////////NINETEENTH RUNE
 
@@ -853,12 +852,12 @@ var/list/sacrificed = list()
 	if(users.len>=3)
 		var/mob/living/carbon/cultist = input("Choose the one who you want to summon", "Followers of Geometer") as null|anything in (cultists - user)
 		if(!cultist)
-			return fizzle(user)
+			return fizzle()
 		if(cultist == user) //just to be sure.
 			return
 		if(cultist.buckled || cultist.handcuffed || (!isturf(cultist.loc) && !istype(cultist.loc, /obj/structure/closet)))
 			user << "<span class='danger'>You cannot summon the [cultist], for his shackles of blood are strong</span>"
-			return fizzle(user)
+			return fizzle()
 		cultist.loc = src.loc
 		cultist.Weaken(5)
 		cultist.regenerate_icons()
@@ -870,7 +869,7 @@ var/list/sacrificed = list()
 		"<span class='danger'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
 		"<span class='danger'>You hear a pop and smell ozone.</span>")
 		qdel(src)
-	return fizzle(user)
+	return fizzle()
 
 /////////////////////////////////////////TWENTIETH RUNES
 

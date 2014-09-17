@@ -165,7 +165,7 @@ obj/structure/windoor_assembly/Destroy()
 				if(do_after(user, 40))
 					if(!src) return
 
-					user << "<span class='notice'>You cut the windoor wires!</span>"
+					user << "<span class='notice'>You cut the windoor wires.!</span>"
 					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)

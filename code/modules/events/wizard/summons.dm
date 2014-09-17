@@ -6,7 +6,10 @@
 	earliest_start = 0
 
 /datum/round_event/wizard/summonguns/start()
-	rightandwrong(0)
+	if(!ticker.mode.wizards)	return
+	var/datum/mind/M = pick(ticker.mode.wizards)
+	if(M.current)
+		M.current.rightandwrong(0)
 
 /datum/round_event_control/wizard/summonmagic //The Somewhat Less Classic
 	name = "Summon Magic"
@@ -16,4 +19,7 @@
 	earliest_start = 0
 
 /datum/round_event/wizard/summonmagic/start()
-	rightandwrong(1)
+	if(!ticker.mode.wizards)	return
+	var/datum/mind/M = pick(ticker.mode.wizards)
+	if(M.current)
+		M.current.rightandwrong(1)

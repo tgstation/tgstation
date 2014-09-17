@@ -196,8 +196,7 @@ var/time_last_changed_position = 0
 		header += "<hr>"
 
 		var/jobs_all = ""
-		var/list/alljobs = list("Unassigned")
-		alljobs += (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
+		var/list/alljobs = (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
 		for(var/job in alljobs)
 			jobs_all += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
 
@@ -368,13 +367,12 @@ var/time_last_changed_position = 0
 			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"), MAX_NAME_LEN)
+					var/newJob = reject_bad_name(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"))
 					if(newJob)
 						t1 = newJob
-
-				else if(t1 == "Unassigned")
-					modify.access = list()
-
+					else
+						modify.assignment = "Unassigned"
+						return
 				else
 					var/datum/job/jobdatum
 					for(var/jobtype in typesof(/datum/job))

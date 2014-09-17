@@ -36,7 +36,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 	. += ..()
 	. += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]", (A.locked ? "The door bolts have fallen!" : "The door bolts look up."),
 	(A.lights ? "The door bolt lights are on." : "The door bolt lights are off!"),
-	((A.hasPower()) ? "The test light is on." : "The test light is off!"),
+	((A.arePowerSystemsOn() && !(A.stat & NOPOWER)) ? "The test light is on." : "The test light is off!"),
 	((A.aiControlDisabled==0 && !A.emagged) ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),
 	(A.safe==0 ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."),
 	(A.normalspeed==0 ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."),
@@ -124,7 +124,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 	switch(index)
 		if(AIRLOCK_WIRE_IDSCAN)
 			//Sending a pulse through this disables emergency access and flashes the red light on the door (if the door has power).
-			if(A.hasPower() && A.density)
+			if((A.arePowerSystemsOn()) && (!(A.stat & NOPOWER)) && A.density)
 				A.do_animate("deny")
 				if(A.emergency)
 					A.emergency = 0
@@ -140,7 +140,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				for(var/mob/M in range(1, A))
 					M << "You hear a click from the bottom of the door."
 			else
-				if(A.hasPower()) //only can raise bolts if power's on
+				if(A.arePowerSystemsOn()) //only can raise bolts if power's on
 					A.locked = 0
 					for(var/mob/M in range(1, A))
 						M << "You hear a click from the bottom of the door."

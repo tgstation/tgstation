@@ -116,12 +116,12 @@
 		if ("help")
 			help_shake_act(M)
 		else
-			if (M.is_muzzled())
+			if (is_muzzled())
 				return
-			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites [src]!</span>")
-			if (health > -100)
+			if (health > 0)
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+						"<span class='userdanger'>[M.name] bites [src]!</span>")
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -134,7 +134,7 @@
 
 	if(M.Victim) return // can't attack while eating!
 
-	if (stat > -100)
+	if (health > -100)
 
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
@@ -307,28 +307,6 @@ In all, this is a lot like the monkey code. /N
 			else
 				M << "<span class='warning'>[name] is too injured for that.</span>"
 	return
-
-
-/mob/living/carbon/alien/humanoid/attack_larva(mob/living/carbon/alien/larva/L as mob)
-
-	switch(L.a_intent)
-		if("help")
-			visible_message("<span class='notice'>[L] rubs its head against [src].</span>")
-
-
-		else
-			if (health > 0)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				var/damage = rand(1, 3)
-				visible_message("<span class='danger'>[L.name] bites [src]!!</span>", \
-						"<span class='userdanger'>[L.name] bites [src]!!</span>")
-
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				L << "<span class='warning'>[name] is too injured for that.</span>"
-	return
-
 
 
 /mob/living/carbon/alien/humanoid/restrained()

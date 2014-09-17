@@ -68,7 +68,7 @@
 
 
 /obj/item/weapon/storage/proc/show_to(mob/user)
-	if(user.s_active != src && (user.stat == CONSCIOUS))
+	if(user.s_active != src)
 		for(var/obj/item/I in src)
 			if(I.on_found(user))
 				return

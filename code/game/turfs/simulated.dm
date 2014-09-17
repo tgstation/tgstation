@@ -33,7 +33,10 @@
 			overlays -= wet_overlay
 
 /turf/simulated/Entered(atom/A, atom/OL)
-	..()
+	if(movement_disabled && usr.ckey != movement_disabled_exception)
+		usr << "<span class='danger'>Movement is admin-disabled.</span>" //This is to identify lag problems
+		return
+
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying)	return
@@ -58,3 +61,6 @@
 
 			if(2) //lube
 				M.slip(0, 10, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
+
+
+	..()

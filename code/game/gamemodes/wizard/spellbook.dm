@@ -295,12 +295,12 @@
 							temp = "You have learned flesh to stone."
 						if("summonguns")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							rightandwrong(0, H)
+							H.rightandwrong(0)
 							max_uses--
 							temp = "You have cast summon guns."
 						if("summonmagic")
 							feedback_add_details("wizard_spell_learned","SU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							rightandwrong(1, H)
+							H.rightandwrong(1)
 							max_uses--
 							temp = "You have cast summon magic."
 						if("summonevents")

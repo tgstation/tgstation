@@ -32,7 +32,8 @@
 	..()
 	if(stat == 2)
 		new /obj/item/weapon/ectoplasm (src.loc)
-		visible_message("<span class='warning'>[src] lets out a contented sigh as their form unwinds.</span>")
+		for(var/mob/M in viewers(src, null))
+			M.visible_message("<span class='warning'>[src] lets out a contented sigh as their form unwinds.</span>")
 		ghostize()
 		qdel(src)
 		return

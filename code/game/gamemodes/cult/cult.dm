@@ -30,6 +30,8 @@
 	required_enemies = 6
 	recommended_enemies = 6
 
+	uplink_welcome = "Nar-Sie Uplink Console:"
+	uplink_uses = 10
 
 	var/finished = 0
 
@@ -373,8 +375,18 @@
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
 		var/text = "<br><font size=3><b>The cultists were:</b></font>"
 		for(var/datum/mind/cultist in cult)
-			text += printplayer(cultist)
 
+			text += "<br><b>[cultist.key]</b> was <b>[cultist.name]</b> ("
+			if(cultist.current)
+				if(cultist.current.stat == DEAD)
+					text += "died"
+				else
+					text += "survived"
+				if(cultist.current.real_name != cultist.name)
+					text += " as <b>[cultist.current.real_name]</b>"
+			else
+				text += "body destroyed"
+			text += ")"
 		text += "<br>"
 
 		world << text

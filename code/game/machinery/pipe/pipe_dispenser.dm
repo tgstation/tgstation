@@ -11,7 +11,7 @@
 
 /obj/machinery/pipedispenser/attack_hand(user as mob)
 	if(..())
-		return 1
+		return
 	var/dat = {"
 <b>Regular pipes:</b><BR>
 <A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
@@ -46,10 +46,10 @@
 
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
-		return 1
+		return
 	if(!anchored|| !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
-		return 1
+		return
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
@@ -149,7 +149,6 @@ Nah
 <A href='?src=\ref[src];dmake=5'>Bin</A><BR>
 <A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
 <A href='?src=\ref[src];dmake=7'>Chute</A><BR>
-<A href='?src=\ref[src];dmake=8'>Sort Junction</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -164,6 +163,9 @@ Nah
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
+		if(!anchored || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			usr << browse(null, "window=pipedispenser")
+			return
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
 			var/obj/structure/disposalconstruct/C = new (src.loc)
@@ -187,8 +189,6 @@ Nah
 				if(7)
 					C.ptype = 8
 					C.density = 1
-				if(8)
-					C.ptype = 9
 			C.add_fingerprint(usr)
 			C.update()
 			wait = 1
