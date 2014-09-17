@@ -321,23 +321,21 @@ silicate
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(2, 1, location)
 	s.start()
-	for(var/mob/living/carbon/M in viewers(world.view, location))
-		switch(get_dist(M, location))
-			if(0 to 3)
-				if(hasvar(M, "glasses"))
-					if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
-						continue
-
-				flick("e_flash", M.flash)
+	for(var/mob/living/carbon/M in hearers(5, location))
+		if(M.eyecheck())
+			continue
+		if(get_dist(M, location) < 4)
+			M.Weaken(5)
+		flick("e_flash", M.flash)
+		M.Stun(5)
+	for(var/obj/structure/closet/L in get_hear(5, location))
+		for(var/mob/living/carbon/M in L)
+			if(M.eyecheck())
+				continue
+			if(get_dist(M, location) < 4)
 				M.Weaken(5)
-
-			if(4 to 5)
-				if(hasvar(M, "glasses"))
-					if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
-						continue
-
-				flick("e_flash", M.flash)
-				M.Stun(5)
+			flick("e_flash", M.flash)
+			M.Stun(5)
 
 /datum/chemical_reaction/napalm
 	name = "Napalm"
