@@ -44,7 +44,6 @@
 var/pipenetwarnings = 10
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
-	air = new
 	var/list/possible_expansions = list(base)
 	members = list(base)
 	edges = list()
@@ -84,6 +83,7 @@ var/pipenetwarnings = 10
 
 						if(item.air_temporary)
 							air.merge(item.air_temporary)
+							item.air_temporary = null
 
 					edge_check--
 
@@ -103,6 +103,7 @@ var/pipenetwarnings = 10
 		if(I.parent == src)
 			continue
 		var/datum/pipeline/E = I.parent
+		air.volume += E.air.volume
 		if(E.members.len > members.len)
 			members.Add(E.members)
 			for(var/obj/machinery/atmospherics/pipe/S in E.members)
@@ -112,7 +113,9 @@ var/pipenetwarnings = 10
 		adjacent -= I
 	if(adjacent.len)
 		edges |= P
-	members |= P
+	if(!members.Find(P))
+		members += P
+		air.volume += P.volume
 	if(oldedges.len)
 		for(var/obj/machinery/atmospherics/pipe/O in oldedges)
 			var/list/Oedges = O.pipeline_expansion()
@@ -122,13 +125,6 @@ var/pipenetwarnings = 10
 				edges |= O
 			else
 				edges -= O
-
-/datum/pipeline/proc/removeLastMember(obj/machinery/atmospherics/pipe/P)
-	if(members.len == 1 && members.Find(P))
-		qdel()
-		if(P.air_temporary)
-			var/turf/T = P.loc
-			T.assume_air(P.air_temporary)
 
 /obj/machinery/atmospherics/proc/addMember(obj/machinery/atmospherics/pipe/P)
 	return
