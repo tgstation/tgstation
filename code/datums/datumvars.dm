@@ -1,7 +1,25 @@
 
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
-
 client
+	proc/debug_reagents(datum/D in world)
+		set category = "Debug"
+		set name = "Add Reagent"
+
+		if(!usr.client || !usr.client.holder)
+			usr << "<span class='warning'>You need to be an administrator to access this.</span>"
+			return
+
+		if(!D) return
+		if(istype(D, /atom))
+			var/atom/A = D
+			var/reagentDatum = input(usr,"Reagent","Insert Reagent","")
+			var/reagentAmount = input(usr, "Amount", "Insert Amount", "") as num
+			if(A.reagents.add_reagent(reagentDatum, reagentAmount))
+				usr << "<span class='warning'>[reagentDatum] doesn't exist.</span>"
+				return
+			log_admin("[key_name(usr)] added [reagentDatum] with [reagentAmount] units to [A] ")
+			message_admins("[key_name(usr)] added [reagentDatum] with [reagentAmount] units to [A] ")
+
 	proc/debug_variables(datum/D in world)
 		set category = "Debug"
 		set name = "View Variables"
