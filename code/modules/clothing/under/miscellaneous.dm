@@ -218,6 +218,13 @@
 	item_state = "soviet"
 	_color = "soviet"
 
+/obj/item/clothing/under/squatter_outfit
+	name = "slav squatter tracksuit"
+	desc = "Cyka blyat."
+	icon_state = "squatteroutfit"
+	item_state = "squatteroutfit"
+	_color = "squatteroutfit"
+
 /obj/item/clothing/under/redcoat
 	name = "redcoat uniform"
 	desc = "Looks old."

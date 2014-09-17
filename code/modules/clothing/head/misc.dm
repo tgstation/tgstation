@@ -181,6 +181,13 @@
 	desc = "Goes well with celery."
 	flags = FPRINT|TABLEPASS
 
+/obj/item/clothing/head/squatter_hat
+	name = "slav squatter hat"
+	icon_state = "squatter_hat"
+	item_state = "squatter_hat"
+	desc = "Cyka blyat."
+	flags = FPRINT|TABLEPASS
+
 /obj/item/clothing/head/fedora
 	name = "\improper fedora"
 	icon_state = "fedora"
