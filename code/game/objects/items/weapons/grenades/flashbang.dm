@@ -8,21 +8,17 @@
 /obj/item/weapon/grenade/flashbang/prime()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
-	for(var/obj/structure/closet/L in view(7, flashbang_turf))
-		for(var/mob/living/M in L)
-			bang(get_turf(M), M)
-
-	for(var/mob/living/M in view(7, flashbang_turf))
+	for(var/mob/living/M in get_hearers_in_view(7, flashbang_turf))
 		bang(get_turf(M), M)
 
-	for(var/obj/effect/blob/B in view(8,flashbang_turf))     		//Blob damage here
+	for(var/obj/effect/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
 		var/damage = round(30/(get_dist(B,get_turf(src))+1))
 		B.health -= damage
 		B.update_icon()
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/proc/bang(var/turf/T , var/mob/living/M)
-	M << "<span class='warning'>BANG</span>"
+	M.show_message("<span class='warning'>BANG</span>", 2)
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 
 //Checking for protections
