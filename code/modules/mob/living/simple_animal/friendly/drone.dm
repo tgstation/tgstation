@@ -185,8 +185,8 @@
 	set category = "Drone"
 	set name = "Check Laws"
 
-	usr << "<b>Drone Laws</b>"
-	usr << laws
+	src << "<b>Drone Laws</b>"
+	src << laws
 
 
 /mob/living/simple_animal/drone/verb/toggle_light()
