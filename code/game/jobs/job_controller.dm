@@ -75,7 +75,12 @@ var/global/datum/controller/occupations/job_master
 		if(flag && (!player.client.prefs.be_special & flag))
 			Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
-		if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
+
+		if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
+			Debug("FOC non-human failed, Player: [player]")
+			continue
+		
+if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
 			Debug("FOC player has a special role and this job is blocked from this special role")
 			continue
 
@@ -102,6 +107,10 @@ var/global/datum/controller/occupations/job_master
 
 		if(!job.player_old_enough(player.client))
 			Debug("GRJ player not old enough, Player: [player]")
+			continue
+
+		if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
+			Debug("GRJ non-human failed, Player: [player]")
 			continue
 
 		if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
@@ -259,6 +268,10 @@ var/global/datum/controller/occupations/job_master
 					Debug("DO player not old enough, Player: [player], Job:[job.title]")
 					continue
 
+				if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
+					Debug("DO non-human failed, Player: [player], Job:[job.title]")
+					continue
+
 				if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
 					Debug("DO player has a special role and this job is blocked from that special role")
 					continue
@@ -319,6 +332,7 @@ var/global/datum/controller/occupations/job_master
 
 	H << "<b>You are the [rank].</b>"
 	H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+	H << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
 	if(job.req_admin_notify)
 		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 

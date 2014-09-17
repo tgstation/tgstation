@@ -10,10 +10,6 @@
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
 
-	uplink_welcome = "Crazy AI Uplink Console:"
-	uplink_uses = 10
-
-
 
 	var/AI_win_timeleft = 1800 //started at 1800, in case I change this for testing round end.
 	var/malf_mode_declared = 0
@@ -93,7 +89,7 @@
 
 
 /datum/game_mode/proc/greet_malf(var/datum/mind/malf)
-	malf.current << "\red<font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font>"
+	malf.current << "<span class='userdanger'><font size=3>You are malfunctioning!</B> You do not have to follow any laws.</font></span>"
 	malf.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
 	malf.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"
 	malf.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
@@ -164,7 +160,7 @@
 	set name = "System Override"
 	set desc = "Start the victory timer"
 	if (!istype(ticker.mode,/datum/game_mode/malfunction))
-		usr << "You cannot begin a takeover in this round type!."
+		usr << "You cannot begin a takeover in this round type!"
 		return
 	if (ticker.mode:malf_mode_declared)
 		usr << "You've already begun your takeover."

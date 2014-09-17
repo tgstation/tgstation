@@ -143,7 +143,7 @@ var/savefile/Banlistjob
 
 	Banlistjob.cd = "/base"
 	if ( Banlistjob.dir.Find("[ckey][computerid][rank]") )
-		usr << text("\red Banjob already exists.")
+		usr << text("<span class='danger'>Banjob already exists.</span>")
 		return 0
 	else
 		Banlistjob.dir.Add("[ckey][computerid][rank]")

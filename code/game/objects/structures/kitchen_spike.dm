@@ -24,12 +24,12 @@
 			src.meat = 5
 			src.meattype = 1
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [user] has forced [G.affecting] onto the spike, killing them instantly!"))
+				O.show_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
 			qdel(G.affecting)
 			qdel(G)
 
 		else
-			user << "\red The spike already has something on it, finish collecting its meat first!"
+			user << "<span class='danger'>The spike already has something on it, finish collecting its meat first!</span>"
 	else if(istype(G.affecting, /mob/living/carbon/alien))
 		if(src.occupied == 0)
 			src.icon_state = "spikebloodygreen"
@@ -37,13 +37,13 @@
 			src.meat = 5
 			src.meattype = 2
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [user] has forced [G.affecting] onto the spike, killing them instantly!"))
+				O.show_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
 			qdel(G.affecting)
 			qdel(G)
 		else
-			user << "\red The spike already has something on it, finish collecting its meat first!"
+			user << "<span class='danger'>The spike already has something on it, finish collecting its meat first!</span>"
 	else
-		user << "\red They are too big for the spike, try something smaller!"
+		user << "<span class='danger'>They are too big for the spike, try something smaller!</span>"
 		return
 
 ///obj/structure/kitchenspike/MouseDrop_T(var/atom/movable/C, mob/user)

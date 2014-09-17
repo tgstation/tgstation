@@ -77,13 +77,13 @@
 			if (!input)
 				return
 			if(copytext(input,1,5) == "says")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(input,1,9) == "exclaims")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(input,1,5) == "asks")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else
 				var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
@@ -202,7 +202,7 @@
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					src << "\red You cannot send IC messages (muted)."
+					src << "<span class='danger'>You cannot send IC messages (muted).</span>"
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -211,13 +211,13 @@
 			if(!(message))
 				return
 			if(copytext(message,1,5) == "says")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(message,1,9) == "exclaims")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(message,1,5) == "asks")
-				src << "\red Invalid emote."
+				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else
 				message = "<B>[src]</B> [message]"

@@ -55,21 +55,21 @@
 		if (istype(W, /obj/item/weapon/screwdriver))
 			if (do_after(user, 20))
 				src.open =! src.open
-				user.show_message(text("\blue You [] the service panel.", (src.open ? "open" : "close")))
+				user.show_message(text("<span class='notice'>You [] the service panel.</span>", (src.open ? "open" : "close")))
 			return
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
-			user.show_message(text("\red Now attempting to reset internal memory, please hold."), 1)
+			user.show_message(text("<span class='danger'>Now attempting to reset internal memory, please hold.</span>"), 1)
 			src.l_hacking = 1
 			if (do_after(usr, 100))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
-					user.show_message(text("\red Internal memory reset.  Please give it a few seconds to reinitialize."), 1)
+					user.show_message(text("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>"), 1)
 					sleep(80)
 					src.l_setshort = 0
 					src.l_hacking = 0
 				else
-					user.show_message(text("\red Unable to reset internal memory."), 1)
+					user.show_message(text("<span class='danger'>Unable to reset internal memory.</span>"), 1)
 					src.l_hacking = 0
 			else	src.l_hacking = 0
 			return
@@ -153,11 +153,13 @@
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
 	force = 8.0
+	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
 	w_class = 4.0
 	max_w_class = 3
 	max_combined_w_class = 21
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/storage/secure/briefcase/New()
 	..()
@@ -166,7 +168,7 @@
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user as mob)
 	if ((src.loc == user) && (src.locked == 1))
-		usr << "\red [src] is locked and cannot be opened!"
+		usr << "<span class='danger'>[src] is locked and cannot be opened!</span>"
 	else if ((src.loc == user) && (!src.locked))
 		playsound(src.loc, "rustle", 50, 1, -5)
 		if (user.s_active)

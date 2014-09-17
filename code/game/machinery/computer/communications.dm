@@ -51,7 +51,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(..())
 		return
 	if (src.z > 1)
-		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		usr << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	usr.set_machine(src)
 
@@ -209,7 +209,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
 				centcom_message_cooldown = 1
-				spawn(6000)//10 minute cooldown
+				spawn(600)//One minute cooldown
 					centcom_message_cooldown = 0
 
 
@@ -226,7 +226,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				centcom_message_cooldown = 1
-				spawn(6000)//10 minute cooldown
+				spawn(600)//One minute cooldown
 					centcom_message_cooldown = 0
 
 		if("RestoreBackup")
@@ -325,14 +325,14 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(..())
 		return
 	if (src.z > 6)
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		user << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 
 	user.set_machine(src)
 	var/dat = ""
 	if (emergency_shuttle.online && emergency_shuttle.location==0)
 		var/timeleft = emergency_shuttle.timeleft()
-		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
+		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 
 
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
@@ -354,10 +354,11 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if (src.authenticated)
 				if(emergency_shuttle.recall_count > 1)
 					if(emergency_shuttle.last_call_loc)
-						dat += "<BR>Last emergency shuttle call/recall traced to: <b>[format_text(emergency_shuttle.last_call_loc.name)]</b>.<BR>"
+						dat += "<BR>Most recent shuttle call/recall traced to: <b>[format_text(emergency_shuttle.last_call_loc.name)]</b>"
 					else
-						dat += "<BR>Last emergency shuttle call/recall trace failed.<BR>"
-				dat += "Logged in as: [auth_id]"
+						dat += "<BR>Unable to trace most recent shuttle call/recall signal."
+				dat += "<BR>Logged in as: [auth_id]"
+				dat += "<BR>"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<BR>"
 				dat += "<BR><B>General Functions</B>"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
@@ -496,7 +497,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
 			dat += "<BR><BR><B>Special Functions</B>"
-			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-announce'>Make a Priority Announcement</A> \]"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-announce'>Make an Announcement</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-changeseclevel'>Change Alert Level</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-emergencyaccess'>Emergency Maintenance Access</A> \]"
 		if(STATE_CALLSHUTTLE)
@@ -557,7 +558,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(!input || !user.canUseTopic(src))
 		return
 	if(is_silicon)
-		priority_announce(input, null, null, "Priority")
+		minor_announce(input)
 		ai_message_cooldown = 1
 		spawn(600)//One minute cooldown
 			ai_message_cooldown = 0
@@ -593,11 +594,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/area/signal_origin = get_area(user)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	if (seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
-		emergency_shuttle.incall(0.6, signal_origin)
-		priority_announce("The emergency shuttle has been called. Red Alert state confirmed: Dispatching priority shuttle. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[emergency_reason]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+		emergency_shuttle.incall(0.6, signal_origin, emergency_reason, 1)
 	else
-		emergency_shuttle.incall(1, signal_origin)
-		priority_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[emergency_reason]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+		emergency_shuttle.incall(1, signal_origin, emergency_reason, 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)

@@ -146,7 +146,7 @@
 
 /turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
@@ -228,7 +228,6 @@
 				user << "<span class='notice'>You remove the outer plating.</span>"
 				dismantle_wall()
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 
 	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )

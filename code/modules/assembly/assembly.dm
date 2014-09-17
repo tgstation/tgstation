@@ -98,7 +98,7 @@
 /obj/item/device/assembly/attach_assembly(var/obj/item/device/assembly/A, var/mob/user)
 	holder = new/obj/item/device/assembly_holder(get_turf(src))
 	if(holder.attach(A,src,user))
-		user << "\blue You attach \the [A] to \the [src]!"
+		user << "<span class='notice'>You attach \the [A] to \the [src]!</span>"
 		return 1
 	return 0
 
@@ -111,9 +111,9 @@
 			return
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(toggle_secure())
-			user << "\blue \The [src] is ready!"
+			user << "<span class='notice'>\The [src] is ready!</span>"
 		else
-			user << "\blue \The [src] can now be attached!"
+			user << "<span class='notice'>\The [src] can now be attached!</span>"
 		return
 	..()
 	return

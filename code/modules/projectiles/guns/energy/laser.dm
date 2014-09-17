@@ -110,7 +110,7 @@ obj/item/weapon/gun/energy/laser/retro
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
 			return 1
-		M << "\red You need to be wearing your laser tag vest!"
+		M << "<span class='danger'>You need to be wearing your laser tag vest!</span>"
 	return 0
 
 /obj/item/weapon/gun/energy/laser/bluetag/New()
@@ -147,7 +147,7 @@ obj/item/weapon/gun/energy/laser/retro
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
 			return 1
-		M << "\red You need to be wearing your laser tag vest!"
+		M << "<span class='danger'>You need to be wearing your laser tag vest!</span>"
 	return 0
 
 /obj/item/weapon/gun/energy/laser/redtag/New()

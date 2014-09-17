@@ -27,10 +27,8 @@
 
 /turf/New()
 	..()
-	for(var/atom/movable/AM as mob|obj in src)
-		spawn( 0 )
-			src.Entered(AM)
-			return
+	for(var/atom/movable/AM in src)
+		Entered(AM)
 	return
 
 // Adds the adjacent turfs to the current atmos processing
@@ -50,9 +48,6 @@
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
-	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
-		return
 	if (!mover)
 		return 1
 	// First, make sure it can leave its square
@@ -85,28 +80,7 @@
 			return 0
 	return 1 //Nothing found to block so return success!
 
-/turf/Entered(atom/atom as mob|obj)
-	if(movement_disabled)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
-		return
-	..()
-//vvvvv Infared beam stuff vvvvv
-
-	if ((atom && atom.density && !( istype(atom, /obj/effect/beam) )))
-		for(var/obj/effect/beam/i_beam/I in src)
-			spawn( 0 )
-				if (I)
-					I.hit()
-				break
-
-//^^^^^ Infared beam stuff ^^^^^
-
-	if(!istype(atom, /atom/movable))
-		return
-
-	var/atom/movable/M = atom
-
-	var/loopsanity = 100
+/turf/Entered(atom/movable/M)
 	if(ismob(M))
 		var/mob/O = M
 		if(!O.lastarea)
@@ -117,16 +91,13 @@
 			inertial_drift(O)
 		else if(!istype(src, /turf/space))
 			O.inertia_dir = 0
-	..()
-	var/objects = 0
-	for(var/atom/A as mob|obj|turf|area in range(1))
-		if(objects > loopsanity)	break
-		objects++
-		spawn( 0 )
-			if ((A && M))
-				A.HasProximity(M, 1)
-			return
-	return
+
+	var/loopsanity = 100
+	for(var/atom/A in range(1))
+		if(loopsanity == 0)
+			break
+		loopsanity--
+		A.HasProximity(M, 1)
 
 /turf/proc/is_plating()
 	return 0
@@ -139,6 +110,18 @@
 /turf/proc/is_grass_floor()
 	return 0
 /turf/proc/is_wood_floor()
+	return 0
+/turf/proc/is_gold_floor()
+	return 0
+/turf/proc/is_silver_floor()
+	return 0
+/turf/proc/is_plasma_floor()
+	return 0
+/turf/proc/is_uranium_floor()
+	return 0
+/turf/proc/is_bananium_floor()
+	return 0
+/turf/proc/is_diamond_floor()
 	return 0
 /turf/proc/is_carpet_floor()
 	return 0
@@ -245,15 +228,14 @@
 	src.ChangeTurf(/turf/space)
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 
-/turf/proc/kill_creatures(mob/U = null)//Will kill people/creatures and damage mechs./N
-//Useful to batch-add creatures to the list.
+/turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf
 	for(var/mob/living/M in src)
-		if(M==U)	continue//Will not harm U. Since null != M, can be excluded to kill everyone.
-		spawn(0)
-			M.gib()
-	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
-		spawn(0)
-			M.take_damage(100, "brute")
+		if(M==U)
+			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
+		M.adjustBruteLoss(damage)
+		M.Paralyse(damage/5)
+	for(var/obj/mecha/M in src)
+		M.take_damage(damage*2, "brute")
 
 /turf/proc/Bless()
 	flags |= NOJAUNT

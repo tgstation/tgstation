@@ -275,14 +275,14 @@ datum/reagents/proc/handle_reactions()
 
 					if(!istype(my_atom, /mob)) // No bubbling mobs
 						for(var/mob/M in seen)
-							M << "\blue \icon[my_atom] The solution begins to bubble."
+							M << "<span class='notice'>\icon[my_atom] The solution begins to bubble.</span>"
 
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								M << "\blue \icon[my_atom] The [my_atom]'s power is consumed in the reaction."
+								M << "<span class='notice'>\icon[my_atom] The [my_atom]'s power is consumed in the reaction.</span>"
 								ME2.name = "\improper used slime extract"
 								ME2.desc = "This extract has been used up."
 

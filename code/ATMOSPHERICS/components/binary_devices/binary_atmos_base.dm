@@ -128,3 +128,7 @@
 		node2 = null
 
 	return null
+
+/obj/machinery/atmospherics/binary/nullifyPipenetwork()
+	network1 = null
+	network2 = null

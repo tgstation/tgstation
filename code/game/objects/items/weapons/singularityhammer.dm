@@ -90,9 +90,9 @@
 	s.set_up(5, 1, target.loc)
 	s.start()
 	target.take_organ_damage(0,30)
-	target.visible_message("\red [target.name] was shocked by the [src.name]!", \
-		"\red <B>You feel a powerful shock course through your body sending you flying!</B>", \
-		"\red You hear a heavy electrical crack")
+	target.visible_message("<span class='danger'>[target.name] was shocked by the [src.name]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
+		"<span class='danger'>You hear a heavy electrical crack.</span>")
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 	return

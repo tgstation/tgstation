@@ -21,7 +21,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
 /obj/item/weapon/gun/energy/pulse_rifle/destroyer/attack_self(mob/living/user as mob)
-	user << "\red [src.name] has three settings, and they are all DESTROY."
+	user << "<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>"
 
 
 

@@ -153,9 +153,9 @@
 
 	if (isrobot(usr) || src.locked || src.smashed)
 		if(src.locked)
-			usr << "\red The cabinet won't budge!"
+			usr << "<span class='danger'>The cabinet won't budge!</span>"
 		else if(src.smashed)
-			usr << "\blue The protective glass is broken!"
+			usr << "<span class='notice'>The protective glass is broken!</span>"
 		return
 
 	localopened = !localopened
@@ -172,11 +172,11 @@
 		if(fireaxe)
 			usr.put_in_hands(fireaxe)
 			fireaxe = null
-			usr << "\blue You take the Fire axe from the [name]."
+			usr << "<span class='notice'>You take the Fire axe from the [name].</span>"
 		else
-			usr << "\blue The [src.name] is empty."
+			usr << "<span class='notice'>The [src.name] is empty.</span>"
 	else
-		usr << "\blue The [src.name] is closed."
+		usr << "<span class='notice'>The [src.name] is closed.</span>"
 	update_icon()
 
 /obj/structure/closet/fireaxecabinet/attack_paw(mob/user as mob)

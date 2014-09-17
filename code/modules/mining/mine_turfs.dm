@@ -372,8 +372,8 @@
 
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
+	if (!user.IsAdvancedToolUser())
+		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
@@ -390,11 +390,11 @@
 		if(last_act+W:digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
-		user << "\red You start picking."
+		user << "<span class='danger'>You start picking.</span>"
 		playsound(user, 'sound/weapons/Genhit.ogg', 20, 1)
 
 		if(do_after(user,W:digspeed))
-			user << "\blue You finish cutting into the rock."
+			user << "<span class='notice'>You finish cutting into the rock.</span>"
 			gets_drilled()
 	else
 		return attack_hand(user)
@@ -512,15 +512,15 @@
 			return
 
 		if (dug)
-			user << "\red This area has already been dug"
+			user << "<span class='danger'>This area has already been dug.</span>"
 			return
 
-		user << "\red You start digging."
+		user << "<span class='danger'>You start digging.</span>"
 		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(40)
 		if ((user.loc == T && user.get_active_hand() == W))
-			user << "\blue You dug a hole."
+			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 			return
 
@@ -530,15 +530,15 @@
 			return
 
 		if (dug)
-			user << "\red This area has already been dug"
+			user << "<span class='warning'>This area has already been dug.</span>"
 			return
 
-		user << "\red You start digging."
+		user << "<span class='danger'>You start digging.</span>"
 		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(30)
 		if ((user.loc == T && user.get_active_hand() == W))
-			user << "\blue You dug a hole."
+			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 
 	if ((istype(W,/obj/item/weapon/pickaxe/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/borgdrill)))
@@ -547,15 +547,15 @@
 			return
 
 		if (dug)
-			user << "\red This area has already been dug"
+			user << "<span class='warning'>This area has already been dug.</span>"
 			return
 
-		user << "\red You start digging."
+		user << "<span class='danger'>You start digging.</span>"
 		playsound(src, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(0)
 		if ((user.loc == T && user.get_active_hand() == W))
-			user << "\blue You dug a hole."
+			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
@@ -597,22 +597,6 @@
 /turf/simulated/mineral/updateMineralOverlays()
 	return
 
-
-
 /turf/proc/fullUpdateMineralOverlays()
 	for (var/turf/t in range(1,src))
 		t.updateMineralOverlays()
-
-/turf/simulated/floor/plating/asteroid/Entered(atom/movable/M as mob|obj)
-	..()
-	if(istype(M,/mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = M
-		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				src.attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				src.attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				src.attackby(R.module_state_3,R)
-			else
-				return

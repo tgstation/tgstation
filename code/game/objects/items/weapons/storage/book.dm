@@ -52,16 +52,16 @@
 
 	add_logs(user, M, "attacked", object="[src.name]")
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		user << "\red You don't have the dexterity to do this!"
+	if (!user.IsAdvancedToolUser())
+		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 	if(!chaplain)
-		user << "\red The book sizzles in your hands."
+		user << "<span class='danger'>The book sizzles in your hands.</span>"
 		user.take_organ_damage(0,10)
 		return
 
 	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red The [src] slips out of your hand and hits your head."
+		user << "<span class='danger'>The [src] slips out of your hand and hits your head.</span>"
 		user.take_organ_damage(10)
 		user.Paralyse(20)
 		return
@@ -71,7 +71,7 @@
 
 	if (M.stat !=2)
 		if(M.mind && (M.mind.assigned_role == "Chaplain"))
-			user << "\red You can't heal yourself!"
+			user << "<span class='danger'>You can't heal yourself!</span>"
 			return
 		/*if((M.mind in ticker.mode.cult) && (prob(20)))
 			M << "\red The power of [src.deity_name] clears your mind of heresy!"
@@ -86,8 +86,8 @@
 					if(affecting.status == ORGAN_ORGANIC)
 						if(message_halt == 0)
 							for(var/mob/O in viewers(M, null))
-								O.show_message(text("\red <B>[] heals [] with the power of [src.deity_name]!</B>", user, M), 1)
-							M << "\red May the power of [src.deity_name] compel you to be healed!"
+								O.show_message(text("<span class='userdanger'>[] heals [] with the power of [src.deity_name]!</span>", user, M), 1)
+							M << "<span class='danger'>May the power of [src.deity_name] compel you to be healed!</span>"
 							playsound(src.loc, "punch", 25, 1, -1)
 							message_halt = 1
 					else
@@ -100,34 +100,34 @@
 		else
 			if(ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 				M.adjustBrainLoss(10)
-				M << "\red You feel dumber."
+				M << "<span class='danger'>You feel dumber.</span>"
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] beats [] over the head with []!</B>", user, M, src), 1)
+				O.show_message(text("<span class='danger'>[user] beats [M] over the head with [src]!</span>"), 1)
 			playsound(src.loc, "punch", 25, 1, -1)
 
 	else if(M.stat == 2)
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red <B>[] smacks []'s lifeless corpse with [].</B>", user, M, src), 1)
+			O.show_message(text("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>"), 1)
 		playsound(src.loc, "punch", 25, 1, -1)
 	return
 
 /obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity) return
 	if (istype(A, /turf/simulated/floor))
-		user << "\blue You hit the floor with the bible."
+		user << "<span class='notice'>You hit the floor with the bible.</span>"
 		if(user.mind && (user.mind.assigned_role == "Chaplain"))
 			call(/obj/effect/rune/proc/revealrunes)(src)
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
-			user << "\blue You bless [A]."
+			user << "<span class='notice'>You bless [A].</span>"
 			var/water2holy = A.reagents.get_reagent_amount("water")
 			A.reagents.del_reagent("water")
 			A.reagents.add_reagent("holywater",water2holy)
 		if(A.reagents && A.reagents.has_reagent("unholywater")) //yeah yeah, copy pasted code - sue me
-			user << "\blue You purify [A]."
+			user << "<span class='notice'> You purify [A].</span>"
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
-			A.reagents.add_reagent("cleaner",unholy2clean)		//it cleans their soul, get it? I'll get my coat...
+			A.reagents.add_reagent("holywater",unholy2clean)
 
 /obj/item/weapon/storage/book/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)

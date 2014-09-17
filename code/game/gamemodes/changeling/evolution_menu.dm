@@ -91,7 +91,7 @@ var/list/sting_paths
 
 					body += "<font size='2'><b>"+desc+"</b></font> <BR>"
 
-					body += "<font size='2'><font color = 'red'><b>"+helptext+"</b></font> <BR>"
+					body += "<font size='2'><span class='danger'>"+helptext+"</span></font> <BR>"
 
 					if(!ownsthis)
 					{
@@ -156,7 +156,7 @@ var/list/sting_paths
 						return;
 					locked_tabs.push(id);
 					var notice_span = document.getElementById(notice_span_id);
-					notice_span.innerHTML = "<font color='red'>Locked</font> ";
+					notice_span.innerHTML = "<span class='danger'>Locked</span> ";
 					//link.setAttribute("onClick","attempt('"+id+"','"+link_id+"','"+notice_span_id+"');");
 					//document.write("removeFromLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
 					//document.write("aa - "+link.getAttribute("onClick"));
@@ -316,6 +316,10 @@ var/list/sting_paths
 		user << "We have already evolved this ability!"
 		return
 
+	if(thepower.dna_cost < 0)
+		user << "We cannot evolve this ability."
+		return
+
 	if(geneticpoints < thepower.dna_cost)
 		user << "We have reached our capacity for abilities."
 		return
@@ -376,6 +380,7 @@ var/list/sting_paths
 	if(ishuman(src) || ismonkey(src))
 		if(mind && mind.changeling)
 			digitalcamo = 0
+			mind.changeling.changeling_speak = 0
 			mind.changeling.reset()
 			for(var/obj/effect/proc_holder/changeling/p in mind.changeling.purchasedpowers)
 				if(!(p.dna_cost == 0 && keep_free_powers))

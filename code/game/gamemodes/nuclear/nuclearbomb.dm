@@ -17,10 +17,6 @@ var/bomb_set
 	use_power = 0
 	var/previous_level = ""
 
-/obj/machinery/nuclearbomb/New()
-	..()
-	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
-
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
@@ -114,7 +110,7 @@ var/bomb_set
 				if (src.timing == -1.0)
 					return
 				if (src.safety)
-					usr << "\red The safety is still on."
+					usr << "<span class='danger'>The safety is still on.</span>"
 					return
 				src.timing = !( src.timing )
 				if (src.timing)
@@ -208,7 +204,7 @@ var/bomb_set
 					blackbox.save_all_data_to_sql()
 				sleep(300)
 				log_game("Rebooting due to nuclear detonation")
-				kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
+				kick_clients_in_lobby("<span class='danger'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
 				world.Reboot()
 				return
 	return
@@ -236,8 +232,8 @@ var/bomb_set
 	if(blobstart.len > 0)
 		var/obj/item/weapon/disk/nuclear/NEWDISK = new(pick(blobstart))
 		transfer_fingerprints_to(NEWDISK)
-		message_admins("[src] has been destroyed.  Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
-		log_game("[src] has been destroyed.  Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
+		message_admins("[src] has been destroyed in ([x], [y] ,[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[NEWDISK.x];Y=[NEWDISK.y];Z=[NEWDISK.z]'>JMP</a>).")
+		log_game("[src] has been destroyed in ([x], [y] ,[z]). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
 		del(src) //Needed to clear all references to it
 	else
 		ERROR("[src] was supposed to be destroyed, but we were unable to locate a blobstart landmark to spawn a new one.")

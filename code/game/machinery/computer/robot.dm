@@ -30,7 +30,7 @@
 
 /obj/machinery/computer/robotics/interact(var/mob/user as mob)
 	if (src.z > 6)
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		user << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	user.set_machine(src)
 	var/dat
@@ -92,11 +92,11 @@
 						R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
 						R.ResetSecurityCodes()
 					else
-						message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
-						log_game("\blue [key_name(usr)] detonated [R.name]!")
+						message_admins("<span class='notice'>[key_name_admin(usr)] detonated [R.name]!</span>")
+						log_game("\<span class='notice'>[key_name(usr)] detonated [R.name]!</span>")
 						R.self_destruct()
 		else
-			usr << "\red Access Denied."
+			usr << "<span class='danger'>Access Denied.</span>"
 
 	else if (href_list["stopbot"])
 		if(src.allowed(usr))
@@ -104,13 +104,13 @@
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
-					message_admins("\blue [key_name_admin(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
+					message_admins("<span class='notice'>[key_name_admin(usr)] [R.canmove ? "locked down" : "released"] [R.name]!</span>")
 					log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 					R.SetLockdown(!R.lockcharge)
 					R << "[!R.lockcharge ? "<span class='notice'>Your lockdown has been lifted!" : "<span class='alert'>You have been locked down!"]</span>"
 
 		else
-			usr << "\red Access Denied."
+			usr << "<span class='danger'>Access Denied.</span>"
 
 	else if (href_list["magbot"])
 		if(issilicon(usr) && is_special_character(usr))

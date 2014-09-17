@@ -132,6 +132,6 @@
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (connected_device)
-		user << "\red You cannot unwrench this [src], dettach [connected_device] first."
+		user << "<span class='danger'>You cannot unwrench this [src], dettach [connected_device] first.</span>"
 		return 1
 	return ..()

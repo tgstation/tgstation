@@ -18,7 +18,7 @@
 
 /obj/item/device/flash/proc/clown_check(mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
-		user << "\red [src] slips out of your hand."
+		user << "<span class='danger'>[src] slips out of your hand.</span>"
 		user.drop_item()
 		return 0
 	return 1

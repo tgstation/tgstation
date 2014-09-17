@@ -152,9 +152,9 @@
 			src.chest = W
 			src.updateicon()
 		else if(!W:wires)
-			user << "\blue You need to attach wires to it first!"
+			user << "<span class='notice'>You need to attach wires to it first!</span>"
 		else
-			user << "\blue You need to attach a cell to it first!"
+			user << "<span class='notice'>You need to attach a cell to it first!</span>"
 
 	if(istype(W, /obj/item/robot_parts/head))
 		if(src.head)	return
@@ -164,7 +164,7 @@
 			src.head = W
 			src.updateicon()
 		else
-			user << "\blue You need to attach a flash to it first!"
+			user << "<span class='notice'>You need to attach a flash to it first!</span>"
 
 	if (istype(W, /obj/item/device/multitool))
 		if(check_completion())
@@ -176,10 +176,10 @@
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
-				user << "\red You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise."
+				user << "<span class='danger'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise.</span>"
 				return
 			if(!M.brainmob)
-				user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
+				user << "<span class='danger'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>"
 				return
 			if(!M.brainmob.key)
 				var/ghost_can_reenter = 0
@@ -193,15 +193,15 @@
 					return
 
 			if(M.brainmob.stat == DEAD)
-				user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
+				user << "<span class='danger'>Sticking a dead brain into the frame would sort of defeat the purpose.</span>"
 				return
 
 			if(M.brainmob.mind in ticker.mode.head_revolutionaries)
-				user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI."
+				user << "<span class='danger'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI.</span>"
 				return
 
 			if(jobban_isbanned(M.brainmob, "Cyborg"))
-				user << "\red This MMI does not seem to fit."
+				user << "<span class='danger'>This MMI does not seem to fit.</span>"
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
@@ -225,7 +225,7 @@
 				O.lawupdate = 0
 				O.make_laws()
 				if(ticker.mode.config_tag == "malfunction") //Don't let humans get a cyborg on their side during malf, for balance reasons.
-					O.set_zeroth_law("\red ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*�&110010")
+					O.set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*�&110010</span>")
 
 			M.brainmob.mind.transfer_to(O)
 
@@ -253,6 +253,8 @@
 		else
 			user << "<span class='notice'>The MMI must go in after everything else!</span>"
 
+	if(istype(W,/obj/item/weapon/pen))
+		user << "<span class='warning'>You need to use a multitool to name [src].</span>"
 	return
 
 /obj/item/robot_parts/robot_suit/proc/Interact(mob/user)
@@ -308,13 +310,13 @@
 	..()
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(src.cell)
-			user << "\blue You have already inserted a cell!"
+			user << "<span class='notice'>You have already inserted a cell!</span>"
 			return
 		else
 			user.drop_item()
 			W.loc = src
 			src.cell = W
-			user << "\blue You insert the cell!"
+			user << "<span class='notice'>You insert the cell!</span>"
 	if(istype(W, /obj/item/stack/cable_coil))
 		if(src.wires)
 			user << "<span class='warning'>You have already inserted wire.</span>"
@@ -332,10 +334,10 @@
 	if(istype(W, /obj/item/device/flash))
 		var/obj/item/device/flash/F = W
 		if(src.flash1 && src.flash2)
-			user << "\blue You have already inserted the eyes!"
+			user << "<span class='notice'>You have already inserted the eyes!</span>"
 			return
 		else if(F.broken)
-			user << "\blue You can't use a broken flash!"
+			user << "<span class='notice'>You can't use a broken flash!</span>"
 			return
 		else
 			user.drop_item()
@@ -344,6 +346,6 @@
 				src.flash2 = F
 			else
 				src.flash1 = F
-			user << "\blue You insert the flash into the eye socket!"
+			user << "<span class='notice'>You insert the flash into the eye socket!</span>"
 	return
 

@@ -247,8 +247,28 @@
 									C.internals.icon_state = "internal1"
 							else
 								C << "<span class='notice'>You don't have an oxygen tank.</span>"
+
 		if("act_intent")
-			usr.a_intent_change("right")
+			if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
+
+				var/_x = text2num(params2list(params)["icon-x"])
+				var/_y = text2num(params2list(params)["icon-y"])
+
+				if(_x<=16 && _y<=16)
+					usr.a_intent_change("harm")
+
+				else if(_x<=16 && _y>=17)
+					usr.a_intent_change("help")
+
+				else if(_x>=17 && _y<=16)
+					usr.a_intent_change("grab")
+
+				else if(_x>=17 && _y>=17)
+					usr.a_intent_change("disarm")
+
+			else
+				usr.a_intent_change("right")
+
 		if("pull")
 			usr.stop_pulling()
 		if("throw/catch")
@@ -314,7 +334,7 @@
 		if("Crew Monitorting")
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
-				crewmonitor(AI)
+				crewmonitor(AI,AI)
 
 		if("Show Crew Manifest")
 			if(isAI(usr))
@@ -366,7 +386,14 @@
 			else if(isrobot(usr))
 				var/mob/living/silicon/robot/R = usr
 				R.aicamera.viewpictures()
-
+		if("nightvision")
+			if(isalien(usr))
+				var/mob/living/carbon/alien/humanoid/A = usr
+				A.nightvisiontoggle()
+		if("Sensor Augmentation")
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.sensor_mode()
 		else
 			return 0
 	return 1
@@ -383,20 +410,23 @@
 		return 1
 	switch(name)
 		if("r_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("r")
+			if(ismob(usr))
+				var/mob/Mr = usr
+				Mr.activate_hand("r")
 		if("l_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("l")
+			if(ismob(usr))
+				var/mob/Ml = usr
+				Ml.activate_hand("l")
 		if("swap")
-			usr:swap_hand()
+			if(ismob(usr))
+				var/mob/Ms = usr
+				Ms.swap_hand()
 		if("hand")
-			usr:swap_hand()
+			if(ismob(usr))
+				var/mob/Mh = usr
+				Mh.swap_hand()
 		else
 			if(usr.attack_ui(slot_id))
 				usr.update_inv_l_hand(0)
 				usr.update_inv_r_hand(0)
 	return 1
-

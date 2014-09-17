@@ -26,6 +26,7 @@
 			dat += text("<A href='?src=\ref[src];id=eject'>[inserted_id]</A><br>")
 			dat += text("Collected Points: [inserted_id.points]. <A href='?src=\ref[src];id=reset'>Reset.</A><br>")
 			dat += text("Card goal: [inserted_id.goal].  <A href='?src=\ref[src];id=setgoal'>Set </A><br>")
+			dat += text("Space Law recommends quotas of 100 points per minute they would normally serve in the brig.<BR>")
 		else
 			dat += text("<A href='?src=\ref[src];id=insert'>Insert Prisoner ID.</A><br>")
 		dat += "<H3>Prisoner Implant Management</H3>"
@@ -93,7 +94,7 @@
 					usr.drop_item()
 					I.loc = src
 					inserted_id = I
-				else usr << "\red No valid ID."
+				else usr << "<span class='danger'>No valid ID.</span>"
 			else if(istype(inserted_id))
 				switch(href_list["id"])
 					if("eject")
@@ -105,6 +106,7 @@
 					if("setgoal")
 						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
 						if(num >= 0)
+							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
 							inserted_id.goal = num
 		else if(href_list["inject1"])
 			var/obj/item/weapon/implant/I = locate(href_list["inject1"])

@@ -59,6 +59,10 @@
 		SetOpacity(0)
 		update_icon(0)
 	else
+		var/srcturf = get_turf(src)
+		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
+			opening = 0
+			return
 		do_the_flick()
 		density = 1
 		sleep(4)
@@ -114,7 +118,7 @@
 		user << "<span class='warning'>You can't reach, close it first!</span>"
 
 	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter) || istype(W, /obj/item/weapon/pickaxe/diamonddrill) || istype(W, /obj/item/weapon/melee/energy/blade))
-		dismantle()
+		dismantle(user)
 
 /obj/structure/falsewall/proc/dismantle(mob/user)
 	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='warning'>You dismantle the false wall.</span>")

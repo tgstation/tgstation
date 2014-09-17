@@ -33,7 +33,7 @@
 			if(fields["SE"])
 				M.dna.struc_enzymes = merge_text(M.dna.struc_enzymes, fields["SE"])
 				if(ishuman(M) && (deconstruct_block(getblock(M.dna.struc_enzymes, RACEBLOCK), BAD_MUTATION_DIFFICULTY) == BAD_MUTATION_DIFFICULTY))	//check for monkeying people.
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 					log_msg += " (MONKEY)"
 				domutcheck(M, null,(type != /obj/item/weapon/dnainjector))	//admin-spawnable-injectors always work
 			log_attack(log_msg)
@@ -42,7 +42,7 @@
 		return
 
 /obj/item/weapon/dnainjector/attack(mob/target, mob/user)
-	if(!ishuman(user))
+	if(!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return
 	add_logs(user, target, "attempted to inject", object="[name]")

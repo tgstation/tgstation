@@ -107,10 +107,10 @@
 
 /obj/machinery/implantchair/put_mob(mob/living/carbon/M as mob)
 	if(!iscarbon(M))
-		usr << "\red <B>The [src.name] cannot hold this!</B>"
+		usr << "<span class='userdanger'>The [src.name] cannot hold this!</span>"
 		return
 	if(src.occupant)
-		usr << "\red <B>The [src.name] is already occupied!</B>"
+		usr << "<span class='userdanger'>The [src.name] is already occupied!</span>"
 		return
 	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
@@ -131,7 +131,7 @@
 		if(!imp)	continue
 		if(istype(imp, /obj/item/weapon/implant/loyalty))
 			for (var/mob/O in viewers(M, null))
-				O.show_message("\red [M] has been implanted by the [src.name].", 1)
+				O.show_message("<span class='danger'>[M] has been implanted by the [src.name].</span>", 1)
 
 			if(imp.implanted(M))
 				imp.loc = M

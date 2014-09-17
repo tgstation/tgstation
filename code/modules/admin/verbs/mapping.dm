@@ -140,11 +140,9 @@ var/intercom_range_display_status = 0
 	src.verbs += /datum/admins/proc/show_traitor_panel
 	src.verbs += /client/proc/print_jobban_old
 	src.verbs += /client/proc/print_jobban_old_filter
-	src.verbs += /client/proc/forceEvent
 	src.verbs += /client/proc/kill_pipe_processing
 	src.verbs += /client/proc/kill_air_processing
 	src.verbs += /client/proc/disable_communication
-	src.verbs += /client/proc/disable_movement
 	src.verbs += /client/proc/print_pointers
 	src.verbs += /client/proc/count_movable_instances
 	src.verbs += /client/proc/SDQL2_query
@@ -269,17 +267,3 @@ var/global/say_disabled = 0
 		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
 	else
 		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
-
-//This proc is intended to detect lag problems relating to movement
-var/global/movement_disabled = 0
-var/global/movement_disabled_exception //This is the client that calls the proc, so he can continue to run around to gauge any change to lag.
-/client/proc/disable_movement()
-	set category = "Mapping"
-	set name = "Disable all movement"
-
-	movement_disabled = !movement_disabled
-	if(movement_disabled)
-		message_admins("[src.ckey] used 'Disable all movement', killing all movement.")
-		movement_disabled_exception = usr.ckey
-	else
-		message_admins("[src.ckey] used 'Disable all movement', restoring all movement.")

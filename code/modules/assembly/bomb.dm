@@ -81,10 +81,6 @@
 	if(bombassembly)
 		bombassembly.on_found(finder)
 
-/obj/item/device/onetankbomb/hear_talk(mob/living/M as mob, msg)
-	if(bombassembly)
-		bombassembly.hear_talk(M, msg)
-
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 

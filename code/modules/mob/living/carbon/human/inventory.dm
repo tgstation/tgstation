@@ -46,7 +46,7 @@
 					return 0
 				if(!w_uniform)
 					if(!disable_warning)
-						src << "\red You need a jumpsuit before you can attach this [I.name]."
+						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
 					return 0
 				if( !(I.slot_flags & SLOT_BELT) )
 					return
@@ -80,7 +80,7 @@
 					return 0
 				if(!w_uniform)
 					if(!disable_warning)
-						src << "\red You need a jumpsuit before you can attach this [I.name]."
+						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
 					return 0
 				if( !(I.slot_flags & SLOT_ID) )
 					return 0
@@ -92,7 +92,7 @@
 					return 0
 				if(!w_uniform)
 					if(!disable_warning)
-						src << "\red You need a jumpsuit before you can attach this [I.name]."
+						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
 					return 0
 				if(I.slot_flags & SLOT_DENYPOCKET)
 					return
@@ -105,7 +105,7 @@
 					return 0
 				if(!w_uniform)
 					if(!disable_warning)
-						src << "\red You need a jumpsuit before you can attach this [I.name]."
+						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
 					return 0
 				if(I.slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -119,7 +119,7 @@
 					return 0
 				if(!wear_suit)
 					if(!disable_warning)
-						src << "\red You need a suit before you can attach this [I.name]."
+						src << "<span class='danger'>You need a suit before you can attach this [I.name].</span>"
 					return 0
 				if(!wear_suit.allowed)
 					if(!disable_warning)
@@ -183,7 +183,7 @@
 				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))
 					S.handle_item_insertion(I)
 				else
-					H << "\red You are unable to equip that."
+					H << "<span class='danger'>You are unable to equip that.</span>"
 
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
@@ -385,5 +385,5 @@
 			I.loc = back
 			return
 		else
-			src << "\red You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"
+			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return

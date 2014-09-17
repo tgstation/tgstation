@@ -144,28 +144,48 @@
 		pos--
 	L.Insert(pos+1, thing)
 
+// Returns the next item in a list
+/proc/next_list_item(var/item, var/list/L)
+	var/i
+	i = L.Find(item)
+	if(i == L.len)
+		i = 1
+	else
+		i++
+	return L[i]
+
+// Returns the previous item in a list
+/proc/previous_list_item(var/item, var/list/L)
+	var/i
+	i = L.Find(item)
+	if(i == 1)
+		i = L.len
+	else
+		i--
+	return L[i]
+
 /*
  * Sorting
  */
-
+/*
 //Reverses the order of items in the list
 /proc/reverselist(var/list/input)
 	var/list/output = list()
 	for(var/i = input.len; i >= 1; i--)
 		output += input[i]
 	return output
+*/
 
 //Randomize: Return the list in a random order
-/proc/shuffle(var/list/shufflelist)
-	if(!shufflelist)
+/proc/shuffle(var/list/L)
+	if(!L)
 		return
-	var/list/new_list = list()
-	var/list/old_list = shufflelist.Copy()
-	while(old_list.len)
-		var/item = pick(old_list)
-		new_list += item
-		old_list -= item
-	return new_list
+	L = L.Copy()
+
+	for(var/i=1, i<=L.len, ++i)
+		L.Swap(i,rand(1,L.len))
+
+	return L
 
 //Return a list with no duplicate entries
 /proc/uniquelist(var/list/L)
@@ -175,141 +195,22 @@
 			K += item
 	return K
 
-//Mergesort: divides up the list into halves to begin the sort
-/proc/sortKey(var/list/client/L, var/order = 1)
-	if(isnull(L) || L.len < 2)
-		return L
-	var/middle = L.len / 2 + 1
-	return mergeKey(sortKey(L.Copy(0,middle)), sortKey(L.Copy(middle)), order)
+//for sorting clients or mobs by ckey
+/proc/sortKey(list/L, order=1)
+	return sortTim(L, order >= 0 ? /proc/cmp_ckey_asc : /proc/cmp_ckey_dsc)
 
-//Mergsort: does the actual sorting and returns the results back to sortAtom
-/proc/mergeKey(var/list/client/L, var/list/client/R, var/order = 1)
-	var/Li=1
-	var/Ri=1
-	var/list/result = new()
-	while(Li <= L.len && Ri <= R.len)
-		var/client/rL = L[Li]
-		var/client/rR = R[Ri]
-		if(sorttext(rL.ckey, rR.ckey) == order)
-			result += L[Li++]
-		else
-			result += R[Ri++]
+//Specifically for record datums in a list.
+/proc/sortRecord(list/L, field = "name", order = 1)
+	cmp_field = field
+	return sortTim(L, order >= 0 ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
 
-	if(Li <= L.len)
-		return (result + L.Copy(Li, 0))
-	return (result + R.Copy(Ri, 0))
+//any value in a list
+/proc/sortList(var/list/L, cmp=/proc/cmp_text_asc)
+	return sortTim(L.Copy(), cmp)
 
-//Mergesort: divides up the list into halves to begin the sort
-/proc/sortAtom(var/list/atom/L, var/order = 1)
-	if(isnull(L) || L.len < 2)
-		return L
-	var/middle = L.len / 2 + 1
-	return mergeAtoms(sortAtom(L.Copy(0,middle)), sortAtom(L.Copy(middle)), order)
-
-//Mergsort: does the actual sorting and returns the results back to sortAtom
-/proc/mergeAtoms(var/list/atom/L, var/list/atom/R, var/order = 1)
-	var/Li=1
-	var/Ri=1
-	var/list/result = new()
-	while(Li <= L.len && Ri <= R.len)
-		var/atom/rL = L[Li]
-		var/atom/rR = R[Ri]
-		if(sorttext(rL.name, rR.name) == order)
-			result += L[Li++]
-		else
-			result += R[Ri++]
-
-	if(Li <= L.len)
-		return (result + L.Copy(Li, 0))
-	return (result + R.Copy(Ri, 0))
-
-
-
-
-//Mergesort: Specifically for record datums in a list.
-/proc/sortRecord(var/list/datum/data/record/L, var/field = "name", var/order = 1)
-	if(isnull(L))
-		return list()
-	if(L.len < 2)
-		return L
-	var/middle = L.len / 2 + 1
-	return mergeRecordLists(sortRecord(L.Copy(0, middle), field, order), sortRecord(L.Copy(middle), field, order), field, order)
-
-//Mergsort: does the actual sorting and returns the results back to sortRecord
-/proc/mergeRecordLists(var/list/datum/data/record/L, var/list/datum/data/record/R, var/field = "name", var/order = 1)
-	var/Li=1
-	var/Ri=1
-	var/list/result = new()
-	if(!isnull(L) && !isnull(R))
-		while(Li <= L.len && Ri <= R.len)
-			var/datum/data/record/rL = L[Li]
-			if(isnull(rL))
-				L -= rL
-				continue
-			var/datum/data/record/rR = R[Ri]
-			if(isnull(rR))
-				R -= rR
-				continue
-			if(sorttext(rL.fields[field], rR.fields[field]) == order)
-				result += L[Li++]
-			else
-				result += R[Ri++]
-
-		if(Li <= L.len)
-			return (result + L.Copy(Li, 0))
-	return (result + R.Copy(Ri, 0))
-
-
-
-
-//Mergesort: any value in a list
-/proc/sortList(var/list/L)
-	if(L.len < 2)
-		return L
-	var/middle = L.len / 2 + 1 // Copy is first,second-1
-	return mergeLists(sortList(L.Copy(0,middle)), sortList(L.Copy(middle))) //second parameter null = to end of list
-
-//Mergsorge: uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
-/proc/sortNames(var/list/L)
-	var/list/Q = new()
-	for(var/atom/x in L)
-		Q[x.name] = x
-	return sortList(Q)
-
-/proc/mergeLists(var/list/L, var/list/R)
-	var/Li=1
-	var/Ri=1
-	var/list/result = new()
-	while(Li <= L.len && Ri <= R.len)
-		if(sorttext(L[Li], R[Ri]) < 1)
-			result += R[Ri++]
-		else
-			result += L[Li++]
-
-	if(Li <= L.len)
-		return (result + L.Copy(Li, 0))
-	return (result + R.Copy(Ri, 0))
-
-//Mergesort: any value in a list, preserves key=value structure
-/proc/sortAssoc(var/list/L)
-	if(L.len < 2)
-		return L
-	var/middle = L.len / 2 + 1 // Copy is first,second-1
-	return mergeAssoc(sortAssoc(L.Copy(0,middle)), sortAssoc(L.Copy(middle))) //second parameter null = to end of list
-
-/proc/mergeAssoc(var/list/L, var/list/R)
-	var/Li=1
-	var/Ri=1
-	var/list/result = new()
-	while(Li <= L.len && Ri <= R.len)
-		if(sorttext(L[Li], R[Ri]) < 1)
-			result += R&R[Ri++]
-		else
-			result += L&L[Li++]
-
-	if(Li <= L.len)
-		return (result + L.Copy(Li, 0))
-	return (result + R.Copy(Ri, 0))
+//uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
+/proc/sortNames(var/list/L, order=1)
+	return sortTim(L, order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
 
 
 //Converts a bitfield to a list of numbers (or words if a wordlist is provided)
@@ -349,3 +250,83 @@
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)
 			return R
+
+
+//Move a single element from position fromIndex within a list, to position toIndex
+//This will preserve associations ~Carnie
+/proc/moveElement(list/L, fromIndex, toIndex)
+	if(fromIndex > toIndex)
+		++fromIndex
+	else
+		++toIndex
+
+	L.Insert(toIndex, null)
+	L.Swap(fromIndex, toIndex)
+	L.Cut(fromIndex, fromIndex+1)
+
+
+//Move elements [fromIndex,fromIndex+len) to [toIndex,toIndex+len)
+//This will preserve associations and is much faster than copying to a new list
+//or checking for associative lists and manually copying elements ~Carnie
+/proc/moveRange(list/L, fromIndex, toIndex, len=1)
+	var/distance = abs(toIndex - fromIndex)
+	if(len > distance)	//there are more elements to be moved than the distance to be moved. Therefore the same result can be achieved (with fewer operations) by moving elements between where we are and where we are going
+		if(fromIndex < toIndex)
+			toIndex += len
+		else
+			fromIndex += len
+
+		for(var/i=0, i<distance, ++i)
+			L.Insert(fromIndex, null)
+			L.Swap(fromIndex, toIndex)
+			L.Cut(toIndex, toIndex+1)
+	else
+		if(fromIndex > toIndex)
+			fromIndex += len
+		else
+			toIndex += len	//?
+
+		for(var/i=0, i<len, ++i)
+			L.Insert(toIndex, null)
+			L.Swap(fromIndex, toIndex)
+			L.Cut(fromIndex, fromIndex+1)
+
+//Move elements from [fromIndex, fromIndex+len) to [toIndex, toIndex+len)
+//Move any elements being overwritten by the move to the now-empty elements, preserving order
+//Note: if the two ranges overlap, only the destination order will be preserved fully, since some elements will be within both ranges ~Carnie
+/proc/swapRange(list/L, fromIndex, toIndex, len=1)
+	var/distance = abs(toIndex - fromIndex)
+	if(len > distance)	//there is an overlap, therefore swapping each element will require more swaps than inserting new elements
+		if(fromIndex < toIndex)
+			toIndex += len
+		else
+			fromIndex += len
+
+		for(var/i=0, i<distance, ++i)
+			L.Insert(fromIndex, null)
+			L.Swap(fromIndex, toIndex)
+			L.Cut(toIndex, toIndex+1)
+	else
+		if(toIndex > fromIndex)
+			var/a = toIndex
+			toIndex = fromIndex
+			fromIndex = a
+
+		for(var/i=0, i<len, ++i)
+			L.Swap(fromIndex++, toIndex++)
+
+//replaces reverseList ~Carnie
+/proc/reverseRange(list/L, start=1, end=0)
+	if(L.len)
+		start = start % L.len
+		end = end % (L.len+1)
+		if(start <= 0)
+			start += L.len
+		if(end <= 0)
+			end += L.len + 1
+
+		--end
+		while(start < end)
+			L.Swap(start++,end--)
+
+	return L

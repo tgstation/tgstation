@@ -181,6 +181,7 @@ datum/preferences
 				dat += "<h3>Hair Style</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=previous_hair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hair_style;task=input'>&gt;</a><BR>"
 				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 
 
@@ -189,6 +190,7 @@ datum/preferences
 				dat += "<h3>Facial Hair Style</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
 				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 
 
@@ -215,6 +217,7 @@ datum/preferences
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
 				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
+				dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(toggles & CHAT_GHOSTWHISPER) ? "Nearest Creatures" : "All Speech"]</a><br>"
 				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 
 				if(config.allow_Metadata)
@@ -315,6 +318,9 @@ datum/preferences
 				continue
 			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
+				continue
+			if(config.enforce_human_authority && (rank in command_positions) && user.client.prefs.pref_species.id != "human")
+				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
 				continue
 			if((rank in command_positions) || (rank == "AI"))//Bold head jobs
 				HTML += "<b><span class='dark'>[rank]</span></b>"
@@ -450,7 +456,7 @@ datum/preferences
 			return
 
 		if (!isnum(desiredLvl))
-			user << "\red UpdateJobPreference - desired level was not a number. Please notify coders!"
+			user << "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>"
 			ShowChoices(user)
 			return
 
@@ -597,6 +603,18 @@ datum/preferences
 						if(new_hair_style)
 							hair_style = new_hair_style
 
+					if("next_hair_style")
+						if (gender == MALE)
+							hair_style = next_list_item(hair_style, hair_styles_male_list)
+						else
+							hair_style = next_list_item(hair_style, hair_styles_female_list)
+
+					if("previous_hair_style")
+						if (gender == MALE)
+							hair_style = previous_list_item(hair_style, hair_styles_male_list)
+						else
+							hair_style = previous_list_item(hair_style, hair_styles_female_list)
+
 					if("facial")
 						var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
 						if(new_facial)
@@ -610,6 +628,18 @@ datum/preferences
 							new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_female_list
 						if(new_facial_hair_style)
 							facial_hair_style = new_facial_hair_style
+
+					if("next_facehair_style")
+						if (gender == MALE)
+							facial_hair_style = next_list_item(facial_hair_style, facial_hair_styles_male_list)
+						else
+							facial_hair_style = next_list_item(facial_hair_style, facial_hair_styles_female_list)
+
+					if("previous_facehair_style")
+						if (gender == MALE)
+							facial_hair_style = previous_list_item(facial_hair_style, facial_hair_styles_male_list)
+						else
+							facial_hair_style = previous_list_item(facial_hair_style, facial_hair_styles_female_list)
 
 					if("underwear")
 						var/new_underwear
@@ -711,6 +741,9 @@ datum/preferences
 
 					if("ghost_sight")
 						toggles ^= CHAT_GHOSTSIGHT
+
+					if("ghost_whispers")
+						toggles ^= CHAT_GHOSTWHISPER
 
 					if("pull_requests")
 						toggles ^= CHAT_PULLR

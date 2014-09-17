@@ -61,7 +61,7 @@ var/global/pipe_processing_killed = 0
 		job_master = new /datum/controller/occupations()
 		job_master.SetupOccupations()
 		job_master.LoadJobs("config/jobs.txt")
-		world << "\red \b Job setup complete"
+		world << "<span class='userdanger'>Job setup complete</span>"
 
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
@@ -81,17 +81,17 @@ var/global/pipe_processing_killed = 0
 			ticker.pregame()
 
 /datum/controller/game_controller/proc/setup_objects()
-	world << "\red \b Initializing objects..."
+	world << "<span class='userdanger'>Initializing objects...</span>"
 	sleep(-1)
 	for(var/atom/movable/object in world)
 		object.initialize()
 
-	world << "\red \b Initializing pipe networks..."
+	world << "<span class='userdanger'>Initializing pipe networks...</span>"
 	sleep(-1)
 	for(var/obj/machinery/atmospherics/machine in world)
 		machine.build_network()
 
-	world << "\red \b Initializing atmos machinery..."
+	world << "<span class='userdanger'>Initializing atmos machinery...</span>"
 	sleep(-1)
 	for(var/obj/machinery/atmospherics/unary/U in world)
 		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
@@ -101,12 +101,12 @@ var/global/pipe_processing_killed = 0
 			var/obj/machinery/atmospherics/unary/vent_scrubber/T = U
 			T.broadcast_status()
 
-	world << "\red \b Making a mess..."
+	world << "<span class='userdanger'>Making a mess...</span>"
 	sleep(-1)
 	for(var/turf/simulated/floor/F in world)
 		F.MakeDirty()
 
-	world << "\red \b Initializations complete."
+	world << "<span class='userdanger'>Initializations complete.</span>"
 	sleep(-1)
 
 
@@ -236,83 +236,53 @@ var/global/pipe_processing_killed = 0
 */
 
 /datum/controller/game_controller/proc/process_mobs()
-	var/i = 1
-	while(i<=mob_list.len)
-		var/mob/M = mob_list[i]
-		if(M && !M.gc_destroyed)
+	for(var/mob/M in mob_list)
+		if(!M.gc_destroyed)
 			last_thing_processed = M.type
 			M.Life()
-			i++
 			continue
-		mob_list.Cut(i,i+1)
+		mob_list -= M
 
 /datum/controller/game_controller/proc/process_diseases()
-	var/i = 1
-	while(i<=active_diseases.len)
-		var/datum/disease/Disease = active_diseases[i]
-		if(Disease)
-			last_thing_processed = Disease.type
-			Disease.process()
-			i++
-			continue
-		active_diseases.Cut(i,i+1)
+	for(var/datum/disease/Disease in active_diseases)
+		last_thing_processed = Disease.type
+		Disease.process()
 
 /datum/controller/game_controller/proc/process_machines()
-	var/i = 1
-	while(i<=machines.len)
-		var/obj/machinery/Machine = machines[i]
-		if(Machine && !Machine.gc_destroyed)
+	for(var/obj/machinery/Machine in machines)
+		if(!Machine.gc_destroyed)
 			last_thing_processed = Machine.type
 			if(Machine.process() != PROCESS_KILL)
 				if(Machine)
 					if(Machine.use_power)
 						Machine.auto_use_power()
-					i++
 					continue
-		machines.Cut(i,i+1)
+		machines -= Machine
 
 /datum/controller/game_controller/proc/process_objects()
-	var/i = 1
-	while(i<=processing_objects.len)
-		var/obj/Object = processing_objects[i]
-		if(Object && !Object.gc_destroyed)
+	for(var/obj/Object in processing_objects)
+		if(!Object.gc_destroyed)
 			last_thing_processed = Object.type
 			Object.process()
-			i++
 			continue
-		processing_objects.Cut(i,i+1)
+		processing_objects -= Object
 
 /datum/controller/game_controller/proc/process_pipenets()
 	last_thing_processed = /datum/pipe_network
-	var/i = 1
-	while(i<=pipe_networks.len)
-		var/datum/pipe_network/Network = pipe_networks[i]
-		if(Network)
-			Network.process()
-			i++
-			continue
-		pipe_networks.Cut(i,i+1)
+	for(var/datum/pipe_network/Network in pipe_networks)
+		Network.process()
 
 /datum/controller/game_controller/proc/process_powernets()
 	last_thing_processed = /datum/powernet
-	var/i = 1
-	while(i<=powernets.len)
-		var/datum/powernet/Powernet = powernets[i]
-		if(Powernet)
-			Powernet.reset()
-			i++
-			continue
-		powernets.Cut(i,i+1)
+	for(var/datum/powernet/Powernet in powernets)
+		Powernet.reset()
 
 /datum/controller/game_controller/proc/process_nano()
-	var/i = 1
-	while(i<=nanomanager.processing_uis.len)
-		var/datum/nanoui/ui = nanomanager.processing_uis[i]
-		if(ui && ui.src_object && ui.user)
+	for(var/datum/nanoui/ui in nanomanager.processing_uis)
+		if(ui.src_object && ui.user)
 			ui.process()
-			i++
 			continue
-		nanomanager.processing_uis.Cut(i,i+1)
+		nanomanager.processing_uis -= ui
 
 /datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"

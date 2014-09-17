@@ -142,7 +142,7 @@ Filter types:
 		return
 
 	if(!src.allowed(user))
-		user << "\red Access denied."
+		user << "<span class='danger'>Access denied.</span>"
 		return
 
 	var/dat
