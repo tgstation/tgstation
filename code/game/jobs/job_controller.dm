@@ -80,7 +80,7 @@ var/global/datum/controller/occupations/job_master
 			Debug("FOC non-human failed, Player: [player]")
 			continue
 		
-if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
+		if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
 			Debug("FOC player has a special role and this job is blocked from this special role")
 			continue
 
