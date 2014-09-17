@@ -108,13 +108,10 @@ var/next_mob_id = 0
 	if(hearing_distance)
 		range = hearing_distance
 	var/msg = message
-	for(var/mob/M in hearers(range, src))
+	for(var/mob/M in get_hearers_in_view(range, src))
 		if(self_message && M==src)
 			msg = self_message
 		M.show_message( msg, 2, deaf_message, 1)
-	for(var/obj/structure/closet/L in get_hear(range, src))  //so people inside closets can hear these messages.
-		for(var/mob/living/M in L)
-			M.show_message( msg, 2, deaf_message, 1)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -126,11 +123,8 @@ var/next_mob_id = 0
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
-	for(var/mob/M in hearers(range, src))
+	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
-	for(var/obj/structure/closet/L in get_hear(range, src))  //so people inside closets can hear these messages.
-		for(var/mob/living/M in L)
-			M.show_message( message, 2, deaf_message, 1)
 
 
 
