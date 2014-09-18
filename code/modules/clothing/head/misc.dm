@@ -282,3 +282,18 @@
 	item_state = "officercap"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEEARS
+
+/obj/item/clothing/head/russobluecamohat
+	name = "russian blue camo beret"
+	desc = "A symbol of discipline, honor, and lots and lots of removal of some type of skewered food."
+	icon_state = "russobluecamohat"
+	item_state = "russobluecamohat"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+
+/obj/item/clothing/head/russofurhat
+	name = "russian fur hat"
+	desc = "Russian winter got you down? Maybe your enemy, but not you!"
+	icon_state = "russofurhat"
+	item_state = "russofurhat"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags_inv = HIDEEARS
