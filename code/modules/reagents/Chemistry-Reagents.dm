@@ -800,6 +800,7 @@ datum
 				if(M.stat == 2) return
 				if(alien && alien == IS_VOX)
 					M.adjustOxyLoss(-2*REM)
+					M.adjustToxLoss(-2*REM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 					return
 				..()
@@ -1183,7 +1184,6 @@ datum
 					M:hulk_time = 0
 				for(var/datum/dna/gene/G in dna_genes)
 					if(G.is_active(M))
-						world << "gene: [G.name]"
 						if(G.name == "Hulk" && ishuman(M))
 							G.OnMobLife(M)
 						G.deactivate(M)
