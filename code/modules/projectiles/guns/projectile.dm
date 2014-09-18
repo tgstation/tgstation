@@ -13,13 +13,13 @@
 	w_type = RECYK_METAL
 	recoil = 1
 	var/empty_casings = 1 //Set to 0 to not eject empty casings
-	var/ammo_type = "/obj/item/ammo_casing/a357"
+	var/ammo_type = /obj/item/ammo_casing/a357
 	var/list/loaded = list()
 	var/max_shells = 7 //only used by guns with no magazine
 	var/load_method = SPEEDLOADER //0 = Single shells or quick loader, 1 = box, 2 = magazine
 	var/obj/item/ammo_storage/magazine/stored_magazine = null
 	var/obj/item/ammo_casing/chambered = null
-	var/mag_type = ""
+	var/mag_type = null
 	var/auto_mag_drop = 0 //whether the mag drops when it empties, or if the user has to do it
 
 /obj/item/weapon/gun/projectile/New()

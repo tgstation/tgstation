@@ -20,7 +20,7 @@
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	caliber = list("flare" = 1)
 	origin_tech = "combat=2;materials=2"
-	ammo_type = "/obj/item/ammo_casing/shotgun/flare"
+	ammo_type = /obj/item/ammo_casing/shotgun/flare
 
 /obj/item/weapon/gun/projectile/flare/syndicate
 	desc = "An illegal flare gun with a modified hammer, allowing it to fire shotgun shells and flares at dangerous velocities."
@@ -30,4 +30,4 @@
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	caliber = list("flare" = 1, "shotgun" = 1)
 	origin_tech = "combat=4;materials=2;syndicate=2"
-	ammo_type = "/obj/item/ammo_casing/shotgun/flare"
+	ammo_type = /obj/item/ammo_casing/shotgun/flare

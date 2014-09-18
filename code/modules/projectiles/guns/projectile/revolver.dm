@@ -5,7 +5,7 @@
 	max_shells = 6
 	caliber = list("38" = 1, "357" = 1)
 	origin_tech = "combat=2;materials=2"
-	ammo_type = "/obj/item/ammo_casing/c38"
+	ammo_type = /obj/item/ammo_casing/c38
 	var/perfect = 0
 
 	special_check(var/mob/living/carbon/human/M) //to see if the gun fires 357 rounds safely. A non-modified revolver randomly blows up

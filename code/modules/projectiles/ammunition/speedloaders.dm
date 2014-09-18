@@ -9,7 +9,7 @@
 /obj/item/ammo_storage/speedloader/c38
 	name = "speed loader (.38)"
 	icon_state = "38"
-	ammo_type = "/obj/item/ammo_casing/c38"
+	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
 	multiple_sprites = 1
 
@@ -20,7 +20,7 @@
 	name = "speed loader (.357)"
 	desc = "A speedloader, used to load a gun without any of that annoying fumbling. This one appears to have a small 'S' embossed on the side."
 	icon_state = "s357"
-	ammo_type = "/obj/item/ammo_casing/a357"
+	ammo_type = /obj/item/ammo_casing/a357
 	max_ammo = 7
 	multiple_sprites = 1
 

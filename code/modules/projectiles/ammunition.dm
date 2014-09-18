@@ -38,7 +38,7 @@
 	throw_speed = 4
 	throw_range = 5
 	var/list/stored_ammo = list()
-	var/ammo_type = "/obj/item/ammo_casing/a357"
+	var/ammo_type = /obj/item/ammo_casing/a357
 	var/exact = 1 //whether or not the item only takes ammo_type, or also subtypes. Set to 1 to only take the specified ammo
 	var/max_ammo = 7
 	var/starting_ammo = -1 //-1 makes it spawn the max ammo, 0 and above makes it spawn that number
