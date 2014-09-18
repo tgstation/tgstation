@@ -61,15 +61,15 @@
 
 /obj/item/weapon/gun/projectile/pistol
 	name = "\improper Stechtkin pistol"
-	desc = "A small, easily concealable gun. Uses .45 rounds."
+	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "pistol"
 	w_class = 2
 	max_shells = 10
 	caliber = list("9mm" = 1)
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
-	ammo_type = "/obj/item/ammo_casing/c45"
-	mag_type = "/obj/item/ammo_storage/magazine/c45"
+	ammo_type = "/obj/item/ammo_casing/c9mm"
+	mag_type = "/obj/item/ammo_storage/magazine/mc9mm"
 	load_method = 2
 	auto_mag_drop = 1
 

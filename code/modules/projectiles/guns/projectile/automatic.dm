@@ -12,7 +12,7 @@
 	var/burstfire = 0 //Whether or not the gun fires multiple bullets at once
 	var/burst_count = 3
 	load_method = 2
-	mag_type = "/obj/item/ammo_storage/magazine/mc9mm"
+	mag_type = "/obj/item/ammo_storage/magazine/smg9mm"
 
 /obj/item/weapon/gun/projectile/automatic/New()
 	..()
@@ -57,7 +57,7 @@
 	caliber = list(".45" = 1)
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	ammo_type = "/obj/item/ammo_casing/c45"
-	mag_type = "/obj/item/ammo_storage/magazine/c45"
+	mag_type = "/obj/item/ammo_storage/magazine/uzi45"
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi/isHandgun()
 	return 1
