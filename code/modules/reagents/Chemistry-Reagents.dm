@@ -1179,8 +1179,15 @@ datum
 				if(!M) M = holder.my_atom
 
 				var/needs_update = M.mutations.len > 0
-				if(M.active_genes.Find(/datum/dna/gene/basic/stealth/chameleon))
-					M.alpha = 255
+				if(ishuman(M))
+					M:hulk_time = 0
+				for(var/datum/dna/gene/G in dna_genes)
+					if(G.is_active(M))
+						world << "gene: [G.name]"
+						if(G.name == "Hulk" && ishuman(M))
+							G.OnMobLife(M)
+						G.deactivate(M)
+				M.alpha = 255
 				M.mutations = list()
 				M.active_genes = list()
 
