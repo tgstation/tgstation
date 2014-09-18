@@ -11,6 +11,7 @@
 	explosion_resistance = 5
 	var/health = 10
 	var/destroyed = 0
+	delayAttacks = 1
 
 /obj/structure/grille/fence/east_west
 	//width=80
@@ -39,7 +40,6 @@
 	attack_hand(user)
 
 /obj/structure/grille/attack_hand(mob/user as mob)
-	user.changeNext_move(8)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='warning'>You kick [src].</span>", \
@@ -55,7 +55,6 @@
 
 /obj/structure/grille/attack_alien(mob/user as mob)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
-	user.changeNext_move(8)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
 						 "<span class='warning'>You mangle [src].</span>", \
@@ -68,7 +67,6 @@
 
 /obj/structure/grille/attack_slime(mob/user as mob)
 	if(!istype(user, /mob/living/carbon/slime/adult))	return
-	user.changeNext_move(8)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
 						 "<span class='warning'>You smash against [src].</span>", \
@@ -79,9 +77,7 @@
 	return
 
 /obj/structure/grille/attack_animal(var/mob/living/simple_animal/M as mob)
-	M.changeNext_move(8)
 	if(M.melee_damage_upper == 0)	return
-
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
 					  "<span class='warning'>You smash against [src].</span>", \
@@ -109,7 +105,6 @@
 	return 0
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	user.changeNext_move(8)
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)

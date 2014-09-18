@@ -50,6 +50,13 @@
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
+/mob/living/carbon/slime/UnarmedAttack(atom/A)
+	A.attack_slime(src)
+	return
+
+/mob/living/carbon/slime/RestrainedClickOn(atom/A)
+	return
+	
 /mob/living/carbon/slime/adult
 	name = "adult slime"
 	icon = 'icons/mob/slimes.dmi'

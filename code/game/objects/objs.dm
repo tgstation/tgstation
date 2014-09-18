@@ -39,7 +39,15 @@
 
 	..()
 
-/obj/item/proc/is_used_on(obj/O, mob/user)
+/obj/attack_tk(mob/user)
+	if(!user.stat)
+		if(!src.anchored)
+			var/obj/item/tk_grab/O = new(src)
+			user.put_in_active_hand(O)
+			O.host = user
+			O.focus_object(src)
+		else . = ..()
+	return
 
 /obj/recycle(var/datum/materials/rec)
 	if (src.m_amt == 0 && src.g_amt == 0)
