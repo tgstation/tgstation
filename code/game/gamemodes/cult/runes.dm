@@ -110,7 +110,7 @@ var/list/sacrificed = list()
 				C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
 		if(cultsinrange.len >= 3)
 			M.visible_message("<span class='danger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
-			"<span class='danger'>AAAAAAHHHH!.</span>", \
+			"<span class='danger'>AAAAAAHHHH!</span>", \
 			"<span class='danger'>You hear an anguished scream.</span>")
 			if(is_convertable_to_cult(M.mind))
 				ticker.mode.add_cultist(M.mind)

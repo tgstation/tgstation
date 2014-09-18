@@ -51,6 +51,12 @@
 	else
 		return ..()
 
+/obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
+	if(air_temporary)
+		var/turf/T = loc
+		T.assume_air(air_temporary)
+		air_update_turf()
+
 /obj/machinery/atmospherics/pipe/simple
 	icon = 'icons/obj/pipes.dmi'
 	icon_state = "intact-f"
@@ -111,8 +117,7 @@
 		var/obj/machinery/atmospherics/A = node2
 		node2.disconnect(src)
 		A.build_network()
-	if(parent)
-		parent.removeLastMember(src)
+	releaseAirToTurf()
 	..()
 
 /obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
@@ -241,8 +246,7 @@
 		var/obj/machinery/atmospherics/A = node3
 		node3.disconnect(src)
 		A.build_network()
-	if(parent)
-		parent.removeLastMember(src)
+	releaseAirToTurf()
 	..()
 
 /obj/machinery/atmospherics/pipe/manifold/disconnect(obj/machinery/atmospherics/reference)
