@@ -372,7 +372,7 @@
 
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!user.IsAdvancedToolUser())
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 
@@ -597,22 +597,6 @@
 /turf/simulated/mineral/updateMineralOverlays()
 	return
 
-
-
 /turf/proc/fullUpdateMineralOverlays()
 	for (var/turf/t in range(1,src))
 		t.updateMineralOverlays()
-
-/turf/simulated/floor/plating/asteroid/Entered(atom/movable/M as mob|obj)
-	..()
-	if(istype(M,/mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = M
-		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				src.attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				src.attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				src.attackby(R.module_state_3,R)
-			else
-				return

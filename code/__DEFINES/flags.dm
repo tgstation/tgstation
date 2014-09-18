@@ -74,3 +74,4 @@
 #define ALIEN 4
 #define ROBOT 8
 #define SLIME 16
+#define DRONE 32

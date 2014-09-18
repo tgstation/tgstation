@@ -194,7 +194,7 @@
 
 	if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 		if(prob(20))
-			src << "<span class='danger'>You feel a searing heat in your lungs!>/span>"
+			src << "<span class='danger'>You feel a searing heat in your lungs!</span>"
 		fire_alert = max(fire_alert, 1)
 	else
 		fire_alert = 0

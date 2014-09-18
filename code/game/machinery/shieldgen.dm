@@ -374,10 +374,9 @@
 	src.add_fingerprint(user)
 
 /obj/machinery/shieldwallgen/process()
-	spawn(100)
-		power()
-		if(power)
-			storedpower -= 50 //this way it can survive longer and survive at all
+	power()
+	if(power)
+		storedpower -= 50 //this way it can survive longer and survive at all
 	if(storedpower >= maxstoredpower)
 		storedpower = maxstoredpower
 	if(storedpower <= 0)
@@ -389,14 +388,10 @@
 		if(!anchored)
 			src.active = 0
 			return
-		spawn(1)
-			setup_field(1)
-		spawn(2)
-			setup_field(2)
-		spawn(3)
-			setup_field(4)
-		spawn(4)
-			setup_field(8)
+		setup_field(1)
+		setup_field(2)
+		setup_field(4)
+		setup_field(8)
 		src.active = 2
 	if(src.active >= 1)
 		if(src.power == 0)
@@ -404,14 +399,10 @@
 				"You hear heavy droning fade out")
 			icon_state = "Shield_Gen"
 			src.active = 0
-			spawn(1)
-				src.cleanup(1)
-			spawn(1)
-				src.cleanup(2)
-			spawn(1)
-				src.cleanup(4)
-			spawn(1)
-				src.cleanup(8)
+			src.cleanup(1)
+			src.cleanup(2)
+			src.cleanup(4)
+			src.cleanup(8)
 
 /obj/machinery/shieldwallgen/proc/setup_field(var/NSEW = 0)
 	var/turf/T = src.loc

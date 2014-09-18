@@ -1357,7 +1357,7 @@ datum/chemical_reaction/pestkiller
 	for(var/mob/living/carbon/slime/slime in viewers(get_turf(holder.my_atom), null))
 		slime.rabid = 1
 		for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-			O.show_message(text("<span class='danger'>The [slime] is driven into a frenzy!.</span>"), 1)
+			O.show_message(text("<span class='danger'>The [slime] is driven into a frenzy!</span>"), 1)
 
 //Pink
 /datum/chemical_reaction/slimeppotion

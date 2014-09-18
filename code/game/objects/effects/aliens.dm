@@ -30,9 +30,9 @@
 	return
 
 /obj/structure/alien/resin/Destroy()
-	spawn(10)
-		var/turf/T = loc
-		T.relativewall_neighbours()
+	var/turf/T = loc
+	loc = null
+	T.relativewall_neighbours()
 	..()
 
 /obj/structure/alien/resin/Move()
@@ -178,6 +178,12 @@
 		if(src)
 			Life()
 
+/obj/structure/alien/weeds/Destroy()
+	var/turf/T = loc
+	loc = null
+	for (var/obj/structure/alien/weeds/W in range(1,T))
+		W.updateWeedOverlays()
+	..()
 
 /obj/structure/alien/weeds/proc/Life()
 	set background = BACKGROUND_ENABLED
@@ -267,7 +273,7 @@
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
 	icon_state = "weednode"
-	luminosity = NODERANGE
+	luminosity = 1
 	var/node_range = NODERANGE
 
 
