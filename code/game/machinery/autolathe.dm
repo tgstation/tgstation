@@ -67,7 +67,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 /obj/machinery/autolathe
 	name = "autolathe"
-	desc = "It produces items using metal and glass."
+	desc = "It produces items using iron and glass."
 	icon_state = "autolathe"
 	density = 1
 
@@ -146,13 +146,13 @@ var/global/list/autolathe_recipes_hidden = list( \
 			return 1
 
 	if (src.m_amount + O.m_amt > max_m_amount)
-		user << "<span class=\"alert\">The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>"
+		user << "<span class=\"alert\">The autolathe is full. Please remove iron from the autolathe in order to insert more.</span>"
 		return 1
 	if (src.g_amount + O.g_amt > max_g_amount)
 		user << "<span class=\"alert\">The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>"
 		return 1
 	if (O.m_amt == 0 && O.g_amt == 0)
-		user << "<span class=\"alert\">This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>"
+		user << "<span class=\"alert\">This object does not contain significant amounts of iron or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>"
 		return 1
 
 	var/amount = 1
@@ -199,7 +199,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		if(href_list["make"])
 			var/coeff = 2 ** prod_coeff
 			var/turf/T = get_step(src.loc, get_dir(src,usr))
-				
+
 			// critical exploit fix start -walter0o
 			var/obj/item/template = null
 			var/attempting_to_build = locate(href_list["make"])
@@ -211,25 +211,25 @@ var/global/list/autolathe_recipes_hidden = list( \
 				template = attempting_to_build
 
 			else // somebody is trying to exploit, alert admins -walter0o
-				
+
 				var/turf/LOC = get_turf(usr)
 				message_admins("[key_name_admin(usr)] tried to exploit an autolathe to duplicate <a href='?_src_=vars;Vars=\ref[attempting_to_build]'>[attempting_to_build]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
-				log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe to duplicate [attempting_to_build] !")		
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe to duplicate [attempting_to_build] !")
 				return
 
 			// now check for legit multiplier, also only stacks should pass with one to prevent raw-materials-manipulation -walter0o
 
 			var/multiplier = text2num(href_list["multiplier"])
-			
+
 			if (!multiplier) multiplier = 1
 			var/max_multiplier = 1
-			
+
 			if(istype(template, /obj/item/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
 				var/obj/item/stack/S = template
 				max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)  // pasta from regular_win() to make sure the numbers match -walter0o
 
 			if( (multiplier > max_multiplier) || (multiplier <= 0) ) // somebody is trying to exploit, alert admins-walter0o
-					
+
 				var/turf/LOC = get_turf(usr)
 				message_admins("[key_name_admin(usr)] tried to exploit an autolathe with multiplier set to <u>[multiplier]</u> on <u>[template]</u>  ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])" , 0)
 				log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe with multiplier set to [multiplier] on [template]  !")
@@ -280,7 +280,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/dat
 	if(!panel_open)
 		var/coeff = 2 ** prod_coeff
-		dat = "<div class='statusDisplay'><b>Metal amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
+		dat = "<div class='statusDisplay'><b>Iron amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
 		dat += "<b>Glass amount:</b> [src.g_amount] / [max_g_amount] cm<sup>3</sup><hr>"
 		var/list/objs = list()
 		objs += src.L

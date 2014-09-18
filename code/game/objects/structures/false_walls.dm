@@ -143,7 +143,7 @@
 
 /obj/structure/falsewall/reinforced
 	name = "reinforced wall"
-	desc = "A huge chunk of reinforced metal used to seperate rooms."
+	desc = "A huge chunk of plasteel used to seperate rooms."
 	icon_state = "r_wall"
 
 /obj/structure/falsewall/reinforced/ChangeToWall(delete = 1)

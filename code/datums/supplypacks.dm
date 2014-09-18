@@ -858,12 +858,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	group = supply_materials
 
 
-/datum/supply_packs/materials/metal50
-	name = "50 Metal Sheets"
+/datum/supply_packs/materials/iron50
+	name = "50 Iron Sheets"
 	contains = list(/obj/item/stack/sheet/metal)
 	amount = 50
 	cost = 10
-	containername = "metal sheets crate"
+	containername = "iron sheets crate"
 
 /datum/supply_packs/materials/plasteel20
 	name = "20 Plasteel Sheets"

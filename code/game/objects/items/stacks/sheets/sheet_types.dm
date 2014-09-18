@@ -1,6 +1,6 @@
 /* Diffrent misc types of sheets
  * Contains:
- *		Metal
+ *		Iron
  *		Plasteel
  *		Wood
  *		Cloth
@@ -8,9 +8,9 @@
  */
 
 /*
- * Metal
+ * Iron
  */
-var/global/list/datum/stack_recipe/metal_recipes = list ( \
+var/global/list/datum/stack_recipe/iron_recipes = list ( \
 	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("chair", /obj/structure/stool/bed/chair, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("swivel chair", /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
@@ -24,7 +24,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
-	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
+	new/datum/stack_recipe("iron rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
 	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
@@ -44,9 +44,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 )
 
 /obj/item/stack/sheet/metal
-	name = "metal"
-	desc = "Sheets made out of metal."
-	singular_name = "metal sheet"
+	name = "iron"
+	desc = "Sheets made out of iron."
+	singular_name = "iron sheet"
 	icon_state = "sheet-metal"
 	m_amt = MINERAL_MATERIAL_AMOUNT
 	throwforce = 10.0
@@ -59,7 +59,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	cost = 500
 
 /obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
-	recipes = metal_recipes
+	recipes = iron_recipes
 	return ..()
 
 

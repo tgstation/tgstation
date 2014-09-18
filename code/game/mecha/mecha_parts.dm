@@ -10,14 +10,14 @@
 	flags = CONDUCT
 	origin_tech = "programming=2;materials=2"
 	var/construction_time = 100
-	var/list/construction_cost = list("metal"=20000,"glass"=5000)
+	var/list/construction_cost = list("iron"=20000,"glass"=5000)
 
 
 /obj/item/mecha_parts/chassis
 	name="Mecha Chassis"
 	icon_state = "backbone"
 	var/datum/construction/construct
-	construction_cost = list("metal"=20000)
+	construction_cost = list("iron"=20000)
 
 /obj/item/mecha_parts/chassis/attackby(obj/item/W as obj, mob/user as mob)
 	if(!construct || !construct.action(W, user))
@@ -42,7 +42,7 @@
 	icon_state = "ripley_harness"
 	origin_tech = "programming=2;materials=2;biotech=2;engineering=2"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"glass"=7500)
+	construction_cost = list("iron"=20000,"glass"=7500)
 
 /obj/item/mecha_parts/part/ripley_left_arm
 	name = "\improper Ripley left arm"
@@ -50,7 +50,7 @@
 	icon_state = "ripley_l_arm"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 150
-	construction_cost = list("metal"=15000)
+	construction_cost = list("iron"=15000)
 
 /obj/item/mecha_parts/part/ripley_right_arm
 	name = "\improper Ripley right arm"
@@ -58,7 +58,7 @@
 	icon_state = "ripley_r_arm"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 150
-	construction_cost = list("metal"=15000)
+	construction_cost = list("iron"=15000)
 
 /obj/item/mecha_parts/part/ripley_left_leg
 	name = "\improper Ripley left leg"
@@ -66,7 +66,7 @@
 	icon_state = "ripley_l_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 150
-	construction_cost = list("metal"=15000)
+	construction_cost = list("iron"=15000)
 
 /obj/item/mecha_parts/part/ripley_right_leg
 	name = "\improper Ripley right leg"
@@ -74,7 +74,7 @@
 	icon_state = "ripley_r_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 150
-	construction_cost = list("metal"=15000)
+	construction_cost = list("iron"=15000)
 
 ///////// Gygax
 
@@ -91,7 +91,7 @@
 	icon_state = "gygax_harness"
 	origin_tech = "programming=2;materials=2;biotech=3;engineering=3"
 	construction_time = 300
-	construction_cost = list("metal"=20000,"glass"=10000,"diamond"=2000)
+	construction_cost = list("iron"=20000,"glass"=10000,"diamond"=2000)
 
 /obj/item/mecha_parts/part/gygax_head
 	name = "\improper Gygax head"
@@ -99,7 +99,7 @@
 	icon_state = "gygax_head"
 	origin_tech = "programming=2;materials=2;magnets=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=10000,"glass"=5000, "diamond"=2000)
+	construction_cost = list("iron"=10000,"glass"=5000, "diamond"=2000)
 
 /obj/item/mecha_parts/part/gygax_left_arm
 	name = "\improper Gygax left arm"
@@ -107,7 +107,7 @@
 	icon_state = "gygax_l_arm"
 	origin_tech = "programming=2;materials=2;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000, "diamond"=1000)
+	construction_cost = list("iron"=15000, "diamond"=1000)
 
 /obj/item/mecha_parts/part/gygax_right_arm
 	name = "\improper Gygax right arm"
@@ -115,7 +115,7 @@
 	icon_state = "gygax_r_arm"
 	origin_tech = "programming=2;materials=2;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000, "diamond"=1000)
+	construction_cost = list("iron"=15000, "diamond"=1000)
 
 /obj/item/mecha_parts/part/gygax_left_leg
 	name = "\improper Gygax left leg"
@@ -123,7 +123,7 @@
 	icon_state = "gygax_l_leg"
 	origin_tech = "programming=2;materials=2;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000, "diamond"=2000)
+	construction_cost = list("iron"=15000, "diamond"=2000)
 
 /obj/item/mecha_parts/part/gygax_right_leg
 	name = "\improper Gygax right leg"
@@ -131,7 +131,7 @@
 	icon_state = "gygax_r_leg"
 	origin_tech = "programming=2;materials=2;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000, "diamond"=2000)
+	construction_cost = list("iron"=15000, "diamond"=2000)
 
 /obj/item/mecha_parts/part/gygax_armor
 	gender = PLURAL
@@ -140,14 +140,14 @@
 	icon_state = "gygax_armor"
 	origin_tech = "materials=6;combat=4;engineering=5"
 	construction_time = 600
-	construction_cost = list("metal"=25000,"diamond"=10000)
+	construction_cost = list("iron"=25000,"diamond"=10000)
 
 
 //////////// Durand
 
 /obj/item/mecha_parts/chassis/durand
 	name = "\improper Durand chassis"
-	construction_cost = list("metal"=25000)
+	construction_cost = list("iron"=25000)
 
 /obj/item/mecha_parts/chassis/durand/New()
 	..()
@@ -159,7 +159,7 @@
 	icon_state = "durand_harness"
 	origin_tech = "programming=2;materials=3;biotech=3;engineering=3"
 	construction_time = 300
-	construction_cost = list("metal"=25000,"glass"=10000,"silver"=10000)
+	construction_cost = list("iron"=25000,"glass"=10000,"silver"=10000)
 
 /obj/item/mecha_parts/part/durand_head
 	name = "\improper Durand head"
@@ -167,7 +167,7 @@
 	icon_state = "durand_head"
 	origin_tech = "programming=2;materials=3;magnets=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=10000,"glass"=15000,"silver"=2000)
+	construction_cost = list("iron"=10000,"glass"=15000,"silver"=2000)
 
 /obj/item/mecha_parts/part/durand_left_arm
 	name = "\improper Durand left arm"
@@ -175,7 +175,7 @@
 	icon_state = "durand_l_arm"
 	origin_tech = "programming=2;materials=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=10000,"silver"=4000)
+	construction_cost = list("iron"=10000,"silver"=4000)
 
 /obj/item/mecha_parts/part/durand_right_arm
 	name = "\improper Durand right arm"
@@ -183,7 +183,7 @@
 	icon_state = "durand_r_arm"
 	origin_tech = "programming=2;materials=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=10000,"silver"=4000)
+	construction_cost = list("iron"=10000,"silver"=4000)
 
 /obj/item/mecha_parts/part/durand_left_leg
 	name = "\improper Durand left leg"
@@ -191,7 +191,7 @@
 	icon_state = "durand_l_leg"
 	origin_tech = "programming=2;materials=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000,"silver"=4000)
+	construction_cost = list("iron"=15000,"silver"=4000)
 
 /obj/item/mecha_parts/part/durand_right_leg
 	name = "\improper Durand right leg"
@@ -199,7 +199,7 @@
 	icon_state = "durand_r_leg"
 	origin_tech = "programming=2;materials=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000,"silver"=4000)
+	construction_cost = list("iron"=15000,"silver"=4000)
 
 /obj/item/mecha_parts/part/durand_armor
 	gender = PLURAL
@@ -208,7 +208,7 @@
 	icon_state = "durand_armor"
 	origin_tech = "materials=5;combat=4;engineering=5"
 	construction_time = 600
-	construction_cost = list("metal"=50000,"uranium"=30000)
+	construction_cost = list("iron"=50000,"uranium"=30000)
 
 ////////// Firefighter
 
@@ -254,42 +254,42 @@
 	desc = "A torso part of H.O.N.K. Contains chuckle unit, bananium core and honk support systems."
 	icon_state = "honker_harness"
 	construction_time = 300
-	construction_cost = list("metal"=20000,"glass"=10000,"bananium"=10000)
+	construction_cost = list("iron"=20000,"glass"=10000,"bananium"=10000)
 
 /obj/item/mecha_parts/part/honker_head
 	name = "\improper H.O.N.K head"
 	desc = "A H.O.N.K head. Appears to lack a face plate."
 	icon_state = "honker_head"
 	construction_time = 200
-	construction_cost = list("metal"=10000,"glass"=5000,"bananium"=5000)
+	construction_cost = list("iron"=10000,"glass"=5000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_left_arm
 	name = "\improper H.O.N.K left arm"
 	desc = "A H.O.N.K left arm. With unique sockets that accept odd weaponry designed by clown scientists."
 	icon_state = "honker_l_arm"
 	construction_time = 200
-	construction_cost = list("metal"=15000,"bananium"=5000)
+	construction_cost = list("iron"=15000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_right_arm
 	name = "\improper H.O.N.K right arm"
 	desc = "A H.O.N.K right arm. With unique sockets that accept odd weaponry designed by clown scientists."
 	icon_state = "honker_r_arm"
 	construction_time = 200
-	construction_cost = list("metal"=15000,"bananium"=5000)
+	construction_cost = list("iron"=15000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_left_leg
 	name = "\improper H.O.N.K left leg"
 	desc = "A H.O.N.K left leg. The foot appears just large enough to fully accomodate a clown shoe."
 	icon_state = "honker_l_leg"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"bananium"=5000)
+	construction_cost = list("iron"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_right_leg
 	name = "\improper H.O.N.K right leg"
 	desc = "A H.O.N.K right leg. The foot appears just large enough to fully accomodate a clown shoe."
 	icon_state = "honker_r_leg"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"bananium"=5000)
+	construction_cost = list("iron"=20000,"bananium"=5000)
 
 
 ////////// Phazon
@@ -306,42 +306,42 @@
 	name="\improper Phazon torso"
 	icon_state = "phazon_harness"
 	construction_time = 300
-	construction_cost = list("metal"=35000,"glass"=10000,"plasma"=20000)
+	construction_cost = list("iron"=35000,"glass"=10000,"plasma"=20000)
 	origin_tech = "programming=5;materials=7;bluespace=6;powerstorage=6"
 
 /obj/item/mecha_parts/part/phazon_head
 	name="\improper Phazon head"
 	icon_state = "phazon_head"
 	construction_time = 200
-	construction_cost = list("metal"=15000,"glass"=5000,"plasma"=10000)
+	construction_cost = list("iron"=15000,"glass"=5000,"plasma"=10000)
 	origin_tech = "programming=4;materials=5;magnets=6"
 
 /obj/item/mecha_parts/part/phazon_left_arm
 	name="\improper Phazon left arm"
 	icon_state = "phazon_l_arm"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"plasma"=10000)
+	construction_cost = list("iron"=20000,"plasma"=10000)
 	origin_tech = "materials=5;bluespace=2;magnets=2"
 
 /obj/item/mecha_parts/part/phazon_right_arm
 	name="\improper Phazon right arm"
 	icon_state = "phazon_r_arm"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"plasma"=10000)
+	construction_cost = list("iron"=20000,"plasma"=10000)
 	origin_tech = "materials=5;bluespace=2;magnets=2"
 
 /obj/item/mecha_parts/part/phazon_left_leg
 	name="\improper Phazon left leg"
 	icon_state = "phazon_l_leg"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"plasma"=10000)
+	construction_cost = list("iron"=20000,"plasma"=10000)
 	origin_tech = "materials=5;bluespace=3;magnets=3"
 
 /obj/item/mecha_parts/part/phazon_right_leg
 	name="\improper Phazon right leg"
 	icon_state = "phazon_r_leg"
 	construction_time = 200
-	construction_cost = list("metal"=20000,"plasma"=10000)
+	construction_cost = list("iron"=20000,"plasma"=10000)
 	origin_tech = "materials=5;bluespace=3;magnets=3"
 
 ///////// Odysseus
@@ -359,7 +359,7 @@
 	desc = "An Odysseus head. Contains an integrated medical HUD scanner."
 	icon_state = "odysseus_head"
 	construction_time = 100
-	construction_cost = list("metal"=6000,"glass"=10000)
+	construction_cost = list("iron"=6000,"glass"=10000)
 	origin_tech = "programming=3;materials=2"
 
 /obj/item/mecha_parts/part/odysseus_torso
@@ -368,7 +368,7 @@
 	icon_state = "odysseus_torso"
 	origin_tech = "programming=2;materials=2;biotech=2;engineering=2"
 	construction_time = 180
-	construction_cost = list("metal"=12000)
+	construction_cost = list("iron"=12000)
 
 /obj/item/mecha_parts/part/odysseus_left_arm
 	name = "\improper Odysseus left arm"
@@ -376,7 +376,7 @@
 	icon_state = "odysseus_l_arm"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 120
-	construction_cost = list("metal"=6000)
+	construction_cost = list("iron"=6000)
 
 /obj/item/mecha_parts/part/odysseus_right_arm
 	name = "\improper Odysseus right arm"
@@ -384,7 +384,7 @@
 	icon_state = "odysseus_r_arm"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 120
-	construction_cost = list("metal"=6000)
+	construction_cost = list("iron"=6000)
 
 /obj/item/mecha_parts/part/odysseus_left_leg
 	name = "\improper Odysseus left leg"
@@ -392,7 +392,7 @@
 	icon_state = "odysseus_l_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 130
-	construction_cost = list("metal"=7000)
+	construction_cost = list("iron"=7000)
 
 /obj/item/mecha_parts/part/odysseus_right_leg
 	name = "\improper Odysseus right leg"
@@ -400,14 +400,14 @@
 	icon_state = "odysseus_r_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 130
-	construction_cost = list("metal"=7000)
+	construction_cost = list("iron"=7000)
 
 /*/obj/item/mecha_parts/part/odysseus_armor
 	name="Odysseus Carapace"
 	icon_state = "odysseus_armor"
 	origin_tech = "materials=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000)*/
+	construction_cost = list("iron"=15000)*/
 
 
 ///////// Circuitboards

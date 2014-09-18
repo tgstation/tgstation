@@ -59,7 +59,7 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)	// now returns how many times the item can be built with the material
 	var/A = 0
 	switch(M)
-		if("$metal")
+		if("$iron")
 			A = m_amount
 		if("$glass")
 			A = g_amount
