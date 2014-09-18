@@ -1011,9 +1011,9 @@ Status: []<BR>"},
 /obj/machinery/porta_turret/stationary
 	emagged = 1
 
-	New()
-		installation = new/obj/item/weapon/gun/energy/laser(loc)
-		..()
+/obj/machinery/porta_turret/stationary/New()
+	installation = new/obj/item/weapon/gun/energy/laser(loc)
+	..()
 
 ////////////////////////
 //Turret Control Panel//

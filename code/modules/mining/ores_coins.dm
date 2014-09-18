@@ -38,15 +38,15 @@
 	points = 1
 	refined_type = /obj/item/stack/sheet/glass
 
-	attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
-		var/location = get_turf(user)
-		var/sandAmt = 1 // The sand we're holding
-		for(var/obj/item/weapon/ore/glass/sandToConvert in location) // The sand on the floor
-			sandAmt += 1
-			qdel(sandToConvert)
-		var/obj/item/stack/sheet/mineral/newSandstone = new /obj/item/stack/sheet/mineral/sandstone(location)
-		newSandstone.amount = sandAmt
-		qdel(src)
+/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
+	var/location = get_turf(user)
+	var/sandAmt = 1 // The sand we're holding
+	for(var/obj/item/weapon/ore/glass/sandToConvert in location) // The sand on the floor
+		sandAmt += 1
+		qdel(sandToConvert)
+	var/obj/item/stack/sheet/mineral/newSandstone = new /obj/item/stack/sheet/mineral/sandstone(location)
+	newSandstone.amount = sandAmt
+	qdel(src)
 
 /obj/item/weapon/ore/plasma
 	name = "Plasma ore"

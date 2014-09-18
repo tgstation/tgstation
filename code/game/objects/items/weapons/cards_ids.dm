@@ -179,10 +179,11 @@ update_label("John Doe", "Clowny")
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
-	New()
-		var/datum/job/captain/J = new/datum/job/captain
-		access = J.get_access()
-		..()
+
+/obj/item/weapon/card/id/captains_spare/New()
+	var/datum/job/captain/J = new/datum/job/captain
+	access = J.get_access()
+	..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper Centcom ID"
@@ -190,9 +191,10 @@ update_label("John Doe", "Clowny")
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
-	New()
-		access = get_all_centcom_access()
-		..()
+
+/obj/item/weapon/card/id/centcom/New()
+	access = get_all_centcom_access()
+	..()
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"

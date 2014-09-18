@@ -151,13 +151,11 @@
 	desc = "Arrrr matey."
 	icon_state = "cutlass0"
 
-/obj/item/weapon/melee/energy/sword/green
-	New()
-		item_color = "green"
+/obj/item/weapon/melee/energy/sword/green/New()
+	item_color = "green"
 
-/obj/item/weapon/melee/energy/sword/red
-	New()
-		item_color = "red"
+/obj/item/weapon/melee/energy/sword/red/New()
+	item_color = "red"
 
 /obj/item/weapon/melee/energy/blade
 	name = "energy blade"

@@ -14,14 +14,15 @@
 	var/SE
 	var/UI
 	var/restcure = 0
-	New()
-		..()
-		agent = "Virus class [pick("A","B","C","D","E","F")][pick("A","B","C","D","E","F")]-[rand(50,300)]"
-		if(prob(40))
-			cure_id = list("ryetalyn")
-			cure_list = list("ryetalyn")
-		else
-			restcure = 1
+
+/datum/disease/dna_retrovirus/New()
+	..()
+	agent = "Virus class [pick("A","B","C","D","E","F")][pick("A","B","C","D","E","F")]-[rand(50,300)]"
+	if(prob(40))
+		cure_id = list("ryetalyn")
+		cure_list = list("ryetalyn")
+	else
+		restcure = 1
 
 
 

@@ -30,47 +30,48 @@
 
 	var/global/gid = 1
 	var/id = 0
-	New()
-		..()
-		id = gid
-		gid++
 
-		name = "[name] (ID [id])"
+/obj/machinery/portable_atmospherics/scrubber/huge/New()
+	..()
+	id = gid
+	gid++
 
-	attack_hand(var/mob/user as mob)
-		usr << "<span class='notice'>You can't directly interact with this machine. Use the area atmos computer.</span>"
+	name = "[name] (ID [id])"
 
-	update_icon()
-		src.overlays = 0
+/obj/machinery/portable_atmospherics/scrubber/huge/attack_hand(var/mob/user as mob)
+	usr << "<span class='notice'>You can't directly interact with this machine. Use the area atmos computer.</span>"
 
+/obj/machinery/portable_atmospherics/scrubber/huge/update_icon()
+	src.overlays = 0
+
+	if(on)
+		icon_state = "scrubber:1"
+	else
+		icon_state = "scrubber:0"
+
+/obj/machinery/portable_atmospherics/scrubber/huge/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(istype(W, /obj/item/weapon/wrench))
 		if(on)
-			icon_state = "scrubber:1"
-		else
-			icon_state = "scrubber:0"
-
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if(istype(W, /obj/item/weapon/wrench))
-			if(on)
-				user << "<span class='notice'>Turn it off first!</span>"
-				return
-
-			anchored = !anchored
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
-
+			user << "<span class='notice'>Turn it off first!</span>"
 			return
 
-		..()
+		anchored = !anchored
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+
+		return
+
+	..()
 
 /obj/machinery/portable_atmospherics/scrubber/huge/stationary
 	name = "stationary air scrubber"
 
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if(istype(W, /obj/item/weapon/wrench))
-			user << "<span class='notice'>The bolts are too tight for you to unscrew!</span>"
-			return
+/obj/machinery/portable_atmospherics/scrubber/huge/stationary/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(istype(W, /obj/item/weapon/wrench))
+		user << "<span class='notice'>The bolts are too tight for you to unscrew!</span>"
+		return
 
-		..()
+	..()
 
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()

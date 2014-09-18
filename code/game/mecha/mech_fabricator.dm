@@ -273,28 +273,28 @@
 			part_sets.Cut(i,++i)
 	return
 /*
-	proc/sanity_check()
-		for(var/p in resources)
-			var/index = resources.Find(p)
-			index = resources.Find(p, ++index)
-			if(index) //duplicate resource
-				world << "Duplicate resource definition for [src](\ref[src])"
-				return 0
-		for(var/set_name in part_sets)
-			var/index = part_sets.Find(set_name)
-			index = part_sets.Find(set_name, ++index)
-			if(index) //duplicate part set
-				world << "Duplicate part set definition for [src](\ref[src])"
-				return 0
-		return 1
+/obj/machinery/mecha_part_fabricator/proc/sanity_check()
+	for(var/p in resources)
+		var/index = resources.Find(p)
+		index = resources.Find(p, ++index)
+		if(index) //duplicate resource
+			world << "Duplicate resource definition for [src](\ref[src])"
+			return 0
+	for(var/set_name in part_sets)
+		var/index = part_sets.Find(set_name)
+		index = part_sets.Find(set_name, ++index)
+		if(index) //duplicate part set
+			world << "Duplicate part set definition for [src](\ref[src])"
+			return 0
+	return 1
 */
 /*
-	New()
-		..()
-		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armor","time"=600,"metal"=75000,"diamond"=10000))
-		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000))
-		src.remove_part_set("Gygax")
-		return
+/obj/machinery/mecha_part_fabricator/New()
+	..()
+	src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armor","time"=600,"metal"=75000,"diamond"=10000))
+	src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000))
+	src.remove_part_set("Gygax")
+	return
 */
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)

@@ -242,7 +242,7 @@ obj/item/weapon/twohanded/
 	if(istype(loc, /mob/living))
 		if (HULK in M.mutations)
 			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
-	hitsound = 'sound/weapons/blade1.ogg' 
+	hitsound = 'sound/weapons/blade1.ogg'
 
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
@@ -257,13 +257,11 @@ obj/item/weapon/twohanded/
 				return
 			return 1
 
-/obj/item/weapon/twohanded/dualsaber/green
-	New()
-		item_color = "green"
+/obj/item/weapon/twohanded/dualsaber/green/New()
+	item_color = "green"
 
-/obj/item/weapon/twohanded/dualsaber/red
-	New()
-		item_color = "red"
+/obj/item/weapon/twohanded/dualsaber/red/New()
+	item_color = "red"
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

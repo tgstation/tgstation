@@ -6,8 +6,9 @@
 	name = "Input area"
 	density = 0
 	anchored = 1.0
-	New()
-		icon_state = "blank"
+
+/obj/machinery/mineral/input/New()
+	icon_state = "blank"
 
 /obj/machinery/mineral/output
 	icon = 'icons/mob/screen_gen.dmi'
@@ -15,8 +16,9 @@
 	name = "Output area"
 	density = 0
 	anchored = 1.0
-	New()
-		icon_state = "blank"
+
+/obj/machinery/mineral/output/New()
+	icon_state = "blank"
 
 /obj/machinery/mineral
 	var/input_dir = NORTH

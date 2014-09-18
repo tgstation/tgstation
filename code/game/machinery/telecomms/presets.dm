@@ -53,10 +53,10 @@
 	freq_listening = list(1353, 1357, 1359) //command, engineering, security
 
 	//Common and other radio frequencies for people to freely use
-	New()
-		for(var/i = 1441, i < 1489, i += 2)
-			freq_listening |= i
-		..()
+/obj/machinery/telecomms/receiver/preset_right/New()
+	for(var/i = 1441, i < 1489, i += 2)
+		freq_listening |= i
+	..()
 
 
 //Buses

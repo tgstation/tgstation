@@ -1667,90 +1667,90 @@ var/year_integer = text2num(year) // = 2013???
 /datum/global_iterator/mecha_preserve_temp  //normalizing cabin air temperature to 20 degrees celsium
 	delay = 20
 
-	process(var/obj/mecha/mecha)
-		if(mecha.cabin_air && mecha.cabin_air.return_volume() > 0)
-			var/delta = mecha.cabin_air.temperature - T20C
-			mecha.cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
-		return
+/datum/global_iterator/mecha_preserve_temp/process(var/obj/mecha/mecha)
+	if(mecha.cabin_air && mecha.cabin_air.return_volume() > 0)
+		var/delta = mecha.cabin_air.temperature - T20C
+		mecha.cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
+	return
 
 /datum/global_iterator/mecha_tank_give_air
 	delay = 15
 
-	process(var/obj/mecha/mecha)
-		if(mecha.internal_tank)
-			var/datum/gas_mixture/tank_air = mecha.internal_tank.return_air()
-			var/datum/gas_mixture/cabin_air = mecha.cabin_air
+/datum/global_iterator/mecha_tank_give_air/process(var/obj/mecha/mecha)
+	if(mecha.internal_tank)
+		var/datum/gas_mixture/tank_air = mecha.internal_tank.return_air()
+		var/datum/gas_mixture/cabin_air = mecha.cabin_air
 
-			var/release_pressure = mecha.internal_tank_valve
-			var/cabin_pressure = cabin_air.return_pressure()
-			var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
-			var/transfer_moles = 0
-			if(pressure_delta > 0) //cabin pressure lower than release pressure
-				if(tank_air.return_temperature() > 0)
-					transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
-					var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
-					cabin_air.merge(removed)
-			else if(pressure_delta < 0) //cabin pressure higher than release pressure
-				var/datum/gas_mixture/t_air = mecha.return_air()
-				pressure_delta = cabin_pressure - release_pressure
+		var/release_pressure = mecha.internal_tank_valve
+		var/cabin_pressure = cabin_air.return_pressure()
+		var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
+		var/transfer_moles = 0
+		if(pressure_delta > 0) //cabin pressure lower than release pressure
+			if(tank_air.return_temperature() > 0)
+				transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
+				var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
+				cabin_air.merge(removed)
+		else if(pressure_delta < 0) //cabin pressure higher than release pressure
+			var/datum/gas_mixture/t_air = mecha.return_air()
+			pressure_delta = cabin_pressure - release_pressure
+			if(t_air)
+				pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
+			if(pressure_delta > 0) //if location pressure is lower than cabin pressure
+				transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
+				var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
 				if(t_air)
-					pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
-				if(pressure_delta > 0) //if location pressure is lower than cabin pressure
-					transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
-					var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
-					if(t_air)
-						t_air.merge(removed)
-					else //just delete the cabin gas, we're in space or some shit
-						del(removed)
-		else
-			return stop()
-		return
+					t_air.merge(removed)
+				else //just delete the cabin gas, we're in space or some shit
+					del(removed)
+	else
+		return stop()
+	return
 
 /datum/global_iterator/mecha_intertial_movement //inertial movement in space
 	delay = 7
 
-	process(var/obj/mecha/mecha as obj,direction)
-		if(direction)
-			if(!step(mecha, direction)||mecha.check_for_support())
-				src.stop()
-		else
+/datum/global_iterator/mecha_intertial_movement/process(var/obj/mecha/mecha as obj,direction)
+	if(direction)
+		if(!step(mecha, direction)||mecha.check_for_support())
 			src.stop()
-		return
+	else
+		src.stop()
+	return
 
 /datum/global_iterator/mecha_internal_damage // processing internal damage
 
-	process(var/obj/mecha/mecha)
-		if(!mecha.hasInternalDamage())
-			return stop()
-		if(mecha.hasInternalDamage(MECHA_INT_FIRE))
-			if(!mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL) && prob(5))
-				mecha.clearInternalDamage(MECHA_INT_FIRE)
-			if(mecha.internal_tank)
-				if(mecha.internal_tank.return_pressure()>mecha.internal_tank.maximum_pressure && !(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)))
-					mecha.setInternalDamage(MECHA_INT_TANK_BREACH)
-				var/datum/gas_mixture/int_tank_air = mecha.internal_tank.return_air()
-				if(int_tank_air && int_tank_air.return_volume()>0) //heat the air_contents
-					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
-			if(mecha.cabin_air && mecha.cabin_air.return_volume()>0)
-				mecha.cabin_air.temperature = min(6000+T0C, mecha.cabin_air.return_temperature()+rand(10,15))
-				if(mecha.cabin_air.return_temperature()>mecha.max_temperature/2)
-					mecha.take_damage(4/round(mecha.max_temperature/mecha.cabin_air.return_temperature(),0.1),"fire")
-		if(mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL)) //stop the mecha_preserve_temp loop datum
-			mecha.pr_int_temp_processor.stop()
-		if(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)) //remove some air from internal tank
-			if(mecha.internal_tank)
-				var/datum/gas_mixture/int_tank_air = mecha.internal_tank.return_air()
-				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.10)
-				if(mecha.loc && hascall(mecha.loc,"assume_air"))
-					mecha.loc.assume_air(leaked_gas)
-				else
-					del(leaked_gas)
-		if(mecha.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
-			if(mecha.get_charge())
-				mecha.spark_system.start()
-				mecha.cell.charge -= min(20,mecha.cell.charge)
-				mecha.cell.maxcharge -= min(20,mecha.cell.maxcharge)
-		return
+/datum/global_iterator/mecha_internal_damage/process(var/obj/mecha/mecha)
+	if(!mecha.hasInternalDamage())
+		return stop()
+	if(mecha.hasInternalDamage(MECHA_INT_FIRE))
+		if(!mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL) && prob(5))
+			mecha.clearInternalDamage(MECHA_INT_FIRE)
+		if(mecha.internal_tank)
+			if(mecha.internal_tank.return_pressure()>mecha.internal_tank.maximum_pressure && !(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)))
+				mecha.setInternalDamage(MECHA_INT_TANK_BREACH)
+			var/datum/gas_mixture/int_tank_air = mecha.internal_tank.return_air()
+			if(int_tank_air && int_tank_air.return_volume()>0) //heat the air_contents
+				int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
+		if(mecha.cabin_air && mecha.cabin_air.return_volume()>0)
+			mecha.cabin_air.temperature = min(6000+T0C, mecha.cabin_air.return_temperature()+rand(10,15))
+			if(mecha.cabin_air.return_temperature()>mecha.max_temperature/2)
+				mecha.take_damage(4/round(mecha.max_temperature/mecha.cabin_air.return_temperature(),0.1),"fire")
+	if(mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL)) //stop the mecha_preserve_temp loop datum
+		mecha.pr_int_temp_processor.stop()
+	if(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)) //remove some air from internal tank
+		if(mecha.internal_tank)
+			var/datum/gas_mixture/int_tank_air = mecha.internal_tank.return_air()
+			var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.10)
+			if(mecha.loc && hascall(mecha.loc,"assume_air"))
+				mecha.loc.assume_air(leaked_gas)
+			else
+				del(leaked_gas)
+	if(mecha.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
+		if(mecha.get_charge())
+			mecha.spark_system.start()
+			mecha.cell.charge -= min(20,mecha.cell.charge)
+			mecha.cell.maxcharge -= min(20,mecha.cell.maxcharge)
+	return
 
 
 /////////////
