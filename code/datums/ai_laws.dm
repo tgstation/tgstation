@@ -1,20 +1,20 @@
 var/global/randomize_laws      = 0 // Not right now - N3X
-var/global/base_law_type       //= /datum/ai_laws/asimov - Variable is initialized below in getLawset proc - Hoshi
+var/global/base_law_type       = /datum/ai_laws/asimov  //Deinitialize this variable by commenting out Asimov as the base_law_type to activate AI lawset randomization
 var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck on MoMMIs. - N3X
 
 //Create proc for determining the lawset of the first silicon
-//NT Default and Robocop are not recommended as roundstart lawsets due to encouraging poor AI behavior
-//Paladin needs to be revised before becoming a roundstart lawset
-//Corporate apparently needs to be revised, as well
-//Double Asimov, so the proc doesn't shit itself amd return errors
+//So long as base_law_type is declared, but uninitialized, the first silicon created in a round will randomly select a base_law_type based upon the below proc
+//All silicons created during the round will start with the randomized base_law_type
+//Weights are currently set to 40% Asimov, 20% Corporate, 20% NT Default, 10% Robocop, 10% Paladin
+//Add, comment out, or adjust weights to modify law selection
+//So long as the weights come to a sum of 100 total, they will be equal parts of 100%
 /proc/getLawset(var/mob/M)
 	if(!base_law_type) base_law_type = pick(
-		100;/datum/ai_laws/asimov,
-		100;/datum/ai_laws/asimov,
-		//100;/datum/ai_laws/corporate,
-		//100;/datum/ai_laws/nanotrasen,
-		//50;/datum/ai_laws/robocop,
-		//50;/datum/ai_laws/paladin
+		40;/datum/ai_laws/asimov,
+		20;/datum/ai_laws/corporate,
+		20;/datum/ai_laws/nanotrasen,
+		10;/datum/ai_laws/robocop,
+		10;/datum/ai_laws/paladin
 		)
 	return (new base_law_type)  //Return the chosen lawset
 
