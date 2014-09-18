@@ -174,3 +174,17 @@
 		bullets_from.update_icon()
 		target.update_icon()
 		return bullets_loaded
+
+	proc/get_round(var/keep = 0)
+		if(!stored_ammo.len)
+			return null
+		else
+			var/b = stored_ammo[stored_ammo.len]
+			stored_ammo -= b
+			if(keep)
+				stored_ammo.Insert(1,b)
+			else
+				update_icon()
+			return b
+	proc/ammo_count()
+		return stored_ammo.len

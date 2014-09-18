@@ -18,6 +18,7 @@
 	var/max_shells = 7 //only used by guns with no magazine
 	var/load_method = SPEEDLOADER //0 = Single shells or quick loader, 1 = box, 2 = magazine
 	var/obj/item/ammo_storage/magazine/stored_magazine = null
+	var/obj/item/ammo_casing/chambered = null
 	var/mag_type = ""
 	var/auto_mag_drop = 0 //whether the mag drops when it empties, or if the user has to do it
 
@@ -25,9 +26,7 @@
 	..()
 	if(mag_type && load_method == 2)
 		stored_magazine = new mag_type(src)
-		var/new_ammo = min(stored_magazine.max_ammo, max_shells)
-		for(var/i = 1, i <= new_ammo, i++)
-			loaded += new ammo_type(stored_magazine) //we put it straight into loaded because that's how magazines work
+		chamber_round()
 	else
 		for(var/i = 1, i <= max_shells, i++)
 			loaded += new ammo_type(src)
@@ -37,26 +36,25 @@
 //loads the argument magazine into the gun
 /obj/item/weapon/gun/projectile/proc/LoadMag(var/obj/item/ammo_storage/magazine/AM, var/mob/user)
 	if(istype(AM) && !stored_magazine)
-		AM.loc = src
-		stored_magazine = AM
-		loaded = AM.stored_ammo
 		if(user)
 			user.drop_item(AM)
 			usr << "<span class='notice'>You load the magazine into \the [src].</span>"
+		AM.loc = src
+		stored_magazine = AM
+		chamber_round()
+		AM.update_icon()
 		update_icon()
 		return 1
 	return 0
 
 /obj/item/weapon/gun/projectile/proc/RemoveMag(var/mob/user)
 	if(stored_magazine)
-		stored_magazine.stored_ammo = loaded
 		stored_magazine.loc = get_turf(src.loc)
 		if(user)
 			user.put_in_hands(stored_magazine)
-			usr << "<span class='notice'>You remove the magazine from \the [src].</span>"
+			usr << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
 		stored_magazine.update_icon()
 		stored_magazine = null
-		loaded = list() //nevar 4get this or you start getting problems
 		update_icon()
 		return 1
 	return 0
@@ -70,16 +68,37 @@
 	else
 		usr << "<span class='rose'>There is no magazine to remove!</span>"
 
-/obj/item/weapon/gun/projectile/load_into_chamber()
+
+/obj/item/weapon/gun/projectile/proc/chamber_round() //Only used by guns with magazine
+	if(chambered || !stored_magazine)
+		return 0
+	else
+		var/obj/item/ammo_casing/round = stored_magazine.get_round()
+		if(istype(round))
+			chambered = round
+			chambered.loc = src
+			return 1
+	return 0
+
+/obj/item/weapon/gun/projectile/proc/getAC()
+	var/obj/item/ammo_casing/AC = null
+	if(mag_type && load_method == 2)
+		AC = chambered
+	else if(loaded.len)
+		AC = loaded[1] //load next casing.
+	return AC
+
+/obj/item/weapon/gun/projectile/process_chambered()
+	var/obj/item/ammo_casing/AC = getAC()
 	if(in_chamber)
 		return 1 //{R}
-
-	if(!loaded.len)
-		return 0
-	var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
-	loaded -= AC //Remove casing from loaded list.
 	if(isnull(AC) || !istype(AC))
-		return 0
+		return
+	if(mag_type && load_method == 2)
+		chambered = null //Remove casing from chamber.
+		chamber_round()
+	else
+		loaded -= AC //Remove casing from loaded list.
 	if(empty_casings == 1)
 		AC.loc = get_turf(src) //Eject casing onto ground.
 		if(AC.BB)
@@ -145,7 +164,7 @@
 
 /obj/item/weapon/gun/projectile/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
 	..()
-	if(!loaded.len && stored_magazine && auto_mag_drop) //auto_mag_drop decides whether or not the mag is dropped once it empties
+	if(!chambered && stored_magazine && !stored_magazine.ammo_count() && auto_mag_drop) //auto_mag_drop decides whether or not the mag is dropped once it empties
 		RemoveMag()
 		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
 	return
@@ -153,16 +172,18 @@
 /obj/item/weapon/gun/projectile/examine()
 	..()
 	usr << "Has [getAmmo()] round\s remaining."
-//		if(in_chamber && !loaded.len)
-//			usr << "However, it has a chambered round."
-//		if(in_chamber && loaded.len)
-//			usr << "It also has a chambered round." {R}
 	return
 
 /obj/item/weapon/gun/projectile/proc/getAmmo()
 	var/bullets = 0
-	for(var/obj/item/ammo_casing/AC in loaded)
-		if(istype(AC))
-			bullets += 1
+	if(mag_type && load_method == 2)
+		if(stored_magazine)
+			bullets += stored_magazine.ammo_count()
+		if(chambered)
+			bullets++
+	else
+		for(var/obj/item/ammo_casing/AC in loaded)
+			if(istype(AC))
+				bullets += 1
 	return bullets
 

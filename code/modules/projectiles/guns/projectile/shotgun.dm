@@ -28,7 +28,7 @@
 			recentpump = 0
 		return
 
-	load_into_chamber()
+	process_chambered()
 		if(in_chamber)
 			return 1
 		return 0
@@ -82,7 +82,7 @@
 	origin_tech = "combat=3;materials=1"
 	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
 
-	load_into_chamber()
+	process_chambered()
 		if(in_chamber)
 			return 1
 		if(!loaded.len)
