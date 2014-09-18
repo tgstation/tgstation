@@ -501,8 +501,3 @@ proc/is_blind(A)
 		var/turf/targetturf = get_turf(M)
 		if((targetturf.z == sourceturf.z))
 			M.show_message("<span class='info'>\icon[icon] [message]</span>", 1)
-
-/mob/proc/faceAtom(atom/target)
-	if(src.isAbleBodied() && target.loc && src.loc)
-		src.dir = get_dir(src,target)
-	return

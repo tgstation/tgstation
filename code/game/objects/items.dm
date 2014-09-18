@@ -14,8 +14,6 @@
 	pressure_resistance = 5
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
-	
-	var/attackDelay = 8 //How often a user can attack with this item (lower is faster)
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
 	var/cold_protection = 0 //flags which determine which body parts are protected from cold. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
@@ -54,106 +52,8 @@
 		src:my_atom = null*/
 	..()
 
-/obj/item/proc/preAttack(atom/target,mob/user,forceMod=1)
-	if(user.canTouch(target))
-		//TODO: Attackby() needs to take more specific instructions.
-		//		It would allow us to avoid this inelegant shit.
-		if(forceMod && (src.damtype == "brute"))
-			. = src.force
-			src.force *= forceMod
-			target.attackby(src,user)
-			src.afterattack(target,user,1)
-			src.force = .
-		else
-			target.attackby(src,user)
-			src.afterattack(target,user,1)
-	return
-
-/obj/item/proc/attack_self(mob/user)
-	return
-
-/obj/item/proc/afterattack(atom/target,mob/user,proximity)
-	return
-
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
-
-obj/item/proc/get_clamped_volume()
-	if(src.w_class)
-		if(src.force)	. = Clamp(((src.force + src.w_class)*4),30,100)
-		else			. = Clamp((src.w_class*6),10,100)
-	return
-
-/obj/item/proc/attack(mob/living/target,mob/living/user,def_zone)
-	if(!isliving(target)) return
-	if(can_operate(target) && do_surgery(target,user,src)) return
-	if(src.hitsound) playsound(src.loc,src.hitsound,50,1,-1)
-	user.lastattacked = target
-	target.lastattacker = user
-	spawn() add_logs(user,target,"attacked",object=src.name,addition="(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])")
-	var/power = src.force
-	 //TODO: Should be in attackArmed()
-	if(istype(target,/mob/living/carbon/human)) target:attacked_by(src,user,def_zone)
-	else //TODO: Should be in mob code
-		switch(src.damtype)
-			if("brute")
-				if(istype(src,/mob/living/carbon/slime))
-					target.adjustBrainLoss(power)
-				else
-					if(src.force && prob(33))
-						var/turf/T = get_turf(target)
-						if(istype(T,/turf/simulated)) T:add_blood_floor(target)
-					target.take_organ_damage(power)
-			if("fire")
-				if(!(M_RESIST_COLD in target.mutations))
-					target.take_organ_damage(0,power)
-					target << "<span class='danger'>Aargh it burns!</span>"
-		target.updatehealth()
-		if(istype(target,/mob/living/carbon/slime)) //TODO: Should be in slime code
-			var/mob/living/carbon/slime/slime = target
-			if(prob(25))
-				user << "<span class='warning'>[src] passes right through [slime]!</span>"
-				return
-			if(power > 0) slime.attacked += 10
-			if(prob(50)) slime.Discipline--
-			if((power >= 3) && prob(5+round(power/2)))
-				if(slime.Victim && prob(80) && !slime.client)
-					slime.Discipline++
-					slime.Victim = null
-					slime.anchored = 0
-				slime.SStun = 1
-				spawn(rand(5,20))
-					if(slime) slime.SStun = 0
-				step_away(slime,user)
-				if(prob(25+power))
-					spawn(2)
-						if(slime && user) step_away(slime, user)
-		var/showname = "." //TODO: Should be in a logging proc
-		if(user) showname = " by [user]!"
-		if(!(user in viewers(target,null))) showname = "."
-		spawn()
-			if(attack_verb && attack_verb.len)
-				target.visible_message("<span class='danger'>[target] has been [pick(attack_verb)] with [src][showname]</span>",
-				"<span class='userdanger'>[target] has been [pick(attack_verb)] with [src][showname]!</span>")
-			else if(force == 0)
-				target.visible_message("<span class='danger'>[target] has been [pick("tapped","patted")] with [src][showname]</span>",
-				"<span class='userdanger'>[target] has been [pick("tapped","patted")] with [src][showname]</span>")
-			else
-				target.visible_message("<span class='danger'>[target] has been attacked with [src][showname]</span>",
-				"<span class='userdanger'>[target] has been attacked with [src][showname]</span>")
-		if(!showname && user && user.client) user << "<span class='danger'>You attack [target] with [src].<span>"
-	src.add_fingerprint(user)
-	return 1
-
-/obj/item/attack_tk(mob/user)
-	if(user.stat || (!isturf(src.loc))) return
-	if((M_TK in user.mutations) && !user.get_active_hand())
-		var/obj/item/tk_grab/O = new(src)
-		user.put_in_active_hand(O)
-		O.host = user
-		O.focus_object(src)
-	else warning("Strange attack_tk(): TK([M_TK in user.mutations]) empty hand([!user.get_active_hand()])")
-	return
 
 /obj/item/ex_act(severity)
 	switch(severity)
@@ -173,9 +73,6 @@ obj/item/proc/get_clamped_volume()
 
 /obj/item/blob_act()
 	del(src)
-
-/obj/item/proc/is_used_on(obj/O,mob/user)
-	return
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user

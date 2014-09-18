@@ -7,7 +7,7 @@
 	var/list/hud_list[9]
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
-	
+
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
@@ -75,31 +75,6 @@
 	if(!delay_ready_dna)
 		dna.ready_dna(src)
 
-// Attacking ///////////////////////////////////////////////////
-		
-/mob/living/carbon/human/UnarmedAttack(atom/target)
-	if(src.gloves && src.gloves.Touch(target,src.canTouch(target)))
-		return 1
-	else if(src.mutations.len)
-		if((M_LASER in mutations) && a_intent == "hurt")
-			src.shootEyeLasers(target)
-			return 1
-		else if(M_TK in mutations)
-			target.attack_tk(src)
-			return 1
-	if(src.canTouch(target))
-		if(target.delayAttacks)
-			if(src.nextAllowedAttack > world.time) return 1
-			else src.nextAllowedAttack = world.time + src.attackDelayUnarmed
-		target.attack_hand(src)
-	return
-
-/mob/living/carbon/human/getForceModifier()
-	if(M_HULK in src.mutations) . = 2
-	return
-
-////////////////////////////////////////////////////////////////
-		
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
 		return

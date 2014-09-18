@@ -61,6 +61,37 @@
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	*/
 
+/client/proc/fix_next_move()
+	set category = "Debug"
+	set name = "Unfreeze Everyone"
+	var/largest_move_time = 0
+	var/largest_click_time = 0
+	var/mob/largest_move_mob = null
+	var/mob/largest_click_mob = null
+	for(var/mob/M in world)
+		if(!M.client)
+			continue
+		if(M.next_move >= largest_move_time)
+			largest_move_mob = M
+			if(M.next_move > world.time)
+				largest_move_time = M.next_move - world.time
+			else
+				largest_move_time = 1
+		if(M.next_click >= largest_click_time)
+			largest_click_mob = M
+			if(M.next_click > world.time)
+				largest_click_time = M.next_click - world.time
+			else
+				largest_click_time = 0
+		log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  next_click = [M.next_click]  world.time = [world.time]")
+		M.next_move = 1
+		M.next_click = 0
+	message_admins("[key_name_admin(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [largest_move_time/10] seconds!", 1)
+	message_admins("[key_name_admin(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!", 1)
+	message_admins("world.time = [world.time]", 1)
+	feedback_add_details("admin_verb","UFE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
 /client/proc/radio_report()
 	set category = "Debug"
 	set name = "Radio report"

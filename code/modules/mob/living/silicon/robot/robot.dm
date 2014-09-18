@@ -139,41 +139,6 @@
 
 	playsound(loc, startup_sound, 75, 1)
 
-
-// Clicking ////////////////////////////////////////////////////
-
-/mob/living/silicon/robot/isAbleBodied()
-	return (!(src.stat || src.lockcharge || src.weakened || src.stunned || src.paralysis))
-
-//Middle click cycles through selected modules.
-/mob/living/silicon/robot/MiddleClickOn(atom/target)
-	src.cycle_modules()
-	return
-
-/mob/living/silicon/robot/AltClickOn(atom/target)
-	if(isturf(target)) target.AltClick(src)
-	else target.RobotAltClick(src)
-	return
-
-/mob/living/silicon/robot/ShiftClickOn(atom/target)
-	if(istype(target,/obj/machinery/door/airlock)) target.AIShiftClick(src)
-	else . = ..()
-	return
-
-/mob/living/silicon/robot/CtrlClickOn(var/atom/A)
-	if(istype(A,/obj/machinery/door/airlock)) A.AICtrlClick(src)
-	else . = ..()
-	return
-
-/mob/living/silicon/robot/UnarmedAttack(atom/target)
-	target.attack_robot(src)
-	return 1
-
-////////////////////////////////////////////////////////////////
-
-
-
-
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
 	if (!rbPDA)

@@ -39,12 +39,6 @@
 
 	..()
 
-/atom/movable/attackby(obj/item/W,mob/user)
-	if(W && (!(W.flags & NOBLUDGEON)))
-		//This is dumb as fuck
-		user.visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
-	return
-	
 // Used in shuttle movement and AI eye stuff.
 // Primarily used to notify objects being moved by a shuttle/bluespace fuckup.
 /atom/movable/proc/setLoc(var/T, var/teleported=0)

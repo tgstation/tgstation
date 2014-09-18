@@ -16,7 +16,6 @@
 	var/pass_flags = 0
 	var/throwpass = 0
 	var/germ_level = 0 // The higher the germ level, the more germ on the atom.
-	var/delayAttacks = 0 //Can a user spam-click on us? (combat balance)
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -28,97 +27,6 @@
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
 
-// Getting Clicked /////////////////////////////////////////////
-// A lot of this is just special-snowflake bullshit
-
-/atom/Click(location,control,params)
-	return usr.ClickOn(src,params)
-
-/atom/DblClick(location,control,params)
-	return usr.DblClickOn(src,params)
-
-/atom/proc/CtrlClick(mob/user)
-	return
-
-/atom/movable/CtrlClick(mob/user)
-	if(user.canTouch(src)) user.start_pulling(src)
-	return
-
-/atom/proc/AltClick(mob/user)
-	var/turf/T = get_turf(src)
-	if(T && T.Adjacent(user))
-		if(user.listed_turf == T)
-			user.listed_turf = null
-		else
-			user.listed_turf = T
-			user.client.statpanel = T.name
-	return
-
-/atom/proc/attack_animal(mob/user)
-	return
-	
-/atom/proc/attack_hand(mob/user)
-	return
-	
-/atom/proc/attack_ai(mob/user)
-	return
-	
-/atom/proc/AIShiftClick()
-	return
-	
-/atom/proc/AICtrlClick()
-	return
-
-/atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
-	return src.AltClick(user)
-	
-/atom/proc/attack_paw(mob/user)
-	return
-	
-/atom/proc/attack_alien(mob/user)
-	return attack_paw(user)
-	
-/atom/proc/attack_larva(mob/user)
-	return
-	
-/atom/proc/attack_slime(mob/user as mob)
-	return
-	
-/atom/proc/attack_robot(mob/user)
-	return src.attack_ai(user)
-
-/atom/proc/RobotAltClick()
-	return
-
-/atom/proc/attack_ghost(mob/user)
-	var/ghost_flags = 0
-	if(ghost_read) ghost_flags |= PERMIT_ALL
-	if(canGhostRead(user,src,ghost_flags)) src.attack_ai(user)
-	else src.examine()
-	return
-
-/atom/proc/attack_tk(mob/user)
-	if(user.stat) return
-	return user.UnarmedAttack(src)
-	
-/atom/proc/attack_self_tk(mob/user)
-	return
-	
-// Drag n Drop /////////////////////////////////////////////////
-
-/atom/MouseDrop(atom/over)
-	if(over && over.Adjacent(usr) && src.Adjacent(usr))
-		over.MouseDrop_T(src,usr)
-	return
-
-/atom/proc/MouseDrop_T(atom/dropping,mob/user)
-	return
-	
-////////////////////////////////////////////////////////////////
-	
-/atom/proc/attackby(obj/item/W,mob/user)
-	return
-	
 /atom/proc/throw_impact(atom/hit_atom, var/speed)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom

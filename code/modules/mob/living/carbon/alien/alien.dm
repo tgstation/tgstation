@@ -30,13 +30,6 @@
 
 	var/heat_protection = 0.5
 
-/mob/living/carbon/alien/UnarmedAttack(atom/A)
-	A.attack_alien(src)
-	return
-
-/mob/living/carbon/alien/RestrainedClickOn(atom/A)
-	return
-	
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
 	return

@@ -16,7 +16,6 @@
 	var/sheets = 1 // Number of sheets needed to build this window (determines how much shit is spawned by destroy())
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
-	delayAttacks = 1
 
 /obj/structure/window/examine()
 	..()
@@ -124,13 +123,16 @@
 		if(pdiff>0)
 			message_admins("Window destroyed by hulk [user.real_name] ([formatPlayerPanel(user,user.ckey)]) with pdiff [pdiff] at [formatJumpTo(loc)]!")
 			log_admin("Window destroyed by hulk [user.real_name] ([user.ckey]) with pdiff [pdiff] at [loc]!")
+		user.changeNext_move(8)
 		destroy()
 	else if (usr.a_intent == "hurt")
+		user.changeNext_move(8) // not so polite
 		playsound(get_turf(src), 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
 							"\red You bang against the [src.name]!", \
 							"You hear a banging sound.")
 	else
+		user.changeNext_move(10)
 		playsound(get_turf(src), 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("[usr.name] knocks on the [src.name].", \
 							"You knock on the [src.name].", \
@@ -142,7 +144,9 @@
 	return attack_hand(user)
 
 /obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
+	user.changeNext_move(10)
 	health -= damage
+	user.changeNext_move(8)
 	if(health <= 0)
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		var/pdiff=performWallPressureCheck(src.loc)
@@ -235,6 +239,7 @@
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
+			user.changeNext_move(10)
 			hit(W.force)
 			if(health <= 7)
 				anchored = 0

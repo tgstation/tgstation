@@ -298,6 +298,7 @@
 	return
 
 /obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
+	user.changeNext_move(10)
 	..()
 	playsound(get_turf(src), 'sound/weapons/smash.ogg', 60, 1)
 	src.spark_system.start()

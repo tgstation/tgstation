@@ -22,6 +22,9 @@
 
 	if(istype(A, /obj/effect/proc_holder/spell))
 		return
+
+	user.changeNext_move(8)
+
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
 			user << "<span class='notice'>\The [A] is empty.</span>"

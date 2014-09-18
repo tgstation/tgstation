@@ -51,11 +51,6 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
-/obj/item/weapon/gun/preAttack(atom/target,mob/user)
-	if(user.a_intent != "help") //If the user wants to shoot
-		src.Fire(target,user) //Just shoot, fuck everything else!
-	return
-			
 /obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 	if(flag)	return //we're placing gun on a table or in backpack
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?

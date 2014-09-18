@@ -380,6 +380,7 @@
 
 	//okay, so the closet is either welded or locked... resist!!!
 	//user.next_move = world.time + 100
+	user.changeNext_move(100)
 	user.last_special = world.time + 100
 	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
 	for(var/mob/O in viewers(src))

@@ -24,10 +24,6 @@
 	regenerate_icons()
 	..()
 
-/mob/living/carbon/alien/larva/UnarmedAttack(atom/A)
-	A.attack_larva(src)
-	return
-	
 //This is fine, works the same as a human
 /mob/living/carbon/alien/larva/Bump(atom/movable/AM as mob|obj, yes)
 

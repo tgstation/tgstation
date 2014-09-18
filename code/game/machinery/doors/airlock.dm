@@ -1188,26 +1188,3 @@ About the new airlock wires panel:
 	open()
 	locked = 1
 	return
-
-/obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
-	if(density)
-		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
-	else
-		Topic("aiDisable=7", list("aiDisable"="7"), 1)
-	return
-	
-/obj/machinery/door/airlock/AICtrlClick() // Bolts doors
-	if(locked)
-		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
-	else
-		Topic("aiDisable=4", list("aiDisable"="4"), 1)
-		
-/obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
-	if(!secondsElectrified)
-		// permenant shock
-		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
-	else
-		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
-		Topic("aiDisable=5", list("aiDisable"="5"), 1)
-	return
-	

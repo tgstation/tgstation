@@ -93,20 +93,6 @@
 	real_name = name
 	..()
 
-// Clicking ////////////////////////////////////////////////////
-
-/mob/dead/observer/DblClickOn(atom/target,params)
-	if((ismob(target) && (target != src)) || istype(target,/obj/machinery/bot) || istype(target,/obj/machinery/singularity))
-		src.ManualFollow(target)
-	else src.loc = get_turf(target)
-	return
-
-/mob/dead/observer/ClickOn(atom/target,params)
-	target.attack_ghost(src)
-	return
-
-////////////////////////////////////////////////////////////////
-
 /mob/dead/observer/hasFullAccess()
 	return isAdminGhost(src)
 
