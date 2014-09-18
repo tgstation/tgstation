@@ -3,6 +3,14 @@
 	update_hud()
 	return
 
+// Clicking ////////////////////////////////////////////////////
+
+/mob/living/carbon/MiddleClickOn(atom/target)
+	src.swap_hand()
+	return
+
+////////////////////////////////////////////////////////////////
+	
 /mob/living/carbon/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
 

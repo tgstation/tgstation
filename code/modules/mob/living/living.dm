@@ -29,6 +29,22 @@
 					special_role = null
 					current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now..(You don't remember who enslaved you)</B></FONT>"
 				*/
+				
+// Clicking ////////////////////////////////////////////////////
+
+/mob/living/UnarmedAttack(var/atom/A)
+	A.attack_animal(src)
+	return
+	
+/mob/living/RestrainedClickOn(var/atom/A)
+	return
+
+////////////////////////////////////////////////////////////////
+		
+/mob/living/attackby(obj/item/I,mob/user)
+	if(istype(I) && ismob(user)) I.attack(src,user)
+	return
+		
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))

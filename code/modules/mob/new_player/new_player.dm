@@ -458,3 +458,6 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 	proc/close_spawn_windows()
 		src << browse(null, "window=latechoices") //closes late choices window
 		src << browse(null, "window=playersetup") //closes the player setup window
+
+/mob/new_player/ClickOn()
+	return

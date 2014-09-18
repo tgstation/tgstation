@@ -877,7 +877,6 @@ steam.start() -- spawns the effect
 		return
 
 	attack_hand(var/mob/user)
-		user.changeNext_move(10)
 		if ((M_HULK in user.mutations) || (prob(75 - metal*25)))
 			user << "\blue You smash through the metal foam wall."
 			for(var/mob/O in oviewers(user))
@@ -890,7 +889,6 @@ steam.start() -- spawns the effect
 
 
 	attackby(var/obj/item/I, var/mob/user)
-		user.changeNext_move(10)
 		if (istype(I, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = I
 			G.affecting.loc = src.loc
