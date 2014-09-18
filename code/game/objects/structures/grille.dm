@@ -175,7 +175,7 @@
 		switch(W.damtype)
 			if(BURN)
 				playsound(loc, 'sound/items/welder.ogg', 80, 1)
-			if(BRUTE)
+			else
 				playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 		health -= W.force * 0.3
 
