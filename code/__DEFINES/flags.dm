@@ -49,6 +49,7 @@
 #define PASSGLASS	2
 #define PASSGRILLE	4
 #define PASSBLOB	8
+#define PASSMOB 16
 
 //flags for species
 
