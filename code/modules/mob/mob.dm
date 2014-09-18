@@ -707,6 +707,12 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
+/mob/proc/swap_hand()
+	return
+
+/mob/proc/activate_hand(var/selhand)
+	return
+
 /mob/proc/SpeciesCanConsume()
 	return 0
 

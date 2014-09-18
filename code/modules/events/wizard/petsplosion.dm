@@ -2,7 +2,7 @@
 	name = "Petsplosion"
 	weight = 2
 	typepath = /datum/round_event/wizard/petsplosion/
-	max_occurrences = 3
+	max_occurrences = 1 //Exponential growth is nothing to sneeze at!
 	earliest_start = 0
 
 /datum/round_event/wizard/petsplosion/

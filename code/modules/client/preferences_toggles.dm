@@ -17,6 +17,15 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ghost_whispers()
+	set name = "Show/Hide GhostWhispers"
+	set category = "Preferences"
+	set desc = ".Toggle between hearing all whispers, and only whispers of nearby mobs"
+	prefs.toggles ^= CHAT_GHOSTWHISPER
+	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TGW") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide RadioChatter"
 	set category = "Preferences"

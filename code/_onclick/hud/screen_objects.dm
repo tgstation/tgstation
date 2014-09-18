@@ -410,17 +410,21 @@
 		return 1
 	switch(name)
 		if("r_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("r")
+			if(ismob(usr))
+				var/mob/Mr = usr
+				Mr.activate_hand("r")
 		if("l_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("l")
+			if(ismob(usr))
+				var/mob/Ml = usr
+				Ml.activate_hand("l")
 		if("swap")
-			usr:swap_hand()
+			if(ismob(usr))
+				var/mob/Ms = usr
+				Ms.swap_hand()
 		if("hand")
-			usr:swap_hand()
+			if(ismob(usr))
+				var/mob/Mh = usr
+				Mh.swap_hand()
 		else
 			if(usr.attack_ui(slot_id))
 				usr.update_inv_l_hand(0)

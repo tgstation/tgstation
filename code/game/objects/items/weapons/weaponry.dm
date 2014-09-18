@@ -85,6 +85,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/katana/cursed
+	slot_flags = null
+
 /obj/item/weapon/katana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
 	return(BRUTELOSS)
