@@ -6,13 +6,13 @@
 	max_shells = 18
 	caliber = list("9mm" = 1)
 	origin_tech = "combat=4;materials=2"
-	ammo_type = /obj/item/ammo_casing/c9mm
+	ammo_type = "/obj/item/ammo_casing/c9mm"
 	automatic = 1
 	fire_delay = 0
 	var/burstfire = 0 //Whether or not the gun fires multiple bullets at once
 	var/burst_count = 3
 	load_method = 2
-	mag_type = /obj/item/ammo_storage/magazine/smg9mm
+	mag_type = "/obj/item/ammo_storage/magazine/mc9mm"
 
 /obj/item/weapon/gun/projectile/automatic/New()
 	..()
@@ -56,8 +56,8 @@
 	burst_count = 3
 	caliber = list(".45" = 1)
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/c45
-	mag_type = /obj/item/ammo_storage/magazine/uzi45
+	ammo_type = "/obj/item/ammo_casing/c45"
+	mag_type = "/obj/item/ammo_storage/magazine/c45"
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi/isHandgun()
 	return 1
@@ -72,8 +72,8 @@
 	burst_count = 4
 	caliber = list("12mm" = 1)
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/a12mm
-	mag_type = /obj/item/ammo_storage/magazine/a12mm
+	ammo_type = "/obj/item/ammo_casing/a12mm"
+	mag_type = "/obj/item/ammo_storage/magazine/a12mm"
 	fire_sound = 'sound/weapons/Gunshot_c20.ogg'
 	load_method = 2
 	auto_mag_drop = 1
@@ -96,8 +96,8 @@
 	max_shells = 20
 	burst_count = 4
 	caliber = list("12mm" = 1)
-	ammo_type = /obj/item/ammo_casing/a12mm
-	mag_type = /obj/item/ammo_storage/magazine/a12mm
+	ammo_type = "/obj/item/ammo_casing/a12mm"
+	mag_type = "/obj/item/ammo_storage/magazine/a12mm"
 	fire_sound = 'sound/weapons/Gunshot_c20.ogg'
 	load_method = 2
 	auto_mag_drop = 1
@@ -113,8 +113,8 @@
 	burst_count = 5
 	caliber = list("a762" = 1)
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	ammo_type = /obj/item/ammo_casing/a762
-	mag_type = /obj/item/ammo_storage/magazine/a762
+	ammo_type = "/obj/item/ammo_casing/a762"
+	mag_type = "/obj/item/ammo_storage/magazine/a762"
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	load_method = 2
 	var/cover_open = 0

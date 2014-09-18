@@ -18,7 +18,7 @@
 	slot_flags = SLOT_BACK
 	caliber = list("rpg" = 1)
 	origin_tech = "combat=4;materials=2;syndicate=2"
-	ammo_type = /obj/item/ammo_casing/rocket_rpg
+	ammo_type = "/obj/item/ammo_casing/rocket_rpg"
 	attack_verb = list("struck", "hit", "bashed")
 
 /obj/item/weapon/gun/projectile/rocketlauncher/isHandgun()

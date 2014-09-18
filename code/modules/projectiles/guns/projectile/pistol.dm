@@ -7,8 +7,8 @@
 	caliber = list(".45"  = 1)
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
-	ammo_type = /obj/item/ammo_casing/c45
-	mag_type = /obj/item/ammo_storage/magazine/c45
+	ammo_type = "/obj/item/ammo_casing/c45"
+	mag_type = "/obj/item/ammo_storage/magazine/c45"
 	load_method = 2
 
 
@@ -19,8 +19,8 @@
 	force = 14.0
 	max_shells = 7
 	caliber = list(".50" = 1)
-	ammo_type = /obj/item/ammo_casing/a50
-	mag_type = /obj/item/ammo_storage/magazine/a50
+	ammo_type ="/obj/item/ammo_casing/a50"
+	mag_type = "/obj/item/ammo_storage/magazine/a50"
 	load_method = 2
 	auto_mag_drop = 1
 
@@ -46,8 +46,8 @@
 	caliber = list("75" = 1)
 	fire_sound = 'sound/weapons/elecfire.ogg'
 	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/a75
-	mag_type = /obj/item/ammo_storage/magazine/a75
+	ammo_type = "/obj/item/ammo_casing/a75"
+	mag_type = "/obj/item/ammo_storage/magazine/a75"
 	load_method = 2
 	auto_mag_drop = 1
 
@@ -61,15 +61,15 @@
 
 /obj/item/weapon/gun/projectile/pistol
 	name = "\improper Stechtkin pistol"
-	desc = "A small, easily concealable gun. Uses 9mm rounds."
+	desc = "A small, easily concealable gun. Uses .45 rounds."
 	icon_state = "pistol"
 	w_class = 2
 	max_shells = 10
 	caliber = list("9mm" = 1)
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
-	ammo_type = /obj/item/ammo_casing/c9mm
-	mag_type = /obj/item/ammo_storage/magazine/mc9mm
+	ammo_type = "/obj/item/ammo_casing/c45"
+	mag_type = "/obj/item/ammo_storage/magazine/c45"
 	load_method = 2
 	auto_mag_drop = 1
 

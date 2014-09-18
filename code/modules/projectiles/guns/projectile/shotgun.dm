@@ -11,7 +11,7 @@
 	slot_flags = SLOT_BACK
 	caliber = list("shotgun" = 1, "flare" = 1) //flare shells are still shells
 	origin_tech = "combat=4;materials=2"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
 	empty_casings = 0
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
@@ -65,7 +65,7 @@
 	icon_state = "cshotgun"
 	max_shells = 8
 	origin_tech = "combat=5;materials=2"
-	ammo_type = /obj/item/ammo_casing/shotgun
+	ammo_type = "/obj/item/ammo_casing/shotgun"
 
 //this is largely hacky and bad :(	-Pete
 /obj/item/weapon/gun/projectile/shotgun/doublebarrel
@@ -80,7 +80,7 @@
 	slot_flags = SLOT_BACK
 	caliber = list("shotgun" = 1, "flare" = 1)
 	origin_tech = "combat=3;materials=1"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
 
 	process_chambered()
 		if(in_chamber)
