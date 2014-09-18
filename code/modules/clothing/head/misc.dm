@@ -288,7 +288,7 @@
 	desc = "A symbol of discipline, honor, and lots and lots of removal of some type of skewered food."
 	icon_state = "russobluecamohat"
 	item_state = "russobluecamohat"
-	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/russofurhat
 	name = "russian fur hat"
