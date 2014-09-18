@@ -67,7 +67,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			user << "<span class='warning'>You cannot deconstruct this item!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='warning'>The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>"
+			user << "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>"
 			return
 		busy = 1
 		loaded_item = O
