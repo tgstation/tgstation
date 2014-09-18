@@ -1,7 +1,2 @@
 author: Duny
-changes:
-  - wip: Defficiency - Changed a whole bunch of things. See github for more precisions.
-  - bugfix: Box - Fixed atmos techs not having access to the engineering pod.
-  - bugfix: Box - Fixed tech storage camera showing the outside of robotics.
-  - tweak: Box - The virology access door south of medbay can now be open by anyone with medbay access. Previously virology only.
-  - tweak: Box - Fireaxe cabinets are back to being locked at roundstart.
+changes: []
