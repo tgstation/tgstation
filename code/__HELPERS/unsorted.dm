@@ -1232,10 +1232,8 @@ var/global/list/common_tools = list(
 /proc/is_hot(obj/item/W as obj)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		if(W:isOn())
-			world << "It's hot!"
 			return 3800
 		else
-			world << "It's not!"
 			return 0
 	if(istype(W, /obj/item/weapon/lighter))
 		if(W:lit)
@@ -1257,7 +1255,6 @@ var/global/list/common_tools = list(
 	if(istype(W, /obj/item/weapon/melee/energy))
 		return 3500
 	else
-		world << "It's cold!"
 		return 0
 
 	return 0
