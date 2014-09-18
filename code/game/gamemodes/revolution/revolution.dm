@@ -25,8 +25,10 @@
 	uplink_uses = 10
 
 	var/finished = 0
-	var/checkwin_counter = 0
+	var/check_counter = 0
 	var/max_headrevs = 3
+	var/list/datum/mind/heads_to_kill = list()
+
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
@@ -75,13 +77,11 @@
 /datum/game_mode/revolution/post_setup()
 	var/list/heads = get_living_heads()
 
+	heads_to_kill = heads
+
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/mind/head_mind in heads)
-			var/datum/objective/mutiny/rev_obj = new
-			rev_obj.owner = rev_mind
-			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
-			rev_mind.objectives += rev_obj
+			mark_for_death(rev_mind, head_mind)
 
 	//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 	//	Removing revolutionary uplinks.	-Pete
@@ -97,11 +97,12 @@
 
 
 /datum/game_mode/revolution/process()
-	checkwin_counter++
-	if(checkwin_counter >= 5)
+	check_counter++
+	if(check_counter >= 5)
 		if(!finished)
+			check_heads()
 			ticker.mode.check_win()
-		checkwin_counter = 0
+		check_counter = 0
 	return 0
 
 
@@ -152,6 +153,44 @@
 		mob << "The flash in your [where] will help you to persuade the crew to join your cause."
 		mob.update_icons()
 		return 1
+
+/////////////////////////////////
+//Gives head revs their targets//
+/////////////////////////////////
+/datum/game_mode/revolution/proc/mark_for_death(var/datum/mind/rev_mind, var/datum/mind/head_mind)
+	var/datum/objective/mutiny/rev_obj = new
+	rev_obj.owner = rev_mind
+	rev_obj.target = head_mind
+	rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
+	rev_mind.objectives += rev_obj
+
+////////////////////////////////////////////
+//Checks if new heads have joined midround//
+////////////////////////////////////////////
+/datum/game_mode/revolution/proc/check_heads()
+	var/list/heads = get_all_heads()
+	if(heads_to_kill.len < heads.len)
+		var/list/new_heads = heads - heads_to_kill
+		for(var/datum/mind/head_mind in new_heads)
+			for(var/datum/mind/rev_mind in head_revolutionaries)
+				mark_for_death(rev_mind, head_mind)
+
+	if(max_headrevs < initial(max_headrevs) && max_headrevs < heads.len)
+		latejoin_headrev()
+
+///////////////////////////////
+//Adds a new headrev midround//
+///////////////////////////////
+/datum/game_mode/revolution/proc/latejoin_headrev()
+	if(revolutionaries) //Head Revs are not in this list
+		var/datum/mind/stalin = pick(revolutionaries)
+		revolutionaries -= stalin
+		head_revolutionaries += stalin
+		log_game("[stalin.key] (ckey) has been promoted to a head rev")
+		equip_revolutionary(stalin.current)
+		forge_revolutionary_objectives(stalin)
+		greet_revolutionary(stalin)
+		++max_headrevs
 
 //////////////////////////////////////
 //Checks if the revs have won or not//
