@@ -734,30 +734,22 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
-	var/cutDownOnSpam = 0
 
 /obj/item/device/t_scanner/mining_scanner/scan()
-	var/turf/t = get_turf(src)
-	var/list/mobs = recursive_mob_check(t, 1,0,0)
-	if(!mobs.len)
-		return
 	if(!cooldown)
 		cooldown = 1
 		spawn(100)
 			cooldown = 0
+		var/turf/t = get_turf(src)
+		var/list/mobs = recursive_mob_check(t, 1,0,0)
+		if(!mobs.len)
+			return
 		var/list/L = list()
 		var/turf/simulated/mineral/M
 		for(M in range(7, t))
 			if(M.scan_state)
 				L += M
-		if(!L.len)
-			if(cutDownOnSpam==0)
-				for(var/mob/user in mobs)
-					user << "<span class='info'>[src] reports that nothing was detected nearby.</span>"
-			cutDownOnSpam = 1
-			return
-		else
-			cutDownOnSpam = 0
+		if(L.len)
 			for(var/mob/user in mobs)
 				if(user.client)
 					var/client/C = user.client
