@@ -67,13 +67,13 @@
 			var/accepted = 0
 			if((exact && (AC.type == text2path(ammo_type))) || (!exact && istype(AC, text2path(ammo_type))))//if it's the exact type we want, or the general class
 				accepted = 1
-			if(!AC.spent && accepted && stored_ammo.len < max_ammo) //spent means fired. Spent shots can't be loaded into guns or magazines
+			if(AC.BB && accepted && stored_ammo.len < max_ammo)
 				stored_ammo += AC
 				user.drop_item(AC)
 				AC.loc = src
 				user << "<span class='notice'>You successfully load the [src] with \the [AC]</span>"
 				update_icon()
-			else if(AC.spent)
+			else if(!AC.BB)
 				user << "<span class='notice'>You can't load a spent bullet.</span>"
 			else if (stored_ammo.len == max_ammo)
 				user << "<span class='notice'>\The [src] can't hold any more shells.</span>"

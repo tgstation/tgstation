@@ -101,20 +101,13 @@
 		loaded -= AC //Remove casing from loaded list.
 	if(empty_casings == 1)
 		AC.loc = get_turf(src) //Eject casing onto ground.
-		if(AC.BB)
-			AC.spent = 1
-			AC.desc += " This one is spent."	//descriptions are magic - only when there's a projectile in the casing
-			in_chamber = AC.BB //Load projectile into chamber.
-			AC.BB.loc = src //Set projectile loc to gun.
-			return 1
-		return 0
-	else
-		if(AC.BB)
-			in_chamber = AC.BB //Load projectile into chamber
-			AC.BB.loc = src //Set projectile loc to gun
-			return 1
-		return 0
-
+	if(AC.BB)
+		in_chamber = AC.BB //Load projectile into chamber.
+		AC.BB.loc = src //Set projectile loc to gun.
+		AC.BB = null //Empty casings
+		AC.update_icon()
+		return 1
+	return 0
 
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
 
