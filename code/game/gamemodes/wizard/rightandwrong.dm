@@ -14,7 +14,6 @@
 		if(H.mind)
 			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice") continue
 		if(prob(25) && !(H.mind in ticker.mode.traitors))
-			if(jobban_isbanned(H, "Syndicate") || jobban_isbanned(H, "traitor")) continue
 			ticker.mode.traitors += H.mind
 			H.mind.special_role = "traitor"
 			var/datum/objective/survive/survive = new
