@@ -24,7 +24,7 @@
 	ammo_type = "/obj/item/ammo_casing/a12mm"
 	max_ammo = 20
 	multiple_sprites = 1
-	sprite_modulo = 10
+	sprite_modulo = 2
 
 
 /obj/item/ammo_storage/magazine/a12mm/empty
@@ -34,7 +34,7 @@
 	name = "magazine (9mm)"
 	icon_state = "smg9mm"
 	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/c9mm
+	ammo_type = "/obj/item/ammo_casing/c9mm"
 	max_ammo = 18
 	sprite_modulo = 3
 	multiple_sprites = 1
@@ -87,7 +87,7 @@
 	name = "magazine (.45)"
 	icon_state = "uzi45"
 	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c45
+	ammo_type = "/obj/item/ammo_casing/c45"
 	max_ammo = 16
-	multiple_sprites = 2
-	sprite_modulo = 1
+	multiple_sprites = 1
+	sprite_modulo = 2

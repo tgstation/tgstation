@@ -10,16 +10,20 @@
 	var/caliber = ""							//Which kind of guns it can be loaded into
 	var/projectile_type = ""//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
-	var/spent = 0 //whether or not the thing has been shot. Can't load empty bullets!
 
 
 	New()
 		..()
 		if(projectile_type)
 			BB = new projectile_type(src)
+		update_icon()
+
+	update_icon()
 		pixel_x = rand(-10.0, 10)
 		pixel_y = rand(-10.0, 10)
 		dir = pick(cardinal)
+		icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
+		desc = "[initial(desc)][BB ? "" : " This one is spent"]"
 
 
 //Boxes of ammo

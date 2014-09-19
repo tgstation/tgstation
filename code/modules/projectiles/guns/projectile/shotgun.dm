@@ -31,16 +31,13 @@
 	process_chambered()
 		if(in_chamber)
 			return 1
+		else if(current_shell && current_shell.BB)
+			in_chamber = current_shell.BB //Load projectile into chamber.
+			current_shell.BB.loc = src //Set projectile loc to gun.
+			current_shell.BB = null
+			current_shell.update_icon()
+			return 1
 		return 0
-
-	Fire()
-		..() //replaces the current shell with an empty one if it's been fired
-		if(current_shell) //because of how fucking painful current_shell is to work with, this is what I got
-			var/obj/item/ammo_casing/shotgun/empty/new_shell = new(src)
-			new_shell.desc += " This looks like it used to be a [current_shell.name]."
-			qdel(current_shell)
-			current_shell = new_shell
-			new_shell = null
 
 	proc/pump(mob/M as mob)
 		playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)

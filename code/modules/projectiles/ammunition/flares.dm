@@ -17,7 +17,12 @@
 	stored_flare = new(src)
 
 /obj/item/ammo_casing/shotgun/flare/attack_self()
-	usr <<"You disassemble the flare shell."
-	stored_flare.loc = usr.loc
-	new/obj/item/ammo_casing/shotgun/empty(usr.loc)
-	qdel(src)
+	if(stored_flare)
+		usr <<"You disassemble the flare shell."
+		stored_flare.loc = usr.loc
+		stored_flare = null
+		BB = null
+		icon_state = "flareshell-empty"
+		update_icon()
+	else
+		usr <<"This flare is empty."
