@@ -318,6 +318,9 @@
 	if(jobban_isbanned(user,"pAI"))
 		return
 
+	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!),,"Yes","No")
+	if(be_drone == "No")
+		return
 	var/mob/living/simple_animal/drone/D = new(get_turf(loc))
 	D.key = user.key
 	qdel(src)
