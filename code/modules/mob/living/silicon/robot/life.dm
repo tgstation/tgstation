@@ -78,7 +78,7 @@
 	if(src.resting)
 		Weaken(5)
 
-	if(health < config.health_threshold_dead && src.stat != 2) //die only once
+	if(health <= 0 && src.stat != 2) //die only once
 		death()
 
 	if (src.stat != 2) //Alive.
@@ -168,12 +168,13 @@
 		src.see_in_dark = 8
 		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-	for(var/image/hud in client.images)  //COPIED FROM the human handle_regular_hud_updates() proc
-		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-			client.images.Remove(hud)
+	regular_hud_updates() //Handles MED/SEC HUDs for borgs.
 
-	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
-	if(hud && hud.hud)	hud.hud.process_hud(src)
+	switch(sensor_mode)
+		if (SEC_HUD)
+			process_sec_hud(src, 1)
+		if (MED_HUD)
+			process_med_hud(src)
 
 	if (src.healths)
 		if (src.stat != 2)

@@ -1,0 +1,142 @@
+<b>Note:</b> I wrote this document to the best of my knowledge, I still don't know everything there is to know about this library or MySQL. - Nadrew<p>
+<h2><a name="DBConnection">DBConnection</a></h2>
+The DBConnection datum is what handles your connection to the MySQL database.
+<br><b>A note on the DBI string's format, it's "dbi:mysql:[database_name]:[server]:[port]"</b><p style="color:red;"><b>If libMySQL (.dll/.so) does not exist on the system DBConnection.ErrorMsg() will return 'The selected module could not be loaded.'</b></p>
+<hr>
+<font size=+1><b><a name="DBConnection.Connect()">Connect()</a></b></font><br>
+Creates a new connection to your MySQL server.<br>
+<b>Format:</b> Connect(dbi,username,password,cursor)<br>
+<b>Arguments:</b>
+<dd><b>dbi</b> The database interface string to send to MySQL.
+<dd><b>username</b> The MySQL username to send.
+<dd><b>password</b> The MySQL password associated with the username.
+<dd><b>cursor</b> The MySQL cursor to connect with, best not to set this.<p>
+<b>Example:</b><br>
+<pre>
+var/DBConnection/dbcon = new()
+dbcon.Connect("dbi:mysql:database_name:localhost:3306","username","password")
+if(!dbcon.IsConnected()) usr << dbcon.ErrorMsg()
+</pre>
+<hr>
+<font size=+1><b><a name="DBConnection.Disconnect()">Disconnect()</a></b></font><br>
+Disconnects the current MySQL database connection.
+<hr>
+<font size=+1><b><a name="DBConnection.IsConnected()">IsConnected()</a></b></font><br>
+Returns true if the DBConnection object has a connection, false otherwise.
+<hr>
+<font size=+1><b><a name="DBConnection.Quote()">Quote()</a></b></font><br>
+This will escape the string passed using the MySQL escaping function, this will prevent against things like data injection attacks<br>
+<b>Format:</b> Quote(string)<br>
+<b>Arguments:</b>
+<dd><b>string</b> The string you want to escape.<hr>
+<font size=+1><b><a name="DBConnection.ErrorMsg()">ErrorMsg()</a></b></font><br>
+This will return the error message (if any) given by the MySQL server. For an example of the usage, check the example under <a href="#DBConnection.Connect()">Connect()</a>.<hr>
+<font size=+1><b><a name="DBConnection.SelectDB()">SelectDB()</a></b></font><br>
+This allows you to quickly change the database your DBConnection object is acting on.<br>
+<b>Format:</b> SelectDB(database,dbi)<br>
+<b>Arguments:</b>
+<dd><b>database</b> The database you wish to switch to.
+<dd><b>dbi</b> (Optional) The dbi string you want to use to make the switch.<hr>
+<font size=+1><b><a name="DBConnection.NewQuery()">NewQuery()</a></b></font><br>
+This is a nice handy function that'll handle the creation of new query objects for you and return the resulting object.<br>
+<b>Format:</b> NewQuery(query,cursor)<br>
+<b>Arguments:</b>
+<dd><b>query</b> The SQL query you want to execute.
+<dd><b>cursor</b> As usual, best to leave this one alone ;)<br>
+<b>Example:</b><br>
+<pre>
+var/DBQuery/my_query = dbcon.NewQuery("SELECT * FROM `my_table`")
+if(my_query.RowCount()) usr << "Got some data."
+else usr << "No data there!"
+</pre><hr>
+<h2><a name="DBQuery">DBQuery</a></h2>
+The DBQuery datum is what handles executing SQL queries and contains all of the various data given by that query.
+<hr>
+<font size=+1><b><a name="DBQuery.Connect()">Connect()</a></b></font><br>
+This proc is a way of quickly changing the DBConnection object the query object is connected to.<br>
+<b>Format:</b> Connect(DBConnection)<br>
+<b>Arguments:</b>
+<dd><b>DBConnection</b> The new /DBConnection object to associate with this query.<hr>
+<font size=+1><b><a name="DBQuery.Execute()">Execute()</a></b></font><br>
+Executes a SQL query and returns true if the query succeded or false otherwise. If no query is passed this will execute the last query sent to the object (which is set if a query is passed to NewQuery())<br>
+<b>Format:</b> Execute(query,cursor)<br>
+<b>Arguments:</b>
+<dd><b>query</b> The SQL query to execute.
+<dd><b>cursor</b> Seriously, if you don't know what this is, no touching!<br>
+<b>Example:</b><br>
+<pre>
+var/DBQuery/query = dbcon.NewQuery("SELECT * FROM `my_table`")
+if(!query.Execute()) usr << query.ErrorMsg()
+else usr << "The query worked!"
+</pre><hr>
+<font size=+1><b><a name="DBQuery.NextRow()">NextRow()</a></b></font><br>
+Returns a list of values obtained from the MySQL query, or nothing if no rows are found.<br>
+<b>Example:</b><br>
+<pre>
+var/DBQuery/query = dbcon.NewQuery("SELECT `mycolumn` FROM `my_table`")
+query.Execute()
+while(query.NextRow())
+    var/mycolumn = query.item[1]
+    usr << "Item: [mycolumn]"
+</pre><hr>
+<font size=+1><b><a name="DBQuery.RowsAffected()">RowsAffected()</a></b></font><br>
+Returns the amount of rows affected by your MySQL query.<br>
+<b>Example:</b><br>
+<pre>
+var/DBQuery/query = dbcon.NewQuery("INSERT INTO `my_table` (`mycolumn`) VALUES ('myvalue')")
+query.Execute()
+usr << "Updated [query.RowsAffected()] row\s."
+</pre><hr>
+<font size=+1><b><a name="DBQuery.RowCount()">RowCount()</a></b></font><br>
+Returns the amount of rows displayed by your MySQL query.<br>
+<b>Example:</b><br>
+<pre>
+var/DBQuery/query = dbcon.NewQuery("SELECT `mycolumn` FROM `my_table`")
+query.Execute()
+usr << "Your query returned [query.RowCount()] row\s."
+</pre><hr>
+<font size=+1><b><a name="DBQuery.ErrorMsg()">ErrorMsg()</a></b></font><br>
+Display any errors returned by your MySQL query.<br>
+<b>Exmaple:</b><br>
+<pre>
+var/DBQuery/query = dbcon.NewQuery("SELECT `mycolumn` FROM `my_table`")
+if(!query.Execute()) usr << query.ErrorMsg()
+</pre><hr>
+<font size=+1><b><a name="DBQuery.Columns()">Columns()</a></b></font><br>
+Returns the list of columns that your query affects.<br>
+<b>Example:</b><br>
+<pre>
+var/DBQuery/query = dbcon.NewQuery("SELECT * FROM `my_table`")
+query.Execute()
+var/list/columns = query.Columns()
+for(var/DBColumn/C in columns)
+    usr << "Column ([C.position]): [C.name]"
+</pre><hr>
+<font size=+1><b><a name="DBQuery.GetRowData()">GetRowData()</a></b></font><br>
+Returns a list of data inside of a column referenced by name and not number.<br>
+<b>Example:</b><br>
+<pre>
+var/DBQuery/query = dbcon.NewQuery("SELECT `mycolumn` FROM `my_table`")
+query.Execute()
+while(query.NextRow())
+    var/list/column_data = query.GetColumnData()
+    usr << column_data["mycolumn"]
+</pre><hr>
+<font size=+1><b><a name="DBQuery.Close()">Close()</a></b></font><br>
+Clears all data from the query object so that it may be reused for a new query.<br>
+<hr>
+<font size=+1><b><a name="DBQuery.Quote()">Quote()</a></b></font><br>
+See <a href="#DBConnection.Quote()">DBConnection.Quote()</a><hr>
+<h2><a name="DBColumn">DBQuery</a></h2>
+The DBColumn object is created by the Columns() proc and contains various useful things relating to the current column of data you're working with.<hr>
+<font size=+1><b><a name="DBColumn.variables">Variables</a></b></font><br>
+<dd><b>name</b> The name of the column.
+<dd><b>table</b> The table the column belongs to.
+<dd><b>position</b> The position the column is located in on the table.
+<dd><b>sql_type</b> The data type of the column.
+<dd><b>flags</b> Any special flags set for the column.
+<dd><b>length</b> The current length of the column's data.
+<dd><b>max_length</b> The maximum length of the column's data.
+<hr>
+<font size=+1><b><a name="DBColumn.SqlTypeName()">SqlTypeName()</a></b></font><br>
+Simply returns the plain-text value of the sql_type variable.

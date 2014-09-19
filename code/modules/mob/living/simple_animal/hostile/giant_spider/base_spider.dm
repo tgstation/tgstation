@@ -35,7 +35,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	speed = 3
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/weapons/spiderlunge.ogg'
 
 	wanted_objects = list(
 		/obj/machinery/bot,          // Beepsky and friends
@@ -106,7 +106,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	// Can't open bolted/welded doors
 	if(istype(D,/obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A=D
-		if(A.locked | A.welded | A.jammed)
+		if(A.locked || A.welded || A.jammed)
 			return 0
 
 	var/turf/T = get_turf(D)

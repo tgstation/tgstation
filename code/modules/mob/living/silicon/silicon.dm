@@ -8,6 +8,9 @@
 	var/list/alarms_to_clear = list()
 	immune_to_ssd = 1
 
+	var/sensor_mode = 0 //Determines the current HUD.
+	#define SEC_HUD 1 //Security HUD mode
+	#define MED_HUD 2 //Medical HUD mode
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 
@@ -156,7 +159,7 @@
 // this function shows the health of the pAI in the Status panel
 /mob/living/silicon/proc/show_system_integrity()
 	if(!src.stat)
-		stat(null, text("System integrity: [(src.health+100)/2]%"))
+		stat(null, text("System integrity: [round((health / maxHealth) * 100)]%"))
 	else
 		stat(null, text("Systems nonfunctional"))
 
@@ -198,3 +201,50 @@
 	dat += "<br>"
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
+
+/mob/living/silicon/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0)
+	if(istype(source, /obj/machinery/containment_field))
+		var/damage = shock_damage * siemens_coeff * 0.75 // take reduced damage
+
+		if(damage <= 0)
+			damage = 0
+
+		if(take_overall_damage(0, damage, "[source]") == 0) // godmode
+			return 0
+
+		visible_message( \
+			"<span class='warning'>[src] was shocked by the [source]!</span>", \
+			"<span class='danger'>Energy pulse detected, system damaged!</span>", \
+			"<span class='warning'>You hear a heavy electrical crack.</span>" \
+		)
+
+		if(prob(20))
+			Stun(2)
+
+		var/datum/effect/effect/system/spark_spread/SparkSpread = new
+		SparkSpread.set_up(5, 1, loc)
+		SparkSpread.start()
+
+		return damage
+
+	return 0
+
+/mob/living/silicon/assess_threat() //Secbots will not target silicons!
+	return -10
+
+/mob/living/silicon/verb/sensor_mode()
+	set name = "Set Sensor Augmentation"
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical"/*,"Light Amplification"*/,"Disable")
+	switch(sensor_type)
+		if ("Security")
+			sensor_mode = SEC_HUD
+			src << "<span class='notice'>Security records overlay enabled.</span>"
+		if ("Medical")
+			sensor_mode = MED_HUD
+			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"/*
+		if ("Light Amplification")
+			src.sensor_mode = NIGHT
+			src << "<span class='notice'>Light amplification mode enabled.</span>"*/
+		if ("Disable")
+			sensor_mode = 0
+			src << "Sensor augmentations disabled."

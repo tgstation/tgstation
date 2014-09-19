@@ -215,13 +215,6 @@
 	energy_drain = 0
 	range = MELEE|RANGED
 
-	New()
-		reagents = new/datum/reagents(200)
-		reagents.my_atom = src
-		reagents.add_reagent("water", 200)
-		..()
-		return
-
 	action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
 		if(!action_checks(target) || get_dist(chassis, target)>3) return
 		if(get_dist(chassis, target)>2) return
@@ -278,6 +271,10 @@
 				return 1
 		return 0
 
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/New()
+	. = ..()
+	create_reagents(200)
+	reagents.add_reagent("water", 200)
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd
 	name = "Mounted RCD"

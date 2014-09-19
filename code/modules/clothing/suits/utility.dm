@@ -90,7 +90,7 @@
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
-
+	species_fit = list("Vox")
 
 /obj/item/clothing/suit/radiation
 	name = "Radiation suit"
@@ -105,3 +105,4 @@
 	slowdown = 1.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
 	flags_inv = HIDEJUMPSUIT
+	species_fit = list("Vox")

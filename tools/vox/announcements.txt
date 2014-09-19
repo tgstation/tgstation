@@ -22,6 +22,7 @@ sound/AI/ion_storm = Ion storm detected.  Please check all A.I. controlled equip
 sound/AI/meteors = Meteors detected on collision course with the station. Seek shelter within the core of the station immediately.
 sound/AI/newroundsexy = You want to put a banging donk on it.
 sound/AI/radiation = High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.
+sound/AI/meteorround = A meteor storm has been detected in proximity of the station and is expected to strike within a few minutes.
 
 sound/AI/outbreak_before = Confirmed outbreak of level
 sound/AI/outbreak_after  = biohazard aboard the station.  All personnel must contain the outbreak.

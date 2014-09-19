@@ -76,7 +76,7 @@
 	HORNSBLOCK     = getAssignedBlock("HORNS",      numsToAssign)
 	SMILEBLOCK     = getAssignedBlock("SMILE",      numsToAssign)
 	ELVISBLOCK     = getAssignedBlock("ELVIS",      numsToAssign)
-	
+
 	// Powers
 	SOBERBLOCK     = getAssignedBlock("SOBER",      numsToAssign, good=1)
 	PSYRESISTBLOCK = getAssignedBlock("PSYRESIST",  numsToAssign, DNA_HARD_BOUNDS, good=1)
@@ -94,13 +94,14 @@
 	//
 	// /vg/ Blocks
 	/////////////////////////////////////////////
-	
+
 	// Disabilities
 	LOUDBLOCK      = getAssignedBlock("LOUD",       numsToAssign)
 	WHISPERBLOCK   = getAssignedBlock("WHISPER",    numsToAssign)
 	DIZZYBLOCK     = getAssignedBlock("DIZZY",      numsToAssign)
-	
-	
+	SANSBLOCK      = getAssignedBlock("SANS",	numsToAssign)
+
+
 	//
 	// Static Blocks
 	/////////////////////////////////////////////.
@@ -121,6 +122,15 @@
 				assignedToBlock=blocks_assigned[G.block]
 			assignedToBlock.Add(G.name)
 			blocks_assigned[G.block]=assignedToBlock
+
+	// I WILL HAVE A LIST OF GENES THAT MATCHES THE RANDOMIZED BLOCKS GODDAMNIT!
+	for(var/block=1;block<=DNA_SE_LENGTH;block++)
+		var/name = assigned_blocks[block]
+		for(var/datum/dna/gene/gene in dna_genes)
+			if(gene.name == name || gene.block == block)
+				if(gene.block in assigned_gene_blocks)
+					warning("DNA2: Gene [gene.name] trying to add to already assigned gene block list (used by [english_list(assigned_gene_blocks[block])])")
+				assigned_gene_blocks[block] = gene
 
 	testing("DNA2: [numsToAssign.len] blocks are unused: [english_list(numsToAssign)]")
 

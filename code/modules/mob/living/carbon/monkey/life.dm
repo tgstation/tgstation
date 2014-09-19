@@ -126,6 +126,9 @@
 			src << "\red You suddenly feel very weak."
 			Weaken(3)
 			emote("collapse")
+			if(reagents.has_reagent("creatine"))
+				var/datum/reagent/creatine/C = reagents.get_reagent("creatine")
+				C.dehulk(src)
 
 		if (radiation)
 
@@ -180,14 +183,14 @@
 			if(B.virus2.len)
 				for (var/ID in B.virus2)
 					var/datum/disease2/disease/V = B.virus2[ID]
-					if (infect_virus2(src,V))
+					if (infect_virus2(src,V, notes="(Airborne from blood)"))
 						return 1
 
 		for(var/obj/effect/decal/cleanable/mucus/M in get_turf(src))
 			if(M.virus2.len)
 				for (var/ID in M.virus2)
 					var/datum/disease2/disease/V = M.virus2[ID]
-					if (infect_virus2(src,V))
+					if (infect_virus2(src,V, notes="(Airborne from mucus)"))
 						return 1
 		return 0
 

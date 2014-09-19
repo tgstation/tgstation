@@ -1,7 +1,7 @@
 //Updates the mob's health from organs and mob damage variables
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
 		return
 	var/total_burn	= 0
@@ -9,9 +9,9 @@
 	for(var/datum/organ/external/O in organs)	//hardcoded to streamline things a bit
 		total_brute	+= O.brute_dam
 		total_burn	+= O.burn_dam
-	health = 100 - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	//TODO: fix husking
-	if( ((100 - total_burn) < config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
+	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
 		ChangeToHusk()
 	return
 
@@ -47,7 +47,7 @@
 
 /mob/living/carbon/human/adjustFireLoss(var/amount)
 	if(amount > 0)
-		take_overall_damage(0, amount)
+		take_overall_damage(0, amount * species.fireloss_mult)
 	else
 		heal_overall_damage(0, -amount)
 
@@ -263,4 +263,22 @@ This function restores all organs.
 			organ.implants += S
 			visible_message("<span class='danger'>The projectile sticks in the wound!</span>")
 			S.add_blood(src)
+	if(istype(used_weapon,/obj/item/projectile/flare)) //We want them to carry the flare, not a projectile
+		var/obj/item/projectile/flare/F = used_weapon
+		if(damagetype == BURN && F.embed && istype(F.shot_from, /obj/item/weapon/gun/projectile/flare/syndicate) && prob(75)) //only syndicate guns are dangerous
+			var/obj/item/device/flashlight/flare/FS = new
+			FS.name = "shot [FS.name]"
+			FS.desc = "[FS.desc]. It looks like it was fired from [F.shot_from]."
+			FS.loc = src
+			organ.implants += FS
+			visible_message("<span class='danger'>The flare sticks in the wound!</span>")
+			FS.add_blood(src)
+			FS.luminosity = 4 //not so bright, because it's inside them
+			FS.Light(src) //Now they glow, because the flare is lit
+			if(prob(80)) //tends to happen, which is good
+				visible_message("<span class='danger'><b>[name]</b> bursts into flames!</span>", "<span class='danger'>You burst into flames!</span>")
+				on_fire = 1
+				adjust_fire_stacks(0.5) //as seen in ignite code
+				update_icon = 1
+			qdel(F)
 	return 1

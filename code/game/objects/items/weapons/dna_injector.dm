@@ -19,6 +19,8 @@
 	var/value=0
 
 /obj/item/weapon/dnainjector/New()
+	. = ..()
+
 	if(datatype && block)
 		buf=new
 		buf.dna=new
@@ -1122,7 +1124,7 @@
 
 /obj/item/weapon/dnainjector/antiloud
 	name = "DNA-Injector (Anti-Loud)"
-	desc = "No, keep yelling!"
+	desc = "EVEN WITH CRUISE CONTROL, YOU STILL HAVE TO STEER!"
 	datatype = DNA2_BUF_SE
 	value = 0x001
 	//block = 14
@@ -1137,17 +1139,17 @@
 	value = 0xFFF
 	//block = 14
 	New()
-		block = ELVISBLOCK
+		block = WHISPERBLOCK
 		..()
 
-/obj/item/weapon/dnainjector/antiquiet
+/obj/item/weapon/dnainjector/antiwhisper
 	name = "DNA-Injector (Anti-Quiet)"
 	desc = "WOOOO HOOOO!"
 	datatype = DNA2_BUF_SE
 	value = 0x001
 	//block = 14
 	New()
-		block = ELVISBLOCK
+		block = WHISPERBLOCK
 		..()
 
 /obj/item/weapon/dnainjector/dizzy
@@ -1157,7 +1159,7 @@
 	value = 0xFFF
 	//block = 14
 	New()
-		block = ELVISBLOCK
+		block = DIZZYBLOCK
 		..()
 
 /obj/item/weapon/dnainjector/antidizzy
@@ -1167,5 +1169,25 @@
 	value = 0x001
 	//block = 14
 	New()
-		block = ELVISBLOCK
+		block = DIZZYBLOCK
+		..()
+		
+/obj/item/weapon/dnainjector/sans
+	name = "DNA-Injector (Wacky)"
+	desc = "<span class='sans'>#wow #woah</span>"
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 14
+	New()
+		block = SANSBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antisans
+	name = "DNA-Injector (Anti-Wacky)"
+	desc = "Worst font."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 14
+	New()
+		block = SANSBLOCK
 		..()

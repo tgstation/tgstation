@@ -20,7 +20,6 @@
 
 	var/blocks_air = 0
 	var/icon_old = null
-	var/pathweight = 1
 
 	// Bot shit
 	var/targetted_by=null
@@ -63,102 +62,69 @@
 	..()
 	return 0
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+/turf/Enter(atom/movable/O, atom/oldloc)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		usr << "\red Movement is admin-disabled." //This is to identify lag problems
-		return
-	if (!mover || !isturf(mover.loc))
-		return 1
-
-
-	//First, check objects to block exit that are not on the border
-	for(var/obj/obstacle in mover.loc)
-		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
-			if(!obstacle.CheckExit(mover, src))
-				mover.Bump(obstacle, 1)
-				return 0
-
-	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle in mover.loc)
-		if((border_obstacle.flags & ON_BORDER) && (mover != border_obstacle) && (forget != border_obstacle))
-			if(!border_obstacle.CheckExit(mover, src))
-				mover.Bump(border_obstacle, 1)
-				return 0
-
-	//Next, check objects to block entry that are on the border
-	for(var/obj/border_obstacle in src)
-		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
-				mover.Bump(border_obstacle, 1)
-				return 0
-
-	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
-		mover.Bump(src, 1)
 		return 0
 
-	//Finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle in src)
-		if(obstacle.flags & ~ON_BORDER)
-			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
-				mover.Bump(obstacle, 1)
+	// first, check objects to block exit that are not on the border
+	for(var/atom/movable/obstacle in oldloc)
+		if((obstacle.flags & ~ON_BORDER) && (obstacle != O))
+			if(!obstacle.CheckExit(O, src))
+				O.Bump(obstacle, 1)
 				return 0
-	return 1 //Nothing found to block so return success!
 
+	// now, check objects to block exit that are on the border
+	for(var/atom/movable/border_obstacle in oldloc)
+		if((border_obstacle.flags & ON_BORDER) && (border_obstacle != O))
+			if(!border_obstacle.CheckExit(O, src))
+				O.Bump(border_obstacle, 1)
+				return 0
 
-/turf/Entered(atom/atom as mob|obj)
-	if(movement_disabled)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
-		return
-	..()
-//vvvvv Infared beam stuff vvvvv
+	// next, check objects to block entry that are on the border
+	for(var/atom/movable/border_obstacle in contents)
+		if(border_obstacle.flags & ON_BORDER)
+			if(!border_obstacle.CanPass(O, oldloc))
+				O.Bump(border_obstacle, 1)
+				return 0
 
-	if ((atom && atom.density && !( istype(atom, /obj/effect/beam) )))
-		for(var/obj/effect/beam/i_beam/I in src)
-			spawn( 0 )
-				if (I)
-					I.hit()
-				break
+	// then, check the turf itself
+	if (!CanPass(O, src))
+		O.Bump(src, 1)
+		return 0
 
-//^^^^^ Infared beam stuff ^^^^^
+	// finally, check objects/mobs to block entry that are not on the border
+	for(var/atom/movable/obstacle in contents)
+		if(obstacle.flags & ~ON_BORDER)
+			if(!obstacle.CanPass(O, oldloc))
+				O.Bump(obstacle, 1)
+				return 0
 
-	if(!istype(atom, /atom/movable))
-		return
+	return 1 // nothing found to block so return success!
 
-	var/atom/movable/M = atom
-
+/turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
-	if(ismob(M))
-		if(!M:lastarea)
-			M:lastarea = get_area(M.loc)
-		if(M:lastarea.has_gravity == 0)
-			inertial_drift(M)
+	if(ismob(Obj))
+		if(!Obj:lastarea)
+			Obj:lastarea = get_area(Obj.loc)
+		if(Obj:lastarea.has_gravity == 0)
+			inertial_drift(Obj)
 
 	/*
-		if(M.flags & NOGRAV)
-			inertial_drift(M)
+		if(Obj.flags & NOGRAV)
+			inertial_drift(Obj)
 	*/
 
-
-
 		else if(!istype(src, /turf/space))
-			M:inertia_dir = 0
+			Obj:inertia_dir = 0
 	..()
 	var/objects = 0
-	for(var/atom/A as mob|obj|turf|area in src)
-		if(objects > loopsanity)	break
-		objects++
-		spawn( 0 )
-			if ((A && M))
-				A.HasEntered(M, 1)
-			return
-	objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))
 		if(objects > loopsanity)	break
 		objects++
 		spawn( 0 )
-			if ((A && M))
-				A.HasProximity(M, 1)
+			if ((A && Obj))
+				A.HasProximity(Obj, 1)
 			return
 	return
 
@@ -237,7 +203,7 @@
 		del L
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/turf/N)
+/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1)
 	if (!N)
 		return
 
@@ -290,6 +256,9 @@
 		if (istype(W,/turf/simulated/floor))
 			W.RemoveLattice()
 
+		if(tell_universe)
+			universe.OnTurfChange(W)
+
 		if(air_master)
 			air_master.mark_for_update(src)
 
@@ -308,6 +277,9 @@
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
+		if(tell_universe)
+			universe.OnTurfChange(W)
+
 		if(air_master)
 			air_master.mark_for_update(src)
 
@@ -320,6 +292,15 @@
 
 	decals += decal
 	overlays += decal
+
+/turf/proc/ClearDecals()
+	if(!decals)
+		return
+
+	for(var/image/decal in decals)
+		overlays -= decal
+
+	decals = 0
 
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
@@ -410,8 +391,7 @@
 /turf/proc/Distance(turf/t)
 	if(get_dist(src,t) == 1)
 		var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
-		cost *= (pathweight+t.pathweight)/2
-		return cost
+		return sqrt(cost)
 	else
 		return get_dist(src,t)
 /turf/proc/AdjacentTurfsSpace()

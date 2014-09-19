@@ -30,9 +30,8 @@
 	item_state = "balloon-empty"
 
 /obj/item/toy/balloon/New()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
+	. = ..()
+	create_reagents(10)
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
@@ -112,7 +111,7 @@
 	desc = "\"Singulo\" brand spinning toy."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is putting \his head into the [src.name]! It looks like \he's  trying to commit suicide!</b>"
 		return (BRUTELOSS|TOXLOSS|OXYLOSS)
@@ -374,10 +373,20 @@
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
+	var/style_type = /datum/writing_style/crayon
+	var/datum/writing_style/style
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
-		return (BRUTELOSS|OXYLOSS)
+/obj/item/toy/crayon/New()
+	..()
+
+	style = new style_type
+
+/obj/item/toy/crayon/proc/Format(var/mob/user,var/text,var/obj/item/weapon/paper/P)
+	return style.Format(text,src,user,P)
+
+/obj/item/toy/crayon/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
+	return (BRUTELOSS|OXYLOSS)
 
 
 
@@ -432,7 +441,7 @@
 		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 		del(src)
 
-/obj/item/toy/snappop/HasEntered(H as mob|obj)
+/obj/item/toy/snappop/Crossed(H as mob|obj)
 	if((ishuman(H))) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(M.m_intent == "run")
@@ -459,10 +468,9 @@
 	flags =  USEDELAY
 
 /obj/item/toy/waterflower/New()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("water", 10)
+	. = ..()
+	create_reagents(10)
+	reagents.add_reagent("water", 10)
 
 /obj/item/toy/waterflower/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
@@ -618,7 +626,7 @@
 	desc = "The holy grail of all programmers."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "gooncode"
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</b>"
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)

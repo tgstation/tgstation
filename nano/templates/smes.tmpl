@@ -3,9 +3,9 @@
 		Stored Capacity:
 	</div>
 	<div class="itemContent">
-		{{:~displayBar(storedCapacity, 0, 100, charging ? 'good' : 'average')}}
+		{{:helper.displayBar(data.storedCapacity, 0, 100, data.charging ? 'good' : 'average')}}
 		<div class="statusValue">
-			{{:~round(storedCapacity)}}%
+			{{:helper.round(data.storedCapacity)}}%
 		</div>
 	</div>
 </div>
@@ -16,9 +16,9 @@
 		Charge Mode:
 	</div>
 	<div class="itemContent">
-		{{:~link('Auto', 'refresh', {'cmode' : 1}, chargeMode ? 'selected' : null)}}{{:~link('Off', 'close', {'cmode' : 1}, chargeMode ? null : 'selected')}}
+		{{:helper.link('Auto', 'refresh', {'cmode' : 1}, data.chargeMode ? 'selected' : null)}}{{:helper.link('Off', 'close', {'cmode' : 1}, data.chargeMode ? null : 'selected')}}
 		&nbsp;
-		{{if charging}}
+		{{if data.charging}}
 			[<span class='good'>Charging</span>]
 		{{else}}
 			[<span class='average'>Not Charging</span>]
@@ -31,12 +31,12 @@
 		Input Level:
 	</div>
 	<div class="itemContent">
-		{{:~displayBar(chargeLevel, 0, chargeMax)}}			
+		{{:helper.displayBar(data.chargeLevel, 0, data.chargeMax)}}
 		<div style="clear: both; padding-top: 4px;">
-			{{:~link('MIN', null, {'input' : 'min'}, (chargeLevel > 0) ? null : 'disabled')}}
-			{{:~link('SET', null, {'input' : 'set'}, null)}}			
-			{{:~link('MAX', null, {'input' : 'max'}, (chargeLevel < chargeMax) ? null : 'disabled')}}
-			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:chargeLevel}} W&nbsp;</div>
+			{{:helper.link('MIN', null, {'input' : 'min'}, (data.chargeLevel > 0) ? null : 'disabled')}}
+			{{:helper.link('SET', null, {'input' : 'set'}, null)}}			
+			{{:helper.link('MAX', null, {'input' : 'max'}, (data.chargeLevel < data.chargeMax) ? null : 'disabled')}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.chargeLevel}} W&nbsp;</div>
 		</div>
 	</div>
 </div>
@@ -47,7 +47,7 @@
 		Output Status:
 	</div>
 	<div class="itemContent">
-		{{:~link('Online', 'power', {'online' : 1}, outputOnline ? 'selected' : null)}}{{:~link('Offline', 'close', {'online' : 1}, outputOnline ? null : 'selected')}}
+		{{:helper.link('Online', 'power', {'online' : 1}, data.outputOnline ? 'selected' : null)}}{{:helper.link('Offline', 'close', {'online' : 1}, data.outputOnline ? null : 'selected')}}
 	</div>
 </div>
 
@@ -56,12 +56,12 @@
 		Output Level:
 	</div>
 	<div class="itemContent">
-		{{:~displayBar(outputLevel, 0, outputMax)}}			
+		{{:helper.displayBar(data.outputLevel, 0, data.outputMax)}}
 		<div style="clear: both; padding-top: 4px;">
-			{{:~link('MIN', null, {'output' : 'min'}, (outputLevel > 0) ? null : 'disabled')}}
-			{{:~link('SET', null, {'output' : 'set'}, null)}}			
-			{{:~link('MAX', null, {'output' : 'max'}, (outputLevel < outputMax) ? null : 'disabled')}}
-			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:outputLevel}} W&nbsp;</div>			
+			{{:helper.link('MIN', null, {'output' : 'min'}, (data.outputLevel > 0) ? null : 'disabled')}}
+			{{:helper.link('SET', null, {'output' : 'set'}, null)}}			
+			{{:helper.link('MAX', null, {'output' : 'max'}, (data.outputLevel < data.outputMax) ? null : 'disabled')}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.outputLevel}} W&nbsp;</div>			
 		</div>
 	</div>
 </div>
@@ -71,9 +71,9 @@
 		Output Load:
 	</div>
 	<div class="itemContent">
-		{{:~displayBar(outputLoad, 0, outputMax, (outputLoad < outputLevel) ? 'good' : 'average')}}
+		{{:helper.displayBar(data.outputLoad, 0, data.outputMax, (data.outputLoad < data.outputLevel) ? 'good' : 'average')}}
 		<div class="statusValue">
-			{{:outputLoad}} W
+			{{:data.outputLoad}} W
 		</div>
 	</div>
 </div>

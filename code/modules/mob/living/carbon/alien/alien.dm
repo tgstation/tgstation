@@ -48,7 +48,7 @@
 	return 2
 
 // MULEBOT SMASH
-/mob/living/carbon/alien/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/alien/Crossed(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOverCreature(src,"#00ff00")

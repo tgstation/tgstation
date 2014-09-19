@@ -408,7 +408,7 @@
 		//	playsound(H.loc, 'male_fallscream.ogg', 50, 0)
 		//playsound(H.loc, 'bubbles.ogg', 50, 0)
 		//playsound(H.loc, 'loudcrunch2.ogg', 50, 0)
-		var/mob/living/carbon/human/skellington/nH = new /mob/living/carbon/human/skellington(H.loc)
+		var/mob/living/carbon/human/skellington/nH = new /mob/living/carbon/human/skellington(H.loc, delay_ready_dna=1)
 		nH.real_name = H.real_name
 		nH.name = "[H.name]'s skeleton"
 		//H.decomp_stage = 4

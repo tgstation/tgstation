@@ -18,7 +18,7 @@
 
 	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	var/obj/item/projectile/in_chamber = null
-	var/caliber = ""
+	var/list/caliber //the ammo the gun will accept. Now multiple types (make sure to set them to =1)
 	var/silenced = 0
 	var/recoil = 0
 	var/ejectshell = 1

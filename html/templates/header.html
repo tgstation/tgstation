@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+HEY, YOU.
+
+ADDING A CHANGELOG ENTRY? MAKE changelog/USERNAME.yml.  READ example.yml SO YOU DON'T SCREW UP.
+
+ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old teams)
+--->
+<html>
+	<head>
+		<title>/vg/station Changelog</title>
+		<link rel="stylesheet" type="text/css" href="changelog.css">
+		<script type='text/javascript'>
+            function changeText(tagID, newText, linkTagID) {
+                var tag = document.getElementById(tagID);
+                tag.innerHTML = newText;
+                var linkTag = document.getElementById(linkTagID);
+                linkTag.removeAttribute("href");
+                linkTag.removeAttribute("onclick");
+            }
+
+		</script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<body>
+		<!--
+		Header Section
+		-->
+		<div class="header">
+			<h1>/vg/station - A Space Station 13 Server</h1>
+			<p>
+				<b>Forum | <a href="http://baystation12.net/wiki/">Wiki</a> | <a href="https://github.com/d3athrow/vgstation13">Source</a></b>
+			</p>
+			<p>
+				<b>Visit our IRC channel:</b><a href="irc://irc.rizon.net/vgstation">#vgstation on irc.rizon.net</a>
+			</p>
+			<p>
+				<em>Code licensed under <a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>. Content licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.</em>
+			</p>
+
+			<h2>/vg/station 13 Credits</h2>
+			<dl class="creditblock">
+				<dt class="creditsection">
+					Code:
+				</dt>
+				<dd>
+					Cloroxygen, Duny, Emisune, IconLeap, N3X15, Pomf123, SarahJohnson
+				</dd>
+				<dt class="creditsection">
+					Sprites:
+				</dt>
+				<dd>
+					Bustatime, Cloroxygen, Cogwerks, Dbuhos, Emisune, ISaidNo, Kokuten, N3X15, Osaifh, Rei1226
+				</dd>
+				<dt class="creditsection">
+					Sounds:
+				</dt>
+				<dd>
+					NOBODY ;_;
+				</dd>
+				<dt class="creditsection">
+					Thanks To:
+				</dt>
+				<dd>
+					Baystation, Festival TTS, /tg/ station, Goonstation, Animus Station, Daedalus, and original Spacestation 13 devs. Skibiliano for the IRC bot.
+				</dd>
+			</dl>
+		</div>
+
+		<div class="testserver">
+			Visit the Bleeding-Edge test server at <a href="byond://ss13.nexisonline.net:1336">byond://ss13.nexisonline.net:1336</a>
+		</div>
+
+		<!--
+		
+		AGAIN, TO ADD SHIT, ADD AND MAINTAIN YOUR OWN changelog/USERNAME.yml FILE. 
+		
+		*** DO NOT FUCK WITH THIS FILE OR YOU WILL CAUSE MERGE CONFLICTS. ***
+		
+		-->

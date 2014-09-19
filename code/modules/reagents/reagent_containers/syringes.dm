@@ -173,18 +173,6 @@
 				if(ismob(target) && target == user)
 					src.reagents.reaction(target, INGEST)
 
-				if(isobj(target))
-					// /vg/: Logging transfers of bad things
-					if(target.reagents_to_log.len)
-						var/list/badshit=list()
-						for(var/bad_reagent in target.reagents_to_log)
-							if(reagents.has_reagent(bad_reagent))
-								badshit += reagents_to_log[bad_reagent]
-						if(badshit.len)
-							var/hl="\red <b>([english_list(badshit)])</b> \black"
-							message_admins("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-							log_game("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].")
-
 				spawn(5)
 					var/datum/reagent/blood/B
 					for(var/datum/reagent/blood/d in src.reagents.reagent_list)
@@ -198,6 +186,19 @@
 					else
 						trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
+
+					if(isobj(target))
+						// /vg/: Logging transfers of bad things
+						if(target.reagents_to_log.len)
+							var/list/badshit=list()
+							for(var/bad_reagent in target.reagents_to_log)
+								if(reagents.has_reagent(bad_reagent))
+									badshit += reagents_to_log[bad_reagent]
+							if(badshit.len)
+								var/hl="\red <b>([english_list(badshit)])</b> \black"
+								message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+								log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
+
 					if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 						mode = SYRINGE_DRAW
 						update_icon()

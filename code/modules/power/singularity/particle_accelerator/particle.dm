@@ -3,8 +3,8 @@
 /obj/effect/accelerated_particle
 	name = "Accelerated Particles"
 	desc = "Small things moving very fast."
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
-	icon_state = "particle"//Need a new icon for this
+	icon = 'icons/obj/machines/particle_accelerator2.dmi'
+	icon_state = "particle1"//Need a new icon for this
 	anchored = 1
 	density = 1
 	var/movement_range = 10
@@ -21,14 +21,17 @@
 /obj/effect/accelerated_particle/weak
 	movement_range = 8
 	energy = 5
+	icon_state="particle0"
 
 /obj/effect/accelerated_particle/strong
 	movement_range = 15
 	energy = 15
+	icon_state="particle2"
 
 /obj/effect/accelerated_particle/powerful
 	movement_range = 20
 	energy = 50
+	icon_state="particle3"
 
 /obj/effect/accelerated_particle/New(loc, dir = 2)
 	. = ..()

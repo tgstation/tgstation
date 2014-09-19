@@ -1,6 +1,5 @@
 /datum/event/disease_outbreak
 	announceWhen	= 15
-	oneShot			= 1
 
 
 /datum/event/disease_outbreak/announce()

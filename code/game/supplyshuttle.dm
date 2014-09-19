@@ -46,16 +46,16 @@ var/list/mechtoys = list(
 	layer = 4
 	explosion_resistance = 5
 
-/obj/structure/plasticflaps/CanPass(atom/A, turf/T)
-	if(istype(A) && A.checkpass(PASSGLASS))
+/obj/structure/plasticflaps/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(60)
 
-	var/obj/structure/stool/bed/B = A
-	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	var/obj/structure/stool/bed/B = mover
+	if (istype(mover, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
 		return 0
 
-	else if(istype(A, /mob/living)) // You Shall Not Pass!
-		var/mob/living/M = A
+	else if(isliving(mover)) // You Shall Not Pass!
+		var/mob/living/M = mover
 		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime) && !istype(M, /mob/living/simple_animal/mouse))  //If your not laying down, or a small creature, no pass.
 			return 0
 	return ..()
@@ -101,6 +101,8 @@ var/list/mechtoys = list(
 	var/last_viewed_group = "categories"
 	var/datum/money_account/current_acct
 
+	l_color = "#87421F"
+
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
 	icon = 'icons/obj/computer.dmi'
@@ -110,6 +112,8 @@ var/list/mechtoys = list(
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/last_viewed_group = "categories"
 	var/datum/money_account/current_acct
+
+	l_color = "#87421F"
 
 /*
 /obj/effect/marker/supplymarker

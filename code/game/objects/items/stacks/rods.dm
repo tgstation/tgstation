@@ -45,11 +45,11 @@
 /obj/item/stack/rods/attack_self(mob/user as mob)
 	src.add_fingerprint(user)
 
-	if(!istype(user.loc,/turf)) return 0
+	if(!istype(user.loc, /turf)) return 0
 
-	if (locate(/obj/structure/grille, usr.loc))
-		for(var/obj/structure/grille/G in usr.loc)
-			if (G.destroyed)
+	if(locate(/obj/structure/grille, user.loc))
+		for(var/obj/structure/grille/G in user.loc)
+			if(G.destroyed)
 				G.health = 10
 				G.density = 1
 				G.destroyed = 0
@@ -59,15 +59,15 @@
 				return 1
 	else
 		if(amount < 2)
-			user << "\blue You need at least two rods to do this."
-			return
-		usr << "\blue Assembling grille..."
-
-		if (!do_after(usr, 10))
+			user << "<span class='notice'>You need at least two rods to do this.</span>"
 			return
 
-		var /obj/structure/grille/Grille = getFromPool(/obj/structure/grille, usr.loc)
-		usr << "\blue You assemble a grille"
-		Grille.add_fingerprint(usr)
+		user << "<span class='notice'>Assembling grille...</span>"
+
+		if(!do_after(user, 10))
+			return
+
+		var/obj/structure/grille/Grille = getFromPool(/obj/structure/grille, user.loc)
+		user << "<span class='notice'>You assembled a grille!</span>"
+		Grille.add_fingerprint(user)
 		use(2)
-	return

@@ -33,6 +33,7 @@ Refactored AI modules by N3X15
 	var/modflags = 0
 
 /obj/item/weapon/aiModule/New()
+	. = ..()
 	name = "'[modname]' [modtype]"
 	updateLaw()
 

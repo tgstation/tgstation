@@ -1,4 +1,3 @@
-
 var/global/normal_ooc_colour = "#002eb8"
 
 /client/verb/ooc(msg as text)
@@ -64,7 +63,6 @@ var/global/normal_ooc_colour = "#002eb8"
 					else
 						display_name = holder.fakekey
 			C << "<font color='[display_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
-
 			/*
 			if(holder)
 				if(!holder.fakekey || C.holder)

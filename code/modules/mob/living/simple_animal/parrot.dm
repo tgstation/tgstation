@@ -50,7 +50,7 @@
 	response_disarm = "gently moves aside"
 	response_harm   = "swats"
 	stop_automated_movement = 1
-	a_intent = "harm" //parrots now start "aggressive" since only player parrots will nuzzle.
+	a_intent = "hurt" //parrots now start "aggressive" since only player parrots will nuzzle.
 	attacktext = "chomps"
 	friendly = "grooms"
 
@@ -286,6 +286,7 @@
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
 		user << "\blue [src] eagerly devours the cracker."
+		playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 	..()
 	return
 
@@ -505,7 +506,7 @@
 		var/mob/living/L = parrot_interest
 		if(melee_damage_upper == 0)
 			melee_damage_upper = parrot_damage_upper
-			a_intent = "harm"
+			a_intent = "hurt"
 
 		//If the mob is close enough to interact with
 		if(in_range(src, parrot_interest))
@@ -706,6 +707,7 @@
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
 		emote("[src] eagerly downs the cracker")
+		playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		return 1
 
 
@@ -755,7 +757,7 @@
 		a_intent = "help"
 	else
 		melee_damage_upper = parrot_damage_upper
-		a_intent = "harm"
+		a_intent = "hurt"
 	return
 
 /*

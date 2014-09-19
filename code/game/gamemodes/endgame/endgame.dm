@@ -7,8 +7,6 @@
  // Essentially a policy manager.  Once shit hits the fan, this changes its policies.
  // Called by master controller.
 
- var/global/datum/universal_state/universe = new
-
  // Default shit.
 /datum/universal_state
 	// Just for reference, for now.
@@ -26,8 +24,6 @@
  	// Simulates stuff getting broken due to molecular bonds decaying.
  	var/decay_rate = 0
 
- 	var/escape = 0 // NO ESCAPE
-
 // Actually decay the turf.
 /datum/universal_state/proc/DecayTurf(var/turf/T)
 	if(istype(T,/turf/simulated/wall))
@@ -43,6 +39,30 @@
 			F.ReplaceWithLattice()
 		return
 
-// Apply changes to a turf
-/datum/universal_state/proc/FilterTurf(var/turf/T)
+// Return 0 to cause shuttle call to fail.
+/datum/universal_state/proc/OnShuttleCall(var/mob/user)
+	return 1
+
+// Processed per tick
+/datum/universal_state/proc/OnTurfTick(var/turf/T)
+	if(decay_rate && prob(decay_rate))
+		DecayTurf(T)
+
+// Apply changes when exiting state
+/datum/universal_state/proc/OnExit()
  	// Does nothing by default
+
+// Apply changes when entering state
+/datum/universal_state/proc/OnEnter()
+ 	// Does nothing by default
+
+// Apply changes to a new turf.
+/datum/universal_state/proc/OnTurfChange(var/turf/NT)
+ 	return
+
+/proc/SetUniversalState(var/newstate,var/on_exit=1, var/on_enter=1)
+	if(on_exit)
+		universe.OnExit()
+	universe = new newstate
+	if(on_enter)
+		universe.OnEnter()

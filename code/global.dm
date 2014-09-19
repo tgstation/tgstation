@@ -18,6 +18,9 @@ var/global/list/events = list()
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 
 var/global/list/global_map = null
+
+var/global/datum/universal_state/universe = new
+
 	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
 	//Resulting sector map looks like
 	//|_1_|_4_|
@@ -105,6 +108,7 @@ var/POLYMORPHBLOCK = 0
 var/LOUDBLOCK = 0
 var/WHISPERBLOCK = 0
 var/DIZZYBLOCK = 0
+var/SANSBLOCK = 0
 
 
 
@@ -179,7 +183,19 @@ var/list/latejoin = list()
 var/list/prisonwarp = list()	//prisoners go to these
 var/list/holdingfacility = list()	//captured people go here
 var/list/xeno_spawn = list()//Aliens spawn at these.
-//	list/mazewarp = list()
+var/list/endgame_safespawns = list()
+var/list/endgame_exits = list()
+var/list/meteor_materialkit = list()
+var/list/meteor_bombkit = list()
+var/list/meteor_bombkitextra = list()
+var/list/meteor_tankkit = list()
+var/list/meteor_canisterkit = list()
+var/list/meteor_buildkit = list()
+var/list/meteor_pizzakit = list()
+var/list/meteor_panickit = list()
+var/list/meteor_shieldkit = list()
+var/list/meteor_genkit = list()
+var/list/meteor_breachkit = list()
 var/list/tdome1 = list()
 var/list/tdome2 = list()
 var/list/tdomeobserve = list()
@@ -285,3 +301,43 @@ var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the
 
 // Recall time limit:  2 hours
 var/recall_time_limit=72000
+
+//Goonstyle scoreboard
+// NOW AN ASSOCIATIVE LIST
+// NO FUCKING EXCUSE FOR THE ATROCITY THAT WAS
+var/list/score=list(
+	"crewscore"      = 0, // this is the overall var/score for the whole round
+	"stuffshipped"   = 0, // how many useful items have cargo shipped out?
+	"stuffharvested" = 0, // how many harvests have hydroponics done?
+	"oremined"       = 0, // obvious
+	"researchdone"   = 0,
+	"eventsendured"  = 0, // how many random events did the station survive?
+	"powerloss"      = 0, // how many APCs have poor charge?
+	"escapees"       = 0, // how many people got out alive?
+	"deadcrew"       = 0, // dead bodies on the station, oh no
+	"mess"           = 0, // how much poo, puke, gibs, etc went uncleaned
+	"meals"          = 0,
+	"disease"        = 0, // how many rampant, uncured diseases are on board the station
+	"deadcommand"    = 0, // used during rev, how many command staff perished
+	"arrested"       = 0, // how many traitors/revs/whatever are alive in the brig
+	"traitorswon"    = 0, // how many traitors were successful?
+	"allarrested"    = 0, // did the crew catch all the enemies alive?
+	"opkilled"       = 0, // used during nuke mode, how many operatives died?
+	"disc"           = 0, // is the disc safe and secure?
+	"nuked"          = 0, // was the station blown into little bits?
+
+	// these ones are mainly for the stat panel
+	"powerbonus"    = 0, // if all APCs on the station are running optimally, big bonus
+	"messbonus"     = 0, // if there are no messes on the station anywhere, huge bonus
+	"deadaipenalty" = 0, // is the AI dead? if so, big penalty
+	"foodeaten"     = 0, // nom nom nom
+	"clownabuse"    = 0, // how many times a clown was punched, struck or otherwise maligned
+	"richestname"   = null, // this is all stuff to show who was the richest alive on the shuttle
+	"richestjob"    = null,  // kinda pointless if you dont have a money system i guess
+	"richestcash"   = 0,
+	"richestkey"    = null,
+	"dmgestname"    = null, // who had the most damage on the shuttle (but was still alive)
+	"dmgestjob"     = null,
+	"dmgestdamage"  = 0,
+	"dmgestkey"     = null
+)

@@ -62,20 +62,18 @@
 		type_instances[type] = type_instances[type] - 1
 	else
 		type_instances[type] = 0
-		WARNING("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type at least adds to type_instances\[type\].")
+		WARNING("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type calls AddToProfiler().")
 
 /atom/Destroy()
 	// Only call when we're actually deleted.
 	DeleteFromProfiler()
 
-	//world << "[type] - [tag] - [x].[y].[z]"
-
-	density = 0
+	if(reagents)
+		reagents.Destroy()
+		reagents = null
 
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
-
-	..()
 
 /atom/New()
 	. = ..()
@@ -128,9 +126,6 @@
 
 /atom/proc/CheckExit()
 	return 1
-
-/atom/proc/HasEntered(atom/movable/AM as mob|obj)
-	return
 
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
@@ -273,6 +268,8 @@ its easier to just keep the beam vertical.
 		return
 	usr << "That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
 	usr << desc
+	if(on_fire)
+		usr << "\red OH SHIT! IT'S ON FIRE!"
 	// *****RM
 	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 	return

@@ -63,7 +63,7 @@
 	throw_speed = 4
 	throw_range = 20
 
-	HasEntered(AM as mob|obj)
+	Crossed(AM as mob|obj)
 		var/burned = rand(2,5)
 		if(istype(AM, /mob/living))
 			var/mob/living/M = AM

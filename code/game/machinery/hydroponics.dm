@@ -40,6 +40,11 @@
 
 	RefreshParts()
 
+/obj/machinery/hydroponics/Del()
+	for(var/obj/O in src.component_parts) O.loc = null
+	src.component_parts.len = 0
+	return ..()
+	
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
 		if(planted)
@@ -55,7 +60,7 @@
 		..()
 		return
 
-/obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -351,6 +356,13 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	else if ( istype(myseed, /obj/item/seeds/plumpmycelium ))
 		del(myseed)
 		myseed = new /obj/item/seeds/walkingmushroommycelium
+	else if ( istype(myseed, /obj/item/seeds/synthmeatseed ))
+		del(myseed)
+		switch(rand(1,100))
+			if(1 to 50)
+				myseed = new /obj/item/seeds/synthbuttseed
+			if(51 to 100)
+				myseed = new /obj/item/seeds/synthbrainseed
 
 	else if ( istype(myseed, /obj/item/seeds/chiliseed ))
 		del(myseed)
@@ -839,7 +851,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if(I.reliability != 100 && crit_fail)
 					I.crit_fail = 1
 				I.loc = src.loc
-			del(src)
+			qdel(src)
 		return 1
 	return
 

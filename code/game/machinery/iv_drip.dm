@@ -156,14 +156,14 @@
 		return
 
 	mode = !mode
-	usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
+	usr << "The [src] is now [mode ? "injecting" : "taking blood"]."
 
 /obj/machinery/iv_drip/examine()
 	set src in view()
 	..()
 	if (!(usr in view(2)) && usr!=src.loc) return
 
-	usr << "The IV drip is [mode ? "injecting" : "taking blood"]."
+	usr << "The [src] is [mode ? "injecting" : "taking blood"]."
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)

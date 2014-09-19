@@ -658,7 +658,7 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/weapon/cloaking_device(M), slot_r_store)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/ammo_magazine/a357(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/ammo_storage/box/a357(M), slot_l_store)
 
 		if ("tournament chef") //Steven Seagal FTW
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(M), slot_w_uniform)
@@ -773,7 +773,7 @@ Pressure: [env.return_pressure()]"}
 				sec_briefcase.contents += new /obj/item/weapon/spacecash/c1000
 			sec_briefcase.contents += new /obj/item/weapon/gun/energy/crossbow
 			sec_briefcase.contents += new /obj/item/weapon/gun/projectile/mateba
-			sec_briefcase.contents += new /obj/item/ammo_magazine/a357
+			sec_briefcase.contents += new /obj/item/ammo_storage/box/a357
 			sec_briefcase.contents += new /obj/item/weapon/plastique
 			M.equip_to_slot_or_del(sec_briefcase, slot_l_hand)
 
@@ -1102,7 +1102,7 @@ Pressure: [env.return_pressure()]"}
 		return
 	if(istype(M, /mob/living/carbon))
 		M.dna.SetSEState(block,!M.dna.GetSEState(block))
-		domutcheck(M,null,MUTCHK_FORCED)
+		genemutcheck(M,block,null,MUTCHK_FORCED)
 		M.update_mutations()
 		var/state="[M.dna.GetSEState(block)?"on":"off"]"
 		var/blockname=assigned_blocks[block]

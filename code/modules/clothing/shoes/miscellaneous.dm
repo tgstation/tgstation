@@ -87,6 +87,7 @@
 	item_state = "jackboots"
 	_color = "hosred"
 	siemens_coefficient = 0.7
+	species_fit = list("Vox")
 
 /obj/item/clothing/shoes/jackboots/batmanboots
 	name = "batboots"
@@ -139,3 +140,10 @@
 	desc = "Simon's Shoes"
 	icon_state = "simonshoes"
 	item_state = "simonshoes"
+	species_fit = list("Vox")
+
+/obj/item/clothing/shoes/kneesocks
+	name = "kneesocks"
+	desc = "A pair of girly knee-high socks"
+	icon_state = "kneesock"
+	item_state = "kneesock"

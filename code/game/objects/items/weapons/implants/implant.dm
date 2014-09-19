@@ -169,7 +169,7 @@ Implant Specifics:<BR>"}
 		var/turf/t = get_turf(imp_in)
 
 		if(t)
-			t.hotspot_expose(3500,125)
+			t.hotspot_expose(3500,125,surfaces=1)
 
 	implanted(mob/source as mob)
 		phrase = input("Choose activation phrase:") as text
@@ -242,14 +242,6 @@ Can only be loaded while still in its original case.<BR>
 the implant may become unstable and either pre-maturely inject the subject or simply break."}
 		return dat
 
-
-	New()
-		..()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-
-
 	trigger(emote, source as mob)
 		if(emote == "deathgasp")
 			src.activate(src.reagents.total_volume)
@@ -282,6 +274,10 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 		spawn(20)
 			malfunction--
+
+/obj/item/weapon/implant/chem/New()
+	. = ..()
+	create_reagents(50)
 
 /obj/item/weapon/implant/loyalty
 	name = "loyalty"

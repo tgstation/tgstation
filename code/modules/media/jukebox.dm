@@ -90,6 +90,7 @@ var/global/loopModeNames=list(
 	var/selected_song = 0 // 0 or the song someone has selected for purchase
 	var/autoplay      = 0 // Start playing after spawn?
 	var/last_reload   = 0 // Reload cooldown.
+	var/last_song     = 0 // ID of previous song (used in shuffle to prevent double-plays)
 
 	var/screen = JUKEBOX_SCREEN_MAIN
 
@@ -108,7 +109,6 @@ var/global/loopModeNames=list(
 		linked_account = department_accounts[department]
 	else
 		linked_account = station_account
-	update_icon()
 
 /obj/machinery/media/jukebox/attack_ai(var/mob/user)
 	attack_hand(user)
@@ -159,8 +159,8 @@ var/global/loopModeNames=list(
 		t += " | <a href=\"?src=\ref[src];screen=[JUKEBOX_SCREEN_SETTINGS]\">Settings</a>"
 	t += "</div>"
 	switch(screen)
-		if(JUKEBOX_SCREEN_MAIN)    t += ScreenMain(user)
-		if(JUKEBOX_SCREEN_PAYMENT) t += ScreenPayment(user)
+		if(JUKEBOX_SCREEN_MAIN)     t += ScreenMain(user)
+		if(JUKEBOX_SCREEN_PAYMENT)  t += ScreenPayment(user)
 		if(JUKEBOX_SCREEN_SETTINGS) t += ScreenSettings(user)
 
 	user.set_machine(src)
@@ -259,6 +259,9 @@ var/global/loopModeNames=list(
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/multitool))
+		update_multitool_menu(user)
+		return 1
 	if(istype(W, /obj/item/weapon/card/emag))
 		current_song = 0
 		if(!emagged)
@@ -426,6 +429,9 @@ var/global/loopModeNames=list(
 				update_icon()
 				return
 			visible_message("<span class='notice'>\icon[src] \The [src] beeps, and the menu on its front fills with [playlist.len] items.</span>","<em>You hear a beep.</em>")
+			if(autoplay)
+				playing=1
+				autoplay=0
 		else
 			testing("[src] failed to update playlist: Response null.")
 			stat &= BROKEN
@@ -443,7 +449,10 @@ var/global/loopModeNames=list(
 			else
 				switch(loop_mode)
 					if(JUKEMODE_SHUFFLE)
-						current_song=rand(1,playlist.len)
+						while(1)
+							current_song=rand(1,playlist.len)
+							if(current_song!=last_song || playlist.len<4)
+								break
 					if(JUKEMODE_REPEAT_SONG)
 						current_song=current_song
 					if(JUKEMODE_PLAY_ONCE)
@@ -456,6 +465,7 @@ var/global/loopModeNames=list(
 	if(current_song && playing)
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url
+		last_song = current_song
 		media_start_time = world.time
 		visible_message("<span class='notice'>\icon[src] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
 		//visible_message("<span class='notice'>\icon[src] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
@@ -482,6 +492,23 @@ var/global/loopModeNames=list(
 		"rock" = "Rock"
 	)
 
+// Relaxing elevator music~
+/obj/machinery/media/jukebox/dj
+
+	playlist_id="muzak"
+	autoplay = 1
+	change_cost = 0
+
+	id_tag="DJ Satellite" // For autolink
+
+	// Must be defined on your server.
+	playlists=list(
+		"bar"  = "Bar Mix",
+		"jazz" = "Jazz",
+		"rock" = "Rock",
+		"muzak" = "Muzak"
+	)
+
 // So I don't have to do all this shit manually every time someone sacrifices pun-pun.
 // Also for debugging.
 /obj/machinery/media/jukebox/superjuke
@@ -497,6 +524,7 @@ var/global/loopModeNames=list(
 		"bar"  = "Bar Mix",
 		"jazz" = "Jazz",
 		"rock" = "Rock",
+		"muzak" = "Muzak",
 
 		"emagged" = "Syndie Mix",
 		"shuttle" = "Shuttle",
@@ -510,10 +538,27 @@ var/global/loopModeNames=list(
 		return
 	..()
 
-/obj/machinery/media/jukebox/shuttle
+/obj/machinery/media/jukebox/superjuke/shuttle
 	playlist_id="shuttle"
-	// Must be defined on your server.
-	playlists=list(
-		"shuttle"  = "Shuttle Mix"
-	)
-	invisibility=101 // FAK U NO SONG 4 U
+	id_tag="Shuttle" // For autolink
+
+
+/obj/machinery/media/jukebox/superjuke/thematic
+	playlist_id="endgame"
+
+/obj/machinery/media/jukebox/superjuke/thematic/update_music()
+	if(current_song && playing)
+		var/datum/song_info/song = playlist[current_song]
+		media_url = song.url
+		last_song = current_song
+		media_start_time = world.time
+		visible_message("<span class='notice'>\icon[src] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
+		//visible_message("<span class='notice'>\icon[src] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
+	else
+		media_url=""
+		media_start_time = 0
+
+	// Send update to clients.
+	for(var/mob/M in mob_list)
+		if(M && M.client)
+			M.force_music(media_url,media_start_time,volume)

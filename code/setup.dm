@@ -382,6 +382,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_LOUD		208		// CAUSES INTENSE YELLING
 #define M_WHISPER	209		// causes quiet whispering
 #define M_DIZZY		210		// Trippy.
+#define M_SANS		211		// IF YOU SEE THIS WHILST BROWSING CODE, YOU HAVE BEEN VISITED BY: THE FONT OF SHITPOSTING. GREAT LUCK AND WEALTH WILL COME TO YOU, BUT ONLY IF YOU SAY 'fuck comic sans' IN YOUR PR.
 
 // Bustanuts
 #define M_HARDCORE      300
@@ -658,10 +659,6 @@ var/list/TAGGERLOCATIONS = list(
 #define ORGAN_MUTATED		2048
 #define ORGAN_PEG			4096 // ROB'S MAGICAL PEGLEGS v2
 
-#define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
-
-
-
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
 #define R_BUILDMODE		1
@@ -872,3 +869,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MT_ERROR  -1
 #define MT_UPDATE 1
 #define MT_REINIT 2
+
+#define AUTOIGNITION_WOOD  573.15
+#define AUTOIGNITION_PAPER 519.15

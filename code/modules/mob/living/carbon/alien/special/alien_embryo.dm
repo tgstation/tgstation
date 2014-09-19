@@ -117,8 +117,7 @@
 	// to 2, so we don't do a process heavy check everytime.
 	var/mob/dead/observer/ghostpicked
 	while(ghost_volunteers.len)
-		ghostpicked = pick(ghost_volunteers)
-		ghost_volunteers -= ghostpicked
+		ghostpicked = pick_n_take(ghost_volunteers)
 		if(!istype(ghostpicked))
 			continue
 		break

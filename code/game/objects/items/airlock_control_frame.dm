@@ -44,9 +44,6 @@
 /obj/item/weapon/circuitboard/ecb/airlock_controller
 	name = "Embedded Controller Board (Airlock Control)"
 	build_path = /obj/machinery/embedded_controller/radio/airlock_controller
-/obj/item/weapon/circuitboard/ecb/vent_controller
-	name = "Embedded Controller Board (Vent Control)"
-	build_path = /obj/machinery/embedded_controller/radio/simple_vent_controller
-/obj/item/weapon/circuitboard/ecb/smart_airlock_controller
-	name = "Embedded Controller Board (Smart Airlock Control)"
-	build_path = /obj/machinery/embedded_controller/radio/smart_airlock_controller
+/obj/item/weapon/circuitboard/ecb/advanced_airlock_controller
+	name = "Embedded Controller Board (Advanced)"
+	build_path = /obj/machinery/embedded_controller/radio/advanced_airlock_controller

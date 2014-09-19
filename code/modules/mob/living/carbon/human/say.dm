@@ -1,6 +1,7 @@
 /mob/living/carbon/human/say(var/message)
 
 	if(silent)
+		src << "\red Silence."
 		return
 
 	//Mimes dont speak! Changeling hivemind and emotes are allowed.

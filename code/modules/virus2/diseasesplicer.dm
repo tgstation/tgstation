@@ -11,6 +11,8 @@
 	var/splicing = 0
 	var/scanning = 0
 
+	l_color = "#0000FF"
+
 /obj/machinery/computer/diseasesplicer/attackby(var/obj/I as obj, var/mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		return ..(I,user)
@@ -44,7 +46,7 @@
 	if(splicing)
 		dat = "Splicing in progress."
 	else if(scanning)
-		dat = "Splicing in progress."
+		dat = "Scanning in progress."
 	else if(burning)
 		dat = "Data disk burning in progress."
 	else
@@ -134,8 +136,11 @@
 	else if(href_list["splice"])
 		if(dish)
 			for(var/datum/disease2/effectholder/e in dish.virus2.effects)
+				var/old_e=e.effect.name
 				if(e.stage == memorybank.stage)
 					e.effect = memorybank.effect
+					dish.virus2.log += "<br />[timestamp()] [e.effect.name] spliced in by [key_name(usr)] (replaces [old_e])"
+
 			splicing = 10
 //			dish.virus2.spreadtype = "Blood"
 

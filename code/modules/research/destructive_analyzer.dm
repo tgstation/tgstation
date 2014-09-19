@@ -13,6 +13,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 1
 
+	takes_material_input = 0
+	has_output = 0
+
 /obj/machinery/r_n_d/destructive_analyzer/New()
 	. = ..()
 
@@ -42,49 +45,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
-
-/obj/machinery/r_n_d/destructive_analyzer/update_icon()
-	overlays.Cut()
-	if(linked_console)
-		overlays += "d_analyzer_link"
-
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/O as obj, var/mob/user as mob)
-	if (shocked)
-		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			if(linked_console)
-				linked_console.linked_destroy = null
-				linked_console = null
-			icon_state = "d_analyzer_t"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "d_analyzer"
-			user << "You close the maintenance hatch of [src]."
-		return
-	if (opened)
-		if(istype(O, /obj/item/weapon/crowbar))
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				I.loc = src.loc
-			del(src)
-			return 1
-		else
-			user << "\red You can't load the [src.name] while it's opened."
-			return 1
-	if (disabled)
-		return
-	if (!linked_console)
-		user << "\red The protolathe must be linked to an R&D console first!"
-		return
-	if (busy)
-		user << "\red The protolathe is busy right now."
-		return
+	..()
 	if (istype(O, /obj/item) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
 			if(isMoMMI(user))

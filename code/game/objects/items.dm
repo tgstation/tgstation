@@ -6,8 +6,6 @@
 	var/item_state = null
 	var/r_speed = 1.0
 	var/health = null
-	var/burn_point = null
-	var/burning = null
 	var/hitsound = null
 	var/w_class = 3.0
 	flags = FPRINT | TABLEPASS
@@ -22,8 +20,8 @@
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-	var/icon_action_button //If this is set, The item will make an action button on the player's HUD when picked up. The button will have the icon_action_button sprite from the screen1_action.dmi file.
-	var/action_button_name //This is the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. Note that icon_action_button needs to be set in order for the action button to appear.
+	//If this is set, The item will make an action button on the player's HUD when picked up.
+	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -41,13 +39,12 @@
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
 	var/list/species_fit = null //This object has a different appearance when worn by these species
 
+	var/nonplant_seed_type
+
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))
 		var/mob/H = src.loc
 		H.drop_from_inventory(src) // items at the very least get unequipped from their mob before being deleted
-	if(reagents && istype(reagents))
-		reagents.my_atom = null
-		reagents.delete()
 	if(hasvar(src, "holder"))
 		src:holder = null
 	/*  BROKEN, FUCK BYOND
@@ -617,11 +614,11 @@
 	return
 
 
-//This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
+//This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
-	if( src in usr )
+	if(src in usr)
 		attack_self(usr)
 
 
@@ -768,3 +765,9 @@
 
 /obj/item/proc/OnMobDeath(var/mob/holder)
 	return
+
+/proc/isitem(const/object)
+	if(istype(object, /obj/item))
+		return 1
+
+	return 0

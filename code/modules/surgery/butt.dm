@@ -15,9 +15,8 @@
 
 /datum/surgery_step/butt/slice_cheek
 	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/hatchet = 75
 	)
 
 	min_duration = 50
@@ -142,6 +141,7 @@
 		user.visible_message("\red [target] lets out a small fart, which gets set alight with [user]'s [tool]!" , \
 		"\red [target] farts into the open flame, burning his anus!" )
 		target.apply_damage(max(10, tool.force), BURN, "groin")
+		playsound(get_turf(src), 'sound/effects/holler.ogg', 50, 1)
 
 
 

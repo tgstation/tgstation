@@ -12,6 +12,9 @@
 	var/enemy_mp = 20
 	var/gameover = 0
 	var/blocked = 0 //Player cannot attack/heal while set
+
+	l_color = "#00FF00"
+
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
 							/obj/item/toy/blink								= 2,
 							/obj/item/clothing/under/syndicate/tacticool	= 2,

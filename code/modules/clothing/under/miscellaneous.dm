@@ -209,6 +209,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	_color = "pirate"
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/soviet
 	name = "soviet uniform"
@@ -387,6 +388,7 @@
 	icon_state = "spants"
 	_color = "simonpants"
 	item_state = "spants"
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/batmansuit
 	name = "batsuit"
@@ -394,3 +396,17 @@
 	icon_state = "bmuniform"
 	_color = "bmuniform"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/under/officeruniform
+	name = "officer's uniform"
+	desc = "Bestraft die Juden fur ihre Verbrechen."
+	icon_state = "officeruniform"
+	item_state = "officeruniform"
+	_color = "officeruniform"
+
+/obj/item/clothing/under/soldieruniform
+	name = "soldier's uniform"
+	desc = "Bestraft die Verbundeten fur ihren Widerstand."
+	icon_state = "soldieruniform"
+	item_state = "soldieruniform"
+	_color = "soldieruniform"

@@ -75,6 +75,12 @@
 /obj/structure/sign/double/map/right
 	icon_state = "map-right"
 
+//For efficiency station
+/obj/structure/sign/map/efficiency
+	name = "station map"
+	desc = "A framed picture of the station."
+	icon_state = "map_efficiency"
+
 /obj/structure/sign/securearea
 	name = "\improper SECURE AREA"
 	desc = "A warning sign which reads 'SECURE AREA'."
@@ -141,7 +147,7 @@
 	icon_state = "goldenplaque"
 
 /obj/structure/sign/kiddieplaque
-	name = "AI developers plaque"
+	name = "AI developer's plaque"
 	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be retarded. Beneath the image, someone has scratched the word \"PACKETS\""
 	icon_state = "kiddieplaque"
 

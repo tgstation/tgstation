@@ -68,6 +68,9 @@
 				user << "\red [target] is empty. Cant dissolve pill."
 				return
 
+			user << "\blue You dissolve the pill in [target]"
+			var/trans = reagents.trans_to(target, reagents.total_volume)
+
 			// /vg/: Logging transfers of bad things
 			if(target.reagents_to_log.len)
 				var/list/badshit=list()
@@ -76,11 +79,9 @@
 						badshit += reagents_to_log[bad_reagent]
 				if(badshit.len)
 					var/hl="\red <b>([english_list(badshit)])</b> \black"
-					message_admins("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-					log_game("[user.name] ([user.ckey]) added [reagents.get_reagent_ids(1)] to \a [target] with [src].")
+					message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
 
-			user << "\blue You dissolve the pill in [target]"
-			reagents.trans_to(target, reagents.total_volume)
 			for(var/mob/O in viewers(2, user))
 				O.show_message("\red [user] puts something in [target].", 1)
 			spawn(5)
@@ -93,6 +94,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //Pills
+/obj/item/weapon/reagent_containers/pill/creatine
+	name = "Creatine Suicide Pill (50 units)"
+	desc = "WILL ALSO KILL YOU VIOLENTLY."
+	icon_state = "pill5"
+	New()
+		..()
+		reagents.add_reagent("creatine", 50)
+
 /obj/item/weapon/reagent_containers/pill/antitox
 	name = "Anti-toxins pill"
 	desc = "Neutralizes many common toxins."

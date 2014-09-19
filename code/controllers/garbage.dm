@@ -2,15 +2,16 @@
 #define GC_COLLECTION_TIMEOUT (10 SECONDS)
 #define GC_FORCE_DEL_PER_TICK 20
 //#define GC_DEBUG
-var/list/meowww = new
+
+var/list/gc_hard_del_types = new
 var/datum/garbage_collector/garbageCollector
 
-/client/verb/bwoink()
-	set name = "bwoink"
-	set desc = "bwoink"
+/client/verb/gc_dump_hdl()
+	set name = "(GC) Hard Del List"
+	set desc = "List types that are hard del()'d by the GC."
 	set category = "Debug"
 
-	for(var/A in meowww)
+	for(var/A in gc_hard_del_types)
 		usr << A
 
 /datum/garbage_collector
@@ -20,63 +21,54 @@ var/datum/garbage_collector/garbageCollector
 	// To let them know how hardworking am I :^).
 	var/dels_count = 0
 	var/hard_dels = 0
-	var/processing = 1
 
-/datum/garbage_collector/proc/addTrash(const/datum/D)
-	if(!D)
+/datum/garbage_collector/proc/addTrash(const/atom/movable/AM)
+	if(!istype(AM))
 		return
 
 	if(del_everything)
-		del(D)
+		del(AM)
 		hard_dels++
 		dels_count++
 		return
 
-	if(!istype(D, /atom/movable))
-		del(D)
-		hard_dels++
-		dels_count++
-		return
-
-	var/atom/movable/AM = D
 	var/timeofday = world.timeofday
 	AM.timeDestroyed = timeofday
 	queue -= "\ref[AM]"
 	queue["\ref[AM]"] = timeofday
 
 /datum/garbage_collector/proc/process()
-	if(processing)
-		var/remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
-		var/remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
-		var/collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
+	var/remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
+	var/remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
+	var/collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
 
-		while(queue.len && --remainingCollectionPerTick >= 0)
-			var/refID = queue[1]
-			var/destroyedAtTime = queue[refID]
+	while(queue.len && --remainingCollectionPerTick >= 0)
+		var/refID = queue[1]
+		var/destroyedAtTime = queue[refID]
 
-			if(destroyedAtTime > collectionTimeScope)
+		if(destroyedAtTime > collectionTimeScope)
+			break
+
+		var/atom/movable/AM = locate(refID)
+
+		// Something's still referring to the qdel'd object. Kill it.
+		if(AM && AM.timeDestroyed == destroyedAtTime)
+			if(remainingForceDelPerTick <= 0)
 				break
 
-			var/atom/movable/A = locate(refID)
+			#ifdef GC_DEBUG
+			WARNING("gc process force delete [AM.type]")
+			#endif
 
-			// Something's still referring to the qdel'd object. Kill it.
-			if(A && A.timeDestroyed == destroyedAtTime)
-				if(remainingForceDelPerTick <= 0)
-					break
+			gc_hard_del_types |= "[AM.type]"
 
-				#ifdef GC_DEBUG
-				WARNING("gc process force delete [A.type]")
-				#endif
+			del(AM)
 
-				meowww |= "[A.type]"
+			hard_dels++
+			remainingForceDelPerTick--
 
-				del(A)
-
-				hard_dels++
-				remainingForceDelPerTick--
-
-			queue.Cut(1, 2)
-			dels_count++
+		queue.Cut(1, 2)
+		dels_count++
 
 #ifdef GC_DEBUG
 #undef GC_DEBUG
@@ -86,31 +78,30 @@ var/datum/garbage_collector/garbageCollector
 #undef GC_COLLECTION_TIMEOUT
 #undef GC_COLLECTIONS_PER_TICK
 
-/proc/qdel(const/O)
-	if (!O)
+/*
+ * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
+ * OTHER TYPES CANNOT BE QDEL'D BECAUSE THEIR LOC IS LOCKED OR THEY DON'T HAVE ONE.
+ */
+/proc/qdel(const/atom/movable/AM)
+	if(isnull(AM))
 		return
 
-	if (!garbageCollector)
-		del(O)
+	if(isnull(garbageCollector))
+		del(AM)
 		return
 
-	if (!istype(O, /datum))
-		del(O)
+	if(!istype(AM))
+		WARNING("qdel() passed object of type [AM.type]. qdel() can only handle /atom/movable types.")
+		del(AM)
 		garbageCollector.hard_dels++
 		garbageCollector.dels_count++
 		return
 
-	var/datum/D = O
-
-	if (isnull(D.gcDestroyed))
+	if(isnull(AM.gcDestroyed))
 		// Let our friend know they're about to get fucked up.
-		D.Destroy()
+		AM.Destroy()
 
-		garbageCollector.addTrash(D)
-
-/datum
-	// Garbage collection (qdel).
-	var/gcDestroyed
+		garbageCollector.addTrash(AM)
 
 /datum/controller
 	var/processing = 0
@@ -119,25 +110,12 @@ var/datum/garbage_collector/garbageCollector
 
 /datum/controller/proc/recover() // If we are replacing an existing controller (due to a crash) we attempt to preserve as much as we can.
 
-/datum/controller/New()
-	. = ..()
-	tag = "[type]:NOGC"
-
-/datum/Del()
-	// Pass to Destroy().
-	if(isnull(gcDestroyed))
-		Destroy()
-
-	sleep(-1)
-	..()
-
 /*
  * Like Del(), but for qdel.
  * Called BEFORE qdel moves shit.
  */
 /datum/proc/Destroy()
-	tag = null
-	gcDestroyed = "Bye world!"
+	del(src)
 
 /client/proc/qdel_toggle()
 	set name = "Toggle qdel Behavior"

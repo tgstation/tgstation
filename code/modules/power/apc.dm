@@ -1144,6 +1144,7 @@
 					chargecount++
 				else
 					chargecount = 0
+					charging = 0
 
 				if(chargecount == 10)
 
@@ -1282,6 +1283,10 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	if(terminal)
 		terminal.master = null
 		terminal = null
+
+	if(wires)
+		wires.Destroy()
+		wires = null
 
 	..()
 

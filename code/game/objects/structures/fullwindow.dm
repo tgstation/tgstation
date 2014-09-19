@@ -7,7 +7,7 @@
 /obj/structure/window/full/CheckExit(atom/movable/O as mob|obj, target as turf)
 	return 1
 
-/obj/structure/window/full/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/window/full/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	return 0

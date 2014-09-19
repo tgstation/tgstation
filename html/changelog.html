@@ -1,4 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+HEY, YOU.
+
+ADDING A CHANGELOG ENTRY? MAKE changelog/USERNAME.yml.  READ example.yml SO YOU DON'T SCREW UP.
+
+ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old teams)
+--->
 <html>
 	<head>
 		<title>/vg/station Changelog</title>
@@ -37,13 +44,13 @@
 					Code:
 				</dt>
 				<dd>
-					Emisune, N3X15, Pomf123, SarahJohnson, Cloroxygen
+					Cloroxygen, Duny, Emisune, IconLeap, N3X15, Pomf123, SarahJohnson
 				</dd>
 				<dt class="creditsection">
 					Sprites:
 				</dt>
 				<dd>
-					Bustatime, Cogwerks, Dbuhos, Emisune, N3X15, Rei1226, Osaifh, Cloroxygen
+					Bustatime, Cloroxygen, Cogwerks, Dbuhos, Emisune, ISaidNo, Kokuten, N3X15, Osaifh, Rei1226
 				</dd>
 				<dt class="creditsection">
 					Sounds:
@@ -65,20 +72,370 @@
 		</div>
 
 		<!--
-		Changelog Section
+		
+		AGAIN, TO ADD SHIT, ADD AND MAINTAIN YOUR OWN changelog/USERNAME.yml FILE. 
+		
+		*** DO NOT FUCK WITH THIS FILE OR YOU WILL CAUSE MERGE CONFLICTS. ***
+		
 		-->
 
-		<!-- NOTE TO UPDATERS!! Please only list things which are important to players.
-		Stuff which is in development and not yet visible to players or just code related
-		(ie. code improvements for expandability, etc.) should not be listed here. They
-		should be listed in the changelog upon commit though. Thanks. -->
-		<!-- To take advantage of the pretty new format (well it was new when I wrote this anyway), open the "add-to-changelog.html" file in any browser and add the stuff and then generate the html code and paste it here -->
-		<!-- Suggestion:  Group changes not merged into master into a single [IN DEVELOPMENT] block, then change the date to today before merging.  Makes the changes from the last release a bit easier to comprehend. -->
+		<div class="commit sansserif">
+			<h2 class="date">2014.09.18</h2>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Defficiency - Changed a whole bunch of things. See github for more precisions.</li>
+				<li class="bugfix">Box - Fixed atmos techs not having access to the engineering pod.</li>
+				<li class="bugfix">Box - Fixed tech storage camera showing the outside of robotics.</li>
+				<li class="tweak">Box - The virology access door south of medbay can now be open by anyone with medbay access. Previously virology only.</li>
+				<li class="tweak">Box - Fireaxe cabinets are back to being locked at roundstart.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fix ryetalyn not removing genes and their spells/verbs properly. No more getting multiple hulk or leap activations.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.09.16</h2>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Made an attempt at unfucking cargo's air alarm. The ore redemption machine now prevents gases from getting through.</li>
+				<li class="tweak">Another attempt at unfucking cargo. Cargo lobby, delivery and office are now their own areas. Delivery office now has a windoor at its desk, and the plastic flaps are now airtight.</li>
+			</ul>
+			<h3 class="author">Wild Bill updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed viro maint not being radiation-shielded</li>
+				<li class="bugfix">Fixed silicons grabbing things from deep fryers</li>
+				<li class="bugfix">Fixed strange "You cannot say that...?" debug message</li>
+				<li class="bugfix">Fixed unpowered wires shocking people</li>
+				<li class="bugfix">Fixed ghosts interacting with AI/cyborg uploads</li>
+				<li class="tweak">Refactored new cooking machines and custom foods</li>
+				<li class="tweak">Added various vars and an adminverb for cooking silliness</li>
+				<li class="tweak">Lowered defult custom food size cap (to 30 from 600)</li>
+				<li class="bugfix">Fixed robutts deep-frying their modules</li>
+				<li class="bugfix">Fixed ghosts printing books</li>
+				<li class="bugfix">Fixed deconstructive analyzer eating items</li>
+				<li class="bugfix">Fixed apiaries spawning hydro tray parts when attached</li>
+				<li class="bugfix">Fixed dirt spawning hydro tray parts when cleaned up</li>
+				<li class="bugfix">Fixed airlocks being un-emag-able</li>
+				<li class="bugfix">Fixed airlocks spawning multiple door assemblies</li>
+				<li class="bugfix">Fixed pizza boxes eating pizza</li>
+				<li class="bugfix">Fixed constructs being useless due to ZAS perma-stun</li>
+				<li class="rscadd">Added map objects (spawners + nests) for mappers to use</li>
+				<li class="bugfix">Fixed missing custom food sprites/overlays</li>
+				<li class="bugfix">Fixed a variety of roundstart runtimes</li>
+				<li class="rscdel">Removed a bunch of old unused shit</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.09.13</h2>
+			<h3 class="author">Spike68 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed bug '#1381 Door timing override does nothing'. Also fixed doors not closing when they are expected to.</li>
+				<li class="bugfix">Fixes bug '#1412 Gibtonite in-hand sprite is a spear'</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.22</h2>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Further work has been done on the Meteor gamemode. Most of it concerns the supplies spawned in the Bar, giving everything a random bias to maximize chaos and hopefully an announcement sound if someone generates it</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Horror Form for changeling has been added.  Costs 30 points, effectively turns user into a hulk.  Unlike a hulk, however, Horrors can punch people so hard they have a 25% chance of flying down a hallway.  Can also force open doors (50% chance after 5 sec).  Throwing speed bonus.  Takes twice as much fire damage as a normal human.  <u>YOU CANNOT RETURN TO HUMAN FORM AFTER CHANGING INTO A HORROR.</u></li>
+				<li class="rscadd">New traitor panel control for adjusting genomes of changelings. (No more opening 5 VV panels!)</li>
+				<li class="rscadd">Added several warnings on nukeop creatine pills so they don't think it's delicious candy.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.21</h2>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Added barricade kit to replace old barricade function with wooden planks. Uses 5 planks and gives an unsprited (uses wood plank sprite) barricade kit. Can be used to make old barricades, or on doors to block passage like tape</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added soot to fires affecting some floors.</li>
+				<li class="tweak">Regular paper supports [img] tags again.</li>
+				<li class="tweak">Improved paper logging.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.20</h2>
+			<h3 class="author">Kiniamaro updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">remove [img] BBcode from paper.</li>
+				<li class="rscadd">add new item "nano paper" that supports [img] and [video] tags.</li>
+				<li class="rscadd">add new item "Nano Paper Dispenser" that can be made using R&D.</li>
+				<li class="rscadd">add a nano paper dispenser inside the librarians office.</li>
+				<li class="bugfix">paper now properly displays help</li>
+				<li class="rscadd">detailed update info here: http://pastebin.com/Sr5gxUZA</li>
+			</ul>
+			<h3 class="author">Lokiamis updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">There is now three times as much laser tag equipment in fitness.</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Wooden objects and other flammables now produce real fire that will kill you.</li>
+				<li class="rscadd">Fires are now fed by flammable objects, as well as plasma and fuel spills.</li>
+				<li class="rscadd">Wooden floors can now catch fire.</li>
+				<li class="rscadd">Extinguishers should now affect object fires.</li>
+				<li class="tweak">Buildmode is now logged.</li>
+				<li class="rscadd">Viruses now keep a log of what happens to them, for admin investigations.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.19</h2>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Added a grinder in Botany and replaced an empty first-aid locker with a defib locker. Added recharger south of defib locker</li>
+				<li class="tweak">Changed the way mops function. They notably now correctly use their reagents and can be used on people</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Streaming media should now shut off after server reboot.</li>
+				<li class="bugfix">Rewrote how paper is parsed, fixes a number of XSS exploits.</li>
+			</ul>
+			<h3 class="author">Tehsapper updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Rocky debris is now autominable.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.18</h2>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Changed cloner functionality. Base cloning time has seen a pretty steep increase (between 3 and 6 minutes) but the cloning time and biomass use can be reduced by replacing the cloning pod's parts. This change should make cloning people less of a choice early in the round and reverse "clone everything" mentality with the recent changes to defibrillators and other planned changes</li>
+				<li class="bugfix">R&D now makes HUDSunglasses instead of the old "Sec HUD" item</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added delete-after directive to changelog YML files.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.17</h2>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Modified functionality of Kitchen machines</li>
+				<li class="bugfix">Fixed Teleporter Console dropping two boards</li>
+				<li class="bugfix">Fixed Voxes spawning with human survival boxes</li>
+				<li class="bugfix">Fixed ERT Suit fire resistance coefficient</li>
+				<li class="bugfix">Fixed invisible combat borgs using placeholder sprite</li>
+				<li class="bugfix">Made Operating Computer functional again</li>
+				<li class="wip">Modified how defibrillators function in view of more profound changes to Medbay</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.16</h2>
+			<h3 class="author">Kiniamaro updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Added a bunch of new pAI emotes.</li>
+				<li class="rscadd">Changing ID card skins at the HoPs computer.</li>
+				<li class="rscadd">Paper can now use the [img]http://url[/img] BBcode.</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added a changelog editing system that should cause fewer conflicts and more accurate timestamps.</li>
+				<li class="bugfix">Fixed wall smoothing not being applied to new walls.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.10</h2>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Supermatter buffs:  Explosions are now all huge, and the big crystal will bring about a new end-of-universe scenario.  Endgame will cause all antags to fail automatically, and will kill almost everyone, so keep an eye on it.</li>
+				<li class="rscadd">Emergency shuttle has a music playlist it'll play.  Pods, too.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.06</h2>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Added back Robust Softdrinks to bartender's backroom.</li>
+				<li class="wip">Little bunch of Efficiency changes, full changelog <a href="https://github.com/d3athrow/vgstation13/pull/1203">here</a>.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.05</h2>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed CE and xenobiology disposals.</li>
+				<li class="wip">Efficiency modifications, full changelog <a href="https://github.com/d3athrow/vgstation13/pull/1175">here</a>.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.08.04</h2>
+			<h3 class="author">Iamgoofball, Heredth updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adds the Discount Dan's Vendor.</li>
+				<li class="rscadd">Adds the Groans Soda Vendor.</li>
+				<li class="rscadd">Adds multiple Discount Dan's foods.</li>
+				<li class="rscadd">Adds multiple Groans Soda Vendor drinks.</li>
+				<li class="rscadd">They come in a variety of flavors!</li>
+				<li class="rscdel">Replaced most of the vending machines in the public hallways with Discount Dan and Groans Soda vending machines to encourage going to the Chef for food more.</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Plasmamen removed for now, needs serious rebalancing.</li>
+				<li class="bugfix">Large portion of borer recruitment code rewritten. Existing borers will be unable to spawn new borers until a ghost becomes available (and won't lose chems until a ghost is found).</li>
+				<li class="bugfix">Grey eyes fixed (no more "f_style error")</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.30</h2>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Tons of Efficiency fixes. All the roundbreaking shit should be fixed. Full changelog <a href="https://github.com/d3athrow/vgstation13/pull/1151">here</a>.</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Plasma Men added.  Sublimation doesn't work yet and the helmet doesn't have a lit state, but everything else appears good to go.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.28</h2>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Ported Efficiency station from tg code.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.27</h2>
+			<h3 class="author">IconLeap updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Object pool has an update, this fixed the emitter anomaly at singularity and etc.</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="experiment">HAPPY BIRTHDAY TO ME: Added new radio broadcasting system.</li>
+				<li class="rscadd">Added radio transmitter and linked Muzak jukebox to DJ station.  Autoplay on roundstart. NOTE:  Wear a radiation-resistant suit when working near the transmitter, or you will die of radiation.</li>
+				<li class="rscadd">All hallways and arrival shuttle have been outfit with wall-mounted radios that play Muzak.</li>
+				<li class="rscadd">Added portable boomboxes.  Most head offices have one, or a wall-mounted sound system (that's turned off).</li>
+				<li class="rscadd">All radio systems can be tuned.  The transmitter is configurable with a multitool.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.24</h2>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Firelocks no longer require a crowbar or fireaxe to open.</li>
+				<li class="tweak">Firelocks that have active heat, cold, or pressure alerts can now only be opened with atmospherics or engineering access.</li>
+				<li class="rscadd">Firelock examine text simplified and cleaned up, added pressure readouts.</li>
+				<li class="bugfix">Heat and pressure alert lighting modified to alternate, in order to prevent one hiding the other.</li>
+				<li class="rscadd">In other news: Tables and chairs can now catch fire.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.20</h2>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Atmos control computer now has a map similar to the crew monitor, the alarm locations are not clickable just yet however.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.19</h2>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Imported bay12 NanoUI fixes and updates.</li>
+				<li class="rscadd">Crew monitor now uses NanoUI and contains a map to easily locate people with their sensors on.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.18</h2>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="experiment">Many wooden and paper products now catch fire when sufficiently heated. (See Wikipedia for autoignition temps)</li>
+				<li class="bugfix">Fixed clowncart dropping 15 FUCKING TATORPEELS on death.</li>
+				<li class="rscadd">Firelocks blink red if the pressure difference is &gt; 25 kPa. (Note that this also counts tiles under doors and glass, so it's somewhat iffy.)</li>
+				<li class="rscadd">Added Creatine.</li>
+				<li class="rscadd">Nuclear Operatives have a 50u pill of Creatine instead of cyanide.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Firelocks blink orange now if the pressure difference is &gt; 25 kPa.</li>
+				<li class="rscadd">Firelocks blink red on each cardinal direction the temperature is 50C higher than room temp. Firelocks blink blue on each cardinal direction the temperature is below freezing.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.17</h2>
+			<h3 class="author">IconLeap updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed medical cyborg hypospray charging.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.14</h2>
+			<h3 class="author">IconLeap updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Update how HUD of items (magboots etc.) created.<br/>This is an attempt to fix the sudden growth of world.instances per time.</li>
+			</ul>
+			<h3 class="author">dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Major changes made to SCP-173 (known as sculpture) so far, most of them leading to a much deadlier and functional mob</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.13</h2>
+			<h3 class="author">IconLeap updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Used holocarp mob instead of plain carp at holodeck for wildlife simulation.</li>
+			</ul>
+			<h3 class="author">dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Carded AIs no longer show Ion, Zeroth, Traitor and Directives law when checked on a card. Forces condoms to use their brain when confronted with a bordeline dangerous AI.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.12</h2>
+			<h3 class="author">Duny updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Revamped atmos, pushed down auxiliary engineering and engineering pod to make room for it. Atmos maint size also reduced near virology.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.07.11</h2>
+			<h3 class="author">Kiniamaro updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">added the option to set offsets to the telescience pad to compensate for the drift</li>
+			</ul>
+		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.07.10</h2>
 			<h3 class="author">Duny updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="imageadd">Added four AI core sprites.</li>
+			</ul>
+			<h3 class="author">IconLeap updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Used dna2 Clone proc (datum) at cloning machines instead of manually setting the vars in code.<br/>The clone will have now exactly the same dna of the person getting cloned.</li>
 			</ul>
 			<h3 class="author">N3X15 updated:</h3>
 			<ul class="changes bgimages16">
@@ -87,18 +444,23 @@
 				<li class="bugfix">Whispers no longer display in lobby.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.07.09</h2>
 			<h3 class="author">Rei1226 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">Added more scrubbers and vents to cargo</li>
 				<li class="tweak">Fixed the scrubber trapped under merchant computer in cargo
-				<li class="tweak">Added a light in engineering at the right radiation collectors. No more dark spots</li>
+				<li class="tweak">Added a light in engineering at the right radiation collectors. No more dark spots</li></li>
 			</ul>
 		</div>
-		
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.07.08</h2>
+			<h3 class="author">Heredth updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">butt added butt buttbot butt butt.</li>
+			</ul>
 			<h3 class="author">N3X15 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">Added clown wizard mask and robes to MagiVend.</li>
@@ -113,11 +475,8 @@
 				<li class="tweak">Removed double pipe on mix in atmos and under pump on the TEG cold loop heat circ.</li>
 				<li class="tweak">Re-added Tank dispenser to eng watch station.</li>
 			</ul>
-			<h3 class="author">Heredth updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">butt added butt buttbot butt butt.</li>
-			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.07.07</h2>
 			<h3 class="author">N3X15 updated:</h3>
@@ -125,8 +484,14 @@
 				<li class="tweak">Animated shit now lasts only 2 minutes (BYOND time) before they die.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.07.06</h2>
+			<h3 class="author">Heredth updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added new wizard spell, Butt-Bot's Revenge.</li>
+				<li class="tweak">Changed the way butt identity is handled.</li>
+			</ul>
 			<h3 class="author">Pomf123 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">Added health and damage to spacepods.</li>
@@ -136,12 +501,8 @@
 			<ul class="changes bgimages16">
 				<li class="rscadd">Added clowncart.</li>
 			</ul>
-			<h3 class="author">Heredth updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added new wizard spell, Butt-Bot's Revenge.</li>
-				<li class="tweak">Changed the way butt identity is handled.</li>
-			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.07.05</h2>
 			<h3 class="author">ESwordTheCat updated:</h3>
@@ -149,6 +510,7 @@
 				<li class="bugfix">Fix more link of flavor text</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.30</h2>
 			<h3 class="author">Duny updated:</h3>
@@ -158,6 +520,7 @@
 				<li class="tweak">Replaced the magboots stealing objective with an advanced magboots stealing objective. The numerous magboots additions over time made the objective stupidly easy.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.28</h2>
 			<h3 class="author">N3X15 updated:</h3>
@@ -165,6 +528,7 @@
 				<li class="rscadd">Biomass required for cloning. To add biomass, slap cloner pod with meat.  Thank Velard and Pomf for this change!</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.26</h2>
 			<h3 class="author">Duny updated:</h3>
@@ -173,6 +537,7 @@
 				<li class="tweak">Brought back "old" EVA layout. My only changes I left in are the birdbeast crew support and the correction of the access needed for the maintenance door.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.25</h2>
 			<h3 class="author">Lokiamis updated:</h3>
@@ -180,6 +545,7 @@
 				<li class="rscadd">Added satchels for machine components in RnD.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.24</h2>
 			<h3 class="author">SJ_benster updated:</h3>
@@ -187,20 +553,21 @@
 				<li class="rscadd">Added various new suicides with items, including a fairly special one with the bag of holding.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.23</h2>
-			<h3 class="author">Rei1226 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Fixed medbay's cameras.</li>
-				<li class="tweak">Fixed whatever white shit some dumbass drew all over the sleeper sprite.</li>
-				<li class="tweak">You can now see the outside of cloning from the second genetics console.</li>
-			</ul>
 			<h3 class="author">Duny updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">Made the paramedic station its own area with its own APC.</li>
 				<li class="rscadd">Added service channel for the bartender, the chef and botanists. :d to use it.</li>
 				<li class="rscadd">Added service headsets and encryption keys. Bartender, chef and botanists now spawn with a service headset and spares are available in their workplaces.</li>
 				<li class="tweak">Brought back colored departmental radio channels.</li>
+			</ul>
+			<h3 class="author">Rei1226 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Fixed medbay's cameras.</li>
+				<li class="tweak">Fixed whatever white shit some dumbass drew all over the sleeper sprite.</li>
+				<li class="tweak">You can now see the outside of cloning from the second genetics console.</li>
 			</ul>
 		</div>
 
@@ -216,7 +583,7 @@
 				<li class="tweak">Fixed staff of changed slimes who split not coming out with universal understand.</li>
 			</ul>
 		</div>
-		
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.21</h2>
 			<h3 class="author">Rei1226 updated:</h3>
@@ -225,7 +592,6 @@
 			</ul>
 		</div>
 
-		
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.20</h2>
 			<h3 class="author">Pomf123 updated:</h3>
@@ -237,20 +603,23 @@
 				<li class="experiment">T-Ray scanners and flashes will reveal invisible mobs for a short period of time. This includes vampires and genetic invisibility.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.19</h2>
 			<h3 class="author">Cloroxygen updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="rscadd">Added High Energy Particle Scatterer: Makes it way easier to deal with tumors.<br><span class = "redletter">IMPORTANT NOTE:</span> The H.E.P.S. leaks a small amount of radiation when the beam is activated (much like a cobalt beam or xray irl) so be sure to close the oncology shutters and wear your oncology lab coat!<br><span class = "redletter">ANOTHER IMPORTANT NOTE:</span>The H.E.P.S. map placement has been delayed so it may not appear in every round.</li>
+				<li class="rscadd">Added High Energy Particle Scatterer: Makes it way easier to deal with tumors.<br><span class="redletter">IMPORTANT NOTE:</span> The H.E.P.S. leaks a small amount of radiation when the beam is activated (much like a cobalt beam or xray irl) so be sure to close the oncology shutters and wear your oncology lab coat!<br><span class="redletter">ANOTHER IMPORTANT NOTE:</span>The H.E.P.S. map placement has been delayed so it may not appear in every round.</br></br></li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.17</h2>
 			<h3 class="author">Cloroxygen updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="experiment">Added oncology: This includes cancer, oncologist job, oncologist's office, chemo, chemo IV pack, oncologist wardrobe, oncology pamphlet (which explains how to cure cancer), and oncologist lab coat.<br><br><span class ="redletter"> TO AVOID GETTING CANCER: <br>Do not linger with toxins in your body.</span> <br>There is now a toxin threshold and exposure time threshold...having elevated toxins in your blood for several minutes can/will cause cancer. It now kills more slowly than in the several test rounds you've experienced it in until now. Also: If your supply of chemo runs out as oncologist, more can be made with Arithrazine, Diethylamine, and Unstable Mutagen. More updates planned for this addon.</li>
+				<li class="experiment">Added oncology: This includes cancer, oncologist job, oncologist's office, chemo, chemo IV pack, oncologist wardrobe, oncology pamphlet (which explains how to cure cancer), and oncologist lab coat.<br><br><span class="redletter"> TO AVOID GETTING CANCER: <br>Do not linger with toxins in your body.</br></span> <br>There is now a toxin threshold and exposure time threshold...having elevated toxins in your blood for several minutes can/will cause cancer. It now kills more slowly than in the several test rounds you've experienced it in until now. Also: If your supply of chemo runs out as oncologist, more can be made with Arithrazine, Diethylamine, and Unstable Mutagen. More updates planned for this addon.</br></br></br></li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.11</h2>
 			<h3 class="author">Cloroxygen updated:</h3>
@@ -260,6 +629,7 @@
 				<li class="rscadd">Added the ability to set internals on a target from either their Suit storage, belt, or back gas tank instead of just the back.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.10</h2>
 			<h3 class="author">SarahJohnson updated:</h3>
@@ -278,6 +648,7 @@
 				<li class="rscadd">The RPD and Pipe Dispensers can now create Passive Vents.  Passive vents can also be deconstructed.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.08</h2>
 			<h3 class="author">Heredth updated:</h3>
@@ -286,6 +657,7 @@
 				<li class="rscadd">You may now create buttbots.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.07</h2>
 			<h3 class="author">Erthilo updated:</h3>
@@ -296,6 +668,7 @@
 				<li class="tweak">Medical Cyborgs now have surgical tools and bandages by default. Upgrade board now gives them a defibrillator.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.06.04</h2>
 			<h3 class="author">N3X15 updated:</h3>
@@ -304,6 +677,7 @@
 				<li class="bugfix">Explosions now destroy objects they are stored inside.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.30</h2>
 			<h3 class="author">Pomf123 updated:</h3>
@@ -313,6 +687,7 @@
 				<li class="tweak">Instead of popping up at an inopportune time after clicking Regenerative Stasis, after the timeframe it gives you another verb that will actually regenerate you! Idea blatantly stolen from TG</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.29</h2>
 			<h3 class="author">Heredth updated:</h3>
@@ -320,6 +695,7 @@
 				<li class="rscadd">Added three new mutations: Dizzy, Loud, And Whisper.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.24</h2>
 			<h3 class="author">N3X15 updated:</h3>
@@ -328,6 +704,7 @@
 				<li class="tweak">MoMMIs can insert metal and glass into autolathes and circuit imprinters.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.22</h2>
 			<h3 class="author">Kokuten updated:</h3>
@@ -346,8 +723,7 @@
 				<li class="rscadd">Added shirtless uniforms, now available at the Suitlord 9000 in the locker rooms.</li>
 			</ul>
 		</div>
-		
-		
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.20</h2>
 			<h3 class="author">N3X15 updated:</h3>
@@ -359,23 +735,13 @@
 				<li class="tweak">Bartender can change jukebox payable account, price of songs, and restrict song changes to a variety of access levels.</li>
 			</ul>
 		</div>
-		
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.19</h2>
 			<h3 class="author">N3X15 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">MoMMIs can now use the Destructive Analyzer.</li>
 			</ul>
-		</div>
-		
-		<div class="commit sansserif">
-			<h2 class="date">In Development</h2>
-			<h3 class="author">Rei1226 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">New race of fish people, the Nemoians. Available Soon�.</li>
-				<li class="rscadd">Space Gorillas and Gorillionares. Available Soon�.</li>
-			</ul>
-			<h2 class="date">2014.05.19</h2>
 			<h3 class="author">Rei1226 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">The HF Frequency Blade now has proper sprites. Admin-spawn only.</li>
@@ -383,7 +749,7 @@
 				<li class="rscadd">Bladewolf security borg module added.</li>
 			</ul>
 		</div>
-	
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.18</h2>
 			<h3 class="author">N3X15 updated:</h3>
@@ -391,7 +757,7 @@
 				<li class="bugfix">ATMs will spawn withdrawn cash on their sprite (assuming mappers set the dir correctly), preventing it from being consumed.</li>
 			</ul>
 		</div>
-		
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.17</h2>
 			<h3 class="author">N3X15 updated:</h3>
@@ -401,6 +767,7 @@
 				<li class="bugfix">When removing MMIs from a robot, the old body is now properly deleted.</li>
 			</ul>
 		</div>
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.16</h2>
 			<h3 class="author">Kokuten updated:</h3>
@@ -408,7 +775,7 @@
 				<li class="rscadd">New shield generator sprites!</li>
 			</ul>
 		</div>
-		
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.15</h2>
 			<h3 class="author">Kokuten updated:</h3>
@@ -420,7 +787,7 @@
 				<li class="rscadd"><a href="http://ss13.nexisonline.net/wiki/Space_Pod">You can now build space pods.</a> (Sprites by Cogwerks.)</li>
 			</ul>
 		</div>
-		
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.12</h2>
 			<h3 class="author">N3X15 updated:</h3>
@@ -430,7 +797,7 @@
 				<li class="tweak">Nuke moved next to security, detective now has a window into spess, lots of atmos and wiring work.</li>
 			</ul>
 		</div>
-		
+
 		<div class="commit sansserif">
 			<h2 class="date">2014.05.11</h2>
 			<h3 class="author">Erthilo updated:</h3>
@@ -438,8 +805,7 @@
 				<li class="rscadd">All PDA's can access crew manifest, even without a cartridge.</li>
 				<li class="rscadd">Stungloves now have a unique onmob sprite.</li>
 			</ul>
-			<h2 class="date">2014.05.11</h2>
-			<h3 class="author">Rei1226 updated;</h3>
+			<h3 class="author">Rei1226 updated; updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">Kamina's glasses added in a secret location on the map.</li>
 				<li class="rscadd">Added new borg module sprites: Wall-E for engineering, Wall-A for mining, EVE for medical, and R2-D2 for service.</li>
@@ -447,7 +813,12 @@
 		</div>
 
 		<div class="commit sansserif">
-			<h2 class="date">In development</h2>
+			<h2 class="date">2014.05.10</h2>
+			<h3 class="author">ESwordTheCat updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Remove default WEST when creating terminal for SMEs.</li>
+				<li class="bugfix">Fixed https://github.com/d3athrow/vgstation13/issues/675.</li>
+			</ul>
 			<h3 class="author">Erthilo updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">Added inacusiate which cures deafness instantly. Useful after an explosion. Add 1 part anti-toxin, 1 part carbon, and 1 part water.</li>
@@ -459,44 +830,6 @@
 				<li class="bugfix">Compressed matter implanter can now fit in storage items.</li>
 				<li class="bugfix">Newscasters should now be functional again.</li>
 				<li class="bugfix">Fixed some typos.</li>
-			</ul>
-			<h3 class="author">ESwordTheCat updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Remove default WEST when creating terminal for SMEs.</li>
-				<li class="bugfix">Fixed https://github.com/d3athrow/vgstation13/issues/675.</li>
-			</ul>
-			<h3 class="author">Kzd1 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">New PDA cartridge for the chef equipped with a reagent scanner</li>
-				<li class="bugfix">Fixed snack bars not deleting themself when a reaction causes them to be completely emptied of reagents</li>
-				<li class="bugfix">Fixed CondiMaster displaying a pill bottle message due to some inheritance from the ChemMaster</li>
-				<li class="rscadd">Can now climb into the gibber and commit sudoku</li>
-				<li class="experiment">Added dynamic snack bars that can be made out of any reagent. Color changes with reagents. Max 10 units per bar.</li>
-				<li class="rscadd">Slightly expanded the kitchen freezer room</li>
-				<li class="rscadd">Added SnackBar Machine to the kitchen freezer room, with R&D support</li>
-				<li class="rscadd">Added a plant bag for the chef next to the SmartFridge</li>
-				<li class="rscadd">The ChemMaster and similar machines now show the color mix of the reagents within them on screen</li>
-				<li class="rscadd">Drinking glasses can be smashed over heads via harm intent. Reagents react with the target.</li>
-				<li class="rscadd">Added Radgun traitor item for Geneticist</li>
-				<li class="rscadd">Added PDA Pinpointer traitor item</li>
-				<li class="rscadd">Added DNA Scrambler traitor item</li>
-				<li class="rscadd">Caps can now be flipped by clicking it while is is in your active hand rather than only by using the verb</li>
-			</ul>
-			<h3 class="author">Hikayu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Added the ability to create multiple pills at once to the ChemMaster 3000</li>
-			</ul>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">Removed click delay for most actions, hostile moves still have a delay of 8 to 10 ticks.</li>
-				<li class="bugfix">Fixed powergloves and laser eyes.</li>
-				<li class="bugfix">Fixed aliens not being able to kill simple animals with harm intent.</li>
-				<li class="bugfix">Fixed being able to use a reset board on a MoMMI</li>
-				<li class="bugfix">Fixed lighting not updating properly upon an airlock closing.</li>
-				<li class="rscadd">Added a snack, Busta-Nuts. They're full of hardcore eating action.</li>
-				<li class="rscadd">Added spacepods a work in progress, currently one spawns per round in a random location.</li>
-				<li class="rscadd">Added the framework for colored lighting and as a proof of concept, glosticks. If you want a rave just ask.</li>
-				<li class="rscadd">Re-added ghost dionas, now with a cooldown for each player.</li>
 			</ul>
 			<h3 class="author">Heredth updated:</h3>
 			<ul class="changes bgimages16">
@@ -518,13 +851,34 @@
 				<li class="rscadd">Added two new toys, the Mini Meteor and the Wisperphone.</li>
 				<li class="bugfix">RSF may now place items unto tables directly. At the sacrifice of not being able to pass over tables anymore.</li>
 			</ul>
+			<h3 class="author">Hikayu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Added the ability to create multiple pills at once to the ChemMaster 3000</li>
+			</ul>
+			<h3 class="author">Kzd1 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">New PDA cartridge for the chef equipped with a reagent scanner</li>
+				<li class="bugfix">Fixed snack bars not deleting themself when a reaction causes them to be completely emptied of reagents</li>
+				<li class="bugfix">Fixed CondiMaster displaying a pill bottle message due to some inheritance from the ChemMaster</li>
+				<li class="rscadd">Can now climb into the gibber and commit sudoku</li>
+				<li class="experiment">Added dynamic snack bars that can be made out of any reagent. Color changes with reagents. Max 10 units per bar.</li>
+				<li class="rscadd">Slightly expanded the kitchen freezer room</li>
+				<li class="rscadd">Added SnackBar Machine to the kitchen freezer room, with R&amp;D; support</li>
+				<li class="rscadd">Added a plant bag for the chef next to the SmartFridge</li>
+				<li class="rscadd">The ChemMaster and similar machines now show the color mix of the reagents within them on screen</li>
+				<li class="rscadd">Drinking glasses can be smashed over heads via harm intent. Reagents react with the target.</li>
+				<li class="rscadd">Added Radgun traitor item for Geneticist</li>
+				<li class="rscadd">Added PDA Pinpointer traitor item</li>
+				<li class="rscadd">Added DNA Scrambler traitor item</li>
+				<li class="rscadd">Caps can now be flipped by clicking it while is is in your active hand rather than only by using the verb</li>
+			</ul>
 			<h3 class="author">N3X15 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="experiment">All objects caught in explosions or in Singuloth's maw are now deleted using a new technique. This should make explosions and singulo releases nearly lagless.</li>
 				<li class="experiment">Xenoarch updated from Bay.</li>
 				<li class="rscadd">Ghosts can no longer interact with an object if it's blessed with holy water.</li>
 				<li class="rscadd">Ghosts have a cooldown before they can interact with light switches.</li>
-				<li class="rscadd">A new streaming audio system has been stolen from D2K5's old code and reimplemented. </li>
+				<li class="rscadd">A new streaming audio system has been stolen from D2K5's old code and reimplemented.</li>
 				<li class="rscadd">Added Chariot spell to Wizards.</li>
 				<li class="rscadd">Added a huge new variety of things to the asteroid: Caves, mobs, Gibtonite from /tg/, custom dungeon generation, wider variety of dungeons.</li>
 				<li class="rscadd">Added Go-Karts, sprited by Rei1226.</li>
@@ -548,10 +902,22 @@
 				<li class="bugfix">Traitors should no longer be asked to steal things their job provides easy access to.</li>
 				<li class="bugfix">MoMMIs no longer drop their stunprods when emagged.</li>
 			</ul>
-			<h3 class='author'>Yota updated:</h3>	
-			<ul class='changes bgimages16'>
-				<li class='tweak'>Photograph now rendered crisp and clean, so that we may enjoy them in their 0.009 megapixel goodness.</li>
-				<li class='bugfix'>Cameras should now capture more of what they should, and less of what they shouldn't.</li>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="experiment">Removed click delay for most actions, hostile moves still have a delay of 8 to 10 ticks.</li>
+				<li class="bugfix">Fixed powergloves and laser eyes.</li>
+				<li class="bugfix">Fixed aliens not being able to kill simple animals with harm intent.</li>
+				<li class="bugfix">Fixed being able to use a reset board on a MoMMI</li>
+				<li class="bugfix">Fixed lighting not updating properly upon an airlock closing.</li>
+				<li class="rscadd">Added a snack, Busta-Nuts. They're full of hardcore eating action.</li>
+				<li class="rscadd">Added spacepods a work in progress, currently one spawns per round in a random location.</li>
+				<li class="rscadd">Added the framework for colored lighting and as a proof of concept, glosticks. If you want a rave just ask.</li>
+				<li class="rscadd">Re-added ghost dionas, now with a cooldown for each player.</li>
+			</ul>
+			<h3 class="author">Yota updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Photograph now rendered crisp and clean, so that we may enjoy them in their 0.009 megapixel goodness.</li>
+				<li class="bugfix">Cameras should now capture more of what they should, and less of what they shouldn't.</li>
 			</ul>
 		</div>
 

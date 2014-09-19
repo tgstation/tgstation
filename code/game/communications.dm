@@ -154,44 +154,33 @@ var/const/RADIO_CONVEYORS = "10"
 
 var/global/datum/controller/radio/radio_controller
 
-datum/controller/radio
-	var/list/datum/radio_frequency/frequencies = list()
+/datum/controller/radio
+	var/list/datum/radio_frequency/frequencies = new
 
-	proc/add_object(obj/device as obj, var/new_frequency as num, var/filter = null as text|null)
-		var/f_text = num2text(new_frequency)
-		var/datum/radio_frequency/frequency = frequencies[f_text]
+/datum/controller/radio/proc/add_object(const/obj/device, const/_frequency, var/filter = null as text|null)
+	var/datum/radio_frequency/frequency = return_frequency(_frequency)
 
-		if(!frequency)
-			frequency = new
-			frequency.frequency = new_frequency
-			frequencies[f_text] = frequency
+	if(isnull(frequency))
+		frequency = new
+		frequency.frequency = _frequency
+		frequencies[num2text(_frequency)] = frequency
 
-		frequency.add_listener(device, filter)
-		return frequency
+	frequency.add_listener(device, filter)
+	return frequency
 
-	proc/remove_object(obj/device, old_frequency)
-		var/f_text = num2text(old_frequency)
-		var/datum/radio_frequency/frequency = frequencies[f_text]
+/datum/controller/radio/proc/remove_object(const/obj/device, const/_frequency)
+	var/datum/radio_frequency/frequency = return_frequency(_frequency)
 
-		if(frequency)
-			frequency.remove_listener(device)
+	if(frequency)
+		frequency.remove_listener(device)
 
-			if(frequency.devices.len == 0)
-				del(frequency)
-				frequencies -= f_text
+		if(frequency.devices.len <= 0)
+			frequencies.Remove(num2text(_frequency))
 
-		return 1
+	return 1
 
-	proc/return_frequency(var/new_frequency as num)
-		var/f_text = num2text(new_frequency)
-		var/datum/radio_frequency/frequency = frequencies[f_text]
-
-		if(!frequency)
-			frequency = new
-			frequency.frequency = new_frequency
-			frequencies[f_text] = frequency
-
-		return frequency
+/datum/controller/radio/proc/return_frequency(const/_frequency)
+	return frequencies[num2text(_frequency)]
 
 datum/radio_frequency
 	var/frequency as num
@@ -255,30 +244,33 @@ datum/radio_frequency
 
 //			del(signal)
 
-		add_listener(obj/device as obj, var/filter as text|null)
-			if (!filter)
-				filter = "_default"
-			//log_admin("add_listener(device=[device],filter=[filter]) frequency=[frequency]")
-			var/list/obj/devices_line = devices[filter]
-			if (!devices_line)
-				devices_line = new
-				devices[filter] = devices_line
-			devices_line+=device
-//			var/list/obj/devices_line___ = devices[filter_str]
-//			var/l = devices_line___.len
-			//log_admin("DEBUG: devices_line.len=[devices_line.len]")
-			//log_admin("DEBUG: devices(filter_str).len=[l]")
+/datum/radio_frequency/proc/add_listener(const/obj/device, var/filter)
+	if(!filter) // FIXME
+		filter = "_default"
 
-		remove_listener(obj/device)
-			for (var/devices_filter in devices)
-				var/list/devices_line = devices[devices_filter]
-				devices_line-=device
-				while (null in devices_line)
-					devices_line -= null
-				if (devices_line.len==0)
-					devices -= devices_filter
-					del(devices_line)
+	var/list/devices_at_filter = devices[filter]
 
+	if(isnull(devices_at_filter))
+		devices_at_filter = new
+		devices[filter] = devices_at_filter
+
+	devices_at_filter.Add(device)
+
+/datum/radio_frequency/proc/remove_listener(const/obj/device, const/filter)
+	var/list/devices_at_filter = devices[filter]
+
+	// 1. check if it's an object
+	// 2. check if it has contents
+	// 3. check if the device is in contents
+	if(devices_at_filter && devices_at_filter.len && devices_at_filter.Find(device))
+		devices_at_filter.Remove(device)
+
+		if(devices_at_filter.len <= 0)
+			devices.Remove(filter)
+
+/datum/radio_frequency/remove_listener(const/obj/device)
+	for(var/filter in devices)
+		..(device, filter)
 
 var/list/pointers = list()
 

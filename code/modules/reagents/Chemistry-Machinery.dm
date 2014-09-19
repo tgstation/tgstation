@@ -158,8 +158,8 @@
 		else
 			custom = 0
 			amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
-		if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
-			amount = 0
+		if (amount < 5) // Since the user can actually type the commands himself, some sanity checking
+			amount = 5
 		if (amount > 100)
 			amount = 100
 
@@ -264,6 +264,8 @@
 	var/bottlesprite = "1" //yes, strings
 	var/pillsprite = "1"
 	var/client/has_sprites = list()
+
+	l_color = "#0000FF"
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -677,6 +679,8 @@
 	var/temphtml = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
+
+	l_color = "#0000FF"
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **

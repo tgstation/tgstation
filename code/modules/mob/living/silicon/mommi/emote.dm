@@ -216,6 +216,23 @@
 			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			m_type = 1
 
+		if("comment")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> cheerily vocalizes at [param]."
+			else
+				message = "<B>[src]</B> vocalizes."
+			playsound(src, get_sfx("mommicomment"),50, 0)
+			m_type = 1
+
 		else
 			src << text("Invalid Emote: [], use *help", act)
 	if ((message && src.stat == 0))

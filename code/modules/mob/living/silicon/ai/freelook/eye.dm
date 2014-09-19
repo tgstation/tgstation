@@ -13,7 +13,7 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/aiEye/proc/setLoc(var/T)
+/mob/camera/aiEye/setLoc(var/T)
 
 	if(ai)
 		if(!isturf(ai.loc))

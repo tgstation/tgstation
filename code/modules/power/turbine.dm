@@ -38,6 +38,8 @@
 	var/id_tag = 0
 	var/door_status = 0
 
+	l_color = "#0000FF"
+
 // the inlet stage of the gas turbine electricity generator
 
 /obj/machinery/compressor/New()

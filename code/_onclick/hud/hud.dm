@@ -193,6 +193,8 @@ datum/hud/New(mob/owner)
 		ghost_hud()
 	else if(isovermind(mymob))
 		blob_hud()
+	else if(isconstruct(mymob))
+		construct_hud()
 
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)

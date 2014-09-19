@@ -1,5 +1,6 @@
 #define ACT_REPLACE      /datum/speech_filter_action/replace
 #define ACT_PICK_REPLACE /datum/speech_filter_action/pick_replace
+
 /datum/speech_filter
 	// REGEX OH BOY
 	// orig -> /datum/SFA
@@ -7,9 +8,12 @@
 
 // Simple replacements. (ass -> butt) => s/ass/butt/
 /datum/speech_filter/proc/addReplacement(var/orig,var/replacement, var/case_sensitive=0)
+	orig        = replacetext(orig,       "/","\\/")
+	replacement = replacetext(replacement,"/","\\/")
 	return addExpression("/[orig]/[replacement]/[case_sensitive?"":"i"]g",ACT_REPLACE)
 
 /datum/speech_filter/proc/addPickReplacement(var/orig,var/list/replacements, var/case_sensitive=0)
+	orig        = replacetext(orig,"/","\\/")
 	return addExpression("/[orig]/[case_sensitive?"":"i"]g",ACT_PICK_REPLACE,replacements)
 
 /datum/speech_filter/proc/addWordReplacement(var/orig,var/replacement, var/case_sensitive=0)

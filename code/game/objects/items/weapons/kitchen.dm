@@ -183,6 +183,7 @@
 	name = "Butcher's Cleaver"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
+	hitsound = "sound/weapons/rapidslice.ogg"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
@@ -223,6 +224,7 @@
 	name = "rolling pin"
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
+	hitsound = "sound/weapons/smash.ogg"
 	force = 8.0
 	throwforce = 10.0
 	throw_speed = 2

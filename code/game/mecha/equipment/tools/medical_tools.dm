@@ -375,7 +375,6 @@
 
 		if(!PN)
 			PN = new()
-			powernets += PN
 		NC.powernet = PN
 		PN.cables += NC
 		NC.mergeConnectedNetworks(NC.d2)

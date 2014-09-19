@@ -95,9 +95,9 @@
 			return
 
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			new/obj/item/weapon/cable_coil(T, 2, _color)
+			new/obj/item/weapon/cable_coil(T, 2, l_color)
 		else
-			new/obj/item/weapon/cable_coil(T, 1, _color)
+			new/obj/item/weapon/cable_coil(T, 1, l_color)
 
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
@@ -145,17 +145,15 @@
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
-
 /obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
-	if(!prob(prb))
-		return 0
-	if (electrocute_mob(user, powernet, src, siemens_coeff))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-		return 1
-	else
-		return 0
+	if(src.powernet && (src.powernet.avail > 1000))
+		if(prob(prb))
+			if(electrocute_mob(user,powernet,src,siemens_coeff))
+				var/datum/effect/effect/system/spark_spread/s = new
+				s.set_up(5,1,src)
+				s.start()
+				return 1
+	return
 
 /obj/structure/cable/ex_act(severity)
 	switch(severity)
@@ -163,12 +161,12 @@
 			qdel(src)
 		if(2.0)
 			if (prob(50))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, _color)
+				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, l_color)
 				qdel(src)
 
 		if(3.0)
 			if (prob(25))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, _color)
+				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, l_color)
 				qdel(src)
 	return
 
@@ -200,7 +198,7 @@
 
 
 /obj/item/weapon/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
-	..()
+	. = ..()
 	src.amount = length
 	if (param_color)
 		_color = param_color
@@ -327,7 +325,6 @@
 		C.updateicon()
 
 		C.powernet = new()
-		powernets += C.powernet
 		C.powernet.cables += C
 
 		C.mergeConnectedNetworks(C.d2)
@@ -337,7 +334,7 @@
 		use(1)
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				new/obj/item/weapon/cable_coil(C.loc, 1, C._color)
+				new/obj/item/weapon/cable_coil(C.loc, 1, C.l_color)
 				qdel(C)
 		//src.laying = 1
 		//last = C
@@ -397,7 +394,7 @@
 			use(1)
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
-					new/obj/item/weapon/cable_coil(NC.loc, 1, NC._color)
+					new/obj/item/weapon/cable_coil(NC.loc, 1, NC.l_color)
 					qdel(NC)
 
 			return
@@ -436,7 +433,7 @@
 		use(1)
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				new/obj/item/weapon/cable_coil(C.loc, 2, C._color)
+				new/obj/item/weapon/cable_coil(C.loc, 2, C.l_color)
 				qdel(C)
 
 		return
@@ -461,7 +458,6 @@
 
 			if(!TC.powernet)
 				TC.powernet = new()
-				powernets += TC.powernet
 				TC.powernet.cables += TC
 
 			if(powernet)
@@ -476,7 +472,6 @@
 /obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
 	if(!powernet)
 		powernet = new()
-		powernets += powernet
 		powernet.cables += src
 
 	for(var/AM in loc)
@@ -496,7 +491,7 @@
 				merge_powernets(powernet, N.terminal.powernet)
 			else
 				N.terminal.powernet = powernet
-				powernet.nodes[N.terminal] = N.terminal
+				powernet.nodes.Add(N.terminal)
 
 		else if(istype(AM,/obj/machinery/power))
 			var/obj/machinery/power/M = AM
@@ -505,14 +500,14 @@
 				merge_powernets(powernet, M.powernet)
 			else
 				M.powernet = powernet
-				powernet.nodes[M] = M
+				powernet.nodes.Add(M)
 
 
 obj/structure/cable/proc/cableColor(var/colorC)
 	var/color_n = "red"
 	if(colorC)
 		color_n = colorC
-	_color = color_n
+	l_color = color_n
 	switch(colorC)
 		if("red")
 			icon = 'icons/obj/power_cond_red.dmi'

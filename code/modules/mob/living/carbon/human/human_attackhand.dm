@@ -169,7 +169,7 @@
 
 			log_attack("[M.name] ([M.ckey]) [M.species.attack_verb]ed [src.name] ([src.ckey])")
 
-			var/damage = rand(0, 5)//BS12 EDIT
+			var/damage = rand(0, M.species.max_hurt_damage)//BS12 EDIT // edited again by Iamgoofball to fix species attacks
 			if(!damage)
 				if(M.species.attack_verb == "punch")
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -193,13 +193,24 @@
 
 			visible_message("\red <B>[M] has [M.species.attack_verb]ed [src]!</B>")
 			//Rearranged, so claws don't increase weaken chance.
-			if(damage >= 5 && prob(50))
+			if(damage >= M.species.max_hurt_damage && prob(50))
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(2, WEAKEN, armor_block)
 
 			if(M.species.punch_damage)
 				damage += M.species.punch_damage
 			apply_damage(damage, BRUTE, affecting, armor_block)
+
+			// Horror form can punch people so hard they learn how to fly.
+			if(M.species.punch_throw_range && prob(25))
+				visible_message("\red <B>[src] is thrown by the force of the assault!</B>")
+				var/turf/T = get_turf(src)
+				var/turf/target
+				if(istype(T, /turf/space)) // if ended in space, then range is unlimited
+					target = get_edge_target_turf(T, M.dir)
+				else						// otherwise limit to 10 tiles
+					target = get_ranged_target_turf(T, M.dir, M.species.punch_throw_range)
+				src.throw_at(target,100,M.species.punch_throw_speed)
 
 
 		if("disarm")

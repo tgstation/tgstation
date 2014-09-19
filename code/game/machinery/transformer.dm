@@ -1,6 +1,6 @@
 /obj/machinery/transformer
 	name = "Automatic Robotic Factory 5000"
-	desc = "A large metallic machine with an entrance and an exit. A sign on the side reads, 'human goes in, robot comes out'. human must be lying down and alive. Has to cooldown between each use."
+	desc = "A large metallic machine with an entrance and an exit. A sign on the side reads 'human goes in, robot comes out'. Human must be lying down and alive. Has to cooldown between each use."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = MOB_LAYER+1 // Overhead
@@ -39,7 +39,7 @@
 	if(cooldown_state)
 		return
 
-	// HasEntered didn't like people lying down.
+	// Crossed didn't like people lying down.
 	if(ishuman(AM))
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)

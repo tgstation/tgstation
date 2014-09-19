@@ -20,6 +20,7 @@
 	desc = "A wrench with common uses. Can be found in your hand."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "wrench"
+	hitsound = "sound/weapons/smash.ogg"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5.0
@@ -39,6 +40,7 @@
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "screwdriver"
+	hitsound = 'sound/weapons/toolhit.ogg'
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5.0
@@ -93,6 +95,27 @@
 		M = user
 	return eyestab(M,user)
 
+/obj/item/weapon/screwdriver/attackby(var/obj/O)
+	if(istype(O, /obj/item/weapon/cable_coil))
+		var/obj/item/weapon/cable_coil/C = O
+		var/mob/M = usr
+		if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
+			if(!istype(M.loc,/turf)) return
+			if(C.amount < 10)
+				usr << "\red You need at least 10 lengths to make a bolas wire!"
+				return
+			var/obj/item/weapon/legcuffs/bolas/cable/B = new /obj/item/weapon/legcuffs/bolas/cable(usr.loc)
+			qdel(src)
+			B.icon_state = "cbolas_[C._color]"
+			B.cable_color = C._color
+			B.screw_state = item_state
+			B.screw_istate = icon_state
+			M << "\blue You wind some cable around the screwdriver handle to make a bolas wire."
+			C.use(10)
+		else
+			usr << "\blue You cannot do that."
+	else
+		..()
 /*
  * Wirecutters
  */
@@ -101,6 +124,7 @@
 	desc = "This cuts wires."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "cutters"
+	hitsound = 'sound/weapons/toolhit.ogg'
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 	force = 6.0
@@ -138,6 +162,7 @@
 	name = "welding tool"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
+	hitsound = 'sound/weapons/toolhit.ogg'
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 
@@ -167,17 +192,13 @@
 
 /obj/item/weapon/weldingtool/New()
 	. = ..()
-//	var/random_fuel = min(rand(10,20),max_fuel)
-	var/datum/reagents/R = new/datum/reagents(max_fuel)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("fuel", max_fuel)
+	create_reagents(max_fuel)
+	reagents.add_reagent("fuel", max_fuel)
 
 /obj/item/weapon/weldingtool/examine()
 	set src in usr
 	usr << text("\icon[] [] contains []/[] units of fuel!", src, src.name, get_fuel(),src.max_fuel )
 	return
-
 
 /obj/item/weapon/weldingtool/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/screwdriver))
@@ -225,6 +246,7 @@
 				src.force = 3
 				src.damtype = "brute"
 				src.icon_state = "welder"
+				src.hitsound = "sound/weapons/toolhit.ogg"
 				src.welding = 0
 			processing_objects.Remove(src)
 			return
@@ -234,6 +256,7 @@
 				src.force = 15
 				src.damtype = "fire"
 				src.icon_state = "welder1"
+				src.hitsound = "sound/weapons/welderattack.ogg"
 			if(prob(5))
 				remove_fuel(1)
 
@@ -252,7 +275,7 @@
 		if(M.l_hand == src || M.r_hand == src)
 			location = get_turf(M)
 	if (istype(location, /turf))
-		location.hotspot_expose(700, 5)
+		location.hotspot_expose(700, 5,surfaces=istype(loc,/turf))
 
 
 /obj/item/weapon/weldingtool/afterattack(obj/O as obj, mob/user as mob, proximity)
@@ -273,7 +296,7 @@
 		remove_fuel(1)
 		var/turf/location = get_turf(user)
 		if (istype(location, /turf))
-			location.hotspot_expose(700, 50, 1)
+			location.hotspot_expose(700, 50, 1,surfaces=1)
 			if(isliving(O))
 				var/mob/living/L = O
 				L.IgniteMob()
@@ -444,6 +467,7 @@
 	desc = "Used to hit floors"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "crowbar"
+	hitsound = "sound/weapons/toolhit.ogg"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5.0
@@ -464,7 +488,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is smashing \his head in with the [src.name]! It looks like \he's done waiting for half life three!</b>"
 		return (BRUTELOSS)

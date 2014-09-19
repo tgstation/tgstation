@@ -318,6 +318,15 @@ datum/controller/game_controller/proc/processMobs()
 
 		processing_objects -= Object
 
+	// Hack.
+	for (var/turf/unsimulated/wall/supermatter/SM in processing_objects)
+		if (SM)
+			last_thing_processed = SM.type
+			SM.process()
+			continue
+
+		processing_objects -= SM
+
 /datum/controller/game_controller/proc/processPipenets()
 	last_thing_processed = /datum/pipe_network
 

@@ -23,7 +23,7 @@
 	var/up = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
-	icon_action_button = "action_welding"
+	action_button_name = "Toggle Welding Helmet"
 	siemens_coefficient = 0.9
 	species_fit = list("Vox")
 
@@ -195,6 +195,7 @@
 
 	var/s_tone = 0.0
 	var/created_name = "Buttbot"
+	nonplant_seed_type = /obj/item/seeds/synthbuttseed
 
 	proc
 		transfer_buttdentity(var/mob/living/carbon/H)

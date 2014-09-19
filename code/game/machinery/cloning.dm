@@ -22,6 +22,16 @@
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS // * 3 - N3X
 	var/opened = 0
+	var/time_coeff = 1 //Upgraded via part upgrading
+	var/resource_efficiency = 1
+
+	l_color = "#7BF9FF"
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)) && attempting)
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -40,6 +50,16 @@
 
 	RefreshParts()
 
+/obj/machinery/clonepod/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/scanning_module/SM in component_parts)
+		T += SM.rating //First rank is two times more efficient, second rank is two and a half times, third is three times. For reference, there's TWO scanning modules
+	time_coeff = T/2
+	T = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/MA in component_parts)
+		T += MA.rating //Ditto above
+	resource_efficiency = T/2
+	T = 0
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -181,17 +201,14 @@
 	spawn(30)
 		src.eject_wait = 0
 
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, delay_ready_dna=1)
 	occupant = H
 
-	if(!R.dna.real_name)	//to prevent null names
-		R.dna.real_name = "clone ([rand(0,999)])"
-	H.real_name = R.dna.real_name
-
-	H.dna.mutantrace = R.dna.mutantrace
-
 	src.icon_state = "pod_1"
+
 	//Get the clone body ready
+	H.dna = R.dna.Clone()
+
 	H.adjustCloneLoss(150) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
 	H.adjustBrainLoss(src.heal_level + 50 + rand(10, 30)) // The rand(10, 30) will come out as extra brain damage
 	H.Paralyse(4)
@@ -219,23 +236,12 @@
 
 	// -- End mode specific stuff
 
-	if(!R.dna)
-		H.dna = new /datum/dna()
-		H.dna.real_name = H.real_name
-	else
-		H.dna=R.dna
 	H.UpdateAppearance()
-	randmutb(H) //Sometimes the clones come out wrong.
-	H.dna.UpdateSE()
-	H.dna.UpdateUI()
+	H.set_species()
+	randmutb(H) // sometimes the clones come out wrong.
+	H.update_mutantrace()
+	H.real_name = H.dna.real_name
 
-	H.f_style = "Shaved"
-	if(R.dna.species == "Human") //no more xenos losing ears/tentacles
-		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
-
-	H.set_species(R.dna.species)
-	//for(var/datum/language/L in languages)
-	//	H.add_language(L.name)
 	H.suiciding = 0
 	src.attempting = 0
 	return 1
@@ -260,14 +266,17 @@
 			src.occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
-			src.occupant.adjustCloneLoss(-2)
+			src.occupant.adjustCloneLoss(-1*time_coeff) //Very slow, new parts = much faster
 
 			//Premature clones may have brain damage.
-			src.occupant.adjustBrainLoss(-1)
+			src.occupant.adjustBrainLoss(-1*time_coeff) //Ditto above
 
 			//So clones don't die of oxyloss in a running pod.
 			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
 				src.occupant.reagents.add_reagent("inaprovaline", 60)
+			var/mob/living/carbon/human/H = src.occupant
+			if(istype(H, /datum/species/vox))
+				src.occupant.reagents.add_reagent("nitrogen",10)
 
 			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
 			src.occupant.adjustOxyLoss(-4)
@@ -402,7 +411,7 @@
 	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
 
-	src.biomass -= CLONE_BIOMASS
+	src.biomass -= CLONE_BIOMASS/resource_efficiency //Improve parts to use less biomass
 
 	return
 
@@ -460,7 +469,7 @@
 	icon_state = "disk_kit"
 
 /obj/item/weapon/storage/box/disks/New()
-	..()
+	. = ..()
 	new /obj/item/weapon/disk/data(src)
 	new /obj/item/weapon/disk/data(src)
 	new /obj/item/weapon/disk/data(src)

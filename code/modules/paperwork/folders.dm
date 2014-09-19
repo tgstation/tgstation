@@ -6,6 +6,9 @@
 	w_class = 2
 	pressure_resistance = 2
 
+	autoignition_temperature = 522 // Kelvin
+	fire_fuel = 1
+
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."
 	icon_state = "folder_blue"

@@ -226,3 +226,100 @@
 .uiIcon16.icon-grip-solid-horizontal { background-position: -48px -224px; }
 .uiIcon16.icon-gripsmall-diagonal-se { background-position: -64px -224px; }
 .uiIcon16.icon-grip-diagonal-se { background-position: -80px -224px; }
+
+.mapIcon16 {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    background-image: url(uiIcons16Green.png);
+    background-position: -144px -96px;
+    background-repeat: no-repeat;
+    zoom: 0.125;
+}
+.mapIcon16.dead {
+    background-image: url(uiIcons16Red.png);
+}
+
+.mapIcon16.bad {
+    background-image: url(uiIcons16Red.png);
+}
+
+.mapIcon16.average {
+    background-image: url(uiIcons16Orange.png);
+}
+
+.mapIcon16.good {
+    background-image: url(uiIcons16Green.png);
+}
+
+/* AirAlarm */
+.mapIcon16.icon-airalarm { background-position: 0 -144px; }
+
+/* Command Positions */
+.mapIcon16.rank-captain {
+    background-position: -224px -112px;
+}
+.mapIcon16.rank-headofpersonnel {
+    background-position: -112px -96px;
+}
+.mapIcon16.rank-headofsecurity {
+    background-position: -112px -128px;
+}
+.mapIcon16.rank-chiefengineer {
+    background-position: -176px -112px;
+}
+.mapIcon16.rank-researchdirector {
+    background-position: -128px -128px;
+}
+.mapIcon16.rank-chiefmedicalofficer {
+    background-position: -32px -128px;
+}
+
+/* Engineering Positions */
+.mapIcon16.rank-stationengineer {
+    background-position: -176px -112px;
+}
+.mapIcon16.rank-atmospherictechnician {
+    background-position: -176px -112px;
+}
+
+/* Medical Positions */
+.mapIcon16.rank-medicaldoctor {
+    background-position: -32px -128px;
+}
+.mapIcon16.rank-geneticist {
+    background-position: -32px -128px;
+}
+.mapIcon16.rank-psychiatrist {
+    background-position: -32px -128px;
+}
+.mapIcon16.rank-chemist {
+    background-position: -32px -128px;
+}
+
+/* Science Positions */
+.mapIcon16.rank-scientist {
+    background-position: -128px -128px;
+}
+.mapIcon16.rank-geneticist {
+    background-position: -128px -128px;
+}
+.mapIcon16.rank-roboticist {
+    background-position: -128px -128px;
+}
+.mapIcon16.rank-xenobiologist {
+    background-position: -128px -128px;
+}
+
+/* Security Positions */
+.mapIcon16.rank-warden {
+    background-position: -112px -128px;
+}
+.mapIcon16.rank-detective {
+    background-position: -112px -128px;
+}
+.mapIcon16.rank-securityofficer {
+    background-position: -112px -128px;
+}
+

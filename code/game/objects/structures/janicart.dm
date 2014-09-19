@@ -4,7 +4,7 @@
 	icon_state = "jani_keys"
 
 /obj/item/mecha_parts/janicart_upgrade
-	name = "Janicart cleaner upgrade"
+	name = "Janicart Cleaner Upgrade"
 	desc = "This device upgrades the janicart to automatically clean surfaces when driving."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
@@ -24,11 +24,8 @@
 	var/upgraded = 0
 
 /obj/structure/stool/bed/chair/vehicle/janicart/New()
-	..()
-
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	. = ..()
+	create_reagents(100)
 
 /obj/structure/stool/bed/chair/vehicle/janicart/examine()
 	set src in usr

@@ -162,13 +162,10 @@
 		return
 
 	door_animate("deny")
-	return
 
 /obj/machinery/door/blob_act()
-	if (prob(BLOB_PROBABILITY))
-		src = null
-
-	return
+	if(prob(BLOB_PROBABILITY))
+		qdel(src)
 
 /obj/machinery/door/proc/door_animate(var/animation as text)
 	switch (animation)
@@ -267,16 +264,13 @@
 	if (!glass)
 		src.SetOpacity(1)
 
-	// TODO: analyze this proc
-	update_nearby_tiles()
-
 	// TODO: rework how fire works on doors
 	var/obj/fire/F = locate() in loc
-	if (F)
-		F = null
+	if(F)
+		qdel(F)
 
+	update_nearby_tiles()
 	operating = 0
-	return
 
 /obj/machinery/door/New()
 	. = ..()
@@ -286,7 +280,6 @@
 		layer = 3.1
 
 		explosion_resistance = initial(explosion_resistance)
-		update_heat_protection(get_turf(src))
 	else
 		// under all objects if opened. 2.7 due to tables being at 2.6
 		layer = 2.7
@@ -302,15 +295,12 @@
 			bound_height = width * world.icon_size
 
 	update_nearby_tiles()
-	return
 
 /obj/machinery/door/Destroy()
-	density = 0
 	update_nearby_tiles()
 	..()
-	return
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group) return 0
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
@@ -345,18 +335,14 @@
 	return 1
 
 /obj/machinery/door/proc/update_nearby_tiles()
-	if (isnull(air_master))
+	if(!air_master)
 		return 0
 
-	var/T
+	for(var/turf in locs)
+		update_heat_protection(turf)
+		air_master.mark_for_update(turf)
 
-	for (T in locs.Copy())
-		if (!isturf(T))
-			continue
-
-		update_heat_protection(T)
-		air_master.mark_for_update(T)
-
+	update_freelok_sight()
 	return 1
 
 /obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)

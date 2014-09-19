@@ -15,8 +15,10 @@
 
 /obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)
-		if(M.monkeyizing)	return
-		if(M.has_brain_worms()) return //Borer stuff - RR
+		if(M.monkeyizing)
+			return
+		if(M.has_brain_worms())
+			return //Borer stuff - RR
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null
@@ -25,7 +27,8 @@
 
 		if(istype(M, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/Robot = M
-			if(Robot.mmi)	del(Robot.mmi)
+			if(Robot.mmi)
+				del(Robot.mmi)
 		else
 			for(var/obj/item/W in M)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
@@ -99,7 +102,7 @@
 					else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
 				new_mob.universal_speak = 1
 			if("human")
-				new_mob = new /mob/living/carbon/human(M.loc)
+				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
 
 				new_mob.gender = M.gender
 

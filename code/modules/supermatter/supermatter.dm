@@ -66,7 +66,7 @@
 
 		gasefficency = 0.125
 
-		explosion_power = 3 //3,6,9,12? Or is that too small?
+		explosion_power = 8 // WAS 3 - N3X
 
 
 /obj/machinery/power/supermatter/New()
@@ -79,6 +79,12 @@
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
+		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+		new /turf/unsimulated/wall/supermatter(get_turf(src))
+		SetUniversalState(/datum/universal_state/supermatter_cascade)
+		del(src)
+
+/obj/machinery/power/supermatter/shard/explode()
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
 		del src
 		return
@@ -228,7 +234,9 @@
 /obj/machinery/power/supermatter/attack_hand(mob/user as mob)
 	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
 		"<span class=\"danger\">You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
-		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
+		"<span class=\"warning\">You hear an unearthly noise as a wave of heat washes over you.</span>")
+
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
 	Consume(user)
 
@@ -243,6 +251,8 @@
 		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
 		"<span class=\"warning\">Everything suddenly goes silent.</span>")
 
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+
 	user.drop_from_inventory(W)
 	Consume(W)
 
@@ -253,10 +263,12 @@
 	if(istype(AM, /mob/living))
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
-		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
+		"<span class=\"warning\">You hear an unearthly noise as a wave of heat washes over you.</span>")
 	else
 		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
 		"<span class=\"warning\">You hear a loud crack as you are washed with a wave of heat.</span>")
+
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
 	Consume(AM)
 
@@ -278,5 +290,5 @@
 		else
 			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
 		var/rads = 500 * sqrt( 1 / (get_dist(l, src) + 1) )
-		l.apply_effect(rads, IRRADIATE)
+		l.apply_effect(rads, IRRADIATE, 0) // Permit blocking
 

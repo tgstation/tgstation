@@ -47,6 +47,14 @@
 	var/obj/item/weapon/circuitboard/airlock/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	autoclose = 1
+	var/busy = 0
+
+/obj/machinery/door/airlock/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+
+	..()
 
 /obj/machinery/door/airlock/command
 	name = "Airlock"
@@ -218,13 +226,11 @@
 	icon = 'icons/obj/doors/Doorplasma.dmi'
 	mineral = "plasma"
 
-/obj/machinery/door/airlock/plasma/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
+	autoignition_temperature = 300
+	fire_fuel = 10
 
-/obj/machinery/door/airlock/plasma/proc/ignite(exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
+/obj/machinery/door/airlock/plasma/ignite(temperature)
+	PlasmaBurn(temperature)
 
 /obj/machinery/door/airlock/plasma/proc/PlasmaBurn(temperature)
 	for(var/turf/simulated/floor/target_tile in range(2,loc))
@@ -235,7 +241,8 @@
 		napalm.toxins = toxinsToDeduce
 		napalm.temperature = 400+T0C
 		target_tile.assume_air(napalm)
-		spawn (0) target_tile.hotspot_expose(temperature, 400)
+		spawn (0)
+			target_tile.hotspot_expose(temperature, 400, surfaces=1)
 	for(var/obj/structure/falsewall/plasma/F in range(3,src))//Hackish as fuck, but until fire_act works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
 		T.ChangeTurf(/turf/simulated/wall/mineral/plasma/)
@@ -609,7 +616,7 @@ About the new airlock wires panel:
 			if (user)
 				src.attack_ai(user)
 
-/obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if (src.isElectrified())
 		if (istype(mover, /obj/item))
 			var/obj/item/i = mover
@@ -930,12 +937,11 @@ About the new airlock wires panel:
 	return dat
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
-	if (!istype(user, /mob/living/silicon))
+	if (!istype(user, /mob/living/silicon) && !isobserver(user))
 		if (isElectrified())
 			// TODO: analyze the called proc
 			if (shock(user, 100))
 				return
-
 	if (!p_open)
 		..(user)
 	//else
@@ -987,6 +993,8 @@ About the new airlock wires panel:
 			PC.plugin(src, user)
 			PC = null
 	else if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) )
+		if(src.busy) return
+		src.busy = 1
 		var/beingcrowbarred = null
 		if(istype(I, /obj/item/weapon/crowbar) )
 			beingcrowbarred = 1 //derp, Agouri
@@ -1021,9 +1029,9 @@ About the new airlock wires panel:
 					A = new/obj/item/weapon/circuitboard/airlock(loc)
 
 					// TODO: recheck the vars
-					if (req_access.len)
+					if(req_access && req_access.len)
 						A.conf_access = req_access
-					else if (req_one_access.len)
+					else if(req_one_access && req_one_access.len)
 						A.conf_access = req_one_access
 						A.one_access = 1
 				else
@@ -1060,12 +1068,12 @@ About the new airlock wires panel:
 						user << "\red You need to be wielding the Fire axe to do that."
 				else
 					spawn(0)	close(1)
+		src.busy = 0
 	else if (istype(I, /obj/item/weapon/card/emag) || istype(I, /obj/item/weapon/melee/energy/blade))
 		if (!operating)
 			if(density)
 				door_animate("spark")
-				sleep(6)
-				open()
+				open(1)
 			operating = -1
 	else
 		..(I, user)
@@ -1098,7 +1106,7 @@ About the new airlock wires panel:
 			spawn(150)
 				autoclose()
 		else if(autoclose && !normalspeed)
-			spawn(5)
+			spawn(20)
 				autoclose()
 	// </worry>
 	return ..()
@@ -1120,6 +1128,12 @@ About the new airlock wires panel:
 
 			if (locate(/mob/living) in T)
 				playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)
+				if(autoclose  && normalspeed)
+					spawn(150)
+						autoclose()
+				else if(autoclose && !normalspeed)
+					spawn(20)
+						autoclose()
 				return
 
 	else
@@ -1160,7 +1174,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/New()
-	..()
+	. = ..()
 	wires = new(src)
 	if(src.closeOtherId != null)
 		spawn (5)

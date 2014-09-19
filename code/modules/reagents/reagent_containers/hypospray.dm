@@ -23,6 +23,11 @@
 	reagents.add_reagent("doctorsdelight", 30)
 	return
 
+/obj/item/weapon/reagent_containers/hypospray/creatine/New() // TESTING!
+	..()
+	reagents.add_reagent("creatine", 30)
+	return
+
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M as mob, mob/user as mob)
 	if(!reagents.total_volume)
 		user << "\red [src] is empty."
@@ -32,6 +37,7 @@
 	if (reagents.total_volume)
 		user << "\blue You inject [M] with [src]."
 		M << "\red You feel a tiny prick!"
+		playsound(get_turf(src), 'sound/items/hypospray.ogg', 50, 1)
 
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)

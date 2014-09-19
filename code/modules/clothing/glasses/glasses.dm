@@ -102,7 +102,7 @@
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
 	icon_state = "welding-g"
 	item_state = "welding-g"
-	icon_action_button = "action_welding_g"
+	action_button_name = "Toggle Welding Goggles"
 	var/up = 0
 	species_fit = list("Vox")
 
@@ -139,8 +139,6 @@
 	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes. Allows for better vision than normal goggles.."
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
-	icon_action_button = "action_welding_g"
-	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/welding/superior/getMask()
 	return null

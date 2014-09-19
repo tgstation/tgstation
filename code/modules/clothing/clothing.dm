@@ -77,7 +77,7 @@
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
 	var/cover_hair = 0
-
+	species_restricted = list("exclude","Muton")
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -102,7 +102,7 @@ BLIND     // can't see anything
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
-	species_restricted = list("exclude","Unathi","Tajaran")
+	species_restricted = list("exclude","Unathi","Tajaran","Muton")
 	var/pickpocket = 0 //Master pickpocket?
 
 /obj/item/clothing/gloves/examine()
@@ -129,7 +129,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
-
+	species_restricted = list("exclude","Muton")
 
 //Mask
 /obj/item/clothing/mask
@@ -137,6 +137,43 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
+	species_restricted = list("exclude","Muton")
+	var/can_flip = null
+	var/is_flipped = 1
+	var/ignore_flip = 0
+
+	/obj/item/clothing/mask/verb/togglemask()
+		set name = "Toggle Mask"
+		set category = "Object"
+		set src in usr
+		if(ignore_flip)
+			return
+		else
+			if(!usr.canmove || usr.stat || usr.restrained())
+				return
+			if(!can_flip)
+				usr << "You try pushing \the [src] out of the way, but it is very uncomfortable and you look like a fool. You push it back into place."
+				return
+			if(src.is_flipped == 2)
+				src.icon_state = initial(icon_state)
+				gas_transfer_coefficient = initial(gas_transfer_coefficient)
+				permeability_coefficient = initial(permeability_coefficient)
+				flags = initial(flags)
+				flags_inv = initial(flags_inv)
+				usr << "You push \the [src] back into place."
+				src.is_flipped = 1
+			else
+				src.icon_state += "_up"
+				usr << "You push \the [src] out of the way."
+				gas_transfer_coefficient = null
+				permeability_coefficient = null
+				flags = null
+				flags_inv = null
+				src.is_flipped = 2
+			usr.update_inv_wear_mask()
+
+/obj/item/clothing/mask/attack_self()
+	togglemask()
 
 //Shoes
 /obj/item/clothing/shoes
@@ -152,7 +189,7 @@ BLIND     // can't see anything
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
-	species_restricted = list("exclude","Unathi","Tajaran")
+	species_restricted = list("exclude","Unathi","Tajaran","Muton")
 
 //Suit
 /obj/item/clothing/suit
@@ -164,6 +201,7 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
+	species_restricted = list("exclude","Muton")
 	siemens_coefficient = 0.9
 
 //Spacesuit
@@ -181,7 +219,7 @@ BLIND     // can't see anything
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
 	siemens_coefficient = 0.9
-	species_restricted = list("exclude","Diona","Vox")
+	species_restricted = list("exclude","Diona","Muton")
 
 /obj/item/clothing/suit/space
 	name = "Space suit"
@@ -200,7 +238,7 @@ BLIND     // can't see anything
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
 	siemens_coefficient = 0.9
-	species_restricted = list("exclude","Diona","Vox")
+	species_restricted = list("exclude","Diona","Vox","Muton")
 
 //Under clothing
 /obj/item/clothing/under
@@ -211,6 +249,7 @@ BLIND     // can't see anything
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	species_restricted = list("exclude","Muton")
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*

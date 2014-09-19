@@ -60,15 +60,15 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
 	name = "Shield"
-	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire"
+	desc = "Allows you to pull up a shield to protect yourself and allies from incoming threats"
 
-	school = "transmutation"
+	school = "conjuration"
 	charge_max = 300
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list(/obj/effect/forcefield)
+	summon_type = list(/obj/effect/forcefield/cult)
 	summon_lifespan = 200
 
 

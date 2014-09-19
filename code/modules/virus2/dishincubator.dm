@@ -63,6 +63,8 @@
 		on = !on
 		if(on)
 			icon_state = "incubator_on"
+			if(dish && dish.virus2)
+				dish.virus2.log += "<br />[timestamp()] Incubation starting by [key_name(usr)] {food=[foodsupply],rads=[radiation]}"
 		else
 			icon_state = "incubator"
 	if (href_list["ejectdish"])
@@ -82,11 +84,13 @@
 		else
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in beaker.reagents.reagent_list
 			if (!B)
-				state("\The [src.name] buzzes, \"No suitable breeding enviroment detected.\"", "blue")
+				state("\The [src.name] buzzes, \"No suitable breeding environment detected.\"", "blue")
 			else
 				if (!B.data["virus2"])
 					B.data["virus2"] = list()
-				var/list/virus = list("[dish.virus2.uniqueID]" = dish.virus2.getcopy())
+				var/datum/disease2/disease/D = dish.virus2.getcopy()
+				D.log += "<br />[timestamp()] Injected into blood via [src] by [key_name(usr)]"
+				var/list/virus = list("[dish.virus2.uniqueID]" = D)
 				B.data["virus2"] = virus
 
 				state("\The [src.name] pings, \"Injection complete.\"", "blue")
@@ -142,6 +146,7 @@
 				state("The [src.name] pings", "blue")
 		if(radiation)
 			if(radiation > 50 & prob(5))
+				dish.virus2.log += "<br />[timestamp()] MAJORMUTATE (incubator rads)"
 				dish.virus2.majormutate()
 				if(dish.info)
 					dish.info = "OUTDATED : [dish.info]"
