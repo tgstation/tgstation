@@ -324,9 +324,10 @@ silicate
 	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
 		if(C.eyecheck())
 			continue
+		flick("e_flash", C.flash)
 		if(get_dist(C, location) < 4)
 			C.Weaken(5)
-		flick("e_flash", C.flash)
+			continue
 		C.Stun(5)
 
 /datum/chemical_reaction/napalm
