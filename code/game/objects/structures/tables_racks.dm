@@ -698,7 +698,8 @@ Destroy type values:
 
 /obj/structure/table/MouseDrop_T(mob/target, mob/living/carbon/human/user)
 	if(istype(target) && user == target)
-		climb_table(user)
+		if(user.canmove)
+			climb_table(user)
 
 /obj/structure/table/proc/climb_table(mob/user)
 	src.add_fingerprint(user)
@@ -709,6 +710,7 @@ Destroy type values:
 		user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>[user] climbs onto [src].</span>")
 		add_logs(user, src, "climbed onto")
+		user.Weaken(2)
 
 /*
  * Racks
