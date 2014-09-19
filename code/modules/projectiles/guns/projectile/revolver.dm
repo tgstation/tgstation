@@ -9,11 +9,11 @@
 	var/perfect = 0
 
 	special_check(var/mob/living/carbon/human/M) //to see if the gun fires 357 rounds safely. A non-modified revolver randomly blows up
-		if(loaded.len) //this is a good check, I like this check
+		if(getAmmo()) //this is a good check, I like this check
 			var/obj/item/ammo_casing/AC = loaded[1]
 			if(caliber["38"] == 0) //if it's been modified, this is true
 				return 1
-			if(istype(AC, /obj/item/ammo_casing/a357) && !perfect && prob(70 - (loaded.len * 10)))	//minimum probability of 10, maximum of 60
+			if(istype(AC, /obj/item/ammo_casing/a357) && !perfect && prob(70 - (getAmmo() * 10)))	//minimum probability of 10, maximum of 60
 				M << "<span class='danger'>[src] blows up in your face.</span>"
 				M.take_organ_damage(0,20)
 				M.drop_item()
@@ -50,13 +50,13 @@
 					return
 			if(caliber["38"])
 				user << "<span class='notice'>You begin to reinforce the barrel of [src].</span>"
-				if(loaded.len)
+				if(getAmmo())
 					afterattack(user, user)	//you know the drill
 					playsound(user, fire_sound, 50, 1)
 					user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 					return
 				if(do_after(user, 30))
-					if(loaded.len)
+					if(getAmmo())
 						user << "<span class='notice'>You can't modify it!</span>"
 						return
 					caliber["38"] = 0
@@ -66,13 +66,13 @@
 						perfect = 1
 			else
 				user << "<span class='notice'>You begin to revert the modifications to [src].</span>"
-				if(loaded.len)
+				if(getAmmo())
 					afterattack(user, user)	//and again
 					playsound(user, fire_sound, 50, 1)
 					user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 					return
 				if(do_after(user, 30))
-					if(loaded.len)
+					if(getAmmo())
 						user << "<span class='notice'>You can't modify it!</span>"
 						return
 					caliber["38"] = 1
@@ -122,12 +122,12 @@
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_storage/magazine))
 
-		if((load_method == 2) && loaded.len)	return
+		if((load_method == 2) && getAmmo())	return
 		var/obj/item/ammo_storage/magazine/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(getAmmo() > 0 || loaded.len >= max_shells)
+			if(getAmmo() > 0 || getAmmo() >= max_shells)
 				break
-			if(caliber[AC.caliber] && loaded.len < max_shells)
+			if(caliber[AC.caliber] && getAmmo() < max_shells)
 				AC.loc = src
 				AM.stored_ammo -= AC
 				loaded += AC
@@ -152,7 +152,7 @@
 
 /obj/item/weapon/gun/projectile/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
 
-	if(!loaded.len)
+	if(!getAmmo())
 		user.visible_message("\red *click*", "\red *click*")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return

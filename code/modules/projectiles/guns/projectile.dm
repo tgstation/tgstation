@@ -84,7 +84,7 @@
 	var/obj/item/ammo_casing/AC = null
 	if(mag_type && load_method == 2)
 		AC = chambered
-	else if(loaded.len)
+	else if(getAmmo())
 		AC = loaded[1] //load next casing.
 	return AC
 

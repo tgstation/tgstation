@@ -38,11 +38,11 @@
 			usr << "<span class='warning'>\The [src] is still cooling down!</span>"
 			return
 		var/shots_fired = 0 //haha, I'm so clever
-		var/to_shoot = min(burst_count, loaded.len)
+		var/to_shoot = min(burst_count, getAmmo())
 		for(var/i = 1; i <= to_shoot; i++)
 			..()
 			shots_fired++
-		message_admins("[usr] just shot [shots_fired] burst fire bullets out of [loaded.len + shots_fired] from their [src].")
+		message_admins("[usr] just shot [shots_fired] burst fire bullets out of [getAmmo() + shots_fired] from their [src].")
 		fire_delay = shots_fired * 10
 	else
 		..()
@@ -81,7 +81,7 @@
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
 	if(stored_magazine)
-		icon_state = "c20r-[round(loaded.len,4)]"
+		icon_state = "c20r-[round(getAmmo(),4)]"
 	else
 		icon_state = "c20r"
 	return
@@ -127,7 +127,7 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][stored_magazine ? round(loaded.len, 25) : "-empty"]"
+	icon_state = "l6[cover_open ? "open" : "closed"][stored_magazine ? round(getAmmo(), 25) : "-empty"]"
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays

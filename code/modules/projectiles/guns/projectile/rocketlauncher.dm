@@ -25,7 +25,7 @@
 	return 0
 
 /obj/item/weapon/gun/projectile/rocketlauncher/update_icon()
-	if(!loaded.len)
+	if(!getAmmo())
 		icon_state = "rpg_e"
 		item_state = "rpg_e"
 	else

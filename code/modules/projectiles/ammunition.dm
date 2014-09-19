@@ -180,7 +180,7 @@
 		return bullets_loaded
 
 	proc/get_round(var/keep = 0)
-		if(!stored_ammo.len)
+		if(!ammo_count())
 			return null
 		else
 			var/b = stored_ammo[stored_ammo.len]

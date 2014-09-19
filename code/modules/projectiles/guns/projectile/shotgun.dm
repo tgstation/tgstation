@@ -47,13 +47,11 @@
 			current_shell = null
 			if(in_chamber)
 				in_chamber = null
-		if(!loaded.len)
+		if(!getAmmo())
 			return 0
 		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 		loaded -= AC //Remove casing from loaded list.
 		current_shell = AC
-		if(current_shell && AC.BB)
-			in_chamber = AC.BB //Load projectile into chamber.
 		update_icon()	//I.E. fix the desc
 		return 1
 
@@ -82,22 +80,20 @@
 	process_chambered()
 		if(in_chamber)
 			return 1
-		if(!loaded.len)
+		if(!getAmmo())
 			return 0
-
 		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 		loaded -= AC //Remove casing from loaded list.
-		AC.spent = 1
-		AC.desc = "[initial(AC.desc)] This one is spent."
-
 		if(AC.BB)
 			in_chamber = AC.BB //Load projectile into chamber.
 			AC.BB.loc = src //Set projectile loc to gun.
+			AC.BB = null
+			AC.update_icon()
 			return 1
 		return 0
 
 	attack_self(mob/living/user as mob)
-		if(!(locate(/obj/item/ammo_casing/shotgun) in src) && !loaded.len)
+		if(!(locate(/obj/item/ammo_casing/shotgun) in src) && !getAmmo())
 			user << "<span class='notice'>\The [src] is empty.</span>"
 			return
 
@@ -109,23 +105,13 @@
 		user << "<span class='notice'>You break \the [src].</span>"
 		update_icon()
 
-	Fire()
-		..()
-		for(var/obj/item/ammo_casing/shotgun/shell in src) //replaces the fired shells with the empty kind: hacky, or what? (empty shells are special shotgun ammo)
-			if(shell.spent)
-				var/obj/item/ammo_casing/shotgun/empty/new_shell = new(src)
-				new_shell.desc += " This looks like it used to be a [shell.name]."
-				loaded += new_shell //to stop new shells being loaded
-				loaded -= shell
-				qdel(shell)
-
 	attackby(var/obj/item/A as obj, mob/user as mob)
 		..()
 		A.update_icon()
 		update_icon()
 		if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
 			user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
-			if(loaded.len)
+			if(getAmmo())
 				afterattack(user, user)	//will this work?
 				afterattack(user, user)	//it will. we call it twice, for twice the FUN
 				playsound(user, fire_sound, 50, 1)
