@@ -113,26 +113,24 @@ var/list/sacrificed = list()
 			"<span class='danger'>AAAAAAHHHH!</span>", \
 			"<span class='danger'>You hear an anguished scream.</span>")
 			if(is_convertable_to_cult(M.mind))
-				ticker.mode.add_cultist(M.mind)
-				M.mind.special_role = "Cultist"
-				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-				M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-/*//convert no longer gives words
-				//picking which word to use
-				if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
-					var/convert_word
-					for(var/i=1, i<=3, i++)
-						convert_word = pick(ticker.mode.grantwords)
-						if(convert_word in usr.mind.cult_words)
-							if(i==3) convert_word = null				//NOTE: If max loops is changed ensure this condition is changed to match /Mal
-						else
-							break
-					if(!convert_word)
-						usr << "\red This Convert was unworthy of knowledge of the other side!"
-					else
-						usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
-						ticker.mode.grant_runeword(usr, convert_word)
-					return 1		*/
+				if(jobban_isbanned(M, "Syndicate") || jobban_isbanned(M, "cultist"))
+					M.visible_message("<span class='warning'>[M] screams horrifically before falling limp, his mind clearly broken by something he saw.", \
+					"<span class='userdanger'>You are currently jobbanned from Cultist.</span>")
+					M.ghostize(0) //Jobbanned players are force ghosted
+					M.resting = 1
+					spawn(0)
+						var/client/C = pick_from_candidates(BE_CULTIST) //Try to find a suitable observer to replace the jobbanned player
+						if(C)
+							M.key = C.key
+							M << "<span class='warning'>Who are you? How did you get here? You can't seem to remember anything but...</span>"
+							ticker.mode.add_cultist(M.mind)
+							M.mind.special_role = "Cultist"
+							ticker.mode.greet_cultist(M)
+				else
+					ticker.mode.add_cultist(M.mind)
+					M.mind.special_role = "Cultist"
+					ticker.mode.greet_cultist(M)
+
 			else
 				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 				M << "<span class='userdanger'>And not a single fuck was given, exterminate the cult at all costs.</span>"
@@ -303,8 +301,12 @@ var/list/sacrificed = list()
 
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if(!jobban_isbanned(O, "Syndicate") && !jobban_isbanned(O, "cultist"))
+			continue
 		ghost = O
 		break
 
@@ -340,12 +342,11 @@ var/list/sacrificed = list()
 	body_to_sacrifice.gib()
 
 //	if(ticker.mode.name == "cult")
-//		ticker.mode:add_cultist(corpse_to_raise.mind)
+//		ticker.mode: corpse_to_raise.mind)
 //	else
 //		ticker.mode.cult |= corpse_to_raise.mind
 
-	corpse_to_raise << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-	corpse_to_raise << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+	ticker.mode.greet_cultist(corpse_to_raise)
 	return
 
 
@@ -435,8 +436,7 @@ var/list/sacrificed = list()
 		ticker.mode.cult+=D.mind
 
 	D.mind.special_role = "Cultist"
-	D << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-	D << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+	ticker.mode.greet_cultist(D)
 
 	var/mob/living/user = usr
 	while(this_rune && user && user.stat==CONSCIOUS && user.client && user.loc==this_rune.loc)

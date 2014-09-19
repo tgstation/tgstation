@@ -211,16 +211,7 @@
 	var/list/drafted = list()
 	var/datum/mind/applicant = null
 
-	var/roletext
-	switch(role)
-		if(BE_CHANGELING)	roletext="changeling"
-		if(BE_TRAITOR)		roletext="traitor"
-		if(BE_OPERATIVE)	roletext="operative"
-		if(BE_WIZARD)		roletext="wizard"
-		if(BE_REV)			roletext="revolutionary"
-		if(BE_CULTIST)		roletext="cultist"
-		if(BE_MONKEY)		roletext="monkey"
-
+	var/roletext = get_roletext(role)
 
 	// Ultimate randomizing code right here
 	for(var/mob/new_player/player in player_list)
@@ -379,8 +370,6 @@ proc/display_roundstart_logout_report()
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='userdanger'>Ghosted</span>)\n"
 						continue //Ghosted while alive
-
-
 
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
