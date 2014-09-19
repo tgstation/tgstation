@@ -1473,7 +1473,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "toxtest"
 
 /area/science/shuttlebay
-	name = "\improper Toxins Shuttle Bay"
+	name = "\improper Research Shuttle Bay"
 	icon_state = "toxshuttle"
 
 /area/science/mixing
