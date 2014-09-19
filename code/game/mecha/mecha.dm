@@ -1100,6 +1100,8 @@
 	var/atom/movable/mob_container
 	if(ishuman(occupant))
 		mob_container = src.occupant
+		if(occupant.hud_used && last_user_hud)
+			occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 	else if(istype(occupant, /mob/living/carbon/brain))
 		var/mob/living/carbon/brain/brain = occupant
 		mob_container = brain.container
@@ -1135,8 +1137,7 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
 		src.occupant << browse(null, "window=exosuit")
-		if(src.occupant.hud_used && src.last_user_hud)
-			src.occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
+
 
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container
