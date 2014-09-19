@@ -1,22 +1,2 @@
-
 author: Wild Bill
-
-changes: 
-  - bugfix: Fixed viro maint not being radiation-shielded
-  - bugfix: Fixed silicons grabbing things from deep fryers
-  - bugfix: Fixed strange "You cannot say that...?" debug message
-  - bugfix: Fixed unpowered wires shocking people
-  - bugfix: Fixed ghosts interacting with AI/cyborg uploads
-  - tweak: Refactored new cooking machines and custom foods
-  - tweak: Added various vars and an adminverb for cooking silliness
-  - tweak: Lowered defult custom food size cap (to 30 from 600)
-  - bugfix: Fixed robutts deep-frying their modules
-  - bugfix: Fixed ghosts printing books
-  - bugfix: Fixed deconstructive analyzer eating items
-  - bugfix: Fixed apiaries spawning hydro tray parts when attached
-  - bugfix: Fixed dirt spawning hydro tray parts when cleaned up
-  - bugfix: Fixed airlocks being un-emag-able
-  - bugfix: Fixed airlocks spawning multiple door assemblies
-  - bugfix: Fixed pizza boxes eating pizza
-  - bugfix: Fixed constructs being useless due to ZAS perma-stun
-  - rscadd: Added map objects (spawners + nests) for mappers to use
+changes: []

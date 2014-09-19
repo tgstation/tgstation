@@ -266,14 +266,17 @@
 			src.occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
-			src.occupant.adjustCloneLoss(-0.2*time_coeff) //Very slow, new parts = much faster
+			src.occupant.adjustCloneLoss(-1*time_coeff) //Very slow, new parts = much faster
 
 			//Premature clones may have brain damage.
-			src.occupant.adjustBrainLoss(-0.1*time_coeff) //Ditto above
+			src.occupant.adjustBrainLoss(-1*time_coeff) //Ditto above
 
 			//So clones don't die of oxyloss in a running pod.
 			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
 				src.occupant.reagents.add_reagent("inaprovaline", 60)
+			var/mob/living/carbon/human/H = src.occupant
+			if(istype(H, /datum/species/vox))
+				src.occupant.reagents.add_reagent("nitrogen",10)
 
 			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
 			src.occupant.adjustOxyLoss(-4)
