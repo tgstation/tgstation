@@ -121,10 +121,11 @@
 		..()
 
 /mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity)
-	if(istype(A,/obj/item/weapon/gun))
+	var/list/bad_items = list(/obj/item/weapon/gun, /obj/item/weapon/grenade)
+	if(A.type in bad_items)
 		src << "<span class='warning'>Your subroutines prevent you from picking up [A].</span>"
 		return
-
+		
 	A.attack_hand(src)
 
 
