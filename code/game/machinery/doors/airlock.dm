@@ -888,11 +888,13 @@ About the new airlock wires panel:
 	src.add_fingerprint(user)
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
-		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>"
-		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-		if(do_after(user,40,5,1))
-			if(density && !operating)//Door must be closed to weld.
-				if(W.remove_fuel(0,user))
+		if(W.remove_fuel(0,user))
+			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>"
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			if(do_after(user,40,5,1))
+				if(density && !operating)//Door must be closed to weld.
+					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
+						return
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					welded = !welded
 					user << "<span class='notice'>You [welded ? "welded the airlock shut":"unwelded the airlock"]</span>"
@@ -1013,10 +1015,11 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/plasma/attackby(C as obj, mob/user as mob)
-	if(C)
-		message_admins("Plasma airlock ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma airlock ignited by [user.ckey]([user]) in ([x],[y],[z])")
+	if(is_hot(C) > 300)//If the temperature of the object is over 300, then ignite
+		message_admins("Plasma wall ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("Plasma wall ignited by [user.ckey]([user]) in ([x],[y],[z])")
 		ignite(is_hot(C))
+		return
 	..()
 
 /obj/machinery/door/airlock/open(var/forced=0)

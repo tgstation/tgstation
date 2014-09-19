@@ -221,12 +221,12 @@
 			user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-			sleep(100)
-			if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )	return
-
-			if( user.loc == T && user.get_active_hand() == WT )
-				user << "<span class='notice'>You remove the outer plating.</span>"
-				dismantle_wall()
+			if(do_after(user, 100))
+				if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )
+					return
+				if( user.loc == T && user.get_active_hand() == WT )
+					user << "<span class='notice'>You remove the outer plating.</span>"
+					dismantle_wall()
 		else
 			return
 
@@ -235,16 +235,18 @@
 		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-		sleep(60)
-		if(mineral == "diamond")//Oh look, it's tougher
-			sleep(60)
-		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )	return
+		if(do_after(user, 60))
+			if(mineral == "diamond")//Oh look, it's tougher
+				if(!do_after(user, 60))
+					return
 
-		if( user.loc == T && user.get_active_hand() == W )
-			user << "<span class='notice'>You remove the outer plating.</span>"
-			dismantle_wall()
-			for(var/mob/O in viewers(user, 5))
-				O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart.</span>", 2)
+			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
+				return
+
+			if( user.loc == T && user.get_active_hand() == W )
+				user << "<span class='notice'>You remove the outer plating.</span>"
+				dismantle_wall()
+				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", "<span class='warning'>You hear metal being sliced apart.</span>")
 		return
 
 	//DRILLING
@@ -252,16 +254,17 @@
 
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 
-		sleep(60)
-		if(mineral == "diamond")
-			sleep(60)
-		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )	return
+		if(do_after(user, 60))
+			if(mineral == "diamond")//Oh look, it's tougher
+				if(!do_after(user, 60))
+					return
+			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
+				return
 
-		if( user.loc == T && user.get_active_hand() == W )
-			user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
-			dismantle_wall()
-			for(var/mob/O in viewers(user, 5))
-				O.show_message("<span class='warning'>The wall was drilled through by [user]!</span>", 1, "<span class='warning'>You hear the grinding of metal.</span>", 2)
+			if( user.loc == T && user.get_active_hand() == W )
+				user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
+				dismantle_wall()
+				visible_message("<span class='warning'>The wall was drilled through by [user]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
 		return
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
@@ -271,18 +274,19 @@
 		user << "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>"
 		playsound(src, "sparks", 50, 1)
 
-		sleep(70)
-		if(mineral == "diamond")
-			sleep(70)
-		if( !istype(src, /turf/simulated/wall) || !user || !EB || !T )	return
+		if(do_after(user, 70))
+			if(mineral == "diamond")//Oh look, it's tougher
+				if(!do_after(user, 70))
+					return
+			if( !istype(src, /turf/simulated/wall) || !user || !EB || !T )
+				return
 
-		if( user.loc == T && user.get_active_hand() == W )
-			EB.spark_system.start()
-			playsound(src, "sparks", 50, 1)
-			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
-			dismantle_wall(1)
-			for(var/mob/O in viewers(user, 5))
-				O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", 2)
+			if( user.loc == T && user.get_active_hand() == W )
+				EB.spark_system.start()
+				playsound(src, "sparks", 50, 1)
+				playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
+				dismantle_wall(1)
+				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>")
 		return
 
 	else if(istype(W,/obj/item/apc_frame))
