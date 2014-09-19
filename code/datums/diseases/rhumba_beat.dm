@@ -8,6 +8,7 @@
 	agent = "Unknown"
 	affected_species = list("Human")
 	permeability_mod = 1
+	severity = "BIOHAZARD THREAT!"
 
 /datum/disease/rhumba_beat/stage_act()
 	..()
