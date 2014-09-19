@@ -800,6 +800,7 @@ datum
 				if(M.stat == 2) return
 				if(alien && alien == IS_VOX)
 					M.adjustOxyLoss(-2*REM)
+					M.adjustToxLoss(-2*REM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 					return
 				..()
@@ -1179,8 +1180,14 @@ datum
 				if(!M) M = holder.my_atom
 
 				var/needs_update = M.mutations.len > 0
-				if(M.active_genes.Find(/datum/dna/gene/basic/stealth/chameleon))
-					M.alpha = 255
+				if(ishuman(M))
+					M:hulk_time = 0
+				for(var/datum/dna/gene/G in dna_genes)
+					if(G.is_active(M))
+						if(G.name == "Hulk" && ishuman(M))
+							G.OnMobLife(M)
+						G.deactivate(M)
+				M.alpha = 255
 				M.mutations = list()
 				M.active_genes = list()
 

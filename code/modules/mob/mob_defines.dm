@@ -231,3 +231,4 @@
 
 	// /vg/ - Prevent mobs from being moved by a client.
 	var/deny_client_move = 0
+	var/incorporeal_move = 0
