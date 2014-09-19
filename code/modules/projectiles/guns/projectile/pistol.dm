@@ -64,7 +64,7 @@
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "pistol"
 	w_class = 2
-	max_shells = 10
+	max_shells = 8
 	caliber = list("9mm" = 1)
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
@@ -104,10 +104,8 @@
 
 /obj/item/weapon/gun/projectile/pistol/update_icon()
 	..()
-	if(silenced)
-		icon_state = "pistol-silencer"
-	else
-		icon_state = initial(icon_state)
+	icon_state = "[initial(icon_state)][silenced ? "-silencer" : ""][chambered ? "" : "-e"]"
+	return
 
 /obj/item/weapon/silencer
 	name = "silencer"

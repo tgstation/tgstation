@@ -35,7 +35,7 @@
 
 //loads the argument magazine into the gun
 /obj/item/weapon/gun/projectile/proc/LoadMag(var/obj/item/ammo_storage/magazine/AM, var/mob/user)
-	if(istype(AM) && !stored_magazine)
+	if(istype(AM, text2path(mag_type)) && !stored_magazine)
 		if(user)
 			user.drop_item(AM)
 			usr << "<span class='notice'>You load the magazine into \the [src].</span>"
@@ -121,19 +121,26 @@
 				user << "<span class='rose'>There is already a magazine loaded in \the [src]!</span>"
 		else
 			user << "<span class='rose'>You can't load \the [src] with a magazine, dummy!</span>"
-	if(istype(A, /obj/item/ammo_storage) && load_method == SPEEDLOADER)
+	if(istype(A, /obj/item/ammo_storage) && load_method != MAGAZINE)
 		var/obj/item/ammo_storage/AS = A
 		var/success_load = AS.LoadInto(AS, src)
 		if(success_load)
 			user << "<span class='notice'>You successfully fill the [src] with [success_load] shell\s from the [AS]</span>"
-	if(istype(A, /obj/item/ammo_casing) && load_method == SPEEDLOADER)
+	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
 		//message_admins("Loading the [src], with [AC], [AC.caliber] and [caliber.len]") //Enable this for testing
-		if(caliber[AC.caliber] && loaded.len < max_shells && !AC.spent) // a used bullet can't be fired twice
-			user.drop_item()
-			AC.loc = src
-			loaded += AC
-			num_loaded++
+		if(AC.BB && caliber[AC.caliber]) // a used bullet can't be fired twice
+			if(load_method == MAGAZINE && !chambered)
+				user.drop_item()
+				AC.loc = src
+				chambered = AC
+				num_loaded++
+			else if(getAmmo() < max_shells)
+				user.drop_item()
+				AC.loc = src
+				loaded += AC
+				num_loaded++
+
 	if(num_loaded)
 		user << "\blue You load [num_loaded] shell\s into \the [src]!"
 	A.update_icon()
@@ -150,10 +157,20 @@
 			AC.loc = get_turf(src) //Eject casing onto ground.
 			user << "\blue You unload \the [AC] from \the [src]!"
 			update_icon()
+			return
 		if (load_method == MAGAZINE && stored_magazine)
 			RemoveMag(user)
+			return
 	else
-		user << "\red Nothing loaded in \the [src]!"
+		if(chambered)
+			var/obj/item/ammo_casing/AC = chambered
+			AC.loc = get_turf(src) //Eject casing onto ground.
+			chambered = null
+			user << "\blue You unload \the [AC] from \the [src]!"
+			update_icon()
+			return
+		else
+			user << "\red Nothing loaded in \the [src]!"
 
 /obj/item/weapon/gun/projectile/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
 	..()

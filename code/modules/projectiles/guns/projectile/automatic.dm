@@ -14,13 +14,6 @@
 	load_method = 2
 	mag_type = "/obj/item/ammo_storage/magazine/smg9mm"
 
-/obj/item/weapon/gun/projectile/automatic/New()
-	..()
-	stored_magazine = new mag_type(src)
-	loaded = stored_magazine.stored_ammo
-	update_icon()
-	return
-
 /obj/item/weapon/gun/projectile/automatic/isHandgun()
 	return 0
 
@@ -29,6 +22,11 @@
 	set category = "Object"
 	burstfire = !burstfire
 	usr << "You toggle \the [src]'s firing setting to [burstfire ? "burst fire" : "single fire"]."
+
+/obj/item/weapon/gun/projectile/automatic/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][stored_magazine ? "-[stored_magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
+	return
 
 /obj/item/weapon/gun/projectile/automatic/Fire()
 	if(burstfire == 1)
