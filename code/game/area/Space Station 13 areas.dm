@@ -1206,6 +1206,10 @@ proc/process_ghost_teleport_locs()
 	name = "Cryogenics"
 	icon_state = "cryo"
 
+/area/medical/storage
+	name = "\improper Medbay Storage"
+	icon_state = "med_storage"
+
 /area/medical/exam_room
 	name = "\improper Exam Room"
 	icon_state = "exam_room"
@@ -1253,6 +1257,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Brig Medbay"
 	icon_state = "sec_medbay"
 
+/area/security/toilet
+	name = "\improper Brig Toilets"
+	icon_state = "toilet"
+
 /area/security/rec_room
 	name = "\improper Brig Recording Room"
 	icon_state = "rec"
@@ -1281,9 +1289,9 @@ proc/process_ghost_teleport_locs()
 	icon_state = "Warden"
 	jammed=1
 
-/area/security/armoury
-	name = "\improper Armory"
-	icon_state = "Warden"
+/area/security/armory
+	name = "\improper Secure Armory"
+	icon_state = "Armory"
 	jammed=1
 
 /area/security/hos
@@ -1463,6 +1471,10 @@ proc/process_ghost_teleport_locs()
 /area/science/test_area
 	name = "\improper Toxins Test Area"
 	icon_state = "toxtest"
+
+/area/science/shuttlebay
+	name = "\improper Toxins Shuttle Bay"
+	icon_state = "toxshuttle"
 
 /area/science/mixing
 	name = "\improper Toxins Mixing Room"
