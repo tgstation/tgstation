@@ -30,8 +30,6 @@
 	required_enemies = 6
 	recommended_enemies = 6
 
-	uplink_welcome = "Nar-Sie Uplink Console:"
-	uplink_uses = 10
 
 	var/finished = 0
 
@@ -103,7 +101,7 @@
 //		grant_runeword(cult_mind.current)
 //		grant_secondword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
-		cult_mind.current << "<span class='notice'>You are a member of the cult!</span>"
+		cult_mind.current << "<span class='userdanger'>You are a member of the cult!</span>"
 		memorize_cult_objectives(cult_mind)
 		cult_mind.special_role = "Cultist"
 	..()
@@ -130,6 +128,11 @@
 		grant_runeword(cult_mind.current,startingword)
 //	grant_runeword(cult_mind.current,"blood")
 //	grant_runeword(cult_mind.current,"hell")
+
+/datum/game_mode/proc/greet_cultist(mob/M)
+	M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
+	M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
@@ -332,7 +335,7 @@
 		feedback_set("round_end_result",acolytes_survived)
 		world << "<span class='danger'><FONT size = 3>The staff managed to stop the cult!</FONT></span>"
 
-	var/text = "<b>Cultists escaped:</b> [acolytes_survived]"
+	var/text = ""
 
 	if(cult_objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"
@@ -341,10 +344,10 @@
 			switch(cult_objectives[obj_count])
 				if("survive")
 					if(!check_survive())
-						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <font color='green'><B>Success!</B></font>"
+						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <font color='green'><B>Success!</B></font>"
 						feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
 					else
-						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <span class='danger'>Fail.</span>"
+						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='danger'>Fail.</span>"
 						feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
 				if("sacrifice")
 					if(sacrifice_target)
@@ -375,18 +378,8 @@
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
 		var/text = "<br><font size=3><b>The cultists were:</b></font>"
 		for(var/datum/mind/cultist in cult)
+			text += printplayer(cultist)
 
-			text += "<br><b>[cultist.key]</b> was <b>[cultist.name]</b> ("
-			if(cultist.current)
-				if(cultist.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(cultist.current.real_name != cultist.name)
-					text += " as <b>[cultist.current.real_name]</b>"
-			else
-				text += "body destroyed"
-			text += ")"
 		text += "<br>"
 
 		world << text

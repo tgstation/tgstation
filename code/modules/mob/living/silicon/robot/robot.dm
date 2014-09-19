@@ -26,7 +26,6 @@
 	var/module_state_2 = null
 	var/module_state_3 = null
 
-	var/obj/item/device/radio/borg/radio = null
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/stock_parts/cell/cell = null
 	var/obj/machinery/camera/camera = null
@@ -104,10 +103,10 @@
 	//MMI stuff. Held togheter by magic. ~Miauw
 	mmi = new(src)
 	mmi.brain = new /obj/item/organ/brain(mmi)
-	mmi.brain.name = "[src.real_name]'s brain"
+	mmi.brain.name = "[real_name]'s brain"
 	mmi.locked = 1
 	mmi.icon_state = "mmi_full"
-	mmi.name = "Man-Machine Interface: [src.real_name]"
+	mmi.name = "Man-Machine Interface: [real_name]"
 	mmi.brainmob = new(src)
 	mmi.brainmob.name = src.real_name
 	mmi.brainmob.real_name = src.real_name
@@ -413,7 +412,6 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("<span class='danger'>[user] has fixed some of the dents on [src]!</span>"), 1)
 		else
-			user << "Need more welding fuel!"
 			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
@@ -929,9 +927,7 @@
 
 
 /mob/living/silicon/robot/Move(a, b, flag)
-
 	. = ..()
-
 	if(module)
 		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
@@ -961,7 +957,16 @@
 								cleaned_human.update_inv_shoes(0)
 							cleaned_human.clean_blood()
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
-		return
+			return
+
+		if(module.type == /obj/item/weapon/robot_module/miner)
+			if(istype(loc, /turf/simulated/floor/plating/asteroid))
+				if(istype(module_state_1,/obj/item/weapon/storage/bag/ore))
+					loc.attackby(module_state_1,src)
+				else if(istype(module_state_2,/obj/item/weapon/storage/bag/ore))
+					loc.attackby(module_state_2,src)
+				else if(istype(module_state_3,/obj/item/weapon/storage/bag/ore))
+					loc.attackby(module_state_3,src)
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)

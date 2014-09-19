@@ -5,7 +5,6 @@
 	anchored = 1
 	w_class = 4.0
 	canhear_range = 2
-	flags = CONDUCT
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
@@ -51,8 +50,8 @@
 	return canhear_range
 
 
-/obj/item/device/radio/intercom/hear_talk(mob/M as mob, msg)
-	if(!src.anyai && !(M in src.ai))
+/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	if(!anyai && !(speaker in ai))
 		return
 	..()
 

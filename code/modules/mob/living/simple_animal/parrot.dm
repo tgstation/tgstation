@@ -6,13 +6,8 @@
  *		AI
  *		Procs / Verbs (usable by players)
  *		Sub-types
+ *		Hear & say (the things we do for gimmicks)
  */
-
-/*So you want to delete parrots eh?
-heres the locations of their snowflake code:
-lines 294-301 in living/say.dm (speech buffer)
-135 in living/say.dm (parrots talking into headsets)
-*/
 
 /*
  * Defines
@@ -33,7 +28,7 @@ lines 294-301 in living/say.dm (speech buffer)
 
 /mob/living/simple_animal/parrot
 	name = "parrot"
-	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\""
+	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\"" //'
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
@@ -48,6 +43,7 @@ lines 294-301 in living/say.dm (speech buffer)
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
+	meat_amount = 1
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 
@@ -128,6 +124,41 @@ lines 294-301 in living/say.dm (speech buffer)
 	stat("Held Item", held_item)
 	stat("Mode",a_intent)
 
+/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	if(speaker != src && prob(20)) //Dont imitate ourselves
+		if(speech_buffer.len >= 20)
+			speech_buffer -= pick(speech_buffer)
+		speech_buffer |= html_decode(raw_message)
+	..()
+
+/mob/living/simple_animal/parrot/radio(message, message_mode) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
+	. = ..()
+	if(. != 0)
+		return .
+
+	switch(message_mode)
+		if(MODE_HEADSET)
+			if (ears)
+				ears.talk_into(src, message)
+			return ITALICS | REDUCE_RANGE
+
+		if(MODE_SECURE_HEADSET)
+			if (ears)
+				ears.talk_into(src, message, 1)
+			return ITALICS | REDUCE_RANGE
+
+		if(MODE_DEPARTMENT)
+			if (ears)
+				ears.talk_into(src, message, message_mode)
+			return ITALICS | REDUCE_RANGE
+
+	if(message_mode in radiochannels)
+		if(ears)
+			ears.talk_into(src, message, message_mode)
+			return ITALICS | REDUCE_RANGE
+
+	return 0
+
 /*
  * Inventory
  */
@@ -167,7 +198,7 @@ lines 294-301 in living/say.dm (speech buffer)
 						ears = null
 						for(var/possible_phrase in speak)
 							if(copytext(possible_phrase,1,3) in department_radio_keys)
-								possible_phrase = copytext(possible_phrase,3,length(possible_phrase))
+								possible_phrase = copytext(possible_phrase,3)
 					else
 						usr << "<span class='danger'>There is nothing to remove from its [remove_from].</span>"
 						return
@@ -329,7 +360,7 @@ lines 294-301 in living/say.dm (speech buffer)
 
 //-----SPEECH
 	/* Parrot speech mimickry!
-	   Phrases that the parrot hears in mob/living/say() get added to speach_buffer.
+	   Phrases that the parrot Hear()s get added to speach_buffer.
 	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
 	   Then it clears the buffer to make sure they dont magically remember something from hours ago. */
 	if(speech_buffer.len && prob(10))
@@ -372,9 +403,9 @@ lines 294-301 in living/say.dm (speech buffer)
 							useradio = 1
 
 						if(copytext(possible_phrase,1,3) in department_radio_keys)
-							possible_phrase = "[useradio?pick(available_channels):""] [copytext(possible_phrase,3,length(possible_phrase)+1)]" //crop out the channel prefix
+							possible_phrase = "[useradio?pick(available_channels):""][copytext(possible_phrase,3)]" //crop out the channel prefix
 						else
-							possible_phrase = "[useradio?pick(available_channels):""] [possible_phrase]"
+							possible_phrase = "[useradio?pick(available_channels):""][possible_phrase]"
 
 						newspeak.Add(possible_phrase)
 

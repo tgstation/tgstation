@@ -143,7 +143,7 @@ proc/wabbajack(mob/living/M)
 			switch(randomize)
 				if("monkey")
 					new_mob = new /mob/living/carbon/monkey(M.loc)
-					new_mob.universal_speak = 1
+					new_mob.languages |= HUMAN
 				if("robot")
 					if(prob(30))
 						new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
@@ -160,13 +160,13 @@ proc/wabbajack(mob/living/M)
 					if(prob(50))
 						var/mob/living/carbon/slime/Slime = new_mob
 						Slime.is_adult = 1
-					new_mob.universal_speak = 1
+					new_mob.languages |= HUMAN
 				if("xeno")
 					if(prob(50))
 						new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 					else
 						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-					new_mob.universal_speak = 1
+					new_mob.languages |= HUMAN
 
 					/*var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
 					switch(alien_caste)
@@ -174,7 +174,7 @@ proc/wabbajack(mob/living/M)
 						if("Sentinel")	new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 						if("Drone")		new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
 						else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
-					new_mob.universal_speak = 1*/
+					new_mob.languages |= HUMAN*/
 				if("animal")
 					if(prob(50))
 						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato")
@@ -199,7 +199,7 @@ proc/wabbajack(mob/living/M)
 							if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
 							if("lizard")	new_mob = new /mob/living/simple_animal/lizard(M.loc)
 							else			new_mob = new /mob/living/simple_animal/chick(M.loc)
-					new_mob.universal_speak = 1
+					new_mob.languages |= HUMAN
 				if("human")
 					new_mob = new /mob/living/carbon/human(M.loc)
 

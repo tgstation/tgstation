@@ -110,10 +110,6 @@ var/list/blob_nodes = list()
 	else
 		ERROR("Events variable is null in blob gamemode post setup.")
 
-	spawn(10)
-		start_state = new /datum/station_state()
-		start_state.count()
-
 	spawn(0)
 
 		var/wait_time = rand(waittime_l, waittime_h)

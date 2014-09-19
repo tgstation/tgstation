@@ -305,7 +305,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				pass = 1
 
 			if(pass)
-
 				for (var/obj/machinery/requests_console/Console in allConsoles)
 					if (ckey(Console.department) == ckey(href_list["department"]))
 						switch(priority)
@@ -315,7 +314,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								Console.createmessage(src, "EXTREME PRIORITY Alert in [department]", sending, 3, 1)
 							else		// Normal priority
 								Console.createmessage(src, "Message from [department]", sending, 1, 1)
-
 						screen = 6
 						Console.luminosity = 2
 
@@ -325,8 +323,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					else
 						messages += "<b>To: [dpt]</b><BR>[sending]"
 			else
-				for (var/mob/O in hearers(4, src.loc))
-					O.show_message("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'")
+				say("NOTICE: No server detected!")
 
 
 	//Handle screen switching
@@ -370,6 +367,13 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 
+/obj/machinery/say_quote(var/text)
+	var/ending = copytext(text, length(text) - 2)
+	if (ending == "!!!")
+		return "blares, \"[text]\""
+
+	return "beeps, \"[text]\""
+
 /obj/machinery/requests_console/proc/createmessage(source, title, message, priority, paper)
 	var/linkedsender
 	var/unlinkedsender
@@ -389,8 +393,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				src.update_icon()
 			if(!src.silent)
 				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				for (var/mob/O in hearers(5, src.loc))
-					O.show_message("\icon[src] *The Requests Console beeps: '[title]'")
+				say(title)
 				src.messages += "<span class='bad'>High Priority</span><BR><b>From:</b> [linkedsender]<BR>[message]"
 			if(paper)
 				var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(src.loc)
@@ -403,8 +406,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				src.update_icon()
 			if(1)
 				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				for (var/mob/O in hearers(7, src.loc))
-					O.show_message("\icon[src] *The Requests Console yells: '[title]'")
+				say(title)
 			src.messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [linkedsender]<BR>[message]"
 			var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(src.loc)
 			if(paper)
@@ -421,8 +423,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				src.update_icon()
 			if(!src.silent)
 				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				for (var/mob/O in hearers(4, src.loc))
-					O.show_message("\icon[src] *The Requests Console beeps: '[title]'")
+				say(title)
 			src.messages += "<b>From:</b> [linkedsender]<BR>[message]"
 			if(paper)
 				var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(src.loc)

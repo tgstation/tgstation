@@ -31,7 +31,7 @@ var/list/sacrificed = list()
 		user.loc = allrunesloc[rand(1,index)]
 		return
 	if(istype(src,/obj/effect/rune))
-		return	fizzle() //Use friggin manuals, Dorf, your list was of zero length.
+		return fizzle(user) //Use friggin manuals, Dorf, your list was of zero length.
 	else
 		call(/obj/effect/rune/proc/fizzle)()
 		return
@@ -53,7 +53,7 @@ var/list/sacrificed = list()
 			IP = R
 			runecount++
 	if(runecount >= 2)
-		user << "<span class='danger'>You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric</span>"
+		user << "<span class='danger'>You feel pain, as the rune disappears in reality shift caused by too much wear of space-time fabric</span>"
 		if (istype(user, /mob/living))
 			user.take_overall_damage(5, 0)
 		qdel(src)
@@ -61,7 +61,7 @@ var/list/sacrificed = list()
 		if(iscultist(C) && !C.stat)
 			culcount++
 	if(user.loc==src.loc)
-		return fizzle()
+		return fizzle(user)
 	if(culcount>=1)
 		user.say("Sas[pick("'","`")]so c'arta forbici tarem!")
 		user.visible_message("<span class='danger'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
@@ -74,7 +74,7 @@ var/list/sacrificed = list()
 			M.loc = IP.loc
 		return
 
-	return fizzle()
+	return fizzle(user)
 
 /////////////////////////////////////////SECOND RUNE
 
@@ -110,29 +110,27 @@ var/list/sacrificed = list()
 				C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
 		if(cultsinrange.len >= 3)
 			M.visible_message("<span class='danger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
-			"<span class='danger'>AAAAAAHHHH!.</span>", \
+			"<span class='danger'>AAAAAAHHHH!</span>", \
 			"<span class='danger'>You hear an anguished scream.</span>")
 			if(is_convertable_to_cult(M.mind))
-				ticker.mode.add_cultist(M.mind)
-				M.mind.special_role = "Cultist"
-				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-				M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-/*//convert no longer gives words
-				//picking which word to use
-				if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
-					var/convert_word
-					for(var/i=1, i<=3, i++)
-						convert_word = pick(ticker.mode.grantwords)
-						if(convert_word in usr.mind.cult_words)
-							if(i==3) convert_word = null				//NOTE: If max loops is changed ensure this condition is changed to match /Mal
-						else
-							break
-					if(!convert_word)
-						usr << "\red This Convert was unworthy of knowledge of the other side!"
-					else
-						usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
-						ticker.mode.grant_runeword(usr, convert_word)
-					return 1		*/
+				if(jobban_isbanned(M, "Syndicate") || jobban_isbanned(M, "cultist"))
+					M.visible_message("<span class='warning'>[M] screams horrifically before falling limp, his mind clearly broken by something he saw.", \
+					"<span class='userdanger'>You are currently jobbanned from Cultist.</span>")
+					M.ghostize(0) //Jobbanned players are force ghosted
+					M.resting = 1
+					spawn(0)
+						var/client/C = pick_from_candidates(BE_CULTIST) //Try to find a suitable observer to replace the jobbanned player
+						if(C)
+							M.key = C.key
+							M << "<span class='warning'>Who are you? How did you get here? You can't seem to remember anything but...</span>"
+							ticker.mode.add_cultist(M.mind)
+							M.mind.special_role = "Cultist"
+							ticker.mode.greet_cultist(M)
+				else
+					ticker.mode.add_cultist(M.mind)
+					M.mind.special_role = "Cultist"
+					ticker.mode.greet_cultist(M)
+
 			else
 				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 				M << "<span class='userdanger'>And not a single fuck was given, exterminate the cult at all costs.</span>"
@@ -152,9 +150,10 @@ var/list/sacrificed = list()
 
 /obj/effect/rune/proc/tearreality()
 	var/list/mob/living/carbon/human/cultist_count = list()
+	var/mob/living/user = usr
+	user.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 	for(var/mob/M in range(1,src))
 		if(iscultist(M) && !M.stat)
-			M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 			cultist_count += M
 	if(cultist_count.len >= 9)
 		if(ticker.mode.name == "cult")
@@ -302,8 +301,12 @@ var/list/sacrificed = list()
 
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in loc)
-		if(!O.client)	continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		if(!O.client)
+			continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
+			continue
+		if(!jobban_isbanned(O, "Syndicate") && !jobban_isbanned(O, "cultist"))
+			continue
 		ghost = O
 		break
 
@@ -339,12 +342,11 @@ var/list/sacrificed = list()
 	body_to_sacrifice.gib()
 
 //	if(ticker.mode.name == "cult")
-//		ticker.mode:add_cultist(corpse_to_raise.mind)
+//		ticker.mode: corpse_to_raise.mind)
 //	else
 //		ticker.mode.cult |= corpse_to_raise.mind
 
-	corpse_to_raise << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-	corpse_to_raise << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+	ticker.mode.greet_cultist(corpse_to_raise)
 	return
 
 
@@ -374,7 +376,7 @@ var/list/sacrificed = list()
 
 		return
 	if(istype(src,/obj/effect/rune))
-		return	fizzle()
+		return fizzle()
 	else
 		call(/obj/effect/rune/proc/fizzle)()
 		return
@@ -424,7 +426,6 @@ var/list/sacrificed = list()
 	"<span class='danger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
 	"<span class='danger'>You hear liquid flowing.</span>")
 	D.real_name = "[pick(first_names_male)] [pick(last_names)]"
-	D.universal_speak = 1
 	D.status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH
 
 	D.key = ghost.key
@@ -435,8 +436,7 @@ var/list/sacrificed = list()
 		ticker.mode.cult+=D.mind
 
 	D.mind.special_role = "Cultist"
-	D << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-	D << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+	ticker.mode.greet_cultist(D)
 
 	var/mob/living/user = usr
 	while(this_rune && user && user.stat==CONSCIOUS && user.client && user.loc==this_rune.loc)
@@ -770,7 +770,7 @@ var/list/sacrificed = list()
 			return
 		return
 	if(istype(W,/obj/effect/rune))
-		return	fizzle()
+		return fizzle()
 	if(istype(W,/obj/item/weapon/paper/talisman))
 		call(/obj/effect/rune/proc/fizzle)()
 		return
@@ -803,7 +803,7 @@ var/list/sacrificed = list()
 	if(users.len>=1)
 		var/mob/living/carbon/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - users)
 		if(!cultist)
-			return fizzle()
+			return fizzle(user)
 		if (cultist == user) //just to be sure.
 			return
 		if(!(cultist.buckled || \
@@ -836,7 +836,7 @@ var/list/sacrificed = list()
 			user.take_overall_damage(15, 0)
 			C.say("Khari[pick("'","`")]d! Gual'te nikka!")
 		qdel(src)
-	return fizzle()
+	return fizzle(user)
 
 /////////////////////////////////////////NINETEENTH RUNE
 
@@ -853,12 +853,12 @@ var/list/sacrificed = list()
 	if(users.len>=3)
 		var/mob/living/carbon/cultist = input("Choose the one who you want to summon", "Followers of Geometer") as null|anything in (cultists - user)
 		if(!cultist)
-			return fizzle()
+			return fizzle(user)
 		if(cultist == user) //just to be sure.
 			return
 		if(cultist.buckled || cultist.handcuffed || (!isturf(cultist.loc) && !istype(cultist.loc, /obj/structure/closet)))
 			user << "<span class='danger'>You cannot summon the [cultist], for his shackles of blood are strong</span>"
-			return fizzle()
+			return fizzle(user)
 		cultist.loc = src.loc
 		cultist.Weaken(5)
 		cultist.regenerate_icons()
@@ -870,7 +870,7 @@ var/list/sacrificed = list()
 		"<span class='danger'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
 		"<span class='danger'>You hear a pop and smell ozone.</span>")
 		qdel(src)
-	return fizzle()
+	return fizzle(user)
 
 /////////////////////////////////////////TWENTIETH RUNES
 

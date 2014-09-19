@@ -342,6 +342,8 @@
 	gameover = 0
 
 /obj/machinery/computer/arcade/orion_trail/attack_hand(mob/user as mob)
+	if(..())
+		return
 	if(fuel <= 0 || food <=0 || settlers.len == 0)
 		gameover = 1
 		event = null

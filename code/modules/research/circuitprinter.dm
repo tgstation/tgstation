@@ -92,7 +92,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "\The [name] must be linked to an R&D console first!"
+		user << "<span class='warning'>The [name] must be linked to an R&D console first!</span>"
 		return 1
 	if (O.is_open_container())
 		return

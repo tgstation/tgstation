@@ -186,8 +186,6 @@
 						state = 2
 						user << "You weld the [src] to the floor."
 						connect_to_network()
-				else
-					user << "<span class='danger'>You need more welding fuel to complete this task.</span>"
 			if(2)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -199,8 +197,6 @@
 						state = 1
 						user << "You cut the [src] free from the floor."
 						disconnect_from_network()
-				else
-					user << "<span class='danger'>You need more welding fuel to complete this task.</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))

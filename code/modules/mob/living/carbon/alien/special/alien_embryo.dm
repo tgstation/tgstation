@@ -9,6 +9,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	icon_state = "larva0_dead"
 	var/mob/living/affected_mob
 	var/stage = 0
+	var/polling_ghosts = 0
 
 /obj/item/alien_embryo/New()
 	if(istype(loc, /mob/living))
@@ -70,23 +71,20 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			affected_mob << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
-			if(prob(50))
+			if(prob(50) && !polling_ghosts)
 				AttemptGrow()
 
 /obj/item/alien_embryo/proc/AttemptGrow(var/gib_on_success = 1)
-	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
-	var/client/C = null
+	polling_ghosts = 1
+	var/client/C = pick_from_candidates(BE_ALIEN)
+	polling_ghosts = 0
 
 	// To stop clientless larva, we will check that our host has a client
 	// if we find no ghosts to become the alien. If the host has a client
 	// he will become the alien but if he doesn't then we will set the stage
 	// to 2, so we don't do a process heavy check everytime.
 
-	if(candidates.len)
-		C = pick(candidates)
-	else if(affected_mob.client)
-		C = affected_mob.client
-	else
+	if(!C)
 		stage = 4 // Let's try again later.
 		return
 

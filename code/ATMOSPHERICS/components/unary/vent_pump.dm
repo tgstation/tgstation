@@ -281,6 +281,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			user << "<span class='notice'>Now welding the vent.</span>"
 			if(do_after(user, 20))
 				if(!src || !WT.isOn()) return
@@ -293,10 +294,6 @@
 					user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
 					welded = 0
 					update_icon()
-			else
-				user << "<span class='notice'>The welding tool needs to be on to start this task.</span>"
-		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return 1
 	else
 		return ..()
@@ -361,7 +358,7 @@
 		L << "<span class='warning'> There are no available vents to travel to, they could be welded. </span>"
 		return
 
-	var/obj/selection = input(L,"Select a destination.", "Duct System") as null|anything in sortAssoc(vents)
+	var/obj/selection = input(L,"Select a destination.", "Duct System") as null|anything in sortList(vents)
 	if(!selection)	return
 
 	if(!Adjacent(L))

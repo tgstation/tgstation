@@ -14,9 +14,9 @@
 		if(ticker.triai)
 			ticker.triai = 0
 			usr << "Only one AI will be spawned at round start."
-			message_admins("<span class='notice'>[key_name_admin(usr)] has toggled off triple AIs at round start.</span>", 1)
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has toggled off triple AIs at round start.</span>", 1)
 		else
 			ticker.triai = 1
 			usr << "There will be an AI Triumvirate at round start."
-			message_admins("<span class='notice'>[key_name_admin(usr)] has toggled on triple AIs at round start.</span>", 1)
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has toggled on triple AIs at round start.</span>", 1)
 	return

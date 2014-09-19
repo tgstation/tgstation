@@ -307,12 +307,12 @@ datum/reagent/fuel/unholywater/on_mob_life(var/mob/living/M as mob)
 		M.adjustBruteLoss(2)
 	holder.remove_reagent(src.id, 1)
 
-datum/reagent/plasma/hellwater			//if someone has this in their system they've really pissed off an eldrich god
+datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"
 	id = "hell_water"
 	description = "YOUR FLESH! IT BURNS!"
 
-datum/reagent/plasma/hellwater/on_mob_life(var/mob/living/M as mob)
+datum/reagent/hellwater/on_mob_life(var/mob/living/M as mob)
 	M.fire_stacks = min(5,M.fire_stacks + 3)
 	M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
 	M.adjustToxLoss(1)
@@ -1199,7 +1199,7 @@ datum/reagent/spaceacillin
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/on_mob_life(var/mob/living/M as mob)//no more mr. panacea
+datum/reagent/spaceacillin/on_mob_life(var/mob/living/M as mob)//no more mr. panacea
 	holder.remove_reagent(src.id, 0.2)
 	..()
 	return
@@ -1719,12 +1719,27 @@ datum/reagent/toxin/teapowder
 datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
 	id = "mutetoxin"
+	description = "A toxin that temporarily paralyzes the vocal cords."
 	reagent_state = LIQUID
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 
-datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
-	M.silent += 2 * REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
+datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
+	M.silent += REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
+	..()
+
+datum/reagent/toxin/staminatoxin
+	name = "Tirizene"
+	id = "tirizene"
+	description = "A toxin that affects the stamina of a person when injected into the bloodstream."
+	reagent_state = LIQUID
+	color = "#6E2828"
+	data = 13
+	toxpwr = 0
+
+datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(REM * data)
+	data = max(data - 1, 3)
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -3147,7 +3162,7 @@ datum/reagent/ethanol/tequilla_sunrise
 datum/reagent/ethanol/toxins_special
 	name = "Toxins Special"
 	id = "toxinsspecial"
-	description = "This thing is ON FIRE!. CALL THE DAMN SHUTTLE!"
+	description = "This thing is ON FIRE! CALL THE DAMN SHUTTLE!"
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 15

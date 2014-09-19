@@ -594,9 +594,7 @@
 /mob/living/carbon/human/proc/handle_regular_hud_updates()
 	if(!client)	return 0
 
-	for(var/image/hud in client.images)
-		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-			client.images.Remove(hud)
+	regular_hud_updates() //For MED/SEC HUD icon deletion
 
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 
@@ -696,8 +694,8 @@
 			if(lastpuke >= 25) // about 25 second delay I guess
 				Stun(5)
 
-				for(var/mob/O in viewers(world.view, src))
-					O.show_message("<span class='danger'>[O] throws up!</span>")
+				visible_message("<span class='danger'>[src] throws up!</span>", \
+						"<span class='userdanger'>[src] throws up!</span>")
 				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 				var/turf/location = loc

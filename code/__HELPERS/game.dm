@@ -32,7 +32,7 @@
 
 // Like view but bypasses luminosity check
 
-/proc/hear(var/range, var/atom/source)
+/proc/get_hear(var/range, var/atom/source)
 
 	var/lum = source.luminosity
 	source.luminosity = 6
@@ -131,13 +131,29 @@
 	return turfs
 
 
+//This is the new version of recursive_mob_check, used for say().
+//The other proc was left intact because morgue trays use it.
+/proc/recursive_hear_check(var/atom/O)
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/list/found_mobs = list()
 
-//var/debug_mob = 0
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
 
+		if(A.flags & HEAR)
+			found_mobs |= A
+
+		for(var/atom/B in A)
+			if(!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_mobs
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
-
-
 /proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
 
 	var/list/processing_list = list(O)
@@ -178,22 +194,19 @@
 	return found_mobs
 
 
-/proc/get_mobs_in_view(var/R, var/atom/source)
-	// Returns a list of mobs in range of R from source. Used in radio and say code.
-
+/proc/get_hearers_in_view(var/R, var/atom/source)
+	// Returns a list of hearers in range of R from source. Used in saycode.
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
 
 	if(!T)
 		return hear
 
-	var/list/range = hear(R, T)
-
+	var/list/range = get_hear(R, T)
 	for(var/atom/movable/A in range)
-		hear |= recursive_mob_check(A, 1, 0, 1)
+		hear |= recursive_hear_check(A)
 
 	return hear
-
 
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
@@ -208,7 +221,7 @@
 		if(R)
 			var/turf/speaker = get_turf(R)
 			if(speaker)
-				for(var/turf/T in hear(R.canhear_range,speaker))
+				for(var/turf/T in get_hear(R.canhear_range,speaker))
 					speaker_coverage[T] = T
 
 
@@ -221,6 +234,7 @@
 				if(speaker_coverage[ear])
 					. |= M
 	return .
+
 
 #define SIGN(X) ((X<0)?-1:1)
 
@@ -255,6 +269,7 @@
 	return 1
 #undef SIGN
 
+
 /proc/isInSight(var/atom/A, var/atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
@@ -267,6 +282,7 @@
 
 	else
 		return 0
+
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST
@@ -295,19 +311,56 @@
 			return M
 	return null
 
-// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
+// Will poll ghosts for volunteers
+/proc/get_candidates(be_special_flag=0, rolename=null, wait_time=200)
+	var/list/mob/dead/observer/volunteers = list()
+	var/list/client/candidates = list()
+	var/time_passed = world.time
 
-/proc/get_candidates(be_special_flag=0, afk_bracket=3000)
-	var/list/candidates = list()
-	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
-	while(!candidates.len && afk_bracket < 6000)
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client != null)
-				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-					if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
-						candidates += G.client
-		afk_bracket += 600 // Add a minute to the bracket, for every attempt
+	for(var/mob/dead/observer/G in player_list)
+		spawn(0)
+			if(!G.client)
+				return
+			if((G.client.prefs.be_special & be_special_flag) && !jobban_isbanned(G, get_roletext(be_special_flag)) || (be_special_flag < 0))
+				switch(alert(G,"Do you want to be considered to be a [rolename ? rolename : get_roletext(be_special_flag)]?","Please answer in [wait_time/10] seconds!","Yes","No"))
+					if("Yes")
+						if((world.time-time_passed)>wait_time)
+							return
+						volunteers += G
+					if("No")
+						return
+					else
+						return
+	sleep(wait_time)
+
+	for(var/mob/dead/observer/G in volunteers)
+		if(G.client)
+			candidates += G.client
+
 	return candidates
+
+/proc/pick_from_candidates(be_special_flag=0, rolename=null, wait_time=200)
+	var/list/candidates = get_candidates(be_special_flag, rolename, wait_time)
+	if(candidates.len)
+		var/client/C = pick(candidates)
+		return C
+	return 0 //Unable to find a valid candidate
+
+
+/proc/get_roletext(role) //Translates role flag to role text
+	var/roletext
+	switch(role)
+		if(BE_CHANGELING)	roletext="changeling"
+		if(BE_TRAITOR)		roletext="traitor"
+		if(BE_OPERATIVE)	roletext="operative"
+		if(BE_WIZARD)		roletext="wizard"
+		if(BE_REV)			roletext="revolutionary"
+		if(BE_GANG)			roletext="gangster"
+		if(BE_CULTIST)		roletext="cultist"
+		if(BE_MONKEY)		roletext="monkey"
+		if(BE_NINJA)		roletext="ninja"
+		if(BE_ALIEN)		roletext="alien"
+	return roletext
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))	O = new /obj/screen/text()

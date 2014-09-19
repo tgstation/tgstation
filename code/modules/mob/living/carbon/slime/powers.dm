@@ -217,7 +217,7 @@
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = "harm"
-			new_slime.universal_speak = universal_speak
+			new_slime.languages = languages
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else

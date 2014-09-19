@@ -160,3 +160,8 @@
 		node3 = null
 
 	return null
+
+/obj/machinery/atmospherics/trinary/nullifyPipenetwork()
+	network1 = null
+	network2 = null
+	network3 = null

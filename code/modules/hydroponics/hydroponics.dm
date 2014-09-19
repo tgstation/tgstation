@@ -257,7 +257,7 @@ obj/machinery/hydroponics/update_icon()
 			overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
 
 		if(waterlevel <= 10)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state =" over_lowwater3")
+			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_lowwater3")
 		if(nutrilevel <= 2)
 			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_lownutri3")
 		if(health <= (myseed.endurance / 2))
@@ -837,6 +837,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 		//dna stuff
 		hardset_dna(podman, ui, se, null, null, null, !prob(potency) ? /datum/species/plant/pod : null, "#59CE00")	//makes sure podman has dna and sets the dna's ui/se/mutantrace/real_name etc variables
+
+		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

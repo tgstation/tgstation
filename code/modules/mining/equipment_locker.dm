@@ -591,7 +591,7 @@
 				health += 10
 				user << "<span class='info'>You repair some of the armor on [src].</span>"
 			return
-	if(istype(I, /obj/item/device/mining_scanner))
+	if(istype(I, /obj/item/device/t_scanner/mining_scanner))
 		user << "<span class='info'>You instruct [src] to drop any collected ore.</span>"
 		DropOre()
 		return
@@ -725,45 +725,46 @@
 		usr << "<span class='info'>The display on [src] seems to be flickering.</span>"
 
 /**********************Mining Scanner**********************/
-/obj/item/device/mining_scanner
+/obj/item/device/t_scanner/mining_scanner
 	desc = "A scanner that checks surrounding rock for useful minerals, it can also be used to stop gibtonite detonations. Requires you to wear mesons to work properly."
 	name = "mining scanner"
-	icon_state = "mining"
+	icon_state = "mining0"
 	item_state = "analyzer"
 	w_class = 2.0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
 
-/obj/item/device/mining_scanner/attack_self(mob/user)
-	if(!user.client)
-		return
+/obj/item/device/t_scanner/mining_scanner/scan()
 	if(!cooldown)
 		cooldown = 1
-		spawn(40)
+		spawn(100)
 			cooldown = 0
-		var/client/C = user.client
+		var/turf/t = get_turf(src)
+		var/list/mobs = recursive_mob_check(t, 1,0,0)
+		if(!mobs.len)
+			return
 		var/list/L = list()
 		var/turf/simulated/mineral/M
-		for(M in range(7, user))
+		for(M in range(7, t))
 			if(M.scan_state)
 				L += M
-		if(!L.len)
-			user << "<span class='info'>[src] reports that nothing was detected nearby.</span>"
-			return
-		else
-			for(M in L)
-				var/turf/T = get_turf(M)
-				var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
-				C.images += I
-				spawn(30)
-					if(C)
-						C.images -= I
+		if(L.len)
+			for(var/mob/user in mobs)
+				if(user.client)
+					var/client/C = user.client
+					for(M in L)
+						var/turf/T = get_turf(M)
+						var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+						C.images += I
+						spawn(30)
+							if(C)
+								C.images -= I
 
 //Debug item to identify all ore spread quickly
-/obj/item/device/mining_scanner/admin
+/obj/item/device/t_scanner/mining_scanner/admin
 
-/obj/item/device/mining_scanner/admin/attack_self(mob/user)
+/obj/item/device/t_scanner/mining_scanner/admin/attack_self(mob/user)
 	for(var/turf/simulated/mineral/M in world)
 		if(M.scan_state)
 			M.icon_state = M.scan_state
