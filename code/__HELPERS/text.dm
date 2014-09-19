@@ -18,6 +18,9 @@
 	var/sqltext = dbcon.Quote(t);
 	return copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
 
+/proc/format_table_name(var/table as text)
+	return sqlfdbktableprefix + table
+
 /*
  * Text sanitization
  */

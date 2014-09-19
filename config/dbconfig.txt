@@ -15,6 +15,16 @@ PORT 3306
 ## Database for all SQL functions, not just feedback.
 FEEDBACK_DATABASE feedback
 
+## Prefix to be added to the name of every table, older databases will require this be set to erro_
+## if left out defaults to erro_ for legacy reasons, if you want no table prefix, give a blank prefix rather then comment out
+## Note, this does not change the table names in the database, you will have to do that yourself.
+##IE:
+##	FEEDBACK_TABLEPREFIX erro_
+##	FEEDBACK_TABLEPREFIX 
+##
+## Suggested Default: (and whats used in the .sql file)
+FEEDBACK_TABLEPREFIX SS13_
+
 ## Username/Login used to access the database.
 FEEDBACK_LOGIN username
 

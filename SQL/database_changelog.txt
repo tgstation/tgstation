@@ -13,3 +13,12 @@ UPDATE erro_library SET deleted = 1 WHERE id = someid
 (Replace someid with the id of the book you want to soft delete.)
 
 ----------------------------------------------------
+
+19 September 2014, by MrStonedOne
+
+Removed erro_ from table names, replaced with SS13_. dbconfig.txt has a option allowing you to change the prefix used in code, defaults to "erro_" if left out for legacy reasons.
+
+If you are creating a new database and want to change the prefix, simply find and replace SS13_ to what ever you want and set the prefix value
+
+If you have an existing database, and you want to rid your database of erros, you will have to rename all of the tables. A bit sql is included to do just that in errofreedatabase.sql
+
