@@ -139,7 +139,7 @@
 				I.loc = user
 				user.visible_message("<span class='notice'>[user] places \a [I] into their internal storage.</span>")
 			else
-				user << "<span class='notice'>Your internal storage is full.</span>"
+				internal_storage.attackby(I, src)
 		else
 			if(internal_storage)
 				var/obj/item/dummy_item = internal_storage
