@@ -45,7 +45,6 @@
 * Only called when the block is deactivated.
 */
 /datum/dna/gene/proc/deactivate(var/mob/M, var/connected, var/flags)
-	world << "basecall deactivate"
 	return
 
 // This section inspired by goone's bioEffects.
@@ -121,7 +120,6 @@
 		M << "\blue [msg]"
 
 /datum/dna/gene/basic/deactivate(var/mob/M)
-	world << "basic deactivate [name]"
 	M.mutations.Remove(mutation)
 	if(deactivation_messages.len)
 		var/msg = pick(deactivation_messages)
