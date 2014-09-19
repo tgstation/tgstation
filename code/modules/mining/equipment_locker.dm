@@ -576,7 +576,7 @@
 	projectilesound = 'sound/weapons/Gunshot4.ogg'
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
-						  /obj/item/weapon/ore/clown)
+						  /obj/item/weapon/ore/bananium)
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/weldingtool))
