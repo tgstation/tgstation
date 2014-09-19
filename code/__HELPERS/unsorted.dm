@@ -1231,33 +1231,41 @@ var/global/list/common_tools = list(
 
 /proc/is_hot(obj/item/W as obj)
 	if(istype(W, /obj/item/weapon/weldingtool))
-		if(W:isOn())
+		var/obj/item/weapon/weldingtool/O = W
+		if(O.isOn())
 			return 3800
 		else
 			return 0
 	if(istype(W, /obj/item/weapon/lighter))
-		if(W:lit)
+		var/obj/item/weapon/lighter/O = W
+		if(O.lit)
 			return 1500
 		else
 			return 0
 	if(istype(W, /obj/item/weapon/match))
-		if(W:lit)
+		var/obj/item/weapon/match/O = W
+		if(O.lit)
 			return 1000
 		else
 			return 0
 	if(istype(W, /obj/item/clothing/mask/cigarette))
-		if(W:lit)
+		var/obj/item/clothing/mask/cigarette/O = W
+		if(O.lit)
 			return 1000
 		else
 			return 0
 	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		return 3800
 	if(istype(W, /obj/item/weapon/melee/energy))
-		return 3500
+		var/obj/item/weapon/melee/energy/O = W
+		if(O.active)
+			return 3500
+		else
+			return 0
+	if(istype(W, /obj/item/device/assembly/igniter))
+		return 1000
 	else
 		return 0
-
-	return 0
 
 //Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
 /proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
