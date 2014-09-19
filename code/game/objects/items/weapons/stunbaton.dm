@@ -14,9 +14,9 @@
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>"
-		return (FIRELOSS)
+/obj/item/weapon/melee/baton/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
+	return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
 	..()
@@ -35,11 +35,13 @@
 
 /obj/item/weapon/melee/baton/proc/deductcharge(var/chrgdeductamt)
 	if(bcell)
+		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
+			status = 0
+			update_icon()
+			playsound(loc, "sparks", 75, 1, -1)
 		if(bcell.use(chrgdeductamt))
 			return 1
 		else
-			status = 0
-			update_icon()
 			return 0
 
 /obj/item/weapon/melee/baton/update_icon()
@@ -60,14 +62,18 @@
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
-		if(!bcell)
+		var/obj/item/weapon/stock_parts/cell/C = W
+		if(bcell)
+			user << "<span class='notice'>[src] already has a cell.</span>"
+		else
+			if(C.maxcharge < hitcost)
+				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
+				return
 			user.drop_item()
 			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
 			update_icon()
-		else
-			user << "<span class='notice'>[src] already has a cell.</span>"
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(bcell)
@@ -86,13 +92,13 @@
 		status = !status
 		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
 		playsound(loc, "sparks", 75, 1, -1)
-		update_icon()
 	else
 		status = 0
 		if(!bcell)
 			user << "<span class='warning'>[src] does not have a power source!</span>"
 		else
 			user << "<span class='warning'>[src] is out of charge.</span>"
+	update_icon()
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/user)

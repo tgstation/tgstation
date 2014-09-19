@@ -11,6 +11,7 @@
 	response_harm = "hits"
 	speed = 0
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/xenomeat
+	meat_amount = 3
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -28,7 +29,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
-	faction = "alien"
+	faction = list("alien")
 	status_flags = CANPUSH
 	minbodytemp = 0
 	heat_damage_per_tick = 20

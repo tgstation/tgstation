@@ -60,7 +60,6 @@
 		M.equip_to_slot_or_del(new src.corpseback(M), slot_back)
 	if(src.corpseid == 1)
 		var/obj/item/weapon/card/id/W = new(M)
-		W.name = "[M.real_name]'s ID Card"
 		var/datum/job/jobdatum
 		for(var/jobtype in typesof(/datum/job))
 			var/datum/job/J = new jobtype
@@ -77,6 +76,7 @@
 		if(corpseidjob)
 			W.assignment = corpseidjob
 		W.registered_name = M.real_name
+		W.update_label()
 		M.equip_to_slot_or_del(W, slot_wear_id)
 	qdel(src)
 
@@ -92,7 +92,7 @@
 	corpsegloves = /obj/item/clothing/gloves/combat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas
-	corpsehelmet = /obj/item/clothing/head/helmet/swat
+	corpsehelmet = /obj/item/clothing/head/helmet/swat/syndicate
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseid = 1
 	corpseidjob = "Operative"
@@ -103,12 +103,12 @@
 /obj/effect/landmark/mobcorpse/syndicatecommando
 	name = "Syndicate Commando"
 	corpseuniform = /obj/item/clothing/under/syndicate
-	corpsesuit = /obj/item/clothing/suit/space/rig/syndi
+	corpsesuit = /obj/item/clothing/suit/space/hardsuit/syndi
 	corpseshoes = /obj/item/clothing/shoes/swat
 	corpsegloves = /obj/item/clothing/gloves/combat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/syndicate
-	corpsehelmet = /obj/item/clothing/head/helmet/space/rig/syndi
+	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	corpseback = /obj/item/weapon/tank/jetpack/oxygen
 	corpsepocket1 = /obj/item/weapon/tank/emergency_oxygen
 	corpseid = 1

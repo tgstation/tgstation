@@ -12,3 +12,4 @@ var/timezoneOffset = 0 // The difference betwen midnight (of the host computer) 
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.
 var/fileaccess_timer = 0
 
+var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"

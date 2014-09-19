@@ -32,6 +32,8 @@
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/reflect_chance = 0 //This var dictates what % of a time an object will reflect an energy based weapon's shot
 
+	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
+
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
@@ -138,7 +140,6 @@
 	else
 		if(isliving(loc))
 			return
-		user.next_move = max(user.next_move+2,world.time + 2)
 	pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -160,7 +161,6 @@
 		if(istype(src.loc, /mob/living))
 			return
 		src.pickup(user)
-		user.next_move = max(user.next_move+2,world.time + 2)
 
 	user.put_in_active_hand(src)
 	return
@@ -210,9 +210,9 @@
 						success = 1
 						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)
-						user << "<span class='notice'>You put everything in [S].</span>"
+						user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
 					else if(success)
-						user << "<span class='notice'>You put some things in [S].</span>"
+						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
 					else
 						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
 
@@ -259,191 +259,11 @@
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(M as mob, slot, disable_warning = 0)
-	if(!slot) return 0
-	if(!M) return 0
+/obj/item/proc/mob_can_equip(mob/M, slot, disable_warning = 0)
+	if(!M)
+		return 0
 
-	if(ishuman(M))
-		//START HUMAN
-		var/mob/living/carbon/human/H = M
-		switch(slot)
-			if(slot_l_hand)
-				if(H.l_hand)
-					return 0
-				return 1
-			if(slot_r_hand)
-				if(H.r_hand)
-					return 0
-				return 1
-			if(slot_wear_mask)
-				if(H.wear_mask)
-					return 0
-				if( !(slot_flags & SLOT_MASK) )
-					return 0
-				return 1
-			if(slot_back)
-				if(H.back)
-					return 0
-				if( !(slot_flags & SLOT_BACK) )
-					return 0
-				return 1
-			if(slot_wear_suit)
-				if(H.wear_suit)
-					return 0
-				if( !(slot_flags & SLOT_OCLOTHING) )
-					return 0
-				return 1
-			if(slot_gloves)
-				if(H.gloves)
-					return 0
-				if( !(slot_flags & SLOT_GLOVES) )
-					return 0
-				return 1
-			if(slot_shoes)
-				if(H.shoes)
-					return 0
-				if( !(slot_flags & SLOT_FEET) )
-					return 0
-				return 1
-			if(slot_belt)
-				if(H.belt)
-					return 0
-				if(!H.w_uniform)
-					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
-					return 0
-				if( !(slot_flags & SLOT_BELT) )
-					return
-				return 1
-			if(slot_glasses)
-				if(H.glasses)
-					return 0
-				if( !(slot_flags & SLOT_EYES) )
-					return 0
-				return 1
-			if(slot_head)
-				if(H.head)
-					return 0
-				if( !(slot_flags & SLOT_HEAD) )
-					return 0
-				return 1
-			if(slot_ears)
-				if(H.ears)
-					return 0
-				if( !(slot_flags & SLOT_EARS) )
-					return 0
-				return 1
-			if(slot_w_uniform)
-				if(H.w_uniform)
-					return 0
-				if( !(slot_flags & SLOT_ICLOTHING) )
-					return 0
-				return 1
-			if(slot_wear_id)
-				if(H.wear_id)
-					return 0
-				if(!H.w_uniform)
-					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
-					return 0
-				if( !(slot_flags & SLOT_ID) )
-					return 0
-				return 1
-			if(slot_l_store)
-				if(flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
-					return 0
-				if(H.l_store)
-					return 0
-				if(!H.w_uniform)
-					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
-					return 0
-				if(slot_flags & SLOT_DENYPOCKET)
-					return
-				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
-					return 1
-			if(slot_r_store)
-				if(flags & NODROP)
-					return 0
-				if(H.r_store)
-					return 0
-				if(!H.w_uniform)
-					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
-					return 0
-				if(slot_flags & SLOT_DENYPOCKET)
-					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
-					return 1
-				return 0
-			if(slot_s_store)
-				if(flags & NODROP) //Suit storage NODROP items drop if you take a suit off, this is to prevent people exploiting this.
-					return 0
-				if(H.s_store)
-					return 0
-				if(!H.wear_suit)
-					if(!disable_warning)
-						H << "\red You need a suit before you can attach this [name]."
-					return 0
-				if(!H.wear_suit.allowed)
-					if(!disable_warning)
-						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
-					return 0
-				if(src.w_class > 4)
-					if(!disable_warning)
-						usr << "The [name] is too big to attach."
-					return 0
-				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
-					return 1
-				return 0
-			if(slot_handcuffed)
-				if(H.handcuffed)
-					return 0
-				if(!istype(src, /obj/item/weapon/handcuffs))
-					return 0
-				return 1
-			if(slot_legcuffed)
-				if(H.legcuffed)
-					return 0
-				if(!istype(src, /obj/item/weapon/legcuffs))
-					return 0
-				return 1
-			if(slot_in_backpack)
-				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
-					var/obj/item/weapon/storage/backpack/B = H.back
-					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
-						return 1
-				return 0
-		return 0 //Unsupported slot
-		//END HUMAN
-
-	else if(ismonkey(M))
-		//START MONKEY
-		var/mob/living/carbon/monkey/MO = M
-		switch(slot)
-			if(slot_l_hand)
-				if(MO.l_hand)
-					return 0
-				return 1
-			if(slot_r_hand)
-				if(MO.r_hand)
-					return 0
-				return 1
-			if(slot_wear_mask)
-				if(MO.wear_mask)
-					return 0
-				if( !(slot_flags & SLOT_MASK) )
-					return 0
-				return 1
-			if(slot_back)
-				if(MO.back)
-					return 0
-				if( !(slot_flags & SLOT_BACK) )
-					return 0
-				return 1
-		return 0 //Unsupported slot
-
-		//END MONKEY
+	return M.can_equip(src, slot, disable_warning)
 
 
 /obj/item/verb/verb_pickup()
@@ -490,7 +310,7 @@
 			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "\red You're going to need to remove that mask/helmet/glasses first."
+		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
 		return
 
 	var/mob/living/carbon/monkey/Mo = M
@@ -498,11 +318,11 @@
 			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "\red You're going to need to remove that mask/helmet/glasses first."
+		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
 		return
 
 	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
-		user << "\red You cannot locate any eyes on this creature!"
+		user << "<span class='danger'>You cannot locate any eyes on this creature!</span>"
 		return
 
 	add_logs(user, M, "attacked", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
@@ -518,13 +338,13 @@
 		*/
 	if(M != user)
 		for(var/mob/O in (viewers(M) - user - M))
-			O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
-		M << "\red [user] stabs you in the eye with [src]!"
-		user << "\red You stab [M] in the eye with [src]!"
+			O.show_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
+		M << "<span class='danger'>[user] stabs you in the eye with [src]!</span>"
+		user << "<span class='danger'>You stab [M] in the eye with [src]!</span>"
 	else
 		user.visible_message( \
-			"\red [user] has stabbed themself with [src]!", \
-			"\red You stab yourself in the eyes with [src]!" \
+			"<span class='danger'>[user] has stabbed themself with [src]!</span>", \
+			"<span class='danger'>You stab yourself in the eyes with [src]!</span>" \
 		)
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/U = M
@@ -540,17 +360,17 @@
 		M.eye_blurry += 15+(0.1*M.eye_blurry)
 		M.disabilities |= NEARSIGHTED
 		if(M.stat != 2)
-			M << "\red Your eyes start to bleed profusely!"
+			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
 		if(prob(50))
 			if(M.stat != 2)
-				M << "\red You drop what you're holding and clutch at your eyes!"
+				M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
 				M.drop_item()
 			M.eye_blurry += 10
 			M.Paralyse(1)
 			M.Weaken(2)
 		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
-				M << "\red You go blind!"
+				M << "<span class='danger'>You go blind!</span>"
 			M.sdisabilities |= BLIND
 	return
 

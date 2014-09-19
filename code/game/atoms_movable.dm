@@ -10,6 +10,7 @@
 	var/throw_range = 7
 	var/moved_recently = 0
 	var/mob/pulledby = null
+	var/languages = 0 //For say() and Hear()
 	glide_size = 8
 
 /atom/movable/Move()
@@ -23,19 +24,23 @@
 	return
 
 /atom/movable/Del()
-	if(!gc_destroyed && loc)
+	if(isnull(gc_destroyed) && loc)
 		testing("GC: -- [type] was deleted via del() rather than qdel() --")
-//	else if(!gc_destroyed)
+//	else if(isnull(gc_destroyed))
 //		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
 //	else
 //		testing("GC: [type] was deleted via GC with qdel()")
 	..()
 
 /atom/movable/Destroy()
-	loc = null	// can never null their loc enough really
+	if(reagents)
+		qdel(reagents)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	. = ..()
+	tag = null
+	loc = null
+	invisibility = 101
+	// Do not call ..()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -123,7 +128,10 @@
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
-	if(isobj(src)) src.throw_impact(get_turf(src))
+	if(isobj(src))
+		src.throw_impact(get_turf(src))
+	
+	return 1
 
 
 //Overlays

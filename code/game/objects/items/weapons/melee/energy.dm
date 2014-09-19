@@ -2,8 +2,8 @@
 	var/active = 0
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	viewers(user) << pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
-						"<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
+						"<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/rejects_blood()
@@ -24,7 +24,7 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>"
+		user.visible_message("<span class='suicide'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/axe/attack_self(mob/user)
@@ -163,7 +163,7 @@
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
-	force = 70.0//Normal attacks deal very high damage.
+	force = 30	//Normal attacks deal esword damage
 	hitsound = 'sound/weapons/blade1.ogg'
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 3

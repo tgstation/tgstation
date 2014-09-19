@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////
+// AIR SENSOR (found in gaz tanks)
+/////////////////////////////////////////////////////////////
+
 obj/machinery/air_sensor
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
@@ -73,6 +77,10 @@ obj/machinery/air_sensor/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
+/////////////////////////////////////////////////////////////
+// GENERAL AIR CONTROL (a.k.a atmos computer)
+/////////////////////////////////////////////////////////////
+
 obj/machinery/computer/general_air_control/Destroy()
 		radio_controller.remove_object(src, frequency)
 		..()
@@ -99,21 +107,18 @@ obj/machinery/computer/general_air_control/New()
 obj/machinery/computer/general_air_control/attack_hand(mob/user)
 	if(..(user))
 		return
-	//user << browse(return_text(),"window=computer")
-	user.set_machine(src)
-	//onclose(user, "computer")
+	interact(user) //UpdateDialog() is calling /interact each tick, not attack_hand()
 
-	var/datum/browser/popup = new(user, "computer", name, 465, 390)
+
+obj/machinery/computer/general_air_control/interact(mob/user)
+	var/datum/browser/popup = new(user, "computer", name, 480, 490) //update the content every tick
 	popup.set_content(return_text())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-obj/machinery/computer/general_air_control/interact(mob/user)
-	attack_hand(user)
-
 obj/machinery/computer/general_air_control/process()
-	..()
-	src.updateDialog()
+	if(..())	//if the computer is not broken or unpowered
+		src.updateDialog()
 
 obj/machinery/computer/general_air_control/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -121,13 +126,14 @@ obj/machinery/computer/general_air_control/receive_signal(datum/signal/signal)
 	var/id_tag = signal.data["tag"]
 	if(!id_tag || !sensors.Find(id_tag)) return
 
-	sensor_information = list()
-
 	sensor_information[id_tag] = signal.data
 
 obj/machinery/computer/general_air_control/proc/return_text()
 	var/sensor_data
+	var/count = 0
 	if(sensors.len)
+		sensor_data += "<TABLE cellpadding='3'><TR>" //begin the 3x2 table formatting
+
 		for(var/id_tag in sensors)
 			var/long_name = sensors[id_tag]
 			var/list/data = sensor_information[id_tag]
@@ -154,10 +160,16 @@ obj/machinery/computer/general_air_control/proc/return_text()
 			else
 				sensor_part = "<FONT class='bad'>[long_name] can not be found!</FONT><BR>"
 
-			sensor_data += sensor_part
-
+			sensor_data += "<TD valign='top'>[sensor_part]</TD>"//add the data to the current table cell
+			count++;
+			if(count == 2) //if we've put two readings on a line...
+				sensor_data +="</TR><TR>" //... start a new one
+				count = 0
+		sensor_data += "</TR></TABLE>" //end the table formatting
 	else
-		sensor_data = "No sensors connected."
+		sensor_data = "No sensors connected.<BR><BR>" // there's nothing in the sensors list (new computer), so choose between the two atmos computers
+		sensor_data += "<A href='?src=\ref[src];dist_loop=1'>Initialize as Distribution and Waste Monitor</A><BR>"
+		sensor_data += "<A href='?src=\ref[src];tank_mon=1'>Initialize as Tank Monitor</A><BR>"
 
 	var/output = {"
 <h1>Sensor Data</h1>[sensor_data]"}
@@ -175,6 +187,25 @@ obj/machinery/computer/general_air_control/proc/set_frequency(new_frequency)
 
 obj/machinery/computer/general_air_control/initialize()
 	set_frequency(frequency)
+
+obj/machinery/computer/general_air_control/Topic(href, href_list)
+	if(..())
+		return
+
+	if(href_list["dist_loop"])
+		name = "Distribution and Waste Monitor"
+		set_frequency(1443)
+		sensors = list("mair_in_meter" = "Mixed Air In", "air_sensor" = "Mixed Air Supply Tank", "mair_out_meter" = "Mixed Air Out", "dloop_atm_meter" = "Distribution Loop", "wloop_atm_meter" = "Waste Loop")
+
+	if(href_list["tank_mon"])
+		name = "Tank Monitor"
+		set_frequency(1441)
+		sensors = list("n2_sensor" = "Nitrogen", "o2_sensor" = "Oxygen", "co2_sensor" = "Carbon Dioxide", "tox_sensor" = "Toxins", "n2o_sensor" = "Nitrous Oxide", "waste_sensor" = "Gas Mix Tank")
+
+
+/////////////////////////////////////////////////////////////
+// LARGE TANK CONTROL
+/////////////////////////////////////////////////////////////
 
 obj/machinery/computer/general_air_control/large_tank_control
 	icon = 'icons/obj/computer.dmi'
@@ -232,9 +263,10 @@ obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob
 
 obj/machinery/computer/general_air_control/large_tank_control/return_text()
 	var/output = "<A href='?src=\ref[src];reconnect=1'>Reconnect</A><BR>"
-	output += ..()
-			//if(signal.data)
-			//	input_info = signal.data // Attempting to fix intake control
+	if(sensors.len) //if recieving signals from nearby sensors...
+		output += ..() //... get the data.
+	else
+		output += "No sensors connected."
 
 	output += "<h1>Tank Control System</h1>"
 	if(input_info)
@@ -255,11 +287,10 @@ Rate: [volume_rate] L/sec<BR>"}
 		output += {"<B>Output</B>: [power?("Open"):("On Hold")] <A href='?src=\ref[src];out_refresh_status=1'>Refresh</A><BR>
 <B>Max Output Pressure:</B> [output_pressure] kPa<BR>"}
 		output += "<B>Command:</B> <A href='?src=\ref[src];out_toggle_power=1'>Toggle Power</A> <A href='?src=\ref[src];out_set_pressure=1'>Set Pressure</A><BR>"
+		output += "<B>Max Output Pressure Set:</B> <A href='?src=\ref[src];adj_pressure=-1000'>-</A> <A href='?src=\ref[src];adj_pressure=-100'>-</A> <A href='?src=\ref[src];adj_pressure=-10'>-</A> <A href='?src=\ref[src];adj_pressure=-1'>-</A> [pressure_setting] kPa <A href='?src=\ref[src];adj_pressure=1'>+</A> <A href='?src=\ref[src];adj_pressure=10'>+</A> <A href='?src=\ref[src];adj_pressure=100'>+</A> <A href='?src=\ref[src];adj_pressure=1000'>+</A><BR>"
 
 	else
 		output += "<FONT color='red'>ERROR: Can not find output port</FONT><BR>"
-
-	output += "<B>Max Output Pressure Set:</B> <A href='?src=\ref[src];adj_pressure=-1000'>-</A> <A href='?src=\ref[src];adj_pressure=-100'>-</A> <A href='?src=\ref[src];adj_pressure=-10'>-</A> <A href='?src=\ref[src];adj_pressure=-1'>-</A> [pressure_setting] kPa <A href='?src=\ref[src];adj_pressure=1'>+</A> <A href='?src=\ref[src];adj_pressure=10'>+</A> <A href='?src=\ref[src];adj_pressure=100'>+</A> <A href='?src=\ref[src];adj_pressure=1000'>+</A><BR>"
 
 	return output
 
@@ -282,8 +313,6 @@ obj/machinery/computer/general_air_control/large_tank_control/Topic(href, href_l
 	if(href_list["adj_pressure"])
 		var/change = text2num(href_list["adj_pressure"])
 		pressure_setting = Clamp(pressure_setting + change, 0, 50*ONE_ATMOSPHERE)
-		spawn(1)
-			src.updateDialog()
 		return
 
 	if(!radio_connection)
@@ -316,8 +345,10 @@ obj/machinery/computer/general_air_control/large_tank_control/Topic(href, href_l
 	signal.data["sigtype"]="command"
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-	spawn(5)
-		src.updateDialog()
+
+/////////////////////////////////////////////////////////////
+// FUEL INJECTION
+/////////////////////////////////////////////////////////////
 
 obj/machinery/computer/general_air_control/fuel_injection
 	icon = 'icons/obj/computer.dmi'

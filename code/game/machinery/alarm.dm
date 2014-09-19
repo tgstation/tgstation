@@ -6,26 +6,29 @@
 	var/min1
 	var/max1
 	var/max2
-	New(_min2 as num, _min1 as num, _max1 as num, _max2 as num)
-		min2 = _min2
-		min1 = _min1
-		max1 = _max1
-		max2 = _max2
-	proc/get_danger_level(curval as num)
-		if (max2 >=0 && curval>=max2)
-			return 2
-		if (min2 >=0 && curval<=min2)
-			return 2
-		if (max1 >=0 && curval>=max1)
-			return 1
-		if (min1 >=0 && curval<=min1)
-			return 1
-		return 0
-	proc/CopyFrom(datum/tlv/other)
-		min2 = other.min2
-		min1 = other.min1
-		max1 = other.max1
-		max2 = other.max2
+
+/datum/tlv/New(_min2 as num, _min1 as num, _max1 as num, _max2 as num)
+	min2 = _min2
+	min1 = _min1
+	max1 = _max1
+	max2 = _max2
+
+/datum/tlv/proc/get_danger_level(curval as num)
+	if (max2 >=0 && curval>=max2)
+		return 2
+	if (min2 >=0 && curval<=min2)
+		return 2
+	if (max1 >=0 && curval>=max1)
+		return 1
+	if (min1 >=0 && curval<=min1)
+		return 1
+	return 0
+
+/datum/tlv/proc/CopyFrom(datum/tlv/other)
+	min2 = other.min2
+	min1 = other.min1
+	max1 = other.max1
+	max2 = other.max2
 
 #define AALARM_MODE_SCRUBBING 1
 #define AALARM_MODE_VENTING 2 //makes draught
@@ -58,7 +61,6 @@
 	var/datum/radio_frequency/radio_connection
 	var/locked = 1
 	var/datum/wires/alarm/wires = null
-	var/wiresexposed = 0 // If it's been screwdrivered open.
 	var/aidisabled = 0
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
@@ -126,7 +128,7 @@
 
 	if(nbuild)
 		buildstage = 0
-		wiresexposed = 1
+		panel_open = 1
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
@@ -185,7 +187,7 @@
 		popup.open()
 		refresh_all()
 
-	if(wiresexposed && (!istype(user, /mob/living/silicon)))
+	if(panel_open && (!istype(user, /mob/living/silicon)))
 		wires.Interact(user)
 
 	return
@@ -654,7 +656,7 @@ table tr:first-child th:first-child { border: none;}
 				))
 
 /obj/machinery/alarm/update_icon()
-	if(wiresexposed)
+	if(panel_open)
 		switch(buildstage)
 			if(2)
 				if(wires.wires_status == (2 ** wires.wire_count) - 1) // All wires cut
@@ -777,12 +779,12 @@ table tr:first-child th:first-child { border: none;}
 
 			if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				wiresexposed = !wiresexposed
-				user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+				panel_open = !panel_open
+				user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
 				update_icon()
 				return
 
-			if (wiresexposed && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
+			if (panel_open && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
 				return src.attack_hand(user)
 			else if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
@@ -790,10 +792,10 @@ table tr:first-child th:first-child { border: none;}
 				else
 					if(src.allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 						locked = !locked
-						user << "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface."
+						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
 						src.updateUsrDialog()
 					else
-						user << "\red Access denied."
+						user << "<span class='danger'>Access denied.</span>"
 				return
 		if(1)
 			if(istype(W, /obj/item/weapon/crowbar) && wires.wires_status == (2 ** wires.wire_count) - 1)
@@ -808,20 +810,17 @@ table tr:first-child th:first-child { border: none;}
 
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
-				if(cable.amount < 5)
-					user << "You need more cable!"
+				if(cable.get_amount() < 5)
+					user << "<span class='warning'>You need five lengths of cable to wire the fire alarm.</span>"
 					return
-
-				user << "You start wiring the air alarm!"
-				spawn(20)
-					cable.amount -= 5
-					if(!cable.amount)
-						qdel(cable)
-
-					user << "You wire the air alarm!"
-					wires.wires_status = 0
-					buildstage = 2
-					update_icon()
+				user << "<span class='notice'>You start wiring the air alarm.</span>"
+				if (do_after(user, 20))
+					if (cable.get_amount() >= 5 && buildstage == 1)
+						cable.use(5)
+						user << "<span class='notice'>You wire the air alarm.</span>"
+						wires.wires_status = 0
+						buildstage = 2
+						update_icon()
 				return
 		if(0)
 			if(istype(W, /obj/item/weapon/airalarm_electronics))
@@ -893,14 +892,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red Air Alarm cannot be placed on this spot."
+		usr << "<span class='danger'>Air Alarm cannot be placed on this spot.</span>"
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "\red Air Alarm cannot be placed in this area."
+		usr << "<span class='danger'>Air Alarm cannot be placed in this area.</span>"
 		return
 
 	if(gotwallitem(loc, ndir))
-		usr << "\red There's already an item on this wall!"
+		usr << "<span class='danger'>There's already an item on this wall!</span>"
 		return
 
 	new /obj/machinery/alarm(loc, ndir, 1)
@@ -917,7 +916,6 @@ FIRE ALARM
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
-	var/working = 1.0
 	var/time = 10.0
 	var/timing = 0.0
 	var/lockdownbyai = 0
@@ -927,12 +925,11 @@ FIRE ALARM
 	active_power_usage = 6
 	power_channel = ENVIRON
 	var/last_process = 0
-	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
 /obj/machinery/firealarm/update_icon()
 
-	if(wiresexposed)
+	if(panel_open)
 		switch(buildstage)
 			if(2)
 				icon_state="fire_b2"
@@ -975,11 +972,13 @@ FIRE ALARM
 	src.add_fingerprint(user)
 
 	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
-		wiresexposed = !wiresexposed
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		panel_open = !panel_open
+		user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
 		update_icon()
 		return
 
-	if(wiresexposed)
+	if(panel_open)
 		switch(buildstage)
 			if(2)
 				if (istype(W, /obj/item/device/multitool))
@@ -1000,13 +999,11 @@ FIRE ALARM
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
-					if(coil.amount < 5)
+					if(coil.get_amount() < 5)
 						user << "<span class='warning'>You need more cable for this!</span>"
 						return
 
-					coil.amount -= 5
-					if(!coil.amount)
-						qdel(coil)
+					coil.use(5)
 
 					buildstage = 2
 					user << "<span class='notice'>You wire \the [src]!</span>"
@@ -1035,7 +1032,6 @@ FIRE ALARM
 					qdel(src)
 		return
 
-	src.alarm()
 	return
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
@@ -1136,26 +1132,18 @@ FIRE ALARM
 	src.updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
-	if (!( src.working ))
+	if (stat & (NOPOWER|BROKEN)) // can't reset alarm if it's unpowered or broken.
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
-	for(var/area/RA in A.related)
-		RA.firereset()
+	var/area/A = get_area(src)
+	A.firereset()
 	update_icon()
 	return
 
 /obj/machinery/firealarm/proc/alarm()
-	if (!( src.working ))
+	if (stat & (NOPOWER|BROKEN))  // can't activate alarm if it's unpowered or broken.
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
-	for(var/area/RA in A.related)
-		RA.firealert()
+	var/area/A = get_area(src)
+	A.firealert()
 	update_icon()
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
@@ -1171,7 +1159,7 @@ FIRE ALARM
 
 	if(building)
 		buildstage = 0
-		wiresexposed = 1
+		panel_open = 1
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
@@ -1228,14 +1216,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red Fire Alarm cannot be placed on this spot."
+		usr << "<span class='danger'>Fire Alarm cannot be placed on this spot.</span>"
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "\red Fire Alarm cannot be placed in this area."
+		usr << "<span class='danger'>Fire Alarm cannot be placed in this area.</span>"
 		return
 
 	if(gotwallitem(loc, ndir))
-		usr << "\red There's already an item on this wall!"
+		usr << "<span class='danger'>There's already an item on this wall!</span>"
 		return
 
 	new /obj/machinery/firealarm(loc, ndir, 1)
@@ -1282,7 +1270,7 @@ Code shamelessly copied from apc_frame
 	return
 
 /obj/machinery/firealarm/partyalarm/reset()
-	if (!( src.working ))
+	if (stat & (NOPOWER|BROKEN))
 		return
 	var/area/A = src.loc
 	A = A.loc
@@ -1293,7 +1281,7 @@ Code shamelessly copied from apc_frame
 	return
 
 /obj/machinery/firealarm/partyalarm/alarm()
-	if (!( src.working ))
+	if (stat & (NOPOWER|BROKEN))
 		return
 	var/area/A = src.loc
 	A = A.loc

@@ -43,12 +43,12 @@
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 				if(do_after(user, 20))
 					user << "<span class='notice'>You pry the frame apart.</span>"
-					new /obj/item/stack/sheet/wood(loc, 4)
+					new /obj/item/stack/sheet/mineral/wood(loc, 4)
 					qdel(src)
 
 		if(1)
-			if(istype(I, /obj/item/stack/sheet/wood))
-				var/obj/item/stack/sheet/wood/W = I
+			if(istype(I, /obj/item/stack/sheet/mineral/wood))
+				var/obj/item/stack/sheet/mineral/wood/W = I
 				W.use(2)
 				user << "<span class='notice'>You add a shelf.</span>"
 				state = 2
@@ -83,7 +83,7 @@
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
-					new /obj/item/stack/sheet/wood(loc, 1)
+					new /obj/item/stack/sheet/mineral/wood(loc, 1)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -92,7 +92,7 @@
 
 /obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)
-		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents as obj|null
+		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)
 			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 				return
@@ -134,33 +134,33 @@
 /obj/structure/bookcase/manuals/medical
 	name = "medical manuals bookcase"
 
-	New()
-		..()
-		new /obj/item/weapon/book/manual/medical_cloning(src)
-		update_icon()
+/obj/structure/bookcase/manuals/medical/New()
+	..()
+	new /obj/item/weapon/book/manual/medical_cloning(src)
+	update_icon()
 
 
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
 
-	New()
-		..()
-		new /obj/item/weapon/book/manual/wiki/engineering_construction(src)
-		new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
-		new /obj/item/weapon/book/manual/wiki/engineering_hacking(src)
-		new /obj/item/weapon/book/manual/wiki/engineering_guide(src)
-		new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
-		new /obj/item/weapon/book/manual/robotics_cyborgs(src)
-		update_icon()
+/obj/structure/bookcase/manuals/engineering/New()
+	..()
+	new /obj/item/weapon/book/manual/wiki/engineering_construction(src)
+	new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
+	new /obj/item/weapon/book/manual/wiki/engineering_hacking(src)
+	new /obj/item/weapon/book/manual/wiki/engineering_guide(src)
+	new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
+	new /obj/item/weapon/book/manual/robotics_cyborgs(src)
+	update_icon()
 
 
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"
 
-	New()
-		..()
-		new /obj/item/weapon/book/manual/research_and_development(src)
-		update_icon()
+/obj/structure/bookcase/manuals/research_and_development/New()
+	..()
+	new /obj/item/weapon/book/manual/research_and_development(src)
+	update_icon()
 
 
 /*
@@ -179,22 +179,10 @@
 	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 	var/unique = 0		//0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title			//The real name of the book.
-	var/carved = 0		//Has the book been hollowed out for use as a secret storage item?
-	var/obj/item/store	//What's in the book?
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
 
 /obj/item/weapon/book/attack_self(mob/user)
-	if(carved)
-		if(store)
-			user << "<span class='notice'>[store] falls out of [title]!</span>"
-			store.loc = get_turf(loc)
-			store = null
-			return
-		else
-			user << "<span class='notice'>The pages of [title] have been cut out!</span>"
-			return
-
 	if(is_blind(user))
 		return
 
@@ -207,21 +195,6 @@
 
 
 /obj/item/weapon/book/attackby(obj/item/I, mob/user)
-	if(carved)
-		if(!store)
-			if(I.w_class < 3)
-				user.drop_item()
-				I.loc = src
-				store = I
-				user << "<span class='notice'>You put [I] in [title].</span>"
-				return
-			else
-				user << "<span class='notice'>[I] won't fit in [title].</span>"
-				return
-		else
-			user << "<span class='notice'>There's already something in [title]!</span>"
-			return
-
 	if(istype(I, /obj/item/weapon/pen))
 		if(is_blind(user))
 			return
@@ -286,13 +259,21 @@
 					user << "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
 
 	else if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/wirecutters))
-		if(carved)
-			return
 		user << "<span class='notice'>You begin to carve out [title].</span>"
 		if(do_after(user, 30))
 			user << "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>"
-			carved = 1
-			return
+			var/obj/item/weapon/storage/book/B = new
+			B.name = src.name
+			B.title = src.title
+			if(user.l_hand == src || user.r_hand == src)
+				qdel(src)
+				user.put_in_hands(B)
+				return
+			else
+				B.loc = src.loc
+				qdel(src)
+				return
+		return
 	else
 		..()
 
@@ -311,26 +292,26 @@
 	var/obj/item/weapon/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 
-	attack_self(mob/user)
-		mode += 1
-		if(mode > 3)
-			mode = 0
-		user << "[src] Status Display:"
-		var/modedesc
-		switch(mode)
-			if(0)
-				modedesc = "Scan book to local buffer."
-			if(1)
-				modedesc = "Scan book to local buffer and set associated computer buffer to match."
-			if(2)
-				modedesc = "Scan book to local buffer, attempt to check in scanned book."
-			if(3)
-				modedesc = "Scan book to local buffer, attempt to add book to general inventory."
-			else
-				modedesc = "ERROR"
-		user << " - Mode [mode] : [modedesc]"
-		if(computer)
-			user << "<font color=green>Computer has been associated with this unit.</font>"
+/obj/item/weapon/barcodescanner/attack_self(mob/user)
+	mode += 1
+	if(mode > 3)
+		mode = 0
+	user << "[src] Status Display:"
+	var/modedesc
+	switch(mode)
+		if(0)
+			modedesc = "Scan book to local buffer."
+		if(1)
+			modedesc = "Scan book to local buffer and set associated computer buffer to match."
+		if(2)
+			modedesc = "Scan book to local buffer, attempt to check in scanned book."
+		if(3)
+			modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 		else
-			user << "<font color=red>No associated computer found. Only local scans will function properly.</font>"
-		user << "\n"
+			modedesc = "ERROR"
+	user << " - Mode [mode] : [modedesc]"
+	if(computer)
+		user << "<font color=green>Computer has been associated with this unit.</font>"
+	else
+		user << "<font color=red>No associated computer found. Only local scans will function properly.</font>"
+	user << "\n"

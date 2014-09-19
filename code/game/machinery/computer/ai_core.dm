@@ -63,14 +63,18 @@
 				state = 1
 				icon_state = "1"
 			if(istype(P, /obj/item/stack/cable_coil))
-				if(P:amount >= 5)
+				var/obj/item/stack/cable_coil/C = P
+				if(C.get_amount() >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						P:amount -= 5
-						if(!P:amount) qdel(P)
-						user << "<span class='notice'>You add cables to the frame.</span>"
-						state = 3
-						icon_state = "3"
+						if (C.get_amount() >= 5 && state == 2)
+							C.use(5)
+							user << "<span class='notice'>You add cables to the frame.</span>"
+							state = 3
+							icon_state = "3"
+				else
+					user << "<span class='warning'>You need five lengths of cable to wire the AI core.</span>"
+					return
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				if (brain)
@@ -84,15 +88,18 @@
 					A.amount = 5
 
 			if(istype(P, /obj/item/stack/sheet/rglass))
-				if(P:amount >= 2)
+				var/obj/item/stack/sheet/rglass/G = P
+				if(G.get_amount() >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						if (P)
-							P:amount -= 2
-							if(!P:amount) qdel(P)
+						if (G.get_amount() >= 2 && state == 3)
+							G.use(2)
 							user << "<span class='notice'>You put in the glass panel.</span>"
 							state = 4
 							icon_state = "4"
+				else
+					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into AI core.</span>"
+					return
 
 			if(istype(P, /obj/item/weapon/aiModule/core/full)) //Allows any full core boards to be applied to AI cores.
 				var/obj/item/weapon/aiModule/core/M = P
@@ -188,11 +195,11 @@
 		switch(anchored)
 			if(0)
 				if(do_after(user, 20))
-					user << "\blue You wrench the core into place."
+					user << "<span class='notice'>You wrench the core into place.</span>"
 					anchored = 1
 			if(1)
 				if(do_after(user, 20))
-					user << "\blue You unfasten the core."
+					user << "<span class='notice'>You unfasten the core.</span>"
 					anchored = 0
 	return
 
@@ -214,13 +221,13 @@ That prevents a few funky behaviors.
 					if("AICARD")
 						var/obj/item/device/aicard/C = src
 						if(C.contents.len)//If there is an AI on card.
-							U << "\red <b>Transfer failed</b>: \black Existing AI found on this terminal. Remove existing AI to install a new one."
+							U << "<span class='userdanger'>Transfer failed</span>: \black Existing AI found on this terminal. Remove existing AI to install a new one."
 						else
 							if (ticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = ticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
 									if (T.mind == malfai)
-										U << "\red <b>ERROR</b>: \black Remote transfer interface disabled."//Do ho ho ho~
+										U << "<span class='userdanger'>ERROR</span>: \black Remote transfer interface disabled."//Do ho ho ho~
 										return
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
 							T.aiRestorePowerRoutine = 0//So the AI initially has power.
@@ -233,20 +240,20 @@ That prevents a few funky behaviors.
 								C.icon_state = "aicard-full"
 							T.cancel_camera()
 							T << "You have been downloaded to a mobile storage device. Remote device connection severed."
-							U << "\blue <b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+							U << "<span class='boldnotice'>Transfer successful</span>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(C.AI)//If there is an AI on card.
-							U << "\red <b>Transfer failed</b>: \black Existing AI found on this terminal. Remove existing AI to install a new one."
+							U << "<span class='userdanger'>Transfer failed</span>: \black Existing AI found on this terminal. Remove existing AI to install a new one."
 						else
 							if (ticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = ticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
 									if (T.mind == malfai)
-										U << "\red <b>ERROR</b>: \black Remote transfer interface disabled."
+										U << "<span class='userdanger'>ERROR</span>: \black Remote transfer interface disabled."
 										return
 							if(T.stat)//If the ai is dead/dying.
-								U << "\red <b>ERROR</b>: \black [T.name] data core is corrupted. Unable to install."
+								U << "<span class='userdanger'>ERROR</span>: \black [T.name] data core is corrupted. Unable to install."
 							else
 								new /obj/structure/AIcore/deactivated(T.loc)
 								T.aiRestorePowerRoutine = 0
@@ -255,7 +262,7 @@ That prevents a few funky behaviors.
 								C.AI = T
 								T.cancel_camera()
 								T << "You have been downloaded to a mobile storage device. Remote device connection severed."
-								U << "\blue <b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+								U << "<span class='boldnotice'>Transfer successful</span>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 
 			if("INACTIVE")//Inactive AI object.
 				var/obj/structure/AIcore/deactivated/T = target
@@ -271,7 +278,7 @@ That prevents a few funky behaviors.
 							C.overlays.Cut()
 							A.cancel_camera()
 							A << "You have been uploaded to a stationary terminal. Remote device connection restored."
-							U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+							U << "<span class='boldnotice'>Transfer successful</span>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
 							qdel(T)
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
@@ -282,7 +289,7 @@ That prevents a few funky behaviors.
 							A.loc = T.loc
 							A.cancel_camera()
 							A << "You have been uploaded to a stationary terminal. Remote device connection restored."
-							U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+							U << "<span class='boldnotice'>Transfer successful</span>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
 							qdel(T)
 			if("AIFIXER")//AI Fixer terminal.
 				var/obj/machinery/computer/aifixer/T = target
@@ -306,7 +313,7 @@ That prevents a few funky behaviors.
 								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
 								A.cancel_camera()
 								A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
-								U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+								U << "<span class='boldnotice'>Transfer successful</span>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
 						else
 							if(!C.contents.len && T.occupier && !T.active)
 								C.name = "inteliCard - [T.occupier.name]"
@@ -318,16 +325,16 @@ That prevents a few funky behaviors.
 									C.icon_state = "aicard-full"
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
 								T.occupier << "You have been downloaded to a mobile storage device. Still no remote access."
-								U << "\blue <b>Transfer successful</b>: \black [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+								U << "<span class='boldnotice'>Transfer successful</span>: \black [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 								T.occupier.loc = C
 								T.occupier.cancel_camera()
 								T.occupier = null
 							else if (C.contents.len)
-								U << "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal."
+								U << "<span class='userdanger'>ERROR</span>: \black Artificial intelligence detected on terminal."
 							else if (T.active)
-								U << "\red <b>ERROR</b>: \black Reconstruction in progress."
+								U << "<span class='userdanger'>ERROR</span>: \black Reconstruction in progress."
 							else if (!T.occupier)
-								U << "\red <b>ERROR</b>: \black Unable to locate artificial intelligence."
+								U << "<span class='userdanger'>ERROR</span>: \black Unable to locate artificial intelligence."
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(!T.contents.len)
@@ -343,25 +350,25 @@ That prevents a few funky behaviors.
 								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
 								A.cancel_camera()
 								A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
-								U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+								U << "<span class='boldnotice'>Transfer successful</span>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
 						else
 							if(!C.AI && T.occupier && !T.active)
 								if (T.occupier.stat)
-									U << "\red <b>ERROR</b>: \black [T.occupier.name] data core is corrupted. Unable to install."
+									U << "<span class='userdanger'>ERROR</span>: \black [T.occupier.name] data core is corrupted. Unable to install."
 								else
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
 									T.occupier << "You have been downloaded to a mobile storage device. Still no remote access."
-									U << "\blue <b>Transfer successful</b>: \black [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+									U << "<span class='boldnotice'>Transfer successful</span>: \black [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 									T.occupier.loc = C
 									T.occupier.cancel_camera()
 									T.occupier = null
 							else if (C.AI)
-								U << "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal."
+								U << "<span class='userdanger'>ERROR</span>: \black Artificial intelligence detected on terminal."
 							else if (T.active)
-								U << "\red <b>ERROR</b>: \black Reconstruction in progress."
+								U << "<span class='userdanger'>ERROR</span>: \black Reconstruction in progress."
 							else if (!T.occupier)
-								U << "\red <b>ERROR</b>: \black Unable to locate artificial intelligence."
+								U << "<span class='userdanger'>ERROR</span>: \black Unable to locate artificial intelligence."
 			if("NINJASUIT")//Ninjasuit
 				var/obj/item/clothing/suit/space/space_ninja/T = target
 				switch(interaction)
@@ -374,7 +381,7 @@ That prevents a few funky behaviors.
 
 							if(A)//If the host AI card is not empty.
 								if(A_T)//If there is an AI on the target card.
-									U << "\red <b>ERROR</b>: \black [A_T.name] already installed. Remove [A_T.name] to install a new one."
+									U << "<span class='userdanger'>ERROR</span>: \black [A_T.name] already installed. Remove [A_T.name] to install a new one."
 								else
 									A.loc = C//Throw them into the target card. Since they are already on a card, transfer is easy.
 									C.name = "inteliCard - [A.name]"
@@ -382,10 +389,10 @@ That prevents a few funky behaviors.
 									T.AI = null
 									A.cancel_camera()
 									A << "You have been uploaded to a mobile storage device."
-									U << "\blue <b>SUCCESS</b>: \black [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory."
+									U << "<span class='boldnotice'>SUCCESS</span>: \black [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory."
 							else//If host AI is empty.
 								if(C.flush)//If the other card is flushing.
-									U << "\red <b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol."
+									U << "<span class='userdanger'>ERROR</span>: \black AI flush is in progress, cannot execute transfer protocol."
 								else
 									if(A_T&&!A_T.stat)//If there is an AI on the target card and it's not inactive.
 										A_T.loc = T//Throw them into suit.
@@ -395,9 +402,9 @@ That prevents a few funky behaviors.
 										T.AI = A_T
 										A_T.cancel_camera()
 										A_T << "You have been uploaded to a mobile storage device."
-										U << "\blue <b>SUCCESS</b>: \black [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host."
+										U << "<span class='boldnotice'>SUCCESS</span>: \black [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host."
 									else if(A_T)//If the target AI is dead. Else just go to return since nothing would happen if both are empty.
-										U << "\red <b>ERROR</b>: \black [A_T.name] data core is corrupted. Unable to install."
+										U << "<span class='userdanger'>ERROR</span>: \black [A_T.name] data core is corrupted. Unable to install."
 	else
-		U << "\red <b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol."
+		U << "<span class='userdanger'>ERROR</span>: \black AI flush is in progress, cannot execute transfer protocol."
 	return

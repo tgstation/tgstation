@@ -1,14 +1,20 @@
+//In this file: Summon Magic/Summon Guns/Summon Events
 
+/proc/rightandwrong(var/summon_type, var/mob/user) //0 = Summon Guns, 1 = Summon Magic
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
+	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
+	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
 
-/mob/proc/rightandwrong(var/summon_type) //0 = Summon Guns, 1 = Summon Magic
-	usr << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
-	message_admins("[key_name_admin(usr, 1)] summoned [summon_type ? "magic" : "guns"]!")
-	log_game("[key_name(usr)] summoned [summon_type ? "magic" : "guns"]!")
+	if(user) //in this case either someone holding a spellbook or a badmin
+		user << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
+		message_admins("[key_name_admin(user, 1)] summoned [summon_type ? "magic" : "guns"]!")
+		log_game("[key_name(user)] summoned [summon_type ? "magic" : "guns"]!")
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(H.mind)
 			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice") continue
 		if(prob(25) && !(H.mind in ticker.mode.traitors))
+			if(jobban_isbanned(H, "Syndicate") || jobban_isbanned(H, "traitor")) continue
 			ticker.mode.traitors += H.mind
 			H.mind.special_role = "traitor"
 			var/datum/objective/survive/survive = new
@@ -20,8 +26,9 @@
 			for(var/datum/objective/OBJ in H.mind.objectives)
 				H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 				obj_count++
-		var/randomizeguns = pick("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
-		var/randomizemagic = pick("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying")
+		var/randomizeguns 			= pick(gunslist)
+		var/randomizemagic 			= pick(magiclist)
+		var/randomizemagicspecial 	= pick(magicspeciallist)
 		if(!summon_type)
 			switch (randomizeguns)
 				if("taser")
@@ -44,9 +51,9 @@
 					new /obj/item/weapon/gun/projectile/automatic/gyropistol(get_turf(H))
 				if("pulse")
 					new /obj/item/weapon/gun/energy/pulse_rifle(get_turf(H))
-				if("silenced")
+				if("suppressed")
 					new /obj/item/weapon/gun/projectile/automatic/pistol(get_turf(H))
-					new /obj/item/weapon/silencer(get_turf(H))
+					new /obj/item/weapon/suppressor(get_turf(H))
 				if("cannon")
 					new /obj/item/weapon/gun/energy/lasercannon(get_turf(H))
 				if("doublebarrel")
@@ -95,13 +102,15 @@
 					new /obj/item/weapon/gun/magic/wand/teleport(get_turf(H))
 				if("wanddoor")
 					new /obj/item/weapon/gun/magic/wand/door(get_turf(H))
-				if("staffchange")
-					new /obj/item/weapon/gun/magic/staff/change(get_turf(H))
+				if("wandfireball")
+					new /obj/item/weapon/gun/magic/wand/fireball(get_turf(H))
 				if("staffhealing")
 					new /obj/item/weapon/gun/magic/staff/healing(get_turf(H))
+				if("staffdoor")
+					new /obj/item/weapon/gun/magic/staff/door(get_turf(H))
 				if("armor")
-					new /obj/item/clothing/suit/space/rig/wizard(get_turf(H))
-					new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(H))
+					new /obj/item/clothing/suit/space/hardsuit/wizard(get_turf(H))
+					new /obj/item/clothing/head/helmet/space/hardsuit/wizard(get_turf(H))
 				if("scrying")
 					new /obj/item/weapon/scrying(get_turf(H))
 					if (!(XRAY in H.mutations))
@@ -109,4 +118,41 @@
 						H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 						H.see_in_dark = 8
 						H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-						H << "\blue The walls suddenly disappear."
+						H << "<span class='notice'>The walls suddenly disappear.</span>"
+
+				if("special")
+					magiclist -= "special" //only one super OP item per summoning max
+					switch (randomizemagicspecial)
+						if("staffchange")
+							new /obj/item/weapon/gun/magic/staff/change(get_turf(H))
+						if("staffanimation")
+							new /obj/item/weapon/gun/magic/staff/animate(get_turf(H))
+						if("wandbelt")
+							new /obj/item/weapon/storage/belt/wands/full(get_turf(H))
+						if("contract")
+							new /obj/item/weapon/antag_spawner/contract(get_turf(H))
+						if("staffchaos")
+							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
+					H << "<span class='notice'>You suddenly feel lucky.</span>"
+
+/mob/proc/summonevents()
+	if(events) 																//if there isn't something is very wrong
+		if(!events.wizardmode) 												//lets get this party started
+			events.control = list()											//out with the old
+			for(var/type in typesof(/datum/round_event_control/wizard) - /datum/round_event_control/wizard)	//in with the new
+				var/datum/round_event_control/wizard/W = new type()
+				if(!W.typepath)
+					continue												//don't want this one! leave it for the garbage collector
+				events.control += W											//add it to the list of all events (controls)
+			events.frequency_lower = 600									//1 minute lower bound
+			events.frequency_upper = 3000									//5 minutes upper bound
+			events.wizardmode = 1
+			events.reschedule()
+
+		else 																//Speed it up
+			events.frequency_lower = round(events.frequency_lower * 0.8)	//1 minute | 48 seconds | 34.8 seconds | 30.7 seconds | 24.6 seconds
+			events.frequency_upper = round(events.frequency_upper * 0.6)	//5 minutes | 3 minutes | 1 minute 48 seconds | 1 minute 4.8 seconds | 38.9 seconds
+			if(events.frequency_upper < events.frequency_lower)
+				events.frequency_upper = events.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
+
+			events.reschedule()

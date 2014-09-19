@@ -15,6 +15,7 @@
 	var/bonus_points = 100
 	var/thanks_msg = "Have some supply points as thanks (the shuttle will be returned in 5 minutes)."
 	var/dispatched = 0
+	announceWhen	= 1
 
 /datum/round_event/shuttle_loan/start()
 	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY)
@@ -23,18 +24,18 @@
 	supply_shuttle.shuttle_loan = src
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
-			command_alert("The syndicate are trying to infiltrate your station. If you let them hijack your shuttle, you'll save us a headache.","Centcom Counter Intelligence")
+			priority_announce("The syndicate are trying to infiltrate your station. If you let them hijack your shuttle, you'll save us a headache.","Centcom Counter Intelligence")
 		if(RUSKY_PARTY)
-			command_alert("A group of angry russians want to have a party, can you send them your cargo shuttle then make them disappear?","Centcom Russian Outreach Program")
+			priority_announce("A group of angry russians want to have a party, can you send them your cargo shuttle then make them disappear?","Centcom Russian Outreach Program")
 		if(SPIDER_GIFT)
-			command_alert("The Spider Clan has sent us a mysterious gift, can we ship it to you to see what's inside?","Centcom Diplomatic Corps")
+			priority_announce("The Spider Clan has sent us a mysterious gift, can we ship it to you to see what's inside?","Centcom Diplomatic Corps")
 		if(DEPARTMENT_RESUPPLY)
-			command_alert("Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","Centcom Supply Department")
+			priority_announce("Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","Centcom Supply Department")
 			thanks_msg = "The shuttle will be returned in 5 minutes."
 			bonus_points = 0
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
-	command_alert(thanks_msg, "Cargo shuttle commandeered by Centcom.")
+	priority_announce(thanks_msg, "Cargo shuttle commandeered by Centcom.")
 
 	dispatched = 1
 	supply_shuttle.points += bonus_points

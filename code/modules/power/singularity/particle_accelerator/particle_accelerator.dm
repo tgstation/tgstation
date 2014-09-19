@@ -163,11 +163,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return
 
 
-/obj/structure/particle_accelerator/meteorhit()
-	if(prob(50))
-		qdel(src)
-	return
-
 /obj/structure/particle_accelerator/update_icon()
 	switch(construction_state)
 		if(0,1)
@@ -231,10 +226,14 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 					"You remove the external bolts.")
 				temp_state--
 			else if(istype(O, /obj/item/stack/cable_coil))
-				if(O:use(1,user))
+				var/obj/item/stack/cable_coil/C = O
+				if(C.use(1))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")
 					temp_state++
+				else
+					user << "<span class='warning'>You need one length of cable to wire the [src.name].</span>"
+					return
 		if(2)
 			if(istype(O, /obj/item/weapon/wirecutters))//TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
@@ -345,12 +344,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 
 /obj/machinery/particle_accelerator/blob_act()
-	if(prob(50))
-		qdel(src)
-	return
-
-
-/obj/machinery/particle_accelerator/meteorhit()
 	if(prob(50))
 		qdel(src)
 	return

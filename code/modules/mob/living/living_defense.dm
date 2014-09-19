@@ -16,6 +16,8 @@
 /mob/living/proc/getarmor(var/def_zone, var/type)
 	return 0
 
+/mob/living/proc/on_hit(var/obj/item/projectile/proj_type)
+	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/armor = run_armor_check(def_zone, P.flag)

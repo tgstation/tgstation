@@ -29,6 +29,12 @@
 	..()
 	regenerate_icons()
 
+/mob/living/simple_animal/corgi/sac_act(var/obj/effect/rune/R, victim)
+	usr << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
+	usr.reagents.add_reagent("hell_water", 2)
+	R.stone_or_gib(victim)
+
+
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	user.set_machine(src)
 	if(user.stat) return
@@ -52,13 +58,13 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				usr << "\red [src] is wearing too much armor. You can't cause \him any damage."
+				usr << "<span class='danger'>[src] is wearing too much armor. You can't cause \him any damage.</span>"
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red \b [user] hits [src] with [O], however [src] is too armored.")
 			else
-				usr << "\red [src] is wearing too much armor. You can't reach \his skin."
+				usr << "<span class='danger'>[src] is wearing too much armor. You can't reach \his skin.<span>"
 				for (var/mob/M in viewers(src, null))
-					M.show_message("\red [user] gently taps [src] with [O]. ")
+					M.show_message("<span class='danger'>[user] gently taps [src] with [O].</span>")
 			if(health>0 && prob(15))
 				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression")
 			return
@@ -87,7 +93,7 @@
 					inventory_head = null
 					regenerate_icons()
 				else
-					usr << "\red There is nothing to remove from its [remove_from]."
+					usr << "<span class='danger'>There is nothing to remove from its [remove_from].</span>"
 					return
 			if("back")
 				if(inventory_back)
@@ -95,7 +101,7 @@
 					inventory_back = null
 					regenerate_icons()
 				else
-					usr << "\red There is nothing to remove from its [remove_from]."
+					usr << "<span class='danger'>There is nothing to remove from its [remove_from].</span>"
 					return
 
 		show_inv(usr)
@@ -113,13 +119,13 @@
 
 			if("back")
 				if(inventory_back)
-					usr << "\red It's already wearing something."
+					usr << "<span class='danger'>It's already wearing something.</span>"
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
 
 					if(!item_to_add)
-						usr.visible_message("\blue [usr] pets [src]","\blue You rest your hand on [src]'s back for a moment.")
+						usr.visible_message("<span class='notice'>[usr] pets [src]</span>","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
 						return
 					if(istype(item_to_add,/obj/item/weapon/plastique)) // last thing he ever wears, I guess
 						item_to_add.afterattack(src,usr,1)
@@ -138,7 +144,9 @@
 
 					if( ! ( item_to_add.type in allowed_types ) )
 						usr << "You set [item_to_add] on [src]'s back, but \he shakes it off!"
-						usr.drop_item()
+						if(!usr.drop_item())
+							usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
+							return
 						item_to_add.loc = loc
 						if(prob(25))
 							step_rand(item_to_add)
@@ -166,10 +174,10 @@
 		return
 
 	if(inventory_head)
-		if(usr)	usr << "\red You can't put more than one hat on [src]!"
+		if(usr)	usr << "<span class='danger'>You can't put more than one hat on [src]!</span>"
 		return
 	if(!item_to_add)
-		usr.visible_message("\blue [usr] pets [src]","\blue You rest your hand on [src]'s head for a moment.")
+		usr.visible_message("<span class='notice'>[usr] pets [src]</span>","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		return
 
 
@@ -298,18 +306,24 @@
 			valid = 1
 
 	if(valid)
-		if(usr)
+		if(health <= 0)
+			usr << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
+		else if(usr)
+			if(!usr.drop_item())
+				usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+				return 0
 			usr.visible_message("[usr] puts [item_to_add] on [real_name]'s head.  [src] looks at [usr] and barks once.",
 				"You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.",
 				"You hear a friendly-sounding bark.")
-			usr.drop_item()
 		item_to_add.loc = src
 		src.inventory_head = item_to_add
 		regenerate_icons()
 
 	else
+		if(!usr.drop_item())
+			usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+			return 0
 		usr << "You set [item_to_add] on [src]'s head, but \he shakes it off!"
-		usr.drop_item()
 		item_to_add.loc = loc
 		if(prob(25))
 			step_rand(item_to_add)
@@ -414,7 +428,7 @@
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/weapon/newspaper))
 		if(!stat)
-			user.visible_message("\blue [user] baps [name] on the nose with the rolled up [O]")
+			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					dir = i
@@ -464,7 +478,7 @@
 //puppies cannot wear anything.
 /mob/living/simple_animal/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "\red You can't fit this on [src]"
+		usr << "<span class='danger'>You can't fit this on [src]</span>"
 		return
 	..()
 
@@ -487,7 +501,7 @@
 //Lisa already has a cute bow!
 /mob/living/simple_animal/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "\red [src] already has a cute bow!"
+		usr << "<span class='danger'>[src] already has a cute bow!</span>"
 		return
 	..()
 

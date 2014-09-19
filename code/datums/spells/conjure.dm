@@ -22,7 +22,8 @@
 		if(T.density && !summon_ignore_density)
 			targets -= T
 
-	playsound(src.loc, cast_sound, 50, 1)
+	if(cast_sound)
+		playsound(src.loc, cast_sound, 50, 1)
 
 	if(do_after(usr,delay))
 		for(var/i=0,i<summon_amt,i++)
@@ -34,7 +35,7 @@
 				targets -= spawn_place
 			if(ispath(summoned_object_type,/turf))
 				if(istype(get_turf(usr),/turf/simulated/shuttle))
-					usr << "\red You can't build things on shuttles!"
+					usr << "<span class='danger'>You can't build things on shuttles!</span>"
 					break
 				var/turf/O = spawn_place
 				var/N = summoned_object_type

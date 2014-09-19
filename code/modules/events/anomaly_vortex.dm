@@ -11,7 +11,7 @@
 
 
 /datum/round_event/anomaly/anomaly_vortex/announce()
-	command_alert("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert")
+	priority_announce("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert")
 
 /datum/round_event/anomaly/anomaly_vortex/start()
 	var/turf/T = pick(get_area_turfs(impact_area))

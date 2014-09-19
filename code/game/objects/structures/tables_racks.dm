@@ -103,6 +103,32 @@
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 20
 
+/datum/table_recipe/meteorshot
+	name = "Meteorshot Shell"
+	result_path = /obj/item/ammo_casing/shotgun/meteorshot
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/rcd_ammo = 1,
+				/obj/item/weapon/stock_parts/manipulator = 2)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/pulseslug
+	name = "Pulse Slug Shell"
+	result_path = /obj/item/ammo_casing/shotgun/pulseslug
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/stock_parts/capacitor/adv = 2,
+				/obj/item/weapon/stock_parts/micro_laser/ultra = 1)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/dragonsbreath
+	name = "Dragonsbreath Shell"
+	result_path = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/datum/reagent/phosphorus = 5,)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
 
 /obj/structure/table
 	name = "table"
@@ -236,6 +262,7 @@
 						while(amt > 0)
 							I = locate(B) in loc
 							Deletion.Add(I)
+							I.loc = null //remove it from the table loc so that we don't locate the same item every time (will be relocated inside the crafted item in construct_item())
 							amt--
 						break item_loop
 		else
@@ -260,6 +287,7 @@
 			if(!istype(B, A))
 				Deletion.Remove(B)
 				qdel(B)
+
 	return Deletion
 
 /obj/structure/table/interact(mob/user)
@@ -269,7 +297,7 @@
 	var/dat = "<h3>Construction menu</h3>"
 	dat += "<div class='statusDisplay'>"
 	if(busy)
-		dat += "Construction inprogress...</div>"
+		dat += "Construction in progress...</div>"
 	else
 		for(var/datum/table_recipe/R in table_recipes)
 			if(check_contents(R))
@@ -521,6 +549,8 @@
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(locate(/obj/structure/table) in get_turf(mover))
+		return 1
 	else
 		return 0
 
@@ -557,7 +587,27 @@
 		return
 
 	if (istype(I, /obj/item/weapon/wrench))
-		table_destroy(2, user)
+		if(istype(src, /obj/structure/table/reinforced))
+			var/obj/structure/table/reinforced/RT = src
+			if(RT.status == 1)
+				table_destroy(2, user)
+				return
+		else
+			table_destroy(2, user)
+			return
+
+	if (istype(I, /obj/item/weapon/storage/bag/tray))
+		var/obj/item/weapon/storage/bag/tray/T = I
+		if(T.contents.len > 0) // If the tray isn't empty
+			var/list/obj/item/oldContents = T.contents.Copy()
+			T.quick_empty()
+
+			for(var/obj/item/C in oldContents)
+				C.loc = src.loc
+
+			user.visible_message("<span class='notice'>[user] empties [I] on [src].</span>")
+			return
+		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(isrobot(user))
 		return
@@ -569,6 +619,7 @@
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		table_destroy(1, user)
+		return
 
 	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;
 		if(user.drop_item())
@@ -589,24 +640,13 @@ Destroy type values:
 		return
 
 	if(destroy_type == 2)
-		if(istype(src, /obj/structure/table/reinforced))
-			var/obj/structure/table/reinforced/RT = src
-			if(RT.status == 1)
-				user << "<span class='notice'>Now disassembling the reinforced table</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if (do_after(user, 50))
-					new parts( src.loc )
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					qdel(src)
-				return
-		else
-			user << "<span class='notice'>Now disassembling table</span>"
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 50))
-				new parts( src.loc )
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				qdel(src)
-			return
+		user << "<span class='notice'>Now disassembling the [src.name]</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if (do_after(user, 50))
+			new parts( src.loc )
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			qdel(src)
+		return
 
 
 
@@ -642,18 +682,18 @@ Destroy type values:
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				user << "\blue Now weakening the reinforced table"
+				user << "<span class='notice'>Now weakening the reinforced table</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table weakened"
+					user << "<span class='notice'>Table weakened</span>"
 					src.status = 1
 			else
-				user << "\blue Now strengthening the reinforced table"
+				user << "<span class='notice'>Now strengthening the reinforced table</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table strengthened"
+					user << "<span class='notice'>Table strengthened</span>"
 					src.status = 2
 			return
 	..()
@@ -706,7 +746,9 @@ Destroy type values:
 		return
 	if(isrobot(user))
 		return
-	user.drop_item()
+	if(!user.drop_item())
+		user << "<span class='notice'>\The [O] is stuck to your hand, you cannot put it in the rack!</span>"
+		return
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
@@ -720,12 +762,11 @@ Destroy type values:
 
 	if(isrobot(user))
 		return
-	user.drop_item()
+	if(!user.drop_item())
+		user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the rack!</span>"
+		return
 	if(W && W.loc)	W.loc = src.loc
 	return 1
-
-/obj/structure/rack/meteorhit(obj/O as obj)
-	qdel(src)
 
 
 /obj/structure/rack/attack_hand(mob/user)
@@ -761,4 +802,3 @@ Destroy type values:
 		qdel(src)
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
-

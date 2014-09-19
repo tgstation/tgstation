@@ -7,7 +7,9 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
+Gun Hog = Game Master
 razharas = Game Master
+Niknakflak = Game Master
 rolan7 = Game Master
 quarxink = Game Master
 adrix89 = Game Master
@@ -55,3 +57,10 @@ rumia29 = Game Master
 bobylein = Game Master
 sirbayer = Game Master
 hornygranny = Game Master
+yota = Game Master
+firecage = Game Master
+donkieyo = Game Master
+argoneus = Game Master
+paprka = Game Master
+cookingboy3 = Game Master
+limeliz = Game Master

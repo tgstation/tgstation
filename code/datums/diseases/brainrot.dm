@@ -24,7 +24,7 @@
 			if(prob(2))
 				affected_mob.emote("yawn")
 			if(prob(2))
-				affected_mob << "\red Your don't feel like yourself."
+				affected_mob << "<span class='danger'>Your don't feel like yourself.</span>"
 			if(prob(5))
 				affected_mob.adjustBrainLoss(1)
 				affected_mob.updatehealth()
@@ -37,7 +37,7 @@
 				affected_mob.adjustBrainLoss(2)
 				affected_mob.updatehealth()
 				if(prob(2))
-					affected_mob << "\red Your try to remember something important...but can't."
+					affected_mob << "<span class='danger'>Your try to remember something important...but can't.</span>"
 
 		if(4)
 			if(prob(2))
@@ -48,9 +48,9 @@
 				affected_mob.adjustBrainLoss(3)
 				affected_mob.updatehealth()
 				if(prob(2))
-					affected_mob << "\red Strange buzzing fills your head, removing all thoughts."
+					affected_mob << "<span class='danger'>Strange buzzing fills your head, removing all thoughts.</span>"
 			if(prob(3))
-				affected_mob << "\red You lose consciousness..."
+				affected_mob << "<span class='danger'>You lose consciousness...</span>"
 				for(var/mob/O in viewers(affected_mob, null))
 					O.show_message("[affected_mob] suddenly collapses", 1)
 				affected_mob.Paralyse(rand(5,10))

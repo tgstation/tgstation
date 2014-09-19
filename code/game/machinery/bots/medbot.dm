@@ -49,7 +49,7 @@
 	treatment_tox = "anti_toxin"
 
 /obj/item/weapon/firstaid_arm_assembly
-	name = "first aid/robot arm assembly"
+	name = "incomplete medibot assembly."
 	desc = "A first aid kit with a robot arm permanently grafted to it."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "firstaid_arm"
@@ -104,6 +104,7 @@
 	if (.)
 		return
 	var/dat
+	dat += hack(user)
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
@@ -143,7 +144,7 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (src.allowed(usr)))
-		if (src.on)
+		if (src.on && !src.emagged)
 			turn_off()
 		else
 			turn_on()
@@ -177,6 +178,17 @@
 	else if ((href_list["togglevoice"]) && (!src.locked || issilicon(usr)))
 		src.shut_up = !src.shut_up
 
+	else if (href_list["operation"])
+		if(!src.emagged)
+			src.emagged = 2
+			src.hacked = 1
+			usr << "<span class='warning'>You corrupt [src]'s reagent processor circuits.</span>"
+		else if(!src.hacked)
+			usr << "<span class='userdanger'>[src] seems damaged and does not respond to reprogramming!</span>"
+		else
+			src.hacked = 0
+			src.emagged = 0
+			usr << "<span class='notice'>You reset [src]'s reagent circuits.</span>"
 	src.updateUsrDialog()
 	return
 
@@ -219,8 +231,7 @@
 	if(open && !locked)
 		if(user) user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
 		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+			src.visible_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
 		flick("medibot_spark", src)
 		src.patient = null
 		if(user) src.oldpatient = user
@@ -279,7 +290,7 @@
 						var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!")
 						src.speak(message)
 						src.last_newpatient_speak = world.time
-					src.visible_message("<b>[src]</b> points at [C.name]!")
+					src.visible_message("<span class='name'>[src]</span> points at [C.name]!")
 				break
 			else
 				continue
@@ -336,9 +347,8 @@
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
 	if((src.reagent_glass) && (src.use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
 		for(var/datum/reagent/R in src.reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(R))
+			if(!C.reagents.has_reagent(R.id))
 				return 1
-			continue
 
 	//They're injured enough for it!
 	if((C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_brute)))
@@ -384,36 +394,40 @@
 
 	var/reagent_id = null
 
-	//Use whatever is inside the loaded beaker. If there is one.
-	if((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
-		reagent_id = "internal_beaker"
-
 	if(src.emagged == 2) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
 
-	var/virus = 0
-	for(var/datum/disease/D in C.viruses)
-		virus = 1
+	else
+		var/virus = 0
+		for(var/datum/disease/D in C.viruses)
+			virus = 1
 
-	if (!reagent_id && (virus))
-		if(!C.reagents.has_reagent(src.treatment_virus))
-			reagent_id = src.treatment_virus
+		if (!reagent_id && (virus))
+			if(!C.reagents.has_reagent(src.treatment_virus))
+				reagent_id = src.treatment_virus
 
-	if (!reagent_id && (C.getBruteLoss() >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_brute))
-			reagent_id = src.treatment_brute
+		if (!reagent_id && (C.getBruteLoss() >= heal_threshold))
+			if(!C.reagents.has_reagent(src.treatment_brute))
+				reagent_id = src.treatment_brute
 
-	if (!reagent_id && (C.getOxyLoss() >= (15 + heal_threshold)))
-		if(!C.reagents.has_reagent(src.treatment_oxy))
-			reagent_id = src.treatment_oxy
+		if (!reagent_id && (C.getOxyLoss() >= (15 + heal_threshold)))
+			if(!C.reagents.has_reagent(src.treatment_oxy))
+				reagent_id = src.treatment_oxy
 
-	if (!reagent_id && (C.getFireLoss() >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_fire))
-			reagent_id = src.treatment_fire
+		if (!reagent_id && (C.getFireLoss() >= heal_threshold))
+			if(!C.reagents.has_reagent(src.treatment_fire))
+				reagent_id = src.treatment_fire
 
-	if (!reagent_id && (C.getToxLoss() >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_tox))
-			reagent_id = src.treatment_tox
+		if (!reagent_id && (C.getToxLoss() >= heal_threshold))
+			if(!C.reagents.has_reagent(src.treatment_tox))
+				reagent_id = src.treatment_tox
+
+		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
+		if(reagent_id && src.use_beaker && src.reagent_glass && src.reagent_glass.reagents.total_volume)
+			for(var/datum/reagent/R in src.reagent_glass.reagents.reagent_list)
+				if(!C.reagents.has_reagent(R.id))
+					reagent_id = "internal_beaker"
+					break
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!
 		src.oldpatient = src.patient
@@ -425,7 +439,9 @@
 		return
 	else
 		src.icon_state = "medibots"
-		visible_message("\red <B>[src] is trying to inject [src.patient]!</B>")
+		C.visible_message("<span class='danger'>[src] is trying to inject [src.patient]!</span>", \
+			"<span class='userdanger'>[src] is trying to inject [src.patient]!</span>")
+
 		spawn(30)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
@@ -433,21 +449,14 @@
 					src.reagent_glass.reagents.reaction(src.patient, 2)
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
-				visible_message("\red <B>[src] injects [src.patient] with the syringe!</B>")
+				C.visible_message("<span class='danger'>[src] injects [src.patient] with the syringe!</span>", \
+					"<span class='userdanger'>[src] injects [src.patient] with the syringe!</span>")
 
 			src.icon_state = "medibot[src.on]"
 			src.currently_healing = 0
 			return
 
-//	src.speak(reagent_id)
 	reagent_id = null
-	return
-
-
-/obj/machinery/bot/medbot/proc/speak(var/message)
-	if((!src.on) || (!message))
-		return
-	visible_message("[src] beeps, \"[message]\"")
 	return
 
 /obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)
@@ -457,7 +466,7 @@
 
 /obj/machinery/bot/medbot/explode()
 	src.on = 0
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)

@@ -17,8 +17,9 @@
 /obj/item/weapon/watertank/New()
 	..()
 	create_reagents(volume)
+	noz = make_noz()
 	return
-	
+
 /obj/item/weapon/watertank/examine()
 	set src in usr
 	..()
@@ -41,32 +42,32 @@
 	var/mob/living/carbon/human/user = usr
 	if(on)
 		//Detach the nozzle into the user's hands
-		make_noz()
 		var/list/L = list("left hand" = slot_l_hand,"right hand" = slot_r_hand)
 		if(!user.equip_in_one_of_slots(noz, L))
 			on = 0
 			user << "<span class='notice'>You need a free hand to hold the mister!</span>"
+			return
+		noz.loc = user
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz(user)
 	return
-	
+
 /obj/item/weapon/watertank/proc/make_noz()
-	noz = new /obj/item/weapon/reagent_containers/spray/mister(src)
-	return
+	return new /obj/item/weapon/reagent_containers/spray/mister(src)
 
 /obj/item/weapon/watertank/equipped(mob/user, slot)
 	if (slot != slot_back)
 		remove_noz(user)
 
 /obj/item/weapon/watertank/proc/remove_noz(mob/user)
-	if (noz != null)
-		var/mob/living/carbon/human/M = user
+	var/mob/living/carbon/human/M = user
+	if(noz in get_both_hands(M))
 		M.unEquip(noz)
 	return
 
 /obj/item/weapon/watertank/Destroy()
-	if (noz)
+	if (on)
 		var/M = get(noz, /mob)
 		remove_noz(M)
 	..()
@@ -91,23 +92,24 @@
 
 /obj/item/weapon/reagent_containers/spray/mister/New(parent_tank)
 	..()
-	if(check_tank_exists(parent_tank, usr, src))
+	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
 		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
-		return
+		loc = tank
+	return
 
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user as mob)
 	user << "<span class='notice'>The mister snaps back onto the watertank!</span>"
 	tank.on = 0
-	qdel(src)
-	
+	loc = tank
+
 /obj/item/weapon/reagent_containers/spray/mister/attack_self()
 	return
-	
+
 /proc/check_tank_exists(parent_tank, var/mob/living/carbon/human/M, var/obj/O)
-	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank) || !M || !istype(M))	//To avoid weird issues from admin spawns
+	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
 		M.unEquip(O)
-		qdel(O)
+		qdel(0)
 		return 0
 	else
 		return 1
@@ -118,12 +120,12 @@
 	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
-	
+
 /obj/item/weapon/watertank/janitor/New()
 	..()
-	reagents.add_reagent("cleaner", 250)
-	
-	
+	reagents.add_reagent("cleaner", 500)
+
+
 /obj/item/weapon/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"
 	desc = "A janitorial spray nozzle attached to a watertank, designed to clean up large messes."
@@ -134,13 +136,12 @@
 	possible_transfer_amounts = null
 
 /obj/item/weapon/watertank/janitor/make_noz()
-	noz = new /obj/item/weapon/reagent_containers/spray/mister/janitor(src)
-	return
-	
+	return new /obj/item/weapon/reagent_containers/spray/mister/janitor(src)
+
 /obj/item/weapon/reagent_containers/spray/mister/janitor/attack_self(var/mob/user)
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
 	user << "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
-	
+
 //Atmos tank
 /obj/item/weapon/watertank/atmos
 	name = "backpack water tank"
@@ -148,10 +149,10 @@
 	icon_state = "waterbackpackatmos"
 	item_state = "waterbackpackatmos"
 	volume = 100
-	
+
 /obj/item/weapon/watertank/atmos/make_noz()
-	noz = new /obj/item/weapon/extinguisher/mini/nozzle(src)
-	
+	return new /obj/item/weapon/extinguisher/mini/nozzle(src)
+
 /obj/item/weapon/extinguisher/mini/nozzle
 	name = "fire extinguisher nozzle"
 	desc = "A fire extinguisher nozzle attached to a water tank."
@@ -160,18 +161,19 @@
 	item_state = "misteratmos"
 	safety = 0
 	var/obj/item/weapon/watertank/tank
-	
+
 /obj/item/weapon/extinguisher/mini/nozzle/New(parent_tank)
-	if(check_tank_exists(parent_tank, usr, src))
+	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
 		reagents = tank.reagents
 		max_water = tank.volume
+		loc = tank
 	return
-		
+
 /obj/item/weapon/extinguisher/mini/nozzle/dropped(mob/user as mob)
 	user << "<span class='notice'>The nozzle snaps back onto the watertank!</span>"
 	tank.on = 0
-	qdel(src)
-	
+	loc = tank
+
 /obj/item/weapon/extinguisher/mini/nozzle/attack_self()
 	return

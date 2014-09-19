@@ -64,10 +64,6 @@
 	if (prob(50))
 		qdel(src)
 
-/obj/machinery/chem_dispenser/meteorhit()
-	qdel(src)
-	return
-
  /**
   * The ui_interact proc is used to open and update Nano UIs
   * If ui_interact is not used then the UI will not update correctly
@@ -275,10 +271,6 @@
 /obj/machinery/chem_master/blob_act()
 	if (prob(50))
 		qdel(src)
-
-/obj/machinery/chem_master/meteorhit()
-	qdel(src)
-	return
 
 /obj/machinery/chem_master/power_change()
 	if(powered())
@@ -576,7 +568,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	spawn(waittime)
 		src.wait = null
 		update_icon()
-		playsound(src.loc, 'sound/items/timer.ogg', 30, 1)
+		playsound(src.loc, 'sound/machines/ping.ogg', 30, 1)
 
 /obj/machinery/computer/pandemic/update_icon()
 	if(stat & BROKEN)
@@ -645,6 +637,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 					D = new type(0, null)
 			if(!D)
 				return
+			replicator_cooldown(50)
 			var/list/data = list("viruses"=list(D))
 			var/name = sanitize(input(usr,"Name:","Name the culture",D.name))
 			if(!name || name == " ") name = D.name
@@ -652,7 +645,6 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood",20,data)
 			src.updateUsrDialog()
-			replicator_cooldown(50)
 		else
 			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()
@@ -816,7 +808,6 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		icon = 'icons/obj/kitchen.dmi'
 		icon_state = "juicer1"
 		layer = 2.9
-		density = 1
 		anchored = 1
 		use_power = 1
 		idle_power_usage = 5
@@ -831,7 +822,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/stack/sheet/mineral/plasma = list("plasma" = 20),
 				/obj/item/stack/sheet/metal = list("iron" = 20),
 				/obj/item/stack/sheet/plasteel = list("iron" = 20, "plasma" = 20),
-				/obj/item/stack/sheet/wood = list("carbon" = 20),
+				/obj/item/stack/sheet/mineral/wood = list("carbon" = 20),
 				/obj/item/stack/sheet/glass = list("silicon" = 20),
 				/obj/item/stack/sheet/rglass = list("silicon" = 20, "iron" = 20),
 				/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),
@@ -839,7 +830,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 				/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
 				/obj/item/weapon/grown/nettle = list("sacid" = 0),
-				/obj/item/weapon/grown/deathnettle = list("pacid" = 0),
+				/obj/item/weapon/grown/nettle/death = list("pacid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0),
 
 				//Crayons (for overriding colours)
@@ -859,10 +850,10 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 
 				//Grinder stuff, but only if dry
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica = list("coffeepowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta = list("coffeepowder" = 0, "hyperzine" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera = list("teapowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra = list("teapowder" = 0, "kelotane" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "hyperzine" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera = list("teapowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "kelotane" = 0),
 
 
 
@@ -879,20 +870,20 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list("banana" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list("potato" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = list("lemonjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/orange = list("orangejuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/lime = list("limejuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = list("lemonjuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = list("orangejuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime = list("limejuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list("poisonberryjuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = list("poisonberryjuice" = 0),
 		)
 
 		var/list/dried_items = list(
 
 				//Grinder stuff, but only if dry
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica = list("coffeepowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta = list("coffeepowder" = 0, "hyperzine" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera = list("teapowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra = list("teapowder" = 0, "kelotane" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "hyperzine" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera = list("teapowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "kelotane" = 0),
 		)
 
 		var/list/holdingitems = list()

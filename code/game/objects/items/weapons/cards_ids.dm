@@ -65,8 +65,8 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
-	var/mining_points = 0 //For redeeming at mining equipment lockers
-	var/access = list()
+	var/mining_points = 0 //For redeeming at mining equipment vendors
+	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
 	slot_flags = SLOT_ID
 
@@ -90,6 +90,27 @@
 /obj/item/weapon/card/id/GetID()
 	return src
 
+/*
+Usage:
+update_label()
+	Sets the id name to whatever registered_name and assignment is
+
+update_label("John Doe", "Clowny")
+	Properly formats the name and occupation and sets the id name to the arguments
+*/
+/obj/item/weapon/card/id/proc/update_label(var/newname, var/newjob)
+	if(newname || newjob)
+		name = text("[][]",
+			(!newname)	? "identification card"	: "[newname]'s ID Card",
+			(!newjob)		? ""										: " ([newjob])"
+		)
+		return
+
+	name = text("[][]",
+		(!registered_name)	? "identification card"	: "[registered_name]'s ID Card",
+		(!assignment)				? ""										: " ([assignment])"
+	)
+
 /obj/item/weapon/card/id/verb/read()
 	set name = "Read ID Card"
 	set category = "Object"
@@ -100,13 +121,11 @@
 
 
 /obj/item/weapon/card/id/silver
-	name = "identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
-	name = "identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
@@ -123,7 +142,7 @@
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
-				usr << "\blue The card's microscanners activate as you pass it over the ID, copying its access."
+				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
 
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
@@ -141,8 +160,8 @@
 			src.registered_name = ""
 			return
 		src.assignment = u
-		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-		user << "\blue You successfully forge the ID card."
+		update_label()
+		user << "<span class='notice'>You successfully forge the ID card.</span>"
 	else
 		..()
 

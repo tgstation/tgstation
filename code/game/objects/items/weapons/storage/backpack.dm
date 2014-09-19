@@ -35,36 +35,36 @@
 	max_w_class = 5
 	max_combined_w_class = 35
 
-	New()
-		..()
+/obj/item/weapon/storage/backpack/holding/New()
+	..()
+	return
+
+/obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(crit_fail)
+		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
 		return
+	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
+		investigate_log("has become a singularity. Caused by [user.key]","singulo")
+		user << "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
+		qdel(W)
+		var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
+		singulo.energy = 300 //should make it a bit bigger~
+		message_admins("[key_name_admin(user)] detonated a bag of holding")
+		log_game("[key_name(user)] detonated a bag of holding")
+		qdel(src)
+		return
+	..()
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(crit_fail)
-			user << "\red The Bluespace generator isn't working."
-			return
-		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
-			investigate_log("has become a singularity. Caused by [user.key]","singulo")
-			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
-			qdel(W)
-			var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
-			singulo.energy = 300 //should make it a bit bigger~
-			message_admins("[key_name_admin(user)] detonated a bag of holding")
-			log_game("[key_name(user)] detonated a bag of holding")
-			qdel(src)
-			return
-		..()
-
-	proc/failcheck(mob/user as mob)
-		if (prob(src.reliability)) return 1 //No failure
-		if (prob(src.reliability))
-			user << "\red The Bluespace portal resists your attempt to add another item." //light failure
-		else
-			user << "\red The Bluespace generator malfunctions!"
-			for (var/obj/O in src.contents) //it broke, delete what was in it
-				qdel(O)
-			crit_fail = 1
-			icon_state = "brokenpack"
+/obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user as mob)
+	if (prob(src.reliability)) return 1 //No failure
+	if (prob(src.reliability))
+		user << "<span class='danger'>The Bluespace portal resists your attempt to add another item.</span>" //light failure
+	else
+		user << "<span class='danger'>The Bluespace generator malfunctions!</span>"
+		for (var/obj/O in src.contents) //it broke, delete what was in it
+			qdel(O)
+		crit_fail = 1
+		icon_state = "brokenpack"
 
 
 /obj/item/weapon/storage/backpack/santabag
@@ -180,3 +180,9 @@
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
+
+/obj/item/weapon/storage/backpack/mime
+	name = "Parcel Parceaux"
+	desc = "A silent backpack made for those silent workers. Silence Co."
+	icon_state = "mimepack"
+	item_state = "mimepack"

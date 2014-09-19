@@ -3,6 +3,7 @@
 	throw_range = 5
 	w_class = 1.0
 	var/used = 0
+	var/polling_ghosts = 0
 
 /obj/item/weapon/antag_spawner/proc/spawn_antag(var/client/C, var/turf/T, var/type = "")
 	return
@@ -42,7 +43,7 @@
 	..()
 	var/mob/living/carbon/human/H = usr
 
-	if(H.stat || H.restrained())
+	if(H.stat || H.restrained() || polling_ghosts)
 		return
 	if(!istype(H, /mob/living/carbon/human))
 		return 1
@@ -53,10 +54,12 @@
 			if (used)
 				H << "You already used this contract!"
 				return
-			var/list/candidates = get_candidates(BE_WIZARD)
-			if(candidates.len)
+			H << "You send out a call for aid into the realms! It will be about 20 seconds before you get a response."
+			polling_ghosts = 1
+			var/client/C = pick_from_candidates(BE_WIZARD, "wizard's apprentice")
+			polling_ghosts = 0
+			if(C)
 				src.used = 1
-				var/client/C = pick(candidates)
 				spawn_antag(C, get_turf(H.loc), href_list["school"])
 			else
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
@@ -64,6 +67,7 @@
 /obj/item/weapon/antag_spawner/contract/spawn_antag(var/client/C, var/turf/T, var/type = "")
 	new /obj/effect/effect/harmless_smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
+	C.prefs.copy_to(M)
 	M.key = C.key
 	M << "<B>You are the [usr.real_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals."
 	switch(type)
@@ -102,10 +106,11 @@
 	M.mind.objectives += new_objective
 	ticker.mode.traitors += M.mind
 	M.mind.special_role = "apprentice"
+	M << sound('sound/effects/magic.ogg')
 
 /obj/item/weapon/antag_spawner/contract/equip_antag(mob/target as mob)
 	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_ears)
-	target.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(target), slot_w_uniform)
+	target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(target), slot_w_uniform)
 	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(target), slot_shoes)
 	target.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(target), slot_wear_suit)
 	target.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(target), slot_head)
@@ -121,13 +126,17 @@
 	var/TC_cost = 0
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user as mob)
+	if(polling_ghosts)
+		return
 	if(used)
 		user << "The teleporter is out of power."
 		return
-	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
-	if(borg_candicates.len > 0)
+	user << "<span class='notice'>Standby for reinforcements... ETA 20 seconds.</span>"
+	polling_ghosts = 1
+	var/client/C = pick_from_candidates(BE_OPERATIVE, "Syndicate cyborg")
+	polling_ghosts = 0
+	if(C)
 		used = 1
-		var/client/C = pick(borg_candicates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
 	else
 		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
@@ -141,4 +150,4 @@
 	ticker.mode.syndicates += R.mind
 	ticker.mode.update_synd_icons_added(R.mind)
 	R.mind.special_role = "syndicate"
-	R.faction = "syndicate"
+	R.faction = list("syndicate")

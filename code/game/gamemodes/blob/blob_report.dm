@@ -2,13 +2,11 @@
 
 /datum/game_mode/blob/send_intercept(var/report = 1)
 	var/intercepttext = ""
-	var/interceptname = "Error"
 	switch(report)
 		if(0)
 			..()
 			return
 		if(1)
-			interceptname = "Biohazard Alert"
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
 			intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>"
@@ -21,12 +19,12 @@
 			intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12.<BR>"
 			intercepttext += "Message ends."
 		if(2)
-			var/nukecode = "ERROR"
+			var/nukecode = rand(10000, 99999)
 			for(var/obj/machinery/nuclearbomb/bomb in world)
 				if(bomb && bomb.r_code)
 					if(bomb.z == 1)
-						nukecode = bomb.r_code
-			interceptname = "Directive 7-12"
+						bomb.r_code = nukecode
+
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Directive 7-12 has been issued for [station_name()].<BR>"
 			intercepttext += "The biohazard has grown out of control and will soon reach critical mass.<BR>"
@@ -42,13 +40,8 @@
 					aiPlayer.set_zeroth_law(law)
 					aiPlayer << "Laws Updated: [law]"
 
-	for(var/obj/machinery/computer/communications/comm in world)
-		comm.messagetitle.Add(interceptname)
-		comm.messagetext.Add(intercepttext)
-		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
-			intercept.name = "paper- [interceptname]"
-			intercept.info = intercepttext
+	print_command_report(intercepttext,"Classified [command_name()] Update")
+	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg');
 	return
 
 
@@ -63,52 +56,52 @@
 	var/mach = 0
 
 
-	proc/count()
-		for(var/turf/T in world)
-			if(T.z != 1)
-				continue
+/datum/station_state/proc/count()
+	for(var/turf/T in world)
+		if(T.z != 1)
+			continue
 
-			if(istype(T,/turf/simulated/floor))
-				if(!(T:burnt))
-					src.floor += 12
-				else
-					src.floor += 1
+		if(istype(T,/turf/simulated/floor))
+			if(!(T:burnt))
+				src.floor += 12
+			else
+				src.floor += 1
 
-			if(istype(T, /turf/simulated/wall))
-				if(T:intact)
-					src.wall += 2
-				else
-					src.wall += 1
+		if(istype(T, /turf/simulated/wall))
+			if(T:intact)
+				src.wall += 2
+			else
+				src.wall += 1
 
-			if(istype(T, /turf/simulated/wall/r_wall))
-				if(T:intact)
-					src.r_wall += 2
-				else
-					src.r_wall += 1
+		if(istype(T, /turf/simulated/wall/r_wall))
+			if(T:intact)
+				src.r_wall += 2
+			else
+				src.r_wall += 1
 
-		for(var/obj/O in world)
-			if(O.z != 1)
-				continue
+	for(var/obj/O in world)
+		if(O.z != 1)
+			continue
 
-			if(istype(O, /obj/structure/window))
-				src.window += 1
-			else if(istype(O, /obj/structure/grille) && (!O:destroyed))
-				src.grille += 1
-			else if(istype(O, /obj/machinery/door))
-				src.door += 1
-			else if(istype(O, /obj/machinery))
-				src.mach += 1
-		return
+		if(istype(O, /obj/structure/window))
+			src.window += 1
+		else if(istype(O, /obj/structure/grille) && (!O:destroyed))
+			src.grille += 1
+		else if(istype(O, /obj/machinery/door))
+			src.door += 1
+		else if(istype(O, /obj/machinery))
+			src.mach += 1
+	return
 
 
-	proc/score(var/datum/station_state/result)
-		if(!result)	return 0
-		var/output = 0
-		output += (result.floor / max(floor,1))
-		output += (result.r_wall/ max(r_wall,1))
-		output += (result.wall / max(wall,1))
-		output += (result.window / max(window,1))
-		output += (result.door / max(door,1))
-		output += (result.grille / max(grille,1))
-		output += (result.mach / max(mach,1))
-		return (output/7)
+/datum/station_state/proc/score(var/datum/station_state/result)
+	if(!result)	return 0
+	var/output = 0
+	output += (result.floor / max(floor,1))
+	output += (result.r_wall/ max(r_wall,1))
+	output += (result.wall / max(wall,1))
+	output += (result.window / max(window,1))
+	output += (result.door / max(door,1))
+	output += (result.grille / max(grille,1))
+	output += (result.mach / max(mach,1))
+	return (output/7)

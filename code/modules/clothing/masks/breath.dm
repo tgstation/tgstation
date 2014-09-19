@@ -3,6 +3,7 @@
 	name = "breath mask"
 	icon_state = "breath"
 	item_state = "m_mask"
+	body_parts_covered = 0
 	flags = MASKCOVERSMOUTH | MASKINTERNALS
 	w_class = 2
 	gas_transfer_coefficient = 0.10

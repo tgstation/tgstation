@@ -11,7 +11,7 @@
 	attack_verb = list("banned")
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</span>"
+		user.visible_message("<span class='suicide'>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</span>")
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
@@ -32,9 +32,9 @@
 	throwforce = 10
 	w_class = 1
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
-		return (BRUTELOSS|FIRELOSS)
+/obj/item/weapon/nullrod/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/sord
 	name = "\improper SORD"
@@ -48,9 +48,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
-		return(BRUTELOSS)
+/obj/item/weapon/sord/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/claymore
 	name = "claymore"
@@ -65,12 +65,12 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	IsShield()
-		return 1
+/obj/item/weapon/claymore/IsShield()
+	return 1
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>"
-		return(BRUTELOSS)
+/obj/item/weapon/claymore/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/katana
 	name = "katana"
@@ -85,9 +85,12 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"
-		return(BRUTELOSS)
+/obj/item/weapon/katana/cursed
+	slot_flags = null
+
+/obj/item/weapon/katana/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/katana/IsShield()
 		return 1

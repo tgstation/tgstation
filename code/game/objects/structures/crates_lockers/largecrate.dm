@@ -11,7 +11,7 @@
 
 /obj/structure/largecrate/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/crowbar))
-		new /obj/item/stack/sheet/wood(src)
+		new /obj/item/stack/sheet/mineral/wood(src)
 		var/turf/T = get_turf(src)
 		for(var/obj/O in contents)
 			O.loc = T

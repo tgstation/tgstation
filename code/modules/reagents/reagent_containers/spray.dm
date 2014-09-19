@@ -10,7 +10,9 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 7
-	amount_per_transfer_from_this = 10
+	var/spray_maxrange = 3 //what the sprayer will set spray_currentrange to in the attack_self.
+	var/spray_currentrange = 3 //the range of tiles the sprayer will reach when in fixed mode.
+	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = null
 
@@ -41,17 +43,12 @@
 		return
 
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
-	var/tiles =1
 	D.create_reagents(amount_per_transfer_from_this)
-	if(amount_per_transfer_from_this >=10)
-		tiles =1
-	else
-		tiles =3
 
-	reagents.trans_to(D, amount_per_transfer_from_this, 1/tiles)
+	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_currentrange)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	spawn(0)
-		for(var/i=0, i<tiles, i++)
+		for(var/i=0, i<spray_currentrange, i++)
 			step_towards(D,A)
 			D.reagents.reaction(get_turf(D))
 			for(var/atom/T in get_turf(D))
@@ -60,6 +57,7 @@
 		qdel(D)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	user.changeNext_move(CLICK_CD_RANGE)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src].")
@@ -75,6 +73,7 @@
 /obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
 
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
+	spray_currentrange = (spray_currentrange == 1 ? spray_maxrange : 1)
 	user << "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
 
@@ -116,7 +115,8 @@
 	icon_state = "pepperspray"
 	item_state = "pepperspray"
 	volume = 40
-	amount_per_transfer_from_this = 10
+	spray_maxrange = 4
+	amount_per_transfer_from_this = 5
 
 
 /obj/item/weapon/reagent_containers/spray/pepper/New()
@@ -143,12 +143,15 @@
 //chemsprayer
 /obj/item/weapon/reagent_containers/spray/chemsprayer
 	name = "chem sprayer"
-	desc = "A utility used to spray large amounts of reagent in a given area."
+	desc = "A utility used to spray large amounts of reagents in a given area."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
 	throwforce = 0
 	w_class = 3.0
+	spray_maxrange = 7
+	spray_currentrange = 7
+	amount_per_transfer_from_this = 10
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"
 
@@ -205,7 +208,7 @@
 			var/turf/my_target = pick(the_targets)
 			the_targets -= my_target
 
-			for(var/j=1, j<=rand(6,8), j++)
+			for(var/j=0, j<=spray_currentrange, j++)
 				step_towards(D, my_target)
 				D.reagents.reaction(get_turf(D))
 				for(var/atom/t in get_turf(D))
@@ -214,6 +217,7 @@
 			qdel(D)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	user.changeNext_move(CLICK_CD_RANGE)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from a chem sprayer.")
@@ -225,6 +229,11 @@
 		message_admins("[key_name_admin(user)] fired Space lube from a chem sprayer.")
 		log_game("[key_name(user)] fired Space lube from a chem sprayer.")
 	return
+
+/obj/item/weapon/reagent_containers/spray/chemsprayer/attack_self(var/mob/user)
+
+	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
+	user << "<span class='notice'>You adjust the output switch. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
 /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror/New()
 	..()

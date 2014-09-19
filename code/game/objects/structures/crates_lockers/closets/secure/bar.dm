@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/bar
-	name = "Booze"
+	name = "booze storage"
 	req_access = list(access_bar)
 	icon_state = "cabinetdetective_locked"
 	icon_closed = "cabinetdetective"
@@ -9,20 +9,20 @@
 	icon_off = "cabinetdetective_broken"
 
 
-	New()
-		..()
-		sleep(2)
-		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
-		return
+/obj/structure/closet/secure_closet/bar/New()
+	..()
+	sleep(2)
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	return
 
 /obj/structure/closet/secure_closet/bar/update_icon()
 	if(broken)

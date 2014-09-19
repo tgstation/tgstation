@@ -10,6 +10,15 @@
 	//underwear
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_all, underwear_m, underwear_f)
 
+	//Species
+	for(var/spath in typesof(/datum/species))
+		if(spath == /datum/species)
+			continue
+		var/datum/species/S = new spath()
+		if(S.roundstart)
+			roundstart_species[S.name] = S.type
+		species_list[S.id] = S.type
+
 	//Surgeries
 	for(var/path in typesof(/datum/surgery))
 		if(path == /datum/surgery)

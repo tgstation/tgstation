@@ -12,7 +12,7 @@
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob)
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
@@ -75,16 +75,16 @@
 				return
 
 			//REPAIRING (replacing the outer grille for cosmetic damage)
-			else if( istype(W, /obj/item/stack/rods) )
-				var/obj/item/stack/O = W
-				src.d_state = 0
-				src.icon_state = "r_wall"
-				relativewall_neighbours()	//call smoothwall stuff
-				user << "<span class='notice'>You replace the outer grille.</span>"
-				if (O.amount > 1)
-					O.amount--
+			else if(istype(W, /obj/item/stack/rods))
+				var/obj/item/stack/rods/O = W
+				if (O.use(1))
+					src.d_state = 0
+					src.icon_state = "r_wall"
+					relativewall_neighbours()	//call smoothwall stuff
+					user << "<span class='notice'>You replace the outer grille.</span>"
 				else
-					qdel(O)
+					user << "<span class='warning'>You need one rod to repair the wall.</span>"
+					return
 				return
 
 		if(2)
@@ -102,8 +102,6 @@
 						src.d_state = 3
 						src.icon_state = "r_wall-3"
 						user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
-				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 
 			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
@@ -166,8 +164,6 @@
 						src.icon_state = "r_wall-6"
 						new /obj/item/stack/rods( src )
 						user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
-				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 
 			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
@@ -214,23 +210,24 @@
 			dismantle_wall()
 
 	//REPAIRING
-	else if( istype(W, /obj/item/stack/sheet/metal) && d_state )
+	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)
 		var/obj/item/stack/sheet/metal/MS = W
+
+		if (MS.get_amount() < 1)
+			user << "<span class='warning'>You need one sheet of metal to repair the wall.</span>"
+			return
 
 		user << "<span class='notice'>You begin patching-up the wall with \a [MS].</span>"
 
-		sleep( max(20*d_state,100) )	//time taken to repair is proportional to the damage! (max 10 seconds)
-		if( !istype(src, /turf/simulated/wall/r_wall) || !user || !MS || !T )	return
-
-		if( user.loc == T && user.get_active_hand() == MS && d_state )
+		if (do_after(user, max(20*d_state,100)))//time taken to repair is proportional to the damage! (max 10 seconds)
+			if(loc == null || MS.get_amount() < 1)
+				return
+			MS.use(1)
 			src.d_state = 0
 			src.icon_state = "r_wall"
 			relativewall_neighbours()	//call smoothwall stuff
 			user << "<span class='notice'>You repair the last of the damage.</span>"
-			if (MS.amount > 1)
-				MS.amount--
-			else
-				qdel(MS)
+
 
 	//APC
 	else if( istype(W,/obj/item/apc_frame) )

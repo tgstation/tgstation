@@ -35,15 +35,6 @@
 		return
 
 	else if(TK in mutations)
-		switch(get_dist(src,A))
-			if(1 to 5) // not adjacent may mean blocked by window
-				next_move += 2
-			if(5 to 7)
-				next_move += 5
-			if(8 to 15)
-				next_move += 10
-			if(16 to 128)
-				return
 		A.attack_tk(src)
 
 /*
@@ -76,7 +67,7 @@
 	if(..())
 		return
 	if(a_intent != "harm" || !ismob(A)) return
-	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
+	if(is_muzzled())
 		return
 	var/mob/living/carbon/ML = A
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
@@ -90,11 +81,10 @@
 			O.show_message("<span class='danger'>[name] bites [ML]!</span>", 1)
 		if(armor >= 2) return
 		for(var/datum/disease/D in viruses)
-			if(istype(D, /datum/disease/jungle_fever))
-				ML.contract_disease(D,1,0)
+			ML.contract_disease(D,1,0)
 	else
 		for(var/mob/O in viewers(ML, null))
-			O.show_message("\red <B>[src] has attempted to bite [ML]!</B>", 1)
+			O.show_message("<span class='userdanger'>[src] has attempted to bite [ML]!</span>", 1)
 
 /*
 	Aliens

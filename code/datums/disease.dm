@@ -154,7 +154,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		for(var/datum/disease/D in affected_mob.viruses)
 			if(D != src)
 				if(IsSame(D))
-					//error("Deleting [D.name] because it's the same as [src.name].")
+					//ERROR("Deleting [D.name] because it's the same as [src.name].")
 					del(D) // if there are somehow two viruses of the same kind in the system, delete the other one
 
 	if(holder == affected_mob)
@@ -176,8 +176,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(affected_mob)
 		if(resistance && !(type in affected_mob.resistances))
 			affected_mob.resistances += type
-		/*if(istype(src, /datum/disease/alien_embryo))	//Get rid of the infection flag if it's a xeno embryo.
-			affected_mob.status_flags &= ~(XENO_HOST)*/
 		affected_mob.viruses -= src		//remove the datum from the list
 	del(src)	//delete the datum to stop it processing
 	return

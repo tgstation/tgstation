@@ -28,7 +28,7 @@
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
 
-/obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
+/obj/item/ammo_casing/proc/newshot() //For energy weapons, shotgun shells and wands (!).
 	if (!BB)
 		BB = new projectile_type(src)
 	return
@@ -44,7 +44,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
-	m_amt = 50000
+	m_amt = 30000
 	throwforce = 2
 	w_class = 1.0
 	throw_speed = 3

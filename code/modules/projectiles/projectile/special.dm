@@ -46,7 +46,7 @@
 /obj/item/projectile/meteor
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
-	icon_state = "smallf"
+	icon_state = "small1"
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
@@ -62,7 +62,7 @@
 		if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
 			if(A)
 
-				A.meteorhit(src)
+				A.ex_act(2)
 				playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 
 				for(var/mob/M in range(10, src))
@@ -82,32 +82,8 @@
 	flag = "energy"
 
 	on_hit(var/atom/target, var/blocked = 0)
-		if(iscarbon(target))
-			var/mob/living/carbon/M = target
-			if(check_dna_integrity(M) && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
-				if(prob(15))
-					M.apply_effect((rand(30,80)),IRRADIATE)
-					M.Weaken(5)
-					for (var/mob/V in viewers(src))
-						V.show_message("\red [M] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
-				if(prob(35))
-				//	for (var/mob/V in viewers(src)) //Public messages commented out to prevent possible metaish genetics experimentation and stuff. - Cheridan
-				//		V.show_message("\red [M] is mutated by the radiation beam.", 3, "\red You hear the snapping of twigs.", 2)
-					if(prob(80))
-						randmutb(M)
-						domutcheck(M,null)
-					else
-						randmutg(M)
-						domutcheck(M,null)
-				else
-					M.adjustFireLoss(rand(5,15))
-					M.show_message("\red The radiation beam singes you!")
-				//	for (var/mob/V in viewers(src))
-				//		V.show_message("\red [M] is singed by the radiation beam.", 3, "\red You hear the crackle of burning leaves.", 2)
-			else
-			//	for (var/mob/V in viewers(src))
-			//		V.show_message("The radiation beam dissipates harmlessly through [M]", 3)
-				M.show_message("\blue The radiation beam dissipates harmlessly through your body.")
+		..()
+		return
 
 /obj/item/projectile/energy/florayield
 	name = "beta somatoray"
@@ -117,14 +93,9 @@
 	nodamage = 1
 	flag = "energy"
 
-	on_hit(mob/living/carbon/target, var/blocked = 0)
-		if(iscarbon(target))
-			if(ishuman(target) && target.dna && target.dna.mutantrace == "plant")	//These rays make plantmen fat.
-				target.nutrition = min(target.nutrition+30, 500)
-			else
-				target.show_message("\blue The radiation beam dissipates harmlessly through your body.")
-		else
-			return 1
+	on_hit(mob/living/carbon/human/target, var/blocked = 0)
+		..()
+		return
 
 
 /obj/item/projectile/beam/mindflayer

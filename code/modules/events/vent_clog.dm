@@ -4,14 +4,14 @@
 	weight = 35
 
 /datum/round_event/vent_clog
-	announceWhen	= 0
+	announceWhen	= 1
 	startWhen		= 5
 	endWhen			= 35
 	var/interval 	= 2
 	var/list/vents  = list()
 
 /datum/round_event/vent_clog/announce()
-	command_alert("The scrubbers network is experiencing a backpressure surge.  Some ejection of contents may occur.", "Atmospherics alert")
+	priority_announce("The scrubbers network is experiencing a backpressure surge.  Some ejection of contents may occur.", "Atmospherics alert")
 
 
 /datum/round_event/vent_clog/setup()

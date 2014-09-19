@@ -29,7 +29,7 @@
 	var/frame_desc = null
 
 /obj/item/weapon/circuitboard/large_tank_control
-	name = "cirquir board (Large Tank Control)"
+	name = "circuit board (Large Tank Control)"
 	build_path = /obj/machinery/computer/general_air_control/large_tank_control
 	origin_tech = "programming=2;engineering=3;materials=2"
 /obj/item/weapon/circuitboard/turbine_computer
@@ -205,6 +205,12 @@
 /obj/item/weapon/circuitboard/labor_shuttle/one_way
 	name = "circuit Board (Prisoner Shuttle Console)"
 	build_path = /obj/machinery/computer/shuttle/labor/one_way
+/obj/item/weapon/circuitboard/ferry
+	name = "circuit Board (Transport Ferry)"
+	build_path = /obj/machinery/computer/shuttle/ferry
+/obj/item/weapon/circuitboard/ferry/request
+	name = "circuit Board (Transport Ferry Console)"
+	build_path = /obj/machinery/computer/shuttle/ferry/request
 /obj/item/weapon/circuitboard/mining_shuttle
 	name = "circuit Board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/mining
@@ -222,6 +228,10 @@
 /*/obj/item/weapon/circuitboard/prison_shuttle
 	name = "circuit board (Prison Shuttle)"
 	build_path = /obj/machinery/computer/prison_shuttle*/
+/obj/item/weapon/circuitboard/slot_machine
+	name = "circuit board (Slot Machine)"
+	build_path = /obj/machinery/computer/slot_machine
+	origin_tech = "programming=1"
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
@@ -271,27 +281,31 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				user << "<span class='notice'>You start wrenching the frame into place.</span>"
 				if(do_after(user, 20))
-					user << "<span class='notice'>You wrench the frame into place.</span>"
+					user << "<span class='notice'>You've wrenched the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.remove_fuel(0, user))
-					user << "<span class='warning'>The welding tool must be on to complete this task.</span>"
+					if(!WT.isOn())
+						user << "<span class='warning'>The welding tool must be on to complete this task.</span>"
 					return
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+				user << "<span class='notice'>You start deconstructing the frame.</span>"
 				if(do_after(user, 20))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>You deconstruct the frame.</span>"
+					user << "<span class='notice'>You've deconstructed the frame.</span>"
 					var/obj/item/stack/sheet/metal/M = new (loc, 5)
 					M.add_fingerprint(user)
 					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				user << "<span class='notice'>You start to unfasten the frame.</span>"
 				if(do_after(user, 20))
-					user << "<span class='notice'>You unfasten the frame.</span>"
+					user << "<span class='notice'>You've unfastened the frame.</span>"
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
@@ -323,44 +337,51 @@
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You unfasten the circuit board.</span>"
-				src.state = 1
-				src.icon_state = "1"
+				state = 1
+				icon_state = "1"
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
-				if(C.amount >= 5)
+				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					user << "<span class='notice'>You start adding cables to the frame.</span>"
 					if(do_after(user, 20))
-						if(C && C.amount >= 5)
-							C.amount -= 5
-							if(C.amount <= 0) qdel(C)
-							user << "<span class='notice'>You add cables to the frame.</span>"
-							src.state = 3
-							src.icon_state = "3"
+						if(C.get_amount() >= 5 && state == 2)
+							C.use(5)
+							user << "<span class='notice'>You've added cables to the frame.</span>"
+							state = 3
+							icon_state = "3"
+				else
+					user << "<span class='warning'>You need five lengths of cable to wire the frame.</span>"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "<span class='notice'>You remove the cables.</span>"
-				src.state = 2
-				src.icon_state = "2"
+				state = 2
+				icon_state = "2"
 				var/obj/item/stack/cable_coil/A = new (loc)
 				A.amount = 5
 				A.add_fingerprint(user)
 
 			if(istype(P, /obj/item/stack/sheet/glass))
-				if(P:amount >= 2)
+				var/obj/item/stack/sheet/glass/G = P
+				if(G.get_amount() < 2)
+					user << "<span class='warning'>You need two glass sheets to continue construction.</span>"
+					return
+				else
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					user << "<span class='notice'>You start to put in the glass panel.</span>"
 					if(do_after(user, 20))
-						if(P)
-							P:use(2)
-							user << "<span class='notice'>You put in the glass panel.</span>"
-							src.state = 4
+						if(G.get_amount() >= 2 && state == 3)
+							G.use(2)
+							user << "<span class='notice'>You've put in the glass panel.</span>"
+							state = 4
 							src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "<span class='notice'>You remove the glass panel.</span>"
-				src.state = 3
-				src.icon_state = "3"
+				state = 3
+				icon_state = "3"
 				var/obj/item/stack/sheet/glass/G = new (loc, 2)
 				G.add_fingerprint(user)
 			if(istype(P, /obj/item/weapon/screwdriver))

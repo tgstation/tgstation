@@ -1,5 +1,5 @@
 /obj/item/weapon/melee/cultblade
-	name = "Cult Blade"
+	name = "cult blade"
 	desc = "An arcane weapon wielded by the followers of Nar-Sie"
 	icon_state = "cultblade"
 	item_state = "cultblade"
@@ -16,7 +16,7 @@
 		return ..()
 	else
 		user.Paralyse(5)
-		user << "\red An unexplicable force powerfully repels the sword from [target]!"
+		user << "<span class='danger'>An unexplicable force powerfully repels the sword from [target]!</span>"
 		var/organ = ((user.hand ? "l_":"r_") + "arm")
 		var/obj/item/organ/limb/affecting = user.get_organ(organ)
 		if(affecting.take_damage(rand(force/2, force))) //random amount of damage between half of the blade's force and the full force of the blade.
@@ -25,7 +25,7 @@
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user as mob)
 	if(!iscultist(user))
-		user << "\red An overwhelming feeling of dread comes over you as you pick up the cultist's sword. It would be wise to be rid of this blade quickly."
+		user << "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the cultist's sword. It would be wise to be rid of this blade quickly.</span>"
 		user.Dizzy(120)
 
 
@@ -92,10 +92,10 @@
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/cult
-	name = "cult armour"
-	icon_state = "cult_armour"
-	item_state = "cult_armour"
-	desc = "A bulky suit of armour, bristling with spikes. It looks space proof."
+	name = "cult armor"
+	icon_state = "cult_armor"
+	item_state = "cult_armor"
+	desc = "A bulky suit of armor, bristling with spikes. It looks space proof."
 	w_class = 3
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1

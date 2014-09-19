@@ -2,18 +2,17 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
-	//Set the mob up for GC. Mobs have lots of references
-	if(client)
-		for(var/atom/movable/AM in client.screen)
-			qdel(AM)
-		client.screen = list()
-	del(hud_used)
-	for(var/magic in mob_spell_list)
-		del(magic)
+	qdel(hud_used)
+	if(mind && mind.current == src)
+		spellremove(src)
 	for(var/infection in viruses)
-		del(infection)
+		qdel(infection)
 	ghostize()
 	..()
+
+/mob/proc/sac_act(var/obj/effect/rune/R, var/mob/victim as mob)
+	return
+
 
 var/next_mob_id = 0
 /mob/New()
@@ -33,14 +32,14 @@ var/next_mob_id = 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/t = "\blue Coordinates: [x],[y] \n"
-	t+= "\red Temperature: [environment.temperature] \n"
-	t+= "\blue Nitrogen: [environment.nitrogen] \n"
-	t+= "\blue Oxygen: [environment.oxygen] \n"
-	t+= "\blue Plasma : [environment.toxins] \n"
-	t+= "\blue Carbon Dioxide: [environment.carbon_dioxide] \n"
+	var/t = "<span class='notice'>Coordinates: [x],[y] \n</span>"
+	t+= "<span class='danger'>Temperature: [environment.temperature] \n</span>"
+	t+= "<span class='notice'>Nitrogen: [environment.nitrogen] \n</span>"
+	t+= "<span class='notice'>Oxygen: [environment.oxygen] \n</span>"
+	t+= "<span class='notice'>Plasma : [environment.toxins] \n</span>"
+	t+= "<span class='notice'>Carbon Dioxide: [environment.carbon_dioxide] \n</span>"
 	for(var/datum/gas/trace_gas in environment.trace_gases)
-		usr << "\blue [trace_gas.type]: [trace_gas.moles] \n"
+		usr << "<span class='notice'>[trace_gas.type]: [trace_gas.moles] \n</span>"
 
 	usr.show_message(t, 1)
 
@@ -179,7 +178,7 @@ var/next_mob_id = 0
 			qdel(W)
 		else
 			if(!disable_warning)
-				src << "\red You are unable to equip that." //Only print if qdel_on_fail is false
+				src << "<span class='danger'>You are unable to equip that.</span>" //Only print if qdel_on_fail is false
 		return 0
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
 	return 1
@@ -268,8 +267,6 @@ var/list/slot_equipment_priority = list( \
 		if (W)
 			W.attack_self(src)
 			update_inv_r_hand(0)
-	if(next_move < world.time)
-		next_move = world.time + 2
 	return
 
 /*
@@ -331,12 +328,12 @@ var/list/slot_equipment_priority = list( \
 	if (!( abandon_allowed ))
 		return
 	if ((stat != 2 || !( ticker )))
-		usr << "\blue <B>You must be dead to use this!</B>"
+		usr << "<span class='boldnotice'>You must be dead to use this!</span>"
 		return
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	usr << "\blue <B>Please roleplay correctly!</B>"
+	usr << "<span class='boldnotice'>Please roleplay correctly!</span>"
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
@@ -394,7 +391,7 @@ var/list/slot_equipment_priority = list( \
 	if(check_rights_for(client,R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
-		usr << "\blue You must be observing to use this!"
+		usr << "<span class='notice'>You must be observing to use this!</span>"
 		return
 
 	if(is_admin && stat == DEAD)
@@ -438,7 +435,7 @@ var/list/slot_equipment_priority = list( \
 			creatures[name] = O
 
 
-	for(var/mob/M in sortAtom(mob_list))
+	for(var/mob/M in sortNames(mob_list))
 		var/name = M.name
 		if (names.Find(name))
 			namecounts[name]++
@@ -488,32 +485,15 @@ var/list/slot_equipment_priority = list( \
 		if(machine && in_range(src, usr))
 			show_inv(machine)
 
-	if(!usr.stat && usr.canmove && !usr.restrained() && Adjacent(usr))
+	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			var/obj/item/what = get_item_by_slot(slot)
 
 			if(what)
-				if(what.flags & NODROP)
-					usr << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
-					return
-				visible_message("<span class='danger'>[usr] tries to remove [src]'s [what.name].</span>", \
-								"<span class='userdanger'>[usr] tries to remove [src]'s [what.name].</span>")
-				what.add_fingerprint(usr)
-				if(do_mob(usr, src, STRIP_DELAY))
-					if(what && Adjacent(usr))
-						unEquip(what)
+				usr.stripPanelUnequip(what,src,slot)
 			else
-				what = usr.get_active_hand()
-				if(what && (what.flags & NODROP))
-					usr << "<span class='notice'>You can't put \the [what.name] on [src], it's stuck to your hand!</span>"
-					return
-				if(what && what.mob_can_equip(src, slot, 1))
-					visible_message("<span class='notice'>[usr] tries to put [what] on [src].</span>")
-					if(do_mob(usr, src, STRIP_DELAY * 0.5))
-						if(what && Adjacent(usr))
-							usr.unEquip(what)
-							equip_to_slot_if_possible(what, slot, 0, 1)
+				usr.stripPanelEquip(what,src,slot)
 
 	if(usr.machine == src)
 		if(Adjacent(usr))
@@ -521,6 +501,15 @@ var/list/slot_equipment_priority = list( \
 		else
 			usr << browse(null,"window=mob\ref[src]")
 
+// The src mob is trying to strip an item from someone
+// Defined in living.dm
+/mob/proc/stripPanelUnequip(obj/item/what, mob/who)
+	return
+
+// The src mob is trying to place an item on someone
+// Defined in living.dm
+/mob/proc/stripPanelEquip(obj/item/what, mob/who)
+	return
 
 /mob/MouseDrop(mob/M)
 	..()
@@ -569,6 +558,9 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/is_active()
 	return (0 >= usr.stat)
 
+/mob/proc/is_muzzled()
+	return 0
+
 /mob/proc/see(message)
 	if(!is_active())
 		return 0
@@ -592,6 +584,8 @@ var/list/slot_equipment_priority = list( \
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
 				stat(null,"Air-[master_controller.air_cost]\t#[global_activeturfs]")
+				stat(null,"Turfs-[master_controller.air_turfs]\tGroups-[master_controller.air_groups]")
+				stat(null,"SC-[master_controller.air_superconductivity]\tHP-[master_controller.air_highpressure]\tH-[master_controller.air_hotspots]")
 				stat(null,"Sun-[master_controller.sun_cost]")
 				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
@@ -599,7 +593,7 @@ var/list/slot_equipment_priority = list( \
 				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
 				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
 				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-				stat(null,"GC-[master_controller.gc_cost]\t#[garbage.destroyed.len + garbage.queue.len]-#dels[garbage.dels]")
+				stat(null,"GC-[master_controller.gc_cost]\t#[garbage.destroyed.len]-#dels[garbage.dels]")
 				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
@@ -651,28 +645,28 @@ var/list/slot_equipment_priority = list( \
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
-        var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
-        var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
-        if(ko || resting || stunned)
-                drop_r_hand()
-                drop_l_hand()
-        else
-                lying = 0
-                canmove = 1
-        if(buckled)
-                lying = 90 * bed
-        else
-                if((ko || resting) && !lying)
-                        fall(ko)
-        anchored = buckled
-        canmove = !(ko || resting || stunned || buckled)
-        density = !lying
-        update_transform()
-        lying_prev = lying
-        if(update_icon) //forces a full overlay update
-                update_icon = 0
-                regenerate_icons()
-        return canmove
+	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
+	if(ko || resting || stunned)
+		drop_r_hand()
+		drop_l_hand()
+	else
+		lying = 0
+		canmove = 1
+	if(buckled)
+		lying = 90 * bed
+		anchored = buckled
+	else
+		if((ko || resting) && !lying)
+			fall(ko)
+	canmove = !(ko || resting || stunned || buckled)
+	density = !lying
+	update_transform()
+	lying_prev = lying
+	if(update_icon) //forces a full overlay update
+		update_icon = 0
+		regenerate_icons()
+	return canmove
 
 /mob/proc/fall(var/forced)
 	drop_l_hand()
@@ -711,6 +705,15 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
+	return 0
+
+/mob/proc/swap_hand()
+	return
+
+/mob/proc/activate_hand(var/selhand)
+	return
+
+/mob/proc/SpeciesCanConsume()
 	return 0
 
 /mob/proc/Jitter(amount)
@@ -801,4 +804,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
 	update_canmove()
+	return
+
+/mob/proc/assess_threat() //For sec bot threat assessment
 	return

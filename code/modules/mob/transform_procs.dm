@@ -72,6 +72,8 @@
 	//transfer mind and delete old mob
 	if(mind)
 		mind.transfer_to(O)
+		if(O.mind.changeling)
+			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
 	updateappearance(O)
@@ -131,6 +133,12 @@
 
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
 	O.dna = dna
+
+	if(!dna.species)
+		O.dna.species = new /datum/species/human()
+	else
+		O.dna.species = new dna.species.type()
+
 	dna = null
 	if (newname) //if there's a name as an argument, always take that one over the current name
 		O.real_name = newname
@@ -242,18 +250,13 @@
 	O << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
 	O << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
 	O << "To use something, simply click on it."
-	O << {"Use say ":b to speak to your cyborgs through binary."}
+	O << {"Use say ":b to speak to your cyborgs through binary."} //"
 	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
 		O.show_laws()
 		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
-	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-	O.verbs += /mob/living/silicon/ai/proc/ai_alerts
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_list
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-	O.verbs += /mob/living/silicon/ai/proc/ai_roster
 
 	O.job = "AI"
 
@@ -304,9 +307,7 @@
 
 	O.loc = loc
 	O.job = "Cyborg"
-
-	O.mmi = new /obj/item/device/mmi(O)
-	O.mmi.transfer_identity(src)//Does not transfer key/client.
+	O.notify_ai(1)
 
 	. = O
 	qdel(src)
@@ -416,7 +417,7 @@
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
 	if(!safe_animal(mobpath))
-		usr << "\red Sorry but this mob type is currently unavailable."
+		usr << "<span class='danger'>Sorry but this mob type is currently unavailable.</span>"
 		return
 
 	if(notransform)
@@ -449,7 +450,7 @@
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
 	if(!safe_animal(mobpath))
-		usr << "\red Sorry but this mob type is currently unavailable."
+		usr << "<span class='danger'>Sorry but this mob type is currently unavailable.</span>"
 		return
 
 	var/mob/new_mob = new mobpath(src.loc)
@@ -472,20 +473,8 @@
 	if(!MP)
 		return 0	//Sanity, this should never happen.
 
-//	if(ispath(MP, /mob/living/simple_animal/space_worm)) //Goodbye Space Worms 2014
-//		return 0 //Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
-
-	if(ispath(MP, /mob/living/simple_animal/construct/behemoth))
-		return 0 //I think this may have been an unfinished WiP or something. These constructs should really have their own class simple_animal/construct/subtype
-
-	if(ispath(MP, /mob/living/simple_animal/construct/armoured))
-		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
-
-	if(ispath(MP, /mob/living/simple_animal/construct/wraith))
-		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
-
-	if(ispath(MP, /mob/living/simple_animal/construct/builder))
-		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+	if(ispath(MP, /mob/living/simple_animal/construct))
+		return 0 //Verbs do not appear for players.
 
 //Good mobs!
 	if(ispath(MP, /mob/living/simple_animal/cat))
@@ -500,7 +489,7 @@
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/shade))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/tomato))
+	if(ispath(MP, /mob/living/simple_animal/hostile/killertomato))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/mouse))
 		return 1 //It is impossible to pull up the player panel for mice (Fixed! - Nodrak)

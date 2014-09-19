@@ -1,8 +1,9 @@
 /obj/effect/proc_holder/changeling/fakedeath
 	name = "Regenerative Stasis"
 	desc = "We fall into a stasis, allowing us to regenerate."
-	chemical_cost = 10
+	chemical_cost = 20
 	dna_cost = 0
+	req_dna = 1
 	req_stat = DEAD
 	max_genetic_damage = 100
 

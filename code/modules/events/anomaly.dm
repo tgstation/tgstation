@@ -7,6 +7,7 @@
 /datum/round_event/anomaly
 	var/area/impact_area
 	var/obj/effect/anomaly/newAnomaly
+	announceWhen	= 1
 
 
 /datum/round_event/anomaly/setup(loop=0)
@@ -22,7 +23,7 @@
 		setup(safety_loop)
 
 /datum/round_event/anomaly/announce()
-	command_alert("Localized hyper-energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Localized hyper-energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
 	var/turf/T = pick(get_area_turfs(impact_area))

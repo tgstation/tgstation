@@ -22,8 +22,8 @@
 	..()
 
 /obj/item/weapon/plastique/suicide_act(var/mob/user)
-	. = (BRUTELOSS)
-	viewers(user) << "<span class='suicide'>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</span>"
+	. = BRUTELOSS
+	user.visible_message("<span class='suicide'>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -56,16 +56,12 @@
 		timer = newtime
 		user << "Timer set for [timer] seconds."
 
-/obj/item/weapon/plastique/preattack(atom/target as obj|turf, mob/user as mob,proximity_flag)
-	if (!proximity_flag)
+/obj/item/weapon/plastique/afterattack(atom/movable/target, mob/user, flag)
+	if (!flag)
 		return
-	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
+	if (ismob(target) || istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
 		return
 	user << "Planting explosives..."
-	if(ismob(target))
-		add_logs(user, target, "tried to plant explosives on", object="[name]")
-		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
-
 
 	if(do_after(user, 50) && in_range(user, target))
 		user.drop_item()
@@ -74,7 +70,7 @@
 
 		if (ismob(target))
 			add_logs(user, target, "planted [name] on")
-			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
+			user.visible_message("<span class='danger'>[user.name] finished planting an explosive on [target.name]!</span>")
 			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted C4 on [key_name(target)](<A HREF='?_src_=holder;adminmoreinfo=\ref[target]'>?</A>) with [timer] second fuse",0,1)
 			log_game("[key_name(user)] planted C4 on [key_name(target)] with [timer] second fuse")
 
@@ -86,10 +82,8 @@
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
 			explode(get_turf(target))
-	return 1
 
 /obj/item/weapon/plastique/proc/explode(var/location)
-
 	if(!target)
 		target = get_atom_on_turf(src)
 	if(!target)
@@ -99,7 +93,8 @@
 
 	if(target)
 		if (istype(target, /turf/simulated/wall))
-			target:dismantle_wall(1)
+			var/turf/simulated/wall/W = target
+			W.dismantle_wall(1)
 		else
 			target.ex_act(1)
 	if(target)

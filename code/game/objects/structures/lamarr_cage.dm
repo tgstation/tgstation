@@ -1,5 +1,5 @@
 /obj/structure/lamarr
-	name = "Lab Cage"
+	name = "lab cage"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "labcage1"
 	desc = "A glass lab container for storing interesting creatures."
@@ -40,12 +40,6 @@
 		qdel(src)
 
 
-/obj/structure/lamarr/meteorhit(obj/O as obj)
-		new /obj/item/weapon/shard( src.loc )
-		Break()
-		qdel(src)
-
-
 /obj/structure/lamarr/proc/healthcheck()
 	if (src.health <= 0)
 		if (!( src.destroyed ))
@@ -67,6 +61,7 @@
 
 
 /obj/structure/lamarr/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE)
 	src.health -= W.force
 	src.healthcheck()
 	..()
@@ -76,13 +71,14 @@
 	return src.attack_hand(user)
 
 /obj/structure/lamarr/attack_hand(mob/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if (src.destroyed)
 		return
 	else
-		usr << text("\blue You kick the lab cage.")
+		usr << text("<span class='notice'>You kick the lab cage.</span>")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] kicks the lab cage.", usr)
+				O << text("<span class='danger'>[] kicks the lab cage.</span>", usr)
 		src.health -= 2
 		healthcheck()
 		return

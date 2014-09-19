@@ -48,6 +48,30 @@ CREATE TABLE `erro_admin_log` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `erro_admin_ranks`
+--
+
+DROP TABLE IF EXISTS `erro_admin_ranks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `erro_admin_ranks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rank` varchar(40) NOT NULL,
+  `flags` int(16) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+insert into erro_admin_ranks (rank, flags) values ('Moderator',2);
+insert into erro_admin_ranks (rank, flags) values ('Admin Candidate',2);
+insert into erro_admin_ranks (rank, flags) values ('Trial Admin',5638);
+insert into erro_admin_ranks (rank, flags) values ('Badmin',5727);
+insert into erro_admin_ranks (rank, flags) values ('Game Admin',8063);
+insert into erro_admin_ranks (rank, flags) values ('Game Master',65535);
+insert into erro_admin_ranks (rank, flags) values ('Host',65535);
+insert into erro_admin_ranks (rank, flags) values ('Coder',5168);
+
+--
 -- Table structure for table `erro_ban`
 --
 

@@ -25,7 +25,7 @@
 		if(prob(40))
 			for(var/mob/M in hearers(4, src))
 				if(M.client)
-					M.show_message(text("\red You hear something rumbling inside [src]'s stomach..."), 2)
+					M.show_message(text("<span class='danger'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -41,7 +41,7 @@
 					src.take_organ_damage(d)
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
-						M.show_message(text("\red <B>[user] attacks [src]'s stomach wall with the [I.name]!"), 2)
+						M.show_message(text("<span class='userdanger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
 				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
 
 				if(prob(src.getBruteLoss() - 50))
@@ -117,9 +117,9 @@
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
 	src.visible_message(
-		"\red [src] was shocked by the [source]!", \
-		"\red <B>You feel a powerful shock course through your body!</B>", \
-		"\red You hear a heavy electrical crack." \
+		"<span class='danger'>[src] was shocked by the [source]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock course through your body!</span>", \
+		"<span class='danger'>You hear a heavy electrical crack.</span>" \
 	)
 //	if(src.stunned < shock_damage)	src.stunned = shock_damage
 	Stun(5)//This should work for now, more is really silly and makes you lay there forever
@@ -128,7 +128,7 @@
 	return shock_damage
 
 
-/mob/living/carbon/proc/swap_hand()
+/mob/living/carbon/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand,/obj/item/weapon/twohanded))
@@ -149,7 +149,7 @@
 		src.hands.dir = SOUTH*/
 	return
 
-/mob/living/carbon/proc/activate_hand(var/selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
+/mob/living/carbon/activate_hand(var/selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
 
 	if(istext(selhand))
 		selhand = lowertext(selhand)
@@ -205,7 +205,7 @@
 					src << "<span class='info'>You're completely exhausted.</span>"
 				else
 					src << "<span class='info'>You feel fatigued.</span>"
-			if(dna && (dna.mutantrace == "skeleton") && !H.w_uniform && !H.wear_suit)
+			if(dna && dna.species.id && dna.species.id == "skeleton" && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			if(ishuman(src))
@@ -308,7 +308,7 @@
 	//actually throw it!
 	if(item)
 		item.layer = initial(item.layer)
-		src.visible_message("\red [src] has thrown [item].")
+		src.visible_message("<span class='danger'>[src] has thrown [item].</span>")
 
 		if(!src.lastarea)
 			src.lastarea = get_area(src.loc)
@@ -339,6 +339,8 @@
 		return 1
 	return
 
+/mob/living/carbon/proc/canBeHandcuffed()
+	return 0
 
 /mob/living/carbon/unEquip(obj/item/I) //THIS PROC DID NOT CALL ..() AND THAT COST ME AN ENTIRE DAY OF DEBUGGING.
 	. = ..() //Sets the default return value to what the parent returns.
@@ -418,23 +420,25 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 	//strip panel
-	if(!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr))
+	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["internal"])
-			if(back && istype(back, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-				visible_message("<span class='danger'>[usr] tries to [internal ? "disable" : "set"] [src]'s internals.</span>", \
-								"<span class='userdanger'>[usr] tries to [internal ? "disable" : "set"] [src]'s internals.</span>")
+			var/slot = text2num(href_list["internal"])
+			var/obj/item/ITEM = get_item_by_slot(slot)
+			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>", \
+								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>")
 				if(do_mob(usr, src, STRIP_DELAY))
 					if(internal)
 						internal = null
 						if(internals)
 							internals.icon_state = "internal0"
-					else if(back && istype(back, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-						internal = back
+					else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+						internal = ITEM
 						if(internals)
 							internals.icon_state = "internal1"
 
-					visible_message("<span class='danger'>[usr] [internal ? "sets" : "disables"] [src]'s internals.</span>", \
-									"<span class='userdanger'>[usr] [internal ? "sets" : "disables"] [src]'s internals.</span>")
+					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
+									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
 
 
 /mob/living/carbon/attackby(obj/item/I, mob/user)
@@ -447,19 +451,6 @@
 
 	..()
 
-
-/mob/living/carbon/say(var/message, var/bubble_type)
-	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
-		return
-
-	..(message, bubble_type)
-
-/mob/living/carbon/proc/is_mutantrace(var/mrace)
-	if(mrace)
-		if(src.dna && src.dna.mutantrace == mrace)
-			return 1
-	else
-		return src.dna && src.dna.mutantrace ? 1 : 0
 
 /mob/living/carbon/getTrail()
 	if(getBruteLoss() < 300)
@@ -479,3 +470,6 @@ var/const/GALOSHES_DONT_HELP = 8
 
 /mob/living/carbon/fall(var/forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
+
+/mob/living/carbon/is_muzzled()
+	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))

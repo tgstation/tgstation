@@ -38,13 +38,13 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/pinpointer(H.loc), slot_l_store)
 
 		var/obj/item/weapon/card/id/W = new(H)
-		W.name = "[H.real_name]'s ID Card"
 		W.icon_state = "centcom"
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
 		W.assignment = "Highlander"
 		W.registered_name = H.real_name
+		W.update_label(H.real_name)
 		H.equip_to_slot_or_del(W, slot_wear_id)
 
-	message_admins("\blue [key_name_admin(usr)] used THERE CAN BE ONLY ONE!", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>", 1)
 	log_admin("[key_name(usr)] used there can be only one.")

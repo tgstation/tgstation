@@ -53,6 +53,80 @@
 		turret.shot_delay = 20
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
+/datum/AI_Module/large/lockdown
+	module_name = "Hostile Station Lockdown"
+	mod_pick_name = "lockdown"
+	description = "Take control of the airlock, blast door and fire control networks, locking them down. Caution! This command also electrifies all airlocks."
+	cost = 20
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/lockdown
+
+/mob/living/silicon/ai/proc/lockdown()
+	set category = "Malfunction"
+	set name = "Initiate Hostile Lockdown"
+
+	if(src.stat == 2)
+		src <<"You cannot begin a lockdown because you are dead!"
+		return
+
+	if(malf_cooldown)
+		return
+
+	var/obj/machinery/door/airlock/AL
+	for(var/obj/machinery/door/D in airlocks)
+		spawn()
+			if(istype(D, /obj/machinery/door/airlock))
+				AL = D
+				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
+					AL.locked = 0 //For airlocks that were bolted open.
+					AL.safe = 0 //DOOR CRUSH
+					AL.close()
+					AL.locked = 1 //Bolt it!
+					AL.lights = 0 //Stealth bolt for a classic AI door trap.
+					AL.secondsElectrified = -1  //Shock it!
+			else if(!D.stat) //So that only powered doors are closed.
+				D.close() //Close ALL the doors!
+
+	var/obj/machinery/computer/communications/C = locate() in machines
+	if(C)
+		C.post_status("alert", "lockdown")
+
+	src.verbs += /mob/living/silicon/ai/proc/disablelockdown
+	src << "<span class = 'warning'>Lockdown Initiated.</span>"
+	malf_cooldown = 1
+	spawn(30)
+	malf_cooldown = 0
+
+/mob/living/silicon/ai/proc/disablelockdown()
+	set category = "Malfunction"
+	set name = "Disable Lockdown"
+
+	if(src.stat == 2)
+		src <<"You cannot disable lockdown because you are dead!"
+		return
+	if(malf_cooldown)
+		return
+
+	var/obj/machinery/door/airlock/AL
+	for(var/obj/machinery/door/D in airlocks)
+		spawn()
+			if(istype(D, /obj/machinery/door/airlock))
+				AL = D
+				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
+					AL.locked = 0
+					AL.secondsElectrified = 0
+					AL.open()
+					AL.safe = 1
+					AL.lights = 1 //Essentially reset the airlock to normal.
+			else if(!D.stat) //Opens only powered doors.
+				D.open() //Open everything!
+
+	src << "<span class = 'notice'>Lockdown Lifted.</span>"
+	malf_cooldown = 1
+	spawn(30)
+	malf_cooldown = 0
+
 /datum/AI_Module/large/disable_rcd
 	module_name = "RCD disable"
 	mod_pick_name = "rcd"
@@ -91,7 +165,7 @@
 			if(overload.uses > 0)
 				overload.uses --
 				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
+					V.show_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>", 2)
 				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
@@ -118,7 +192,7 @@
 			if(override.uses > 0)
 				override.uses --
 				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
+					V.show_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>", 2)
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
 					if(M)
@@ -209,22 +283,6 @@
 				else apc.overload++
 			src << "<span class='notice'>Overcurrent applied to the powernet.</span>"
 		else src << "<span class='notice'>Out of uses.</span>"
-
-/datum/AI_Module/small/interhack
-	module_name = "Hack intercept"
-	mod_pick_name = "interhack"
-	description = "Hacks the status update from Centcom, removing any information about malfunctioning electrical systems."
-	cost = 15
-	one_time = 1
-
-	power_type = /mob/living/silicon/ai/proc/interhack
-
-/mob/living/silicon/ai/proc/interhack()
-	set category = "Malfunction"
-	set name = "Hack intercept"
-	src.verbs -= /mob/living/silicon/ai/proc/interhack
-	ticker.mode:hack_intercept()
-	src << "<span class='notice'>Status update intercepted and modified.</span>"
 
 /datum/AI_Module/small/reactivate_camera
 	module_name = "Reactivate camera"

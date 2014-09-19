@@ -160,6 +160,32 @@
 	return
 
 
+/mob/camera/blob/verb/relocate_core()
+	set category = "Blob"
+	set name = "Relocate Core (80)"
+	set desc = "Relocates your core to the node you are on, your old core will be turned into a node."
+
+
+	var/turf/T = get_turf(src)
+
+	if(!T)
+		return
+
+	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
+	if(!B)
+		src << "You must be on a blob node!"
+		return
+
+	if(!can_buy(80))
+		return
+
+	// The old switcharoo.
+	var/turf/old_turf = blob_core.loc
+	blob_core.loc = T
+	B.loc = old_turf
+	return
+
+
 /mob/camera/blob/verb/revert()
 	set category = "Blob"
 	set name = "Remove Blob"

@@ -43,7 +43,6 @@
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
 
-
 //Additional code for the above flags.
 #ifdef dellogging
 #warn compiling del logging. This will have additional overheads.	//will warn you if compiling with dellogging

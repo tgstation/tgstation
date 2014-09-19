@@ -16,13 +16,3 @@ obj/structure/ex_act(severity)
 				return
 		if(3.0)
 			return
-
-obj/structure/meteorhit(obj/O as obj)
-	qdel(src)
-
-
-
-
-
-
-

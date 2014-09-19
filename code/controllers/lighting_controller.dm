@@ -1,6 +1,6 @@
 var/datum/controller/lighting/lighting_controller = new ()
 
-datum/controller/lighting
+/datum/controller/lighting
 	var/processing = 0
 	var/processing_interval = 5	//setting this too low will probably kill the server. Don't be silly with it!
 	var/process_cost = 0
@@ -17,7 +17,7 @@ datum/controller/lighting
 	var/list/changed_turfs = list()
 	var/changed_turfs_workload_max = 0
 
-datum/controller/lighting/New()
+/datum/controller/lighting/New()
 	lighting_states = max( 0, length(icon_states(LIGHTING_ICON))-1 )
 	if(lighting_controller != src)
 		if(istype(lighting_controller,/datum/controller/lighting))
@@ -31,7 +31,7 @@ datum/controller/lighting/New()
 //All queue lists prune themselves, which will cause lights with no luminosity to be garbage collected (cheaper and safer
 //than deleting them). Processing interval should be roughly half a second for best results.
 //By using queues we are ensuring we don't perform more updates than are necessary
-datum/controller/lighting/proc/process()
+/datum/controller/lighting/proc/process()
 	processing = 1
 	spawn(0)
 		set background = BACKGROUND_ENABLED
@@ -65,7 +65,7 @@ datum/controller/lighting/proc/process()
 //Does not loop. Should be run prior to process() being called for the first time.
 //Note: if we get additional z-levels at runtime (e.g. if the gateway thin ever gets finished) we can initialize specific
 //z-levels with the z_level argument
-datum/controller/lighting/proc/Initialize(var/z_level)
+/datum/controller/lighting/proc/Initialize(var/z_level)
 	processing = 0
 	spawn(-1)
 		set background = BACKGROUND_ENABLED
@@ -95,7 +95,7 @@ datum/controller/lighting/proc/Initialize(var/z_level)
 //Used to strip valid information from an existing controller and transfer it to a replacement
 //It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfered but the loop
 //does not crash
-datum/controller/lighting/proc/Recover()
+/datum/controller/lighting/proc/Recover()
 	if(!istype(lighting_controller.changed_turfs,/list))
 		lighting_controller.changed_turfs = list()
 	if(!istype(lighting_controller.lights,/list))

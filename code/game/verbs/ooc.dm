@@ -3,7 +3,7 @@
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
 	if(!mob)	return
@@ -15,18 +15,18 @@
 	if(!msg)	return
 
 	if(!(prefs.toggles & CHAT_OOC))
-		src << "\red You have OOC muted."
+		src << "<span class='danger'>You have OOC muted.</span>"
 		return
 
 	if(!holder)
 		if(!ooc_allowed)
-			src << "\red OOC is globally muted"
+			src << "<span class='danger'>OOC is globally muted.</span>"
 			return
 		if(!dooc_allowed && (mob.stat == DEAD))
-			usr << "\red OOC for dead mobs has been turned off."
+			usr << "<span class='danger'>OOC for dead mobs has been turned off.</span>"
 			return
 		if(prefs.muted & MUTE_OOC)
-			src << "\red You cannot use OOC (muted)."
+			src << "<span class='danger'>You cannot use OOC (muted).</span>"
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
@@ -55,6 +55,17 @@
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
 			else
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+
+/proc/toggle_ooc()
+	ooc_allowed = !( ooc_allowed )
+	if (ooc_allowed)
+		world << "<B>The OOC channel has been globally enabled!</B>"
+	else
+		world << "<B>The OOC channel has been globally disabled!</B>"
+
+/proc/auto_toggle_ooc(var/on)
+	if(!config.ooc_during_round && ooc_allowed != on)
+		toggle_ooc()
 
 var/global/normal_ooc_colour = "#002eb8"
 
@@ -85,9 +96,9 @@ var/global/normal_ooc_colour = "#002eb8"
 	set desc ="Check the admin notice if it has been set"
 
 	if(admin_notice)
-		src << "\blue <b>Admin Notice:</b>\n \t [admin_notice]"
+		src << "<span class='boldnotice'>Admin Notice:</span>\n \t [admin_notice]"
 	else
-		src << "\blue There are no admin notices at the moment."
+		src << "<span class='notice'>There are no admin notices at the moment.</span>"
 
 /client/verb/motd()
 	set name = "MOTD"
@@ -97,4 +108,4 @@ var/global/normal_ooc_colour = "#002eb8"
 	if(join_motd)
 		src << "<div class=\"motd\">[join_motd]</div>"
 	else
-		src << "\blue The Message of the Day has not been set."
+		src << "<span class='notice'>The Message of the Day has not been set.</span>"

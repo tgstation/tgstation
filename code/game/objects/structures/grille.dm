@@ -18,10 +18,6 @@
 /obj/structure/grille/blob_act()
 	qdel(src)
 
-/obj/structure/grille/meteorhit(var/obj/M)
-	qdel(src)
-
-
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)
 
@@ -30,9 +26,10 @@
 	attack_hand(user)
 
 /obj/structure/grille/attack_hand(mob/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
-	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
-						 "<span class='warning'>You kick [src].</span>", \
+	user.visible_message("<span class='warning'>[user] hits [src].</span>", \
+						 "<span class='warning'>You hit [src].</span>", \
 						 "You hear twisting metal.")
 
 	if(shock(user, 70))
@@ -45,7 +42,7 @@
 
 /obj/structure/grille/attack_alien(mob/user as mob)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
-
+	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
 						 "<span class='warning'>You mangle [src].</span>", \
@@ -57,6 +54,7 @@
 		return
 
 /obj/structure/grille/attack_slime(mob/living/carbon/slime/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(!user.is_adult)	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -69,6 +67,7 @@
 	return
 
 /obj/structure/grille/attack_animal(var/mob/living/simple_animal/M as mob)
+	M.changeNext_move(CLICK_CD_MELEE)
 	if(M.melee_damage_upper == 0)	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -101,79 +100,86 @@
 	return
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE)
+	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			if(destroyed)
-				new /obj/item/stack/rods(loc)
-			else
-				new /obj/item/stack/rods(loc)
-				new /obj/item/stack/rods(loc)
+			var/obj/item/stack/rods/newrods = new(loc)
+			transfer_fingerprints_to(newrods)
+			if(!destroyed)
+				newrods.amount = 2
 			qdel(src)
 	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			anchored = !anchored
-			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the grille.</span>", \
-								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] the floor.</span>")
+			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the [src].</span>", \
+								 "<span class='notice'>You have [anchored ? "fastened the [src] to" : "unfastened the [src] from"] the floor.</span>")
 			return
 
 //window placing begin
-	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
-		var/dir_to_set = 1
-		if(loc == user.loc)
-			dir_to_set = user.dir
-		else
-			if( ( x == user.x ) || (y == user.y) ) //Only supposed to work for cardinal directions.
-				if( x == user.x )
-					if( y > user.y )
-						dir_to_set = 2
-					else
-						dir_to_set = 1
-				else if( y == user.y )
-					if( x > user.x )
-						dir_to_set = 8
-					else
-						dir_to_set = 4
-			else
-				user << "<span class='notice'>You can't reach.</span>"
-				return //Only works for cardinal direcitons, diagonals aren't supposed to work like this.
-		for(var/obj/structure/window/WINDOW in loc)
-			if(WINDOW.dir == dir_to_set)
-				user << "<span class='notice'>There is already a window facing this way there.</span>"
+	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))
+		if (!destroyed)
+			var/obj/item/stack/ST = W
+			if (ST.get_amount() < 1)
+				user << "<span class='warning'>You need at least one sheet of glass for that.</span>"
 				return
-		user << "<span class='notice'>You start placing the window.</span>"
-		if(do_after(user,20))
-			if(!src) return //Grille destroyed while waiting
+			var/dir_to_set = 1
+			if(loc == user.loc)
+				dir_to_set = user.dir
+			else
+				if( ( x == user.x ) || (y == user.y) ) //Only supposed to work for cardinal directions.
+					if( x == user.x )
+						if( y > user.y )
+							dir_to_set = 2
+						else
+							dir_to_set = 1
+					else if( y == user.y )
+						if( x > user.x )
+							dir_to_set = 8
+						else
+							dir_to_set = 4
+				else
+					user << "<span class='notice'>You can't reach.</span>"
+					return //Only works for cardinal direcitons, diagonals aren't supposed to work like this.
 			for(var/obj/structure/window/WINDOW in loc)
-				if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
+				if(WINDOW.dir == dir_to_set)
 					user << "<span class='notice'>There is already a window facing this way there.</span>"
 					return
-			var/obj/structure/window/WD
-			if(istype(W,/obj/item/stack/sheet/rglass))
-				WD = new/obj/structure/window(loc,1) //reinforced window
-			else
-				WD = new/obj/structure/window(loc,0) //normal window
-			WD.dir = dir_to_set
-			WD.ini_dir = dir_to_set
-			WD.anchored = 0
-			WD.state = 0
-			var/obj/item/stack/ST = W
-			ST.use(1)
-			user << "<span class='notice'>You place the [WD] on [src].</span>"
-		return
+			user << "<span class='notice'>You start placing the window.</span>"
+			if(do_after(user,20))
+				if(!src) return //Grille destroyed while waiting
+				for(var/obj/structure/window/WINDOW in loc)
+					if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
+						user << "<span class='notice'>There is already a window facing this way there.</span>"
+						return
+				var/obj/structure/window/WD
+				if(istype(W, /obj/item/stack/sheet/rglass))
+					WD = new/obj/structure/window(loc,1) //reinforced window
+				else
+					WD = new/obj/structure/window(loc,0) //normal window
+				WD.dir = dir_to_set
+				WD.ini_dir = dir_to_set
+				WD.anchored = 0
+				WD.state = 0
+				ST.use(1)
+				user << "<span class='notice'>You place the [WD] on [src].</span>"
+			return
 //window placing end
 
 	else if(istype(W, /obj/item/weapon/shard))
 		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 		health -= W.force * 0.1
 	else if(!shock(user, 70))
-		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 		switch(W.damtype)
-			if("fire")
+			if(BURN)
 				health -= W.force
-			if("brute")
+				playsound(loc, 'sound/items/welder.ogg', 80, 1)
+			if(BRUTE)
 				health -= W.force * 0.1
+				playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
+
 	healthcheck()
 	..()
 	return
@@ -185,11 +191,11 @@
 			icon_state = "brokengrille"
 			density = 0
 			destroyed = 1
-			new /obj/item/stack/rods(loc)
+			var/obj/item/stack/rods/newrods = new(loc)
+			transfer_fingerprints_to(newrods)
 
 		else
 			if(health <= -6)
-				new /obj/item/stack/rods(loc)
 				qdel(src)
 				return
 	return

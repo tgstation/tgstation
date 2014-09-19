@@ -9,7 +9,7 @@
  * Lasertag
  */
 /obj/item/clothing/suit/bluetag
-	name = "blue laser tag armour"
+	name = "blue laser tag armor"
 	desc = "Blue Pride, Station Wide"
 	icon_state = "bluetag"
 	item_state = "bluetag"
@@ -18,7 +18,7 @@
 	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
 
 /obj/item/clothing/suit/redtag
-	name = "red laser tag armour"
+	name = "red laser tag armor"
 	desc = "Pew pew pew"
 	icon_state = "redtag"
 	item_state = "redtag"
@@ -95,9 +95,9 @@
 
 
 /obj/item/clothing/suit/syndicatefake
-	name = "red space suit replica"
-	icon_state = "syndicate"
-	item_state = "space_suit_syndicate"
+	name = "black and red space suit replica"
+	icon_state = "syndicate-black-red"
+	item_state = "syndicate-black-red"
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = 3
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
@@ -120,7 +120,7 @@
 	item_state = "imperium_monk"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
-	allowed = list(/obj/item/weapon/storage/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
 
 
 /obj/item/clothing/suit/chickensuit
@@ -148,7 +148,7 @@
 	item_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
-	allowed = list(/obj/item/weapon/storage/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
 
 
 

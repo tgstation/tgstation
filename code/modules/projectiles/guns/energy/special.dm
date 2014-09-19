@@ -1,12 +1,17 @@
 /obj/item/weapon/gun/energy/ionrifle
 	name = "ion rifle"
-	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
+	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
+	item_state = null	//so the human update icon uses the icon_state instead.
 	origin_tech = "combat=2;magnets=4"
 	w_class = 5
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
+
+
+/obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
+	return
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
@@ -26,29 +31,29 @@
 	var/charge_tick = 0
 	var/mode = 0 //0 = mutate, 1 = yield boost
 
-	New()
-		..()
-		processing_objects.Add(src)
+/obj/item/weapon/gun/energy/floragun/New()
+	..()
+	processing_objects.Add(src)
 
 
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/floragun/Destroy()
+	processing_objects.Remove(src)
+	..()
 
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/floragun/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
+	update_icon()
+	return 1
 
-	attack_self(mob/living/user as mob)
-		select_fire(user)
-		update_icon()
-		return
+/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user as mob)
+	select_fire(user)
+	update_icon()
+	return
 
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
@@ -62,24 +67,24 @@
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
 
-	New()
-		..()
-		processing_objects.Add(src)
+/obj/item/weapon/gun/energy/meteorgun/New()
+	..()
+	processing_objects.Add(src)
 
 
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/meteorgun/Destroy()
+	processing_objects.Remove(src)
+	..()
 
-	process()
-		charge_tick++
-		if(charge_tick < recharge_time) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
+/obj/item/weapon/gun/energy/meteorgun/process()
+	charge_tick++
+	if(charge_tick < recharge_time) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
 
-	update_icon()
-		return
+/obj/item/weapon/gun/energy/meteorgun/update_icon()
+	return
 
 
 /obj/item/weapon/gun/energy/meteorgun/pen
@@ -125,7 +130,7 @@
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
-	desc = "A self defense weapon that exhausts targets, weakening them until they collapse. Non-lethal."
+	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)

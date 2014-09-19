@@ -2,8 +2,13 @@
 language: c
 
 env:
-  BYOND_MAJOR="503"
-  BYOND_MINOR="1224"
+    global:
+    - BYOND_MAJOR="506"
+    - BYOND_MINOR="1247"
+    matrix:
+    - DM_MAPFILE="tgstation2"
+    - DM_MAPFILE="metastation"
+    - DM_MAPFILE="ministation"
 
 before_install:
   - sudo apt-get update -qq
@@ -17,4 +22,4 @@ install:
   - cd ..
 
 script:
-  - DreamMaker tgstation.dme
+  - bash dm.sh -M${DM_MAPFILE} tgstation.dme

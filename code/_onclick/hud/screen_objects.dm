@@ -13,6 +13,10 @@
 	unacidable = 1
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 
+/obj/screen/Destroy()
+	master = null
+	..()
+
 
 /obj/screen/text
 	icon = null
@@ -46,7 +50,6 @@
 		return 1
 	if(usr.next_move >= world.time)
 		return
-	usr.next_move = world.time + 6
 
 	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
 		return 1
@@ -91,7 +94,6 @@
 		var/obj/item/I = usr.get_active_hand()
 		if(I)
 			master.attackby(I, usr)
-			usr.next_move = world.time+2
 	return 1
 
 /obj/screen/zone_sel
@@ -245,8 +247,28 @@
 									C.internals.icon_state = "internal1"
 							else
 								C << "<span class='notice'>You don't have an oxygen tank.</span>"
+
 		if("act_intent")
-			usr.a_intent_change("right")
+			if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
+
+				var/_x = text2num(params2list(params)["icon-x"])
+				var/_y = text2num(params2list(params)["icon-y"])
+
+				if(_x<=16 && _y<=16)
+					usr.a_intent_change("harm")
+
+				else if(_x<=16 && _y>=17)
+					usr.a_intent_change("help")
+
+				else if(_x>=17 && _y<=16)
+					usr.a_intent_change("grab")
+
+				else if(_x>=17 && _y>=17)
+					usr.a_intent_change("disarm")
+
+			else
+				usr.a_intent_change("right")
+
 		if("pull")
 			usr.stop_pulling()
 		if("throw/catch")
@@ -274,7 +296,6 @@
 			if(isrobot(usr))
 				var/mob/living/silicon/robot/R = usr
 				R.uneq_active()
-				R.hud_used.update_robot_modules_display()
 
 		if("module1")
 			if(istype(usr, /mob/living/silicon/robot))
@@ -288,6 +309,91 @@
 			if(istype(usr, /mob/living/silicon/robot))
 				usr:toggle_module(3)
 
+		if("AI Core")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.view_core()
+
+		if("Show Camera List")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/camera = input(AI, "Choose which camera you want to view", "Cameras") as null|anything in AI.get_camera_list()
+				AI.ai_camera_list(camera)
+
+		if("Track With Camera")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/target_name = input(AI, "Choose who you want to track", "Tracking") as null|anything in AI.trackable_mobs()
+				AI.ai_camera_track(target_name)
+
+		if("Toggle Camera Light")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.toggle_camera_light()
+
+		if("Crew Monitorting")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				crewmonitor(AI,AI)
+
+		if("Show Crew Manifest")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_roster()
+
+		if("Show Alerts")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_alerts()
+
+		if("Announcement")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.announcement()
+
+		if("Call Emergency Shuttle")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_call_shuttle()
+
+		if("State Laws")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.checklaws()
+
+		if("PDA - Send Message")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.cmd_send_pdamesg(usr)
+
+		if("PDA - Show Message Log")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.cmd_show_message_log(usr)
+
+		if("Take Image")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.aicamera.toggle_camera_mode()
+			else if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.aicamera.toggle_camera_mode()
+
+		if("View Images")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.aicamera.viewpictures()
+			else if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.aicamera.viewpictures()
+		if("nightvision")
+			if(isalien(usr))
+				var/mob/living/carbon/alien/humanoid/A = usr
+				A.nightvisiontoggle()
+		if("Sensor Augmentation")
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.sensor_mode()
 		else
 			return 0
 	return 1
@@ -297,28 +403,30 @@
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
 		return 1
+
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 	switch(name)
 		if("r_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("r")
-				usr.next_move = world.time+2
+			if(ismob(usr))
+				var/mob/Mr = usr
+				Mr.activate_hand("r")
 		if("l_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("l")
-				usr.next_move = world.time+2
+			if(ismob(usr))
+				var/mob/Ml = usr
+				Ml.activate_hand("l")
 		if("swap")
-			usr:swap_hand()
+			if(ismob(usr))
+				var/mob/Ms = usr
+				Ms.swap_hand()
 		if("hand")
-			usr:swap_hand()
+			if(ismob(usr))
+				var/mob/Mh = usr
+				Mh.swap_hand()
 		else
 			if(usr.attack_ui(slot_id))
 				usr.update_inv_l_hand(0)
 				usr.update_inv_r_hand(0)
-				usr.next_move = world.time+6
 	return 1

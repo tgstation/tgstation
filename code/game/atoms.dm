@@ -1,7 +1,7 @@
 /atom
 	layer = 2
 	var/level = 2
-	var/flags = null
+	var/flags = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
@@ -16,9 +16,6 @@
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
-
-	// Garbage collection
-	var/gc_destroyed //Time when this object
 
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
@@ -40,25 +37,8 @@
 				var/mob/living/M = src
 				M.take_organ_damage(20)
 
-
 /atom/proc/CheckParts()
 	return
-
-/atom/Del()
-	// Pass to Destroy().
-	if(isnull(gc_destroyed)) // If we're just straight up calling del(atom), make sure anything in Destroy() gets called anyways just to be sure.
-		Destroy()
-	..()
-
-// Like Del(), but for qdel.
-// Called BEFORE qdel moves shit.
-// Also called on del()
-/atom/proc/Destroy()
-	gc_destroyed = world.time
-	if(reagents)
-		reagents.delete()
-		del(reagents) // Technically I think the reagent holder will gc, but let's be careful here and delete all the reagents and the holder too
-	invisibility = 101
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	del(giver)
@@ -99,9 +79,6 @@
 		return flags & INSERT_CONTAINER
 */
 
-
-/atom/proc/meteorhit(obj/meteor as obj)
-	return
 
 /atom/proc/allow_drop()
 	return 1
@@ -232,6 +209,7 @@ its easier to just keep the beam vertical.
 
 	if (!( usr ))
 		return
+	usr.face_atom(src)
 	usr << "\icon[src]That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
 	if(desc)
 		usr << desc
@@ -272,6 +250,10 @@ var/list/blood_splatter_icons = list()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/M)
+	if(ishuman(M) && M.dna)
+		var/mob/living/carbon/human/H = M
+		if(NOBLOOD in H.dna.species.specflags)
+			return 0
 	if(rejects_blood())
 		return 0
 	if(!istype(M))
@@ -292,7 +274,7 @@ var/list/blood_splatter_icons = list()
 		//try to find a pre-processed blood-splatter. otherwise, make a new one
 		var/index = blood_splatter_index()
 		var/icon/blood_splatter_icon = blood_splatter_icons[index]
-		if(!blood_splatter_icon )
+		if(!blood_splatter_icon)
 			blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 			blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 			blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant

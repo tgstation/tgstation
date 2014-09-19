@@ -32,9 +32,6 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
-/obj/machinery/gravity_generator/meteorhit()
-	return
-
 /obj/machinery/gravity_generator/update_icon()
 	..()
 	icon_state = "[get_status()]_[sprite_number]"
@@ -90,6 +87,14 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	update_list()
 
 //
+// Generator an admin can spawn
+//
+
+/obj/machinery/gravity_generator/main/station/admin/New()
+	..()
+	initialize()
+
+//
 // Main Generator with the main code
 //
 
@@ -111,6 +116,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/broken_state = 0
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
+	investigate_log("was destroyed!", "gravity")
 	on = 0
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/O in parts)
@@ -130,7 +136,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		var/obj/machinery/gravity_generator/part/part = new(T)
 		if(count == 5) // Middle
 			middle = part
-		part.sprite_number = count;
+		if(count <= 3) // Their sprite is the top part of the generator
+			part.density = 0
+			part.layer = MOB_LAYER + 0.1
+		part.sprite_number = count
 		part.main_part = src
 		parts += part
 		part.update_icon()
@@ -148,6 +157,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	breaker = 0
 	set_power()
 	set_state(0)
+	investigate_log("has broken down.", "gravity")
 
 /obj/machinery/gravity_generator/main/set_fix()
 	..()
@@ -176,6 +186,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 					user << "<span class='notice'>You mend the damaged framework.</span>"
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					broken_state++
+				else if(WT.isOn())
+					user << "<span class='notice'>You don't have enough fuel to mend the damaged framework.</span>"
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
 				var/obj/item/stack/sheet/plasteel/PS = I
@@ -231,6 +243,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 	if(href_list["gentoggle"])
 		breaker = !breaker
+		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", "gravity")
 		set_power()
 		src.updateUsrDialog()
 
@@ -238,6 +251,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 /obj/machinery/gravity_generator/main/power_change()
 	..()
+	investigate_log("has [stat & NOPOWER ? "lost" : "regained"] power.", "gravity")
 	set_power()
 
 /obj/machinery/gravity_generator/main/get_status()
@@ -259,6 +273,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		new_state = 1
 
 	charging_state = new_state ? POWER_UP : POWER_DOWN // Startup sequence animation.
+	investigate_log("is now [charging_state == POWER_UP ? "charging" : "discharging"].", "gravity")
 	update_icon()
 
 // Set the state of the gravity.
@@ -268,12 +283,17 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	use_power = on ? 2 : 1
 	// Sound the alert if gravity was just enabled or disabled.
 	var/alert = 0
+	var/area/area = get_area(src)
 	if(new_state) // If we turned on
 		if(gravity_in_level() == 0)
 			alert = 1
+			investigate_log("was brought online and is now producing gravity for this level.", "gravity")
+			message_admins("The gravity generator was brought online. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 	else
 		if(gravity_in_level() == 1)
 			alert = 1
+			investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
+			message_admins("The gravity generator was brought offline with no backup generator. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 
 	update_icon()
 	update_list()
@@ -298,7 +318,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 				charge_count -= 2
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
+				playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
 
 			updateDialog()
 			if(prob(25)) // To help stop "Your clothes feel warm" spam.
@@ -332,11 +352,13 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/our_turf = get_turf(src)
-	for(var/mob/M in player_list)
+	for(var/mob/M in mob_list)
 		var/turf/their_turf = get_turf(M)
-		if(M.client && their_turf.z == our_turf.z)
-			shake_camera(M, 15, 1)
-			M.playsound_local(our_turf, 'sound/machines/signal.ogg', 100)
+		if(their_turf.z == our_turf.z)
+			M.update_gravity(M.mob_has_gravity())
+			if(M.client)
+				shake_camera(M, 15, 1)
+				M.playsound_local(our_turf, 'sound/effects/alert.ogg', 100, 1, 0.5)
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)

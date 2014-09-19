@@ -45,3 +45,28 @@
 			data += "[R.id]([R.volume] units); " //Using IDs because SOME chemicals(I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 		return data
 	else return "No reagents"
+
+/obj/item/weapon/reagent_containers/proc/canconsume(mob/eater, mob/user)
+	if(!eater.SpeciesCanConsume())
+		return 0
+	//Check for covering mask
+	var/obj/item/clothing/cover = eater.get_item_by_slot(slot_wear_mask)
+
+	if(isnull(cover)) // No mask, do we have any helmet?
+		cover = eater.get_item_by_slot(slot_head)
+	else
+		var/obj/item/clothing/mask/covermask = cover
+		if(covermask.alloweat) // Specific cases, clownmask for example.
+			return 1
+
+	if(!isnull(cover))
+		if((cover.flags & HEADCOVERSMOUTH) || (cover.flags & MASKCOVERSMOUTH))
+			var/who = (isnull(user) || eater == user) ? "your" : "their"
+
+			if(istype(cover, /obj/item/clothing/mask/))
+				user << "<span class='warning'>You have to remove [who] mask first!</span>"
+			else
+				user << "<span class='warning'>You have to remove [who] helmet first!</span>"
+
+			return 0
+	return 1

@@ -14,14 +14,19 @@
 	var/singular_name
 	var/amount = 1
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/is_cyborg = 0 // It's 1 if module is used by a cyborg, and uses its storage
+	var/datum/robot_energy_storage/source
+	var/cost = 1 // How much energy from storage it costs
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
 	if (amount)
-		src.amount=amount
+		src.amount = amount
 	return
 
 /obj/item/stack/Destroy()
+	if (is_cyborg)
+		return // Not supposed to be destroyed
 	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
 	..()
@@ -29,16 +34,28 @@
 /obj/item/stack/examine()
 	set src in view(1)
 	..()
-	if(src.singular_name)
-		if(src.amount>1)
-			usr << "There are [src.amount] [src.singular_name]\s in the stack."
+	if (is_cyborg)
+		if(src.singular_name)
+			usr << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
 		else
-			usr << "There is [src.amount] [src.singular_name] in the stack."
-	else if(src.amount>1)
-		usr << "There are [src.amount] in the stack."
+			usr << "There is enough energy for [src.get_amount()]."
+		return
+	if(src.singular_name)
+		if(src.get_amount()>1)
+			usr << "There are [src.get_amount()] [src.singular_name]\s in the stack."
+		else
+			usr << "There is [src.get_amount()] [src.singular_name] in the stack."
+	else if(src.get_amount()>1)
+		usr << "There are [src.get_amount()] in the stack."
 	else
-		usr << "There is [src.amount] in the stack."
+		usr << "There is [src.get_amount()] in the stack."
 	return
+
+/obj/item/stack/proc/get_amount()
+	if (is_cyborg)
+		return round(source.energy / cost)
+	else
+		return (amount)
 
 /obj/item/stack/attack_self(mob/user as mob)
 	interact(user)
@@ -46,10 +63,10 @@
 /obj/item/stack/interact(mob/user as mob)
 	if (!recipes)
 		return
-	if (!src || amount<=0)
+	if (!src || get_amount() <= 0)
 		user << browse(null, "window=stack")
 	user.set_machine(src) //for correct work of onclose
-	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.amount)
+	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.get_amount())
 	for(var/i=1;i<=recipes.len,i++)
 		var/datum/stack_recipe/R = recipes[i]
 		if (isnull(R))
@@ -57,7 +74,7 @@
 			continue
 		if (i>1 && !isnull(recipes[i-1]))
 			t1+="<br>"
-		var/max_multiplier = round(src.amount / R.req_amount)
+		var/max_multiplier = round(src.get_amount() / R.req_amount)
 		var/title as text
 		var/can_build = 1
 		can_build = can_build && (max_multiplier>0)
@@ -97,43 +114,38 @@
 	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
 	if (href_list["make"])
-		if (src.amount < 1) qdel(src) //Never should happen
+		if (src.get_amount() < 1) qdel(src) //Never should happen
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
 		if (!multiplier) multiplier = 1
-		if (src.amount < R.req_amount*multiplier)
+		if (src.get_amount() < R.req_amount*multiplier)
 			if (R.req_amount*multiplier>1)
-				usr << "\red You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!"
+				usr << "<span class='danger'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
 			else
-				usr << "\red You haven't got enough [src] to build \the [R.title]!"
+				usr << "<span class='danger'>You haven't got enough [src] to build \the [R.title]!</span>"
 			return
 		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			usr << "\red There is another [R.title] here!"
+			usr << "<span class='danger'>There is another [R.title] here!</span>"
 			return
 		if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
-			usr << "\red \The [R.title] must be constructed on the floor!"
+			usr << "<span class='danger'>\The [R.title] must be constructed on the floor!</span>"
 			return
 		if (R.time)
-			usr << "\blue Building [R.title] ..."
+			usr << "<span class='notice'>Building [R.title] ...</span>"
 			if (!do_after(usr, R.time))
 				return
-		if (src.amount < R.req_amount*multiplier)
+		if (src.get_amount() < R.req_amount*multiplier)
 			return
 		var/atom/O = new R.result_type( usr.loc )
 		O.dir = usr.dir
-		if (R.max_res_amount>1)
+		if (R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
-			//new_item.add_to_stacks(usr)
-		src.amount-=R.req_amount*multiplier
-		if (src.amount<=0)
-			var/oldsrc = src
-			src = null //dont kill proc after del()
-			usr.unEquip(oldsrc, 1)
-			qdel(oldsrc)
-			if (istype(O,/obj/item))
-				usr.put_in_hands(O)
+			new_item.add_to_stacks(usr)
+		use(R.req_amount * multiplier)
+		if (istype(O,/obj/item))
+			usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )
@@ -146,15 +158,23 @@
 			return
 	return
 
-/obj/item/stack/proc/use(var/amount)
-	src.amount-=amount
-	if (src.amount<=0)
-		var/oldsrc = src
-		src = null //dont kill proc after del()
+/obj/item/stack/proc/use(var/used) // return 0 = borked; return 1 = had enough
+	if (is_cyborg)
+		return source.use_charge(used * cost)
+	if (amount < used)
+		return 0
+	amount -= used
+	if (amount <= 0)
 		if(usr)
-			usr.unEquip(oldsrc, 1)
-		qdel(oldsrc)
-	return
+			usr.unEquip(src, 1)
+		qdel(src)
+	return 1
+
+/obj/item/stack/proc/add(var/amount)
+	if (is_cyborg)
+		source.add_charge(amount * cost)
+	else
+		src.amount += amount
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
 	var/obj/item/stack/oldsrc = src
@@ -189,19 +209,28 @@
 	..()
 	if (istype(W, src.type))
 		var/obj/item/stack/S = W
-		if (S.amount >= max_amount)
-			return 1
-		var/to_transfer as num
-		if (user.get_inactive_hand()==src)
-			to_transfer = 1
+		if (S.is_cyborg)
+			var/to_transfer = min(src.amount, round((S.source.max_energy - S.source.energy) / S.cost))
+			S.add(to_transfer)
+			if (S && usr.machine==S)
+				spawn(0) S.interact(usr)
+			src.use(to_transfer)
+			if (src && usr.machine==src)
+				spawn(0) src.interact(usr)
 		else
-			to_transfer = min(src.amount, S.max_amount-S.amount)
-		S.amount+=to_transfer
-		if (S && usr.machine==S)
-			spawn(0) S.interact(usr)
-		src.use(to_transfer)
-		if (src && usr.machine==src)
-			spawn(0) src.interact(usr)
+			if (S.amount >= max_amount)
+				return 1
+			var/to_transfer as num
+			if (user.get_inactive_hand()==src)
+				to_transfer = 1
+			else
+				to_transfer = min(src.amount, S.max_amount-S.amount)
+			S.amount+=to_transfer
+			if (S && usr.machine==S)
+				spawn(0) S.interact(usr)
+			src.use(to_transfer)
+			if (src && usr.machine==src)
+				spawn(0) src.interact(usr)
 	else return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)

@@ -1,5 +1,5 @@
 /obj/machinery/computer/shuttle/labor
-	name = "Labor Shuttle Console"
+	name = "labor shuttle console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	circuit = /obj/item/weapon/circuitboard/labor_shuttle
@@ -8,7 +8,7 @@
 
 
 /obj/machinery/computer/shuttle/labor/one_way
-	name = "Prisoner Shuttle Console"
+	name = "prisoner shuttle console"
 	desc = "A one-way shuttle console, used to summon the shuttle to the labor camp."
 	circuit = /obj/item/weapon/circuitboard/labor_shuttle/one_way
 	req_access = list( )
@@ -17,6 +17,6 @@
 	if(href_list["move"])
 		var/datum/shuttle_manager/s = shuttles["laborcamp"]
 		if(s.location == /area/shuttle/laborcamp/outpost)
-			usr << "\blue Shuttle is already at the outpost."
+			usr << "<span class='notice'>Shuttle is already at the outpost.</span>"
 			return 0
 	..()

@@ -16,23 +16,24 @@
  */
 /obj/structure/alien/resin
 	name = "resin"
-	desc = "Looks like some kind of slimy growth."
+	desc = "Looks like some kind of thick resin."
 	icon_state = "resin"
 	density = 1
 	opacity = 1
 	anchored = 1
 	var/health = 200
-
+	var/resintype = null
 /obj/structure/alien/resin/New(location)
+	relativewall_neighbours()
 	..()
 	air_update_turf(1)
 	return
 
 /obj/structure/alien/resin/Destroy()
-	density = 0
-	air_update_turf(1)
+	var/turf/T = loc
+	loc = null
+	T.relativewall_neighbours()
 	..()
-	return
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
@@ -44,16 +45,28 @@
 
 /obj/structure/alien/resin/wall
 	name = "resin wall"
-	desc = "Purple slime solidified into a wall."
+	desc = "Thick resin solidified into a wall."
 	icon_state = "resinwall"	//same as resin, but consistency ho!
+	resintype = "wall"
+
+/obj/structure/alien/resin/wall/New()
+	relativewall_neighbours()
+	..()
+
+/obj/structure/alien/resin/wall/BlockSuperconductivity()
+	return 1
 
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
-	desc = "Purple slime just thin enough to let light pass through."
+	desc = "Resin just thin enough to let light pass through."
 	icon_state = "resinmembrane"
 	opacity = 0
 	health = 120
+	resintype = "membrane"
 
+/obj/structure/alien/resin/membrane/New()
+	relativewall_neighbours()
+	..()
 
 /obj/structure/alien/resin/proc/healthcheck()
 	if(health <=0)
@@ -108,6 +121,7 @@
 
 
 /obj/structure/alien/resin/attack_alien(mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(islarva(user))
 		return
 	user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
@@ -119,6 +133,7 @@
 
 
 /obj/structure/alien/resin/attackby(obj/item/I, mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	health -= I.force
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	healthcheck()
@@ -140,11 +155,12 @@
 
 /obj/structure/alien/weeds
 	gender = PLURAL
-	name = "weeds"
-	desc = "Weird purple weeds."
+	name = "resin floor"
+	desc = "A thick resin surface covers the floor."
 	icon_state = "weeds"
 	anchored = 1
 	density = 0
+	layer = 2
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
 
@@ -157,11 +173,17 @@
 		return
 	if(icon_state == "weeds")
 		icon_state = pick("weeds", "weeds1", "weeds2")
-
+	fullUpdateWeedOverlays()
 	spawn(rand(150, 200))
 		if(src)
 			Life()
 
+/obj/structure/alien/weeds/Destroy()
+	var/turf/T = loc
+	loc = null
+	for (var/obj/structure/alien/weeds/W in range(1,T))
+		W.updateWeedOverlays()
+	..()
 
 /obj/structure/alien/weeds/proc/Life()
 	set background = BACKGROUND_ENABLED
@@ -193,6 +215,7 @@
 
 
 /obj/structure/alien/weeds/attackby(obj/item/I, mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(I.attack_verb.len)
 		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I] by [user].</span>")
 	else
@@ -220,12 +243,37 @@
 		healthcheck()
 
 
+/obj/structure/alien/weeds/proc/updateWeedOverlays()
+
+	overlays.Cut()
+	var/turf/N = get_step(src, NORTH)
+	var/turf/S = get_step(src, SOUTH)
+	var/turf/E = get_step(src, EAST)
+	var/turf/W = get_step(src, WEST)
+	if(!locate(/obj/structure/alien) in N.contents)
+		if(istype(N, /turf/simulated/floor))
+			src.overlays += image('icons/mob/alien.dmi', "weeds_side_s", layer=2.6, pixel_y = 32)
+	if(!locate(/obj/structure/alien) in S.contents)
+		if(istype(S, /turf/simulated/floor))
+			src.overlays += image('icons/mob/alien.dmi', "weeds_side_n", layer=2.6, pixel_y = -32)
+	if(!locate(/obj/structure/alien) in E.contents)
+		if(istype(E, /turf/simulated/floor))
+			src.overlays += image('icons/mob/alien.dmi', "weeds_side_w", layer=2.6, pixel_x = 32)
+	if(!locate(/obj/structure/alien) in W.contents)
+		if(istype(W, /turf/simulated/floor))
+			src.overlays += image('icons/mob/alien.dmi', "weeds_side_e", layer=2.6, pixel_x = -32)
+
+
+/obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
+	for (var/obj/structure/alien/weeds/W in range(1,src))
+		W.updateWeedOverlays()
+
 //Weed nodes
 /obj/structure/alien/weeds/node
-	name = "purple sac"
-	desc = "Weird purple octopus-like thing."
+	name = "glowing resin"
+	desc = "Blue bioluminescence shines from beneath the surface."
 	icon_state = "weednode"
-	luminosity = NODERANGE
+	luminosity = 1
 	var/node_range = NODERANGE
 
 
@@ -285,6 +333,7 @@
 
 /obj/structure/alien/egg/attack_hand(mob/user)
 	user << "<span class='notice'>It feels slimy.</span>"
+	user.changeNext_move(CLICK_CD_MELEE)
 
 
 /obj/structure/alien/egg/proc/GetFacehugger()
@@ -336,6 +385,7 @@
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 	health -= damage
+	user.changeNext_move(CLICK_CD_MELEE)
 	healthcheck()
 
 

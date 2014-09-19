@@ -45,7 +45,7 @@
 					break
 			else if(istype(item, /obj/item/weapon/gun/magic))
 				var/obj/item/weapon/gun/magic/I = item
-				if(prob(80))
+				if(prob(80) && !I.can_charge)
 					I.max_charges--
 				if(I.max_charges <= 0)
 					I.max_charges = 0

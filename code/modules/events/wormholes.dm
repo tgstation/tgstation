@@ -28,10 +28,7 @@
 		wormholes += new /obj/effect/portal/wormhole(T, null, null, -1)
 
 /datum/round_event/wormholes/announce()
-	command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-	for(var/mob/M in player_list)
-		if(!istype(M, /mob/new_player))
-			M << sound('sound/AI/spanomalies.ogg')
+	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", 'sound/AI/spanomalies.ogg')
 
 /datum/round_event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)
@@ -51,7 +48,6 @@
 	desc = "It looks highly unstable; It could close at any moment."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
-	failchance = 0
 
 /obj/effect/portal/wormhole/attack_hand(mob/user)
 	teleport(user)

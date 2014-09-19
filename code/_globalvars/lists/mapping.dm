@@ -37,6 +37,8 @@ var/list/tdomeadmin = list()
 var/list/prisonsecuritywarp = list()	//prison security goes to these
 var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()
+var/list/secequipment = list()
+var/list/deathsquadspawn = list()
 var/list/global_activeturfs
 
 	//away missions

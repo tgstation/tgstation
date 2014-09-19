@@ -57,6 +57,13 @@
 		last_slogan = world.time + rand(0, slogan_delay)
 		power_change()
 
+/obj/machinery/vending/Destroy()
+	qdel(wires)
+	wires = null
+	qdel(coin)
+	coin = null
+	..()
+
 /obj/machinery/vending/initialize()
 	build_inventory(products)
 	build_inventory(contraband, 1)
@@ -327,12 +334,20 @@
 				return
 			if(coin.string_attached)
 				if(prob(50))
-					usr << "<span class='notice'>You successfully pull the coin out before [src] could swallow it.</span>"
+					if(usr.put_in_hands(coin))
+						usr << "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>"
+						coin = null
+					else
+						usr << "<span class='notice'>You couldn't pull [coin] out because your hands are full.</span>"
+						qdel(coin)
+						coin = null
 				else
-					usr << "<span class='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>"
+					usr << "<span class='notice'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all.</span>"
 					qdel(coin)
+					coin = null
 			else
 				qdel(coin)
+				coin = null
 		else if (!(R in product_records))
 			vend_ready = 1
 			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
@@ -391,8 +406,10 @@
 	if(!message)
 		return
 
-	visible_message("<span class='name'>[src]</span> <span class='game say'>beeps, \"[message]\"</span>")
+	say(message)
 
+/obj/machinery/vending/say_quote(text)
+	return "beeps, \"[text]\""
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)
@@ -631,7 +648,7 @@
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
 	vend_delay = 34
 	icon_state = "cigs"
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4,/obj/item/weapon/rollingpaperpack = 5)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4,/obj/item/weapon/storage/fancy/rollingpapers = 5)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
@@ -699,7 +716,7 @@
 	icon_deny = "sec-deny"
 	req_access_txt = "1"
 	products = list(/obj/item/weapon/handcuffs = 8,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/flash = 5,
-					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6)
+					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6,/obj/item/device/flashlight/seclite = 4)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2)
 
 /obj/machinery/vending/hydronutrients
@@ -709,7 +726,7 @@
 	product_ads = "We like plants!;Don't you want some?;The greenest thumbs ever.;We like big plants.;Soft soil..."
 	icon_state = "nutri"
 	icon_deny = "nutri-deny"
-	products = list(/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez = 45,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z = 25,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh = 15,/obj/item/weapon/reagent_containers/spray/pestspray = 20,
+	products = list(/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez = 30,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z = 20,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh = 10,/obj/item/weapon/reagent_containers/spray/pestspray = 20,
 					/obj/item/weapon/reagent_containers/syringe = 5,/obj/item/weapon/storage/bag/plants = 5)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5)
 
@@ -788,7 +805,7 @@
 	desc = "A kitchen and restaurant equipment vendor"
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
-	products = list(/obj/item/weapon/tray = 8,/obj/item/weapon/kitchen/utensil/fork = 6,/obj/item/weapon/kitchenknife = 3,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2,/obj/item/weapon/reagent_containers/food/condiment/pack/ketchup = 5,/obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce = 5)
+	products = list(/obj/item/weapon/storage/bag/tray = 8,/obj/item/weapon/kitchen/utensil/fork = 6,/obj/item/weapon/kitchenknife = 3,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2,/obj/item/weapon/reagent_containers/food/condiment/pack/ketchup = 5,/obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce = 5)
 	contraband = list(/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2)
 
 /obj/machinery/vending/sovietsoda
@@ -827,7 +844,7 @@
 	icon_state = "engi"
 	icon_deny = "engi-deny"
 	req_access_txt = "11"
-	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/orange = 4,/obj/item/clothing/head/hardhat = 4,
+	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/sneakers/orange = 4,/obj/item/clothing/head/hardhat = 4,
 					/obj/item/weapon/storage/belt/utility = 4,/obj/item/clothing/glasses/meson = 4,/obj/item/clothing/gloves/yellow = 4, /obj/item/weapon/screwdriver = 12,
 					/obj/item/weapon/crowbar = 12,/obj/item/weapon/wirecutters = 12,/obj/item/device/multitool = 12,/obj/item/weapon/wrench = 12,/obj/item/device/t_scanner = 12,
 					/obj/item/weapon/stock_parts/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,

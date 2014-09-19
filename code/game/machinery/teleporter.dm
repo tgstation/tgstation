@@ -7,13 +7,18 @@
 	var/regime_set = "Teleporter"
 	var/id = null
 	var/obj/machinery/teleport/station/power_station
+	var/calibrating
 	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
+	link_power_station()
 	..()
 	return
+
+/obj/machinery/computer/teleporter/initialize()
+	link_power_station()
 
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
@@ -53,15 +58,26 @@
 	else if(!power_station.teleporter_hub)
 		data += "<div class='statusDisplay'>No hub linked.</div>"
 	else
-		data += "<div class='statusDisplay'>Current regime: [regime_set]<BR>Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]</div><BR>"
+		data += "<div class='statusDisplay'>Current regime: [regime_set]<BR>"
+		data += "Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]<BR>"
+		if(calibrating)
+			data += "Calibration: <font color='yellow'>In Progress</font>"
+		else if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
+			data += "Calibration: <font color='green'>Optimal</font>"
+		else
+			data += "Calibration: <font color='red'>Sub-Optimal</font>"
+		data += "</div><BR>"
+
 		data += "<A href='?src=\ref[src];regimeset=1'>Change regime</A><BR>"
 		data += "<A href='?src=\ref[src];settarget=1'>Set target</A><BR>"
 		if(locked)
-			data += "<A href='?src=\ref[src];locked=1'>Get target from memory</A><BR>"
+			data += "<BR><A href='?src=\ref[src];locked=1'>Get target from memory</A><BR>"
 			data += "<A href='?src=\ref[src];eject=1'>Eject GPS device</A><BR>"
 		else
-			data += "<span class='linkOff'>Get target from memory</span><BR>"
-			data += "<span class='linkOff'>Eject GPS device</span>"
+			data += "<BR><span class='linkOff'>Get target from memory</span><BR>"
+			data += "<span class='linkOff'>Eject GPS device</span><BR>"
+
+		data += "<BR><A href='?src=\ref[src];calibrate=1'>Calibrate Hub</A>"
 
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
 	popup.set_content(data)
@@ -71,21 +87,61 @@
 /obj/machinery/computer/teleporter/Topic(href, href_list)
 	if(..())
 		return
+
+	if(href_list["eject"])
+		eject()
+		updateDialog()
+		return
+
+	if(!check_hub_connection())
+		usr << "<span class='warning'>Error: Unable to detect hub.</span>"
+		return
+	if(calibrating)
+		usr << "<span class='warning'>Error: Calibration in progress. Stand by.</span>"
+		return
+
 	if(href_list["regimeset"])
 		power_station.engaged = 0
 		power_station.teleporter_hub.update_icon()
+		power_station.teleporter_hub.calibrated = 0
 		reset_regime()
 	if(href_list["settarget"])
 		power_station.engaged = 0
 		power_station.teleporter_hub.update_icon()
+		power_station.teleporter_hub.calibrated = 0
 		set_target(usr)
 	if(href_list["locked"])
 		power_station.engaged = 0
 		power_station.teleporter_hub.update_icon()
+		power_station.teleporter_hub.calibrated = 0
 		target = get_turf(locked.locked_location)
-	if(href_list["eject"])
-		eject()
+	if(href_list["calibrate"])
+		if(!target)
+			usr << "<span class='warning'>Error: No target set to calibrate to.</span>"
+			return
+		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
+			usr << "<span class='notice'>Hub is already calibrated.</span>"
+			return
+		src.visible_message("<span class='notice'>Processing hub calibration to target...</span>")
+
+		calibrating = 1
+		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
+			calibrating = 0
+			if(check_hub_connection())
+				power_station.teleporter_hub.calibrated = 1
+				src.visible_message("<span class='notice'>Calibration complete.</span>")
+			else
+				src.visible_message("<span class='warning'>Error: Unable to detect hub.</span>")
+			updateDialog()
+
 	updateDialog()
+
+/obj/machinery/computer/teleporter/proc/check_hub_connection()
+	if(!power_station)
+		return
+	if(!power_station.teleporter_hub)
+		return
+	return 1
 
 /obj/machinery/computer/teleporter/proc/reset_regime()
 	target = null
@@ -186,6 +242,7 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/obj/machinery/teleport/station/power_station
+	var/calibrated //Calibration prevents mutation
 
 /obj/machinery/teleport/hub/New()
 	..()
@@ -197,6 +254,9 @@
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
+
+/obj/machinery/teleport/hub/initialize()
+	link_power_station()
 
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
@@ -214,10 +274,9 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
-	spawn()
-		if(power_station && power_station.engaged && !panel_open)
-			teleport(M)
-			use_power(5000)
+	if(power_station && power_station.engaged && !panel_open)
+		teleport(M)
+		use_power(5000)
 	return
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user)
@@ -237,18 +296,16 @@
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (istype(M, /atom/movable))
-		if(prob(30 - (accurate * 10))) //oh dear a problem
-			do_teleport(M, com.target)
-			if(ishuman(M))//don't remove people from the round randomly you jerks
-				var/mob/living/carbon/human/human = M
-				if(human.dna && !human.dna.mutantrace)
-					M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
-					human.dna.mutantrace = "fly"
-					human.update_body()
-					human.update_hair()
-				human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
-		else
-			do_teleport(M, com.target)
+		if(do_teleport(M, com.target))
+			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
+				if(ishuman(M))//don't remove people from the round randomly you jerks
+					var/mob/living/carbon/human/human = M
+					if(human.dna && human.dna.species.id == "human")
+						M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
+						human.dna.species = new /datum/species/fly()
+						human.regenerate_icons()
+					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
+			calibrated = 0
 	return
 
 /obj/machinery/teleport/hub/update_icon()
@@ -258,6 +315,12 @@
 		icon_state = "tele1"
 	else
 		icon_state = "tele0"
+
+/obj/machinery/teleport/hub/syndicate/New()
+	..()
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
+	RefreshParts()
+
 
 /obj/machinery/teleport/station
 	name = "station"
@@ -282,6 +345,10 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
+	link_console_and_hub()
+
+/obj/machinery/teleport/station/initialize()
+	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()
 	var/E

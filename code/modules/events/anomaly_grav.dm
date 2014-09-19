@@ -11,7 +11,7 @@
 
 
 /datum/round_event/anomaly/anomaly_grav/announce()
-	command_alert("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/anomaly_grav/start()
 	var/turf/T = pick(get_area_turfs(impact_area))

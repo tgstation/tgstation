@@ -17,6 +17,12 @@
 /area
 	var/global/global_uid = 0
 	var/uid
+	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
+									'sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg',\
+									'sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg',\
+									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
+									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
+									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 
 /area/New()
 	icon_state = ""
@@ -90,45 +96,80 @@
 	return 0
 
 /area/proc/firealert()
-	if(src.name == "Space") //no fire alarms in space
+	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
-	if (!( src.fire ))
-		src.fire = 1
-		src.updateicon()
-		src.mouse_opacity = 0
-		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.blocked)
-				if(D.operating)
-					D.nextstate = CLOSED
-				else if(!D.density)
-					spawn(0)
-					D.close()
-		var/list/cameras = list()
-		for (var/obj/machinery/camera/C in src)
+
+	var/list/cameras = list()
+
+	for(var/area/RA in related)
+		if (!( RA.fire ))
+			RA.set_fire_alarm_effect()
+			for(var/obj/machinery/door/firedoor/D in RA)
+				if(!D.blocked)
+					if(D.operating)
+						D.nextstate = CLOSED
+					else if(!D.density)
+						spawn(0)
+							D.close()
+		for (var/obj/machinery/camera/C in RA)
 			cameras += C
-		for (var/mob/living/silicon/ai/aiPlayer in player_list)
-			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-		for (var/obj/machinery/computer/station_alert/a in machines)
-			a.triggerAlarm("Fire", src, cameras, src)
+
+	for (var/obj/machinery/computer/station_alert/a in machines)
+		a.triggerAlarm("Fire", src, cameras, src)
+	for (var/mob/living/silicon/aiPlayer in player_list)
+		aiPlayer.triggerAlarm("Fire", src, cameras, src)
 	return
 
 /area/proc/firereset()
-	if (src.fire)
-		src.fire = 0
-		src.mouse_opacity = 0
-		src.updateicon()
-		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.blocked)
-				if(D.operating)
-					D.nextstate = OPEN
-				else if(D.density)
-					spawn(0)
-					D.open()
-		for (var/mob/living/silicon/ai/aiPlayer in player_list)
-			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/station_alert/a in machines)
-			a.cancelAlarm("Fire", src, src)
+	for(var/area/RA in related)
+		if (RA.fire)
+			RA.fire = 0
+			RA.mouse_opacity = 0
+			RA.updateicon()
+			for(var/obj/machinery/door/firedoor/D in RA)
+				if(!D.blocked)
+					if(D.operating)
+						D.nextstate = OPEN
+					else if(D.density)
+						spawn(0)
+							D.open()
+
+	for (var/mob/living/silicon/aiPlayer in player_list)
+		aiPlayer.cancelAlarm("Fire", src, src)
+	for (var/obj/machinery/computer/station_alert/a in machines)
+		a.cancelAlarm("Fire", src, src)
 	return
+
+/area/proc/burglaralert(var/obj/trigger)
+	if(always_unpowered == 1) //no burglar alarms in space/asteroid
+		return
+
+	var/list/cameras = list()
+
+	for(var/area/RA in related)
+		//Trigger alarm effect
+		RA.set_fire_alarm_effect()
+		//Lockdown airlocks
+		for(var/obj/machinery/door/airlock/DOOR in RA)
+			spawn(0)
+				DOOR.close()
+				if(DOOR.density)
+					DOOR.locked = 1
+					DOOR.update_icon()
+		for (var/obj/machinery/camera/C in RA)
+			cameras += C
+
+	for (var/mob/living/silicon/SILICON in player_list)
+		SILICON.triggerAlarm("Burglar", src, cameras, trigger)
+	//Cancel silicon alert after 1 minute
+	spawn(600)
+		for (var/mob/living/silicon/SILICON in player_list)
+			SILICON.cancelAlarm("Burglar", src, trigger)
+
+/area/proc/set_fire_alarm_effect()
+	fire = 1
+	updateicon()
+	mouse_opacity = 0
 
 /area/proc/readyalert()
 	if(name == "Space")
@@ -228,8 +269,22 @@
 			used += master.used_environ
 		if(TOTAL)
 			used += master.used_light + master.used_equip + master.used_environ
-
+		if(STATIC_EQUIP)
+			used += master.static_equip
+		if(STATIC_LIGHT)
+			used += master.static_light
+		if(STATIC_ENVIRON)
+			used += master.static_environ
 	return used
+
+/area/proc/addStaticPower(value, powerchannel)
+	switch(powerchannel)
+		if(STATIC_EQUIP)
+			static_equip += value
+		if(STATIC_LIGHT)
+			static_light += value
+		if(STATIC_ENVIRON)
+			static_environ += value
 
 /area/proc/clear_usage()
 
@@ -249,9 +304,6 @@
 
 
 /area/Entered(A)
-	var/musVolume = 25
-	var/sound = 'sound/ambience/ambigen1.ogg'
-
 	if(!istype(A,/mob/living))	return
 
 	var/mob/living/L = A
@@ -271,27 +323,10 @@
 		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
 	if(prob(35))
-
-		if(istype(src, /area/chapel))
-			sound = pick('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
-		else if(istype(src, /area/medical/morgue))
-			sound = pick('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/ambience/title2.ogg')
-		else if(type == /area)
-			sound = pick('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
-		else if(istype(src, /area/engine))
-			sound = pick('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
-		else if(istype(src, /area/AIsattele) || istype(src, /area/turret_protected/ai) || istype(src, /area/turret_protected/ai_upload) || istype(src, /area/turret_protected/ai_upload_foyer))
-			sound = pick('sound/ambience/ambimalf.ogg')
-		else if(istype(src, /area/mine/explored) || istype(src, /area/mine/unexplored))
-			sound = pick('sound/ambience/ambimine.ogg')
-			musVolume = 25
-		else if(istype(src, /area/tcommsat) || istype(src, /area/turret_protected/tcomwest) || istype(src, /area/turret_protected/tcomeast) || istype(src, /area/turret_protected/tcomfoyer) || istype(src, /area/turret_protected/tcomsat))
-			sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-		else
-			sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+		var/sound = pick(ambientsounds)
 
 		if(!L.client.played)
-			L << sound(sound, repeat = 0, wait = 0, volume = musVolume, channel = 1)
+			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
 			L.client.played = 1
 			spawn(600)			//ewww - this is very very bad
 				if(L.&& L.client)
@@ -300,9 +335,10 @@
 /area/proc/mob_activate(var/mob/living/L)
 	return
 
-/proc/has_gravity(var/atom/AT)
-	var/area/A = get_area(AT)
-	var/turf/T = get_turf(AT)
+/proc/has_gravity(atom/AT, turf/T)
+	if(!T)
+		T = get_turf(AT)
+	var/area/A = get_area(T)
 	if(istype(T, /turf/space)) // Turf never has gravity
 		return 0
 	else if(A && A.has_gravity) // Areas which always has gravity
@@ -312,3 +348,34 @@
 		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
 			return 1
 	return 0
+
+/area/proc/clear_docking_area()
+	var/list/dstturfs = list()
+	var/throwy = world.maxy
+
+	for(var/turf/T in src)
+		dstturfs += T
+		if(T.y < throwy)
+			throwy = T.y
+
+	// hey you, get out of the way!
+	for(var/turf/T in dstturfs)
+		// find the turf to move things to
+		var/turf/D = locate(T.x, throwy - 1, T.z)
+		for(var/atom/movable/AM as mob|obj in T)
+			//mobs take damage
+			if(istype(AM, /mob/living))
+				var/mob/living/living_mob = AM
+				living_mob.Paralyse(10)
+				living_mob.take_organ_damage(80)
+				living_mob.anchored = 0 //Unbuckle them so they can be moved
+			//Anything not bolted down is moved, everything else is destroyed
+			if(!AM.anchored)
+				AM.Move(D)
+			else
+				qdel(AM)
+		if(istype(T, /turf/simulated))
+			del(T)
+
+	for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
+		qdel(bug)

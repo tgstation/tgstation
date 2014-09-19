@@ -12,7 +12,7 @@
 obj/structure/windoor_assembly
 	icon = 'icons/obj/doors/windoor.dmi'
 
-	name = "Windoor Assembly"
+	name = "windoor Assembly"
 	icon_state = "l_windoor_assembly01"
 	anchored = 0
 	density = 0
@@ -89,7 +89,6 @@ obj/structure/windoor_assembly/Destroy()
 							R.add_fingerprint(user)
 						qdel(src)
 				else
-					user << "<span class='notice'>You need more welding fuel to dissassemble the windoor assembly.</span>"
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
@@ -99,12 +98,12 @@ obj/structure/windoor_assembly/Destroy()
 
 				if(do_after(user, 40))
 					if(!src) return
-					user << "\blue You've secured the windoor assembly!"
+					user << "<span class='notice'>You've secured the windoor assembly!</span>"
 					src.anchored = 1
 					if(src.secure)
-						src.name = "Secure Anchored Windoor Assembly"
+						src.name = "secure anchored windoor assembly"
 					else
-						src.name = "Anchored Windoor Assembly"
+						src.name = "anchored windoor assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
 			else if(istype(W, /obj/item/weapon/wrench) && anchored)
@@ -113,31 +112,31 @@ obj/structure/windoor_assembly/Destroy()
 
 				if(do_after(user, 40))
 					if(!src) return
-					user << "\blue You've unsecured the windoor assembly!"
+					user << "<span class='notice'>You've unsecured the windoor assembly!</span>"
 					src.anchored = 0
 					if(src.secure)
-						src.name = "Secure Windoor Assembly"
+						src.name = "secure windoor assembly"
 					else
-						src.name = "Windoor Assembly"
+						src.name = "windoor assembly"
 
 			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
 			else if(istype(W, /obj/item/stack/sheet/plasteel) && !secure)
 				var/obj/item/stack/sheet/plasteel/P = W
 				if(P.amount < 2)
-					user << "\red You need more plasteel to do this."
+					user << "<span class='danger'>You need more plasteel to do this.</span>"
 					return
-				user << "\blue You start to reinforce the windoor with plasteel."
+				user << "<span class='notice'>You start to reinforce the windoor with plasteel.</span>"
 
 				if(do_after(user,40))
 					if(!src) return
 
 					P.use(2)
-					user << "\blue You reinforce the windoor."
+					user << "<span class='notice'>You reinforce the windoor.</span>"
 					src.secure = "secure_"
 					if(src.anchored)
-						src.name = "Secure Anchored Windoor Assembly"
+						src.name = "secure anchored windoor assembly"
 					else
-						src.name = "Secure Windoor Assembly"
+						src.name = "secure windoor assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
 			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
@@ -147,12 +146,12 @@ obj/structure/windoor_assembly/Destroy()
 					if(!src) return
 					var/obj/item/stack/cable_coil/CC = W
 					CC.use(1)
-					user << "\blue You wire the windoor!"
+					user << "<span class='notice'>You wire the windoor!</span>"
 					src.state = "02"
 					if(src.secure)
-						src.name = "Secure Wired Windoor Assembly"
+						src.name = "secure wired windoor assembly"
 					else
-						src.name = "Wired Windoor Assembly"
+						src.name = "wired windoor assembly"
 			else
 				..()
 
@@ -166,13 +165,13 @@ obj/structure/windoor_assembly/Destroy()
 				if(do_after(user, 40))
 					if(!src) return
 
-					user << "\blue You cut the windoor wires.!"
+					user << "<span class='notice'>You cut the windoor wires!</span>"
 					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
-						src.name = "Secure Wired Windoor Assembly"
+						src.name = "secure wired windoor assembly"
 					else
-						src.name = "Wired Windoor Assembly"
+						src.name = "wired windoor assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
 			else if(istype(W, /obj/item/weapon/airlock_electronics))
@@ -184,8 +183,8 @@ obj/structure/windoor_assembly/Destroy()
 
 					user.drop_item()
 					W.loc = src
-					user << "\blue You've installed the airlock electronics!"
-					src.name = "Near finished Windoor Assembly"
+					user << "<span class='notice'>You've installed the airlock electronics!</span>"
+					src.name = "near finished windoor assembly"
 					src.electronics = W
 				else
 					W.loc = src.loc
@@ -200,8 +199,8 @@ obj/structure/windoor_assembly/Destroy()
 
 				if(do_after(user, 40))
 					if(!src) return
-					user << "\blue You've removed the airlock electronics!"
-					src.name = "Wired Windoor Assembly"
+					user << "<span class='notice'>You've removed the airlock electronics!</span>"
+					src.name = "wired windoor assembly"
 					var/obj/item/weapon/airlock_electronics/ae
 					if (!electronics) //This shouldnt happen, but if it does, lets not crash and runtime.
 						ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -214,7 +213,7 @@ obj/structure/windoor_assembly/Destroy()
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(istype(W, /obj/item/weapon/crowbar))
 				if(!src.electronics)
-					usr << "\red The assembly is missing electronics."
+					usr << "<span class='danger'>The assembly is missing electronics.</span>"
 					return
 				usr << browse(null, "window=windoor_access")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
@@ -225,7 +224,7 @@ obj/structure/windoor_assembly/Destroy()
 					if(!src) return
 
 					density = 1 //Shouldn't matter but just incase
-					user << "\blue You finish the windoor!"
+					user << "<span class='notice'>You finish the windoor!</span>"
 
 					if(secure)
 						var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(src.loc)
@@ -238,7 +237,10 @@ obj/structure/windoor_assembly/Destroy()
 						windoor.dir = src.dir
 						windoor.density = 0
 
-						windoor.req_access = src.electronics.conf_access
+						if(src.electronics.use_one_access)
+							windoor.req_one_access = src.electronics.conf_access
+						else
+							windoor.req_access = src.electronics.conf_access
 						windoor.electronics = src.electronics
 						src.electronics.loc = windoor
 						windoor.close()

@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /*
 A Star pathfinding algorithm
 Returns a list of tiles forming a path from A to B, taking dense objects as well as walls, and the orientation of
@@ -13,10 +11,6 @@ And for the distance one i wrote:
 So an example use might be:
 
 src.path_list = AStar(src.loc, target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance)
-
-Note: The path is returned starting at the END node, so i wrote reverselist to reverse it for ease of use.
-
-src.path_list = reverselist(src.pathlist)
 
 Then to start on the path, all you need to do it:
 Step_to(src, src.path_list[1])
@@ -36,151 +30,209 @@ length to avoid portals or something i guess?? Not that they're counted right no
 
 // Also added 'exclude' turf to avoid travelling over; defaults to null
 
+//Currently, there's four main ways to call AStar
+//
+// 1) adjacent = "/turf/proc/AdjacentTurfsWithAccess" and distance = "/turf/proc/Distance"
+//	Seeks a path moving in all directions (including diagonal) and checking for the correct id to get through doors
+//
+// 2) adjacent = "/turf/proc/CardinalTurfsWithAccess" and distance = "/turf/proc/Distance_cardinal"
+//  Seeks a path moving only in cardinal directions and checking if for the correct id to get through doors
+//  Used by most bots, including Beepsky
+//
+// 3) adjacent = "/turf/proc/AdjacentTurfs" and distance = "/turf/proc/Distance"
+//  Same as 1), but don't check for ID. Can get only get through open doors
+//
+// 4) adjacent = "/turf/proc/AdjacentTurfsSpace" and distance = "/turf/proc/Distance"
+//  Same as 1), but check all turf, including unsimulated
 
-PriorityQueue
-	var/L[]
-	var/cmp
-	New(compare)
-		L = new()
-		cmp = compare
-	proc
-		IsEmpty()
-			return !L.len
-		Enqueue(d)
-			var/i
-			var/j
-			L.Add(d)
-			i = L.len
-			j = i>>1
-			while(i > 1 &&  call(cmp)(L[j],L[i]) > 0)
-				L.Swap(i,j)
-				i = j
-				j >>= 1
+//////////////////////
+//PriorityQueue object
+//////////////////////
 
-		Dequeue()
-			if(!L.len) return 0
-			. = L[1]
-			Remove(1)
+//an ordered list, using the cmp proc to weight the list elements
+/PriorityQueue
+	var/list/L //the actual queue
+	var/cmp //the weight function used to order the queue
 
-		Remove(i)
-			if(i > L.len) return 0
-			L.Swap(i,L.len)
-			L.Cut(L.len)
-			if(i < L.len)
-				_Fix(i)
-		_Fix(i)
-			var/child = i + i
-			var/item = L[i]
-			while(child <= L.len)
-				if(child + 1 <= L.len && call(cmp)(L[child],L[child + 1]) > 0)
-					child++
-				if(call(cmp)(item,L[child]) > 0)
-					L[i] = L[child]
-					i = child
-				else
-					break
-				child = i + i
-			L[i] = item
-		List()
-			var/ret[] = new()
-			var/copy = L.Copy()
-			while(!IsEmpty())
-				ret.Add(Dequeue())
-			L = copy
-			return ret
-		RemoveItem(i)
-			var/ind = L.Find(i)
-			if(ind)
-				Remove(ind)
-PathNode
-	var/turf/source
-	var/PathNode/prevNode
-	var/f
-	var/g
-	var/h
-	var/nt		// Nodes traversed
-	var/bestF
-	New(s,p,pg,ph,pnt)
-		source = s
-		prevNode = p
-		g = pg
-		h = ph
-		f = g + h
-		source.bestF = f
-		nt = pnt
+/PriorityQueue/New(compare)
+	L = new()
+	cmp = compare
 
-turf
-	var/bestF
-proc
-	PathWeightCompare(PathNode/a, PathNode/b)
-		return a.f - b.f
+/PriorityQueue/proc/IsEmpty()
+	return !L.len
 
-	AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minnodedist,id=null, var/turf/exclude=null)
+//add an element in the list,
+//immediatly ordering it to its position using Insertion sort
+/PriorityQueue/proc/Enqueue(var/atom/A)
+	var/i
+	L.Add(A)
+	i = L.len -1
+	while(i > 0 &&  call(cmp)(L[i],A) >= 0) //place the element at it's right position using the compare proc
+		L.Swap(i,i+1) 						//last inserted element being first in case of ties (optimization)
+		i--
 
-//		world << "A*: [start] [end] [adjacent] [dist] [maxnodes] [maxnodedepth] [mintargetdist], [minnodedist] [id]"
-		var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare)
-		var/closed[] = new()
-		var/path[]
-		start = get_turf(start)
-		if(!start) return 0
+//removes and returns the first element in the queue
+/PriorityQueue/proc/Dequeue()
+	if(!L.len)
+		return 0
+	. = L[1]
+	Remove(.)
+	return .
 
-		open.Enqueue(new /PathNode(start,null,0,call(start,dist)(end)))
+//removes an element
+/PriorityQueue/proc/Remove(var/atom/A)
+	return L.Remove(A)
 
-		while(!open.IsEmpty() && !path)
-		{
-			var/PathNode/cur = open.Dequeue()
-			closed.Add(cur.source)
+//returns a copy of the elements list
+/PriorityQueue/proc/List()
+	var/list/ret = L.Copy()
+	return ret
 
-			var/closeenough
-			if(mintargetdist)
-				closeenough = call(cur.source,dist)(end) <= mintargetdist
+//return the position of an element or 0 if not found
+/PriorityQueue/proc/Seek(var/atom/A)
+	return L.Find(A)
 
-			if(cur.source == end || closeenough)
-				path = new()
+//return the element at the i_th position
+/PriorityQueue/proc/Get(var/i)
+	if(i > L.len || i < 1)
+		return 0
+	return L[i]
+
+//replace the passed element at it's right position using the cmp proc
+/PriorityQueue/proc/ReSort(var/atom/A)
+	var/i = Seek(A)
+	if(i == 0)
+		return
+	while(i < L.len && call(cmp)(L[i],L[i+1]) > 0)
+		L.Swap(i,i+1)
+		i++
+	while(i > 1 && call(cmp)(L[i],L[i-1]) <= 0) //last inserted element being first in case of ties (optimization)
+		L.Swap(i,i-1)
+		i--
+
+//////////////////////
+//PathNode object
+//////////////////////
+
+//A* nodes variables
+/PathNode
+	var/turf/source //turf associated with the PathNode
+	var/PathNode/prevNode //link to the parent PathNode
+	var/f		//A* Node weight (f = g + h)
+	var/g		//A* movement cost variable
+	var/h		//A* heuristic variable
+	var/nt		//count the number of Nodes traversed
+
+/PathNode/New(s,p,pg,ph,pnt)
+	source = s
+	prevNode = p
+	g = pg
+	h = ph
+	f = g + h
+	source.PNode = src
+	nt = pnt
+
+/PathNode/proc/calc_f()
+	f = g + h
+
+//////////////////////
+//A* procs
+//////////////////////
+
+//the weighting function, used in the A* algorithm
+proc/PathWeightCompare(PathNode/a, PathNode/b)
+	return a.f - b.f
+
+//search if there's a PathNode that points to turf T in the Priority Queue
+proc/SeekTurf(var/PriorityQueue/Queue, var/turf/T)
+	var/i = 1
+	var/PathNode/PN
+	while(i < Queue.L.len + 1)
+		PN = Queue.L[i]
+		if(PN.source == T)
+			return i
+		i++
+	return 0
+
+//the actual algorithm
+proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minnodedist,id=null, var/turf/exclude=null)
+	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare) //the open list, ordered using the PathWeightCompare proc, from lower f to higher
+	var/list/closed = new() //the closed list
+	var/list/path = null //the returned path, if any
+	var/PathNode/cur //current processed turf
+
+	//sanitation
+	start = get_turf(start)
+	if(!start)
+		return 0
+
+	//initialization
+	open.Enqueue(new /PathNode(start,null,0,call(start,dist)(end),0))
+
+	//then run the main loop
+	while(!open.IsEmpty() && !path)
+	{
+			//get the lower f node on the open list
+		cur = open.Dequeue() //get the lower f turf in the open list
+		closed.Add(cur.source) //and tell we've processed it
+
+		//if we only want to get near the target, check if we're close enough
+		var/closeenough
+		if(mintargetdist)
+			closeenough = call(cur.source,dist)(end) <= mintargetdist
+
+		//if too many steps, abandon that path
+		if(maxnodedepth && (cur.nt > maxnodedepth))
+			continue
+
+		//found the target turf (or close enough), let's create the path to it
+		if(cur.source == end || closeenough)
+			path = new()
+			path.Add(cur.source)
+			while(cur.prevNode)
+				cur = cur.prevNode
 				path.Add(cur.source)
-				while(cur.prevNode)
-					cur = cur.prevNode
-					path.Add(cur.source)
-				break
+			break
 
-			var/L[] = call(cur.source,adjacent)(id)
-			if(minnodedist && maxnodedepth)
-				if(call(cur.source,minnodedist)(end) + cur.nt >= maxnodedepth)
-					continue
-			else if(maxnodedepth)
-				if(cur.nt >= maxnodedepth)
-					continue
+		//IMPLEMENTATION TO FINISH
+		//do we really need this minnodedist ???
+		/*if(minnodedist && maxnodedepth)
+			if(call(cur.source,minnodedist)(end) + cur.nt >= maxnodedepth)
+				continue
+		*/
 
-			for(var/turf/d in L)
-				if(d == exclude)
-					continue
-				var/ng = cur.g + call(cur.source,dist)(d)
-				if(d.bestF)
-					if(ng + call(d,dist)(end) < d.bestF)
-						for(var/i = 1; i <= open.L.len; i++)
-							var/PathNode/n = open.L[i]
-							if(n.source == d)
-								open.Remove(i)
-								break
-					else
-						continue
+		//get adjacents turfs using the adjacent proc, checking for access with id
+		var/list/L = call(cur.source,adjacent)(id,closed)
 
-				open.Enqueue(new /PathNode(d,cur,ng,call(d,dist)(end),cur.nt+1))
-				if(maxnodes && open.L.len > maxnodes)
-					open.L.Cut(open.L.len)
-		}
+		for(var/turf/T in L)
+			if(T == exclude)
+				continue
 
-		var/PathNode/temp
-		while(!open.IsEmpty())
-			temp = open.Dequeue()
-			temp.source.bestF = 0
-		while(closed.len)
-			temp = closed[closed.len]
-			temp.bestF = 0
-			closed.Cut(closed.len)
+			var/newg = cur.g + call(cur.source,dist)(T)
+			if(!T.PNode) //is not already in open list, so add it
+				open.Enqueue(new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1))
+			else //is already in open list, check if it's a better way from the current turf
+				if(newg < T.PNode.g)
+					T.PNode.prevNode = cur
+					T.PNode.g = newg
+					T.PNode.calc_f()
+					open.ReSort(T.PNode)//reorder the changed element in the list
 
-		if(path)
-			for(var/i = 1; i <= path.len/2; i++)
-				path.Swap(i,path.len-i+1)
+	}
 
-		return path
+	//cleaning after us
+	for(var/PathNode/PN in open.L)
+		PN.source.PNode = null
+	for(var/turf/T in closed)
+		T.PNode = null
+
+	//if the path is longer than maxnodes, then don't return it
+	if(path && maxnodes && path.len > (maxnodes + 1))
+		return 0
+
+	//reverse the path to get it from start to finish
+	if(path)
+		for(var/i = 1; i <= path.len/2; i++)
+			path.Swap(i,path.len-i+1)
+
+	return path

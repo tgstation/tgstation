@@ -142,7 +142,7 @@
 
 	New()
 		sleep(2)
-		new /obj/item/clothing/under/det(src)
+		new /obj/item/clothing/under/rank/det(src)
 		new /obj/item/clothing/suit/armor/det_suit(src)
 		new /obj/item/clothing/suit/det_suit(src)
 		new /obj/item/clothing/gloves/black(src)

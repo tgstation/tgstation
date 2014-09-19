@@ -18,7 +18,7 @@ Urist: I don't feel like figuring out how you store object spells so I'm leaving
 Make sure spells that are removed from spell_list are actually removed and deleted when mind transfering.
 Also, you never added distance checking after target is selected. I've went ahead and did that.
 */
-/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets,mob/user = usr, distanceoverride)
 	if(!targets.len)
 		user << "No mind found."
 		return
@@ -29,7 +29,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	var/mob/living/target = targets[1]
 
-	if(!(target in oview(range)))//If they are not in overview after selection. Do note that !() is necessary for in to work because ! takes precedence over it.
+	if(!(target in oview(range)) && !distanceoverride)//If they are not in overview after selection. Do note that !() is necessary for in to work because ! takes precedence over it.
 		user << "They are too far away!"
 		return
 

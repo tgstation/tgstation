@@ -35,9 +35,9 @@
 	if(charged == 1)
 		new /obj/effect/rend(get_turf(usr))
 		charged = 0
-		visible_message("\red <B>[src] hums with power as [usr] deals a blow to reality itself!</B>")
+		visible_message("<span class='userdanger'>[src] hums with power as [usr] deals a blow to reality itself!</span>")
 	else
-		user << "\red The unearthly energies that powered the blade are now dormant."
+		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
 
 
 
@@ -49,9 +49,9 @@
 	if(charged)
 		new /obj/effect/rend/cow(get_turf(usr))
 		charged = 0
-		visible_message("\red <B>[src] hums with power as [usr] deals a blow to hunger itself!</B>")
+		visible_message("<span class='userdanger'>[src] hums with power as [usr] deals a blow to hunger itself!</span>")
 	else
-		user << "\red The unearthly energies that powered the blade are now dormant."
+		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
 
 /obj/effect/rend/cow
 	desc = "Reverberates with the sound of ten thousand moos."
@@ -70,7 +70,7 @@
 
 /obj/effect/rend/cow/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/nullrod))
-		visible_message("\red <b>[I] strikes a blow against \the [src], banishing it!</b>")
+		visible_message("<span class='danger'>[I] strikes a blow against \the [src], banishing it!</span>")
 		qdel(src)
 		return
 	..()
@@ -91,7 +91,7 @@
 	hitsound = 'sound/items/welder2.ogg'
 
 /obj/item/weapon/scrying/attack_self(mob/user as mob)
-	user << "\blue You can see...everything!"
-	visible_message("\red <B>[usr] stares into [src], their eyes glazing over.</B>")
+	user << "<span class='notice'>You can see...everything!</span>"
+	visible_message("<span class='danger'>[usr] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 	return

@@ -4,26 +4,26 @@
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		return attack_hand(user)
+/obj/structure/signpost/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	return attack_hand(user)
 
-	attack_hand(mob/user as mob)
-		switch(alert("Travel back to ss13?",,"Yes","No"))
-			if("Yes")
-				if(user.z != src.z)	return
-				user.loc.loc.Exited(user)
-				user.loc = pick(latejoin)
-			if("No")
-				return
+/obj/structure/signpost/attack_hand(mob/user as mob)
+	switch(alert("Travel back to ss13?",,"Yes","No"))
+		if("Yes")
+			if(user.z != src.z)	return
+			user.loc.loc.Exited(user)
+			user.loc = pick(latejoin)
+		if("No")
+			return
 
 /obj/effect/mark
-		var/mark = ""
-		icon = 'icons/misc/mark.dmi'
-		icon_state = "blank"
-		anchored = 1
-		layer = 99
-		mouse_opacity = 0
-		unacidable = 1//Just to be sure.
+	var/mark = ""
+	icon = 'icons/misc/mark.dmi'
+	icon_state = "blank"
+	anchored = 1
+	layer = 99
+	mouse_opacity = 0
+	unacidable = 1//Just to be sure.
 
 /obj/effect/beam
 	name = "beam"
@@ -50,13 +50,13 @@
 	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
 
 /obj/structure/showcase/fakeid
-	name = "Centcom Identification Console"
+	name = "\improper Centcom identification console"
 	desc = "You can use this to change ID's."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "id"
 
 /obj/structure/showcase/fakesec
-	name = "Centcom Security Records"
+	name = "\improper Centcom security records"
 	desc = "Used to view and edit personnel's security records"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "security"
@@ -75,9 +75,10 @@
 	throwforce = 0.0
 	throw_speed = 2
 	throw_range = 7
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		user.drop_item()
-		src.throw_at(target, throw_range, throw_speed)
+
+/obj/item/weapon/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	user.drop_item()
+	src.throw_at(target, throw_range, throw_speed)
 
 /obj/effect/spawner
 	name = "object spawner"

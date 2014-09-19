@@ -18,17 +18,17 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-	IsShield()
-		return 1
+/obj/item/weapon/shield/riot/IsShield()
+	return 1
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/melee/baton))
-			if(cooldown < world.time - 25)
-				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
-				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
-				cooldown = world.time
-		else
-			..()
+/obj/item/weapon/shield/riot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/melee/baton))
+		if(cooldown < world.time - 25)
+			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			cooldown = world.time
+	else
+		..()
 
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"

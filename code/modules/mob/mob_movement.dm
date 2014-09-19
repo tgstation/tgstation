@@ -26,40 +26,31 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		usr << "\red This mob type cannot throw items."
+		usr << "<span class='danger'>This mob type cannot throw items.</span>"
 	return
 
 
 /client/Northwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if(!C.get_active_hand())
-			usr << "\red You have nothing to drop in your hand."
-			return
-		drop_item()
-	else
-		usr << "\red This mob type cannot drop items."
-	return
+	if(!usr.get_active_hand())
+		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
+		return
+	usr.drop_item()
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
 	set hidden = 1
 
 	if(!usr.pulling)
-		usr << "\blue You are not pulling anything."
+		usr << "<span class='notice'>You are not pulling anything.</span>"
 		return
 	usr.stop_pulling()
 
 /client/verb/swap_hand()
-	set hidden = 1
-	if(istype(mob, /mob/living/carbon))
-		mob:swap_hand()
-	if(istype(mob,/mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = mob
-		R.cycle_modules()
-	return
+	set category = "IC"
+	set name = "Swap hands"
 
-
+	if(mob)
+		mob.swap_hand()
 
 /client/verb/attack_self()
 	set hidden = 1
@@ -189,7 +180,7 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == 0 && M.canmove && mob.Adjacent(M))
-						src << "\blue You're restrained! You can't move!"
+						src << "<span class='notice'>You're restrained! You can't move!</span>"
 						return 0
 					else
 						M.stop_pulling()
@@ -351,7 +342,7 @@
 ///Return 1 for movement 0 for none
 /mob/proc/Process_Spacemove(var/check_drift = 0)
 	//First check to see if we can do things
-	if(restrained())
+	if(!canmove)
 		return 0
 
 	if(!isturf(loc))	//if they're in a disposal unit, for example
@@ -362,14 +353,8 @@
 		if(istype(turf,/turf/space))
 			continue
 
-		if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-			if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src)) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
-				continue
-
-
-		else
-			if((istype(turf,/turf/simulated/floor)) && (!has_gravity(src))) // No one else gets a chance.
-				continue
+		if(!turf.density && !mob_negates_gravity())
+			continue
 
 		dense_object++
 		break
@@ -390,18 +375,22 @@
 	if(!dense_object)
 		return 0
 
-
-
 	//Check to see if we slipped
 	if(prob(Process_Spaceslipping(5)))
-		src << "\blue <B>You slipped!</B>"
+		src << "<span class='boldnotice'>You slipped!</span>"
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0
+
 	//If not then we can reset inertia and move
 	inertia_dir = 0
 	return 1
 
+/mob/proc/mob_has_gravity(turf/T)
+	return has_gravity(src, T)
+
+/mob/proc/mob_negates_gravity()
+	return 0
 
 /mob/proc/Process_Spaceslipping(var/prob_slip = 5)
 	//Setup slipage
@@ -431,4 +420,7 @@
 	return
 
 /mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+	return
+
+/mob/proc/update_gravity()
 	return

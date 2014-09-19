@@ -22,6 +22,7 @@
 	var/raising= 0			//if the turret is currently opening or closing its cover
 	var/health = 80			//the turret's health
 	var/locked = 1			//if the turret's behaviour control access is locked
+	var/controllock = 0		//if the turret responds to control panels
 
 	var/installation		//the type of weapon installed
 	var/gun_charge = 0		//the charge of the gun inserted
@@ -269,6 +270,8 @@
 		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
 		visible_message("[src] hums oddly...")
 		emagged = 1
+		iconholder = 1
+		controllock = 1
 		on = 0 //turns off the turret temporarily
 		sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 		on = 1 //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
@@ -300,6 +303,7 @@
 
 	else
 		//if the turret was attacked with the intention of harming it:
+		user.changeNext_move(CLICK_CD_MELEE)
 		health -= I.force * 0.5
 		if(health <= 0)
 			die()
@@ -614,6 +618,13 @@
 	spawn( 1 )
 		A.process()
 
+/obj/machinery/porta_turret/proc/setState(var/on, var/emagged)
+	if(controllock)
+		return
+	src.on = on
+	src.emagged = emagged
+	src.iconholder = emagged
+	src.power_change()
 
 /*
 		Portable turret constructions
@@ -652,16 +663,12 @@
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
-				if(M.amount>=2) //requires 2 metal sheets
+				if(M.use(2))
 					user << "<span class='notice'>You add some metal armor to the interior frame.</span>"
 					build_step = 2
-					M.amount -= 2
 					icon_state = "turret_frame2"
-					if(M.amount <= 0)
-						user.unEquip(M, 1) //We're deleting it anyway, so no point in having NODROP fuck shit up.
-						qdel(M)
 				else
-					user << "<span class='warning'>You need two sheets of metal for that.</span>"
+					user << "<span class='warning'>You need two sheets of metal to continue construction.</span>"
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
@@ -742,15 +749,11 @@
 		if(6)
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
-				if(M.amount>=2)
+				if(M.use(2))
 					user << "<span class='notice'>You add some metal armor to the exterior frame.</span>"
 					build_step = 7
-					M.amount -= 2
-					if(M.amount <= 0)
-						user.unEquip(M, 1) //If we don't force-unequip, bugs happen because the item was deleted without updating the neccesary stuffs.
-						qdel(M)
 				else
-					user << "<span class='warning'>You need two sheets of metal for that.</span>"
+					user << "<span class='warning'>You need two sheets of metal to continue construction.</span>"
 				return
 
 			else if(istype(I, /obj/item/weapon/screwdriver))
@@ -992,6 +995,7 @@ Status: []<BR>"},
 			user << "<span class='notice'>Access denied.</span>"
 
 	else
+		user.changeNext_move(CLICK_CD_MELEE)
 		Parent_Turret.health -= I.force * 0.5
 		if(Parent_Turret.health <= 0)
 			Parent_Turret.die()
@@ -1010,3 +1014,146 @@ Status: []<BR>"},
 	New()
 		installation = new/obj/item/weapon/gun/energy/laser(loc)
 		..()
+
+////////////////////////
+//Turret Control Panel//
+////////////////////////
+
+/obj/machinery/turretid
+	name = "turret control panel"
+	desc = "Used to control a room's automated defenses."
+	icon = 'icons/obj/machines/turret_control.dmi'
+	icon_state = "control_standby"
+	anchored = 1
+	density = 0
+	var/enabled = 1
+	var/lethal = 0
+	var/locked = 1
+	var/control_area //can be area name, path or nothing.
+	var/ailock = 0 // AI cannot use this
+	req_access = list(access_ai_upload)
+
+/obj/machinery/turretid/New()
+	..()
+	if(!control_area)
+		var/area/CA = get_area(src)
+		if(CA.master && CA.master != CA)
+			control_area = CA.master
+		else
+			control_area = CA
+	else if(istext(control_area))
+		for(var/area/A in world)
+			if(A.name && A.name==control_area)
+				control_area = A
+				break
+	power_change() //Checks power and initial settings
+	//don't have to check if control_area is path, since get_area_all_atoms can take path.
+	return
+
+/obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
+	if(stat & BROKEN) return
+	if (istype(user, /mob/living/silicon))
+		return src.attack_hand(user)
+
+	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
+		emagged = 1
+		locked = 0
+		if(user.machine==src)
+			src.attack_hand(user)
+
+		return
+
+	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
+		if (src.allowed(usr))
+			if(emagged)
+				user << "<span class='notice'>The turret control is unresponsive.</span>"
+				return
+
+			locked = !locked
+			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>"
+			if (locked)
+				if (user.machine==src)
+					user.unset_machine()
+					user << browse(null, "window=turretid")
+			else
+				if (user.machine==src)
+					src.attack_hand(user)
+		else
+			user << "<span class='warning'>Access denied.</span>"
+
+/obj/machinery/turretid/attack_ai(mob/user as mob)
+	if(!ailock)
+		return attack_hand(user)
+	else
+		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
+
+/obj/machinery/turretid/attack_hand(mob/user as mob)
+	if ( get_dist(src, user) > 0 )
+		if ( !issilicon(user) )
+			user << "<span class='notice'>You are too far away.</span>"
+			user.unset_machine()
+			user << browse(null, "window=turretid")
+			return
+
+	user.set_machine(src)
+	var/loc = src.loc
+	if (istype(loc, /turf))
+		loc = loc:loc
+	if (!istype(loc, /area))
+		user << text("Turret badly positioned - loc.loc is [].", loc)
+		return
+	var/area/area = loc
+	var/t = ""
+
+	if(src.locked && (!istype(user, /mob/living/silicon)))
+		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
+	else
+		if (!istype(user, /mob/living/silicon))
+			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
+		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
+		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
+
+	//user << browse(t, "window=turretid")
+	//onclose(user, "turretid")
+	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
+	popup.set_content(t)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+
+/obj/machinery/turretid/Topic(href, href_list)
+	if(..())
+		return
+	if (src.locked)
+		if (!istype(usr, /mob/living/silicon))
+			usr << "Control panel is locked!"
+			return
+	if (href_list["toggleOn"])
+		src.enabled = !src.enabled
+		src.updateTurrets()
+	else if (href_list["toggleLethal"])
+		src.lethal = !src.lethal
+		src.updateTurrets()
+	src.attack_hand(usr)
+
+/obj/machinery/turretid/proc/updateTurrets()
+	if(control_area)
+		for (var/obj/machinery/porta_turret/aTurret in get_area_all_atoms(control_area))
+			aTurret.setState(enabled, lethal)
+	src.update_icon()
+
+/obj/machinery/turretid/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/turretid/update_icon()
+	..()
+	if(stat & NOPOWER)
+		icon_state = "control_off"
+	else if (enabled)
+		if (lethal)
+			icon_state = "control_kill"
+		else
+			icon_state = "control_stun"
+	else
+		icon_state = "control_standby"

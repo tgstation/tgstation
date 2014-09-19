@@ -10,6 +10,7 @@
 	var/temp = null
 	var/max_uses = 5
 	var/op = 1
+	var/activepage
 
 /obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
@@ -30,12 +31,23 @@
 	var/dat
 	if(temp)
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
-	else
-		dat = "<B>The Book of Spells:</B><BR>"
-		dat += "Spells left to memorize: [uses]<BR>"
+	else if (!activepage || activepage == "return")
+		dat = "<B>The Book of Magic:</B><BR>"
+		dat += "Uses remaining: [uses]<BR>"
 		dat += "<HR>"
-		dat += "<B>Memorize which spell:</B><BR>"
-		dat += "<I>The number after the spell name is the cooldown time.</I><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=spells'>Learn and Improve Magical Abilities</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=artifacts'>Summon Magical Tools and Weapons</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=oneuse'>Cast Powerful One Time Spells</A><BR>"
+
+		dat += "<HR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
+
+	else if (activepage == "spells")
+		dat += "<B>Spells:</B><BR>"
+		dat += "Spells that can be reused endlessly. Unless stated otherwise all spells require full wizard garb as a focus.<BR>"
+		dat += "The number after the spell name is the cooldown time. You can reduce this number by spending more points on the spell.<BR>"
+
+		dat += "<HR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=magicmissile'>Magic Missile</A> (15)<BR>"
 		dat += "<I>This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage.</I><BR>"
@@ -82,32 +94,64 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>"
 		dat += "<I>This spell will curse a person to immediately turn into an unmoving statue. The effect will eventually wear off if the statue is not destroyed.</I><BR>"
 
+		dat += "<HR>"
+
+		dat += "<A href='byond://?src=\ref[src];spell_choice=return'><B>Return</B></A><BR>"
+
+	else if (activepage == "oneuse")
+
+		dat += "<B>One Time Spells:</B><BR>"
+		dat += "These potent spells can only be used once and will be used automatically upon purchase.<BR>"
+		dat += "The effects are global and irreversable, these spells cannot be unlearned, but they can be bought multiple times.<BR>"
+
+		dat += "<HR>"
+
 		dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR>"
 		dat += "<I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!</I><BR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=summonmagic'>Summon Magic</A> (One time use, global spell)<BR>"
 		dat += "<I>Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time.</I><BR>"
 
+		dat += "<A href='byond://?src=\ref[src];spell_choice=summonevents'>Summon Events</A> (One time use, persistent global spell)<BR>"
+		dat += "<I>Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events.</I><BR>"
+
 		dat += "<HR>"
-		dat += "<B>Artefacts:</B><BR>"
-		dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of spells.<BR>"
-		dat += "It is recommended that only experienced wizards attempt to wield such artefacts.<BR>"
+
+		dat += "<A href='byond://?src=\ref[src];spell_choice=return'><B>Return</B></A><BR>"
+
+	else if (activepage == "artifacts")
+
+		dat += "<B>Artifacts:</B><BR>"
+		dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of uses.<BR>"
+		dat += "These items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 		dat += "<HR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=staffchange'>Staff of Change</A><BR>"
 		dat += "<I>An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself.</I><BR>"
 		dat += "<HR>"
 
+		dat += "<A href='byond://?src=\ref[src];spell_choice=staffanimation'>Staff of Animation</A><BR>"
+		dat += "<I>An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines.</I><BR>"
+		dat += "<HR>"
+
+		dat += "<A href='byond://?src=\ref[src];spell_choice=staffdoor'>Staff of Door Creation</A><BR>"
+		dat += "<I>A particular staff that can mold solid metal into ornate wooden doors. Useful for getting around in the absence of other transportation. Does not work on glass.</I><BR>"
+		dat += "<HR>"
+
+		dat += "<A href='byond://?src=\ref[src];spell_choice=staffchaos'>Staff of Chaos</A><BR>"
+		dat += "<I>A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended.</I><BR>"
+		dat += "<HR>"
+
 		dat += "<A href='byond://?src=\ref[src];spell_choice=soulstone'>Six Soul Stone Shards and the spell Artificer</A><BR>"
 		dat += "<I>Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot.</I><BR>"
 		dat += "<HR>"
 
-		dat += "<A href='byond://?src=\ref[src];spell_choice=armor'>Mastercrafted Armor Set</A><BR>"
-		dat += "<I>An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space.</I><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=wands'>Wand Assortment</A><BR>"
+		dat += "<I>A collection of wands that allow for a wide variety of utility. Wands do not recharge, so be conservative in use. Comes in a handy belt.</I><BR>"
 		dat += "<HR>"
 
-		dat += "<A href='byond://?src=\ref[src];spell_choice=staffanimation'>Staff of Animation</A><BR>"
-		dat += "<I>An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines.</I><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=armor'>Mastercrafted Armor Set</A><BR>"
+		dat += "<I>An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space.</I><BR>"
 		dat += "<HR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=contract'>Contract of Apprenticeship</A><BR>"
@@ -118,7 +162,8 @@
 		dat += "<I>An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision.</I><BR>"
 
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
+
+		dat += "<A href='byond://?src=\ref[src];spell_choice=return'><B>Return</B></A><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -148,11 +193,13 @@
 					feedback_add_details("wizard_spell_learned","UM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 				else
 					temp = "You may only re-memorize spells whilst located inside the wizard sanctuary."
+			else if(href_list["spell_choice"] == "spells" || href_list["spell_choice"] == "artifacts" || href_list["spell_choice"] == "oneuse" || href_list["spell_choice"] == "return")
+				activepage = href_list["spell_choice"]
 			else if(uses >= 1 && max_uses >=1)
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonguns = "Summon Guns", summonmagic = "Summon Magic", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.mind.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -248,14 +295,19 @@
 							temp = "You have learned flesh to stone."
 						if("summonguns")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.rightandwrong(0)
+							rightandwrong(0, H)
 							max_uses--
 							temp = "You have cast summon guns."
 						if("summonmagic")
 							feedback_add_details("wizard_spell_learned","SU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.rightandwrong(1)
+							rightandwrong(1, H)
 							max_uses--
 							temp = "You have cast summon magic."
+						if("summonevents")
+							feedback_add_details("wizard_spell_learned","SE") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.summonevents()
+							max_uses--
+							temp = "You have cast summon events."
 						if("staffchange")
 							feedback_add_details("wizard_spell_learned","ST") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/gun/magic/staff/change(get_turf(H))
@@ -271,14 +323,29 @@
 							feedback_add_details("wizard_spell_learned","HS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/clothing/shoes/sandal(get_turf(H)) //In case they've lost them.
 							new /obj/item/clothing/gloves/purple(get_turf(H))//To complete the outfit
-							new /obj/item/clothing/suit/space/rig/wizard(get_turf(H))
-							new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(H))
+							new /obj/item/clothing/suit/space/hardsuit/wizard(get_turf(H))
+							new /obj/item/clothing/head/helmet/space/hardsuit/wizard(get_turf(H))
 							temp = "You have purchased a suit of wizard armor."
 							max_uses--
 						if("staffanimation")
 							feedback_add_details("wizard_spell_learned","SA") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/gun/magic/staff/animate(get_turf(H))
 							temp = "You have purchased a staff of animation."
+							max_uses--
+						if("staffchaos")
+							feedback_add_details("wizard_spell_learned","SC") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
+							temp = "You have purchased a staff of chaos."
+							max_uses--
+						if("staffdoor")
+							feedback_add_details("wizard_spell_learned","SD") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							new /obj/item/weapon/gun/magic/staff/door(get_turf(H))
+							temp = "You have purchased a staff of door creation."
+							max_uses--
+						if("wands")
+							feedback_add_details("wizard_spell_learned","WA") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							new /obj/item/weapon/storage/belt/wands/full(get_turf(H))
+							temp = "You have purchased an assortment of wands."
 							max_uses--
 						if("contract")
 							feedback_add_details("wizard_spell_learned","CT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
@@ -293,12 +360,13 @@
 								H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 								H.see_in_dark = 8
 								H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-								H << "\blue The walls suddenly disappear."
+								H << "<span class='notice'>The walls suddenly disappear.</span>"
 							temp = "You have purchased a scrying orb, and gained x-ray vision."
 							max_uses--
 		else
 			if(href_list["temp"])
 				temp = null
+				activepage = null
 		attack_self(H)
 
 	return

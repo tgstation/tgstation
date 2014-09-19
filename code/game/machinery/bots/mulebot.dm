@@ -98,12 +98,12 @@ var/global/mulebot_count = 0
 /obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		locked = !locked
-		user << "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!"
+		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>"
 		flick("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
 	else if(istype(I, /obj/item/weapon/card/id))
 		if(toggle_lock(user))
-			user << "\blue Controls [(locked ? "locked" : "unlocked")]."
+			user << "<span class='notice'>Controls [(locked ? "locked" : "unlocked")].</span>"
 
 	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
 		var/obj/item/weapon/stock_parts/cell/C = I
@@ -113,16 +113,16 @@ var/global/mulebot_count = 0
 		updateDialog()
 	else if(istype(I,/obj/item/weapon/screwdriver))
 		if(locked)
-			user << "\blue The maintenance hatch cannot be opened or closed while the controls are locked."
+			user << "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>"
 			return
 
 		open = !open
 		if(open)
-			src.visible_message("[user] opens the maintenance hatch of [src]", "\blue You open [src]'s maintenance hatch.")
+			src.visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
 			on = 0
 			icon_state="mulebot-hatch"
 		else
-			src.visible_message("[user] closes the maintenance hatch of [src]", "\blue You close [src]'s maintenance hatch.")
+			src.visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
 			icon_state = "mulebot0"
 
 		updateDialog()
@@ -130,18 +130,18 @@ var/global/mulebot_count = 0
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
-				"\red [user] repairs [src]!",
-				"\blue You repair [src]!"
+				"<span class='danger'>[user] repairs [src]!</span>",
+				"<span class='notice'>You repair [src]!</span>"
 			)
 		else
-			user << "\blue [src] does not need a repair!"
+			user << "<span class='notice'>[src] does not need a repair!</span>"
 	else if(istype(I, /obj/item/device/multitool) || istype(I, /obj/item/weapon/wirecutters))
 		if(open)
 			attack_hand(usr)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
-			user.visible_message("\red [user] knocks [load] off [src] with \the [I]!", "\red You knock [load] off [src] with \the [I]!")
+			user.visible_message("<span class='danger'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class='danger'>You knock [load] off [src] with \the [I]!</span>")
 		else
 			user << "You hit [src] with \the [I] but to no effect."
 	else
@@ -164,7 +164,7 @@ var/global/mulebot_count = 0
 	if(prob(50) && !isnull(load))
 		unload(0)
 	if(prob(25))
-		src.visible_message("\red Something shorts out inside [src]!")
+		src.visible_message("<span class='danger'>Something shorts out inside [src]!</span>")
 		wires.RandomCut()
 	..()
 
@@ -182,7 +182,7 @@ var/global/mulebot_count = 0
 
 /obj/machinery/bot/mulebot/interact(var/mob/user, var/ai=0)
 	var/dat
-	dat += "<h3>Multiple Utility Load Effector Mk. III</h3>"
+	dat += "<h3>Multiple Utility Load Effector Mk. IV</h3>"
 	dat += "<b>ID:</b> [suffix]<BR>"
 	dat += "<b>Power:</b> [on ? "On" : "Off"]<BR>"
 
@@ -273,7 +273,7 @@ var/global/mulebot_count = 0
 					turn_off()
 				else if (cell && !open)
 					if (!turn_on())
-						usr << "\red You can't switch on [src]."
+						usr << "<span class='danger'>You can't switch on [src].</span>"
 						return
 				else
 					return
@@ -288,7 +288,7 @@ var/global/mulebot_count = 0
 					cell.add_fingerprint(usr)
 					cell = null
 
-					usr.visible_message("\blue [usr] removes the power cell from [src].", "\blue You remove the power cell from [src].")
+					usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
 					updateDialog()
 
 			if("cellinsert")
@@ -300,7 +300,7 @@ var/global/mulebot_count = 0
 						C.loc = src
 						C.add_fingerprint(usr)
 
-						usr.visible_message("\blue [usr] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
+						usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 						updateDialog()
 
 
@@ -380,7 +380,7 @@ var/global/mulebot_count = 0
 		updateDialog()
 		return 1
 	else
-		user << "\red Access denied."
+		user << "<span class='danger'>Access denied.</span>"
 		return 0
 
 // mousedrop a crate to load the bot
@@ -416,9 +416,6 @@ var/global/mulebot_count = 0
 
 	if(get_dist(C, src) > 1 || load || !on)
 		return
-	for(var/obj/structure/plasticflaps/P in src.loc)//Takes flaps into account
-		if(!CanPass(C,P))
-			return
 	mode = 1
 
 	// if a create, close before loading
@@ -500,25 +497,24 @@ var/global/mulebot_count = 0
 	if(on)
 		var/speed = (wires.Motor1() ? 1 : 0) + (wires.Motor2() ? 2 : 0)
 		//world << "speed: [speed]"
+		var/num_steps = 0
 		switch(speed)
 			if(0)
 				// do nothing
 			if(1)
-				process_bot()
-				spawn(2)
-					process_bot()
-					sleep(2)
-					process_bot()
-					sleep(2)
-					process_bot()
-					sleep(2)
-					process_bot()
+				num_steps = 10
 			if(2)
-				process_bot()
-				spawn(4)
-					process_bot()
+				num_steps = 5
 			if(3)
-				process_bot()
+				num_steps = 3
+
+		if(num_steps)
+			process_bot()
+			num_steps--
+			spawn(0)
+				for(var/i=num_steps,i>0,i--)
+					sleep(2)
+					process_bot()
 
 	if(refresh) updateDialog()
 
@@ -594,7 +590,7 @@ var/global/mulebot_count = 0
 							src.visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
 							playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 
-						if(blockcount > 5)	// attempt 5 times before recomputing
+						if(blockcount > 10)	// attempt 10 times before recomputing
 							// find new path excluding blocked turf
 							src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
 							playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
@@ -718,9 +714,9 @@ var/global/mulebot_count = 0
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
-				src.visible_message("\red [src] bumps into [M]!")
+				src.visible_message("<span class='danger'>[src] bumps into [M]!</span>")
 			else
-				src.visible_message("\red [src] knocks over [M]!")
+				src.visible_message("<span class='danger'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
@@ -734,7 +730,7 @@ var/global/mulebot_count = 0
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
-	src.visible_message("\red [src] drives over [H]!")
+	src.visible_message("<span class='danger'>[src] drives over [H]!</span>")
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)
@@ -890,7 +886,7 @@ var/global/mulebot_count = 0
 
 
 /obj/machinery/bot/mulebot/explode()
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)

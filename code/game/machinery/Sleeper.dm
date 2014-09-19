@@ -17,8 +17,8 @@
 	var/min_health = 25
 	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
 	var/list/possible_chems = list(list("stoxin", "dexalin", "bicaridine", "kelotane"),
-								   list("stoxin", "dexalinp", "imidazoline", "dermaline", "bicaridine"),
-								   list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline", "alkysine", "arithrazine"))
+								   list("stoxin", "dexalinp", "bicaridine", "dermaline", "imidazoline"),
+								   list("stoxin", "dexalinp", "bicaridine", "dermaline", "imidazoline", "anti_toxin", "ryetalyn", "alkysine", "arithrazine"))
 
 /obj/machinery/sleeper/New()
 	..()
@@ -52,7 +52,7 @@
 	return 0
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user)|| !iscarbon(target))
+	if(stat || user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user)|| !iscarbon(target))
 		return
 	close_machine(target)
 
@@ -87,21 +87,21 @@
 		if(1.0)
 			for(var/atom/movable/A in src)
 				A.loc = loc
-				ex_act(severity)
+				A.ex_act(severity)
 			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
 				for(var/atom/movable/A in src)
 					A.loc = loc
-					ex_act(severity)
+					A.ex_act(severity)
 				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
 				for(var/atom/movable/A in src)
 					A.loc = loc
-					ex_act(severity)
+					A.ex_act(severity)
 				qdel(src)
 
 
@@ -131,48 +131,17 @@
 	..()
 	open_machine()
 
-/obj/machinery/sleeper/Destroy()
-	var/turf/T = loc
-	T.contents += contents
-	..()
-
 /obj/machinery/sleeper/attack_hand(mob/user)
-	if(..())
-		return
-	var/dat = "<h3>Sleeper Status</h3>"
-
-	dat += "<div class='statusDisplay'>"
-	if(!occupant)
-		dat += "Sleeper Unoccupied"
+	if(stat & (BROKEN|NOPOWER))
+		if(state_open)
+			close_machine()
+		else
+			open_machine()
 	else
-		dat += "[occupant.name] => "
-		switch(occupant.stat)	//obvious, see what their status is
-			if(0)
-				dat += "<span class='good'>Conscious</span>"
-			if(1)
-				dat += "<span class='average'>Unconscious</span>"
-			else
-				dat += "<span class='bad'>DEAD</span>"
+		sleeperUI(user)
 
-		dat += "<br />"
-
-		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
-
-		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
-		if(occupant.reagents.reagent_list.len)
-			for(var/datum/reagent/R in occupant.reagents.reagent_list)
-				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] units</div></div>", round(R.volume, 0.1))
-
-	dat += "</div>"
-
-	dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
-
-	dat += "<A href='?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
-
+/obj/machinery/sleeper/proc/sleeperUI(mob/user)
+	var/dat
 	dat += "<h3>Injector</h3>"
 	if(occupant)
 		dat += "<A href='?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
@@ -188,6 +157,34 @@
 			var/datum/reagent/C = chemical_reagents_list[re]
 			if(C)
 				dat += "<BR><span class='linkOff'>Inject [C.name]</span>"
+
+	dat += "<h3>Sleeper Status</h3>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
+	dat += "<A href='?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
+	dat += "<div class='statusDisplay'>"
+	if(!occupant)
+		dat += "Sleeper Unoccupied"
+	else
+		dat += "[occupant.name] => "
+		switch(occupant.stat)	//obvious, see what their status is
+			if(0)
+				dat += "<span class='good'>Conscious</span>"
+			if(1)
+				dat += "<span class='average'>Unconscious</span>"
+			else
+				dat += "<span class='bad'>DEAD</span>"
+		dat += "<br />"
+		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
+
+		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
+		if(occupant.reagents.reagent_list.len)
+			for(var/datum/reagent/R in occupant.reagents.reagent_list)
+				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] units</div></div>", round(R.volume, 0.1))
+	dat += "</div>"
 
 	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540)	//Set up the popup browser window
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))

@@ -35,6 +35,13 @@
 		shoot_with_empty_chamber(user)
 		return
 	if(target == user)
+		if(no_den_usage)
+			var/area/A = get_area(user)
+			if(istype(A, /area/wizard_station))
+				user << "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>"
+				return
+			else
+				no_den_usage = 0
 		zap_self(user)
 	else
 		..()
@@ -45,6 +52,11 @@
 	user.visible_message("<span class='notice'>[user] zaps \himself with [src]!</span>")
 	playsound(user, fire_sound, 50, 1)
 	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> zapped \himself with a <b>[src]</b>"
+
+
+/////////////////////////////////////
+//WAND OF DEATH
+/////////////////////////////////////
 
 /obj/item/weapon/gun/magic/wand/death
 	name = "wand of death"
@@ -61,6 +73,10 @@
 	charges--
 	..()
 
+/////////////////////////////////////
+//WAND OF HEALING
+/////////////////////////////////////
+
 /obj/item/weapon/gun/magic/wand/resurrection
 	name = "wand of healing"
 	desc = "This wand uses healing magics to heal and revive. They are rarely utilized within the Wizard Federation for some reason."
@@ -74,6 +90,10 @@
 	charges--
 	..()
 
+/////////////////////////////////////
+//WAND OF POLYMORPH
+/////////////////////////////////////
+
 /obj/item/weapon/gun/magic/wand/polymorph
 	name = "wand of polymorph"
 	desc = "This wand is attuned to chaos and will radically alter the victim's form."
@@ -86,12 +106,17 @@
 	wabbajack(user)
 	charges--
 
+/////////////////////////////////////
+//WAND OF TELEPORTATION
+/////////////////////////////////////
+
 /obj/item/weapon/gun/magic/wand/teleport
 	name = "wand of teleportation"
 	desc = "This wand will wrench targets through space and time to move them somewhere else."
 	ammo_type = /obj/item/ammo_casing/magic/teleport
 	icon_state = "telewand"
 	max_charges = 10 //10, 5, 5, 4
+	no_den_usage = 1
 
 /obj/item/weapon/gun/magic/wand/teleport/zap_self(mob/living/user as mob)
 	do_teleport(user, user, 10)
@@ -101,15 +126,24 @@
 	charges--
 	..()
 
+/////////////////////////////////////
+//WAND OF DOOR CREATION
+/////////////////////////////////////
+
 /obj/item/weapon/gun/magic/wand/door
 	name = "wand of door creation"
 	desc = "This particular wand can create doors in any wall for the unscrupulous wizard who shuns teleportation magics."
 	ammo_type = /obj/item/ammo_casing/magic/door
 	icon_state = "doorwand"
 	max_charges = 20 //20, 10, 10, 7
+	no_den_usage = 1
 
 /obj/item/weapon/gun/magic/wand/door/zap_self()
 	return
+
+/////////////////////////////////////
+//WAND OF FIREBALL
+/////////////////////////////////////
 
 /obj/item/weapon/gun/magic/wand/fireball
 	name = "wand of fireball"

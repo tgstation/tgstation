@@ -54,23 +54,27 @@
 /obj/item/clothing/mask/gas/sechailer/hos
 	icon_state = "hosmask"
 
+/obj/item/clothing/mask/gas/sechailer/cyborg
+	icon_state = "hosmask"
+	aggressiveness = 1 //Borgs are nicecurity!
+
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
 			if(1)
-				user << "\blue You set the restrictor to the middle position."
+				user << "<span class='notice'>You set the restrictor to the middle position.</span>"
 				aggressiveness = 2
 			if(2)
-				user << "\blue You set the restrictor to the last position."
+				user << "<span class='notice'>You set the restrictor to the last position.</span>"
 				aggressiveness = 3
 			if(3)
-				user << "\blue You set the restrictor to the first position."
+				user << "<span class='notice'>You set the restrictor to the first position.</span>"
 				aggressiveness = 1
 			if(4)
-				user << "\red You adjust the restrictor but nothing happens, probably because its broken."
+				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>"
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
-			user << "\red You broke it!"
+			user << "<span class='danger'>You broke it!</span>"
 			aggressiveness = 4
 	else
 		..()
@@ -103,7 +107,7 @@
 
 		switch(phrase)	//sets the properties of the chosen phrase
 			if(1)				// good cop
-				phrase_text = "HALT! HALT! HALT! HALT!"
+				phrase_text = "HALT! HALT! HALT!"
 				phrase_sound = "halt"
 			if(2)
 				phrase_text = "Stop in the name of the Law."
@@ -224,30 +228,51 @@
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
+	alloweat = 1
 	icon_state = "clown"
 	item_state = "clown_hat"
+
+obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
+
+	var/mob/M = usr
+	var/list/options = list()
+	options["True Form"] = "clown"
+	options["The Feminist"] = "sexyclown"
+	options["The Madman"] = "joker"
+	options["The Rainbow Color"] ="rainbow"
+
+	var/choice = input(M,"To what form do you wish to Morph this mask?","Morph Mask") in options
+
+	if(src && choice && !M.stat && in_range(M,src))
+		icon_state = options[choice]
+		M << "Your Clown Mask has now morphed into [choice], all praise the Honk Mother!"
+		return 1
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
+	alloweat = 1
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
+	alloweat = 1
 	icon_state = "mime"
 	item_state = "mime"
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
+	alloweat = 1
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
+	alloweat = 1
 	icon_state = "sexymime"
 	item_state = "sexymime"
 
@@ -264,4 +289,5 @@
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
 	desc = "Twoooo!"
+	alloweat = 1
 	icon_state = "owl"

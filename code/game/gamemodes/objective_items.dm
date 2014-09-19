@@ -34,8 +34,8 @@ datum/objective_item/steal/jetpack
 	difficulty = 3
 
 datum/objective_item/steal/magboots
-	name = "a pair of magboots"
-	targetitem =  /obj/item/clothing/shoes/magboots
+	name = "the chief engineer's advanced magnetic boots"
+	targetitem =  /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
 	excludefromjob = list("Chief Engineer")
 
@@ -75,6 +75,10 @@ datum/objective_item/steal/reactive
 	difficulty = 5
 	excludefromjob = list("Research Director")
 
+datum/objective_item/steal/documents
+	name = "any set of secret documents of any organization"
+	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's
+	difficulty = 5
 
 //Items with special checks!
 datum/objective_item/steal/plasma
@@ -128,6 +132,16 @@ datum/objective_item/slime/check_special_completion(var/obj/item/slime_extract/E
 		return 1
 	return 0
 
+//Unique Objectives
+datum/objective_item/unique/docs_red
+	name = "the \"Red\" secret documents"
+	targetitem = /obj/item/documents/syndicate/red
+	difficulty = 10
+
+datum/objective_item/unique/docs_blue
+	name = "the \"Blue\" secret documents"
+	targetitem = /obj/item/documents/syndicate/blue
+	difficulty = 10
 
 //Old ninja objectives.
 datum/objective_item/special/pinpointer

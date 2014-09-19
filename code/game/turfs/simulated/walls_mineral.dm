@@ -86,6 +86,8 @@
 
 /turf/simulated/wall/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
+		message_admins("Plasma wall ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("Plasma wall ignited by [user.ckey]([user]) in ([x],[y],[z])")
 		ignite(is_hot(W))
 		return
 	..()
@@ -126,3 +128,11 @@
 		if(shocked)
 			shock()
 */
+
+/turf/simulated/wall/mineral/wood
+	name = "wooden wall"
+	desc = "A wall with wooden plating."
+	icon_state = "wood0"
+	walltype = "wood"
+	mineral = "wood"
+	hardness = 70

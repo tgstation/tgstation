@@ -116,6 +116,8 @@ Class Procs:
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
+	if(occupant)
+		open_machine()
 	..()
 
 /obj/machinery/process()//If you dont use process or power why are you here
@@ -202,29 +204,48 @@ Class Procs:
 	..()
 	if(!interact_offline && stat & (NOPOWER|BROKEN))
 		return 1
-	if(usr.restrained() || usr.lying || usr.stat)
+	if(!usr.canUseTopic(src))
 		return 1
-	if(!(ishuman(usr) || issilicon(usr) || (ismonkey(usr) && ticker && ticker.mode.name == "monkey")))
-		usr << "<span class='notice'>You don't have the dexterity to do this!</span>"
-		return 1
-
-	var/norange = 0
-	if(istype(usr, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = usr
-		if(istype(H.l_hand, /obj/item/tk_grab))
-			norange = 1
-		else if(istype(H.r_hand, /obj/item/tk_grab))
-			norange = 1
-
-	if(!norange)
-		if(!issilicon(usr))
-			if(!in_range(src, usr))
-				return 1
-			if(!isturf(loc))
-				return 1
-
 	add_fingerprint(usr)
 	return 0
+
+/mob/proc/canUseTopic() //TODO: once finished, place these procs on the respective mob files
+	return
+
+/mob/dead/observer/canUseTopic()
+	if(check_rights(R_ADMIN, 0))
+		return
+
+/mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(no_dextery)
+		if(be_close && in_range(M, src))
+			return 1
+	else
+		src << "<span class='notice'>You don't have the dexterity to do this!</span>"
+	return
+
+/mob/living/carbon/human/canUseTopic(atom/movable/M)
+	if(restrained() || lying || stat || stunned || weakened)
+		return
+	if(!in_range(M, src))
+		return
+	if(!isturf(M.loc) && M.loc != src)
+		return
+	return 1
+
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
+	if(stat)
+		return
+	if(be_close && !in_range(M, src))
+		return
+	return 1
+
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
+	if(stat || lockcharge || stunned || weakened)
+		return
+	if(be_close && !in_range(M, src))
+		return
+	return 1
 
 /obj/machinery/attack_ai(mob/user as mob)
 	if(isrobot(user))
@@ -243,9 +264,7 @@ Class Procs:
 		return 1
 	if(user.lying || user.stat)
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+	if(!user.IsAdvancedToolUser())
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
@@ -256,7 +275,7 @@ Class Procs:
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			visible_message("\red [H] stares cluelessly at [src] and drools.")
+			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
 			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
@@ -307,15 +326,16 @@ Class Procs:
 	if(panel_open && istype(W))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		dir = pick(WEST,EAST,SOUTH,NORTH)
-		user << "<span class='notice'>You clumsily rotate [name].</span>"
+		user << "<span class='notice'>You clumsily rotate [src].</span>"
 		return 1
 	return 0
 
 /obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W))
-		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>"
+		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name].</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, time))
+			user << "<span class='notice'>You've [anchored ? "un" : ""]secured [name].</span>"
 			anchored = !anchored
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		return 1

@@ -32,16 +32,19 @@ var/const/SAFETY_COOLDOWN = 100
 
 
 /obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		emagged = 1
-		if(safety_mode)
-			safety_mode = 0
+	if(istype(I, /obj/item/weapon/card/emag))
+		if(!emagged)
+			emagged = 1
+			if(safety_mode)
+				safety_mode = 0
+				update_icon()
+			playsound(src.loc, "sparks", 75, 1, -1)
+			user << "<span class='notice'>You use the [I.name] on the [src.name].</span>"
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(emagged)
+			emagged = 0
 			update_icon()
-		playsound(src.loc, "sparks", 75, 1, -1)
-	else if(istype(I, /obj/item/weapon/screwdriver) && emagged)
-		emagged = 0
-		update_icon()
-		user << "<span class='notice'>You reset the crusher to its default factory settings.</span>"
+			user << "<span class='notice'>You reset the crusher to its default factory settings.</span>"
 	else
 		..()
 		return
@@ -90,18 +93,17 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/proc/recycle(var/obj/item/I, var/sound = 1)
 	I.loc = src.loc
-	if(!istype(I, /obj/item/weapon/disk/nuclear))
-		qdel(I)
-		if(prob(15))
-			new /obj/item/stack/sheet/metal(loc)
-		if(prob(10))
-			new /obj/item/stack/sheet/glass(loc)
-		if(prob(2))
-			new /obj/item/stack/sheet/plasteel(loc)
-		if(prob(1))
-			new /obj/item/stack/sheet/rglass(loc)
-		if(sound)
-			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	qdel(I)
+	if(prob(15))
+		new /obj/item/stack/sheet/metal(loc)
+	if(prob(10))
+		new /obj/item/stack/sheet/glass(loc)
+	if(prob(2))
+		new /obj/item/stack/sheet/plasteel(loc)
+	if(prob(1))
+		new /obj/item/stack/sheet/rglass(loc)
+	if(sound)
+		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 
 
 /obj/machinery/recycler/proc/stop(var/mob/living/L)

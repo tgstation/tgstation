@@ -10,7 +10,7 @@
 	var/wax = 200
 	var/lit = 0
 	proc
-		light(var/flavor_text = "\red [usr] lights the [name].")
+		light(var/flavor_text = "<span class='danger'>[usr] lights the [name].</span>")
 
 
 /obj/item/candle/update_icon()
@@ -28,7 +28,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn()) //Badasses dont get blinded by lighting their candle with a welding tool
-			light("\red [user] casually lights the [name] with [W], what a badass.")
+			light("<span class='danger'>[user] casually lights the [name] with [W], what a badass.</span>")
 	else if(istype(W, /obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/L = W
 		if(L.lit)
@@ -47,7 +47,7 @@
 			light()
 
 
-/obj/item/candle/light(var/flavor_text = "\red [usr] lights the [name].")
+/obj/item/candle/light(var/flavor_text = "<span class='danger'>[usr] lights the [name].</span>")
 	if(!src.lit)
 		src.lit = 1
 		//src.damtype = "fire"

@@ -52,7 +52,7 @@
 		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
-		if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")	//don't have dexterity
+		if(!user.IsAdvancedToolUser())
 			user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 			return
 
@@ -107,6 +107,15 @@
 	flags = CONDUCT
 	brightness_on = 2
 
+
+/obj/item/device/flashlight/seclite
+	name = "seclite"
+	desc = "A robust flashlight used by security."
+	icon_state = "seclite"
+	item_state = "seclite"
+	force = 9 // Not as good as a stun baton.
+	brightness_on = 5 // A little better than the standard flashlight.
+	hitsound = 'sound/weapons/genhit1.ogg'
 
 // the desk lamps are a bit special
 /obj/item/device/flashlight/lamp

@@ -36,7 +36,7 @@
 		return
 	var/turf/loc = get_turf(usr)
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red [src.name] cannot be placed on this spot."
+		usr << "<span class='danger'>[src.name] cannot be placed on this spot.</span>"
 		return
 	usr << "Attaching [src] to the wall."
 	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
@@ -137,15 +137,17 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		if (src.stage != 1) return
 		var/obj/item/stack/cable_coil/coil = W
-		coil.use(1)
-		switch(fixture_type)
-			if ("tube")
-				src.icon_state = "tube-construct-stage2"
-			if("bulb")
-				src.icon_state = "bulb-construct-stage2"
-		src.stage = 2
-		user.visible_message("[user.name] adds wires to [src].", \
-			"You add wires to [src].")
+		if (coil.use(1))
+			switch(fixture_type)
+				if ("tube")
+					src.icon_state = "tube-construct-stage2"
+				if("bulb")
+					src.icon_state = "bulb-construct-stage2"
+			src.stage = 2
+			user.visible_message("[user.name] adds wires to [src].", \
+				"You add wires to [src].")
+		else
+			user << "<span class='warning'>You need one length of cable to wire [src]."
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -199,6 +201,7 @@
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
+	var/static_power_used = 0
 	var/brightness = 8			// luminosity when on, also used in power calculation
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
@@ -300,6 +303,11 @@
 	active_power_usage = (luminosity * 10)
 	if(on != on_gs)
 		on_gs = on
+		if(on)
+			static_power_used = luminosity * 20 //20W per unit luminosity
+			addStaticPower(static_power_used, STATIC_LIGHT)
+		else
+			removeStaticPower(static_power_used, STATIC_LIGHT)
 
 
 // attempt to set the light's on/off status
@@ -451,18 +459,18 @@
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		for(var/mob/M in viewers(src))
-			M.show_message("\red [user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
+			M.show_message("<span class='danger'>[user.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 
 /obj/machinery/light/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)	return
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
-		M << "\red That object is useless to you."
+		M << "<span class='danger'>That object is useless to you.</span>"
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		for(var/mob/O in viewers(src))
-			O.show_message("\red [M.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
+			O.show_message("<span class='danger'>[M.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 // attack with hand - remove tube/bulb
@@ -593,14 +601,6 @@
 		broken()
 
 
-// timed process
-// use power
-
-#define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
-
-/obj/machinery/light/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
-	if(on)
-		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
 
 // called when area power state changes
 /obj/machinery/light/power_change()
@@ -650,11 +650,6 @@
 	g_amt = 100
 	brightness = 8
 
-/obj/item/weapon/light/tube/large
-	w_class = 2
-	name = "large light tube"
-	brightness = 15
-
 /obj/item/weapon/light/bulb
 	name = "light bulb"
 	desc = "A replacement light bulb."
@@ -662,20 +657,11 @@
 	base_state = "lbulb"
 	item_state = "contvapour"
 	g_amt = 100
-	brightness = 5
+	brightness = 4
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()
 	shatter()
-
-/obj/item/weapon/light/bulb/fire
-	name = "fire bulb"
-	desc = "A replacement fire bulb."
-	icon_state = "fbulb"
-	base_state = "fbulb"
-	item_state = "egg4"
-	g_amt = 100
-	brightness = 5
 
 // update the icon state and description of the light
 
@@ -694,11 +680,6 @@
 
 /obj/item/weapon/light/New()
 	..()
-	switch(name)
-		if("light tube")
-			brightness = rand(6,9)
-		if("light bulb")
-			brightness = rand(4,6)
 	update()
 
 
@@ -735,7 +716,7 @@
 
 /obj/item/weapon/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		src.visible_message("\red [name] shatters.","\red You hear a small glass object shatter.")
+		src.visible_message("<span class='danger'>[name] shatters.</span>","<span class='danger'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)

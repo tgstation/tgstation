@@ -36,8 +36,6 @@
 /obj/machinery/field/containment/ex_act(severity)
 	return 0
 
-/obj/machinery/field/containment/meteorhit()
-	return 0
 
 /obj/machinery/field/containment/Crossed(atom/movable/mover)
 	if(isliving(mover))
@@ -84,17 +82,17 @@
 			user.Stun(stun)
 			user.Weaken(10)
 			user.burn_skin(shock_damage)
-			user.visible_message("\red [user.name] was shocked by the [src.name]!", \
-			"\red <B>You feel a powerful shock course through your body sending you flying!</B>", \
-			"\red You hear a heavy electrical crack")
+			user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
+			"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
+			"<span class='danger'>You hear a heavy electrical crack.</span>")
 
 		else if(issilicon(user))
 			if(prob(20))
 				user.Stun(2)
 			user.take_overall_damage(0, shock_damage)
-			user.visible_message("\red [user.name] was shocked by the [src.name]!", \
-			"\red <B>Energy pulse detected, system damaged!</B>", \
-			"\red You hear an electrical crack")
+			user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
+			"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
+			"<span class='danger'>You hear an electrical crack.</span>")
 
 		user.updatehealth()
 		var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))

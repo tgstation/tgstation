@@ -43,6 +43,9 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["ctrl"])
+		CtrlShiftClickOn(A)
+		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
 		return
@@ -71,7 +74,7 @@
 		return M.click_action(A,src)
 
 	if(restrained())
-		next_move = world.time + 10   //Doing shit in cuffs shall be vey slow
+		changeNext_move(10)   //Doing shit in cuffs shall be vey slow
 		RestrainedClickOn(A)
 		return
 
@@ -83,34 +86,23 @@
 
 
 	if(W == A)
-		next_move = world.time + 6
-		if(W.flags&USEDELAY)
-			next_move += 5
 		W.attack_self(src)
 		if(hand)
 			update_inv_l_hand(0)
 		else
 			update_inv_r_hand(0)
-
 		return
 
 	// operate two levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents))
-		// faster access to objects already on you
-		if(A in contents)
-			next_move = world.time + 6 // on your person
-		else
-			next_move = world.time + 8 // in a box/bag or in your square
-
 		// No adjacency needed
 		if(W)
-			if(W.flags&USEDELAY)
-				next_move += 5
-
 			var/resolved = A.attackby(W,src)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
+			if(ismob(A))
+				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
 		return
 
@@ -119,33 +111,31 @@
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		next_move = world.time + 10
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				if(W.flags&USEDELAY)
-					next_move += 5
-				if(W.preattack(A,src,1,params))	//Weapon attack override,return 1 to exit
-					return
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
+				if(ismob(A))
+					changeNext_move(CLICK_CD_MELEE)
 				UnarmedAttack(A, 1)
 			return
 		else // non-adjacent click
 			if(W)
-				if(W.preattack(A,src,0,params))	//Weapon attack override,return 1 to exit
-					return
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
 
 	return
 
-// Default behavior: ignore double clicks, consider them normal clicks instead
+/mob/proc/changeNext_move(num)
+	next_move = world.time + num
+
+// Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
 /mob/proc/DblClickOn(var/atom/A, var/params)
-	ClickOn(A,params)
+	return
 
 
 /*
@@ -159,6 +149,8 @@
 	in human click code to allow glove touches only at melee range.
 */
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
+	if(ismob(A))
+		changeNext_move(CLICK_CD_MELEE)
 	return
 
 /*
@@ -173,19 +165,9 @@
 	if(!mutations.len) return
 	if((LASER in mutations) && a_intent == "harm")
 		LaserEyes(A) // moved into a proc below
-	else if(TK in mutations)
-		switch(get_dist(src,A))
-			if(0)
-				;
-			if(1 to 5) // not adjacent may mean blocked by window
-				next_move += 2
-			if(5 to 7)
-				next_move += 5
-			if(8 to tk_maxrange)
-				next_move += 10
-			else
-				return
-		A.attack_tk(src)
+	else
+		if(TK in mutations)
+			A.attack_tk(src)
 /*
 	Restrained ClickOn
 
@@ -221,7 +203,6 @@
 /atom/proc/ShiftClick(var/mob/user)
 	if(user.client && user.client.eye == user)
 		examine()
-		user.face_atom(src)
 	return
 
 /*
@@ -260,6 +241,17 @@
 	return T.Adjacent(src)
 
 /*
+	Control+Shift click
+	Unused except for AI
+*/
+/mob/proc/CtrlShiftClickOn(var/atom/A)
+	A.CtrlShiftClick(src)
+	return
+
+/atom/proc/CtrlShiftClick(var/mob/user)
+	return
+
+/*
 	Misc helpers
 
 	Laser Eyes: as the name implies, handles this since nothing else does currently
@@ -269,7 +261,7 @@
 	return
 
 /mob/living/LaserEyes(atom/A)
-	next_move = world.time + 6
+	changeNext_move(CLICK_CD_RANGE)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 
@@ -293,7 +285,7 @@
 		nutrition = max(nutrition - rand(1,5),0)
 		handle_regular_hud_updates()
 	else
-		src << "\red You're out of energy!  You need food!"
+		src << "<span class='danger'>You're out of energy!  You need food!</span>"
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)

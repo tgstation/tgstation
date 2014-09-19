@@ -1,13 +1,10 @@
-
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/device/flashlight/seclite)
 	body_parts_covered = CHEST
-
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -30,7 +27,7 @@
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
-	desc = "An armoured jacket with silver rank pips and livery."
+	desc = "An armored jacket with silver rank pips and livery."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -82,32 +79,6 @@
 		hit_reflect_chance = 0
 	if (prob(hit_reflect_chance))
 		return 1
-
-/obj/item/clothing/suit/armor/swat
-	name = "swat suit"
-	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
-	icon_state = "deathsquad"
-	item_state = "swat_suit"
-	gas_transfer_coefficient = 0.01
-	permeability_coefficient = 0.01
-	flags = THICKMATERIAL
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 1
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 0, rad = 0)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	heat_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-
-/obj/item/clothing/suit/armor/swat/officer
-	name = "officer jacket"
-	desc = "An armored jacket used in special operations."
-	icon_state = "detective"
-	item_state = "det_suit"
-	blood_overlay_type = "coat"
-	flags_inv = 0
 
 
 /obj/item/clothing/suit/armor/vest/det_suit

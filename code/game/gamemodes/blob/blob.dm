@@ -17,9 +17,6 @@ var/list/blob_nodes = list()
 
 	restricted_jobs = list("Cyborg", "AI")
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
 	var/declared = 0
 
 	var/cores_to_spawn = 1
@@ -62,7 +59,7 @@ var/list/blob_nodes = list()
 
 
 /datum/game_mode/blob/proc/greet_blob(var/datum/mind/blob)
-	blob.current << "<B>\red You are infected by the Blob!</B>"
+	blob.current << "<span class='userdanger'>You are infected by the Blob!</span>"
 	blob.current << "<b>Your body is ready to give spawn to a new blob core which will eat this station.</b>"
 	blob.current << "<b>Find a good location to spawn the core and then take control and overwhelm the station!</b>"
 	blob.current << "<b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b>"
@@ -111,11 +108,7 @@ var/list/blob_nodes = list()
 		if(B)
 			B.max_occurrences = 0 // disable the event
 	else
-		error("Events variable is null in blob gamemode post setup.")
-
-	spawn(10)
-		start_state = new /datum/station_state()
-		start_state.count()
+		ERROR("Events variable is null in blob gamemode post setup.")
 
 	spawn(0)
 
@@ -127,25 +120,29 @@ var/list/blob_nodes = list()
 
 		sleep(100)
 
-		show_message("<span class='alert'>You feel tired and bloated.</span>")
+		show_message("<span class='userdanger'>You feel tired and bloated.</span>")
 
 		sleep(wait_time)
 
-		show_message("<span class='alert'>You feel like you are about to burst.</span>")
+		show_message("<span class='userdanger'>You feel like you are about to burst.</span>")
 
 		sleep(wait_time / 2)
 
 		burst_blobs()
 
 		// Stage 0
-		sleep(40)
+		sleep(wait_time)
 		stage(0)
 
 		// Stage 1
-		sleep(2000)
+		sleep(wait_time)
 		stage(1)
 
-	..()
+		// Stage 2
+		sleep(30000)
+		stage(2)
+
+	return ..(0)
 
 /datum/game_mode/blob/proc/stage(var/stage)
 
@@ -153,14 +150,12 @@ var/list/blob_nodes = list()
 		if (0)
 			send_intercept(1)
 			declared = 1
-			return
 
 		if (1)
-			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
-					M << sound('sound/AI/outbreak5.ogg')
-			return
+			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
+
+		if (2)
+			send_intercept(2)
 
 	return
 

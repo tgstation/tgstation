@@ -73,6 +73,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(11)	underwear = "Ladies Kinky"
 				if(12)	underwear = "Tankini"
 				if(13)	underwear = "Nude"
+		if(!(pref_species in species_list))
+			pref_species = new /datum/species/human()
 	return
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
@@ -151,6 +153,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == -2)		//fatal, can't load any data
 		return 0
 
+	if(!S["species"] || !config.mutant_races)
+		S["species"]		<< new /datum/species/human()
+	if(!S["mutant_color"] || S["mutant_color"] == "#000")
+		S["mutant_color"]	<< "#FFF"
+
 	//Character
 	S["OOC_Notes"]			>> metadata
 	S["real_name"]			>> real_name
@@ -165,6 +172,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["facial_style_name"]	>> facial_hair_style
 	S["underwear"]			>> underwear
 	S["backbag"]			>> backbag
+	S["species"]			>> pref_species
+	S["mutant_color"]		>> mutant_color
 
 	//Jobs
 	S["userandomjob"]		>> userandomjob
@@ -185,6 +194,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
+	if(!(pref_species in species_list))
+		pref_species = new /datum/species/human()
+	if(!mutant_color || mutant_color == "#000")
+		mutant_color = "#FFF"
 	if(!real_name)	real_name = random_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
@@ -202,6 +215,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
 	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
+	mutant_color	= sanitize_hexcolor(mutant_color, 3, 0)
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -238,6 +252,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["facial_style_name"]	<< facial_hair_style
 	S["underwear"]			<< underwear
 	S["backbag"]			<< backbag
+	S["species"]			<< pref_species
+	S["mutant_color"]		<< mutant_color
 
 	//Jobs
 	S["userandomjob"]		<< userandomjob

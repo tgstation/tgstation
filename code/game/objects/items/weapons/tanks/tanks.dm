@@ -42,7 +42,7 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if (!in_range(src, usr))
-		if (icon == src) usr << "\blue If you want any more information you'll need to get closer."
+		if (icon == src) usr << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
@@ -61,7 +61,7 @@
 	else
 		descriptive = "furiously hot"
 
-	usr << "\blue It feels [descriptive]"
+	usr << "<span class='notice'>It feels [descriptive]</span>"
 
 	return
 
@@ -131,17 +131,17 @@
 				if(location.internal == src)
 					location.internal = null
 					location.internals.icon_state = "internal0"
-					usr << "\blue You close the tank release valve."
+					usr << "<span class='notice'>You close the tank release valve.</span>"
 					if (location.internals)
 						location.internals.icon_state = "internal0"
 				else
 					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 						location.internal = src
-						usr << "\blue You open \the [src] valve."
+						usr << "<span class='notice'>You open \the [src] valve.</span>"
 						if (location.internals)
 							location.internals.icon_state = "internal1"
 					else
-						usr << "\blue You need something to connect to \the [src]."
+						usr << "<span class='notice'>You need something to connect to \the [src].</span>"
 
 		src.add_fingerprint(usr)
 /*
@@ -205,13 +205,15 @@
 		air_contents.react()
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
-		range = min(range, MAX_EX_LIGHT_RANGE)
 		var/turf/epicenter = get_turf(loc)
 
 		//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		qdel(src)
+		if(istype(src.loc,/obj/item/device/transfer_valve))
+			qdel(src.loc)
+		else
+			qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
 		//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"

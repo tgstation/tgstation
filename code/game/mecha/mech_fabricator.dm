@@ -20,12 +20,12 @@
 	var/list/resources = list(
 										"metal"=0,
 										"glass"=0,
-										"gold"=0,
-										"silver"=0,
+										"bananium"=0,
 										"diamond"=0,
+										"gold"=0,
 										"plasma"=0,
-										"uranium"=0,
-										"bananium"=0
+										"silver"=0,
+										"uranium"=0
 										)
 	var/res_max_amount = 200000
 	var/datum/research/files
@@ -73,7 +73,7 @@
 						/obj/item/mecha_parts/part/gygax_right_arm,
 						/obj/item/mecha_parts/part/gygax_left_leg,
 						/obj/item/mecha_parts/part/gygax_right_leg,
-						/obj/item/mecha_parts/part/gygax_armour
+						/obj/item/mecha_parts/part/gygax_armor
 					),
 	"Durand"=list(
 						/obj/item/mecha_parts/chassis/durand,
@@ -83,7 +83,7 @@
 						/obj/item/mecha_parts/part/durand_right_arm,
 						/obj/item/mecha_parts/part/durand_left_leg,
 						/obj/item/mecha_parts/part/durand_right_leg,
-						/obj/item/mecha_parts/part/durand_armour
+						/obj/item/mecha_parts/part/durand_armor
 					),
 	"H.O.N.K"=list(
 						/obj/item/mecha_parts/chassis/honker,
@@ -291,7 +291,7 @@
 /*
 	New()
 		..()
-		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000))
+		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armor","time"=600,"metal"=75000,"diamond"=10000))
 		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000))
 		src.remove_part_set("Gygax")
 		return
@@ -313,7 +313,7 @@
 /obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/obj/item/part)
 	var/i = 0
 	var/output
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))//The most efficient way to go about this. Not all objects have these vars, but if they don't then they CANNOT be made by the mech fab. Doing it this way reduces a major amount of typecasting and switches, while cutting down maintenece for them as well -Sieve
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))//The most efficient way to go about this. Not all objects have these vars, but if they don't then they CANNOT be made by the mech fab. Doing it this way reduces a major amount of typecasting and switches, while cutting down maintenece for them as well -Sieve
 		for(var/c in part:construction_cost)//The check should ensure that anything without the var doesn't make it to this point
 			if(c in resources)
 				output += "[i?" | ":null][get_resource_cost_w_coeff(part,c)] [c]"
@@ -334,7 +334,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/remove_resources(var/obj/item/part)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		for(var/resource in part:construction_cost)
 			if(resource in src.resources)
 				src.resources[resource] -= get_resource_cost_w_coeff(part,resource)
@@ -344,7 +344,7 @@
 /obj/machinery/mecha_part_fabricator/proc/check_resources(var/obj/item/part)
 //		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts) || istype(part,/obj/item/borg/upgrade))
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		for(var/resource in part:construction_cost)
 			if(resource in src.resources)
 				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
@@ -355,6 +355,11 @@
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(var/obj/item/part)
 	if(!part) return
+
+	 // critical exploit prevention, do not remove unless you replace it
+	if( (part.loc != src) || !(hasvar(part, "construction_time")) || !(hasvar(part, "construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
+		return
+
 	src.being_built = new part.type(src)
 	src.desc = "It's building \a [src.being_built]."
 	src.remove_resources(part)
@@ -407,7 +412,7 @@
 			return process_queue()
 		else
 			return
-	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")))//If it shouldn't be printed
+	if(!(hasvar(part, "construction_time")) || !(hasvar(part, "construction_cost")))//If it shouldn't be printed
 		remove_from_queue(1)//Take it out of the quene
 		return process_queue()//Then reprocess it
 	temp = null
@@ -434,7 +439,7 @@
 		for(var/i=1;i<=queue.len;i++)
 			var/obj/item/part = listgetindex(src.queue, i)
 			if(istype(part))
-				if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+				if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 					output += "<li[!check_resources(part)?" style='color: #f00;'":null]>[part.name] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
 				else//Prevents junk items from even appearing in the list, and they will be silently removed when the fab processes
 					remove_from_queue(i)//Trash it
@@ -524,7 +529,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		var/list/L = part_sets["Misc"]
 		if(L.Find(part.type))
 			return round(part:construction_cost[resource]*(resource_coeff/2)*resource_coeff_tech, roundto)             //hacky scary skeletons send shivers down your spine
@@ -534,7 +539,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/obj/item/part as obj, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		return round(part:construction_time*time_coeff*time_coeff_tech, roundto)
 	else
 		return 0
@@ -603,6 +608,20 @@
 	onclose(user, "mecha_fabricator")
 	return
 
+/obj/machinery/mecha_part_fabricator/proc/exploit_prevention(var/obj/Part, mob/user as mob, var/desc_exploit)
+// critical exploit prevention, feel free to improve or replace this, but do not remove it
+
+	if(!istype(Part) || !istype(user)) // sanity
+		return 1
+
+	if( (Part.loc != src) || !(hasvar(Part, "construction_time")) || !(hasvar(Part, "construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
+
+		var/turf/LOC = get_turf(user)
+		message_admins("[key_name_admin(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] <a href='?_src_=vars;Vars=\ref[Part]'>[Part]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
+		log_admin("EXPLOIT : [key_name(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] [Part] !")
+		return 1
+
+	return null
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
 	if(..())
@@ -617,13 +636,25 @@
 				src.part_set = tpart_set
 				screen = "parts"
 	if(href_list["part"])
-		var/list/part = filter.getObj("part")
+		var/obj/part = filter.getObj("part")
+
+		// critical exploit prevention, do not remove unless you replace it
+		if(src.exploit_prevention(part, usr))
+			return
+
 		if(!processing_queue)
 			build_part(part)
 		else
 			add_to_queue(part)
 	if(href_list["add_to_queue"])
-		add_to_queue(filter.getObj("add_to_queue"))
+		var/obj/part = filter.getObj("add_to_queue")
+
+		// critical exploit prevention, do not remove unless you replace it
+		if(src.exploit_prevention(part, usr))
+			return
+
+		add_to_queue(part)
+
 		return update_queue_on_page()
 	if(href_list["remove_from_queue"])
 		remove_from_queue(filter.getNum("remove_from_queue"))
@@ -657,11 +688,14 @@
 		queue = list()
 		return update_queue_on_page()
 	if(href_list["sync"])
-		queue = list()
 		src.sync()
-		return update_queue_on_page()
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")
+
+		// critical exploit prevention, do not remove unless you replace it
+		if(src.exploit_prevention(part, usr, 1))
+			return
+
 		if(part)
 			temp = {"<h1>[part] description:</h1>
 						[part.desc]<br>
@@ -695,10 +729,10 @@
 			return 0
 	var/result = 0
 	var/obj/item/stack/sheet/res = new type(src)
-	var/total_amount = round(resources[mat_string]/res.perunit)
-	res.amount = min(total_amount,amount)
+	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
+	res.amount = min(total_amount,res.max_amount)
 	if(res.amount>0)
-		resources[mat_string] -= res.amount*res.perunit
+		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
 		res.Move(src.loc)
 		result = res.amount
 	else
@@ -713,38 +747,52 @@
 	if(exchange_parts(user, W))
 		return
 
-	default_deconstruction_crowbar(W)
-
-	if (panel_open)
+	if(panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
-			if(src.resources["metal"] >= 3750)
+			while(src.resources["metal"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
-				G.amount = round(src.resources["metal"] / G.perunit)
-			if(src.resources["glass"] >= 3750)
+				var/sheet_conversion = round(src.resources["metal"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["metal"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["glass"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-				G.amount = round(src.resources["glass"] / G.perunit)
-			if(src.resources["plasma"] >= 2000)
+				var/sheet_conversion = round(src.resources["glass"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["glass"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["plasma"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/plasma/G = new /obj/item/stack/sheet/mineral/plasma(src.loc)
-				G.amount = round(src.resources["plasma"] / G.perunit)
-			if(src.resources["silver"] >= 2000)
+				var/sheet_conversion = round(src.resources["plasma"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["plasma"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["silver"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/silver/G = new /obj/item/stack/sheet/mineral/silver(src.loc)
-				G.amount = round(src.resources["silver"] / G.perunit)
-			if(src.resources["gold"] >= 2000)
+				var/sheet_conversion = round(src.resources["silver"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["silver"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["gold"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold(src.loc)
-				G.amount = round(src.resources["gold"] / G.perunit)
-			if(src.resources["uranium"] >= 2000)
+				var/sheet_conversion = round(src.resources["gold"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["gold"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["uranium"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium(src.loc)
-				G.amount = round(src.resources["uranium"] / G.perunit)
-			if(src.resources["diamond"] >= 2000)
+				var/sheet_conversion = round(src.resources["uranium"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["uranium"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["diamond"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
-				G.amount = round(src.resources["diamond"] / G.perunit)
-			if(src.resources["bananium"] >= 2000)
+				var/sheet_conversion = round(src.resources["diamond"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["diamond"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["bananium"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
-				G.amount = round(src.resources["bananium"] / G.perunit)
+				var/sheet_conversion = round(src.resources["bananium"] / MINERAL_MATERIAL_AMOUNT)
+				G.amount = min(sheet_conversion, G.max_amount)
+				src.resources["bananium"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
 			return 1
 		else
-			user << "\red You can't load \the [src.name] while it's opened."
+			user << "<span class='danger'>You can't load \the [src.name] while it's opened.</span>"
 			return 1
 
 	if(istype(W, /obj/item/weapon/card/emag))
@@ -776,12 +824,11 @@
 		return
 	var/obj/item/stack/sheet/stack = W
 	var/sname = "[stack.name]"
-	var/amnt = stack.perunit
 	if(src.resources[material] < res_max_amount)
 		var/count = 0
 		src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 		while(src.resources[material] < res_max_amount && stack && stack.amount > 0)
-			src.resources[material] += amnt
+			src.resources[material] += MINERAL_MATERIAL_AMOUNT
 			stack.use(1)
 			count++
 		sleep(10)

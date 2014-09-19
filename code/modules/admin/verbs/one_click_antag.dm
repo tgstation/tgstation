@@ -10,14 +10,16 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/one_click_antag()
 
-	var/dat = {"<B>One-click Antagonist</B><br>
+	var/dat = {"<B>Quick-Create Antagonist</B><br>
 		<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
 		<a href='?src=\ref[src];makeAntag=2'>Make Changelings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
 		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
+		<a href='?src=\ref[src];makeAntag=11'>Make Blob</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Requires Ghosts)</a><br>
 		"}
 /* These dont work just yet
 	Ninja, aliens and deathsquad I have not looked into yet
@@ -26,7 +28,6 @@ client/proc/one_click_antag()
 
 		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 		"}
 */
 	usr << browse(dat, "window=oneclickantag;size=400x400")
@@ -146,35 +147,10 @@ client/proc/one_click_antag()
 	return 0
 
 /datum/admins/proc/makeWizard()
-	var/list/mob/dead/observer/candidates = list()
-	var/mob/dead/observer/theghost = null
-	var/time_passed = world.time
+	var/client/C = pick_from_candidates(BE_WIZARD)
 
-	for(var/mob/dead/observer/G in player_list)
-		if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
-			spawn(0)
-				switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
-					if("Yes")
-						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-							return
-						candidates += G
-					if("No")
-						return
-					else
-						return
-
-	sleep(300)
-
-	if(candidates.len)
-		shuffle(candidates)
-		for(var/mob/i in candidates)
-			if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
-
-			theghost = i
-			break
-
-	if(theghost)
-		var/mob/living/carbon/human/new_character=makeBody(theghost)
+	if(C)
+		var/mob/living/carbon/human/new_character=makeBody(C.mob)
 		new_character.mind.make_Wizard()
 		return 1
 
@@ -216,92 +192,59 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/makeNukeTeam()
 
-	var/list/mob/dead/observer/candidates = list()
+	var/list/candidates = get_candidates(BE_OPERATIVE)
+
 	var/list/mob/dead/observer/chosen = list()
-	var/mob/dead/observer/theghost = null
-	var/time_passed = world.time
-
-	for(var/mob/dead/observer/G in player_list)
-		if(!jobban_isbanned(G, "operative") && !jobban_isbanned(G, "Syndicate"))
-			spawn(0)
-				switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
-					if("Yes")
-						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-							return
-						candidates += G
-					if("No")
-						return
-					else
-						return
-
-	sleep(300)
+	var/client/C = null
 
 	if(candidates.len)
 		var/numagents = 5
 		var/agentcount = 0
 
 		for(var/i = 0, i<numagents,i++)
-			shuffle(candidates) //More shuffles means more randoms
-			for(var/mob/j in candidates)
-				if(!j || !j.client)
-					candidates.Remove(j)
-					continue
 
-				theghost = j
-				candidates.Remove(theghost)
-				chosen += theghost
-				agentcount++
-				break
+			C = pick(candidates)
+			candidates.Remove(C)
+			chosen += C.mob
+			agentcount++
+			break
 		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
 		if(agentcount < 3)
 			return 0
-		else
-			for(var/mob/c in chosen)
-				var/mob/living/carbon/human/new_character=makeBody(c)
-				new_character.mind.make_Nuke()
 
-		var/obj/effect/landmark/nuke_spawn = locate("landmark*Syndicate-Uplink")
-		var/obj/effect/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
-
+		var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
+		var/obj/effect/landmark/closet_spawn = locate("landmark*Syndicate-Uplink")
 		var/nuke_code = "[rand(10000, 99999)]"
 
 		if(nuke_spawn)
-			var/obj/item/weapon/paper/P = new
-			P.info = "Sadly, the Syndicate could not get you a nuclear bomb.  We have, however, acquired the arming code for the station's onboard nuke.  The nuclear authorization code is: <b>[nuke_code]</b>"
-			P.name = "nuclear bomb code and instructions"
-			P.loc = nuke_spawn.loc
+			var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
+			the_bomb.r_code = nuke_code
 
 		if(closet_spawn)
 			new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
-		for (var/obj/effect/landmark/A in /area/syndicate_station/start)//Because that's the only place it can BE -Sieve
-			if (A.name == "Syndicate-Gear-Closet")
-				new /obj/structure/closet/syndicate/personal(A.loc)
-				qdel(A)
+		//Let's find the spawn locations
+		var/list/turf/synd_spawn = list()
+		for(var/obj/effect/landmark/A in landmarks_list)
+			if(A.name == "Syndicate-Spawn")
+				synd_spawn += get_turf(A)
 				continue
 
-			if (A.name == "Syndicate-Bomb")
-				new /obj/effect/spawner/newbomb/timer/syndicate(A.loc)
-				qdel(A)
-				continue
+		var/leader_chosen
+		var/spawnpos = 1 //Decides where they'll spawn. 1=leader.
 
-		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/image/I in synd_mind.current.client.images)
-						if(I.icon_state == "synd")
-							del(I)
+		for(var/mob/c in chosen)
+			if(spawnpos > synd_spawn.len)
+				spawnpos = 2 //Ran out of spawns. Let's loop back to the first non-leader position
+			var/mob/living/carbon/human/new_character=makeBody(c)
+			if(!leader_chosen)
+				leader_chosen = 1
+				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code,1)
+			else
+				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code)
+			spawnpos++
 
-		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/datum/mind/synd_mind_1 in ticker.mode.syndicates)
-						if(synd_mind_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
-							synd_mind.current.client.images += I
-
-		for (var/obj/machinery/nuclearbomb/bomb in world)
-			bomb.r_code = nuke_code						// All the nukes are set to this code.
+		ticker.mode.update_all_synd_icons()
 
 	return 1
 
@@ -317,74 +260,64 @@ client/proc/one_click_antag()
 	new /datum/round_event/ninja()
 	return 1
 
-/* DEATH SQUADS
+// DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
-	var/list/mob/dead/observer/candidates = list()
-	var/mob/dead/observer/theghost = null
-	var/time_passed = world.time
-	var/input = "Purify the station."
-	if(prob(10))
-		input = "Save Runtime and any other cute things on the station."
+	var/mission = input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
+	var/list/candidates = get_candidates(-1, "member of a Nanotrasen strike team")
 
-	var/syndicate_leader_selected = 0 //when the leader is chosen. The last person spawned.
+	if(candidates.len >= 3) //Minimum 3 to be considered a squad
+		//Pick the lucky players
+		var/numagents = min(5,candidates.len) //How many commandos to spawn
+		while(numagents && deathsquadspawn.len && candidates.len)
+			var/spawnloc = deathsquadspawn[1]
+			var/client/C = pick(candidates)
+			var/mob/dead/observer/chosen_candidate = C.mob
+			candidates -= chosen_candidate
+			if(!chosen_candidate.key)
+				continue
 
-	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
-	for(var/mob/dead/observer/G in player_list)
-		spawn(0)
-			switch(alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-						return
-					candidates += G
-				if("No")
-					return
-				else
-					return
-	sleep(300)
+			//Spawn and equip the commando
+			var/mob/living/carbon/human/Commando = new(spawnloc)
+			chosen_candidate.client.prefs.copy_to(Commando)
+			ready_dna(Commando)
+			if(numagents == 1) //If Squad Leader
+				Commando.real_name = "Officer [pick(commando_names)]"
+				equip_deathsquad(Commando, 1)
+			else
+				Commando.real_name = "Trooper [pick(commando_names)]"
+				equip_deathsquad(Commando)
+			Commando.key = chosen_candidate.key
+			Commando.mind.assigned_role = "Death Commando"
 
-	for(var/mob/dead/observer/G in candidates)
-		if(!G.key)
-			candidates.Remove(G)
+			//Assign antag status and the mission
+			ticker.mode.traitors += Commando.mind
+			Commando.mind.special_role = "deathsquad"
+			var/datum/objective/missionobj = new
+			missionobj.owner = Commando.mind
+			missionobj.explanation_text = mission
+			missionobj.completed = 1
+			Commando.mind.objectives += missionobj
 
-	if(candidates.len)
-		var/numagents = 6
-		//Spawns commandos and equips them.
-		for (var/obj/effect/landmark/L in /area/syndicate_mothership/elite_squad)
-			if(numagents<=0)
-				break
-			if (L.name == "Syndicate-Commando")
-				syndicate_leader_selected = numagents == 1?1:0
+			//Greet the commando
+			Commando << "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>"
+			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
+			if(numagents == 1) //If Squad Leader
+				missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
+			else
+				missiondesc += " Follow orders given to you by your squad leader."
+			missiondesc += "<BR><B>Your Mission</B>: [mission]"
+			Commando << missiondesc
 
-				var/mob/living/carbon/human/new_syndicate_commando = create_syndicate_death_commando(L, syndicate_leader_selected)
+			//Logging and cleanup
+			if(numagents == 1)
+				message_admins("The deathsquad has spawned with [key_name_admin(Commando)] as squad leader.")
+			log_game("[key_name(Commando)] has been selected as a Death Commando")
+			deathsquadspawn -= spawnloc
+			numagents--
 
+		return 1
 
-				while((!theghost || !theghost.client) && candidates.len)
-					theghost = pick(candidates)
-					candidates.Remove(theghost)
-
-				if(!theghost)
-					qdel(new_syndicate_commando)
-					break
-
-				new_syndicate_commando.key = theghost.key
-				new_syndicate_commando.internal = new_syndicate_commando.s_store
-				new_syndicate_commando.internals.icon_state = "internal1"
-
-				//So they don't forget their code or mission.
-
-
-				new_syndicate_commando << "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>"
-
-				numagents--
-		if(numagents >= 6)
-			return 0
-
-		for (var/obj/effect/landmark/L in /area/shuttle/syndicate_elite)
-			if (L.name == "Syndicate-Commando-Bomb")
-				new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
-
-	return 1
-*/
+	return
 
 /datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
@@ -392,11 +325,7 @@ client/proc/one_click_antag()
 	//First we spawn a dude.
 	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
 
-	new_character.gender = pick(MALE,FEMALE)
-
-	var/datum/preferences/A = new()
-	A.copy_to(new_character)
-
+	G_found.client.prefs.copy_to(new_character)
 	ready_dna(new_character)
 	new_character.key = G_found.key
 

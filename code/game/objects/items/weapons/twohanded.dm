@@ -193,6 +193,7 @@ obj/item/weapon/twohanded/
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
+	hitsound = "swing_hit"
 	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
@@ -213,9 +214,8 @@ obj/item/weapon/twohanded/
 
 /obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
 	..()
-	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
-		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
-		user.take_organ_damage(20,25)
+	if((CLUMSY in user.mutations) && (wielded) && prob(40))
+		impale(user)
 		return
 	if((wielded) && prob(50))
 		spawn(0)
@@ -223,21 +223,31 @@ obj/item/weapon/twohanded/
 				user.dir = i
 				sleep(1)
 
+/obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user as mob)
+	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on the [src].</span>"
+	if (force_wielded)
+		user.take_organ_damage(20,25)
+	else
+		user.adjustStaminaLoss(25)
+
 /obj/item/weapon/twohanded/dualsaber/IsShield()
 	if(wielded)
 		return 1
 	else
 		return 0
 
-/obj/item/weapon/twohanded/dualsaber/wield() //Specific wield () hulk checks due to reflect_chance var for balance issues
-	wielded = 1
+/obj/item/weapon/twohanded/dualsaber/wield() //Specific wield () hulk checks due to reflect_chance var for balance issues and switches hitsounds.
+	..()
 	var/mob/living/M = loc
 	if(istype(loc, /mob/living))
 		if (HULK in M.mutations)
 			loc << "<span class='warning'>You lack the grace to wield this to its full extent.</span>"
-	force = force_wielded
-	name = "[initial(name)] (Wielded)"
-	update_icon()
+	hitsound = 'sound/weapons/blade1.ogg' 
+
+
+/obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
+	..()
+	hitsound = "swing_hit"
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect()
 	if(wielded)

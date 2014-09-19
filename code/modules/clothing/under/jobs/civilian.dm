@@ -132,14 +132,14 @@
 	item_state = "ba_suit"
 	item_color = "blacksuit"
 
-/obj/item/clothing/under/librarian
+/obj/item/clothing/under/rank/librarian
 	name = "sensible suit"
 	desc = "It's very... sensible."
 	icon_state = "red_suit"
 	item_state = "red_suit"
 	item_color = "red_suit"
 
-/obj/item/clothing/under/mime
+/obj/item/clothing/under/rank/mime
 	name = "mime's outfit"
 	desc = "It's not very colourful."
 	icon_state = "mime"
