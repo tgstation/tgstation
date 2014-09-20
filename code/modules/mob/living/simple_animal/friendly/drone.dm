@@ -197,7 +197,7 @@
 
 	if(alert_s && A)
 		var/msg = "<span class='notice'>DRONE PING: [name]: [alert_s] priority alert in [A.name]!</span>"
-		for(var/mob/living/simple_animal/drone/D in world)
+		for(var/mob/living/simple_animal/drone/D in mob_list)
 			D << msg
 
 /mob/living/simple_animal/drone/Login()
