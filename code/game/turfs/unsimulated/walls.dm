@@ -17,7 +17,11 @@ turf/unsimulated/wall/splashscreen
 	layer = FLY_LAYER
 
 	New()
-		icon_state = "[initial(icon_state)][pick(1,2,3)]"
+		if(prob(30))
+			icon = 'icons/misc/fullscreen2.dmi'
+			icon_state = "[initial(icon_state)]12"
+		else
+			icon_state = "[initial(icon_state)][rand(1,11)]"
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
