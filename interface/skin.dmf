@@ -1771,7 +1771,7 @@ window "window1"
 		macro = ""
 		menu = ""
 		on-close = ""
-	elem "input"
+	elem "input2"
 		type = INPUT
 		pos = 0,456
 		size = 634x20
@@ -1785,7 +1785,7 @@ window "window1"
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
-		is-default = true
+		is-default = false
 		border = sunken
 		drop-zone = false
 		right-click = false
