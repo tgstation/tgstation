@@ -89,7 +89,7 @@
 				/obj/item/stack/sheet/rglass = 1,
 				/obj/item/weapon/book/manual/wiki/engineering_construction = 1,
 				/obj/item/weapon/book/manual/wiki/engineering_hacking = 1,
-				/obj/item/weapon/caution/cone = 1,
+				/obj/item/clothing/head/cone = 1,
 				/obj/item/weapon/coin/silver = 1,
 				/obj/item/weapon/coin/twoheaded = 1,
 				/obj/item/weapon/contraband/poster = 1,
