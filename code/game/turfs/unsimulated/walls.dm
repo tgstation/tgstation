@@ -13,15 +13,11 @@
 turf/unsimulated/wall/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'
-	icon_state = "title"
+	icon_state = "title1"
 	layer = FLY_LAYER
 
 	New()
-		if(prob(30))
-			icon = 'icons/misc/fullscreen2.dmi'
-			icon_state = "[initial(icon_state)]12"
-		else
-			icon_state = "[initial(icon_state)][rand(1,11)]"
+		icon = file("icons/splashworks/title[rand(1,12)].gif")
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
