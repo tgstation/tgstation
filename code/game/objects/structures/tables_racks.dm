@@ -710,7 +710,7 @@ Destroy type values:
 		user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>[user] climbs onto [src].</span>")
 		add_logs(user, src, "climbed onto")
-		user.Weaken(2)
+		user.Stun(2)
 
 /*
  * Racks
