@@ -38,6 +38,7 @@
 	var/obj/item/head
 	var/obj/item/default_storage //If this exists, it will spawn in internal storage
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
+	var/list/bad_items = list(/obj/item/weapon/gun, /obj/item/weapon/grenade)
 
 
 /mob/living/simple_animal/drone/New()
@@ -133,10 +134,10 @@
 		..()
 
 /mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity)
-	var/list/bad_items = list(/obj/item/weapon/gun, /obj/item/weapon/grenade)
-	if(A.type in bad_items)
-		src << "<span class='warning'>Your subroutines prevent you from picking up [A].</span>"
-		return
+	for(var/I in src.bad_items)
+		if(istype(A, I))
+			src << "<span class='warning'>Your subroutines prevent you from picking up [A].</span>"
+			return
 
 	A.attack_hand(src)
 
@@ -439,6 +440,7 @@
 	"3. Your primary mission is to destroy the station."
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
+	bad_items = list()
 
 /mob/living/simple_animal/drone/syndrone/New()
 	..()
