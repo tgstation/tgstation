@@ -21,6 +21,7 @@
 	var/state = 0
 	var/locked = 0
 
+	machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
@@ -139,31 +140,25 @@
 
 		A.dumbfire()
 
-/obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
-
-	if(istype(W, /obj/item/weapon/wrench))
-		if(active)
-			user << "Turn off the [src] first."
-			return
-		switch(state)
-			if(0)
-				state = 1
-				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] secures [src.name] to the floor.", \
-					"You secure the external reinforcing bolts to the floor.", \
-					"You hear a ratchet")
-				src.anchored = 1
-			if(1)
-				state = 0
-				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
-					"You undo the external reinforcing bolts.", \
-					"You hear a ratchet")
-				src.anchored = 0
-			if(2)
-				user << "\red The [src.name] needs to be unwelded from the floor."
+/obj/machinery/power/emitter/emag(mob/user)
+	if(!emagged)
+		locked = 0
+		emagged = 1
+		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
 		return
 
+/obj/machinery/power/emitter/wrenchAnchor(mob/user)
+	if(active)
+		user << "Turn off the [src] first."
+		return
+	if(state == 2)
+		user << "\red The [src.name] needs to be unwelded from the floor."
+		return
+	return ..()
+
+/obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
+	if(..())
+		return
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
@@ -216,13 +211,4 @@
 		else
 			user << "\red Access denied."
 		return
-
-
-	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		locked = 0
-		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
-		return
-
-	..()
 	return

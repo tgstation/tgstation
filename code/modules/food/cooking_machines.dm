@@ -59,6 +59,8 @@ var/global/ingredientLimit = 30
 	idle_power_usage = 20
 	active_power_usage = 500
 
+	machine_flags = WRENCHMOVE | FIXED2WORK //need to add circuits before the other flags get in
+
 	var/active				=	0 //Currently cooking?
 	var/cookSound			=	'sound/machines/ding.ogg'
 	var/cookTime			=	100	//In ticks
@@ -104,16 +106,12 @@ var/global/ingredientLimit = 30
 	return
 
 /obj/machinery/cooking/attackby(obj/item/I,mob/user)
-	if(istype(user,/mob/living/silicon)) user << "<span class='warning'>That's a terrible idea.</span>"
-	else if(src.active) user << "<span class='warning'>[src.name] is currently busy.</span>"
-	else if(istype(I,/obj/item/weapon/wrench))
-		playsound(loc,'sound/items/Ratchet.ogg',50,1)
-		if(do_after(user,30))
-			src.anchored = !src.anchored
-			playsound(loc,'sound/items/Ratchet.ogg',50,1)
-			user << "<span class='notice'>You [src.anchored ? "bolt down" : "unbolt"] the [src.name]</span>"
-	else if(!src.anchored) user << "<span class='warning'>The [src.name] must be bolted down first!</span>"
-	else src.takeIngredient(I,user)
+	if(istype(user,/mob/living/silicon))
+		user << "<span class='warning'>That's a terrible idea.</span>"
+	else if(src.active)
+		user << "<span class='warning'>[src.name] is currently busy.</span>"
+	else if(!..())
+		src.takeIngredient(I,user)
 	return
 
 // Food Processing /////////////////////////////////////////////

@@ -24,6 +24,8 @@
 	var/list/owned_bee_swarms = list()
 	var/hydrotray_type = /obj/machinery/hydroponics
 
+	machine_flags = FIXED2WORK | WRENCHMOVE
+
 //overwrite this after it's created if the apiary needs a custom machinery sprite
 /obj/machinery/apiary/New()
 	..()

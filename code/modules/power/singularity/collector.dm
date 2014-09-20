@@ -19,6 +19,8 @@ var/global/list/rad_collectors = list()
 	ghost_read=0
 	ghost_write=0
 
+	machine_flags = WRENCHMOVE | FIXED2WORK
+
 /obj/machinery/power/rad_collector/New()
 	..()
 	rad_collectors += src
@@ -51,7 +53,9 @@ var/global/list/rad_collectors = list()
 ..()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/analyzer))
+	if(..())
+		return 1
+	else if(istype(W, /obj/item/device/analyzer))
 		user << "\blue The [W.name] detects that [last_power]W were recently produced."
 		return 1
 	else if(istype(W, /obj/item/weapon/tank/plasma))
@@ -69,19 +73,6 @@ var/global/list/rad_collectors = list()
 		if(P && !src.locked)
 			eject()
 			return 1
-	else if(istype(W, /obj/item/weapon/wrench))
-		if(P)
-			user << "\blue Remove the plasma tank first."
-			return 1
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-		src.anchored = !src.anchored
-		user.visible_message("[user.name] [anchored? "secures":"unsecures"] the [src.name].", \
-			"You [anchored? "secure":"undo"] the external bolts.", \
-			"You hear a ratchet")
-		if(anchored)
-			connect_to_network()
-		else
-			disconnect_from_network()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			if(active)
@@ -94,8 +85,17 @@ var/global/list/rad_collectors = list()
 			user << "\red Access denied!"
 			return 1
 	else
-		..()
-		return 1
+		return
+
+/obj/machinery/power/rad_collector/wrenchAnchor(mob/user)
+	if(P)
+		user << "\blue Remove the plasma tank first."
+		return
+	..()
+	if(anchored)
+		connect_to_network()
+	else
+		disconnect_from_network()
 
 /obj/machinery/power/rad_collector/ex_act(severity)
 	switch(severity)

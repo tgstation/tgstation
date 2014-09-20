@@ -16,11 +16,12 @@
 
 	var/secondsElectrified = 0
 	var/visible = 1
-	var/p_open = 0
 	var/operating = 0
 	var/autoclose = 0
 	var/glass = 0
 	var/normalspeed = 1
+
+	machine_flags = SCREWTOGGLE
 
 	// for glass airlocks/opacity firedoors
 	var/heat_proof = 0
@@ -54,7 +55,7 @@
 		M.last_bumped = world.time
 
 		if(!M.restrained() && !M.small)
-			bump_open(M)
+			bumpanel_open(M)
 
 		return
 
@@ -79,7 +80,7 @@
 
 	return
 
-/obj/machinery/door/proc/bump_open(mob/user as mob)
+/obj/machinery/door/proc/bumpanel_open(mob/user as mob)
 	// TODO: analyze this
 	if(user.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) //Fakkit
 		return
@@ -142,6 +143,9 @@
 
 
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
+	if(..())
+		return 1
+
 	if (istype(I, /obj/item/device/detective_scanner))
 		return
 

@@ -1,6 +1,7 @@
 /obj/machinery/computer/telecomms/traffic
 	name = "Telecommunications Traffic Control"
 	icon_state = "computer_generic"
+	circuit = "/obj/item/weapon/circuitboard/comm_traffic"
 
 	var/screen = 0				// the screen number:
 	var/list/servers = list()	// the servers located by the computer
@@ -283,39 +284,15 @@
 	return
 
 /obj/machinery/computer/telecomms/traffic/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	if(istype(D, /obj/item/weapon/screwdriver))
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				getFromPool(/obj/item/weapon/shard, loc)
-				var/obj/item/weapon/circuitboard/comm_traffic/M = new /obj/item/weapon/circuitboard/comm_traffic( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/comm_traffic/M = new /obj/item/weapon/circuitboard/comm_traffic( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+	..()
+
+/obj/machinery/computer/telecomms/emag(mob/user)
+	if(!emagged)
 		playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "\blue You you disable the security protocols"
 	src.updateUsrDialog()
 	return
-
 /obj/machinery/computer/telecomms/traffic/proc/canAccess(var/mob/user)
 	if(issilicon(user) || in_range(user, src))
 		return 1

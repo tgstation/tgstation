@@ -9,10 +9,11 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 50
+	machine_flags = WRENCHMOVE | FIXED2WORK
 	var/grinded = 0
 
-
 /obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	..()
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if (istype(O, /obj/item/weapon/grab))

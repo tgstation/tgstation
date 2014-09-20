@@ -66,7 +66,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable
 	trash = /obj/item/trash/plate
 	bitesize = 2
-	
+
 	var/ingMax = 600
 	var/list/ingredients = list()
 	var/stackIngredients = 0

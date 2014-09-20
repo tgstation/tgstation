@@ -7,20 +7,22 @@
 	layer = 2.8
 
 	var/on = 0
-	var/opened=0
 	var/temperature_archived
 	var/mob/living/carbon/occupant = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
 	var/current_heat_capacity = 50
 
+	machine_flags = SCREWTOGGLE | CROWDESTROY
+
 	l_color = "#00FF00"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)) && on)
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
+
+/obj/machinery/atmospherics/unary/cryo_cell/power_change()
+	..()
+	if(!(stat & (BROKEN|NOPOWER)) && on)
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	. = ..()
@@ -41,9 +43,8 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	go_out()
-	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
-		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+		beaker.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
 	..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -238,53 +239,33 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
+/obj/machinery/atmospherics/unary/cryo_cell/crowbarDestroy(mob/user)
+	if(on)
+		user << "[src] is on."
+		return
+	if(occupant)
+		user << "\red [occupant.name] is inside the [src]!"
+		return
+	if(beaker) //special check to avoid destroying this
+		beaker.loc = src.loc
+	..()
+
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "\red A beaker is already loaded into the machine."
 			return
-
 		beaker =  G
 		user.drop_item()
 		G.loc = src
 		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
-	else if(istype(G, /obj/item/weapon/screwdriver))
-		if(!opened)
-			src.opened = 1
-			//src.icon_state = "cryo_cell_t"
-			user << "You open the maintenance hatch of [src]"
-			return
-		else
-			src.opened = 0
-			//src.icon_state = "cryo_cell"
-			user << "You close the maintenance hatch of [src]"
-			return
+	if(..())
+		return
+	if (panel_open)
+		user.set_machine(src)
+		interact(user)
 		return 1
-	if (opened)
-		if(on)
-			user << "[src] is on."
-			return
-		if(occupant)
-			user << "\red [occupant.name] is inside the [src]!"
-			return
-		if(istype(G, /obj/item/weapon/crowbar)) //beakers are destroyed in the process of destroying the cryo cell
-			user << "You begin to remove the circuits from [src]."
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			if(do_after(user, 50))
-				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-				M.state = 2
-				M.icon_state = "box_1"
-				for(var/obj/I in component_parts)
-					if(I.reliability != 100 && crit_fail)
-						I.crit_fail = 1
-					I.loc = src.loc
-				del(src)
-				return 1
-		else
-			user.set_machine(src)
-			interact(user)
-			return 1
-	else if(istype(G, /obj/item/weapon/grab))
+	if(istype(G, /obj/item/weapon/grab))
 		if(!ismob(G:affecting))
 			return
 		for(var/mob/living/carbon/slime/M in range(1,G:affecting))

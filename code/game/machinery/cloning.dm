@@ -21,17 +21,19 @@
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS // * 3 - N3X
-	var/opened = 0
 	var/time_coeff = 1 //Upgraded via part upgrading
 	var/resource_efficiency = 1
 
+	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY
+
 	l_color = "#7BF9FF"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)) && attempting)
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
+
+/obj/machinery/clonepod/power_change()
+	..()
+	if(!(stat & (BROKEN|NOPOWER)) && attempting)
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -298,6 +300,20 @@
 
 	return
 
+/obj/machinery/clonepod/emag(mob/user as mob)
+	if (isnull(src.occupant))
+		return
+	user << "You force an emergency ejection."
+	src.locked = 0
+	src.go_out()
+	return
+
+/obj/machinery/clonepod/crowbarDestroy(mob/user)
+	if (occupant)
+		user << "\red You cannot disassemble this [src], it's occupado."
+		return
+	..()
+
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -312,38 +328,6 @@
 		else
 			src.locked = 0
 			user << "System unlocked."
-	else if (istype(W, /obj/item/weapon/card/emag))
-		if (isnull(src.occupant))
-			return
-		user << "You force an emergency ejection."
-		src.locked = 0
-		src.go_out()
-		return
-	else if (istype(W, /obj/item/weapon/screwdriver))
-		if (!opened)
-			src.opened = 1
-			user << "You open the maintenance hatch of [src]."
-			//src.icon_state = "autolathe_t"
-		else
-			src.opened = 0
-			user << "You close the maintenance hatch of [src]."
-			//src.icon_state = "autolathe"
-			return 1
-	else if(istype(W, /obj/item/weapon/crowbar))
-		if (occupant)
-			user << "\red You cannot disassemble this [src], it's occupado."
-			return 1
-		if (opened)
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "\blue \The [src] processes \the [W]."
 		biomass += 50

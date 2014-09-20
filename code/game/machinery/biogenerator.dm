@@ -145,7 +145,6 @@
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 40
-	var/opened = 0.0
 	var/processing = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/points = 0
@@ -153,25 +152,28 @@
 	var/list/recipes[0]
 	var/list/recipe_categories[0]
 
+	machine_flags = SCREWTOGGLE | CROWDESTROY
+
 	l_color = "#7BF9FF"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
 
-	on_reagent_change()			//When the reagents change, change the icon as well.
-		update_icon()
+/obj/machinery/biogenerator/power_change()
+	..()
+	if(!(stat & (BROKEN|NOPOWER)))
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
 
+/obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
 	update_icon()
-		if(!src.beaker)
-			icon_state = "biogen-empty"
-		else if(!src.processing)
-			icon_state = "biogen-stand"
-		else
-			icon_state = "biogen-work"
-		return
+
+/obj/machinery/biogenerator/update_icon()
+	if(!src.beaker)
+		icon_state = "biogen-empty"
+	else if(!src.processing)
+		icon_state = "biogen-stand"
+	else
+		icon_state = "biogen-work"
+	return
 
 /obj/machinery/biogenerator/New()
 	. = ..()
@@ -204,6 +206,7 @@
 		recipes[recipe.id]=recipe
 
 /obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	..()
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "\red The biogenerator already occuped."
@@ -229,31 +232,6 @@
 					break
 			if(i<10)
 				user << "\blue You empty the plant bag into the biogenerator."
-	else if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			src.opened = 1
-			user << "You open the maintenance hatch of [src]."
-			//src.icon_state = "autolathe_t"
-		else
-			src.opened = 0
-			user << "You close the maintenance hatch of [src]."
-			//src.icon_state = "autolathe"
-			return 1
-	else if(istype(O, /obj/item/weapon/crowbar))
-		if (opened)
-			if(beaker)
-				user << "\red A beaker is loaded, you cannot deconstruct [src]."
-				return 1
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return 1
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		user << "\red You cannot put this in [src.name]"
@@ -269,6 +247,12 @@
 			user << "\blue You put [O.name] in [src.name]"
 	update_icon()
 	return
+
+/obj/machinery/biogenerator/crowbarDestroy(mob/user)
+	if(panel_open && beaker)
+		user << "\red A beaker is loaded, you cannot deconstruct [src]."
+		return
+	..()
 
 /obj/machinery/biogenerator/interact(mob/user as mob)
 	if(stat & BROKEN)

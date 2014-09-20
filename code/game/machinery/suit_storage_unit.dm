@@ -29,6 +29,8 @@
 	var/safetieson = 1
 	var/cycletime_left = 0
 
+	machine_flags = SCREWTOGGLE
+
 
 //The units themselves/////////////////
 
@@ -559,16 +561,14 @@
 		src.OCCUPANT = null //Testing this as a backup sanity test
 	return
 
+/obj/machinery/suit_storage_unit/togglePanelOpen(var/obj/toggleitem, mob/user)
+	..()
+	src.updateUsrDialog()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
 	if(!src.ispowered)
 		return
-	if(istype(I, /obj/item/weapon/screwdriver))
-		src.panelopen = !src.panelopen
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
-		user << text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") )
-		src.updateUsrDialog()
-		return
+	..()
 	if ( istype(I, /obj/item/weapon/grab) )
 		var/obj/item/weapon/grab/G = I
 		if( !(ismob(G.affecting)) )
