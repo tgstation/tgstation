@@ -1228,6 +1228,8 @@ window "mapwindow"
 		on-size = ""
 		icon-size = 0
 		text-mode = false
+		letterbox = true
+		zoom = 0
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
 		style = ""
@@ -1726,4 +1728,97 @@ window "infowindow"
 		on-show = ".winset\"rpane.infob.is-visible=true;rpane.browseb.is-visible=true?rpane.infob.pos=130,0:rpane.infob.pos=65,0 rpane.textb.is-visible=true rpane.infob.is-checked=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=infowindow\""
 		on-hide = ".winset\"rpane.infob.is-visible=false;rpane.browseb.is-visible=true?rpane.browseb.is-checked=true rpane.rpanewindow.left=browserwindow:rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=\""
 		on-tab = ""
+		prefix-color = none
+		suffix-color = none
+
+window "window1"
+	elem "window1"
+		type = MAIN
+		pos = 281,0
+		size = 634x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = ""
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = false
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = center
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "input"
+		type = INPUT
+		pos = 0,456
+		size = 634x20
+		anchor1 = 0,100
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #d3b5b5
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = sunken
+		drop-zone = false
+		right-click = false
+		saved-params = "command"
+		on-size = ""
+		command = "msay"
+		multi-line = false
+		is-password = false
+		no-command = false
+	elem "msay_output"
+		type = OUTPUT
+		pos = 0,0
+		size = 634x456
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #fffdd0
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = line
+		drop-zone = false
+		right-click = false
+		saved-params = "max-lines"
+		on-size = ""
+		link-color = #0000ff
+		visited-color = #ff00ff
+		style = ""
+		enable-http-images = false
+		max-lines = 1000
+		image = ""
 
