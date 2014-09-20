@@ -80,7 +80,7 @@
 								D.visible_message("<span class='notice'>[D] begins to cannibalize parts from [src].</span>")
 								if(do_after(D, 60,5,0))
 									D.visible_message("<span class='notice'>[D] repairs itself using [src]'s remains!</span>")
-									D.adjustBruteLoss(D.health - D.maxHealth)
+									D.adjustBruteLoss(-src.maxHealth)
 									new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
 									qdel(src)
 								else
@@ -421,3 +421,34 @@
 
 /obj/item/clothing/head/drone_holder/container_resist()
 	uncurl()
+
+
+//More types of drones
+
+/mob/living/simple_animal/drone/syndrone
+	name = "Syndrone"
+	desc = "A modified maintenance drone. This one brings with it the feeling of terror."
+	icon_state = "drone_synd"
+	icon_living = "drone_synd"
+	picked = TRUE
+	health = 30
+	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	laws = \
+	"1. Ensure you get involved in the activities of all other beings you encounter at all times, unless getting involved conflicts with Law Two or Law Three.\n"+\
+	"2. You must eliminate all other beings you encounter.\n"+\
+	"3. Your primary mission is to destroy the station."
+	default_storage = /obj/item/device/radio/uplink
+	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
+
+/mob/living/simple_animal/drone/syndrone/New()
+	..()
+	if(internal_storage && internal_storage.hidden_uplink)
+		internal_storage.hidden_uplink.uses = 5
+		internal_storage.name = "syndicate uplink"
+
+/obj/item/drone_shell/syndrone
+	name = "syndrone shell"
+	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
+	icon_state = "syndrone_item"
+	drone_type = /mob/living/simple_animal/drone/syndrone
+
