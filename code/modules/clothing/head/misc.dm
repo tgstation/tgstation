@@ -181,6 +181,13 @@
 	desc = "Goes well with celery."
 	flags = FPRINT|TABLEPASS
 
+/obj/item/clothing/head/squatter_hat
+	name = "slav squatter hat"
+	icon_state = "squatter_hat"
+	item_state = "squatter_hat"
+	desc = "Cyka blyat."
+	flags = FPRINT|TABLEPASS
+
 /obj/item/clothing/head/fedora
 	name = "\improper fedora"
 	icon_state = "fedora"
@@ -273,5 +280,20 @@
 	desc = "Ein Hut von Offizieren in der Nazi-Partei getragen."
 	icon_state = "officercap"
 	item_state = "officercap"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags_inv = HIDEEARS
+
+/obj/item/clothing/head/russobluecamohat
+	name = "russian blue camo beret"
+	desc = "A symbol of discipline, honor, and lots and lots of removal of some type of skewered food."
+	icon_state = "russobluecamohat"
+	item_state = "russobluecamohat"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/head/russofurhat
+	name = "russian fur hat"
+	desc = "Russian winter got you down? Maybe your enemy, but not you!"
+	icon_state = "russofurhat"
+	item_state = "russofurhat"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEEARS
