@@ -20,12 +20,49 @@
 	..()
 
 /obj/structure/statue/attackby(obj/item/weapon/W, mob/user)
+	add_fingerprint(user)
+	if(istype(W, /obj/item/weapon/wrench) && !anchored)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		user.visible_message("[user] secures the [name] to the floor.", "You start to secure the [name] to the floor.")
+		if(do_after(user, 10))
+			if(!src)
+				return
+			user << "<span class='notice'>You've secured the [name]!</span>"
+			src.anchored = 1
+		return
+
+	else if(istype(W, /obj/item/weapon/wrench) && anchored)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		user.visible_message("[user] unsecures the [name] to the floor.", "You start to unsecure the [name] to the floor.")
+		if(do_after(user, 10))
+			if(!src)
+				return
+			user << "<span class='notice'>You've unsecured the [name]!</span>"
+			src.anchored = 0
+		return
+
+	if(istype(W, /obj/item/weapon/weldingtool) && !anchored)
+		var/obj/item/weapon/weldingtool/WT = W
+		if (WT.remove_fuel(0,user))
+			user.visible_message("<span class='warning'>[user] dissassembles the [name].</span>", "<span class='notice'>You start to dissassemble the [name].</span>")
+			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+			if(do_after(user, 20))
+				if(!src || !WT.isOn())
+					return
+				user << "<span class='notice'>You dissasembled the [name]!</span>"
+				Dismantle(1)
+		return
 	hardness -= W.force/100
 	user << "You hit the [name] with your [W.name]!"
 	CheckHardness()
 
 /obj/structure/statue/attack_hand(mob/user)
-	visible_message("<span class='danger'>[user] rubs some dust off from the [name]'s surface.</span>")
+	if(spam_flag == 0)
+		spam_flag = 1
+		visible_message("<span class='danger'>[user] rubs some dust off from the [name]'s surface.</span>")
+		spawn(10)
+			spam_flag = 0
+
 
 /obj/structure/statue/CanAtmosPass()
 	return !density
