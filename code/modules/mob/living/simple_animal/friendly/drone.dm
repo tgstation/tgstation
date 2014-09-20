@@ -37,7 +37,6 @@
 	var/obj/item/head
 	var/obj/item/default_storage //If this exists, it will spawn in internal storage
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
-	var/list/bad_items = list(/obj/item/weapon/gun, /obj/item/weapon/grenade)
 
 
 /mob/living/simple_animal/drone/New()
@@ -132,14 +131,9 @@
 	if(message_mode != MODE_BINARY) //so they can hear binary but can't talk in it
 		..()
 
+
 /mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity)
-	for(var/I in src.bad_items)
-		if(istype(A, I))
-			src << "<span class='warning'>Your subroutines prevent you from picking up [A].</span>"
-			return
-
 	A.attack_hand(src)
-
 
 
 /mob/living/simple_animal/drone/swap_hand()
@@ -192,6 +186,19 @@
 	light_on = !light_on
 
 	src << "<span class='notice'>Your light is now [light_on ? "on" : "off"]</span>"
+
+/mob/living/simple_animal/drone/verb/drone_ping()
+	set category = "Drone"
+	set name = "Drone ping"
+
+	var/alert_s = input(src,"Alert severity level","Drone ping",null) as null|anything in list("Low","Medium","High","Critical")
+
+	var/area/A = get_area(loc)
+
+	if(alert_s && A)
+		var/msg = "<span class='notice'>DRONE PING: [name]: [alert_s] priority alert in [A.name]!</span>"
+		for(var/mob/living/simple_animal/drone/D in world)
+			D << msg
 
 /mob/living/simple_animal/drone/Login()
 	..()
@@ -439,13 +446,14 @@
 	"3. Your primary mission is to destroy the station."
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-	bad_items = list()
 
 /mob/living/simple_animal/drone/syndrone/New()
 	..()
 	if(internal_storage && internal_storage.hidden_uplink)
 		internal_storage.hidden_uplink.uses = 5
 		internal_storage.name = "syndicate uplink"
+
+	src << "<span class='notice'>You can kill and eat other drones to increase your health!</span>" //Inform the evil lil guy
 
 /obj/item/drone_shell/syndrone
 	name = "syndrone shell"
