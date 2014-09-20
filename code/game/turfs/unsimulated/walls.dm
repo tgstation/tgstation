@@ -16,5 +16,8 @@ turf/unsimulated/wall/splashscreen
 	icon_state = "title"
 	layer = FLY_LAYER
 
+	New()
+		icon_state = "[initial(icon_state)][pick(1,2,3)]"
+
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
