@@ -1,4 +1,7 @@
 author: Miauw
+
+delete-after: True
+
 changes: 
   - bugfix: Voice changer masks work again.
   - tweak: You can now turn voice changer masks on/off by activating them in your hand. They start off.
