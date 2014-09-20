@@ -1,10 +1,11 @@
 
 #define HANDS_LAYER 1
-#define TOTAL_LAYERS 1
+#define HEAD_LAYER 2
+#define TOTAL_LAYERS 2
 
 
 /mob/living/simple_animal/drone
-	name = "drone"
+	name = "Drone"
 	desc = "A maintenance drone, an expendable robot built to perform station repairs."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_grey"
@@ -33,17 +34,27 @@
 	"3. You must maintain, repair, improve, and power the station to the best of your abilities."
 	var/light_on = 0
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
+	var/obj/item/head
+	var/obj/item/default_storage //If this exists, it will spawn in internal storage
+	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
 
 
 /mob/living/simple_animal/drone/New()
 	..()
 
-	name = "Drone ([rand(100,999)])"
+	name = name + " ([rand(100,999)])"
 	real_name = name
 
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
+
+	if(default_storage)
+		var/obj/item/I = new default_storage(src)
+		equip_to_slot_or_del(I, "drone_storage_slot")
+	if(default_hatmask)
+		var/obj/item/I = new default_hatmask(src)
+		equip_to_slot_or_del(I, slot_head)
 
 /mob/living/simple_animal/drone/attack_hand(mob/user)
 	if(isdrone(user))
@@ -68,8 +79,9 @@
 								D.visible_message("<span class='notice'>[D] begins to cannibalize parts from [src].</span>")
 								if(do_after(D, 60,5,0))
 									D.visible_message("<span class='notice'>[D] repairs itself using [src]'s remains!</span>")
-									D.adjustBruteLoss(D.health - D.maxHealth)
-									gib()
+									D.adjustBruteLoss(-src.maxHealth)
+									new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
+									qdel(src)
 								else
 									D << "<span class='notice'>You need to remain still to canibalize [src].</span>"
 							else
@@ -119,35 +131,9 @@
 	if(message_mode != MODE_BINARY) //so they can hear binary but can't talk in it
 		..()
 
+
 /mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity)
-	if(istype(A,/obj/item/weapon/gun))
-		src << "<span class='warning'>Your subroutines prevent you from picking up [A].</span>"
-		return
-
 	A.attack_hand(src)
-
-
-/mob/living/simple_animal/drone/attack_ui(slot_id)
-	if(slot_id == "drone_storage_slot")
-		var/obj/item/I = get_active_hand()
-		var/mob/user = src
-		if(I)
-			if(!internal_storage)
-				user.drop_item()
-				internal_storage = I
-				I.loc = user
-				user.visible_message("<span class='notice'>[user] places \a [I] into their internal storage.</span>")
-			else
-				user << "<span class='notice'>Your internal storage is full.</span>"
-		else
-			if(internal_storage)
-				var/obj/item/dummy_item = internal_storage
-				user.put_in_hands(dummy_item)
-				internal_storage = null
-		update_inv_internal_storage()
-		return 1
-	else
-		..()
 
 
 /mob/living/simple_animal/drone/swap_hand()
@@ -201,8 +187,24 @@
 
 	src << "<span class='notice'>Your light is now [light_on ? "on" : "off"]</span>"
 
+/mob/living/simple_animal/drone/verb/drone_ping()
+	set category = "Drone"
+	set name = "Drone ping"
+
+	var/alert_s = input(src,"Alert severity level","Drone ping",null) as null|anything in list("Low","Medium","High","Critical")
+
+	var/area/A = get_area(loc)
+
+	if(alert_s && A)
+		var/msg = "<span class='notice'>DRONE PING: [name]: [alert_s] priority alert in [A.name]!</span>"
+		for(var/mob/living/simple_animal/drone/D in mob_list)
+			D << msg
+
 /mob/living/simple_animal/drone/Login()
 	..()
+	update_inv_hands()
+	update_inv_head()
+	update_inv_internal_storage()
 	check_laws()
 
 	if(!picked)
@@ -213,16 +215,69 @@
 	drop_l_hand()
 	drop_r_hand()
 	if(internal_storage)
-		var/obj/item/dummy_item = internal_storage
-		dummy_item.loc = get_turf(src)
-		internal_storage = null
-		update_inv_internal_storage()
+		unEquip(internal_storage)
+	if(head)
+		unEquip(head)
 
 /mob/living/simple_animal/drone/unEquip(obj/item/I, force)
 	if(..(I,force))
 		update_inv_hands()
+		if(I == head)
+			head = null
+			update_inv_head()
+		if(I == internal_storage)
+			internal_storage = null
+			update_inv_internal_storage()
 		return 1
 	return 0
+
+/mob/living/simple_animal/drone/can_equip(obj/item/I, slot)
+	switch(slot)
+		if(slot_head)
+			if(head)
+				return 0
+			if(!((I.slot_flags & SLOT_HEAD) || (I.slot_flags & SLOT_MASK)))
+				return 0
+			return 1
+		if("drone_storage_slot")
+			if(internal_storage)
+				return 0
+			return 1
+	..()
+
+/mob/living/simple_animal/drone/get_item_by_slot(slot_id)
+	switch(slot_id)
+		if(slot_head)
+			return head
+		if("drone_storage_slot")
+			return internal_storage
+	..()
+
+/mob/living/simple_animal/drone/equip_to_slot(obj/item/I, slot)
+	if(!slot)	return
+	if(!istype(I))	return
+
+	if(I == l_hand)
+		l_hand = null
+	else if(I == r_hand)
+		r_hand = null
+	update_inv_hands()
+
+	I.screen_loc = null // will get moved if inventory is visible
+	I.loc = src
+	I.equipped(src, slot)
+	I.layer = 20
+
+	switch(slot)
+		if(slot_head)
+			head = I
+			update_inv_head()
+		if("drone_storage_slot")
+			internal_storage = I
+			update_inv_internal_storage()
+		else
+			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+			return
 
 /mob/living/simple_animal/drone/emp_act()
 	Stun(5)
@@ -269,17 +324,35 @@
 		drone_overlays[HANDS_LAYER] = hands_overlays
 	apply_overlay(HANDS_LAYER)
 
-/mob/living/simple_animal/drone/proc/update_inv_internal_storage()
-	if(client && hud_used)
-		for(var/obj/screen/inventory/drone_storage in client.screen)
-			if(drone_storage.slot_id == "drone_storage_slot")
-				drone_storage.overlays = list()
-				if(internal_storage)
-					drone_storage.overlays += image("icon"=internal_storage.icon, "icon_state"=internal_storage.icon_state)
-				break
 
+/mob/living/simple_animal/drone/proc/update_inv_internal_storage()
+	if(internal_storage && client && hud_used)
+		internal_storage.screen_loc = ui_drone_storage
+		client.screen += internal_storage
+
+
+/mob/living/simple_animal/drone/update_inv_head()
+	remove_overlay(HEAD_LAYER)
+
+	if(head)
+		if(client && hud_used)
+			head.screen_loc = ui_drone_head
+			client.screen += head
+
+
+		var/image/head_overlay = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+		if(istype(head, /obj/item/clothing/mask))
+			head_overlay.icon = 'icons/mob/mask.dmi'
+		head_overlay.color = head.color
+		head_overlay.alpha = head.alpha
+		head_overlay.pixel_y = -15
+
+		drone_overlays[HEAD_LAYER]	= head_overlay
+
+	apply_overlay(HEAD_LAYER)
 
 #undef HANDS_LAYER
+#undef HEAD_LAYER
 #undef TOTAL_LAYERS
 
 /mob/living/simple_animal/drone/canUseTopic()
@@ -312,12 +385,16 @@
 	origin_tech = "programming=2;biotech=4"
 	var/construction_cost = list("metal"=800, "glass"=350)
 	var/construction_time=150
+	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
 /obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"pAI"))
 		return
 
-	var/mob/living/simple_animal/drone/D = new(get_turf(loc))
+	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
+	if(be_drone == "No")
+		return
+	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
 	D.key = user.key
 	qdel(src)
 
@@ -351,3 +428,36 @@
 
 /obj/item/clothing/head/drone_holder/container_resist()
 	uncurl()
+
+
+//More types of drones
+
+/mob/living/simple_animal/drone/syndrone
+	name = "Syndrone"
+	desc = "A modified maintenance drone. This one brings with it the feeling of terror."
+	icon_state = "drone_synd"
+	icon_living = "drone_synd"
+	picked = TRUE
+	health = 30
+	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	laws = \
+	"1. Ensure you get involved in the activities of all other beings you encounter at all times, unless getting involved conflicts with Law Two or Law Three.\n"+\
+	"2. You must eliminate all other beings you encounter.\n"+\
+	"3. Your primary mission is to destroy the station."
+	default_storage = /obj/item/device/radio/uplink
+	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
+
+/mob/living/simple_animal/drone/syndrone/New()
+	..()
+	if(internal_storage && internal_storage.hidden_uplink)
+		internal_storage.hidden_uplink.uses = 5
+		internal_storage.name = "syndicate uplink"
+
+	src << "<span class='notice'>You can kill and eat other drones to increase your health!</span>" //Inform the evil lil guy
+
+/obj/item/drone_shell/syndrone
+	name = "syndrone shell"
+	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
+	icon_state = "syndrone_item"
+	drone_type = /mob/living/simple_animal/drone/syndrone
+

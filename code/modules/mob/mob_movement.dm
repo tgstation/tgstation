@@ -14,7 +14,8 @@
 
 
 /client/Northeast()
-	swap_hand()
+	if(mob)
+		mob.swap_hand()
 	return
 
 
