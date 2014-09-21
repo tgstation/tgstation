@@ -49,7 +49,7 @@
 			user.visible_message("<span class='notice'>[user] successfully augments [target]'s [parse_zone(target_zone)]!</span>")
 			L.loc = get_turf(target)
 			H.organs -= L
-			switch(target_zone)  //for the surgery to progress this MUST still be the original "location" so it's safe to do this.
+			switch(target_zone)
 				if("r_leg")
 					H.organs += new /obj/item/organ/limb/robot/r_leg(src)
 				if("l_leg")
