@@ -127,7 +127,7 @@
 					if(!item_to_add)
 						usr.visible_message("<span class='notice'>[usr] pets [src]</span>","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
 						return
-					if(istype(item_to_add,/obj/item/weapon/plastique)) // last thing he ever wears, I guess
+					if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
 						item_to_add.afterattack(src,usr,1)
 						return
 
@@ -169,7 +169,7 @@
 //Many  hats added, Some will probably be removed, just want to see which ones are popular.
 /mob/living/simple_animal/corgi/proc/place_on_head(obj/item/item_to_add)
 
-	if(istype(item_to_add,/obj/item/weapon/plastique)) // last thing he ever wears, I guess
+	if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
 		item_to_add.afterattack(src,usr,1)
 		return
 

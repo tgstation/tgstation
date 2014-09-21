@@ -836,7 +836,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			sec_briefcase.contents += new /obj/item/weapon/gun/energy/crossbow
 			sec_briefcase.contents += new /obj/item/weapon/gun/projectile/revolver/mateba
 			sec_briefcase.contents += new /obj/item/ammo_box/a357
-			sec_briefcase.contents += new /obj/item/weapon/plastique
+			sec_briefcase.contents += new /obj/item/weapon/c4
 			M.equip_to_slot_or_del(sec_briefcase, slot_l_hand)
 
 			var/obj/item/device/pda/heads/pda = new(M)
@@ -1116,7 +1116,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 	M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(M), slot_in_backpack)
 	M.equip_to_slot_or_del(new /obj/item/device/flashlight(M), slot_in_backpack)
 
-	M.equip_to_slot_or_del(new /obj/item/weapon/plastique(M), slot_in_backpack)
+	M.equip_to_slot_or_del(new /obj/item/weapon/c4(M), slot_in_backpack)
 
 	M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(M), slot_l_store)
 	M.equip_to_slot_or_del(new /obj/item/weapon/shield/energy(M), slot_r_store)
