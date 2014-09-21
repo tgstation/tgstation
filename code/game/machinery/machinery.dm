@@ -445,13 +445,13 @@ Class Procs:
 		else
 			user <<"<span class='warning'>\The [src]'s maintenance panel must be closed first!</span>"
 			return
-	if(!anchored && machine_flags &FIXED2WORK)
-		return user << "<span class='warning'>\The [src] must be anchored first!</span>"
 	if(istype(O, /obj/item/weapon/screwdriver) && machine_flags &SCREWTOGGLE)
 		return togglePanelOpen(O, user)
 	if(istype(O, /obj/item/weapon/crowbar) && machine_flags &CROWDESTROY)
 		if(panel_open)
 			return crowbarDestroy(user)
+	if(!anchored && machine_flags &FIXED2WORK)
+		return user << "<span class='warning'>\The [src] must be anchored first!</span>"
 
 /obj/machinery/proc/shock(mob/user, prb, var/siemenspassed = -1)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock

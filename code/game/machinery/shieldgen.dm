@@ -8,8 +8,6 @@
 	anchored = 1
 	unacidable = 1
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK
-
 	var/const/max_health = 200
 	var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
@@ -59,8 +57,6 @@
 
 	opacity = 1
 	spawn(20) if(src) opacity = 0
-
-	..()
 
 /obj/machinery/shield/meteorhit()
 	src.health -= max_health*0.75 //3/4 health as damage
@@ -155,8 +151,9 @@
 		var/active = 0
 		var/malfunction = 0 //Malfunction causes parts of the shield to slowly dissapate
 		var/list/deployed_shields = list()
-		var/is_open = 0 //Whether or not the wires are exposed
 		var/locked = 0
+
+		machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK | SCREWTOGGLE
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -237,7 +234,7 @@
 	if(locked)
 		user << "The machine is locked, you are unable to use it."
 		return
-	if(is_open)
+	if(panel_open)
 		user << "The panel must be closed before operating this machine."
 		return
 
@@ -253,23 +250,32 @@
 				"You hear heavy droning.")
 			src.shields_up()
 		else
-			user << "The device must first be secured to the floor."
+			user << "The [src] must first be secured to the floor."
 	return
 
 /obj/machinery/shieldgen/emag(mob/user)
-	malfunction = 1
-	update_icon()
+	if(!emagged)
+		malfunction = 1
+		update_icon()
+		return 1
+	return
 
 /obj/machinery/shieldgen/wrenchAnchor(mob/user)
 	if(locked)
 		user << "The bolts are covered, unlocking this would retract the covers."
 		return
-	..()
+	if(active)
+		user << "Turn \the [src] off first!"
+	if(panel_open)
+		user << "You have to close \the [src]'s maintenance panel before you can do that."
+		return
+	return ..()
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+	if(..())
+		return 1
 
-	if(istype(W, /obj/item/weapon/cable_coil) && malfunction && is_open)
+	if(istype(W, /obj/item/weapon/cable_coil) && malfunction && panel_open)
 		var/obj/item/weapon/cable_coil/coil = W
 		user << "\blue You begin to replace the wires."
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
@@ -323,6 +329,8 @@
 		var/storedpower = 0
 		flags = FPRINT | CONDUCT
 		use_power = 0
+
+		machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
@@ -462,26 +470,15 @@
 		CF.loc = T
 		CF.dir = field_dir
 
+/obj/machinery/shieldwallgen/wrenchAnchor(mob/user)
+	if(active)
+		user << "Turn off the field generator first."
+		return
+	return ..()
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
-		if(active)
-			user << "Turn off the field generator first."
-			return
-
-		else if(state == 0)
-			state = 1
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-			user << "You secure the external reinforcing bolts to the floor."
-			src.anchored = 1
-			return
-
-		else if(state == 1)
-			state = 0
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-			user << "You undo the external reinforcing bolts."
-			src.anchored = 0
-			return
+	if(..())
+		return 1
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
