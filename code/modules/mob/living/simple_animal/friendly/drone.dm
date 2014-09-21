@@ -181,8 +181,9 @@
 	src << "<b>Drone Laws</b>"
 	src << laws
 
-
-/mob/living/simple_animal/drone/proc/toggle_light()
+/mob/living/simple_animal/drone/verb/toggle_light()
+	set category = "Drone"
+	set name = "Toggle drone light"
 	if(light_on)
 		AddLuminosity(-4)
 	else
