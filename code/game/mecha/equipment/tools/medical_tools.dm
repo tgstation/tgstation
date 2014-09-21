@@ -169,8 +169,8 @@
 				<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [occupant.getOxyLoss()]%</font><br />
 				<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [occupant.getToxLoss()]%</font><br />
 				<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [occupant.getFireLoss()]%</font><br />
-				[occupant.getCloneLoss() ? "<span class='warning'>Subject appears to have been imperfectly cloned.</span>" : ""]<br />
-				[occupant.getBrainLoss() ? "<span class='warning'>Significant brain damage detected.</span>" : ""]<br />
+				<font color="red">[occupant.getCloneLoss() ? "Subject appears to have been imperfectly cloned." : ""]</font><br />
+				<font color="red">[occupant.getBrainLoss() ? "Significant brain damage detected." : ""]</font><br />
 				"}
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_reagents()
