@@ -26,15 +26,22 @@ var/global/ingredientLimit = 30
 	if(.)	foodNesting = 1
 	else	foodNesting = 0
 	. = (input("Deep Fried Nutriment? (1 to 50)"))
+	. = text2num(.)
 	if(isnum(.) && (. in 1 to 50)) deepFriedNutriment = .
 	else usr << "That wasn't a valid number."
-	. = (input("Ingredient Limit? (1 to 1000)"))
+	. = (input("Ingredient Limit? (1 to 100)"))
+	. = text2num(.)
 	if(isnum(.) && (. in 1 to 100)) ingredientLimit = .
 	else usr << "That wasn't a valid number."
 	log_admin("[key_name(usr)] set deepFriedEverything to [deepFriedEverything].")
 	log_admin("[key_name(usr)] set foodNesting to [foodNesting].")
 	log_admin("[key_name(usr)] set deepFriedNutriment to [deepFriedNutriment]")
 	log_admin("[key_name(usr)] set ingredientLimit to [ingredientLimit]")
+
+	message_admins("[key_name(usr)] set deepFriedEverything to [deepFriedEverything].")
+	message_admins("[key_name(usr)] set foodNesting to [foodNesting].")
+	message_admins("[key_name(usr)] set deepFriedNutriment to [deepFriedNutriment]")
+	message_admins("[key_name(usr)] set ingredientLimit to [ingredientLimit]")
 	return
 
 // Base (Oven) /////////////////////////////////////////////////
@@ -115,7 +122,7 @@ var/global/ingredientLimit = 30
 /obj/machinery/cooking/proc/validateIngredient(var/obj/item/I)
 	if(istype(I,/obj/item/weapon/grab) || istype(I,/obj/item/tk_grab)) . = "It won't fit."
 	else if(istype(I,/obj/item/weapon/disk/nuclear)) . = "It's the fucking nuke disk!"
-	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks || deepFriedEverything)) . = "valid"
+	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks) || deepFriedEverything) . = "valid"
 	else . = "It's not edible food."
 	return
 

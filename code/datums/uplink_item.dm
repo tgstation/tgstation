@@ -192,6 +192,14 @@ var/list/uplink_items = list()
 	cost = 6
 	job = list("Geneticist")
 
+//Atmospheric Technician
+/datum/uplink_item/jobspecific/flaregun
+	name = "Modified Flaregun"
+	desc = "A modified flaregun, identical in most appearances to the regular kind, as well as 7 rounds of flare ammunition. Capable of firing flares at lethal velocity, as well as firing shotgun ammunition."
+	item = /obj/item/weapon/storage/box/syndie_kit/flaregun
+	cost = 4
+	job = list("Atmospheric Technician")
+
 // DANGEROUS WEAPONS
 
 /datum/uplink_item/dangerous
@@ -205,8 +213,8 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/ammo
 	name = "Ammo-357"
-	desc = "Seven additional rounds for the revolver. Reports indicate the presence of machinery aboard Nanotrasen space stations suitable for producing extra .357 cartridges."
-	item = /obj/item/ammo_magazine/a357
+	desc = "A speedloader and seven additional rounds for the revolver. Reports indicate the presence of machinery aboard Nanotrasen space stations suitable for producing extra .357 cartridges."
+	item = /obj/item/weapon/storage/box/syndie_kit/ammo
 	cost = 2
 
 /datum/uplink_item/dangerous/crossbow

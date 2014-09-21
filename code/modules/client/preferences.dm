@@ -48,6 +48,7 @@ datum/preferences
 	var/toggles = TOGGLES_DEFAULT
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
+	var/special_popup = 0
 
 	//character preferences
 	var/real_name						//our character's name
@@ -286,7 +287,8 @@ datum/preferences
 			<b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a><br>
 			<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</b></a><br>
 			<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</b></a><br>
-			<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles & CHAT_GHOSTRADIO) ? "Nearest Speakers" : "All Chatter"]</b></a><br>"}
+			<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles & CHAT_GHOSTRADIO) ? "Nearest Speakers" : "All Chatter"]</b></a><br>
+			<b>Special Windows:</b><a href='?_src_=prefs;preference=special_popup'><b>[special_popup ? "Yes" : "No"]</b></a><br>"}
 		// END AUTOFIX
 		if(config.allow_Metadata)
 			dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
@@ -405,8 +407,8 @@ datum/preferences
 		dat += {"\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)][used_skillpoints > 0 ? " [used_skillpoints]" : "0"])</i></a><br>
 			<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"}
 		// END AUTOFIX
-		if(lentext(flavor_text) <= 40)
-			if(!lentext(flavor_text))
+		if(length(flavor_text) <= 40)
+			if(!length(flavor_text))
 				dat += "\[...\]"
 			else
 				dat += "[flavor_text]"
@@ -603,21 +605,21 @@ datum/preferences
 			<b>Set Character Records</b><br>
 			<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"}
 		// END AUTOFIX
-		if(lentext(med_record) <= 40)
+		if(length(med_record) <= 40)
 			HTML += "[med_record]"
 		else
 			HTML += "[copytext(med_record, 1, 37)]..."
 
 		HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">Employment Records</a><br>"
 
-		if(lentext(gen_record) <= 40)
+		if(length(gen_record) <= 40)
 			HTML += "[gen_record]"
 		else
 			HTML += "[copytext(gen_record, 1, 37)]..."
 
 		HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
 
-		if(lentext(sec_record) <= 40)
+		if(length(sec_record) <= 40)
 			HTML += "[sec_record]<br>"
 		else
 			HTML += "[copytext(sec_record, 1, 37)]...<br>"
@@ -1250,6 +1252,9 @@ datum/preferences
 
 					if("name")
 						be_random_name = !be_random_name
+
+					if("special_popup")
+						special_popup = !special_popup
 
 					if("randomslot")
 						randomslot = !randomslot

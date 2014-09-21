@@ -13,6 +13,7 @@
 	action_button_name = "Toggle Helmet Light"
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
+	species_restricted = list("exclude","Vox")
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))
@@ -57,6 +58,7 @@
 	icon_state = "rig0-white"
 	item_state = "ce_helm"
 	_color = "white"
+	species_restricted = list("exclude","Vox")
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/suit/space/rig/elite
@@ -74,13 +76,13 @@
 	icon_state = "rig0-mining"
 	item_state = "mining_helm"
 	_color = "mining"
+	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/suit/space/rig/mining
 	icon_state = "rig-mining"
 	name = "mining hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating."
 	item_state = "mining_hardsuit"
-
 
 
 //Syndicate rig
@@ -93,6 +95,7 @@
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.6
 	var/obj/machinery/camera/camera
+	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
@@ -117,7 +120,7 @@
 	slowdown = 1
 	w_class = 3
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 60)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/gun,/obj/item/ammo_storage,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
 	siemens_coefficient = 0.6
 
 
@@ -128,6 +131,7 @@
 	icon_state = "rig0-wiz"
 	item_state = "wiz_helm"
 	_color = "wiz"
+	species_restricted = list("exclude","Vox")
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.7
@@ -154,6 +158,7 @@
 	icon_state = "rig0-medical"
 	item_state = "medical_helm"
 	_color = "medical"
+	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/suit/space/rig/medical
 	icon_state = "rig-medical"
@@ -170,6 +175,7 @@
 	icon_state = "rig0-sec"
 	item_state = "sec_helm"
 	_color = "sec"
+	species_restricted = list("exclude","Vox")
 	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
 	siemens_coefficient = 0.7
 
@@ -190,6 +196,7 @@
 	icon_state = "rig0-atmos"
 	item_state = "atmos_helm"
 	_color = "atmos"
+	species_restricted = list("exclude","Vox")
 	armor = list(melee = 40, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 0)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
 
@@ -210,6 +217,7 @@
 	icon_state = "rig0-atmos_gold"
 	item_state = "atmos_gold_helm"
 	_color = "atmos"
+	species_restricted = list("exclude","Vox")
 	no_light=1
 
 /obj/item/clothing/suit/space/rig/atmos/gold
@@ -224,3 +232,42 @@
 	slowdown = 2
 	armor = list(melee = 30, bullet = 5, laser = 40,energy = 5, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/backpack/satchel_norm,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd, /obj/item/weapon/extinguisher, /obj/item/weapon/)
+
+//ADMINBUS RIGS. SOVIET + NAZI
+/obj/item/clothing/head/helmet/space/rig/nazi
+	name = "nazi hardhelmet"
+	desc = "This is the face of das vaterland's top elite. Gas or energy are your only escapes."
+	item_state = "rig0-nazi"
+	icon_state = "rig0-nazi"
+	species_restricted = list("exclude","Vox")//GAS THE VOX
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
+	_color = "nazi"
+
+/obj/item/clothing/suit/space/rig/nazi
+	name = "nazi hardsuit"
+	desc = "The attire of a true krieger. All shall fall, and only das vaterland will remain."
+	item_state = "rig-nazi"
+	icon_state = "rig-nazi"
+	slowdown = 1
+	species_restricted = list("exclude","Vox")//GAS THE VOX
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
+	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/)
+
+/obj/item/clothing/head/helmet/space/rig/soviet
+	name = "soviet hardhelmet"
+	desc = "Crafted with the pride of the proletariat. The vengeful gaze of the visor roots out all fascists and capitalists."
+	item_state = "rig0-soviet"
+	icon_state = "rig0-soviet"
+	species_restricted = list("exclude","Vox")//HET
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
+	_color = "soviet"
+
+/obj/item/clothing/suit/space/rig/soviet
+	name = "soviet hardsuit"
+	desc = "Crafted with the pride of the proletariat. The last thing the enemy sees is the bottom of this armor's boot."
+	item_state = "rig-soviet"
+	icon_state = "rig-soviet"
+	slowdown = 1
+	species_restricted = list("exclude","Vox")//HET
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
+	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/)

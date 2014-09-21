@@ -30,7 +30,7 @@
 	var/antagHUD = 0
 	universal_speak = 1
 	var/atom/movable/following = null
-
+	incorporeal_move = 1
 
 
 /mob/dead/observer/New(var/mob/body=null, var/flags=1)
@@ -288,6 +288,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/reset_poltergeist_cooldown()
 	next_poltergeist=0
 
+/* WHY
 /mob/dead/observer/Move(NewLoc, direct)
 	dir = direct
 	if(NewLoc)
@@ -310,13 +311,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else if((direct & WEST) && x > 1)
 		x--
 
-	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
+	for(var/obj/effect/step_trigger/S in get_turf(src))	//<-- this is dumb
 		S.Crossed(src)
 
 	var/area/A = get_area_master(src)
 	if(A)
 		A.Entered(src)
-
+*/
 /mob/dead/observer/examine()
 	if(usr)
 		usr << desc

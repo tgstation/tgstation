@@ -3,20 +3,22 @@
 	name = "revolver"
 	icon_state = "detective"
 	max_shells = 6
-	caliber = "38"
+	caliber = list("38" = 1, "357" = 1)
 	origin_tech = "combat=2;materials=2"
 	ammo_type = "/obj/item/ammo_casing/c38"
 	var/perfect = 0
 
-	special_check(var/mob/living/carbon/human/M)
-		if(caliber == initial(caliber))
-			return 1
-		if(!perfect && prob(70 - (loaded.len * 10)))	//minimum probability of 10, maximum of 60
-			M << "<span class='danger'>[src] blows up in your face.</span>"
-			M.take_organ_damage(0,20)
-			M.drop_item()
-			del(src)
-			return 0
+	special_check(var/mob/living/carbon/human/M) //to see if the gun fires 357 rounds safely. A non-modified revolver randomly blows up
+		if(loaded.len) //this is a good check, I like this check
+			var/obj/item/ammo_casing/AC = loaded[1]
+			if(caliber["38"] == 0) //if it's been modified, this is true
+				return 1
+			if(istype(AC, /obj/item/ammo_casing/a357) && !perfect && prob(70 - (loaded.len * 10)))	//minimum probability of 10, maximum of 60
+				M << "<span class='danger'>[src] blows up in your face.</span>"
+				M.take_organ_damage(0,20)
+				M.drop_item()
+				del(src)
+				return 0
 		return 1
 
 	verb/rename_gun()
@@ -38,15 +40,15 @@
 			return 1
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
-		var/obj/item/weapon/conversion_kit/CK
 		..()
 		if(isscrewdriver(A) || istype(A, /obj/item/weapon/conversion_kit))
+			var/obj/item/weapon/conversion_kit/CK
 			if(istype(A, /obj/item/weapon/conversion_kit))
 				CK = A
 				if(!CK.open)
 					user << "<span class='notice'>This [CK.name] is useless unless you open it first. </span>"
 					return
-			if(caliber == "38")
+			if(caliber["38"])
 				user << "<span class='notice'>You begin to reinforce the barrel of [src].</span>"
 				if(loaded.len)
 					afterattack(user, user)	//you know the drill
@@ -57,7 +59,7 @@
 					if(loaded.len)
 						user << "<span class='notice'>You can't modify it!</span>"
 						return
-					caliber = "357"
+					caliber["38"] = 0
 					desc = "The barrel and chamber assembly seems to have been modified."
 					user << "<span class='warning'>You reinforce the barrel of [src]! Now it will fire .357 rounds.</span>"
 					if(CK && istype(CK))
@@ -73,7 +75,7 @@
 					if(loaded.len)
 						user << "<span class='notice'>You can't modify it!</span>"
 						return
-					caliber = "38"
+					caliber["38"] = 1
 					desc = initial(desc)
 					user << "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>"
 					perfect = 0
@@ -118,14 +120,14 @@
 	if(!A) return
 
 	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_magazine))
+	if(istype(A, /obj/item/ammo_storage/magazine))
 
 		if((load_method == 2) && loaded.len)	return
-		var/obj/item/ammo_magazine/AM = A
+		var/obj/item/ammo_storage/magazine/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
 			if(getAmmo() > 0 || loaded.len >= max_shells)
 				break
-			if(AC.caliber == caliber && loaded.len < max_shells)
+			if(caliber[AC.caliber] && loaded.len < max_shells)
 				AC.loc = src
 				AM.stored_ammo -= AC
 				loaded += AC

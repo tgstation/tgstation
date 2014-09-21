@@ -80,12 +80,12 @@
 	var/obj/effect/proc_holder/spell/spelltype
 
 	activate(var/mob/M, var/connected, var/flags)
-		..()
+		..(M,connected,flags)
 		M.spell_list += new spelltype(M)
 		return 1
 
 	deactivate(var/mob/M, var/connected, var/flags)
-		..()
+		..(M,connected,flags)
 		for(var/obj/effect/proc_holder/spell/S in M.spell_list)
 			if(istype(S,spelltype))
 				M.spell_list.Remove(S)
@@ -95,12 +95,12 @@
 	var/verbtype
 
 	activate(var/mob/M, var/connected, var/flags)
-		..()
+		..(M,connected,flags)
 		M.verbs += verbtype
 		return 1
 
 	deactivate(var/mob/M, var/connected, var/flags)
-		..()
+		..(M,connected,flags)
 		M.verbs -= verbtype
 
 // WAS: /datum/bioEffect/cryokinesis
