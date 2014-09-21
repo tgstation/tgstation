@@ -30,9 +30,7 @@ var/time_last_changed_position = 0
 		"Captain",
 		"Head of Personnel",
 		"Head of Security",
-		"Warden",
 		"Chief Engineer",
-		"Quartermaster",
 		"Research Director",
 		"Chief Medical Officer",
 		"Chaplain")
