@@ -787,18 +787,18 @@
 				var/list/L = current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
 				if (!flash)
-					usr << "\red Deleting flash failed!"
+					usr << "<span class='warning'>Deleting flash failed!</span>"
 				qdel(flash)
 				var/obj/item/device/recaller/recaller = locate() in L
 				if (!recaller)
-					usr << "\red Deleting recaller failed!"
+					usr << "<span class='warning'>Deleting recaller failed!</span>"
 				qdel(recaller)
 
 			if("repairflash")
 				var/list/L = current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
 				if (!flash)
-					usr << "\red Repairing flash failed!"
+					usr << "<span class='warning'>Repairing flash failed!</span>"
 				else
 					flash.broken = 0
 

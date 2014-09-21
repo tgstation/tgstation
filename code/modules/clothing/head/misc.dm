@@ -194,3 +194,16 @@
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	flags = NODROP
+
+/obj/item/clothing/head/cone
+	desc = "This cone is trying to warn you of something!"
+	name = "warning cone"
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "cone"
+	item_state = "cone"
+	force = 1.0
+	throwforce = 3.0
+	throw_speed = 2
+	throw_range = 5
+	w_class = 2.0
+	attack_verb = list("warned", "cautioned", "smashed")

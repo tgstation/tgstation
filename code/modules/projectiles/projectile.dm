@@ -50,9 +50,12 @@
 	var/forcedodge = 0
 
 
+
 /obj/item/projectile/proc/delete()
 	// Garbage collect the projectiles
 	loc = null
+
+
 
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
 	if(!isliving(target))	return 0
@@ -67,8 +70,8 @@
 	else
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
-/obj/item/projectile/Bump(atom/A as mob|obj|turf|area)
 
+/obj/item/projectile/Bump(atom/A as mob|obj|turf|area)
 	if(A == firer)
 		loc = A.loc
 		return 0 //cannot shoot yourself
@@ -120,8 +123,7 @@
 				permutated.Add(A)
 				return 0
 
-			density = 0
-			invisibility = 101
+
 			delete()
 			return 0
 	return 1
@@ -141,9 +143,9 @@
 		delete()
 		return
 	kill_count--
-	spawn while(src && src.loc)
+	spawn while(loc)
 		if((!( current ) || loc == current))
-			current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
+			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 		if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 			delete()
 			return

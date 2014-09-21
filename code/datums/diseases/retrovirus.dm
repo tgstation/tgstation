@@ -8,7 +8,7 @@
 	agent = ""
 	affected_species = list("Human")
 	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."
-	severity = "Severe"
+	severity = "Dangerous!"
 	permeability_mod = 0.4
 	stage_prob = 2
 	var/SE

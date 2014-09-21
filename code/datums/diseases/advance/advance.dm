@@ -182,7 +182,7 @@ var/list/advance_cures = 	list(
 		CRASH("We did not have any symptoms before generating properties.")
 		return
 
-	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "transmittable" = 1, "severity" = 1)
+	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "transmittable" = 1, "severity" = 0)
 
 	for(var/datum/symptom/S in symptoms)
 
@@ -190,7 +190,7 @@ var/list/advance_cures = 	list(
 		properties["stealth"] += S.stealth
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
-		properties["severity"] = max(properties["severity"], S.level) // severity is based on the highest level symptom
+		properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity symptom
 
 	return properties
 
@@ -234,7 +234,7 @@ var/list/advance_cures = 	list(
 	switch(level_sev)
 
 		if(-INFINITY to 0)
-			severity = "Non-Threat"
+			severity = non_threat
 		if(1)
 			severity = "Minor"
 		if(2)

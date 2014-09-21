@@ -148,10 +148,35 @@ client/proc/one_click_antag()
 	return 0
 
 /datum/admins/proc/makeWizard()
-	var/client/C = pick_from_candidates(BE_WIZARD)
+	var/list/mob/dead/observer/candidates = list()
+	var/mob/dead/observer/theghost = null
+	var/time_passed = world.time
 
-	if(C)
-		var/mob/living/carbon/human/new_character=makeBody(C.mob)
+	for(var/mob/dead/observer/G in player_list)
+		if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
+			spawn(0)
+				switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+					if("Yes")
+						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+							return
+						candidates += G
+					if("No")
+						return
+					else
+						return
+
+	sleep(300)
+
+	if(candidates.len)
+		shuffle(candidates)
+		for(var/mob/i in candidates)
+			if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
+
+			theghost = i
+			break
+
+	if(theghost)
+		var/mob/living/carbon/human/new_character=makeBody(theghost)
 		new_character.mind.make_Wizard()
 		return 1
 
@@ -193,22 +218,42 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/makeNukeTeam()
 
-	var/list/candidates = get_candidates(BE_OPERATIVE)
-
+	var/list/mob/dead/observer/candidates = list()
 	var/list/mob/dead/observer/chosen = list()
-	var/client/C = null
+	var/mob/dead/observer/theghost = null
+	var/time_passed = world.time
+
+	for(var/mob/dead/observer/G in player_list)
+		if(!jobban_isbanned(G, "operative") && !jobban_isbanned(G, "Syndicate"))
+			spawn(0)
+				switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
+					if("Yes")
+						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+							return
+						candidates += G
+					if("No")
+						return
+					else
+						return
+
+	sleep(300)
 
 	if(candidates.len)
 		var/numagents = 5
 		var/agentcount = 0
 
 		for(var/i = 0, i<numagents,i++)
+			shuffle(candidates) //More shuffles means more randoms
+			for(var/mob/j in candidates)
+				if(!j || !j.client)
+					candidates.Remove(j)
+					continue
 
-			C = pick(candidates)
-			candidates.Remove(C)
-			chosen += C.mob
-			agentcount++
-			break
+				theghost = j
+				candidates.Remove(theghost)
+				chosen += theghost
+				agentcount++
+				break
 		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
 		if(agentcount < 3)
 			return 0
@@ -263,16 +308,34 @@ client/proc/one_click_antag()
 
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
+	var/list/mob/dead/observer/candidates = list()
+	var/time_passed = world.time
 	var/mission = input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
-	var/list/candidates = get_candidates(-1, "member of a Nanotrasen strike team")
+
+	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
+	for(var/mob/dead/observer/G in player_list)
+		spawn(0)
+			switch(alert(G,"Do you wish to be considered for an elite Nanotrasen strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
+				if("Yes")
+					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+						return
+					candidates += G
+				if("No")
+					return
+				else
+					return
+	sleep(300)
+
+	for(var/mob/dead/observer/G in candidates)
+		if(!G.key)
+			candidates.Remove(G)
 
 	if(candidates.len >= 3) //Minimum 3 to be considered a squad
 		//Pick the lucky players
 		var/numagents = min(5,candidates.len) //How many commandos to spawn
 		while(numagents && deathsquadspawn.len && candidates.len)
 			var/spawnloc = deathsquadspawn[1]
-			var/client/C = pick(candidates)
-			var/mob/dead/observer/chosen_candidate = C.mob
+			var/mob/dead/observer/chosen_candidate = pick(candidates)
 			candidates -= chosen_candidate
 			if(!chosen_candidate.key)
 				continue

@@ -52,6 +52,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/requires = 0
 	var/list/required_limb = list()
 
+	var/const/non_threat = "Non-Threat"
+
 
 /datum/disease/proc/stage_act()
 	var/cure_present = has_cure()

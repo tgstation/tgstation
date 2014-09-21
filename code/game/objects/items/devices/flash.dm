@@ -92,21 +92,8 @@
 								if(!ticker.mode.add_gangster(M.mind,"B"))
 									resisted = 1
 							if(!resisted)
-								if(jobban_isbanned(M, "Syndicate") || jobban_isbanned(M, "revolutionary"))
-									M << "<span class='userdanger'>You are currently jobbanned from Revolutionary.</span>"
-									user << "<span class='warning'>This mind was unable to survive the rigors of conversion and has been wiped clean!</span>"
-									M.ghostize(0) //Jobbanned players are force ghosted
-									M.resting = 1
-									spawn(0)
-										var/client/C = pick_from_candidates(BE_REV) //Try to find a suitable observer to replace the jobbanned player
-										if(C)
-											M.key = C.key
-											M << "<span class='warning'>Who are you? How did you get here? You can't seem to remember anything but...</span>"
-											M.mind.has_been_rev = 1
-											ticker.mode.add_revolutionary(M.mind)
-								else
-									M.mind.has_been_rev = 1
-									ticker.mode.add_revolutionary(M.mind)
+								M.mind.has_been_rev = 1
+								ticker.mode.add_revolutionary(M.mind)
 							else
 								user << "<span class='warning'>This mind seems resistant to the flash!</span>"
 						else

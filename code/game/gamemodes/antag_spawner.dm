@@ -3,7 +3,6 @@
 	throw_range = 5
 	w_class = 1.0
 	var/used = 0
-	var/polling_ghosts = 0
 
 /obj/item/weapon/antag_spawner/proc/spawn_antag(var/client/C, var/turf/T, var/type = "")
 	return
@@ -43,7 +42,7 @@
 	..()
 	var/mob/living/carbon/human/H = usr
 
-	if(H.stat || H.restrained() || polling_ghosts)
+	if(H.stat || H.restrained())
 		return
 	if(!istype(H, /mob/living/carbon/human))
 		return 1
@@ -54,12 +53,10 @@
 			if (used)
 				H << "You already used this contract!"
 				return
-			H << "You send out a call for aid into the realms! It will be about 20 seconds before you get a response."
-			polling_ghosts = 1
-			var/client/C = pick_from_candidates(BE_WIZARD, "wizard's apprentice")
-			polling_ghosts = 0
-			if(C)
+			var/list/candidates = get_candidates(BE_WIZARD)
+			if(candidates.len)
 				src.used = 1
+				var/client/C = pick(candidates)
 				spawn_antag(C, get_turf(H.loc), href_list["school"])
 			else
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
@@ -126,17 +123,13 @@
 	var/TC_cost = 0
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user as mob)
-	if(polling_ghosts)
-		return
 	if(used)
 		user << "The teleporter is out of power."
 		return
-	user << "<span class='notice'>Standby for reinforcements... ETA 20 seconds.</span>"
-	polling_ghosts = 1
-	var/client/C = pick_from_candidates(BE_OPERATIVE, "Syndicate cyborg")
-	polling_ghosts = 0
-	if(C)
+	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
+	if(borg_candicates.len > 0)
 		used = 1
+		var/client/C = pick(borg_candicates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
 	else
 		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"

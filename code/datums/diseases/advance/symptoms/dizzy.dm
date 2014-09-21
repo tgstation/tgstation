@@ -23,6 +23,7 @@ Bonus
 	stage_speed = -3
 	transmittable = -1
 	level = 4
+	severity = 2
 
 /datum/symptom/dizzy/Activate(var/datum/disease/advance/A)
 	..()

@@ -23,7 +23,7 @@
 ///////////////////////////
 /datum/game_mode/gang/announce()
 	world << "<B>The current game mode is - Gang War!</B>"
-	world << "<B>A violent turf war has erupted on the station!<BR>\nGangsters -  Take over the station by killing the rival gang's bosses! Recruit gangsters by flashing them! <BR>\nSecurity - Protect the Crew! Identify and stop the mob bosses!</B>"
+	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by killing the rival gang's bosses! Recruit gangsters by flashing them! <BR>Security - Protect the Crew! Identify and stop the mob bosses!</B>"
 
 
 ///////////////////////////////////////////////////////////////////////////////
