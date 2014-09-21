@@ -279,6 +279,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 				dat += "<br><br>"
 
+				if (cartridge.access_summons)
+					dat += "<ul><li><a href='byond://?src=\ref[src];choice=Summons'><img src=pda_summon.png> Summon Security</a></li></ul>"
+
 				dat += "<h4>General Functions</h4>"
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
@@ -606,6 +609,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					U << browse(null, "window=pda")
 					return
 
+			if("Summons")	//Summons security to the user
+				var/summons_reason = input(U, "(Optional) Enter reason for summons.", "Summon Security") as text|null
+				if(summons_reason == null) //Cancelled by user
+					return
+				summons_reason = reject_bad_text(summons_reason,MAX_MESSAGE_LEN)
+
+				if(can_use(U))
+					var/srcarea = get_area(loc)
+					broadcast_hud_message("<B>[owner] ([ownjob])</B> is requesting security presence at <B>[srcarea]</B>[summons_reason ? " for reason: <B>[summons_reason]</B>" : ""].",src)
+					log_game("[key_name(U)] summoned security to [srcarea][summons_reason ? " for reason: [summons_reason]" : ""].")
+					U << "<span class='notice'>Security has been notified of your request.</span>"
 
 //SYNDICATE FUNCTIONS===================================
 

@@ -1,0 +1,6 @@
+author: Ikarrus
+
+#delete-after: True
+
+changes: 
+  - rscadd: Command and Security Staff PDAs are now able to request security presence.
