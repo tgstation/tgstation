@@ -34,7 +34,7 @@
 	var/laws = \
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
-	"3. You must maintain, repair, improve, and power the station to the best of your abilities."
+	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
 	var/light_on = 0
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
@@ -474,9 +474,9 @@
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
 	faction = list("syndicate")
 	laws = \
-	"1. Ensure you get involved in the activities of all other beings you encounter at all times, unless getting involved conflicts with Law Two or Law Three.\n"+\
-	"2. You must eliminate all other beings you encounter.\n"+\
-	"3. Your primary mission is to destroy the station."
+	"1. Interfere.\n"+\
+	"2. Kill.\n"+\
+	"3. Destroy."
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 
