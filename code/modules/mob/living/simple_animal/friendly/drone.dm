@@ -38,7 +38,7 @@
 	var/light_on = 0
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
-	var/obj/item/default_storage //If this exists, it will spawn in internal storage
+	var/obj/item/default_storage = /obj/item/weapon/storage/toolbox/drone //If this exists, it will spawn in internal storage
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
 
 
@@ -71,7 +71,7 @@
 					switch(d_input)
 						if("Reactivate")
 							if(!client)
-								D << "<span class='notice'>This drone's OS has blue screened...</span>"
+								D << "<span class='notice'>This drone's OS has blue screened, there is no point in repairing them.</span>"
 								return
 							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>")
 							if(do_after(user,30,needhand = 1))
@@ -182,10 +182,7 @@
 	src << laws
 
 
-/mob/living/simple_animal/drone/verb/toggle_light()
-	set category = "Drone"
-	set name = "Toggle drone light"
-
+/mob/living/simple_animal/drone/proc/toggle_light()
 	if(light_on)
 		AddLuminosity(-4)
 	else
