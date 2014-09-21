@@ -210,7 +210,7 @@
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
 	U.hidden_uplink.uplink_owner="[synd_mob.key]"
-	U.hidden_uplink.uses = 10
+	U.hidden_uplink.uses = 20
 	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
