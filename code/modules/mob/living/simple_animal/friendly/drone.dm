@@ -70,6 +70,9 @@
 				if(d_input)
 					switch(d_input)
 						if("Reactivate")
+							if(!client)
+								D << "<span class='notice'>This drone's OS has blue screened...</span>"
+								return
 							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>")
 							if(do_after(user,30,needhand = 1))
 								health = maxHealth
