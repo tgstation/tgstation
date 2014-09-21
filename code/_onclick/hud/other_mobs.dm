@@ -85,6 +85,15 @@
 	inv_box.layer = 19
 	adding += inv_box
 
+	inv_box = new /obj/screen/inventory()
+	inv_box.name = "head/mask"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "mask"
+	inv_box.screen_loc = ui_drone_head
+	inv_box.slot_id = slot_head
+	inv_box.layer = 19
+	adding += inv_box
+
 	using = new /obj/screen/inventory()
 	using.name = "hand"
 	using.icon = ui_style

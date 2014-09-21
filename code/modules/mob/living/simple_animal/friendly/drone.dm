@@ -3,6 +3,9 @@
 #define HEAD_LAYER 2
 #define TOTAL_LAYERS 2
 
+#define DRONE_NET_CONNECT "<span class='notice'>DRONE NETWORK: [name] connected.</span>"
+#define DRONE_NET_DISCONNECT "<span class='danger'>DRONE NETWORK: [name] is not responding.</span>"
+
 
 /mob/living/simple_animal/drone
 	name = "Drone"
@@ -56,6 +59,8 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)
 
+	alert_drones(DRONE_NET_CONNECT)
+
 /mob/living/simple_animal/drone/attack_hand(mob/user)
 	if(isdrone(user))
 		var/mob/living/simple_animal/drone/D = user
@@ -65,14 +70,15 @@
 				if(d_input)
 					switch(d_input)
 						if("Reactivate")
-							D.visible_message("<span class='notice'>[D] begins to reactivate [src]</span>")
+							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>")
 							if(do_after(user,30,needhand = 1))
 								health = maxHealth
 								stat = CONSCIOUS
 								icon_state = icon_living
 								D.visible_message("<span class='notice'>[D] reactivates [src]!</span>")
+								alert_drones(DRONE_NET_CONNECT)
 							else
-								D << "<span class='notice'>You need to remain still to reactivate [src]</span>"
+								D << "<span class='notice'>You need to remain still to reactivate [src].</span>"
 
 						if("Cannibalize")
 							if(D.health < D.maxHealth)
@@ -165,7 +171,6 @@
 	r_hand.screen_loc = ui_rhand
 	update_inv_hands()
 
-
 /mob/living/simple_animal/drone/verb/check_laws()
 	set category = "Drone"
 	set name = "Check Laws"
@@ -195,10 +200,18 @@
 
 	var/area/A = get_area(loc)
 
-	if(alert_s && A)
-		var/msg = "<span class='notice'>DRONE PING: [name]: [alert_s] priority alert in [A.name]!</span>"
-		for(var/mob/living/simple_animal/drone/D in world)
-			D << msg
+	if(alert_s && A && stat != DEAD)
+		var/msg = "<span class='boldnotice'>DRONE PING: [name]: [alert_s] priority alert in [A.name]!</span>"
+		alert_drones(msg)
+
+/mob/living/simple_animal/drone/proc/alert_drones(msg)
+	for(var/mob/living/simple_animal/drone/D in mob_list)
+		if(D.stat != DEAD)
+			for(var/F in src.faction)
+				if(F in D.faction)
+					D << msg
+					break
+
 
 /mob/living/simple_animal/drone/Login()
 	..()
@@ -218,6 +231,12 @@
 		unEquip(internal_storage)
 	if(head)
 		unEquip(head)
+
+	alert_drones(DRONE_NET_DISCONNECT)
+
+/mob/living/simple_animal/drone/gib()
+	dust()
+
 
 /mob/living/simple_animal/drone/unEquip(obj/item/I, force)
 	if(..(I,force))
@@ -351,9 +370,16 @@
 
 	apply_overlay(HEAD_LAYER)
 
-#undef HANDS_LAYER
-#undef HEAD_LAYER
-#undef TOTAL_LAYERS
+//These procs serve as redirection so that the drone updates as expected when other things call these procs
+/mob/living/simple_animal/drone/update_inv_l_hand()
+	update_inv_hands()
+
+/mob/living/simple_animal/drone/update_inv_r_hand()
+	update_inv_hands()
+
+/mob/living/simple_animal/drone/update_inv_wear_mask()
+	update_inv_head()
+
 
 /mob/living/simple_animal/drone/canUseTopic()
 	if(stat)
@@ -375,6 +401,12 @@
 	else
 		mode()
 
+#undef HANDS_LAYER
+#undef HEAD_LAYER
+#undef TOTAL_LAYERS
+
+#undef DRONE_NET_CONNECT
+#undef DRONE_NET_DISCONNECT
 
 //DRONE SHELL
 /obj/item/drone_shell
@@ -440,6 +472,7 @@
 	picked = TRUE
 	health = 30
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	faction = list("syndicate")
 	laws = \
 	"1. Ensure you get involved in the activities of all other beings you encounter at all times, unless getting involved conflicts with Law Two or Law Three.\n"+\
 	"2. You must eliminate all other beings you encounter.\n"+\
@@ -453,6 +486,8 @@
 		internal_storage.hidden_uplink.uses = 5
 		internal_storage.name = "syndicate uplink"
 
+/mob/living/simple_animal/drone/syndrone/Login()
+	..()
 	src << "<span class='notice'>You can kill and eat other drones to increase your health!</span>" //Inform the evil lil guy
 
 /obj/item/drone_shell/syndrone
