@@ -316,7 +316,6 @@
 		req_access = list(access_teleporter)
 		var/active = 0
 		var/power = 0
-		var/state = 0
 		var/steps = 0
 		var/last_check = 0
 		var/check_delay = 10
@@ -360,7 +359,7 @@
 //		use_power(250) //uses APC power
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
-	if(state != 1)
+	if(!anchored)
 		user << "\red The shield generator needs to be firmly secured to the floor first."
 		return 1
 	if(src.locked && !istype(user, /mob/living/silicon))
@@ -370,7 +369,7 @@
 		user << "\red The shield generator needs to be powered by wire underneath."
 		return 1
 
-	if(src.active >= 1)
+	if(src.active)
 		src.active = 0
 		icon_state = "Shield_Gen"
 
@@ -399,7 +398,7 @@
 //		shieldload = maxshieldload
 
 	if(src.active == 1)
-		if(!src.state == 1)
+		if(!anchored)
 			src.active = 0
 			return
 		spawn(1)
@@ -411,7 +410,7 @@
 		spawn(4)
 			setup_field(8)
 		src.active = 2
-	if(src.active >= 1)
+	if(src.active == 1)
 		if(src.power == 0)
 			src.visible_message("\red The [src.name] shuts down due to lack of power!", \
 				"You hear heavy droning fade out")
@@ -474,7 +473,10 @@
 	if(active)
 		user << "Turn off the field generator first."
 		return
-	return ..()
+	if(..())
+		power()
+		return 1
+	return
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
 	if(..())
@@ -609,6 +611,9 @@
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
+
+	if(!mover)
+		return
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(20)
