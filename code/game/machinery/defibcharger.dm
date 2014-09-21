@@ -89,7 +89,7 @@ obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as o
 		return
 	if(istype(G, /obj/item/weapon/melee/defibrillator))
 		var/obj/item/weapon/melee/defibrillator/D = G
-		if(D.status)
+		if(D.ready)
 			user << "<span class='warning'>[D] won't fit. Try putting the paddles back on!</span>"
 			return
 		if(charging)
