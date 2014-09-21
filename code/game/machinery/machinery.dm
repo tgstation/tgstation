@@ -396,14 +396,16 @@ Class Procs:
 		M.state = 2
 		M.icon_state = "box_1"
 		for(var/obj/I in component_parts)
-			if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
+			if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) && src:reagents && src:reagents.total_volume)
 				reagents.trans_to(I, reagents.total_volume)
 			if(I.reliability != 100 && crit_fail)
 				I.crit_fail = 1
 			I.loc = src.loc
-		del(src)
+		for(var/obj/I in src.contents) //remove any stuff loaded, like for fridges
+			I.loc = src.loc
 		user.visible_message(	"<span class='notice'>[user] successfully pries out the circuitboard from \the [src]!</span>",
 								"<span class='notice'>\icon[src] You successfully pry out the circuitboard from \the [src]!</span>")
+		del(src)
 		return 1
 	return
 
@@ -418,7 +420,7 @@ Class Procs:
 	user << "<span class='notice'>\icon[src] You [panel_open ? "open" : "close"] the maintenance hatch of \the [src].</span>"
 	if(istype(toggleitem, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-	return panel_open
+	return 1
 
 /obj/machinery/proc/wrenchAnchor(var/mob/user)
 	user.visible_message(	"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",

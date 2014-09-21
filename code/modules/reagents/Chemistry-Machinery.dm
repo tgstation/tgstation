@@ -989,7 +989,6 @@
 	var/inuse = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/limit = 10
-	var/opened = 0.0
 	var/list/blend_items = list (
 
 		//Sheets
@@ -1038,6 +1037,8 @@
 
 	var/list/holdingitems = list()
 
+	machine_flags = SCREWTOGGLE | CROWDESTROY
+
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
@@ -1062,9 +1063,22 @@
 	icon_state = "juicer"+num2text(!isnull(beaker))
 	return
 
+/obj/machinery/reagentgrinder/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if(!panel_open && beaker)
+		user << "You can't reach \the [src]'s maintenance panel with the beaker in the way!"
+		return
+	return ..()
+
+/obj/machinery/reagentgrinder/crowbarDestroy(mob/user)
+	if(beaker)
+		user << "You can't do that while \the [src] has a beaker loaded!"
+		return
+	return ..()
 
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
+	if(..())
+		return
 
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \
@@ -1100,30 +1114,6 @@
 
 		src.updateUsrDialog()
 		return 0
-	else if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			user << "You open the maintenance hatch of [src]."
-			//src.icon_state = "autolathe_t"
-		else
-			user << "You close the maintenance hatch of [src]."
-			//src.icon_state = "autolathe"
-		opened = !opened
-		return 1
-	else if(istype(O, /obj/item/weapon/crowbar))
-		if (opened)
-			if(beaker)
-				user << "\red A beaker is loaded, you cannot deconstruct [src]."
-				return 1
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return 1
 
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
 		user << "Cannot refine into a reagent."

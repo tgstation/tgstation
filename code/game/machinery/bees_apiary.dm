@@ -46,6 +46,8 @@
 		return
 
 /obj/machinery/apiary/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(..())
+		return
 	if(istype(O, /obj/item/queen_bee))
 		if(health > 0)
 			user << "\red There is already a queen in there."
@@ -72,7 +74,15 @@
 		else
 			user << "\blue You begin to dislodge the dead apiary from the tray."
 		if(do_after(user, 50))
-			new hydrotray_type(src.loc)
+			var/obj/machinery/created_tray = new hydrotray_type(src.loc)
+			created_tray.component_parts = list()
+			for(var/obj/I in src.component_parts)
+				created_tray.component_parts += I
+				I.loc = created_tray
+				component_parts -= I
+			for(var/obj/I in src.contents)
+				I.loc = created_tray
+				contents -= I
 			new /obj/item/apiary(src.loc)
 			user << "\red You dislodge the apiary from the tray."
 			del(src)
@@ -100,7 +110,6 @@
 			user << "\blue There is no honey left to harvest."
 	else
 		angry_swarm(user)
-		..()
 
 /obj/machinery/apiary/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1

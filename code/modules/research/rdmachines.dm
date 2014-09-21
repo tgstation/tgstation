@@ -193,7 +193,8 @@
 					output=src
 					user << "\blue Output set."
 		return
-	..()
+	if(..())
+		return 1
 
 	if(istype(O,/obj/item/stack/sheet) && takes_material_input)
 		var/accepted = 1

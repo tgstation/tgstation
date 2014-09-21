@@ -41,11 +41,6 @@
 
 	RefreshParts()
 
-/obj/machinery/hydroponics/Del()
-	for(var/obj/O in src.component_parts) O.loc = null
-	src.component_parts.len = 0
-	return ..()
-
 /obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
 		if(planted)
@@ -492,7 +487,8 @@ obj/machinery/hydroponics/proc/mutatepest()  // Until someone makes a spaceworm,
 
 obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
-	..()
+	if(..())
+		return 1
 
 	//Called when mob user "attacks" it with object O
 	if (istype(O, /obj/item/weapon/reagent_containers/glass/bucket))
@@ -826,6 +822,14 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			A.icon = src.icon
 			A.icon_state = src.icon_state
 			A.hydrotray_type = src.type
+			A.component_parts = list()
+			for(var/obj/I in component_parts)
+				I.loc = A
+				component_parts -= I
+				A.component_parts += I
+			for(var/obj/I in contents)
+				I.loc = A
+				contents -= I
 			del(src)
 	return
 

@@ -139,6 +139,9 @@
 		user << "<span class='notice'>\The [src] is unpowered and useless.</span>"
 		return
 
+	if(..())
+		return 1
+
 	if(accept_check(O))
 		if(contents.len >= max_n_of_items)
 			user << "<span class='notice'>\The [src] is full.</span>"

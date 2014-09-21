@@ -120,7 +120,8 @@
 			user << "\red It's dirty!"
 			return 1
 
-	..()
+	if(..())
+		return 1
 
 	if(holdingitems && holdingitems.len >= limit)
 		usr << "The machine cannot hold anymore items."

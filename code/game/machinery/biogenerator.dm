@@ -152,7 +152,7 @@
 	var/list/recipes[0]
 	var/list/recipe_categories[0]
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 	l_color = "#7BF9FF"
 
@@ -206,10 +206,13 @@
 		recipes[recipe.id]=recipe
 
 /obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	..()
-	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+	if(..())
+		return 1
+	else if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "\red The biogenerator already occuped."
+		else if(panel_open)
+			user << "<span class='rose'>The biogenerator's maintenance panel must be closed first.</span>"
 		else
 			user.before_take_item(O)
 			O.loc = src
@@ -249,10 +252,23 @@
 	return
 
 /obj/machinery/biogenerator/crowbarDestroy(mob/user)
-	if(panel_open && beaker)
-		user << "\red A beaker is loaded, you cannot deconstruct [src]."
+	if(beaker)
+		user << "\red A beaker is loaded, you cannot deconstruct \the [src]."
 		return
-	..()
+	return ..()
+
+/obj/machinery/biogenerator/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if(beaker)
+		user << "<span class='rose'>You can't open \the [src]'s maintenance panel while a beaker is loaded.</span>"
+		return
+	if(..())
+		if(panel_open)
+			overlays += "biogen-open"
+		else
+			overlays -= "biogen-open"
+		update_icon()
+		return 1
+	return
 
 /obj/machinery/biogenerator/interact(mob/user as mob)
 	if(stat & BROKEN)

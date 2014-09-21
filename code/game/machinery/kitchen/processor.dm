@@ -9,7 +9,9 @@
 	var/broken = 0
 	var/processing = 0
 	var/opened = 0.0
+
 	machine_flags = SCREWTOGGLE | CROWDESTROY
+
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 500
@@ -130,12 +132,19 @@
 		return P
 	return 0
 
+/obj/machinery/processor/crowbarDestroy(mob/user)
+	if(contents.len)
+		user << "You can't do that while something is loaded in \the [src]."
+		return
+	return ..()
+
 /obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.processing)
 		user << "<span class='warning'>[src] is already processing!</span>"
 		return 1
 
-	..()
+	if(..())
+		return 1
 	if(src.contents.len > 0) //TODO: several items at once? several different items?
 		user << "<span class='warning'>Something is already in [src]</span>."
 		return 1
