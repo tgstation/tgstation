@@ -150,3 +150,7 @@
 	if(istype(W, /obj/item/weapon/pickaxe))
 		qdel(src)
 	..()
+
+/obj/effect/meteor/Destroy()
+	walk(src,0) //this cancels the walk_towards() proc
+	..()

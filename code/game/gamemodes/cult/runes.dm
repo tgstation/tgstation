@@ -434,7 +434,6 @@ var/list/sacrificed = list()
 				if(R.word1==cultwords["travel"] && R.word2==cultwords["self"])  //teleport
 					T = new(src.loc)
 					T.imbue = "[R.word3]"
-					T.info = "[R.word3]"
 					imbued_from = R
 					break
 				if(R.word1==cultwords["see"] && R.word2==cultwords["blood"] && R.word3==cultwords["hell"]) //tome
