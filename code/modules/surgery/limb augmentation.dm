@@ -46,10 +46,10 @@
 	if(L)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			user.visible_message("<span class='notice'>[user] successfully augments [target]'s [parse_zone(user.zone_sel.selecting)]!</span>")
+			user.visible_message("<span class='notice'>[user] successfully augments [target]'s [target_zone]!</span>")
 			L.loc = get_turf(target)
 			H.organs -= L
-			switch(user.zone_sel.selecting)  //for the surgery to progress this MUST still be the original "location" so it's safe to do this.
+			switch(target_zone)  //for the surgery to progress this MUST still be the original "location" so it's safe to do this.
 				if("r_leg")
 					H.organs += new /obj/item/organ/limb/robot/r_leg(src)
 				if("l_leg")
@@ -70,7 +70,7 @@
 			qdel(tool)
 			H.update_damage_overlays(0)
 			H.update_augments() //Gives them the Cyber limb overlay
-			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(user.zone_sel.selecting)] INTENT: [uppertext(user.a_intent)]")
+			add_logs(user, target, "augmented", addition="by giving him new [target_zone] INTENT: [uppertext(user.a_intent)]")
 	else
-		user.visible_message("<span class='notice'>[user] [target] has no organic [parse_zone(user.zone_sel.selecting)] there!</span>")
+		user.visible_message("<span class='notice'>[user] [target] has no organic [target_zone] there!</span>")
 	return 1
