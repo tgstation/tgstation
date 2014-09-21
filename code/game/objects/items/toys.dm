@@ -1037,6 +1037,7 @@ obj/item/toy/cards/deck/syndicate
 	name = "Non-Specific Action Figure action figure"
 	desc = "A \"Space Life\" brand... wait, what the hell is this thing?"
 	icon_state = "nuketoy"
+	icon = 'icons/obj/toy.dmi'
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 	var/obj/item/toy/accessory/hastoy = null
@@ -1115,13 +1116,7 @@ obj/item/toy/cards/deck/syndicate
 	name = "Chaplain action figure"
 	desc = "A \"Space Life\" brand Chaplain action figure."
 	icon_state = "chaplain"
-	var/doll_deity = "Space Jesus"
-	toysay = "Praise INSERT DEITY!"
-
-/obj/item/toy/figure/chaplain/New()
-	..()
-	doll_deity = pick("Space Jesus", "The Lord", "Buddha", "The Honkmother", "Allah", "Science", "Woody", "The Lard", "Satan", "The Devil", "Our Ancestors", "God")
-	desc = "Praise [doll_deity]!"
+	toysay = "Praise Space Jesus!"
 
 /obj/item/toy/figure/chef
 	name = "Chef action figure"
