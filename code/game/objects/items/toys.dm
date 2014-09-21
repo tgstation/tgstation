@@ -1,5 +1,6 @@
 /* Toys!
- * ContainsL
+ * Contains:
+ *
  *		Balloons
  *		Fake telebeacon
  *		Fake singularity
@@ -11,6 +12,7 @@
  *		Water flower
  *		Cards
  *		Toy nuke
+ *		Action Figures
  */
 
 
@@ -110,16 +112,16 @@
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "revolver"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "capgun"
 	item_state = "gun"
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
-	w_class = 3.0
+	w_class = 2.0
 	g_amt = 10
 	m_amt = 10
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
-	var/bullets = 7.0
+	var/bullets = 6.0
 
 /obj/item/toy/gun/examine()
 	set src in usr
@@ -131,20 +133,20 @@
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob)
 
 	if (istype(A, /obj/item/toy/ammo/gun))
-		if (src.bullets >= 7)
+		if (src.bullets >= 6)
 			user << "<span class='notice'>It's already fully loaded!</span>"
 			return 1
 		if (A.amount_left <= 0)
 			user << "<span class='danger'>There are no more caps!</span>"
 			return 1
-		if (A.amount_left < (7 - src.bullets))
+		if (A.amount_left < (6 - src.bullets))
 			src.bullets += A.amount_left
 			user << text("<span class='danger'>You reload [] cap\s!</span>", A.amount_left)
 			A.amount_left = 0
 		else
-			user << text("<span class='danger'>You reload [] cap\s!</span>", 7 - src.bullets)
-			A.amount_left -= 7 - src.bullets
-			src.bullets = 7
+			user << text("<span class='danger'>You reload [] cap\s!</span>", 6 - src.bullets)
+			A.amount_left -= 6 - src.bullets
+			src.bullets = 6
 		A.update_icon()
 		return 1
 	return
@@ -168,18 +170,33 @@
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
-	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "357-7"
+	desc = "There are 6 caps left! Make sure to recyle the ring in an autolathe when it gets empty."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "capring-6"
 	w_class = 1.0
 	g_amt = 10
 	m_amt = 10
-	var/amount_left = 7.0
+	var/amount_left = 6.0
 
 /obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = text("357-[]", src.amount_left)
+	src.icon_state = text("capring-[]", src.amount_left)
 	src.desc = text("There are [] cap\s left! Make sure to recycle the box in an autolathe when it gets empty.", src.amount_left)
+	if(src.amount_left == 0)
+		qdel(src)
 	return
+
+/obj/item/weapon/storage/box/capgun
+	name = "cap gun box"
+	desc = "A cap gun in a box. Ages 8 and up"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "capgunbox"
+
+/obj/item/weapon/storage/box/capgun/New()
+		..()
+		new /obj/item/toy/gun( src )
+		new /obj/item/toy/ammo/gun( src )
+		new /obj/item/toy/ammo/gun( src )
+		new /obj/item/toy/ammo/gun( src )
 
 /*
  * Toy crossbow
@@ -188,12 +205,13 @@
 /obj/item/toy/crossbow
 	name = "foam dart crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "crossbow"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamcrossbow"
 	item_state = "crossbow"
 	w_class = 2.0
 	attack_verb = list("attacked", "struck", "hit")
-	var/bullets = 5
+	var/bullets = 4
+	var/max_bullets = 3
 
 /obj/item/toy/crossbow/examine()
 	set src in view(2)
@@ -203,7 +221,7 @@
 
 /obj/item/toy/crossbow/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/toy/ammo/crossbow))
-		if(bullets <= 4)
+		if(bullets <= max_bullets)
 			user.drop_item()
 			qdel(I)
 			bullets++
@@ -255,9 +273,9 @@
 
 		return
 	else if (bullets == 0)
-		user.Weaken(5)
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message(text("<span class='danger'>[] realized they were out of ammo and starting scrounging for some!</span>", user), 1)
+		user << "<span class='danger'>*click*</span>"
+		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		return
 
 
 /obj/item/toy/crossbow/attack(mob/M as mob, mob/user as mob)
@@ -277,9 +295,25 @@
 		src.bullets--
 	else if (M.lying && src.bullets == 0)
 		for(var/mob/O in viewers(M, null))
-			if (O.client)	O.show_message(text("<span class='userdanger'>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</span>", user, M), 1, "<span class='danger'>You hear someone fall</span>", 2)
+			if (O.client)	O.show_message(text("<span class='userdanger'>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and they fall over in their incompetence!</span>", user, M), 1, "<span class='danger'>You hear someone fall</span>", 2)
 		user.Weaken(5)
 	return
+
+/obj/item/weapon/storage/box/foamcrossbow
+	name = "foam dart crossbow box"
+	desc = "A \"Foam Force\" brand foam dart crossbow in a box. Ages 8 and up"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamcrossbowbox"
+
+/obj/item/weapon/storage/box/foamcrossbow/New()
+		..()
+		new /obj/item/toy/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
 
 /obj/item/toy/ammo/crossbow
 	name = "foam dart"
@@ -287,6 +321,30 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamdart"
 	w_class = 1.0
+
+/obj/item/weapon/storage/box/foamdart
+	name = "box of foam darts"
+	desc = "A box of \"Foam Force\" brand foam darts. Ages 8 and up"
+	icon_state = "foamdartsbox"
+	icon = 'icons/obj/toy.dmi'
+	storage_slots=14
+
+/obj/item/weapon/storage/box/foamdart/New()
+		..()
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
 
 /obj/effect/foam_dart_dummy
 	name = ""
@@ -296,6 +354,31 @@
 	anchored = 1
 	density = 0
 
+/obj/item/toy/crossbow/shotgun
+	name = "foam dart shotgun"
+	icon_state = "dartshotgun"
+	icon = 'icons/obj/toy.dmi'
+	desc = "A \"Boam Borce\" brand foam dart shotgun. Ages 8 and up."
+	item_state = "shotgun"
+	w_class = 2.0
+	bullets = 2
+	max_bullets = 1
+
+/obj/item/weapon/storage/box/foamshotgun
+	name = "foam dart shotgun box"
+	desc = "A \"Foam Force\" brand foam dart shotgun in a box. Ages 8 and up"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamshotgunbox"
+
+/obj/item/weapon/storage/box/foamshotgun/New()
+		..()
+		new /obj/item/toy/crossbow/shotgun( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
+		new /obj/item/toy/ammo/crossbow( src )
 
 /*
  * Toy swords
@@ -945,3 +1028,254 @@ obj/item/toy/cards/deck/syndicate
 	else
 		var/timeleft = (cooldown - world.time)
 		user << "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>"
+
+/*
+ * Action Figures
+ */
+
+/obj/item/toy/figure
+	name = "Non-Specific Action Figure action figure"
+	desc = "A \"Space Life\" brand... wait, what the hell is this thing?"
+	icon_state = "nuketoy"
+	var/cooldown = 0
+	var/toysay = "What the fuck did you do?"
+	var/obj/item/toy/accessory/hastoy = null
+
+/obj/item/toy/figure/attack_self(mob/user as mob)
+	if(!cooldown)
+		user << "<span class='notice'>The [src] says \"[toysay]\".</span>"
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		cooldown = 1
+		spawn(30) cooldown = 0
+
+/*/obj/item/toy/figure/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(!cooldown)
+			user << "<span class='notice'>The [src] says \"[toysay]\".</span>"
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+			cooldown = 1
+			spawn(30) cooldown = 0
+			return
+*/
+/obj/item/toy/figure/cmo
+	name = "Chief Medical Officer action figure"
+	desc = "A \"Space Life\" brand Chief Medical Officer action figure."
+	icon_state = "cmo"
+	toysay = "Suit sensors!"
+
+/obj/item/toy/figure/assistant
+	name = "Assistant action figure"
+	desc = "A \"Space Life\" brand Assistant action figure."
+	icon_state = "assistant"
+	toysay = "Grey tide world wide!"
+
+/obj/item/toy/figure/atmos
+	name = "Atmospheric Technician action figure"
+	desc = "A \"Space Life\" brand Atmospheric Technician action figure."
+	icon_state = "atmos"
+	toysay = "Glory to Atmosia!"
+
+/obj/item/toy/figure/bartender
+	name = "Bartender action figure"
+	desc = "A \"Space Life\" brand Bartender action figure."
+	icon_state = "bartender"
+	toysay = "Where is Pun Pun?"
+
+/obj/item/toy/figure/borg
+	name = "Cyborg action figure"
+	desc = "A \"Space Life\" brand Cyborg action figure."
+	icon_state = "borg"
+	toysay = "I. LIVE. AGAIN."
+
+/obj/item/toy/figure/botanist
+	name = "Botanist action figure"
+	desc = "A \"Space Life\" brand Botanist action figure."
+	icon_state = "botanist"
+	toysay = "Dude, I see colors..."
+
+/obj/item/toy/figure/captain
+	name = "Captain action figure"
+	desc = "A \"Space Life\" brand Captain action figure."
+	icon_state = "captain"
+	toysay = "Any heads of staff?"
+
+/obj/item/toy/figure/cargotech
+	name = "Cargo Technician action figure"
+	desc = "A \"Space Life\" brand Cargo Technician action figure."
+	icon_state = "cargotech"
+	toysay = "For Cargonia!"
+
+/obj/item/toy/figure/ce
+	name = "Chief Engineer action figure"
+	desc = "A \"Space Life\" brand Chief Engineer action figure."
+	icon_state = "ce"
+	toysay = "Wire the solars!"
+
+/obj/item/toy/figure/chaplain
+	name = "Chaplain action figure"
+	desc = "A \"Space Life\" brand Chaplain action figure."
+	icon_state = "chaplain"
+	var/doll_deity = "Space Jesus"
+	toysay = "Praise INSERT DEITY!"
+
+/obj/item/toy/figure/chaplain/New()
+	..()
+	doll_deity = pick("Space Jesus", "The Lord", "Buddha", "The Honkmother", "Allah", "Science", "Woody", "The Lard", "Satan", "The Devil", "Our Ancestors", "God")
+	desc = "Praise [doll_deity]!"
+
+/obj/item/toy/figure/chef
+	name = "Chef action figure"
+	desc = "A \"Space Life\" brand Chef action figure."
+	icon_state = "chef"
+	toysay = "Pun-Pun is a tasty burger."
+
+/obj/item/toy/figure/chemist
+	name = "Chemist action figure"
+	desc = "A \"Space Life\" brand Chemist action figure."
+	icon_state = "chemist"
+	toysay = "Get your pills!"
+
+/obj/item/toy/figure/clown
+	name = "Clown action figure"
+	desc = "A \"Space Life\" brand Clown action figure."
+	icon_state = "clown"
+	toysay = "Honk!"
+
+/obj/item/toy/figure/ian
+	name = "Ian action figure"
+	desc = "A \"Space Life\" brand Ian action figure."
+	icon_state = "ian"
+	toysay = "Arf!"
+
+/obj/item/toy/figure/detective
+	name = "Detective action figure"
+	desc = "A \"Space Life\" brand Detective action figure."
+	icon_state = "detective"
+	toysay = "This airlock has grey jumpsuit and insulated glove fibers on it."
+
+/obj/item/toy/figure/dsquad
+	name = "Death Squad Officer action figure"
+	desc = "A \"Space Life\" brand Death Squad Officer action figure."
+	icon_state = "dsquad"
+	toysay = "Eliminate all threats!"
+
+/obj/item/toy/figure/engineer
+	name = "Engineer action figure"
+	desc = "A \"Space Life\" brand Engineer action figure."
+	icon_state = "engineer"
+	toysay = "Oh god, the singularity is loose!"
+
+/obj/item/toy/figure/geneticist
+	name = "Geneticist action figure"
+	desc = "A \"Space Life\" brand Geneticist action figure."
+	icon_state = "geneticist"
+	toysay = "Smash!"
+
+/obj/item/toy/figure/hop
+	name = "Head of Personel action figure"
+	desc = "A \"Space Life\" brand Head of Personel action figure."
+	icon_state = "hop"
+	toysay = "Giving out all access!"
+
+/obj/item/toy/figure/hos
+	name = "Head of Security action figure"
+	desc = "A \"Space Life\" brand Head of Security action figure."
+	icon_state = "hos"
+	toysay = "Get the justice chamber ready, I think we got a joker here."
+
+/obj/item/toy/figure/qm
+	name = "Quartermaster action figure"
+	desc = "A \"Space Life\" brand Quartermaster action figure."
+	icon_state = "qm"
+	toysay = "Please sign this form in triplicate and we will see about geting you a welding mask within 3 business days."
+
+/obj/item/toy/figure/janitor
+	name = "Janitor action figure"
+	desc = "A \"Space Life\" brand Janitor action figure."
+	icon_state = "janitor"
+	toysay = "Look at the signs, you idiot."
+
+/obj/item/toy/figure/lawyer
+	name = "Lawyer action figure"
+	desc = "A \"Space Life\" brand Lawyer action figure."
+	icon_state = "lawyer"
+	toysay = "My client is a dirty traitor!"
+
+/obj/item/toy/figure/librarian
+	name = "Librarian action figure"
+	desc = "A \"Space Life\" brand Librarian action figure."
+	icon_state = "librarian"
+	toysay = "One day while..."
+
+/obj/item/toy/figure/md
+	name = "Medical Doctor action figure"
+	desc = "A \"Space Life\" brand Medical Doctor action figure."
+	icon_state = "md"
+	toysay = "The patient is already dead!"
+
+/obj/item/toy/figure/mime
+	name = "Mime action figure"
+	desc = "A \"Space Life\" brand Mime action figure."
+	icon_state = "mime"
+	toysay = "..."
+
+/obj/item/toy/figure/miner
+	name = "Shaft Miner action figure"
+	desc = "A \"Space Life\" brand Shaft Miner action figure."
+	icon_state = "miner"
+	toysay = "Oh god it's eating my intestines!"
+
+/obj/item/toy/figure/ninja
+	name = "Ninja action figure"
+	desc = "A \"Space Life\" brand Ninja action figure."
+	icon_state = "ninja"
+	toysay = "Oh god! Stop shooting, I'm friendly!"
+
+/obj/item/toy/figure/wizard
+	name = "Wizard action figure"
+	desc = "A \"Space Life\" brand Wizard action figure."
+	icon_state = "wizard"
+	toysay = "Ei Nath!"
+
+/obj/item/toy/figure/rd
+	name = "Research Director action figure"
+	desc = "A \"Space Life\" brand Research Director action figure."
+	icon_state = "rd"
+	toysay = "Blowing all of the borgs!"
+
+/obj/item/toy/figure/roboticist
+	name = "Roboticist action figure"
+	desc = "A \"Space Life\" brand Roboticist action figure."
+	icon_state = "roboticist"
+	toysay = "Big stompy mechs!"
+
+/obj/item/toy/figure/scientist
+	name = "Scientist action figure"
+	desc = "A \"Space Life\" brand Scientist action figure."
+	icon_state = "scientist"
+	toysay = "For science!"
+
+/obj/item/toy/figure/syndie
+	name = "Nuclear Operative action figure"
+	desc = "A \"Space Life\" brand Nuclear Operative action figure."
+	icon_state = "syndie"
+	toysay = "Get that fucking disk!"
+
+/obj/item/toy/figure/secofficer
+	name = "Security Officer action figure"
+	desc = "A \"Space Life\" brand Security Officer action figure."
+	icon_state = "secofficer"
+	toysay = "I am the law!"
+
+/obj/item/toy/figure/virologist
+	name = "Virologist action figure"
+	desc = "A \"Space Life\" brand Virologist action figure."
+	icon_state = "virologist"
+	toysay = "The cure is potassium!"
+
+/obj/item/toy/figure/warden
+	name = "Warden action figure"
+	desc = "A \"Space Life\" brand Warden action figure."
+	icon_state = "warden"
+	toysay = "Seventeen minutes for coughing at an officer!"
+
