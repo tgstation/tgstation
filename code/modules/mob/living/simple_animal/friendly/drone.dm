@@ -102,6 +102,9 @@
 
 
 	if(ishuman(user))
+		if(stat == DEAD)
+			..()
+			return
 		if(user.get_active_hand())
 			user << "<span class='notice'>Your hands are full.</span>"
 			return
