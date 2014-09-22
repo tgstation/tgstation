@@ -204,6 +204,13 @@
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
 	if(..())
 		return
+	if((usr == src.OCCUPANT) && istype(usr, /mob/living/simple_animal/drone)) //allows drones to escape
+		usr.set_machine(src)
+		if(href_list["eject_guy"])
+			src.eject_occupant(usr)
+		src.updateUsrDialog()
+		src.update_icon()
+		return
 	if(usr == src.OCCUPANT) //No unlocking yourself out!
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
