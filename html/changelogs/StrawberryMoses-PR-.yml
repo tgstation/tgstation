@@ -1,6 +1,0 @@
-author: StrawberryMoses
-
-delete-after: True
-
-changes: 
-  - bugfix: Drones can now eject themselves from suit storage units.
