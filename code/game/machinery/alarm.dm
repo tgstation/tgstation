@@ -940,11 +940,15 @@ FIRE ALARM
 
 		return
 
+	var/area/A = src.loc
+	A = A.loc
 	if(stat & BROKEN)
 		icon_state = "firex"
 	else if(stat & NOPOWER)
 		icon_state = "firep"
 	else if(!src.detecting)
+		icon_state = "fire1"
+	else if(A.fire)
 		icon_state = "fire1"
 	else
 		icon_state = "fire0"
@@ -1136,7 +1140,6 @@ FIRE ALARM
 		return
 	var/area/A = get_area(src)
 	A.firereset()
-	update_icon()
 	return
 
 /obj/machinery/firealarm/proc/alarm()

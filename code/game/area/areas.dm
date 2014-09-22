@@ -133,6 +133,8 @@
 					else if(D.density)
 						spawn(0)
 							D.open()
+			for(var/obj/machinery/firealarm/F in RA)
+				F.update_icon()
 
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		aiPlayer.cancelAlarm("Fire", src, src)
