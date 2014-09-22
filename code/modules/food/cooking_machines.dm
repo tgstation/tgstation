@@ -106,11 +106,16 @@ var/global/ingredientLimit = 30
 	return
 
 /obj/machinery/cooking/attackby(obj/item/I,mob/user)
-	if(istype(user,/mob/living/silicon))
-		user << "<span class='warning'>That's a terrible idea.</span>"
-	else if(src.active)
+	if(src.active)
 		user << "<span class='warning'>[src.name] is currently busy.</span>"
-	else if(!..())
+		return
+	else if(..())
+		return 1
+	else if(istype(user,/mob/living/silicon))
+		user << "<span class='warning'>That's a terrible idea.</span>"
+		return
+	else
+
 		src.takeIngredient(I,user)
 	return
 

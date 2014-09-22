@@ -77,14 +77,16 @@ obj/machinery/recharger/defibcharger/wallcharger/process()
 	if(charging)
 		user << "<span class='warning'>Not while [src] is charging!</span>"
 		return
-	..()
+	return(..())
 
 /obj/machinery/recharger/defibcharger/wallcharger/crowbarDestroy()
 	if(charging)
 		charging.loc = src.loc
-	..()
+	return(..())
 
 obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
+	if(..())
+		return
 	if(istype(user,/mob/living/silicon))
 		return
 	if(istype(G, /obj/item/weapon/melee/defibrillator))
@@ -108,4 +110,3 @@ obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as o
 		charging = G
 		use_power = 2
 		update_icon()
-	..()

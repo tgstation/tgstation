@@ -15,11 +15,12 @@
 	var/amount = 30
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/recharged = 0
-	var/opened = 0
 	var/custom = 0
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
+
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -181,38 +182,16 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
+/obj/machinery/chem_dispenser/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if(beaker)
+		user << "You can't reach the maintenance panel with a beaker in the way!"
+		return
+	return ..()
 
 /obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob) //to be worked on
 
-	if(!istype(D, /obj/item/weapon/reagent_containers/glass))
-		if(istype(D, /obj/item/weapon/screwdriver))
-			if(!opened)
-				src.opened = 1
-				//src.icon_state = "chem_dispenser_t"
-				user << "You open the maintenance hatch of [src]"
-			else
-				src.opened = 0
-				//src.icon_state = "chem_dispenser"
-				user << "You close the maintenance hatch of [src]"
-			return 1
-		if(opened)
-			if(istype(D, /obj/item/weapon/crowbar))
-				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-				M.state = 2
-				M.icon_state = "box_1"
-				for(var/obj/I in component_parts)
-					if(I.reliability != 100 && crit_fail)
-						I.crit_fail = 1
-					I.loc = src.loc
-				del(src)
-				return 1
-			else // this might need rework
-				user.set_machine(user)
-				interact(user)
-				return 1
-		else
-			return
+	if(..())
+		return 1
 
 	if(isrobot(user))
 		// UNLESS MoMMI or medbutt.
@@ -220,15 +199,20 @@
 		if(!isMoMMI(user) && !istype(R.module,/obj/item/weapon/robot_module/medical))
 			return
 
-	if(src.beaker)
-		user << "A beaker is already loaded into the machine."
-		return
-
-	src.beaker =  D
-	user.drop_item()
-	D.loc = src
-	user << "You add the beaker to the machine!"
-	nanomanager.update_uis(src) // update all UIs attached to src
+	if(istype(D, /obj/item/weapon/reagent_containers/glass))
+		if(src.beaker)
+			user << "A beaker is already loaded into the machine."
+			return
+		else if(!panel_open)
+			src.beaker =  D
+			user.drop_item()
+			D.loc = src
+			user << "You add the beaker to the machine!"
+			nanomanager.update_uis(src) // update all UIs attached to src
+			return 1
+		else
+			user <<"You can't add a beaker to the machine while the panel is open."
+			return
 
 /obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -258,7 +242,6 @@
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
 	var/mode = 0
 	var/condi = 0
-	var/opened = 0
 	var/useramount = 30 // Last used amount
 	var/pillamount = 10
 	var/bottlesprite = "1" //yes, strings
@@ -266,6 +249,8 @@
 	var/client/has_sprites = list()
 
 	l_color = "#0000FF"
+
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -326,7 +311,10 @@
 
 /obj/machinery/chem_master/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 
-	if(istype(B, /obj/item/weapon/reagent_containers/glass))
+	if(..())
+		return 1
+
+	else if(istype(B, /obj/item/weapon/reagent_containers/glass))
 
 		if(src.beaker)
 			user << "A beaker is already loaded into the machine."
@@ -337,6 +325,7 @@
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		update_icon()
+		return 1
 
 	else if(istype(B, /obj/item/weapon/storage/pill_bottle))
 
@@ -349,43 +338,7 @@
 		B.loc = src
 		user << "You add the pill bottle into the dispenser slot!"
 		src.updateUsrDialog()
-	else if(istype(B, /obj/item/weapon/screwdriver))
-		if(src.beaker)
-			user << "\red A beaker is loaded in [src]."
-			return
-		if(src.loaded_pill_bottle)
-			user << "\red A pill bottle is loaded in [src]."
-			return
-		if(!opened)
-			src.opened = 1
-			//src.icon_state = "freezer_t"
-			user << "You open the maintenance hatch of [src]."
-		else
-			src.opened = 0
-			//src.icon_state = "freezer"
-			user << "You close the maintenance hatch of [src]."
 		return 1
-	if(opened)
-		if(istype(B, /obj/item/weapon/crowbar))
-			if(src.beaker)
-				user << "\red A beaker is loaded in [src]."
-				return
-			if(src.loaded_pill_bottle)
-				user << "\red A pill bottle is loaded in [src]."
-				return
-			user << "You begin to remove the circuits from the [src]."
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			if(do_after(user, 50))
-				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-				M.state = 2
-				M.icon_state = "box_1"
-				for(var/obj/I in component_parts)
-					if(I.reliability != 100 && crit_fail)
-						I.crit_fail = 1
-					I.loc = src.loc
-				del(src)
-				return 1
-	return
 
 /obj/machinery/chem_master/Topic(href, href_list)
 	if(stat & (BROKEN|NOPOWER)) 		return
@@ -931,32 +884,8 @@
 
 
 /obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe(src.loc)
-				getFromPool(/obj/item/weapon/shard, loc)
-				var/obj/item/weapon/circuitboard/pandemic/M = new /obj/item/weapon/circuitboard/pandemic(A)
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/pandemic/M = new /obj/item/weapon/circuitboard/pandemic(A)
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
+	if(..())
+		return 1
 	else if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(stat & (NOPOWER|BROKEN)) return
 		if(src.beaker)
@@ -1064,9 +993,9 @@
 	return
 
 /obj/machinery/reagentgrinder/togglePanelOpen(var/obj/toggleitem, mob/user)
-	if(!panel_open && beaker)
+	if(beaker)
 		user << "You can't reach \the [src]'s maintenance panel with the beaker in the way!"
-		return
+		return -1
 	return ..()
 
 /obj/machinery/reagentgrinder/crowbarDestroy(mob/user)
@@ -1078,21 +1007,24 @@
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	if(..())
-		return
+		return 1
 
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/shaker))
 
 		if (beaker)
-			return 1
+			return 0
+		if (panel_open)
+			user << "You can't load a beaker while the maintenance panel is open."
+			return 0
 		else
 			src.beaker =  O
 			user.drop_item()
 			O.loc = src
 			update_icon()
 			src.updateUsrDialog()
-			return 0
+			return 1
 
 	if(holdingitems && holdingitems.len >= limit)
 		usr << "The machine cannot hold any more items."

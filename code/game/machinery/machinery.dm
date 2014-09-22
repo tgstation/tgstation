@@ -407,7 +407,7 @@ Class Procs:
 								"<span class='notice'>\icon[src] You successfully pry out the circuitboard from \the [src]!</span>")
 		del(src)
 		return 1
-	return
+	return -1
 
 /obj/machinery/proc/togglePanelOpen(var/obj/toggleitem, var/mob/user)
 	panel_open = !panel_open
@@ -432,7 +432,7 @@ Class Procs:
 								"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
 								"<span class='notice'>You hear a ratchet.</span>")
 		return 1
-	return
+	return -1
 
 /obj/machinery/proc/emag(mob/user as mob)
 	return
@@ -446,7 +446,7 @@ Class Procs:
 			return wrenchAnchor(user)
 		else
 			user <<"<span class='warning'>\The [src]'s maintenance panel must be closed first!</span>"
-			return
+			return -1 //we return -1 rather than 0 for the if(..()) checks
 	if(istype(O, /obj/item/weapon/screwdriver) && machine_flags &SCREWTOGGLE)
 		return togglePanelOpen(O, user)
 	if(istype(O, /obj/item/weapon/crowbar) && machine_flags &CROWDESTROY)
@@ -468,4 +468,4 @@ Class Procs:
 	if (electrocute_mob(user, get_area(src), src, siemenspassed))
 		return 1
 	else
-		return 0
+		return -1
