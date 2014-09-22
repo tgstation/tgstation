@@ -54,7 +54,7 @@
 	if (amt_silver)
 		dat += text("Silver ore: [amt_silver]<br>")
 	if (amt_iron)
-		dat += text("Metal ore: [amt_iron]<br>")
+		dat += text("Iron ore: [amt_iron]<br>")
 	if (amt_glass)
 		dat += text("Sand: [amt_glass]<br>")
 	if (amt_diamond)

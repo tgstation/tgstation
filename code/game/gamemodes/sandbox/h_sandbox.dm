@@ -48,7 +48,7 @@ datum/hSB/proc/update()
 
 			"Building Supplies",
 			"Spawn 50 Wood"                     = "hsbwood",
-			"Spawn 50 Metal"					= "hsbmetal",
+			"Spawn 50 Iron	"					= "hsbiron",
 			"Spawn 50 Plasteel"					= "hsbplasteel",
 			"Spawn 50 Reinforced Glass"         = "hsbrglass",
 			"Spawn 50 Glass"					= "hsbglass",
@@ -183,7 +183,7 @@ datum/hSB/Topic(href, href_list)
 			if("hsbrglass")
 				new/obj/item/stack/sheet/rglass{amount=50}(usr.loc)
 
-			if("hsbmetal")
+			if("hsbiron")
 				new/obj/item/stack/sheet/metal{amount=50}(usr.loc)
 
 			if("hsbplasteel")

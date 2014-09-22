@@ -1,7 +1,7 @@
 /obj/item/stack/rods
-	name = "metal rod"
+	name = "iron rod"
 	desc = "Some rods. Can be used for building, or something."
-	singular_name = "metal rod"
+	singular_name = "iron rod"
 	icon_state = "rods"
 	flags = CONDUCT
 	w_class = 3.0
@@ -27,7 +27,7 @@
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
 			new_item.add_to_stacks(usr)
 			for (var/mob/M in viewers(src))
-				M.show_message("<span class='danger'>[src] is shaped into metal by [user.name] with the weldingtool.</span>", 3, "<span class='danger'>You hear welding.</span>", 2)
+				M.show_message("<span class='danger'>[src] is shaped into iron by [user.name] with the weldingtool.</span>", 3, "<span class='danger'>You hear welding.</span>", 2)
 			var/obj/item/stack/rods/R = src
 			src = null
 			var/replace = (user.get_inactive_hand()==R)

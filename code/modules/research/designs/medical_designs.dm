@@ -8,7 +8,7 @@ datum/design/mass_spectrometer
 	id = "mass_spectrometer"
 	req_tech = list("biotech" = 2, "magnets" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 30, "$glass" = 20)
+	materials = list("$iron" = 30, "$glass" = 20)
 	reliability = 76
 	build_path = /obj/item/device/mass_spectrometer
 
@@ -18,7 +18,7 @@ datum/design/adv_mass_spectrometer
 	id = "adv_mass_spectrometer"
 	req_tech = list("biotech" = 2, "magnets" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 30, "$glass" = 20)
+	materials = list("$iron" = 30, "$glass" = 20)
 	reliability = 74
 	build_path = /obj/item/device/mass_spectrometer/adv
 
@@ -28,7 +28,7 @@ datum/design/mmi
 	id = "mmi"
 	req_tech = list("programming" = 2, "biotech" = 3)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 1000, "$glass" = 500)
+	materials = list("$iron" = 1000, "$glass" = 500)
 	reliability = 76
 	build_path = /obj/item/device/mmi
 	category = "Misc"
@@ -39,7 +39,7 @@ datum/design/mmi_radio
 	id = "mmi_radio"
 	req_tech = list("programming" = 2, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 1200, "$glass" = 500)
+	materials = list("$iron" = 1200, "$glass" = 500)
 	reliability = 74
 	build_path = /obj/item/device/mmi/radio_enabled
 	category = "Misc"
@@ -50,7 +50,7 @@ datum/design/synthetic_flash
 	id = "sflash"
 	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = MECHFAB
-	materials = list("$metal" = 750, "$glass" = 750)
+	materials = list("$iron" = 750, "$glass" = 750)
 	reliability = 76
 	build_path = /obj/item/device/flash/synthetic
 	category = "Misc"
@@ -61,7 +61,7 @@ datum/design/bluespacebeaker
 	id = "bluespacebeaker"
 	req_tech = list("bluespace" = 2, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 3000, "$plasma" = 3000, "$diamond" = 500)
+	materials = list("$iron" = 3000, "$plasma" = 3000, "$diamond" = 500)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	category = "Misc"
@@ -72,7 +72,7 @@ datum/design/noreactbeaker
 	id = "splitbeaker"
 	req_tech = list("materials" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 3000)
+	materials = list("$iron" = 3000)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = "Misc"

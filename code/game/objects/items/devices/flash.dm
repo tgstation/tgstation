@@ -198,7 +198,7 @@
 	desc = "When a problem arises, SCIENCE is the solution."
 	icon_state = "sflash"
 	origin_tech = "magnets=2;combat=1"
-	var/construction_cost = list("metal"=750, "glass"=750)
+	var/construction_cost = list("iron"=750, "glass"=750)
 	var/construction_time=100
 
 /obj/item/device/flash/synthetic/attack(mob/living/M, mob/user)

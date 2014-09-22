@@ -71,7 +71,7 @@
 		P.name = "\improper IOU"
 		P.info = "Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!"
 
-	//Metal (common ore)
+	//Iron (common ore)
 	if(pickednum >= 2)
 		new /obj/item/stack/sheet/metal(src, rand(common_min, common_max))
 

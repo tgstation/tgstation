@@ -18,7 +18,7 @@
 	var/time_coeff_tech = 1
 	var/resource_coeff_tech = 1
 	var/list/resources = list(
-										"metal"=0,
+										"iron"=0,
 										"glass"=0,
 										"bananium"=0,
 										"diamond"=0,
@@ -363,7 +363,7 @@
 	src.being_built = new part.type(src)
 	src.desc = "It's building \a [src.being_built]."
 	src.remove_resources(part)
-	part.m_amt = get_resource_cost_w_coeff(part,"metal")
+	part.m_amt = get_resource_cost_w_coeff(part,"iron")
 	part.g_amt = get_resource_cost_w_coeff(part,"glass")
 	src.overlays += "fab-active"
 	src.use_power = 2
@@ -709,7 +709,7 @@
 /obj/machinery/mecha_part_fabricator/proc/remove_material(var/mat_string, var/amount)
 	var/type
 	switch(mat_string)
-		if("metal")
+		if("iron")
 			type = /obj/item/stack/sheet/metal
 		if("glass")
 			type = /obj/item/stack/sheet/glass
@@ -749,11 +749,11 @@
 
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
-			while(src.resources["metal"] >= MINERAL_MATERIAL_AMOUNT)
+			while(src.resources["iron"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
-				var/sheet_conversion = round(src.resources["metal"] / MINERAL_MATERIAL_AMOUNT)
+				var/sheet_conversion = round(src.resources["iron"] / MINERAL_MATERIAL_AMOUNT)
 				G.amount = min(sheet_conversion, G.max_amount)
-				src.resources["metal"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
+				src.resources["iron"] -= (G.amount * MINERAL_MATERIAL_AMOUNT)
 			while(src.resources["glass"] >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
 				var/sheet_conversion = round(src.resources["glass"] / MINERAL_MATERIAL_AMOUNT)
@@ -809,7 +809,7 @@
 		if(/obj/item/stack/sheet/mineral/plasma)
 			material = "plasma"
 		if(/obj/item/stack/sheet/metal)
-			material = "metal"
+			material = "iron"
 		if(/obj/item/stack/sheet/glass)
 			material = "glass"
 		if(/obj/item/stack/sheet/mineral/clown)

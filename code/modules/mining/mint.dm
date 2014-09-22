@@ -18,7 +18,7 @@
 	var/amt_mythril = 0
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = 0
-	var/chosen = "metal" //which material will be used to make coins
+	var/chosen = "iron" //which material will be used to make coins
 	var/coinsToProduce = 10
 
 /obj/machinery/mineral/mint/process()
@@ -67,10 +67,10 @@
 	else
 		dat += text("<A href='?src=\ref[src];choose=silver'>Choose</A>")
 	dat += text("<br><font color='#555555'><b>Iron inserted: </b>[amt_iron]</font> ")
-	if (chosen == "metal")
+	if (chosen == "iron")
 		dat += text("chosen")
 	else
-		dat += text("<A href='?src=\ref[src];choose=metal'>Choose</A>")
+		dat += text("<A href='?src=\ref[src];choose=iron'>Choose</A>")
 	dat += text("<br><font color='#8888FF'><b>Diamond inserted: </b>[amt_diamond]</font> ")
 	if (chosen == "diamond")
 		dat += text("chosen")
@@ -128,7 +128,7 @@
 		processing = 1;
 		icon_state = "coinpress1"
 		switch(chosen)
-			if("metal")
+			if("iron")
 				while(amt_iron > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/iron)
 					amt_iron -= 20

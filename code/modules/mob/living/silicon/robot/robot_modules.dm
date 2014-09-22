@@ -254,7 +254,7 @@
 	energy = min(energy + amount, max_energy)
 
 /datum/robot_energy_storage/metal
-	name = "Metal Synthesizer"
+	name = "Iron Synthesizer"
 
 /datum/robot_energy_storage/glass
 	name = "Glass Synthesizer"
