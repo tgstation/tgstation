@@ -111,6 +111,8 @@
 					else if(!D.density)
 						spawn(0)
 							D.close()
+			for(var/obj/machinery/firealarm/F in RA)
+				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
