@@ -370,11 +370,8 @@
 				living_mob.take_organ_damage(80)
 				living_mob.anchored = 0 //Unbuckle them so they can be moved
 			//Anything not bolted down is moved, everything else is destroyed
-			else
-				if(istype(AM,/mob))
-					var/mob/C = AM
-					if(C.status_flags | GODMODE)
-						continue
+			else if(ismob(AM))
+				continue
 			if(!AM.anchored)
 				AM.Move(D)
 			else
@@ -384,8 +381,6 @@
 			del(T)
 
 	for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
-		if(istype(bug,/mob))
-			var/mob/C = bug
-			if(C.status_flags | GODMODE)
-				continue
+		if(ismob(bug))
+			continue
 		qdel(bug)
