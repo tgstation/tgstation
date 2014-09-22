@@ -19,6 +19,12 @@
 	var/isbroken = 0
 	var/opened = 0.0
 
+	var/list/accepted_types = list(	/obj/item/weapon/reagent_containers/food/snacks/grown,
+									/obj/item/weapon/grown,
+									/obj/item/seeds/,
+									/obj/item/weapon/reagent_containers/food/snacks/meat,
+									/obj/item/weapon/reagent_containers/food/snacks/egg)
+
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
 	l_color = "#7BF9FF"
@@ -52,10 +58,9 @@
 	RefreshParts()
 
 /obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O, /obj/item/weapon/grown) || istype(O,/obj/item/seeds/) || istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat/) || istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/))
-		return 1
-	else
-		..()
+	for(var/ac_type in accepted_types)
+		if(istype(O, ac_type))
+			return 1
 
 /obj/machinery/smartfridge/seeds
 	name = "\improper MegaSeed Servitor"
@@ -65,12 +70,27 @@
 	icon_on = "seeds"
 	icon_off = "seeds-off"
 
+	accepted_types = list(/obj/item/seeds)
+
 	l_color = "#000000"
 
-/obj/machinery/smartfridge/seeds/accept_check(var/obj/item/O as obj)
-	if(istype(O,/obj/item/seeds/))
-		return 1
-	return 0
+/obj/machinery/smartfridge/seeds/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/smartfridge/seeds,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
+	RefreshParts()
 
 /obj/machinery/smartfridge/secure/medbay
 	name = "\improper Refrigerated Medicine Storage"
@@ -79,41 +99,102 @@
 	icon_on = "smartfridge_chem"
 	req_one_access = list(access_chemistry, access_medical)
 
+	accepted_types = list(	/obj/item/weapon/reagent_containers/glass,
+							/obj/item/weapon/storage/pill_bottle,
+							/obj/item/weapon/reagent_containers/pill)
 
-/obj/machinery/smartfridge/secure/medbay/accept_check(var/obj/item/O as obj)
-	if(istype(O,/obj/item/weapon/reagent_containers/glass/))
-		return 1
-	if(istype(O,/obj/item/weapon/storage/pill_bottle/))
-		return 1
-	if(istype(O,/obj/item/weapon/reagent_containers/pill/))
-		return 1
-	return 0
+/obj/machinery/smartfridge/medbay/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/smartfridge/medbay,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
+	RefreshParts()
 
 /obj/machinery/smartfridge/chemistry
 	name = "\improper Smart Chemical Storage"
 	desc = "A refrigerated storage unit for medicine and chemical storage."
 
-/obj/machinery/smartfridge/chemistry/accept_check(var/obj/item/O as obj)
-	if(istype(O,/obj/item/weapon/storage/pill_bottle) || istype(O,/obj/item/weapon/reagent_containers))
-		return 1
-	return 0
+	accepted_types = list(	/obj/item/weapon/storage/pill_bottle,
+							/obj/item/weapon/reagent_containers)
+
+/obj/machinery/smartfridge/chemistry/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/smartfridge/chemistry,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
+	RefreshParts()
 
 /obj/machinery/smartfridge/drinks
 	name = "\improper Drink Showcase"
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
-/obj/machinery/smartfridge/drinks/accept_check(var/obj/item/O as obj)
-	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
-		return 1
+	accepted_types = list(	/obj/item/weapon/reagent_containers/glass,
+							/obj/item/weapon/reagent_containers/food/drinks,
+							/obj/item/weapon/reagent_containers/food/condiment)
+
+/obj/machinery/smartfridge/drinks/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/smartfridge/drinks,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
+	RefreshParts()
 
 /obj/machinery/smartfridge/extract
 	name = "\improper Slime Extract Storage"
 	desc = "A refrigerated storage unit for slime extracts"
 
-/obj/machinery/smartfridge/extract/accept_check(var/obj/item/O as obj)
-	if(istype(O,/obj/item/slime_extract))
-		return 1
-	return 0
+	accepted_types = list(/obj/item/slime_extract)
+
+/obj/machinery/smartfridge/extract/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/smartfridge/extract,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
+	RefreshParts()
 
 
 /obj/machinery/smartfridge/power_change()
