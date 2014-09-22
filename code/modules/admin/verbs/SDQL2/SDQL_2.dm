@@ -12,7 +12,7 @@
 	-- Will delete all pickaxes. "IN world" is not required.
 	DELETE /obj/item/weapon/pickaxe
 	-- Will flicker the lights once, then turn all mobs green. The semicolon is important to separate the consecutive querys, but is not required for standard one-query use
-	CALL flicker(1) ON /obj/machinery/light; UPDATE /mob/living/carbon/human SET color = "#00cc00"
+	CALL flicker(1) ON /obj/machinery/light; UPDATE /mob SET color = "#00cc00"
 
 	--You can use operators other than ==, such as >, <=, != and etc..
 
