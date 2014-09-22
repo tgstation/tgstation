@@ -1285,7 +1285,7 @@
 		return
 	var/datum/gas_mixture/G = H.loc.return_air() // Check if we're standing in an oxygenless environment
 	if(G.oxygen < 1)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		ExtinguishMob(H) //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(H)
 	location.hotspot_expose(700, 50, 1)
