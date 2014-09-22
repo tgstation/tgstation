@@ -51,9 +51,10 @@ display round(lastgen) and plasmatank amount
 	directwired = 0
 	use_power = 0
 
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+
 	var/active = 0
 	var/power_gen = 5000
-	var/open = 0
 	var/recent_fault = 0
 	var/power_output = 1
 
@@ -202,6 +203,40 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/proc/overheat()
 	explosion(src.loc, 2, 5, 2, -1)
 
+/obj/machinery/power/port_gen/pacman/emag(mob/user)
+	emagged = 1
+	emp_act(1)
+	return 1
+
+/obj/machinery/power/port_gen/pacman/crowbarDestroy(mob/user) //don't like the copy/paste, but the proc has special handling in the middle so we need it
+	user.visible_message(	"[user] begins to pry out the circuitboard from \the [src].",
+							"You begin to pry out the circuitboard from \the [src]...")
+	if(do_after(user, 40))
+		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		M.state = 2
+		M.icon_state = "box_1"
+		for(var/obj/I in component_parts)
+			if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) && src:reagents && src:reagents.total_volume)
+				reagents.trans_to(I, reagents.total_volume)
+			if(I.reliability != 100 && crit_fail)
+				I.crit_fail = 1
+			I.loc = src.loc
+		for(var/obj/I in src.contents) //remove any stuff loaded, like for fridges
+			I.loc = src.loc
+		while ( sheets > 0 )
+			var/obj/item/stack/sheet/G = new sheet_path(src.loc)
+			if ( sheets > 50 )
+				G.amount = 50
+			else
+				G.amount = sheets
+			sheets -= G.amount
+		user.visible_message(	"<span class='notice'>[user] successfully pries out the circuitboard from \the [src]!</span>",
+								"<span class='notice'>\icon[src] You successfully pry out the circuitboard from \the [src]!</span>")
+		del(src)
+		return 1
+	return -1
+
 /obj/machinery/power/port_gen/pacman/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, sheet_path))
 		var/obj/item/stack/addstack = O
@@ -214,49 +249,9 @@ display round(lastgen) and plasmatank amount
 		addstack.use(amount)
 		updateUsrDialog()
 		return
-	else if (istype(O, /obj/item/weapon/card/emag))
-		emagged = 1
-		emp_act(1)
 	else if(!active)
-
-		if(istype(O, /obj/item/weapon/wrench))
-
-			if(!anchored)
-				connect_to_network()
-				user << "\blue You secure the generator to the floor."
-			else
-				disconnect_from_network()
-				user << "\blue You unsecure the generator from the floor."
-
-			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-			anchored = !anchored
-
-		else if(istype(O, /obj/item/weapon/screwdriver))
-			open = !open
-			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-			if(open)
-				user << "\blue You open the access panel."
-			else
-				user << "\blue You close the access panel."
-		else if(istype(O, /obj/item/weapon/crowbar) && open)
-			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			for(var/obj/item/I in component_parts)
-				if(I.reliability < 100)
-					I.crit_fail = 1
-				I.loc = src.loc
-			while ( sheets > 0 )
-				var/obj/item/stack/sheet/G = new sheet_path(src.loc)
-
-				if ( sheets > 50 )
-					G.amount = 50
-				else
-					G.amount = sheets
-
-				sheets -= G.amount
-
-			new_frame.state = 2
-			new_frame.icon_state = "box_1"
-			del(src)
+		if( ..() )
+			return 1
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()

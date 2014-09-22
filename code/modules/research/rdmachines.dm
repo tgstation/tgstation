@@ -142,32 +142,31 @@
 	src.updateUsrDialog()
 
 /obj/machinery/r_n_d/togglePanelOpen(var/item/toggleitem, mob/user)
-	..()
-	if (panel_open && linked_console)
-		linked_console.linked_machines -= src
-		switch(src.type)
-			if(/obj/machinery/r_n_d/protolathe)
-				linked_console.linked_lathe = null
-			if(/obj/machinery/r_n_d/destructive_analyzer)
-				linked_console.linked_destroy = null
-			if(/obj/machinery/r_n_d/circuit_imprinter)
-				linked_console.linked_imprinter = null
-		linked_console = null
-		overlays -= "[base_state]_link"
-	return
+	if(..())
+		if (panel_open && linked_console)
+			linked_console.linked_machines -= src
+			switch(src.type)
+				if(/obj/machinery/r_n_d/protolathe)
+					linked_console.linked_lathe = null
+				if(/obj/machinery/r_n_d/destructive_analyzer)
+					linked_console.linked_destroy = null
+				if(/obj/machinery/r_n_d/circuit_imprinter)
+					linked_console.linked_imprinter = null
+			linked_console = null
+			overlays -= "[base_state]_link"
+	return 1
 
 /obj/machinery/r_n_d/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
 	if (disabled)
-		return
-	if (!linked_console && !(istype(src, /obj/machinery/r_n_d/fabricator))) //fabricators get a free pass because they aren't tied to a console
-		user << "\The [src.name] must be linked to an R&D console first!"
-		return 0
+		return 1
 	if (busy)
 		user << "\red The [src.name] is busy. Please wait for completion of previous operation."
 		return 1
 	if (stat)
+		return 1
+	if( ..() )
 		return 1
 	if (istype(O, /obj/item/device/multitool))
 		if(!panel_open && has_output)
@@ -192,10 +191,10 @@
 						del(output)
 					output=src
 					user << "\blue Output set."
-		return
-	if(..())
-		return 1
-
+			return 1
+	if (!linked_console && !(istype(src, /obj/machinery/r_n_d/fabricator))) //fabricators get a free pass because they aren't tied to a console
+		user << "\The [src.name] must be linked to an R&D console first!"
+		return 0
 	if(istype(O,/obj/item/stack/sheet) && takes_material_input)
 		var/accepted = 1
 		if(allowed_materials && allowed_materials.len)

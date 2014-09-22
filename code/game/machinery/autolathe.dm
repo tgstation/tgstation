@@ -170,7 +170,8 @@ var/global/list/autolathe_recipes_hidden = list( \
 	if (busy)
 		user << "\red The autolathe is busy. Please wait for completion of previous operation."
 		return 1
-	..()
+	if(..())
+		return 1
 	if(isrobot(user))
 		if(!isMoMMI(user))
 			user << "\red You're a robot. No."

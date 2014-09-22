@@ -81,6 +81,28 @@
 			src.visible_message("\icon[src] <b>[src]</b> beeps: \"No records in User DB\"")
 	return
 
+/obj/machinery/r_n_d/fabricator/crowbarDestroy(mob/user) //copy paste code to remove all the parts WOOP WOOP
+	user.visible_message(	"[user] begins to pry out the circuitboard from \the [src].",
+							"You begin to pry out the circuitboard from \the [src]...")
+	if(do_after(user, 40))
+		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		M.state = 2
+		M.icon_state = "box_1"
+		for(var/obj/I in component_parts)
+			if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) && src:reagents && src:reagents.total_volume)
+				reagents.trans_to(I, reagents.total_volume)
+			if(I.reliability != 100 && crit_fail)
+				I.crit_fail = 1
+			I.loc = src.loc
+		for(var/obj/I in src.contents) //remove any stuff loaded, like for fridges
+			qdel(I)
+		user.visible_message(	"<span class='notice'>[user] successfully pries out the circuitboard from \the [src]!</span>",
+								"<span class='notice'>\icon[src] You successfully pry out the circuitboard from \the [src]!</span>")
+		del(src)
+		return 1
+	return -1
+
 /obj/machinery/r_n_d/fabricator/proc/convert_part_set(set_name as text)
 	var/list/parts = part_sets[set_name]
 	if(istype(parts, /list))
