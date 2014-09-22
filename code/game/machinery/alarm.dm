@@ -1166,7 +1166,6 @@ FIRE ALARM
 		return
 	var/area/A = get_area(src)
 	A.firealert()
-	update_icon()
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 
