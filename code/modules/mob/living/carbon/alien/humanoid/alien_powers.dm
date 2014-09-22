@@ -143,12 +143,15 @@ Doesn't work on other aliens/AI.*/
 	set category = "Alien"
 
 	if(powerc(55))
+		if(locate(/obj/structure/alien/resin) in loc)
+			src << "<span class='danger'>There is already a resin structure there.</span>"
+			return
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
 		if(!choice || !powerc(55))	return
 		adjustToxLoss(-55)
-		src << "<span class='userdanger'>You shape a [choice].</span>"
+		src << "<span class='notice'>You shape a [choice].</span>"
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("<span class='userdanger'>[src] vomits up a thick purple substance and begins to shape it!</span>"), 1)
+			O.show_message(text("<span class='notice'>[src] vomits up a thick purple substance and begins to shape it.</span>"), 1)
 		switch(choice)
 			if("resin wall")
 				new /obj/structure/alien/resin/wall(loc)
