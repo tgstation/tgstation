@@ -697,7 +697,7 @@ Destroy type values:
 	..()
 
 /obj/structure/table/MouseDrop_T(mob/target, mob/living/carbon/human/user)
-	if(istype(target) && user == target)
+	if(istype(target) && user == target && ishuman(user))
 		if(user.canmove)
 			climb_table(user)
 
