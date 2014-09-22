@@ -46,7 +46,8 @@ var/list/uplink_items = list()
 	var/cost = 0
 	var/last = 0 // Appear last
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
-	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
+	var/list/excludefrom = list() //Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
+	var/surplus = 100 //Chance of being included in the surplus crate (when pick() selects it)
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	if(item)
@@ -105,6 +106,7 @@ var/list/uplink_items = list()
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 13
+	surplus = 50
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
@@ -118,6 +120,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
 	cost = 14
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 40
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
@@ -125,6 +128,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 40
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
@@ -133,6 +137,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 12
 	excludefrom = list(/datum/game_mode/nuclear)
+	surplus = 50
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
@@ -140,6 +145,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/flamethrower/full/tank
 	cost = 11
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 40
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
@@ -165,6 +171,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
 	cost = 8
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 35
 
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
@@ -173,6 +180,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
 	cost = 20
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
 
 /datum/uplink_item/dangerous/gygax
 	name = "Gygax Exosuit"
@@ -181,6 +189,7 @@ var/list/uplink_items = list()
 	item = /obj/mecha/combat/gygax/dark/loaded
 	cost = 90
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
 
 /datum/uplink_item/dangerous/mauler
 	name = "Mauler Exosuit"
@@ -188,6 +197,7 @@ var/list/uplink_items = list()
 	item = /obj/mecha/combat/marauder/mauler/loaded
 	cost = 140
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
 
 /datum/uplink_item/dangerous/syndieborg
 	name = "Syndicate Cyborg"
@@ -195,6 +205,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/antag_spawner/borg_tele
 	cost = 50
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
 
 //for refunding the syndieborg teleporter
 /datum/uplink_item/dangerous/syndieborg/spawn_item()
@@ -206,6 +217,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/ammo
 	category = "Ammunition"
+	surplus = 40
 
 /datum/uplink_item/ammo/revolver
 	name = "Ammo-357"
@@ -232,6 +244,7 @@ var/list/uplink_items = list()
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 12
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
 
 // STEALTHY WEAPONS
 
@@ -251,6 +264,7 @@ var/list/uplink_items = list()
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
+	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
@@ -264,6 +278,7 @@ var/list/uplink_items = list()
 	desc = "Fitted for use on the Stetchkin pistol, this suppressor will make its shots quieter when equipped onto it."
 	item = /obj/item/weapon/suppressor
 	cost = 3
+	surplus = 10
 
 // STEALTHY TOOLS
 
@@ -282,6 +297,7 @@ var/list/uplink_items = list()
 	it can also be used in a washing machine to forge clothing."
 	item = /obj/item/weapon/stamp/chameleon
 	cost = 1
+	surplus = 35
 
 /datum/uplink_item/stealthy_tools/syndigolashes
 	name = "No-Slip Brown Shoes"
@@ -312,6 +328,7 @@ var/list/uplink_items = list()
 	desc = "Enables you to bug cameras to view them remotely. Adding particular items to it alters its functions."
 	item = /obj/item/device/camera_bug
 	cost = 2
+	surplus = 90
 
 // DEVICE AND TOOLS
 
@@ -357,6 +374,7 @@ var/list/uplink_items = list()
 	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
 	cost = 6
+	surplus = 75
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
@@ -421,6 +439,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/circuitboard/teleporter
 	cost = 40
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
 
 /datum/uplink_item/device_tools/shield
 	name = "Energy Shield"
@@ -428,6 +447,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/shield/energy
 	cost = 16
 	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 20
 
 
 // IMPLANTS
@@ -447,6 +467,7 @@ var/list/uplink_items = list()
 	The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 20
+	surplus = 0
 
 /datum/uplink_item/implants/adrenal
 	name = "Adrenal Implant"
@@ -458,6 +479,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
+	surplus = 0
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
@@ -473,6 +495,7 @@ var/list/uplink_items = list()
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
 	excludefrom = list(/datum/game_mode/nuclear)
+	surplus = 40
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that you are The Boss"
@@ -504,3 +527,35 @@ var/list/uplink_items = list()
 		U.uses -= max(0, I.cost)
 		feedback_add_details("traitor_uplink_items_bought","RN")
 		return new I.item(loc)
+
+/datum/uplink_item/badass/surplus_crate
+	name = "Syndicate Surplus Crate"
+	desc = "A crate containing 50 telecrystals worth of random syndicate leftovers."
+	cost = 20
+	item = /obj/item/weapon/storage/box/syndicate
+	excludefrom = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
+	var/obj/structure/closet/crate/C = new(loc)
+	var/list/temp_uplink_list = get_uplink_items()
+	var/list/buyable_items = list()
+	for(var/category in temp_uplink_list)
+		buyable_items += temp_uplink_list[category]
+	var/list/bought_items = list()
+	U.uses -= cost
+	var/remaining_TC = 50
+
+	var/datum/uplink_item/I
+	while(remaining_TC)
+		I = pick(buyable_items)
+		if(!I.surplus)
+			continue
+		if(I.cost > remaining_TC)
+			continue
+		if((I.item in bought_items) && prob(33)) //To prevent people from being flooded with the same thing over and over again.
+			continue
+		bought_items += I.item
+		remaining_TC -= I.cost
+
+	for(var/item in bought_items)
+		new item(C)
