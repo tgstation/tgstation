@@ -11,11 +11,10 @@ var/global/vox_shuttle_location
 	req_access = list(access_syndicate)
 	var/moving = FALSE
 	var/lastMove = 0
-	var/warning = FALSE // warning about the end of the round.
 
 	l_color = "#B40000"
 
-/obj/machinery/computer/vox_station/proc/vox_move_to(const/area/destination)
+/obj/machinery/computer/vox_station/proc/vox_move_to(var/destination)
 	if(moving)
 		return
 
@@ -37,7 +36,7 @@ var/global/vox_shuttle_location
 		sleep(VOX_SHUTTLE_MOVE_TIME)
 
 	areaMaster.move_contents_to(dest_location)
-	areaMaster = dest_location // let do this while move_contents_to proc is not using Move()
+	areaMaster = dest_location
 	moving = FALSE
 
 	return 1
@@ -87,11 +86,14 @@ var/global/vox_shuttle_location
 
 	switch(href_list["move"])
 		if("start")
-			if(ticker && (istype(ticker.mode, /datum/game_mode/heist)))
-				if(!warning)
-					user << "<span class=\"warning\">Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>"
-					warning = TRUE
-					return
+			if(ticker && istype(ticker.mode, /datum/game_mode/heist))
+				switch(alert("OOC INFO: Returning to dark space will end your raid and report your success or failure.", "Confirmation", "Yes", "No"))
+					if("Yes")
+						var/location = get_turf(user)
+						message_admins("[key_name_admin(user)] attempts to end the raid - [formatJumpTo(location)]")
+						log_admin("[key_name(user)] attempts to end the raid - [formatLocation(location)]")
+					if("No")
+						return
 
 			if(vox_move_to(/area/shuttle/vox/station) == 1)
 				vox_shuttle_location = "start"
