@@ -90,12 +90,12 @@
 	areas = list(/area/shuttle/vox/station)
 
 /datum/theft_objective/number/heist/check_completion()
-	var/result = 0
+	var/result = FALSE
 
 	for(var/datum/mind/raider in raiders)
 		result = ..(raider)
 
-		if(result > 0)
+		if(result)
 			break
 
 	return result
@@ -150,12 +150,12 @@
 	areas = list(/area/shuttle/vox/station)
 
 /datum/theft_objective/number/salvage/check_completion()
-	var/result = 0
+	var/result = FALSE
 
 	for(var/datum/mind/raider in raiders)
 		result = ..(raider)
 
-		if(result > 0)
+		if(result)
 			break
 
 	return result
