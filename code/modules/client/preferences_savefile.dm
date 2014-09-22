@@ -42,21 +42,20 @@
 	check.Add("select ckey from client")
 	if(check.Execute(db))
 		if(!check.NextRow())
-			if(!save_preferences_sqlite(ckey))
-				world << " An error has occured."
-				return 0
+			return 0
 	else
 		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
-	q.Add("SELECT * FROM client where ckey = ?", ckey)
+	q.Add("SELECT * FROM client WHERE ckey = ?", ckey)
 	if(q.Execute(db))
 		while(q.NextRow())
 			var/list/row = q.GetRowData()
 			for(var/a in row)
-				//world << "[a] = [row[a]]"
 				preference_list_client[a] = row[a]
 	else
 		message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 
 	ooccolor 		=	preference_list_client["ooc_color"]
@@ -142,15 +141,18 @@
 			ckey, ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, special_popup)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 		else
 			q.Add("UPDATE client SET ooc_color=?,lastchangelog=?,UI_style=?,default_slot=?,toggles=?,UI_style_color=?,UI_style_alpha=?,warns=?,warnbans=?,randomslot=?,volume=?,special=? WHERE ckey = ?",\
 			ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, special_popup, ckey)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 	else
 		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 	user << "Preferences Updated."
 	return 1
@@ -193,77 +195,168 @@
 	var/database/query/q = new
 	var/database/query/check = new
 
-	check.Add("select ckey from players where ckey = ? and slot = ?", ckey, slot)
+	check.Add("SELECT player_ckey FROM players WHERE player_ckey = ? AND player_slot = ?", ckey, slot)
 	if(check.Execute(db))
 		if(!check.NextRow())
 			user << "You have no character file to load, please save one first."
 			return 0
 	else
-		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
+		message_admins("load_save_sqlite Check Error #: [check.Error()] - [check.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 
-	q.Add("select * from players, body, limbs, jobs WHERE players.ckey = ? AND players.slot = ?", ckey, slot)
+	q.Add({"
+SELECT
+    limbs.player_ckey,
+    limbs.player_slot,
+    limbs.l_arm,
+    limbs.r_arm,
+    limbs.l_leg,
+    limbs.r_leg,
+    limbs.l_foot,
+    limbs.r_foot,
+    limbs.l_hand,
+    limbs.r_hand,
+    limbs.heart,
+    limbs.eyes,
+    players.player_ckey,
+    players.player_slot,
+    players.ooc_notes,
+    players.real_name,
+    players.random_name,
+    players.gender,
+    players.age,
+    players.species,
+    players.language,
+    players.flavor_text,
+    players.med_record,
+    players.sec_record,
+    players.gen_record,
+    players.player_alt_titles,
+    players.be_special,
+    players.disabilities,
+    players.nanotrasen_relation,
+    jobs.player_ckey,
+    jobs.player_slot,
+    jobs.alternate_option,
+    jobs.job_civilian_high,
+    jobs.job_civilian_med,
+    jobs.job_civilian_low,
+    jobs.job_medsci_high,
+    jobs.job_medsci_med,
+    jobs.job_medsci_low,
+    jobs.job_engsec_high,
+    jobs.job_engsec_med,
+    jobs.job_engsec_low,
+    body.player_ckey,
+    body.player_slot,
+    body.hair_red,
+    body.hair_green,
+    body.hair_blue,
+    body.facial_red,
+    body.facial_green,
+    body.facial_blue,
+    body.skin_tone,
+    body.hair_style_name,
+    body.facial_style_name,
+    body.eyes_red,
+    body.eyes_green,
+    body.eyes_blue,
+    body.underwear,
+    body.backbag,
+    body.b_type
+FROM
+    players
+INNER JOIN
+    limbs
+ON
+    (
+        players.player_ckey = limbs.player_ckey)
+AND (
+        players.player_slot = limbs.player_slot)
+INNER JOIN
+    jobs
+ON
+    (
+        limbs.player_ckey = jobs.player_ckey)
+AND (
+        limbs.player_slot = jobs.player_slot)
+INNER JOIN
+    body
+ON
+    (
+        jobs.player_ckey = body.player_ckey)
+AND (
+        jobs.player_slot = body.player_slot)
+WHERE
+    players.player_ckey = ?
+AND players.player_slot = ? ;"}, ckey, slot)
 	if(q.Execute(db))
 		while(q.NextRow())
 			var/list/row = q.GetRowData()
 			for(var/a in row)
-				//world << "[a] = [row[a]]"
 				preference_list[a] = row[a]
 	else
-		message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+		message_admins("load_save_sqlite Error #: [q.Error()] - [q.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 
-	metadata = preference_list["ooc_notes"]
-	real_name = preference_list["real_name"]
-	be_random_name = preference_list["random_name"]
-	gender = preference_list["gender"]
-	age = preference_list["age"]
-	species = preference_list["species"]
-	language = preference_list["language"]
-	flavor_text = preference_list["flavor_text"]
-	med_record = preference_list["med_record"]
-	sec_record = preference_list["sec_record"]
-	gen_record = preference_list["gen_record"]
-	player_alt_titles = preference_list["player_alt_titles"]
-	be_special = preference_list["be_special"]
-	disabilities = preference_list["disabilities"]
-	nanotrasen_relation = preference_list["nanotrasen_relation"]
+	metadata 			= preference_list["ooc_notes"]
+	real_name 			= preference_list["real_name"]
+	be_random_name 		= preference_list["random_name"]
+	gender 				= preference_list["gender"]
+	age 				= preference_list["age"]
+	species				= preference_list["species"]
+	language			= preference_list["language"]
+	flavor_text			= preference_list["flavor_text"]
+	med_record			= preference_list["med_record"]
+	sec_record			= preference_list["sec_record"]
+	gen_record			= preference_list["gen_record"]
+	player_alt_titles	= preference_list["player_alt_titles"]
+	be_special			= preference_list["be_special"]
+	disabilities		= preference_list["disabilities"]
+	nanotrasen_relation	= preference_list["nanotrasen_relation"]
 
-	r_hair = preference_list["hair_red"]
-	g_hair = preference_list["hair_green"]
-	b_hair = preference_list["hair_blue"]
-	r_facial = preference_list["facial_red"]
-	g_facial = preference_list["facial_green"]
-	b_facial = preference_list["facial_blue"]
-	underwear = preference_list["underwear"]
-	backbag = preference_list["backbag"]
-	b_type = preference_list["b_type"]
+	r_hair				= preference_list["hair_red"]
+	g_hair				= preference_list["hair_green"]
+	b_hair				= preference_list["hair_blue"]
+	h_style				= preference_list["hair_style_name"]
+
+	r_facial			= preference_list["facial_red"]
+	g_facial			= preference_list["facial_green"]
+	b_facial			= preference_list["facial_blue"]
+	f_style				= preference_list["facial_style_name"]
+
+	underwear			= preference_list["underwear"]
+	backbag				= preference_list["backbag"]
+	b_type				= preference_list["b_type"]
 
 	organ_data["l_arm"] = preference_list["l_arm"]
 	organ_data["r_arm"] = preference_list["r_arm"]
 	organ_data["l_leg"] = preference_list["l_leg"]
 	organ_data["r_leg"] = preference_list["r_leg"]
-	organ_data["l_foot"] = preference_list["l_foot"]
-	organ_data["r_foot"] = preference_list["r_foot"]
-	organ_data["l_hand"] = preference_list["l_hand"]
-	organ_data["r_hand"] = preference_list["r_hand"]
+	organ_data["l_foot"]= preference_list["l_foot"]
+	organ_data["r_foot"]= preference_list["r_foot"]
+	organ_data["l_hand"]= preference_list["l_hand"]
+	organ_data["r_hand"]= preference_list["r_hand"]
 	organ_data["heart"] = preference_list["heart"]
-	organ_data["eyes"] = preference_list["eyes"]
+	organ_data["eyes"] 	= preference_list["eyes"]
 
-	alternate_option = preference_list["alternate_option"]
-	job_civilian_high = preference_list["job_civilian_high"]
-	job_civilian_med = preference_list["job_civilian_med"]
-	job_civilian_low = preference_list["job_civilian_low"]
-	job_medsci_high = preference_list["job_medsci_high"]
-	job_medsci_med = preference_list["job_medsci_med"]
-	job_medsci_low = preference_list["job_medsci_low"]
-	job_engsec_high = preference_list["job_engsec_high"]
-	job_engsec_med = preference_list["job_engsec_med"]
-	job_engsec_low = preference_list["job_engsec_low"]
+	alternate_option	= preference_list["alternate_option"]
+	job_civilian_high	= preference_list["job_civilian_high"]
+	job_civilian_med	= preference_list["job_civilian_med"]
+	job_civilian_low	= preference_list["job_civilian_low"]
+	job_medsci_high		= preference_list["job_medsci_high"]
+	job_medsci_med		= preference_list["job_medsci_med"]
+	job_medsci_low		= preference_list["job_medsci_low"]
+	job_engsec_high		= preference_list["job_engsec_high"]
+	job_engsec_med		= preference_list["job_engsec_med"]
+	job_engsec_low		= preference_list["job_engsec_low"]
 
 
-	metadata		= sanitize_text(metadata, initial(metadata))
-	real_name		= reject_bad_name(real_name)
+	metadata			= sanitize_text(metadata, initial(metadata))
+	real_name			= reject_bad_name(real_name)
+
 	if(isnull(species)) species = "Human"
 	if(isnull(language)) language = "None"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
@@ -271,16 +364,20 @@
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
+
 	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
 	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
 	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
+
 	r_facial		= sanitize_integer(r_facial, 0, 255, initial(r_facial))
 	g_facial		= sanitize_integer(g_facial, 0, 255, initial(g_facial))
+
 	b_facial		= sanitize_integer(b_facial, 0, 255, initial(b_facial))
 	s_tone			= sanitize_integer(s_tone, -185, 34, initial(s_tone))
 	h_style			= sanitize_inlist(h_style, hair_styles_list, initial(h_style))
 	f_style			= sanitize_inlist(f_style, facial_hair_styles_list, initial(f_style))
 	r_eyes			= sanitize_integer(r_eyes, 0, 255, initial(r_eyes))
+
 	g_eyes			= sanitize_integer(g_eyes, 0, 255, initial(g_eyes))
 	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
 	underwear		= sanitize_integer(underwear, 1, underwear_m.len, initial(underwear))
@@ -304,6 +401,8 @@
 	if(isnull(disabilities)) disabilities = 0
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
+
+	user << "Sucessfully loaded [real_name]."
 
 	return 1
 
@@ -414,17 +513,17 @@
 
 /datum/preferences/proc/random_character_sqlite(var/user, var/ckey)
 	var/database/query/q = new
-	var/i = 0
-	q.Add("SELECT slot FROM players WHERE ckey=?", ckey)
+	var/list/slot_list = new
+	q.Add("SELECT player_slot FROM players WHERE player_ckey=?", ckey)
 	if(q.Execute(db))
 		while(q.NextRow())
-			i++
+			slot_list.Add(q.GetColumn(1))
 	else
 		message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
-	var/random_slot = rand(1,i)
-	world << "This is random_slot : [random_slot]"
-	load_save_sqlite(user, ckey, random_slot)
+	var/random_slot = pick(slot_list)
+	load_save_sqlite(ckey, user, random_slot)
 	return 1
 
 /datum/preferences/proc/random_character()
@@ -474,36 +573,37 @@
 	var/database/query/q = new
 	var/database/query/check = new
 
-	check.Add("select ckey from players where ckey = ? and slot = ?", ckey, slot)
+	check.Add("select player_ckey from players where player_ckey = ? and player_slot = ?", ckey, slot)
 	if(check.Execute(db))
 		if(!check.NextRow())            //1       2         3         4           5      6   7       8        9           10         11         12         13                14         15           16
-			q.Add("INSERT INTO players (ckey,slot,ooc_notes,real_name,random_name,gender,age,species,language,flavor_text,med_record,sec_record,gen_record,player_alt_titles,be_special,disabilities,nanotrasen_relation) \
+			q.Add("INSERT INTO players (player_ckey,player_slot,ooc_notes,real_name,random_name,gender,age,species,language,flavor_text,med_record,sec_record,gen_record,player_alt_titles,be_special,disabilities,nanotrasen_relation) \
 				   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, metadata, real_name, be_random_name, gender, age, species, language, flavor_text, med_record, sec_record, gen_record, player_alt_titles, be_special, disabilities, nanotrasen_relation)
 			if(!q.Execute(db))
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
+				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 			user << "Created Character"
 		else
-			q.Add("UPDATE players SET ooc_notes=?,real_name=?,random_name=?,gender=?,age=?,species=?,language=?,flavor_text=?,med_record=?,sec_record=?,gen_record=?,player_alt_titles=?,be_special=?,disabilities=?,nanotrasen_relation=? WHERE ckey = ? AND slot = ?",\
+			q.Add("UPDATE players SET ooc_notes=?,real_name=?,random_name=?,gender=?,age=?,species=?,language=?,flavor_text=?,med_record=?,sec_record=?,gen_record=?,player_alt_titles=?,be_special=?,disabilities=?,nanotrasen_relation=? WHERE player_ckey = ? AND player_slot = ?",\
 									  metadata, real_name, be_random_name, gender, age, species, language, flavor_text, med_record, sec_record, gen_record, player_alt_titles, be_special, disabilities, nanotrasen_relation, ckey, slot)
-			world << "Players Query : [q]"
 			if(!q.Execute(db))
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
+				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 			user << "Updated Character"
 	else
 		message_admins("Error #:[check.Error()] - [check.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 
 	check.Add("select player_ckey from body where player_ckey = ? and player_slot = ?", ckey, slot)
-	world << "Check Query : [check]"
 	if(check.Execute(db))
 		if(!check.NextRow())
 			q.Add("INSERT INTO body (player_ckey,player_slot,hair_red,hair_green,hair_blue,facial_red,facial_green,facial_blue,skin_tone,hair_style_name,facial_style_name,eyes_red,eyes_green,eyes_blue,underwear,backbag,b_type) \
 					VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, r_hair, g_hair, b_hair, r_facial, g_facial, b_facial, s_tone, h_style, f_style, r_eyes, g_eyes, b_eyes, underwear, backbag, b_type)
-			world << "Body Query : [q]"
 			if(!q.Execute(db))
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
+				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 			user << "Created Body"
 		else
@@ -511,10 +611,12 @@
 									r_hair, g_hair, b_hair, r_facial, g_facial, b_facial, s_tone, h_style, f_style, r_eyes, g_eyes, b_eyes, underwear, backbag, b_type, ckey, slot)
 			if(!q.Execute(db))
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
+				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 			user << "Updated Body"
 	else
 		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 
 	check.Add("select player_ckey from jobs where player_ckey = ? and player_slot = ?", ckey, slot)
@@ -524,6 +626,7 @@
 					VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, alternate_option, job_civilian_high, job_civilian_med, job_civilian_low, job_medsci_high, job_medsci_med, job_medsci_low, job_engsec_high, job_engsec_med, job_engsec_low)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 			user << "Created Job list"
 		else
@@ -531,10 +634,12 @@
 									job_civilian_high, job_civilian_med, job_civilian_low, job_medsci_high, job_medsci_med, job_medsci_low, job_engsec_high, job_engsec_med, job_engsec_low, ckey, slot)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 			user << "Updated Job List"
 	else
 		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 
 	check.Add("select player_ckey from limbs where player_ckey = ? and player_slot = ?", ckey, slot)
@@ -543,11 +648,13 @@
 			q.Add("INSERT INTO limbs (player_ckey, player_slot) VALUES (?,?)", ckey, slot)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 			for(var/stuff in organ_data)
 				q.Add("UPDATE limbs SET [stuff]=? WHERE player_ckey = ? AND player_slot = ?", organ_data[stuff], ckey, slot)
 				if(!q.Execute(db))
 					message_admins("Error #; [q.Error()] - [q.ErrorMsg()]")
+					warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 					return 0
 			user << "Created Limbs"
 		else
@@ -555,10 +662,12 @@
 				q.Add("UPDATE limbs SET [stuff] = ? WHERE player_ckey = ? AND player_slot = ?", organ_data[stuff], ckey, slot)
 				if(!q.Execute(db))
 					message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+					warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 					return 0
 			user << "Updated Limbs"
 	else
 		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 	return 1
 

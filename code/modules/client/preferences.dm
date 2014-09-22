@@ -129,118 +129,17 @@ datum/preferences
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 	if(istype(C))
 		if(!IsGuestKey(C.key))
-			if(!load_preferences_sqlite(C.ckey))
-				if(!load_save_sqlite(C, C.ckey, default_slot))
+			var/load_pref = load_preferences_sqlite(C.ckey)
+			if(load_pref)
+				if(load_save_sqlite(C.ckey, src, default_slot))
 					return
-	gender = pick(MALE, FEMALE)
+			else
+				save_preferences_sqlite(src, C.ckey)
+	randomize_appearance_for()
 	real_name = random_name(gender)
+	save_character_sqlite(src, C.ckey, default_slot)
 
 /datum/preferences
-	proc/ZeroSkills(var/forced = 0)
-		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
-			if(!skills.Find(S.ID) || forced)
-				skills[S.ID] = SKILL_NONE
-	proc/CalculateSkillPoints()
-		used_skillpoints = 0
-		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
-			var/multiplier = 1
-			switch(skills[S.ID])
-				if(SKILL_NONE)
-					used_skillpoints += 0 * multiplier
-				if(SKILL_BASIC)
-					used_skillpoints += 1 * multiplier
-				if(SKILL_ADEPT)
-					// secondary skills cost less
-					if(S.secondary)
-						used_skillpoints += 1 * multiplier
-					else
-						used_skillpoints += 3 * multiplier
-				if(SKILL_EXPERT)
-					// secondary skills cost less
-					if(S.secondary)
-						used_skillpoints += 3 * multiplier
-					else
-						used_skillpoints += 6 * multiplier
-
-	proc/GetSkillClass(points)
-		// skill classes describe how your character compares in total points
-		var/original_points = points
-		points -= min(round((age - 20) / 2.5), 4) // every 2.5 years after 20, one extra skillpoint
-		if(age > 30)
-			points -= round((age - 30) / 5) // every 5 years after 30, one extra skillpoint
-		if(original_points > 0 && points <= 0) points = 1
-		switch(points)
-			if(0)
-				return "Unconfigured"
-			if(1 to 3)
-				return "Terrifying"
-			if(4 to 6)
-				return "Below Average"
-			if(7 to 10)
-				return "Average"
-			if(11 to 14)
-				return "Above Average"
-			if(15 to 18)
-				return "Exceptional"
-			if(19 to 24)
-				return "Genius"
-			if(24 to 1000)
-				return "God"
-
-	proc/SetSkills(mob/user)
-		if(SKILLS == null)
-			setup_skills()
-
-		if(skills.len == 0)
-			ZeroSkills()
-
-
-		var/HTML = "<body>"
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:185: HTML += "<b>Select your Skills</b><br>"
-		HTML += {"<b>Select your Skills</b><br>
-			Current skill level: <b>[GetSkillClass(used_skillpoints)]</b> ([used_skillpoints])<br>
-			<a href=\"byond://?src=\ref[user];preference=skills;preconfigured=1;\">Use preconfigured skillset</a><br>
-			<table>"}
-		// END AUTOFIX
-		for(var/V in SKILLS)
-
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:190: HTML += "<tr><th colspan = 5><b>[V]</b>"
-			HTML += {"<tr><th colspan = 5><b>[V]</b>
-				</th></tr>"}
-			// END AUTOFIX
-			for(var/datum/skill/S in SKILLS[V])
-				var/level = skills[S.ID]
-
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:194: HTML += "<tr style='text-align:left;'>"
-				HTML += {"<tr style='text-align:left;'>
-					<th><a href='byond://?src=\ref[user];preference=skills;skillinfo=\ref[S]'>[S.name]</a></th>
-					<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></a></th>"}
-				// END AUTOFIX
-				// secondary skills don't have an amateur level
-				if(S.secondary)
-					HTML += "<th></th>"
-				else
-					HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Amateur\]</font></a></th>"
-
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:202: HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></a></th>"
-				HTML += {"<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></a></th>
-					<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></a></th>
-					</tr>"}
-				// END AUTOFIX
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:205: HTML += "</table>"
-		HTML += {"</table>
-			<a href=\"byond://?src=\ref[user];preference=skills;cancel=1;\">\[Done\]</a>"}
-		// END AUTOFIX
-		user << browse(null, "window=preferences")
-		user << browse(HTML, "window=show_skills;size=600x800")
-		return
 
 	proc/ShowChoices(mob/user)
 		if(!user || !user.client)	return
@@ -249,8 +148,7 @@ datum/preferences
 		user << browse_rsc(preview_icon_side, "previewicon2.png")
 		var/dat = "<html><body><center>"
 
-		if(load_preferences_sqlite(user.ckey))
-
+		if(!IsGuestKey(user.key))
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:220: dat += "<center>"
 			dat += {"<center>
@@ -407,8 +305,7 @@ datum/preferences
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:325: dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)][used_skillpoints > 0 ? " [used_skillpoints]" : "0"])</i></a><br>"
-		dat += {"\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)][used_skillpoints > 0 ? " [used_skillpoints]" : "0"])</i></a><br>
-			<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"}
+		dat += {"<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"}
 		// END AUTOFIX
 		if(lentext(flavor_text) <= 40)
 			if(!lentext(flavor_text))
@@ -820,40 +717,6 @@ datum/preferences
 					SetDisabilities(user)
 				else
 					SetDisabilities(user)
-			return 1
-		else if(href_list["preference"] == "skills")
-			if(href_list["cancel"])
-				user << browse(null, "window=show_skills")
-				ShowChoices(user)
-			else if(href_list["skillinfo"])
-				var/datum/skill/S = locate(href_list["skillinfo"])
-				var/HTML = "<b>[S.name]</b><br>[S.desc]"
-				user << browse(HTML, "window=\ref[user]skillinfo")
-			else if(href_list["setskill"])
-				var/datum/skill/S = locate(href_list["setskill"])
-				var/value = text2num(href_list["newvalue"])
-				skills[S.ID] = value
-				CalculateSkillPoints()
-				SetSkills(user)
-			else if(href_list["preconfigured"])
-				var/selected = input(user, "Select a skillset", "Skillset") as null|anything in SKILL_PRE
-				if(!selected) return
-
-				ZeroSkills(1)
-				for(var/V in SKILL_PRE[selected])
-					if(V == "field")
-						skill_specialization = SKILL_PRE[selected]["field"]
-						continue
-					skills[V] = SKILL_PRE[selected][V]
-				CalculateSkillPoints()
-
-				SetSkills(user)
-			else if(href_list["setspecialization"])
-				skill_specialization = href_list["setspecialization"]
-				CalculateSkillPoints()
-				SetSkills(user)
-			else
-				SetSkills(user)
 			return 1
 
 		else if(href_list["preference"] == "records")
@@ -1283,12 +1146,12 @@ datum/preferences
 
 					if("save")
 						save_preferences_sqlite(user, user.ckey)
-						save_character_sqlite(user.ckey, user, slot)
+						save_character_sqlite(user.ckey, user, default_slot)
 						//random_character_sqlite(user, user.ckey)
 
 					if("reload")
-						//load_preferences_sqlite(user.ckey)
-						//load_save_sqlite(user.ckey, user, default_slot)
+						load_preferences_sqlite(user, user.ckey)
+						load_save_sqlite(user.ckey, user, default_slot)
 
 					if("open_load_dialog")
 						if(!IsGuestKey(user.key))
@@ -1298,9 +1161,9 @@ datum/preferences
 						close_load_dialog(user)
 
 					if("changeslot")
-						load_save_sqlite(user.ckey, user, text2num(href_list["num"]))
-							//user << "You have no character created here, change your preferences and save."
-						slot = text2num(href_list["num"])
+						var/num = text2num(href_list["num"])
+						load_save_sqlite(user.ckey, user, num)
+						default_slot = num
 						close_load_dialog(user)
 
 		ShowChoices(user)
@@ -1403,23 +1266,32 @@ datum/preferences
 
 	proc/open_load_dialog(mob/user)
 
+		var/database/query/q = new
+		var/list/name_list[MAX_SAVE_SLOTS]
+
+		q.Add("select real_name, player_slot from players where player_ckey=?", user.ckey)
+		if(q.Execute(db))
+			while(q.NextRow())
+				name_list[q.GetColumn(2)] = q.GetColumn(1)
+		else
+			message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+			warning("Error #:[q.Error()] - [q.ErrorMsg()]")
+			return 0
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:1283: var/dat = "<body>"
-		var/dat = {"<body>
-<tt><center>"}
+		var/dat = {"<body><tt><center>"}
 		// END AUTOFIX
-		var/savefile/S = new /savefile(path)
-		if(S)
-			dat += "<b>Select a character slot to load</b><hr>"
-			var/name
-			for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
-				S.cd = "/character[i]"
-				S["real_name"] >> name
-				if(!name)	name = "Character[i]"
-				if(i==default_slot)
-					name = "<b>[name]</b>"
-				dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
-
+		dat += "<b>Select a character slot to load</b><hr>"
+		var/counter = 1
+		while(counter <= MAX_SAVE_SLOTS)
+			if(counter==default_slot)
+				dat += "<a href='?_src_=prefs;preference=changeslot;num=[counter];'><b>[name_list[counter]]</b></a><br>"
+			else
+				if(!name_list[counter])
+					dat += "<a href='?_src_=prefs;preference=changeslot;num=[counter];'>Character[counter]</a><br>"
+				else
+					dat += "<a href='?_src_=prefs;preference=changeslot;num=[counter];'>[name_list[counter]]</a><br>"
+			counter++
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:1228: dat += "<hr>"
