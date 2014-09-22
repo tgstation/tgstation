@@ -20,7 +20,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"vampire" = IS_MODE_COMPILED("vampire")			 // 13
 )
 
-var/const/MAX_SAVE_SLOTS = 10
+var/const/MAX_SAVE_SLOTS = 8
 
 //used for alternate_option
 #define GET_RANDOM_JOB 0
@@ -29,8 +29,12 @@ var/const/MAX_SAVE_SLOTS = 10
 
 datum/preferences
 	//doohickeys for savefiles
+	var/database/db = ("players2.sqlite")
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
+	var/slot = 1
+	var/list/slot_names = new
+
 	var/savefile_version = 0
 
 	//non-preference stuff
@@ -125,9 +129,8 @@ datum/preferences
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 	if(istype(C))
 		if(!IsGuestKey(C.key))
-			load_path(C.ckey)
-			if(load_preferences())
-				if(load_character())
+			if(!load_preferences_sqlite(C.ckey))
+				if(!load_save_sqlite(C, C.ckey, default_slot))
 					return
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
@@ -246,7 +249,7 @@ datum/preferences
 		user << browse_rsc(preview_icon_side, "previewicon2.png")
 		var/dat = "<html><body><center>"
 
-		if(path)
+		if(load_preferences_sqlite(user.ckey))
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:220: dat += "<center>"
@@ -1279,12 +1282,13 @@ datum/preferences
 						toggles ^= CHAT_GHOSTRADIO
 
 					if("save")
-						save_preferences()
-						save_character()
+						save_preferences_sqlite(user, user.ckey)
+						save_character_sqlite(user.ckey, user, slot)
+						//random_character_sqlite(user, user.ckey)
 
 					if("reload")
-						load_preferences()
-						load_character()
+						//load_preferences_sqlite(user.ckey)
+						//load_save_sqlite(user.ckey, user, default_slot)
 
 					if("open_load_dialog")
 						if(!IsGuestKey(user.key))
@@ -1294,7 +1298,9 @@ datum/preferences
 						close_load_dialog(user)
 
 					if("changeslot")
-						load_character(text2num(href_list["num"]))
+						load_save_sqlite(user.ckey, user, text2num(href_list["num"]))
+							//user << "You have no character created here, change your preferences and save."
+						slot = text2num(href_list["num"])
 						close_load_dialog(user)
 
 		ShowChoices(user)
