@@ -8,7 +8,7 @@
 /obj/machinery/computer/taxi_shuttle_a
 	name = "taxi shuttle terminal"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle2"
+	icon_state = "syndishuttle"
 	req_access = list(access_taxi)
 	var/area/curr_location
 	var/moving = 0
@@ -101,7 +101,7 @@
 /obj/machinery/computer/taxi_shuttle_b
 	name = "taxi shuttle terminal"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle2"
+	icon_state = "syndishuttle"
 	req_access = list(access_taxi)
 	var/area/curr_location
 	var/moving = 0
