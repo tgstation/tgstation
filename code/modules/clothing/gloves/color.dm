@@ -17,8 +17,8 @@
 
 	item_color="yellow"
 
-	New()
-		siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
+/obj/item/clothing/gloves/fyellow/New()
+	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/black
 	desc = "These gloves are fire-resistant."
@@ -33,11 +33,11 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 
 
-	hos
-		item_color = "hosred"		//Exists for washing machines. Is not different from black gloves in any way.
+/obj/item/clothing/gloves/black/hos
+	item_color = "hosred"		//Exists for washing machines. Is not different from black gloves in any way.
 
-	ce
-		item_color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
+/obj/item/clothing/gloves/black/ce
+	item_color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
 
 /obj/item/clothing/gloves/black/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -69,8 +69,8 @@
 	item_state = "rainbowgloves"
 	item_color = "rainbow"
 
-	clown
-		item_color = "clown"
+/obj/item/clothing/gloves/rainbow/clown
+	item_color = "clown"
 
 /obj/item/clothing/gloves/blue
 	name = "blue gloves"
@@ -100,11 +100,11 @@
 	item_state = "graygloves"
 	item_color="grey"
 
-	rd
-		item_color = "director"			//Exists for washing machines. Is not different from gray gloves in any way.
+/obj/item/clothing/gloves/grey/rd
+	item_color = "director"			//Exists for washing machines. Is not different from gray gloves in any way.
 
-	hop
-		item_color = "hop"				//Exists for washing machines. Is not different from gray gloves in any way.
+/obj/item/clothing/gloves/grey/hop
+	item_color = "hop"				//Exists for washing machines. Is not different from gray gloves in any way.
 
 /obj/item/clothing/gloves/light_brown
 	name = "light brown gloves"
@@ -120,5 +120,5 @@
 	item_state = "browngloves"
 	item_color="brown"
 
-	cargo
-		item_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.
+/obj/item/clothing/gloves/brown/cargo
+	item_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.

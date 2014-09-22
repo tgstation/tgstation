@@ -19,11 +19,12 @@
 	var/input
 	var/output
 	var/time = 40
-	proc/process(loc, what)
-		if (src.output && loc)
-			new src.output(loc)
-		if (what)
-			qdel(what) // Note to self: Make this safer
+
+/datum/food_processor_process/proc/process(loc, what)
+	if (src.output && loc)
+		new src.output(loc)
+	if (what)
+		qdel(what) // Note to self: Make this safer
 
 	/* objs */
 /datum/food_processor_process/meat

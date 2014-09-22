@@ -11,29 +11,29 @@
 	item_color = "engineering" //Determines used sprites: hardsuit[on]-[color] and hardsuit[on]-[color]2 (lying down sprite)
 	action_button_name = "Toggle Helmet Light"
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-			return
-		on = !on
-		icon_state = "hardsuit[on]-[item_color]"
+/obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "hardsuit[on]-[item_color]"
 //		item_state = "hardsuit[on]-[item_color]"
-		user.update_inv_head()	//so our mob-overlays update
+	user.update_inv_head()	//so our mob-overlays update
 
-		if(on)	user.AddLuminosity(brightness_on)
-		else	user.AddLuminosity(-brightness_on)
+	if(on)	user.AddLuminosity(brightness_on)
+	else	user.AddLuminosity(-brightness_on)
 
-	pickup(mob/user)
-		if(on)
-			user.AddLuminosity(brightness_on)
+/obj/item/clothing/head/helmet/space/hardsuit/pickup(mob/user)
+	if(on)
+		user.AddLuminosity(brightness_on)
 //			user.UpdateLuminosity()
-			SetLuminosity(0)
+		SetLuminosity(0)
 
-	dropped(mob/user)
-		if(on)
-			user.AddLuminosity(-brightness_on)
+/obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
+	if(on)
+		user.AddLuminosity(-brightness_on)
 //			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
+		SetLuminosity(brightness_on)
 
 /obj/item/clothing/suit/space/hardsuit
 	name = "engineering hardsuit"

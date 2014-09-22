@@ -23,8 +23,8 @@
 
 	var/uplink_contents			// the contents of the uplink
 
-	proc/assign_objectives(var/datum/mind/traitor)
-		..()
+/datum/faction/syndicate/proc/assign_objectives(var/datum/mind/traitor)
+	..()
 
 
 /* ----- Begin defining syndicate factions ------ */

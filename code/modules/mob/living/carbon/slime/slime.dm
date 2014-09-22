@@ -625,18 +625,18 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 //has it been enhanced before?
 
-	attackby(obj/item/O as obj, mob/user as mob)
-		if(istype(O, /obj/item/weapon/slimesteroid2))
-			if(enhanced == 1)
-				user << "<span class='warning'> This extract has already been enhanced!</span>"
-				return ..()
-			if(Uses == 0)
-				user << "<span class='warning'> You can't enhance a used extract!</span>"
-				return ..()
-			user <<"You apply the enhancer. It now has triple the amount of uses."
-			Uses = 3
-			enhanced = 1
-			qdel(O)
+/obj/item/slime_extract/attackby(obj/item/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/weapon/slimesteroid2))
+		if(enhanced == 1)
+			user << "<span class='warning'> This extract has already been enhanced!</span>"
+			return ..()
+		if(Uses == 0)
+			user << "<span class='warning'> You can't enhance a used extract!</span>"
+			return ..()
+		user <<"You apply the enhancer. It now has triple the amount of uses."
+		Uses = 3
+		enhanced = 1
+		qdel(O)
 
 /obj/item/slime_extract/New()
 		..()
@@ -738,33 +738,33 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "<span class='warning'> The potion only works on baby slimes!</span>"
-			return ..()
-		if(M.is_adult) //Can't tame adults
-			user << "<span class='warning'> Only baby slimes can be tamed!</span>"
-			return..()
-		if(M.stat)
-			user << "<span class='warning'> The slime is dead!</span>"
-			return..()
-		if(M.mind)
-			user << "<span class='warning'> The slime resists!</span>"
-			return ..()
-		var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
-		pet.icon_state = "[M.colour] baby slime"
-		pet.icon_living = "[M.colour] baby slime"
-		pet.icon_dead = "[M.colour] baby slime dead"
-		pet.colour = "[M.colour]"
-		user <<"You feed the slime the potion, removing it's powers and calming it."
-		qdel(M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+/obj/item/weapon/slimepotion/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+		user << "<span class='warning'> The potion only works on baby slimes!</span>"
+		return ..()
+	if(M.is_adult) //Can't tame adults
+		user << "<span class='warning'> Only baby slimes can be tamed!</span>"
+		return..()
+	if(M.stat)
+		user << "<span class='warning'> The slime is dead!</span>"
+		return..()
+	if(M.mind)
+		user << "<span class='warning'> The slime resists!</span>"
+		return ..()
+	var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
+	pet.icon_state = "[M.colour] baby slime"
+	pet.icon_living = "[M.colour] baby slime"
+	pet.icon_dead = "[M.colour] baby slime dead"
+	pet.colour = "[M.colour]"
+	user <<"You feed the slime the potion, removing it's powers and calming it."
+	qdel(M)
+	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
-		if (!newname)
-			newname = "pet slime"
-		pet.name = newname
-		pet.real_name = newname
-		qdel(src)
+	if (!newname)
+		newname = "pet slime"
+	pet.name = newname
+	pet.real_name = newname
+	qdel(src)
 
 /obj/item/weapon/slimepotion2
 	name = "advanced docility potion"
@@ -772,30 +772,30 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-		if(!istype(M, /mob/living/carbon/slime/))//If target is not a slime.
-			user << "<span class='warning'> The potion only works on slimes!</span>"
-			return ..()
-		if(M.stat)
-			user << "<span class='warning'> The slime is dead!</span>"
-			return..()
-		if(M.mind)
-			user << "<span class='warning'> The slime resists!</span>"
-			return ..()
-		var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
-		pet.icon_state = "[M.colour] adult slime"
-		pet.icon_living = "[M.colour] adult slime"
-		pet.icon_dead = "[M.colour] baby slime dead"
-		pet.colour = "[M.colour]"
-		user <<"You feed the slime the potion, removing it's powers and calming it."
-		qdel(M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+/obj/item/weapon/slimepotion2/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+	if(!istype(M, /mob/living/carbon/slime/))//If target is not a slime.
+		user << "<span class='warning'> The potion only works on slimes!</span>"
+		return ..()
+	if(M.stat)
+		user << "<span class='warning'> The slime is dead!</span>"
+		return..()
+	if(M.mind)
+		user << "<span class='warning'> The slime resists!</span>"
+		return ..()
+	var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
+	pet.icon_state = "[M.colour] adult slime"
+	pet.icon_living = "[M.colour] adult slime"
+	pet.icon_dead = "[M.colour] baby slime dead"
+	pet.colour = "[M.colour]"
+	user <<"You feed the slime the potion, removing it's powers and calming it."
+	qdel(M)
+	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
-		if (!newname)
-			newname = "pet slime"
-		pet.name = newname
-		pet.real_name = newname
-		qdel(src)
+	if (!newname)
+		newname = "pet slime"
+	pet.name = newname
+	pet.real_name = newname
+	qdel(src)
 
 
 /obj/item/weapon/slimesteroid
@@ -804,23 +804,23 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
-	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "<span class='warning'> The steroid only works on baby slimes!</span>"
-			return ..()
-		if(M.is_adult) //Can't tame adults
-			user << "<span class='warning'> Only baby slimes can use the steroid!</span>"
-			return..()
-		if(M.stat)
-			user << "<span class='warning'> The slime is dead!</span>"
-			return..()
-		if(M.cores == 3)
-			user <<"<span class='warning'> The slime already has the maximum amount of extract!</span>"
-			return..()
+/obj/item/weapon/slimesteroid/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+		user << "<span class='warning'> The steroid only works on baby slimes!</span>"
+		return ..()
+	if(M.is_adult) //Can't tame adults
+		user << "<span class='warning'> Only baby slimes can use the steroid!</span>"
+		return..()
+	if(M.stat)
+		user << "<span class='warning'> The slime is dead!</span>"
+		return..()
+	if(M.cores == 3)
+		user <<"<span class='warning'> The slime already has the maximum amount of extract!</span>"
+		return..()
 
-		user <<"You feed the slime the steroid. It now has triple the amount of extract."
-		M.cores = 3
-		qdel(src)
+	user <<"You feed the slime the steroid. It now has triple the amount of extract."
+	M.cores = 3
+	qdel(src)
 
 /obj/item/weapon/slimesteroid2
 	name = "extract enhancer"
@@ -828,18 +828,19 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
 
-	/*afterattack(obj/target, mob/user , flag)
-		if(istype(target, /obj/item/slime_extract))
-			if(target.enhanced == 1)
-				user << "<span class='warning'> This extract has already been enhanced!</span>"
-				return ..()
-			if(target.Uses == 0)
-				user << "<span class='warning'> You can't enhance a used extract!</span>"
-				return ..()
-			user <<"You apply the enhancer. It now has triple the amount of uses."
-			target.Uses = 3
-			target.enahnced = 1
-			qdel(src)*/
+/*
+/obj/item/weapon/slimesteroid2/afterattack(obj/target, mob/user , flag)
+	if(istype(target, /obj/item/slime_extract))
+		if(target.enhanced == 1)
+			user << "<span class='warning'> This extract has already been enhanced!</span>"
+			return ..()
+		if(target.Uses == 0)
+			user << "<span class='warning'> You can't enhance a used extract!</span>"
+			return ..()
+		user <<"You apply the enhancer. It now has triple the amount of uses."
+		target.Uses = 3
+		target.enahnced = 1
+		qdel(src)*/
 
 ////////Adamantine Golem stuff I dunno where else to put it
 
@@ -911,43 +912,43 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	unacidable = 1
 	layer = TURF_LAYER
 
-	New()
-		..()
-		processing_objects.Add(src)
+/obj/effect/golemrune/New()
+	..()
+	processing_objects.Add(src)
 
-	process()
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
-			ghost = O
-			break
-		if(ghost)
-			icon_state = "golem2"
-		else
-			icon_state = "golem"
+/obj/effect/golemrune/process()
+	var/mob/dead/observer/ghost
+	for(var/mob/dead/observer/O in src.loc)
+		if(!O.client)	continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		ghost = O
+		break
+	if(ghost)
+		icon_state = "golem2"
+	else
+		icon_state = "golem"
 
-	attack_hand(mob/living/user as mob)
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
-			ghost = O
-			break
-		if(!ghost)
-			user << "The rune fizzles uselessly. There is no spirit nearby."
-			return
-		var/mob/living/carbon/human/G = new /mob/living/carbon/human
-		if(prob(50))	G.gender = "female"
-		hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
+/obj/effect/golemrune/attack_hand(mob/living/user as mob)
+	var/mob/dead/observer/ghost
+	for(var/mob/dead/observer/O in src.loc)
+		if(!O.client)	continue
+		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+		ghost = O
+		break
+	if(!ghost)
+		user << "The rune fizzles uselessly. There is no spirit nearby."
+		return
+	var/mob/living/carbon/human/G = new /mob/living/carbon/human
+	if(prob(50))	G.gender = "female"
+	hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
 
-		G.set_cloned_appearance()
-		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
-		G.dna.species.auto_equip(G)
-		G.loc = src.loc
-		G.key = ghost.key
-		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
-		qdel(src)
+	G.set_cloned_appearance()
+	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
+	G.dna.species.auto_equip(G)
+	G.loc = src.loc
+	G.key = ghost.key
+	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+	qdel(src)
 
 /mob/living/carbon/slime/getTrail()
 	return null

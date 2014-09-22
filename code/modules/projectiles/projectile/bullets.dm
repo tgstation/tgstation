@@ -122,30 +122,29 @@
 	icon_state = "cbbolt"
 	damage = 6
 
-	New()
-		..()
-		flags |= NOREACT
-		create_reagents(50)
+/obj/item/projectile/bullet/dart/New()
+	..()
+	flags |= NOREACT
+	create_reagents(50)
 
-	on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
-		if(istype(target, /mob/living/carbon))
-			var/mob/living/carbon/M = target
-			if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
-				reagents.trans_to(M, reagents.total_volume)
-				return 1
-			else
-				target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
-									   "<span class='userdanger'>You were protected against the [name]!</span>")
-		flags &= ~NOREACT
-		reagents.handle_reactions()
-		return 1
+/obj/item/projectile/bullet/dart/on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
+	if(istype(target, /mob/living/carbon))
+		var/mob/living/carbon/M = target
+		if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+			reagents.trans_to(M, reagents.total_volume)
+			return 1
+		else
+			target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
+								   "<span class='userdanger'>You were protected against the [name]!</span>")
+	flags &= ~NOREACT
+	reagents.handle_reactions()
+	return 1
 
-/obj/item/projectile/bullet/dart/metalfoam
-	New()
-		..()
-		reagents.add_reagent("aluminium", 15)
-		reagents.add_reagent("foaming_agent", 5)
-		reagents.add_reagent("pacid", 5)
+/obj/item/projectile/bullet/dart/metalfoam/New()
+	..()
+	reagents.add_reagent("aluminium", 15)
+	reagents.add_reagent("foaming_agent", 5)
+	reagents.add_reagent("pacid", 5)
 
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe

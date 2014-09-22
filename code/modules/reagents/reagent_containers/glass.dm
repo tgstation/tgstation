@@ -170,23 +170,20 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
-	New()
-		..()
-		reagents.add_reagent("cryoxadone", 30)
-		update_icon()
+/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone/New()
+	..()
+	reagents.add_reagent("cryoxadone", 30)
+	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/beaker/sulphuric
-	New()
-		..()
-		reagents.add_reagent("sacid", 50)
-		update_icon()
+/obj/item/weapon/reagent_containers/glass/beaker/sulphuric/New()
+	..()
+	reagents.add_reagent("sacid", 50)
+	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/beaker/slime
-	New()
-		..()
-		reagents.add_reagent("slimejelly", 50)
-		update_icon()
+/obj/item/weapon/reagent_containers/glass/beaker/slime/New()
+	..()
+	reagents.add_reagent("slimejelly", 50)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bucket
 	name = "bucket"
