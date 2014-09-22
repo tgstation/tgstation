@@ -3,7 +3,7 @@
 var/list/potential_theft_objectives=list(
 	"traitor" = typesof(/datum/theft_objective/traitor) - /datum/theft_objective/traitor,
 	"special" = typesof(/datum/theft_objective/special) - /datum/theft_objective/special,
-	"heist"   = typesof(/datum/theft_objective/heist) + typesof(/datum/theft_objective/number/heist) - /datum/theft_objective/heist - /datum/theft_objective/number/heist,
+	"heist"   = typesof(/datum/theft_objective/number/heist) - /datum/theft_objective/number/heist,
 	"salvage" = typesof(/datum/theft_objective/number/salvage) - /datum/theft_objective/number/salvage
 )
 
@@ -505,16 +505,22 @@ datum/objective/nuclear
 	var/datum/theft_objective/steal_target
 
 	find_target()
-		var/loop=50
-		while(!steal_target && loop > 0)
-			loop--
-			var/thefttype = pick(potential_theft_objectives[target_category])
-			var/datum/theft_objective/O = new thefttype
-			if(owner.assigned_role in O.protected_jobs)
+		var/list/possibleObjectives = potential_theft_objectives[target_category]
+		var/loopSanity = possibleObjectives.len
+
+		while(isnull(steal_target) && loopSanity > 0)
+			loopSanity--
+
+			var/pickedObjective = pick(possibleObjectives)
+			var/datum/theft_objective/objective = new pickedObjective
+
+			if(owner && owner.assigned_role in objective.protected_jobs)
 				continue
-			steal_target=O
+
+			steal_target = objective
 			explanation_text = format_explanation()
 			return
+
 		explanation_text = "Free Objective."
 
 	proc/format_explanation()
