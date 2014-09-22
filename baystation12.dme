@@ -435,6 +435,7 @@
 #include "code\game\machinery\computer\store.dm"
 #include "code\game\machinery\computer\syndicate_shuttle.dm"
 #include "code\game\machinery\computer\syndicate_specops_shuttle.dm"
+#include "code\game\machinery\computer\taxi_shuttle.dm"
 #include "code\game\machinery\computer\vox_shuttle.dm"
 #include "code\game\machinery\doors\airlock.dm"
 #include "code\game\machinery\doors\airlock_electronics.dm"
