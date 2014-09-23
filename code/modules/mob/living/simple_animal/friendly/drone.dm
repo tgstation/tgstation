@@ -305,7 +305,6 @@
 /mob/living/simple_animal/drone/emp_act()
 	Stun(5)
 	src << "<span class='alert'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>"
-	sleep(5)
 	check_laws()
 
 /mob/living/simple_animal/drone/proc/pick_colour()
