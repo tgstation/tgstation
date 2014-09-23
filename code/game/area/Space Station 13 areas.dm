@@ -1048,6 +1048,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Firing Range"
 	icon_state = "firingrange"
 
+/area/security/transfer
+	name = "\improper Prisioner Transfer Centre"
+	icon_state = "security"
+
 /*
 	New()
 		..()
