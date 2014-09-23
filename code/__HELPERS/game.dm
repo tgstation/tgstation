@@ -143,7 +143,7 @@
 
 		if(A.flags & HEAR)
 			found_mobs |= A
-		
+
 		for(var/atom/B in A)
 			if(!processed_list[B])
 				processing_list |= B
@@ -355,6 +355,7 @@
 		if(BE_OPERATIVE)	roletext="operative"
 		if(BE_WIZARD)		roletext="wizard"
 		if(BE_REV)			roletext="revolutionary"
+		if(BE_GANG)			roletext="gangster"
 		if(BE_CULTIST)		roletext="cultist"
 		if(BE_MONKEY)		roletext="monkey"
 		if(BE_NINJA)		roletext="ninja"

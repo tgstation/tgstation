@@ -143,6 +143,7 @@
 
 				ticker.mode.remove_cultist(M.brainmob.mind, 1)
 				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
+				ticker.mode.remove_gangster(M.brainmob.mind, 1)
 
 				user.drop_item()
 				M.loc = src

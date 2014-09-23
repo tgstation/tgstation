@@ -606,7 +606,7 @@
 		A = new eprojectile(loc)
 	else
 		A = new projectile(loc)
-	A.original = target.loc
+	A.original = target
 	if(!emagged)
 		use_power(reqpower)
 	else

@@ -75,10 +75,11 @@
 			rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
 			rev_mind.objectives += rev_obj
 
-	//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
-	//	Removing revolutionary uplinks.	-Pete
-		equip_revolutionary(rev_mind.current)
-		update_rev_icons_added(rev_mind)
+		spawn(rand(10,100))
+		//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
+		//	Removing revolutionary uplinks.	-Pete
+			equip_revolutionary(rev_mind.current)
+			update_rev_icons_added(rev_mind)
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
@@ -103,7 +104,7 @@
 		var/datum/objective/mutiny/rev_obj = new
 		rev_obj.owner = rev_mind
 		rev_obj.target = head_mind
-		rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
+		rev_obj.explanation_text = "Assassinate or exile [head_mind.name], the [head_mind.assigned_role]."
 		rev_mind.objectives += rev_obj
 
 /datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
@@ -196,7 +197,8 @@
 		rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has renounced the revolution!</font>"
 
 		if(beingborged)
-			rev_mind.current << "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing from the moment you were flashed until now.</FONT></span>"
+			rev_mind.current << "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing but the name of the one who flashed you.</FONT></span>"
+			message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> has been borged while being a member of the revolution.")
 
 		else
 			rev_mind.current << "<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>"
@@ -264,20 +266,36 @@
 /datum/game_mode/proc/update_rev_icons_added(datum/mind/rev_mind)
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
+
+			//Tagging the new rev for revheads to see
 			if(head_rev_mind.current)
 				if(head_rev_mind.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
+					var/I
+					if(rev_mind in head_revolutionaries) //If the new rev is a head rev
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev_head")
+					else
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
 					head_rev_mind.current.client.images += I
+
+			//Tagging the revheads for new rev to see
 			if(rev_mind.current)
 				if(rev_mind.current.client)
 					var/image/J = image('icons/mob/mob.dmi', loc = head_rev_mind.current, icon_state = "rev_head")
 					rev_mind.current.client.images += J
 
 		for(var/datum/mind/rev_mind_1 in revolutionaries)
+
+			//Tagging the new rev for fellow revs to see
 			if(rev_mind_1.current)
 				if(rev_mind_1.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
+					var/I
+					if(rev_mind in head_revolutionaries) //If the new rev is a head rev
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev_head")
+					else
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
 					rev_mind_1.current.client.images += I
+
+			//Tagging fellow revs for the new rev to see
 			if(rev_mind.current)
 				if(rev_mind.current.client)
 					var/image/J = image('icons/mob/mob.dmi', loc = rev_mind_1.current, icon_state = "rev")
@@ -336,7 +354,7 @@
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - heads killed")
-		world << "<span class='danger'><FONT size = 3>The heads of staff were killed or abandoned the station! The revolutionaries win!</FONT></span>"
+		world << "<span class='danger'><FONT size = 3>The heads of staff were killed or exiled! The revolutionaries win!</FONT></span>"
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
 		world << "<span class='danger'><FONT size = 3>The heads of staff managed to stop the revolution!</FONT></span>"
@@ -388,7 +406,7 @@
 		for(var/datum/mind/rev in revolutionaries)
 			text += "<br><b>[rev.key]</b> was <b>[rev.name]</b> ("
 			if(rev.current)
-				if(rev.current.stat == DEAD)
+				if(rev.current.stat == DEAD || isbrain(rev.current))
 					text += "died"
 				else if(rev.current.z != 1)
 					text += "fled the station"
@@ -414,7 +432,7 @@
 				text += "<font color='red'>"
 			text += "<br><b>[head.key]</b> was <b>[head.name]</b> ("
 			if(head.current)
-				if(head.current.stat == DEAD)
+				if(head.current.stat == DEAD || isbrain(head.current))
 					text += "died"
 				else if(head.current.z != 1)
 					text += "fled the station"
@@ -430,9 +448,3 @@
 		text += "<br>"
 
 		world << text
-
-/proc/is_convertable_to_rev(datum/mind/mind)
-	return istype(mind) && \
-		istype(mind.current, /mob/living/carbon/human) && \
-		!(mind.assigned_role in command_positions) && \
-		!(mind.assigned_role in list("Security Officer", "Detective", "Warden"))

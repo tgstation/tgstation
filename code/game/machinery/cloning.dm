@@ -175,17 +175,15 @@
 
 	// -- Mode/mind specific stuff goes here
 
-	switch(ticker.mode.name)
-		if("revolution")
-			if((H.mind in ticker.mode:revolutionaries) || (H.mind in ticker.mode:head_revolutionaries))
-				ticker.mode.update_all_rev_icons() //So the icon actually appears
-		if("nuclear emergency")
-			if(H.mind in ticker.mode.syndicates)
-				ticker.mode.update_all_synd_icons()
-		if("cult")
-			if (H.mind in ticker.mode.cult)
-				ticker.mode.add_cultist(src.occupant.mind)
-				ticker.mode.update_all_cult_icons() //So the icon actually appears
+	if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.head_revolutionaries))
+		ticker.mode.update_all_rev_icons() //So the icon actually appears
+	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gangsters) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gangsters))
+		ticker.mode.update_all_gang_icons()
+	if(H.mind in ticker.mode.syndicates)
+		ticker.mode.update_all_synd_icons()
+	if (H.mind in ticker.mode.cult)
+		ticker.mode.add_cultist(src.occupant.mind)
+		ticker.mode.update_all_cult_icons() //So the icon actually appears
 
 	// -- End mode specific stuff
 

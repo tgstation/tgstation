@@ -2,7 +2,7 @@
 	name = "alien larva"
 	real_name = "alien larva"
 	icon_state = "larva0"
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB
 
 	maxHealth = 25
 	health = 25
@@ -282,6 +282,9 @@
 	return
 
 /mob/living/carbon/alien/larva/toggle_throw_mode()
+	return
+
+/mob/living/carbon/alien/larva/start_pulling()
 	return
 
 /* Commented out because it's duplicated in life.dm
