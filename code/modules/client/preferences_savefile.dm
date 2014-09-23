@@ -303,9 +303,9 @@ AND players.player_slot = ? ;"}, ckey, slot)
 
 	metadata 			= preference_list["ooc_notes"]
 	real_name 			= preference_list["real_name"]
-	be_random_name 		= preference_list["random_name"]
+	be_random_name 		= text2num(preference_list["random_name"])
 	gender 				= preference_list["gender"]
-	age 				= preference_list["age"]
+	age 				= text2num(preference_list["age"])
 	species				= preference_list["species"]
 	language			= preference_list["language"]
 	flavor_text			= preference_list["flavor_text"]
@@ -313,22 +313,24 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	sec_record			= preference_list["sec_record"]
 	gen_record			= preference_list["gen_record"]
 	player_alt_titles	= preference_list["player_alt_titles"]
-	be_special			= preference_list["be_special"]
-	disabilities		= preference_list["disabilities"]
+	be_special			= text2num(preference_list["be_special"])
+	disabilities		= text2num(preference_list["disabilities"])
 	nanotrasen_relation	= preference_list["nanotrasen_relation"]
 
-	r_hair				= preference_list["hair_red"]
-	g_hair				= preference_list["hair_green"]
-	b_hair				= preference_list["hair_blue"]
+	r_hair				= text2num(preference_list["hair_red"])
+	g_hair				= text2num(preference_list["hair_green"])
+	b_hair				= text2num(preference_list["hair_blue"])
 	h_style				= preference_list["hair_style_name"]
 
-	r_facial			= preference_list["facial_red"]
-	g_facial			= preference_list["facial_green"]
-	b_facial			= preference_list["facial_blue"]
+	r_facial			= text2num(preference_list["facial_red"])
+	g_facial			= text2num(preference_list["facial_green"])
+	b_facial			= text2num(preference_list["facial_blue"])
 	f_style				= preference_list["facial_style_name"]
 
-	underwear			= preference_list["underwear"]
-	backbag				= preference_list["backbag"]
+	s_tone				= text2num(preference_list["skin_tone"])
+
+	underwear			= text2num(preference_list["underwear"])
+	backbag				= text2num(preference_list["backbag"])
 	b_type				= preference_list["b_type"]
 
 	organ_data["l_arm"] = preference_list["l_arm"]
@@ -342,16 +344,16 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	organ_data["heart"] = preference_list["heart"]
 	organ_data["eyes"] 	= preference_list["eyes"]
 
-	alternate_option	= preference_list["alternate_option"]
-	job_civilian_high	= preference_list["job_civilian_high"]
-	job_civilian_med	= preference_list["job_civilian_med"]
-	job_civilian_low	= preference_list["job_civilian_low"]
-	job_medsci_high		= preference_list["job_medsci_high"]
-	job_medsci_med		= preference_list["job_medsci_med"]
-	job_medsci_low		= preference_list["job_medsci_low"]
-	job_engsec_high		= preference_list["job_engsec_high"]
-	job_engsec_med		= preference_list["job_engsec_med"]
-	job_engsec_low		= preference_list["job_engsec_low"]
+	alternate_option	= text2num(preference_list["alternate_option"])
+	job_civilian_high	= text2num(preference_list["job_civilian_high"])
+	job_civilian_med	= text2num(preference_list["job_civilian_med"])
+	job_civilian_low	= text2num(preference_list["job_civilian_low"])
+	job_medsci_high		= text2num(preference_list["job_medsci_high"])
+	job_medsci_med		= text2num(preference_list["job_medsci_med"])
+	job_medsci_low		= text2num(preference_list["job_medsci_low"])
+	job_engsec_high		= text2num(preference_list["job_engsec_high"])
+	job_engsec_med		= text2num(preference_list["job_engsec_med"])
+	job_engsec_low		= text2num(preference_list["job_engsec_low"])
 
 
 	metadata			= sanitize_text(metadata, initial(metadata))
