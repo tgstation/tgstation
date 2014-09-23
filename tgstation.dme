@@ -250,6 +250,7 @@
 #include "code\game\gamemodes\blob\overmind.dm"
 #include "code\game\gamemodes\blob\powers.dm"
 #include "code\game\gamemodes\blob\theblob.dm"
+#include "code\game\gamemodes\blob\blobs\blob_mobs.dm"
 #include "code\game\gamemodes\blob\blobs\core.dm"
 #include "code\game\gamemodes\blob\blobs\factory.dm"
 #include "code\game\gamemodes\blob\blobs\node.dm"
