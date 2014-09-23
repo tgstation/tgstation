@@ -124,12 +124,12 @@
 	max = 1
 
 /datum/theft_objective/number/heist/particle_accelerator/check_completion()
-	var/found_end_cap
-	var/found_fuel_chamber
-	var/found_particle_emitter_center
-	var/found_particle_emitter_left
-	var/found_particle_emitter_right
-	var/found_power_box
+	var/found_end_cap = 0
+	var/found_fuel_chamber = 0
+	var/found_particle_emitter_center = 0
+	var/found_particle_emitter_left = 0
+	var/found_particle_emitter_right = 0
+	var/found_power_box = 0
 
 	var/list/all_contents
 
