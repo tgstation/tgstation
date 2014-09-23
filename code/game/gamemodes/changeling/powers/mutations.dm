@@ -186,7 +186,7 @@
 	weapon_type = /obj/item/weapon/shield/changeling
 	weapon_name_simple = "shield"
 
-/obj/effect/proc_holder/changeling/shield/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/weapon/shield/sting_action(var/mob/user)
 	var/datum/changeling/changeling = user.mind.changeling //So we can read the absorbedcount.
 	if(!changeling)
 		return
