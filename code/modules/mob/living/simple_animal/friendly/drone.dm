@@ -136,11 +136,11 @@
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
 	return 1
 
-/mob/living/simple_animal/drone/binarycheck()
-	return 1
-
 /mob/living/simple_animal/drone/radio(message, message_mode)
-	if(message_mode != MODE_BINARY) //so they can hear binary but can't talk in it
+	if(message_mode == MODE_BINARY)
+		drone_chat(message)
+		return ITALICS | REDUCE_RANGE
+	else
 		..()
 
 
@@ -208,14 +208,24 @@
 		var/msg = "<span class='boldnotice'>DRONE PING: [name]: [alert_s] priority alert in [A.name]!</span>"
 		alert_drones(msg)
 
-/mob/living/simple_animal/drone/proc/alert_drones(msg)
-	for(var/mob/living/simple_animal/drone/D in mob_list)
-		if(D.stat != DEAD)
-			for(var/F in src.faction)
-				if(F in D.faction)
-					D << msg
-					break
+/mob/living/simple_animal/drone/proc/alert_drones(msg, dead_can_hear = 0)
+	for(var/mob/M in player_list)
+		var/send_msg = 0
 
+		if(istype(M, /mob/living/simple_animal/drone) && M.stat != DEAD)
+			for(var/F in src.faction)
+				if(F in M.faction)
+					send_msg = 1
+					break
+		else if(dead_can_hear && (M.stat == DEAD) && (M.client.prefs.toggles & CHAT_GHOSTEARS) && !istype(M, /mob/new_player))
+			send_msg = 1
+
+		if(send_msg)
+			M << msg
+
+/mob/living/simple_animal/drone/proc/drone_chat(msg)
+	var/rendered = "<i><span class='game say'>DRONE CHAT: <span class='name'>[name]</span>: [msg]</span></i>"
+	alert_drones(rendered, 1)
 
 /mob/living/simple_animal/drone/Login()
 	..()
@@ -305,7 +315,6 @@
 /mob/living/simple_animal/drone/emp_act()
 	Stun(5)
 	src << "<span class='alert'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>"
-	check_laws()
 
 /mob/living/simple_animal/drone/proc/pick_colour()
 	var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
