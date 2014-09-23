@@ -91,7 +91,8 @@
 
 /datum/theft_objective/number/heist/check_completion()
 	var/found_amount = 0
-	var/list/all_contents
+
+	var/list/all_contents = new
 
 	for(var/datum/mind/raider in raiders)
 		if(raider && raider.current && isliving(raider.current))
@@ -131,7 +132,7 @@
 	var/found_particle_emitter_right = 0
 	var/found_power_box = 0
 
-	var/list/all_contents
+	var/list/all_contents = new
 
 	for(var/datum/mind/raider in raiders)
 		if(raider && raider.current && isliving(raider.current))
