@@ -26,6 +26,7 @@ var/const/MAX_SAVE_SLOTS = 8
 #define GET_RANDOM_JOB 0
 #define BE_ASSISTANT 1
 #define RETURN_TO_LOBBY 2
+#define POLLED_LIMIT	150
 
 datum/preferences
 	//doohickeys for savefiles
@@ -34,6 +35,7 @@ datum/preferences
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
 	var/slot = 1
 	var/list/slot_names = new
+	var/lastPolled = 0
 
 	var/savefile_version = 0
 
@@ -1145,8 +1147,12 @@ datum/preferences
 						toggles ^= CHAT_GHOSTRADIO
 
 					if("save")
-						save_preferences_sqlite(user, user.ckey)
-						save_character_sqlite(user.ckey, user, default_slot)
+						if(world.timeofday >= (lastPolled + POLLED_LIMIT))
+							save_preferences_sqlite(user, user.ckey)
+							save_character_sqlite(user.ckey, user, default_slot)
+							lastPolled = world.timeofday
+						else
+							user << "You need to wait [round((((lastPolled + POLLED_LIMIT) - world.timeofday) / 10))] seconds before you can save again."
 						//random_character_sqlite(user, user.ckey)
 
 					if("reload")

@@ -327,6 +327,10 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	b_facial			= text2num(preference_list["facial_blue"])
 	f_style				= preference_list["facial_style_name"]
 
+	r_eyes				= text2num(preference_list["eyes_red"])
+	g_eyes				= text2num(preference_list["eyes_green"])
+	b_eyes				= text2num(preference_list["eyes_blue"])
+
 	s_tone				= text2num(preference_list["skin_tone"])
 
 	underwear			= text2num(preference_list["underwear"])
@@ -378,10 +382,11 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	s_tone			= sanitize_integer(s_tone, -185, 34, initial(s_tone))
 	h_style			= sanitize_inlist(h_style, hair_styles_list, initial(h_style))
 	f_style			= sanitize_inlist(f_style, facial_hair_styles_list, initial(f_style))
-	r_eyes			= sanitize_integer(r_eyes, 0, 255, initial(r_eyes))
 
+	r_eyes			= sanitize_integer(r_eyes, 0, 255, initial(r_eyes))
 	g_eyes			= sanitize_integer(g_eyes, 0, 255, initial(g_eyes))
 	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
+
 	underwear		= sanitize_integer(underwear, 1, underwear_m.len, initial(underwear))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
@@ -632,7 +637,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 				return 0
 			user << "Created Job list"
 		else
-			q.Add("UPDATE jobs SET job_civilian_high=?,job_civilian_med=?,job_civilian_low=?,job_medsci_high=?,job_medsci_med=?,job_medsci_low=?,job_engsec_high=?,job_engsec_med=?,job_engsec_low=? WHERE player_ckey = ? AND player_slot / ?",\
+			q.Add("UPDATE jobs SET job_civilian_high=?,job_civilian_med=?,job_civilian_low=?,job_medsci_high=?,job_medsci_med=?,job_medsci_low=?,job_engsec_high=?,job_engsec_med=?,job_engsec_low=? WHERE player_ckey = ? AND player_slot = ?",\
 									job_civilian_high, job_civilian_med, job_civilian_low, job_medsci_high, job_medsci_med, job_medsci_low, job_engsec_high, job_engsec_med, job_engsec_low, ckey, slot)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")

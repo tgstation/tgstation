@@ -105,7 +105,7 @@
 	set category = "Preferences"
 	set desc = "Toggles seeing OutOfCharacter chat"
 	prefs.toggles ^= CHAT_OOC
-	prefs.save_preferences_sqlite(src ,ckey)
+	prefs.save_preferences_sqlite(src,ckey)
 	src << "You will [(prefs.toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel."
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -142,7 +142,7 @@
 	var/role_flag = be_special_flags[role]
 	if(!role_flag)	return
 	prefs.be_special ^= role_flag
-	prefs.save_preferences()
+	prefs.save_preferences_sqlite(src, 	ckey)
 	src << "You will [(prefs.be_special & role_flag) ? "now" : "no longer"] be considered for [role] events (where possible)."
 	feedback_add_details("admin_verb","TBeSpecial") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
