@@ -61,15 +61,15 @@
 	ooccolor 		=	preference_list_client["ooc_color"]
 	lastchangelog 	= 	preference_list_client["lastchangelog"]
 	UI_style 		=	preference_list_client["UI_style"]
-	default_slot 	=	preference_list_client["default_slot"]
-	toggles 		=	preference_list_client["toggles"]
+	default_slot 	=	text2num(preference_list_client["default_slot"])
+	toggles 		=	text2num(preference_list_client["toggles"])
 	UI_style_color	= 	preference_list_client["UI_style_color"]
-	UI_style_alpha 	= 	preference_list_client["UI_style_alpha"]
-	warns			=	preference_list_client["warns"]
-	warnbans		=	preference_list_client["warnsbans"]
-	volume			=	preference_list_client["volume"]
-	special_popup	=	preference_list_client["special"]
-	randomslot		=	preference_list_client["randomslot"]
+	UI_style_alpha 	= 	text2num(preference_list_client["UI_style_alpha"])
+	warns			=	text2num(preference_list_client["warns"])
+	warnbans		=	text2num(preference_list_client["warnsbans"])
+	volume			=	text2num(preference_list_client["volume"])
+	special_popup	=	text2num(preference_list_client["special"])
+	randomslot		=	text2num(preference_list_client["randomslot"])
 
 	ooccolor		= 	sanitize_hexcolor(ooccolor, initial(ooccolor))
 	lastchangelog	= 	sanitize_text(lastchangelog, initial(lastchangelog))
