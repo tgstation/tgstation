@@ -613,11 +613,24 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/summons_reason = input(U, "(Optional) Enter reason for summons.", "Summon Security") as text|null
 				if(summons_reason == null) //Cancelled by user
 					return
+
+				var/turf/pos = get_turf(loc)
+				var/obj/machinery/server
+				if(message_servers)
+					for (var/obj/machinery/message_server/MS in message_servers)
+						if(MS.active)
+							if(MS.z == pos.z)
+								server = MS
+								break
+				if(!server || emped) //Cannot broadcast if there is no active message server, or if the PDA is EMP'd
+					U << "<span class='warning'>ERROR: Unable to reach messaging server.</span>"
+					return
+
 				summons_reason = reject_bad_text(summons_reason,MAX_MESSAGE_LEN)
 
 				if(can_use(U))
 					var/srcarea = get_area(loc)
-					broadcast_hud_message("<B>[owner] ([ownjob])</B> is requesting security presence at <B>[srcarea]</B>[summons_reason ? " for reason: <B>[summons_reason]</B>" : ""].",src)
+					broadcast_hud_message("<B>[owner] ([ownjob])</B> is requesting security presence at <B>[srcarea]</B>[summons_reason ? " for reason: <B>[summons_reason]</B>" : ""].",server)
 					log_game("[key_name(U)] summoned security to [srcarea][summons_reason ? " for reason: [summons_reason]" : ""].")
 					U << "<span class='notice'>Security has been notified of your request.</span>"
 
