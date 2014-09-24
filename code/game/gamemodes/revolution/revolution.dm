@@ -402,18 +402,6 @@
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
 		world << "<span class='danger'><FONT size = 3>The heads of staff managed to stop the revolution!</FONT></span>"
-
-	var/num_revs = 0
-	for(var/mob/living/carbon/mob in living_mob_list)
-		if(mob.mind)
-			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
-				num_revs++
-	var/num_survivors = 0
-	for(var/mob/living/carbon/survivor in living_mob_list)
-		if(survivor.key)
-			num_survivors++
-
-	world << "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" // % of loyal crew
 	..()
 	return 1
 
@@ -421,6 +409,18 @@
 	var/list/targets = list()
 
 	if(head_revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+		var/num_revs = 0
+		var/num_survivors = 0
+		for(var/mob/living/carbon/survivor in living_mob_list)
+			if(survivor.ckey)
+				num_survivors++
+				if(survivor.mind)
+					if((survivor.mind in head_revolutionaries) || (survivor.mind in revolutionaries))
+						num_revs++
+
+		if(num_survivors)
+			world << "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" // % of loyal crew
+
 		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
 
 		for(var/datum/mind/headrev in head_revolutionaries)
