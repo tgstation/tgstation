@@ -36,6 +36,7 @@
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
 	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
 	var/light_on = 0
+	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
 	var/obj/item/default_storage = /obj/item/weapon/storage/toolbox/drone //If this exists, it will spawn in internal storage
@@ -305,6 +306,36 @@
 /mob/living/simple_animal/drone/emp_act()
 	Stun(5)
 	src << "<span class='alert'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>"
+
+
+/mob/living/simple_animal/drone/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+	if(stat != DEAD)
+		var/list/L = src.alarms[class]
+		for (var/I in L)
+			if (I == A.name)
+				var/list/alarm = L[I]
+				var/list/sources = alarm[2]
+				if (!(alarmsource in sources))
+					sources += alarmsource
+				return
+		L[A.name] = list(A, list(alarmsource))
+		src << "--- [class] alarm detected in [A.name]!"
+
+/mob/living/simple_animal/drone/proc/cancelAlarm(var/class, area/A as area, obj/origin)
+	if(stat != DEAD)
+		var/list/L = alarms[class]
+		var/cleared = 0
+		for (var/I in L)
+			if (I == A.name)
+				var/list/alarm = L[I]
+				var/list/srcs  = alarm[2]
+				if (origin in srcs)
+					srcs -= origin
+				if (srcs.len == 0)
+					cleared = 1
+					L -= I
+		if(cleared)
+			src << "--- [class] alarm in [A.name] has been cleared."
 
 /mob/living/simple_animal/drone/proc/pick_colour()
 	var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
