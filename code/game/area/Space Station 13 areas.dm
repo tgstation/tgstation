@@ -380,9 +380,17 @@ proc/process_ghost_teleport_locs()
 
 /area/tdome
 	name = "\improper Thunderdome"
-	icon_state = "thunder"
+	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+
+/area/tdome/arena
+	name = "\improper Thunderdome Arena"
+	icon_state = "thunder"
+
+/area/tdome/arena_source
+	name = "\improper Thunderdome Arena Template"
+	icon_state = "thunder"
 
 /area/tdome/tdome1
 	name = "\improper Thunderdome (Team 1)"
@@ -390,7 +398,7 @@ proc/process_ghost_teleport_locs()
 
 /area/tdome/tdome2
 	name = "\improper Thunderdome (Team 2)"
-	icon_state = "yellow"
+	icon_state = "green"
 
 /area/tdome/tdomeadmin
 	name = "\improper Thunderdome (Admin.)"

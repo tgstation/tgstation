@@ -193,7 +193,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Clown
  */
-/obj/item/stack/sheet/mineral/clown
+/obj/item/stack/sheet/mineral/bananium
 	name = "bananium"
 	icon_state = "sheet-clown"
 	singular_name = "bananium sheet"
@@ -210,7 +210,7 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	new/datum/stack_recipe("Clown Statue", /obj/structure/statue/bananium/clown, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
-/obj/item/stack/sheet/mineral/clown/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/bananium/New(var/loc, var/amount=null)
 	recipes = clown_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4

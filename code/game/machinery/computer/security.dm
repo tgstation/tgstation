@@ -219,7 +219,9 @@
 						dat += "<br><br><font size='4'><b>Comments/Log</b></font><br>"
 						var/counter = 1
 						while(active2.fields[text("com_[]", counter)])
-							dat += text("[]<BR><A href='?src=\ref[];choice=Delete Entry;del_c=[]'>Delete Entry</A><BR><BR>", active2.fields[text("com_[]", counter)], src, counter)
+							dat += (active2.fields[text("com_[]", counter)] + "<BR>")
+							if(active2.fields[text("com_[]", counter)] != "<B>Deleted</B>")
+								dat += text("<A href='?src=\ref[];choice=Delete Entry;del_c=[]'>Delete Entry</A><BR><BR>", src, counter)
 							counter++
 						dat += text("<A href='?src=\ref[];choice=Add Entry'>Add Entry</A><br><br>", src)
 						dat += text("<A href='?src=\ref[];choice=Delete Record (Security)'>Delete Record (Security Only)</A><br>", src)

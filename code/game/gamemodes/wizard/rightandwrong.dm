@@ -136,16 +136,10 @@
 
 /mob/proc/summonevents()
 	if(events) 																//if there isn't something is very wrong
-		if(!events.wizardmode) 												//lets get this party started
-			events.control = list()											//out with the old
-			for(var/type in typesof(/datum/round_event_control/wizard) - /datum/round_event_control/wizard)	//in with the new
-				var/datum/round_event_control/wizard/W = new type()
-				if(!W.typepath)
-					continue												//don't want this one! leave it for the garbage collector
-				events.control += W											//add it to the list of all events (controls)
+		if(!events.wizardmode)
+			events.toggleWizardmode()
 			events.frequency_lower = 600									//1 minute lower bound
 			events.frequency_upper = 3000									//5 minutes upper bound
-			events.wizardmode = 1
 			events.reschedule()
 
 		else 																//Speed it up
