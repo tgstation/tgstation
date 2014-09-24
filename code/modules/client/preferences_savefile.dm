@@ -39,7 +39,7 @@
 	var/list/preference_list_client = new
 	var/database/query/check = new
 	var/database/query/q = new
-	check.Add("select ckey from client")
+	check.Add("SELECT ckey FROM client WHERE ckey = ?", ckey)
 	if(check.Execute(db))
 		if(!check.NextRow())
 			return 0

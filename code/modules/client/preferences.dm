@@ -136,7 +136,11 @@ datum/preferences
 				if(load_save_sqlite(C.ckey, src, default_slot))
 					return
 			else
+				if(!C.ckey)
+					C << "<span class='warning'>It's either your first time connecting, or your preferences weren't loaded properly, please use the reload option in the character setup screen.</span>"
+					return
 				save_preferences_sqlite(src, C.ckey)
+				C << "Preferences Created"
 	randomize_appearance_for()
 	real_name = random_name(gender)
 	save_character_sqlite(src, C.ckey, default_slot)
