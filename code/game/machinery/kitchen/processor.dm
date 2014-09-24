@@ -135,7 +135,7 @@
 /obj/machinery/processor/crowbarDestroy(mob/user)
 	if(contents.len)
 		user << "You can't do that while something is loaded in \the [src]."
-		return
+		return -1
 	return ..()
 
 /obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)

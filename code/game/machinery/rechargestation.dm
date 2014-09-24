@@ -54,16 +54,16 @@
 /obj/machinery/recharge_station/crowbarDestroy(mob/user)
 	if (occupant)
 		user << "\red You cannot disassemble \this [src], it's occupado."
-		return 1
+		return -1
 	if(anchored)
 		user << "You have to unanchor \the [src] first!"
-		return
+		return -1
 	..()
 
 /obj/machinery/recharge_station/wrenchAnchor(mob/user)
 	if (occupant)
 		user << "\red You cannot unwrench this [src], it's occupado."
-		return 1
+		return -1
 	..()
 
 /obj/machinery/recharge_station/process()

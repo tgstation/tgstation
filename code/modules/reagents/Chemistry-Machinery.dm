@@ -1001,7 +1001,7 @@
 /obj/machinery/reagentgrinder/crowbarDestroy(mob/user)
 	if(beaker)
 		user << "You can't do that while \the [src] has a beaker loaded!"
-		return
+		return -1
 	return ..()
 
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)

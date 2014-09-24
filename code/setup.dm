@@ -883,3 +883,4 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define CROWDESTROY		4	//does hitting a panel_open machine with a crowbar disassemble it?
 #define WRENCHMOVE		8	//does hitting it with a wrench toggle its anchored state?
 #define FIXED2WORK		16	//does it need to be anchored to work? Try to use this with WRENCHMOVE
+#define EJECTNOTDEL		32 	//when we destroy the machine, does it remove all its items or destroy them?

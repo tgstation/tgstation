@@ -25,7 +25,7 @@
 									/obj/item/weapon/reagent_containers/food/snacks/meat,
 									/obj/item/weapon/reagent_containers/food/snacks/egg)
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY
+	machine_flags = SCREWTOGGLE | CROWDESTROY | EJECTNOTDEL
 
 	l_color = "#7BF9FF"
 	power_change()

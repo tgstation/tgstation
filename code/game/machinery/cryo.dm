@@ -248,7 +248,7 @@
 		return
 	if(beaker) //special check to avoid destroying this
 		beaker.loc = src.loc
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))

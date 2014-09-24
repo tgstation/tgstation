@@ -228,13 +228,15 @@ var/global/list/autolathe_recipes_hidden = list( \
 	src.updateUsrDialog()
 
 /obj/machinery/autolathe/crowbarDestroy(mob/user)
-	if(m_amount >= 3750)
-		var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
-		G.amount = round(m_amount / 3750)
-	if(g_amount >= 3750)
-		var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-		G.amount = round(g_amount / 3750)
-	..()
+	if(..() == 1)
+		if(m_amount >= 3750)
+			var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
+			G.amount = round(m_amount / 3750)
+		if(g_amount >= 3750)
+			var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
+			G.amount = round(g_amount / 3750)
+		return 1
+	return -1
 
 /obj/machinery/autolathe/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

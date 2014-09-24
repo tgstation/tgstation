@@ -401,11 +401,13 @@ Class Procs:
 			if(I.reliability != 100 && crit_fail)
 				I.crit_fail = 1
 			I.loc = src.loc
-		for(var/obj/I in src.contents) //remove any stuff loaded, like for fridges
-			I.loc = src.loc
+		for(var/obj/I in src) //remove any stuff loaded, like for fridges
+			if(machine_flags &EJECTNOTDEL)
+				I.loc = src.loc
+			else
+				qdel(I)
 		user.visible_message(	"<span class='notice'>[user] successfully pries out the circuitboard from \the [src]!</span>",
 								"<span class='notice'>\icon[src] You successfully pry out the circuitboard from \the [src]!</span>")
-		del(src)
 		return 1
 	return -1
 
@@ -451,7 +453,11 @@ Class Procs:
 		return togglePanelOpen(O, user)
 	if(istype(O, /obj/item/weapon/crowbar) && machine_flags &CROWDESTROY)
 		if(panel_open)
-			return crowbarDestroy(user)
+			if(crowbarDestroy(user) == 1)
+				qdel(src)
+				return 1
+			else
+				return -1
 	if(!anchored && machine_flags &FIXED2WORK)
 		return user << "<span class='warning'>\The [src] must be anchored first!</span>"
 

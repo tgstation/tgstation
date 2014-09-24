@@ -156,6 +156,21 @@
 			overlays -= "[base_state]_link"
 	return 1
 
+/obj/machinery/r_n_d/crowbarDestroy(mob/user)
+	if(..() == 1)
+		for(var/matID in materials)
+			var/datum/material/M = materials[matID]
+			var/obj/item/stack/sheet/sheet = new M.sheettype(src.loc)
+			var/available_num_sheets = round(M.stored/sheet.perunit)
+			if(available_num_sheets>0)
+				sheet.amount = available_num_sheets
+				M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
+				materials[M.id]=M
+			else
+				del sheet
+		return 1
+	return -1
+
 /obj/machinery/r_n_d/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)

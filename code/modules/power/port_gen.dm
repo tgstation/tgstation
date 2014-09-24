@@ -209,21 +209,7 @@ display round(lastgen) and plasmatank amount
 	return 1
 
 /obj/machinery/power/port_gen/pacman/crowbarDestroy(mob/user) //don't like the copy/paste, but the proc has special handling in the middle so we need it
-	user.visible_message(	"[user] begins to pry out the circuitboard from \the [src].",
-							"You begin to pry out the circuitboard from \the [src]...")
-	if(do_after(user, 40))
-		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/I in component_parts)
-			if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) && src:reagents && src:reagents.total_volume)
-				reagents.trans_to(I, reagents.total_volume)
-			if(I.reliability != 100 && crit_fail)
-				I.crit_fail = 1
-			I.loc = src.loc
-		for(var/obj/I in src.contents) //remove any stuff loaded, like for fridges
-			I.loc = src.loc
+	if(..())
 		while ( sheets > 0 )
 			var/obj/item/stack/sheet/G = new sheet_path(src.loc)
 			if ( sheets > 50 )
@@ -231,9 +217,6 @@ display round(lastgen) and plasmatank amount
 			else
 				G.amount = sheets
 			sheets -= G.amount
-		user.visible_message(	"<span class='notice'>[user] successfully pries out the circuitboard from \the [src]!</span>",
-								"<span class='notice'>\icon[src] You successfully pry out the circuitboard from \the [src]!</span>")
-		del(src)
 		return 1
 	return -1
 

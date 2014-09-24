@@ -56,7 +56,7 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer/crowbarDestroy(mob/user)
 	if(src.on || anchored)
 		return
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(anchored)
@@ -65,13 +65,14 @@
 	if(src.on)
 		user << "You have to turn off the [src]!"
 		return
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/wrenchAnchor(mob/user)
 	if(src.on)
 		user << "You have to turn off the [src] first!"
 		return
-	..()
+	if(..())
+		return 1
 	if(!anchored)
 		verbs += rotate_verbs
 		if(node)
@@ -218,7 +219,7 @@
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/crowbarDestroy(mob/user)
 	if(src.on || anchored)
 		return
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(anchored)
@@ -227,13 +228,14 @@
 	if(src.on)
 		user << "You have to turn off the [src]!"
 		return
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/wrenchAnchor(mob/user)
 	if(src.on)
 		user << "You have to turn off the [src] first!"
 		return
-	..()
+	if(..())
+		return 1
 	if(!anchored)
 		verbs += rotate_verbs
 		if(node)
