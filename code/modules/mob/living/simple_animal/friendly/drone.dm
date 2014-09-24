@@ -167,16 +167,6 @@
 			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
 
 
-/mob/living/simple_animal/drone/put_in_l_hand(obj/item/I)
-	. = ..()
-	l_hand.screen_loc = ui_lhand
-	update_inv_hands()
-
-/mob/living/simple_animal/drone/put_in_r_hand(obj/item/I)
-	. = ..()
-	r_hand.screen_loc = ui_rhand
-	update_inv_hands()
-
 /mob/living/simple_animal/drone/verb/check_laws()
 	set category = "Drone"
 	set name = "Check Laws"
@@ -343,12 +333,23 @@
 
 		hands_overlays += image("icon"='icons/mob/items_righthand.dmi', "icon_state"="[r_state]", "layer"=-HANDS_LAYER)
 
+		if(client && hud_used)
+			r_hand.layer = 20
+			r_hand.screen_loc = ui_rhand
+			client.screen |= r_hand
+
 	if(l_hand)
 		var/l_state = l_hand.item_state
 		if(!l_state)
 			l_state = l_hand.icon_state
 
 		hands_overlays += image("icon"='icons/mob/items_lefthand.dmi', "icon_state"="[l_state]", "layer"=-HANDS_LAYER)
+
+		if(client && hud_used)
+			l_hand.layer = 20
+			l_hand.screen_loc = ui_lhand
+			client.screen |= l_hand
+
 
 	if(hands_overlays.len)
 		drone_overlays[HANDS_LAYER] = hands_overlays
