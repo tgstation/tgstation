@@ -118,7 +118,7 @@ Note: Must be placed west/left of and R&D console to function.
 				var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
 				G.amount = round(diamond_amount / G.perunit)
 			if(clown_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
+				var/obj/item/stack/sheet/mineral/bananium/G = new /obj/item/stack/sheet/mineral/bananium(src.loc)
 				G.amount = round(clown_amount / G.perunit)
 			if(adamantine_amount >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/adamantine/G = new /obj/item/stack/sheet/mineral/adamantine(src.loc)
@@ -177,7 +177,7 @@ Note: Must be placed west/left of and R&D console to function.
 		uranium_amount += amount * MINERAL_MATERIAL_AMOUNT
 	else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
 		diamond_amount += amount * MINERAL_MATERIAL_AMOUNT
-	else if(istype(stack, /obj/item/stack/sheet/mineral/clown))
+	else if(istype(stack, /obj/item/stack/sheet/mineral/bananium))
 		clown_amount += amount * MINERAL_MATERIAL_AMOUNT
 	else if(istype(stack, /obj/item/stack/sheet/mineral/adamantine))
 		adamantine_amount += amount * MINERAL_MATERIAL_AMOUNT
