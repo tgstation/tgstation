@@ -568,7 +568,8 @@
 /obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
 	if(!src.ispowered)
 		return
-	..()
+	if(..())
+		return 1
 	if ( istype(I, /obj/item/weapon/grab) )
 		var/obj/item/weapon/grab/G = I
 		if( !(ismob(G.affecting)) )
