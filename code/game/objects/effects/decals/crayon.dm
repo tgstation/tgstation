@@ -20,10 +20,5 @@
 	name = type
 	desc = "A [type] drawn in crayon."
 
-	switch(type)
-		if("rune")
-			type = "rune[rand(1,6)]"
-
-
 	icon_state = type
 	color = main
