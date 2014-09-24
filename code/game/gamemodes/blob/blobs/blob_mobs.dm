@@ -129,10 +129,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	maxbodytemp = 360
-	vision_range = 12
-	aggro_vision_range = 12
-	idle_vision_range = 12
-	force_threshold = 15
+	force_threshold = 10
 	environment_smash = 3
 
 
