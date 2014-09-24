@@ -84,7 +84,7 @@
 		var/mob/living/carbon/human/target = M
 		if(!(target.stat == 2 || target.stat == DEAD))
 			if(src.emagged) src.shockAttack(target,user)
-			else user << "<span class='notice'>[src] buzzes: Cardiac rythm normal.</span>"
+			else user << "<span class='notice'>[src] buzzes: Cardiac rhythm normal.</span>"
 		else src.attemptDefib(target,user)
 	return
 
