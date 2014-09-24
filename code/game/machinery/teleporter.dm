@@ -17,6 +17,8 @@
 	id = "[rand(1000, 9999)]"
 
 /obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob)
+	if(..())
+		return 1
 	if(istype(I, /obj/item/weapon/card/data/))
 		var/obj/item/weapon/card/data/C = I
 		if(stat & (NOPOWER|BROKEN) & (C.function != "teleporter"))
@@ -59,9 +61,6 @@
 			one_time_use = 1
 
 			src.add_fingerprint(usr)
-	else
-		..()
-
 	return
 
 /obj/machinery/computer/teleporter/attack_paw(var/mob/user)
@@ -155,29 +154,10 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 
+	machine_flags = SCREWTOGGLE | CROWDESTROY
+
 /obj/machinery/teleport/hub/attackby(obj/item/weapon/O as obj, mob/user as mob)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			src.opened = 1
-			user << "You open the maintenance hatch of [src]."
-			//src.icon_state = "autolathe_t"
-		else
-			src.opened = 0
-			user << "You close the maintenance hatch of [src]."
-			//src.icon_state = "autolathe"
-			return 1
-	else if(istype(O, /obj/item/weapon/crowbar))
-		if (opened)
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return 1
+	return(..())
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -337,6 +317,8 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 
+	machine_flags = SCREWTOGGLE | CROWDESTROY
+
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -361,29 +343,10 @@ obj/machinery/teleport/station/New()
 	RefreshParts()
 
 /obj/machinery/teleport/station/attackby(var/obj/item/weapon/W, var/mob/user as mob)
-	if (istype(W, /obj/item/weapon/screwdriver))
-		if (!opened)
-			src.opened = 1
-			user << "You open the maintenance hatch of [src]."
-			//src.icon_state = "autolathe_t"
-		else
-			src.opened = 0
-			user << "You close the maintenance hatch of [src]."
-			//src.icon_state = "autolathe"
-			return 1
-	else if(istype(W, /obj/item/weapon/crowbar))
-		if (opened)
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return 1
-	else src.attack_hand()
+	if (..())
+		return 1
+	else
+		src.attack_hand()
 
 /obj/machinery/teleport/station/attack_paw(var/mob/user)
 	src.attack_hand(user)

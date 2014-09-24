@@ -80,9 +80,11 @@ obj/machinery/recharger/defibcharger/wallcharger/process()
 	return(..())
 
 /obj/machinery/recharger/defibcharger/wallcharger/crowbarDestroy()
-	if(charging)
-		charging.loc = src.loc
-	return(..())
+	if(..() == 1)
+		if(charging)
+			charging.loc = src.loc
+		return 1
+	return -1
 
 obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 	if(..())
