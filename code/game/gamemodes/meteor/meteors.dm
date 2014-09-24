@@ -93,6 +93,10 @@
 		qdel(src)
 	return ..()
 
+/obj/effect/meteor/Destroy()
+	walk(src,0) //this cancels the walk_towards() proc
+	..()
+
 /obj/effect/meteor/dust
 	name = "space dust"
 	icon_state = "dust"

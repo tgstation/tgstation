@@ -12,8 +12,10 @@ var/global/const/SYMPTOM_ACTIVATION_PROB = 3
 	var/resistance = 0
 	var/stage_speed = 0
 	var/transmittable = 0
-	// The type level of the symptom. Higher is more lethal and harder to generate.
+	// The type level of the symptom. Higher is harder to generate.
 	var/level = 0
+	// The severity level of the symptom. Higher is more dangerous.
+	var/severity = 0
 	// The hash tag for our diseases, we will add it up with our other symptoms to get a unique id! ID MUST BE UNIQUE!!!
 	var/id = ""
 

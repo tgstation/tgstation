@@ -965,7 +965,7 @@
 "asC" = (/obj/machinery/atmospherics/pipe/manifold{dir = 4; icon_state = "manifold"; level = 2},/obj/machinery/meter,/turf/simulated/floor{icon_state = "dark"},/area/prison/solitary{name = "Prisoner Education Chamber"})
 "asD" = (/obj/machinery/door/airlock/security{name = "Prisoner Education Chamber"; req_access = null; req_access_txt = "3"},/turf/simulated/floor/plating,/area/prison/solitary{name = "Prisoner Education Chamber"})
 "asE" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 4},/area/security/prison)
-"asF" = (/obj/item/weapon/caution/cone,/turf/simulated/floor/plating{tag = "icon-panelscorched"; icon_state = "panelscorched"},/area/maintenance/fpmaint2{name = "Port Maintenance"})
+"asF" = (/obj/item/clothing/head/cone,/turf/simulated/floor/plating{tag = "icon-panelscorched"; icon_state = "panelscorched"},/area/maintenance/fpmaint2{name = "Port Maintenance"})
 "asG" = (/obj/machinery/atmospherics/pipe/simple{dir = 6; icon_state = "intact"; level = 2},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor{icon_state = "dark"},/area/prison/solitary{name = "Prisoner Education Chamber"})
 "asH" = (/obj/structure/rack,/obj/item/weapon/tank/oxygen/red{pixel_x = -4; pixel_y = -1},/obj/item/weapon/tank/oxygen/red{pixel_x = 4; pixel_y = -1},/obj/item/weapon/tank/anesthetic{pixel_x = 2},/obj/item/weapon/wrench,/obj/item/clothing/mask/gas,/obj/item/clothing/mask/gas,/turf/simulated/floor{icon_state = "dark"},/area/prison/solitary{name = "Prisoner Education Chamber"})
 "asI" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "dark"},/area/prison/solitary{name = "Prisoner Education Chamber"})
