@@ -154,7 +154,13 @@
 	if(state == 2)
 		user << "\red The [src.name] needs to be unwelded from the floor."
 		return
-	return ..()
+	if(..() == 1)
+		if(state == 1)
+			state = 0
+		else if(state == 0)
+			state = 1
+		return 1
+	return -1
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
 	if(..())
