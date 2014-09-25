@@ -8854,7 +8854,7 @@
 "doL" = (/turf/simulated/floor{icon_state = "dark"},/area/security/prison)
 "doM" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/security/prison)
 "doN" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/obj/machinery/firealarm{dir = 1; pixel_y = -24},/turf/simulated/floor/wood,/area/crew_quarters/captain)
-"doO" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/closet/secure_closet/ammunitionlocker,/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/ai_monitored/security/armory)
+"doO" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/closet/ammunitionlocker,/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/ai_monitored/security/armory)
 "doP" = (/obj/structure/closet/crate,/obj/item/device/aicard,/obj/item/device/multitool,/obj/item/weapon/weldingtool,/obj/item/weapon/wrench,/obj/item/weapon/circuitboard/teleporter,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "doQ" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor,/area/ai_monitored/security/armory)
 "doR" = (/obj/machinery/light/small,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{icon_state = "dark"},/area/security/prison)
