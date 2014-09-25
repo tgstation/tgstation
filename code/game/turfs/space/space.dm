@@ -143,6 +143,8 @@
 			z_level =  6
 		else
 			z_level = pick(unplaced_z_levels)
+		if(z_level >> world.maxz) //A safety if one of the unplaced_z_levels doesn't actually exist
+			z_level =  6
 		placement = pick(free_zones)
 		text_zone_connections = replacetext(text_zone_connections, placement, "[z_level]")
 
