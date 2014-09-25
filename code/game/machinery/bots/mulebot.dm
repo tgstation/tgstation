@@ -29,8 +29,6 @@ var/global/mulebot_count = 0
 
 	var/turf/target				// this is turf to navigate to (location of beacon)
 	var/loaddir = 0				// this the direction to unload onto/load from
-	new_destination = ""	// pending new destination (waiting for beacon response)
-	destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
 	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
 
@@ -241,7 +239,7 @@ var/global/mulebot_count = 0
 
 	//user << browse("<HEAD><TITLE>M.U.L.E. Mk. III [suffix ? "([suffix])" : ""]</TITLE></HEAD>[dat]", "window=mulebot;size=350x500")
 	//onclose(user, "mulebot")
-	var/datum/browser/popup = new(user, "mulebot", "M.U.L.E. Mk. III [suffix ? "([suffix])" : ""]", 350, 500)
+	var/datum/browser/popup = new(user, "mulebot", "M.U.L.E. Mk. V [suffix ? "([suffix])" : ""]", 350, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()

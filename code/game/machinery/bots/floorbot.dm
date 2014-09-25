@@ -81,6 +81,7 @@
 	oldloc = null
 	ignore_list = list()
 	nagged = 0
+	anchored = 0
 
 /obj/machinery/bot/floorbot/set_custom_texts()
 	text_hack = "You corrupt [name]'s construction protocols."
@@ -140,7 +141,7 @@
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
-			user << "<span class='notice'>You [locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
+			user << "<span class='notice'>You [locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>"
 		else
 			if(emagged)
 				user << "<span class='warning'>ERROR</span>"
@@ -192,7 +193,7 @@
 /obj/machinery/bot/floorbot/process()
 	set background = BACKGROUND_ENABLED
 
-	if(!on)
+	if(!on || mode == BOT_REPAIRING)
 		return
 
 	if(call_path)
@@ -233,6 +234,7 @@
 					if(get_dir(src, D) == targetdirection)
 						oldtarget = D
 						target = D
+						anchored = 1
 						break
 
 			var/turf/T = get_step(src, targetdirection)
@@ -245,6 +247,7 @@
 					mode = BOT_MOVING
 					oldtarget = D
 					target = D
+					anchored = 1 //Prevent the floorbot being blown off-course while trying to reach a hull breach.
 					break
 		if(!target && replacetiles) //Finds a floor without a tile and gives it one.
 			for (var/turf/simulated/floor/F in view(7,src))

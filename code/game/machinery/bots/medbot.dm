@@ -258,7 +258,7 @@
 /obj/machinery/bot/medbot/process()
 	set background = BACKGROUND_ENABLED
 
-	if(!on)
+	if(!on || mode == BOT_HEALING)
 		return
 
 	if(call_path)
