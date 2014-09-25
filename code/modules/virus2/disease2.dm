@@ -50,12 +50,15 @@
 		var/datum/disease2/effect/f = new sympton // initalize the new sympton
 		holder.effect = f // assign the new sympton to the holder
 		holder.chance = input(C, "Choose chance", "Chance") as num // set the chance of the sympton that can occur
+		if(holder.chance > 100 || holder.chance < 0)
+			return 0
 		D.log += "[f.name] [holder.chance]%<br>"
 		D.effects += holder // add the holder to the disease
 
 	D.uniqueID = rand(0, 10000)
 	D.infectionchance = input(C, "Choose an infection rate percent", "Infection Rate") as num
-
+	if(D.infectionchance > 100 || D.infectionchance < 0)
+		return 0
 	//pick random antigens for the disease to have
 	D.antigen |= text2num(pick(ANTIGENS))
 	D.antigen |= text2num(pick(ANTIGENS))
