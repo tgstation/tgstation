@@ -96,7 +96,7 @@
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in get_hearers_in_view(src, null))
-				audible_message("<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>")
+				M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>", 2)
 	return
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user as mob)
