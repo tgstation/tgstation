@@ -37,6 +37,7 @@
 
 	var/memory
 
+	var/need_job_assign = 1 //Whether the job controller should give them a job
 	var/assigned_role
 	var/special_role
 
@@ -161,6 +162,11 @@
 	remove_objectives()
 	remove_antag_equip()
 
+
+/datum/mind/proc/remove_gang()
+		ticker.mode.remove_gangster(src,0,1)
+		remove_objectives()
+
 /datum/mind/proc/remove_malf()
 	if(src in ticker.mode.malf_ai)
 		ticker.mode.malf_ai -= src
@@ -196,6 +202,7 @@
 	remove_cultist()
 	remove_rev()
 	remove_malf()
+	remove_gang()
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -224,6 +231,7 @@
 
 	var/list/sections = list(
 		"revolution",
+		"gang",
 		"cult",
 		"wizard",
 		"changeling",
@@ -256,16 +264,54 @@
 			else
 				text += "."
 
-			text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
+		/** GANG ***/
+		text = "gang"
+		if (ticker.mode.config_tag=="gang")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if (src in ticker.mode.A_bosses)
+			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A)</B> <a href='?src=\ref[src];gang=agang'>gangster</a> <b>BOSS</b>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
+			text += "<br>Flash & Recaller: <a href='?src=\ref[src];gang=equip'>give</a>"
+
+			var/list/L = current.get_contents()
+			var/obj/item/device/flash/flash = locate() in L
+			if (flash)
+				if(!flash.broken)
+					text += "|<a href='?src=\ref[src];gang=takeequip'>take equipment</a>."
+				else
+					text += "|<a href='?src=\ref[src];gang=takeequip'>take equipment</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
+			else
+				text += "."
+
 			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
+				text += "<br>Objectives are empty! <a href='?src=\ref[src];gang=autoobjective'>Set to kill all rival gang leaders</a>."
+
+		else if (src in ticker.mode.B_bosses)
+			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B)</B> <a href='?src=\ref[src];gang=bgang'>gangster</a> <b>BOSS</b>"
+			text += "<br>Flash & Recaller: <a href='?src=\ref[src];gang=equip'>give</a>"
+
+			var/list/L = current.get_contents()
+			var/obj/item/device/flash/flash = locate() in L
+			if (flash)
+				if(!flash.broken)
+					text += "<br><a href='?src=\ref[src];gang=takeequip'>take equipment</a>."
+				else
+					text += "<br><a href='?src=\ref[src];gang=takeequip'>take equipment</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
+			else
+				text += "."
+
+			if (objectives.len==0)
+				text += "<br>Objectives are empty! <a href='?src=\ref[src];gang=autoobjective'>Set to kill all rival gang leaders</a>."
+
+		else if (src in ticker.mode.A_gangsters)
+			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A) GANGSTER</B> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
+		else if (src in ticker.mode.B_gangsters)
+			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B) GANGSTER</B> <a href='?src=\ref[src];gang=bboss'>boss</a>"
 		else if(isloyal(current))
-			text += "head|<b>LOYAL</b>|employee|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|rev"
-		else if (src in ticker.mode.revolutionaries)
-			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
+			text += "<B>LOYAL</B>|none|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
 		else
-			text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
-		sections["revolution"] = text
+			text += "loyal|<B>NONE</B>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
+		sections["gang"] = text
 
 		/** CULT ***/
 		text = "cult"
@@ -448,7 +494,7 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	usr << browse(out, "window=edit_memory[src]")
+	usr << browse(out, "window=edit_memory[src];size=400x500")
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))	return
@@ -679,16 +725,83 @@
 				else
 					flash.broken = 0
 
-			if("reequip")
+	else if (href_list["gang"])
+		switch(href_list["gang"])
+			if("clear")
+				remove_gang()
+				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
+				log_admin("[key_name(usr)] has de-gang'ed [current].")
+
+			if("agang")
+				if(src in ticker.mode.A_gangsters)
+					return
+				ticker.mode.remove_gangster(src, 0, 2)
+				ticker.mode.add_gangster(src,"A",0)
+				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A).")
+				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A).")
+
+			if("aboss")
+				if(src in ticker.mode.A_bosses)
+					return
+				ticker.mode.remove_gangster(src, 0, 2)
+				ticker.mode.A_bosses += src
+				src.special_role = "[gang_name("A")] Gang (A) Boss"
+				ticker.mode.update_gang_icons_added(src, "A")
+				current << "<FONT size=3 color=red><B>You are a [gang_name("A")] Gang Boss!</B></FONT>"
+				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
+				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
+
+			if("bgang")
+				if(src in ticker.mode.B_gangsters)
+					return
+				ticker.mode.remove_gangster(src, 0, 2)
+				ticker.mode.add_gangster(src,"B",0)
+				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B).")
+				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B).")
+
+			if("bboss")
+				if(src in ticker.mode.B_bosses)
+					return
+				ticker.mode.remove_gangster(src, 0, 2)
+				ticker.mode.B_bosses += src
+				src.special_role = "[gang_name("B")] Gang (B) Boss"
+				ticker.mode.update_gang_icons_added(src, "B")
+				current << "<FONT size=3 color=red><B>You are a [gang_name("B")] Gang Boss!</B></FONT>"
+				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
+				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
+
+			if("autoobjective")
+				ticker.mode.forge_gang_objectives(src)
+				ticker.mode.greet_gang(src,0)
+				usr << "<span class='info>The objectives for gang war have been generated and shown to [key]</span>"
+
+			if("equip")
+				switch(ticker.mode.equip_gang(current))
+					if(2)
+						usr << "<span class='warning'>Unable to equip flash!</span>"
+					if(1)
+						usr << "<span class='warning'>Unable to equip recaller!</span>"
+					if(0)
+						usr << "<span class='warning'>Unable to equip both flash and recaller!</span>"
+
+			if("takeequip")
 				var/list/L = current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
+				if (!flash)
+					usr << "<span class='warning'>Deleting flash failed!</span>"
 				qdel(flash)
-				take_uplink()
-				var/fail = 0
-				fail |= !ticker.mode.equip_traitor(current, 1)
-				fail |= !ticker.mode.equip_revolutionary(current)
-				if (fail)
-					usr << "<span class='danger'>Reequipping revolutionary goes wrong!</span>"
+				var/obj/item/device/recaller/recaller = locate() in L
+				if (!recaller)
+					usr << "<span class='warning'>Deleting recaller failed!</span>"
+				qdel(recaller)
+
+			if("repairflash")
+				var/list/L = current.get_contents()
+				var/obj/item/device/flash/flash = locate() in L
+				if (!flash)
+					usr << "<span class='warning'>Repairing flash failed!</span>"
+				else
+					flash.broken = 0
 
 	else if (href_list["cult"])
 		switch(href_list["cult"])
@@ -999,7 +1112,6 @@
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)
 		special_role = "Syndicate"
-		assigned_role = "MODE"
 		ticker.mode.forge_syndicate_objectives(src)
 		ticker.mode.greet_syndicate(src)
 
@@ -1039,7 +1151,6 @@
 	if(!(src in ticker.mode.wizards))
 		ticker.mode.wizards += src
 		special_role = "Wizard"
-		assigned_role = "MODE"
 		//ticker.mode.learn_basic_spells(current)
 		if(!wizardstart.len)
 			current.loc = pick(latejoin)
@@ -1119,6 +1230,13 @@
 	fail |= !ticker.mode.equip_revolutionary(current)
 
 
+/datum/mind/proc/make_Gang(var/gang)
+	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
+	ticker.mode.update_gang_icons_added(src, gang)
+	ticker.mode.forge_gang_objectives(src, gang)
+	ticker.mode.greet_gang(src)
+	ticker.mode.equip_gang(current)
+
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
@@ -1149,11 +1267,13 @@
 //slime
 /mob/living/carbon/slime/mind_initialize()
 	..()
+	mind.special_role = "slime"
 	mind.assigned_role = "slime"
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
+	mind.special_role = "Alien"
 	mind.assigned_role = "Alien"
 	//XENO HUMANOID
 /mob/living/carbon/alien/humanoid/queen/mind_initialize()
@@ -1201,14 +1321,17 @@
 /mob/living/simple_animal/mind_initialize()
 	..()
 	mind.assigned_role = "Animal"
+	mind.special_role = "Animal"
 
 /mob/living/simple_animal/corgi/mind_initialize()
 	..()
 	mind.assigned_role = "Corgi"
+	mind.special_role = "Corgi"
 
 /mob/living/simple_animal/shade/mind_initialize()
 	..()
 	mind.assigned_role = "Shade"
+	mind.special_role = "Shade"
 
 /mob/living/simple_animal/construct/mind_initialize()
 	..()

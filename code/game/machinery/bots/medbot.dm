@@ -285,12 +285,10 @@
 				src.patient = C
 				src.oldpatient = C
 				src.last_found = world.time
-				spawn(0)
-					if((src.last_newpatient_speak + 100) < world.time) //Don't spam these messages!
-						var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!")
-						src.speak(message)
-						src.last_newpatient_speak = world.time
-					src.visible_message("<span class='name'>[src]</span> points at [C.name]!")
+				if((src.last_newpatient_speak + 300) < world.time) //Don't spam these messages!
+					var/message = pick("Hey, [C.name]! Hold on, I'm coming.","Wait [C.name]! I want to help!","[C.name], you appear to be injured!")
+					src.speak(message)
+					src.last_newpatient_speak = world.time
 				break
 			else
 				continue
@@ -451,9 +449,10 @@
 
 		spawn(30)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
-				if((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
-					src.reagent_glass.reagents.trans_to(src.patient,src.injection_amount) //Inject from beaker instead.
-					src.reagent_glass.reagents.reaction(src.patient, 2)
+				if(reagent_id == "internal_beaker")
+					if(src.use_beaker && src.reagent_glass && src.reagent_glass.reagents.total_volume)
+						src.reagent_glass.reagents.trans_to(src.patient,src.injection_amount) //Inject from beaker instead.
+						src.reagent_glass.reagents.reaction(src.patient, 2)
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
 				C.visible_message("<span class='danger'>[src] injects [src.patient] with the syringe!</span>", \
