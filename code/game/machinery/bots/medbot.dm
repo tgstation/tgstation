@@ -285,12 +285,10 @@
 				src.patient = C
 				src.oldpatient = C
 				src.last_found = world.time
-				spawn(0)
-					if((src.last_newpatient_speak + 100) < world.time) //Don't spam these messages!
-						var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!")
-						src.speak(message)
-						src.last_newpatient_speak = world.time
-					src.visible_message("<span class='name'>[src]</span> points at [C.name]!")
+				if((src.last_newpatient_speak + 300) < world.time) //Don't spam these messages!
+					var/message = pick("Hey, [C.name]! Hold on, I'm coming.","Wait [C.name]! I want to help!","[C.name], you appear to be injured!")
+					src.speak(message)
+					src.last_newpatient_speak = world.time
 				break
 			else
 				continue
