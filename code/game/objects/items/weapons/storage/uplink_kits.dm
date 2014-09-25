@@ -25,8 +25,7 @@
 			return
 
 		if("screwed")
-			new /obj/item/device/sbeacondrop/bomb(src)
-			new /obj/item/weapon/grenade/syndieminibomb(src)
+			new /obj/item/weapon/storage/box/syndie_kit/emp
 			new /obj/item/device/powersink(src)
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
