@@ -11,6 +11,13 @@
 	m_amt = 10000
 	var/code = 2
 
+/obj/item/device/radio/electropack/initialize()
+	radio_controller.add_object(src, frequency, RADIO_CHAT)
+
+/obj/item/device/radio/electropack/New()
+	if(radio_controller)
+		radio_controller.add_object(src, frequency, RADIO_CHAT)
+
 /obj/item/device/radio/electropack/attack_hand(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
