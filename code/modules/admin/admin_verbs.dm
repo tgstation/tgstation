@@ -78,7 +78,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
-	/client/proc/make_sound,
+	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
 	/client/proc/forceEvent
@@ -159,7 +159,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/make_sound,
+	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/datum/admins/proc/startnow,
@@ -449,12 +449,12 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>", 1)
 
-/client/proc/make_sound(var/obj/O in world)
+/client/proc/object_say(var/obj/O in world)
 	set category = "Special Verbs"
-	set name = "Osay"
+	set name = "Object Say"
 	set desc = "Makes an object say something."
 	if(istype(O))
-		var/message = input("What do you want the message to be?", "Make Sound") as text | null
+		var/message = input("What do you want the message to be?", "Object Say") as text | null
 		if(!message)
 			return
 		var/templanguages = O.languages

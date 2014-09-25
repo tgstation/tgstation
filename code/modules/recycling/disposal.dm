@@ -581,8 +581,8 @@
 	if (user.stat)
 		return
 	if (src.loc)
-		for (var/mob/M in hearers(src.loc.loc))
-			M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", 2)
+		for (var/mob/M in get_hearers_in_view(src.loc.loc))
+			audible_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>")
 
 	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
 

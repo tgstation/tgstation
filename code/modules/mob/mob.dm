@@ -100,10 +100,10 @@ var/next_mob_id = 0
 // This would be for audible actions by the src mob
 // message is the message output to anyone who can hear.
 // self_message (optional) is what the src mob hears.
-// blind_message (optional) is what deaf people will see.
+// deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(var/message, var/self_message, var/deaf_message, var/hearing_distance)
+/mob/audible_message(var/message, var/deaf_message, var/hearing_distance, var/self_message)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
@@ -116,7 +116,7 @@ var/next_mob_id = 0
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
 // message is the message output to anyone who can hear.
-// blind_message (optional) is what deaf people will see.
+// deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
 /atom/proc/audible_message(var/message, var/deaf_message, var/hearing_distance)
