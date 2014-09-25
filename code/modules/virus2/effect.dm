@@ -490,15 +490,20 @@
 
 
 
-
-
 /datum/disease2/effect/elvis
 	name = "Elvisism"
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		//
+		if(!istype(mob))
+			return
+
+		var/mob/living/carbon/human/H = mob
 		var/obj/item/clothing/glasses/virussunglasses = new /obj/item/clothing/glasses/virussunglasses
-		mob.equip_to_slot(virussunglasses, slot_glasses)
+		if(H.glasses && !istype(H.glasses, /obj/item/clothing/glasses/virussunglasses))
+			mob.u_equip(H.glasses)
+			mob.equip_to_slot(virussunglasses, slot_glasses)
+		if(!slot_glasses)
+			mob.equip_to_slot(virussunglasses, slot_glasses)
 		mob.confused += 10
 
 
@@ -511,7 +516,6 @@
 
 		if(istype(mob, /mob/living/carbon/human))
 
-			var/mob/living/carbon/human/H = mob
 			if(H.species.name == "Human" && !(H.f_style == "Pompadour"))
 				spawn(50)
 					H.h_style = "Pompadour"
@@ -550,7 +554,11 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		//
 		var/obj/item/clothing/mask/gas/virusclown_hat = new /obj/item/clothing/mask/gas/virusclown_hat
-		mob.equip_to_slot(virusclown_hat, slot_wear_mask)
+		if(mob.wear_mask && !istype(mob.wear_mask, /obj/item/clothing/mask/gas/virusclown_hat))
+			mob.u_equip(mob.wear_mask)
+			mob.equip_to_slot(virusclown_hat, slot_wear_mask)
+		if(!mob.wear_mask)
+			mob.equip_to_slot(virusclown_hat, slot_wear_mask)
 		mob.reagents.add_reagent("psilocybin", 20)
 		mob.say(pick("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk..."))
 
@@ -583,7 +591,11 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 
 
 		var/obj/item/clothing/mask/horsehead/magic/magichead = new /obj/item/clothing/mask/horsehead/magic
-		mob.equip_to_slot(magichead, slot_wear_mask)
+		if(mob.wear_mask && !istype(mob.wear_mask, /obj/item/clothing/mask/horsehead/magic))
+			mob.u_equip(mob.wear_mask)
+			mob.equip_to_slot(magichead, slot_wear_mask)
+		if(!mob.wear_mask)
+			mob.equip_to_slot(magichead, slot_wear_mask)
 		mob << "<span class='warning'>You feel a little horse!</span>"
 
 

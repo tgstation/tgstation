@@ -16,7 +16,7 @@
 
 /datum/disease2/disease/New(var/notes="No notes.")
 	uniqueID = rand(0,10000)
-	log += "<br />[timestamp()] CREATED - [notes]"
+	log += "<br />[timestamp()] CREATED - [notes]<br>"
 	..()
 
 /datum/disease2/disease/proc/makerandom(var/greater=0)
@@ -33,6 +33,38 @@
 	antigen |= text2num(pick(ANTIGENS))
 	antigen |= text2num(pick(ANTIGENS))
 	spreadtype = prob(70) ? "Airborne" : "Contact"
+
+/proc/virus2_make_custom(client/C)
+	if(!C.holder || !istype(C))
+		return 0
+	if(!(C.holder.rights & R_DEBUG))
+		return 0
+	var/mob/living/carbon/infectedMob = input(C, "Select person to infect", "Infect Person") in (player_list) // get the selected mob
+	if(!istype(infectedMob))
+		return // return if isn't proper mob type
+	var/datum/disease2/disease/D = new /datum/disease2/disease("custom_disease") //set base name
+	for(var/i = 1; i <= D.max_stage; i++)  // run through this loop until everything is set
+		var/datum/disease2/effect/sympton = input(C, "Choose a sympton to add ([5-i] remaining)", "Choose a Sympton") in ((typesof(/datum/disease2/effect) - /datum/disease2/effect)) // choose a sympton from the list of them
+		var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder(infectedMob) // create the infectedMob as a holder for it.
+		holder.stage = i // set the stage of this holder equal to i.
+		var/datum/disease2/effect/f = new sympton // initalize the new sympton
+		holder.effect = f // assign the new sympton to the holder
+		holder.chance = input(C, "Choose chance", "Chance") as num // set the chance of the sympton that can occur
+		D.log += "[f.name] [holder.chance]%<br>"
+		D.effects += holder // add the holder to the disease
+
+	D.uniqueID = rand(0, 10000)
+	D.infectionchance = input(C, "Choose an infection rate percent", "Infection Rate") as num
+
+	//pick random antigens for the disease to have
+	D.antigen |= text2num(pick(ANTIGENS))
+	D.antigen |= text2num(pick(ANTIGENS))
+
+	D.spreadtype = input(C, "Select spread type", "Spread Type") in list("Airborne", "Contact") // select how the disease is spread
+	infectedMob.virus2["[D.uniqueID]"] = D // assign the disease datum to the infectedMob/ selected user.
+	log_admin("[infectedMob] was infected with a virus with uniqueID : [D.uniqueID] by [C.ckey]")
+	message_admins("[infectedMob] was infected with a virus with uniqueID : [D.uniqueID] by [C.ckey]")
+	return 1
 
 /datum/disease2/disease/proc/activate(var/mob/living/carbon/mob)
 	if(dead)
