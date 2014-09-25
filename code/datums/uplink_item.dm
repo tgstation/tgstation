@@ -55,6 +55,8 @@ var/list/uplink_items = list()
 		feedback_add_details("traitor_uplink_items_bought", "[item]")
 		return new item(loc)
 
+/datum/uplink_item/proc/modify_item(var/obj/I, var/mob/M) //Override this if there's vars on newly spawned items you want to change
+
 /datum/uplink_item/proc/buy(var/obj/item/device/uplink/U, var/mob/user)
 
 	..()
@@ -74,6 +76,8 @@ var/list/uplink_items = list()
 			return 0
 
 		var/obj/I = spawn_item(get_turf(user), U)
+
+		modify_item(I, user)
 
 		if(istype(I, /obj/item) && ishuman(user))
 			var/mob/living/carbon/human/A = user
@@ -386,17 +390,29 @@ var/list/uplink_items = list()
 	name = "Singularity Beacon"
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. \
 	Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, \
-	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
+	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation. \
+	Except in nuclear operations this beacon will not respond for the first 40 minutes of the shift due to the high risk of station abandonment this item brings."
 	item = /obj/item/device/sbeacondrop
 	cost = 7
+
+/datum/uplink_item/device_tools/singularity_beacon/modify_item(var/obj/I, var/mob/M)
+	var/obj/item/device/sbeacondrop/B = I
+	if(!M.mind || !(M.mind in ticker.mode.syndicates))
+		B.is_time_restricted = 1
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
 	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 60 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
-	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
+	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb. \
+	Except in nuclear operations this beacon will not respond for the first 40 minutes of the shift due to the high risk of station abandonment this item brings."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 6
 	excludefrom = list(/datum/game_mode/traitor/double_agents)
+
+/datum/uplink_item/device_tools/syndicate_bomb/modify_item(var/obj/I, var/mob/M)
+	var/obj/item/device/sbeacondrop/B = I
+	if(!M.mind || !(M.mind in ticker.mode.syndicates))
+		B.is_time_restricted = 1
 
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
