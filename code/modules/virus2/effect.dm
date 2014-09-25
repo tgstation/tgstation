@@ -506,29 +506,22 @@
 			mob.equip_to_slot(virussunglasses, slot_glasses)
 		mob.confused += 10
 
-
-
-
 		if(pick(0,1))
 			mob.say(pick("Uh HUH!", "Thank you, Thank you very much...", "I ain't nothin' but a hound dog!", "Swing low, sweet chariot!"))
 		else
 			mob.emote("me",1,pick("curls his lip!", "gyrates his hips!", "thrusts his hips!"))
 
-		if(istype(mob, /mob/living/carbon/human))
+		if(istype(H))
 
 			if(H.species.name == "Human" && !(H.f_style == "Pompadour"))
 				spawn(50)
 					H.h_style = "Pompadour"
 					H.update_hair()
 
-
-
 			if(H.species.name == "Human" && !(H.f_style == "Elvis Sideburns"))
 				spawn(50)
 					H.f_style = "Elvis Sideburns"
 					H.update_hair()
-
-
 
 /obj/item/clothing/glasses/virussunglasses
 
