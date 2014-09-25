@@ -74,20 +74,39 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if (M.a_intent == "harm" && !is_muzzled())
-			if ((prob(75) && health > 0))
+		if (M.a_intent == "harm" && !M.is_muzzled())
+			if (prob(75))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M.name] bites [name]!</span>", \
 						"<span class='userdanger'>[M.name] bites [name]!</span>")
 				var/damage = rand(1, 5)
-				adjustBruteLoss(damage)
-				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+				if (health > -100)
+					adjustBruteLoss(damage)
+					health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 				for(var/datum/disease/D in M.viruses)
 					contract_disease(D,1,0)
 			else
 				visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>", \
 					"<span class='userdanger'>[M.name] has attempted to bite [name]!</span>")
 	return
+
+/mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L as mob)
+
+	switch(L.a_intent)
+		if("help")
+			visible_message("<span class='notice'>[L] rubs its head against [src].</span>")
+
+
+		else
+
+			var/damage = rand(1, 3)
+			visible_message("<span class='danger'>[L] bites [src]!</span>", \
+					"<span class='userdanger'>[L] bites [src]!</span>")
+			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+
+			if(stat != DEAD)
+				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+				adjustBruteLoss(damage)
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
 	if (!ticker)
@@ -181,8 +200,9 @@
 				else
 					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
 							"<span class='userdanger'>[M] has slashed [name]!</span>")
-				adjustBruteLoss(damage)
-				updatehealth()
+				if (stat != DEAD)
+					adjustBruteLoss(damage)
+					updatehealth()
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \

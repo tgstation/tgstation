@@ -452,7 +452,7 @@
 				M.show_message("\the [I] lands in \the [src].", 3)
 		else
 			for(var/mob/M in viewers(src))
-				M.show_message("\the [I] bounces off of \the [src]'s rim!.", 3)
+				M.show_message("\the [I] bounces off of \the [src]'s rim!", 3)
 		return 0
 	else
 		return ..(mover, target, height, air_group)
@@ -583,7 +583,6 @@
 	if (src.loc)
 		for (var/mob/M in get_hearers_in_view(src.loc.loc))
 			audible_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>")
-
 	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
 
 // called to vent all gas in holder to a location

@@ -524,7 +524,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["viewrequests"])
-		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current requests: <BR><BR>"
+		temp = "Current requests: <BR><BR>"
 		for(var/S in supply_shuttle.requestlist)
 			var/datum/supply_order/SO = S
 			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]<BR>"
@@ -724,12 +724,11 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 					supply_shuttle.requestlist.Cut(i,i+1)
 					supply_shuttle.points -= P.cost
 					supply_shuttle.shoppinglist += O
-					temp = "Thanks for your order.<BR>"
-					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+					temp = "Thanks for your order."
 				else
-					temp = "Not enough supply points.<BR>"
-					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+					temp = "Not enough supply points."
 				break
+		temp += "<BR><BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["vieworders"])
 		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current approved orders: <BR><BR>"
@@ -750,7 +749,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 */
 	else if (href_list["viewrequests"])
-		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current requests: <BR><BR>"
+		temp = "Current requests: <BR><BR>"
 		for(var/S in supply_shuttle.requestlist)
 			var/datum/supply_order/SO = S
 			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]  [supply_shuttle.moving ? "":supply_shuttle.at_station ? "":"<A href='?src=\ref[src];confirmorder=[SO.ordernum]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.ordernum]'>Remove</A>"]<BR>"

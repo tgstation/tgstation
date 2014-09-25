@@ -143,7 +143,7 @@
 
 		if(A.flags & HEAR)
 			found_mobs |= A
-		
+
 		for(var/atom/B in A)
 			if(!processed_list[B])
 				processing_list |= B

@@ -47,7 +47,7 @@ var/list/freqtoname = list(
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
 		AM.Hear(rendered, src, languages, message)
 
-/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq) 
+/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -100,6 +100,8 @@ var/list/freqtoname = list(
 		return "hisses."
 	else if(message_langs & ROBOT)
 		return "beeps rapidly."
+	else if(message_langs & DRONE)
+		return "chitters."
 	else
 		return "makes a strange sound."
 

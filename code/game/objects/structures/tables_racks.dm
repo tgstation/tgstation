@@ -262,6 +262,7 @@
 						while(amt > 0)
 							I = locate(B) in loc
 							Deletion.Add(I)
+							I.loc = null //remove it from the table loc so that we don't locate the same item every time (will be relocated inside the crafted item in construct_item())
 							amt--
 						break item_loop
 		else
@@ -286,6 +287,7 @@
 			if(!istype(B, A))
 				Deletion.Remove(B)
 				qdel(B)
+
 	return Deletion
 
 /obj/structure/table/interact(mob/user)
@@ -695,6 +697,24 @@ Destroy type values:
 					src.status = 2
 			return
 	..()
+
+/obj/structure/table/MouseDrop_T(mob/target, mob/living/carbon/human/user)
+	if(istype(target) && user == target && istype(user))
+		if(user.canmove)
+			climb_table(user)
+
+/obj/structure/table/proc/climb_table(mob/user)
+	src.add_fingerprint(user)
+	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
+								"<span class='notice'>[user] starts climbing onto [src].</span>")
+	if(do_mob(user, user, 20))
+		user.pass_flags += PASSTABLE
+		step(user,get_dir(user,src.loc))
+		user.pass_flags -= PASSTABLE
+		user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
+									"<span class='notice'>[user] climbs onto [src].</span>")
+		add_logs(user, src, "climbed onto")
+		user.Stun(2)
 
 /*
  * Racks

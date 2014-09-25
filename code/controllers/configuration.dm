@@ -23,7 +23,6 @@
 	var/log_emote = 0					// log emotes
 	var/log_attack = 0					// log attack messages
 	var/log_adminchat = 0				// log admin chat messages
-	var/log_adminwarn = 0				// log warnings admins get about bomb construction and such
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/sql_enabled = 0					// for sql switching
@@ -78,7 +77,7 @@
 	var/allow_ai = 0					// allow ai job
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
-	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
+	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
 	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 
 	var/traitor_objectives_amount = 2
@@ -212,8 +211,6 @@
 					config.log_emote = 1
 				if("log_adminchat")
 					config.log_adminchat = 1
-				if("log_adminwarn")
-					config.log_adminwarn = 1
 				if("log_pda")
 					config.log_pda = 1
 				if("log_hrefs")
