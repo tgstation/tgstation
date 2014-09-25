@@ -623,12 +623,10 @@ var/global/floorIsLava = 0
 		<hr />
 		<ul>
 			<li>
-				<b>Default Cyborg/AI Laws:</b>
-				<a href="?src=\ref[src];set_base_laws=ai">[base_law_type]</a>
+				<a href="?src=\ref[src];set_base_laws=ai"><b>Default Cyborg/AI Laws:</b>[base_law_type]</a>
 			</li>
 			<li>
-				<b>Default MoMMI Laws:</b>
-				<a href="?src=\ref[src];set_base_laws=mommi">[mommi_base_law_type]</a>
+				<a href="?src=\ref[src];set_base_laws=mommi"><b>Default MoMMI Laws:</b>[mommi_base_law_type]</a>
 			</li>
 		</ul>
 		<hr />
