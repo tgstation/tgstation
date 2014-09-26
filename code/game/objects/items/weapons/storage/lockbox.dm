@@ -104,6 +104,16 @@
 					locked = !locked
 					src.update_icon()
 
+/obj/item/weapon/storage/lockbox/update_icon()
+	..()
+	if (broken)
+		icon_state = src.icon_broken
+	else if(locked)
+		icon_state = src.icon_locked
+	else
+		icon_state = src.icon_closed
+	return
+
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "Lockbox (Loyalty Implants)"
 	req_access = list(access_security)
