@@ -16,7 +16,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI candidate" = 1,                                 // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
 	"blob" = IS_MODE_COMPILED("blob"),					 // 9
-	"monkey" = IS_MODE_COMPILED("monkey")				// 10
+	"monkey" = IS_MODE_COMPILED("monkey"),				// 10
+	"gangster" = IS_MODE_COMPILED("gang")				// 11
 )
 
 
@@ -217,6 +218,7 @@ datum/preferences
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
 				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
+				dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(toggles & CHAT_GHOSTWHISPER) ? "Nearest Creatures" : "All Speech"]</a><br>"
 				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 
 				if(config.allow_Metadata)
@@ -318,7 +320,7 @@ datum/preferences
 			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
-			if(config.enforce_human_authority && ((rank in command_positions) || (rank in security_positions)) && user.client.prefs.pref_species.id != "human")
+			if(config.enforce_human_authority && (rank in command_positions) && user.client.prefs.pref_species.id != "human")
 				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
 				continue
 			if((rank in command_positions) || (rank == "AI"))//Bold head jobs
@@ -740,6 +742,9 @@ datum/preferences
 
 					if("ghost_sight")
 						toggles ^= CHAT_GHOSTSIGHT
+
+					if("ghost_whispers")
+						toggles ^= CHAT_GHOSTWHISPER
 
 					if("pull_requests")
 						toggles ^= CHAT_PULLR

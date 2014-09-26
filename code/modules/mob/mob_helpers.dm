@@ -120,6 +120,11 @@ proc/isovermind(A)
 		return 1
 	return 0
 
+proc/isdrone(A)
+	if(istype(A, /mob/living/simple_animal/drone))
+		return 1
+	return 0
+
 proc/isorgan(A)
 	if(istype(A, /obj/item/organ/limb))
 		return 1
@@ -461,7 +466,9 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 
 /proc/broadcast_hud_message(var/message, var/broadcast_source)
 	var/turf/sourceturf = get_turf(broadcast_source)
-	for(var/mob/living/carbon/human/human in mob_list)
-		var/turf/humanturf = get_turf(human)
-		if((humanturf.z == sourceturf.z) && istype(human.glasses, /obj/item/clothing/glasses/hud/security))
-			human.show_message("<span class='info'>\icon[human.glasses] [message]</span>", 1)
+	var/user_list = sec_hud_users //A local var is used for easy addition of other HUD types.
+	var/hud_icon = /obj/item/weapon/handcuffs //Icon displayed when the HUD triggered. Handcuffs for Sec HUDs.
+	for(var/mob/hud_user in user_list)
+		var/turf/userturf = get_turf(hud_user)
+		if(userturf.z == sourceturf.z) //Must have same z-level.
+			hud_user.show_message("<span class='info'>\icon[hud_icon] [message]</span>", 1)

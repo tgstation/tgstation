@@ -254,8 +254,6 @@ Buildable meters
 			return 1
 	// no conflicts found
 
-	var/pipefailtext = "<span class='danger'>There's nothing to connect this pipe section to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)</span>"
-
 	switch(pipe_type)
 		if(PIPE_SIMPLE_STRAIGHT, PIPE_SIMPLE_BENT)
 			var/obj/machinery/atmospherics/pipe/simple/P = new( src.loc )
@@ -264,16 +262,13 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (!P)
-				usr << pipefailtext
-				return 1
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				P.node1.addMember(P)
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				P.node2.addMember(P)
+			P.build_network()
 
 		if(PIPE_HE_STRAIGHT, PIPE_HE_BENT)
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/P = new ( src.loc )
@@ -283,16 +278,13 @@ Buildable meters
 			//var/turf/T = P.loc
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (!P)
-				usr << pipefailtext
-				return 1
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				P.node1.addMember(P)
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				P.node2.addMember(P)
+			P.build_network()
 
 		if(PIPE_CONNECTOR)		// connector
 			var/obj/machinery/atmospherics/portables_connector/C = new( src.loc )
@@ -310,26 +302,22 @@ Buildable meters
 
 
 		if(PIPE_MANIFOLD)		//manifold
-			var/obj/machinery/atmospherics/pipe/manifold/M = new( src.loc )
+			var/obj/machinery/atmospherics/pipe/manifold/M = new(loc)
 			M.dir = dir
 			M.initialize_directions = pipe_dir
-			//M.New()
 			var/turf/T = M.loc
 			M.level = T.intact ? 2 : 1
 			M.initialize()
-			if (!M)
-				usr << "There's nothing to connect this manifold to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
-				return 1
-			M.build_network()
 			if (M.node1)
 				M.node1.initialize()
-				M.node1.build_network()
+				M.node1.addMember(M)
 			if (M.node2)
 				M.node2.initialize()
-				M.node2.build_network()
+				M.node2.addMember(M)
 			if (M.node3)
 				M.node3.initialize()
-				M.node3.build_network()
+				M.node3.addMember(M)
+			M.build_network()
 
 		if(PIPE_JUNCTION)
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/P = new ( src.loc )
@@ -339,16 +327,13 @@ Buildable meters
 			//var/turf/T = P.loc
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (!P)
-				usr << "There's nothing to connect this junction to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
-				return 1
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				P.node1.addMember(P)
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				P.node2.addMember(P)
+			P.build_network()
 
 		if(PIPE_UVENT)		//unary vent
 			var/obj/machinery/atmospherics/unary/vent_pump/V = new( src.loc )
@@ -479,16 +464,13 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (!P)
-				usr << pipefailtext
-				return 1
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				P.node1.addMember(P)
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				P.node2.addMember(P)
+			P.build_network()
 
 		if(PIPE_PASSIVE_GATE)		//passive gate
 			var/obj/machinery/atmospherics/binary/passive_gate/P = new(src.loc)

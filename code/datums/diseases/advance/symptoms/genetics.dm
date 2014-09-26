@@ -23,6 +23,7 @@ Bonus
 	stage_speed = 0
 	transmittable = -3
 	level = 6
+	severity = 3
 	var/good_mutations = 0
 	var/archived_dna = null
 
@@ -79,3 +80,4 @@ Bonus
 	transmittable = -7
 	level = 6
 	good_mutations = 1
+	severity = 0

@@ -113,7 +113,7 @@ SHUTTLE_REFUEL_DELAY 12000
 ## Used as (Antagonists = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
 TRAITOR_SCALING_COEFF 6
-CHANGELING_SCALING_COEFF 7
+CHANGELING_SCALING_COEFF 6
 
 ## Variables calculate how number of open security officer positions will scale to population.
 ## Used as (Officers = Population / Coeff)
@@ -128,7 +128,7 @@ TRAITOR_OBJECTIVES_AMOUNT 2
 ## implants from being most antagonists.
 #PROTECT_ROLES_FROM_ANTAGONIST
 
-## If non-human species are barred from joining as a head/security
+## If non-human species are barred from joining as a head of staff
 #ENFORCE_HUMAN_AUTHORITY
 
 ## If late-joining players have a chance to become a traitor/changeling

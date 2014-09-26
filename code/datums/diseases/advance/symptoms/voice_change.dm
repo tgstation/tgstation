@@ -23,6 +23,7 @@ Bonus
 	stage_speed = -3
 	transmittable = -1
 	level = 6
+	severity = 2
 
 /datum/symptom/voice_change/Activate(var/datum/disease/advance/A)
 	..()

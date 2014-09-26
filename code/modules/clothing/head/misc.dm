@@ -57,7 +57,7 @@
 	name = "cueball helmet"
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = HEADCOVERSEYES|BLOCKHAIR
 	item_state="cueball"
 	flags_inv = 0
 
@@ -80,7 +80,7 @@
 	desc = "A helmet made out of a box."
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
-	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
 /obj/item/clothing/head/justice
@@ -88,7 +88,7 @@
 	desc = "fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = HEADCOVERSEYES|BLOCKHAIR
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
@@ -194,3 +194,16 @@
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	flags = NODROP
+
+/obj/item/clothing/head/cone
+	desc = "This cone is trying to warn you of something!"
+	name = "warning cone"
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "cone"
+	item_state = "cone"
+	force = 1.0
+	throwforce = 3.0
+	throw_speed = 2
+	throw_range = 5
+	w_class = 2.0
+	attack_verb = list("warned", "cautioned", "smashed")

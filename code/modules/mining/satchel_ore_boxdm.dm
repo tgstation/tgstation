@@ -45,7 +45,7 @@
 			amt_gold++;
 		if (istype(C,/obj/item/weapon/ore/uranium))
 			amt_uranium++;
-		if (istype(C,/obj/item/weapon/ore/clown))
+		if (istype(C,/obj/item/weapon/ore/bananium))
 			amt_clown++;
 
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")

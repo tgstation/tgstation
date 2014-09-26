@@ -15,10 +15,7 @@
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
-
-
-	uplink_welcome = "Syndicate Uplink Console:"
-	uplink_uses = 10
+	pre_setup_before_jobs = 1
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/scale_modifier = 1 // Used for gamemodes, that are a child of traitor, that need more than the usual.
@@ -74,7 +71,7 @@
 	return 1
 
 /datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	var/traitorcap = round(joined_player_list.len / (config.traitor_scaling_coeff * scale_modifier * 2))
+	var/traitorcap = min(round(joined_player_list.len / (config.traitor_scaling_coeff * scale_modifier * 2)) + 2, round(joined_player_list.len/config.traitor_scaling_coeff*scale_modifier) )
 	if(traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
 	if(traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * scale_modifier * 2)))
@@ -204,18 +201,7 @@
 		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
 
-			text += "<br><b>[traitor.key]</b> was <b>[traitor.name]</b> ("
-			if(traitor.current)
-				if(traitor.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(traitor.current.real_name != traitor.name)
-					text += " as <b>[traitor.current.real_name]</b>"
-			else
-				text += "body destroyed"
-			text += ")"
-
+			text += printplayer(traitor)
 
 			var/TC_uses = 0
 			var/uplink_true = 0

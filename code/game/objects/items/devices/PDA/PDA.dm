@@ -37,6 +37,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/cart = "" //A place to stick cartridge menu information
 	var/detonate = 1 // Can the PDA be blown up?
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
+	var/emped = 0
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -370,7 +371,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/count = 0
 
 				if (!toff)
-					for (var/obj/item/device/pda/P in sortAtom(get_viewable_pdas()))
+					for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
 						if (P == src)	continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
 						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate) && P.detonate)
@@ -730,6 +731,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/datum/signal/signal = src.telecomms_process()
 
+	if(emped)
+		t = Gibberish(t, 100)
+
 	var/useTC = 0
 	if(signal)
 		if(signal.data["done"])
@@ -1071,6 +1075,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/emp_act(severity)
 	for(var/atom/A in src)
 		A.emp_act(severity)
+	emped += 1
+	spawn(200 * severity)
+		emped -= 1
 
 /proc/get_viewable_pdas()
 	. = list()

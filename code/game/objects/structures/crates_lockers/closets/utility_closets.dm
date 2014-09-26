@@ -218,3 +218,21 @@
 		icon_state = icon_closed
 	else
 		icon_state = icon_opened
+
+/*
+ * Ammunition
+ */
+/obj/structure/closet/ammunitionlocker
+	name = "ammunition locker"
+
+/obj/structure/closet/ammunitionlocker/New()
+	..()
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+

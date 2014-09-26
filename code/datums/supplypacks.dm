@@ -55,12 +55,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	manifest += "<ul>"
 	for(var/path in contains)
 		if(!path)	continue
-		var/atom/movable/AM = new path()
-		manifest += "<li>[AM.name]</li>"
-//		del AM	//just to make sure they're deleted, no longer garbage collected, as there are way to many objects in crates that have other references.
-		qdel(AM) // How about we fix the issues rather than bypass them, mmkay?
+		var/atom/movable/AM = path
+		manifest += "<li>[initial(AM.name)]</li>"
 	manifest += "</ul>"
-
 
 ////// Use the sections to keep things tidy please /Malkevin
 
@@ -501,6 +498,15 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 25
 	containername = "particle accelerator crate"
 
+/datum/supply_packs/engineering/engine/spacesuit
+	name = "Space Suit crate"
+	contains = list(/obj/item/clothing/suit/space,
+					/obj/item/clothing/head/helmet/space,
+					/obj/item/clothing/mask/breath,)
+	cost = 80
+	containertype = /obj/structure/closet/crate/secure
+	containername = "space suit crate"
+	access = access_eva
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////

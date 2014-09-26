@@ -196,7 +196,7 @@
 				user << "<span class='danger'>Sticking a dead brain into the frame would sort of defeat the purpose.</span>"
 				return
 
-			if(M.brainmob.mind in ticker.mode.head_revolutionaries)
+			if((M.brainmob.mind in ticker.mode.head_revolutionaries) || (M.brainmob.mind in ticker.mode.A_bosses) || (M.brainmob.mind in ticker.mode.B_bosses))
 				user << "<span class='danger'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI.</span>"
 				return
 
@@ -253,6 +253,8 @@
 		else
 			user << "<span class='notice'>The MMI must go in after everything else!</span>"
 
+	if(istype(W,/obj/item/weapon/pen))
+		user << "<span class='warning'>You need to use a multitool to name [src].</span>"
 	return
 
 /obj/item/robot_parts/robot_suit/proc/Interact(mob/user)

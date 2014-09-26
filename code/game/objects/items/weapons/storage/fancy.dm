@@ -153,7 +153,7 @@
 	throwforce = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list(/obj/item/clothing/mask/cigarette)
+	can_hold = list(/obj/item/clothing/mask/cigarette,/obj/item/weapon/lighter)
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/New()
@@ -168,24 +168,26 @@
 	desc = "There are [contents.len] cig\s left!"
 	return
 
-/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W as obj, atom/new_location)
-		var/obj/item/clothing/mask/cigarette/C = W
-		if(!istype(C)) return // what
-		reagents.trans_to(C, (reagents.total_volume/contents.len))
-		..()
+/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
+	if(istype(W,/obj/item/clothing/mask/cigarette))
+		reagents.trans_to(W,(reagents.total_volume/contents.len))
+	..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
 		return
-
-	if(M == user && user.zone_sel.selecting == "mouth" && contents.len > 0 && !user.wear_mask)
-		var/obj/item/clothing/mask/cigarette/W = contents[1]
-		remove_from_storage(W, M)
-		M.equip_to_slot_if_possible(W, slot_wear_mask)
-		contents -= W
-		user << "<span class='notice'>You take a cigarette out of the pack.</span>"
+	var/obj/item/clothing/mask/cigarette/cig = locate(/obj/item/clothing/mask/cigarette) in contents
+	if(cig)
+		if(M == user && user.zone_sel.selecting == "mouth" && contents.len > 0 && !user.wear_mask)
+			var/obj/item/clothing/mask/cigarette/W = cig
+			remove_from_storage(W, M)
+			M.equip_to_slot_if_possible(W, slot_wear_mask)
+			contents -= W
+			user << "<span class='notice'>You take a cigarette out of the pack.</span>"
+		else
+			..()
 	else
-		..()
+		user << "<span class='notice'>There are no cigarettes left in the pack.</span>"
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"

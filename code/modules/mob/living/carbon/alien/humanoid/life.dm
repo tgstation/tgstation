@@ -4,7 +4,7 @@
 	oxygen_alert = 0
 	toxins_alert = 0
 	fire_alert = 0
-
+	pass_flags = PASSTABLE
 	var/temperature_alert = 0
 
 
@@ -194,7 +194,7 @@
 
 	if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 		if(prob(20))
-			src << "<span class='danger'>You feel a searing heat in your lungs!>/span>"
+			src << "<span class='danger'>You feel a searing heat in your lungs!</span>"
 		fire_alert = max(fire_alert, 1)
 	else
 		fire_alert = 0
@@ -389,8 +389,12 @@
 		sight |= SEE_MOBS
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_OBJS
-		see_in_dark = 4
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if(nightvision)
+			see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_MINIMUM
+		else if(!nightvision)
+			see_in_dark = 4
+			see_invisible = 45
 		if(see_override)
 			see_invisible = see_override
 

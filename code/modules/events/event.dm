@@ -15,7 +15,10 @@
 
 	var/holidayID				//string which should match the events.holiday variable if you wish this event to be holiday-specific
 								//anything with a (non-null) holidayID which does not match holiday, cannot run.
+	var/wizardevent = 0
 
+/datum/round_event_control/wizard
+	wizardevent = 1
 
 /datum/round_event_control/proc/runEvent()
 	if(!ispath(typepath,/datum/round_event))

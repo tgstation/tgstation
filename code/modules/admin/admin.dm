@@ -6,7 +6,6 @@ var/global/floorIsLava = 0
 ////////////////////////////////
 /proc/message_admins(var/msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	log_adminwarn(msg)
 	admins << msg
 
 
@@ -434,6 +433,7 @@ var/global/floorIsLava = 0
 		dat += {"
 			<B>Fun Secrets</B><BR>
 			<BR>
+			<A href='?src=\ref[src];secretsfun=tdomereset'>Reset Thunderdome to default state</A><BR>
 			<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
 			<A href='?src=\ref[src];secretsfun=allspecies'>Change the species of all humans</A><BR>

@@ -358,7 +358,7 @@
 		L << "<span class='warning'> There are no available vents to travel to, they could be welded. </span>"
 		return
 
-	var/obj/selection = input(L,"Select a destination.", "Duct System") as null|anything in sortAssoc(vents)
+	var/obj/selection = input(L,"Select a destination.", "Duct System") as null|anything in sortList(vents)
 	if(!selection)	return
 
 	if(!Adjacent(L))
