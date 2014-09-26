@@ -174,7 +174,7 @@
 	if(!istext(string))
 		return ""
 
-	return text("[][]", uppertext(copytext(string, 1, 1)), lowertext(copytext(string, 2)))
+	return text("[][]", uppertext(copytext(string, 1, 2)), lowertext(copytext(string, 2)))
 
 // --- Number methods ---
 
