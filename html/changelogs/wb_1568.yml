@@ -1,4 +1,0 @@
-author: Wild Bill
-delete-after: True
-changes: 
-  - bugfix: Fixed ghosts interacting with shieldgens and shield_gens
