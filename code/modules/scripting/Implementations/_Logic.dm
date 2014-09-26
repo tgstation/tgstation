@@ -170,6 +170,12 @@
 	if(istext(string))
 		return text2num(string)
 
+/proc/n_proper(var/string)
+	if(!istext(string))
+		return ""
+
+	return text("[][]", uppertext(copytext(string, 1, 1)), lowercase(copytext(string, 2)))
+
 // --- Number methods ---
 
 //Returns the highest value of the arguments

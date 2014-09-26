@@ -160,6 +160,7 @@
 		interpreter.SetProc("reverse", /proc/n_reverse)
 		interpreter.SetProc("tonum", /proc/n_str2num)
 		interpreter.SetProc("replace", /proc/n_replace)
+		interpreter.SetProc("proper", /proc/n_proper)
 
 		// Numbers
 		interpreter.SetProc("tostring", /proc/n_num2str)
