@@ -134,7 +134,7 @@
 /datum/preferences/proc/save_preferences_sqlite(var/user, var/ckey)
 	var/database/query/check = new
 	var/database/query/q = new
-	check.Add("select ckey from client")
+	check.Add("SELECT ckey FROM client WHERE ckey = ?", ckey)
 	if(check.Execute(db))
 		if(!check.NextRow())
 			q.Add("INSERT into client (ckey, ooc_color, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, special) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",\
@@ -301,6 +301,17 @@ AND players.player_slot = ? ;"}, ckey, slot)
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 
+	var/list/player_alt_list1 = new
+	var/list/player_alt_list2 = new()
+	player_alt_list1.Add(text2list(preference_list["player_alt_titles"], ";")) // we're getting the first part of the string for each job.
+	for(var/item in player_alt_list1) // iterating through the list
+		if(!findtext(item, ":"))
+			continue
+		var/delim_location = findtext(item, ":") // getting the second part of the string that will be handled for titles
+		var/job = copytext(item, 1, delim_location) // getting where the job is, it's in the first slot so we want to get that position.
+		var/title = copytext(item, delim_location + 1, 0) // getting where the job title is, it's in the second slot so we want to get that position.
+		player_alt_list2[job] = title // we assign the alt_titles here to specific job titles and hope everything works.
+
 	metadata 			= preference_list["ooc_notes"]
 	real_name 			= preference_list["real_name"]
 	be_random_name 		= text2num(preference_list["random_name"])
@@ -312,7 +323,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	med_record			= preference_list["med_record"]
 	sec_record			= preference_list["sec_record"]
 	gen_record			= preference_list["gen_record"]
-	player_alt_titles	= preference_list["player_alt_titles"]
+	player_alt_titles	= player_alt_list2
 	be_special			= text2num(preference_list["be_special"])
 	disabilities		= text2num(preference_list["disabilities"])
 	nanotrasen_relation	= preference_list["nanotrasen_relation"]
@@ -580,11 +591,16 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	var/database/query/q = new
 	var/database/query/check = new
 
-	check.Add("select player_ckey from players where player_ckey = ? and player_slot = ?", ckey, slot)
+	var/altTitles
+
+	for(var/a in player_alt_titles)
+		altTitles += "[a]:[player_alt_titles[a]];"
+
+	check.Add("SELECT player_ckey FROM players WHERE player_ckey = ? AND player_slot = ?", ckey, slot)
 	if(check.Execute(db))
 		if(!check.NextRow())            //1       2         3         4           5      6   7       8        9           10         11         12         13                14         15           16
 			q.Add("INSERT INTO players (player_ckey,player_slot,ooc_notes,real_name,random_name,gender,age,species,language,flavor_text,med_record,sec_record,gen_record,player_alt_titles,be_special,disabilities,nanotrasen_relation) \
-				   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, metadata, real_name, be_random_name, gender, age, species, language, flavor_text, med_record, sec_record, gen_record, player_alt_titles, be_special, disabilities, nanotrasen_relation)
+				   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, metadata, real_name, be_random_name, gender, age, species, language, flavor_text, med_record, sec_record, gen_record, altTitles, be_special, disabilities, nanotrasen_relation)
 			if(!q.Execute(db))
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
@@ -592,7 +608,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 			user << "Created Character"
 		else
 			q.Add("UPDATE players SET ooc_notes=?,real_name=?,random_name=?,gender=?,age=?,species=?,language=?,flavor_text=?,med_record=?,sec_record=?,gen_record=?,player_alt_titles=?,be_special=?,disabilities=?,nanotrasen_relation=? WHERE player_ckey = ? AND player_slot = ?",\
-									  metadata, real_name, be_random_name, gender, age, species, language, flavor_text, med_record, sec_record, gen_record, player_alt_titles, be_special, disabilities, nanotrasen_relation, ckey, slot)
+									  metadata, real_name, be_random_name, gender, age, species, language, flavor_text, med_record, sec_record, gen_record, altTitles, be_special, disabilities, nanotrasen_relation, ckey, slot)
 			if(!q.Execute(db))
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
@@ -603,7 +619,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 
-	check.Add("select player_ckey from body where player_ckey = ? and player_slot = ?", ckey, slot)
+	check.Add("SELECT player_ckey FROM body WHERE player_ckey = ? AND player_slot = ?", ckey, slot)
 	if(check.Execute(db))
 		if(!check.NextRow())
 			q.Add("INSERT INTO body (player_ckey,player_slot,hair_red,hair_green,hair_blue,facial_red,facial_green,facial_blue,skin_tone,hair_style_name,facial_style_name,eyes_red,eyes_green,eyes_blue,underwear,backbag,b_type) \
@@ -626,7 +642,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 
-	check.Add("select player_ckey from jobs where player_ckey = ? and player_slot = ?", ckey, slot)
+	check.Add("SELECT player_ckey FROM jobs WHERE player_ckey = ? AND player_slot = ?", ckey, slot)
 	if(check.Execute(db))
 		if(!check.NextRow())
 			q.Add("INSERT INTO jobs (player_ckey,player_slot,alternate_option,job_civilian_high,job_civilian_med,job_civilian_low,job_medsci_high,job_medsci_med,job_medsci_low,job_engsec_high,job_engsec_med,job_engsec_low) \
@@ -637,8 +653,8 @@ AND players.player_slot = ? ;"}, ckey, slot)
 				return 0
 			user << "Created Job list"
 		else
-			q.Add("UPDATE jobs SET job_civilian_high=?,job_civilian_med=?,job_civilian_low=?,job_medsci_high=?,job_medsci_med=?,job_medsci_low=?,job_engsec_high=?,job_engsec_med=?,job_engsec_low=? WHERE player_ckey = ? AND player_slot = ?",\
-									job_civilian_high, job_civilian_med, job_civilian_low, job_medsci_high, job_medsci_med, job_medsci_low, job_engsec_high, job_engsec_med, job_engsec_low, ckey, slot)
+			q.Add("UPDATE jobs SET alternate_option=?,job_civilian_high=?,job_civilian_med=?,job_civilian_low=?,job_medsci_high=?,job_medsci_med=?,job_medsci_low=?,job_engsec_high=?,job_engsec_med=?,job_engsec_low=? WHERE player_ckey = ? AND player_slot = ?",\
+									alternate_option, job_civilian_high, job_civilian_med, job_civilian_low, job_medsci_high, job_medsci_med, job_medsci_low, job_engsec_high, job_engsec_med, job_engsec_low, ckey, slot)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
@@ -649,7 +665,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
 
-	check.Add("select player_ckey from limbs where player_ckey = ? and player_slot = ?", ckey, slot)
+	check.Add("SELECT player_ckey FROM limbs WHERE player_ckey = ? AND player_slot = ?", ckey, slot)
 	if(check.Execute(db))
 		if(!check.NextRow())
 			q.Add("INSERT INTO limbs (player_ckey, player_slot) VALUES (?,?)", ckey, slot)
