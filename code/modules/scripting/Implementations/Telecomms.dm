@@ -105,6 +105,13 @@
 		interpreter.SetVar("SLIME"   ,	SLIME)
 		interpreter.SetVar("DRONE"   ,	DRONE)
 
+		var/curlang = HUMAN
+		if(istype(signal.data["mob"], /atom/movable))
+			var/atom/movable/M = signal.data["mob"]
+			curlang = M.languages
+
+		interpreter.SetVar("$language", curlang)
+
 
 		/*
 		Telecomms procs
