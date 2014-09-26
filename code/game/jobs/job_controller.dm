@@ -46,8 +46,9 @@ var/global/datum/controller/occupations/job_master
 		if(!job)	return 0
 		if(jobban_isbanned(player, rank))	return 0
 		if(!job.player_old_enough(player.client)) return 0
-		if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
-			return 0
+		if(player.mind.special_role && ticker && ticker.mode)
+			if(job.title in ticker.mode.restricted_jobs || job.title in ticker.mode.protected_jobs)
+				return 0
 
 		var/position_limit = job.total_positions
 		if(!latejoin)
@@ -79,10 +80,11 @@ var/global/datum/controller/occupations/job_master
 		if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
 			Debug("FOC non-human failed, Player: [player]")
 			continue
-		
-		if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
-			Debug("FOC player has a special role and this job is blocked from this special role")
-			continue
+
+		if(player.mind.special_role && ticker && ticker.mode)
+			if(job.title in ticker.mode.restricted_jobs || job.title in ticker.mode.protected_jobs)
+				Debug("FOC player has a special role and this job is blocked from this special role")
+				continue
 
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 			Debug("FOC pass, Player: [player], Level:[level]")
@@ -113,9 +115,10 @@ var/global/datum/controller/occupations/job_master
 			Debug("GRJ non-human failed, Player: [player]")
 			continue
 
-		if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
-			Debug("GRJ player has a special role and this job is blocked from this special role")
-			continue
+		if(player.mind.special_role && ticker && ticker.mode)
+			if(job.title in ticker.mode.restricted_jobs || job.title in ticker.mode.protected_jobs)
+				Debug("GRJ player has a special role and this job is blocked from this special role")
+				continue
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 			Debug("GRJ Random job given, Player: [player], Job: [job]")
@@ -272,9 +275,10 @@ var/global/datum/controller/occupations/job_master
 					Debug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
-				if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
-					Debug("DO player has a special role and this job is blocked from that special role")
-					continue
+				if(player.mind.special_role && ticker && ticker.mode)
+					if(job.title in ticker.mode.restricted_jobs || job.title in ticker.mode.protected_jobs)
+						Debug("DO player has a special role and this job is blocked from that special role")
+						continue
 
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
