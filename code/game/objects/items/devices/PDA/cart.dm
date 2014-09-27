@@ -723,10 +723,10 @@ Code:
 				if("alert")
 					post_status("alert", href_list["alert"])
 				if("setmsg1")
-					message1 = reject_bad_text(input("Line 1", "Enter Message Text", message1) as text|null, 40)
+					message1 = reject_bad_text(trim(copytext(sanitize(input("Line 1", "Enter Message Text", message1) as text|null), 1, 40)), 40)
 					updateSelfDialog()
 				if("setmsg2")
-					message2 = reject_bad_text(input("Line 2", "Enter Message Text", message2) as text|null, 40)
+					message2 = reject_bad_text(trim(copytext(sanitize(input("Line 2", "Enter Message Text", message2) as text|null), 1, 40)), 40)
 					updateSelfDialog()
 				else
 					post_status(href_list["statdisp"])

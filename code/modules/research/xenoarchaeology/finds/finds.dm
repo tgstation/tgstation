@@ -233,7 +233,7 @@
 			possible_spawns += /obj/item/stack/sheet/mineral/silver
 
 			var/new_type = pick(possible_spawns)
-			new_item = new new_type(src.loc)
+			new_item = new new_type(get_turf(src))
 			new_item:amount = rand(5,45)
 		if(15)
 			if(prob(75))

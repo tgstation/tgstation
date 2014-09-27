@@ -40,13 +40,12 @@
 	h_style = "Bald"
 	..(new_loc, "Muton")
 
-/mob/living/carbon/human/New(var/new_loc, var/new_species = null, var/delay_ready_dna=0)
-
-	if(!species)
-		if(new_species)
-			set_species(new_species)
-		else
-			set_species()
+/mob/living/carbon/human/New(var/new_loc, var/new_species_name = null, var/delay_ready_dna=0)
+	if(!hair_styles_list.len) buildHairLists()
+	if(!all_species.len) buildSpeciesLists()
+	if(!src.species)
+		if(new_species_name)	src.set_species(new_species_name)
+		else					src.set_species()
 
 	create_reagents(1000)
 
@@ -1645,54 +1644,27 @@ mob/living/carbon/human/yank_out_object()
 	else
 		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
 
-/mob/living/carbon/human/proc/set_species(var/new_species, var/force_organs)
-
-	if(!dna)
-		if(!new_species)
-			new_species = "Human"
-	else
-		if(!new_species)
-			new_species = dna.species
-		else
-			dna.species = new_species
-
-	if(species && (species.name && species.name == new_species))
-		return
-
-	if(species && species.language)
-		remove_language(species.language)
-
-	if(species && species.abilities)
-		verbs -= species.abilities
-
-	species = all_species[new_species]
-
-	if(species.abilities)
-		verbs |= species.abilities
-
-	if(force_organs || !organs || !organs.len)
-		species.create_organs(src)
-
-	if(species.language)
-		add_language(species.language)
-
-	see_in_dark = species.darksight
-	if(see_in_dark > 2)
-		see_invisible = SEE_INVISIBLE_LEVEL_ONE
-	else
-		see_invisible = SEE_INVISIBLE_LIVING
-
-	if(species.default_mutations.len>0 || species.default_blocks.len>0)
-		do_deferred_species_setup=1
-
-	spawn(0)
-		update_icons()
-
-	if(species)
-		species.handle_post_spawn(src)
-		return 1
-	else
-		return 0
+/mob/living/carbon/human/proc/set_species(var/new_species_name,var/force_organs)
+	if(new_species_name)
+		if(src.species && src.species.name && (src.species.name == new_species_name)) return
+	else if(src.dna)	new_species_name = src.dna.species
+	else				new_species_name = "Human"
+	if(src.species)
+		if(src.species.language)	src.remove_language(species.language)
+		if(src.species.abilities)	src.verbs -= species.abilities
+	src.species = all_species[new_species_name]
+	if(src.species.abilities)
+		if(src.species.language)	src.add_language(species.language)
+		if(src.species.abilities)	src.verbs |= species.abilities
+	if(force_organs || !src.organs || !src.organs.len) src.species.create_organs(src)
+	src.see_in_dark = species.darksight
+	if(src.see_in_dark > 2)	src.see_invisible = SEE_INVISIBLE_LEVEL_ONE
+	else					src.see_invisible = SEE_INVISIBLE_LIVING
+	if((src.species.default_mutations.len > 0) || (src.species.default_blocks.len > 0))
+		src.do_deferred_species_setup = 1
+	spawn() src.update_icons()
+	src.species.handle_post_spawn(src)
+	return 1
 
 /mob/living/carbon/human/proc/bloody_doodle()
 	set category = "IC"

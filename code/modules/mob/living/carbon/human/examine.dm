@@ -213,10 +213,10 @@
 			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [o.display_name]!</span>\n"
 
 	if(suiciding)
-		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
+		msg += "<span class='warning'>[t_He] appears to have committed suicide... there is no hope of recovery.</span>\n"
 
 	if(M_DWARF in mutations)
-		msg += "[t_He] [t_is] a halfling!\n"
+		msg += "[t_He] [t_is] a short, sturdy creature fond of drink and industry.\n"
 
 	var/distance = get_dist(usr,src)
 	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
@@ -258,7 +258,7 @@
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 	if(!key && brain_op_stage != 4 && stat != DEAD)
-		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
+		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 	else if(!client && brain_op_stage != 4 && stat != DEAD && !(status_flags & FAKEDEATH))
 		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
@@ -481,7 +481,7 @@
 
 	msg += "*---------*</span>"
 	if (pose)
-		if( findtext(pose,".",lentext(pose)) == 0 && findtext(pose,"!",lentext(pose)) == 0 && findtext(pose,"?",lentext(pose)) == 0 )
+		if( findtext(pose,".",length(pose)) == 0 && findtext(pose,"!",length(pose)) == 0 && findtext(pose,"?",length(pose)) == 0 )
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "\n[t_He] is [pose]"
 

@@ -238,7 +238,9 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 							"PACKETS!!!", \
 							"SARAH HALE DID IT!!!", \
 							"Don't tell Chase", \
-							"not so tough now huh"))
+							"not so tough now huh", \
+							"WERE NOT BAY!!", \
+							"BLAME HOSHI!!!"))
 					if(3)
 						emote("drool")
 

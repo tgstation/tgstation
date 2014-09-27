@@ -219,7 +219,7 @@ BLIND     // can't see anything
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
 	siemens_coefficient = 0.9
-	species_restricted = list("exclude","Diona","Vox","Muton")
+	species_restricted = list("exclude","Diona","Muton")
 
 /obj/item/clothing/suit/space
 	name = "Space suit"
@@ -238,7 +238,7 @@ BLIND     // can't see anything
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
 	siemens_coefficient = 0.9
-	species_restricted = list("exclude","Diona","Vox","Muton")
+	species_restricted = list("exclude","Diona","Muton")
 
 //Under clothing
 /obj/item/clothing/under

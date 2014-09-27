@@ -16,11 +16,14 @@ Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
 		Dispense:
 	</div>
 	<div class="itemContent">
-		{{:helper.link('5', 'gear', {'amount' : 5}, (data.amount == 5) ? 'selected' : null)}}
-		{{:helper.link('10', 'gear', {'amount' : 10}, (data.amount == 10) ? 'selected' : null)}}
-		{{:helper.link('20', 'gear', {'amount' : 20}, (data.amount == 20) ? 'selected' : null)}}
-		{{:helper.link('30', 'gear', {'amount' : 30}, (data.amount == 30) ? 'selected' : null)}}
-		{{:helper.link('50', 'gear', {'amount' : 50}, (data.amount == 50) ? 'selected' : null)}}
+		{{:helper.link('5', 'gear', {'amount' : 5}, (data.amount == 5 && !data.custom) ? 'selected' : null)}}
+		{{:helper.link('10', 'gear', {'amount' : 10}, (data.amount == 10 && !data.custom) ? 'selected' : null)}}
+		{{:helper.link('20', 'gear', {'amount' : 20}, (data.amount == 20 && !data.custom) ? 'selected' : null)}}
+		{{:helper.link('30', 'gear', {'amount' : 30}, (data.amount == 30 && !data.custom) ? 'selected' : null)}}
+		{{:helper.link('50', 'gear', {'amount' : 50}, (data.amount == 50 && !data.custom) ? 'selected' : null)}}
+		{{:helper.link('100', 'gear', {'amount' : 100}, (data.amount == 100 && !data.custom) ? 'selected' : null)}}
+		{{:helper.link((data.custom) ? 'Custom: ' + data.amount : 'Custom', 'gear', {'amount' : 0}, (data.amount == 0), (data.custom) ? 'selected' : null)}}
+
 	</div>
 </div>
 <div class="item">&nbsp;</div>
@@ -68,7 +71,7 @@ Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
 						{{else}}
 							Beaker
 						{{/if}}
-						is empty
+						 is empty
 					</span>
 				{{/for}}
 			{{else}}

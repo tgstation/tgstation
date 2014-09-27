@@ -1104,6 +1104,10 @@ proc/process_ghost_teleport_locs()
 	name = "Fore Starboard Solar Maintenance"
 	icon_state = "SolarcontrolA"
 
+/area/maintenance/virology_maint
+	name = "Virology Maintenance"
+	icon_state = "asmaint"
+
 /area/assembly/showroom
 	name = "\improper Robotics Showroom"
 	icon_state = "showroom"
@@ -1186,10 +1190,6 @@ proc/process_ghost_teleport_locs()
 	name = "Virology Break Room"
 	icon_state = "virology"
 
-/area/medical/virology_maint
-	name = "Virology Maintenance"
-	icon_state = "asmaint"
-
 /area/medical/morgue
 	name = "\improper Morgue"
 	icon_state = "morgue"
@@ -1205,6 +1205,10 @@ proc/process_ghost_teleport_locs()
 /area/medical/cryo
 	name = "Cryogenics"
 	icon_state = "cryo"
+
+/area/medical/storage
+	name = "\improper Medbay Storage"
+	icon_state = "med_storage"
 
 /area/medical/exam_room
 	name = "\improper Exam Room"
@@ -1253,6 +1257,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Brig Medbay"
 	icon_state = "sec_medbay"
 
+/area/security/toilet
+	name = "\improper Brig Toilets"
+	icon_state = "toilet"
+
 /area/security/rec_room
 	name = "\improper Brig Recording Room"
 	icon_state = "rec"
@@ -1281,9 +1289,9 @@ proc/process_ghost_teleport_locs()
 	icon_state = "Warden"
 	jammed=1
 
-/area/security/armoury
-	name = "\improper Armory"
-	icon_state = "Warden"
+/area/security/armory
+	name = "\improper Secure Armory"
+	icon_state = "Armory"
 	jammed=1
 
 /area/security/hos
@@ -1356,21 +1364,25 @@ proc/process_ghost_teleport_locs()
 
 /area/supply/sorting
 	name = "\improper Delivery Office"
-	icon_state = "quartstorage"
+	icon_state = "cargo_delivery"
 
 ////////////WORK IN PROGRESS//////////
 
+/area/supply/lobby
+	name ="\improper Cargo Lobby"
+	icon_state = "cargo_lobby"
+
 /area/supply/office
 	name = "\improper Cargo Office"
-	icon_state = "quartoffice"
+	icon_state = "cargo_office"
 
 /area/supply/storage
 	name = "\improper Cargo Bay"
-	icon_state = "quartstorage"
+	icon_state = "cargo_bay"
 
 /area/supply/qm
 	name = "\improper Quartermaster's Office"
-	icon_state = "quart"
+	icon_state = "cargo_quart"
 	jammed=1
 
 /area/supply/miningdock
@@ -1459,6 +1471,10 @@ proc/process_ghost_teleport_locs()
 /area/science/test_area
 	name = "\improper Toxins Test Area"
 	icon_state = "toxtest"
+
+/area/science/shuttlebay
+	name = "\improper Research Shuttle Bay"
+	icon_state = "toxshuttle"
 
 /area/science/mixing
 	name = "\improper Toxins Mixing Room"

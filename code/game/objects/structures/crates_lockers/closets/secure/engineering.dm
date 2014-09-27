@@ -118,6 +118,39 @@
 		new /obj/item/device/gps/engineering(src)
 		return
 
+/obj/structure/closet/secure_closet/engineering_atmos
+	name = "Atmospheric Technician's Locker"
+	req_access = list(access_atmospherics)
+	icon_state = "secureatmos1"
+	icon_closed = "secureatmos"
+	icon_locked = "secureatmos1"
+	icon_opened = "secureatmosopen"
+	icon_broken = "secureatmosbroken"
+	icon_off = "secureatmosoff"
+
+	New()
+		..()
+		sleep(2)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_norm(src)
+		new /obj/item/clothing/under/rank/atmospheric_technician(src)
+		new /obj/item/clothing/shoes/black(src)
+		new /obj/item/weapon/storage/toolbox/mechanical(src)
+		new /obj/item/weapon/extinguisher/foam(src)
+		// new /obj/item/weapon/cartridge/engineering(src)
+		new /obj/item/device/radio/headset/headset_eng(src)
+		new /obj/item/clothing/suit/storage/hazardvest(src)
+		new /obj/item/clothing/mask/gas(src)
+		new /obj/item/taperoll/engineering(src)
+		new /obj/item/weapon/gun/projectile/flare(src) //yay for emergency lighting
+		new /obj/item/ammo_storage/box/flare(src)
+		new /obj/item/weapon/pipe_dispenser(src)
+		new /obj/item/device/analyzer(src)
+		return
+
+
 /obj/structure/closet/secure_closet/engineering_general
 	name = "Engineering Locker"
 	req_access = list(access_engine_equip)

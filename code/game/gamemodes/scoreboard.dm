@@ -110,7 +110,7 @@
 				if (NUKE.r_code == "Nope") continue
 				var/turf/T = NUKE.loc
 				if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar)) nukedpenalty = 1000
-				else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armoury) || istype(T,/area/security/checkpoint2)) nukedpenalty = 50000
+				else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armory) || istype(T,/area/security/checkpoint2)) nukedpenalty = 50000
 				else if (istype(T,/area/engine)) nukedpenalty = 100000
 				else nukedpenalty = 10000
 
@@ -251,7 +251,7 @@
 			var/turf/T = NUKE.loc
 			bombdat = T.loc
 			if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar/) || istype(T,/area)) nukedpenalty = 1000
-			else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armoury) || istype(T,/area/security/checkpoint2)) nukedpenalty = 50000
+			else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armory) || istype(T,/area/security/checkpoint2)) nukedpenalty = 50000
 			else if (istype(T,/area/engine)) nukedpenalty = 100000
 			else nukedpenalty = 10000
 			break

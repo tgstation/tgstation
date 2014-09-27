@@ -33,18 +33,22 @@
 
 
 /obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
-	if(!user || !M)	return	//sanity
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [M.name] ([M.ckey])</font>")
+	if(!user || !M) //sanity
+		return
 
-	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [src.name] to flash [M.name] ([M.ckey])</font>")
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name] by [key_name(user)]</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [key_name(M)]</font>")
+
+	log_attack("<font color='red'>[key_name(user)] Used the [src.name] to flash [key_name(M)]</font>")
 
 	if(!iscarbon(user))
 		M.LAssailant = null
 	else
 		M.LAssailant = user
 
-	if(!clown_check(user))	return
+	if(!clown_check(user))
+		return
+
 	if(broken)
 		user << "<span class='warning'>\The [src] is broken.</span>"
 		return
@@ -65,69 +69,64 @@
 		else	//can only use it  5 times a minute
 			user << "<span class='warning'>*click* *click*</span>"
 			return
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1)
-	var/flashfail = 0
+
+	playsound(get_turf(user), 'sound/weapons/flash.ogg', 100, 1)
+
+	var/flashfail = FALSE
 
 	if(iscarbon(M))
-		var/safety = M:eyecheck()
-		if(safety <= 0)
-			M.Weaken(10)
-			flick("e_flash", M.flash)
+		var/mob/living/carbon/Subject = M
+		var/safe = Subject.eyecheck()
 
-			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
-				if(user.mind && user.mind in ticker.mode.head_revolutionaries)
-					var/revsafe = 0
-					for(var/obj/item/weapon/implant/loyalty/L in M)
-						if(L && L.implanted)
-							revsafe = 1
-							break
-					M.mind_initialize()		//give them a mind datum if they don't have one.
-					if(M.mind.has_been_rev)
-						revsafe = 2
-					if(!revsafe)
-						M.mind.has_been_rev = 1
-						ticker.mode.add_revolutionary(M.mind)
-						log_admin("[user]([ckey(user.key)]) has converted [M] ([ckey(M.key)]) to the revolution at [M.loc.x], [M.loc.y], [M.loc.z]")
-					else if(revsafe == 1)
-						user << "<span class='warning'>Something seems to be blocking the flash!</span>"
+		if(safe <= 0)
+			Subject.Weaken(10)
+			flick("e_flash", Subject.flash)
+
+			if(ishuman(user) && user.mind && user.mind in ticker.mode.head_revolutionaries) // alien revhead when?
+				if(ishuman(Subject))
+					if(Subject.stat != DEAD)
+						Subject.mind_initialize() // give them a mind datum if they don't have one
+
+						var/result = ticker.mode.add_revolutionary(Subject.mind)
+
+						if(result == 1)
+							log_admin("[key_name(user)] has converted [key_name(Subject)] to the revolution at [formatLocation(Subject.loc)]")
+							Subject.mind.has_been_rev = TRUE
+						else if(result == -1 || Subject.mind.has_been_rev) // command positions or has been rev before (according to old code you cannot attempt to rev people that has been deconverted, can be remove)
+							user << "<span class=\"warning\">This mind seems resistant to the flash!</span>"
+						else if(result == -2) // rev jobbanned
+							user << "<span class=\"warning\">This mind seems resistant to the flash! (OOC INFO: REVOLUTIONARY JOBBANNED)</span>"
+						else if(result == -3) // loyalty implanted
+							user << "<span class=\"warning\">Something seems to be blocking the flash!</span>"
 					else
-						user << "<span class='warning'>This mind seems resistant to the flash!</span>"
-					user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
+						user << "<span class=\"warning\">This mind is so vacant that it is not susceptible to influence!</span>"
 		else
-			flashfail = 1
-
+			flashfail = TRUE
 	else if(issilicon(M))
-		M.Weaken(rand(5,10))
+		M.Weaken(rand(5, 10))
 	else
-		flashfail = 1
+		flashfail = TRUE
 
 	if(isrobot(user))
 		spawn(0)
-			var/atom/movable/overlay/animation = new(user.loc)
+			var/atom/movable/overlay/animation = new(get_turf(user))
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)
-			del(animation)
+			qdel(animation)
 
 	if(!flashfail)
 		flick("flash2", src)
+
 		if(!issilicon(M))
-
-			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+			user.visible_message("<span class=\"disarm\">[user] blinds [M] with the flash!</span>")
 		else
-
-			user.visible_message("<span class='notice'>[user] overloads [M]'s sensors with the flash!</span>")
+			user.visible_message("<span class=\"warning\">[user] overloads [M]'s sensors with the flash!</span>")
 	else
-
-		user.visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
-
-	return
-
-
-
+		user.visible_message("<span class=\"notice\">[user] fails to blind [M] with the flash!</span>")
 
 /obj/item/device/flash/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
 	if(!user || !clown_check(user)) 	return

@@ -91,3 +91,12 @@
 			for(var/mob/M in T)
 				Proj.on_hit(M,M.bullet_act(Proj, def_zone))
 		return
+
+//Code for the Juggernaut construct's forcefield, that seemed like a good place to put it.
+/obj/effect/forcefield/cult
+	desc = "That eerie looking obstacle seems to have been pulled from another dimension through sheer force"
+	name = "Juggerwall"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "m_shield_cult"
+	l_color = "#B40000"
+	luminosity = 2

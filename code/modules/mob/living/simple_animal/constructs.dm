@@ -32,6 +32,7 @@
 	real_name = name
 	for(var/spell in construct_spells)
 		spell_list += new spell(src)
+	updateicon()
 
 /mob/living/simple_animal/construct/Die()
 	..()
@@ -109,7 +110,7 @@
 				playsound(loc, M.attack_sound, 50, 1, 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
-			add_logs(M, src, "attacked", admin=0)
+			add_logs(M, src, "attacked", admin=1)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			adjustBruteLoss(damage)
 
@@ -128,7 +129,11 @@
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
+/mob/living/simple_animal/construct/airflow_stun()
+	return
 
+/mob/living/simple_animal/construct/airflow_hit(atom/A)
+	return
 
 /////////////////Juggernaut///////////////
 
@@ -300,6 +305,14 @@
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
+////////////////Glow//////////////////
+/mob/living/simple_animal/construct/proc/updateicon()
+	overlays = 0
+	var/overlay_layer = LIGHTING_LAYER+1
+	if(layer != MOB_LAYER)
+		overlay_layer=TURF_LAYER+0.2
+
+	overlays += image(icon,"glow-[icon_state]",overlay_layer)
 
 ////////////////Powers//////////////////
 
@@ -330,3 +343,64 @@
 				return
 			cultist.loc = usr.loc
 			usr.visible_message("\red [cultist] appears in a flash of red light as [usr] glows with power")*/
+
+////////////////HUD//////////////////////
+
+/mob/living/simple_animal/construct/Life()
+	. = ..()
+	if(.)
+		if(fire)
+			if(fire_alert)							fire.icon_state = "fire1" //fire_alert is either 0 if no alert, 1 for cold and 2 for heat.
+			else									fire.icon_state = "fire0"
+		if(pullin)
+			if(pulling)								pullin.icon_state = "pull1"
+			else									pullin.icon_state = "pull0"
+
+/mob/living/simple_animal/construct/armoured/Life()
+	..()
+	switch(health)
+		if(250 to INFINITY)		healths.icon_state = "juggernaut_health0"
+		if(208 to 249)			healths.icon_state = "juggernaut_health1"
+		if(167 to 207)			healths.icon_state = "juggernaut_health2"
+		if(125 to 166)			healths.icon_state = "juggernaut_health3"
+		if(84 to 124)			healths.icon_state = "juggernaut_health4"
+		if(42 to 83)			healths.icon_state = "juggernaut_health5"
+		if(1 to 41)				healths.icon_state = "juggernaut_health6"
+		else					healths.icon_state = "juggernaut_health7"
+
+
+/mob/living/simple_animal/construct/behemoth/Life()
+	..()
+	switch(health)
+		if(750 to INFINITY)		healths.icon_state = "juggernaut_health0"
+		if(625 to 749)			healths.icon_state = "juggernaut_health1"
+		if(500 to 624)			healths.icon_state = "juggernaut_health2"
+		if(375 to 499)			healths.icon_state = "juggernaut_health3"
+		if(250 to 374)			healths.icon_state = "juggernaut_health4"
+		if(125 to 249)			healths.icon_state = "juggernaut_health5"
+		if(1 to 124)			healths.icon_state = "juggernaut_health6"
+		else					healths.icon_state = "juggernaut_health7"
+
+/mob/living/simple_animal/construct/builder/Life()
+	..()
+	switch(health)
+		if(50 to INFINITY)		healths.icon_state = "artificer_health0"
+		if(42 to 49)			healths.icon_state = "artificer_health1"
+		if(34 to 41)			healths.icon_state = "artificer_health2"
+		if(26 to 33)			healths.icon_state = "artificer_health3"
+		if(18 to 25)			healths.icon_state = "artificer_health4"
+		if(10 to 17)			healths.icon_state = "artificer_health5"
+		if(1 to 9)				healths.icon_state = "artificer_health6"
+		else					healths.icon_state = "artificer_health7"
+
+/mob/living/simple_animal/construct/wraith/Life()
+	..()
+	switch(health)
+		if(75 to INFINITY)		healths.icon_state = "wraith_health0"
+		if(62 to 74)			healths.icon_state = "wraith_health1"
+		if(50 to 61)			healths.icon_state = "wraith_health2"
+		if(37 to 49)			healths.icon_state = "wraith_health3"
+		if(25 to 36)			healths.icon_state = "wraith_health4"
+		if(12 to 24)			healths.icon_state = "wraith_health5"
+		if(1 to 11)				healths.icon_state = "wraith_health6"
+		else					healths.icon_state = "wraith_health7"

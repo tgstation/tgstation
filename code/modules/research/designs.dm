@@ -1829,7 +1829,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("combat" = 4, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3750, "$silver" = 100)
-	build_path = /obj/item/ammo_magazine/c9mm
+	build_path = /obj/item/ammo_storage/box/c9mm
 
 /datum/design/stunshell
 	name = "Stun Shell"
