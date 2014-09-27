@@ -186,7 +186,7 @@
 	else
 		B_gangsters += gangster_mind
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
-	gangster_mind.current << "<font color='red'>Help your bosses take over the station by defeating their rivals. You can identify your bosses by the brown \"B\" icons, but only they know who is in your gang! Work with your boss to avoid attacking your own gang.</font>"
+	gangster_mind.current << "<font color='red'>Help your bosses take over the station by defeating their rivals. You can identify your bosses by the brown \"B\" icons, but <B>only they know who the other members of your gang are!</B> Work with your boss to avoid attacking your own gang.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
 	update_gang_icons_added(gangster_mind,gang)
