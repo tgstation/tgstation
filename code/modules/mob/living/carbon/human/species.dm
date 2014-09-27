@@ -853,6 +853,7 @@
 					H.apply_effect(20, PARALYZE, armor)
 					if(H != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(H.mind)
+						ticker.mode.remove_gangster(H.mind)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
@@ -1264,7 +1265,7 @@
 		return
 	var/datum/gas_mixture/G = H.loc.return_air() // Check if we're standing in an oxygenless environment
 	if(G.oxygen < 1)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		ExtinguishMob(H) //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(H)
 	location.hotspot_expose(700, 50, 1)

@@ -24,7 +24,7 @@
 	..()
 	cost = 5
 
-/datum/uplink_item/device_tools/plastic_explosives/New()
+/datum/uplink_item/device_tools/c4/New()
 	..()
 	item = null // Disabled
 

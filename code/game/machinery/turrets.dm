@@ -491,7 +491,7 @@
 //Turret Control Panel//
 ////////////////////////
 
-/obj/machinery/turretid
+/obj/machinery/areaturretid
 	name = "turret control panel"
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
@@ -505,7 +505,7 @@
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
 
-/obj/machinery/turretid/New()
+/obj/machinery/areaturretid/New()
 	..()
 	if(!control_area)
 		var/area/CA = get_area(src)
@@ -522,7 +522,7 @@
 	//don't have to check if control_area is path, since get_area_all_atoms can take path.
 	return
 
-/obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/areaturretid/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN) return
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
@@ -554,13 +554,13 @@
 		else
 			user << "<span class='warning'>Access denied.</span>"
 
-/obj/machinery/turretid/attack_ai(mob/user as mob)
+/obj/machinery/areaturretid/attack_ai(mob/user as mob)
 	if(!ailock)
 		return attack_hand(user)
 	else
 		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
 
-/obj/machinery/turretid/attack_hand(mob/user as mob)
+/obj/machinery/areaturretid/attack_hand(mob/user as mob)
 	if ( get_dist(src, user) > 0 )
 		if ( !issilicon(user) )
 			user << "<span class='notice'>You are too far away.</span>"
@@ -593,7 +593,7 @@
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-/obj/machinery/turretid/Topic(href, href_list)
+/obj/machinery/areaturretid/Topic(href, href_list)
 	if(..())
 		return
 	if (src.locked)
@@ -608,17 +608,17 @@
 		src.updateTurrets()
 	src.attack_hand(usr)
 
-/obj/machinery/turretid/proc/updateTurrets()
+/obj/machinery/areaturretid/proc/updateTurrets()
 	if(control_area)
 		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(control_area))
 			aTurret.setState(enabled, lethal)
 	src.update_icon()
 
-/obj/machinery/turretid/power_change()
+/obj/machinery/areaturretid/power_change()
 	..()
 	update_icon()
 
-/obj/machinery/turretid/update_icon()
+/obj/machinery/areaturretid/update_icon()
 	..()
 	if(stat & NOPOWER)
 		icon_state = "control_off"

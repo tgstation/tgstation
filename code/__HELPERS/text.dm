@@ -1,7 +1,7 @@
 /*
  * Holds procs designed to help with filtering text
  * Contains groups:
- *			SQL sanitization
+ *			SQL sanitization/formating
  *			Text sanitization
  *			Text searches
  *			Text modification
@@ -17,6 +17,9 @@
 /proc/sanitizeSQL(var/t as text)
 	var/sqltext = dbcon.Quote(t);
 	return copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
+
+/proc/format_table_name(var/table as text)
+	return sqlfdbktableprefix + table
 
 /*
  * Text sanitization

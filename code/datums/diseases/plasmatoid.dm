@@ -3,3 +3,4 @@
 	max_stages = 4
 	cure = "None"
 	affected_species = list("Monkey", "Human")
+	severity = "Unknown"

@@ -77,7 +77,7 @@
 	var/allow_ai = 0					// allow ai job
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
-	var/changeling_scaling_coeff = 7	//how much does the amount of players get divided by to determine changelings
+	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
 	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 
 	var/traitor_objectives_amount = 2
@@ -443,6 +443,8 @@
 				sqlfdbklogin = value
 			if("feedback_password")
 				sqlfdbkpass = value
+			if("feedback_tableprefix")
+				sqlfdbktableprefix = value
 			else
 				diary << "Unknown setting in configuration: '[name]'"
 

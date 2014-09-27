@@ -1,13 +1,14 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
-/mob/proc/rightandwrong(var/summon_type) //0 = Summon Guns, 1 = Summon Magic
+/proc/rightandwrong(var/summon_type, var/mob/user) //0 = Summon Guns, 1 = Summon Magic
 	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
 
-	usr << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
-	message_admins("[key_name_admin(usr, 1)] summoned [summon_type ? "magic" : "guns"]!")
-	log_game("[key_name(usr)] summoned [summon_type ? "magic" : "guns"]!")
+	if(user) //in this case either someone holding a spellbook or a badmin
+		user << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
+		message_admins("[key_name_admin(user, 1)] summoned [summon_type ? "magic" : "guns"]!")
+		log_game("[key_name(user)] summoned [summon_type ? "magic" : "guns"]!")
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(H.mind)
@@ -135,16 +136,10 @@
 
 /mob/proc/summonevents()
 	if(events) 																//if there isn't something is very wrong
-		if(!events.wizardmode) 												//lets get this party started
-			events.control = list()											//out with the old
-			for(var/type in typesof(/datum/round_event_control/wizard) - /datum/round_event_control/wizard)	//in with the new
-				var/datum/round_event_control/wizard/W = new type()
-				if(!W.typepath)
-					continue												//don't want this one! leave it for the garbage collector
-				events.control += W											//add it to the list of all events (controls)
+		if(!events.wizardmode)
+			events.toggleWizardmode()
 			events.frequency_lower = 600									//1 minute lower bound
 			events.frequency_upper = 3000									//5 minutes upper bound
-			events.wizardmode = 1
 			events.reschedule()
 
 		else 																//Speed it up

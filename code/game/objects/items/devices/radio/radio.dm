@@ -1,8 +1,3 @@
-var/GLOBAL_RADIO_TYPE = 1 // radio type to use
-	// 0 = old radios
-	// 1 = new radios (subspace technology)
-
-
 /obj/item/device/radio
 	icon = 'icons/obj/radio.dmi'
 	name = "station bounced radio"
@@ -610,8 +605,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
-
-
 
 /obj/item/device/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.

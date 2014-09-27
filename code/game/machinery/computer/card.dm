@@ -15,14 +15,13 @@ var/time_last_changed_position = 0
 	var/authenticated = 0.0
 	var/mode = 0.0
 	var/printing = null
-	var/edit_job_target = ""
 	var/list/region_access = null
 	var/list/head_subordinates = null
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
 	//if set to 0: Not able to close "original" positions. You can only close positions that you have opened before
-	var/change_position_cooldown = 280
+	var/change_position_cooldown = 60
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
 		"AI",
@@ -31,9 +30,7 @@ var/time_last_changed_position = 0
 		"Captain",
 		"Head of Personnel",
 		"Head of Security",
-		"Warden",
 		"Chief Engineer",
-		"Quartermaster",
 		"Research Director",
 		"Chief Medical Officer",
 		"Chaplain")
@@ -109,54 +106,61 @@ var/time_last_changed_position = 0
 
 	else if(mode == 2)
 		// JOB MANAGEMENT
-		var/datum/job/j = job_master.GetJob(edit_job_target)
-		if(!j)
-		// SHOW MAIN JOB MANAGEMENT MENU
-			dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
-			dat += "<h1>Job Management</h1>"
-			dat += "<i>Choose Job</i><hr>"
-			for(var/datum/job/job in job_master.occupations)
-				if(!(job.title in blacklisted))
-					dat += "<a href='?src=\ref[src];choice=edit_job;job=[job.title]'><b>[job.title]</b></a> ([job.current_positions]/[job.total_positions])<br>"
+		dat = "<a href='?src=\ref[src];choice=return'>Return</a>"
+		dat += " || Confirm Identity: "
+		var/S
+		if(scan)
+			S = html_encode(scan.name)
 		else
-			if(access_change_ids in scan.access)
-			// EDIT SPECIFIC JOB
-				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
-				dat += "<h1>[j.title]: [j.current_positions]/[j.total_positions]</h1><hr>"
-				//Make sure antags can't completely ruin rounds
-
-				//Don't allow more than 1 Head / limit blacklisted jobs
-				switch(can_open_job(j))
-					if(1)
-						dat += "<a href='?src=\ref[src];choice=make_job_available'>Open Position</a><br>"
-					if(-1)
-						dat += "<b>You cannot open any more positions for this job.</b><br>"
-					if(-2)
-						var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
-						var/mins = round(time_to_wait / 60)
-						var/seconds = time_to_wait - (60*mins)
-						dat += "<b>You have to wait [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"] minutes before you can open this position.</b>"
-					if(0)
-						dat += "<b>You cannot open positions for this job.</b><br>"
-
-
-				switch(can_close_job(j))
-					if(1)
-						dat += "<a href='?src=\ref[src];choice=make_job_unavailable'>Close Position</a>"
-					if(-1)
-						dat += "<b>You cannot close any more positions for this job.</b><br>"
-					if(-2)
-						var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
-						var/mins = round(time_to_wait / 60)
-						var/seconds = time_to_wait - (60*mins)
-						dat += "<b>You have to wait [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"] minutes before you can close this position.</b>"
-					if(0)
-						dat += "<b>You cannot close positions for this job.</b><br>"
-			else
-				dat = "<a href='?src=\ref[src];choice=return'><i>Return</i></a><hr>"
-				dat += "<h1>Please insert your ID</h1>"
-				mode = 3
-
+			S = "--------"
+		dat += "<a href='?src=\ref[src];choice=scan'>[S]</a>"
+		dat += "<table>"
+		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b></td></tr>"
+		var/ID
+		if(scan && (access_change_ids in scan.access))
+			ID = 1
+		else
+			ID = 0
+		for(var/datum/job/job in job_master.occupations)
+			dat += "<tr>"
+			if(job.title in blacklisted)
+				continue
+			dat += "<td>[job.title]</td>"
+			dat += "<td>[job.current_positions]/[job.total_positions]</td>"
+			dat += "<td>"
+			switch(can_open_job(job))
+				if(1)
+					if(ID)
+						dat += "<a href='?src=\ref[src];choice=make_job_available;job=[job.title]'>Open Position</a><br>"
+					else
+						dat += "Open Position"
+				if(-1)
+					dat += "Denied"
+				if(-2)
+					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
+					var/mins = round(time_to_wait / 60)
+					var/seconds = time_to_wait - (60*mins)
+					dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
+				if(0)
+					dat += "Denied"
+			dat += "</td><td>"
+			switch(can_close_job(job))
+				if(1)
+					if(ID)
+						dat += "<a href='?src=\ref[src];choice=make_job_unavailable;job=[job.title]'>Close Position</a>"
+					else
+						dat += "Close Position"
+				if(-1)
+					dat += "Denied"
+				if(-2)
+					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
+					var/mins = round(time_to_wait / 60)
+					var/seconds = time_to_wait - (60*mins)
+					dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
+				if(0)
+					dat += "Denied"
+			dat += "</td></tr>"
+		dat += "</table>"
 	else
 		var/header = ""
 
@@ -196,7 +200,8 @@ var/time_last_changed_position = 0
 		header += "<hr>"
 
 		var/jobs_all = ""
-		var/list/alljobs = (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
+		var/list/alljobs = list("Unassigned")
+		alljobs += (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
 		for(var/job in alljobs)
 			jobs_all += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
 
@@ -229,7 +234,7 @@ var/time_last_changed_position = 0
 				carddesc += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 				carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
 				carddesc += "<input type='hidden' name='choice' value='reg'>"
-				carddesc += "<b>registered_name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
+				carddesc += "<b>registered name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
 				carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
 				carddesc += "</form>"
 				carddesc += "<b>Assignment:</b> "
@@ -281,7 +286,7 @@ var/time_last_changed_position = 0
 	//user << browse(dat, "window=id_com;size=900x520")
 	//onclose(user, "id_com")
 
-	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier Console", 900, 590)
+	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier Console", 900, 620)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -367,12 +372,13 @@ var/time_last_changed_position = 0
 			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/newJob = reject_bad_name(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"))
+					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"), MAX_NAME_LEN)
 					if(newJob)
 						t1 = newJob
-					else
-						modify.assignment = "Unassigned"
-						return
+
+				else if(t1 == "Unassigned")
+					modify.access = list()
+
 				else
 					var/datum/job/jobdatum
 					for(var/jobtype in typesof(/datum/job))
@@ -406,44 +412,38 @@ var/time_last_changed_position = 0
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 
-		if("edit_job")
-			edit_job_target = href_list["job"]
-			if(job_master.GetJob(edit_job_target) == null)
-				edit_job_target = ""
-
 		if("return")
-			if(edit_job_target != "")
-				//RETURN TO JOB MANAGEMENT
-				edit_job_target = ""
-			else
-				//DISPLAY MAIN MENU
-				mode = 3;
-				edit_job_target = ""
+			//DISPLAY MAIN MENU
+			mode = 3;
 
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
-			var/datum/job/j = job_master.GetJob(edit_job_target)
-			if(!j)
-				return 0
-			if(can_open_job(j) != 1)
-				return 0
-			if(opened_positions[edit_job_target] >= 0)
-				time_last_changed_position = world.time / 10
-			j.total_positions++
-			opened_positions[edit_job_target]++
+			if(scan && (access_change_ids in scan.access))
+				var/edit_job_target = href_list["job"]
+				var/datum/job/j = job_master.GetJob(edit_job_target)
+				if(!j)
+					return 0
+				if(can_open_job(j) != 1)
+					return 0
+				if(opened_positions[edit_job_target] >= 0)
+					time_last_changed_position = world.time / 10
+				j.total_positions++
+				opened_positions[edit_job_target]++
 
 		if("make_job_unavailable")
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
-			var/datum/job/j = job_master.GetJob(edit_job_target)
-			if(!j)
-				return 0
-			if(can_close_job(j) != 1)
-				return 0
-			//Allow instant closing without cooldown if a position has been opened before
-			if(opened_positions[edit_job_target] <= 0)
-				time_last_changed_position = world.time / 10
-			j.total_positions--
-			opened_positions[edit_job_target]--
+			if(scan && (access_change_ids in scan.access))
+				var/edit_job_target = href_list["job"]
+				var/datum/job/j = job_master.GetJob(edit_job_target)
+				if(!j)
+					return 0
+				if(can_close_job(j) != 1)
+					return 0
+				//Allow instant closing without cooldown if a position has been opened before
+				if(opened_positions[edit_job_target] <= 0)
+					time_last_changed_position = world.time / 10
+				j.total_positions--
+				opened_positions[edit_job_target]--
 
 		if ("print")
 			if (!( printing ))
