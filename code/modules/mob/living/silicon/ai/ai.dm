@@ -93,9 +93,9 @@ var/list/ai_list = list()
 	aicamera = new/obj/item/device/camera/ai_camera(src)
 
 	if (istype(loc, /turf))
-		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
-		/mob/living/silicon/ai/proc/ai_camera_list, /mob/living/silicon/ai/proc/ai_network_change, \
-		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
+		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
+		/mob/living/silicon/ai/proc/ai_statuschange, \
+		/mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
@@ -195,9 +195,6 @@ var/list/ai_list = list()
 
 
 /mob/living/silicon/ai/proc/ai_alerts()
-	set category = "AI Commands"
-	set name = "Show Alerts"
-
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\ai\ai.dm:195: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
@@ -236,13 +233,9 @@ var/list/ai_list = list()
 
 // this verb lets the ai see the stations manifest
 /mob/living/silicon/ai/proc/ai_roster()
-	set category = "AI Commands"
-	set name = "Show Crew Manifest"
 	show_station_manifest()
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	set category = "AI Commands"
-	set name = "Call Emergency Shuttle"
 	if(src.stat == 2)
 		src << "You can't call the shuttle because you are dead!"
 		return
@@ -555,10 +548,6 @@ var/list/ai_list = list()
 	return !cleared
 
 /mob/living/silicon/ai/cancel_camera()
-	set category = "AI Commands"
-	set name = "Cancel Camera View"
-
-	//src.cameraFollow = null
 	src.view_core()
 
 
@@ -698,9 +687,9 @@ var/list/ai_list = list()
 
 //Toggles the luminosity and applies it by re-entereing the camera.
 /mob/living/silicon/ai/proc/toggle_camera_light()
-	set name = "Toggle Camera Light"
-	set desc = "Toggles the light on the camera the AI is looking through."
-	set category = "AI Commands"
+
+	if(stat != CONSCIOUS)
+		return
 
 	camera_light_on = !camera_light_on
 	src << "Camera lights [camera_light_on ? "activated" : "deactivated"]."
