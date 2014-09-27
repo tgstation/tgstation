@@ -4,7 +4,7 @@
 	set src in view(1)
 	give_item(usr)
 
-/mob/living/carbon/proc/give_item(mob/living/human/user)
+/mob/living/carbon/proc/give_item(mob/living/carbon/user)
 
 	if(src.stat == 2 || user.stat == 2 || src.client == null)
 		return
