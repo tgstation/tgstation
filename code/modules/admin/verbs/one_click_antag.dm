@@ -375,7 +375,7 @@ client/proc/one_click_antag()
 
 			//Logging and cleanup
 			if(numagents == 1)
-				message_admins("The deathsquad has spawned with [key_name_admin(Commando)] as squad leader.")
+				message_admins("The deathsquad has spawned with the mission: [mission].")
 			log_game("[key_name(Commando)] has been selected as a Death Commando")
 			spawnpoints -= spawnloc
 			numagents--
