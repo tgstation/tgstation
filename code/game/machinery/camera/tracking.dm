@@ -22,8 +22,6 @@
 
 
 /mob/living/silicon/ai/proc/ai_camera_list(var/camera in get_camera_list())
-	set category = "AI Commands"
-	set name = "Show Camera List"
 
 	if(src.stat == 2)
 		src << "You can't list the cameras because you are dead!"
@@ -105,9 +103,6 @@
 	return targets
 
 /mob/living/silicon/ai/proc/ai_camera_track(var/target_name in trackable_mobs())
-	set category = "AI Commands"
-	set name = "Track With Camera"
-	set desc = "Select who you would like to track."
 
 	if(src.stat == 2)
 		src << "You can't track with camera because you are dead!"
