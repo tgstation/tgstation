@@ -164,8 +164,7 @@
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				for(var/mob/V in hearers(M, null))
-					V.show_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>", 2)
+				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
@@ -191,8 +190,7 @@
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
-				for(var/mob/V in hearers(M, null))
-					V.show_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>", 2)
+				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
 					if(M)

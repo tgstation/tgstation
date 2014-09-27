@@ -162,8 +162,7 @@ Frequency:
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/T = L[t1]
-	for(var/mob/O in hearers(user, null))
-		O.show_message("<span class='notice'>Locked In.</span>", 2)
+	user.show_message("<span class='notice'>Locked In.</span>", 2)
 	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(src), T, src)
 	try_move_adjacent(P)
 	active_portals++
