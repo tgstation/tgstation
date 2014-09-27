@@ -772,7 +772,7 @@ LOOK FOR SURGERY.DM*/
 				log_attack("<font color='red'>[user.name] ([user.ckey]) debrained [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 
-				var/obj/item/brain/B = new(M.loc)
+				var/obj/item/organ/brain/B = new(M.loc)
 				B.transfer_identity(M)
 
 				M:brain_op_stage = 4.0

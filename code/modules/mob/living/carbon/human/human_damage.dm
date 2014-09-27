@@ -17,13 +17,19 @@
 
 /mob/living/carbon/human/getBrainLoss()
 	var/res = brainloss
-	var/datum/organ/internal/brain/sponge = internal_organs["brain"]
-	if (sponge.is_bruised())
-		res += 20
-	if (sponge.is_broken())
-		res += 50
-	res = min(res,maxHealth*2)
-	return res
+	if(species && species.has_organ["brain"])
+		var/datum/organ/internal/brain/sponge = internal_organs_by_name["brain"]
+		if(!sponge)
+			res += 200
+		else
+			if (sponge.is_bruised())
+				res += 20
+			if (sponge.is_broken())
+				res += 50
+
+		res = min(res,maxHealth*2)
+		return res
+	return 0
 
 //These procs fetch a cumulative total damage from all organs
 /mob/living/carbon/human/getBruteLoss()
@@ -40,16 +46,54 @@
 
 
 /mob/living/carbon/human/adjustBruteLoss(var/amount)
+	if(species && species.brute_mod)
+		amount = amount*species.brute_mod
+
 	if(amount > 0)
 		take_overall_damage(amount, 0)
 	else
 		heal_overall_damage(-amount, 0)
+	hud_updateflag |= 1 << HEALTH_HUD
 
 /mob/living/carbon/human/adjustFireLoss(var/amount)
+	if(species && species.burn_mod)
+		amount = amount*species.burn_mod
+
 	if(amount > 0)
-		take_overall_damage(0, amount * species.fireloss_mult)
+		take_overall_damage(0, amount)
 	else
 		heal_overall_damage(0, -amount)
+	hud_updateflag |= 1 << HEALTH_HUD
+
+/mob/living/carbon/human/proc/adjustBruteLossByPart(var/amount, var/organ_name, var/obj/damage_source = null)
+	if(species && species.brute_mod)
+		amount = amount*species.brute_mod
+
+	if (organ_name in organs_by_name)
+		var/datum/organ/external/O = get_organ(organ_name)
+
+		if(amount > 0)
+			O.take_damage(amount, 0, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
+		else
+			//if you don't want to heal robot organs, they you will have to check that yourself before using this proc.
+			O.heal_damage(-amount, 0, internal=0, robo_repair=(O.status & ORGAN_ROBOT))
+
+	hud_updateflag |= 1 << HEALTH_HUD
+
+/mob/living/carbon/human/proc/adjustFireLossByPart(var/amount, var/organ_name, var/obj/damage_source = null)
+	if(species && species.burn_mod)
+		amount = amount*species.burn_mod
+
+	if (organ_name in organs_by_name)
+		var/datum/organ/external/O = get_organ(organ_name)
+
+		if(amount > 0)
+			O.take_damage(0, amount, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
+		else
+			//if you don't want to heal robot organs, they you will have to check that yourself before using this proc.
+			O.heal_damage(0, -amount, internal=0, robo_repair=(O.status & ORGAN_ROBOT))
+
+	hud_updateflag |= 1 << HEALTH_HUD
 
 /mob/living/carbon/human/Stun(amount)
 	if(M_HULK in mutations)	return
@@ -65,6 +109,10 @@
 
 /mob/living/carbon/human/adjustCloneLoss(var/amount)
 	..()
+
+	if(species.flags & IS_SYNTHETIC)
+		return
+
 	var/heal_prob = max(0, 80 - getCloneLoss())
 	var/mut_prob = min(80, getCloneLoss()+10)
 	if (amount > 0)
@@ -91,6 +139,8 @@
 			if (O.status & ORGAN_MUTATED)
 				O.unmutate()
 				src << "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>"
+	hud_updateflag |= 1 << HEALTH_HUD
+
 ////////////////////////////////////////////
 
 //Returns a list of damaged organs
@@ -118,18 +168,25 @@
 	var/datum/organ/external/picked = pick(parts)
 	if(picked.heal_damage(brute,burn))
 		UpdateDamageIcon()
+		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
 
+
+/*
+In most cases it makes more sense to use apply_damage() instead! And make sure to check armour if applicable.
+*/
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/take_organ_damage(var/brute, var/burn, var/sharp = 0)
+/mob/living/carbon/human/take_organ_damage(var/brute, var/burn, var/sharp = 0, var/edge = 0)
 	var/list/datum/organ/external/parts = get_damageable_organs()
 	if(!parts.len)	return
 	var/datum/organ/external/picked = pick(parts)
-	if(picked.take_damage(brute,burn,sharp))
+	if(picked.take_damage(brute,burn,sharp,edge))
 		UpdateDamageIcon()
+		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
+	speech_problem_flag = 1
 
 
 //Heal MANY external organs, in random order
@@ -150,10 +207,12 @@
 
 		parts -= picked
 	updatehealth()
+	hud_updateflag |= 1 << HEALTH_HUD
+	speech_problem_flag = 1
 	if(update)	UpdateDamageIcon()
 
 // damage MANY external organs, in random order
-/mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0, var/used_weapon = null)
+/mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0, var/edge = 0, var/used_weapon = null)
 	if(status_flags & GODMODE)	return	//godmode
 	var/list/datum/organ/external/parts = get_damageable_organs()
 	var/update = 0
@@ -163,12 +222,13 @@
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
 
-		update |= picked.take_damage(brute,burn,sharp,used_weapon)
+		update |= picked.take_damage(brute,burn,sharp,edge,used_weapon)
 		brute	-= (picked.brute_dam - brute_was)
 		burn	-= (picked.burn_dam - burn_was)
 
 		parts -= picked
 	updatehealth()
+	hud_updateflag |= 1 << HEALTH_HUD
 	if(update)	UpdateDamageIcon()
 
 
@@ -178,8 +238,9 @@
 This function restores the subjects blood to max.
 */
 /mob/living/carbon/human/proc/restore_blood()
-	var/blood_volume = vessel.get_reagent_amount("blood")
-	vessel.add_reagent("blood",560.0-blood_volume)
+	if(!species.flags & NO_BLOOD)
+		var/blood_volume = vessel.get_reagent_amount("blood")
+		vessel.add_reagent("blood",560.0-blood_volume)
 
 
 /*
@@ -194,6 +255,7 @@ This function restores all organs.
 	if(istype(E, /datum/organ/external))
 		if (E.heal_damage(brute, burn))
 			UpdateDamageIcon()
+			hud_updateflag |= 1 << HEALTH_HUD
 	else
 		return 0
 	return
@@ -228,15 +290,20 @@ This function restores all organs.
 	switch(damagetype)
 		if(BRUTE)
 			damageoverlaytemp = 20
-			if(organ.take_damage(damage, 0, sharp, used_weapon))
+			if(species && species.brute_mod)
+				damage = damage*species.brute_mod
+			if(organ.take_damage(damage, 0, sharp, edge, used_weapon))
 				UpdateDamageIcon()
 		if(BURN)
 			damageoverlaytemp = 20
-			if(organ.take_damage(0, damage, sharp, used_weapon))
+			if(species && species.burn_mod)
+				damage = damage*species.burn_mod
+			if(organ.take_damage(0, damage, sharp, edge, used_weapon))
 				UpdateDamageIcon()
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()
+	hud_updateflag |= 1 << HEALTH_HUD
 
 	//Embedded projectile code.
 	if(!organ) return

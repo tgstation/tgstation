@@ -16,6 +16,10 @@
 	h_style = "Skrell Male Tentacles"
 	..(new_loc, "Skrell")
 
+/mob/living/carbon/human/tajaran/New(var/new_loc)
+	h_style = "Tajaran Ears"
+	..(new_loc, "Tajaran")
+
 /mob/living/carbon/human/unathi/New(var/new_loc)
 	h_style = "Unathi Horns"
 	..(new_loc, "Unathi")
@@ -214,7 +218,7 @@
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 30
 				ear_deaf += 120
 			if (prob(70) && !shielded)
@@ -622,67 +626,21 @@
 	var/obj/item/device/pda/pda = wear_id
 	if (istype(pda) && pda.id)
 		id = pda.id
-	if (istype(id))
+	if (isty
 		return id
 
-/*
- * added a safety check in case you want to shock a human mob directly through electrocute_act.
- */
-/mob/living/carbon/human/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0, const/safety = 0)
-	var/sc = siemens_coeff
+//Removed the horrible safety parameter. It was only being used by ninja code anyways.
+//Now checks siemens_coefficient of the affected area by default
+/mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/base_siemens_coeff = 1.0, var/def_zone = null)
+	if(status_flags & GODMODE)	return 0	//godmode
 
-	if(!safety)
-		if(gloves)
-			var/obj/item/clothing/gloves/Glove = gloves
-			sc = Glove.siemens_coefficient
+	if (!def_zone)
+		def_zone = pick("l_hand", "r_hand")
 
-	if(M_NO_SHOCK in src.mutations)
-		sc = 0
+	var/datum/organ/external/affected_organ = get_organ(check_zone(def_zone))
+	var/siemens_coeff = base_siemens_coeff * get_siemens_coefficient_organ(affected_organ)
 
-	return ..(shock_damage, source, sc)
-
-
-/mob/living/carbon/human/proc/num2slotname(var/slot_id)
-	if(slot_id == null)
-		return
-	else if(slot_id == 1)
-		return "back"
-	else if(slot_id == 2)
-		return "mask"
-	else if(slot_id == 3)
-		return "handcuffed"
-	else if(slot_id == 4)
-		return "l_hand"
-	else if(slot_id == 5)
-		return "r_hand"
-	else if(slot_id == 6)
-		return "belt"
-	else if(slot_id == 7)
-		return "id"
-	else if(slot_id == 8)
-		return "ears"
-	else if(slot_id == 9)
-		return "eyes"
-	else if(slot_id == 10)
-		return "gloves"
-	else if(slot_id == 11)
-		return "head"
-	else if(slot_id == 12)
-		return "shoes"
-	else if(slot_id == 13)
-		return "suit"
-	else if(slot_id == 14)
-		return "uniform"
-	else if(slot_id == 15)
-		return "l_store"
-	else if(slot_id == 16)
-		return "r_store"
-	else if(slot_id == 17)
-		return "s_store"
-	else if(slot_id == 18)
-		return "in_backpack"
-	else if(slot_id == 19)
-		return "h_store"
+	return ..(shock_damage, source, siemens_coeff, def_zone)
 
 
 /mob/living/carbon/human/Topic(href, href_list)
@@ -1423,8 +1381,7 @@
 					H.brainmob.mind.transfer_to(src)
 					del(H)
 
-	for(var/E in internal_organs)
-		var/datum/organ/internal/I = internal_organs[E]
+	for(var/datum/organ/internal/I in internal_organs)
 		I.damage = 0
 
 	for (var/datum/disease/virus in viruses)
@@ -1436,13 +1393,13 @@
 	..()
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
-	var/datum/organ/internal/lungs/L = internal_organs["lungs"]
-	return L.is_bruised()
+	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
+	return L && L.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
-	var/datum/organ/internal/lungs/L = internal_organs["lungs"]
+	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
 
-	if(!L.is_bruised())
+	if(L && !L.is_bruised())
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
 		L.damage = L.min_bruised_damage
 
@@ -1579,7 +1536,7 @@ mob/living/carbon/human/yank_out_object()
 	var/list/visible_implants = list()
 	for(var/datum/organ/external/organ in src.organs)
 		for(var/obj/item/weapon/O in organ.implants)
-			if(!istype(O,/obj/item/weapon/implant) && O.w_class > class)
+			if(!istype(O,/obj/item/weapon/implant) && (O.w_class > class) && !istype(O,/obj/item/weapon/shard/shrapnel))
 				visible_implants += O
 
 	return(visible_implants)
@@ -1644,27 +1601,41 @@ mob/living/carbon/human/yank_out_object()
 	else
 		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
 
-/mob/living/carbon/human/proc/set_species(var/new_species_name,var/force_organs)
+/mob/living/carbon/human/proc/set_species(var/new_species, var/force_organs, var/default_colour)
+
 	if(new_species_name)
-		if(src.species && src.species.name && (src.species.name == new_species_name)) return
-	else if(src.dna)	new_species_name = src.dna.species
-	else				new_species_name = "Human"
+		if(src.species && src.species.name && (src.species.name == new_species_name))
+			return
+	else if(src.dna)
+		new_species_name = src.dna.species
+	else
+		new_species_name = "Human"
 	if(src.species)
-		if(src.species.language)	src.remove_language(species.language)
-		if(src.species.abilities)	src.verbs -= species.abilities
+		if(src.species.language)
+			src.remove_language(species.language)
+		if(src.species.abilities)
+			src.verbs -= species.abilities
 	src.species = all_species[new_species_name]
 	if(src.species.abilities)
-		if(src.species.language)	src.add_language(species.language)
-		if(src.species.abilities)	src.verbs |= species.abilities
-	if(force_organs || !src.organs || !src.organs.len) src.species.create_organs(src)
+		if(src.species.language)
+			src.add_language(species.language)
+		if(src.species.abilities)
+			src.verbs |= species.abilities
+	if(force_organs || !src.organs || !src.organs.len)
+		src.species.create_organs(src)
 	src.see_in_dark = species.darksight
-	if(src.see_in_dark > 2)	src.see_invisible = SEE_INVISIBLE_LEVEL_ONE
-	else					src.see_invisible = SEE_INVISIBLE_LIVING
+	if(src.see_in_dark > 2)	
+		src.see_invisible = SEE_INVISIBLE_LEVEL_ONE
+	else					
+		src.see_invisible = SEE_INVISIBLE_LIVING
 	if((src.species.default_mutations.len > 0) || (src.species.default_blocks.len > 0))
 		src.do_deferred_species_setup = 1
-	spawn() src.update_icons()
-	src.species.handle_post_spawn(src)
-	return 1
+	spawn() 
+		src.update_icons()
+		src.species.handle_post_spawn(src)
+		return 1
+	else
+		return 0
 
 /mob/living/carbon/human/proc/bloody_doodle()
 	set category = "IC"
@@ -1721,6 +1692,27 @@ mob/living/carbon/human/yank_out_object()
 		W.message = message
 		W.add_fingerprint(src)
 
+
+/mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
+	. = 1
+
+	if(!user)
+		target_zone = pick("chest","chest","chest","left leg","right leg","left arm", "right arm", "head")
+	else if(!target_zone)
+		target_zone = user.zone_sel.selecting
+
+	switch(target_zone)
+		if("head")
+			if(head && head.flags & THICKMATERIAL)
+				. = 0
+		else
+			if(wear_suit && wear_suit.flags & THICKMATERIAL)
+				. = 0
+	if(!. && error_msg && user)
+ 		// Might need re-wording.
+		user << "<span class='alert'>There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"] to inject into.</span>"
+
+		
 /mob/living/carbon/human/canSingulothPull(var/obj/machinery/singularity/singulo)
 	if(!..())
 		return 0
@@ -1812,4 +1804,16 @@ mob/living/carbon/human/yank_out_object()
 	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
 		threatcount -= 2
 
-	return threatcount
+/mob/living/carbon/human/has_brain()
+	if(internal_organs_by_name["brain"])
+		var/datum/organ/internal/brain = internal_organs_by_name["brain"]
+		if(brain && istype(brain))
+			return 1
+	return 0
+
+/mob/living/carbon/human/has_eyes()
+	if(internal_organs_by_name["eyes"])
+		var/datum/organ/internal/eyes = internal_organs_by_name["eyes"]
+		if(eyes && istype(eyes) && !eyes.status & ORGAN_CUT_AWAY)
+			return 1
+	return 0

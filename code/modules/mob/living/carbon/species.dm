@@ -74,9 +74,9 @@ var/global/list/whitelisted_species = list("Human")
 
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
-	var/blood_color = "#A10808" // Red.
-	var/flesh_color = "#FFC896" // Pink.
-
+	var/blood_color = "#A10808" //Red.
+	var/flesh_color = "#FFC896" //Pink.
+	var/base_color      //Used when setting species.
 	var/uniform_icons = 'icons/mob/uniform.dmi'
 	var/fat_uniform_icons = 'icons/mob/uniform_fat.dmi'
 	var/gloves_icons    = 'icons/mob/hands.dmi'
@@ -88,6 +88,23 @@ var/global/list/whitelisted_species = list("Human")
 	var/wear_suit_icons = 'icons/mob/suit.dmi'
 	var/wear_mask_icons = 'icons/mob/mask.dmi'
 	var/back_icons      = 'icons/mob/back.dmi'
+
+
+	//Used in icon caching.
+	var/race_key = 0
+	var/icon/icon_template
+
+	var/list/has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"lungs" =    /datum/organ/internal/lungs,
+		"liver" =    /datum/organ/internal/liver,
+		"kidneys" =  /datum/organ/internal/kidney,
+		"brain" =    /datum/organ/internal/brain,
+		"appendix" = /datum/organ/internal/appendix,
+		"eyes" =     /datum/organ/internal/eyes
+		)
+/datum/species/New()
+	unarmed = new unarmed_type()
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
@@ -106,28 +123,24 @@ var/global/list/whitelisted_species = list("Human")
 	H.organs_by_name["r_foot"] = new/datum/organ/external/r_foot(H.organs_by_name["r_leg"])
 
 	H.internal_organs = list()
-	H.internal_organs_by_name["heart"] = new/datum/organ/internal/heart(H)
-	H.internal_organs_by_name["lungs"] = new/datum/organ/internal/lungs(H)
-	H.internal_organs_by_name["liver"] = new/datum/organ/internal/liver(H)
-	H.internal_organs_by_name["kidney"] = new/datum/organ/internal/kidney(H)
-	H.internal_organs_by_name["brain"] = new/datum/organ/internal/brain(H)
-	H.internal_organs_by_name["eyes"] = new/datum/organ/internal/eyes(H)
+	for(var/organ in has_organ)
+		var/organ_type = has_organ[organ]
+		H.internal_organs_by_name[organ] = new organ_type(H)
 
 	for(var/name in H.organs_by_name)
 		H.organs += H.organs_by_name[name]
 
 	for(var/datum/organ/external/O in H.organs)
 		O.owner = H
-
-	/*
+		
 	if(flags & IS_SYNTHETIC)
 		for(var/datum/organ/external/E in H.organs)
 			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
 			E.status |= ORGAN_ROBOT
 		for(var/datum/organ/internal/I in H.internal_organs)
 			I.mechanize()
-	*/
 
+/datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
 
 /datum/species/proc/handle_breath(var/datum/gas_mixture/breath, var/mob/living/carbon/human/H)

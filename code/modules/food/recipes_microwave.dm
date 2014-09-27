@@ -56,7 +56,7 @@
 
 /datum/recipe/brainburger
 	reagents = list("flour" = 5)
-	items = list(/obj/item/brain)
+	items = list(/obj/item/organ/brain)
 	result = /obj/item/weapon/reagent_containers/food/snacks/brainburger
 
 /datum/recipe/roburger
@@ -571,7 +571,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
-		/obj/item/brain
+		/obj/item/organ/brain
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake
 

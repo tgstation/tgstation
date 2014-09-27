@@ -568,21 +568,32 @@
 		..()
 		reagents.add_reagent("nutriment", 1)*/
 
+<<<<<<< HEAD
 /obj/item/weapon/reagent_containers/food/snacks/appendix //yes, this is the same as meat. I might do something different in future
 	name = "appendix"
 	desc = "An appendix which looks perfectly healthy."
+=======
+/obj/item/weapon/reagent_containers/food/snacks/organ
+
+	name = "organ"
+	desc = "It's good for you."
+>>>>>>> 4b4a57b... Organ rewrite mapclean attempt.
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "appendix"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", rand(3,5))
+		reagents.add_reagent("toxin", rand(1,3))
 		src.bitesize = 3
 
+<<<<<<< HEAD
 /obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed
 	name = "inflamed appendix"
 	desc = "An appendix which appears to be inflamed."
 	icon_state = "appendixinflamed"
 
+=======
+>>>>>>> 4b4a57b... Organ rewrite mapclean attempt.
 /obj/item/weapon/reagent_containers/food/snacks/tofu
 	name = "Tofu"
 	icon_state = "tofu"
@@ -1555,6 +1566,41 @@
 	attack_self(mob/user)
 		if(wrapped)
 			Unwrap(user)
+
+	On_Consume(var/mob/M)
+		M << "<span class = 'warning'>Something inside of you suddently expands!</span>"
+
+		if (istype(M, /mob/living/carbon/human))
+			//Do not try to understand.
+			var/obj/item/weapon/surprise = new/obj/item/weapon(M)
+			var/mob/living/carbon/monkey/ook = new monkey_type(null) //no other way to get access to the vars, alas
+			surprise.icon = ook.icon
+			surprise.icon_state = ook.icon_state
+			surprise.name = "malformed [ook.name]"
+			surprise.desc = "Looks like \a very deformed [ook.name], a little small for its kind. It shows no signs of life."
+			del(ook)	//rip nullspace monkey
+			surprise.transform *= 0.6
+			surprise.add_blood(M)
+			var/mob/living/carbon/human/H = M
+			var/datum/organ/external/E = H.get_organ("chest")
+			E.fracture()
+			for (var/datum/organ/internal/I in E.internal_organs)
+				I.take_damage(rand(I.min_bruised_damage, I.min_broken_damage+1))
+
+			if (!E.hidden && prob(60)) //set it snuggly
+				E.hidden = surprise
+				E.cavity = 0
+			else 		//someone is having a bad day
+				E.createwound(CUT, 30)
+				E.embed(surprise)
+		else if (ismonkey(M))
+			M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
+			var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)
+			ook.name = "malformed [ook.name]"
+			ook.transform *= 0.6
+			ook.add_blood(M)
+			M.gib()
+		..()
 
 	proc/Expand()
 		for(var/mob/M in viewers(src,7))

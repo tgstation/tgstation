@@ -34,6 +34,8 @@
 
 	// Checks if this step applies to the mutantrace of the user.
 	proc/is_valid_mutantrace(mob/living/carbon/human/target)
+		if(!hasorgans(target))
+			return 0
 
 		if(allowed_species)
 			for(var/species in allowed_species)
@@ -90,12 +92,15 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 		//check if tool is right or close enough and if this step is possible
 		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M))
 			S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
-			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
+			//We had proper tools! (or RNG smiled.) and user did not move or change hands.
 			if( prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)))
 				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
-			else														//or
+			else if (tool in user.contents && user.Adjacent(M))											//or
 				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
 			return	1	  												//don't want to do weapony things after surgery
+	if (user.a_intent == "help")
+		user << "\red You can't see any useful way to use [tool] on [M]."
+		return 1
 	return 0
 
 proc/sort_surgeries()
@@ -118,5 +123,7 @@ proc/sort_surgeries()
 	var/eyes	=	0
 	var/face	=	0
 	var/appendix =	0
-	var/ribcage =	0
-	var/butt	=	0
+	var/ribcage = 0
+	var/butt = 0
+	var/head_reattach = 0
+	var/current_organ

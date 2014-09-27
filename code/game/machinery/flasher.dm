@@ -84,8 +84,8 @@
 		O.Weaken(strength)
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
-			var/datum/organ/internal/eyes/E = H.internal_organs["eyes"]
-			if ((E.damage > E.min_bruised_damage && prob(E.damage + 50)))
+			var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
+			if (E && (E.damage > E.min_bruised_damage && prob(E.damage + 50)))
 				flick("e_flash", O:flash)
 				E.damage += rand(1, 5)
 		else
