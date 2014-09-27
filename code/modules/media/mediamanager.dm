@@ -166,4 +166,4 @@ function SetMusic(url, time, volume) {
 	media.update_volume(value)
 	if(prefs)
 		prefs.volume = value
-		prefs.save_volume()
+		prefs.save_preferences_sqlite(src, ckey)
