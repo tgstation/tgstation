@@ -264,6 +264,17 @@
 			else
 				text += "."
 
+			text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
+			if (objectives.len==0)
+				text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
+		else if(isloyal(current))
+			text += "head|<b>LOYAL</b>|employee|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|rev"
+		else if (src in ticker.mode.revolutionaries)
+			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
+		else
+			text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+		sections["revolution"] = text
+
 		/** GANG ***/
 		text = "gang"
 		if (ticker.mode.config_tag=="gang")
@@ -285,6 +296,7 @@
 
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];gang=autoobjective'>Set to kill all rival gang leaders</a>."
+
 
 		else if (src in ticker.mode.B_bosses)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B)</B> <a href='?src=\ref[src];gang=bgang'>gangster</a> <b>BOSS</b>"

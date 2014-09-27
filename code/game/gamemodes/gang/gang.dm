@@ -38,7 +38,7 @@
 			if(player.assigned_role == job)
 				antag_candidates -= player
 
-	if(antag_candidates.len > 2)
+	if(antag_candidates.len >= 2)
 		assign_bosses()
 		if(antag_candidates.len > 20)
 			assign_bosses()
@@ -141,7 +141,8 @@
 	if (!where)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a flash."
 	else
-		mob << "The <b>flash</b> in your [where] will help you to persuade the crew to work for you. Keep in mind that your underlings can only identify their bosses, but not each other."
+		mob << "The <b>flash</b> in your [where] will help you to persuade the crew to work for you."
+		mob << "<span class='userdanger'>Keep in mind that your underlings can only identify their bosses, but not each other. You must coordinate your gang effectively to beat out the competition.</span>"
 		. += 1
 
 	mob.update_icons()
@@ -373,7 +374,7 @@
 /datum/game_mode/gang/declare_completion()
 	if(!finished)
 		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
-	if(finished == "Draw")
+	else if(finished == "Draw")
 		world << "<FONT size=3 color=red><B>All gang bosses have been killed or exiled!</B></FONT>"
 	else
 		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang defeated their rivals!</B></FONT>"
@@ -407,7 +408,7 @@
 
 	if(A_bosses.len || A_gangsters.len)
 		if(winner == "A" || winner == "B")
-			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_ganga/num_survivors)*100, 0.1)]% strength.</b>"
+			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_ganga/num_survivors)*100, 0.1)]% influence.</b>"
 		world << "<br><font size=2><b>The [gang_name("A")] Gang bosses were:</b></font>"
 		gang_membership_report(A_bosses)
 		world << "<br><font size=2><b>The [gang_name("A")] Gangsters were:</b></font>"
@@ -415,7 +416,7 @@
 
 	if(B_bosses.len || B_gangsters.len)
 		if(winner == "A" || winner == "B")
-			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_gangb/num_survivors)*100, 0.1)]% strength</b>"
+			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_gangb/num_survivors)*100, 0.1)]% influence.</b>"
 		world << "<br><font size=2><b>The [gang_name("B")] Gang bosses were:</b></font>"
 		gang_membership_report(B_bosses)
 		world << "<br><font size=2><b>The [gang_name("B")] Gangsters were:</b></font>"
@@ -437,6 +438,6 @@
 		else
 			text += "body destroyed"
 		text += ")"
-	text += "<br>"
+	text += "<br><br>"
 
 	world << text
