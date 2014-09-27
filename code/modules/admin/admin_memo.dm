@@ -49,9 +49,9 @@
 		else
 			ckey = src.ckey
 		if(ckey)
+			message_admins("<span class='admin'>[src.ckey] removed [ckey]'s Memo.</span>")
+			log_admin("[src.ckey] removed Memo created by [F[memo]].")
 			for(var/memo in F.dir)
-				message_admins("<span class='admin'>[src.ckey] removed [ckey]'s Memo.</span>")
-				log_admin("[src.ckey] removed Memo created by [F[memo]].")
 				F.dir.Remove(ckey)
 
 #undef MEMOFILE
