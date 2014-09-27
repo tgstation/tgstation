@@ -626,7 +626,7 @@
 	var/obj/item/device/pda/pda = wear_id
 	if (istype(pda) && pda.id)
 		id = pda.id
-	if (isty
+	if (istype(id))
 		return id
 
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
@@ -1624,13 +1624,13 @@ mob/living/carbon/human/yank_out_object()
 	if(force_organs || !src.organs || !src.organs.len)
 		src.species.create_organs(src)
 	src.see_in_dark = species.darksight
-	if(src.see_in_dark > 2)	
+	if(src.see_in_dark > 2)
 		src.see_invisible = SEE_INVISIBLE_LEVEL_ONE
-	else					
+	else
 		src.see_invisible = SEE_INVISIBLE_LIVING
 	if((src.species.default_mutations.len > 0) || (src.species.default_blocks.len > 0))
 		src.do_deferred_species_setup = 1
-	spawn() 
+	spawn()
 		src.update_icons()
 		src.species.handle_post_spawn(src)
 		return 1
@@ -1712,7 +1712,7 @@ mob/living/carbon/human/yank_out_object()
  		// Might need re-wording.
 		user << "<span class='alert'>There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"] to inject into.</span>"
 
-		
+
 /mob/living/carbon/human/canSingulothPull(var/obj/machinery/singularity/singulo)
 	if(!..())
 		return 0

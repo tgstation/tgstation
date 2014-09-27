@@ -568,16 +568,9 @@
 		..()
 		reagents.add_reagent("nutriment", 1)*/
 
-<<<<<<< HEAD
 /obj/item/weapon/reagent_containers/food/snacks/appendix //yes, this is the same as meat. I might do something different in future
 	name = "appendix"
 	desc = "An appendix which looks perfectly healthy."
-=======
-/obj/item/weapon/reagent_containers/food/snacks/organ
-
-	name = "organ"
-	desc = "It's good for you."
->>>>>>> 4b4a57b... Organ rewrite mapclean attempt.
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "appendix"
 	New()
@@ -586,14 +579,6 @@
 		reagents.add_reagent("toxin", rand(1,3))
 		src.bitesize = 3
 
-<<<<<<< HEAD
-/obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed
-	name = "inflamed appendix"
-	desc = "An appendix which appears to be inflamed."
-	icon_state = "appendixinflamed"
-
-=======
->>>>>>> 4b4a57b... Organ rewrite mapclean attempt.
 /obj/item/weapon/reagent_containers/food/snacks/tofu
 	name = "Tofu"
 	icon_state = "tofu"

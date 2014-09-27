@@ -238,7 +238,7 @@
 
 /mob/living/proc/can_inject()
 	return 1
-	
+
 /mob/living/proc/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0)
 	  return 0 // only carbon liveforms have this proc
 				// now with silicons
@@ -520,7 +520,7 @@
 	//Getting out of someone's inventory.
 	if(istype(src.loc,/obj/item/weapon/holder))
 		var/obj/item/weapon/holder/H = src.loc //Get our item holder.
-			H.loc = get_turf(H)
+		H.loc = get_turf(H)
 		if(istype(M))
 			M.drop_from_inventory(H)
 			M << "[H] wriggles out of your grip!"

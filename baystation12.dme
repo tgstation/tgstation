@@ -1333,7 +1333,7 @@
 #include "code\ZAS\Debug.dm"
 #include "code\ZAS\Diagnostic.dm"
 #include "code\ZAS\Fire.dm"
-#include "code\ZAS\Phoron.dm"
+#include "code\ZAS\Plasma.dm"
 #include "code\ZAS\Turf.dm"
 #include "code\ZAS\Variable Settings.dm"
 #include "code\ZAS\Zone.dm"
