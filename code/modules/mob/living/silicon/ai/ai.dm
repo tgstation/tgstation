@@ -48,9 +48,10 @@ var/list/ai_list = list()
 	var/explosive = 0 //does the AI explode when it dies?
 
 	var/mob/living/silicon/ai/parent = null
+	var/camera_light_on = 0
+	var/list/obj/machinery/camera/lit_cameras = list()
 
-	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
-	var/datum/trackable/track = null
+	var/datum/trackable/track = new()
 
 	var/last_paper_seen = null
 	var/can_shunt = 1
@@ -467,14 +468,11 @@ var/list/ai_list = list()
 		updatehealth()
 
 /mob/living/silicon/ai/reset_view(atom/A)
-	if(current)
-		current.SetLuminosity(0)
+	if (camera_light_on)
+		light_cameras()
 	if(istype(A,/obj/machinery/camera))
 		current = A
 	..()
-	if(istype(A,/obj/machinery/camera))
-		if(camera_light_on)	A.SetLuminosity(AI_CAMERA_LUMINOSITY)
-		else				A.SetLuminosity(0)
 
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
@@ -687,43 +685,46 @@ var/list/ai_list = list()
 
 //Toggles the luminosity and applies it by re-entereing the camera.
 /mob/living/silicon/ai/proc/toggle_camera_light()
-
 	if(stat != CONSCIOUS)
 		return
 
 	camera_light_on = !camera_light_on
-	src << "Camera lights [camera_light_on ? "activated" : "deactivated"]."
-	if(!camera_light_on)
-		if(src.current)
-			src.current.SetLuminosity(0)
-	else
-		src.lightNearbyCamera()
 
+	if (!camera_light_on)
+		src << "Camera lights deactivated."
 
+		for (var/obj/machinery/camera/C in lit_cameras)
+			C.SetLuminosity(0)
+			lit_cameras = list()
 
-// Handled camera lighting, when toggled.
-// It will get the nearest camera from the eyeobj, lighting it.
+		return
 
-/mob/living/silicon/ai/proc/lightNearbyCamera()
-	if(camera_light_on && camera_light_on < world.timeofday)
-		if(src.current)
-			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
-			if(camera && src.current != camera)
-				src.current.SetLuminosity(0)
-				if(!camera.light_disabled)
-					src.current = camera
-					src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)
-				else
-					src.current = null
-			else if(isnull(camera))
-				src.current.SetLuminosity(0)
-				src.current = null
-		else
-			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
-			if(camera && !camera.light_disabled)
-				src.current = camera
-				src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)
-		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
+	light_cameras()
+
+	src << "Camera lights activated."
+	return
+
+//AI_CAMERA_LUMINOSITY
+
+/mob/living/silicon/ai/proc/light_cameras()
+	var/list/obj/machinery/camera/add = list()
+	var/list/obj/machinery/camera/remove = list()
+	var/list/obj/machinery/camera/visible = list()
+	for (var/datum/camerachunk/CC in eyeobj.visibleCameraChunks)
+		for (var/obj/machinery/camera/C in CC.cameras)
+			if (!C.can_use() || C.light_disabled || get_dist(C, eyeobj) > 7)
+				continue
+			visible |= C
+
+	add = visible - lit_cameras
+	remove = lit_cameras - visible
+
+	for (var/obj/machinery/camera/C in remove)
+		C.SetLuminosity(0)
+		lit_cameras -= C
+	for (var/obj/machinery/camera/C in add)
+		C.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		lit_cameras |= C
 
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W as obj, mob/user as mob)

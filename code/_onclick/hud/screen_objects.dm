@@ -429,13 +429,13 @@
 		if("Show Camera List")
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
-				var/camera = input(AI) in AI.get_camera_list()
+				var/camera = input(AI, "Choose which camera you want to view", "Cameras") as null|anything in AI.get_camera_list()
 				AI.ai_camera_list(camera)
 
 		if("Track With Camera")
 			if(isAI(usr))
 				var/mob/living/silicon/ai/AI = usr
-				var/target_name = input(AI) in AI.trackable_mobs()
+				var/target_name = input(AI, "Choose who you want to track", "Tracking") as null|anything in AI.trackable_mobs()
 				AI.ai_camera_track(target_name)
 
 		if("Toggle Camera Light")

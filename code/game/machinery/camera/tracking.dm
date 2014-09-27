@@ -1,5 +1,7 @@
 /mob/living/silicon/ai/proc/get_camera_list()
 
+	track.cameras.Cut()
+
 	if(src.stat == 2)
 		return
 
@@ -10,28 +12,26 @@
 	camera_sort(L)
 
 	var/list/T = list()
-	T["Cancel"] = "Cancel"
+
 	for (var/obj/machinery/camera/C in L)
 		var/list/tempnetwork = C.network&src.network
 		if (tempnetwork.len)
 			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 
-	track = new()
 	track.cameras = T
 	return T
 
 
-/mob/living/silicon/ai/proc/ai_camera_list(var/camera in get_camera_list())
+/mob/living/silicon/ai/proc/ai_camera_list(var/camera)
 
 	if(src.stat == 2)
 		src << "You can't list the cameras because you are dead!"
 		return
 
-	if (!camera || camera == "Cancel")
+	if (!camera)
 		return 0
 
 	var/obj/machinery/camera/C = track.cameras[camera]
-	track = null
 	src.eyeobj.setLoc(C)
 
 	return
@@ -46,10 +46,14 @@
 
 /mob/living/silicon/ai/proc/trackable_mobs()
 
+	track.names.Cut()
+	track.namecounts.Cut()
+	track.humans.Cut()
+	track.others.Cut()
+
 	if(usr.stat == 2)
 		return list()
 
-	var/datum/trackable/TB = new()
 	for(var/mob/living/M in mob_list)
 		// Easy checks first.
 		// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
@@ -87,22 +91,21 @@
 			continue
 
 		var/name = M.name
-		if (name in TB.names)
-			TB.namecounts[name]++
-			name = text("[] ([])", name, TB.namecounts[name])
+		if (name in track.names)
+			track.namecounts[name]++
+			name = text("[] ([])", name, track.namecounts[name])
 		else
-			TB.names.Add(name)
-			TB.namecounts[name] = 1
+			track.names.Add(name)
+			track.namecounts[name] = 1
 		if(human)
-			TB.humans[name] = M
+			track.humans[name] = M
 		else
-			TB.others[name] = M
+			track.others[name] = M
 
-	var/list/targets = sortList(TB.humans) + sortList(TB.others)
-	src.track = TB
+	var/list/targets = sortList(track.humans) + sortList(track.others)
 	return targets
 
-/mob/living/silicon/ai/proc/ai_camera_track(var/target_name in trackable_mobs())
+/mob/living/silicon/ai/proc/ai_camera_track(var/target_name)
 
 	if(src.stat == 2)
 		src << "You can't track with camera because you are dead!"
@@ -111,7 +114,7 @@
 		src.cameraFollow = null
 
 	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
-	src.track = null
+
 	ai_actual_track(target)
 
 /mob/living/silicon/ai/proc/open_nearest_door(mob/living/target as mob)
