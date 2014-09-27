@@ -50,7 +50,7 @@
 			ckey = src.ckey
 		if(ckey)
 			message_admins("<span class='admin'>[src.ckey] removed [ckey]'s Memo.</span>")
-			log_admin("[src.ckey] removed Memo created by [F[memo]].")
+			log_admin("[src.ckey] removed Memo created by [ckey].")
 			for(var/memo in F.dir)
 				F.dir.Remove(ckey)
 
