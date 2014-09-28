@@ -134,23 +134,23 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote(pick(emote_see),1)
+							emote("me", 1, pick(emote_see))
 						else
-							emote(pick(emote_hear),2)
+							emote("me", 2, pick(emote_see))
 				else
 					say(pick(speak))
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote(pick(emote_see),1)
+					emote("me", 1, pick(emote_see))
 				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote(pick(emote_hear),2)
+					emote("me", 2, pick(emote_see))
 				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
-						emote(pick(emote_see),1)
+						emote("me", 1, pick(emote_see))
 					else
-						emote(pick(emote_hear),2)
+						emote("me", 2, pick(emote_see))
 
 
 	//Atmos
@@ -243,14 +243,13 @@
 			return "[emote], \"[text]\""
 	return "says, \"[text]\"";
 
-/mob/living/simple_animal/emote(var/act)
+/mob/living/simple_animal/emote(var/act, var/m_type=1, var/message = null)
 	if(stat)
 		return
 	if(act == "scream")
-		act = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
-		visible_message("<B>[src]</B> [act].")
-		return
-	..(act)
+		message = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
+		act = "me"
+	..(act, m_type, message)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
