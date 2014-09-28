@@ -897,7 +897,6 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 20
 	containername = "sandstone blocks crate"
 
-
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1150,3 +1149,10 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/under/suit_jacket/tan)
 	cost = 30 //Lots of very expensive items. You gotta pay up to look good!
 	containername = "formal-wear crate"
+
+/datum/supply_packs/misc/noslipfloor
+	name = "High-traction tiles"
+	contains = list(/obj/item/stack/tile/noslip)
+	amount = 20
+	cost = 20
+	containername = "high-traction floor tiles"
