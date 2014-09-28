@@ -206,9 +206,3 @@
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
-
-/turf/simulated/floor/noslip
-	name = "high-traction floor"
-	icon_state = "noslip"
-	CAN_BE_SLIPPERY = 0
-	floor_tile = new/obj/item/stack/tile/noslip
