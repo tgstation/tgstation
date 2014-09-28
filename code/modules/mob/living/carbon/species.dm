@@ -64,6 +64,9 @@ var/global/list/whitelisted_species = list("Human")
 	var/brute_resist    // Physical damage reduction.
 	var/burn_resist     // Burn damage reduction.
 
+	var/brute_mod 		// brute multiplier
+	var/burn_mod		// burn multiplier
+
 	// For grays
 	var/max_hurt_damage = 5 // Max melee damage dealt + 5 if hulk
 	var/list/default_mutations = list()
@@ -103,8 +106,6 @@ var/global/list/whitelisted_species = list("Human")
 		"appendix" = /datum/organ/internal/appendix,
 		"eyes" =     /datum/organ/internal/eyes
 		)
-/datum/species/New()
-	unarmed = new unarmed_type()
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
@@ -293,9 +294,6 @@ var/global/list/whitelisted_species = list("Human")
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
 					H.fire_alert = max(H.fire_alert, 2)
 	return 1
-
-/datum/species/proc/handle_post_spawn(var/mob/living/carbon/C) //Handles anything not already covered by basic species assignment.
-	return
 
 // Used for species-specific names (Vox, etc)
 /datum/species/proc/makeName(var/gender,var/mob/living/carbon/C=null)

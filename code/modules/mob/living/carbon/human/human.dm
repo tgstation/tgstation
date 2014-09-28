@@ -1601,41 +1601,29 @@ mob/living/carbon/human/yank_out_object()
 	else
 		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
 
-/mob/living/carbon/human/proc/set_species(var/new_species, var/force_organs, var/default_colour)
+/mob/living/carbon/human/proc/set_species(var/new_species_name, var/force_organs, var/default_colour)
 
 	if(new_species_name)
-		if(src.species && src.species.name && (src.species.name == new_species_name))
-			return
-	else if(src.dna)
-		new_species_name = src.dna.species
-	else
-		new_species_name = "Human"
+		if(src.species && src.species.name && (src.species.name == new_species_name)) return
+	else if(src.dna)	new_species_name = src.dna.species
+	else	new_species_name = "Human"
+
 	if(src.species)
-		if(src.species.language)
-			src.remove_language(species.language)
-		if(src.species.abilities)
-			src.verbs -= species.abilities
+		if(src.species.language)	src.remove_language(species.language)
+		if(src.species.abilities)	src.verbs -= species.abilities
 	src.species = all_species[new_species_name]
 	if(src.species.abilities)
-		if(src.species.language)
-			src.add_language(species.language)
-		if(src.species.abilities)
-			src.verbs |= species.abilities
-	if(force_organs || !src.organs || !src.organs.len)
-		src.species.create_organs(src)
+		if(src.species.language)	src.add_language(species.language)
+		if(src.species.abilities)	src.verbs |= species.abilities
+	if(force_organs || !src.organs || !src.organs.len)	src.species.create_organs(src)
 	src.see_in_dark = species.darksight
-	if(src.see_in_dark > 2)
-		src.see_invisible = SEE_INVISIBLE_LEVEL_ONE
-	else
-		src.see_invisible = SEE_INVISIBLE_LIVING
+	if(src.see_in_dark > 2)	src.see_invisible = SEE_INVISIBLE_LEVEL_ONE
+	else					src.see_invisible = SEE_INVISIBLE_LIVING
 	if((src.species.default_mutations.len > 0) || (src.species.default_blocks.len > 0))
 		src.do_deferred_species_setup = 1
-	spawn()
-		src.update_icons()
-		src.species.handle_post_spawn(src)
-		return 1
-	else
-		return 0
+	spawn()	src.update_icons()
+	src.species.handle_post_spawn(src)
+	return 1
 
 /mob/living/carbon/human/proc/bloody_doodle()
 	set category = "IC"

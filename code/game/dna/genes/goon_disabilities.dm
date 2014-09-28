@@ -410,7 +410,7 @@
 		//playsound(H.loc, 'loudcrunch2.ogg', 50, 0)
 		var/mob/living/carbon/human/skellington/nH = new /mob/living/carbon/human/skellington(H.loc, delay_ready_dna=1)
 		H.real_name = H.real_name
-		H.name = "[H.name]'s skeleton"
+		nH.name = "[H.name]'s skeleton"
 		//H.decomp_stage = 4
 		H.brain_op_stage = 4
 		H.gib(1)

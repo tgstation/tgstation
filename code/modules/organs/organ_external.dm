@@ -740,7 +740,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 			var/obj/item/clothing/suit/space/suit = H.wear_suit
 
-			if(isnull(suit.supporting_limbs))
+			if(!suit.supporting_limbs)
 				return
 
 			owner << "You feel \the [suit] constrict about your [display_name], supporting it."
@@ -1042,10 +1042,10 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 			else
 				base.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
 
-	if(base)
+/*	if(base)
 		//Changing limb's skin color to match owner
 		if(!H.species || H.species.flags & HAS_SKIN_COLOR)
-			base.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
+			base.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)*/
 
 	icon = base
 	dir = SOUTH

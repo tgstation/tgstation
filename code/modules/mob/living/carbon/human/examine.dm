@@ -7,7 +7,7 @@
 		return
 
 	var/skipgloves = 0
-	var/skipsuitstorage = 0
+	//var/skipsuitstorage = 0
 	var/skipjumpsuit = 0
 	var/skipshoes = 0
 	var/skipmask = 0
