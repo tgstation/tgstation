@@ -13,12 +13,12 @@
 	return
 
 
-/obj/effect/decal/cleanable/crayon/New(location,main = "#FFFFFF", var/type = "rune")
+/obj/effect/decal/cleanable/crayon/New(location, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune")
 	..()
 	loc = location
 
-	name = type
-	desc = "A [type] drawn in crayon."
+	name = e_name
+	desc = "A [name] drawn in crayon."
 
 	icon_state = type
 	color = main

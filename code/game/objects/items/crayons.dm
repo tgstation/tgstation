@@ -36,15 +36,21 @@
 	uses = 0
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user as mob)
-	dat += "<center><span style='border:1px solid #161616; background-color: [color];'>&nbsp;&nbsp;&nbsp;</span><a href='?src=\ref[src];color=1'>Change color</a></center>"
+	update_window(user)
+
+/obj/item/toy/crayon/mime/update_window(mob/living/user as mob)
+	dat += "<center><span style='border:1px solid #161616; background-color: [colour];'>&nbsp;&nbsp;&nbsp;</span><a href='?src=\ref[src];color=1'>Change color</a></center>"
 	..()
 
 /obj/item/toy/crayon/mime/Topic(href,href_list)
+	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+		return
 	if(href_list["color"])
 		if(colour != "#FFFFFF")
 			colour = "#FFFFFF"
 		else
 			colour = "#000000"
+		update_window(usr)
 	else
 		..()
 
@@ -55,11 +61,19 @@
 	uses = 0
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user as mob)
+	update_window(user)
+
+/obj/item/toy/crayon/rainbow/update_window(mob/living/user as mob)
 	dat += "<center><span style='border:1px solid #161616; background-color: [colour];'>&nbsp;&nbsp;&nbsp;</span><a href='?src=\ref[src];color=1'>Change color</a></center>"
 	..()
 
 /obj/item/toy/crayon/rainbow/Topic(href,href_list[])
+
 	if(href_list["color"])
-		colour = input(usr, "Please select colour.", "Crayon colour") as color
+		var/temp = input(usr, "Please select colour.", "Crayon colour") as color
+		if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+			return
+		colour = temp
+		update_window(usr)
 	else
 		..()

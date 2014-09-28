@@ -152,7 +152,7 @@
 /obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (flag)
 		return
-	if(!user.IsAdvancedToolUser())
+	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 	src.add_fingerprint(user)
@@ -435,6 +435,9 @@
 	drawtype = pick(pick(graffiti), pick(letters), "rune[rand(1,6)]")
 
 /obj/item/toy/crayon/attack_self(mob/living/user as mob)
+	update_window(user)
+
+/obj/item/toy/crayon/proc/update_window(mob/living/user as mob)
 	dat += "<center><h2>Currently selected: [drawtype]</h2><br>"
 	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter</a>"
 	dat += "<hr>"
@@ -457,35 +460,40 @@
 	dat += "<hr>"
 	var/datum/browser/popup = new(user, "crayon", name, 300, 500)
 	popup.set_content(dat)
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	dat = ""
 
 /obj/item/toy/crayon/Topic(href, href_list, hsrc)
+	var/temp = "a"
 	switch(href_list["type"])
 		if("random_letter")
-			drawtype = pick(letters)
+			temp = pick(letters)
 		if("letter")
-			drawtype = input("Choose the letter.", "Crayon scribbles") in letters
+			temp = input("Choose the letter.", "Crayon scribbles") in letters
 		if("random_rune")
-			drawtype = "rune[rand(1,6)]"
+			temp = "rune[rand(1,6)]"
 		if("random_graffiti")
-			drawtype = pick(graffiti)
+			temp = pick(graffiti)
 		else
-			drawtype = href_list["type"]
+			temp = href_list["type"]
+	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+		return
+	drawtype = temp
+	update_window(usr)
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
 	if(istype(target,/turf/simulated/floor))
+		var/temp = "rune"
 		if(letters.Find(drawtype))
-			user << "You start drawing a letter on the [target.name]."
+			temp = "letter"
 		else if(graffiti.Find(drawtype))
-			user << "You start drawing graffiti on the [target.name]."
-		else
-			user << "You start drawing a rune on the [target.name]."
+			temp = "graffiti"
+		user << "You start drawing a [temp] on the [target.name]."
 		if(instant || do_after(user, 50))
-			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype)
-			user << "You finish drawing."
+			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp)
+			user << "You finish drawing [temp]."
 			if(uses)
 				uses--
 				if(!uses)
