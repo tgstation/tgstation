@@ -27,31 +27,6 @@
  * Backpack Types
  */
 
-/obj/item/weapon/storage/flatpack
-	name = "smuggler's flatpack"
-	desc = "A very slim-line backpack that can easily fit into tight spaces."
-	icon_state = "backpack"
-	item_state = "backpack"
-	level = 1
-	storage_slots = 6
-	max_combined_w_class = 18
-
-/obj/item/weapon/storage/flatpack/hide(var/intact)
-	if(intact)
-		invisibility = 101
-		anchored = 1 //otherwise you can pull, cover it, and drag around an invisible backpack.
-		icon_state = "term"
-	else
-		invisibility = initial(invisibility)
-		anchored = 0
-		icon_state = initial(icon_state)
-
-/obj/item/weapon/storage/flatpack/New()
-	..()
-	new /obj/item/stack/tile/plasteel(src)
-	new /obj/item/weapon/crowbar(src)
-
-
 /obj/item/weapon/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
@@ -109,6 +84,12 @@
 	desc = "It's a backpack made by Honk! Co."
 	icon_state = "clownpack"
 	item_state = "clownpack"
+
+/obj/item/weapon/storage/backpack/mime
+	name = "Parcel Parceaux"
+	desc = "A silent backpack made for those silent workers. Silence Co."
+	icon_state = "mimepack"
+	item_state = "mimepack"
 
 /obj/item/weapon/storage/backpack/medic
 	name = "medical backpack"
@@ -201,8 +182,26 @@
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
 
-/obj/item/weapon/storage/backpack/mime
-	name = "Parcel Parceaux"
-	desc = "A silent backpack made for those silent workers. Silence Co."
-	icon_state = "mimepack"
-	item_state = "mimepack"
+/obj/item/weapon/storage/backpack/satchel_flat
+	name = "smuggler's satchel"
+	desc = "A very slim satchel that can easily fit into tight spaces."
+	icon_state = "satchel-flat"
+	item_state = "satchel-norm"
+	level = 1
+	storage_slots = 6
+	max_combined_w_class = 18
+
+/obj/item/weapon/storage/flatpack/hide(var/intact)
+	if(intact)
+		invisibility = 101
+		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
+		icon_state = "[initial(icon_state)]2"
+	else
+		invisibility = initial(invisibility)
+		anchored = 0
+		icon_state = initial(icon_state)
+
+/obj/item/weapon/storage/flatpack/New()
+	..()
+	new /obj/item/stack/tile/plasteel(src)
+	new /obj/item/weapon/crowbar(src)
