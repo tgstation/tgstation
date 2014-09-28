@@ -23,6 +23,7 @@ var/list/plasma_icons = list("plasma","plasma_dam")
 var/list/diamond_icons = list("diamond","diamond_dam")
 var/list/uranium_icons = list("uranium","uranium_dam")
 var/list/bananium_icons = list("bananium","bananium_dam")
+var/list/noslip_icons = list("noslip","noslip-damaged1","noslip-damaged2","noslip-damaged3","noslip-scorched1","noslip-scorched2")
 
 /turf/simulated/floor
 
@@ -198,6 +199,11 @@ turf/simulated/floor/proc/update_icon()
 		if(!broken && !burnt)
 			if( !(icon_state in bananium_icons) )
 				icon_state = "bananium"
+	else if(is_noslip_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in bananium_icons) )
+				icon_state = "noslip"
+				CAN_BE_SLIPPERY = 0
 
 	spawn(1)
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
@@ -302,6 +308,12 @@ turf/simulated/floor/proc/update_icon()
 	else
 		return 0
 
+/turf/simulated/floor/proc/is_noslip_floor()
+	if(istype(floor_tile, /obj/item/stack/tile/noslip))
+		return 1
+	else
+		return 0
+
 /turf/simulated/floor/is_plating()
 	if(!floor_tile)
 		return 1
@@ -348,6 +360,9 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_plasma_floor())
 		src.icon_state = "plasma_dam"
 		broken = 1
+	else if(is_noslip_floor())
+		src.icon_state = "noslip-damaged[pick("1","2","3")]"
+		broken = 1
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
@@ -385,6 +400,9 @@ turf/simulated/floor/proc/update_icon()
 		burnt = 1
 	else if(is_uranium_floor())
 		src.icon_state = "uranium_dam"
+		burnt = 1
+	else if(is_noslip_floor())
+		src.icon_state = "noslip-scorched[pick("1","2")]"
 		burnt = 1
 
 //This proc will delete the floor_tile and the update_iocn() proc will then change the icon_state of the turf
