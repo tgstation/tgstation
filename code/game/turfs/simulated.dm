@@ -8,7 +8,7 @@
 	nitrogen = MOLES_N2STANDARD
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
-	var/CAN_BE_SLIPPERY = 1 //0: doesn't slip if wet or lubed | 1: slips if wet or lubed (default)
+	var/can_be_slippery = 1 //0: doesn't slip if wet or lubed | 1: slips if wet or lubed (default)
 
 /turf/simulated/New()
 	..()
@@ -50,7 +50,7 @@
 						O.footstep++
 				else
 					playsound(src, "clownstep", 20, 1)
-		if(CAN_BE_SLIPPERY)
+		if(can_be_slippery)
 			switch (src.wet)
 				if(1) //wet floor
 					if(!M.slip(4, 2, null, (NO_SLIP_WHEN_WALKING|STEP)))
