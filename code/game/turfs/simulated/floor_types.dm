@@ -210,5 +210,5 @@
 /turf/simulated/floor/noslip
 	name = "high-traction floor"
 	icon_state = "noslip"
-	CAN_BE_SLIPPERY = 0
+	can_be_slippery = 0
 	floor_tile = new/obj/item/stack/tile/noslip
