@@ -77,7 +77,6 @@
 	if(!ishuman(M)) user << "<span class='warning'>You can't defibrilate [M]. You don't even know where to put the paddles!</span>"
 	else if(!src.charges) user << "<span class='warning'>[src] is out of charges.</span>"
 	else if(!src.ready) user << "<span class='notice'>Take the paddles out first.</span>"
-	else if(world.time < src.nextShock) user << "<span class='warning'>[src] is still charging back up.</span>"
 	else
 		var/mob/living/carbon/human/target = M
 		if(!(target.stat == 2 || target.stat == DEAD))
