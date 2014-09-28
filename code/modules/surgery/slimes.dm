@@ -20,7 +20,7 @@
 	max_duration = 50
 
 	can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-		return ..() && target.core_removal_stage == 0
+		return ..() && istype(target) && target.core_removal_stage == 0
 
 	begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts cutting through [target]'s flesh with \the [tool].", \
@@ -46,7 +46,7 @@
 	max_duration = 50
 
 	can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-		return ..() && target.core_removal_stage == 1
+		return ..() && istype(target) && target.core_removal_stage == 1
 
 	begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts cutting [target]'s silky innards apart with \the [tool].", \
