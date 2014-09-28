@@ -3,12 +3,12 @@
 	config_tag = "meteor"
 	var/const/waittime_l = 600 //Lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //Upper bound on time before intercept arrives (in tenths of seconds)
-	var/const/meteorannouncedelay_l = 60 //Lower bound on announcement, here 10 minutes
-	var/const/meteorannouncedelay_h = 90 //Upper bound on announcement, here 15 minutes
+	var/const/meteorannouncedelay_l = 6000 //Lower bound on announcement, here 10 minutes
+	var/const/meteorannouncedelay_h = 9000 //Upper bound on announcement, here 15 minutes
 	var/meteorannouncedelay = 7500 //Final announcement delay, this is a failsafe value
 	var/const/supplydelay = 100 //Delay before meteor supplies are spawned in tenth of seconds
-	var/const/meteordelay_l = 18 //Lower bound to meteor arrival, here 3 minutes
-	var/const/meteordelay_h = 30 //Higher bound to meteor arrival, here 5 minutes
+	var/const/meteordelay_l = 1800 //Lower bound to meteor arrival, here 3 minutes
+	var/const/meteordelay_h = 3000 //Higher bound to meteor arrival, here 5 minutes
 	var/const/meteorshuttlemultiplier = 4 //How much more will we need to hold out ? Here 40 minutes until shuttle arrives. 1 is 10 minutes
 	var/meteordelay = 2400 //Final meteor delay, failsafe as above
 	var/nometeors = 1 //Can we send the meteors ?
