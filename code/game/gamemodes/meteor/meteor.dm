@@ -3,14 +3,14 @@
 	config_tag = "meteor"
 	var/const/waittime_l = 600 //Lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //Upper bound on time before intercept arrives (in tenths of seconds)
-	var/const/meteorannouncedelay_l = 9000 //Lower bound on announcement, here 15 minutes
-	var/const/meteorannouncedelay_h = 12000 //Upper bound on announcement, here 20 minutes
-	var/meteorannouncedelay = 10500 //Final announcement delay, this is a failsafe value
-	var/const/supplydelay = 100 //Delay before meteor supplies are spawned in tenth of seconds. Anyone in the way will be GIBBED
-	var/const/meteordelay_l = 3000 //Lower bound to meteor arrival, here 5 minutes
-	var/const/meteordelay_h = 6000 //Higher bound to meteor arrival, here 10 minutes
-	var/const/meteorshuttlemultiplier = 3.5 //How much more will we need to hold out ? Here 35 minutes until shuttle arrives. 1 is 10 minutes
-	var/meteordelay = 4500 //Final meteor delay, failsafe as above
+	var/const/meteorannouncedelay_l = 60 //Lower bound on announcement, here 10 minutes
+	var/const/meteorannouncedelay_h = 90 //Upper bound on announcement, here 15 minutes
+	var/meteorannouncedelay = 7500 //Final announcement delay, this is a failsafe value
+	var/const/supplydelay = 100 //Delay before meteor supplies are spawned in tenth of seconds
+	var/const/meteordelay_l = 18 //Lower bound to meteor arrival, here 3 minutes
+	var/const/meteordelay_h = 30 //Higher bound to meteor arrival, here 5 minutes
+	var/const/meteorshuttlemultiplier = 4 //How much more will we need to hold out ? Here 40 minutes until shuttle arrives. 1 is 10 minutes
+	var/meteordelay = 2400 //Final meteor delay, failsafe as above
 	var/nometeors = 1 //Can we send the meteors ?
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 	required_players = 0
@@ -49,9 +49,9 @@
 
 	spawn(meteorannouncedelay)
 		if(prob(70)) //Slighty off-scale
-			command_alert("A meteor storm has been detected in proximity of [station_name()] and is expected to strike within [round((rand(meteordelay - 900, meteordelay + 900))/600)] minutes. A backup emergency shuttle is being dispatched and emergency gear should be teleported into your station's Bar area in [supplydelay/10] seconds. Make good use of these supplies to build a safe zone and good luck.", "Space Weather Automated Announcements")
+			command_alert("A meteor storm has been detected in proximity of [station_name()] and is expected to strike within [round((rand(meteordelay - 600, meteordelay + 600))/600)] minutes. A backup emergency shuttle is being dispatched and emergency gear should be teleported into your station's Bar area in [supplydelay/10] seconds. Make good use of these supplies to build a safe zone and good luck.", "Space Weather Automated Announcements")
 		else //Oh boy
-			command_alert("A meteor storm has been detected in proximity of [station_name()] and is expected to strike within [round((rand(meteordelay - 2400, meteordelay + 2400))/600)] minutes. A backup emergency shuttle is being dispatched and emergency gear should be teleported into your station's Bar area in [supplydelay/10] seconds. Make good use of these supplies to build a safe zone and good luck.", "Space Weather Automated Announcements")
+			command_alert("A meteor storm has been detected in proximity of [station_name()] and is expected to strike within [round((rand(meteordelay - 1200, meteordelay + 3000))/600)] minutes. A backup emergency shuttle is being dispatched and emergency gear should be teleported into your station's Bar area in [supplydelay/10] seconds. Make good use of these supplies to build a safe zone and good luck.", "Space Weather Automated Announcements")
 			world << sound('sound/AI/meteorround.ogg')
 		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world) //Borg RCDs are fairly cheap, so disabling those
 			rcd.disabled = 1
@@ -275,10 +275,10 @@
 			nometeors = 0
 
 /datum/game_mode/meteor/process()
-	if(nometeors == 0)
-		meteors_in_wave = (rand(1,10))*5 //Between 5 and 50 meteors, figures
-		if(prob(90)) //90 % chance of a wave happening
-			meteor_wave(meteors_in_wave)
+	if(!nometeors)
+		meteors_in_wave = (rand(2,20))*5 //Between 10 and 100 meteors in 5 intervals, figures
+		meteor_wave(meteors_in_wave)
+	return
 
 /datum/game_mode/meteor/declare_completion()
 	var/text
