@@ -29,7 +29,7 @@
 				initiate(user, target, target_zone, tool, surgery)
 				return 1
 			else
-				user << "<span class='notice'>You need to expose [target]'s [target_zone] to perform surgery on it!</span>"
+				user << "<span class='notice'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>"
 				return 1	//returns 1 so we don't stab the guy in the dick or wherever.
 	return 0
 
@@ -77,7 +77,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.apply_damage(75,"brute","[target_zone]")
-		user.visible_message("<span class='notice'>[user] saws [target]'s [target_zone] open!")
+		user.visible_message("<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!")
 	return 1
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

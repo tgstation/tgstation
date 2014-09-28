@@ -30,7 +30,7 @@
 	new /obj/item/clothing/under/rank/miner(src)
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/device/mining_scanner(src)
+	new /obj/item/device/t_scanner/mining_scanner(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/device/flashlight/lantern(src)
 	new /obj/item/weapon/shovel(src)

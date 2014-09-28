@@ -40,7 +40,7 @@
 		agent_number--
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		synd_mind.need_job_assign = 0
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
 	return 1
@@ -116,6 +116,10 @@
 		greet_syndicate(synd_mind)
 		equip_syndicate(synd_mind.current)
 
+		if (nuke_code)
+			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
+			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+
 		if(!leader_selected)
 			prepare_syndicate_leader(synd_mind, nuke_code)
 			leader_selected = 1
@@ -144,26 +148,21 @@
 	synd_mind.current << "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>"
 	synd_mind.current << "<B>If you feel you are not up to this task, give your ID to another operative.</B>"
 
+	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
+	if(foundIDs.len)
+		for(var/obj/item/weapon/card/id/ID in foundIDs)
+			ID.access += access_syndicate_leader
+	else
+		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
+
 	if (nuke_code)
-		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-		synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
-
-		var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
-
-		if(foundIDs.len)
-			for(var/obj/item/weapon/card/id/ID in foundIDs)
-				ID.access += access_syndicate_leader
-		else
-			message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
-
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = synd_mind.current
 		P.loc = H.loc
-		H.equip_to_slot_or_del(P, slot_r_store, 0)
+		H.equip_to_slot_or_del(P, slot_r_hand, 0)
 		H.update_icons()
-
 	else
 		nuke_code = "code will be provided later"
 	return
@@ -211,7 +210,7 @@
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
 	U.hidden_uplink.uplink_owner="[synd_mob.key]"
-	U.hidden_uplink.uses = 10
+	U.hidden_uplink.uses = 20
 	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)

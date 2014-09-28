@@ -9,7 +9,7 @@
 
 ##DOWNLOADING
 
-There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/index.php/Downloading_the_source_code
+There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/Downloading_the_source_code
 
 Option 1: Download the source code as a zip by clicking the ZIP button in the
 code tab of https://github.com/tgstation/-tg-station
@@ -25,7 +25,7 @@ Then you simply search for the -tg-station repository and click the big clone
 button.
 
 Option 3:
-Follow this: http://www.tgstation13.org/wiki/index.php/Setting_up_git
+Follow this: http://www.tgstation13.org/wiki/Setting_up_git
 (It's recommended that you use git-scm, as above, rather than the git CLI
 suggested by the guide)
 
@@ -109,7 +109,7 @@ To enable an away mission open fileList.txt in the _maps/RandomZLevels directory
 
 The SQL backend for the library and stats tracking requires a 
 MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
-schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/index.php/Downloading_the_source_code#Setting_up_the_database
+schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
 
 ##IRC BOT SETUP
 

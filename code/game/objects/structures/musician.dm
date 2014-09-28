@@ -57,7 +57,7 @@
 		return
 	// and play
 	var/turf/source = get_turf(instrumentObj)
-	for(var/mob/M in hearers(15, source))
+	for(var/mob/M in get_hearers_in_view(15, source))
 		M.playsound_local(source, soundfile, 100, falloff = 5)
 
 /datum/song/proc/updateDialog(mob/user as mob)

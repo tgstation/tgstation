@@ -64,6 +64,10 @@
 	var/scan_ready = 1
 	var/species //Sorry, no spider+corgi buttbabies.
 
+	//simple_animal access
+	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
+
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
