@@ -187,9 +187,9 @@
 					src.damage += 0.2 * process_accuracy
 				//Damaged one shares the fun
 				else
-					var/victim = pick(owner.internal_organs)
 					var/datum/organ/internal/O = pick(owner.internal_organs)
-					O.damage += 0.2  * process_accuracy
+					if(O)
+						O.damage += 0.2  * process_accuracy
 
 			//Detox can heal small amounts of damage
 			if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))

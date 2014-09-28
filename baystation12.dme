@@ -963,6 +963,10 @@
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\lib_readme.dm"
 #include "code\modules\liquid\splash_simulation.dm"
+#include "code\modules\maps\map_objects.dm"
+#include "code\modules\maps\nests.dm"
+#include "code\modules\maps\spawners\set_spawners.dm"
+#include "code\modules\maps\spawners\spawners.dm"
 #include "code\modules\media\jukebox.dm"
 #include "code\modules\media\machinery.dm"
 #include "code\modules\media\mediamanager.dm"
@@ -1534,5 +1538,4 @@
 #include "code\ZAS\Zone.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation2.dmm"
 // END_INCLUDE

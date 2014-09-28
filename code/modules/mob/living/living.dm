@@ -519,7 +519,7 @@
 
 	//Getting out of someone's inventory.
 	if(istype(src.loc,/obj/item/weapon/holder))
-		var/obj/item/weapon/holder = src.loc
+		var/obj/item/weapon/holder/H = src.loc
 		src.loc = get_turf(src.loc)
 		del(H)
 		return

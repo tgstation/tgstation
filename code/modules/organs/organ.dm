@@ -150,31 +150,43 @@
 			emote("scream")
 		emote("collapse")
 		paralysis = 10
-	
+
 	//Check arms and legs for existence
-	can_stand = 2 //can stand on both legs
-	var/datum/organ/external/E = organs_by_name["l_foot"]
-	if(E.status & ORGAN_DESTROYED)
-		can_stand--
+	//can_stand = 2 //can stand on both legs
+	var/canstand_l = 1
+	var/canstand_r = 1
+	var/legispeg_l=0
+	var/legispeg_r=0
+	var/hasleg_l = 1 //Have left leg
+	var/hasleg_r = 1 //Have right leg
+	var/hasarm_l = 1 //Have left arm
+	var/hasarm_r = 1 //Have right arm
+	//var/datum/organ/external/E = organs_by_name["l_foot"]
+	var/datum/organ/external/E
+	E = organs_by_name["l_leg"]
+	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+		canstand_l = 0
+		hasleg_l = 0
+	legispeg_l=E.status & ORGAN_PEG
 
-	E = organs_by_name["r_foot"]
-	if(E.status & ORGAN_DESTROYED)
-		canstand--
-
+	E = organs_by_name["r_leg"]
+	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+		canstand_r = 0
+		hasleg_r = 0
 	legispeg_r=E.status & ORGAN_PEG
 
 
 	// We CAN stand if we're on a peg.
-	E = get_organ("l_foot")
+	E = organs_by_name["l_foot"]
 	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED) && !legispeg_l)
 		canstand_l = 0
-	E = get_organ("r_foot")
+	E = organs_by_name["r_foot"]
 	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED) && !legispeg_r)
 		canstand_r = 0
-	E = get_organ("l_arm")
+	E = organs_by_name["l_arm"]
 	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
 		hasarm_l = 0
-	E = get_organ("r_arm")
+	E = organs_by_name["r_arm"]
 	if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
 		hasarm_r = 0
 

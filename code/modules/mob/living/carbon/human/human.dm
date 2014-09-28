@@ -632,7 +632,7 @@
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/base_siemens_coeff = 1.0, var/def_zone = null)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE || M_NO_SHOCK in src.mutations)	return 0	//godmode
 
 	if (!def_zone)
 		def_zone = pick("l_hand", "r_hand")
@@ -642,6 +642,47 @@
 
 	return ..(shock_damage, source, siemens_coeff, def_zone)
 
+/mob/living/carbon/human/proc/num2slotname(var/slot_id)
+	if(slot_id == null)
+		return
+	else if(slot_id == 1)
+		return "back"
+	else if(slot_id == 2)
+		return "mask"
+	else if(slot_id == 3)
+		return "handcuffed"
+	else if(slot_id == 4)
+		return "l_hand"
+	else if(slot_id == 5)
+		return "r_hand"
+	else if(slot_id == 6)
+		return "belt"
+	else if(slot_id == 7)
+		return "id"
+	else if(slot_id == 8)
+		return "ears"
+	else if(slot_id == 9)
+		return "eyes"
+	else if(slot_id == 10)
+		return "gloves"
+	else if(slot_id == 11)
+		return "head"
+	else if(slot_id == 12)
+		return "shoes"
+	else if(slot_id == 13)
+		return "suit"
+	else if(slot_id == 14)
+		return "uniform"
+	else if(slot_id == 15)
+		return "l_store"
+	else if(slot_id == 16)
+		return "r_store"
+	else if(slot_id == 17)
+		return "s_store"
+	else if(slot_id == 18)
+		return "in_backpack"
+	else if(slot_id == 19)
+		return "h_store"
 
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
@@ -1689,13 +1730,14 @@ mob/living/carbon/human/yank_out_object()
 	else if(!target_zone)
 		target_zone = user.zone_sel.selecting
 
-	switch(target_zone)
+	/*switch(target_zone)
 		if("head")
 			if(head && head.flags & THICKMATERIAL)
 				. = 0
 		else
 			if(wear_suit && wear_suit.flags & THICKMATERIAL)
 				. = 0
+	*/
 	if(!. && error_msg && user)
  		// Might need re-wording.
 		user << "<span class='alert'>There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"] to inject into.</span>"
