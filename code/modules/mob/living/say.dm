@@ -122,6 +122,7 @@ var/list/department_radio_keys = list(
 	send_speech(message, message_range, src, bubble_type)
 
 	log_say("[name]/[key] : [message]")
+	return 1
 
 /mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(!client)
