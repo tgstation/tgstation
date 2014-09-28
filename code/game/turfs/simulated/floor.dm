@@ -203,7 +203,7 @@ turf/simulated/floor/proc/update_icon()
 		if(!broken && !burnt)
 			if( !(icon_state in noslip_icons) )
 				icon_state = "noslip"
-				CAN_BE_SLIPPERY = 0
+				can_be_slippery = 0
 
 	spawn(1)
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
