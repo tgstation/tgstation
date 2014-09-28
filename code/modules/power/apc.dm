@@ -424,7 +424,7 @@
 			cell = W
 			user.visible_message(\
 				"<span class='warning'>[user.name] has inserted the power cell to [src.name]!</span>",\
-				"<span class='warning'>You insert the power cell.</span>")
+				"<span class='notice'>You insert the power cell.</span>")
 			chargecount = 0
 			update_icon()
 	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
@@ -770,18 +770,18 @@
 
 /obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
 	if (user.stat)
-		user << "<span class='warning'>You must be conscious to use this [src]!</span>"
+		user << "<span class='warning'>You must be conscious to use [src]!</span>"
 		return 0
 	if(!user.client)
 		return 0
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to use this [src]!</span>"
+		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
 		return 0
 	if(user.restrained())
-		user << "<span class='warning'>You must have free hands to use this [src].</span>"
+		user << "<span class='warning'>You must have free hands to use [src].</span>"
 		return 0
 	if(user.lying)
-		user << "<span class='warning'>You must stand to use this [src]!</span>"
+		user << "<span class='warning'>You must stand to use [src]!</span>"
 		return 0
 	if (istype(user, /mob/living/silicon))
 		var/mob/living/silicon/ai/AI = user

@@ -799,7 +799,7 @@ table tr:first-child th:first-child { border: none;}
 				return
 		if(1)
 			if(istype(W, /obj/item/weapon/crowbar) && wires.wires_status == (2 ** wires.wire_count) - 1)
-				user.visible_message("<span class='warning'>[user.name] removes the air alarm electronics from [src.name]!</span>",\
+				user.visible_message("<span class='warning'>[user.name] removes the electronics from [src.name].</span>",\
 									"You start prying out the circuit.")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if (do_after(user, 20))
@@ -821,10 +821,10 @@ table tr:first-child th:first-child { border: none;}
 				if (do_after(user, 20))
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)
-					user << "<span class='notice'>You wire the air alarm.</span>"
-					wires.wires_status = 0
-					buildstage = 2
-					update_icon()
+						user << "<span class='notice'>You wire the air alarm.</span>"
+						wires.wires_status = 0
+						buildstage = 2
+						update_icon()
 				return
 		if(0)
 			if(istype(W, /obj/item/weapon/airalarm_electronics))
@@ -1015,7 +1015,7 @@ FIRE ALARM
 
 				else if(istype(W, /obj/item/weapon/crowbar))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-					user.visible_message("<span class='warning'>[user.name] removes the fire alarm electronics from [src.name].</span>", \
+					user.visible_message("<span class='warning'>[user.name] removes the electronics from [src.name].</span>", \
 										"You start prying out the circuit.")
 					if(do_after(user, 20))
 						if(buildstage == 1)
