@@ -383,7 +383,7 @@
 
 	// make the icons look correct
 	regenerate_icons()
-	update_canmoe()
+	update_canmove()
 	..()
 
 	hud_updateflag |= 1 << HEALTH_HUD
@@ -519,22 +519,9 @@
 
 	//Getting out of someone's inventory.
 	if(istype(src.loc,/obj/item/weapon/holder))
-		var/obj/item/weapon/holder/H = src.loc //Get our item holder.
-		H.loc = get_turf(H)
-		if(istype(M))
-			M.drop_from_inventory(H)
-			M << "[H] wriggles out of your grip!"
-			src << "You wriggle out of [M]'s grip!"
-		else if(istype(H.loc,/obj/item))
-			src << "You struggle free of [H.loc]."
-			H.loc = get_turf(H)
-
-		if(istype(M))
-			for(var/atom/A in M.contents)
-				if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
-					return
-
-		M.status_flags &= ~PASSEMOTES
+		var/obj/item/weapon/holder = src.loc
+		src.loc = get_turf(src.loc)
+		del(H)
 		return
 
 	//Resisting control by an alien mind.

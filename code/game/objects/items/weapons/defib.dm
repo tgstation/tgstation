@@ -141,7 +141,7 @@
 			if((target.health > config.health_threshold_dead)\
 			&&(!(head.status & ORGAN_DESTROYED))\
 			&&(!(M_NOCLONE in target.mutations))\
-			&&(target.brain_op_stage < 4))
+			&&(target.has_brain()))
 				target.visible_message("<span class='notice'>[src] beeps: Defibrillation successful.</span>")
 				dead_mob_list -= target
 				living_mob_list += target

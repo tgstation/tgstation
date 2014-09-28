@@ -132,7 +132,7 @@ var/global/list/whitelisted_species = list("Human")
 
 	for(var/datum/organ/external/O in H.organs)
 		O.owner = H
-		
+
 	if(flags & IS_SYNTHETIC)
 		for(var/datum/organ/external/E in H.organs)
 			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue

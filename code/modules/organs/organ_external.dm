@@ -32,7 +32,6 @@
 	var/damage_msg = "\red You feel an intense pain"
 	var/broken_description
 
-	var/status = 0
 	var/open = 0
 	var/stage = 0
 	var/cavity = 0

@@ -3656,21 +3656,21 @@ datum
 			id = "tequilla"
 			description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 			color = "#FFFF91" // rgb: 255, 255, 145
-			boozepwr = 2
+			//boozepwr = 2
 
 		ethanol/vermouth
 			name = "Vermouth"
 			id = "vermouth"
 			description = "You suddenly feel a craving for a martini..."
 			color = "#91FF91" // rgb: 145, 255, 145
-			boozepwr = 1.5
+			//boozepwr = 1.5
 
 		ethanol/wine
 			name = "Wine"
 			id = "wine"
 			description = "An premium alchoholic beverage made from distilled grape juice."
 			color = "#7E4043" // rgb: 126, 64, 67
-			boozepwr = 1.5
+			//boozepwr = 1.5
 			dizzy_adj = 2
 			slur_start = 65			//amount absorbed after which mob starts slurring
 			confused_start = 145	//amount absorbed after which mob starts confusing directions
@@ -3680,7 +3680,7 @@ datum
 			id = "cognac"
 			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
 			color = "#AB3C05" // rgb: 171, 60, 5
-			boozepwr = 1.5
+			//boozepwr = 1.5
 			dizzy_adj = 4
 			confused_start = 115	//amount absorbed after which mob starts confusing directions
 
@@ -3689,7 +3689,7 @@ datum
 			id = "hooch"
 			description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
 			color = "#664300" // rgb: 102, 67, 0
-			boozepwr = 2
+			//boozepwr = 2
 			dizzy_adj = 6
 			slurr_adj = 5
 			slur_start = 35			//amount absorbed after which mob starts slurring
@@ -3700,14 +3700,14 @@ datum
 			id = "ale"
 			description = "A dark alchoholic beverage made by malted barley and yeast."
 			color = "#664300" // rgb: 102, 67, 0
-			boozepwr = 1
+			//boozepwr = 1
 
 		ethanol/absinthe
 			name = "Absinthe"
 			id = "absinthe"
 			description = "Watch out that the Green Fairy doesn't come for you!"
 			color = "#33EE00" // rgb: 51, 238, 0
-			boozepwr = 4
+			//boozepwr = 4
 			dizzy_adj = 5
 			slur_start = 15
 			confused_start = 30
@@ -3718,7 +3718,7 @@ datum
 			id = "pwine"
 			description = "Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!"
 			color = "#000000" // rgb: 0, 0, 0 SHOCKER
-			boozepwr = 1
+			//boozepwr = 1
 			dizzy_adj = 1
 			slur_start = 1
 			confused_start = 1
@@ -3775,16 +3775,16 @@ datum
 			id = "rum"
 			description = "Popular with the sailors. Not very popular with everyone else."
 			color = "#664300" // rgb: 102, 67, 0
-			boozepwr = 1
+			//boozepwr = 1
 
-				on_mob_life(var/mob/living/M as mob)
+			on_mob_life(var/mob/living/M as mob)
 
-					if(!holder) return
-					..()
-					M.dizziness +=5
-					if(volume > REAGENTS_OVERDOSE)
-						M:adjustToxLoss(1)
-					return
+				if(!holder) return
+				..()
+				M.dizziness +=5
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
+				return
 
 			vodka
 				name = "Vodka"
