@@ -191,7 +191,7 @@
 	storage_slots = 6
 	max_combined_w_class = 18
 
-/obj/item/weapon/storage/flatpack/hide(var/intact)
+/obj/item/weapon/storage/backpack/satchel_flat/hide(var/intact)
 	if(intact)
 		invisibility = 101
 		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
@@ -201,7 +201,7 @@
 		anchored = 0
 		icon_state = initial(icon_state)
 
-/obj/item/weapon/storage/flatpack/New()
+/obj/item/weapon/storage/backpack/satchel_flat/New()
 	..()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
