@@ -22,6 +22,7 @@ var/global/list/global_map = null
 	//5 - empty space
 
 var/list/landmarks_list = list()				//list of all landmarks created
+var/list/start_landmarks_list = list()			//list of all spawn points created
 
 var/list/monkeystart = list()
 var/list/wizardstart = list()

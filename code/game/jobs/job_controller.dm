@@ -79,7 +79,7 @@ var/global/datum/controller/occupations/job_master
 		if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
 			Debug("FOC non-human failed, Player: [player]")
 			continue
-		
+
 		if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
 			Debug("FOC player has a special role and this job is blocked from this special role")
 			continue
@@ -311,7 +311,7 @@ var/global/datum/controller/occupations/job_master
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
+		for(var/obj/effect/landmark/start/sloc in start_landmarks_list)
 			if(sloc.name != rank)	continue
 			if(locate(/mob/living) in sloc.loc)	continue
 			S = sloc
