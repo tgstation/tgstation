@@ -103,6 +103,8 @@
 
 	//user.unset_machine() //Uncomment this if it causes problems.
 	//user.lightNearbyCamera()
+	if (user.camera_light_on)
+		user.light_cameras()
 
 /mob/living/silicon/ai/proc/view_core()
 
