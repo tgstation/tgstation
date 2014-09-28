@@ -27,6 +27,31 @@
  * Backpack Types
  */
 
+/obj/item/weapon/storage/flatpack
+	name = "smuggler's flatpack"
+	desc = "A very slim-line backpack that can easily fit into tight spaces."
+	icon_state = "backpack"
+	item_state = "backpack"
+	level = 1
+	storage_slots = 6
+	max_combined_w_class = 18
+
+/obj/item/weapon/storage/flatpack/hide(var/intact)
+	if(intact)
+		invisibility = 101
+		anchored = 1 //otherwise you can pull, cover it, and drag around an invisible backpack.
+		icon_state = "term"
+	else
+		invisibility = initial(invisibility)
+		anchored = 0
+		icon_state = initial(icon_state)
+
+/obj/item/weapon/storage/flatpack/New()
+	..()
+	new /obj/item/stack/tile/plasteel(src)
+	new /obj/item/weapon/crowbar(src)
+
+
 /obj/item/weapon/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
@@ -34,10 +59,6 @@
 	icon_state = "holdingpack"
 	max_w_class = 5
 	max_combined_w_class = 35
-
-/obj/item/weapon/storage/backpack/holding/New()
-	..()
-	return
 
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(crit_fail)
@@ -122,10 +143,9 @@
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
 
-/obj/item/weapon/storage/backpack/satchel/withwallet
-	New()
-		..()
-		new /obj/item/weapon/storage/wallet/random( src )
+/obj/item/weapon/storage/backpack/satchel/withwallet/New()
+	..()
+	new /obj/item/weapon/storage/wallet/random( src )
 
 /obj/item/weapon/storage/backpack/satchel_norm
 	name = "satchel"
