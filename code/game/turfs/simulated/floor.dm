@@ -201,7 +201,7 @@ turf/simulated/floor/proc/update_icon()
 				icon_state = "bananium"
 	else if(is_noslip_floor())
 		if(!broken && !burnt)
-			if( !(icon_state in bananium_icons) )
+			if( !(icon_state in noslip_icons) )
 				icon_state = "noslip"
 				CAN_BE_SLIPPERY = 0
 
