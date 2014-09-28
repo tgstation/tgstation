@@ -740,7 +740,7 @@
 /obj/item/device/mining_scanner
 	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
 	name = "mining scanner"
-	icon_state = "mining"
+	icon_state = "mining1"
 	item_state = "analyzer"
 	w_class = 2.0
 	flags = CONDUCT
