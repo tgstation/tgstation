@@ -34,8 +34,8 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 			player.wear_mask = null
 		player.equip_to_slot_or_del(a_mask, slot_wear_mask)
 
-		//hallucinations!
-		player.hallucination += rand(30, 50)
+		//drugs!
+		player.druggy = rand(6000, 10000)
 
 	//blood!
 	for(var/turf/simulated/floor/F in sim_floor_list)
@@ -197,8 +197,26 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 	return 0
 
 
-/datum/sadistic_objective/gib
+/datum/sadistic_objective/burnbabyburn
 	level = 3
+	alert = "Light %target% on fire."
+	target = 1
+
+/datum/sadistic_objective/stab/CheckCompletion()
+	if(!target)
+		var/list/living_players = living_mob_list
+		living_players &= player_list
+		target = pick(living_players)
+		priority_announce("[GREETING] Do it to [target] instead.")
+	if(target)
+		var/mob/living/carbon/human/H = target
+		if(H.fire_stacks >= 1)
+			return 1
+
+	return 0
+
+/datum/sadistic_objective/gib
+	level = 4
 	alert = "Gib %target%, and then consume %his% meat."
 	target = 1
 	var/meat = 0
@@ -227,7 +245,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 
 
 /datum/sadistic_objective/suicide
-	level = 4
+	level = 5
 	alert = "Three humans must die."
 	var/initialhumans = 0
 
@@ -243,7 +261,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 
 
 /datum/sadistic_objective/nuke
-	level = 5
+	level = 6
 	alert = "Detonate the station nuke. The code is 00000."
 
 /datum/sadistic_objective/nuke/Announce()
