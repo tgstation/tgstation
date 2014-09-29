@@ -123,6 +123,7 @@
 			destination_y = TRANSITIONEDGE + 1
 
 /datum/controller/game_controller/proc/setup_map_transistions() //listamania
+
 	var/list/unplaced_z_levels = 			accessable_z_levels
 	var/list/free_zones = 					list("A", "B", "C", "D", "E", "F")
 	var/list/zone_connections = 			list("D ","C ","B ","E ","A ","C ","F ","E ","A ","D ","F ","B ","A ","E ","F ","C ","A ","B ","F ","D ","D ","C ","B ","E") //This describes the borders of a cube based on free zones, really!
@@ -152,13 +153,13 @@
 			if(S.transition && prob(50)) //In z = 6 (deep space) it's a bit of a crapshoot in terms of navigation
 				continue
 			if(S.z == z_level)
-				S.transition = z_level
+				S.transition = num2text(z_level)
 				if(!(S in turfs_needing_destinations))
 					turfs_needing_destinations += S
 				if(S.z != 6) //deep space turfs need to hang around in case they get reassigned a zone
 					turfs_needing_transition -= S
 
-		z_level_order += z_level
+		z_level_order += num2text(z_level)
 		unplaced_z_levels -= z_level
 		free_zones -= placement
 
@@ -167,6 +168,7 @@
 	final_zone_connections.len = z_level_order.len
 
 	var/list/temp = list()
+
 	for(var/j=1, j<= 24, j++)
 		temp += zone_connections[j]
 		if(temp.len == 4) //Chunks of cardinal directions
