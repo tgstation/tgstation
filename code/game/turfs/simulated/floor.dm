@@ -23,7 +23,7 @@ var/list/plasma_icons = list("plasma","plasma_dam")
 var/list/diamond_icons = list("diamond","diamond_dam")
 var/list/uranium_icons = list("uranium","uranium_dam")
 var/list/bananium_icons = list("bananium","bananium_dam")
-
+var/list/sim_floor_list = list()
 /turf/simulated/floor
 
 	//Note to coders, the 'intact' var can no longer be used to determine if the floor is a plating or not.
@@ -50,6 +50,7 @@ var/list/bananium_icons = list("bananium","bananium_dam")
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
+	sim_floor_list.Add(src)
 
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))

@@ -5,7 +5,7 @@
 
 #define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
 
-
+var/list/cloner_pod_list = list()
 /obj/machinery/clonepod
 	anchored = 1
 	name = "cloning pod"
@@ -25,6 +25,7 @@
 
 /obj/machinery/clonepod/New()
 	..()
+	cloner_pod_list.Add(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/clonepod(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)

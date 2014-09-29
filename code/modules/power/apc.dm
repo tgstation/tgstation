@@ -42,7 +42,7 @@
 
 //NOTE: STUFF STOLEN FROM AIRLOCK.DM thx
 
-
+var/list/apc_list = list()
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area electrical systems."
@@ -112,6 +112,7 @@
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	..()
+	apc_list.Add(src)
 	wires = new(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area

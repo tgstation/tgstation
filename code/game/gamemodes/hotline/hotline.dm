@@ -6,7 +6,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 /datum/game_mode/hotline
 	name = "Hotline"
 	config_tag = "hotline"
-	required_players = 0
+	required_players = 10
 	var/datum/sadistic_objective/sadObj = null
 	var/objectives_completed = 0
 	var/list/sadistic_objectives = list()
@@ -38,7 +38,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 		player.hallucination += rand(30, 50)
 
 	//blood!
-	for(var/turf/simulated/floor/F in world)
+	for(var/turf/simulated/floor/F in sim_floor_list)
 		if(prob(96))
 			continue
 
@@ -46,7 +46,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 
 	//lights!
 	var/list/epicentreList = list()
-	for(var/obj/machinery/power/apc/A in world)
+	for(var/obj/machinery/power/apc/A in apc_list)
 		if(A.z == 1)
 			epicentreList += A
 
@@ -59,9 +59,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 		epicentreList -= A
 
 	//cloner!
-	for(var/obj/machinery/clonepod/C in world)
-		C.loc.ex_act(3)
-		C.loc.ex_act(3)
+	for(var/obj/machinery/clonepod/C in cloner_pod_list)
 		qdel(C)
 
 
@@ -250,7 +248,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 
 /datum/sadistic_objective/nuke/Announce()
 	..()
-	for(var/obj/machinery/nuclearbomb/nuke in world)
+	for(var/obj/machinery/nuclearbomb/nuke in nuclearbomb_list)
 		if(nuke.z != 1)
 			return
 		nuke.r_code = "00000"
