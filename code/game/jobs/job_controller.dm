@@ -46,9 +46,11 @@ var/global/datum/controller/occupations/job_master
 		if(!job)	return 0
 		if(jobban_isbanned(player, rank))	return 0
 		if(!job.player_old_enough(player.client)) return 0
-		if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
+		if(player.mind.special_role && ticker && ticker.mode)
+			if(job.title in ticker.mode.restricted_jobs)
+				return 0
+		if(!player.mind.need_job_assign)
 			return 0
-
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
@@ -79,9 +81,13 @@ var/global/datum/controller/occupations/job_master
 		if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
 			Debug("FOC non-human failed, Player: [player]")
 			continue
-		
-		if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
-			Debug("FOC player has a special role and this job is blocked from this special role")
+
+		if(player.mind.special_role && ticker && ticker.mode)
+			if(job.title in ticker.mode.restricted_jobs)
+				Debug("FOC player has a special role and this job is blocked from this special role")
+				continue
+
+		if(!player.mind.need_job_assign)
 			continue
 
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
@@ -113,8 +119,12 @@ var/global/datum/controller/occupations/job_master
 			Debug("GRJ non-human failed, Player: [player]")
 			continue
 
-		if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
-			Debug("GRJ player has a special role and this job is blocked from this special role")
+		if(player.mind.special_role && ticker && ticker.mode)
+			if(job.title in ticker.mode.restricted_jobs)
+				Debug("GRJ player has a special role and this job is blocked from this special role")
+				continue
+
+		if(!player.mind.need_job_assign)
 			continue
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
@@ -272,8 +282,12 @@ var/global/datum/controller/occupations/job_master
 					Debug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
-				if(player.mind.special_role && ticker && ticker.mode && (job.title in ticker.mode.restricted_jobs))
-					Debug("DO player has a special role and this job is blocked from that special role")
+				if(player.mind.special_role && ticker && ticker.mode)
+					if(job.title in ticker.mode.restricted_jobs)
+						Debug("DO player has a special role and this job is blocked from that special role")
+						continue
+
+				if(!player.mind.need_job_assign)
 					continue
 
 				// If the player wants that job on this level, then try give it to him.
@@ -304,6 +318,9 @@ var/global/datum/controller/occupations/job_master
 
 //Gives the player the stuff he should have with his rank
 /datum/controller/occupations/proc/EquipRank(var/mob/living/H, var/rank, var/joined_late = 0)
+	if(!H.mind.need_job_assign)
+		return 0
+
 	var/datum/job/job = GetJob(rank)
 
 	H.job = rank
