@@ -245,6 +245,46 @@ obj/item/weapon/gun/energy/staff/focus
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
 	return
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg
+	name = "proto-kinetic accelerator"
+	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
+	icon_state = "kineticgun"
+	item_state = "kineticgun"
+	projectile_type = "/obj/item/projectile/kinetic"
+	cell_type = "/obj/item/weapon/cell/miningborg"
+	charge_cost = 50
+	var/charge_tick = 0
+
+	New()
+		..()
+		processing_objects.Add(src)
+
+
+	Destroy()
+		processing_objects.Remove(src)
+		..()
+
+	process() //Every [recharge_time] ticks, recharge a shot for the cyborg
+		charge_tick++
+		if(charge_tick < 3)
+			message_admins("Can't charge yet!")
+			return 0
+		charge_tick = 0
+
+		if(!power_supply)
+			message_admins("No power supply, quitting!")
+			return 0 //sanity
+		if(isrobot(src.loc))
+			message_admins("We're in a robot!")
+			var/mob/living/silicon/robot/R = src.loc
+			if(R && R.cell)
+				message_admins("We have a robot and its cell")
+				R.cell.use(charge_cost) 		//Take power from the borg...
+				power_supply.give(charge_cost)	//... to recharge the shot
+
+		update_icon()
+		return 1
+
 
 /obj/item/weapon/gun/energy/radgun
 	name = "radgun"
