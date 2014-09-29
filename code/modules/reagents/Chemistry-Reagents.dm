@@ -2687,7 +2687,7 @@ datum
 						if(prob(8))
 							H << "<span class = 'warning'>You feel violently ill.</span>"
 						if(prob(min(data / 10, 100)))	H.vomit()
-						var/datum/organ/internal/liver/L = H.internal_organs["liver"]
+						var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
 						if (istype(L) && !L.is_broken())
 							L.take_damage(data * 0.01, 0)
 							H.adjustToxLoss(round(data / 20, 1))
@@ -2710,7 +2710,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							if(prob(20))
 								H << "<span class = 'sinister'>You feel deathly ill.</span>"
-							var/datum/organ/internal/liver/L = H.internal_organs["liver"]
+							var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
 							if (istype(L) && !L.is_broken())
 								L.take_damage(10, 0)
 							else
@@ -2954,7 +2954,7 @@ datum
 								H << "<span class='warning'>Your stomach grumbles unsettlingly..</span>"
 							if(prob(5))
 								H << "<span class='warning'>Something feels wrong with your body..</span>"
-								var/datum/organ/internal/liver/L = H.internal_organs["liver"]
+								var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
 								if (istype(L))
 									L.take_damage(0.1, 1)
 								H.adjustToxLoss(0.13)

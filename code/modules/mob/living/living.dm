@@ -364,7 +364,7 @@
 			O.wounds = list()
 			O.wound_update_accuracy = 1
 		for(var/organ_name in H.internal_organs)
-			var/datum/organ/internal/IO = H.internal_organs[organ_name]
+			var/datum/organ/internal/IO = H.internal_organs_by_name[organ_name]
 			IO.damage = 0
 			IO.trace_chemicals = list()
 		H.updatehealth()

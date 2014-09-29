@@ -89,7 +89,7 @@
 	return
 
 /obj/item/weapon/melee/defibrillator/proc/shockAttack(mob/living/carbon/human/target,mob/user)
-	var/datum/organ/internal/heart/heart = target.internal_organs["heart"]
+	var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
 	target.visible_message("<span class='danger'>[target.name] has been shocked in the chest with the [src] by [user]!</span>")
 	target.Weaken(rand(6,12))
 	target.apply_damage(rand(30,60),BURN,"chest")
@@ -132,7 +132,7 @@
 		else if(target.w_uniform && istype(target.w_uniform,/obj/item/clothing/under && prob(50)))
 			user << "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>"
 		else
-			var/datum/organ/internal/heart/heart = target.internal_organs["heart"]
+			var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
 			if(prob(25)) heart.damage += 5 //Allow the defibrilator to possibly worsen heart damage. Still rare enough to just be the "clone damage" of the defib
 			target.apply_damage(-target.getOxyLoss(),OXY)
 			target.updatehealth()

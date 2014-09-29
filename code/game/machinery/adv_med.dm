@@ -383,7 +383,7 @@
 							dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"
 					for(var/organ_name in occupant.internal_organs)
-						var/datum/organ/internal/i = occupant.internal_organs[organ_name]
+						var/datum/organ/internal/i = occupant.internal_organs_by_name[organ_name]
 
 						// AUTOFIXED BY fix_string_idiocy.py
 						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\adv_med.dm:311: dat += "<tr>"
