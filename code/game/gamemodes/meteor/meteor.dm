@@ -9,7 +9,7 @@
 	var/const/supplydelay = 100 //Delay before meteor supplies are spawned in tenth of seconds
 	var/const/meteordelay_l = 1800 //Lower bound to meteor arrival, here 3 minutes
 	var/const/meteordelay_h = 3000 //Higher bound to meteor arrival, here 5 minutes
-	var/const/meteorshuttlemultiplier = 6 //How much more will we need to hold out ? Here one hour until shuttle arrives. 1 is 10 minutes
+	var/const/meteorshuttlemultiplier = 4 //How much more will we need to hold out ? Here 40 minutes until shuttle arrives. 1 is 10 minutes
 	var/meteordelay = 2400 //Final meteor delay, failsafe as above
 	var/nometeors = 1 //Can we send the meteors ?
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
@@ -58,8 +58,7 @@
 
 		spawn(100) //Panic interval
 			emergency_shuttle.incall(meteorshuttlemultiplier)
-			//captain_announce("A backup emergency shuttle has been called. It will arrive in [round((emergency_shuttle.timeleft())/60)] minutes.")
-			captain_announce("A Space Weather Inc. backup emergency shuttle has been called. It will take one hour to navigate the meteor storm safely and arrive.")
+			captain_announce("A backup emergency shuttle has been called. It will arrive in [round((emergency_shuttle.timeleft())/60)] minutes.")
 			world << sound('sound/AI/shuttlecalled.ogg')
 			SetUniversalState(/datum/universal_state/meteor_storm)
 
@@ -277,7 +276,7 @@
 
 /datum/game_mode/meteor/process()
 	if(!nometeors)
-		meteors_in_wave = round((rand(10,50))*(world.time/6000)) //Number of meteors per wave increases each minute, capping at a lucridious 120-300 maximum
+		meteors_in_wave = (rand(2,20))*5 //Between 10 and 100 meteors in 5 intervals, figures
 		meteor_wave(meteors_in_wave)
 	return
 

@@ -1,6 +1,6 @@
 #define METEOR_TEMPERATURE
 
-/var/meteor_wave_delay = 600 //Failsafe wait between waves in tenths of seconds
+/var/meteor_wave_delay = 200 //Failsafe wait between waves in tenths of seconds
 //Set it above 100 (10s delay) if you want to minimize lag for some reason
 
 /var/meteors_in_wave = 10 //Failsafe in case a number isn't called
@@ -10,10 +10,9 @@
 	if(!ticker || meteorwavecurrent)
 		return
 	meteorwavecurrent = 1
-	meteor_wave_delay = (rand(20,45))*10 //Between 20 and 45 seconds
-	world << "Firing wave of [meteors_in_wave] meteors at precise tick time [world.time] with set delay for next wave at [meteor_wave_delay/10] seconds"
+	meteor_wave_delay = (rand(10,30))*10 //Between 10 and 30 seconds, makes everything more chaotic
 	for(var/i = 0 to number)
-		spawn(rand(2,5)) //0.2 to 0.5 seconds between meteors
+		spawn(rand(5,15)) //0.5 to 1.5 seconds between meteors
 			spawn_meteor()
 	spawn(meteor_wave_delay)
 		meteorwavecurrent = 0
@@ -62,11 +61,11 @@
 
 	var/obj/effect/meteor/M
 	switch(rand(1, 100))
-		if(1 to 9) //10 % chance of huge boom
+		if(1 to 5) //5 % chance of huge boom
 			M = new /obj/effect/meteor/big(pickedstart)
-		if(9 to 64) //55 % chance of medium boom
+		if(6 to 65) //60 % chance of medium boom
 			M = new /obj/effect/meteor(pickedstart)
-		if(65 to 100) //35 % chance of small boom
+		if(66 to 100) //35 % chance of small boom
 			M = new /obj/effect/meteor/small(pickedstart)
 
 	M.dest = pickedgoal
