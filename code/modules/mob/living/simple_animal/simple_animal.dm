@@ -253,7 +253,7 @@
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
+		M.emote("me", 1, "[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
