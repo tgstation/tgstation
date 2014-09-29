@@ -24,7 +24,7 @@
 
 	for(var/mob/living/carbon/human/H in mobs)
 		if(!moblocs)	break //locs aren't always unique, so this may come into play
-		H.loc = moblocs[moblocs.len]
+		do_teleport(H, moblocs[moblocs.len])
 		moblocs.len -= 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
@@ -46,7 +46,7 @@
 	var/list/mobs	 = list()
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		mobnames += H.name
+		mobnames += H.real_name
 		mobs += H
 
 	if(!mobs) return
@@ -56,7 +56,7 @@
 
 	for(var/mob/living/carbon/human/H in mobs)
 		if(!mobnames)	break
-		H.name = mobnames[mobnames.len]
+		H.real_name = mobnames[mobnames.len]
 		mobnames.len -= 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
@@ -85,10 +85,11 @@
 	shuffle(mobs)
 
 	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new /obj/effect/proc_holder/spell/targeted/mind_transfer/
-	for(var/mob/living/carbon/human/H in mobs)
+	while(mobs.len > 1)
+		var/mob/living/carbon/human/H = pick(mobs)
+		mobs -= H
 		swapper.cast(list(H), mobs[mobs.len], 1)
-		mobs.len -= 1
-		if(mobs.len <= 1) break
+		mobs -= mobs[mobs.len]
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()

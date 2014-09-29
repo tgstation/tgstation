@@ -10,7 +10,7 @@
 //item you want to equip to the hand, and set its slots_flags = null. Only items equiped to hands need do this.
 
 /datum/round_event/wizard/cursed_items/start()
-	var/item_set = pick("wizardmimic", "swords", "bigfatdoobie", "boxing", "voicemodulators", "headphones")
+	var/item_set = pick("wizardmimic", "swords", "bigfatdoobie", "boxing", "voicemodulators")
 	var/list/wearslots	= list(slot_wear_suit, slot_shoes, slot_head, slot_wear_mask, slot_r_hand, slot_gloves, slot_ears)
 	var/list/loadout = list()
 	var/ruins_spaceworthiness
@@ -29,7 +29,6 @@
 			loadout[6] = /obj/item/clothing/gloves/boxing
 			ruins_spaceworthiness = 1
 		if("voicemodulators")	loadout[4] = /obj/item/clothing/mask/gas/voice
-		if("headphones") 		loadout[7] = /obj/item/clothing/ears/earmuffs
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(ruins_spaceworthiness && (H.z != 1 || istype(H.loc, /turf/space)))	continue	//#savetheminers
