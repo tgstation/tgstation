@@ -59,12 +59,13 @@
 		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return
 
-	// Activate the cooldown
-	cooldown = 1
-	update_icon()
-	spawn(cooldown_duration)
-		cooldown = 0
+	// Activate the cooldown if the human isn't jobbanned
+	if(!jobban_isbanned(H, "Cyborg"))
+		cooldown = 1
 		update_icon()
+		spawn(cooldown_duration)
+			cooldown = 0
+			update_icon()
 
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	H.emote("scream") // It is painful
@@ -73,6 +74,11 @@
 
 	// Sleep for a couple of ticks to allow the human to see the pain
 	sleep(5)
+
+	if(jobban_isbanned(H, "Cyborg")) //Jobbanned players get horribly maimed instead
+		H.adjustBruteLoss(1000)
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		return
 
 	use_power(5000) // Use a lot of power.
 	var/mob/living/silicon/robot/R = H.Robotize(1) // Delete the items or they'll all pile up in a single tile and lag

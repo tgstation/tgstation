@@ -72,20 +72,18 @@
 		qdel(overmind)
 
 	var/client/C = null
-	var/list/candidates = list()
 
-	if(!new_overmind)
-		candidates = get_candidates(BE_BLOB)
-		if(candidates.len)
-			C = pick(candidates)
-	else
-		C = new_overmind
+	spawn(0)
+		if(!new_overmind)
+			C = pick_from_candidates(BE_BLOB)
+		else
+			C = new_overmind
 
-	if(C)
-		var/mob/camera/blob/B = new(src.loc)
-		B.key = C.key
-		B.blob_core = src
-		src.overmind = B
-		return 1
-	return 0
+		if(C)
+			var/mob/camera/blob/B = new(src.loc)
+			B.key = C.key
+			B.blob_core = src
+			src.overmind = B
+			return 1
+		return 0
 

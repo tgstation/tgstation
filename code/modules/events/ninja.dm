@@ -42,10 +42,9 @@
 
 	//selecting a candidate player
 	if(!key)
-		var/list/candidates = get_candidates(BE_NINJA)
-		if(!candidates.len)
+		var/client/C = pick_from_candidates(BE_NINJA)
+		if(!C)
 			return kill()
-		var/client/C = pick(candidates)
 		key = C.key
 	if(!key)
 		return kill()
