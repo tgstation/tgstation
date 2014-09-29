@@ -18,7 +18,7 @@
 	pre_setup_before_jobs = 1
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
-	var/scale_modifier = 1 // Used for gamemodes, that are a child of traitor, that need more than the usual.
+	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 
 
 /datum/game_mode/traitor/announce()
@@ -34,7 +34,7 @@
 	var/num_traitors = 1
 
 	if(config.traitor_scaling_coeff)
-		num_traitors = max(1, min( round(num_players()/(config.traitor_scaling_coeff*scale_modifier*2))+2, round(num_players()/(config.traitor_scaling_coeff*scale_modifier)) ))
+		num_traitors = max(1, min( round(num_players()/(config.traitor_scaling_coeff*2))+ 2 + num_modifier, round(num_players()/(config.traitor_scaling_coeff)) + num_modifier ))
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
@@ -71,10 +71,10 @@
 	return 1
 
 /datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	var/traitorcap = min(round(joined_player_list.len / (config.traitor_scaling_coeff * scale_modifier * 2)) + 2, round(joined_player_list.len/config.traitor_scaling_coeff*scale_modifier) )
+	var/traitorcap = min(round(joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
 	if(traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
-	if(traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * scale_modifier * 2)))
+	if(traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
 		if(character.client.prefs.be_special & BE_TRAITOR)
 			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
 				if(!(character.job in ticker.mode.restricted_jobs))

@@ -78,23 +78,21 @@
 					if(M.client)
 						if(M.stat == CONSCIOUS)
 							M.mind_initialize()		//give them a mind datum if they don't have one.
-							M.mind.has_been_rev = 1
 							var/resisted
-							if(isloyal(M))
-								resisted = 1
-							else if(user.mind in ticker.mode.head_revolutionaries)
-								if(!ticker.mode.add_revolutionary(M.mind))
-									resisted = 1
-							else if(user.mind in ticker.mode.A_bosses)
-								if(!ticker.mode.add_gangster(M.mind,"A"))
-									resisted = 1
-							else if(user.mind in ticker.mode.B_bosses)
-								if(!ticker.mode.add_gangster(M.mind,"B"))
-									resisted = 1
-							if(!resisted)
-								M.mind.has_been_rev = 1
-								ticker.mode.add_revolutionary(M.mind)
+							if(!isloyal(M))
+								if(user.mind in ticker.mode.head_revolutionaries)
+									if(!ticker.mode.add_revolutionary(M.mind))
+										resisted = 1
+								if(user.mind in ticker.mode.A_bosses)
+									if(!ticker.mode.add_gangster(M.mind,"A"))
+										resisted = 1
+								if(user.mind in ticker.mode.B_bosses)
+									if(!ticker.mode.add_gangster(M.mind,"B"))
+										resisted = 1
 							else
+								resisted = 1
+
+							if(resisted)
 								user << "<span class='warning'>This mind seems resistant to the flash!</span>"
 						else
 							user << "<span class='warning'>They must be conscious before you can convert them!</span>"
