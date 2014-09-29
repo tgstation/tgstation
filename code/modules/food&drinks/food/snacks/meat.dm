@@ -1,3 +1,5 @@
+var/list/human_meat_list = list()
+
 /obj/item/weapon/reagent_containers/food/snacks/meat
 	name = "meat"
 	desc = "A slab of meat"
@@ -18,6 +20,10 @@
 	name = "-meat"
 	var/subjectname = ""
 	var/subjectjob = null
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/human/New()
+	..()
+	human_meat_list.Add(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
 	icon_state = "slimemeat"

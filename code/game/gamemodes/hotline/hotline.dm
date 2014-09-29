@@ -213,7 +213,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 
 /datum/sadistic_objective/gib/CheckCompletion()
 	if(!target)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/H = locate() in world
+		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/H = locate() in human_meat_list
 		if(H && H.subjectname == targetname && !meat)
 			meat = 1
 			priority_announce("[GREETING] Now consume the meat.")
