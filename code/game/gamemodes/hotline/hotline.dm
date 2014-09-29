@@ -20,9 +20,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 /datum/game_mode/hotline/post_setup()
 	..()
 	//objectives!
-	for(var/path in typesof(/datum/sadistic_objective))
-		if(path == /datum/sadistic_objective)
-			continue
+	for(var/path in (typesof(/datum/sadistic_objective) - /datum/sadistic_objective))
 		var/datum/sadistic_objective/S = new path()
 		sadistic_objectives += S
 
@@ -69,7 +67,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 
 /datum/game_mode/hotline/declare_completion()
 	..()
-	world << "<FONT size = 3><B>The despair squid successfully destroyed the station!</B></FONT>"
+	world << "<FONT size = 3><B>The crew activate the nuclear device. Up to that point, they had stopped thinking of morals, stopped thinking of society, laws, punishments. Their only want was to obey the instructions given. They perished wishing for another order. The station was destroyed.</B></FONT>"
 	return 1
 
 
@@ -123,7 +121,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 
 /datum/sadistic_objective/ian/CheckCompletion()
 	if(!target)
-		target = locate(/mob/living/simple_animal/corgi/Ian) in world
+		target = locate(/mob/living/simple_animal/corgi/Ian) in living_mob_list
 	if(target.stat == DEAD)
 		return 1
 	return 0
@@ -135,7 +133,7 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 
 /datum/sadistic_objective/runtime/CheckCompletion()
 	if(!target)
-		target = locate(/mob/living/simple_animal/cat/Runtime) in world
+		target = locate(/mob/living/simple_animal/cat/Runtime) in living_mob_list
 	if(target.stat == DEAD)
 		return 1
 	return 0
@@ -252,8 +250,10 @@ var/global/list/animal_masks = list(/obj/item/clothing/mask/horsehead, \
 
 /datum/sadistic_objective/nuke/Announce()
 	..()
-	var/obj/machinery/nuclearbomb/nuke = locate() in world
-	nuke.r_code = "00000"
+	for(var/obj/machinery/nuclearbomb/nuke in world)
+		if(nuke.z != 1)
+			return
+		nuke.r_code = "00000"
 
 
 #undef GREETING
