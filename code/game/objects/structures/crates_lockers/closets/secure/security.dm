@@ -41,7 +41,7 @@
 	..()
 	sleep(2)
 	new /obj/item/clothing/under/rank/head_of_personnel(src)
-	new /obj/item/clothing/head/hopcap(src)
+	new /obj/item/clothing/head/helmet/hopcap(src)
 	new /obj/item/weapon/cartridge/hop(src)
 	new /obj/item/device/radio/headset/heads/hop(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)

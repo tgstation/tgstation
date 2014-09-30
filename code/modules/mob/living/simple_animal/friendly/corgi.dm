@@ -199,7 +199,7 @@
 			desc = "Your food will be taste-tested.  All of it."
 			valid = 1
 
-		if(/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain)
+		if(/obj/item/clothing/head/helmet/caphat, /obj/item/clothing/head/collectable/captain)
 			name = "Captain [real_name]"
 			desc = "Probably better than the last captain."
 			valid = 1
@@ -300,7 +300,7 @@
 			desc = "You must respect elder [real_name]"
 			valid = 1
 
-		if(/obj/item/clothing/head/hopcap)
+		if(/obj/item/clothing/head/helmet/hopcap)
 			name = "Lieutenant [real_name]"
 			desc = "Can actually be trusted to not run off on his own."
 			valid = 1

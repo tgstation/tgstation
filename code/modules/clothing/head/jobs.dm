@@ -8,28 +8,25 @@
 	desc = "The commander in chef's head wear."
 
 //Captain
-/obj/item/clothing/head/caphat
+/obj/item/clothing/head/helmet/caphat
 	name = "captain's hat"
 	icon_state = "captain"
 	desc = "It's good being the king."
 	item_state = "that"
+	flags_inv = 0
 
-//Captain: This probably shouldn't be space-worthy
+//Captain: This is no longer space-worthy
 /obj/item/clothing/head/helmet/cap
-	name = "captain's cap"
-	desc = "You fear to wear it for the negligence it brings."
+	name = "captain's parade cap"
+	desc = "Worn only by Captains with an abundance of class."
 	icon_state = "capcap"
 	flags_inv = 0
-	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	heat_protection = HEAD
-	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 
 //Head of Personnel
-/obj/item/clothing/head/hopcap
+/obj/item/clothing/head/helmet/hopcap
 	name = "head of personnel's cap"
 	icon_state = "hopcap"
-	desc = "Glory to Nanotrasen."
+	desc = "The symbol of true bureaucratic micromanagement."
 
 //Chaplain
 /obj/item/clothing/head/chaplain_hood
@@ -63,6 +60,7 @@
 	name = "security beret"
 	desc = "A beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
 	icon_state = "beret_badge"
+	armor = list(melee = 50, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/beret/sec/navyhos
 	name = "head of security's beret"
