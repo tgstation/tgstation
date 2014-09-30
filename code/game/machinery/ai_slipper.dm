@@ -1,7 +1,7 @@
 /obj/machinery/ai_slipper
 	name = "\improper AI liquid dispenser"
-	icon = 'icons/obj/device.dmi'
-	icon_state = "motion3"
+	icon = 'icons/obj/machines/turret_control.dmi'
+	icon_state = "foam_active"
 	layer = 3
 	anchored = 1.0
 	var/uses = 20
@@ -20,7 +20,7 @@
 		if( powered() )
 			stat &= ~NOPOWER
 		else
-			icon_state = "motion0"
+			icon_state = "foam_off"
 			stat |= NOPOWER
 
 /obj/machinery/ai_slipper/proc/setState(var/enabled, var/uses)
@@ -91,7 +91,7 @@
 			return
 	if (href_list["toggleOn"])
 		src.disabled = !src.disabled
-		icon_state = src.disabled? "motion0":"motion3"
+		icon_state = src.disabled? "foam_on":"foam_active"
 	if (href_list["toggleUse"])
 		if(cooldown_on || disabled)
 			return
