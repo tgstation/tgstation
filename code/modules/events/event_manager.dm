@@ -124,9 +124,20 @@ var/datum/controller/event/events
 	holder.forceEvent()
 
 /datum/admins/proc/forceEvent()
-	var/dat = ""
+	var/dat 	= ""
+	var/normal 	= ""
+	var/magic 	= ""
+	var/holiday = ""
 	for(var/datum/round_event_control/E in events.control)
-		dat += "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
+		dat = "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
+		if(E.holidayID)
+			holiday	+= dat
+		else if(E.wizardevent)
+			magic 	+= dat
+		else
+			normal 	+= dat
+
+	dat = normal + "<BR>" + magic + "<BR>" + holiday
 
 	var/datum/browser/popup = new(usr, "forceevent", "Force Random Event", 300, 750)
 	popup.set_content(dat)
