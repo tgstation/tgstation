@@ -254,7 +254,7 @@
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(src.density || src.operating)
-			user << "<span class='warning'>You need to open the [src.name] to access the maintenance panel.</span>"
+			user << "<span class='warning'>You need to open the door to access the maintenance panel.</span>"
 			return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		src.p_open = !( src.p_open )
@@ -271,16 +271,16 @@
 					var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 					switch(base_state)
 						if("left")
-							WA.icon_state = "l_windoor_assembly02"
+							WA.facing = "l"
 						if("right")
-							WA.icon_state = "r_windoor_assembly02"
+							WA.facing = "r"
 						if("leftsecure")
-							WA.icon_state = "l_secure_windoor_assembly02"
+							WA.facing = "l"
 							WA.secure = 1
 						if("rightsecure")
-							WA.icon_state = "r_secure_windoor_assembly02"
+							WA.facing = "r"
 							WA.secure = 1
-							WA.anchored = 1
+					WA.anchored = 1
 					WA.state= "02"
 					WA.dir = src.dir
 					WA.ini_dir = src.dir

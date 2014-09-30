@@ -94,12 +94,20 @@ obj/structure/windoor_assembly/Destroy()
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
 			if(istype(W, /obj/item/weapon/wrench) && !anchored)
+				for(var/obj/machinery/door/window/WD in src.loc)
+					if(WD.dir == src.dir)
+						user << "<span class='warning'>There is already a windoor in that location.</span>"
+						return
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
 
 				if(do_after(user, 40))
 					if(!src || src.anchored)
 						return
+					for(var/obj/machinery/door/window/WD in src.loc)
+						if(WD.dir == src.dir)
+							user << "<span class='warning'>There is already a windoor in that location.</span>"
+							return
 					user << "<span class='notice'>You've secured the windoor assembly!</span>"
 					src.anchored = 1
 					if(src.secure)
@@ -131,7 +139,7 @@ obj/structure/windoor_assembly/Destroy()
 				user << "<span class='notice'>You start to reinforce the windoor with plasteel.</span>"
 
 				if(do_after(user,40))
-					if(!src || !secure)
+					if(!src || secure)
 						return
 
 					P.use(2)
@@ -236,51 +244,50 @@ obj/structure/windoor_assembly/Destroy()
 
 				if(do_after(user, 40))
 
-					if(!src.loc || !src.electronics)
-						return
+					if(src.loc && src.electronics)
 
-					density = 1 //Shouldn't matter but just incase
-					user << "<span class='notice'>You finish the windoor!</span>"
+						density = 1 //Shouldn't matter but just incase
+						user << "<span class='notice'>You finish the windoor!</span>"
 
-					if(secure)
-						var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(src.loc)
-						if(src.facing == "l")
-							windoor.icon_state = "leftsecureopen"
-							windoor.base_state = "leftsecure"
+						if(secure)
+							var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(src.loc)
+							if(src.facing == "l")
+								windoor.icon_state = "leftsecureopen"
+								windoor.base_state = "leftsecure"
+							else
+								windoor.icon_state = "rightsecureopen"
+								windoor.base_state = "rightsecure"
+							windoor.dir = src.dir
+							windoor.density = 0
+
+							if(src.electronics.use_one_access)
+								windoor.req_one_access = src.electronics.conf_access
+							else
+								windoor.req_access = src.electronics.conf_access
+							windoor.electronics = src.electronics
+							src.electronics.loc = windoor
+							if(created_name)
+								windoor.name = created_name
+							windoor.close()
+
+
 						else
-							windoor.icon_state = "rightsecureopen"
-							windoor.base_state = "rightsecure"
-						windoor.dir = src.dir
-						windoor.density = 0
+							var/obj/machinery/door/window/windoor = new /obj/machinery/door/window(src.loc)
+							if(src.facing == "l")
+								windoor.icon_state = "leftopen"
+								windoor.base_state = "left"
+							else
+								windoor.icon_state = "rightopen"
+								windoor.base_state = "right"
+							windoor.dir = src.dir
+							windoor.density = 0
 
-						if(src.electronics.use_one_access)
-							windoor.req_one_access = src.electronics.conf_access
-						else
 							windoor.req_access = src.electronics.conf_access
-						windoor.electronics = src.electronics
-						src.electronics.loc = windoor
-						if(created_name)
-							windoor.name = created_name
-						windoor.close()
-
-
-					else
-						var/obj/machinery/door/window/windoor = new /obj/machinery/door/window(src.loc)
-						if(src.facing == "l")
-							windoor.icon_state = "leftopen"
-							windoor.base_state = "left"
-						else
-							windoor.icon_state = "rightopen"
-							windoor.base_state = "right"
-						windoor.dir = src.dir
-						windoor.density = 0
-
-						windoor.req_access = src.electronics.conf_access
-						windoor.electronics = src.electronics
-						src.electronics.loc = windoor
-						if(created_name)
-							windoor.name = created_name
-						windoor.close()
+							windoor.electronics = src.electronics
+							src.electronics.loc = windoor
+							if(created_name)
+								windoor.name = created_name
+							windoor.close()
 
 
 					qdel(src)
