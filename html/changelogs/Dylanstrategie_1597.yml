@@ -1,4 +1,0 @@
-author: Dylanstrategie
-delete_after: True
-changes:
-  - bugfix: Defibrilator is no longer one-use. Secondary delay has also been removed, now only attack delay (1 s) and setup delay (5 s) actually count
