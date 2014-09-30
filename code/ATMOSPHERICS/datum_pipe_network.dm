@@ -108,6 +108,8 @@ datum/pipe_network
 
 					corresponding.moles += trace_gas.moles
 
+		air_transient.volume = air_transient_volume
+
 		if(air_transient_volume > 0)
 
 			if(total_heat_capacity > 0)
@@ -122,7 +124,7 @@ datum/pipe_network
 
 			//Update individual gas_mixtures by volume ratio
 			for(var/datum/gas_mixture/gas in gases)
-				var/volume_ratio = gas.volume / air_transient_volume
+				var/volume_ratio = gas.volume / air_transient.volume
 
 				gas.oxygen = air_transient.oxygen * volume_ratio
 				gas.nitrogen = air_transient.nitrogen * volume_ratio
@@ -143,7 +145,6 @@ datum/pipe_network
 
 				gas.update_values()
 
-		air_transient.volume = air_transient_volume
 		air_transient.update_values()
 		return 1
 
