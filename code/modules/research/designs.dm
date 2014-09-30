@@ -93,6 +93,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aicore
+	locked = 1
 
 /datum/design/aiupload
 	name = "Circuit Design (AI Upload)"
@@ -102,6 +103,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aiupload
+	locked = 1
 
 /datum/design/borgupload
 	name = "Circuit Design (Cyborg Upload)"
@@ -111,6 +113,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/borgupload
+	locked = 1
 
 /datum/design/med_data
 	name = "Circuit Design (Medical Records)"
@@ -558,6 +561,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = /obj/item/weapon/aiModule/targetted/oneHuman
+	locked = 1
 
 /datum/design/protectstation_module
 	name = "Module Design (ProtectStation)"
@@ -594,6 +598,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = /obj/item/weapon/aiModule/standard/oxygen
+	locked = 1
 
 /datum/design/freeform_module
 	name = "Module Design (Freeform)"
@@ -613,7 +618,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = /obj/item/weapon/aiModule/reset
 
-/datum/design/purge_module
+/datum/design/purge_module //tempted to lock this, have a vote on it - Comic
 	name = "Module Design (Purge)"
 	desc = "Allows for the construction of a Purge AI Module."
 	id = "purge_module"
@@ -657,6 +662,7 @@ other types of metals and chemistry for reagents).
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = /obj/item/weapon/aiModule/core/tyrant
+	locked = 1
 
 ///////////////////////////////////
 /////Subspace Telecomms////////////
