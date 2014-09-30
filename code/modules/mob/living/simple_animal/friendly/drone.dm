@@ -15,7 +15,7 @@
 	maxHealth = 30
 	heat_damage_per_tick = 0
 	cold_damage_per_tick = 0
-	unsuitable_atoms_damage = 0
+	unsuitable_atmos_damage = 0
 	wander = 0
 	speed = 0
 	ventcrawler = 2

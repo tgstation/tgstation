@@ -222,14 +222,14 @@ var/list/department_radio_keys = list(
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 				for(var/mob/M in mob_list)
-					if(M.stat == DEAD && !istype(M, /mob/new_player))
+					if(M in dead_mob_list)
 						M << msg
 					else
 						switch(M.lingcheck())
 							if(2)
 								M << msg
 							if(1)
-								if(prob(30))
+								if(prob(40))
 									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
 				return 1
 			if(1)

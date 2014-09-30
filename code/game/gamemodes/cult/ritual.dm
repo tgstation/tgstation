@@ -63,9 +63,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	usr.say("O bidai nabora se[pick("'","`")]sma!")
 	sleep(10)
 	usr.say("[input]")
-	for(var/datum/mind/H in ticker.mode.cult)
-		if (H.current)
-			H.current << "<span class='userdanger'>[input]</span>"
+	for(var/mob/M in mob_list)
+		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
+			M << "<span class='userdanger'>[input]</span>"
 	return
 	#undef CHECK_STATUS
 

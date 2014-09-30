@@ -574,9 +574,9 @@ var/list/sacrificed = list()
 		usr.say("[input]")
 	else
 		usr.whisper("[input]")
-	for(var/datum/mind/H in ticker.mode.cult)
-		if (H.current)
-			H.current << "<span class='userdanger'>[input]</span>"
+	for(var/mob/M in mob_list)
+		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
+			M << "<span class='userdanger'>[input]</span>"
 	return 1
 
 /////////////////////////////////////////FIFTEENTH RUNE

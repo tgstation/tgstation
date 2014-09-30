@@ -16,19 +16,6 @@ var/list/freqtospan = list(
 	"1441" = "dsquadradio"
 	)
 
-var/list/freqtoname = list(
-	"1351" = "Science",
-	"1353" = "Command",
-	"1355" = "Medical",
-	"1357" = "Engineering",
-	"1359" = "Security",
-	"1441" = "Deathsquad",
-	"1213" = "Syndicate",
-	"1347" = "Supply",
-	"1349" = "Service",
-	"1447" = "AI Private"
-)
-
 /atom/movable/proc/say(message)
 	if(!can_speak())
 		return
