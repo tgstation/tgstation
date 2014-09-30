@@ -338,10 +338,8 @@
 			var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(output.loc)
 			new_item.loc = L
 			L.name += " ([new_item.name])"
-			if(istype(new_item, /obj/item/weapon/circuitboard) || istype(new_item, /obj/item/weapon/aiModule)) //sets access for the locked silicon boards
-				L.req_access = list(access_tox, access_robotics, access_rd)
-			else//sets access for printable guns and armor (to be changed to a better system in the future, when more lockboxes are desirable)
-				L.req_access = list(access_armory)
+			if(being_built.req_lock_access.len) //if the design has a specific list of accesses, we want those. If it doesn't, the default access is armory
+				L.req_access = being_built.req_lock_access
 		else
 			new_item.loc = output.loc
 		return 1

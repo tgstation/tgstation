@@ -51,6 +51,7 @@ other types of metals and chemistry for reagents).
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/build_path = null				//The file path of the object that gets created
 	var/locked = 0						//If true it will spawn inside a lockbox with currently sec access
+	var/list/req_lock_access			//Sets the access for the lockbox that a locked item spawns in
 	var/category = null //Primarily used for Mech Fabricators, but can be used for anything
 
 /datum/design/New()
@@ -94,6 +95,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aicore
 	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/aiupload
 	name = "Circuit Design (AI Upload)"
@@ -104,6 +106,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aiupload
 	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/borgupload
 	name = "Circuit Design (Cyborg Upload)"
@@ -114,6 +117,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/borgupload
 	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
 
 /datum/design/med_data
 	name = "Circuit Design (Medical Records)"
@@ -562,6 +566,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = /obj/item/weapon/aiModule/targetted/oneHuman
 	locked = 1
+	req_lock_access = list(access_captain)
 
 /datum/design/protectstation_module
 	name = "Module Design (ProtectStation)"
@@ -599,6 +604,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = /obj/item/weapon/aiModule/standard/oxygen
 	locked = 1
+	req_lock_access = list(access_captain)
 
 /datum/design/freeform_module
 	name = "Module Design (Freeform)"
@@ -663,6 +669,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = /obj/item/weapon/aiModule/core/tyrant
 	locked = 1
+	req_lock_access = list(access_captain)
 
 ///////////////////////////////////
 /////Subspace Telecomms////////////
