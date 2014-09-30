@@ -388,8 +388,8 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/aiModule/syndicate
 	cost = 14
 
-/datum/uplink_item/stolen/magboots
-	name = "Stolen Magboots"
+/datum/uplink_item/device_tools/magboots
+	name = "Blood-Red Magboots"
 	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station during gravitational generator failures. \
 	These reverse-engineered knockoffs of Nanotrasen's 'Advanced Magboots' slow you down in simulated-gravity environments much like the standard issue variety."
 	item = /obj/item/clothing/shoes/magboots/syndie
