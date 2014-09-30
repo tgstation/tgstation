@@ -13,9 +13,12 @@
 
 
 /obj/item/weapon/storage/box/bodybags
-	name = "body bags"
-	desc = "This box contains body bags."
+	name = "body bag kit"
+	desc = "A kit specifically designed to fit bodybags."
 	icon_state = "bodybags"
+	max_w_class = 3
+	max_combined_w_class = 21
+	can_hold = list("/obj/item/bodybag") //Needed due to the last two variables, figures
 	New()
 		..()
 		new /obj/item/bodybag(src)
@@ -45,13 +48,10 @@
 			if (!in_range(src, user) && src.loc != user)
 				return
 			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-			if (t)
-				src.name = "body bag - "
-				src.name += t
-				src.overlays += image(src.icon, "bodybag_label")
-			else
-				src.name = "body bag"
-		//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
+			src.name = "body bag"
+			if(t)
+				src.name += " [t]"
+			src.overlays += image(src.icon, "bodybag_label")
 			return
 		else if(istype(W, /obj/item/weapon/wirecutters))
 			user << "You cut the tag off the bodybag"
