@@ -182,7 +182,7 @@
 
 		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
 		if(occupant.getCloneLoss())
-			dat += "<div class='line'><span class='average'>Subject appears to have been imperfectly cloned.</span></div>"
+			dat += "<div class='line'><span class='average'>Subject appears to have cellular damage.</span></div>"
 		if(occupant.getBrainLoss())
 			dat += "<div class='line'><span class='average'>Significant brain damage detected.</span></div>"
 		if(occupant.reagents.reagent_list.len)
