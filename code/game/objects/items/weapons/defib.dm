@@ -17,9 +17,7 @@
 	var/datum/effect/effect/system/spark_spread/sparks = new
 	var/charges = 10
 	var/ready = 0
-	var/nextShock
 	var/emagged = 0
-	var/revivedelay = 50 //I hope those are ticks
 
 /obj/item/weapon/melee/defibrillator/New()
 	src.sparks.set_up(5,0,src)
@@ -79,7 +77,6 @@
 	if(!ishuman(M)) user << "<span class='warning'>You can't defibrilate [M]. You don't even know where to put the paddles!</span>"
 	else if(!src.charges) user << "<span class='warning'>[src] is out of charges.</span>"
 	else if(!src.ready) user << "<span class='notice'>Take the paddles out first.</span>"
-	else if(world.time < src.nextShock) user << "<span class='warning'>[src] is still charging back up.</span>"
 	else
 		var/mob/living/carbon/human/target = M
 		if(!(target.stat == 2 || target.stat == DEAD))
@@ -106,7 +103,6 @@
 	playsound(get_turf(src),'sound/items/defib.ogg',50,1)
 	src.charges--
 	src.update_icon()
-	src.nextShock = world.timeofday + revivedelay*0.2
 	return
 
 /obj/item/weapon/melee/defibrillator/proc/attemptDefib(mob/living/carbon/human/target,mob/user)
@@ -157,5 +153,4 @@
 			else
 				target.visible_message("<span class='notice'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
 		target.apply_damage(rand(1,5),BURN,"chest") //Better not try too much times
-		src.nextShock = world.timeofday + revivedelay
 		return
