@@ -125,9 +125,8 @@
 					@param frequency:	Frequency to broadcast to
 					@param source:		The name of the source you wish to imitate. Must be stored in stored_names list.
 					@param job:				The name of the job.
-					@param lang: 			Target language.
 		*/
-		interpreter.SetProc("broadcast", "tcombroadcast", signal, list("message", "freq", "source", "job", "lang"))
+		interpreter.SetProc("broadcast", "tcombroadcast", signal, list("message", "freq", "source", "job"))
 
 		/*
 			-> Send a code signal.
@@ -267,7 +266,7 @@ datum/signal
 			lastsignalers.Add("[time] <B>:</B> [S.id] sent a signal command, which was triggered by NTSL.<B>:</B> [format_frequency(freq)]/[code]")
 
 
-	proc/tcombroadcast(var/message, var/freq, var/source, var/job, var/lang)
+	proc/tcombroadcast(var/message, var/freq, var/source, var/job)
 
 		var/datum/signal/newsign = new
 		var/obj/machinery/telecomms/server/S = data["server"]
@@ -290,16 +289,13 @@ datum/signal
 		if(!job)
 			job = "Unknown"
 
-		if(!lang || lang <= 0)// || !(lang && !(lang & (lang - 1)))) //This last piece of code checks to make sure only one bit is set.
-			lang = HUMAN
-
 		//SAY REWRITE RELATED CODE.
 		//This code is a little hacky, but it *should* work. Even though it'll result in a virtual speaker referencing another virtual speaker. vOv
 		var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
 		virt.name = source
 		virt.job = job
 		virt.faketrack = 1
-		virt.languages = lang
+		virt.languages = HUMAN
 		//END SAY REWRITE RELATED CODE.
 
 		newsign.data["mob"] = virt
