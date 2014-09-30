@@ -22,12 +22,9 @@
 	mag_type = /obj/item/ammo_box/magazine/m50
 
 
-/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/living/user, flag)
 	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
-		update_icon()
-		alarmed = 1
+	empty_alarm()
 	return
 
 /obj/item/weapon/gun/projectile/automatic/deagle/update_icon()
@@ -59,12 +56,9 @@
 /obj/item/weapon/gun/projectile/automatic/gyropistol/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/living/user, flag)
 	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
-		update_icon()
-		alarmed = 1
+	empty_alarm()
 	return
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol/update_icon()

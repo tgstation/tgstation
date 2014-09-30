@@ -16,6 +16,12 @@
 	if(..() && chambered)
 		alarmed = 0
 
+/obj/item/weapon/gun/projectile/automatic/proc/empty_alarm(atom/target, mob/living/user, flag)
+	if(!chambered && !get_ammo() && !alarmed)
+		playsound(src.loc, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		update_icon()
+		alarmed = 1
+	return
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Uzi"
@@ -43,15 +49,10 @@
 	update_icon()
 	return
 
-
-/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
 	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
-		update_icon()
-		alarmed = 1
+	empty_alarm()
 	return
-
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
@@ -140,12 +141,9 @@
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/living/user, flag)
 	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
-		update_icon()
-		alarmed = 1
+	empty_alarm()
 	return
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
