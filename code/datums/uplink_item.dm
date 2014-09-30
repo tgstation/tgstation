@@ -388,6 +388,14 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/aiModule/syndicate
 	cost = 14
 
+/datum/uplink_item/stolen/magboots
+	name = "Stolen Magboots"
+	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station during gravitational generator failures. \
+	These reverse-engineered knockoffs of Nanotrasen's 'Advanced Magboots' slow you down in simulated-gravity environments much like the standard issue variety."
+	item = /obj/item/clothing/shoes/magboots/syndie
+	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/device_tools/c4
 	name = "Composition C-4"
 	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls or connect a signaler to its wiring to make it remotely detonable. \
