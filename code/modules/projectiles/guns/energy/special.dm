@@ -266,19 +266,13 @@ obj/item/weapon/gun/energy/staff/focus
 
 	process() //Every [recharge_time] ticks, recharge a shot for the cyborg
 		charge_tick++
-		if(charge_tick < 3)
-			message_admins("Can't charge yet!")
-			return 0
+		if(charge_tick < 3) return 0
 		charge_tick = 0
 
-		if(!power_supply)
-			message_admins("No power supply, quitting!")
-			return 0 //sanity
+		if(!power_supply) return 0 //sanity
 		if(isrobot(src.loc))
-			message_admins("We're in a robot!")
 			var/mob/living/silicon/robot/R = src.loc
 			if(R && R.cell)
-				message_admins("We have a robot and its cell")
 				R.cell.use(charge_cost) 		//Take power from the borg...
 				power_supply.give(charge_cost)	//... to recharge the shot
 
