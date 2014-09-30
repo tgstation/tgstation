@@ -50,3 +50,16 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
+/////////////////////////////////////
+/obj/item/stack/tile/noslip
+	name = "high-traction floor tile"
+	singular_name = "high-traction floor tile"
+	desc = "A high-traction floor tile. It feels rubbery in your hand."
+	icon_state = "tile_noslip"
+	w_class = 3.0
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 7
+	max_amount = 60
+	origin_tech = "material=3"
