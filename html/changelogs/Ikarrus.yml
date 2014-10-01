@@ -1,7 +1,8 @@
 author: Ikarrus
 
-#delete-after: True
+delete-after: True
 
 changes: 
   - wip: Adds Gang War, a new game mode still in alpha development.
   - experiment: Developer Note: Gang mode is still in development and is not ready to be played reguarly in secret rotations. Server operators are asked to keep Gang mode's probability at 0, and only run it only as a playtest.
+  - rscadd: Command and Security Staff PDAs are now able to request security presence.

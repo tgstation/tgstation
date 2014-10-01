@@ -22,6 +22,7 @@
 	var/access_status_display = 0
 	var/access_quartermaster = 0
 	var/access_hydroponics = 0
+	var/access_summons //Allows them to summon security
 	var/mode = null
 	var/menu
 	var/datum/data/record/active1 = null //General
@@ -56,6 +57,7 @@
 /obj/item/weapon/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
+	access_summons = 1
 	access_security = 1
 
 /obj/item/weapon/cartridge/security/New()
@@ -65,6 +67,7 @@
 /obj/item/weapon/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
 	icon_state = "cart-s"
+	access_summons = 1
 	access_security = 1
 	access_medical = 1
 	access_manifest = 1
@@ -82,6 +85,7 @@
 /obj/item/weapon/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-s"
+	access_summons = 1
 	access_security = 1
 
 /obj/item/weapon/cartridge/clown
@@ -132,6 +136,7 @@
 /obj/item/weapon/cartridge/head
 	name = "\improper Easy-Record DELUXE cartridge"
 	icon_state = "cart-h"
+	access_summons = 1
 	access_manifest = 1
 	access_status_display = 1
 
@@ -151,6 +156,7 @@
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
 	icon_state = "cart-hos"
+	access_summons = 1
 	access_manifest = 1
 	access_status_display = 1
 	access_security = 1
@@ -162,6 +168,7 @@
 /obj/item/weapon/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
+	access_summons = 1
 	access_manifest = 1
 	access_status_display = 1
 	access_engine = 1
@@ -170,6 +177,7 @@
 /obj/item/weapon/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
 	icon_state = "cart-cmo"
+	access_summons = 1
 	access_manifest = 1
 	access_status_display = 1
 	access_reagent_scanner = 1
@@ -178,6 +186,7 @@
 /obj/item/weapon/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
+	access_summons = 1
 	access_manifest = 1
 	access_status_display = 1
 	access_reagent_scanner = 1
@@ -191,6 +200,7 @@
 	name = "\improper Value-PAK cartridge"
 	desc = "Now with 200% more value!"
 	icon_state = "cart-c"
+	access_summons = 1
 	access_manifest = 1
 	access_engine = 1
 	access_security = 1
