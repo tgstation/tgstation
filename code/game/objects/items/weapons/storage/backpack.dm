@@ -14,7 +14,7 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
 	max_combined_w_class = 21
@@ -69,9 +69,9 @@
 	icon_state = "giftbag0"
 	item_state = "giftbag"
 	w_class = 4.0
-	storage_slots = 20
+	storage_slots = 20 //Can store a lot.
 	max_w_class = 3
-	max_combined_w_class = 400 // can store a ton of shit!
+	max_combined_w_class = 60
 
 /obj/item/weapon/storage/backpack/cultpack
 	name = "trophy rack"
@@ -186,12 +186,13 @@
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
-	item_state = "satchel-norm"
+	w_class = 3 //Can fit in backpacks itself.
+	storage_slots = 5
+	max_combined_w_class = 15
 	level = 1
-	storage_slots = 6
-	max_combined_w_class = 18
+	cant_hold = list(/obj/item/weapon/storage/backpack/satchel_flat) //muh recursive backpacks
 
-/obj/item/weapon/storage/flatpack/hide(var/intact)
+/obj/item/weapon/storage/backpack/satchel_flat/hide(var/intact)
 	if(intact)
 		invisibility = 101
 		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
@@ -201,7 +202,7 @@
 		anchored = 0
 		icon_state = initial(icon_state)
 
-/obj/item/weapon/storage/flatpack/New()
+/obj/item/weapon/storage/backpack/satchel_flat/New()
 	..()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
