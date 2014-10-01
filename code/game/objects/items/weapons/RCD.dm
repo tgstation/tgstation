@@ -200,6 +200,11 @@ RCD
 				return 0
 
 			if(istype(A, /turf/simulated/floor))
+				var/turf/T = get_turf(user)
+				if(T.z > 6)
+					// No floors deconstruction on planet away missions
+					return 0
+
 				if(checkResource(5, user))
 					user << "Deconstructing Floor..."
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
