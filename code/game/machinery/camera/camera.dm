@@ -19,6 +19,7 @@ var/list/camera_names=list()
 	var/invuln = null
 	var/bugged = 0
 	var/obj/item/weapon/camera_assembly/assembly = null
+	var/light_on = 0
 
 	machine_flags = SCREWTOGGLE
 
@@ -326,3 +327,4 @@ var/list/camera_names=list()
 		return 1
 	busy = 0
 	return 0
+

@@ -183,17 +183,25 @@
 ///////////////////////////////////////////////////
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in command_positions)
-		return 0
-	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
-	for(var/obj/item/weapon/implant/loyalty/L in H)//Checking that there is a loyalty implant in the contents
-		if(L.imp_in == H)//Checking that it's actually implanted
-			return 0
+		return -1
+
+	var/mob/living/carbon/human/H = rev_mind.current
+
+	if(jobban_isbanned(H, "revolutionary"))
+		return -2
+
+	for(var/obj/item/weapon/implant/loyalty/L in H) // check loyalty implant in the contents
+		if(L.imp_in == H) // a check if it's actually implanted
+			return -3
+
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
-		return 0
+		return -4
+
 	revolutionaries += rev_mind
 	rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
+
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.

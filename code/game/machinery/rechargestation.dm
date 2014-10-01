@@ -9,6 +9,8 @@
 	active_power_usage = 1000
 	var/mob/occupant = null
 
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE
+
 	New()
 		. = ..()
 		build_icon()

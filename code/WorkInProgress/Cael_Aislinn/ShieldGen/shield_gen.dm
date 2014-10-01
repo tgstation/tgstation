@@ -96,6 +96,10 @@
 		return
 	interact(user)
 
+/obj/machinery/shield_gen/attack_ghost(mob/user)
+	if(isAdminGhost(user)) src.attack_hand(user)
+	return
+	
 /obj/machinery/shield_gen/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!istype(user, /mob/living/silicon))

@@ -123,7 +123,7 @@
 /obj/item/device/camera/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
 	var/in_camera_mode = 0
-
+/*
 	verb/picture()
 		set category ="AI Commands"
 		set name = "Take Image"
@@ -137,6 +137,7 @@
 		set src in usr
 
 		viewpictures()
+*/
 
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
