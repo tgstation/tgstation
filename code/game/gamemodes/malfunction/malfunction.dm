@@ -25,7 +25,8 @@
 /datum/game_mode/malfunction/announce()
 	world << {"<B>The current game mode is - AI Malfunction!</B>
 <B>The onboard AI is malfunctioning and must be destroyed.</B>
-<B>If the AI manages to take over the station, it will most likely blow it up. You have no chance to survive, make your time.</B>"}
+<B>If the AI manages to take over the station, it will most likely blow it up. You have [AI_win_timeleft/60] minutes to disable it.</B>
+<B>You have no chance to survive, make your time.</B>"}
 
 
 /datum/game_mode/malfunction/pre_setup()
