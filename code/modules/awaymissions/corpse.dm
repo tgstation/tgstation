@@ -259,7 +259,7 @@
 	corpseradio = /obj/item/device/radio/headset/heads/captain
 	corpseglasses = /obj/item/clothing/glasses/eyepatch
 	corpsemask = /obj/item/clothing/mask/cigarette/cigar/cohiba
-	corpsehelmet = /obj/item/clothing/head/helmet/centhat
+	corpsehelmet = /obj/item/clothing/head/centhat
 	corpsegloves = /obj/item/clothing/gloves/combat
 	corpseshoes = /obj/item/clothing/shoes/swat
 	corpsepocket1 = /obj/item/weapon/lighter/zippo

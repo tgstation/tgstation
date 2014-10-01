@@ -1,11 +1,12 @@
 
 
-/obj/item/clothing/head/helmet/centhat
+/obj/item/clothing/head/centhat
 	name = "\improper Centcom hat"
 	icon_state = "centcom"
 	desc = "It's good to be emperor."
 	item_state = "that"
 	flags_inv = 0
+	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
