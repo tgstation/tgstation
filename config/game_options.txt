@@ -104,6 +104,7 @@ PROBABILITY SANDBOX 0
 ## the shuttle is called or the station is nuked.
 ## Malf and Rev will let the shuttle be called when the antags/protags are dead.
 #CONTINUOUS_ROUND_REV
+#CONTINUOUS_ROUND_GANG
 #CONTINUOUS_ROUND_WIZ
 #CONTINUOUS_ROUND_MALF
 

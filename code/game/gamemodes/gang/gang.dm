@@ -14,7 +14,7 @@
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 2
-	recommended_enemies = 4
+	recommended_enemies = 2
 
 	var/finished = 0
 	var/checkwin_counter = 0
@@ -23,7 +23,7 @@
 ///////////////////////////
 /datum/game_mode/gang/announce()
 	world << "<B>The current game mode is - Gang War!</B>"
-	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by killing the rival gang's bosses! Recruit gangsters by flashing them! <BR>Security - Protect the Crew! Identify and stop the mob bosses!</B>"
+	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by recruiting gangsters and killing the rival gang's bosses! <BR>Crew - Identify and stop the mob bosses!</B>"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -40,17 +40,15 @@
 
 	if(antag_candidates.len >= 2)
 		assign_bosses()
-		if(antag_candidates.len > 20)
-			assign_bosses()
 
 	if(!A_bosses.len || !B_bosses.len)
 		return 0
 
 //Set a temporary special_role so the job controller doesn't hand out invalid jobs for these antags
 	for(var/datum/mind/boss_mind in A_bosses)
-		boss_mind.special_role = "Gang member"
+		boss_mind.special_role = "[gang_name("A")] Gang (A) Boss"
 	for(var/datum/mind/boss_mind in B_bosses)
-		boss_mind.special_role = "Gang member"
+		boss_mind.special_role = "[gang_name("B")] Gang (B) Boss"
 
 	return 1
 
@@ -122,8 +120,7 @@
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			mob.mutations.Remove(CLUMSY)
 
-
-	var/obj/item/device/flash/T = new(mob)
+	var/obj/item/weapon/pen/red/gang/T = new(mob)
 	var/obj/item/device/recaller/recaller = new(mob)
 
 	var/list/slots = list (
@@ -145,10 +142,10 @@
 
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	if (!where)
-		mob << "Your Syndicate benefactors were unfortunately unable to get you a flash."
+		mob << "Your Syndicate benefactors were unfortunately unable to get you a recruitment pen."
 	else
-		mob << "The <b>flash</b> in your [where] will help you to persuade the crew to work for you."
-		mob << "<span class='userdanger'>Keep in mind that your underlings can only identify their bosses, but not each other. You must coordinate your gang effectively to beat out the competition.</span>"
+		mob << "The <b>red pen</b> in your [where] will help you to persuade the crew to work for you. Just apply pen to human."
+		mob << "<span class='userdanger'>Keep in mind that only you can see who your gang members are. Your gangsters rely on you for coordination.</span>"
 		. += 1
 
 	mob.update_icons()
@@ -175,7 +172,7 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/gang/check_finished()
-	if(finished) //Check for Gang Boss death
+	if(finished && !config.continuous_round_gang) //Check for Gang Boss death
 		return 1
 	return ..() //Check for evacuation/nuke
 
@@ -187,35 +184,40 @@
 		return 0
 	if((gangster_mind in A_bosses) || (gangster_mind in A_gangsters) || (gangster_mind in B_bosses) || (gangster_mind in B_gangsters))
 		return 0
+
 	if(gang == "A")
 		A_gangsters += gangster_mind
 	else
 		B_gangsters += gangster_mind
+
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
-	gangster_mind.current << "<font color='red'>Help your bosses take over the station by defeating their rivals. You can identify your bosses by the brown \"B\" icons, but <B>only they know who the other members of your gang are!</B> Work with your boss to avoid attacking your own gang.</font>"
+	gangster_mind.current << "<font color='red'>Help your Boss take over the station by defeating the rival gang. You can identify your Boss by the brown \"B\" icon, but <B>only they know who the other members of your gang are!</B> Work with your Boss to avoid attacking your own gang.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
 	update_gang_icons_added(gangster_mind,gang)
+
 	return 1
+
 //////////////////////////////////////////////////////////////
 //Deals with players going straight (Not a gangster anymore)//
 //////////////////////////////////////////////////////////////
-/datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, var/beingborged, var/silent)
+/datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, var/beingborged, var/silent, var/exclude_bosses=0)
 	var/gang
 
-	if(gangster_mind in A_bosses)
-		A_bosses -= gangster_mind
-		gang = "A"
+	if(!exclude_bosses)
+		if(gangster_mind in A_bosses)
+			A_bosses -= gangster_mind
+			gang = "A"
 
-	else if(gangster_mind in A_gangsters)
+		if(gangster_mind in B_bosses)
+			B_bosses -= gangster_mind
+			gang = "B"
+
+	if(gangster_mind in A_gangsters)
 		A_gangsters -= gangster_mind
 		gang = "A"
 
-	else if(gangster_mind in B_bosses)
-		B_bosses -= gangster_mind
-		gang = "B"
-
-	else if(gangster_mind in B_gangsters)
+	if(gangster_mind in B_gangsters)
 		B_gangsters -= gangster_mind
 		gang = "B"
 
@@ -366,7 +368,7 @@
 		return 0
 	for(var/datum/mind/boss_mind in boss_list)
 		if(boss_mind.current)
-			if(boss_mind.current.stat == DEAD || !ishuman(boss_mind.current) || !boss_mind.current.ckey || !boss_mind.current.client)
+			if(boss_mind.current.stat == DEAD || !ishuman(boss_mind.current) || !boss_mind.current.ckey)
 				return 1
 			var/turf/T = get_turf(boss_mind.current)
 			if(T && (T.z != 1))			//If they leave the station they count as dead for this
@@ -391,7 +393,10 @@
 	var/winner
 	var/datum/game_mode/gang/game_mode = ticker.mode
 	if(istype(game_mode))
-		winner = game_mode.finished
+		if(game_mode.finished)
+			winner = game_mode.finished
+		else
+			winner = "Draw"
 
 	var/num_ganga = 0
 	var/list/agang = A_gangsters + A_bosses
@@ -407,23 +412,19 @@
 			if(bgangster.current in living_mob_list)
 				num_gangb++
 
-	var/num_survivors = 0
-	for(var/mob/living/carbon/survivor in living_mob_list)
-		if(survivor.key)
-			num_survivors++
-
 	if(A_bosses.len || A_gangsters.len)
-		if(winner == "A" || winner == "B")
-			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_ganga/num_survivors)*100, 0.1)]% influence.</b>"
-		world << "<br><font size=2><b>The [gang_name("A")] Gang bosses were:</b></font>"
+		if(winner)
+			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [num_ganga] members!</b>"
+		world << "<br><font size=2><b>The [gang_name("A")] Gang Boss was:</b></font>"
 		gang_membership_report(A_bosses)
 		world << "<br><font size=2><b>The [gang_name("A")] Gangsters were:</b></font>"
 		gang_membership_report(A_gangsters)
+		world << "<br>"
 
 	if(B_bosses.len || B_gangsters.len)
-		if(winner == "A" || winner == "B")
-			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((num_gangb/num_survivors)*100, 0.1)]% influence.</b>"
-		world << "<br><font size=2><b>The [gang_name("B")] Gang bosses were:</b></font>"
+		if(winner)
+			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [num_gangb] members!</b>"
+		world << "<br><font size=2><b>The [gang_name("B")] Gang Boss was:</b></font>"
 		gang_membership_report(B_bosses)
 		world << "<br><font size=2><b>The [gang_name("B")] Gangsters were:</b></font>"
 		gang_membership_report(B_gangsters)
@@ -444,6 +445,5 @@
 		else
 			text += "body destroyed"
 		text += ")"
-	text += "<br><br>"
 
 	world << text
