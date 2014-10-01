@@ -85,7 +85,10 @@
 			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 			return
 		if(do_after(user, 30))	//SHIT IS STEALTHY EYYYYY
-			icon_state = "sawnshotgun"
+			if(istype(src,/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised))
+				icon_state = "isawnshotgun"
+			else
+				icon_state = "sawnshotgun"
 			w_class = 3.0
 			item_state = "gun"
 			slot_flags &= ~SLOT_BACK	//you can't sling it on your back
@@ -107,3 +110,85 @@
 		user << "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
+
+
+// IMPROVISED SHOTGUN //
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
+	name = "improvised shotgun"
+	desc = "Essentially a tube that aims shotgun shells."
+	icon_state = "ishotgun"
+	item_state = "shotgun"
+	w_class = 4.0
+	force = 10
+	flags =  CONDUCT
+	slot_flags = SLOT_BACK
+	origin_tech = "combat=2;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/improvised
+
+
+/obj/item/ishotgunreciever
+	name = "firearm reciever"
+	desc = "An improvised trigger assembly for a firearm."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunpart1"
+	m_amt = 200000 //You need to upgrade the autolathe to make either of these
+
+/obj/item/ishotgunbarrel
+	name = "firearm barrel"
+	desc = "A long metal slug barrel, with threading to be compatible with specific weapon recievers."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunpart2"
+	m_amt = 200000
+
+/obj/item/ishotgungrip
+	name = "firearm stock"
+	desc = "Two oddly-shaped wooden pieces roughly resembling a shotgun stock and hand grip."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunpart3"
+
+/obj/item/ishotgunreciever/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/ishotgunbarrel))
+		user << "You screw the shotgun barrel into the reciever."
+		var/obj/item/ishotgunconstruction/I = new /obj/item/ishotgunconstruction
+		user.unEquip(src)
+		user.put_in_hands(I)
+		del(W)
+		del(src)
+		return
+
+/obj/item/ishotgunconstruction
+	name = "slightly conspicuous metal construction"
+	desc = "A long barrel screwed into a trigger assembly."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunstep1"
+
+/obj/item/ishotgunconstruction/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/ishotgungrip))
+		user << "You attach the grip and stock to the reciever-barrel assembly."
+		var/obj/item/ishotgunconstruction2/I = new /obj/item/ishotgunconstruction2
+		user.unEquip(src)
+		user.put_in_hands(I)
+		del(W)
+		del(src)
+		return
+
+/obj/item/ishotgunconstruction2
+	name = "extremely conspicuous metal construction"
+	desc = "A reicever-barrel shotgun assembly with a loose wooden stock and grip. There's no way you can fire it without the grip coming off."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunstep2"
+
+/obj/item/ishotgunconstruction2/attackby(var/obj/item/I, mob/user as mob)
+	..()
+	if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = I
+		if (C.use(5))
+			var/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/W = new /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
+			user.unEquip(src)
+			user.put_in_hands(W)
+			user << "<span class='notice'>You tie the cable coil around the grip, securing it to the barrel... Mostly.</span>"
+			qdel(src)
+		else
+			user << "<span class='warning'>You need at least five lengths of cable to secure the grip.</span>"
+			return
