@@ -32,5 +32,5 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - rscadd: Added splints to Medical cyborgs and activated charcoal to their upgraded cyborg hypospray. Added police tape and pepperspray to Security cyborgs. Added atmospherics and engineering tape to Engineering cyborgs and MoMMIs.
+  - rscadd: Added splints to Medical cyborgs and activated charcoal to their upgraded cyborg hypospray. Added police tape and pepperspray to Security cyborgs. Added atmospherics and engineering tape to Engineering cyborgs.
   - tweak: Replaced bandages and ointment on Medical cyborgs with advanced trauma and burn kits due to changes in the way that surgery is performed.
