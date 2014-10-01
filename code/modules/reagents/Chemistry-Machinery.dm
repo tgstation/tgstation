@@ -516,6 +516,7 @@
 
 /obj/machinery/computer/pandemic
 	name = "PanD.E.M.I.C 2200"
+	desc = "Used to work with viruses."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
