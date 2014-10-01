@@ -65,9 +65,6 @@ var/list/uplink_items = list()
 	if (!user || user.stat || user.restrained())
 		return 0
 
-	if (!( istype(user, /mob/living/carbon/human)))
-		return 0
-
 	// If the uplink's holder is in the user's contents
 	if ((U.loc in user.contents || (in_range(U.loc, user) && istype(U.loc.loc, /turf))))
 		user.set_machine(U)
@@ -76,9 +73,10 @@ var/list/uplink_items = list()
 
 		var/obj/I = spawn_item(get_turf(user), U)
 
-		if(istype(I, /obj/item) && ishuman(user))
-			var/mob/living/carbon/human/A = user
-			A.put_in_any_hand_if_possible(I)
+		if(istype(I, /obj/item))
+			if(ishuman(user))
+				var/mob/living/carbon/human/A = user
+				A.put_in_any_hand_if_possible(I)
 
 			if(istype(I,/obj/item/weapon/storage/box/) && I.contents.len>0)
 				for(var/atom/o in I)
