@@ -36,11 +36,11 @@
 				if (src.auth_need - src.authorized.len > 0)
 					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has authorized early shuttle launch in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 					log_game("[user.ckey]([user]) has authorized early shuttle launch in ([x],[y],[z])")
-					minor_announce("[src.auth_need - src.authorized.len] more authorization(s) needed until shuttle is launched early")
+					minor_announce("[src.auth_need - src.authorized.len] more authorization(s) needed until shuttle is launched early",null,1)
 				else
 					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has launched the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 					log_game("[user.ckey]([user]) has launched the emergency shuttle in ([x],[y],[z])")
-					minor_announce("The emergency shuttle will launch in 10 seconds")
+					minor_announce("The emergency shuttle will launch in 10 seconds",null,1)
 					emergency_shuttle.online = 1
 					emergency_shuttle.settimeleft(10)
 					//src.authorized = null
@@ -64,7 +64,7 @@
 				if("Launch")
 					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has emagged the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 					log_game("[user.ckey]([user]) has emagged the emergency shuttle in ([x],[y],[z])")
-					minor_announce("The emergency shuttle will launch in 10 seconds", "System Error:")
+					minor_announce("The emergency shuttle will launch in 10 seconds", "SYSTEM ERROR:",null,1)
 					emergency_shuttle.settimeleft( 10 )
 					emagged = 1
 				if("Cancel")

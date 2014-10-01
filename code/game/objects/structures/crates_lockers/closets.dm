@@ -249,8 +249,8 @@
 		user << "<span class='notice'>It won't budge!</span>"
 		if(!lastbang)
 			lastbang = 1
-			for (var/mob/M in hearers(src, null))
-				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
+			for (var/mob/M in get_hearers_in_view(src, null))
+				M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>", 2)
 			spawn(30)
 				lastbang = 0
 

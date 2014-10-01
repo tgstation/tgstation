@@ -85,12 +85,12 @@
 	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
-/obj/item/weapon/ore/clown
+/obj/item/weapon/ore/bananium
 	name = "Bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
 	points = 27
-	refined_type = /obj/item/stack/sheet/mineral/clown
+	refined_type = /obj/item/stack/sheet/mineral/bananium
 
 /obj/item/weapon/ore/slag
 	name = "Slag"

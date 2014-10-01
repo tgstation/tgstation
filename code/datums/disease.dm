@@ -206,7 +206,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 /datum/disease/proc/GetDiseaseID()
 	return src.type
-/*
+
 /datum/disease/Del()
 	active_diseases.Remove(src)
-*/
+	..()

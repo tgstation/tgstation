@@ -25,7 +25,7 @@
 	return
 
 /obj/item/stack/tile/plasteel/attackby(obj/item/W as obj, mob/user as mob)
-	..()
+
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -45,7 +45,8 @@
 			if (!R && replace)
 				user.put_in_hands(new_item)
 		return
-	..()
+	else
+		..()
 
 /*
 /obj/item/stack/tile/plasteel/attack_self(mob/user as mob)

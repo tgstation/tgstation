@@ -1,6 +1,3 @@
-/mob/living/carbon/human/say(var/message)
-	..(message)
-
 /mob/living/carbon/human/say_quote(text)
 	if(!text)
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
@@ -47,10 +44,14 @@
 	return message
 
 /mob/living/carbon/human/GetVoice()
-	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		var/obj/item/clothing/mask/gas/voice/V = src.wear_mask
-		if(V.vchange)
-			return V.voice
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
+		var/obj/item/clothing/mask/gas/voice/V = wear_mask
+		if(V.vchange && wear_id)
+			var/obj/item/weapon/card/id/idcard = wear_id.GetID()
+			if(istype(idcard))
+				return idcard.registered_name
+			else
+				return real_name
 		else
 			return real_name
 	if(mind && mind.changeling && mind.changeling.mimicing)

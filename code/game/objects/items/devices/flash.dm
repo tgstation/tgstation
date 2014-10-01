@@ -74,21 +74,25 @@
 			flick("e_flash", M.flash)
 
 			if(ishuman(M) && ishuman(user) && M.stat != DEAD)
-				if(user.mind && user.mind in ticker.mode.head_revolutionaries)
+				if(user.mind && ((user.mind in ticker.mode.head_revolutionaries) || (user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.B_bosses)))
 					if(M.client)
 						if(M.stat == CONSCIOUS)
-							var/revsafe = 0
-							if(isloyal(M))
-								revsafe = 1
 							M.mind_initialize()		//give them a mind datum if they don't have one.
-//							if(M.mind.has_been_rev)
-//								revsafe = 2
-							if(!revsafe)
-								M.mind.has_been_rev = 1
-								ticker.mode.add_revolutionary(M.mind)
-							else if(revsafe == 1)
-								user << "<span class='warning'>Something seems to be blocking the flash!</span>"
+							var/resisted
+							if(!isloyal(M))
+								if(user.mind in ticker.mode.head_revolutionaries)
+									if(!ticker.mode.add_revolutionary(M.mind))
+										resisted = 1
+								if(user.mind in ticker.mode.A_bosses)
+									if(!ticker.mode.add_gangster(M.mind,"A"))
+										resisted = 1
+								if(user.mind in ticker.mode.B_bosses)
+									if(!ticker.mode.add_gangster(M.mind,"B"))
+										resisted = 1
 							else
+								resisted = 1
+
+							if(resisted)
 								user << "<span class='warning'>This mind seems resistant to the flash!</span>"
 						else
 							user << "<span class='warning'>They must be conscious before you can convert them!</span>"

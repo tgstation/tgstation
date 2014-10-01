@@ -73,6 +73,7 @@ var/global/pipe_processing_killed = 0
 	world.tick_lag = config.Ticklag
 
 	setup_objects()
+	setup_map_transistions()
 	setupgenetics()
 	setupfactions()
 

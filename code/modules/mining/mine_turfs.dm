@@ -417,7 +417,7 @@
 			if (src.mineralName == "Diamond")
 				new /obj/item/weapon/ore/diamond(src)
 			if (src.mineralName == "Clown")
-				new /obj/item/weapon/ore/clown(src)
+				new /obj/item/weapon/ore/bananium(src)
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	N.fullUpdateMineralOverlays()
 	return
