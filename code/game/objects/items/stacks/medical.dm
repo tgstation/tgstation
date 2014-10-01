@@ -41,8 +41,10 @@
 				t_himself = "himself"
 			else if (user.gender == FEMALE)
 				t_himself = "herself"
+			user << "<span class='notice'>You start applying [src] on yourself.</span>"
+			if(!do_after(user,30)) return
 
-			user.visible_message( \
+			else user.visible_message( \
 				"<span class='notice'>[M] applied [src] on [t_himself].</span>", \
 				"<span class='notice'>You apply \the [src] on yourself.</span>" \
 			)
