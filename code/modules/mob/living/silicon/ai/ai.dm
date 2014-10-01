@@ -153,7 +153,7 @@ var/list/ai_list = list()
 	var/icontype = ""
 	/* Nuked your hidden shit.*/
 	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
-	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Broken Output", "Triumvirate", "Triumvirate Static", "Searif", "Ravensdale", "Serithi", "Static", "Wasp", "Robert House", "Red October", "Fabulous")
+	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Broken Output", "Triumvirate", "Triumvirate Static", "Searif", "Ravensdale", "Serithi", "Static", "Wasp", "Robert House", "Red October", "Fabulous", "Girl", "Girl Malf", "Boy", "Boy Malf", "Four-Leaf")
 	switch(icontype)
 		if("Custom") icon_state = "[src.ckey]-ai"
 		if("Clown") icon_state = "ai-clown2"
@@ -178,7 +178,12 @@ var/list/ai_list = list()
 		if("Wasp") icon_state = "ai-wasp"
 		if("Robert House") icon_state = "ai-president"
 		if("Red October") icon_state = "ai-soviet"
+		if("Girl") icon_state = "ai-girl"
+		if("Girl Malf") icon_state = "ai-girl-malf"
+		if("Boy") icon_state = "ai-boy"
+		if("Boy Malf") icon_state = "ai-boy-malf"
 		if("Fabulous") icon_state = "ai-fabulous"
+		if("Four-Leaf") icon_state = "ai-4chan"
 		else icon_state = "ai"
 	//else
 			//usr <<"You can only change your display once!"
@@ -652,7 +657,12 @@ var/list/ai_list = list()
 		"Cortano",
 		"Spoopy",
 		"343",
-		"Auto"
+		"Auto",
+		"Four-Leaf",
+		"Yotsuba",
+		"Girl",
+		"Boy",
+		"SHODAN"
 		)
 		input = input("Please select a hologram:") as null|anything in icon_list
 		if(input)
@@ -670,6 +680,16 @@ var/list/ai_list = list()
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo5"))
 				if("Auto")
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo6"))
+				if("Four-Leaf")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo7"))
+				if("Yotsuba")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo8"))
+				if("Girl")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo9"))
+				if("Boy")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo10"))
+				if("SHODAN")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo11"))
 
 	return
 

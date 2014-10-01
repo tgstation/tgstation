@@ -80,13 +80,22 @@
 
 /obj/item/clothing/under/rank/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
-	name = "botanist's jumpsuit"
+	name = "hydroponicist's jumpsuit"
 	icon_state = "hydroponics"
 	item_state = "g_suit"
 	_color = "hydroponics"
 	permeability_coefficient = 0.50
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	species_fit = list("Vox")
+
+/obj/item/clothing/under/rank/botany
+	desc = "It's a jumpsuit designed to protect against minor plant-related hazards. For the more garden-minded botanist."
+	name = "botanist's jumpsuit"
+	icon_state = "botany"
+	item_state = "botany"
+	_color = "botany"
+	permeability_coefficient = 0.50
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 
 /obj/item/clothing/under/rank/internalaffairs

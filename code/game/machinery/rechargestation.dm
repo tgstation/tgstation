@@ -227,6 +227,26 @@
 								var/obj/item/weapon/melee/baton/B = O
 								if(B.bcell)
 									B.bcell.charge = B.bcell.maxcharge
+							//Combat
+							if(istype(O,/obj/item/weapon/gun/energy/laser/cyborg))
+								if(O:power_supply.charge < O:power_supply.maxcharge)
+									O:power_supply.give(O:charge_cost)
+									O:update_icon()
+								else
+									O:charge_tick = 0
+							if(istype(O,/obj/item/weapon/gun/energy/lasercannon/cyborg))
+								if(O:power_supply.charge < O:power_supply.maxcharge)
+									O:power_supply.give(O:charge_cost)
+									O:update_icon()
+								else
+									O:charge_tick = 0
+							//Mining
+							if(istype(O,/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg))
+								if(O:power_supply.charge < O:power_supply.maxcharge)
+									O:power_supply.give(O:charge_cost)
+									O:update_icon()
+								else
+									O:charge_tick = 0
 							//Service
 							if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
 								if(O.reagents.get_reagent_amount("enzyme") < 50)
