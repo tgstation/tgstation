@@ -106,7 +106,7 @@
 	if(output)
 		var/temp = ""
 		if(occupant)
-			temp = "<br />\[Occupant: [occupant] (Health: [occupant.health]%)\]<br /><a href='?src=\ref[src];view_stats=1'>View stats</a>|<a href='?src=\ref[src];eject=1'>Eject</a>"
+			temp = "<br />\[Occupant: [occupant] ([occupant.stat > 1 ? "*DECEASED*" : "Health: [occupant.health]%"])\]<br /><a href='?src=\ref[src];view_stats=1'>View stats</a>|<a href='?src=\ref[src];eject=1'>Eject</a>"
 		return "[output] [temp]"
 	return
 
@@ -163,12 +163,14 @@
 			t1 = "*dead*"
 		else
 			t1 = "Unknown"
-	return {"<font color="[occupant.health > 50 ? "blue" : "red"]"><b>Health:</b> [occupant.health]% ([t1])</font><br />
+	return {"<font color="[occupant.health > 50 ? "blue" : "red"]"><b>Health:</b> [occupant.stat > 1 ? "[t1]" : "[occupant.health]% ([t1])"]</font><br />
 				<font color="[occupant.bodytemperature > 50 ? "blue" : "red"]"><b>Core Temperature:</b> [src.occupant.bodytemperature-T0C]&deg;C ([src.occupant.bodytemperature*1.8-459.67]&deg;F)</font><br />
 				<font color="[occupant.getBruteLoss() < 60 ? "blue" : "red"]"><b>Brute Damage:</b> [occupant.getBruteLoss()]%</font><br />
 				<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [occupant.getOxyLoss()]%</font><br />
 				<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [occupant.getToxLoss()]%</font><br />
 				<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [occupant.getFireLoss()]%</font><br />
+				<font color="red">[occupant.getCloneLoss() ? "Subject appears to have cellular damage." : ""]</font><br />
+				<font color="red">[occupant.getBrainLoss() ? "Significant brain damage detected." : ""]</font><br />
 				"}
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_reagents()

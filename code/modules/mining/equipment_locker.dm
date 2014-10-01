@@ -41,7 +41,8 @@
 						D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
 		storage.amount += 1 //Stack the sheets
-		O.loc = null //Let the old sheet garbage collect
+		O.loc = null //Let the old sheet...
+		qdel(O) //... garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()
 	if(!panel_open) //If the machine is partially dissassembled, it should not process minerals
@@ -76,9 +77,7 @@
 		return
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
-			for (var/obj/O in src.contents)
-				O.loc = src.loc //Drop item to the floor
-				O.layer = initial(O.layer)
+			empty_content()
 			default_deconstruction_crowbar(W)
 		return 1
 	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
@@ -197,17 +196,26 @@
 	s.start()
 	if(severity == 1)
 		if(prob(50))
-			for (var/obj/O in src.contents)
-				O.loc = src.loc //Drop item to the floor
-				O.layer = initial(O.layer)
+			empty_content()
 			qdel(src)
 	else if(severity == 2)
 		if(prob(25))
-			for (var/obj/O in src.contents)
-				O.loc = src.loc //Drop item to the floor
-				O.layer = initial(O.layer)
+			empty_content()
 			qdel(src)
 	return
+
+//empty the redemption machine by stacks of at most max_amount (50 at this time) size
+/obj/machinery/mineral/ore_redemption/proc/empty_content()
+	var/obj/item/stack/sheet/s
+
+	for(var/O in stack_list)
+		s = stack_list[O]
+		while(s.amount > s.max_amount)
+			new s.type(loc,s.max_amount)
+			s.use(s.max_amount)
+		s.loc = loc
+		s.layer = initial(s.layer)
+
 
 /**********************Mining Equipment Vendor**************************/
 
@@ -576,7 +584,7 @@
 	projectilesound = 'sound/weapons/Gunshot4.ogg'
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
-						  /obj/item/weapon/ore/clown)
+						  /obj/item/weapon/ore/bananium)
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/weldingtool))

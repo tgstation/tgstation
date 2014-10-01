@@ -40,7 +40,7 @@
 		agent_number--
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		synd_mind.need_job_assign = 0
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
 	return 1
@@ -210,7 +210,7 @@
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
 	U.hidden_uplink.uplink_owner="[synd_mob.key]"
-	U.hidden_uplink.uses = 10
+	U.hidden_uplink.uses = 20
 	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)

@@ -31,6 +31,8 @@
 				loc << "<span class='info'>\icon[src]Comm arrays accessed. Broadcasting recall signal...</span>"
 				sleep(rand(10,30))
 				recalling = 0
+				log_game("[key_name(user)] has recalled the shuttle with a recaller.")
+				message_admins("[key_name_admin(user)] has recalled the shuttle with a recaller.", 1)
 				if(!cancel_call_proc(user))
 					loc << "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>"
 				return

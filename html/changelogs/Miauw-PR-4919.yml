@@ -1,0 +1,7 @@
+author: Miauw
+
+delete-after: True
+
+changes:
+  - experiment: The amount of TC has been increased to 20, but the price of all items has been doubled as well
+  - experiment: With this, the prices of stealthy items has been slightly decreased and the prices of offensive items slightly increased (+/- 1 TC)

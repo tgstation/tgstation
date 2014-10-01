@@ -29,6 +29,7 @@
 		return // Not supposed to be destroyed
 	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
+	src.loc = null
 	..()
 
 /obj/item/stack/examine()
@@ -135,23 +136,32 @@
 			usr << "<span class='notice'>Building [R.title] ...</span>"
 			if (!do_after(usr, R.time))
 				return
-		if (src.get_amount() < R.req_amount*multiplier)
-			return
+			if (src.get_amount() < R.req_amount*multiplier)
+				return
+
 		var/atom/O = new R.result_type( usr.loc )
 		O.dir = usr.dir
+		use(R.req_amount * multiplier)
+
+		//is it a stack ?
 		if (R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
-			new_item.add_to_stacks(usr)
-		use(R.req_amount * multiplier)
+			new_item.add_to_stacks(usr) //try to merge with existing stacks on current tile
+
+			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
+				return
+
 		if (istype(O,/obj/item))
 			usr.put_in_hands(O)
 		O.add_fingerprint(usr)
+
 		//BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
+
 	if (src && usr.machine==src) //do not reopen closed window
 		spawn( 0 )
 			src.interact(usr)
@@ -188,7 +198,7 @@
 			continue
 		oldsrc.attackby(item, usr)
 		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
-		if(!oldsrc)
+		if(oldsrc.amount <= 0)
 			break
 
 /obj/item/stack/attack_hand(mob/user as mob)
@@ -206,7 +216,7 @@
 	return
 
 /obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
-	..()
+
 	if (istype(W, src.type))
 		var/obj/item/stack/S = W
 		if (S.is_cyborg)
@@ -231,7 +241,9 @@
 			src.use(to_transfer)
 			if (src && usr.machine==src)
 				spawn(0) src.interact(usr)
-	else return ..()
+
+	else
+		..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
 	src.blood_DNA = from.blood_DNA

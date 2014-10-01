@@ -1168,7 +1168,7 @@ datum/reagent/clonexadone/on_mob_life(var/mob/living/M as mob)
 datum/reagent/rezadone
 	name = "Rezadone"
 	id = "rezadone"
-	description = "A powder derived from fish toxin, this substance can effectively treat genetic damage in humanoids, though excessive consumption has side effects."
+	description = "A powder derived from fish toxin, this substance can effectively treat cellular damage in humanoids, though excessive consumption has side effects."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 

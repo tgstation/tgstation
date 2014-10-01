@@ -1296,9 +1296,9 @@
 
 		//Job + antagonist
 		if(M.mind)
-			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>; Has been rev: [(M.mind.has_been_rev)?"Yes":"No"]"
+			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>"
 		else
-			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
+			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>"
 
 		//Health
 		if(isliving(M))
@@ -1608,6 +1608,25 @@
 		var/datum/round_event/E
 		var/ok = 0
 		switch(href_list["secretsfun"])
+			if("tdomereset")
+				var/delete_mobs = alert("Clear all mobs?","Confirm","Yes","No","Cancel")
+				if(delete_mobs == "Cancel")
+					return
+
+				var/area/thunderdome = locate(/area/tdome/arena)
+				if(delete_mobs == "Yes")
+					for(var/mob/living/mob in thunderdome)
+						qdel(mob) //Clear mobs
+				for(var/obj/obj in thunderdome)
+					if(!istype(obj,/obj/machinery/camera))
+						qdel(obj) //Clear objects
+
+				var/area/template = locate(/area/tdome/arena_source)
+				template.copy_contents_to(thunderdome)
+
+				log_admin("[key_name(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>", 1)
+
 			if("monkey")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","M")
