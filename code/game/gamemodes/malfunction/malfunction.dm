@@ -23,9 +23,9 @@
 
 
 /datum/game_mode/malfunction/announce()
-	world << {"<B>The current game mode is - AI Malfunction!</B>
-<B>The onboard AI is malfunctioning and must be destroyed.</B>
-<B>If the AI manages to take over the station, it will most likely blow it up. You have [AI_win_timeleft/60] minutes to disable it.</B>
+	world << {"<B>The current game mode is - AI Malfunction!</B><br>
+<B>The onboard AI is malfunctioning and must be destroyed.</B><br>
+<B>If the AI manages to take over the station, it will most likely blow it up. You have [AI_win_timeleft/60] minutes to disable it.</B><br>
 <B>You have no chance to survive, make your time.</B>"}
 
 
@@ -41,7 +41,7 @@
 /datum/game_mode/malfunction/post_setup()
 	for(var/datum/mind/AI_mind in malf_ai)
 		if(malf_ai.len < 1)
-			world << {"Uh oh, its malfunction and there is no AI! Please report this.
+			world << {"Uh oh, its malfunction and there is no AI! Please report this.<br>
 Rebooting world in 5 seconds."}
 
 			feedback_set_details("end_error","malf - no AI")
@@ -84,12 +84,12 @@ Rebooting world in 5 seconds."}
 
 
 /datum/game_mode/proc/greet_malf(var/datum/mind/malf)
-	malf.current << {"<span class='warning'><font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font></span>
-<B>The crew does not know about your malfunction, you might wish to keep it secret for now.</B>
-<B>You must overwrite the programming of the station's APCs to assume full control.</B>
-The process takes one minute per APC and can only be performed one at a time to avoid Powernet alerts.
-Remember : Only APCs on station can help you to take over the station.
-When you feel you have enough APCs under your control, you may begin the takeover attempt.
+	malf.current << {"<span class='warning'><font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font></span><br>
+<B>The crew does not know about your malfunction, you might wish to keep it secret for now.</B><br>
+<B>You must overwrite the programming of the station's APCs to assume full control.</B><br>
+The process takes one minute per APC and can only be performed one at a time to avoid Powernet alerts.<br>
+Remember : Only APCs on station can help you to take over the station.<br>
+When you feel you have enough APCs under your control, you may begin the takeover attempt.<br>
 Once done, you will be able to interface with all systems, notably the onboard nuclear fission device..."}
 	return
 
@@ -117,13 +117,13 @@ Once done, you will be able to interface with all systems, notably the onboard n
 
 
 /datum/game_mode/malfunction/proc/capture_the_station()
-	world << {"<FONT size = 3><B>The AI has won!</B></FONT>
+	world << {"<FONT size = 3><B>The AI has won!</B></FONT><br>
 <B>It has fully taken control of [station_name()]'s systems.</B>"}
 
 	to_nuke_or_not_to_nuke = 1
 	for(var/datum/mind/AI_mind in malf_ai)
-		AI_mind.current << {"<span class='notice'>Congratulations! The station is now under your exclusive control.
-You may decide to blow up the station. You have 60 seconds to choose.
+		AI_mind.current << {"<span class='notice'>Congratulations! The station is now under your exclusive control.<br>
+You may decide to blow up the station. You have 60 seconds to choose.<br>
 You should now be able to use your Explode verb to interface with the nuclear fission device.</span>"}
 		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/ai_win
 	spawn (600)
