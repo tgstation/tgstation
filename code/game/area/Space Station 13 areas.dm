@@ -1394,7 +1394,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "storage"
 
 /area/ai_monitored/storage/satellite
-	name = "\improper AI Satellite Exterior"
+	name = "\improper AI Satellite Maint"
 	icon_state = "storage"
 
 
@@ -1416,6 +1416,10 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/aisat
 	name = "\improper AI Satellite"
 	icon_state = "ai"
+
+/area/aisat
+	name = "\improper AI Satellite Exterior"
+	icon_state = "yellow"
 
 /area/turret_protected/aisat_interior
 	name = "\improper AI Satellite Antechamber"
