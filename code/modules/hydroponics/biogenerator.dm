@@ -1,6 +1,6 @@
 /obj/machinery/biogenerator
 	name = "Biogenerator"
-	desc = ""
+	desc = "Makes things out of biomass."
 	icon = 'icons/obj/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = 1
@@ -286,4 +286,4 @@
 	else if(href_list["menu"])
 		menustat = "menu"
 		updateUsrDialog()
-		
+
