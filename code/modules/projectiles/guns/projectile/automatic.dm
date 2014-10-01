@@ -16,7 +16,7 @@
 	if(..() && chambered)
 		alarmed = 0
 
-/obj/item/weapon/gun/projectile/automatic/proc/empty_alarm(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/proc/empty_alarm()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(src.loc, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
 		update_icon()
@@ -49,7 +49,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/c20r/afterattack()
 	..()
 	empty_alarm()
 	return
@@ -141,7 +141,7 @@
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack()
 	..()
 	empty_alarm()
 	return
