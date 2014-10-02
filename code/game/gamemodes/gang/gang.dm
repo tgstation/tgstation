@@ -115,13 +115,18 @@
 	if(!istype(mob))
 		return
 
+	var/obj/item/weapon/pen/gang/pen = new(mob)
+	var/obj/item/device/gangtool/gangtool = new(mob)
+
 	if (mob.mind)
 		if (mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			mob.mutations.Remove(CLUMSY)
 
-	var/obj/item/weapon/pen/red/gang/T = new(mob)
-	var/obj/item/device/recaller/recaller = new(mob)
+		if(mob.mind in A_bosses)
+			gangtool.gang = "A"
+		else if(mob.mind in B_bosses)
+			gangtool.gang = "B"
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -133,18 +138,18 @@
 
 	. = 0
 
-	var/where2 = mob.equip_in_one_of_slots(recaller, slots)
+	var/where2 = mob.equip_in_one_of_slots(gangtool, slots)
 	if (!where2)
-		mob << "Your Syndicate benefactors were unfortunately unable to get you a Recaller."
+		mob << "Your Syndicate benefactors were unfortunately unable to get you a gangtool."
 	else
-		mob << "The <b>Recaller</b> in your [where2] will allow you to prevent the station from prematurely evacuating. Use it to recall the emergency shuttle from anywhere on the station."
+		mob << "The <b>special device</b> in your [where2] gives you access to an assortment of useful tools. It can also be used to recall the emergency shuttle from anywhere on station."
 		. += 2
 
-	var/where = mob.equip_in_one_of_slots(T, slots)
+	var/where = mob.equip_in_one_of_slots(pen, slots)
 	if (!where)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a recruitment pen."
 	else
-		mob << "The <b>red pen</b> in your [where] will help you to persuade the crew to work for you. Just apply pen to human."
+		mob << "The <b>pen</b> in your [where] can be used to recruit members into your gang by jabbing them with it. Requires time to recharge between uses."
 		mob << "<span class='userdanger'>Keep in mind that only you can see who your gang members are. Your gangsters rely on you for coordination.</span>"
 		. += 1
 
@@ -191,7 +196,9 @@
 		B_gangsters += gangster_mind
 
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
-	gangster_mind.current << "<font color='red'>Help your Boss take over the station by defeating the rival gang. You can identify your Boss by the brown \"B\" icon, but <B>only they know who the other members of your gang are!</B> Work with your Boss to avoid attacking your own gang.</font>"
+	gangster_mind.current << "<font color='red'>Help your Boss take over the station by defeating the rival gang.</font>"
+	gangster_mind.current << "<font color='red'>You can identify your Boss by the brown \"B\" icon, but <B>only they know who the other members of your gang are!</B></font>"
+	gangster_mind.current << "<font color='red'>Work with your Boss to avoid attacking your own gang.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
 	update_gang_icons_added(gangster_mind,gang)
