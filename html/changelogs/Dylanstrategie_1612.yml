@@ -1,0 +1,5 @@
+author: dylanstrategie
+delete-after: True
+
+changes: 
+  - bufix: Body bag boxes (now body bag kits, sprite left unchanged) now behave correctly. Body bag naming code simplified
