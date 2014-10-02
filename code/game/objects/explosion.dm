@@ -94,6 +94,7 @@
 				dist = 3
 			else if (dist < flash_range)
 				dist = 4 //Most explosion codes already include flash if ANY ex_act value is passed, so this should work out of the box
+			else
 				continue
 
 			for (var/atom/movable/A in T.contents)
