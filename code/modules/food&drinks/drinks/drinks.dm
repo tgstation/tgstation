@@ -277,10 +277,18 @@
 	volume = 100
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
-	name = "Captain's Flask"
-	desc = "A metal flask belonging to the captain"
+	name = "captain's flask"
+	desc = "A silver flask belonging to the captain"
 	icon_state = "flask"
 	volume = 60
+
+/obj/item/weapon/reagent_containers/food/drinks/flask/det
+	name = "detective's flask"
+	desc = "The detective's only true friend."
+	icon_state = "detflask"
+	New()
+		..()
+		reagents.add_reagent("whiskey", 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/britcup
 	name = "cup"
