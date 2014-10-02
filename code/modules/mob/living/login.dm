@@ -4,25 +4,23 @@
 	sync_mind()
 	mind.show_memory(src, 0)
 
-	//Round specific stuff like hud updates
-	if(ticker && ticker.mode)
-		switch(ticker.mode.name)
-			if("sandbox")
-				CanBuild()
-			if("revolution")
-				if((mind in ticker.mode.revolutionaries) || (src.mind in ticker.mode:head_revolutionaries))
-					ticker.mode.update_rev_icons_added(src.mind)
-			if("gang")
-				if((mind in ticker.mode.A_bosses) || (mind in ticker.mode.A_gangsters))
-					ticker.mode.update_gang_icons_added(src.mind,"A")
-				if((mind in ticker.mode.B_bosses) || (mind in ticker.mode.B_gangsters))
-					ticker.mode.update_gang_icons_added(src.mind,"B")
-			if("cult")
-				if(mind in ticker.mode:cult)
-					ticker.mode.update_cult_icons_added(src.mind)
-			if("nuclear emergency")
-				if(mind in ticker.mode:syndicates)
-					ticker.mode.update_all_synd_icons()
+	//hud updates
+	if(ticker && ticker.mode && ticker.mode.name == "sandbox")
+		CanBuild()
+
+	if((mind in ticker.mode.revolutionaries) || (src.mind in ticker.mode.head_revolutionaries))
+		ticker.mode.update_rev_icons_added(src.mind)
+
+	if((mind in ticker.mode.A_bosses) || (mind in ticker.mode.A_gangsters))
+		ticker.mode.update_gang_icons_added(src.mind,"A")
+	if((mind in ticker.mode.B_bosses) || (mind in ticker.mode.B_gangsters))
+		ticker.mode.update_gang_icons_added(src.mind,"B")
+
+	if(mind in ticker.mode.cult)
+		ticker.mode.update_cult_icons_added(src.mind)
+
+	if(mind in ticker.mode.syndicates)
+		ticker.mode.update_all_synd_icons()
 
 	if(ventcrawler)
 		src << "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>"
