@@ -19,7 +19,7 @@
 	var/sprite_name = "fire_extinguisher"
 
 /obj/item/weapon/extinguisher/mini
-	name = "fire extinguisher"
+	name = "pocket fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
 	item_state = "miniFE"

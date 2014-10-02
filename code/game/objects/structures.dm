@@ -16,3 +16,8 @@ obj/structure/ex_act(severity)
 				return
 		if(3.0)
 			return
+
+obj/structure/Destroy()
+	if(opacity)
+		UpdateAffectingLights()
+	..()
