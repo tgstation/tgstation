@@ -1,5 +1,0 @@
-author: dylanstrategie
-delete-after: True
-
-changes: 
-  - bugfix: Flash range on bombs should now be functional.
