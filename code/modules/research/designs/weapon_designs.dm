@@ -155,7 +155,7 @@ datum/design/stunshell
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200)
-	build_path = /obj/item/ammo_casing/shotgun/stunshell
+	build_path = /obj/item/ammo_casing/shotgun/stunslug
 
 datum/design/techshell
 	name = "Unloaded Technological Shotshell"
