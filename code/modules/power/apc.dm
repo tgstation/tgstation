@@ -1270,4 +1270,22 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	else
 		return 0
 
+/obj/machinery/power/apc/magic
+	name = "magic power controller"
+	desc = "A control terminal for the area electrical systems."
+	start_charge = INFINITY
+	cell_type = INFINITY
+	..()
+
 #undef APC_UPDATE_ICON_COOLDOWN
+/obj/machinery/power/apc/magic/attack_hand(mob/user)
+	if(!user)
+		return
+	src.add_fingerprint(user)
+	if(usr == user && opened && (!issilicon(user)))
+		if(cell)
+			user << "You seem to be unable to remove the powercell, it appears to have melted deeply into the APC."
+		return
+	if(stat & (BROKEN|MAINT))
+		return
+	src.interact(user)
