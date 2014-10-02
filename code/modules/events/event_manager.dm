@@ -274,3 +274,9 @@ var/datum/controller/event/events
 		E.weight = initial(E.weight)
 		if((E.wizardevent && !wizardmode) || (!E.wizardevent && wizardmode))
 			E.weight = 0
+	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [events.frequency_lower / 600] to [events.frequency_upper / 600] minutes" : "disabled"]!")
+	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
+
+/datum/controller/event/proc/resetFrequency()
+	frequency_lower = initial(frequency_lower)
+	frequency_upper = initial(frequency_upper)
