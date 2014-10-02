@@ -168,12 +168,12 @@
 							if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
 								if(O.reagents.get_reagent_amount("enzyme") < 50)
 									O.reagents.add_reagent("enzyme", 2)
-							//Medical
+							//Medical & Standard
 							if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/robot))
 								var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
 								if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
 									B.reagents.add_reagent(B.reagent, 2)
-							if(istype(O,/obj/item/stack/medical/bruise_pack) || istype(O,/obj/item/stack/medical/ointment))
+							if(istype(O,/obj/item/stack/medical/bruise_pack) || istype(O,/obj/item/stack/medical/ointment) || istype(O,/obj/item/stack/medical/advanced/bruise_pack) || istype(O,/obj/item/stack/medical/advanced/ointment) || istype(O,/obj/item/stack/medical/splint))
 								if(O:amount < O:max_amount)
 									O:amount += 2
 								if(O:amount > O:max_amount)

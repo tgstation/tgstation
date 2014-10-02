@@ -115,22 +115,28 @@
 		src.emag.reagents.add_reagent("pacid", 250)
 		src.emag.name = "Polyacid spray"
 
-		var/obj/item/stack/medical/bruise_pack/B = new /obj/item/stack/medical/bruise_pack(src)
-		B.max_amount = 15
-		B.amount = 15
+		var/obj/item/stack/medical/advanced/bruise_pack/B = new /obj/item/stack/medical/advanced/bruise_pack(src)
+		B.max_amount = 10
+		B.amount = 10
 		src.modules += B
 
-		var/obj/item/stack/medical/ointment/O = new /obj/item/stack/medical/ointment(src)
-		O.max_amount = 15
-		O.amount = 15
+		var/obj/item/stack/medical/advanced/ointment/O = new /obj/item/stack/medical/advanced/ointment(src)
+		O.max_amount = 10
+		O.amount = 10
 		src.modules += O
+
+		var/obj/item/stack/medical/splint/S = new /obj/item/stack/medical/splint(src)
+		S.max_amount = 10
+		S.amount = 10
+		src.modules += S
 
 		return
 
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
-			/obj/item/stack/medical/bruise_pack,
-			/obj/item/stack/medical/ointment,
+			/obj/item/stack/medical/advanced/bruise_pack,
+			/obj/item/stack/medical/advanced/ointment,
+			/obj/item/stack/medical/splint,
 		)
 		for (var/T in what)
 			if (!(locate(T) in src.modules))
@@ -164,6 +170,8 @@
 		src.modules += new /obj/item/device/multitool(src)
 		src.modules += new /obj/item/device/t_scanner(src)
 		src.modules += new /obj/item/device/analyzer(src)
+		src.modules += new /obj/item/taperoll/atmos(src)
+		src.modules += new /obj/item/taperoll/engineering(src)
 
 		var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
 		M.amount = 50
@@ -220,9 +228,11 @@
 	New()
 		..()
 		//src.modules += new /obj/item/borg/sight/hud/sec(src)
-		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
 		src.modules += new /obj/item/weapon/melee/baton/loaded(src)
 		src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
+		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
+		src.modules += new /obj/item/weapon/reagent_containers/spray/pepper(src)
+		src.modules += new /obj/item/taperoll/police(src)
 		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 		return
 
