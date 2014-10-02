@@ -38,7 +38,7 @@
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
-		emote("growls at [.]")
+		emote("me", 1, "growls at [.]")
 
 /mob/living/simple_animal/hostile/mimic/Die()
 	..()
