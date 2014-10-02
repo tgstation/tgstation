@@ -1,0 +1,5 @@
+author: Dylanstrategie
+delete_after: true
+changes:
+  - spellcheck: Removed all broken <br /> tags from Malfunction code and tweaked the dialogue slightly
+  - tweak: Explode verb is now available from the start to fix wonky behavior. For obvious reasons, multiple checks were added to avoid early trigger
