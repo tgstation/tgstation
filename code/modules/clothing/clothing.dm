@@ -181,10 +181,6 @@ BLIND     // can't see anything
 			if(user)
 				user << "<span class='warning'>[src] already has an accessory.</span>"
 			return 0
-		if(src.adjusted)
-			if(1)
-				if(user)
-					user << "<span class='warning'>You cannot attach an accessory to [src] when it is adjusted.</span>"
 		else
 			if(user)
 				user.drop_item()
@@ -263,9 +259,6 @@ atom/proc/generate_uniform(index,t_color)
 		return
 	if(!can_adjust)
 		usr << "You cannot wear this suit any differently."
-		return
-	if(hastie)
-		usr << "You cannot adjust this suit with an accessory attached to it."
 		return
 	if(src.adjusted == 1)
 		src.item_color = initial(item_color)
