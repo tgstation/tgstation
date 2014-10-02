@@ -25,7 +25,7 @@
 author: Angelite Entyshak
 
 # Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
-#delete-after: True
+delete-after: True
 
 # Any changes you've made.  See valid prefix list above.
 # INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
