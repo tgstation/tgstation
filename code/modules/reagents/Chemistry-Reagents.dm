@@ -996,6 +996,8 @@ datum/reagent/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob)
 	M.sleeping = 0
 	M.jitteriness = 0
 	for(var/datum/disease/D in M.viruses)
+		if(D.severity == D.non_threat)
+			continue
 		D.spread = "Remissive"
 		D.stage--
 		if(D.stage < 1)
