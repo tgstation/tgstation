@@ -3,6 +3,7 @@
 	name = "breath mask"
 	icon_state = "breath"
 	item_state = "m_mask"
+	can_flip = 1
 	body_parts_covered = 0
 	flags = MASKCOVERSMOUTH | MASKINTERNALS
 	w_class = 2

@@ -6,6 +6,8 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	w_class = 3.0
 	item_state = "gas_alt"
+	can_flip = 1
+	action_button_name = "Toggle Mask"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 
@@ -206,6 +208,7 @@
 	desc = "A close-fitting mask that acts both as an air filter and a post-modern fashion statement."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
+	can_flip = null
 	vchange = 1
 
 /obj/item/clothing/mask/gas/voice/space_ninja/speechModification(message)
@@ -236,6 +239,7 @@
 	alloweat = 1
 	icon_state = "clown"
 	item_state = "clown_hat"
+	can_flip = null
 
 obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 
@@ -259,6 +263,7 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 	alloweat = 1
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
+	can_flip = null
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -266,6 +271,7 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 	alloweat = 1
 	icon_state = "mime"
 	item_state = "mime"
+	can_flip = null
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
@@ -273,6 +279,7 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 	alloweat = 1
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
+	can_flip = null
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -280,19 +287,23 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 	alloweat = 1
 	icon_state = "sexymime"
 	item_state = "sexymime"
+	can_flip = null
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
 	icon_state = "death_commando_mask"
 	item_state = "death_commando_mask"
+	can_flip = null
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
 	desc = "Beep boop"
 	icon_state = "death"
+	can_flip = null
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
 	desc = "Twoooo!"
 	alloweat = 1
 	icon_state = "owl"
+	can_flip = null
