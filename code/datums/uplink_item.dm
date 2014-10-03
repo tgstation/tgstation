@@ -124,7 +124,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
-	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62×51mm ammunition."
+	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62Ã—51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 40
 	gamemodes = list(/datum/game_mode/nuclear)
@@ -239,8 +239,8 @@ var/list/uplink_items = list()
 	cost = 1
 
 /datum/uplink_item/ammo/machinegun
-	name = "Ammo-7.62×51mm"
-	desc = "A 50-round magazine of 7.62×51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
+	name = "Ammo-7.62Ã—51mm"
+	desc = "A 50-round magazine of 7.62Ã—51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 12
 	gamemodes = list(/datum/game_mode/nuclear)
@@ -293,7 +293,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/chameleon_stamp
 	name = "Chameleon Stamp"
-	desc = "A stamp that can be activated to imitate an official Nanotrasen Stamp™. The disguised stamp will work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; \
+	desc = "A stamp that can be activated to imitate an official Nanotrasen StampÂ™. The disguised stamp will work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; \
 	it can also be used in a washing machine to forge clothing."
 	item = /obj/item/weapon/stamp/chameleon
 	cost = 1
@@ -393,7 +393,7 @@ var/list/uplink_items = list()
 	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station during gravitational generator failures. \
 	These reverse-engineered knockoffs of Nanotrasen's 'Advanced Magboots' slow you down in simulated-gravity environments much like the standard issue variety."
 	item = /obj/item/clothing/shoes/magboots/syndie
-	cost = 2
+	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/c4
