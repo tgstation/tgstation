@@ -114,6 +114,10 @@ var/global/pipe_processing_killed = 0
 			if(!Failsafe)	new /datum/controller/failsafe()
 
 			var/currenttime = world.timeofday
+
+			if((last_tick_timeofday - currenttime) > 1e5) //midnight rollover protection
+				last_tick_timeofday -= MIDNIGHT_ROLLOVER
+
 			last_tick_duration = (currenttime - last_tick_timeofday) / 10
 			last_tick_timeofday = currenttime
 
