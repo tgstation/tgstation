@@ -33,7 +33,7 @@
 /obj/item/weapon/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
-	charges = 46//of 138
+	charges = 63//of 188
 
 /obj/item/weapon/vending_refill/coffee
 	machine_name = "hot drinks"
@@ -47,7 +47,7 @@
 /obj/item/weapon/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"
-	charges = 21//of 65
+	charges = 24//of 72
 
 /obj/item/weapon/vending_refill/cigarette
 	machine_name = "cigarette"
