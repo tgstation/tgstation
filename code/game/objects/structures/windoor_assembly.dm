@@ -183,9 +183,9 @@ obj/structure/windoor_assembly/Destroy()
 					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
-						src.name = "secure wired windoor assembly"
+						src.name = "secure anchored windoor assembly"
 					else
-						src.name = "wired windoor assembly"
+						src.name = "anchored windoor assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
 			else if(istype(W, /obj/item/weapon/airlock_electronics))
