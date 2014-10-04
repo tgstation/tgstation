@@ -166,6 +166,8 @@
 			playsound(src, "sparks", 50, 1)
 			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
 
+		return
+
 
 	var/turf/T = user.loc	//get user's location for delay checks
 	var/slicing_duration = 100  //default time taken to slice the wall
