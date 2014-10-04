@@ -617,6 +617,32 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/fancy/on_reagent_change()
 	update_icon()
+	if (reagents.reagent_list.len > 0)
+		switch(reagents.get_master_reagent_id())
+			if("cola")
+				icon_state = "sodabottle-cola"
+				name = "Space Cola"
+				desc = "Cola. in space."
+			if("sodawater")
+				icon_state = "sodabottle-sodawater"
+				name = "Soda Water"
+				desc = "A bottle of soda water. Why not make a scotch and soda?"
+			if("space_up")
+				icon_state = "sodabottle-spaceup"
+				name = "Space-Up"
+				desc = "Tastes like a hull breach in your mouth."
+			if("thirteenloko")
+				icon_state = "sodabottle-13loko"
+				name = "Thirteen Loko"
+				desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsably."
+			if("tonic")
+				icon_state = "sodabottle-tonic"
+				name = "T-Borg's Tonic Water"
+				desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+			else
+				icon_state ="sodabottle"
+				name = "soda bottle"
+				desc = "A glass soda bottle."
 
 /obj/item/weapon/reagent_containers/food/drinks/fancy/pickup(mob/user)
 	..()
