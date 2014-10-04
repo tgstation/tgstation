@@ -27,8 +27,6 @@
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/pre_setup_before_jobs = 0
-	var/uplink_welcome = "Syndicate Uplink Console:"
-	var/uplink_uses = 10
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/datum/mind/sacrifice_target = null
 
@@ -81,6 +79,8 @@
 	if(report)
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
+	start_state = new /datum/station_state()
+	start_state.count()
 	return 1
 
 ///make_antag_chance()
@@ -218,6 +218,7 @@
 		if(BE_OPERATIVE)	roletext="operative"
 		if(BE_WIZARD)		roletext="wizard"
 		if(BE_REV)			roletext="revolutionary"
+		if(BE_GANG)			roletext="gangster"
 		if(BE_CULTIST)		roletext="cultist"
 		if(BE_MONKEY)		roletext="monkey"
 
@@ -385,3 +386,19 @@ proc/display_roundstart_logout_report()
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
 			M << msg
+
+/datum/game_mode/proc/printplayer(var/datum/mind/ply)
+	var/role = "\improper[ply.assigned_role]"
+	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
+	if(ply.current)
+		if(ply.current.stat == DEAD)
+			text += "died"
+		else
+			text += "survived"
+		if(ply.current.real_name != ply.name)
+			text += " as <b>[ply.current.real_name]</b>"
+	else
+		text += "body destroyed"
+	text += ")"
+
+	return text

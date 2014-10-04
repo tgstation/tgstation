@@ -14,6 +14,7 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
+	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "hits"
@@ -59,7 +60,7 @@
 /mob/living/simple_animal/hostile/bear/FindTarget()
 	. = ..()
 	if(.)
-		emote("stares alertly at [.]")
+		emote("me", 1, "stares alertly at [.]")
 		stance = HOSTILE_STANCE_ATTACK
 
 /mob/living/simple_animal/hostile/bear/LoseTarget()

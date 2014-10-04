@@ -93,6 +93,42 @@ var/next_mob_id = 0
 		M.show_message( message, 1, blind_message, 2)
 
 
+
+
+
+// Show a message to all mobs in earshot of this one
+// This would be for audible actions by the src mob
+// message is the message output to anyone who can hear.
+// self_message (optional) is what the src mob hears.
+// deaf_message (optional) is what deaf people will see.
+// hearing_distance (optional) is the range, how many tiles away the message can be heard.
+
+/mob/audible_message(var/message, var/deaf_message, var/hearing_distance, var/self_message)
+	var/range = 7
+	if(hearing_distance)
+		range = hearing_distance
+	var/msg = message
+	for(var/mob/M in get_hearers_in_view(range, src))
+		if(self_message && M==src)
+			msg = self_message
+		M.show_message( msg, 2, deaf_message, 1)
+
+// Show a message to all mobs in earshot of this atom
+// Use for objects performing audible actions
+// message is the message output to anyone who can hear.
+// deaf_message (optional) is what deaf people will see.
+// hearing_distance (optional) is the range, how many tiles away the message can be heard.
+
+/atom/proc/audible_message(var/message, var/deaf_message, var/hearing_distance)
+	var/range = 7
+	if(hearing_distance)
+		range = hearing_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
+		M.show_message( message, 2, deaf_message, 1)
+
+
+
+
 /mob/proc/movement_delay()
 	return 0
 
@@ -447,7 +483,7 @@ var/list/slot_equipment_priority = list( \
 			creatures[name] = O
 
 
-	for(var/mob/M in sortAtom(mob_list))
+	for(var/mob/M in sortNames(mob_list))
 		var/name = M.name
 		if (names.Find(name))
 			namecounts[name]++
@@ -718,6 +754,12 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
+
+/mob/proc/swap_hand()
+	return
+
+/mob/proc/activate_hand(var/selhand)
+	return
 
 /mob/proc/SpeciesCanConsume()
 	return 0

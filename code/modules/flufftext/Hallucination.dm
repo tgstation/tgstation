@@ -109,7 +109,7 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(41 to 65)
 				//Strange audio
 				//src << "Strange Audio"
-				switch(rand(1,12))
+				switch(rand(1,14))
 					if(1) src << 'sound/machines/airlock.ogg'
 					if(2)
 						if(prob(50))src << 'sound/effects/Explosion1.ogg'
@@ -140,6 +140,12 @@ mob/living/carbon/proc/handle_hallucinations()
 							'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
 							'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 						src << pick(creepyasssounds)
+					if(13)
+						src << "<span class='warning'>You feel a tiny prick!</span>"
+					if(14)
+						src << "<h1 class='alert'>Priority Announcement</h1>"
+						src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
+						src << sound('sound/AI/shuttledock.ogg')
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
@@ -338,7 +344,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/clothing/mask/gas/voice, /obj/item/clothing/glasses/thermal,\
 	/obj/item/device/chameleon, /obj/item/weapon/card/emag,\
 	/obj/item/weapon/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\
-	/obj/item/device/radio/headset/syndicate,	/obj/item/weapon/plastique,\
+	/obj/item/device/radio/headset/syndicate,	/obj/item/weapon/c4,\
 	/obj/item/device/powersink, /obj/item/weapon/storage/box/syndie_kit,\
 	/obj/item/toy/syndicateballoon, /obj/item/weapon/gun/energy/laser/captain,\
 	/obj/item/weapon/hand_tele, /obj/item/weapon/rcd, /obj/item/weapon/tank/jetpack,\

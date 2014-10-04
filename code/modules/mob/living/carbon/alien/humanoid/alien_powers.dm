@@ -138,20 +138,18 @@ Doesn't work on other aliens/AI.*/
 	return
 
 /mob/living/carbon/alien/humanoid/proc/resin()
-	set name = "Secrete Resin (75)"
+	set name = "Secrete Resin (55)"
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
 
-	if(powerc(75))
-		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
-		if(!choice || !powerc(75))	return
-		adjustToxLoss(-75)
+	if(powerc(55))
+		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
+		if(!choice || !powerc(55))	return
+		adjustToxLoss(-55)
 		src << "<span class='userdanger'>You shape a [choice].</span>"
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("<span class='userdanger'>[src] vomits up a thick purple substance and begins to shape it!</span>"), 1)
 		switch(choice)
-			if("resin door")
-				new /obj/structure/mineral_door/resin(loc)
 			if("resin wall")
 				new /obj/structure/alien/resin/wall(loc)
 			if("resin membrane")

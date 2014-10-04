@@ -17,6 +17,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
 	throw_range = 5
+	tint = 3
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
@@ -116,6 +117,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(loc == L) return 0
 	if(stat != CONSCIOUS)	return 0
+	if(locate(/obj/item/alien_embryo) in L) return 0
 	if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 
 	L.visible_message("<span class='userdanger'>[src] leaps at [L]'s face!</span>")
@@ -129,7 +131,6 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(iscarbon(M))
 		var/mob/living/carbon/target = L
-
 		if(target.wear_mask)
 			if(prob(20))	return 0
 			var/obj/item/clothing/W = target.wear_mask

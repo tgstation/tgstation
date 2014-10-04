@@ -1,11 +1,32 @@
+//HIVEMIND COMMUNICATION (:g)
+/obj/effect/proc_holder/changeling/hivemind_comms
+	name = "Hivemind Communication"
+	desc = "We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
+	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives."
+	dna_cost = 2
+	chemical_cost = -1
+
+/obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(var/mob/user)
+	..()
+	var/datum/changeling/changeling=user.mind.changeling
+	changeling.changeling_speak = 1
+	user << "<i><font color=#800080>Use say \":g message\" to communicate with the other changelings.</font></i>"
+	var/obj/effect/proc_holder/changeling/hivemind_upload/S1 = new
+	if(!changeling.has_sting(S1))
+		changeling.purchasedpowers+=S1
+	var/obj/effect/proc_holder/changeling/hivemind_download/S2 = new
+	if(!changeling.has_sting(S2))
+		changeling.purchasedpowers+=S2
+	return
+
 // HIVE MIND UPLOAD/DOWNLOAD DNA
 var/list/datum/dna/hivemind_bank = list()
 
 /obj/effect/proc_holder/changeling/hivemind_upload
-	name = "Hive Channel"
+	name = "Hive Channel DNA"
 	desc = "Allows us to channel DNA in the airwaves to allow other changelings to absorb it."
 	chemical_cost = 10
-	dna_cost = 0
+	dna_cost = -1
 
 /obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
@@ -32,10 +53,10 @@ var/list/datum/dna/hivemind_bank = list()
 	return 1
 
 /obj/effect/proc_holder/changeling/hivemind_download
-	name = "Hive Absorb"
+	name = "Hive Absorb DNA"
 	desc = "Allows us to absorb DNA that has been channeled to the airwaves. Does not count towards absorb objectives."
-	chemical_cost = 20
-	dna_cost = 0
+	chemical_cost = 10
+	dna_cost = -1
 
 /obj/effect/proc_holder/changeling/hivemind_download/can_sting(var/mob/living/carbon/user)
 	if(!..())

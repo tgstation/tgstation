@@ -262,6 +262,7 @@
 						while(amt > 0)
 							I = locate(B) in loc
 							Deletion.Add(I)
+							I.loc = null //remove it from the table loc so that we don't locate the same item every time (will be relocated inside the crafted item in construct_item())
 							amt--
 						break item_loop
 		else
@@ -286,6 +287,7 @@
 			if(!istype(B, A))
 				Deletion.Remove(B)
 				qdel(B)
+
 	return Deletion
 
 /obj/structure/table/interact(mob/user)
@@ -295,7 +297,7 @@
 	var/dat = "<h3>Construction menu</h3>"
 	dat += "<div class='statusDisplay'>"
 	if(busy)
-		dat += "Construction inprogress...</div>"
+		dat += "Construction in progress...</div>"
 	else
 		for(var/datum/table_recipe/R in table_recipes)
 			if(check_contents(R))
@@ -585,8 +587,14 @@
 		return
 
 	if (istype(I, /obj/item/weapon/wrench))
-		table_destroy(2, user)
-		return
+		if(istype(src, /obj/structure/table/reinforced))
+			var/obj/structure/table/reinforced/RT = src
+			if(RT.status == 1)
+				table_destroy(2, user)
+				return
+		else
+			table_destroy(2, user)
+			return
 
 	if (istype(I, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = I
@@ -632,24 +640,13 @@ Destroy type values:
 		return
 
 	if(destroy_type == 2)
-		if(istype(src, /obj/structure/table/reinforced))
-			var/obj/structure/table/reinforced/RT = src
-			if(RT.status == 1)
-				user << "<span class='notice'>Now disassembling the reinforced table</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if (do_after(user, 50))
-					new parts( src.loc )
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					qdel(src)
-				return
-		else
-			user << "<span class='notice'>Now disassembling table</span>"
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 50))
-				new parts( src.loc )
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				qdel(src)
-			return
+		user << "<span class='notice'>Now disassembling the [src.name]</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if (do_after(user, 50))
+			new parts( src.loc )
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			qdel(src)
+		return
 
 
 
@@ -700,6 +697,24 @@ Destroy type values:
 					src.status = 2
 			return
 	..()
+
+/obj/structure/table/MouseDrop_T(mob/target, mob/living/carbon/human/user)
+	if(istype(target) && user == target && istype(user))
+		if(user.canmove)
+			climb_table(user)
+
+/obj/structure/table/proc/climb_table(mob/user)
+	src.add_fingerprint(user)
+	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
+								"<span class='notice'>[user] starts climbing onto [src].</span>")
+	if(do_mob(user, user, 20))
+		user.pass_flags += PASSTABLE
+		step(user,get_dir(user,src.loc))
+		user.pass_flags -= PASSTABLE
+		user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
+									"<span class='notice'>[user] climbs onto [src].</span>")
+		add_logs(user, src, "climbed onto")
+		user.Stun(2)
 
 /*
  * Racks
@@ -805,4 +820,3 @@ Destroy type values:
 		qdel(src)
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
-

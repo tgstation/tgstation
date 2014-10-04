@@ -70,7 +70,6 @@ var/list/admin_verbs_sounds = list(
 	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_fun = list(
-	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -79,7 +78,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
-	/client/proc/make_sound,
+	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
 	/client/proc/forceEvent
@@ -113,7 +112,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_debug_del_all,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
-	/client/proc/callproc
+	/client/proc/callproc,
+	/client/proc/SDQL2_query
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -152,7 +152,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/check_words,
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
-	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -161,7 +160,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/make_sound,
+	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/datum/admins/proc/startnow,
@@ -314,7 +313,7 @@ var/list/admin_verbs_hideable = list(
 			mob << "<span class='userdanger'>Invisimin off. Invisibility reset.</span>"
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			mob << "<span class='boldnotice'>Invisimin on. You are now as invisible as a ghost.</span>"
+			mob << "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"
 
 
 /client/proc/player_panel()
@@ -419,7 +418,7 @@ var/list/admin_verbs_hideable = list(
 			var/light_impact_range = input("Light impact range (in tiles):") as num
 			var/flash_range = input("Flash range (in tiles):") as num
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-	message_admins("<span class='notice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
+	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in mob_list)
@@ -431,7 +430,7 @@ var/list/admin_verbs_hideable = list(
 		return
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
-	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>", 1)
 
 	if(T.mind)
 		T.mind.spell_list += new S
@@ -449,22 +448,22 @@ var/list/admin_verbs_hideable = list(
 	T.contract_disease(new D, 1)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>", 1)
 
-/client/proc/make_sound(var/obj/O in world)
+/client/proc/object_say(var/obj/O in world)
 	set category = "Special Verbs"
-	set name = "Make Sound"
-	set desc = "Display a message to everyone who can hear the target"
-	if(O)
-		var/message = input("What do you want the message to be?", "Make Sound") as text|null
-		if(!message)
-			return
-		for (var/mob/V in hearers(O))
-			V.show_message(message, 2)
-		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
-		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound</span>", 1)
-		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+	set name = "Object Say"
+	set desc = "Makes an object say something."
+	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
+	if(!message)
+		return
+	var/templanguages = O.languages
+	O.languages |= ALL
+	O.say(message)
+	O.languages = templanguages
+	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>", 1)
+	feedback_add_details("admin_verb","OS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
@@ -472,17 +471,6 @@ var/list/admin_verbs_hideable = list(
 	if(src.mob)
 		togglebuildmode(src.mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/object_talk(var/msg as text)
-	set category = "Special Verbs"
-	set name = "oSay"
-	set desc = "Display a message to everyone who can hear the target"
-	if(mob.control_object)
-		if(!msg)
-			return
-		for (var/mob/V in hearers(mob.control_object))
-			V.show_message("<b>[mob.control_object.name]</b> says: \"" + msg + "\"", 2)
-	feedback_add_details("admin_verb","OT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/kill_air()
 	set category = "Debug"
@@ -496,7 +484,7 @@ var/list/admin_verbs_hideable = list(
 		usr << "<b>Disabled air processing.</b>"
 	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] used 'kill air'.")
-	message_admins("<span class='notice'>[key_name_admin(usr)] used 'kill air'.</span>", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used 'kill air'.</span>", 1)
 
 /client/proc/deadmin_self()
 	set name = "De-admin self"

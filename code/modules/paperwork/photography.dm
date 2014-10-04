@@ -221,11 +221,11 @@
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
-			seen = hear(world.view, user.client.eye) //To make shooting through security cameras possible
+			seen = get_hear(world.view, user.client.eye) //To make shooting through security cameras possible
 		else
-			seen = hear(world.view, user)
+			seen = get_hear(world.view, user)
 	else
-		seen = hear(world.view, target)
+		seen = get_hear(world.view, target)
 
 	var/list/turfs = list()
 	for(var/turf/T in range(1, target))

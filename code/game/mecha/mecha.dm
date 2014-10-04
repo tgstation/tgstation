@@ -88,15 +88,13 @@
 	removeVerb(/obj/mecha/verb/disconnect_from_port)
 	removeVerb(/atom/movable/verb/pull)
 	log_message("[src.name] created.")
-	loc.Entered(src)
 	mechas_list += src //global mech list
 	return
 
 /obj/mecha/Destroy()
 	go_out()
 	for(var/mob/M in src) //Let's just be ultra sure
-		M.loc = get_turf(src)
-		M.loc.Entered(M)
+		M.Move(loc)
 
 	if(prob(30))
 		explosion(get_turf(loc), 0, 0, 1, 3)
@@ -239,9 +237,9 @@
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/hear_talk(mob/M as mob, text)
-	if(M==occupant && radio.broadcasting)
-		radio.talk_into(M, text)
+/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	if(speaker == occupant && radio.broadcasting)
+		radio.talk_into(speaker, text)
 	return
 
 ////////////////////////////
@@ -1051,8 +1049,6 @@
 		mmi_as_oc.loc = src
 		mmi_as_oc.mecha = src
 		src.verbs -= /obj/mecha/verb/eject
-		src.Entered(mmi_as_oc)
-		src.Move(src.loc)
 		src.icon_state = initial(icon_state)
 		dir = dir_in
 		src.log_message("[mmi_as_oc] moved in as pilot.")
@@ -1103,6 +1099,8 @@
 	var/atom/movable/mob_container
 	if(ishuman(occupant))
 		mob_container = src.occupant
+		if(occupant.hud_used && last_user_hud)
+			occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 	else if(istype(occupant, /mob/living/carbon/brain))
 		var/mob/living/carbon/brain/brain = occupant
 		mob_container = brain.container
@@ -1138,8 +1136,7 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
 		src.occupant << browse(null, "window=exosuit")
-		if(src.occupant.hud_used && src.last_user_hud)
-			src.occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
+
 
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container

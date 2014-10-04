@@ -19,6 +19,7 @@ var/list/ai_list = list()
 	anchored = 1
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
+	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -172,9 +173,8 @@ var/list/ai_list = list()
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
-				if (mind == malfai)
-					if (malf.apcs >= 3)
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+				if ((mind == malfai) && (malf.apcs > 0))
+					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
 
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))

@@ -7,7 +7,7 @@
 
 
 /obj/structure/closet/syndicate/personal
-	desc = "It's a storage unit for operative gear."
+	desc = "It's a personal storage unit for operative gear."
 
 /obj/structure/closet/syndicate/personal/New()
 	..()
@@ -24,7 +24,7 @@
 
 
 /obj/structure/closet/syndicate/nuclear
-	desc = "It's a storage unit for nuclear-operative gear."
+	desc = "It's a storage unit for a Syndicate boarding party."
 
 /obj/structure/closet/syndicate/nuclear/New()
 	..()
@@ -37,11 +37,11 @@
 	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/teargas(src)
-	new /obj/item/weapon/gun/energy/gun(src)
-	new /obj/item/weapon/gun/energy/gun(src)
-	new /obj/item/weapon/gun/energy/gun(src)
-	new /obj/item/weapon/gun/energy/gun(src)
-	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
+	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
+	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
+	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
+	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
@@ -121,7 +121,7 @@
 	/obj/item/stack/sheet/mineral/plasma,
 	/obj/item/stack/sheet/mineral/uranium,
 	/obj/item/stack/sheet/mineral/diamond,
-	/obj/item/stack/sheet/mineral/clown,
+	/obj/item/stack/sheet/mineral/bananium,
 	/obj/item/stack/sheet/plasteel,
 	/obj/item/stack/rods
 	)

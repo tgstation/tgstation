@@ -214,9 +214,9 @@
 	temp = getCloneLoss()
 	if(temp)
 		if(temp < 30)
-			msg += "[t_He] [t_has] minor genetic deformities.\n"
+			msg += "[t_He] [t_has] minor cellular damage.\n"
 		else
-			msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
+			msg += "<B>[t_He] [t_has] severe cellular damage.</B>\n"
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
@@ -262,7 +262,11 @@
 					if(R)
 						criminal = R.fields["criminal"]
 
-					msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
+					msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1;status=1'>\[[criminal]\]</a>\n"
+					msg += "<span class = 'deptradio'>Security record:</span> <a href='?src=\ref[src];criminal=1;view=1'>\[View\]</a> "
+					msg += "<a href='?src=\ref[src];criminal=1;add_crime=1'>\[Add crime\]</a> "
+					msg += "<a href='?src=\ref[src];criminal=1;view_comment=1'>\[View comment log\]</a> "
+					msg += "<a href='?src=\ref[src];criminal=1;add_comment=1'>\[Add comment\]</a>\n"
 
 	msg += "*---------*</span>"
 

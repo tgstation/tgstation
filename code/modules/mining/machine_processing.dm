@@ -271,7 +271,7 @@
 			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
 				if (ore_clown > 0)
 					ore_clown--;
-					generate_mineral(/obj/item/stack/sheet/mineral/clown)
+					generate_mineral(/obj/item/stack/sheet/mineral/bananium)
 				else
 					on = 0
 				continue
@@ -385,7 +385,7 @@
 				ore_uranium++
 				O.loc = null
 				continue
-			if (istype(O,/obj/item/weapon/ore/clown))
+			if (istype(O,/obj/item/weapon/ore/bananium))
 				ore_clown++
 				O.loc = null
 				continue

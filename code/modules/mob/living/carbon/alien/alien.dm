@@ -5,18 +5,16 @@
 /mob/living/carbon/alien
 	name = "alien"
 	voice_name = "alien"
-	voice_message = "hisses"
 	say_message = "hisses"
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2
-
+	languages = ALIEN
+	nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
-
-	alien_talk_understand = 1
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
@@ -194,6 +192,21 @@
 /mob/living/carbon/alien/cuff_break(obj/item/I, mob/living/carbon/C)
 	playsound(C, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when breaking free.
 	..()
+
+/mob/living/carbon/alien/verb/nightvisiontoggle()
+	set name = "Toggle Night Vision"
+	set category = "Alien"
+
+	if(!nightvision)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
+		nightvision = 1
+		hud_used.nightvisionicon.icon_state = "nightvision1"
+	else if(nightvision == 1)
+		see_in_dark = 4
+		see_invisible = 45
+		nightvision = 0
+		hud_used.nightvisionicon.icon_state = "nightvision0"
 
 /*----------------------------------------
 Proc: AddInfectionImages()

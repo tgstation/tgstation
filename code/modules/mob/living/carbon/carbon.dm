@@ -23,9 +23,9 @@
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
-			for(var/mob/M in hearers(4, src))
-				if(M.client)
-					M.show_message(text("<span class='danger'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
+			audible_message("<span class='danger'>You hear something rumbling inside [src]'s stomach...</span>", \
+						 "<span class='danger'>You hear something rumbling.</span>", 4,\
+						  "<span class='danger'>Something is rumbling inside your stomach!</span>")
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -41,7 +41,7 @@
 					src.take_organ_damage(d)
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
-						M.show_message(text("<span class='userdanger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
+						M.show_message("<span class='userdanger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>", 2)
 				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
 
 				if(prob(src.getBruteLoss() - 50))
@@ -128,7 +128,7 @@
 	return shock_damage
 
 
-/mob/living/carbon/proc/swap_hand()
+/mob/living/carbon/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand,/obj/item/weapon/twohanded))
@@ -149,7 +149,7 @@
 		src.hands.dir = SOUTH*/
 	return
 
-/mob/living/carbon/proc/activate_hand(var/selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
+/mob/living/carbon/activate_hand(var/selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
 
 	if(istext(selhand))
 		selhand = lowertext(selhand)
@@ -205,7 +205,7 @@
 					src << "<span class='info'>You're completely exhausted.</span>"
 				else
 					src << "<span class='info'>You feel fatigued.</span>"
-			if(dna && (dna.species == /datum/species/skeleton) && !H.w_uniform && !H.wear_suit)
+			if(dna && dna.species.id && dna.species.id == "skeleton" && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			if(ishuman(src))

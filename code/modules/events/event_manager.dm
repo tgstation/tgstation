@@ -9,6 +9,7 @@ var/datum/controller/event/events
 	var/frequency_upper = 9000	//15 minutes upper bound. Basically an event will happen every 15 to 30 minutes.
 
 	var/holiday					//This will be a string of the name of any realworld holiday which occurs today (GMT time)
+	var/wizardmode = 0			//If the summon events spell is in effect this is true
 
 //Initial controller setup.
 /datum/controller/event/New()
@@ -22,6 +23,8 @@ var/datum/controller/event/events
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
 			continue				//don't want this one! leave it for the garbage collector
+		if(E.wizardevent && !wizardmode)
+			E.weight = 0
 		control += E				//add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
@@ -109,18 +112,36 @@ var/datum/controller/event/events
 
 
 
-//allows a client to trigger an event (For Debugging Purposes)
-/client/proc/forceEvent(var/datum/round_event_control/E in events.control)
+//allows a client to trigger an event
+//aka Badmin Central
+/client/proc/forceEvent()
 	set name = "Trigger Event"
 	set category = "Fun"
 
 	if(!holder ||!check_rights(R_FUN))
 		return
 
-	if(istype(E))
-		E.runEvent()
-		message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])", 1)
-		log_admin("[key_name(usr)] has triggered an event. ([E.name])")
+	holder.forceEvent()
+
+/datum/admins/proc/forceEvent()
+	var/dat 	= ""
+	var/normal 	= ""
+	var/magic 	= ""
+	var/holiday = ""
+	for(var/datum/round_event_control/E in events.control)
+		dat = "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
+		if(E.holidayID)
+			holiday	+= dat
+		else if(E.wizardevent)
+			magic 	+= dat
+		else
+			normal 	+= dat
+
+	dat = normal + "<BR>" + magic + "<BR>" + holiday
+
+	var/datum/browser/popup = new(usr, "forceevent", "Force Random Event", 300, 750)
+	popup.set_content(dat)
+	popup.open()
 
 
 /*
@@ -246,3 +267,16 @@ var/datum/controller/event/events
 				holiday = "Friday the 13th"
 
 	world.update_status()
+
+/datum/controller/event/proc/toggleWizardmode()
+	wizardmode = !wizardmode
+	for(var/datum/round_event_control/E in control)
+		E.weight = initial(E.weight)
+		if((E.wizardevent && !wizardmode) || (!E.wizardevent && wizardmode))
+			E.weight = 0
+	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [events.frequency_lower / 600] to [events.frequency_upper / 600] minutes" : "disabled"]!")
+	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
+
+/datum/controller/event/proc/resetFrequency()
+	frequency_lower = initial(frequency_lower)
+	frequency_upper = initial(frequency_upper)

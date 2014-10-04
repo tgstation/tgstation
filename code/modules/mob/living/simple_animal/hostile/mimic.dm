@@ -9,7 +9,6 @@
 	icon_state = "crate"
 	icon_living = "crate"
 
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	response_help = "touches"
 	response_disarm = "pushes"
 	response_harm = "hits"
@@ -39,7 +38,7 @@
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
-		emote("growls at [.]")
+		emote("me", 1, "growls at [.]")
 
 /mob/living/simple_animal/hostile/mimic/Die()
 	..()

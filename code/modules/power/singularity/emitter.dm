@@ -119,13 +119,17 @@
 		else
 			src.fire_delay = rand(20,100)
 			src.shot_number = 0
-		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+
+		var/obj/item/projectile/beam/emitter/A = PoolOrNew(/obj/item/projectile/beam/emitter,src.loc)
+
+		A.dir = src.dir
 		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
+
 		if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()
-		A.dir = src.dir
+
 		switch(dir)
 			if(NORTH)
 				A.yo = 20
@@ -186,8 +190,6 @@
 						state = 2
 						user << "You weld the [src] to the floor."
 						connect_to_network()
-				else
-					user << "<span class='danger'>You need more welding fuel to complete this task.</span>"
 			if(2)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -199,8 +201,6 @@
 						state = 1
 						user << "You cut the [src] free from the floor."
 						disconnect_from_network()
-				else
-					user << "<span class='danger'>You need more welding fuel to complete this task.</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))

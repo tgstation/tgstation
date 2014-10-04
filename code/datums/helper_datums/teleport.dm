@@ -118,6 +118,11 @@
 		if(teleatom.Move(destturf))
 			playSpecials(destturf,effectout,soundout)
 
+	if(isliving(teleatom))
+		var/mob/living/L = teleatom
+		if(L.buckled)
+			L.buckled.unbuckle()
+
 	destarea.Entered(teleatom)
 
 	return 1

@@ -16,6 +16,7 @@
 	species = /mob/living/simple_animal/cat
 	childtype = /mob/living/simple_animal/cat/kitten
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -38,7 +39,7 @@
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
-					emote("splats \the [M]")
+					emote("me", 1, "splats \the [M]")
 					movement_target = null
 					stop_automated_movement = 0
 					break

@@ -5,11 +5,12 @@
 	required_players = 25
 	required_enemies = 5
 	recommended_enemies = 8
+	pre_setup_before_jobs = 1
 
 	traitor_name = "double agent"
 
-	traitors_possible = 8 //hard limit on traitors if scaling is turned off
-	scale_modifier = 0.5 // Nearly twice as many double agents
+	traitors_possible = 10 //hard limit on traitors if scaling is turned off
+	num_modifier = 6 // Six additional traitors
 
 	var/list/target_list = list()
 	var/list/late_joining_list = list()

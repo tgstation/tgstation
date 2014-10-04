@@ -283,6 +283,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Turns 1479 into 147.9
 /proc/format_frequency(var/f)
+	f = text2num(f)
 	return "[round(f / 10)].[f % 10]"
 
 
@@ -484,7 +485,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
-	var/list/sortmob = sortAtom(mob_list)
+	var/list/sortmob = sortNames(mob_list)
 	for(var/mob/living/silicon/ai/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/camera/M in sortmob)
@@ -817,7 +818,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns: all the areas in the world, sorted.
 /proc/return_sorted_areas()
-	return sortAtom(return_areas())
+	return sortNames(return_areas())
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -1229,36 +1230,42 @@ var/global/list/common_tools = list(
 	return 0
 
 /proc/is_hot(obj/item/W as obj)
-	switch(W.type)
-		if(/obj/item/weapon/weldingtool)
-			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.isOn())
-				return 3800
-			else
-				return 0
-		if(/obj/item/weapon/lighter)
-			if(W:lit)
-				return 1500
-			else
-				return 0
-		if(/obj/item/weapon/match)
-			if(W:lit)
-				return 1000
-			else
-				return 0
-		if(/obj/item/clothing/mask/cigarette)
-			if(W:lit)
-				return 1000
-			else
-				return 0
-		if(/obj/item/weapon/pickaxe/plasmacutter)
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/O = W
+		if(O.isOn())
 			return 3800
-		if(/obj/item/weapon/melee/energy)
+		else
+			return 0
+	if(istype(W, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/O = W
+		if(O.lit)
+			return 1500
+		else
+			return 0
+	if(istype(W, /obj/item/weapon/match))
+		var/obj/item/weapon/match/O = W
+		if(O.lit)
+			return 1000
+		else
+			return 0
+	if(istype(W, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/O = W
+		if(O.lit)
+			return 1000
+		else
+			return 0
+	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		return 3800
+	if(istype(W, /obj/item/weapon/melee/energy))
+		var/obj/item/weapon/melee/energy/O = W
+		if(O.active)
 			return 3500
 		else
 			return 0
-
-	return 0
+	if(istype(W, /obj/item/device/assembly/igniter))
+		return 1000
+	else
+		return 0
 
 //Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
 /proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?

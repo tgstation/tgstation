@@ -153,12 +153,6 @@
 	if(nadeassembly)
 		nadeassembly.on_found(finder)
 
-/obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M, msg)
-	if(nadeassembly)
-		nadeassembly.hear_talk(M, msg)
-
-
-
 /obj/item/weapon/grenade/chem_grenade/prime()
 	if(stage != READY)
 		return

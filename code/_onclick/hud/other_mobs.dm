@@ -30,3 +30,4 @@
 	mymob.client.screen = null
 
 	mymob.client.screen += list(blobpwrdisplay, blobhealthdisplay)
+

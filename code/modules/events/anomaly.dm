@@ -7,6 +7,7 @@
 /datum/round_event/anomaly
 	var/area/impact_area
 	var/obj/effect/anomaly/newAnomaly
+	announceWhen	= 1
 
 
 /datum/round_event/anomaly/setup(loop=0)

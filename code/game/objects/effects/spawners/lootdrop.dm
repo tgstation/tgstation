@@ -48,13 +48,13 @@
 
 	//table data:
 	//-----------
-	//aft maintenance: 		23 items, 17 spots 2 extra (08/08/2014)
+	//aft maintenance: 		24 items, 18 spots 2 extra (28/08/2014)
 	//asmaint: 				16 items, 11 spots 0 extra (08/08/2014)
-	//asmaint2:			 	36 items, 25 spots 2 extra (08/08/2014)
+	//asmaint2:			 	36 items, 26 spots 2 extra (28/08/2014)
 	//fpmaint:				5  items,  4 spots 0 extra (08/08/2014)
-	//fpmaint2:				11 items, 10 spots 2 extra (08/08/2014)
+	//fpmaint2:				12 items, 11 spots 2 extra (28/08/2014)
 	//fsmaint:				0  items,  0 spots 0 extra (08/08/2014)
-	//fsmaint2:				40 items, 30 spots 5 extra (11/08/2014)
+	//fsmaint2:				40 items, 27 spots 5 extra (28/08/2014)
 	//maintcentral:			2  items,  2 spots 0 extra (08/08/2014)
 	//port:					5  items,  5 spots 0 extra (08/08/2014)
 	loot = list(
@@ -89,14 +89,14 @@
 				/obj/item/stack/sheet/rglass = 1,
 				/obj/item/weapon/book/manual/wiki/engineering_construction = 1,
 				/obj/item/weapon/book/manual/wiki/engineering_hacking = 1,
-				/obj/item/weapon/caution/cone = 1,
+				/obj/item/clothing/head/cone = 1,
 				/obj/item/weapon/coin/silver = 1,
 				/obj/item/weapon/coin/twoheaded = 1,
 				/obj/item/weapon/contraband/poster = 1,
 				/obj/item/weapon/crowbar = 1,
 				/obj/item/weapon/crowbar/red = 1,
 				/obj/item/weapon/extinguisher = 11,
-				/obj/item/weapon/gun/projectile/revolver/russian = 1,
+				//obj/item/weapon/gun/projectile/revolver/russian = 1, //disabled until lootdrop is a proper world proc.
 				/obj/item/weapon/hand_labeler = 1,
 				/obj/item/weapon/paper/crumpled = 1,
 				/obj/item/weapon/pen = 1,

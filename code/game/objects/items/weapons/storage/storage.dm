@@ -25,7 +25,7 @@
 
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
-	if(iscarbon(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
+	if(iscarbon(usr) || isdrone(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
 		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
@@ -68,7 +68,7 @@
 
 
 /obj/item/weapon/storage/proc/show_to(mob/user)
-	if(user.s_active != src)
+	if(user.s_active != src && (user.stat == CONSCIOUS))
 		for(var/obj/item/I in src)
 			if(I.on_found(user))
 				return

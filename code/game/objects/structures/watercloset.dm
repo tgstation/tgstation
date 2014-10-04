@@ -153,9 +153,14 @@
 /obj/machinery/shower/attack_hand(mob/M)
 	on = !on
 	update_icon()
+	add_fingerprint(M)
 	if(on)
 		for (var/atom/movable/G in loc)
-			Crossed(G)
+			wash(G)
+	else
+		if(istype(loc, /turf/simulated))
+			var/turf/simulated/tile = loc
+			tile.MakeSlippery()
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
@@ -171,7 +176,9 @@
 					watertemp = "boiling"
 				if("boiling")
 					watertemp = "normal"
-			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I].</span>")
+			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I] to [watertemp] temperature.</span>")
+			log_game("[key_name(user)] has wrenched a shower to [watertemp] at ([x],[y],[z])")
+			add_hiddenprint(user)
 
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
@@ -203,9 +210,10 @@
 /obj/machinery/shower/Crossed(atom/movable/O)
 	..()
 	wash(O)
-	if(ismob(O))
-		mobpresent += 1
-		check_heat(O)
+	if(iscarbon(O) && on)
+		var/mob/living/carbon/M=O
+		M.slip(4,2,null,NO_SLIP_WHEN_WALKING)
+
 
 
 /obj/machinery/shower/Uncrossed(atom/movable/O)
@@ -217,7 +225,9 @@
 //Yes, showers are super powerful as far as washing goes.
 /obj/machinery/shower/proc/wash(atom/movable/O)
 	if(!on) return
-
+	if(ismob(O))
+		mobpresent += 1
+		check_heat(O)
 	if(isliving(O))
 		var/mob/living/L = O
 		L.ExtinguishMob()
@@ -301,6 +311,7 @@
 	if(!on || !mobpresent) return
 	for(var/mob/living/carbon/C in loc)
 		check_heat(C)
+
 
 
 /obj/machinery/shower/proc/check_heat(mob/M)

@@ -11,9 +11,6 @@
 	pre_setup_before_jobs = 1
 	antag_flag = BE_OPERATIVE
 
-	uplink_welcome = "Corporate Backed Uplink Console:"
-	uplink_uses = 10
-
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
@@ -43,7 +40,7 @@
 		agent_number--
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		synd_mind.need_job_assign = 0
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
 	return 1
@@ -100,7 +97,6 @@
 	for(var/obj/effect/landmark/A in landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
-			qdel(A)
 			continue
 
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
@@ -113,12 +109,16 @@
 
 	for(var/datum/mind/synd_mind in syndicates)
 		if(spawnpos > synd_spawn.len)
-			spawnpos = 1
+			spawnpos = 2
 		synd_mind.current.loc = synd_spawn[spawnpos]
 
 		forge_syndicate_objectives(synd_mind)
 		greet_syndicate(synd_mind)
 		equip_syndicate(synd_mind.current)
+
+		if (nuke_code)
+			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
+			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
 
 		if(!leader_selected)
 			prepare_syndicate_leader(synd_mind, nuke_code)
@@ -145,20 +145,25 @@
 	spawn(1)
 		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
+	synd_mind.current << "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>"
+	synd_mind.current << "<B>If you feel you are not up to this task, give your ID to another operative.</B>"
+
+	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
+	if(foundIDs.len)
+		for(var/obj/item/weapon/card/id/ID in foundIDs)
+			ID.name = "lead agent card"
+			ID.access += access_syndicate_leader
+	else
+		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
+
 	if (nuke_code)
-		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-		synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
-		if (ticker.mode.config_tag=="nuclear")
-			P.loc = synd_mind.current.loc
-		else
-			var/mob/living/carbon/human/H = synd_mind.current
-			P.loc = H.loc
-			H.equip_to_slot_or_del(P, slot_r_store, 0)
-			H.update_icons()
-
+		var/mob/living/carbon/human/H = synd_mind.current
+		P.loc = H.loc
+		H.equip_to_slot_or_del(P, slot_r_hand, 0)
+		H.update_icons()
 	else
 		nuke_code = "code will be provided later"
 	return
@@ -206,7 +211,7 @@
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
 	U.hidden_uplink.uplink_owner="[synd_mob.key]"
-	U.hidden_uplink.uses = 10
+	U.hidden_uplink.uses = 20
 	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)

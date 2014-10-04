@@ -13,7 +13,7 @@
 		if(W.remove_fuel(15))
 			new refined_type(get_turf(src.loc))
 			qdel(src)
-		else
+		else if(W.isOn())
 			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
 	..()
 
@@ -85,12 +85,12 @@
 	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
-/obj/item/weapon/ore/clown
+/obj/item/weapon/ore/bananium
 	name = "Bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
 	points = 27
-	refined_type = /obj/item/stack/sheet/mineral/clown
+	refined_type = /obj/item/stack/sheet/mineral/bananium
 
 /obj/item/weapon/ore/slag
 	name = "Slag"
@@ -114,7 +114,7 @@
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator))
 		GibtoniteReaction(user)
 		return
-	if(istype(I, /obj/item/device/mining_scanner) && primed)
+	if(istype(I, /obj/item/device/t_scanner/mining_scanner) && primed)
 		primed = 0
 		user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
 		icon_state = "Gibtonite ore"

@@ -63,9 +63,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	usr.say("O bidai nabora se[pick("'","`")]sma!")
 	sleep(10)
 	usr.say("[input]")
-	for(var/datum/mind/H in ticker.mode.cult)
-		if (H.current)
-			H.current << "<span class='userdanger'>[input]</span>"
+	for(var/mob/M in mob_list)
+		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
+			M << "<span class='userdanger'>[input]</span>"
 	return
 	#undef CHECK_STATUS
 
@@ -173,7 +173,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		user << "<span class='notice'>You are unable to speak the words of the rune.</span>"
 		return
 	if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
-		return fizzle()
+		return fizzle(user)
 	if(word1 == wordtravel && word2 == wordself)
 		return teleport(src.word3)
 	if(word1 == wordsee && word2 == wordblood && word3 == wordhell)
@@ -227,16 +227,18 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	else
 		user.take_overall_damage(30, 0)
 		user << "<span class='danger'>You feel the life draining from you, as if Lord Nar-Sie is displeased with you.</span>"
-		return fizzle()
+		return fizzle(user)
 
 
-/obj/effect/rune/proc/fizzle()
-	if(istype(src,/obj/effect/rune))
-		usr.say(pick("B'ADMINES SP'WNIN SH'T","IC'IN O'OC","RO'SHA'M I'SA GRI'FF'N ME'AI","TOX'IN'S O'NM FI'RAH","IA BL'AME TOX'IN'S","FIR'A NON'AN RE'SONA","A'OI I'RS ROUA'GE","LE'OAN JU'STA SP'A'C Z'EE SH'EF","IA PT'WOBEA'RD, IA A'DMI'NEH'LP"))
-	else
-		usr.whisper(pick("B'ADMINES SP'WNIN SH'T","IC'IN O'OC","RO'SHA'M I'SA GRI'FF'N ME'AI","TOX'IN'S O'NM FI'RAH","IA BL'AME TOX'IN'S","FIR'A NON'AN RE'SONA","A'OI I'RS ROUA'GE","LE'OAN JU'STA SP'A'C Z'EE SH'EF","IA PT'WOBEA'RD, IA A'DMI'NEH'LP"))
-	for (var/mob/V in viewers(src))
-		V.show_message("<span class='danger'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='danger'>You hear a faint fizzle.</span>", 2)
+/obj/effect/rune/proc/fizzle(var/mob/living/cultist = null)
+	var/gibberish = pick("B'ADMINES SP'WNIN SH'T","IC'IN O'OC","RO'SHA'M I'SA GRI'FF'N ME'AI","TOX'IN'S O'NM FI'RAH","IA BL'AME TOX'IN'S","FIR'A NON'AN RE'SONA","A'OI I'RS ROUA'GE","LE'OAN JU'STA SP'A'C Z'EE SH'EF","IA PT'WOBEA'RD, IA A'DMI'NEH'LP")
+
+	if(cultist)
+		if(istype(src,/obj/effect/rune))
+			cultist.say(gibberish)
+		else
+			cultist.whisper(gibberish)
+	visible_message("<span class='danger'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='danger'>You hear a faint fizzle.</span>", 2)
 	return
 
 /obj/effect/rune/proc/check_icon()
@@ -557,7 +559,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					usr.whisper("[input]")
 					for(var/datum/mind/H in ticker.mode.cult)
 						if (H.current)
-							H.current << "<span class='danger'>[input]</span>"
+							H.current << "<span class='userdanger'>[input]</span>"
 					return
 				if("Notes")
 					if(usr.get_active_hand() != src)

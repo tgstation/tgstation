@@ -159,30 +159,29 @@
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE )     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE )
+	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
 
+	H.silent = 5 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	clonemind.transfer_to(H)
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
 	// -- Mode/mind specific stuff goes here
 
-	switch(ticker.mode.name)
-		if("revolution")
-			if((H.mind in ticker.mode:revolutionaries) || (H.mind in ticker.mode:head_revolutionaries))
-				ticker.mode.update_all_rev_icons() //So the icon actually appears
-		if("nuclear emergency")
-			if(H.mind in ticker.mode.syndicates)
-				ticker.mode.update_all_synd_icons()
-		if("cult")
-			if (H.mind in ticker.mode.cult)
-				ticker.mode.add_cultist(src.occupant.mind)
-				ticker.mode.update_all_cult_icons() //So the icon actually appears
+	if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.head_revolutionaries))
+		ticker.mode.update_all_rev_icons() //So the icon actually appears
+	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gangsters) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gangsters))
+		ticker.mode.update_all_gang_icons()
+	if(H.mind in ticker.mode.syndicates)
+		ticker.mode.update_all_synd_icons()
+	if (H.mind in ticker.mode.cult)
+		ticker.mode.add_cultist(src.occupant.mind)
+		ticker.mode.update_all_cult_icons() //So the icon actually appears
 
 	// -- End mode specific stuff
 
@@ -196,13 +195,7 @@
 	if(efficiency < 3 && prob(50))
 		randmutb(H)
 
-	if(H.gender == MALE)
-		H.facial_hair_style = "Full Beard"
-	else
-		H.facial_hair_style = "Shaved"
-	H.hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
-
-	H.regenerate_icons()
+	H.set_cloned_appearance()
 
 	H.suiciding = 0
 	src.attempting = 0

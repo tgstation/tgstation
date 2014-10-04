@@ -79,6 +79,11 @@
 	slmaster.layer = FLY_LAYER
 	slmaster.mouse_opacity = 0
 
+	for(var/i=0, i<max_secret_rooms, i++)
+		make_mining_asteroid_secret()
+
+	createRandomZlevel()
+
 	master_controller = new /datum/controller/game_controller()
 	spawn(-1)
 		master_controller.setup()

@@ -214,20 +214,21 @@
 	var/mob/living/buckled_mob
 	var/list/mutations = list()
 
-	New()
-		return
+/obj/effect/spacevine/New()
+	return
 
-	Destroy()
-		for(var/datum/spacevine_mutation/SM in mutations)
-			SM.on_death(src)
-		if(master)
-			master.vines -= src
-			master.growth_queue -= src
-			if(!master.vines.len)
-				var/obj/item/seeds/kudzuseed/KZ = new(loc)
-				KZ.mutations |= mutations
-		mutations = list()
-		..()
+/obj/effect/spacevine/Destroy()
+	for(var/datum/spacevine_mutation/SM in mutations)
+		SM.on_death(src)
+	if(master)
+		master.vines -= src
+		master.growth_queue -= src
+		if(!master.vines.len)
+			var/obj/item/seeds/kudzuseed/KZ = new(loc)
+			KZ.mutations |= mutations
+	mutations = list()
+	SetOpacity(0)
+	..()
 
 /obj/effect/spacevine/proc/on_chem_effect(datum/reagent/R)
 	var/override = 0
@@ -347,84 +348,84 @@
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
 	//meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
 
-	New(loc, list/muts, mttv)
-		if(!istype(src.loc,/turf/simulated/floor))
-			qdel(src)
+/obj/effect/spacevine_controller/New(loc, list/muts, mttv)
+	if(!istype(src.loc,/turf/simulated/floor))
+		qdel(src)
 
-		spawn_spacevine_piece(src.loc, , muts)
-		processing_objects.Add(src)
-		init_subtypes(/datum/spacevine_mutation/, mutations_list)
-		if(mttv != null)
-			mutativness = mttv
+	spawn_spacevine_piece(src.loc, , muts)
+	processing_objects.Add(src)
+	init_subtypes(/datum/spacevine_mutation/, mutations_list)
+	if(mttv != null)
+		mutativness = mttv
 
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/effect/spacevine_controller/Destroy()
+	processing_objects.Remove(src)
+	..()
 
-	proc/spawn_spacevine_piece(var/turf/location, obj/effect/spacevine/parent, list/muts)
-		var/obj/effect/spacevine/SV = new(location)
-		growth_queue += SV
-		vines += SV
-		SV.master = src
-		if(muts && muts.len)
-			SV.mutations |= muts
-		if(parent)
-			SV.mutations |= parent.mutations
-			SV.color = parent.color
-			if(prob(mutativness))
-				SV.mutations |= pick(mutations_list)
-				var/datum/spacevine_mutation/randmut = pick(SV.mutations)
-				SV.color = randmut.hue
+/obj/effect/spacevine_controller/proc/spawn_spacevine_piece(var/turf/location, obj/effect/spacevine/parent, list/muts)
+	var/obj/effect/spacevine/SV = new(location)
+	growth_queue += SV
+	vines += SV
+	SV.master = src
+	if(muts && muts.len)
+		SV.mutations |= muts
+	if(parent)
+		SV.mutations |= parent.mutations
+		SV.color = parent.color
+		if(prob(mutativness))
+			SV.mutations |= pick(mutations_list)
+			var/datum/spacevine_mutation/randmut = pick(SV.mutations)
+			SV.color = randmut.hue
 
-		for(var/datum/spacevine_mutation/SM in SV.mutations)
-			SM.on_birth(SV)
+	for(var/datum/spacevine_mutation/SM in SV.mutations)
+		SM.on_birth(SV)
 
-	process()
-		if(!vines)
-			qdel(src) //space  vines exterminated. Remove the controller
-			return
-		if(!growth_queue)
-			qdel(src) //Sanity check
-			return
-		if(vines.len >= 250 && !reached_collapse_size)
-			reached_collapse_size = 1
-		if(vines.len >= 30 && !reached_slowdown_size )
-			reached_slowdown_size = 1
+/obj/effect/spacevine_controller/process()
+	if(!vines)
+		qdel(src) //space  vines exterminated. Remove the controller
+		return
+	if(!growth_queue)
+		qdel(src) //Sanity check
+		return
+	if(vines.len >= 250 && !reached_collapse_size)
+		reached_collapse_size = 1
+	if(vines.len >= 30 && !reached_slowdown_size )
+		reached_slowdown_size = 1
 
-		var/length = 0
-		if(reached_collapse_size)
-			length = 0
-		else if(reached_slowdown_size)
-			if(prob(25))
-				length = 1
-			else
-				length = 0
-		else
+	var/length = 0
+	if(reached_collapse_size)
+		length = 0
+	else if(reached_slowdown_size)
+		if(prob(25))
 			length = 1
-		length = min( 30 , max( length , vines.len / 5 ) )
-		var/i = 0
-		var/list/obj/effect/spacevine/queue_end = list()
+		else
+			length = 0
+	else
+		length = 1
+	length = min( 30 , max( length , vines.len / 5 ) )
+	var/i = 0
+	var/list/obj/effect/spacevine/queue_end = list()
 
-		for( var/obj/effect/spacevine/SV in growth_queue )
-			i++
-			queue_end += SV
-			growth_queue -= SV
-			for(var/datum/spacevine_mutation/SM in SV.mutations)
-				SM.process_mutation(SV)
-			if(SV.energy < 2) //If tile isn't fully grown
-				if(prob(20))
-					SV.grow()
-			else //If tile is fully grown
-				SV.buckle_mob()
+	for( var/obj/effect/spacevine/SV in growth_queue )
+		i++
+		queue_end += SV
+		growth_queue -= SV
+		for(var/datum/spacevine_mutation/SM in SV.mutations)
+			SM.process_mutation(SV)
+		if(SV.energy < 2) //If tile isn't fully grown
+			if(prob(20))
+				SV.grow()
+		else //If tile is fully grown
+			SV.buckle_mob()
 
-			//if(prob(25))
-			SV.spread()
-			if(i >= length)
-				break
+		//if(prob(25))
+		SV.spread()
+		if(i >= length)
+			break
 
-		growth_queue = growth_queue + queue_end
-		//sleep(5)
-		//src.process()
+	growth_queue = growth_queue + queue_end
+	//sleep(5)
+	//src.process()
 
 /obj/effect/spacevine/proc/grow()
 	if(!energy)

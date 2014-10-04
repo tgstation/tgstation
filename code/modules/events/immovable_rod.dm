@@ -19,37 +19,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	priority_announce("What the fuck was that?!", "General Alert")
 
 /datum/round_event/immovable_rod/start()
-	var/startx = 0
-	var/starty = 0
-	var/endy = 0
-	var/endx = 0
 	var/startside = pick(cardinal)
-
-	switch(startside)
-		if(NORTH)
-			starty = 187
-			startx = rand(41, 199)
-			endy = 38
-			endx = rand(41, 199)
-		if(EAST)
-			starty = rand(38, 187)
-			startx = 199
-			endy = rand(38, 187)
-			endx = 41
-		if(SOUTH)
-			starty = 38
-			startx = rand(41, 199)
-			endy = 187
-			endx = rand(41, 199)
-		else
-			starty = rand(38, 187)
-			startx = 41
-			endy = rand(38, 187)
-			endx = 199
-
-	//rod time!
-	new /obj/effect/immovablerod(locate(startx, starty, 1), locate(endx, endy, 1))
-
+	var/turf/startT = spaceDebrisStartLoc(startside, 1)
+	var/turf/endT = spaceDebrisFinishLoc(startside, 1)
+	new /obj/effect/immovablerod(startT, endT)
 
 /obj/effect/immovablerod
 	name = "Immovable Rod"
@@ -76,8 +49,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/Bump(atom/clong)
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
-	for (var/mob/O in hearers(src, null))
-		O.show_message("CLANG", 2)
+	audible_message("CLANG")
 
 	if(istype(clong, /turf/unsimulated) || istype(clong, /turf/simulated/shuttle)) //Unstoppable force meets immovable object
 		explosion(src.loc, 4, 5, 6, 7, 0)

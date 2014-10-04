@@ -316,6 +316,10 @@ var/list/sting_paths
 		user << "We have already evolved this ability!"
 		return
 
+	if(thepower.dna_cost < 0)
+		user << "We cannot evolve this ability."
+		return
+
 	if(geneticpoints < thepower.dna_cost)
 		user << "We have reached our capacity for abilities."
 		return
@@ -370,12 +374,14 @@ var/list/sting_paths
 	chem_storage = initial(chem_storage)
 	chem_recharge_rate = initial(chem_recharge_rate)
 	chem_charges = min(chem_charges, chem_storage)
+	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
 
 /mob/proc/remove_changeling_powers(var/keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
 		if(mind && mind.changeling)
 			digitalcamo = 0
+			mind.changeling.changeling_speak = 0
 			mind.changeling.reset()
 			for(var/obj/effect/proc_holder/changeling/p in mind.changeling.purchasedpowers)
 				if(!(p.dna_cost == 0 && keep_free_powers))

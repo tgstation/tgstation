@@ -10,9 +10,6 @@
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
 
-	uplink_welcome = "Wizardly Uplink Console:"
-	uplink_uses = 10
-
 	var/finished = 0
 
 /datum/game_mode/wizard/announce()
@@ -24,7 +21,7 @@
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
-	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
+	wizard.need_job_assign = 0
 	wizard.special_role = "Wizard"
 	if(wizardstart.len == 0)
 		wizard.current << "<span class='userdanger'>A starting location for you could not be found, please report this bug!</span>"

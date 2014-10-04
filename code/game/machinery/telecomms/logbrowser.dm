@@ -80,6 +80,11 @@
 
 					if(mobtype in humans)
 						race = "Human"
+						language = race
+
+					else if(mobtype in slimes) // NT knows a lot about slimes, but not aliens. Can identify slimes
+						race = "Slime"
+						language = race
 
 					else if(mobtype in monkeys)
 						race = "Monkey"
@@ -87,9 +92,10 @@
 
 					else if(mobtype in silicons || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
 						race = "Artificial Life"
-
-					else if(mobtype in slimes) // NT knows a lot about slimes, but not aliens. Can identify slimes
-						race = "slime"
+						language = race
+					
+					else if(istype(mobtype, /obj))
+						race = "Machinery"
 						language = race
 
 					else if(mobtype in animals)
@@ -99,7 +105,6 @@
 					else
 						race = "<i>Unidentifiable</i>"
 						language = race
-
 
 					// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
 
