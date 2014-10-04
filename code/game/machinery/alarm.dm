@@ -795,17 +795,20 @@ table tr:first-child th:first-child { border: none;}
 						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
 						src.updateUsrDialog()
 					else
-						user << "<span class='danger'>Access denied.</span>"
+						user << "<span class='warning'>Access denied.</span>"
 				return
 		if(1)
 			if(istype(W, /obj/item/weapon/crowbar) && wires.wires_status == (2 ** wires.wire_count) - 1)
-				user << "You pry out the circuit."
+				user.visible_message("<span class='warning'>[user.name] removes the electronics from [src.name].</span>",\
+									"You start prying out the circuit.")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				spawn(20)
-					new /obj/item/weapon/airalarm_electronics( src.loc )
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					buildstage = 0
-					update_icon()
+				if (do_after(user, 20))
+					if (buildstage ==1)
+						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
+						new /obj/item/weapon/airalarm_electronics( src.loc )
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+						buildstage = 0
+						update_icon()
 				return
 
 			if(istype(W, /obj/item/stack/cable_coil))
@@ -813,7 +816,8 @@ table tr:first-child th:first-child { border: none;}
 				if(cable.get_amount() < 5)
 					user << "<span class='warning'>You need five lengths of cable to wire the fire alarm.</span>"
 					return
-				user << "<span class='notice'>You start wiring the air alarm.</span>"
+				user.visible_message("<span class='warning'>[user.name] wires the air alarm.</span>", \
+									"You start wiring the air alarm.")
 				if (do_after(user, 20))
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)
@@ -832,7 +836,7 @@ table tr:first-child th:first-child { border: none;}
 				return
 
 			if(istype(W, /obj/item/weapon/wrench))
-				user << "You detach \the [src] from the wall!"
+				user << "<span class='notice'>You detach \the [src] from the wall!</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				new /obj/item/alarm_frame( user.loc )
 				qdel(src)
@@ -892,14 +896,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='danger'>Air Alarm cannot be placed on this spot.</span>"
+		usr << "<span class='warning'>Air Alarm cannot be placed on this spot.</span>"
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='danger'>Air Alarm cannot be placed in this area.</span>"
+		usr << "<span class='warning'>Air Alarm cannot be placed in this area.</span>"
 		return
 
 	if(gotwallitem(loc, ndir))
-		usr << "<span class='danger'>There's already an item on this wall!</span>"
+		usr << "<span class='warning'>There's already an item on this wall!</span>"
 		return
 
 	new /obj/machinery/alarm(loc, ndir, 1)
@@ -1011,7 +1015,9 @@ FIRE ALARM
 
 				else if(istype(W, /obj/item/weapon/crowbar))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-					spawn(20)
+					user.visible_message("<span class='warning'>[user.name] removes the electronics from [src.name].</span>", \
+										"You start prying out the circuit.")
+					if(do_after(user, 20))
 						if(buildstage == 1)
 							user << "<span class='notice'>You pry out the circuit!</span>"
 							new /obj/item/weapon/firealarm_electronics(user.loc)
@@ -1025,7 +1031,8 @@ FIRE ALARM
 					update_icon()
 
 				else if(istype(W, /obj/item/weapon/wrench))
-					user.visible_message("<span class='warning'>[user] removes the fire alarm assembly from the wall!</span>", "<span class='warning'>You remove the fire alarm assembly from the wall!</span>")
+					user.visible_message("<span class='warning'>[user] removes the fire alarm assembly from the wall!</span>", \
+										 "<span class='notice'>You remove the fire alarm assembly from the wall!</span>")
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -1216,14 +1223,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='danger'>Fire Alarm cannot be placed on this spot.</span>"
+		usr << "<span class='warning'>Fire Alarm cannot be placed on this spot.</span>"
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='danger'>Fire Alarm cannot be placed in this area.</span>"
+		usr << "<span class='warning'>Fire Alarm cannot be placed in this area.</span>"
 		return
 
 	if(gotwallitem(loc, ndir))
-		usr << "<span class='danger'>There's already an item on this wall!</span>"
+		usr << "<span class='warning'>There's already an item on this wall!</span>"
 		return
 
 	new /obj/machinery/firealarm(loc, ndir, 1)
