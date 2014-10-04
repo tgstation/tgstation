@@ -130,3 +130,7 @@
 		return bypass	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
 	else
 		return 0
+
+//check if we can set internals in the strip_panel
+/mob/living/carbon/human/proc/can_set_internals(var/slot)
+	return (istype(wear_mask, /obj/item/clothing/mask) && istype(slot, /obj/item/weapon/tank))
