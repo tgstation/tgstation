@@ -934,25 +934,45 @@ FIRE ALARM
 
 /obj/machinery/firealarm/update_icon()
 
+	src.overlays = list()
+
+	var/area/A = src.loc
+	A = A.loc
+
 	if(panel_open)
 		switch(buildstage)
-			if(2)
-				icon_state="fire_b2"
-			if(1)
-				icon_state="fire_b1"
 			if(0)
 				icon_state="fire_b0"
+				return
+			if(1)
+				icon_state="fire_b1"
+				return
+			if(2)
+				icon_state="fire_b2"
 
+		if((stat & BROKEN) || (stat & NOPOWER))
+			return
+
+		overlays += "overlay_[security_level]"
 		return
 
 	if(stat & BROKEN)
 		icon_state = "firex"
-	else if(stat & NOPOWER)
-		icon_state = "firep"
-	else if(!src.detecting)
-		icon_state = "fire1"
+		return
+
+	icon_state = "fire0"
+
+	if(stat & NOPOWER)
+		return
+
+	overlays += "overlay_[security_level]"
+
+	if(!src.detecting)
+		overlays += "overlay_fire"
 	else
-		icon_state = "fire0"
+		overlays += "overlay_[A.fire ? "fire" : "clear"]"
+
+
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
@@ -1020,8 +1040,11 @@ FIRE ALARM
 										"You start prying out the circuit.")
 					if(do_after(user, 20))
 						if(buildstage == 1)
-							user << "<span class='notice'>You pry out the circuit!</span>"
-							new /obj/item/weapon/firealarm_electronics(user.loc)
+							if(stat & BROKEN)
+								user << "<span class='notice'>You remove the destroyed circuit!</span>"
+							else
+								user << "<span class='notice'>You pry out the circuit!</span>"
+								new /obj/item/weapon/firealarm_electronics(user.loc)
 							buildstage = 0
 							update_icon()
 			if(0)
@@ -1144,7 +1167,6 @@ FIRE ALARM
 		return
 	var/area/A = get_area(src)
 	A.firereset()
-	update_icon()
 	return
 
 /obj/machinery/firealarm/proc/alarm()
@@ -1152,7 +1174,6 @@ FIRE ALARM
 		return
 	var/area/A = get_area(src)
 	A.firealert()
-	update_icon()
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 
