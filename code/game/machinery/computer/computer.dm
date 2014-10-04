@@ -102,6 +102,7 @@
 /obj/machinery/computer/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+		user <<"<span class='notice'>You begin to unscrew the monitor...</span>"
 		if(do_after(user, 20))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			var/obj/item/weapon/circuitboard/M = new circuit( A )

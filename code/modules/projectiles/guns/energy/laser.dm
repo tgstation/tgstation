@@ -169,6 +169,20 @@ obj/item/weapon/gun/energy/laser/retro
 	projectile_type = /obj/item/projectile/energy/plasma/rifle
 	charge_cost = 150
 
+/obj/item/weapon/gun/energy/plasma/MP40k
+	name = "Plasma MP40k"
+	desc = "A plasma MP40k. Ich liebe den geruch von plasma am morgen."
+	icon_state = "PlasMP"
+	projectile_type = /obj/item/projectile/energy/plasma/MP40k
+	charge_cost = 75
+
+/obj/item/weapon/gun/energy/laser/LaserAK
+	name = "Laser AK470"
+	desc = "A laser AK. Death solves all problems -- No man, no problem."
+	icon_state = "LaserAK"
+	projectile_type = /obj/item/projectile/beam
+	charge_cost = 75
+
 ////////Laser Tag////////////////////
 
 /obj/item/weapon/gun/energy/laser/bluetag

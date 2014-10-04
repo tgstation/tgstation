@@ -21,6 +21,7 @@
 	icon_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
+	species_fit = list("Vox")
 	siemens_coefficient = 0.6
 
 /obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
@@ -29,6 +30,7 @@
 	icon_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
+	species_fit = list("Vox")
 	siemens_coefficient = 0.6
 
 	cold_protection = FEET
