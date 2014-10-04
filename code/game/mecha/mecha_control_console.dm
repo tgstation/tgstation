@@ -1,5 +1,6 @@
 /obj/machinery/computer/mecha
 	name = "exosuit control console"
+	desc = "Used to remotely locate or lockdown exosuits."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "mecha"
 	req_access = list(access_robotics)
