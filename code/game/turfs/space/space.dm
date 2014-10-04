@@ -134,10 +134,20 @@
 	var/list/z_level_order = 				list()
 	var/z_level
 	var/placement
+	var/total_processed = 0
+
 
 	for(var/turf/space/S in world) //Define the transistions of the z levels
+		total_processed++
+
+		if (S.z > 7) //away missions don't have transitions
+			continue
 		if (S.x == TRANSITIONEDGE || S.x == (world.maxx - TRANSITIONEDGE - 1) || S.y == TRANSITIONEDGE || S.y == (world.maxy - TRANSITIONEDGE - 1))
 			turfs_needing_transition += S
+
+	//if we've processed lots of turfs, switch to background processing to prevent being mistaken for an infinite loop
+	if(total_processed > 450000)
+		set background = 1
 
 	while(free_zones.len != 0) //Assign the sides of the cube
 		if(!unplaced_z_levels) //if we're somehow unable to fill the cube, pad with deep space
