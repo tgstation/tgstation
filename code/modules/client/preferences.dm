@@ -144,8 +144,10 @@ datum/preferences
 	proc/ShowChoices(mob/user)
 		if(!user || !user.client)	return
 		update_preview_icon()
-		user << browse_rsc(preview_icon_front, "previewicon.png")
-		user << browse_rsc(preview_icon_side, "previewicon2.png")
+		var/preview_front = fcopy_rsc(preview_icon_front)
+		var/preview_side = fcopy_rsc(preview_icon_side)
+		user << browse_rsc(preview_front, "previewicon.png")
+		user << browse_rsc(preview_side, "previewicon2.png")
 		var/dat = "<html><body><center>"
 
 		if(!IsGuestKey(user.key))
