@@ -1,4 +1,0 @@
-author: Dylanstrategie
-delete-after: true
-changes:
-  - bugfix: Unfucking two checks in the Radiation Storm event, one that got monkeys kill every time, even when in protected areas
