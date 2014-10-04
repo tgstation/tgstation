@@ -61,7 +61,7 @@ var/list/event_last_fired = list()
 
 	possibleEvents[/datum/event/communications_blackout] = 50 + 25 * active_with_role["AI"] + active_with_role["Scientist"] * 25
 	possibleEvents[/datum/event/ionstorm] = active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
-	possibleEvents[/datum/event/grid_check] = 25 + 20 * active_with_role["Engineer"]
+	//possibleEvents[/datum/event/grid_check] = 25 + 20 * active_with_role["Engineer"]
 	possibleEvents[/datum/event/electrical_storm] = 10 * active_with_role["Janitor"] + 5 * active_with_role["Engineer"]
 	possibleEvents[/datum/event/wallrot] = 30 * active_with_role["Engineer"] + 50 * active_with_role["Botanist"]
 
@@ -92,7 +92,7 @@ var/list/event_last_fired = list()
 		var/time_passed = world.time - event_last_fired[event_type]
 		var/full_recharge_after = 60 * 60 * 10 * 3 // 3 hours
 		var/weight_modifier = max(0, (full_recharge_after - time_passed) / 300)
-		
+
 		possibleEvents[event_type] = max(possibleEvents[event_type] - weight_modifier, 0)
 
 	var/picked_event = pickweight(possibleEvents)

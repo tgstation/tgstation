@@ -39,9 +39,9 @@
 	floor_tile = new/obj/item/stack/tile/wood
 
 	autoignition_temperature = AUTOIGNITION_WOOD
-	fire_fuel = 10
-	soot_type = null
-	melt_temperature = 0 // Doesn't melt.
+	//fire_fuel = 10
+	//soot_type = null
+	//melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/light
 	name = "Light floor"
@@ -64,9 +64,9 @@
 	floor_tile = new/obj/item/stack/tile/wood
 
 	autoignition_temperature = AUTOIGNITION_WOOD
-	fire_fuel = 10
-	soot_type = null
-	melt_temperature = 0 // Doesn't melt.
+	//fire_fuel = 10
+	//soot_type = null
+	//melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
@@ -88,8 +88,8 @@
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
 
-	soot_type = null
-	melt_temperature = 0 // Doesn't melt.
+	//soot_type = null
+	//melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob)
 	if(!C)
@@ -161,8 +161,8 @@
 	heat_capacity = 0
 	layer = 2
 
-	soot_type = null
-	melt_temperature = 0 // Doesn't melt.
+	//soot_type = null
+	//melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/shuttle/wall
 	name = "wall"
@@ -187,8 +187,8 @@
 /turf/simulated/floor/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
-	soot_type = null
-	melt_temperature = 0 // Doesn't melt.
+	//soot_type = null
+	//melt_temperature = 0 // Doesn't melt.
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
@@ -295,8 +295,8 @@
 
 	intact = 0
 
-	soot_type = null
-	melt_temperature = 0 // Doesn't melt.
+	//soot_type = null
+	//melt_temperature = 0 // Doesn't melt.
 
 	New()
 		..()

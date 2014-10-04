@@ -267,7 +267,7 @@
 					s.set_up(2, 1, T)
 					s.start()
 				T.ex_act(3)
-				T.hotspot_expose(1000,500,1,surfaces=1)
+				T.hotspot_expose(1000,500,1)
 
 
 		for(var/item in holographic_items)
@@ -316,7 +316,7 @@
 						s.start()
 						if(T)
 							T.temperature = 5000
-							T.hotspot_expose(50000,50000,1,surfaces=1)
+							T.hotspot_expose(50000,50000,1)
 
 		active = 1
 	else
@@ -365,7 +365,7 @@
 					s.start()
 					if(T)
 						T.temperature = 5000
-						T.hotspot_expose(50000,50000,1,surfaces=1)
+						T.hotspot_expose(50000,50000,1)
 			if(L.name=="Holocarp Spawn")
 				new /mob/living/simple_animal/hostile/carp/holocarp(L.loc)
 

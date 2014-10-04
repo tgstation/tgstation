@@ -21,7 +21,7 @@
 	var/health = 50
 
 	autoignition_temperature = AUTOIGNITION_WOOD
-	fire_fuel = 10
+
 
 /obj/structure/bookcase/initialize()
 	for(var/obj/item/I in loc)
@@ -154,7 +154,7 @@
 	attack_verb = list("bashed", "whacked", "educated")
 
 	autoignition_temperature = AUTOIGNITION_PAPER
-	fire_fuel = 3
+
 
 	var/dat			 // Actual page content
 	var/due_date = 0 // Game time in 1/10th seconds

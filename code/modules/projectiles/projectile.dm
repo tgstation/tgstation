@@ -106,7 +106,7 @@
 				var/turf/simulated/floor/f = get_turf(A.loc)
 				if(f && istype(f))
 					f.break_tile()
-					f.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
+					f.hotspot_expose(1000,CELL_VOLUME)
 			else
 				def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier + 8*distance)
 

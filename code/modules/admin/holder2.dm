@@ -113,9 +113,15 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 	sessKey=0
 	while(query.NextRow())
-		sessKey = query.item[1]
-		query=dbcon.NewQuery("UPDATE admin_sessions SET expires=DATE_ADD(NOW(), INTERVAL 2 HOUR), IP='[owner.address]' WHERE sessID='[sessKey]'")
+		//sessKey = query.item[1]
+		//ALWAYS UPDATE SESSIONKEY
+		query=dbcon.NewQuery("UPDATE admin_sessions SET expires=DATE_ADD(NOW(), INTERVAL 12 HOUR), IP='[owner.address]' WHERE ckey='[owner.ckey]'")
 		query.Execute()
+		query = dbcon.NewQuery("SELECT sessID FROM admin_sessions WHERE ckey = '[owner.ckey]' AND expires > Now()")
+		query.Execute()
+		while(query.NextRow())
+			sessKey = query.item[1]
+			break
 		return sessKey
 
 	query=dbcon.NewQuery("INSERT INTO admin_sessions (sessID,ckey,expires, IP) VALUES (UUID(), '[owner.ckey]', DATE_ADD(NOW(), INTERVAL 2 HOUR), '[owner.address]')")

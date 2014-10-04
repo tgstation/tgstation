@@ -218,7 +218,7 @@
 			napalm.temperature = 200+T0C
 
 			target_tile.assume_air(napalm)
-			spawn (0) target_tile.hotspot_expose(temperature, 400,surfaces=1)
+			spawn (0) target_tile.hotspot_expose(temperature, 400)
 
 			hardness -= toxinsToDeduce/100
 			CheckHardness()

@@ -288,6 +288,10 @@
 					if(count >= 5) // if theres more than 5 security on the station just let assistants join regardless, they should be able to handle the tide
 						return 1
 					return 0
+		if(job.title == "Assistant" && job.current_positions > 5)
+			var/datum/job/officer = job_master.GetJob("Security Officer")
+			if(officer.current_positions >= officer.total_positions)
+				officer.total_positions++
 		return 1
 
 	proc/FuckUpGenes(var/mob/living/carbon/human/H)

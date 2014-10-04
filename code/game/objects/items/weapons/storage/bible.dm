@@ -10,7 +10,6 @@
 	var/deity_name = "Christ"
 
 	autoignition_temperature = 522 // Kelvin
-	fire_fuel = 2
 
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is farting lightly on the [src.name]! It looks like \he's  trying to commit suicide!</b>"
@@ -23,7 +22,6 @@
 	icon_state ="bible"
 
 	autoignition_temperature = 0 // Not actually paper
-	fire_fuel = 0
 
 /obj/item/weapon/storage/bible/booze/New()
 	. = ..()

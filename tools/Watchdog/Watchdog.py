@@ -11,18 +11,18 @@ import shutil
 import cPickle
 import HTMLParser
 
-MONITOR = ('127.0.0.1', 1336)  # IP, port.
-RESTART_COMMAND = "/home/gmod/byond/ss13.sh"  # What shell script restarts SS13?
-COMPILE_COMMAND = "/home/gmod/byond/compile_ss13.sh"  # What shell script should be run to compile SS13?
-STATS_FILE = '/home/gmod/stats.json'  # Where do you want stats.json placed?
+MONITOR = ('127.0.0.1', 7777)  # IP, port.
+RESTART_COMMAND = "C:\\Users\\ss13\\Desktop\\start-testing.bat"  # What shell script restarts SS13?
+COMPILE_COMMAND = ""#"C:\\Users\\ss13\\Desktop\\start-testing.bat"  # What shell script should be run to compile SS13?
+STATS_FILE = 'C:\\Users\\ss13\\Desktop\\stats.json'  # Where do you want stats.json placed?
 
-MAX_FAILURES = 3
+MAX_FAILURES = 9
 TIMEOUT = 30.0  # 30 seconds
 WAIT_FOR_SERVER_RESPONSE = True  # Wait for server to write ready4update.txt before running COMPILE_COMMAND?
 
-LOGPATH = '/home/gmod/byond/crashlogs/'  # Where do you want crash.log stored?
-GAMEPATH = '/home/gmod/byond/tgstation/'  # Where is the game directory?
-CONFIGPATH = '/home/gmod/byond/config/'  # Where is your current list of config files?
+LOGPATH = 'C:\\Users\\ss13\\Desktop\\crashlog'  # Where do you want crash.log stored?
+GAMEPATH = 'C:\\Users\\ss13\\Desktop\\vgstation13-testing'  # Where is the game directory?
+CONFIGPATH = 'C:\\Users\\ss13\Desktop\\vgstation13-testing\\config'  # Where is your current list of config files?
 
 GIT_REMOTE = 'origin'
 GIT_BRANCH = 'Bleeding-Edge'
@@ -30,7 +30,7 @@ GIT_BRANCH = 'Bleeding-Edge'
 NUDGE_IP  = 'localhost'     # IP to nudge
 NUDGE_PORT= 45678           # Port to nudge
 NUDGE_ID  = 'Test Watchdog' # ID tag (use the same as the server, looks better)
-NUDGE_KEY = ''              # PASSCODE USED ON THE BOT!
+NUDGE_KEY = 'asdfasdfasdf'              # PASSCODE USED ON THE BOT!
 
 def send_nudge(message):
 	try:
@@ -200,7 +200,7 @@ def open_socket():
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.connect(MONITOR)
 	# 30-second timeout
-	s.settimeout(TIMEOUT)
+	s.settimeout(300)
 	return s
 	
 # Snippet below from http://pastebin.com/TGhPBPGp
@@ -291,6 +291,7 @@ def ping_server(request):
 		return False
 	except socket.error:
 		log.error("Connection lost!")
+		print "Unexpected error:", sys.exc_info()[0]
 		return False
 	return True
 
@@ -326,14 +327,14 @@ waiting_for_next_commit = False
 os.chdir(cwd)
 log.info('Git repository on branch {1}, commit {0}.'.format(lastCommit, currentBranch))
 while True:
-	if waiting_for_next_commit:
-		checkForUpdate(False)
-		if waiting_for_next_commit:
-			time.sleep(50)
-			continue
+	#if waiting_for_next_commit:
+		#checkForUpdate(False)
+		#if waiting_for_next_commit:
+			#time.sleep(50)
+			#continue
 	if not ping_server(b'?status'):
 		# try to start the server again
-		checkForUpdate(False)
+		#checkForUpdate(False)
 		failChain += 1
 		if lastState == False:
 			if failChain > MAX_FAILURES:
@@ -355,8 +356,8 @@ while True:
 		if firstRun:
 			log.info('Server is confirmed to be up and running.')
 			send_nudge('Server is online and responding to queries.')
-		else:
-			checkForUpdate(True)
+		#else:
+			#checkForUpdate(True)
 		
 		lastState = True
 		failChain = 0

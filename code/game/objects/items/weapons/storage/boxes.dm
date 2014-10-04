@@ -27,7 +27,6 @@
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 	autoignition_temperature = 522 // Kelvin
-	fire_fuel = 2
 
 /obj/item/weapon/storage/box/large
 	name = "large box"
@@ -41,7 +40,6 @@
 	max_combined_w_class = 42 // 21*2
 
 	autoignition_temperature = 530 // Kelvin
-	fire_fuel = 3
 
 /obj/item/weapon/storage/box/surveillance
 	name = "\improper DromedaryCo packet"

@@ -51,7 +51,7 @@
 
 	if (wizards_alive)
 		if(!time_checked) time_checked = world.time
-		if(world.time > time_checked + 3000 && (mages_made < max_mages))
+		if(world.time > time_checked + 3000 && (wizards.len < max_mages))
 			time_checked = world.time
 			make_more_mages()
 	else
@@ -66,14 +66,14 @@
 
 	if(making_mage || emergency_shuttle.departed)
 		return 0
-	if(mages_made >= max_mages)
+	if(wizards.len >= max_mages)
 		return 0
 	making_mage = 1
 	mages_made++
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
 	spawn(rand(200, 600))
-		message_admins("SWF is still pissed, sending another wizard - [max_mages - mages_made] left.")
+		message_admins("SWF is still pissed, sending another wizard - [max_mages - wizards.len] left.")
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_WIZARD)
 				if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))

@@ -12,7 +12,7 @@
 
 	autoignition_temperature = AUTOIGNITION_PAPER
 
-	fire_fuel = 1
+	//fire_fuel = 1
 
 /obj/item/weapon/paper/nano/New()
 	..()

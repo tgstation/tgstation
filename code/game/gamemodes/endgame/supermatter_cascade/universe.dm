@@ -10,24 +10,14 @@
 		user << "<span class='sinister'>All you hear on the frequency is static and panicked screaming. There will be no shuttle call today.</span>"
 	return 0
 
+// Apply changes when exiting state
+/datum/universal_state/supermatter_cascade/OnExit()
+
 /datum/universal_state/supermatter_cascade/OnTurfChange(var/turf/T)
 	var/turf/space/spess = T
 	if(istype(spess))
 		spess.overlays += "end01"
 
-/datum/universal_state/supermatter_cascade/DecayTurf(var/turf/T)
-	if(istype(T,/turf/simulated/wall))
-		var/turf/simulated/wall/W=T
-		W.melt()
-		return
-	if(istype(T,/turf/simulated/floor))
-		var/turf/simulated/floor/F=T
-		// Burnt?
-		if(!F.burnt)
-			F.burn_tile()
-		else
-			F.ReplaceWithLattice()
-		return
 
 // Apply changes when entering state
 /datum/universal_state/supermatter_cascade/OnEnter()

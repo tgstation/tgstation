@@ -241,7 +241,9 @@ dmm_suite{
 		proc{
 			load(atom/what){
 				for(var/attribute in attributes){
-					what.vars[attribute] = attributes[attribute]
+					if(attribute in what.vars){//what.hasVar(attributes[attribute]) || what.hasVar(attribute)){
+						what.vars[attribute] = attributes[attribute]
+						}
 					}
 				Del()
 				}

@@ -7,7 +7,6 @@
 	pressure_resistance = 2
 
 	autoignition_temperature = 522 // Kelvin
-	fire_fuel = 1
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."

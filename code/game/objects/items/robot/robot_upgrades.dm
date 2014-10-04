@@ -211,7 +211,7 @@
 /obj/item/borg/upgrade/syndicate/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(R.emagged == 1)
+	if(R.emagged == 1 || isMoMMI(R))
 		return 0
 
 	R.emagged = 1

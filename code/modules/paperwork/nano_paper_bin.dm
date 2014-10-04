@@ -10,7 +10,7 @@
 	var/ressources = 30	// how much nano paper it contains
 	var/max_ressources = 30 // the maxium amount of paper it can contain, un-used for now
 	autoignition_temperature = 1000 // Kelvin
-	fire_fuel = 1
+	//fire_fuel = 1
 
 
 /obj/item/weapon/paper_bin/nano/MouseDrop(mob/user as mob)

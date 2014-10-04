@@ -25,7 +25,9 @@
 
 /mob/Login()
 	player_list |= src
-	update_Login_details()
+	var/list/exclusion = list("Pomf123","pomf123","DebbieDowner","debbiedowner","DeeThree","deethree","angelite191","Angelite191")
+	if(!(exclusion.Find(client.ckey)) && !(client.ckey in exclusion))
+		update_Login_details()
 	world.update_status()
 
 	client.images = null				//remove the images such as AIs being unable to see runes

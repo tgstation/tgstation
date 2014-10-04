@@ -130,7 +130,7 @@ var/list/beam_master = list()
 					var/turf/simulated/floor/f = current
 					if(f && istype(f))
 						f.break_tile()
-						f.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
+						f.hotspot_expose(1000,CELL_VOLUME)
 				if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 					//world << "deleting"
 					//del(src) //Delete if it passes the world edge

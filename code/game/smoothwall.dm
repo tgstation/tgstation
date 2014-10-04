@@ -72,6 +72,9 @@
 
 /turf/simulated/wall/New()
 	relativewall()
+	for(var/cdir in cardinal)
+		var/turf/T = get_step(src,cdir)
+		T.relativewall()
 	..()
 
 /turf/simulated/wall/Destroy()

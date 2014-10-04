@@ -149,7 +149,7 @@ var/list/sacrificed = list()
 			playsound(U, 'sound/items/Welder2.ogg', 25, 1)
 			var/turf/T = get_turf(U)
 			if(T)
-				T.hotspot_expose(700,125,surfaces=1)
+				T.hotspot_expose(700,125)//,surfaces=1)
 			var/rune = src // detaching the proc - in theory
 			empulse(U, (range_red - 2), range_red)
 			del(rune)

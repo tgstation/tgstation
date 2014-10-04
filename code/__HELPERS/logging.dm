@@ -11,7 +11,7 @@
 
 //print a testing-mode debug message to world.log
 /proc/testing(msg)
-	world.log << "## TESTING: [msg]"
+	//world.log << "## TESTING: [msg]"
 
 /proc/log_admin(text)
 	admin_log.Add(text)

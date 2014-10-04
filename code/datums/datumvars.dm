@@ -14,6 +14,8 @@ client
 			var/atom/A = D
 			var/reagentDatum = input(usr,"Reagent","Insert Reagent","") as text|null
 			var/reagentAmount = input(usr, "Amount", "Insert Amount", "") as num
+			if(!A.reagents)
+				A.reagents = new /datum/reagents(50)
 			if(A.reagents.add_reagent(reagentDatum, reagentAmount))
 				usr << "<span class='warning'>[reagentDatum] doesn't exist.</span>"
 				return

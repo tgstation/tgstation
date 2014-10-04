@@ -489,7 +489,7 @@
 	parts = /obj/item/weapon/table_parts/wood
 	health = 50
 	autoignition_temperature = AUTOIGNITION_WOOD // TODO:  Special ash subtype that looks like charred table legs.
-	fire_fuel = 5
+	//fire_fuel = 5
 
 
 /obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
