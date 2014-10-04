@@ -155,45 +155,10 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
-		if( istype(W, /obj/item/weapon/weldingtool) )
-			var/obj/item/weapon/weldingtool/WT = W
-			if( WT.remove_fuel(0,user) )
-				thermitemelt(user)
-				return
-
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		if(is_hot(W))
 			thermitemelt(user)
-			return
 
-		else if(istype(W, /obj/item/weapon/lighter))
-			var/obj/item/weapon/lighter/L = W
-			if(L.lit)
-				thermitemelt(user)
-				return
-
-		else if(istype(W, /obj/item/weapon/match))
-			var/obj/item/weapon/match/M = W
-			if(M.lit)
-				thermitemelt(user)
-				return
-
-		else if(istype(W, /obj/item/device/flashlight/flare/torch))
-			var/obj/item/device/flashlight/flare/torch/T = W
-			if(T.on)
-				thermitemelt(user)
-				return
-
-		else if(istype(W, /obj/item/device/assembly/igniter))
-			thermitemelt(user)
-			return
-
-		else if(istype(W, /obj/item/candle))
-			var/obj/item/candle/C = W
-			if(C.lit)
-				thermitemelt(user)
-				return
-
-		else if( istype(W, /obj/item/weapon/melee/energy/blade) )
+		if( istype(W, /obj/item/weapon/melee/energy/blade) )
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
 			EB.spark_system.start()
@@ -201,16 +166,11 @@
 			playsound(src, "sparks", 50, 1)
 			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
 
-			thermitemelt(user)
-			return
-
-		else if(istype(W, /obj/item/weapon/melee/energy/sword))
-			var/obj/item/weapon/melee/energy/sword/ES = W
-			if(ES.active)
-				thermitemelt(user)
-				return
 
 	var/turf/T = user.loc	//get user's location for delay checks
+	var/slicing_duration = 100  //default time taken to slice the wall
+	if( mineral == "diamond" )
+		slicing_duration = 200   //diamond wall takes twice as much time
 
 	//DECONSTRUCTION
 	add_fingerprint(user)
@@ -221,7 +181,7 @@
 			user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-			if(do_after(user, 100))
+			if(do_after(user, slicing_duration))
 				if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )
 					return
 				if( user.loc == T && user.get_active_hand() == WT )
@@ -235,11 +195,7 @@
 		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-		if(do_after(user, 60))
-			if(mineral == "diamond")//Oh look, it's tougher
-				if(!do_after(user, 60))
-					return
-
+		if(do_after(user, slicing_duration*0.6))  // plasma cutter is faster than welding tool
 			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
 				return
 
@@ -254,10 +210,7 @@
 
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 
-		if(do_after(user, 60))
-			if(mineral == "diamond")//Oh look, it's tougher
-				if(!do_after(user, 60))
-					return
+		if(do_after(user, slicing_duration*0.6))  // diamond drill is faster than welding tool slicing
 			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
 				return
 
@@ -274,10 +227,7 @@
 		user << "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>"
 		playsound(src, "sparks", 50, 1)
 
-		if(do_after(user, 70))
-			if(mineral == "diamond")//Oh look, it's tougher
-				if(!do_after(user, 70))
-					return
+		if(do_after(user, slicing_duration*0.7))  //energy blade slicing is faster than welding tool slicing
 			if( !istype(src, /turf/simulated/wall) || !user || !EB || !T )
 				return
 
