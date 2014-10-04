@@ -1,4 +1,3 @@
-
 // Basic transit tubes. Straight pieces, curved sections,
 //  and basic splits/joins (no routing logic).
 // Mappers: you can use "Generate Instances from Icon-states"
@@ -48,6 +47,30 @@ obj/structure/transit_tube/ex_act(severity)
 	if(tube_dirs == null)
 		init_dirs()
 
+/obj/structure/transit_tube/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/wrench))
+		for(var/obj/structure/transit_tube_pod/pod in loc)
+			user << "<span class='notice'>Remove the pod first.</span>"
+			return
+		user.visible_message("<span class='warning'>[user] starts to deattach the [src]!</span>", "<span class='notice'>You start deattaching the [name]...</span>")
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 80))
+			user << "<span class='notice'>You deattach the [name]!</span>"
+			if(copytext(icon_state, 1, 3) != "D-")
+				if(istype(src, /obj/structure/transit_tube/station/reverse))
+					var/obj/structure/R = new/obj/structure/c_transit_tube/station/reverse(src.loc)
+					src.transfer_fingerprints_to(R)
+					R.add_fingerprint(user)
+				else if(istype(src, /obj/structure/transit_tube/station))
+					var/obj/structure/R = new/obj/structure/c_transit_tube/station(src.loc)
+					src.transfer_fingerprints_to(R)
+					R.add_fingerprint(user)
+				else
+					var/obj/structure/R = new/obj/structure/c_transit_tube(src.loc)
+					R.icon_state = src.icon_state
+					src.transfer_fingerprints_to(R)
+					R.add_fingerprint(user)
+			qdel(src)
 
 // Called to check if a pod should stop upon entering this tube.
 /obj/structure/transit_tube/proc/should_stop_pod(pod, from_dir)
@@ -258,53 +281,3 @@ obj/structure/transit_tube/ex_act(severity)
 
 	direction_table[text] = directions
 	return directions
-
-
-
-// A copy of text2dir, extended to accept one and two letter
-//  directions, and to clearly return 0 otherwise.
-/obj/structure/transit_tube/proc/text2dir_extended(direction)
-	switch(uppertext(direction))
-		if("NORTH", "N")
-			return 1
-		if("SOUTH", "S")
-			return 2
-		if("EAST", "E")
-			return 4
-		if("WEST", "W")
-			return 8
-		if("NORTHEAST", "NE")
-			return 5
-		if("NORTHWEST", "NW")
-			return 9
-		if("SOUTHEAST", "SE")
-			return 6
-		if("SOUTHWEST", "SW")
-			return 10
-		else
-	return 0
-
-
-
-// A copy of dir2text, which returns the short one or two letter
-//  directions used in tube icon states.
-/obj/structure/transit_tube/proc/dir2text_short(direction)
-	switch(direction)
-		if(1)
-			return "N"
-		if(2)
-			return "S"
-		if(4)
-			return "E"
-		if(8)
-			return "W"
-		if(5)
-			return "NE"
-		if(6)
-			return "SE"
-		if(9)
-			return "NW"
-		if(10)
-			return "SW"
-		else
-	return

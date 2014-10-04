@@ -40,6 +40,20 @@
 				return
 
 
+//pod insertion
+/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R as obj, mob/user as mob)
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
+	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
+		return
+	var/obj/structure/transit_tube_pod/T = new/obj/structure/transit_tube_pod(src)
+	R.transfer_fingerprints_to(T)
+	T.add_fingerprint(usr)
+	T.loc = src.loc
+	T.dir = turn(src.dir, -90)
+	user.visible_message("<span class='notice'>[user] inserts the [R].</span>", "<span class='notice'>You insert the [R].</span>")
+	qdel(R)
+
 
 /obj/structure/transit_tube/station/attack_hand(mob/user as mob)
 	if(!pod_moving)
@@ -76,6 +90,17 @@
 					src.Bumped(GM)
 					qdel(G)
 				break
+	if(istype(W, /obj/item/weapon/crowbar))
+		for(var/obj/structure/transit_tube_pod/pod in loc)
+			if(pod.contents)
+				user << "<span class='notice'>Empty the pod first.</span>"
+				return
+			user.visible_message("<span class='notice'>[user] removes the [pod].</span>", "<span class='notice'>You remove the [pod].</span>")
+			var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(src.loc)
+			pod.transfer_fingerprints_to(R)
+			R.add_fingerprint(user)
+			qdel(pod)
+	..(W, user)
 
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(icon_state == "closed")
