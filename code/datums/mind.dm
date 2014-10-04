@@ -280,15 +280,12 @@
 		text = "<i><b>[text]</b></i>: "
 		if (src in ticker.mode.A_bosses)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A)</B> <a href='?src=\ref[src];gang=agang'>gangster</a> <b>BOSS</b>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-			text += "<br>Flash & Recaller: <a href='?src=\ref[src];gang=equip'>give</a>"
+			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
 
 			var/list/L = current.get_contents()
-			var/obj/item/device/flash/flash = locate() in L
-			if (flash)
-				if(!flash.broken)
-					text += "|<a href='?src=\ref[src];gang=takeequip'>take equipment</a>."
-				else
-					text += "|<a href='?src=\ref[src];gang=takeequip'>take equipment</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
+			var/obj/item/device/gangtool/gangtool = locate() in L
+			if (gangtool)
+				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
 			else
 				text += "."
 
@@ -298,7 +295,7 @@
 
 		else if (src in ticker.mode.B_bosses)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B)</B> <a href='?src=\ref[src];gang=bgang'>gangster</a> <b>BOSS</b>"
-			text += "<br>Flash & Recaller: <a href='?src=\ref[src];gang=equip'>give</a>"
+			text += "<br>Flash & gangtool: <a href='?src=\ref[src];gang=equip'>give</a>"
 
 			var/list/L = current.get_contents()
 			var/obj/item/device/flash/flash = locate() in L
@@ -504,7 +501,7 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	usr << browse(out, "window=edit_memory[src];size=400x500")
+	usr << browse(out, "window=edit_memory[src];size=410x500")
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))	return
@@ -790,28 +787,18 @@
 					if(2)
 						usr << "<span class='warning'>Unable to equip flash!</span>"
 					if(1)
-						usr << "<span class='warning'>Unable to equip recaller!</span>"
+						usr << "<span class='warning'>Unable to equip gangtool!</span>"
 					if(0)
-						usr << "<span class='warning'>Unable to equip both flash and recaller!</span>"
+						usr << "<span class='warning'>Unable to equip both flash and gangtool!</span>"
 
 			if("takeequip")
 				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					usr << "<span class='warning'>Deleting flash failed!</span>"
-				qdel(flash)
-				var/obj/item/device/recaller/recaller = locate() in L
-				if (!recaller)
-					usr << "<span class='warning'>Deleting recaller failed!</span>"
-				qdel(recaller)
-
-			if("repairflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					usr << "<span class='warning'>Repairing flash failed!</span>"
-				else
-					flash.broken = 0
+				for(var/obj/item/weapon/pen/gang/pen in L)
+					qdel(pen)
+				var/obj/item/device/gangtool/gangtool = locate() in L
+				if (!gangtool)
+					usr << "<span class='warning'>Deleting gangtool failed!</span>"
+				qdel(gangtool)
 
 	else if (href_list["cult"])
 		switch(href_list["cult"])
