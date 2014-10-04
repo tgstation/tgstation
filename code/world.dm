@@ -77,6 +77,8 @@
 	slmaster.layer = FLY_LAYER
 	slmaster.mouse_opacity = 0
 
+	setup_map_transitions()
+
 	for(var/i=0, i<max_secret_rooms, i++)
 		make_mining_asteroid_secret()
 
