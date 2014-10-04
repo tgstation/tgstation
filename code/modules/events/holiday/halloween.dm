@@ -9,7 +9,10 @@
 /datum/round_event/spooky/start()
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(H.dna)
-			hardset_dna(H, null, null, null, null, /datum/species/skeleton)
+			if(prob(50))
+				hardset_dna(H, null, null, null, null, /datum/species/skeleton)
+			else
+				hardset_dna(H, null, null, null, null, /datum/species/zombie)
 	for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
 
