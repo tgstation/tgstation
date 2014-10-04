@@ -989,7 +989,7 @@
 					var/mob/living/carbon/monkey/M = current
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
-						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>", 1)
+						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>")
 						src = null
 						M = H.monkeyize()
 						src = M.mind

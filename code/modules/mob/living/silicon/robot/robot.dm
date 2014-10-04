@@ -733,8 +733,7 @@
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>", 1)
+		visible_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>")
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)

@@ -136,8 +136,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		else
 			newcable = new/obj/item/stack/cable_coil(T, 1, cable_color)
 
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='danger'>[user] cuts the cable.</span>", 1)
+		visible_message("<span class='warning'>[user] cuts the cable.</span>")
 
 		newcable.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
