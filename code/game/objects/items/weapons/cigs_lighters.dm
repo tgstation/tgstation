@@ -35,7 +35,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		processing_objects.Remove(src)
 		return
 	if(location)
-		location.hotspot_expose(700, 5)//,surfaces=istype(loc,/turf))
+		location.hotspot_expose(700, 5,surfaces=istype(loc,/turf))
 		return
 
 /obj/item/weapon/match/dropped(mob/user as mob)
@@ -195,7 +195,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		del(src)
 		return
 	if(location)
-		location.hotspot_expose(700, 5)//,surfaces=istype(loc,/turf))
+		location.hotspot_expose(700, 5,surfaces=istype(loc,/turf))
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
 		if(iscarbon(M) && (src == M:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
 			if(M.reagents.has_reagent("lexorin") || M_NO_BREATH in M.mutations || istype(M, /obj/machinery/atmospherics/unary/cryo_cell))
@@ -405,7 +405,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		processing_objects.Remove(src)
 		return
 	if(location)
-		location.hotspot_expose(700, 5)//,surfaces=istype(loc,/turf))
+		location.hotspot_expose(700, 5,surfaces=istype(loc,/turf))
 	return
 
 /obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user as mob) //Refills the pipe. Can be changed to an attackby later, if loose tobacco is added to vendors or something.
@@ -526,7 +526,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/process()
 	var/turf/location = get_turf(src)
 	if(location)
-		location.hotspot_expose(700, 5)//,surfaces=istype(loc,/turf))
+		location.hotspot_expose(700, 5,surfaces=istype(loc,/turf))
 	return
 
 

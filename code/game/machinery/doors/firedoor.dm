@@ -204,7 +204,11 @@
 				user.visible_message("\blue \The [user] lifts \the [src] with \a [C].",\
 				"\The [src] scans your ID, and obediently opens as you apply your [C].",\
 				"You hear metal move, and a door [density ? "open" : "close"].")
-
+			else if(lockdown)
+				user.visible_message("\blue \The [user] pries at \the [src] with \a [C], but \the [src] resists being opened.",\
+				"\red You pry at \the [src], but it actively resists your efforts.  Maybe use your ID, perhaps?",\
+				"You hear someone struggling and metal straining")
+				return
 			if(density)
 				spawn(0)
 					open()

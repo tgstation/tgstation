@@ -1324,7 +1324,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		M.show_message("\red Your [src] explodes!", 1)
 
 	if(T)
-		T.hotspot_expose(700,125)
+		T.hotspot_expose(700,125,surfaces=istype(loc,/turf))
 
 		explosion(T, -1, -1, 2, 3)
 

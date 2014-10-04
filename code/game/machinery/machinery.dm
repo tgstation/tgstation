@@ -338,7 +338,6 @@ Class Procs:
 	return src.attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
-	src.add_hiddenprint(user)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
 

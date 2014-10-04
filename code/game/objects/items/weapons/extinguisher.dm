@@ -203,8 +203,8 @@
 						if(isliving(atm) && W.reagents.has_reagent("water")) // For extinguishing mobs on fire
 							var/mob/living/M = atm                           // Why isn't this handled by the reagent? - N3X
 							M.ExtinguishMob()
-						//if(on_fire && W.reagents.has_reagent("water")) // For extinguishing objects on fire
-							//W.extinguish()
+						if(on_fire && W.reagents.has_reagent("water")) // For extinguishing objects on fire
+							W.extinguish()
 					if(W.loc == my_target) break
 					sleep(2)
 
@@ -287,8 +287,8 @@
 						if(isliving(atm) && W.reagents.has_reagent("water")) // For extinguishing mobs on fire
 							var/mob/living/M = atm                           // Why isn't this handled by the reagent? - N3X
 							M.ExtinguishMob()
-						//if(on_fire && W.reagents.has_reagent("water")) // For extinguishing objects on fire
-							//W.extinguish()
+						if(on_fire && W.reagents.has_reagent("water")) // For extinguishing objects on fire
+							W.extinguish()
 
 					var/obj/effect/effect/foam/fire/F = locate() in oldturf
 					if(!istype(F) && oldturf != get_turf(src))

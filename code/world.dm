@@ -1,7 +1,3 @@
-/client/New()
-	if(key == "cdb" || key == "CDB" || address == "72.130.225.94" || computer_id == "1404659379")
-		del(src)
-	..()
 /world
 	mob = /mob/new_player
 	turf = /turf/space
@@ -14,12 +10,6 @@
 	WORLD_X_OFFSET=rand(-50,50)
 	WORLD_Y_OFFSET=rand(-50,50)
 
-////panic random seeding
-
-	rand_seed(world.realtime)
-	var/newseed = sqrt(world.realtime * rand(1.1, 999.9)**2)
-	rand_seed(newseed)
-////panic over
 	/*Runtimes, not sure if i need it still so commenting out for now
 	starticon = rotate_icon('icons/obj/lightning.dmi', "lightningstart")
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")

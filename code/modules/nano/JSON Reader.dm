@@ -128,16 +128,13 @@ json_reader
 						die()
 
 		get_token()
-			if(istype(tokens) && tokens.len >= i)
-				return tokens[i]
+			return tokens[i]
 
 		next_token()
 			return tokens[++i]
 
 		read_token(val, type)
 			var/json_token/T = get_token()
-			if(!T || !istype(T))
-				return null
 			if(!(T.value == val && istype(T, type)))
 				CRASH("Expected '[val]', found '[T.value]'.")
 			next_token()
@@ -192,17 +189,16 @@ json_reader
 				L[L.len] = read_value()
 				var/json_token/T = get_token()
 				check_type(/json_token/symbol)
-				if(istype(T))
-					switch(T.value)
-						if(",")
-							next_token()
-							continue
-						if("]")
-							next_token()
-							return
-						else
-							die()
-							next_token()
+				switch(T.value)
+					if(",")
+						next_token()
+						continue
+					if("]")
+						next_token()
+						return
+					else
+						die()
+						next_token()
 				CRASH("Unterminated array.")
 
 

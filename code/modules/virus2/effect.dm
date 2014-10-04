@@ -112,6 +112,16 @@
 			var/mob/living/carbon/human/h = mob
 			h.monkeyize()
 
+/datum/disease2/effect/catbeast
+	name = "Kingston Syndrome"
+	stage = 4
+	badness = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		if(istype(mob,/mob/living/carbon/human))
+			var/mob/living/carbon/human/h = mob
+			if(h.species.name != "Tajaran")
+				if(h.set_species("Tajaran"))
+					h.regenerate_icons()
 
 /datum/disease2/effect/suicide
 	name = "Suicidal Syndrome"

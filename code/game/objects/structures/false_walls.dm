@@ -83,10 +83,7 @@
 	)
 
 /obj/structure/falsewall/New()
-	relativewall()
-	for(var/cdir in cardinal)
-		var/turf/T = get_step(src,cdir)
-		T.relativewall()
+	relativewall_neighbours()
 	..()
 
 /obj/structure/falsewall/Destroy()
@@ -111,7 +108,7 @@
 		icon_state = "[mineral]fwall_open"
 		return
 
-	var/junction=findSmoothingNeighbors()
+	var/junction=findSmoothingNeighbors(check_minerals=1)
 	icon_state = "[mineral][junction]"
 
 /obj/structure/falsewall/attack_ai(mob/user as mob)
@@ -130,7 +127,6 @@
 		sleep(15)
 		src.density = 0
 		SetOpacity(0)
-		relativewall()
 		opening = 0
 	else
 		opening = 1
@@ -139,7 +135,7 @@
 		density = 1
 		sleep(15)
 		SetOpacity(1)
-		relativewall()
+		src.relativewall()
 		opening = 0
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
@@ -244,10 +240,7 @@
 	)
 
 /obj/structure/falserwall/New()
-	relativewall()
-	for(var/cdir in cardinal)
-		var/turf/T = get_step(src,cdir)
-		T.relativewall()
+	relativewall_neighbours()
 	..()
 
 
@@ -403,4 +396,3 @@
 	icon_state = ""
 	mineral = "sandstone"
 //------------wtf?------------end
-

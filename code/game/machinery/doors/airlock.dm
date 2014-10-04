@@ -227,7 +227,7 @@
 	mineral = "plasma"
 
 	autoignition_temperature = 300
-	//fire_fuel = 10
+	fire_fuel = 10
 
 /obj/machinery/door/airlock/plasma/ignite(temperature)
 	PlasmaBurn(temperature)

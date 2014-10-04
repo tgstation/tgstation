@@ -21,7 +21,7 @@
 		/obj/structure/falserwall // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
 	)
 
-	//soot_type = null
+	soot_type = null
 
 /turf/simulated/wall/examine()
 	..()
@@ -410,6 +410,20 @@
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 
+// Generic wall melting proc.
+/turf/simulated/wall/melt()
+	if(mineral == "diamond")
+		return
+
+	src.ChangeTurf(/turf/simulated/floor/plating)
+
+	var/turf/simulated/floor/F = src
+	if(!F)
+		return
+	F.burn_tile()
+	F.icon_state = "wall_thermite"
+//	F.sd_LumReset()		//TODO: ~Carn
+	return
 
 /turf/simulated/wall/meteorhit(obj/M as obj)
 	if (prob(15) && !rotting)

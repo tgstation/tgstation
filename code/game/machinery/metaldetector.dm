@@ -269,9 +269,9 @@
 		if(isobserver(O)) continue
 		if (get_dist(src, O) > src.range)
 			continue
-		var/list/titties = src.assess_perp(O)
-		var/dudesthreat = titties[1]
-		var/dudesname = titties[2]
+		var/list/ourretlist = src.assess_perp(O)
+		var/dudesthreat = ourretlist[1]
+		var/dudesname = ourretlist[2]
 
 
 

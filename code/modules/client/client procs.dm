@@ -189,19 +189,18 @@
 	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[sql_address]'")
 	query_ip.Execute()
 	related_accounts_ip = ""
-	var/list/exclusion = list("Pomf123","pomf123","DebbieDowner","debbiedowner","DeeThree","deethree","angelite191","Angelite191")
-	if(!(exclusion.Find(ckey)) && !(ckey in exclusion))
-		while(query_ip.NextRow())
-			related_accounts_ip += "[query_ip.item[1]], "
+	while(query_ip.NextRow())
+		related_accounts_ip += "[query_ip.item[1]], "
+		break
 
 	var/sql_computerid = sanitizeSQL(computer_id)
 
 	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[sql_computerid]'")
 	query_cid.Execute()
 	related_accounts_cid = ""
-	if(!(exclusion.Find(ckey)) && !(ckey in exclusion))
-		while(query_cid.NextRow())
-			related_accounts_cid += "[query_cid.item[1]], "
+	while(query_cid.NextRow())
+		related_accounts_cid += "[query_cid.item[1]], "
+		break
 
 	//Just the standard check to see if it's actually a number
 	if(sql_id)

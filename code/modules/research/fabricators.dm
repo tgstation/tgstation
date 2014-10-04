@@ -544,7 +544,7 @@
 	if(stat & BROKEN)
 		return
 
-	if(!allowed(user) && !isobserver(user))
+	if(!allowed(user))
 		src.visible_message("<span class='warning'>Unauthorized Access</span>: attempted by <b>[user]</b>")
 		return
 

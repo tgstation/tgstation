@@ -128,7 +128,7 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"blood_colour"= "#A10808","resistances"=null,"trace_chem"=null, "antibodies" = null)
+			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null, "antibodies" = null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -156,15 +156,8 @@ datum
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]
 
-			on_merge(var/data)
-				if(data["blood_colour"])
-					color = data["blood_colour"]
-				return ..()
 
-			on_update(var/atom/A)
-				if(data["blood_colour"])
-					color = data["blood_colour"]
-				return ..()
+
 
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
 				if(!istype(T)) return
@@ -181,7 +174,28 @@ datum
 					for(var/datum/disease/D in self.data["viruses"])
 						var/datum/disease/newVirus = D.Copy(1)
 						blood_prop.viruses += newVirus
+						newVirus.holder = blood_prop
 
+
+				else if(istype(self.data["donor"], /mob/living/carbon/monkey))
+					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
+					if(!blood_prop)
+						blood_prop = new(T)
+						blood_prop.blood_DNA["Non-Human DNA"] = "A+"
+					for(var/datum/disease/D in self.data["viruses"])
+						var/datum/disease/newVirus = D.Copy(1)
+						blood_prop.viruses += newVirus
+						newVirus.holder = blood_prop
+
+				else if(istype(self.data["donor"], /mob/living/carbon/alien))
+					var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
+					if(!blood_prop)
+						blood_prop = new(T)
+						blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
+					for(var/datum/disease/D in self.data["viruses"])
+						var/datum/disease/newVirus = D.Copy(1)
+						blood_prop.viruses += newVirus
+						newVirus.holder = blood_prop
 				return
 
 /* Must check the transfering of reagents and their data first. They all can point to one disease datum.
@@ -1871,8 +1885,8 @@ datum
 				M.eye_blind = max(M.eye_blind-5 , 0)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
-					if(E && istype(E))
+					var/datum/organ/internal/eyes/E = H.internal_organs["eyes"]
+					if(istype(E))
 						if(E.damage > 0)
 							E.damage -= 1
 				..()
@@ -2679,7 +2693,7 @@ datum
 						if(prob(8))
 							H << "<span class = 'warning'>You feel violently ill.</span>"
 						if(prob(min(data / 10, 100)))	H.vomit()
-						var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
+						var/datum/organ/internal/liver/L = H.internal_organs["liver"]
 						if (istype(L) && !L.is_broken())
 							L.take_damage(data * 0.01, 0)
 							H.adjustToxLoss(round(data / 20, 1))
@@ -2702,7 +2716,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							if(prob(20))
 								H << "<span class = 'sinister'>You feel deathly ill.</span>"
-							var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
+							var/datum/organ/internal/liver/L = H.internal_organs["liver"]
 							if (istype(L) && !L.is_broken())
 								L.take_damage(10, 0)
 							else
@@ -2946,7 +2960,7 @@ datum
 								H << "<span class='warning'>Your stomach grumbles unsettlingly..</span>"
 							if(prob(5))
 								H << "<span class='warning'>Something feels wrong with your body..</span>"
-								var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
+								var/datum/organ/internal/liver/L = H.internal_organs["liver"]
 								if (istype(L))
 									L.take_damage(0.1, 1)
 								H.adjustToxLoss(0.13)
@@ -3558,10 +3572,8 @@ datum
 					M:drowsyness  = max(M:drowsyness, 30/sober_str)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
-						if (!L)
-							H.adjustToxLoss(5)
-						else if(istype(L))
+						var/datum/organ/internal/liver/L = H.internal_organs["liver"]
+						if (istype(L))
 							L.take_damage(0.1, 1)
 						H.adjustToxLoss(0.1)
 
@@ -3643,140 +3655,20 @@ datum
 				description = "Yohoho and all that."
 				color = "#664300" // rgb: 102, 67, 0
 
-		ethanol/tequilla
-			name = "Tequila"
-			id = "tequilla"
-			description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
-			color = "#FFFF91" // rgb: 255, 255, 145
-			//boozepwr = 2
+			deadrum
+				name = "Deadrum"
+				id = "rum"
+				description = "Popular with the sailors. Not very popular with everyone else."
+				color = "#664300" // rgb: 102, 67, 0
 
-		ethanol/vermouth
-			name = "Vermouth"
-			id = "vermouth"
-			description = "You suddenly feel a craving for a martini..."
-			color = "#91FF91" // rgb: 145, 255, 145
-			//boozepwr = 1.5
+				on_mob_life(var/mob/living/M as mob)
 
-		ethanol/wine
-			name = "Wine"
-			id = "wine"
-			description = "An premium alchoholic beverage made from distilled grape juice."
-			color = "#7E4043" // rgb: 126, 64, 67
-			//boozepwr = 1.5
-			dizzy_adj = 2
-			slur_start = 65			//amount absorbed after which mob starts slurring
-			confused_start = 145	//amount absorbed after which mob starts confusing directions
-
-		ethanol/cognac
-			name = "Cognac"
-			id = "cognac"
-			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
-			color = "#AB3C05" // rgb: 171, 60, 5
-			//boozepwr = 1.5
-			dizzy_adj = 4
-			confused_start = 115	//amount absorbed after which mob starts confusing directions
-
-		ethanol/hooch
-			name = "Hooch"
-			id = "hooch"
-			description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
-			color = "#664300" // rgb: 102, 67, 0
-			//boozepwr = 2
-			dizzy_adj = 6
-			slurr_adj = 5
-			slur_start = 35			//amount absorbed after which mob starts slurring
-			confused_start = 90	//amount absorbed after which mob starts confusing directions
-
-		ethanol/ale
-			name = "Ale"
-			id = "ale"
-			description = "A dark alchoholic beverage made by malted barley and yeast."
-			color = "#664300" // rgb: 102, 67, 0
-			//boozepwr = 1
-
-		ethanol/absinthe
-			name = "Absinthe"
-			id = "absinthe"
-			description = "Watch out that the Green Fairy doesn't come for you!"
-			color = "#33EE00" // rgb: 51, 238, 0
-			//boozepwr = 4
-			dizzy_adj = 5
-			slur_start = 15
-			confused_start = 30
-
-
-		ethanol/pwine
-			name = "Poison Wine"
-			id = "pwine"
-			description = "Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!"
-			color = "#000000" // rgb: 0, 0, 0 SHOCKER
-			//boozepwr = 1
-			dizzy_adj = 1
-			slur_start = 1
-			confused_start = 1
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				M.druggy = max(M.druggy, 50)
-				if(!data) data = 1
-				data++
-				switch(data)
-					if(1 to 25)
-						if (!M.stuttering) M.stuttering = 1
-						M.make_dizzy(1)
-						M.hallucination = max(M.hallucination, 3)
-						if(prob(1)) M.emote(pick("twitch","giggle"))
-					if(25 to 75)
-						if (!M.stuttering) M.stuttering = 1
-						M.hallucination = max(M.hallucination, 10)
-						M.make_jittery(2)
-						M.make_dizzy(2)
-						M.druggy = max(M.druggy, 45)
-						if(prob(5)) M.emote(pick("twitch","giggle"))
-					if (75 to 150)
-						if (!M.stuttering) M.stuttering = 1
-						M.hallucination = max(M.hallucination, 60)
-						M.make_jittery(4)
-						M.make_dizzy(4)
-						M.druggy = max(M.druggy, 60)
-						if(prob(10)) M.emote(pick("twitch","giggle"))
-						if(prob(30)) M.adjustToxLoss(2)
-					if (150 to 300)
-						if (!M.stuttering) M.stuttering = 1
-						M.hallucination = max(M.hallucination, 60)
-						M.make_jittery(4)
-						M.make_dizzy(4)
-						M.druggy = max(M.druggy, 60)
-						if(prob(10)) M.emote(pick("twitch","giggle"))
-						if(prob(30)) M.adjustToxLoss(2)
-						if(prob(5)) if(ishuman(M))
-							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
-							if (L && istype(L))
-								L.take_damage(5, 0)
-					if (300 to INFINITY)
-						if(ishuman(M))
-							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
-							if (L && istype(L))
-								L.take_damage(100, 0)
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
-
-		ethanol/deadrum
-			name = "Deadrum"
-			id = "rum"
-			description = "Popular with the sailors. Not very popular with everyone else."
-			color = "#664300" // rgb: 102, 67, 0
-			//boozepwr = 1
-
-			on_mob_life(var/mob/living/M as mob)
-
-				if(!holder) return
-				..()
-				M.dizziness +=5
-				if(volume > REAGENTS_OVERDOSE)
-					M:adjustToxLoss(1)
-				return
+					if(!holder) return
+					..()
+					M.dizziness +=5
+					if(volume > REAGENTS_OVERDOSE)
+						M:adjustToxLoss(1)
+					return
 
 			vodka
 				name = "Vodka"

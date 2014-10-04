@@ -128,7 +128,7 @@
 			fire_delay = rand(20, 100)
 			shot_number = 0
 
-		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter(loc) //getFromPool(/obj/item/projectile/beam/emitter, loc)
+		var/obj/item/projectile/beam/emitter/A = getFromPool(/obj/item/projectile/beam/emitter, loc)
 		A.dir = dir
 		playsound(get_turf(src), 'sound/weapons/emitter.ogg', 25, 1)
 
