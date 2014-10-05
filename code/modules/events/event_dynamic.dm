@@ -44,20 +44,20 @@ var/list/event_last_fired = list()
 
 	if(!spacevines_spawned)
 		possibleEvents[/datum/event/spacevine] = 15
-	if(minutes_passed >= 30 && active_with_role["Engineer"] > 0) // Give engineers time to not set up the engine
+	if(minutes_passed >= 30 && active_with_role["Engineer"] > 1) // Give engineers time to not set up the engine
 		possibleEvents[/datum/event/meteor_wave] = 15
 		possibleEvents[/datum/event/meteor_shower] = 40
 		possibleEvents[/datum/event/blob] = 10
 
 	possibleEvents[/datum/event/viral_infection] = 40
-	if(active_with_role["Medical"] > 0)
+	if(active_with_role["Medical"] > 1)
 		possibleEvents[/datum/event/radiation_storm] = 50
 		possibleEvents[/datum/event/spontaneous_appendicitis] = 75
 		possibleEvents[/datum/event/viral_outbreak] = 25
 		possibleEvents[/datum/event/organ_failure] = 30
 
 	possibleEvents[/datum/event/prison_break] = 25
-	if(active_with_role["Security"] > 0)
+	if(active_with_role["Security"] > 1)
 		if(!sent_spiders_to_station)
 			possibleEvents[/datum/event/spider_infestation] = 15
 		if(aliens_allowed && !sent_aliens_to_station)
