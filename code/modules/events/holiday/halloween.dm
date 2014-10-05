@@ -16,5 +16,7 @@
 	for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
 
+	spawn_meteors(5, meteorsSPOOKY)
+
 /datum/round_event/spooky/announce()
 	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
