@@ -239,13 +239,3 @@
 	req_access = list(access_security)
 	var/id_tag = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
-
-
-/obj/machinery/door/window/right
-	icon_state = "right"
-	base_state = "right"
-
-/obj/machinery/door/window/brigdoor/right
-	icon_state = "rightsecure"
-	base_state = "rightsecure"
-

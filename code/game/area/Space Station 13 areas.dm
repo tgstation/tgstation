@@ -382,6 +382,60 @@ proc/process_ghost_teleport_locs()
 	name = "\improper hyperspace"
 	icon_state = "shuttle"
 
+// Taxi Shuttle
+
+/area/shuttle/taxi_a
+	requires_power = 0
+
+/area/shuttle/taxi_a/medcal_silicon_station
+	name = "\improper Medical and Silicon Station"
+	icon_state = "bluenew"
+
+/area/shuttle/taxi_a/engineering_cargo_station
+	name = "\improper Engineering and Cargo Station"
+	icon_state = "bluenew"
+
+/area/shuttle/taxi_a/security_science_station
+	name = "\improper Security and Science Station"
+	icon_state = "bluenew"
+
+/area/shuttle/taxi_a/abandoned_station
+	name = "\improper Abandoned Station"
+	icon_state = "bluenew"
+
+/area/shuttle/taxi_a/transit
+	name = "\improper hyperspace"
+	icon_state = "bluenew"
+
+// B
+
+/area/shuttle/taxi_b
+	requires_power = 0
+
+/area/shuttle/taxi_b/medcal_silicon_station
+	name = "\improper Medical and Silicon Station"
+	icon_state = "dk_yellow"
+
+/area/shuttle/taxi_b/engineering_cargo_station
+	name = "\improper Engineering and Cargo Station"
+	icon_state = "dk_yellow"
+
+/area/shuttle/taxi_b/security_science_station
+	name = "\improper Security and Science Station"
+	icon_state = "dk_yellow"
+
+/area/shuttle/taxi_b/abandoned_station
+	name = "\improper Abandoned Station"
+	icon_state = "dk_yellow"
+
+/area/shuttle/taxi_b/transit
+	name = "\improper hyperspace"
+	icon_state = "dk_yellow"
+
+// End Taxi Shuttle
+
+
+
 /area/airtunnel1/      // referenced in airtunnel.dm:759
 
 /area/dummy/           // Referenced in engine.dm:261

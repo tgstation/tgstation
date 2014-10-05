@@ -6,11 +6,11 @@
 /var/const/access_forensics_lockers= 4
 /var/const/access_medical = 5
 /var/const/access_morgue = 6
-/var/const/access_tox = 7
-/var/const/access_tox_storage = 8
+/var/const/access_tox = 7			// Research and Development
+/var/const/access_tox_storage = 8	// Toxins mixing and storage
 /var/const/access_genetics = 9
-/var/const/access_engine = 10
-/var/const/access_engine_equip= 11
+/var/const/access_engine = 10		// Power Engines
+/var/const/access_engine_equip= 11	// Engineering Foyer
 /var/const/access_maint_tunnels = 12
 /var/const/access_external_airlocks = 13
 /var/const/access_emergency_storage = 14
@@ -30,8 +30,8 @@
 /var/const/access_kitchen = 28
 /var/const/access_robotics = 29
 /var/const/access_rd = 30
-/var/const/access_cargo = 31
-/var/const/access_construction = 32
+/var/const/access_cargo = 31		// Cargo Bay
+/var/const/access_construction = 32	// Vacant office, etc
 /var/const/access_chemistry = 33
 /var/const/access_cargo_bot = 34
 /var/const/access_hydroponics = 35
@@ -46,10 +46,10 @@
 /var/const/access_mime = 44
 /var/const/access_surgery = 45
 /var/const/access_theatre = 46
-/var/const/access_research = 47
+/var/const/access_research = 47		// Research Division hallway
 /var/const/access_mining = 48
 /var/const/access_mining_office = 49 //not in use
-/var/const/access_mailsorting = 50
+/var/const/access_mailsorting = 50	// Cargo Office
 /var/const/access_mint = 51
 /var/const/access_mint_vault = 52
 /var/const/access_heads_vault = 53
@@ -66,6 +66,7 @@
 /var/const/access_psychiatrist = 64 // Psychiatrist's office
 /var/const/access_salvage_captain = 65 // Salvage ship captain's quarters
 /var/const/access_weapons = 66 //Weapon authorization for secbots
+/var/const/access_taxi = 67 // Taxi drivers
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
 /var/const/Mostly for admin fun times.*/
@@ -89,9 +90,9 @@
 /var/const/access_paramedic = 500
 
 /obj/var/list/req_access = null
-/obj/var/req_access_txt = "0"
+/obj/var/req_access_txt = "0"			// A user must have ALL of these accesses to use the object
 /obj/var/list/req_one_access = null
-/obj/var/req_one_access_txt = "0"
+/obj/var/req_one_access_txt = "0"		// If this list is populated, a user must have at least ONE of these accesses to use the object
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(var/mob/M)
@@ -216,7 +217,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, /*vg paramedic*/, access_paramedic)
+	            access_keycard_auth, access_tcomsat, access_gateway, /*vg paramedic*/, access_paramedic, access_taxi)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
@@ -241,7 +242,7 @@
 		if(6) //station general
 			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
 		if(7) //supply
-			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm)
+			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm, access_taxi)
 
 /proc/get_region_accesses_name(var/code)
 	switch(code)
@@ -398,6 +399,9 @@
 			return "Paramedic Station"
 		if(access_weapons)
 			return "Weapon Permit"
+		if(access_taxi)
+			return "Taxi Shuttle"
+
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

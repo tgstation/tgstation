@@ -203,13 +203,16 @@ datum/preferences
 
 		var/icon/clothes_s = null
 
+		var/uniform_dmi
+		var/feet_dmi
 		// UNIFORM DMI
-		var/uniform_dmi=current_species.uniform_icons
-		if(disabilities&DISABILITY_FLAG_FAT && current_species.fat_uniform_icons)
-			uniform_dmi=current_species.fat_uniform_icons
+		if(current_species)
+			uniform_dmi=current_species.uniform_icons
+			if(disabilities&DISABILITY_FLAG_FAT && current_species.fat_uniform_icons)
+				uniform_dmi=current_species.fat_uniform_icons
 
 		// SHOES DMI
-		var/feet_dmi=current_species.shoes_icons
+			feet_dmi=current_species.shoes_icons
 
 		if(!for_observer)
 			// Commenting this check so that, if all else fails, the preview icon is never naked. - N3X
