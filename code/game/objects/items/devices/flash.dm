@@ -18,63 +18,48 @@
 /obj/item/device/flash/proc/clown_check(mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
 		flash_carbon(user, user, 15, 0)
-		visible_message("<span class='disarm'>[user] blinds [user] with the flash!</span>")
+		user.visible_message("<span class='disarm'>[user] blinds [user] with the flash!</span>")
 		return 0
 	return 1
 
 
-/obj/item/device/flash/proc/handle_flash_charges()
-	//spamming the flash before it's fully charged (60seconds) increases the chance of it breaking. It will never break on the first use.
-	switch(times_used)
-		if(0 to 5)
-			last_used = world.time
-			if(prob(times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
-				burn_out()
-				return 0
-		else	//can only use it 5 times a minute
-			visible_message("<span class='notice'>*click* *click*</span>")
-			return 0
-	times_used++
-	return 1
-
-
-/obj/item/device/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
+/obj/item/device/flash/proc/burn_out(var/mob/user) //Made so you can override it if you want to have an invincible flash from R&D or something.
 	broken = 1
 	icon_state = "[initial(icon_state)]burnt"
-	visible_message("<span class='notice'>The [src.name] burns out!</span>")
+	user.visible_message("<span class='notice'>The [src.name] burns out!</span>")
 
 
-/obj/item/device/flash/proc/flash_recharge()
-	//capacitor recharges over time
-	for(var/i=0, i<3, i++)
-		if(last_used+600 > world.time)
-			break
-		last_used += 600
-		times_used -= 2
+/obj/item/device/flash/proc/flash_recharge(var/mob/user)
+	if(prob(times_used * 2))	//if you use it 5 times in a minute it has a 10% chance to break!
+		burn_out(user)
+		return 0
+
+	var/deciseconds_passed = world.time - last_used
+	for(var/seconds = deciseconds_passed/10, seconds>=10, seconds-=10) //get 1 charge every 10 seconds
+		times_used--
+
 	last_used = world.time
 	times_used = max(0, times_used) //sanity
 
 
-/obj/item/device/flash/proc/try_use_flash(var/mob/flasher)
-	flash_recharge()
+/obj/item/device/flash/proc/try_use_flash(var/mob/user)
+	flash_recharge(user)
 
 	if(broken)
-		return 0
-	if(!handle_flash_charges())
 		return 0
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[initial(icon_state)]2", src)
+	times_used++
 
-	if(flasher && !clown_check(flasher))
+	if(user && !clown_check(user))
 		return 0
 
 	return 1
 
 
-/obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 10, convert = 1)
+/obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 5, convert = 1)
 	add_logs(user, M, "flashed", object="[src.name]")
-	//if(iscarbon(M))
 	var/safety = M:eyecheck()
 	if(safety <= 0)
 		M.confused += power
@@ -88,38 +73,32 @@
 		return 0
 
 	if(iscarbon(M))
-		flash_carbon(M, user, 10, 1)
-		visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+		flash_carbon(M, user, 5, 1)
+		user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 		return 1
 
 	else if(issilicon(M))
 		M.Weaken(rand(5,10))
 		add_logs(user, M, "flashed", object="[src.name]")
-		visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>")
+		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>")
 		return 1
 
-	visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
+	user.visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
 
 
 /obj/item/device/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!try_use_flash(user))
 		return 0
 	for(var/mob/living/carbon/M in oviewers(3, null))
-		flash_carbon(M, user, 5, 0)
+		flash_carbon(M, user, 3, 0)
 
 
 /obj/item/device/flash/emp_act(severity)
 	if(!try_use_flash())
 		return 0
-
 	for(var/mob/living/carbon/M in viewers(3, null))
 		flash_carbon(M, null, 10, 0)
 	burn_out()
-
-	//if(istype(loc, /mob/living/carbon))
-		//var/mob/living/carbon/M = loc
-			//flash_carbon(M, null, 15, 0)
-			//visible_message("<span class='disarm'>[M] is blinded by the [src.name]!</span>")
 	..()
 
 
@@ -158,7 +137,7 @@
 	..()
 	cyborg_flash_animation(user)
 
-/obj/item/device/flash/cyborg/attack_self(mob/living/M, mob/user)
+/obj/item/device/flash/cyborg/attack_self(mob/user)
 	..()
 	cyborg_flash_animation(user)
 

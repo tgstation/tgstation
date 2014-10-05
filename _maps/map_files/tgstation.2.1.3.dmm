@@ -3290,7 +3290,7 @@
 "bln" = (/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/assembly/robotics)
 "blo" = (/obj/machinery/mecha_part_fabricator,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/assembly/robotics)
 "blp" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor{dir = 8; icon_state = "warnwhite"},/area/assembly/robotics)
-"blq" = (/obj/machinery/ai_status_display{pixel_x = 32; pixel_y = 0},/obj/structure/table,/obj/item/device/flash/synthetic,/obj/item/device/flash/synthetic,/obj/item/device/flash/synthetic,/obj/item/device/flash/synthetic,/obj/item/device/flash/synthetic,/turf/simulated/floor{icon_state = "white"},/area/assembly/robotics)
+"blq" = (/obj/machinery/ai_status_display{pixel_x = 32; pixel_y = 0},/obj/structure/table,/obj/item/device/flash,/obj/item/device/flash,/obj/item/device/flash,/obj/item/device/flash,/obj/item/device/flash,/turf/simulated/floor{icon_state = "white"},/area/assembly/robotics)
 "blr" = (/obj/structure/closet/emcloset,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{dir = 9; icon_state = "warnwhite"},/area/medical/research{name = "Research Division"})
 "bls" = (/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "blt" = (/obj/machinery/camera{c_tag = "Research Division Access"; dir = 2; network = list("SS13")},/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/simulated/floor{icon_state = "warnwhite"; dir = 5},/area/medical/research{name = "Research Division"})
