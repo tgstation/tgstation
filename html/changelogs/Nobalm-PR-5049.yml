@@ -1,0 +1,4 @@
+author: Nobalm
+delete-after: True
+changes:
+  - rscadd: Added examine descriptions to twenty eight objects.

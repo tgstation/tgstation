@@ -16,6 +16,12 @@
 	if(..() && chambered)
 		alarmed = 0
 
+/obj/item/weapon/gun/projectile/automatic/proc/empty_alarm()
+	if(!chambered && !get_ammo() && !alarmed)
+		playsound(src.loc, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		update_icon()
+		alarmed = 1
+	return
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Uzi"
@@ -43,15 +49,10 @@
 	update_icon()
 	return
 
-
-/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/c20r/afterattack()
 	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
-		update_icon()
-		alarmed = 1
+	empty_alarm()
 	return
-
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
@@ -112,6 +113,38 @@
 		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
 		return
 	..()
+
+/obj/item/weapon/gun/projectile/automatic/bulldog
+	name = "\improper Bulldog shotgun"
+	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
+	icon_state = "bulldog"
+	item_state = "bulldog"
+	w_class = 3.0
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/m12g
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
+	if(magazine)
+		src.overlays = 0
+		overlays += "[magazine.icon_state]"
+		return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/update_icon()
+	src.overlays = 0
+	update_magazine()
+	icon_state = "bulldog[chambered ? "" : "-e"]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack()
+	..()
+	empty_alarm()
+	return
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"

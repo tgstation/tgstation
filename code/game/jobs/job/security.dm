@@ -48,6 +48,7 @@ Head of Security
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_store)
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/telebaton(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H

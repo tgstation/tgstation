@@ -18,5 +18,6 @@
 		if(H.dna)
 			H.dna.species = new new_species
 			H.regenerate_icons()
+			H << "<span class='notice'>You feel somehow... different?</span>"
 		if(!all_the_same)
 			new_species = pick(all_species)
