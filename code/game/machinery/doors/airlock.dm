@@ -888,7 +888,8 @@ About the new airlock wires panel:
 
 	src.add_fingerprint(user)
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weapon/weldingtool/W = C		if(W.remove_fuel(0,user))
+		var/obj/item/weapon/weldingtool/W = C
+		if(W.remove_fuel(0,user))
 			user.visible_message("<span class='warning'>[user] is [welded ? "unwelding":"welding"] the airlock.</span>", \
 							"You begin [welded ? "unwelding":"welding"] the airlock...", \
 							"You hear welding.")
