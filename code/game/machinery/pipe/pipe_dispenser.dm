@@ -128,7 +128,7 @@ Nah
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if (!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/transit_tube_pod))
+	if (!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/c_transit_tube_pod))
 		return
 
 	if (get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
