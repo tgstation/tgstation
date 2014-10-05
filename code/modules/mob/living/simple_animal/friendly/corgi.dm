@@ -7,10 +7,10 @@
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
 	gender = MALE
-	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
+	speak = list("YAP!", "Woof!", "Bark!", "AUUUUUU!")
 	speak_emote = list("barks", "woofs")
-	emote_hear = list("barks", "woofs", "yaps","pants")
-	emote_see = list("shakes its head", "shivers")
+	emote_hear = list("barks!", "woofs!", "yaps.","pants.")
+	emote_see = list("shakes its head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 10
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
@@ -66,7 +66,7 @@
 				for (var/mob/M in viewers(src, null))
 					M.show_message("<span class='danger'>[user] gently taps [src] with [O].</span>")
 			if(health>0 && prob(15))
-				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression")
+				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
 			return
 	..()
 
@@ -222,13 +222,13 @@
 			name = "Yann"
 			desc = "Mon dieu! C'est un chien!"
 			speak = list("le woof!", "le bark!", "JAPPE!!")
-			emote_see = list("cowers in fear", "surrenders", "plays dead","looks as though there is a wall in front of him")
+			emote_see = list("cowers in fear.", "surrenders.", "plays dead.","looks as though there is a wall in front of him.")
 			valid = 1
 
 		if(/obj/item/clothing/head/det_hat)
 			name = "Detective [real_name]"
 			desc = "[name] sees through your lies..."
-			emote_see = list("investigates the area","sniffs around for clues","searches for scooby snacks")
+			emote_see = list("investigates the area.","sniffs around for clues.","searches for scooby snacks.")
 			valid = 1
 
 		if(/obj/item/clothing/head/nursehat)
@@ -239,20 +239,20 @@
 		if(/obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate)
 			name = "[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibble","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]"
 			desc = "Yaarghh!! Thar' be a scurvy dog!"
-			emote_see = list("hunts for treasure","stares coldly...","gnashes his tiny corgi teeth")
-			emote_hear = list("growls ferociously", "snarls")
+			emote_see = list("hunts for treasure.","stares coldly...","gnashes his tiny corgi teeth!")
+			emote_hear = list("growls ferociously!", "snarls.")
 			speak = list("Arrrrgh!!","Grrrrrr!")
 			valid = 1
 
 		if(/obj/item/clothing/head/ushanka)
 			name = "[pick("Comrade","Commissar","Glorious Leader")] [real_name]"
 			desc = "A follower of Karl Barx."
-			emote_see = list("contemplates the failings of the capitalist economic model", "ponders the pros and cons of vangaurdism")
+			emote_see = list("contemplates the failings of the capitalist economic model.", "ponders the pros and cons of vangaurdism.")
 			valid = 1
 
 		if(/obj/item/clothing/head/collectable/police)
 			name = "Officer [real_name]"
-			emote_see = list("drools","looks for donuts")
+			emote_see = list("drools.","looks for donuts.")
 			desc = "Stop right there criminal scum!"
 			valid = 1
 
@@ -264,22 +264,22 @@
 		if(/obj/item/clothing/head/cardborg)
 			name = "Borgi"
 			speak = list("Ping!","Beep!","Woof!")
-			emote_see = list("goes rogue", "sniffs out non-humans")
+			emote_see = list("goes rogue.", "sniffs out non-humans.")
 			desc = "Result of robotics budget cuts."
 			valid = 1
 
 		if(/obj/item/weapon/bedsheet)
 			name = "\improper Ghost"
 			speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
-			emote_see = list("stumbles around", "shivers")
-			emote_hear = list("howls","groans")
+			emote_see = list("stumbles around.", "shivers.")
+			emote_hear = list("howls!","groans.")
 			desc = "Spooky!"
 			valid = 1
 
 		if(/obj/item/clothing/head/helmet/space/santahat)
 			name = "Santa's Corgi Helper"
-			emote_hear = list("barks christmas songs", "yaps merrily")
-			emote_see = list("looks for presents", "checks his list")
+			emote_hear = list("barks christmas songs.", "yaps merrily!")
+			emote_see = list("looks for presents.", "checks his list.")
 			desc = "He's very fond of milk and cookies."
 			valid = 1
 
@@ -290,7 +290,7 @@
 
 		if(/obj/item/clothing/head/hardhat/reindeer)
 			name = "[real_name] the red-nosed Corgi"
-			emote_hear = list("lights the way", "illuminates", "yaps")
+			emote_hear = list("lights the way!", "illuminates.", "yaps!")
 			desc = "He has a very shiny nose."
 			SetLuminosity(1)
 			valid = 1
@@ -388,10 +388,10 @@
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
-							emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+							emote("me", 1, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
 
 		if(prob(1))
-			emote(pick("dances around","chases its tail"))
+			emote("me", 1, pick("dances around.","chases its tail!"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
@@ -512,7 +512,7 @@
 
 	if(!stat && !resting && !buckled)
 		if(prob(1))
-			emote(pick("dances around","chases her tail"))
+			emote("me", 1, pick("dances around.","chases her tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
@@ -529,7 +529,7 @@
 		if(change > 0)
 			if(M && stat != DEAD) // Added check to see if this mob (the corgi) is dead to fix issue 2454
 				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
-				emote("yaps happily")
+				emote("me", 1, "yaps happily!")
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
-				emote("growls")
+				emote("me", 1, "growls!")

@@ -38,6 +38,10 @@ Chief Engineer
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 
+	//Equip telebaton
+	if(H.backbag == 2 || H.backbag == 3)
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/telebaton(H), slot_in_backpack)
+
 /*
 Station Engineer
 */

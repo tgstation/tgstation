@@ -1,5 +1,6 @@
 /obj/machinery/washing_machine
 	name = "washing machine"
+	desc = "Gets rid of those pesky bloodstains, or your money back!"
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_10"
 	density = 1

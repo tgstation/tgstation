@@ -40,7 +40,7 @@ Head of Security
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/HoS(H), slot_head)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/HoS(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), slot_s_store)
 
@@ -48,6 +48,7 @@ Head of Security
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_store)
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/telebaton(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
@@ -80,7 +81,7 @@ Warden
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/warden(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/warden(H), slot_head)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/warden(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_l_store)

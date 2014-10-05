@@ -54,8 +54,6 @@
 
 	timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
-	makepowernets()
-
 	sun = new /datum/sun()
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
@@ -78,6 +76,13 @@
 	slmaster.icon_state = "sleeping_agent"
 	slmaster.layer = FLY_LAYER
 	slmaster.mouse_opacity = 0
+
+	for(var/i=0, i<max_secret_rooms, i++)
+		make_mining_asteroid_secret()
+
+	createRandomZlevel()
+
+	makepowernets()
 
 	master_controller = new /datum/controller/game_controller()
 	spawn(-1)

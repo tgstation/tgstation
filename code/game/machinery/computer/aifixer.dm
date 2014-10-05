@@ -1,5 +1,6 @@
 /obj/machinery/computer/aifixer
 	name = "\improper AI system integrity restorer"
+	desc = "Used with inteliCards containing nonfunctioning AIs to restore them to working order."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "ai-fixer"
 	req_access = list(access_captain, access_robotics, access_heads)
