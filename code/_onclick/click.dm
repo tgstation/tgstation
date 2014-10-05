@@ -383,7 +383,15 @@
 	G.next_shock = world.time + time
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)
-	if( stat || buckled || !A || !x || !y || !A.x || !A.y ) return
+	// Snowflake for space vines.
+	var/is_buckled = 0
+	if(buckled)
+		if(istype(buckled))
+			if(!buckled.anchored)
+				is_buckled = 1
+		else
+			is_buckled = 0
+	if( stat || is_buckled || !A || !x || !y || !A.x || !A.y ) return
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) return

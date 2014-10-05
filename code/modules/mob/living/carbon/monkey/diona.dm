@@ -81,11 +81,11 @@
 	set desc = "Turn your food into nutrients for plants."
 
 	var/list/trays = list()
-	for(var/obj/machinery/hydroponics/tray in range(1))
+	for(var/obj/machinery/portable_atmospherics/hydroponics/tray in range(1))
 		if(tray.nutrilevel < 10)
 			trays += tray
 
-	var/obj/machinery/hydroponics/target = input("Select a tray:") as null|anything in trays
+	var/obj/machinery/portable_atmospherics/hydroponics/target = input("Select a tray:") as null|anything in trays
 
 	if(!src || !target || target.nutrilevel == 10) return //Sanity check.
 
@@ -100,11 +100,11 @@
 	set desc = "Clean the weeds out of soil or a hydroponics tray."
 
 	var/list/trays = list()
-	for(var/obj/machinery/hydroponics/tray in range(1))
+	for(var/obj/machinery/portable_atmospherics/hydroponics/tray in range(1))
 		if(tray.weedlevel > 0)
 			trays += tray
 
-	var/obj/machinery/hydroponics/target = input("Select a tray:") as null|anything in trays
+	var/obj/machinery/portable_atmospherics/hydroponics/target = input("Select a tray:") as null|anything in trays
 
 	if(!src || !target || target.weedlevel == 0) return //Sanity check.
 

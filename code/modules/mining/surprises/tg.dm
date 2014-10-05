@@ -171,13 +171,13 @@
 
 	spawntypes = list(
 		/obj/item/weapon/gun/energy/floragun=1,
-		/obj/item/seeds/novaflowerseed=2,
+		//obj/item/seeds/novaflowerseed=2,
 		/obj/item/seeds/bluespacetomatoseed=2
 	)
 	fluffitems = list(
 		// /obj/structure/flora/kirbyplants=1,
 		/obj/structure/table/reinforced=2,
-		/obj/machinery/hydroponics=1,
+		/obj/machinery/portable_atmospherics/hydroponics=1,
 		/obj/effect/glowshroom/single=2,
 		/obj/item/weapon/reagent_containers/syringe/antitoxin=2,
 		/obj/item/weapon/reagent_containers/glass/bottle/diethylamine=3,

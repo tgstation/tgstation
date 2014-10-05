@@ -45,8 +45,8 @@
 			if(udder && prob(5))
 				udder.add_reagent("milk", rand(5, 10))
 
-		if(locate(/obj/effect/spacevine) in loc)
-			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
+		if(locate(/obj/effect/plantsegment) in loc)
+			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
 			del(SV)
 			if(prob(10))
 				say("Nom")
@@ -55,7 +55,7 @@
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
 				var/step = get_step(src, direction)
 				if(step)
-					if(locate(/obj/effect/spacevine) in step)
+					if(locate(/obj/effect/plantsegment) in step)
 						Move(step)
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
@@ -65,8 +65,8 @@
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
 	if(!stat)
-		if(locate(/obj/effect/spacevine) in loc)
-			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
+		if(locate(/obj/effect/plantsegment) in loc)
+			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
 			del(SV)
 			if(prob(10))
 				say("Nom")

@@ -22,7 +22,7 @@
 
 	var/bees_in_hive = 0
 	var/list/owned_bee_swarms = list()
-	var/hydrotray_type = /obj/machinery/hydroponics
+	var/hydrotray_type = /obj/machinery/portable_atmospherics/hydroponics
 
 //overwrite this after it's created if the apiary needs a custom machinery sprite
 /obj/machinery/apiary/New()
@@ -169,14 +169,14 @@
 			bees_in_hive -= 1
 
 		//find some plants, harvest
-		for(var/obj/machinery/hydroponics/H in view(7, src))
-			if(H.planted && !H.dead && H.myseed && prob(owned_bee_swarms.len * 10))
+		for(var/obj/machinery/portable_atmospherics/hydroponics/H in view(7, src))
+			if(H.seed && !H.dead && prob(owned_bee_swarms.len * 10))
 				src.nutrilevel++
 				H.nutrilevel++
-				if(mut < H.mutmod - 1)
-					mut = H.mutmod - 1
-				else if(mut > H.mutmod - 1)
-					H.mutmod = mut
+				if(mut < H.mutation_mod - 1)
+					mut = H.mutation_mod - 1
+				else if(mut > H.mutation_mod - 1)
+					H.mutation_mod = mut
 
 				//flowers give us pollen (nutrients)
 /* - All plants should be giving nutrients to the hive.
@@ -188,11 +188,11 @@
 				if(prob(10))
 					H.lastcycle -= 5
 				if(prob(10))
-					H.myseed.lifespan = max(initial(H.myseed.lifespan) * 1.5, H.myseed.lifespan + 1)
+					H.seed.lifespan = max(initial(H.seed.lifespan) * 1.5, H.seed.lifespan + 1)
 				if(prob(10))
-					H.myseed.endurance = max(initial(H.myseed.endurance) * 1.5, H.myseed.endurance + 1)
-				if(H.toxic && prob(10))
-					H.toxic = min(0, H.toxic - 1)
+					H.seed.endurance = max(initial(H.seed.endurance) * 1.5, H.seed.endurance + 1)
+				if(H.toxins && prob(10))
+					H.toxins = min(0, H.toxins - 1)
 					toxic++
 
 /obj/machinery/apiary/proc/die()

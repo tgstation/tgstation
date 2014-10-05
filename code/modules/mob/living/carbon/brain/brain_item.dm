@@ -11,7 +11,7 @@
 	throw_range = 5
 	origin_tech = "biotech=3"
 	attack_verb = list("attacked", "slapped", "whacked")
-	nonplant_seed_type = /obj/item/seeds/synthbrainseed
+
 
 	var/mob/living/carbon/brain/brainmob = null
 
