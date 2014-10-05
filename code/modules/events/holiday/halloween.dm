@@ -18,5 +18,9 @@
 
 	spawn_meteors(5, meteorsSPOOKY)
 
+	for(var/obj/effect/landmark/C in landmarks_list)
+		if(C.name == "carpspawn")
+			new /mob/living/simple_animal/hostile/carp/eyeball(C.loc)
+
 /datum/round_event/spooky/announce()
 	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
