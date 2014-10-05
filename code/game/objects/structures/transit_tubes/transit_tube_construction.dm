@@ -1,5 +1,4 @@
 // transit tube construction
-//TODO: dispenser, restrict flip/rotate, testing
 
 // normal transit tubes
 /obj/structure/c_transit_tube
