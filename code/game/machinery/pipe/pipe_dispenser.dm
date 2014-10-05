@@ -215,16 +215,14 @@ Nah
 	var/dat = {"<B>Transit Tubes:</B><BR>
 <A href='?src=\ref[src];tube=0'>Straight Tube</A><BR>
 <A href='?src=\ref[src];tube=1'>Straight Tube with Crossing</A><BR>
-<A href='?src=\ref[src];tube=2'>Clockwise Curved Tube</A><BR>
-<A href='?src=\ref[src];tube=3'>Counterclockwise Curved Tube</A><BR>
-<A href='?src=\ref[src];tube=4'>Diagonal Tube</A><BR>
-<A href='?src=\ref[src];tube=5'>Clockwise Junction</A><BR>
-<A href='?src=\ref[src];tube=6'>Counterclockwise Junction</A><BR>
+<A href='?src=\ref[src];tube=2'>Curved Tube</A><BR>
+<A href='?src=\ref[src];tube=3'>Diagonal Tube</A><BR>
+<A href='?src=\ref[src];tube=4'>Junction</A><BR>
 <b>Station Equipment:</b><BR>
-<A href='?src=\ref[src];tube=7'>Through Tube Station</A><BR>
-<A href='?src=\ref[src];tube=8'>Terminus Tube Station</A><BR>
-<A href='?src=\ref[src];tube=9'>Tube Blocker</A><BR>
-<A href='?src=\ref[src];tube=10'>Transit Tube Pod</A><BR>
+<A href='?src=\ref[src];tube=5'>Through Tube Station</A><BR>
+<A href='?src=\ref[src];tube=6'>Terminus Tube Station</A><BR>
+<A href='?src=\ref[src];tube=7'>Tube Blocker</A><BR>
+<A href='?src=\ref[src];tube=8'>Transit Tube Pod</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -239,7 +237,7 @@ Nah
 	if(!wait)
 		if(href_list["tube"])
 			var/tube_type = text2num(href_list["tube"])
-			if(tube_type <= 6)
+			if(tube_type <= 4)
 				var/obj/structure/c_transit_tube/C = new/obj/structure/c_transit_tube(src.loc)
 				switch(tube_type)
 					if(0)
@@ -249,26 +247,22 @@ Nah
 					if(2)
 						C.icon_state = "S-NE"
 					if(3)
-						C.icon_state = "S-NW"
-					if(4)
 						C.icon_state = "NE-SW"
-					if(5)
+					if(4)
 						C.icon_state = "W-NE-SE"
-					if(6)
-						C.icon_state = "S-NE-NW"
 				C.add_fingerprint(usr)
 			else
 				switch(tube_type)
-					if(7)
+					if(5)
 						var/obj/structure/c_transit_tube/station/C = new/obj/structure/c_transit_tube/station(src.loc)
 						C.add_fingerprint(usr)
-					if(8)
+					if(6)
 						var/obj/structure/c_transit_tube/station/reverse/C = new/obj/structure/c_transit_tube/station/reverse(src.loc)
 						C.add_fingerprint(usr)
-					if(9)
+					if(7)
 						var/obj/structure/c_transit_tube/station/block/C = new/obj/structure/c_transit_tube/station/block(src.loc)
 						C.add_fingerprint(usr)
-					if(10)
+					if(8)
 						var/obj/structure/c_transit_tube_pod/C = new/obj/structure/c_transit_tube_pod(src.loc)
 						C.add_fingerprint(usr)
 			wait = 1

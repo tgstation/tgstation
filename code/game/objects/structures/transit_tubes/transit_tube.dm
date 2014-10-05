@@ -8,6 +8,7 @@
 	density = 1
 	layer = 3.1
 	anchored = 1.0
+	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs = null
 	var/exit_delay = 2
 	var/enter_delay = 1
@@ -49,28 +50,35 @@ obj/structure/transit_tube/ex_act(severity)
 
 /obj/structure/transit_tube/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
-		for(var/obj/structure/transit_tube_pod/pod in loc)
-			user << "<span class='notice'>Remove the pod first.</span>"
-			return
-		user.visible_message("<span class='warning'>[user] starts to deattach the [src]!</span>", "<span class='notice'>You start deattaching the [name]...</span>")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 35))
-			user << "<span class='notice'>You deattach the [name]!</span>"
-			if(copytext(icon_state, 1, 3) != "D-")
-				if(istype(src, /obj/structure/transit_tube/station/reverse))
-					var/obj/structure/R = new/obj/structure/c_transit_tube/station/reverse(src.loc)
-					src.transfer_fingerprints_to(R)
-					R.add_fingerprint(user)
-				else if(istype(src, /obj/structure/transit_tube/station))
-					var/obj/structure/R = new/obj/structure/c_transit_tube/station(src.loc)
-					src.transfer_fingerprints_to(R)
-					R.add_fingerprint(user)
-				else
-					var/obj/structure/R = new/obj/structure/c_transit_tube(src.loc)
-					R.icon_state = src.icon_state
-					src.transfer_fingerprints_to(R)
-					R.add_fingerprint(user)
-			qdel(src)
+		if(copytext(icon_state, 1, 3) != "D-") //decorative diagonals cannot be unwrenched directly
+			for(var/obj/structure/transit_tube_pod/pod in loc)
+				user << "<span class='notice'>Remove the pod first.</span>"
+				return
+			user.visible_message("<span class='warning'>[user] starts to deattach the [src]!</span>", "<span class='notice'>You start deattaching the [name]...</span>")
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 35))
+				user << "<span class='notice'>You deattach the [name]!</span>"
+				var/obj/structure/R = new tube_construction(src.loc)
+				R.icon_state = src.icon_state
+				src.transfer_fingerprints_to(R)
+				R.add_fingerprint(user)
+				src.destroy_diagonals()
+				qdel(src)
+
+//destroys disconnected decorative diagonals
+/obj/structure/transit_tube/proc/destroy_diagonals()
+	for(var/obj/structure/transit_tube/D in orange(1, src))
+		if(copytext(D.icon_state, 1, 3) == "D-") //is diagonal
+			var/my_dir = text2dir_extended(copytext(D.icon_state, 3, 5))
+			var/is_connecting = 0
+			for(var/obj/structure/transit_tube/N in orange(1,D))
+				if( (( get_dir(D,N) == turn(my_dir, -45) && D.has_exit(turn(my_dir, 90)) ) || \
+					( get_dir(D,N) == turn(my_dir, 45) && D.has_exit(turn(my_dir, -90))) ) && \
+					D != src )
+					is_connecting = 1
+					break
+			if(!is_connecting)
+				qdel(D)
 
 // Called to check if a pod should stop upon entering this tube.
 /obj/structure/transit_tube/proc/should_stop_pod(pod, from_dir)
@@ -79,7 +87,6 @@ obj/structure/transit_tube/ex_act(severity)
 // Called when a pod stops in this tube section.
 /obj/structure/transit_tube/proc/pod_stopped(pod, from_dir)
 	return
-
 
 // Returns a /list of directions this tube section can connect to.
 //  Tubes that have some sort of logic or changing direction might

@@ -8,6 +8,7 @@
 	icon_state = "closed"
 	exit_delay = 2
 	enter_delay = 3
+	tube_construction = /obj/structure/c_transit_tube/station
 	var/pod_moving = 0
 	var/automatic_launch_time = 100
 	var/cooldown_delay = 200
@@ -27,6 +28,7 @@
 
 // Stations which will send the tube in the opposite direction after their stop.
 /obj/structure/transit_tube/station/reverse
+	tube_construction = /obj/structure/c_transit_tube/station/reverse
 	reverse_launch = 1
 
 /obj/structure/transit_tube/station/should_stop_pod(pod, from_dir)
