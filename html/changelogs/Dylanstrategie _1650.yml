@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete_after: true
+changes:
+  - wip: Changed how random events trigger. They now come faster, base on round duration and playercount, and event probability no longer matters on job counts
