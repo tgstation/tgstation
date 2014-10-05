@@ -11,35 +11,13 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 
-/obj/item/clothing/head/helmet/HoS
-	name = "head of security hat"
-	desc = "The robust hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoscap"
-	armor = list(melee = 75, bullet = 60, laser = 60,energy = 50, bomb = 25, bio = 10, rad = 0)
-	flags = 0
-	flags_inv = HIDEEARS
-
-/obj/item/clothing/head/helmet/HoS/dermal
-	name = "Dermal Armor Patch"
-	desc = "An armored implant that automatically integrates just below the scalp for robust protection without sacrificing style."
-	icon_state = "dermal"
-	item_state = "dermal"
-	flags_inv = 0
-
-/obj/item/clothing/head/helmet/warden
-	name = "warden's hat"
-	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
-	icon_state = "policehelm"
-	flags = 0
-	flags_inv = HIDEEARS
-
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	item_state = "helmet"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
-	armor = list(melee = 80, bullet = 10, laser = 10,energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
 /obj/item/clothing/head/helmet/swat
