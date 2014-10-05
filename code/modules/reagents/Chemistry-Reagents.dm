@@ -3533,7 +3533,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 
-				if(!holder) return
+				if(!holder || !M.reagents) return
 				// Sobering multiplier.
 				// Sober block makes it more difficult to get drunk
 				var/sober_str=!(M_SOBER in M.mutations)?1:2

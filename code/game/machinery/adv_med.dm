@@ -279,6 +279,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/body_scanconsole/attack_ai(user as mob)
+	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
 /obj/machinery/body_scanconsole/attack_hand(user as mob)
