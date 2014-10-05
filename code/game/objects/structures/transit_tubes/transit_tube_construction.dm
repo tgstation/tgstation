@@ -104,6 +104,7 @@
 /obj/structure/c_transit_tube/station/reverse/buildtube()
 	var/obj/structure/transit_tube/station/reverse/R = new/obj/structure/transit_tube/station/reverse(src.loc)
 	R.dir = src.dir
+	R.init_dirs()
 	return R
 
 // block, used after the terminus of a transit tube station, decorative only

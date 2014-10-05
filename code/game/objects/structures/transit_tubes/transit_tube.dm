@@ -54,7 +54,7 @@ obj/structure/transit_tube/ex_act(severity)
 			return
 		user.visible_message("<span class='warning'>[user] starts to deattach the [src]!</span>", "<span class='notice'>You start deattaching the [name]...</span>")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 80))
+		if(do_after(user, 35))
 			user << "<span class='notice'>You deattach the [name]!</span>"
 			if(copytext(icon_state, 1, 3) != "D-")
 				if(istype(src, /obj/structure/transit_tube/station/reverse))
