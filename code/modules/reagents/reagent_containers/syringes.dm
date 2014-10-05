@@ -54,7 +54,10 @@
 
 		return
 
-	afterattack(obj/target, mob/user , flag)
+	afterattack(obj/target, mob/user, proximity_flag, click_parameters)
+		if(proximity_flag == 0) // not adjacent
+			return
+
 		if(!target.reagents) return
 
 		if(mode == SYRINGE_BROKEN)
