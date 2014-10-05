@@ -373,11 +373,9 @@
 	if(!target_vent)
 		return
 
-	for(var/mob/O in viewers(L, null))
-		O.show_message(text("<B>[L] scrambles into the ventillation ducts!</B>"), 1)
+	L.visible_message("<B>[L] scrambles into the ventillation ducts!</B>")
 
-	for(var/mob/O in hearers(target_vent,null))
-		O.show_message("You hear something squeezing through the ventilation ducts.",2)
+	target_vent.audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
 
 	if(target_vent.welded)		//the vent can be welded while they scrolled through the list.
 		target_vent = src

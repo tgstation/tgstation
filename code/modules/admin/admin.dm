@@ -433,6 +433,7 @@ var/global/floorIsLava = 0
 		dat += {"
 			<B>Fun Secrets</B><BR>
 			<BR>
+			<A href='?src=\ref[src];secretsfun=tdomereset'>Reset Thunderdome to default state</A><BR>
 			<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
 			<A href='?src=\ref[src];secretsfun=allspecies'>Change the species of all humans</A><BR>
@@ -443,6 +444,7 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
 			<A href='?src=\ref[src];secretsfun=guns'>Summon Guns</A><BR>
 			<A href='?src=\ref[src];secretsfun=magic'>Summon Magic</A><BR>
+			<A href='?src=\ref[src];secretsfun=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=\ref[src];secretsfun=onlyone'>There can only be one!</A><BR>
 			<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>

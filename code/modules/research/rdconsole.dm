@@ -503,7 +503,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				type = /obj/item/stack/sheet/mineral/diamond
 				res_amount = "diamond_amount"
 			if("clown")
-				type = /obj/item/stack/sheet/mineral/clown
+				type = /obj/item/stack/sheet/mineral/bananium
 				res_amount = "clown_amount"
 		if(ispath(type) && hasvar(linked_lathe, res_amount))
 			var/obj/item/stack/sheet/sheet = new type(linked_lathe.loc)
@@ -935,10 +935,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
+	desc = "A console used to interface with R&D tools."
 	id = 2
 	req_access = null
 	req_access_txt = "29"
 
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
+	desc = "A console used to interface with R&D tools."
 	id = 1

@@ -374,6 +374,7 @@ var/list/sting_paths
 	chem_storage = initial(chem_storage)
 	chem_recharge_rate = initial(chem_recharge_rate)
 	chem_charges = min(chem_charges, chem_storage)
+	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
 
 /mob/proc/remove_changeling_powers(var/keep_free_powers=0)

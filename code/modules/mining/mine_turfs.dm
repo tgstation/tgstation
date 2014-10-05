@@ -204,7 +204,7 @@
 	..()
 
 /turf/simulated/mineral/gibtonite/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/device/mining_scanner) && stage == 1)
+	if(istype(I, /obj/item/device/t_scanner/mining_scanner) && stage == 1)
 		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
 	if(istype(I, /obj/item/weapon/pickaxe))
@@ -372,7 +372,7 @@
 
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!user.IsAdvancedToolUser())
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 
@@ -417,7 +417,7 @@
 			if (src.mineralName == "Diamond")
 				new /obj/item/weapon/ore/diamond(src)
 			if (src.mineralName == "Clown")
-				new /obj/item/weapon/ore/clown(src)
+				new /obj/item/weapon/ore/bananium(src)
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	N.fullUpdateMineralOverlays()
 	return

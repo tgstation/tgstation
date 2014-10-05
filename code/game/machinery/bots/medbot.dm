@@ -285,12 +285,10 @@
 				src.patient = C
 				src.oldpatient = C
 				src.last_found = world.time
-				spawn(0)
-					if((src.last_newpatient_speak + 100) < world.time) //Don't spam these messages!
-						var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!")
-						src.speak(message)
-						src.last_newpatient_speak = world.time
-					src.visible_message("<span class='name'>[src]</span> points at [C.name]!")
+				if((src.last_newpatient_speak + 300) < world.time) //Don't spam these messages!
+					var/message = pick("Hey, [C.name]! Hold on, I'm coming.","Wait [C.name]! I want to help!","[C.name], you appear to be injured!")
+					src.speak(message)
+					src.last_newpatient_speak = world.time
 				break
 			else
 				continue
@@ -365,7 +363,11 @@
 
 
 	for(var/datum/disease/D in C.viruses)
-		if((D.stage > 1) || (D.spread_type == AIRBORNE))
+		if((D.hidden[SCANNER]) || (D.hidden[PANDEMIC])) //the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
+			return 0
+		if(D.severity == D.non_threat) // medibot doesn't try to heal truly harmless viruses
+			return 0
+		if((D.stage > 1) || (D.spread_type == AIRBORNE)) // medibot can't detect a virus in its initial stage unless it spreads airborne.
 
 			if (!C.reagents.has_reagent(src.treatment_virus))
 				return 1 //STOP DISEASE FOREVER
@@ -400,7 +402,10 @@
 	else
 		var/virus = 0
 		for(var/datum/disease/D in C.viruses)
-			virus = 1
+			if((!D.hidden[SCANNER]) && (!D.hidden[PANDEMIC]))    //detectable virus
+				if(D.severity != D.non_threat)      //virus is harmful
+					if((D.stage > 1) || (D.spread_type == AIRBORNE))
+						virus = 1
 
 		if (!reagent_id && (virus))
 			if(!C.reagents.has_reagent(src.treatment_virus))
@@ -444,9 +449,10 @@
 
 		spawn(30)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
-				if((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
-					src.reagent_glass.reagents.trans_to(src.patient,src.injection_amount) //Inject from beaker instead.
-					src.reagent_glass.reagents.reaction(src.patient, 2)
+				if(reagent_id == "internal_beaker")
+					if(src.use_beaker && src.reagent_glass && src.reagent_glass.reagents.total_volume)
+						src.reagent_glass.reagents.trans_to(src.patient,src.injection_amount) //Inject from beaker instead.
+						src.reagent_glass.reagents.reaction(src.patient, 2)
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
 				C.visible_message("<span class='danger'>[src] injects [src.patient] with the syringe!</span>", \

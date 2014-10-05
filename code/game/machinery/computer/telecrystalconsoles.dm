@@ -1,4 +1,4 @@
-#define NUKESCALINGMODIFIER 0.5
+#define NUKESCALINGMODIFIER 1
 
 var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
 

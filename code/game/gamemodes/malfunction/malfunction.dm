@@ -11,7 +11,7 @@
 	pre_setup_before_jobs = 1
 
 
-	var/AI_win_timeleft = 1800 //started at 1800, in case I change this for testing round end.
+	var/AI_win_timeleft = 5400 //started at 5400, in case I change this for testing round end.
 	var/malf_mode_declared = 0
 	var/station_captured = 0
 	var/to_nuke_or_not_to_nuke = 0
@@ -48,7 +48,7 @@
 	if (malf_ai.len < required_enemies)
 		return 0
 	for(var/datum/mind/ai_mind in malf_ai)
-		ai_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		ai_mind.need_job_assign = 0
 		ai_mind.special_role = "malfunctioning AI"//So they actually have a special role/N
 		log_game("[ai_mind.key] (ckey) has been selected as a malf AI")
 	return 1
@@ -98,8 +98,8 @@
 	return
 
 /datum/game_mode/malfunction/process()
-	if (apcs >= 3 && malf_mode_declared)
-		AI_win_timeleft -= ((apcs/6)*last_tick_duration) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
+	if ((apcs > 0) && malf_mode_declared)
+		AI_win_timeleft -= apcs * last_tick_duration	//Victory timer de-increments based on how many APCs are hacked
 	..()
 	if (AI_win_timeleft<=0)
 		check_win()

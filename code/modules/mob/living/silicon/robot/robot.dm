@@ -103,10 +103,10 @@
 	//MMI stuff. Held togheter by magic. ~Miauw
 	mmi = new(src)
 	mmi.brain = new /obj/item/organ/brain(mmi)
-	mmi.brain.name = "[src.real_name]'s brain"
+	mmi.brain.name = "[real_name]'s brain"
 	mmi.locked = 1
 	mmi.icon_state = "mmi_full"
-	mmi.name = "Man-Machine Interface: [src.real_name]"
+	mmi.name = "Man-Machine Interface: [real_name]"
 	mmi.brainmob = new(src)
 	mmi.brainmob.name = src.real_name
 	mmi.brainmob.real_name = src.real_name
@@ -303,11 +303,10 @@
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
 				if(connected_ai)
-					if(connected_ai.mind == malfai)
-						if(malf.apcs >= 3)
-							stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
-				else if(ticker.mode:malf_mode_declared)
-					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+					if((connected_ai.mind == malfai) && (malf.apcs > 0))
+						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
+				else if(malf.malf_mode_declared && (malf.apcs > 0))
+					stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
 
 		if(cell)
 			stat(null, text("Charge Left: [cell.charge]/[cell.maxcharge]"))

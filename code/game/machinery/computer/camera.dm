@@ -15,7 +15,6 @@
 	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
 		return null
 	user.reset_view(current)
-	attack_hand(user)
 	return 1
 
 
@@ -45,10 +44,10 @@
 		D["Cancel"] = "Cancel"
 		for(var/obj/machinery/camera/C in L)
 			if(!C.network)
-				world.log << "[C.c_tag] has no camera network."
+				ERROR("[C.c_tag] has no camera network.")
 				continue
 			if(!(istype(C.network,/list)))
-				world.log << "[C.c_tag]'s camera network is not a list!"
+				ERROR("[C.c_tag]'s camera network is not a list!")
 				continue
 			var/list/tempnetwork = C.network&network
 			if(tempnetwork.len)

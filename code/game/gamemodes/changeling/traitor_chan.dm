@@ -3,7 +3,7 @@
 	config_tag = "traitorchan"
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	restricted_jobs = list("AI", "Cyborg")
-	required_players = 20
+	required_players = 0
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
 
@@ -61,7 +61,7 @@
 	return
 
 /datum/game_mode/traitor/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
-	var/changelingcap = min( round(num_players()/(config.changeling_scaling_coeff*4))+2, round(num_players()/(config.changeling_scaling_coeff*2)) )
+	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*4))+2, round(joined_player_list.len/(config.changeling_scaling_coeff*2)) )
 	if(changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		..()
 		return

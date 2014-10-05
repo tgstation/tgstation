@@ -104,6 +104,10 @@
 		//they can only hold things :(
 		if(src.check_access(george.get_active_hand()))
 			return 1
+	else if(isanimal(M))
+		var/mob/living/simple_animal/A = M
+		if(check_access(A.access_card))
+			return 1
 	return 0
 
 /obj/item/proc/GetAccess()

@@ -134,18 +134,12 @@
 							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
 					H << "<span class='notice'>You suddenly feel lucky.</span>"
 
-/mob/proc/summonevents()
+/proc/summonevents()
 	if(events) 																//if there isn't something is very wrong
-		if(!events.wizardmode) 												//lets get this party started
-			events.control = list()											//out with the old
-			for(var/type in typesof(/datum/round_event_control/wizard) - /datum/round_event_control/wizard)	//in with the new
-				var/datum/round_event_control/wizard/W = new type()
-				if(!W.typepath)
-					continue												//don't want this one! leave it for the garbage collector
-				events.control += W											//add it to the list of all events (controls)
+		if(!events.wizardmode)
 			events.frequency_lower = 600									//1 minute lower bound
 			events.frequency_upper = 3000									//5 minutes upper bound
-			events.wizardmode = 1
+			events.toggleWizardmode()
 			events.reschedule()
 
 		else 																//Speed it up
@@ -155,3 +149,5 @@
 				events.frequency_upper = events.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
 
 			events.reschedule()
+			message_admins("Summon Events intensifies, events will now occur every [events.frequency_lower / 600] to [events.frequency_upper / 600] minutes.")
+			log_game("Summon Events was increased!")

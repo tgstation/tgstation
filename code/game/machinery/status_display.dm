@@ -201,6 +201,7 @@
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
+	desc = "A small screen which the AI can use to present itself."
 	icon_state = "frame"
 	name = "\improper AI display"
 	anchored = 1

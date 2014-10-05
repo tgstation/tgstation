@@ -56,12 +56,17 @@
 				log_admin("[key_name(usr)] created a death squad.")
 				if(!src.makeDeathsquad())
 					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
-
 			if("11")
 				var/strength = input("Set Blob Strength (1=Weak, 2=Strong, 3=Full)","Set Strength",1) as num
 				message_admins("[key_name(usr)] spawned a blob with strength [strength].")
 				log_admin("[key_name(usr)] spawned a blob with strength [strength].")
 				new/datum/round_event/blob(strength)
+			if("12")
+				message_admins("[key_name(usr)] started a gang war.")
+				log_admin("[key_name(usr)] started a gang war.")
+				if(!src.makeGangsters())
+					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
+
 
 	else if(href_list["forceevent"])
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in events.control
@@ -578,6 +583,12 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'>[replacetext("Revolutionary", " ", "&nbsp")]</a></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+
+		//Gangster
+		if(jobban_isbanned(M, "gangster") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=gangster;jobban4=\ref[M]'><font color=red>[replacetext("Gangster", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=gangster;jobban4=\ref[M]'>[replacetext("Gangster", " ", "&nbsp")]</a></td>"
 
 		//Cultist
 		if(jobban_isbanned(M, "cultist") || isbanned_dept)
@@ -1285,9 +1296,9 @@
 
 		//Job + antagonist
 		if(M.mind)
-			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>; Has been rev: [(M.mind.has_been_rev)?"Yes":"No"]"
+			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>"
 		else
-			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
+			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>"
 
 		//Health
 		if(isliving(M))
@@ -1597,6 +1608,25 @@
 		var/datum/round_event/E
 		var/ok = 0
 		switch(href_list["secretsfun"])
+			if("tdomereset")
+				var/delete_mobs = alert("Clear all mobs?","Confirm","Yes","No","Cancel")
+				if(delete_mobs == "Cancel")
+					return
+
+				var/area/thunderdome = locate(/area/tdome/arena)
+				if(delete_mobs == "Yes")
+					for(var/mob/living/mob in thunderdome)
+						qdel(mob) //Clear mobs
+				for(var/obj/obj in thunderdome)
+					if(!istype(obj,/obj/machinery/camera))
+						qdel(obj) //Clear objects
+
+				var/area/template = locate(/area/tdome/arena_source)
+				template.copy_contents_to(thunderdome)
+
+				log_admin("[key_name(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>", 1)
+
 			if("monkey")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","M")
@@ -1823,6 +1853,22 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SM")
 				rightandwrong(1, usr)
+			if("events")
+				if(events && !events.wizardmode)
+					if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
+						summonevents()
+						feedback_inc("admin_secrets_fun_used",1)
+						feedback_add_details("admin_secrets_fun_used","SE")
+
+				else if(events && events.wizardmode)
+					switch(alert("What would you like to do?",,"Intensify Summon Events","Turn Off Summon Events","Nothing"))
+						if("Intensify Summon Events")
+							summonevents()
+							feedback_inc("admin_secrets_fun_used",1)
+							feedback_add_details("admin_secrets_fun_used","SE")
+						if("Turn Off Summon Events")
+							events.toggleWizardmode()
+							events.resetFrequency()
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")

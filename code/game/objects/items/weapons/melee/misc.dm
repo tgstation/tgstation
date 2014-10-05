@@ -56,7 +56,7 @@
 		M.visible_message("<span class='danger'>[M] has been beaten with [src] by [user]!</span>", \
 							"<span class='userdanger'>[M] has been beaten with [src] by [user]!</span>")
 	else
-		playsound(loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
+		playsound(loc, 'sound/effects/woodhit.ogg', 50, 1, -1)
 		M.Stun(7)
 		M.Weaken(7)
 		M.visible_message("<span class='danger'>[M] has been stunned with [src] by [user]!</span>", \
@@ -65,3 +65,74 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.forcesay(hit_appends)
+
+
+
+/obj/item/weapon/melee/telebaton
+	name = "telescopic baton"
+	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "telebaton_0"
+	item_state = "telebaton_0"
+	slot_flags = SLOT_BELT
+	w_class = 2
+	force = 3
+	var/cooldown = 0
+	var/on = 0
+
+/obj/item/weapon/melee/telebaton/attack_self(mob/user as mob)
+	on = !on
+	if(on)
+		user.visible_message("<span class ='warning'>With a flick of their wrist, [user] extends their telescopic baton.</span>",\
+		"<span class ='warning'>You extend the baton.</span>",\
+		"You hear an ominous click.")
+		icon_state = "telebaton_1"
+		item_state = "nullrod"
+		w_class = 4 //doesnt fit in backpack when its on for balance
+		force = 10 //seclite damage
+		attack_verb = list("smacked", "struck", "cracked", "beaten")
+	else
+		user.visible_message("<span class ='notice'>[user] collapses their telescopic baton.</span>",\
+		"<span class ='notice'>You collapse the baton.</span>",\
+		"You hear a click.")
+		icon_state = "telebaton_0"
+		item_state = "telebaton_0" //no sprite in other words
+		slot_flags = SLOT_BELT
+		w_class = 2
+		force = 3 //not so robust now
+		attack_verb = list("hit", "poked")
+
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	add_fingerprint(user)
+
+/obj/item/weapon/melee/telebaton/attack(mob/target as mob, mob/living/user as mob)
+	if(on)
+		add_fingerprint(user)
+		if((CLUMSY in user.mutations) && prob(50))
+			user << "<span class ='danger'>You club yourself over the head.</span>"
+			user.Weaken(3 * force)
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				H.apply_damage(2*force, BRUTE, "head")
+			else
+				user.take_organ_damage(2*force)
+			return
+		if (user.a_intent == "harm")
+			if(!..()) return
+			if(!isrobot(target)) return
+		else
+			if(cooldown <= 0)
+				playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
+				target.Weaken(3)
+				src.add_fingerprint(user)
+				target.visible_message("<span class ='danger'>[target] has been knocked down with \the [src] by [user]!</span>")
+				if(!iscarbon(user))
+					target.LAssailant = null
+				else
+					target.LAssailant = user
+				cooldown = 1
+				spawn(40)
+					cooldown = 0
+		return
+	else
+		return ..()

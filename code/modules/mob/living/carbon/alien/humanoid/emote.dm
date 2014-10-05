@@ -79,11 +79,7 @@
 			playsound(src.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 
 		if (m_type & 1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(message, m_type)
-				//Foreach goto(703)
+			visible_message(message)
 		else
-			for(var/mob/O in hearers(src, null))
-				O.show_message(message, m_type)
-				//Foreach goto(746)
+			src.loc.audible_message(message)
 	return

@@ -508,20 +508,6 @@ var/global/list/g_fancy_list_of_safe_types = null
 		qdel(adminmob)
 	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-
-
-
-/client/proc/cmd_switch_radio()
-	set category = "Debug"
-	set name = "Switch Radio Mode"
-	set desc = "Toggle between normal radios and experimental radios. Have a coder present if you do this."
-
-	GLOBAL_RADIO_TYPE = !GLOBAL_RADIO_TYPE // toggle
-	log_admin("[key_name(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].")
-	message_admins("[key_name_admin(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].", 0)
-	feedback_add_details("admin_verb","SRM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/cmd_admin_areatest()
 	set category = "Mapping"
 	set name = "Test areas"
@@ -836,7 +822,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 			sec_briefcase.contents += new /obj/item/weapon/gun/energy/crossbow
 			sec_briefcase.contents += new /obj/item/weapon/gun/projectile/revolver/mateba
 			sec_briefcase.contents += new /obj/item/ammo_box/a357
-			sec_briefcase.contents += new /obj/item/weapon/plastique
+			sec_briefcase.contents += new /obj/item/weapon/c4
 			M.equip_to_slot_or_del(sec_briefcase, slot_l_hand)
 
 			var/obj/item/device/pda/heads/pda = new(M)
@@ -1116,7 +1102,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 	M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(M), slot_in_backpack)
 	M.equip_to_slot_or_del(new /obj/item/device/flashlight(M), slot_in_backpack)
 
-	M.equip_to_slot_or_del(new /obj/item/weapon/plastique(M), slot_in_backpack)
+	M.equip_to_slot_or_del(new /obj/item/weapon/c4(M), slot_in_backpack)
 
 	M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(M), slot_l_store)
 	M.equip_to_slot_or_del(new /obj/item/weapon/shield/energy(M), slot_r_store)

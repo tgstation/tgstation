@@ -9,7 +9,7 @@
 	permeability_mod = 1
 	contagious_period = 9001 //slightly hacky, but hey! whatever works, right?
 	desc = "If left untreated the subject will become very weak, and may vomit often."
-	severity = "Medium"
+	severity = "Dangerous!"
 	longevity = 1000
 	hidden = list(0, 1)
 	requires = 1
@@ -35,7 +35,8 @@
 			if(prob(1))
 				if (affected_mob.nutrition > 100)
 					affected_mob.Stun(rand(4,6))
-					affected_mob.show_message("<span class='warning'>[affected_mob] throws up!</span>")
+					affected_mob.visible_message("<span class='danger'>[affected_mob] throws up!</span>", \
+												"<span class='userdanger'>[affected_mob] throws up!</span>")
 					playsound(affected_mob.loc, 'sound/effects/splat.ogg', 50, 1)
 					var/turf/location = affected_mob.loc
 					if(istype(location, /turf/simulated))
