@@ -14,7 +14,7 @@
 	icon_state = "captain"
 	item_state = "that"
 	flags_inv = 0
-	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 15, laser = 50, energy = 30, bomb = 25, bio = 0, rad = 0)
 
 //Captain: This is no longer space-worthy
 /obj/item/clothing/head/caphat/parade
@@ -63,7 +63,7 @@
 	name = "head of security hat"
 	desc = "The robust hat of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
-	armor = list(melee = 80, bullet = 60, laser = 50, energy = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 75, bullet = 60, laser = 60, energy = 50, bomb = 25, bio = 10, rad = 0)
 	flags = 0
 	flags_inv = HIDEEARS
 
