@@ -4,3 +4,4 @@ delete-after: True
 
 changes: 
   - rscadd: Added jumpsuit adjusting. Adjust your jumpsuit to wear it more casually by rolling it down or roll up those sleeves of that hard-worn suit!
+  - rscadd: Added a grey alternative to the detective's suit and trenchcoat. Now you can be a noir private investigator!
