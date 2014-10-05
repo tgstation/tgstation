@@ -34,6 +34,8 @@
 			for(var/obj/effect/proc_holder/spell/S in L.mind.spell_list)
 				S.name = initial(S.name)
 				S.spell_level++
+				if(S.spell_level >= 6 || S.charge_max <= 0) //Badmin checks, these should never be a problem in normal play
+					continue
 				S.charge_max = round(initial(S.charge_max) - S.spell_level * (initial(S.charge_max) - S.cooldown_min)/ S.level_max)
 				if(S.charge_max < S.charge_counter)
 					S.charge_counter = S.charge_max

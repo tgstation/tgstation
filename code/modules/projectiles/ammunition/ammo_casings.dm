@@ -46,7 +46,7 @@
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
-	desc = "A 12 gauge slug."
+	desc = "A 12 gauge lead slug."
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet
@@ -54,8 +54,8 @@
 
 
 /obj/item/ammo_casing/shotgun/buckshot
-	name = "shotgun shell"
-	desc = "A 12 gauge shell."
+	name = "buckshot shell"
+	desc = "A 12 gauge buckshot shell."
 	icon_state = "gshell"
 	projectile_type = /obj/item/projectile/bullet/pellet
 	pellets = 5
@@ -63,19 +63,19 @@
 
 
 /obj/item/ammo_casing/shotgun/beanbag
-	name = "beanbag shell"
-	desc = "A weak beanbag shell."
+	name = "beanbag slug"
+	desc = "A weak beanbag slug for riot control."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
 	m_amt = 250
 
 
-/obj/item/ammo_casing/shotgun/stunshell
-	name = "stun shell"
-	desc = "A stunning shell."
+/obj/item/ammo_casing/shotgun/stunslug
+	name = "taser slug"
+	desc = "A stunning taser slug."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
-	m_amt = 200
+	m_amt = 250
 
 
 /obj/item/ammo_casing/shotgun/meteorshot
@@ -94,13 +94,13 @@
 
 /obj/item/ammo_casing/shotgun/incendiary
 	name = "incendiary slug"
-	desc = "An incendiary shell which fires a single slug of incendiary ammo."
+	desc = "An incendiary-coated shotgun slug."
 	icon_state = "ishell"
 	projectile_type = /obj/item/projectile/bullet/incendiary/shell
 
 /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
 	name = "dragonsbreath shell"
-	desc = "An incendiary shell which fires a spread of incendiary ammo."
+	desc = "A shotgun shell which fires a spread of incendiary pellets."
 	icon_state = "ishell2"
 	projectile_type = /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
 	pellets = 4

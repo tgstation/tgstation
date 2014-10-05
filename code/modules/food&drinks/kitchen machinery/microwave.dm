@@ -1,5 +1,6 @@
 /obj/machinery/microwave
 	name = "microwave"
+	desc = "Keeps hot things hot and cold things hot."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"
 	layer = 2.9

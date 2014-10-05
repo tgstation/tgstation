@@ -169,7 +169,7 @@
 				<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [occupant.getOxyLoss()]%</font><br />
 				<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [occupant.getToxLoss()]%</font><br />
 				<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [occupant.getFireLoss()]%</font><br />
-				<font color="red">[occupant.getCloneLoss() ? "Subject appears to have been imperfectly cloned." : ""]</font><br />
+				<font color="red">[occupant.getCloneLoss() ? "Subject appears to have cellular damage." : ""]</font><br />
 				<font color="red">[occupant.getBrainLoss() ? "Significant brain damage detected." : ""]</font><br />
 				"}
 
