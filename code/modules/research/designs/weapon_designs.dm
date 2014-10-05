@@ -64,7 +64,7 @@ datum/design/rapidsyringe
 
 datum/design/largecrossbow
 	name = "Energy Crossbow"
-	desc = "A weapon favoured by syndicate infiltration teams."
+	desc = "A reverse-engineered energy crossbow favored by syndicate infiltration teams and carp hunters."
 	id = "largecrossbow"
 	req_tech = list("combat" = 5, "materials" = 5, "engineering" = 3, "biotech" = 4, "syndicate" = 3)
 	build_type = PROTOLATHE
