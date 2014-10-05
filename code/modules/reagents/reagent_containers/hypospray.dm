@@ -14,12 +14,6 @@
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
 
-
-/obj/item/weapon/reagent_containers/hypospray/New()	//comment this to make hypos start off empty
-	..()
-	reagents.add_reagent("doctorsdelight", 30)
-
-
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		user << "<span class='notice'>[src] is empty.</span>"
@@ -44,7 +38,9 @@
 
 			add_logs(user, M, "injected", object="[src.name]", addition="([contained])")
 
-/obj/item/weapon/reagent_containers/hypospray/CMO
+/obj/item/weapon/reagent_containers/hypospray/CMO/New()
+	..()
+	reagents.add_reagent("doctorsdelight", 30)
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
@@ -69,16 +65,14 @@
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()
-	reagents.remove_reagent("doctorsdelight", 30)
 	reagents.add_reagent("inaprovaline", 10)
 	update_icon()
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M as mob, mob/user as mob)
 	..()
-	if(!emagged)
-		if(reagents.total_volume <= 0) //Prevents medipens from being refilled.
-			flags &= ~OPENCONTAINER
+	if(reagents.total_volume <= 0) //Prevents medipens from being refilled.
+		flags &= ~OPENCONTAINER
 	update_icon()
 	return
 
@@ -94,11 +88,3 @@
 		usr << "<span class='notice'>It is currently loaded.</span>"
 	else
 		usr << "<span class='notice'>It is spent.</span>"
-
-/obj/item/weapon/reagent_containers/hypospray/medipen/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		emagged = 1
-		user << "<span class='notice'>You bypass the electronic child-safety lock on the reagent storage.</span>"
-	else
-		..()
-	return
