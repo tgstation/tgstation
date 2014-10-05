@@ -611,7 +611,11 @@
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
 	what.add_fingerprint(src)
-	if(do_mob(src, who, STRIP_DELAY))
+	var/armor_delay = 0
+	if(istype(what, /obj/item/clothing))
+		var/obj/item/clothing/C = what
+		armor_delay = C.armor["melee"]/2.5
+	if(do_mob(src, who, STRIP_DELAY + armor_delay))
 		if(what && Adjacent(who))
 			who.unEquip(what)
 			add_logs(src, who, "stripped", addition="of [what]")
