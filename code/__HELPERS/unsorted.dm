@@ -1501,3 +1501,8 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 	if(istype(A, /turf/simulated/floor/plating/airless/catwalk))
 		return 1
 	return 0
+
+/proc/has_edge(obj/O as obj)
+	if (!O) return 0
+	if(O.edge) return 1
+	return 0

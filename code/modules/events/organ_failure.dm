@@ -20,7 +20,7 @@ datum/event/organ_failure/start()
 		var/mob/living/carbon/human/C = candidates[1]
 		if(!C) continue
 		// Bruise one of their organs
-		var/datum/organ/internal/I = C.internal_organs[pick(C.internal_organs)]
+		var/datum/organ/internal/I = C.internal_organs_by_name[pick(C.internal_organs)]
 		if(!I) continue
 		I.damage = I.min_bruised_damage
 		candidates.Remove(C)

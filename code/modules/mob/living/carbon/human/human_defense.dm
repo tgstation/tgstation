@@ -57,6 +57,21 @@ emp_act
 		organnum++
 	return (armorval/max(organnum, 1))
 
+/mob/living/carbon/human/proc/get_siemens_coefficient_organ(var/datum/organ/external/def_zone)
+	if(!def_zone)
+		return 1.0
+
+	var/siemens_coefficient = 1.0
+	var/list/clothing_items = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
+
+	for(var/obj/item/clothing/C in clothing_items)
+		if(istype(C) && (C.body_parts_covered & def_zone.body_part)) // Is that body part being targeted covered?
+			siemens_coefficient *= C.siemens_coefficient
+
+
+	return siemens_coefficient
+
+
 
 /mob/living/carbon/human/proc/checkarmor(var/datum/organ/external/def_zone, var/type)
 	if(!type)	return 0

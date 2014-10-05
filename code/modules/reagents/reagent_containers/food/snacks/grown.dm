@@ -1061,7 +1061,7 @@
 	potency = 10
 	New()
 		..()
-		new /obj/item/brain(src.loc)
+		new /obj/item/organ/brain(src.loc)
 		spawn(5) //Workaround to keep harvesting from working weirdly.
 			del(src)
 
