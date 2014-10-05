@@ -305,7 +305,7 @@
 							temp = "You have cast summon magic."
 						if("summonevents")
 							feedback_add_details("wizard_spell_learned","SE") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							summonevents()
+							H.summonevents()
 							max_uses--
 							temp = "You have cast summon events."
 						if("staffchange")

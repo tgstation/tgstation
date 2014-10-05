@@ -48,11 +48,10 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 		else
 			last_call_loc = null
 
-		settimeleft(SHUTTLEARRIVETIME*coeff)
-		online = 1
-
 		priority_announce("The emergency shuttle has been called. [red_alert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[emergency_reason][emergency_shuttle.last_call_loc ? "\n\nCall signal traced. Results can be viewed on any communcations console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
+		settimeleft(SHUTTLEARRIVETIME*coeff)
+		online = 1
 		if(always_fake_recall)
 
 			if ((seclevel2num(get_security_level()) == SEC_LEVEL_RED))

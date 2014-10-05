@@ -25,7 +25,8 @@
 				security_level = SEC_LEVEL_GREEN
 				for(var/obj/machinery/firealarm/FA in world)
 					if(FA.z == 1)
-						FA.update_icon()
+						FA.overlays = list()
+						FA.overlays += image('icons/obj/monitors.dmi', "overlay_green")
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
 					minor_announce(config.alert_desc_blue_upto, "Attention! Security level elevated to blue:",1)
@@ -34,7 +35,8 @@
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in world)
 					if(FA.z == 1)
-						FA.update_icon()
+						FA.overlays = list()
+						FA.overlays += image('icons/obj/monitors.dmi', "overlay_blue")
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
 					minor_announce(config.alert_desc_red_upto, "Attention! Code red!",1)
@@ -49,13 +51,15 @@
 
 				for(var/obj/machinery/firealarm/FA in world)
 					if(FA.z == 1)
-						FA.update_icon()
+						FA.overlays = list()
+						FA.overlays += image('icons/obj/monitors.dmi', "overlay_red")
 			if(SEC_LEVEL_DELTA)
 				minor_announce(config.alert_desc_delta, "Attention! Delta security level reached!",1)
 				security_level = SEC_LEVEL_DELTA
 				for(var/obj/machinery/firealarm/FA in world)
 					if(FA.z == 1)
-						FA.update_icon()
+						FA.overlays = list()
+						FA.overlays += image('icons/obj/monitors.dmi', "overlay_delta")
 	else
 		return
 

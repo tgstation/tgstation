@@ -50,9 +50,8 @@
 		/obj/item/device/flashlight,
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
-		/obj/item/device/analyzer,
-		/obj/item/weapon/extinguisher/mini
-		)
+		/obj/item/device/analyzer)
+
 
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()
@@ -72,7 +71,6 @@
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
-	new /obj/item/weapon/extinguisher/mini(src)
 
 
 
@@ -93,9 +91,8 @@
 		/obj/item/weapon/storage/fancy/cigarettes,
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/stack/medical,
-		/obj/item/device/flashlight/pen,
-		/obj/item/weapon/extinguisher/mini
-		)
+		/obj/item/device/flashlight/pen
+	)
 
 
 /obj/item/weapon/storage/belt/security

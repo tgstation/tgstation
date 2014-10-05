@@ -64,4 +64,3 @@ argoneus = Game Master
 paprka = Game Master
 cookingboy3 = Game Master
 limeliz = Game Master
-steelpoint = Game Master

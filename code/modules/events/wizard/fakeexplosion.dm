@@ -1,6 +1,6 @@
 /datum/round_event_control/wizard/fake_explosion //Oh no the station is gone!
 	name = "Fake Explosion"
-	weight = 0 //Badmin exclusive now because once it's expected its not funny
+	weight = 2
 	typepath = /datum/round_event/wizard/fake_explosion/
 	max_occurrences = 1
 	earliest_start = 0

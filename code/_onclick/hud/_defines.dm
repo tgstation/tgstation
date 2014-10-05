@@ -63,7 +63,6 @@
 #define ui_drone_drop "CENTER+1:18,SOUTH:5"     //maintenance drones
 #define ui_drone_pull "CENTER+2:2,SOUTH:5"      //maintenance drones
 #define ui_drone_storage "CENTER-2:14,SOUTH:5"  //maintenance drones
-#define ui_drone_head "CENTER-3:14,SOUTH:5"     //maintenance drones
 
 //Lower right, persistant menu
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"

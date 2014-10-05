@@ -151,7 +151,6 @@
 	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
 	if(foundIDs.len)
 		for(var/obj/item/weapon/card/id/ID in foundIDs)
-			ID.name = "lead agent card"
 			ID.access += access_syndicate_leader
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")

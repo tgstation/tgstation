@@ -333,9 +333,8 @@ client/proc/one_click_antag()
 	if(candidates.len >= 3) //Minimum 3 to be considered a squad
 		//Pick the lucky players
 		var/numagents = min(5,candidates.len) //How many commandos to spawn
-		var/list/spawnpoints = deathsquadspawn
-		while(numagents && spawnpoints.len && candidates.len)
-			var/spawnloc = spawnpoints[1]
+		while(numagents && deathsquadspawn.len && candidates.len)
+			var/spawnloc = deathsquadspawn[1]
 			var/mob/dead/observer/chosen_candidate = pick(candidates)
 			candidates -= chosen_candidate
 			if(!chosen_candidate.key)
@@ -375,9 +374,9 @@ client/proc/one_click_antag()
 
 			//Logging and cleanup
 			if(numagents == 1)
-				message_admins("The deathsquad has spawned with the mission: [mission].")
+				message_admins("The deathsquad has spawned with [key_name_admin(Commando)] as squad leader.")
 			log_game("[key_name(Commando)] has been selected as a Death Commando")
-			spawnpoints -= spawnloc
+			deathsquadspawn -= spawnloc
 			numagents--
 
 		return 1

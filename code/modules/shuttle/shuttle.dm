@@ -112,8 +112,8 @@ datum/shuttle_manager/proc/move_shuttle(var/override_delay)
 		if(cooldown)
 			return
 		cooldown = 1
-		usr << "<span class='notice'>Docking locks are engaged. Requesting authorization..."
+		usr << "<span class='notice'>Docking locks are engaged. Sending request to leave..."
 		var/datum/shuttle_manager/s = shuttles["ferry"]
-		admins << "<b>FERRY: <font color='blue'>[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[usr]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=moveferry'>Move</a>)</b> is requesting to move the transport ferry to [s.location == /area/shuttle/transport1/centcom ? "the station" : "Centcom"].</font>"
+		admins << "<b>FERRY: <font color='blue'>[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;secretsadmin=moveferry'>Move</a>)</b> is requesting to move the transport ferry to [s.location == /area/shuttle/transport1/centcom ? "the station" : "Centcom"].</font>"
 		spawn(600) //One minute cooldown
 			cooldown = 0

@@ -39,7 +39,7 @@
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = 0
-	var/doortype = null
+	var/doortype = 0
 	var/justzap = 0
 	var/safe = 1
 	normalspeed = 1
@@ -49,53 +49,53 @@
 
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/Doorcom.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_com
+	doortype = 1
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/Doorsec.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_sec
+	doortype = 2
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/Dooreng.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_eng
+	doortype = 3
 
 /obj/machinery/door/airlock/medical
 	icon = 'icons/obj/doors/Doormed.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_med
+	doortype = 4
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
 	icon = 'icons/obj/doors/Doormaint.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_mai
+	doortype = 5
 
 /obj/machinery/door/airlock/external
 	name = "external airlock"
 	icon = 'icons/obj/doors/Doorext.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_ext
+	doortype = 6
 
 /obj/machinery/door/airlock/glass
 	name = "glass airlock"
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_glass
+	doortype = 7
 	glass = 1
 
 /obj/machinery/door/airlock/centcom
 	icon = 'icons/obj/doors/Doorele.dmi'
 	opacity = 1
-	doortype = null //(centcom) there's no door assembly sprites for this one.
+	doortype = 8
 
 /obj/machinery/door/airlock/vault
 	name = "vault door"
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
-	doortype = /obj/structure/door_assembly/door_assembly_vault
+	doortype = 9
 
 /obj/machinery/door/airlock/glass_large
 	name = "glass airlock"
 	icon = 'icons/obj/doors/Door2x1glassfull.dmi'
 	opacity = 0
-	doortype = null //(double glass door) there's no door assembly sprites for this one.
+	doortype = 10
 	glass = 1
 	bound_width = 64 // 2x1
 
@@ -103,67 +103,67 @@
 	name = "freezer airlock"
 	icon = 'icons/obj/doors/Doorfreezer.dmi'
 	opacity = 1
-	doortype = /obj/structure/door_assembly/door_assembly_fre
+	doortype = 11
 
 /obj/machinery/door/airlock/hatch
 	name = "airtight hatch"
 	icon = 'icons/obj/doors/Doorhatchele.dmi'
 	opacity = 1
-	doortype = /obj/structure/door_assembly/door_assembly_hatch
+	doortype = 12
 
 /obj/machinery/door/airlock/maintenance_hatch
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorhatchmaint2.dmi'
 	opacity = 1
-	doortype = /obj/structure/door_assembly/door_assembly_mhatch
+	doortype = 13
 
 /obj/machinery/door/airlock/glass_command
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorcomglass.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_com/glass
+	doortype = 14
 	glass = 1
 
 /obj/machinery/door/airlock/glass_engineering
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorengglass.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_eng/glass
+	doortype = 15
 	glass = 1
 
 /obj/machinery/door/airlock/glass_security
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorsecglass.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_sec/glass
+	doortype = 16
 	glass = 1
 
 /obj/machinery/door/airlock/glass_medical
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doormedglass.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_med/glass
+	doortype = 17
 	glass = 1
 
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
 	icon = 'icons/obj/doors/Doormining.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_min
+	doortype = 18
 
 /obj/machinery/door/airlock/atmos
 	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/Dooratmo.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_atmo
+	doortype = 19
 
 /obj/machinery/door/airlock/research
 	icon = 'icons/obj/doors/Doorresearch.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_research
+	doortype = 20
 
 /obj/machinery/door/airlock/glass_research
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorresearchglass.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_research/glass
+	doortype = 21
 	glass = 1
 	heat_proof = 1
 
@@ -171,40 +171,40 @@
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Doorminingglass.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_min/glass
+	doortype = 22
 	glass = 1
 
 /obj/machinery/door/airlock/glass_atmos
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/Dooratmoglass.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_atmo/glass
+	doortype = 23
 	glass = 1
 
 /obj/machinery/door/airlock/gold
 	name = "gold airlock"
 	icon = 'icons/obj/doors/Doorgold.dmi'
 	var/mineral = "gold"
-	doortype = /obj/structure/door_assembly/door_assembly_gold
+	doortype = 24
 
 /obj/machinery/door/airlock/silver
 	name = "silver airlock"
 	icon = 'icons/obj/doors/Doorsilver.dmi'
 	var/mineral = "silver"
-	doortype = /obj/structure/door_assembly/door_assembly_silver
+	doortype = 25
 
 /obj/machinery/door/airlock/diamond
 	name = "diamond airlock"
 	icon = 'icons/obj/doors/Doordiamond.dmi'
 	var/mineral = "diamond"
-	doortype = /obj/structure/door_assembly/door_assembly_diamond
+	doortype = 26
 
 /obj/machinery/door/airlock/uranium
 	name = "uranium airlock"
 	desc = "And they said I was crazy."
 	icon = 'icons/obj/doors/Dooruranium.dmi'
 	var/mineral = "uranium"
-	doortype = /obj/structure/door_assembly/door_assembly_uranium
+	doortype = 27
 	var/last_event = 0
 
 /obj/machinery/door/airlock/uranium/process()
@@ -224,7 +224,7 @@
 	desc = "No way this can end badly."
 	icon = 'icons/obj/doors/Doorplasma.dmi'
 	var/mineral = "plasma"
-	doortype = /obj/structure/door_assembly/door_assembly_plasma
+	doortype = 28
 
 /obj/machinery/door/airlock/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -247,49 +247,49 @@
 	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/Doorbananium.dmi'
 	var/mineral = "clown"
-	doortype = /obj/structure/door_assembly/door_assembly_clown
+	doortype = 29
 
 /obj/machinery/door/airlock/sandstone
 	name = "sandstone airlock"
 	icon = 'icons/obj/doors/Doorsand.dmi'
 	var/mineral = "sandstone"
-	doortype = /obj/structure/door_assembly/door_assembly_sandstone
+	doortype = 30
 
 /obj/machinery/door/airlock/science
 	icon = 'icons/obj/doors/Doorsci.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_science
+	doortype = 31
 
 /obj/machinery/door/airlock/glass_science
 	name = "glass airlock"
 	icon = 'icons/obj/doors/Doorsciglass.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_science/glass
+	doortype = 32
 	glass = 1
 
 /obj/machinery/door/airlock/highsecurity
 	name = "high tech security airlock"
 	icon = 'icons/obj/doors/hightechsecurity.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_highsecurity
+	doortype = 33
 
 /obj/machinery/door/airlock/shuttle
 	name = "shuttle airlock"
 	icon = 'icons/obj/doors/doorshuttle.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_shuttle
+	doortype = 34
 
 /obj/machinery/door/airlock/wood
 	name = "wooden airlock"
 	icon = 'icons/obj/doors/Doorwood.dmi'
 	var/mineral = "wood"
-	doortype = /obj/structure/door_assembly/door_assembly_wood
+	doortype = 35
 
 /obj/machinery/door/airlock/virology
 	icon = 'icons/obj/doors/Doorviro.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_viro
+	doortype = 36
 
 /obj/machinery/door/airlock/glass_virology
 	icon = 'icons/obj/doors/Doorviroglass.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_viro/glass
+	doortype = 37
 	glass = 1
 
 /*
@@ -640,8 +640,7 @@ About the new airlock wires panel:
 		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
-									"<span class='userdanger'>[user] headbutts the airlock!</span>")
+				visible_message("<span class='danger'>[user] headbutts the airlock.</span>")
 				var/obj/item/organ/limb/affecting = H.get_organ("head")
 				H.Stun(5)
 				H.Weaken(5)
@@ -889,18 +888,16 @@ About the new airlock wires panel:
 	src.add_fingerprint(user)
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
-		user.visible_message("<span class='warning'>[user] is [welded ? "unwelding":"welding"] the airlock.</span>", \
-							"You begin [welded ? "unwelding":"welding"] the airlock...", \
-							"You hear welding.")
+		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>"
 		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 		if(do_after(user,40,5,1))
 			if(density && !operating)//Door must be closed to weld.
 				if(W.remove_fuel(0,user))
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					welded = !welded
-					user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>", \
-										"<span class='notice'>You've [welded ? "welded the airlock shut":"unwelded the airlock"].</span>")
+					user << "<span class='notice'>You [welded ? "welded the airlock shut":"unwelded the airlock"]</span>"
 					update_icon()
+					user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
 		return
 	else if(istype(C, /obj/item/weapon/screwdriver))
 		src.p_open = !( src.p_open )
@@ -923,34 +920,68 @@ About the new airlock wires panel:
 			beingcrowbarred = 0
 		if( beingcrowbarred && (density && welded && !operating && src.p_open && (!hasPower()) && !src.locked) )
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-			user.visible_message("<span class='warning'>[user] removes the electronics from the airlock assembly.</span>", \
-								 "You start to remove electronics from the airlock assembly.")
+			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(do_after(user,40))
-				if(src.loc)
-					if(src.doortype)
-						new src.doortype(src.loc)
-
-					if(emagged)
-						user << "<span class='warning'>You discard the damaged electronics.</span>"
-						qdel(src)
-						return
-					user << "<span class='notice'>You removed the airlock electronics!</span>"
-
-					var/obj/item/weapon/airlock_electronics/ae
-					if(!electronics)
-						ae = new/obj/item/weapon/airlock_electronics( src.loc )
-						if(req_one_access)
-							ae.use_one_access = 1
-							ae.conf_access = src.req_one_access
-						else
-							ae.conf_access = src.req_access
-					else
-						ae = electronics
-						electronics = null
-						ae.loc = src.loc
-
+				switch(src.doortype)
+					if(0) new/obj/structure/door_assembly/door_assembly_0( src.loc )
+					if(1) new/obj/structure/door_assembly/door_assembly_com( src.loc )
+					if(2) new/obj/structure/door_assembly/door_assembly_sec( src.loc )
+					if(3) new/obj/structure/door_assembly/door_assembly_eng( src.loc )
+					if(4) new/obj/structure/door_assembly/door_assembly_med( src.loc )
+					if(5) new/obj/structure/door_assembly/door_assembly_mai( src.loc )
+					if(6) new/obj/structure/door_assembly/door_assembly_ext( src.loc )
+					if(7) new/obj/structure/door_assembly/door_assembly_glass( src.loc )
+					//8 is centcom
+					if(9) new/obj/structure/door_assembly/door_assembly_vault(loc)
+					//10 is double glass door (2x1)
+					//11 is freezer
+					if(12) new/obj/structure/door_assembly/door_assembly_hatch( src.loc )
+					if(13) new/obj/structure/door_assembly/door_assembly_mhatch( src.loc )
+					if(14) new/obj/structure/door_assembly/door_assembly_com/glass( src.loc )
+					if(15) new/obj/structure/door_assembly/door_assembly_eng/glass( src.loc )
+					if(16) new/obj/structure/door_assembly/door_assembly_sec/glass( src.loc )
+					if(17) new/obj/structure/door_assembly/door_assembly_med/glass( src.loc )
+					if(18) new/obj/structure/door_assembly/door_assembly_min( src.loc )
+					if(19) new/obj/structure/door_assembly/door_assembly_atmo( src.loc )
+					if(20) new/obj/structure/door_assembly/door_assembly_research( src.loc )
+					if(21) new/obj/structure/door_assembly/door_assembly_research/glass( src.loc )
+					if(22) new/obj/structure/door_assembly/door_assembly_min/glass( src.loc )
+					if(23) new/obj/structure/door_assembly/door_assembly_atmo/glass( src.loc )
+					if(24) new/obj/structure/door_assembly/door_assembly_gold( src.loc )
+					if(25) new/obj/structure/door_assembly/door_assembly_silver( src.loc )
+					if(26) new/obj/structure/door_assembly/door_assembly_diamond( src.loc )
+					if(27) new/obj/structure/door_assembly/door_assembly_uranium( src.loc )
+					if(28) new/obj/structure/door_assembly/door_assembly_plasma( src.loc )
+					if(29) new/obj/structure/door_assembly/door_assembly_clown( src.loc )
+					if(30) new/obj/structure/door_assembly/door_assembly_sandstone( src.loc )
+					if(31) new/obj/structure/door_assembly/door_assembly_science( src.loc )
+					if(32) new/obj/structure/door_assembly/door_assembly_science/glass( src.loc )
+					if(33) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
+					if(34) new/obj/structure/door_assembly/door_assembly_shuttle(src.loc)
+					if(35) new/obj/structure/door_assembly/door_assembly_wood(src.loc)
+					if(36) new/obj/structure/door_assembly/door_assembly_viro(src.loc)
+					if(37) new/obj/structure/door_assembly/door_assembly_viro/glass(src.loc)
+				if(emagged)
+					user << "<span class='warning'>You discard the damaged electronics.</span>"
 					qdel(src)
 					return
+				user << "<span class='notice'>You removed the airlock electronics!</span>"
+
+				var/obj/item/weapon/airlock_electronics/ae
+				if(!electronics)
+					ae = new/obj/item/weapon/airlock_electronics( src.loc )
+					if(req_one_access)
+						ae.use_one_access = 1
+						ae.conf_access = src.req_one_access
+					else
+						ae.conf_access = src.req_access
+				else
+					ae = electronics
+					electronics = null
+					ae.loc = src.loc
+
+				qdel(src)
+				return
 		else if(hasPower())
 			user << "<span class='warning'> The airlock's motors resist your efforts to force it.</span>"
 		else if(locked)
@@ -1096,35 +1127,35 @@ About the new airlock wires panel:
 		switch(paintjob)
 			if("Default")
 				icon = 'icons/obj/doors/Doorglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_glass
+				doortype = 7
 				heat_proof = 0
 			if("Engineering")
 				icon = 'icons/obj/doors/Doorengglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_eng/glass
+				doortype = 15
 				heat_proof = 0
 			if("Atmospherics")
 				icon = 'icons/obj/doors/Dooratmoglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_atmo/glass
+				doortype = 23
 				heat_proof = 0
 			if("Security")
 				icon = 'icons/obj/doors/Doorsecglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_sec/glass
+				doortype = 16
 				heat_proof = 0
 			if("Command")
 				icon = 'icons/obj/doors/Doorcomglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_com/glass
+				doortype = 14
 				heat_proof = 0
 			if("Medical")
 				icon = 'icons/obj/doors/Doormedglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_med/glass
+				doortype = 17
 				heat_proof = 0
 			if("Research")
 				icon = 'icons/obj/doors/Doorresearchglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_research/glass
+				doortype = 21
 				heat_proof = 1
 			if("Mining")
 				icon = 'icons/obj/doors/Doorminingglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_min/glass
+				doortype = 22
 				heat_proof = 0
 	else
 		//These airlocks have a regular version.
@@ -1134,47 +1165,47 @@ About the new airlock wires panel:
 		switch(paintjob)
 			if("Default")
 				icon = 'icons/obj/doors/Doorint.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_0
+				doortype = 0
 				heat_proof = 0
 			if("Engineering")
 				icon = 'icons/obj/doors/Dooreng.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_eng
+				doortype = 3
 				heat_proof = 0
 			if("Atmospherics")
 				icon = 'icons/obj/doors/Dooratmo.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_atmo
+				doortype = 19
 				heat_proof = 0
 			if("Security")
 				icon = 'icons/obj/doors/Doorsec.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_sec
+				doortype = 2
 				heat_proof = 0
 			if("Command")
 				icon = 'icons/obj/doors/Doorcom.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_com
+				doortype = 1
 				heat_proof = 0
 			if("Medical")
 				icon = 'icons/obj/doors/Doormed.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_med
+				doortype = 4
 				heat_proof = 0
 			if("Research")
 				icon = 'icons/obj/doors/Doorresearch.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_research
+				doortype = 20
 				heat_proof = 0
 			if("Mining")
 				icon = 'icons/obj/doors/Doormining.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_min
+				doortype = 18
 				heat_proof = 0
 			if("Maintenance")
 				icon = 'icons/obj/doors/Doormaint.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_mai
+				doortype = 5
 				heat_proof = 0
 			if("External")
 				icon = 'icons/obj/doors/Doorext.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_ext
+				doortype = 6
 				heat_proof = 0
 			if("High Security")
 				icon = 'icons/obj/doors/hightechsecurity.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_highsecurity
+				doortype = 33
 				heat_proof = 0
 	update_icon()
 

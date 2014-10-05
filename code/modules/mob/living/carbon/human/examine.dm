@@ -220,9 +220,9 @@
 	temp = getCloneLoss()
 	if(temp)
 		if(temp < 30)
-			msg += "[t_He] [t_has] minor cellular damage.\n"
+			msg += "[t_He] [t_has] minor genetic deformities.\n"
 		else
-			msg += "<B>[t_He] [t_has] severe cellular damage.</B>\n"
+			msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"

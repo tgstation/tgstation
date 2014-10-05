@@ -1,6 +1,6 @@
 "aa" = (/turf/space,/area/space)
 "ab" = (/turf/simulated/wall/r_wall,/area/awaymission/academy/headmaster)
-"ac" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/headmaster)
+"ac" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/turf/simulated/floor/plating,/area/awaymission/academy/headmaster)
 "ad" = (/obj/structure/filingcabinet/filingcabinet,/turf/simulated/floor/carpet,/area/awaymission/academy/headmaster)
 "ae" = (/obj/structure/computerframe{anchored = 1},/turf/simulated/floor/carpet,/area/awaymission/academy/headmaster)
 "af" = (/obj/structure/table/reinforced,/obj/item/weapon/pen/red,/turf/simulated/floor/carpet,/area/awaymission/academy/headmaster)
@@ -92,7 +92,7 @@
 "bN" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor{tag = "icon-vault (NORTHEAST)"; icon_state = "vault"; dir = 5},/area/awaymission/academy/headmaster)
 "bO" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor{icon_state = "dark"},/area/awaymission/academy/headmaster)
 "bP" = (/obj/effect/decal/cleanable/cobweb2,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor{tag = "icon-vault (NORTHEAST)"; icon_state = "vault"; dir = 5},/area/awaymission/academy/headmaster)
-"bQ" = (/obj/structure/table/reinforced,/obj/item/device/laser_pointer/upgraded,/turf/simulated/floor/carpet,/area/awaymission/academy/headmaster)
+"bQ" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/headmaster)
 "bR" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/academy/headmaster)
 "bS" = (/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/academy/headmaster)
 "bT" = (/obj/machinery/autolathe,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/academy/classrooms)
@@ -106,7 +106,7 @@
 "cb" = (/obj/structure/table,/obj/item/weapon/lighter/random,/turf/simulated/floor,/area/awaymission/academy/headmaster)
 "cc" = (/turf/simulated/floor{icon_state = "dark"},/area/awaymission/academy/headmaster)
 "cd" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor{tag = "icon-vault (NORTHEAST)"; icon_state = "vault"; dir = 5},/area/awaymission/academy/headmaster)
-"ce" = (/obj/item/seeds/eggyseed,/obj/machinery/hydroponics/constructable,/turf/simulated/floor,/area/awaymission/academy/classrooms)
+"ce" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/headmaster)
 "cf" = (/obj/machinery/portable_atmospherics/canister/toxins,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/academy/headmaster)
 "cg" = (/obj/structure/stool,/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/academy/headmaster)
 "ch" = (/obj/structure/table,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor{icon_state = "floorgrime"},/area/awaymission/academy/classrooms)
@@ -148,7 +148,7 @@
 "cR" = (/obj/machinery/light{dir = 8},/obj/machinery/portable_atmospherics/pump,/turf/simulated/floor{tag = "icon-vault (NORTHEAST)"; icon_state = "vault"; dir = 5},/area/awaymission/academy/headmaster)
 "cS" = (/obj/structure/closet/crate/internals,/obj/item/weapon/tank/oxygen,/obj/item/weapon/tank/oxygen/red,/turf/simulated/floor{icon_state = "dark"},/area/awaymission/academy/headmaster)
 "cT" = (/obj/structure/closet/crate,/obj/item/weapon/crowbar/red,/turf/simulated/floor{tag = "icon-vault (NORTHEAST)"; icon_state = "vault"; dir = 5},/area/awaymission/academy/headmaster)
-"cU" = (/obj/structure/grille,/obj/structure/cable,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/headmaster)
+"cU" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable,/turf/simulated/floor/plating,/area/awaymission/academy/headmaster)
 "cV" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "cW" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "cX" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor{icon_state = "floorgrime"},/area/awaymission/academy/classrooms)
@@ -158,7 +158,7 @@
 "db" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor/wood,/area/awaymission/academy/classrooms)
 "dc" = (/turf/simulated/floor/greengrid,/area/awaymission/academy/classrooms)
 "dd" = (/obj/structure/table/woodentable,/turf/simulated/floor/wood,/area/awaymission/academy/classrooms)
-"de" = (/obj/machinery/hydroponics/constructable,/turf/simulated/floor,/area/awaymission/academy/classrooms)
+"de" = (/obj/structure/table/woodentable,/obj/item/weapon/staff,/turf/simulated/floor/wood,/area/awaymission/academy/classrooms)
 "df" = (/turf/simulated/floor{dir = 9; icon_state = "green"},/area/awaymission/academy/classrooms)
 "dg" = (/turf/simulated/floor{dir = 1; icon_state = "green"},/area/awaymission/academy/classrooms)
 "dh" = (/obj/machinery/light{dir = 1},/turf/simulated/floor{dir = 1; icon_state = "green"},/area/awaymission/academy/classrooms)
@@ -173,8 +173,8 @@
 "dq" = (/obj/structure/stool/bed/chair/wood/normal{dir = 1},/turf/simulated/floor/wood,/area/awaymission/academy/classrooms)
 "dr" = (/turf/simulated/floor{icon_state = "green"; dir = 8},/area/awaymission/academy/classrooms)
 "ds" = (/obj/structure/stool,/turf/simulated/floor,/area/awaymission/academy/classrooms)
-"dt" = (/obj/structure/table/woodentable,/obj/item/weapon/gun/magic/wand/fireball,/turf/simulated/floor/wood,/area/awaymission/academy/classrooms)
-"du" = (/obj/machinery/hydroponics/constructable,/obj/item/seeds/replicapod,/turf/simulated/floor,/area/awaymission/academy/classrooms)
+"dt" = (/obj/machinery/hydroponics,/obj/item/seeds/eggyseed,/turf/simulated/floor,/area/awaymission/academy/classrooms)
+"du" = (/obj/machinery/hydroponics,/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "dv" = (/turf/simulated/floor{icon_state = "green"; dir = 4},/area/awaymission/academy/classrooms)
 "dw" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/obj/effect/landmark{name = "awaystart"},/obj/item/weapon/weldingtool,/turf/simulated/floor/greengrid,/area/awaymission/academy/classrooms)
 "dx" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/greengrid,/area/awaymission/academy/classrooms)
@@ -184,13 +184,13 @@
 "dB" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "dC" = (/obj/structure/closet/crate/hydroponics/prespawned,/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "dD" = (/obj/machinery/door/airlock/freezer,/turf/simulated/floor{icon_state = "white"},/area/awaymission/academy/classrooms)
-"dE" = (/obj/machinery/light/small{dir = 4},/obj/machinery/chem_master/condimaster,/turf/simulated/floor{icon_state = "white"},/area/awaymission/academy/classrooms)
+"dE" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/awaymission/academy/classrooms)
 "dF" = (/obj/machinery/mech_bay_recharge_port,/obj/structure/cable,/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
 "dG" = (/obj/machinery/computer/mech_bay_power_console,/obj/structure/cable,/turf/simulated/floor/greengrid,/area/awaymission/academy/classrooms)
-"dH" = (/obj/machinery/hydroponics/constructable,/obj/item/seeds/bluespacetomatoseed,/turf/simulated/floor,/area/awaymission/academy/classrooms)
+"dH" = (/obj/machinery/hydroponics,/obj/item/seeds/replicapod,/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "dI" = (/obj/structure/table/woodentable,/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "dJ" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor,/area/awaymission/academy/classrooms)
-"dK" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/bag/tray,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/academy/classrooms)
+"dK" = (/obj/machinery/hydroponics,/obj/item/seeds/bluespacetomatoseed,/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "dL" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "dM" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor{icon_state = "green"; dir = 4},/area/awaymission/academy/classrooms)
 "dN" = (/obj/machinery/door/airlock/freezer,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor{icon_state = "white"},/area/awaymission/academy/classrooms)
@@ -222,7 +222,7 @@
 "en" = (/obj/machinery/vending/hydroseeds{slogan_delay = 700},/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "eo" = (/obj/machinery/vending/hydronutrients,/turf/simulated/floor{icon_state = "green"; dir = 6},/area/awaymission/academy/classrooms)
 "ep" = (/obj/structure/closet/secure_closet/freezer/fridge,/turf/simulated/floor{icon_state = "white"},/area/awaymission/academy/classrooms)
-"eq" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
+"eq" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
 "er" = (/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor{dir = 6; icon_state = "yellow"},/area/awaymission/academy/classrooms)
 "es" = (/obj/machinery/singularity/academy,/turf/space,/area/space)
 "et" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor{icon_state = "yellow"; dir = 10},/area/awaymission/academy/classrooms)
@@ -284,13 +284,13 @@
 "fx" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/turf/simulated/floor{icon_state = "grimy"},/area/awaymission/academy/classrooms)
 "fy" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/carpet,/area/awaymission/academy/classrooms)
 "fz" = (/obj/machinery/light,/turf/simulated/floor{icon_state = "escape"; dir = 6},/area/awaymission/academy/classrooms)
-"fA" = (/obj/structure/grille,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/headmaster)
-"fB" = (/obj/structure/grille,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/cable,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/headmaster)
-"fC" = (/obj/machinery/door/airlock/plasma,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor/carpet,/area/awaymission/academy/headmaster)
+"fA" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
+"fB" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
+"fC" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
 "fD" = (/turf/simulated/wall,/area/awaymission/academy/academyaft)
 "fE" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
 "fF" = (/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
-"fG" = (/obj/structure/grille,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/obj/structure/cable,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
+"fG" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
 "fH" = (/obj/machinery/shieldwallgen,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/awaymission/academy/classrooms)
 "fI" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor{icon_state = "whitehall"; dir = 1},/area/awaymission/academy/classrooms)
 "fJ" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/simulated/floor{icon_state = "whitehall"; dir = 1},/area/awaymission/academy/classrooms)
@@ -308,10 +308,10 @@
 "fV" = (/obj/structure/target_stake,/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "fW" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
 "fX" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
-"fY" = (/obj/structure/grille,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
+"fY" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
 "fZ" = (/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/awaymission/academy/classrooms)
 "ga" = (/obj/structure/table,/obj/item/weapon/pen/red,/turf/simulated/floor,/area/awaymission/academy/classrooms)
-"gb" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/simulated/floor{icon_state = "red"; dir = 5},/area/awaymission/academy/academyaft)
+"gb" = (/obj/structure/table,/obj/item/weapon/scalpel,/turf/simulated/floor{icon_state = "whitehall"; dir = 4},/area/awaymission/academy/classrooms)
 "gc" = (/obj/structure/stool/bed/chair/wood/normal,/turf/simulated/floor/wood,/area/awaymission/academy/classrooms)
 "gd" = (/obj/structure/bookcase,/obj/item/weapon/book/manual/wiki/engineering_hacking,/turf/simulated/floor/wood,/area/awaymission/academy/classrooms)
 "ge" = (/obj/structure/bookcase,/turf/simulated/floor/wood,/area/awaymission/academy/classrooms)
@@ -452,28 +452,28 @@
 "iJ" = (/obj/effect/decal/cleanable/cobweb2,/turf/simulated/floor/engine,/area/awaymission/academy/academyaft)
 "iK" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
 "iL" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/table,/obj/item/weapon/beach_ball/holoball,/turf/simulated/floor{icon_state = "red"; dir = 1},/area/awaymission/academy/academyaft)
-"iM" = (/obj/structure/grille,/obj/structure/cable,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
-"iN" = (/obj/structure/grille,/obj/structure/cable,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
+"iM" = (/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor{icon_state = "red"; dir = 5},/area/awaymission/academy/academyaft)
+"iN" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
 "iO" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
-"iP" = (/obj/structure/grille,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/cable,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
+"iP" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
 "iQ" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/simulated/floor/airless{tag = "icon-white (EAST)"; icon_state = "white"; dir = 4},/area/awaymission/academy/academyaft)
 "iR" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/table,/obj/item/device/soulstone,/turf/simulated/floor/airless{tag = "icon-whitered (EAST)"; icon_state = "whitered"; dir = 4},/area/awaymission/academy/academyaft)
 "iS" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion_l"; icon_state = "propulsion_l"},/turf/space,/area/awaymission/academy/academyaft)
 "iT" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/awaymission/academy/academyaft)
 "iU" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion_r"; icon_state = "propulsion_r"},/turf/space,/area/awaymission/academy/academyaft)
-"iV" = (/obj/structure/grille,/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
-"iW" = (/obj/effect/landmark{name = "awaystart"},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/simulated/floor{icon_state = "red"; dir = 4},/area/awaymission/academy/academyaft)
-"iX" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor{icon_state = "red"; dir = 4},/area/awaymission/academy/academyaft)
+"iV" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
+"iW" = (/turf/simulated/floor{icon_state = "red"; dir = 4},/area/awaymission/academy/academyaft)
+"iX" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
 "iY" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/turf/simulated/floor/airless{tag = "icon-white (EAST)"; icon_state = "white"; dir = 4},/area/awaymission/academy/academyaft)
 "iZ" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor/airless{tag = "icon-whitered (EAST)"; icon_state = "whitered"; dir = 4},/area/awaymission/academy/academyaft)
-"ja" = (/obj/structure/grille,/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
+"ja" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
 "jb" = (/obj/structure/table,/obj/item/clothing/glasses/meson/truesight,/turf/simulated/floor,/area/awaymission/academy/academyaft)
 "jc" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
 "jd" = (/obj/structure/noticeboard,/turf/simulated/wall,/area/awaymission/academy/academyaft)
 "je" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
 "jf" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/airless{tag = "icon-white (EAST)"; icon_state = "white"; dir = 4},/area/awaymission/academy/academyaft)
 "jg" = (/obj/structure/table,/obj/item/organ/brain{name = "The preserved brain of Harry Houdini"},/turf/simulated/floor/airless{tag = "icon-whitered (EAST)"; icon_state = "whitered"; dir = 4},/area/awaymission/academy/academyaft)
-"jh" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor{icon_state = "red"; dir = 4},/area/awaymission/academy/academyaft)
+"jh" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor{icon_state = "red"; dir = 4},/area/awaymission/academy/academyaft)
 "ji" = (/turf/simulated/floor{dir = 8; icon_state = "yellow"},/area/awaymission/academy/academyaft)
 "jj" = (/turf/simulated/floor{dir = 4; icon_state = "yellow"},/area/awaymission/academy/academyaft)
 "jk" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/turf/simulated/floor/airless{tag = "icon-white (EAST)"; icon_state = "white"; dir = 4},/area/awaymission/academy/academyaft)
@@ -488,7 +488,7 @@
 "jt" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/space,/area/space)
 "ju" = (/obj/machinery/igniter,/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
 "jv" = (/obj/structure/window/reinforced,/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
-"jw" = (/obj/structure/grille,/obj/structure/cable,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
+"jw" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable,/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
 "jx" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
 "jy" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
 "jz" = (/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
@@ -506,7 +506,7 @@
 "jL" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/carpet,/area/awaymission/academy/academygate)
 "jM" = (/turf/simulated/floor/grass,/area/awaymission/academy/academygate)
 "jN" = (/turf/simulated/floor/carpet,/area/awaymission/academy/academygate)
-"jO" = (/obj/structure/grille,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/cable,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
+"jO" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
 "jP" = (/obj/structure/window/reinforced,/turf/simulated/floor/grass,/area/awaymission/academy/academygate)
 "jQ" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/machinery/door/window,/turf/simulated/floor/carpet,/area/awaymission/academy/academygate)
 "jR" = (/obj/machinery/door/window,/turf/simulated/floor/carpet,/area/awaymission/academy/academygate)
@@ -534,15 +534,6 @@
 "kn" = (/obj/machinery/door_control{id = "AcademyGate"; pixel_y = -24},/turf/simulated/floor/carpet{icon_state = "carpetsymbol"},/area/awaymission/academy/academygate)
 "ko" = (/turf/simulated/floor/carpet{icon_state = "carpetsymbol"},/area/awaymission/academy/academygate)
 "kp" = (/obj/machinery/door/poddoor/shutters{id = "AcademyGate"},/turf/simulated/floor/plating{dir = 2; icon_state = "warnplate"; tag = "icon-warnplate (NORTH)"},/area/awaymission/academy/academygate)
-"kq" = (/obj/structure/grille,/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/cable,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
-"kr" = (/obj/structure/grille,/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
-"ks" = (/obj/structure/grille,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
-"kt" = (/obj/structure/table,/obj/item/weapon/scalpel,/turf/simulated/floor,/area/awaymission/academy/classrooms)
-"ku" = (/obj/structure/table,/obj/item/weapon/lazarus_injector,/turf/simulated/floor{icon_state = "whitehall"; dir = 4},/area/awaymission/academy/classrooms)
-"kv" = (/obj/structure/grille,/obj/structure/cable,/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
-"kw" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"kx" = (/obj/structure/closet/crate/trashcart,/turf/simulated/floor{icon_state = "grimy"},/area/awaymission/academy/academyaft)
-"ky" = (/obj/structure/grille,/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -570,7 +561,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacakahahahahalamananaoapaqacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacarahahasasatasasasauavawacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaeaxahasayazaAaBasapaxaeacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaCahaDasaEaFaFaGasaHahbQacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaCahaDasaEaFaFaGasaHahakacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaeaxahasaIaJaFaKasapaxaeacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaLahahasasasasasasapahakacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaMahahahahaNahalanavahafacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -586,37 +577,37 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaaaaaaaaaRaRaRaRaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaRaaaaaRaRaRaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaOaOaOaaaaabasasasasbobpasasasasabaaaaaOaOaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaaaaaaaRaRaRaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaOaOaaaOaaaaabbqbqbqbqahapbqbqbqbqabaaaaaOaaaOaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaRaaaaaaaaaaaaaaaaaabrbsbtbububvbsbrbrbrbrbrbrbrbrbrbrabbqbwbxbqahapbqbwbxbqababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaaaaaaaaaaaaaaaaaabrbrbybzbAbAbBbybCbDbEbFbFbFbFbFbFbGasbHbIbJbqahapbqbIbJbKasbLbMbNbObPfAbRbSababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrbTbybAbAbAbAbUbybDbVbWbXbYbYbZbYbVasbqcacbbqahapbqbqbqbqabcccdccasasfBbScfcgabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrchbybAcibAbAbybybDbVbYbYbYbWbYbYbVasbqbqbqbqahapahahahahcjckclcmascnfBbSbRcoabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaaaaaaaaaaaaaaaaaabrbrbybzbAbAbBbybCbDbEbFbFbFbFbFbFbGasbHbIbJbqahapbqbIbJbKasbLbMbNbObPbQbRbSababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrbTbybAbAbAbAbUbybDbVbWbXbYbYbZbYbVasbqcacbbqahapbqbqbqbqabcccdccasascebScfcgabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrchbybAcibAbAbybybDbVbYbYbYbWbYbYbVasbqbqbqbqahapahahahahcjckclcmascncebSbRcoabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrcpbUbAbAbAbAbycqbDcrbYbYbYbYbYbYcrasbqcscsbqahapctahctahabcccdcccucvcwbSbScxabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrcybybAbAbAbAbybybDczcAbYbYbYbYbYcBasbqcCcCbqahcDananananfCbNcEckcFasfBbSbRcoabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrcGbybAbAcHbAbybUbDczcIcIcIcIcIcIcBasbqcJbqbqahapbqbqbqbqabccckccckccfBcfbScgabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrcybybAbAbAbAbybybDczcAbYbYbYbYbYcBasbqcCcCbqahcDanananancjbNcEckcFascebSbRcoabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrcGbybAbAcHbAbybUbDczcIcIcIcIcIcIcBasbqcJbqbqahapbqbqbqbqabccckccckcccecfbScgabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrcKbycLbAbAcMbybUbDcNcOcOcOcOcOcOcPascQbwbxbqahapbqbwbxbKascRccckcScTcUbSbSababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrcVcWcXcXcXcXcYbybDcZdadadadadadadbasbqbIbJbqahapbqbIbJbqasasasasasasasasasabbrbrbrbrbrbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdcdcdcbUbUbycKbybDdadadddadddadtdaasbqbqbqbqahapbqbqbqbqasdfdgdhdidgdgdgdhdgdjbDdkdkdlbrbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdmdndobUbybycKdpbDdadadqdadqdadqdaasaFaFaFaFahapaFaFaFaFasdrdscebydsdebybybydvbDdkdkdkdkbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdcdcdcbUbUbycKbybDdadadddadddadedaasbqbqbqbqahapbqbqbqbqasdfdgdhdidgdgdgdhdgdjbDdkdkdlbrbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdmdndobUbybycKdpbDdadadqdadqdadqdaasaFaFaFaFahapaFaFaFaFasdrdsdtbydsdubybybydvbDdkdkdkdkbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdwdxdycWcWcWdzbybDdadadadadddadddaasaFdAdAaFahapaFdAdAaFasdrbybybybybybydBdCdvdDdkdkdkdEbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdFdndGbUbybycKbybDdadadadadqdadqdaasaFdAdAaFahapaFdAdAaFasdrdsdebydsdubydIdJdvbDdkdkdkdkbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdcdcdcbybUbycKbybDdadadadadadadadaasaFdAdAaFahapaFdAdAaFasdrbybybybybybydHdLdMdNdOdPdkdQbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrbrbrbrbDbDbDdRdSbDbDbDdTdTbDbDbDbDbDasasasasasahapasasasasasdrdsdebybydUbybydVdvbDdWdXdkdQbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdFdndGbUbybycKbybDdadadadadqdadqdaasaFdAdAaFahapaFdAdAaFasdrdsdubydsdHbydIdJdvbDdkdkdkdkbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdcdcdcbybUbycKbybDdadadadadadadadaasaFdAdAaFahapaFdAdAaFasdrbybybybybybydKdLdMdNdOdPdkdQbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrbrbrbrbDbDbDdRdSbDbDbDdTdTbDbDbDbDbDasasasasasahapasasasasasdrdsdubybydUbybydVdvbDdWdXdkdQbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdYdYbrdZeaebecedeeefegeheheheheheiehefehehehehejekehehehehbDelememememembybyeneobDdWdXdkepbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabreqeqbreresetecedeheheheheheheheheueheheheheheheheuehehehehbDbDbDbDbDbDbDevevbDbDbDbDewbDbrbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaexeybAbAezbyeAbybyedehejejejejejejejekejejejejejejejekejejejehbDeBeBeBeCeDeBeBeBeBeEeFeFeGeFbrbraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeHbrbAbAeqeIeIeIeJedehejeKeLejeKeLejeMeLejeKeLejeKeLekeKeLejeNbDeBeBeBeOeBeBeBeBeBdKeFeFeGePbraOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeHbrbAbAeqeIeIeIeJedehejeKeLejeKeLejeMeLejeKeLejeKeLekeKeLejeNbDeBeBeBeOeBeBeBeBeBeEeFeFeGePbraOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeHbrbAbAeqeQeQeQeRedehejeSeTejeSeTejeUeTejeSeTejeSeTekeSeTejeheVeBeBeBeWeBeCeBeBeBeEeFeFeGeXbraOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeYeybAbAezbyeZbybyedehejejejejejejejekejejejfafbfbfbfcfbfbfbfdfefffffffffffgfffffffhfififjfkbraOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabreqeqbrflesfmecedeheheheheheheheheueheheheuehehehehehehehehbDeBfnfofpeBeWeBeBeBeEeFeFeFfqbraOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrdYdYbrfrfsftecfufvfdfdfdfdfwehehfxfdfdfdfyejehehejejehehehbDeBeBeBeBfzeBeBeBeBeEeFeFeFbrbraOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrbrbrbrbrbrbDdRdSbDbDbDbDbDeqeqeqeqbDbDfDfEfFfDfDfFfFfDbDbDbDbDbDbDbDbDbDbDbDbDbDbDbDbrbraOaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrbAbAbAksfHfIfJfKfKfLbDfMdadadadadabDfNfEfFfNfNfFfFkxbDfOfPfQfOfOczfRfSfTfUbybyfVbrbraOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrfWfXbAjwfZbybybygakubDdagcdagdgedakrgfggfFfNfNfFfFfNbDghgigjgkghczbyglbybybybybrbraOaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaabrgmbAbAgnfZbygobybygpbDdadddadadadajOfNfFfFfNfNfFfFfNbDghgqghghghczfRfSbybyfVbrbraOaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaRaaaaaaaaaaaaaaaaaabrgrgrgrjwfZbydsbybygsbDgtdqdagegudajOfNfFfFfNfNfFfFgvbDgwgqghghghczbygxbygybrbraOaaaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaRaaaaaaaaaaaaaaaaaabrgzgzgzjwfZbyktbygogpbDdagcdadadadakqgfgAgBfNfNfFfFfNbDghgqgCgDgEczgFfSfVbrbraOaaaaaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrbrbrbrbrbrbDdRdSbDbDbDbDbDfAfBfBfCbDbDfDfEfFfDfDfFfFfDbDbDbDbDbDbDbDbDbDbDbDbDbDbDbDbrbraOaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrbAbAbAfGfHfIfJfKfKfLbDfMdadadadadabDfNfEfFfNfNfFfFfNbDfOfPfQfOfOczfRfSfTfUbybyfVbrbraOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrfWfXbAfYfZbybybygagbbDdagcdagdgedafGgfggfFfNfNfFfFfNbDghgigjgkghczbyglbybybybybrbraOaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaabrgmbAbAgnfZbygobybygpbDdadddadadadafYfNfFfFfNfNfFfFfNbDghgqghghghczfRfSbybyfVbrbraOaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaRaaaaaaaaaaaaaaaaaabrgrgrgrfYfZbydsbybygsbDgtdqdagegudafYfNfFfFfNfNfFfFgvbDgwgqghghghczbygxbygybrbraOaaaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaRaaaaaaaaaaaaaaaaaabrgzgzgzfYfZbygobygogpbDdagcdadadadafAgfgAgBfNfNfFfFfNbDghgqgCgDgEczgFfSfVbrbraOaaaaaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaaaaaaaaaaaaaaaaaaaabrbAgGbAgnfZbydsbydsgpbDdadddagHgIdabDfNfFfEfNfNfFfFfNbDghgqgJgJgJczbygKbrbraOaaaaaaaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaabrgLbAbAjwfZbygobygogpbDdadqdadadadagMfFfFgNgfgfgAgAgAgOgPgQgEgEgRczgSbrbraOaaaaaaaaaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrbAbAgGkvgTgUgVgUgVdkbDdadadadadadabDfNfFfEfNfNfFfFfNbDghghgJgJgJczbrbraOaaaaaaaaaaaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaabrgLbAbAfYfZbygobygogpbDdadqdadadadagMfFfFgNgfgfgAgAgAgOgPgQgEgEgRczgSbrbraOaaaaaaaaaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabrbAbAgGfAgTgUgVgUgVdkbDdadadadadadabDfNfFfEfNfNfFfFfNbDghghgJgJgJczbrbraOaaaaaaaaaaaaaOaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWgWgWgWgWgWgWgWgWgWgWgWfDfDfDfDfDfDfDfDfDgXfDfDgYfDfDfDfDfDfDfDfDfDgWgWgWgWgWgWgWgWgWgWgWgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWgZhahbhbhchdhehfgWhggWhhhihihjhihihkfFfFfEfFfFfFfFfFhhhihihjhihihlgWhggWhmhnhohphqhrgZgZgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWgZhshthbhuhihvhwhxhyhxhzhAhAhAhAhAhBgAgAhChDgAgAgAgAhzhAhAhAhAhAhEhxhFhxhdhGhmhigZgZhHgZgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -631,21 +622,21 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWgWgWgWiDgWgWaagWipififiqfDfDfDhRichRfEfFhRichRfDfDfDitififiugWaagWgWiDgWgWgWgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWiEiFiGiGgWaOgWififififiliHfDhRhRiIggfFhRhRhRfDixilififififgWaOgWiGiGiFiJgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaaaagWiGiGiGiGgWaOgWgWgWfDfDfDfDfDfDfDgXfDfDgYfDfDfDfDfDfDfDgWgWgWaOgWiGiGiGiGgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaaaaaaaaaaaaaaaaaaaaaaaagWiKiKiKiKgWaaaaaagWiLgbfYgfiOgAgAhCgAgAgAgAgAgAgffGiQiRgWaaaaaagWiKiKiKiKgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaaaaaaaRaRaaaaaaaaaaaaaaaaaagWiSiTiTiUgWaaaaaaiVhAjhiPfNfEfFfFfFfFfFfFfFfFfFfNiNiYiZjaaaaaaagWiSiTiTiUgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWjbiXiPfNjcfDfDjdfDfDjdfDfDjefNiNjfjggWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiVhAiWiPfNfEfFjihihihihijjfFfFfNiNjkiZjlaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWjmjniPfNfEfFjojpjpjpjpjqfFfFfNiNjrjsgWjtaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWgWjuiPfNfEjvfFfFfFfFfFfFjvfFfNiNjugWgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWgWiMfNjxesjyfFfFfFfFjzesjyfNiMgWgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaaaaaaaaaaaaaaaaaaaaaaaagWiKiKiKiKgWaaaaaagWiLiMiNgfiOgAgAhCgAgAgAgAgAgAgfiPiQiRgWaaaaaagWiKiKiKiKgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaaaaaaaRaRaaaaaaaaaaaaaaaaaagWiSiTiTiUgWaaaaaaiVhiiWiXfNfEfFfFfFfFfFfFfFfFfFfNiXiYiZjaaaaaaagWiSiTiTiUgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWjbiWiXfNjcfDfDjdfDfDjdfDfDjefNiXjfjggWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiVhijhiXfNfEfFjihihihihijjfFfFfNiXjkiZjlaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWjmjniXfNfEfFjojpjpjpjpjqfFfFfNiXjrjsgWjtaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWgWjuiXfNfEjvfFfFfFfFfFfFjvfFfNiXjugWgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWgWjwfNjxesjyfFfFfFfFjzesjyfNjwgWgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWgWfNjAjBgAgBfFfFfFfFjCfFfNgWgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWfNfNfNfNfEfFfFfFfNfNfNfNgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWfNjDjEfNfEfFfFfFfNjFjGfNgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWkygWgWgWjHgWgWjIgWgWgWkygWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagWiVgWgWgWjHgWgWjIgWgWgWiVgWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajJjJjKjLjMjMjNjKjJjJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakwjMjLjMjMjNjMkwaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakwjMjLjMjMjNjMkwaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakwjPjQjPjPjRjPkwaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajOjMjLjMjMjNjMjOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajOjMjLjMjMjNjMjOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajOjPjQjPjPjRjPjOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajJjJjNjSjTjTjTjUjJjJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajJjJjNjNjVjNjNjWjXjYjJjJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajJjNjNjZkajWjWjWkbkcjNjJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -674,4 +665,3 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
-

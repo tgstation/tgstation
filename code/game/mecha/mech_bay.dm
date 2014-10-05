@@ -78,7 +78,6 @@
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
-	desc = "Used to control mechbay power ports."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/computer.dmi'

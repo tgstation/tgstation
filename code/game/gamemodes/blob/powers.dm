@@ -160,35 +160,6 @@
 	return
 
 
-/mob/camera/blob/verb/create_blobbernaut()
-	set category = "Blob"
-	set name = "Create Blobbernaut (20)"
-	set desc = "Create a powerful blob-being, a Blobbernaut"
-
-	var/turf/T = get_turf(src)
-
-	if(!T)
-		return
-
-	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
-	if(!B)
-		src << "You must be on a blob!"
-		return
-
-	if(!istype(B, /obj/effect/blob/factory))
-		src << "Unable to use this blob, find a factory blob."
-		return
-
-	if(!can_buy(20))
-		return
-
-	var/mob/living/simple_animal/hostile/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blobbernaut (get_turf(B))
-	if(blobber)
-		B.Destroy()
-
-	return
-
-
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
 	set name = "Relocate Core (80)"

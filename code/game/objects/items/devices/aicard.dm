@@ -1,6 +1,5 @@
 /obj/item/device/aicard
 	name = "inteliCard"
-	desc = "A storage device for AIs. Patent pending."
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"

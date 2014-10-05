@@ -145,7 +145,7 @@ MASS SPECTROMETER
 		user.show_message("<span class='info'>Subject appears to be suffering from fatigue.</span>", 1)
 
 	if (M.getCloneLoss())
-		user.show_message("<span class='warning'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>", 1)
+		user.show_message("<span class='warning'>Subject appears to have been imperfectly cloned.</span>", 1)
 
 	for(var/datum/disease/D in M.viruses)
 		if(!D.hidden[SCANNER])

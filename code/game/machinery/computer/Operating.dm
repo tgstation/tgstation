@@ -1,6 +1,5 @@
 /obj/machinery/computer/operating
 	name = "operating computer"
-	desc = "Used to monitor the vitals of a patient during surgery."
 	icon_state = "operating"
 	density = 1
 	anchored = 1.0

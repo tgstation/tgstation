@@ -45,6 +45,11 @@ var/global/pipe_processing_killed = 0
 			del(master_controller)
 		master_controller = src
 
+	createRandomZlevel()			//probably shouldn't be here!
+
+	for(var/i=0, i<max_secret_rooms, i++)
+		make_mining_asteroid_secret()
+
 	if(!events)
 		new /datum/controller/event()
 
@@ -114,10 +119,6 @@ var/global/pipe_processing_killed = 0
 			if(!Failsafe)	new /datum/controller/failsafe()
 
 			var/currenttime = world.timeofday
-
-			if((last_tick_timeofday - currenttime) > 1e5) //midnight rollover protection
-				last_tick_timeofday -= MIDNIGHT_ROLLOVER
-
 			last_tick_duration = (currenttime - last_tick_timeofday) / 10
 			last_tick_timeofday = currenttime
 

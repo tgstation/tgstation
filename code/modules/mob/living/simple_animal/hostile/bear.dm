@@ -60,7 +60,7 @@
 /mob/living/simple_animal/hostile/bear/FindTarget()
 	. = ..()
 	if(.)
-		emote("me", 1, "stares alertly at [.]")
+		emote("stares alertly at [.]")
 		stance = HOSTILE_STANCE_ATTACK
 
 /mob/living/simple_animal/hostile/bear/LoseTarget()

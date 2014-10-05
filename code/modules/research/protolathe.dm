@@ -9,7 +9,6 @@ Note: Must be placed west/left of and R&D console to function.
 */
 /obj/machinery/r_n_d/protolathe
 	name = "Protolathe"
-	desc = "Converts raw materials into useful objects."
 	icon_state = "protolathe"
 	flags = OPENCONTAINER
 
