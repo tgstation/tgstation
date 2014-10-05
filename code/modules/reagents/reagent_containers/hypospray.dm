@@ -44,6 +44,8 @@
 
 			add_logs(user, M, "injected", object="[src.name]", addition="([contained])")
 
+/obj/item/weapon/reagent_containers/hypospray/CMO
+
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field."
@@ -55,3 +57,48 @@
 /obj/item/weapon/reagent_containers/hypospray/combat/New()
 	..()
 	reagents.add_reagent("synaptizine", 30)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen
+	name = "\improper MediPen" //lol epipen is copyrighted
+	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
+	icon_state = "medipen"
+	item_state = "syringe_10"
+	amount_per_transfer_from_this = 10
+	volume = 10
+	var/emagged = 0
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/New()
+	..()
+	reagents.remove_reagent("doctorsdelight", 30)
+	reagents.add_reagent("inaprovaline", 10)
+	update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M as mob, mob/user as mob)
+	..()
+	if(!emagged)
+		if(reagents.total_volume <= 0) //Prevents medipens from being refilled.
+			flags &= ~OPENCONTAINER
+	update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/update_icon()
+	if(reagents.total_volume > 0)
+		icon_state = "[initial(icon_state)]1"
+	else
+		icon_state = "[initial(icon_state)]0"
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/examine()
+	..()
+	if(reagents && reagents.reagent_list.len)
+		usr << "<span class='notice'>It is currently loaded.</span>"
+	else
+		usr << "<span class='notice'>It is spent.</span>"
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+		emagged = 1
+		user << "<span class='notice'>You bypass the electronic child-safety lock on the reagent storage.</span>"
+	else
+		..()
+	return
