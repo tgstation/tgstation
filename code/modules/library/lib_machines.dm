@@ -291,7 +291,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		for (var/mob/V in hearers(src))
 			V.show_message("[src] lets out a low, short blip.", 2)
 	else
-		..()
+		return ..()
 
 /obj/machinery/librarycomp/Topic(href, href_list)
 	if(..())
@@ -445,10 +445,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/libraryscanner/attackby(var/obj/O as obj, var/mob/user as mob)
-	..()
 	if(istype(O, /obj/item/weapon/book))
 		user.drop_item()
 		O.loc = src
+	else
+		return ..()
 
 /obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
 	if(istype(user,/mob/dead))
@@ -512,4 +513,4 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		b.icon_state = "book[rand(1,7)]"
 		del(O)
 	else
-		..()
+		return ..()

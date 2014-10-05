@@ -81,12 +81,14 @@
 			src.visible_message("\icon[src] <b>[src]</b> beeps: \"No records in User DB\"")
 	return
 
+/*
 /obj/machinery/r_n_d/fabricator/crowbarDestroy(mob/user)
 	if(..())
 		for(var/obj/I in src.contents) //remove any stuff loaded, like for fridges
 			qdel(I)
 		return 1
 	return -1
+*/
 
 /obj/machinery/r_n_d/fabricator/proc/convert_part_set(set_name as text)
 	var/list/parts = part_sets[set_name]

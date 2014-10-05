@@ -91,11 +91,13 @@ var/global/list/rad_collectors = list()
 	if(P)
 		user << "\blue Remove the plasma tank first."
 		return
-	..()
-	if(anchored)
-		connect_to_network()
-	else
-		disconnect_from_network()
+	if(..() == 1)
+		if(anchored)
+			connect_to_network()
+		else
+			disconnect_from_network()
+		return 1
+	return -1
 
 /obj/machinery/power/rad_collector/ex_act(severity)
 	switch(severity)

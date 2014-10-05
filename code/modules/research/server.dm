@@ -126,13 +126,6 @@
 
 				env.merge(removed)
 
-/obj/machinery/r_n_d/server/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	..()
-	if (disabled)
-		return
-	if (shocked)
-		shock(user,50)
-
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob)
 	if (disabled)
 		return

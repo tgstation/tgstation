@@ -19,7 +19,7 @@
 /obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob)
 	if(..())
 		return 1
-	if(istype(I, /obj/item/weapon/card/data/))
+	else if(istype(I, /obj/item/weapon/card/data/))
 		var/obj/item/weapon/card/data/C = I
 		if(stat & (NOPOWER|BROKEN) & (C.function != "teleporter"))
 			src.attack_hand()

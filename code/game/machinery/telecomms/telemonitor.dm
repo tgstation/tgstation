@@ -138,9 +138,8 @@
 	return
 
 /obj/machinery/computer/telecomms/monitor/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	..()
 	src.updateUsrDialog()
-	return
+	return ..()
 
 /obj/machinery/computer/telecomms/monitor/emag(mob/user)
 	if(!emagged)
