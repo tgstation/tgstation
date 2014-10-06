@@ -1,0 +1,6 @@
+author: iconleap
+
+delete-after: True
+
+changes: 
+  - bugfix: fixed syringe range exploit (thanks mrnewvegas for bug report).
