@@ -76,7 +76,3 @@ F
 
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-
-/mob/living/simple_animal/hostile/carp/mega/Die()
-	qdel(src)
-	return
