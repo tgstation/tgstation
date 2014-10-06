@@ -31,6 +31,7 @@
 	icon_state = "roman"
 	item_color = "roman"
 	item_state = "armor"
+	strip_delay = 100
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
