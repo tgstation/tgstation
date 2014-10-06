@@ -86,9 +86,8 @@
 
 	src.loc = T
 
-/obj/item/examine()
-	set src in view()
-
+/obj/item/examine(mob/user) //This might be spammy. Remove?
+	..()
 	var/size
 	switch(src.w_class)
 		if(1.0)
@@ -106,25 +105,13 @@
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
 
-	//This reformat names to get a/an properly working on item descriptions when they are bloody
-	var/f_name = "\a [src]"
-	if(src.blood_DNA)
-		f_name = "a bloody [name]"
-
-	var/determiner
 	var/pronoun
 	if(src.gender == PLURAL)
-		determiner = "These are"
 		pronoun = "They are"
 	else
-		determiner = "This is"
 		pronoun = "It is"
 
-	usr << "\icon[src][determiner] [f_name]. [pronoun] a [size] item." //e.g. These are some gloves. They are a small item. or This is a toolbox. It is a bulky item.
-
-	if(src.desc)
-		usr << src.desc
-	return
+	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return

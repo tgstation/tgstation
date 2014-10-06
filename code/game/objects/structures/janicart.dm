@@ -20,12 +20,6 @@
 	create_reagents(100)
 
 
-/obj/structure/janitorialcart/examine()
-	set src in usr
-	..()
-	usr << "It contains [reagents.total_volume] unit\s of liquid!"
-	//everything else is visible, so doesn't need to be mentioned
-
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
 	if(reagents.total_volume < 1)
 		user << "[src] is out of water!</span>"
@@ -176,12 +170,10 @@
 	create_reagents(100)
 
 
-/obj/structure/stool/bed/chair/janicart/examine()
-	set src in usr
+/obj/structure/stool/bed/chair/janicart/examine(mob/user)
 	..()
-	usr << "It contains [reagents.total_volume] unit\s of water!"
 	if(mybag)
-		usr << "\A [mybag] is hanging on the [callme]."
+		user << "\A [mybag] is hanging on \the [callme]."
 
 
 /obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user)

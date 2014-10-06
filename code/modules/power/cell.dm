@@ -5,9 +5,9 @@
 /obj/item/weapon/stock_parts/cell/New()
 	..()
 	charge = maxcharge
+	desc = "This cell has a power rating of [maxcharge], and you should not swallow it."
 
-	spawn(5)
-		updateicon()
+	updateicon()
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	overlays.Cut()
@@ -50,13 +50,12 @@
 	return power_used
 
 
-/obj/item/weapon/stock_parts/cell/examine()
-	set src in view(1)
+/obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
-	if(usr /*&& !usr.stat*/)
-		usr << "This cell has a power rating of [maxcharge], and you should not swallow it.\nThe charge meter reads [round(src.percent() )]%."
-	if(crit_fail)
-		usr << "<span class='danger'>This power cell seems to be faulty.</span>"
+	if(crit_fail || rigged)
+		user << "<span class='danger'>This power cell seems to be faulty!</span>"
+	else
+		user << "The charge meter reads [round(src.percent() )]%."
 
 /obj/item/weapon/stock_parts/cell/attack_self(mob/user as mob)
 	src.add_fingerprint(user)
