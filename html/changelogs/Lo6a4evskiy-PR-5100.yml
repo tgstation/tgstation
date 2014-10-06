@@ -3,4 +3,4 @@ author: Lo6a4evskiy
 delete-after: True
 
 changes: 
-  - rscadd: We have developed a new technology that makes it harder for armored clothing to be stripped off someone. However, we are also selling it to the highest bidder, so you can expect that the enemy will use such armor as well.
+  - tweak: Many items now have different stripping delays. Heavier and more armored pieces of clothing are generally more difficult to take off someone else, while smaller items can be very easy to snatch. Pockets always take 4 seconds to search.
