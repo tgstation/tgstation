@@ -124,9 +124,20 @@ var/datum/controller/event/events
 	holder.forceEvent()
 
 /datum/admins/proc/forceEvent()
-	var/dat = ""
+	var/dat 	= ""
+	var/normal 	= ""
+	var/magic 	= ""
+	var/holiday = ""
 	for(var/datum/round_event_control/E in events.control)
-		dat += "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
+		dat = "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
+		if(E.holidayID)
+			holiday	+= dat
+		else if(E.wizardevent)
+			magic 	+= dat
+		else
+			normal 	+= dat
+
+	dat = normal + "<BR>" + magic + "<BR>" + holiday
 
 	var/datum/browser/popup = new(usr, "forceevent", "Force Random Event", 300, 750)
 	popup.set_content(dat)
@@ -263,3 +274,9 @@ var/datum/controller/event/events
 		E.weight = initial(E.weight)
 		if((E.wizardevent && !wizardmode) || (!E.wizardevent && wizardmode))
 			E.weight = 0
+	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [events.frequency_lower / 600] to [events.frequency_upper / 600] minutes" : "disabled"]!")
+	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
+
+/datum/controller/event/proc/resetFrequency()
+	frequency_lower = initial(frequency_lower)
+	frequency_upper = initial(frequency_upper)

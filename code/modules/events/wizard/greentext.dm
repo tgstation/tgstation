@@ -21,7 +21,7 @@
 
 /obj/item/weapon/greentext/
 	name = "greentext"
-	desc = "for some the pursuit of greentext is the greatest calling in life..."
+	desc = "No one knows what this massive tome does, but it feels <i><font color='green'>desirable</font></i> all the same..."
 	w_class = 4.0
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "greentext"

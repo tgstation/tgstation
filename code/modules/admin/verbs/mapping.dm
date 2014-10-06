@@ -145,7 +145,6 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/disable_communication
 	src.verbs += /client/proc/print_pointers
 	src.verbs += /client/proc/count_movable_instances
-	src.verbs += /client/proc/SDQL2_query
 	src.verbs += /client/proc/cmd_display_del_log
 	//src.verbs += /client/proc/cmd_admin_rejuvenate
 

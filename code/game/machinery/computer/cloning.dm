@@ -1,6 +1,7 @@
 
 /obj/machinery/computer/cloning
 	name = "cloning console"
+	desc = "Used to clone people and manage DNA."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	circuit = /obj/item/weapon/circuitboard/cloning

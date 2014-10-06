@@ -36,7 +36,7 @@
 
 /obj/item/weapon/robot_module/New()
 	modules += new /obj/item/device/flashlight(src)
-	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/device/flash/cyborg(src)
 	emag = new /obj/item/toy/sword(src)
 	emag.name = "Placeholder Emag Item"
 //		jetpack = new /obj/item/toy/sword(src)

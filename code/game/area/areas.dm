@@ -121,6 +121,8 @@
 					else if(!D.density)
 						spawn(0)
 							D.close()
+			for(var/obj/machinery/firealarm/F in RA)
+				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
@@ -145,6 +147,8 @@
 					else if(D.density)
 						spawn(0)
 							D.open()
+			for(var/obj/machinery/firealarm/F in RA)
+				F.update_icon()
 
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		aiPlayer.cancelAlarm("Fire", src, src)

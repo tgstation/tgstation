@@ -43,9 +43,7 @@
 	qdel(src)
 	return
 
-/mob/living/simple_animal/construct/examine()
-	set src in oview()
-
+/mob/living/simple_animal/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 	if (src.health < src.maxHealth)
 		msg += "<span class='warning'>"
@@ -56,8 +54,7 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	usr << msg
-	return
+	user << msg
 
 /mob/living/simple_animal/construct/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -93,7 +90,7 @@
 		M.emote("me", 1, "mends some of \the <EM>[src]'s</EM> wounds.")
 	else if(src != M)
 		if(M.melee_damage_upper <= 0)
-			M.emote("me", 1, "[M.friendly] \the <EM>[src]</EM>")
+			M.emote("me", 1, "[M.friendly] \the <EM>[src]</EM>.")
 		else
 			if(M.attack_sound)
 				playsound(loc, M.attack_sound, 50, 1, 1)

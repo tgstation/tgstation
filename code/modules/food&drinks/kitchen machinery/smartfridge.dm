@@ -3,6 +3,7 @@
 // -------------------------
 /obj/machinery/smartfridge
 	name = "smartfridge"
+	desc = "Keeps cold things cold and hot things cold."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "smartfridge"
 	layer = 2.9

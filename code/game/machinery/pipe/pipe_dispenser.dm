@@ -123,12 +123,15 @@
 Nah
 */
 
-//Allow you to drag-drop disposal pipes into it
-/obj/machinery/pipedispenser/disposal/MouseDrop_T(var/obj/structure/disposalconstruct/pipe as obj, mob/usr as mob)
+//Allow you to drag-drop disposal pipes and transit tubes into it
+/obj/machinery/pipedispenser/disposal/MouseDrop_T(var/obj/structure/pipe as obj, mob/usr as mob)
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if (!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/c_transit_tube_pod))
+		return
+
+	if (get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
 		return
 
 	if (pipe.anchored)
@@ -196,3 +199,73 @@ Nah
 				wait = 0
 	return
 
+//transit tube dispenser
+//inherit disposal for the dragging proc
+/obj/machinery/pipedispenser/disposal/transit_tube
+	name = "transit tube dispenser"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "pipe_d"
+	density = 1
+	anchored = 1.0
+
+/obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(user as mob)
+	if(..())
+		return
+
+	var/dat = {"<B>Transit Tubes:</B><BR>
+<A href='?src=\ref[src];tube=0'>Straight Tube</A><BR>
+<A href='?src=\ref[src];tube=1'>Straight Tube with Crossing</A><BR>
+<A href='?src=\ref[src];tube=2'>Curved Tube</A><BR>
+<A href='?src=\ref[src];tube=3'>Diagonal Tube</A><BR>
+<A href='?src=\ref[src];tube=4'>Junction</A><BR>
+<b>Station Equipment:</b><BR>
+<A href='?src=\ref[src];tube=5'>Through Tube Station</A><BR>
+<A href='?src=\ref[src];tube=6'>Terminus Tube Station</A><BR>
+<A href='?src=\ref[src];tube=7'>Tube Blocker</A><BR>
+<A href='?src=\ref[src];tube=8'>Transit Tube Pod</A><BR>
+"}
+
+	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
+	return
+
+
+/obj/machinery/pipedispenser/disposal/Topic(href, href_list)
+	if(..())
+		return
+	usr.set_machine(src)
+	src.add_fingerprint(usr)
+	if(!wait)
+		if(href_list["tube"])
+			var/tube_type = text2num(href_list["tube"])
+			if(tube_type <= 4)
+				var/obj/structure/c_transit_tube/C = new/obj/structure/c_transit_tube(src.loc)
+				switch(tube_type)
+					if(0)
+						C.icon_state = "E-W"
+					if(1)
+						C.icon_state = "E-W-Pass"
+					if(2)
+						C.icon_state = "S-NE"
+					if(3)
+						C.icon_state = "NE-SW"
+					if(4)
+						C.icon_state = "W-NE-SE"
+				C.add_fingerprint(usr)
+			else
+				switch(tube_type)
+					if(5)
+						var/obj/structure/c_transit_tube/station/C = new/obj/structure/c_transit_tube/station(src.loc)
+						C.add_fingerprint(usr)
+					if(6)
+						var/obj/structure/c_transit_tube/station/reverse/C = new/obj/structure/c_transit_tube/station/reverse(src.loc)
+						C.add_fingerprint(usr)
+					if(7)
+						var/obj/structure/c_transit_tube/station/block/C = new/obj/structure/c_transit_tube/station/block(src.loc)
+						C.add_fingerprint(usr)
+					if(8)
+						var/obj/structure/c_transit_tube_pod/C = new/obj/structure/c_transit_tube_pod(src.loc)
+						C.add_fingerprint(usr)
+			wait = 1
+			spawn(15)
+				wait = 0
+	return

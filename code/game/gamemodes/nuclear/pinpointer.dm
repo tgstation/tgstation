@@ -54,12 +54,11 @@
 		the_disk = locate()
 	point_at(the_disk)
 
-/obj/item/weapon/pinpointer/examine()
+/obj/item/weapon/pinpointer/examine(mob/user)
 	..()
 	for(var/obj/machinery/nuclearbomb/bomb in world)
 		if(bomb.timing)
-			usr << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
-
+			user << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
 
 /obj/item/weapon/pinpointer/advpinpointer
 	name = "advanced pinpointer"

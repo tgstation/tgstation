@@ -122,12 +122,11 @@
 					line1 = ""
 			update_display(line1, line2)
 
-/obj/machinery/status_display/examine()
-	set src in view()
+/obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	switch(mode)
 		if(1,2,4)
-			usr << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+			user << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
@@ -201,6 +200,7 @@
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
+	desc = "A small screen which the AI can use to present itself."
 	icon_state = "frame"
 	name = "\improper AI display"
 	anchored = 1
