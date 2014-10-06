@@ -7,21 +7,39 @@
 	item_color = "b"
 	var/allow_reagents = 0
 
+	var/obj/effect/proc_holder/spell/targeted/implant_button/implant_button = null
+	var/activation_emote = "chuckle"
+	var/uses = 0
+
 
 /obj/item/weapon/implant/proc/trigger(emote, mob/source)
+	if(uses>0)
+		uses--
+		if(implant_button)
+			implant_button.charge_counter = uses
+			if(implant_button.charge_counter == 0)
+				source.mob_spell_list -= implant_button
 	return
 
 
 /obj/item/weapon/implant/proc/activate()
 	return
 
-
 //What does the implant do upon injection?
 //return 0 if the implant fails (ex. Revhead and loyalty implant.)
 //return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
 /obj/item/weapon/implant/proc/implanted(var/mob/source)
+	if(uses>0)
+		var/obj/effect/proc_holder/spell/targeted/implant_button/button = new(null, src)
+		button.name = "Trigger [name]"
+		source.mob_spell_list += button
+		implant_button = button
 	return 1
 
+/obj/item/weapon/implant/proc/removed_surgically(var/mob/target)
+	if(implant_button && target)
+		target.mob_spell_list -= implant_button
+	return 1
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -58,6 +76,8 @@
 /obj/item/weapon/implant/explosive
 	name = "explosive implant"
 	desc = "And boom goes the weasel."
+	uses = 1
+	activation_emote="deathgasp"
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -148,11 +168,14 @@
 	target << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
 	return 1
 
+/obj/item/weapon/implant/removed_surgically(var/mob/target)
+	target << "<span class='notice'>You feel a sense of liberation as Nanotrasen's grip on your mind fades away.</span>"
 
 /obj/item/weapon/implant/adrenalin
 	name = "adrenal implant"
 	desc = "Removes all stuns and knockdowns."
-	var/uses = 3
+	uses = 3
+	activation_emote = "scream"
 
 /obj/item/weapon/implant/adrenalin/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -168,7 +191,6 @@
 /obj/item/weapon/implant/adrenalin/trigger(emote, mob/source)
 	if(uses < 1)	return 0
 	if(emote == "scream")
-		uses--
 		source << "<span class='notice'>You feel a sudden surge of energy!</span>"
 		source.SetStunned(0)
 		source.SetWeakened(0)
@@ -179,8 +201,10 @@
 		source.reagents.add_reagent("synaptizine", 10)
 		source.reagents.add_reagent("tricordrazine", 10)
 		source.reagents.add_reagent("hyperzine", 10)
+		..()
 
 /obj/item/weapon/implant/adrenalin/implanted(mob/source)
+	..()
 	source.mind.store_memory("An adrenal implant can be activated [uses] time\s by using the scream emote, <B>say *scream</B> to attempt to activate.", 0, 0)
 	source << "<span class='notice'>The implanted adrenaline implant can be activated [uses] time\s by using the scream emote, <B>say *scream</B> to attempt to activate.</span>"
 	return 1
@@ -190,8 +214,8 @@
 	name = "emp implant"
 	desc = "Triggers an EMP."
 
-	var/activation_emote = "chuckle"
-	var/uses = 2
+	activation_emote = "chuckle"
+	uses = 2
 
 /obj/item/weapon/implant/emp/New()
 	activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "smile", "pale", "sniff", "whimper", "wink")
@@ -201,11 +225,37 @@
 /obj/item/weapon/implant/emp/trigger(emote, mob/living/carbon/source as mob)
 	if (src.uses < 1)	return 0
 	if (emote == src.activation_emote)
-		src.uses--
 		empulse(source, 3, 5)
+		..()
 	return
 
 /obj/item/weapon/implant/emp/implanted(mob/living/carbon/source)
-		source.mind.store_memory("EMP implant can be activated [uses] time\s by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted EMP implant can be activated [uses] time\s by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
-		return 1
+	..()
+	source.mind.store_memory("EMP implant can be activated [uses] time\s by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+	source << "The implanted EMP implant can be activated [uses] time\s by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+	return 1
+
+
+/obj/effect/proc_holder/spell/targeted/implant_button
+	name = "Trigger implant"
+	desc = "Trigger implant"
+	panel = "Implants"
+	charge_type = "charges"
+	charge_counter = 1
+	charge_max = 1
+	clothes_req = 0
+	human_req = 1
+	include_user = 1
+	range = -1
+	var/obj/item/weapon/implant/target_implant
+
+/obj/effect/proc_holder/spell/targeted/implant_button/New(loc, var/obj/item/weapon/implant/I)
+	..()
+	charge_max = I.uses
+	charge_counter = charge_max
+	target_implant = I
+
+/obj/effect/proc_holder/spell/targeted/implant_button/cast(list/targets)
+	if(target_implant)
+		for(var/mob/living/carbon/human/user in targets)
+			user.emote(target_implant.activation_emote)

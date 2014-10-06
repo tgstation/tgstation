@@ -4,8 +4,7 @@
 	name = "freedom implant"
 	desc = "Use this to escape from those evil Red Shirts."
 	item_color = "r"
-	var/activation_emote = "chuckle"
-	var/uses = 4.0
+	uses = 4.0
 
 
 /obj/item/weapon/implant/freedom/New()
@@ -18,7 +17,6 @@
 /obj/item/weapon/implant/freedom/trigger(emote, mob/living/carbon/source as mob)
 	if (src.uses < 1)	return 0
 	if (emote == src.activation_emote)
-		src.uses--
 		source << "You feel a faint click."
 		if (source.handcuffed)
 			var/obj/item/weapon/W = source.handcuffed
@@ -42,12 +40,14 @@
 				dropped(source)
 				if (W)
 					W.layer = initial(W.layer)
+		..()
 	return
 
 
 /obj/item/weapon/implant/freedom/implanted(mob/living/carbon/source)
 	source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 	source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+	..()
 	return 1
 
 
@@ -67,5 +67,3 @@ mechanisms<BR>
 life can drive down to only 1 use.<HR>
 No Implant Specifics"}
 	return dat
-
-
