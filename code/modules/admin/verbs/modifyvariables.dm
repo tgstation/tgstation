@@ -131,7 +131,7 @@ var/list/forbidden_varedit_object_types = list(
 
 	if(!istype(L,/list)) src << "Not a List."
 
-	var/list/locked = list("vars", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content")
+	var/list/locked = list("vars", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "step_x", "step_y")
 	var/list/ckey_edit = list("key", "ckey")
 	var/list/icon_edit = list("icon", "icon_state", "overlays", "underlays")
 	var/list/names = sortList(L)
