@@ -235,8 +235,24 @@
 	if(seed.consume_gasses && seed.consume_gasses.len)
 		var/missing_gas = 0
 		for(var/gas in seed.consume_gasses)
-			if(environment && environment.gas && environment.gas[gas] && \
-			 environment.gas[gas] >= seed.consume_gasses[gas])
+			if(environment)
+				switch(gas)
+					if("oxygen")
+						if(environment.oxygen <= seed.consume_gasses[gas])
+							missing_gas++
+							continue
+					if("plasma")
+						if(environment.toxins >= seed.consume_gasses[gas])
+							missing_gas++
+							continue
+					if("nitrogen")
+						if(environment.nitrogen >= seed.consume_gasses[gas])
+							missing_gas++
+							continue
+					if("carbon_dioxide")
+						if(environment.carbon_dioxide >= seed.consume_gasses[gas])
+							missing_gas++
+							continue
 				environment.adjust_gas(gas,-seed.consume_gasses[gas],1)
 			else
 				missing_gas++
@@ -258,8 +274,8 @@
 			environment.adjust_gas(gas, max(1,round((seed.exude_gasses[gas]*seed.potency)/seed.exude_gasses.len)))
 
 	// If we're attached to a pipenet, then we should let the pipenet know we might have modified some gasses
-	if (closed_system && connected_port)
-		update_connected_network()
+	//if (closed_system && connected_port)
+	//'	update_connected_network()
 
 	// Handle light requirements.
 	var/area/A = T.loc

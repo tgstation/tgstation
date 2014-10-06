@@ -403,8 +403,7 @@
 	else // feed them plants~
 		var/obj/machinery/portable_atmospherics/hydroponics/tray = target
 		tray.nutrilevel = 10
-		tray.yield_mod = fert.yield_mod
-		tray.mutation_mod = fert.mut_mod
+		fert.reagents.trans_to(tray.reagents, fert.reagents.total_volume)
 		del fert
 		//tray.updateicon()
 		icon_state = "farmbot_fertile"
