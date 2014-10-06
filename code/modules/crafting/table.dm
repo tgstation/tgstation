@@ -1,5 +1,8 @@
+/obj/structure/table
+	var/list/table_contents = list()
+
 /obj/structure/table/MouseDrop(atom/over)
-	if(usr.stat || usr.lying || !Adjacent(usr) || (over != usr))
+	if(over != usr)
 		return
 	interact(usr)
 
@@ -59,7 +62,10 @@
 			if(!check_contents(R) || !check_tools(user, R))
 				return 0
 			var/list/parts = del_reqs(R)
-			var/atom/movable/I = new R.result_path
+			var/list/constructed_stuff = list()
+			for(var/result_path in R.results)
+				constructed_stuff += new result_path(loc)
+			var/atom/movable/I = constructed_stuff[1] //We're assuming item 1 is where everything goes
 			for(var/A in parts)
 				if(istype(A, /obj/item))
 					var/atom/movable/B = A
@@ -69,7 +75,6 @@
 						I.reagents = new /datum/reagents()
 					I.reagents.reagent_list.Add(A)
 			I.CheckParts()
-			I.loc = loc
 			return 1
 	return 0
 
@@ -128,9 +133,12 @@
 	return Deletion
 
 /obj/structure/table/interact(mob/user)
+	if(user.stat || user.lying || !Adjacent(user))
+		return
 	check_table()
 	if(!table_contents.len)
 		return
+	user.face_atom(src)
 	var/dat = "<h3>Construction menu</h3>"
 	dat += "<div class='statusDisplay'>"
 	if(busy)
@@ -158,4 +166,4 @@
 		else
 			usr << "<span class ='warning'>Construction failed.</span>"
 		busy = 0
-	attack_hand(usr)
+		interact(usr)
