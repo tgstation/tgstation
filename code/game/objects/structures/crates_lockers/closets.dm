@@ -16,9 +16,18 @@
 	var/lastbang
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
+	var/trapped = 0
+	var/mob/trapped_mob
 
 /obj/structure/closet/initialize()
 	..()
+
+	///////////////////////////
+	//Spookoween trapped closet
+	///////////////////////////
+	if(events.holiday == "Halloween" && prob(30))
+		set_spooky_trap()
+
 	if(!opened)		// if closed, any item at the crate's loc is put in the contents
 		take_contents()
 
@@ -73,6 +82,9 @@
 	else
 		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	density = 0
+
+	trigger_spooky_trap()
+
 	return 1
 
 /obj/structure/closet/proc/insert(var/atom/movable/AM)
@@ -263,6 +275,7 @@
 
 	if(!src.toggle())
 		usr << "<span class='notice'>It won't budge!</span>"
+		return
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user as mob)
@@ -328,3 +341,84 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
 		open()
+
+////////////////////////////
+//Spookoween trapped closets
+////////////////////////////
+#define SPOOKY_SKELETON 1
+#define ANGRY_FAITHLESS 2
+#define SCARY_BATS 		3
+#define INSANE_CLOWN	4
+
+/obj/structure/closet/proc/set_spooky_trap()
+	if(prob(0.1))
+		trapped = INSANE_CLOWN
+		return
+	if(prob(1))
+		trapped = ANGRY_FAITHLESS
+		return
+	if(prob(20))
+		trapped = SCARY_BATS
+		return
+	else
+		var/mob/living/carbon/human/H = new (loc)
+		H.makeSkeleton()
+		H.health = 1e5
+		insert(H)
+		trapped_mob = H
+		trapped = SPOOKY_SKELETON
+		return
+
+/obj/structure/closet/proc/trigger_spooky_trap()
+	if(!trapped)
+		return
+
+	if(trapped == SPOOKY_SKELETON)
+		src.visible_message("<span class='userdanger'><font size='5'>BOO!</font></span>");
+		playsound(src.loc, pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg'), 300, 1)
+		trapped = 0
+		spawn(60)
+			if(trapped_mob.loc != loc)
+				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
+				smoke.set_up(1,0, trapped_mob.loc, 0)
+				smoke.start()
+				trapped_mob.loc = loc
+			src.close()
+			trapped = SPOOKY_SKELETON
+		return
+
+	if(trapped == ANGRY_FAITHLESS)
+		src.visible_message("<span class='userdanger'>The closet burst open!</span>");
+		src.visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN BOY!</font></span>");
+		playsound(src.loc, 'sound/hallucinations/wail.ogg', 300, 1)
+		var/mob/living/simple_animal/hostile/faithless/F = new (loc)
+		F.health =1e5
+		F.stance = HOSTILE_STANCE_ATTACK
+		F.GiveTarget(usr)
+		trapped = 0
+		qdel(src)
+		spawn(120)
+			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
+			smoke.set_up(1,0, F.loc, 0)
+			smoke.start()
+			qdel(F)
+		return
+
+	if(trapped == SCARY_BATS)
+		src.visible_message("<span class='userdanger'><font size='5'>Protect your hairs !!!</font></span>");
+		playsound(src.loc, 'sound/spookoween/bats.ogg', 300, 1)
+		var/number = rand(1,4)
+		for(var/i=0,i < number,i++)
+			new /mob/living/simple_animal/hostile/retaliate/bat (loc)
+		trapped = 0
+		return
+
+
+	if(trapped == INSANE_CLOWN)
+		src.visible_message("<span class='userdanger'><font size='5'>...</font></span>");
+		playsound(src.loc, 'sound/spookoween/scary_clown_appear.ogg', 300, 1)
+		var/mob/living/simple_animal/hostile/retaliate/clown/insane/IC = new (loc)
+		IC.GiveTarget(usr)
+		trapped = 0
+		return
+

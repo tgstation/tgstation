@@ -384,3 +384,10 @@
 			src.req_access += pick(get_all_accesses())
 	..()
 
+//Spookoween stuffs
+/obj/structure/closet/crate/trigger_spooky_trap()
+	return 0
+
+/obj/structure/closet/crate/set_spooky_trap()
+	return 0
+
