@@ -65,11 +65,15 @@
 	sting_icon = "sting_transform"
 	chemical_cost = 40
 	dna_cost = 2
+	req_dna = 3
 	var/datum/dna/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
 	var/mob/user = usr
 	var/datum/changeling/changeling = user.mind.changeling
+	if(changeling.chosen_sting)
+		unset_sting(user)
+		return
 	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 	if(!selected_dna)
 		return
@@ -96,18 +100,19 @@
 obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
 	desc = "We stealthily sting a target and extract their DNA."
-	helptext = "Will give you the DNA of your target, allowing you to transform into them."
+	helptext = "Will give you the DNA of your target, allowing you to transform into them. DNA collected this way does not count towards absorption objectives."
 	sting_icon = "sting_extract"
 	chemical_cost = 25
-	dna_cost = 0
+	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(var/mob/user, var/mob/target)
 	if(..())
 		return user.mind.changeling.can_absorb_dna(user, target)
 
-/obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(var/mob/user, var/mob/living/carbon/human/target)
 	add_logs(user, target, "stung", object="extraction sting")
-	user.mind.changeling.absorb_dna(target, user)
+	if(!(user.mind.changeling.has_dna(target.dna)))
+		user.mind.changeling.absorb_dna(target, user)
 	feedback_add_details("changeling_powers","ED")
 	return 1
 
@@ -149,6 +154,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	sting_icon = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
+	req_dna = 3
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(var/mob/user, var/mob/living/carbon/target)
 	add_logs(user, target, "stung", object="LSD sting")

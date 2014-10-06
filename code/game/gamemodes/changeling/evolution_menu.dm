@@ -259,7 +259,7 @@ var/list/sting_paths
 					<a id='link[i]'
 					onmouseover='expand("item[i]","[P.name]","[P.desc]","[P.helptext]","[P]",[ownsthis])'
 					>
-					<b id='search[i]'>Evolve [P][ownsthis ? " - Purchased" : ((P.dna_cost > 1) ? " - Cost: [P.dna_cost]" : "")]</b>
+					<b id='search[i]'>Evolve [P][ownsthis ? " - Purchased" : (P.req_dna>changeling.absorbedcount ? " - Requires [P.req_dna] absorptions" : " - Cost: [P.dna_cost]")]</b>
 					</a>
 					<br><span id='item[i]'></span>
 				</td>
@@ -310,6 +310,10 @@ var/list/sting_paths
 
 	if(thepower == null)
 		user << "This is awkward. Changeling power purchase failed, please report this bug to a coder!"
+		return
+
+	if(absorbedcount < thepower.req_dna)
+		user << "We lack the energy to evolve this ability!"
 		return
 
 	if(has_sting(thepower))
