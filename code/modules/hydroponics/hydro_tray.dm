@@ -619,7 +619,7 @@
 
 			if(!S.seed)
 				user << "The packet seems to be empty. You throw it away."
-				del(O)
+				qdel(O)
 				return
 
 			user << "You plant the [S.seed.seed_name] [S.seed.seed_noun]."
@@ -643,7 +643,7 @@
 
 				lastcycle = world.time
 
-			del(O)
+			qdel(O)
 
 			check_level_sanity()
 			update_icon()
@@ -679,7 +679,7 @@
 		weedlevel -= spray.weed_kill_str
 		user << "You spray [src] with [O]."
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
-		del(O)
+		qdel(O)
 
 		check_level_sanity()
 		update_icon()
@@ -700,13 +700,13 @@
 			user << "\red [src] is already occupied!"
 		else
 			user.drop_item()
-			del(O)
+			qdel(O)
 
 			var/obj/machinery/apiary/A = new(src.loc)
 			A.icon = src.icon
 			A.icon_state = src.icon_state
 			A.hydrotray_type = src.type
-			del(src)
+			qdel(src)
 	return
 
 /obj/machinery/portable_atmospherics/hydroponics/attack_tk(mob/user as mob)
@@ -794,7 +794,7 @@
 /obj/machinery/portable_atmospherics/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/shovel))
 		user << "You clear up [src]!"
-		del(src)
+		qdel(src)
 	else if(istype(O,/obj/item/weapon/shovel) || istype(O,/obj/item/weapon/tank))
 		return
 	else
