@@ -160,6 +160,10 @@ BLIND     // can't see anything
 	var/fitted = 1// For use in alternate clothing styles for women, if clothes vary from a jumpsuit in shape, set this to 0
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
+	var/can_adjust = 1
+	var/adjusted = 0
+	var/suit_color = null
+
 		/*
 		1 = Report living/dead
 		2 = Report detailed damages
@@ -246,6 +250,27 @@ atom/proc/generate_uniform(index,t_color)
 			usr << "Your suit will now report your vital lifesigns as well as your coordinate position."
 	..()
 
+/obj/item/clothing/under/verb/rolldown()
+	set name = "Adjust Jumpsuit Style"
+	set category = "Object"
+	set src in usr
+	if(usr.stat)
+		return
+	if(!can_adjust)
+		usr << "You cannot wear this suit any differently."
+		return
+	if(src.adjusted == 1)
+		src.item_color = initial(item_color)
+		src.item_color = src.suit_color //colored jumpsuits are shit and break without this
+		usr << "You adjust the suit back to normal."
+		src.adjusted = 0
+	else
+		src.item_color += "_d"
+		usr << "You adjust the suit to wear it more casually."
+		src.adjusted = 1
+	usr.update_inv_w_uniform()
+	..()
+
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"
 	set category = "Object"
@@ -266,8 +291,10 @@ atom/proc/generate_uniform(index,t_color)
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform(0)
 
-/obj/item/clothing/under/rank/New()
+/obj/item/clothing/under/New()
 	sensor_mode = pick(0,1,2,3)
+	adjusted = 0
+	suit_color = item_color
 	..()
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
