@@ -118,6 +118,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
 		/obj/item/device/flashlight/seclite
+		/obj/item/weapon/melee/telebaton
 		)
 
 /obj/item/weapon/storage/belt/security/New()
