@@ -61,12 +61,12 @@
 		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
 		user.take_organ_damage(5)
 	active = !active
+	icon_state = "eshield[active]"
 
 	if(active)
 		force = 10
 		throwforce = 8
 		throw_speed = 2
-		icon_state = "eshield[active]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
@@ -75,7 +75,6 @@
 		force = 3
 		throwforce = 3
 		throw_speed = 3
-		icon_state = "eshield[active]"
 		w_class = 1
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
 		user << "<span class='notice'>[src] can now be concealed.</span>"
@@ -100,23 +99,21 @@
 
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
+	icon_state = "teleriot[active]"
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 
 	if(active)
 		force = 8
 		throwforce = 5
 		throw_speed = 2
-		icon_state = "teleriot[active]"
 		w_class = 4
 		slot_flags = SLOT_BACK
-		playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 		user << "<span class='notice'>You extend the [src].</span>"
 	else
 		force = 3
 		throwforce = 3
 		throw_speed = 3
-		icon_state = "teleriot[active]"
 		w_class = 3
 		slot_flags = null
-		playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
