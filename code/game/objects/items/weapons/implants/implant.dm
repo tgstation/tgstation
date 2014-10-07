@@ -2,6 +2,7 @@
 	name = "implant"
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
+	action_button_is_hands_free = 1
 	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like loyalty implants
 	var/implanted = null
 	var/mob/imp_in = null
