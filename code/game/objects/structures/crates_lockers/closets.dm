@@ -388,7 +388,7 @@
 		return
 
 	if(trapped == ANGRY_FAITHLESS)
-		src.visible_message("<span class='userdanger'>The closet burst open!</span>");
+		src.visible_message("<span class='userdanger'>The closet bursts open!</span>");
 		src.visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN BOY!</font></span>");
 		playsound(src.loc, 'sound/hallucinations/wail.ogg', 300, 1)
 		var/mob/living/simple_animal/hostile/faithless/F = new (loc)
