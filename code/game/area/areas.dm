@@ -68,6 +68,12 @@
 						a.cancelAlarm("Power", src, source)
 					else
 						a.triggerAlarm("Power", src, cameras, source)
+			for(var/mob/living/simple_animal/drone/D in mob_list)
+				if(D.z == source.z)
+					if(state == 1)
+						D.cancelAlarm("Power", src, source)
+					else
+						D.triggerAlarm("Power", src, cameras, source)
 	return
 
 /area/proc/atmosalert(danger_level)
@@ -86,11 +92,15 @@
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
+			for(var/mob/living/simple_animal/drone/D in mob_list)
+				D.triggerAlarm("Atmosphere", src, cameras, src)
 		else if (src.atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.cancelAlarm("Atmosphere", src, src)
+			for(var/mob/living/simple_animal/drone/D in mob_list)
+				D.cancelAlarm("Atmosphere", src, src)
 		src.atmosalm = danger_level
 		return 1
 	return 0
@@ -111,6 +121,8 @@
 					else if(!D.density)
 						spawn(0)
 							D.close()
+			for(var/obj/machinery/firealarm/F in RA)
+				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
@@ -118,6 +130,8 @@
 		a.triggerAlarm("Fire", src, cameras, src)
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		aiPlayer.triggerAlarm("Fire", src, cameras, src)
+	for (var/mob/living/simple_animal/drone/D in mob_list)
+		D.triggerAlarm("Fire", src, cameras, src)
 	return
 
 /area/proc/firereset()
@@ -133,11 +147,15 @@
 					else if(D.density)
 						spawn(0)
 							D.open()
+			for(var/obj/machinery/firealarm/F in RA)
+				F.update_icon()
 
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		aiPlayer.cancelAlarm("Fire", src, src)
 	for (var/obj/machinery/computer/station_alert/a in machines)
 		a.cancelAlarm("Fire", src, src)
+	for (var/mob/living/simple_animal/drone/D in mob_list)
+		D.cancelAlarm("Fire", src, src)
 	return
 
 /area/proc/burglaralert(var/obj/trigger)

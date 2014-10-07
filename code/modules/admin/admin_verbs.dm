@@ -112,7 +112,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_debug_del_all,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
-	/client/proc/callproc
+	/client/proc/callproc,
+	/client/proc/SDQL2_query
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -453,17 +454,16 @@ var/list/admin_verbs_hideable = list(
 	set category = "Special Verbs"
 	set name = "Object Say"
 	set desc = "Makes an object say something."
-	if(istype(O))
-		var/message = input("What do you want the message to be?", "Object Say") as text | null
-		if(!message)
-			return
-		var/templanguages = O.languages
-		O.languages |= ALL
-		O.say(message)
-		O.languages = templanguages
-		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say [message]")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say [message]</span>", 1)
-		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
+	if(!message)
+		return
+	var/templanguages = O.languages
+	O.languages |= ALL
+	O.say(message)
+	O.languages = templanguages
+	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>", 1)
+	feedback_add_details("admin_verb","OS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"

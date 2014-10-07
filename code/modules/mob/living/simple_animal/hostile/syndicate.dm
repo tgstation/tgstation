@@ -30,7 +30,7 @@
 	max_co2 = 5
 	min_n2 = 0
 	max_n2 = 0
-	unsuitable_atoms_damage = 15
+	unsuitable_atmos_damage = 15
 	faction = list("syndicate")
 	status_flags = CANPUSH
 
@@ -52,7 +52,7 @@
 	melee_damage_upper = 25
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
-	weapon1 = /obj/item/weapon/melee/energy/sword/red
+	weapon1 = /obj/item/weapon/melee/energy/sword/saber/red
 	weapon2 = /obj/item/weapon/shield/energy
 	attacktext = "slashes"
 	status_flags = 0

@@ -1296,9 +1296,9 @@
 
 		//Job + antagonist
 		if(M.mind)
-			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>; Has been rev: [(M.mind.has_been_rev)?"Yes":"No"]"
+			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>"
 		else
-			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
+			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>"
 
 		//Health
 		if(isliving(M))
@@ -1853,6 +1853,22 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SM")
 				rightandwrong(1, usr)
+			if("events")
+				if(events && !events.wizardmode)
+					if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
+						summonevents()
+						feedback_inc("admin_secrets_fun_used",1)
+						feedback_add_details("admin_secrets_fun_used","SE")
+
+				else if(events && events.wizardmode)
+					switch(alert("What would you like to do?",,"Intensify Summon Events","Turn Off Summon Events","Nothing"))
+						if("Intensify Summon Events")
+							summonevents()
+							feedback_inc("admin_secrets_fun_used",1)
+							feedback_add_details("admin_secrets_fun_used","SE")
+						if("Turn Off Summon Events")
+							events.toggleWizardmode()
+							events.resetFrequency()
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")

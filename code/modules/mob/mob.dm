@@ -285,6 +285,18 @@ var/list/slot_equipment_priority = list( \
 	user << browse(dat, "window=mob\ref[src];size=325x500")
 	onclose(user, "mob\ref[src]")
 
+//mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
+/mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+	set name = "Examine"
+	set category = "IC"
+
+//	if( (sdisabilities & BLIND || blinded || stat) && !istype(src,/mob/dead/observer) )
+	if(is_blind(src))
+		src << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+
+	face_atom(A)
+	A.examine(src)
 
 /mob/verb/mode()
 	set name = "Activate Held Object"

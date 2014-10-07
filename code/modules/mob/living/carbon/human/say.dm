@@ -1,6 +1,3 @@
-/mob/living/carbon/human/say(var/message)
-	..(message)
-
 /mob/living/carbon/human/say_quote(text)
 	if(!text)
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code

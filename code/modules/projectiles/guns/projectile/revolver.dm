@@ -45,9 +45,9 @@
 		boolets += magazine.ammo_count(countempties)
 	return boolets
 
-/obj/item/weapon/gun/projectile/revolver/examine()
+/obj/item/weapon/gun/projectile/revolver/examine(mob/user)
 	..()
-	usr << "[get_ammo(0,0)] of those are live rounds."
+	user << "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/weapon/gun/projectile/revolver/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-special rounds."

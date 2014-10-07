@@ -8,6 +8,10 @@
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 
+	var/transition //These is used in transistions as a way to tell where on the "cube" of space you're transitioning from/to
+	var/destination_x
+	var/destination_y
+
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
@@ -50,43 +54,25 @@
 
 	inertial_drift(A)
 
-	if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
-		var/move_to_z = src.z
-		var/safety = 1
+	if(transition)
 
-		while(move_to_z == src.z)
-			var/move_to_z_str = pickweight(accessable_z_levels)
-			move_to_z = text2num(move_to_z_str)
-			safety++
-			if(safety > 10)
-				break
+		if(destination_x)
+			A.x = destination_x
 
-		if(!move_to_z)
-			return
+		if(destination_y)
+			A.y = destination_y
 
-		A.z = move_to_z
-
-		if(src.x <= TRANSITIONEDGE)
-			A.x = world.maxx - TRANSITIONEDGE - 2
-			A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
-
-		else if (A.x >= (world.maxx - TRANSITIONEDGE - 1))
-			A.x = TRANSITIONEDGE + 1
-			A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
-
-		else if (src.y <= TRANSITIONEDGE)
-			A.y = world.maxy - TRANSITIONEDGE -2
-			A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
-
-		else if (A.y >= (world.maxy - TRANSITIONEDGE - 1))
-			A.y = TRANSITIONEDGE + 1
-			A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+		A.z =  text2num(transition)
 
 		if(isliving(A))
 			var/mob/living/L = A
 			if(L.pulling)
 				var/turf/T = get_step(L.loc,turn(A.dir, 180))
 				L.pulling.loc = T
+
+		//now we're on the new z_level, proceed the space drifting
+		if ((A && A.loc))
+			A.loc.Entered(A)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A)
 	var/cur_x
@@ -127,3 +113,99 @@
 
 /turf/space/handle_slip()
 	return
+
+/turf/space/proc/Assign_Destination()
+
+	if(transition)
+		if(x <= TRANSITIONEDGE) 							//west
+			destination_x = world.maxx - TRANSITIONEDGE - 2
+		else if (x >= (world.maxx - TRANSITIONEDGE - 1)) 	//east
+			destination_x = TRANSITIONEDGE + 1
+		else if (y <= TRANSITIONEDGE) 						//south
+			destination_y = world.maxy - TRANSITIONEDGE - 2
+		else if (y >= (world.maxy - TRANSITIONEDGE - 1)) 	//north
+			destination_y = TRANSITIONEDGE + 1
+
+/*
+  Set the space turf transitions for the "space cube"
+
+  Connections:
+     ___     ___
+   /_A_/|  /_F_/|
+  |   |C| |   |E|
+  |_B_|/  |_D_|/
+
+  Note that all maps except F are oriented with north towards A. A and F are oriented with north towards D.
+  The characters on the second cube should be upside down in this illustration, but aren't because of a lack of unicode support.
+*/
+proc/setup_map_transitions() //listamania
+
+	var/list/unplaced_z_levels = 			accessable_z_levels
+	var/list/free_zones = 					list("A", "B", "C", "D", "E", "F")
+	var/list/zone_connections = 			list("D ","C ","B ","E ","A ","C ","F ","E ","A ","D ","F ","B ","A ","E ","F ","C ","A ","B ","F ","D ","D ","C ","B ","E") //This describes the borders of a cube based on free zones, really!
+	var/text_zone_connections = 			list2text(zone_connections)
+	var/list/final_zone_connections =		list()
+	var/list/turfs_needing_transition =		list()
+	var/list/turfs_needing_destinations = 	list()
+	var/list/z_level_order = 				list()
+	var/z_level
+	var/placement
+	var/total_processed = 0
+
+	for(var/turf/space/S in world) //Define the transistions of the z levels
+		total_processed++
+		if (S.x == TRANSITIONEDGE || S.x == (world.maxx - TRANSITIONEDGE - 1) || S.y == TRANSITIONEDGE || S.y == (world.maxy - TRANSITIONEDGE - 1))
+			turfs_needing_transition += S
+
+	//if we've processed lots of turfs, switch to background processing to prevent being mistaken for an infinite loop
+	if(total_processed > 450000)
+		set background = 1
+
+	while(free_zones.len != 0) //Assign the sides of the cube
+		if(!unplaced_z_levels) //if we're somehow unable to fill the cube, pad with deep space
+			z_level =  6
+		else
+			z_level = pick(unplaced_z_levels)
+		if(z_level > world.maxz) //A safety if one of the unplaced_z_levels doesn't actually exist
+			z_level =  6
+		placement = pick(free_zones)
+		text_zone_connections = replacetext(text_zone_connections, placement, "[z_level]")
+
+		for(var/turf/space/S in turfs_needing_transition) //pass the identity zone to the relevent turfs
+			if(S.transition && prob(50)) //In z = 6 (deep space) it's a bit of a crapshoot in terms of navigation
+				continue
+			if(S.z == z_level)
+				S.transition = num2text(z_level)
+				if(!(S in turfs_needing_destinations))
+					turfs_needing_destinations += S
+				if(S.z != 6) //deep space turfs need to hang around in case they get reassigned a zone
+					turfs_needing_transition -= S
+
+		z_level_order += num2text(z_level)
+		unplaced_z_levels -= z_level
+		free_zones -= placement
+
+	zone_connections = text2list(replacetext(text_zone_connections, " ", "\n")) //Convert the string back into a list
+
+	final_zone_connections.len = z_level_order.len
+
+	var/list/temp = list()
+
+	for(var/j=1, j<= 24, j++)
+		temp += zone_connections[j]
+		if(temp.len == 4) //Chunks of cardinal directions
+			final_zone_connections[z_level_order[j/4]] += temp
+			temp = list()
+
+	for(var/turf/space/S in turfs_needing_destinations) //replace the identity zone with the destination z-level
+		var/list/directions = final_zone_connections[S.transition]
+		if(S.x <= TRANSITIONEDGE)
+			S.transition = directions[Z_WEST]
+		else if(S.x >= (world.maxx - TRANSITIONEDGE - 1))
+			S.transition = directions[Z_EAST]
+		else if(S.y <= TRANSITIONEDGE)
+			S.transition = directions[Z_SOUTH]
+		else
+			S.transition = directions[Z_NORTH]
+
+		S.Assign_Destination()

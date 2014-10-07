@@ -163,15 +163,14 @@ LINEN BINS
 	var/obj/item/hidden = null
 
 
-/obj/structure/bedsheetbin/examine()
+/obj/structure/bedsheetbin/examine(mob/user)
 	..()
 	if(amount < 1)
-		usr << "There are no bed sheets in the bin."
-		return
-	if(amount == 1)
-		usr << "There is one bed sheet in the bin."
-		return
-	usr << "There are [amount] bed sheets in the bin."
+		user << "There are no bed sheets in the bin."
+	else if(amount == 1)
+		user << "There is one bed sheet in the bin."
+	else
+		user << "There are [amount] bed sheets in the bin."
 
 
 /obj/structure/bedsheetbin/update_icon()
