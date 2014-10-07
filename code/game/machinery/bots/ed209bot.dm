@@ -33,6 +33,7 @@
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
 	var/projectile = null//Holder for projectile type, to avoid so many else if chains
+	var/shoot_sound = 'sound/weapons/laser.ogg'
 
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -219,8 +220,10 @@ Auto Patrol: []"},
 				user << "<span class='notice'>Access denied.</span>"
 	else
 		..()
-		if (!istype(W, /obj/item/weapon/screwdriver) && !istype(W, /obj/item/weapon/weldingtool) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
-			if(hasvar(W,"force") && W.force)//If force is defined and non-zero
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
+			return
+		if (!istype(W, /obj/item/weapon/screwdriver) && (!src.target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+			if(W.force && W.damtype != STAMINA)//If force is non-zero and damage type isn't stamina.
 				threatlevel = user.assess_threat(src)
 				threatlevel += 6
 				if(threatlevel >= 4)
@@ -257,8 +260,7 @@ Auto Patrol: []"},
 		var/threatlevel = 0
 		if ((C.stat) || (C.lying))
 			continue
-		if (istype(C, /mob/living/carbon/human))
-			threatlevel = C.assess_threat(src, lasercolor)
+		threatlevel = C.assess_threat(src, lasercolor)
 		//src.speak(C.real_name + text(": threat: []", threatlevel))
 		if (threatlevel < 4 )
 			continue
@@ -727,12 +729,15 @@ Auto Patrol: []"},
 	if(!lasercolor)
 		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
 		G.power_supply.charge = 0
+		G.update_icon()
 	else if(lasercolor == "b")
 		var/obj/item/weapon/gun/energy/laser/bluetag/G = new /obj/item/weapon/gun/energy/laser/bluetag(Tsec)
 		G.power_supply.charge = 0
+		G.update_icon()
 	else if(lasercolor == "r")
 		var/obj/item/weapon/gun/energy/laser/redtag/G = new /obj/item/weapon/gun/energy/laser/redtag(Tsec)
 		G.power_supply.charge = 0
+		G.update_icon()
 
 	if (prob(50))
 		new /obj/item/robot_parts/l_leg(Tsec)
@@ -771,21 +776,23 @@ Auto Patrol: []"},
 		return
 
 	//if(lastfired && world.time - lastfired < 100)
-	var/shoot_sound = 'sound/weapons/laser.ogg'
 
 	if(!projectile)
 		if(!lasercolor)
 			if (src.emagged == 2)
 				projectile = /obj/item/projectile/beam
+				shoot_sound = 'sound/weapons/laser.ogg'
 			else
 				projectile = /obj/item/projectile/energy/electrode
 				shoot_sound = 'sound/weapons/Taser.ogg'
 		else if(lasercolor == "b")
+			shoot_sound = 'sound/weapons/laser.ogg'
 			if (src.emagged == 2)
 				projectile = /obj/item/projectile/lasertag
 			else
 				projectile = /obj/item/projectile/lasertag/bluetag
 		else if(lasercolor == "r")
+			shoot_sound = 'sound/weapons/laser.ogg'
 			if (src.emagged == 2)
 				projectile = /obj/item/projectile/lasertag
 			else
