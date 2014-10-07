@@ -3381,7 +3381,7 @@
 "bna" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/manifold{pipe_color = "blue"; dir = 8; icon_state = "manifold-b-f"; level = 1; name = "pipe manifold"},/turf/simulated/floor{dir = 10; icon_state = "whitehall"},/area/medical/research{name = "Research Division"})
 "bnb" = (/obj/machinery/computer/rdconsole/core,/turf/simulated/floor,/area/toxins/lab)
 "bnc" = (/turf/simulated/floor,/area/toxins/lab)
-"bnd" = (/obj/machinery/door_control{dir = 2; id = "robotics2"; name = "Shutters Control Button"; pixel_x = 24; pixel_y = -24},/turf/simulated/floor{icon_state = "white"},/area/assembly/robotics)
+"bnd" = (/obj/machinery/door_control{dir = 2; id = "robotics2"; name = "Shutters Control Button"; pixel_x = 24; pixel_y = -24},/obj/structure/stool,/turf/simulated/floor{icon_state = "white"},/area/assembly/robotics)
 "bne" = (/turf/simulated/floor{dir = 5; icon_state = "whitehall"},/area/medical/research{name = "Research Division"})
 "bnf" = (/obj/machinery/door/poddoor{id = "trash"; name = "disposal bay door"},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bng" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/maintenance/disposal)
