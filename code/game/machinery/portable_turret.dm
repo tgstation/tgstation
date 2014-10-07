@@ -599,13 +599,16 @@
 		icon_state = "[lasercolor]orange_target_prism"
 	else
 		icon_state = "[lasercolor]target_prism"
-	if(sound)
-		playsound(loc, 'sound/weapons/Taser.ogg', 75, 1)
 	var/obj/item/projectile/A
 	if(emagged)
 		A = new eprojectile(loc)
 	else
 		A = new projectile(loc)
+	if(sound)
+		if(istype(A,/obj/item/projectile/energy/electrode)) //if turrets ever shoot more than tasers n lasers, this will need changing
+			playsound(loc, 'sound/weapons/Taser.ogg', 75, 1)
+		else
+			playsound(loc, 'sound/weapons/Laser.ogg', 75, 1)
 	A.original = target
 	if(!emagged)
 		use_power(reqpower)
