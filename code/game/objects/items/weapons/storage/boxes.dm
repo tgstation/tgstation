@@ -416,6 +416,21 @@
 	new /obj/item/weapon/handcuffs(src)
 	new /obj/item/weapon/handcuffs(src)
 
+/obj/item/weapon/storage/box/zipties
+	name = "box of spare zipties"
+	desc = "A box full of zipties."
+	icon_state = "handcuff"
+
+/obj/item/weapon/storage/box/zipties/New()
+	..()
+	new /obj/item/weapon/handcuffs/zipties(src)
+	new /obj/item/weapon/handcuffs/zipties(src)
+	new /obj/item/weapon/handcuffs/zipties(src)
+	new /obj/item/weapon/handcuffs/zipties(src)
+	new /obj/item/weapon/handcuffs/zipties(src)
+	new /obj/item/weapon/handcuffs/zipties(src)
+	new /obj/item/weapon/handcuffs/zipties(src)
+
 /obj/item/weapon/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"
 	desc = "A sleek, sturdy box used to hold replica spacesuits."

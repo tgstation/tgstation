@@ -14,7 +14,6 @@
 	origin_tech = "materials=1"
 	var/breakouttime = 600 //Deciseconds = 120s = 2 minutes
 
-
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
 	if(CLUMSY in user.mutations && prob(50))
 		user << "<span class='warning'>Uh... how do those things work?!</span>"
@@ -26,7 +25,7 @@
 			return
 
 	var/cable = 0
-	if(istype(src, /obj/item/weapon/handcuffs/cable))
+	if(istype(src, /obj/item/weapon/handcuffs/cable) || istype(src, /obj/item/weapon/handcuffs/zipties))
 		cable = 1
 
 	if(!C.handcuffed)
@@ -101,11 +100,18 @@
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
 		if(!C.handcuffed)
-			playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-			C.visible_message("<span class='danger'>[user] is trying to put handcuffs on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put handcuffs on [C]!</span>")
+			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
+								"<span class='userdanger'>[user] is trying to put zipeties on [C]!</span>")
 			if(do_mob(user, C, 30))
 				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/weapon/handcuffs(C)
+					C.handcuffed = new /obj/item/weapon/handcuffs/zipties(C)
 					C.update_inv_handcuffed(0)
 					add_logs(user, C, "handcuffed")
+
+/obj/item/weapon/handcuffs/zipties
+	name = "zipties"
+	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
+	icon_state = "cuff_white"
+	item_state = "coil_white"
+	breakouttime = 300 //Deciseconds = 30s

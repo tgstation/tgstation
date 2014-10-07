@@ -309,10 +309,10 @@ Auto Patrol: []"},
 
 			if(iscarbon(target) && target.canBeHandcuffed())
 				if(!src.target.handcuffed && !src.arrest_type)
-					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+					playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
-					target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
+					target.visible_message("<span class='danger'>[src] is trying to put zipties on [src.target]!</span>",\
+											"<span class='userdanger'>[src] is trying to put zipeties on [src.target]!</span>")
 
 					spawn(60)
 						if(get_dist(src, src.target) <= 1)
@@ -320,7 +320,7 @@ Auto Patrol: []"},
 								return
 
 							if(istype(src.target,/mob/living/carbon))
-								target.handcuffed = new /obj/item/weapon/handcuffs(target)
+								target.handcuffed = new /obj/item/weapon/handcuffs/zipties(target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
 
 							mode = SECBOT_IDLE
