@@ -464,3 +464,151 @@
 		..()
 		reagents.add_reagent("cola", 50)
 		on_reagent_change()
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy
+	name = "wine glass"
+	desc = "Incredibly classy."
+	icon_state = "wineglass"
+	amount_per_transfer_from_this = 10
+	volume = 50
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/update_icon()
+	overlays.Cut()
+
+	if(reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 9)		filling.icon_state = "[icon_state]-10"
+			if(10 to 24) 	filling.icon_state = "[icon_state]10"
+			if(25 to 49)	filling.icon_state = "[icon_state]25"
+			if(50 to 74)	filling.icon_state = "[icon_state]50"
+			if(75 to 79)	filling.icon_state = "[icon_state]75"
+			if(80 to 90)	filling.icon_state = "[icon_state]80"
+			if(91 to INFINITY)	filling.icon_state = "[icon_state]100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
+
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/cocktail
+	name = "cocktail glass"
+	desc = "The olive isn't real, it's just wax!"
+	icon_state = "cocktailglass"
+	amount_per_transfer_from_this = 10
+	volume = 40
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/cocktail/update_icon()
+	overlays.Cut()
+
+	if(reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 29)		filling.icon_state = "[icon_state]-10"
+			if(30 to 59) 	filling.icon_state = "[icon_state]30"
+			if(60 to 99)	filling.icon_state = "[icon_state]60"
+			if(100 to INFINITY)	filling.icon_state = "[icon_state]100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer
+	name = "beer mug"
+	desc = "Chug it good!"
+	icon_state = "beerglass"
+	amount_per_transfer_from_this = 10
+	volume = 50
+	var/glasstype = "beerglass"
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/junked
+	icon_state = "beerglass-junked"
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/update_icon()
+	overlays.Cut()
+
+	if(reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 9)		filling.icon_state = "[glasstype]-10"
+			if(10 to 19) 	filling.icon_state = "[glasstype]10"
+			if(20 to 29)	filling.icon_state = "[glasstype]20"
+			if(30 to 39)	filling.icon_state = "[glasstype]30"
+			if(40 to 49)	filling.icon_state = "[glasstype]40"
+			if(50 to 59)	filling.icon_state = "[glasstype]50"
+			if(60 to 69) 	filling.icon_state = "[glasstype]60"
+			if(70 to 79)	filling.icon_state = "[glasstype]70"
+			if(80 to 89)	filling.icon_state = "[glasstype]80"
+			if(90 to 94)	filling.icon_state = "[glasstype]90"
+			if(95 to 99)	filling.icon_state = "[glasstype]95"
+			if(100 to INFINITY)	filling.icon_state = "[glasstype]100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/shot
+	name = "shot glass"
+	desc = "Another shot of whiskey!"
+	icon_state = "shotglass"
+	amount_per_transfer_from_this = 10
+	volume = 10
+	glasstype = "shotglass"
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/shot/junked
+	icon_state = "shotglass-junked"
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/soda
+	name = "soda bottle"
+	desc = "A glass soda bottle."
+	icon_state = "sodabottle"
+	amount_per_transfer_from_this = 10
+	volume = 60
+	glasstype = "sodabottle"
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/soda/junked
+	icon_state = "sodabottle-junk"
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/on_reagent_change()
+	update_icon()
+	if (reagents.reagent_list.len > 0)
+		switch(reagents.get_master_reagent_id())
+			if("cola")
+				icon_state = "sodabottle-cola"
+				name = "Space Cola"
+				desc = "Cola. in space."
+			if("sodawater")
+				icon_state = "sodabottle-sodawater"
+				name = "Soda Water"
+				desc = "A bottle of soda water. Why not make a scotch and soda?"
+			if("space_up")
+				icon_state = "sodabottle-spaceup"
+				name = "Space-Up"
+				desc = "Tastes like a hull breach in your mouth."
+			if("thirteenloko")
+				icon_state = "sodabottle-13loko"
+				name = "Thirteen Loko"
+				desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsably."
+			if("tonic")
+				icon_state = "sodabottle-tonic"
+				name = "T-Borg's Tonic Water"
+				desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+			else
+				icon_state ="sodabottle"
+				name = "soda bottle"
+				desc = "A glass soda bottle."
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/pickup(mob/user)
+	..()
+	update_icon()
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/dropped(mob/user)
+	..()
+	update_icon()
+
+/obj/item/weapon/reagent_containers/food/drinks/fancy/attack_hand()
+	..()
+	update_icon()
