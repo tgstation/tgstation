@@ -6,8 +6,6 @@
 	layer = 2.1
 	anchored = 1
 
-<<<<<<< HEAD
-
 /obj/effect/decal/cleanable/crayon/examine()
 	set src in view(2)
 	..()
