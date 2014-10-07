@@ -193,6 +193,8 @@ datum/hud/New(mob/owner)
 		ghost_hud()
 	else if(isovermind(mymob))
 		blob_hud()
+	else if(isshade(mymob))
+		shade_hud()
 	else if(isconstruct(mymob))
 		construct_hud()
 

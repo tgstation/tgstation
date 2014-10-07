@@ -350,7 +350,7 @@
 	. = ..()
 	if(.)
 		if(fire)
-			if(fire_alert)							fire.icon_state = "fire1" //fire_alert is either 0 if no alert, 1 for cold and 2 for heat.
+			if(fire_alert)							fire.icon_state = "fire1"
 			else									fire.icon_state = "fire0"
 		if(pullin)
 			if(pulling)								pullin.icon_state = "pull1"
