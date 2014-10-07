@@ -54,7 +54,7 @@
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
 	if ((M_CLUMSY in user.mutations) && prob(50) && active) //only an on blade can cut
-		user << "\red You accidentally cut yourself with [src]."
+		user << "<span class='danger'> You accidentally cut yourself with [src].</span>"
 		user.take_organ_damage(5,5)
 		return
 	toggleActive(user)
@@ -73,12 +73,12 @@
 		force = 30
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "\blue [src] is now active."
+		user << "<span class='notice'> [src] is now active.</span>"
 	else
 		force = 3
 		w_class = 2
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "\blue [src] can now be concealed."
+		user << "<span class='notice'> [src] can now be concealed.</span>"
 	update_icon()
 
 /obj/item/weapon/melee/energy/sword/update_icon()
