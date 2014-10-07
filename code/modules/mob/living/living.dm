@@ -363,10 +363,13 @@
 			O.trace_chemicals = list()
 			O.wounds = list()
 			O.wound_update_accuracy = 1
-		for(var/organ_name in H.internal_organs)
+		for(var/organ_name in H.internal_organs_by_name)
 			var/datum/organ/internal/IO = H.internal_organs_by_name[organ_name]
 			IO.damage = 0
-			IO.trace_chemicals = list()
+			IO.trace_chemicals.len = 0
+			IO.germ_level = 0
+			IO.status = 0
+			IO.robotic = 0
 		H.updatehealth()
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
