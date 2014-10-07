@@ -173,7 +173,7 @@ Security Officer
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/fingerless(H), slot_gloves)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_s_store)
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_l_store)
