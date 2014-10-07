@@ -19,7 +19,7 @@
 	)
 	fluffitems = list(
 		/obj/effect/decal/cleanable/blood=5,
-		/obj/item/weapon/reagent_containers/food/snacks/appendix=2, // OM NOM
+		/obj/item/weapon/reagent_containers/food/snacks/organ=2, // OM NOM
 		/obj/structure/closet/crate/freezer=2,
 		/obj/machinery/optable=1,
 		/obj/item/weapon/scalpel=1,

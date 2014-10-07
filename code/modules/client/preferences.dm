@@ -26,7 +26,7 @@ var/const/MAX_SAVE_SLOTS = 8
 #define GET_RANDOM_JOB 0
 #define BE_ASSISTANT 1
 #define RETURN_TO_LOBBY 2
-#define POLLED_LIMIT	150
+#define POLLED_LIMIT	300
 
 datum/preferences
 	//doohickeys for savefiles
@@ -144,8 +144,10 @@ datum/preferences
 	proc/ShowChoices(mob/user)
 		if(!user || !user.client)	return
 		update_preview_icon()
-		user << browse_rsc(preview_icon_front, "previewicon.png")
-		user << browse_rsc(preview_icon_side, "previewicon2.png")
+		var/preview_front = fcopy_rsc(preview_icon_front)
+		var/preview_side = fcopy_rsc(preview_icon_side)
+		user << browse_rsc(preview_front, "previewicon.png")
+		user << browse_rsc(preview_side, "previewicon2.png")
 		var/dat = "<html><body><center>"
 
 		if(!IsGuestKey(user.key))
@@ -288,7 +290,6 @@ datum/preferences
 			dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_m[underwear]]</b></a><br>"
 		else
 			dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_f[underwear]]</b></a><br>"
-
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:312: dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"

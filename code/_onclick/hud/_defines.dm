@@ -119,3 +119,20 @@
 
 #define ui_iarrowleft "SOUTH-1,11"
 #define ui_iarrowright "SOUTH-1,13"
+
+// AI (Ported straight from /tg/)
+
+#define ui_ai_core "SOUTH:6,WEST:16"
+#define ui_ai_camera_list "SOUTH:6,WEST+1:16"
+#define ui_ai_track_with_camera "SOUTH:6,WEST+2:16"
+#define ui_ai_camera_light "SOUTH:6,WEST+3:16"
+//#define ui_ai_crew_monitor "SOUTH:6,WEST+4:16"
+#define ui_ai_crew_manifest "SOUTH:6,WEST+4:16"
+#define ui_ai_alerts "SOUTH:6,WEST+5:16"
+#define ui_ai_announcement "SOUTH:6,WEST+6:16"
+#define ui_ai_shuttle "SOUTH:6,WEST+7:16"
+#define ui_ai_state_laws "SOUTH:6,WEST+8:16"
+#define ui_ai_pda_send "SOUTH:6,WEST+9:16"
+#define ui_ai_pda_log "SOUTH:6,WEST+10:16"
+#define ui_ai_take_picture "SOUTH:6,WEST+11:16"
+#define ui_ai_view_images "SOUTH:6,WEST+12:16"

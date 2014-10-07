@@ -803,6 +803,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define CAN_BE_FAT 8192 // /vg/
 
+#define IS_SYNTHETIC 16384 // from baystation
+
+
+// from bay station
+#define INFECTION_LEVEL_ONE 100
+#define INFECTION_LEVEL_TWO 500
+#define INFECTION_LEVEL_THREE 1000
+
+
+
 //Language flags.
 #define WHITELISTED 1  // Language is available if the speaker is whitelisted.
 #define RESTRICTED 2   // Language can only be accquired by spawning or an admin.

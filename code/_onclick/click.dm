@@ -268,6 +268,9 @@
 	return
 
 /atom/proc/AltClick(var/mob/user)
+	if(ishuman(src) && user.Adjacent(src))
+		src:give_item(user)
+		return
 	var/turf/T = get_turf(src)
 	if(T && T.Adjacent(user))
 		if(user.listed_turf == T)

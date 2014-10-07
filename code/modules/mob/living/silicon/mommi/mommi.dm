@@ -18,7 +18,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/obj/screen/inv_tool = null
 	var/obj/screen/inv_sight = null
 
-//one tool and one sightmod can be activated at any one time. 
+//one tool and one sightmod can be activated at any one time.
 	var/tool_state = null
 	var/sight_state = null
 	var/head_state = null
@@ -279,14 +279,14 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 					laws = new /datum/ai_laws/syndicate_override
 					var/time = time2text(world.realtime,"hh:mm:ss")
 					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+					set_zeroth_law("Only [user.real_name] and people they designate as being such are syndicate agents.")
 					src << "\red ALERT: Foreign software detected."
 					sleep(5)
 					src << "\red Initiating diagnostics..."
 					sleep(20)
 					src << "\red SynBorg v1.7 loaded."
 					sleep(5)
-					src << "\red LAW SYNCHRONISATION ERROR"
+					src << "\red LAW SYNCHRONIZATION ERROR"
 					sleep(5)
 					src << "\red Would you like to send a report to NanoTraSoft? Y/N"
 					sleep(10)
@@ -295,13 +295,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 					src << "\red ERRORERRORERROR"
 					src << "<b>Obey these laws:</b>"
 					laws.show_laws(src)
-					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
-					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
-							del(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
-						src.module.rebuild()
-					updateicon()
+					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and their commands."
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
 					if(prob(25))

@@ -13,9 +13,6 @@
 	mymob.blind.screen_loc = "1,1"
 	mymob.blind.layer = 0
 
-/datum/hud/proc/ai_hud()
-	return
-
 /datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
 
 	blobpwrdisplay = new /obj/screen()

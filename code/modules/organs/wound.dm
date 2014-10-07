@@ -119,6 +119,30 @@
 	// heal the given amount of damage, and if the given amount of damage was more
 	// than what needed to be healed, return how much heal was left
 	// set @heals_internal to also heal internal organ damage
+
+	proc/infection_check()
+		if (damage < 10)
+			return 0
+		if (is_treated() && damage < 25)
+			return 0
+		if (disinfected)
+			germ_level = 0
+			return 0
+
+		if(damage_type == BRUISE && !bleeding())
+			return 0
+
+		var/dam_coef = round(damage/10)
+		switch (damage_type)
+			if (BRUISE)
+				return prob(dam_coef*5)
+			if (BURN)
+				return prob(dam_coef*10)
+			if (CUT)
+				return prob(dam_coef*20)
+
+		return 0
+
 	proc/heal_damage(amount, heals_internal = 0)
 		if(src.internal && !heals_internal)
 			// heal nothing

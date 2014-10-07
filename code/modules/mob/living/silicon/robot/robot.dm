@@ -826,14 +826,14 @@
 					laws = new /datum/ai_laws/syndicate_override
 					var/time = time2text(world.realtime,"hh:mm:ss")
 					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+					set_zeroth_law("Only [user.real_name] and people they designate as being such are syndicate agents.")
 					src << "\red ALERT: Foreign software detected."
 					sleep(5)
 					src << "\red Initiating diagnostics..."
 					sleep(20)
 					src << "\red SynBorg v1.7 loaded."
 					sleep(5)
-					src << "\red LAW SYNCHRONISATION ERROR"
+					src << "\red LAW SYNCHRONIZATION ERROR"
 					sleep(5)
 					src << "\red Would you like to send a report to NanoTraSoft? Y/N"
 					sleep(10)
@@ -842,7 +842,7 @@
 					src << "\red ERRORERRORERROR"
 					src << "<b>Obey these laws:</b>"
 					laws.show_laws(src)
-					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
+					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and their commands."
 					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
 						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
 							del(D)

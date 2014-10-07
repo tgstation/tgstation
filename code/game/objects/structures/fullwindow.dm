@@ -4,6 +4,10 @@
 	mouse_opacity=2 // Complete opacity.
 	layer = 3.21 // Windows are at 3.2.
 
+/obj/structure/window/full/New(loc)
+	..(loc)
+	flags &= ~ON_BORDER
+
 /obj/structure/window/full/CheckExit(atom/movable/O as mob|obj, target as turf)
 	return 1
 
