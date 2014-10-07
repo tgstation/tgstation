@@ -523,8 +523,8 @@
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater = 15,
 					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/fancy = 10,/obj/item/weapon/reagent_containers/food/drinks/fancy/cocktail = 10,
-					/obj/item/weapon/reagent_containers/food/drinks/fancy/beer = 10,/obj/item/weapon/reagent_containers/food/drinks/fancy/shot = 10,
-					/obj/item/weapon/reagent_containers/food/drinks/fancy/soda = 10,/obj/item/weapon/reagent_containers/food/drinks/ice = 9)
+					/obj/item/weapon/reagent_containers/food/drinks/fancy/beer = 10,/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/shot = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/soda = 10,/obj/item/weapon/reagent_containers/food/drinks/ice = 9)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/tea = 10)
 	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"

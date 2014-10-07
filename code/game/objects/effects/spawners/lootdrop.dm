@@ -115,8 +115,8 @@
 				/obj/item/weapon/weldingtool = 3,
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
-				/obj/item/weapon/reagent_containers/food/drinks/fancy/soda/junked = 1,
-				/obj/item/weapon/reagent_containers/food/drinks/fancy/shot/junked = 1,
+				/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/soda/junked = 1,
+				/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/shot/junked = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/junked = 1,
 				"" = 11
 				)

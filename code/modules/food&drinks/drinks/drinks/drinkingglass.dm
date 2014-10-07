@@ -521,6 +521,7 @@
 	icon_state = "beerglass"
 	amount_per_transfer_from_this = 10
 	volume = 50
+	var/glasstype = "beerglass"
 
 /obj/item/weapon/reagent_containers/food/drinks/fancy/beer/junked
 	icon_state = "beerglass-junked"
@@ -533,87 +534,43 @@
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
-			if(0 to 9)		filling.icon_state = "beerglass-10"
-			if(10 to 19) 	filling.icon_state = "beerglass10"
-			if(20 to 29)	filling.icon_state = "beerglass20"
-			if(30 to 39)	filling.icon_state = "beerglass30"
-			if(40 to 49)	filling.icon_state = "beerglass40"
-			if(50 to 59)	filling.icon_state = "beerglass50"
-			if(60 to 69) 	filling.icon_state = "beerglass60"
-			if(70 to 79)	filling.icon_state = "beerglass70"
-			if(80 to 89)	filling.icon_state = "beerglass80"
-			if(90 to 94)	filling.icon_state = "beerglass90"
-			if(95 to 99)	filling.icon_state = "beerglass95"
-			if(100 to INFINITY)	filling.icon_state = "beerglass100"
+			if(0 to 9)		filling.icon_state = "[glasstype]-10"
+			if(10 to 19) 	filling.icon_state = "[glasstype]10"
+			if(20 to 29)	filling.icon_state = "[glasstype]20"
+			if(30 to 39)	filling.icon_state = "[glasstype]30"
+			if(40 to 49)	filling.icon_state = "[glasstype]40"
+			if(50 to 59)	filling.icon_state = "[glasstype]50"
+			if(60 to 69) 	filling.icon_state = "[glasstype]60"
+			if(70 to 79)	filling.icon_state = "[glasstype]70"
+			if(80 to 89)	filling.icon_state = "[glasstype]80"
+			if(90 to 94)	filling.icon_state = "[glasstype]90"
+			if(95 to 99)	filling.icon_state = "[glasstype]95"
+			if(100 to INFINITY)	filling.icon_state = "[glasstype]100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
 
-/obj/item/weapon/reagent_containers/food/drinks/fancy/shot
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/shot
 	name = "shot glass"
 	desc = "Another shot of whiskey!"
 	icon_state = "shotglass"
 	amount_per_transfer_from_this = 10
 	volume = 10
+	glasstype = "shotglass"
 
-/obj/item/weapon/reagent_containers/food/drinks/fancy/shot/junked
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/shot/junked
 	icon_state = "shotglass-junked"
 
-/obj/item/weapon/reagent_containers/food/drinks/fancy/shot/update_icon()
-	overlays.Cut()
-
-	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
-
-		var/percent = round((reagents.total_volume / volume) * 100)
-		switch(percent)
-			if(0 to 9)		filling.icon_state = "shotglass-10"
-			if(10 to 19) 	filling.icon_state = "shotglass10"
-			if(20 to 29)	filling.icon_state = "shotglass20"
-			if(30 to 39)	filling.icon_state = "shotglass30"
-			if(40 to 49)	filling.icon_state = "shotglass40"
-			if(50 to 59)	filling.icon_state = "shotglass50"
-			if(60 to 69) 	filling.icon_state = "shotglass60"
-			if(70 to 79)	filling.icon_state = "shotglass70"
-			if(80 to 89)	filling.icon_state = "shotglass80"
-			if(90 to 94)	filling.icon_state = "shotglass90"
-			if(95 to 99)	filling.icon_state = "shotglass95"
-			if(100 to INFINITY)	filling.icon_state = "shotglass100"
-
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
-
-/obj/item/weapon/reagent_containers/food/drinks/fancy/soda
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/soda
 	name = "soda bottle"
 	desc = "A glass soda bottle."
 	icon_state = "sodabottle"
 	amount_per_transfer_from_this = 10
 	volume = 60
+	glasstype = "sodabottle"
 
-/obj/item/weapon/reagent_containers/food/drinks/fancy/soda/junked
+/obj/item/weapon/reagent_containers/food/drinks/fancy/beer/soda/junked
 	icon_state = "sodabottle-junk"
-
-/obj/item/weapon/reagent_containers/food/drinks/fancy/soda/update_icon()
-	overlays.Cut()
-
-	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
-
-		var/percent = round((reagents.total_volume / volume) * 100)
-		switch(percent)
-			if(0 to 9)		filling.icon_state = "sodabottle-10"
-			if(10 to 19) 	filling.icon_state = "sodabottle10"
-			if(20 to 49)	filling.icon_state = "sodabottle20"
-			if(50 to 59)	filling.icon_state = "sodabottle50"
-			if(60 to 69) 	filling.icon_state = "sodabottle60"
-			if(70 to 79)	filling.icon_state = "sodabottle70"
-			if(80 to 89)	filling.icon_state = "sodabottle80"
-			if(90 to 94)	filling.icon_state = "sodabottle90"
-			if(95 to 99)	filling.icon_state = "sodabottle95"
-			if(100 to INFINITY)	filling.icon_state = "sodabottle100"
-
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
 
 /obj/item/weapon/reagent_containers/food/drinks/fancy/on_reagent_change()
 	update_icon()
