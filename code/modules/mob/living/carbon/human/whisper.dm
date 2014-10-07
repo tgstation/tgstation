@@ -6,6 +6,10 @@
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
+	if(stat == DEAD)
+		return
+
+
 	message = trim(copytext(strip_html_simple(message), 1, MAX_MESSAGE_LEN))
 	if(!can_speak(message))
 		return

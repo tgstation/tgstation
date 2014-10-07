@@ -19,7 +19,7 @@
 	var/sprite_name = "fire_extinguisher"
 
 /obj/item/weapon/extinguisher/mini
-	name = "fire extinguisher"
+	name = "pocket fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
 	item_state = "miniFE"
@@ -35,12 +35,6 @@
 /obj/item/weapon/extinguisher/New()
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
-
-/obj/item/weapon/extinguisher/examine()
-	set src in usr
-	..()
-	usr << "It contains [src.reagents.total_volume] units of water!"
-	return
 
 /obj/item/weapon/extinguisher/attack_self(mob/user as mob)
 	safety = !safety
