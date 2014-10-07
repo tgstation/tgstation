@@ -26,8 +26,7 @@
 /datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(I)
 		user.visible_message("<span class='notice'>[user] successfully removes [I] from [target]'s [target_zone]!</span>")
-		if(istype(I, /obj/item/weapon/implant/loyalty))
-			target << "<span class='notice'>You feel a sense of liberation as Nanotrasen's grip on your mind fades away.</span>"
+		I.removed_surgically(target)
 		qdel(I)
 	else
 		user.visible_message("<span class='notice'>[user] can't find anything in [target]'s [target_zone].</span>")
