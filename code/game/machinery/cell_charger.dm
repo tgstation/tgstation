@@ -26,12 +26,11 @@
 	else
 		overlays.Cut()
 
-/obj/machinery/cell_charger/examine()
-	set src in oview(5)
+/obj/machinery/cell_charger/examine(mob/user)
 	..()
-	usr << "There's [charging ? "a" : "no"] cell in the charger."
+	user << "There's [charging ? "a" : "no"] cell in the charger."
 	if(charging)
-		usr << "Current charge: [charging.charge]"
+		user << "Current charge: [round(charging.percent(), 1)]%"
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)

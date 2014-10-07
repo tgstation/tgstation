@@ -9,6 +9,7 @@
  */
 /obj/machinery/photocopier
 	name = "photocopier"
+	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
 	anchored = 1

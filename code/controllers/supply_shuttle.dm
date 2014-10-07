@@ -76,6 +76,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /obj/machinery/computer/supplycomp
 	name = "supply shuttle console"
+	desc = "Used to order supplies."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
 	req_access = list(access_cargo)
@@ -89,6 +90,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /obj/machinery/computer/ordercomp
 	name = "supply ordering console"
+	desc = "Used to order supplies from cargo staff."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
 	circuit = /obj/item/weapon/circuitboard/ordercomp
