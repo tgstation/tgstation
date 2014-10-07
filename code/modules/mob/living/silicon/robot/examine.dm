@@ -1,11 +1,4 @@
-/mob/living/silicon/robot/examine()
-	set src in oview()
-
-	if(!usr || !src)	return
-	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
+/mob/living/silicon/robot/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 	var/obj/act_module = get_active_hand()
 	if(act_module)
@@ -41,5 +34,4 @@
 		if(DEAD)			msg += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>\n"
 	msg += "*---------*</span>"
 
-	usr << msg
-	return
+	user << msg

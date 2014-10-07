@@ -39,6 +39,14 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 
+/obj/item/clothing/under/det/grey
+	name = "noir suit"
+	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
+	icon_state = "greydet"
+	item_state = "greydet"
+	item_color = "greydet"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
 /*
  * Head of Security
  */
@@ -60,6 +68,7 @@
 	icon_state = "jensen"
 	item_state = "jensen"
 	item_color = "jensen"
+	can_adjust = 0
 
 /obj/item/clothing/suit/armor/hos/jensen
 	name = "armored trenchoat"

@@ -55,15 +55,13 @@
 		master.update_icon()
 
 
-/obj/item/device/assembly_holder/examine()
-	set src in view()
+/obj/item/device/assembly_holder/examine(mob/user)
 	..()
-	if ((in_range(src, usr) || src.loc == usr))
-		if (src.secured)
-			usr << "\The [src] is ready!"
-		else
-			usr << "\The [src] can be attached!"
-	return
+	if(secured)
+		user << "\The [src] is secured and ready to be used."
+	else
+		user << "\The [src] can be attached to other things."
+
 
 
 /obj/item/device/assembly_holder/HasProximity(atom/movable/AM as mob|obj)
