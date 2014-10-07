@@ -531,7 +531,7 @@
 						laws = new /datum/ai_laws/syndicate_override
 						var/time = time2text(world.realtime,"hh:mm:ss")
 						lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-						set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+						set_zeroth_law("Only [user.real_name] and people \he designates as being such are Syndicate Agents.")
 						src << "<span class='danger'>ALERT: Foreign software detected.</span>"
 						sleep(5)
 						src << "<span class='danger'>Initiating diagnostics...</span>"
@@ -560,7 +560,7 @@
 		if(!opened)
 			usr << "You must access the borgs internals!"
 		else if(!src.module && U.require_module)
-			usr << "The borg must choose a module before he can be upgraded!"
+			usr << "The borg must choose a module before it can be upgraded!"
 		else if(U.locked)
 			usr << "The upgrade is locked and cannot be used yet!"
 		else
