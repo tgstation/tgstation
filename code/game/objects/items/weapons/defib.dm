@@ -140,11 +140,11 @@
 			&&(target.has_brain()))
 				target.visible_message("<span class='notice'>[src] beeps: Defibrillation successful.</span>")
 				dead_mob_list -= target
-				living_mob_list += target
+				living_mob_list |= list(target)
 				target.tod = null
-				target.stat = CONSCIOUS
+				target.stat = UNCONSCIOUS
 				target.regenerate_icons()
-				//target.update_canmove()
+				target.update_canmove()
 				flick("e_flash",target.flash)
 				target.apply_effect(10, EYE_BLUR) //I'll still put this back in to avoid dumd "pounce back up" behavior
 				target.apply_effect(10, PARALYZE)
