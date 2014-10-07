@@ -1,4 +1,4 @@
 author: Nobalm
 delete-after: True
 changes: 
-  - bugfix: Turrets make projectile-appropriate sounds now.
+  - bugfix: Default and admin-spawned turrets make projectile-appropriate sounds now.

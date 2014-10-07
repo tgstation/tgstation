@@ -604,8 +604,8 @@
 		A = new eprojectile(loc)
 	else
 		A = new projectile(loc)
-	if(sound)
-		if(istype(A,/obj/item/projectile/energy/electrode)) //if turrets ever shoot more than tasers n lasers, this will need changing
+	if(sound) //this only occurs with admin-spawned or default-on-map turrets, which should only have these two weapons.
+		if(istype(A,/obj/item/projectile/energy/electrode))
 			playsound(loc, 'sound/weapons/Taser.ogg', 75, 1)
 		else
 			playsound(loc, 'sound/weapons/Laser.ogg', 75, 1)
