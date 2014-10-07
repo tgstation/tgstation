@@ -55,7 +55,7 @@
 		M.last_bumped = world.time
 
 		if(!M.restrained() && !M.small)
-			bumpanel_open(M)
+			bump_open(M)
 
 		return
 
@@ -80,7 +80,7 @@
 
 	return
 
-/obj/machinery/door/proc/bumpanel_open(mob/user as mob)
+/obj/machinery/door/proc/bump_open(mob/user as mob)
 	// TODO: analyze this
 	if(user.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) //Fakkit
 		return
