@@ -97,6 +97,10 @@
 			user << "<span class='warning'>You need one rod to make a wired rod.</span>"
 			return
 
+/obj/item/weapon/handcuffs/cyborg
+	name = "zipties"
+	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
+
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
 		if(!C.handcuffed)
