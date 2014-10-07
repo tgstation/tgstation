@@ -1,4 +1,4 @@
-
+F
 
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
@@ -44,7 +44,7 @@
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()
 	if(.)
-		emote("me", 1, "nashes at [.]")
+		emote("me", 1, "nashes at [.]!")
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	. =..()

@@ -76,14 +76,6 @@
 	spray_currentrange = (spray_currentrange == 1 ? spray_maxrange : 1)
 	user << "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
-
-/obj/item/weapon/reagent_containers/spray/examine()
-	set src in usr
-	..()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		usr << "[round(R.volume)] units of [R.name] left."
-	return
-
 /obj/item/weapon/reagent_containers/spray/verb/empty()
 
 	set name = "Empty Spray Bottle"

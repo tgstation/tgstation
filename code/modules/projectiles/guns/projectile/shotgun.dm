@@ -47,10 +47,10 @@
 	update_icon()	//I.E. fix the desc
 	return 1
 
-/obj/item/weapon/gun/projectile/shotgun/examine()
+/obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
 	if (chambered)
-		usr << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
+		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
 
 /obj/item/weapon/gun/projectile/shotgun/combat
 	name = "combat shotgun"

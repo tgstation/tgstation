@@ -202,7 +202,7 @@
 	return
 /atom/proc/ShiftClick(var/mob/user)
 	if(user.client && user.client.eye == user)
-		examine()
+		user.examinate(src)
 	return
 
 /*

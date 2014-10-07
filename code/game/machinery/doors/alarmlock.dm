@@ -3,7 +3,7 @@
 	name = "glass alarm airlock"
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
-	doortype = 7
+	doortype = /obj/structure/door_assembly/door_assembly_glass
 	glass = 1
 
 	var/datum/radio_frequency/air_connection

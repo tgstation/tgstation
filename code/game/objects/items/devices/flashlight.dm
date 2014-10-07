@@ -249,10 +249,6 @@
 		emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
 		return 1
 
-/obj/item/device/flashlight/emp/examine()
-	..()
-	return
-
 /obj/item/device/flashlight/emp/attack(mob/living/M as mob, mob/living/user as mob)
 	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
 		..()

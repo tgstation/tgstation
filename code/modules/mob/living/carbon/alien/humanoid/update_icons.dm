@@ -38,7 +38,6 @@
 
 	update_inv_r_hand(0)
 	update_inv_l_hand(0)
-	update_inv_pockets(0)
 	update_hud()
 //	update_icons() //Handled in update_transform(), leaving this here as a reminder
 	update_fire()
@@ -54,16 +53,6 @@
 /mob/living/carbon/alien/humanoid/update_hud()
 	if(client)
 		client.screen |= contents
-
-
-/mob/living/carbon/alien/humanoid/update_inv_pockets(update_icons = 1)
-	if(l_store)
-		l_store.screen_loc = ui_alien_storage_l
-	if(r_store)
-		r_store.screen_loc = ui_alien_storage_r
-
-	if(update_icons)
-		update_icons()
 
 
 /mob/living/carbon/alien/humanoid/update_inv_r_hand(update_icons = 1)

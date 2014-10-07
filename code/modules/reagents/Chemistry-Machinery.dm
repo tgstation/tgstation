@@ -4,6 +4,7 @@
 
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
+	desc = "Creates and dispenses chemicals."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -242,6 +243,7 @@
 
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
+	desc = "Used to bottle chemicals to create pills."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -509,6 +511,7 @@
 
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
+	desc = "Used to create condiments and other cooking supplies."
 	condi = 1
 
 ////////////////////////////////////////////////////////////////////////
@@ -516,6 +519,7 @@
 
 /obj/machinery/computer/pandemic
 	name = "PanD.E.M.I.C 2200"
+	desc = "Used to work with viruses."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -805,6 +809,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 /obj/machinery/reagentgrinder
 
 		name = "All-In-One Grinder"
+		desc = "Used to grind things up into raw materials."
 		icon = 'icons/obj/kitchen.dmi'
 		icon_state = "juicer1"
 		layer = 2.9
