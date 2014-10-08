@@ -215,10 +215,7 @@
 	if(isanimal(M))
 		if(iscorgi(M))
 			if(bitecount >= 4)
-				M << text("\blue You swallow up the last part of [src].")
-				for(var/mob/O in oviewers(src, null))
-					if (O.client && !( O.blinded ))
-						O << text("[M] [pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")].")
+				M.visible_message("[M] [pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")].","<span class=\"notice\">You swallow up the last part of \the [src].")
 				playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				var/mob/living/simple_animal/corgi/C = M
 				if (C.health <= C.maxHealth + 5)
@@ -227,10 +224,7 @@
 					C.health = C.maxHealth
 				del(src)
 			else
-				M << text("\blue You take a bite of [src].")
-				for(var/mob/O in oviewers(src, null))
-					if (O.client && !( O.blinded ) && (O.ckey != M.ckey))
-						O << text("[M] takes a bite of [src].")
+				M.visible_message("[M] takes a bite of \the [src].","<span class=\"notice\">You take a bite of \the [src].")
 				playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				bitecount++
 		else if(ismouse(M))
