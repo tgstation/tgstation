@@ -109,7 +109,7 @@
  */
 /obj/item/toy/gun
 	name = "cap gun"
-	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
+	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
@@ -121,12 +121,9 @@
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
-/obj/item/toy/gun/examine()
-	set src in usr
-
-	src.desc = text("There are [] cap\s left. Looks almost like the real thing! Ages 8 and up.", src.bullets)
+/obj/item/toy/gun/examine(mob/user)
 	..()
-	return
+	user << "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob)
 
@@ -162,13 +159,13 @@
 		return
 	playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 	src.bullets--
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("<span class='danger'>[user] fires [src] at [target]!</span>"), 1,
-						 "<span class='warning'> You hear a gunshot.</span>", 2)
+	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
+						"<span class='danger'>You fire [src] at [target]!</span>", \
+						 "<span class='danger'> You hear a gunshot.</span>")
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
-	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
+	desc = "Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357-7"
 	w_class = 1.0
@@ -178,8 +175,10 @@
 
 /obj/item/toy/ammo/gun/update_icon()
 	src.icon_state = text("357-[]", src.amount_left)
-	src.desc = text("There are [] cap\s left! Make sure to recycle the box in an autolathe when it gets empty.", src.amount_left)
-	return
+
+/obj/item/toy/ammo/gun/examine(mob/user)
+	..()
+	user << "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
 /*
  * Toy crossbow
@@ -195,11 +194,10 @@
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
 
-/obj/item/toy/crossbow/examine()
-	set src in view(2)
+/obj/item/toy/crossbow/examine(mob/user)
 	..()
 	if (bullets)
-		usr << "<span class='notice'>It is loaded with [bullets] foam darts!</span>"
+		user << "<span class='notice'>It is loaded with [bullets] foam dart\s.</span>"
 
 /obj/item/toy/crossbow/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/toy/ammo/crossbow))
@@ -234,8 +232,7 @@
 				for(var/mob/living/M in D.loc)
 					if(!istype(M,/mob/living)) continue
 					if(M == user) continue
-					for(var/mob/O in viewers(world.view, D))
-						O.show_message(text("<span class='danger'>[] was hit by the foam dart!</span>", M), 1)
+					D.visible_message("<span class='danger'>[M] was hit by the foam dart!</span>")
 					new /obj/item/toy/ammo/crossbow(M.loc)
 					qdel(D)
 					return
@@ -256,8 +253,7 @@
 		return
 	else if (bullets == 0)
 		user.Weaken(5)
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message(text("<span class='danger'>[] realized they were out of ammo and starting scrounging for some!</span>", user), 1)
+		user.visible_message("<span class='danger'>[user] realized they were out of ammo and starting scrounging for some!</span>")
 
 
 /obj/item/toy/crossbow/attack(mob/M as mob, mob/user as mob)
@@ -267,17 +263,16 @@
 
 	if (src.bullets > 0 && M.lying)
 
-		for(var/mob/O in viewers(M, null))
-			if(O.client)
-				O.show_message(text("<span class='userdanger'>[] casually lines up a shot with []'s head and pulls the trigger!</span>", user, M), 1, "<span class='danger'>You hear the sound of foam against skull.</span>", 2)
-				O.show_message(text("<span class='danger'>[] was hit in the head by the foam dart!</span>", M), 1)
+		M.visible_message("<span class='danger'>[user] casually lines up a shot with [M]'s head and pulls the trigger!</span>")
+		M.visible_message("<span class='danger'>[M] was hit in the head by the foam dart!</span>", \
+							"<span class='userdanger'>You're hit in the head by the foam dart!</span>", \
+							"<span class='danger'>You hear the sound of foam against skull.</span>")
 
 		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
 		new /obj/item/toy/ammo/crossbow(M.loc)
 		src.bullets--
 	else if (M.lying && src.bullets == 0)
-		for(var/mob/O in viewers(M, null))
-			if (O.client)	O.show_message(text("<span class='userdanger'>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</span>", user, M), 1, "<span class='danger'>You hear someone fall</span>", 2)
+		M.visible_message("<span class='danger'>[user] casually lines up a shot with [M]'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</span>")
 		user.Weaken(5)
 	return
 
@@ -817,10 +812,9 @@ obj/item/toy/cards/singlecard
 	pixel_x = -5
 
 
-obj/item/toy/cards/singlecard/examine()
-	set src in usr.contents
-	if(ishuman(usr))
-		var/mob/living/carbon/human/cardUser = usr
+obj/item/toy/cards/singlecard/examine(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
 			cardUser.visible_message("<span class='notice'>[cardUser] checks \his card.</span>", "<span class='notice'>The card reads: [src.cardname]</span>")
 		else

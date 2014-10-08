@@ -1,6 +1,0 @@
-author: Jordie0608
-
-delete-after: True
-
-changes: 
-  - tweak: Grille damage update, humans now deal less unarmed damage to grilles while projectiles and items deal more.

@@ -17,10 +17,9 @@
 			max_charges = Ceiling(max_charges / 2)
 	..()
 
-/obj/item/weapon/gun/magic/wand/examine()
+/obj/item/weapon/gun/magic/wand/examine(mob/user)
 	..()
-	usr << "Has [charges] charge\s remaining."
-	return
+	user << "Has [charges] charge\s remaining."
 
 /obj/item/weapon/gun/magic/wand/update_icon()
 	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"

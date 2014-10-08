@@ -1,5 +1,6 @@
 /obj/machinery/washing_machine
 	name = "washing machine"
+	desc = "Gets rid of those pesky bloodstains, or your money back!"
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_10"
 	density = 1
@@ -130,6 +131,7 @@
 					J.item_color = wash_color
 					J.name = new_jumpsuit_name
 					J.desc = new_desc
+					J.suit_color = wash_color
 			if(new_glove_icon_state && new_glove_item_state && new_glove_name)
 				for(var/obj/item/clothing/gloves/G in contents)
 					//world << "DEBUG: YUP! FOUND IT!"

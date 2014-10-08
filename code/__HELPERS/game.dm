@@ -136,13 +136,13 @@
 /proc/recursive_hear_check(var/atom/O)
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
-	var/list/found_mobs = list()
+	var/list/found_atoms = list()
 
 	while(processing_list.len)
 		var/atom/A = processing_list[1]
 
 		if(A.flags & HEAR)
-			found_mobs |= A
+			found_atoms |= A
 
 		for(var/atom/B in A)
 			if(!processed_list[B])
@@ -151,7 +151,8 @@
 		processing_list.Cut(1, 2)
 		processed_list[A] = A
 
-	return found_mobs
+	return found_atoms
+
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
 /proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
@@ -195,7 +196,7 @@
 
 
 /proc/get_hearers_in_view(var/R, var/atom/source)
-	// Returns a list of hearers in range of R from source. Used in saycode.
+	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
 
@@ -215,25 +216,9 @@
 
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
-	var/list/speaker_coverage = list()
-	for(var/i = 1; i <= radios.len; i++)
-		var/obj/item/device/radio/R = radios[i]
+	for(var/obj/item/device/radio/R in radios)
 		if(R)
-			var/turf/speaker = get_turf(R)
-			if(speaker)
-				for(var/turf/T in get_hear(R.canhear_range,speaker))
-					speaker_coverage[T] = T
-
-
-	// Try to find all the players who can hear the message
-	for(var/i = 1; i <= player_list.len; i++)
-		var/mob/M = player_list[i]
-		if(M)
-			var/turf/ear = get_turf(M)
-			if(ear)
-				if(speaker_coverage[ear])
-					. |= M
-	return .
+			. |= get_hearers_in_view(R.canhear_range, R)
 
 
 #define SIGN(X) ((X<0)?-1:1)

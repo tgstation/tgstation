@@ -134,12 +134,12 @@
 							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
 					H << "<span class='notice'>You suddenly feel lucky.</span>"
 
-/mob/proc/summonevents()
+/proc/summonevents()
 	if(events) 																//if there isn't something is very wrong
 		if(!events.wizardmode)
-			events.toggleWizardmode()
 			events.frequency_lower = 600									//1 minute lower bound
 			events.frequency_upper = 3000									//5 minutes upper bound
+			events.toggleWizardmode()
 			events.reschedule()
 
 		else 																//Speed it up
@@ -149,3 +149,5 @@
 				events.frequency_upper = events.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
 
 			events.reschedule()
+			message_admins("Summon Events intensifies, events will now occur every [events.frequency_lower / 600] to [events.frequency_upper / 600] minutes.")
+			log_game("Summon Events was increased!")

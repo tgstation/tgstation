@@ -392,9 +392,9 @@
 			user << "<span class='info'>There's no points left on [src].</span>"
 	..()
 
-/obj/item/weapon/card/mining_point_card/examine()
+/obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
-	usr << "There's [points] points on the card."
+	user << "There's [points] point\s on the card."
 
 /**********************Jaunter**********************/
 
@@ -533,12 +533,9 @@
 /obj/item/clothing/mask/facehugger/toy
 	desc = "A toy often used to play pranks on other miners by putting it in their beds. It takes a bit to recharge after latching onto something."
 	throwforce = 0
+	real = 0
 	sterile = 1
 	tint = 3 //Makes it feel more authentic when it latches on
-
-/obj/item/clothing/mask/facehugger/toy/examine()//So that giant red text about probisci doesn't show up.
-	if(desc)
-		usr << desc
 
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
@@ -725,12 +722,12 @@
 	if(!malfunctioning)
 		malfunctioning = 1
 
-/obj/item/weapon/lazarus_injector/examine()
+/obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()
 	if(!loaded)
-		usr << "<span class='info'>[src] is empty.</span>"
+		user << "<span class='info'>[src] is empty.</span>"
 	if(malfunctioning)
-		usr << "<span class='info'>The display on [src] seems to be flickering.</span>"
+		user << "<span class='info'>The display on [src] seems to be flickering.</span>"
 
 /**********************Mining Scanner**********************/
 /obj/item/device/t_scanner/mining_scanner

@@ -86,9 +86,8 @@
 
 	src.loc = T
 
-/obj/item/examine()
-	set src in view()
-
+/obj/item/examine(mob/user) //This might be spammy. Remove?
+	..()
 	var/size
 	switch(src.w_class)
 		if(1.0)
@@ -106,25 +105,13 @@
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
 
-	//This reformat names to get a/an properly working on item descriptions when they are bloody
-	var/f_name = "\a [src]"
-	if(src.blood_DNA)
-		f_name = "a bloody [name]"
-
-	var/determiner
 	var/pronoun
 	if(src.gender == PLURAL)
-		determiner = "These are"
 		pronoun = "They are"
 	else
-		determiner = "This is"
 		pronoun = "It is"
 
-	usr << "\icon[src][determiner] [f_name]. [pronoun] a [size] item." //e.g. These are some gloves. They are a small item. or This is a toolbox. It is a bulky item.
-
-	if(src.desc)
-		usr << src.desc
-	return
+	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
@@ -337,14 +324,12 @@
 		M.adjustBruteLoss(10)
 		*/
 	if(M != user)
-		for(var/mob/O in (viewers(M) - user - M))
-			O.show_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
-		M << "<span class='danger'>[user] stabs you in the eye with [src]!</span>"
-		user << "<span class='danger'>You stab [M] in the eye with [src]!</span>"
+		M.visible_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user]!</span>", \
+							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
 	else
 		user.visible_message( \
-			"<span class='danger'>[user] has stabbed themself with [src]!</span>", \
-			"<span class='danger'>You stab yourself in the eyes with [src]!</span>" \
+			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
+			"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
 		)
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/U = M

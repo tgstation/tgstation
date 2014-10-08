@@ -1,10 +1,4 @@
-/mob/living/carbon/human/examine()
-	set src in view()
-
-	if(!usr || !src)	return
-	if( usr.sdisabilities & BLIND || usr.blinded || usr.stat==UNCONSCIOUS )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
+/mob/living/carbon/human/examine(mob/user)
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = 0
@@ -156,7 +150,7 @@
 		else if(istype(wear_id, /obj/item/weapon/card/id)) //just in case something other than a PDA/ID card somehow gets in the ID slot :[
 			var/obj/item/weapon/card/id/idcard = wear_id
 			id = idcard.registered_name
-		if(id && (id != real_name) && (get_dist(src, usr) <= 1) && prob(10))
+		if(id && (id != real_name) && (get_dist(src, user) <= 1) && prob(10))
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_id] \a [wear_id] yet something doesn't seem right...</span>\n"
 		else*/
 		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
@@ -220,9 +214,9 @@
 	temp = getCloneLoss()
 	if(temp)
 		if(temp < 30)
-			msg += "[t_He] [t_has] minor genetic deformities.\n"
+			msg += "[t_He] [t_has] minor cellular damage.\n"
 		else
-			msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
+			msg += "<B>[t_He] [t_has] severe cellular damage.</B>\n"
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
@@ -233,7 +227,7 @@
 	if(nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= 500)
-		if(usr.nutrition < 100)
+		if(user.nutrition < 100)
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
@@ -256,10 +250,10 @@
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
 
-	if(istype(usr, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = usr
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
 		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/security/sunglasses))
-			if(!usr.stat && usr != src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+			if(!user.stat && user != src) //|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 				var/criminal = "None"
 
 				var/perpname = get_face_name(get_id_name(""))
@@ -276,4 +270,4 @@
 
 	msg += "*---------*</span>"
 
-	usr << msg
+	user << msg

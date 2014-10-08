@@ -25,7 +25,7 @@
 
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
-	if(iscarbon(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
+	if(iscarbon(usr) || isdrone(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
 		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
@@ -265,9 +265,9 @@
 				if(M == usr)
 					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 				else if(W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 
 		orient2hud(usr)
 		if(usr.s_active)

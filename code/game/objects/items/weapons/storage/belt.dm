@@ -50,8 +50,9 @@
 		/obj/item/device/flashlight,
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
-		/obj/item/device/analyzer)
-
+		/obj/item/device/analyzer,
+		/obj/item/weapon/extinguisher/mini
+		)
 
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()
@@ -71,6 +72,7 @@
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
+	new /obj/item/weapon/extinguisher/mini(src)
 
 
 
@@ -91,8 +93,9 @@
 		/obj/item/weapon/storage/fancy/cigarettes,
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/stack/medical,
-		/obj/item/device/flashlight/pen
-	)
+		/obj/item/device/flashlight/pen,
+		/obj/item/weapon/extinguisher/mini
+		)
 
 
 /obj/item/weapon/storage/belt/security
@@ -114,7 +117,8 @@
 		/obj/item/ammo_box,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
-		/obj/item/device/flashlight/seclite
+		/obj/item/device/flashlight/seclite,
+		/obj/item/weapon/melee/telebaton
 		)
 
 /obj/item/weapon/storage/belt/security/New()

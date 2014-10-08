@@ -165,10 +165,9 @@
 	reagents.add_reagent("fuel", max_fuel)
 
 
-/obj/item/weapon/weldingtool/examine()
-	set src in usr
+/obj/item/weapon/weldingtool/examine(mob/user)
 	..()
-	usr << "It contains [get_fuel()]/[max_fuel] units of fuel!"
+	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user)
@@ -459,7 +458,11 @@
 	throw_speed = 3
 	throw_range = 3
 	m_amt = 66
+<<<<<<< HEAD
 	icon_state = "crowbar_large"
 
 /obj/item/weapon/crowbar/old
 	icon_state = "oldcrowbar"
+=======
+	icon_state = "crowbar_large"
+>>>>>>> e611301f0f629ea937a37dbd3241a2b08c7012d6

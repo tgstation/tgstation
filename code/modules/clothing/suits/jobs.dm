@@ -63,7 +63,7 @@
 
 //Detective
 /obj/item/clothing/suit/det_suit
-	name = "coat"
+	name = "trenchcoat"
 	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
 	icon_state = "detective"
 	item_state = "det_suit"
@@ -73,6 +73,12 @@
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/det_suit/grey
+	name = "noir trenchcoat"
+	desc = "A hard-boiled private investigator's grey trenchcoat."
+	icon_state = "greydet"
+	item_state = "greydet"
 
 //Engineering
 /obj/item/clothing/suit/hazardvest

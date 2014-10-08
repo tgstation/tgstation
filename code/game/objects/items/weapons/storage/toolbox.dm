@@ -84,6 +84,7 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 
+<<<<<<< HEAD
 
 /obj/item/weapon/storage/toolbox/old
 	name = "old toolbox"
@@ -98,3 +99,19 @@
 	new /obj/item/weapon/wirecutters/old(src)
 	new /obj/item/device/multitool/old(src)
 	new /obj/item/device/radio/off/old(src)
+=======
+/obj/item/weapon/storage/toolbox/drone
+	name = "mechanical toolbox"
+	icon_state = "blue"
+	item_state = "toolbox_blue"
+
+/obj/item/weapon/storage/toolbox/drone/New()
+	..()
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
+>>>>>>> e611301f0f629ea937a37dbd3241a2b08c7012d6

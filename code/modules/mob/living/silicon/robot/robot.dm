@@ -303,11 +303,10 @@
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
 				if(connected_ai)
-					if(connected_ai.mind == malfai)
-						if(malf.apcs >= 3)
-							stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
-				else if(ticker.mode:malf_mode_declared)
-					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+					if((connected_ai.mind == malfai) && (malf.apcs > 0))
+						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
+				else if(malf.malf_mode_declared && (malf.apcs > 0))
+					stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
 
 		if(cell)
 			stat(null, text("Charge Left: [cell.charge]/[cell.maxcharge]"))
@@ -532,7 +531,7 @@
 						laws = new /datum/ai_laws/syndicate_override
 						var/time = time2text(world.realtime,"hh:mm:ss")
 						lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-						set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+						set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
 						src << "<span class='danger'>ALERT: Foreign software detected.</span>"
 						sleep(5)
 						src << "<span class='danger'>Initiating diagnostics...</span>"
@@ -548,7 +547,7 @@
 						src << "<span class='danger'>ERRORERRORERROR</span>"
 						src << "<b>Obey these laws:</b>"
 						laws.show_laws(src)
-						src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</span>"
+						src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
 						updateicon()
 					else
 						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
@@ -561,7 +560,7 @@
 		if(!opened)
 			usr << "You must access the borgs internals!"
 		else if(!src.module && U.require_module)
-			usr << "The borg must choose a module before he can be upgraded!"
+			usr << "The borg must choose a module before it can be upgraded!"
 		else if(U.locked)
 			usr << "The upgrade is locked and cannot be used yet!"
 		else
@@ -733,8 +732,7 @@
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>", 1)
+		visible_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>")
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)

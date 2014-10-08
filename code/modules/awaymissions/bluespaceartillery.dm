@@ -41,7 +41,7 @@
 	if(src.reload < 180) return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		priority_announce("Bluespace artillery fire detected. Brace for impact.")
-		message_admins("[key_name_admin(usr)] has launched an artillery strike.", 1)
+		message_admins("[key_name_admin(usr)] has launched an artillery strike.")
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
 			L+=T
