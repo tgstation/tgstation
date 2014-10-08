@@ -108,7 +108,7 @@
 	new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
 	new /obj/item/weapon/reagent_containers/pill/dermaline( src )
 	new /obj/item/weapon/reagent_containers/syringe/lethal/choral( src )
-	new /obj/item/clothing/glasses/hud/health( src )
+	new /obj/item/clothing/glasses/hud/health/night( src )
 	return
 
 
