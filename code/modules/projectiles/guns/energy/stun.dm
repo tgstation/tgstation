@@ -44,7 +44,7 @@
 
 /obj/item/weapon/gun/energy/stunrevolver
 	name = "stun revolver"
-	desc = "A high-tech revolver that fires integrated, compressed stun cartidges. The stun cartridges can be recharged using a conventional energy weapon recharger."
+	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder. The stun cartridges can be recharged using a conventional energy weapon recharger."
 	icon_state = "stunrevolver"
 	origin_tech = "combat=3;materials=3;powerstorage=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
@@ -104,4 +104,5 @@
 	icon_state = "crossbowlarge"
 	w_class = 3.0
 	force = 10
-	m_amt = 200000
+	m_amt = 4000
+	suppressed = 0
