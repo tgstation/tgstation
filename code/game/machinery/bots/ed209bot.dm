@@ -32,8 +32,8 @@
 	var/weaponscheck = 1 //If true, arrest people for weapons if they don't have access
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
-	var/projectile = null//Holder for projectile type, to avoid so many else if chains
-	var/shoot_sound = 'sound/weapons/laser.ogg'
+	var/projectile = /obj/item/projectile/energy/electrode //Holder for projectile type
+	var/shoot_sound = 'sound/weapons/Taser.ogg'
 
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -84,6 +84,7 @@
 	if(created_name)		name = created_name
 	if(created_lasercolor)	lasercolor = created_lasercolor
 	src.icon_state = "[lasercolor]ed209[src.on]"
+	src.set_weapon() //giving it the right projectile and firing sound.
 	spawn(3)
 		src.botcard = new /obj/item/weapon/card/id(src)
 		var/datum/job/detective/J = new/datum/job/detective
@@ -140,15 +141,21 @@ Arrest for Unauthorized Weapons: []<BR>
 Arrest for Warrant: []<BR>
 <BR>
 Operating Mode: []<BR>
-Report Arrests[]<BR>
-Auto Patrol: []"},
+Report Arrests[]"},
 
 "<A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=weaponscheck'>[src.weaponscheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A>",
-"<A href='?src=\ref[src];operation=declarearrests'>[src.declare_arrests ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=declarearrests'>[src.declare_arrests ? "Yes" : "No"]</A>" )
+
+
+		dat += text({"<BR>
+Auto Patrol: []"},
+
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+
+
 
 	var/datum/browser/popup = new(user, "autosec", "Securitron v2.0.9 controls")
 	popup.set_content(dat)
@@ -197,12 +204,14 @@ Auto Patrol: []"},
 			if(!src.emagged)
 				src.emagged = 2
 				src.hacked = 1
+				src.set_weapon()
 				usr << "<span class='warning'>You disable [src]'s combat inhibitor.</span>"
 			else if(!src.hacked)
 				usr << "<span class='userdanger'>[src] ignores your attempts to restrict it!</span>"
 			else
 				src.emagged = 0
 				src.hacked = 0
+				src.set_weapon()
 				usr << "<span class='notice'>You restore [src]'s combat inhibitor.</span>"
 			src.updateUsrDialog()
 
@@ -247,7 +256,7 @@ Auto Patrol: []"},
 		src.emagged = 2
 		src.on = 1
 		src.icon_state = "[lasercolor]ed209[src.on]"
-		src.projectile = null
+		src.set_weapon()
 		mode = SECBOT_IDLE
 
 /obj/machinery/bot/ed209/process()
@@ -762,6 +771,23 @@ Auto Patrol: []"},
 	qdel(src)
 
 
+/obj/machinery/bot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
+	shoot_sound = 'sound/weapons/laser.ogg'
+	if(src.emagged == 2)
+		if(lasercolor)
+			projectile = /obj/item/projectile/lasertag
+		else
+			projectile = /obj/item/projectile/beam
+	else
+		if(!lasercolor)
+			shoot_sound = 'sound/weapons/Taser.ogg'
+			projectile = /obj/item/projectile/energy/electrode
+		else if(lasercolor == "b")
+			projectile = /obj/item/projectile/lasertag/bluetag
+		else if(lasercolor == "r")
+			projectile = /obj/item/projectile/lasertag/redtag
+
+
 /obj/machinery/bot/ed209/proc/shootAt(var/mob/target)
 	if(lastfired && world.time - lastfired < shot_delay)
 		return
@@ -778,25 +804,7 @@ Auto Patrol: []"},
 	//if(lastfired && world.time - lastfired < 100)
 
 	if(!projectile)
-		if(!lasercolor)
-			if (src.emagged == 2)
-				projectile = /obj/item/projectile/beam
-				shoot_sound = 'sound/weapons/laser.ogg'
-			else
-				projectile = /obj/item/projectile/energy/electrode
-				shoot_sound = 'sound/weapons/Taser.ogg'
-		else if(lasercolor == "b")
-			shoot_sound = 'sound/weapons/laser.ogg'
-			if (src.emagged == 2)
-				projectile = /obj/item/projectile/lasertag
-			else
-				projectile = /obj/item/projectile/lasertag/bluetag
-		else if(lasercolor == "r")
-			shoot_sound = 'sound/weapons/laser.ogg'
-			if (src.emagged == 2)
-				projectile = /obj/item/projectile/lasertag
-			else
-				projectile = /obj/item/projectile/lasertag/redtag
+		return
 
 	if (!( istype(U, /turf) ))
 		return
@@ -842,8 +850,10 @@ Auto Patrol: []"},
 					targets-=toshoot
 					if (prob(50) && emagged < 2)
 						emagged = 2
+						set_weapon()
 						shootAt(toshoot)
 						emagged = 0
+						set_weapon()
 					else
 						shootAt(toshoot)
 			else if(prob(50))
