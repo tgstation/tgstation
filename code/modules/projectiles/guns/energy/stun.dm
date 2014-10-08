@@ -7,6 +7,9 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 
+/obj/item/weapon/gun/energy/taser/old
+	icon_state = "t_gun"
+
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
 	desc = "An integrated taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."

@@ -17,3 +17,15 @@
 	icon_state = "rrust"
 	walltype = "rrust"
 	hardness = 15
+
+/turf/simulated/wall/oldstation
+	name = "wall"
+	desc = "You try to comprehend how old these walls seem to be. You can't manage it."
+	icon_state = "old_wall"
+	walltype = "oldstation"
+
+/turf/simulated/wall/r_wall/oldstation
+	name = "reinforced wall"
+	desc = "You try to comprehend how old these walls seem to be. You can't manage it."
+	icon_state = "old_r_wall"
+	walltype = "reinforcedoldstation"
