@@ -134,7 +134,7 @@
 	name = "cyborg mining drill"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	digspeed = 20
+	digspeed = 15
 	desc = ""
 
 /*****************************Shovel********************************/
