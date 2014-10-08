@@ -23,13 +23,17 @@
 		if(!C.handcuffed)
 			user.drop_item()
 			loc = C
-			C.handcuffed = src
+			if(istype(src, /obj/item/weapon/restraints/handcuffs/zipties))
+				qdel(src)
+				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/zipties/used(C)
+			else
+				C.handcuffed = src
 			C.update_inv_handcuffed(0)
 			return
 
 	if(!C.handcuffed)
-		C.visible_message("<span class='danger'>[user] is trying to put handcuffs on [C]!</span>", \
-							"<span class='userdanger'>[user] is trying to put handcuffs on [C]!</span>")
+		C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
+							"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
 		playsound(loc, cuffsound, 30, 1, -2)
 		if(do_mob(user, C, 30))
