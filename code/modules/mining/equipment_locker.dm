@@ -776,7 +776,7 @@
 	for(var/turf/simulated/mineral/M in world)
 		if(M.scan_state)
 			M.icon_state = M.scan_state
-	del(src)
+	qdel(src)
 
 /obj/item/device/t_scanner/adv_mining_scanner
 	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
