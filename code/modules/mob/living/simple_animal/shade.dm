@@ -69,7 +69,7 @@
 	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
 	icon_living = icon_state
 	status_flags |= GODMODE
-	timer = rand(1,20)
+	timer = rand(1,15)
 
 /mob/living/simple_animal/shade/howling_ghost/Life()
 	..()
@@ -77,7 +77,7 @@
 	if(timer == 0)
 		roam()
 		spooky_ghosty()
-		timer = rand(1,20)
+		timer = rand(1,15)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/EtherealMove(direction)
 	loc = get_step(src, direction)
@@ -95,7 +95,6 @@
 		var/obj/machinery/light/L = locate(/obj/machinery/light) in view(5, src)
 		if(L)
 			L.flicker()
-		return
 	if(prob(5))//poltergeist
 		var/obj/item/I = locate(/obj/item) in view(3, src)
 		if(I)
