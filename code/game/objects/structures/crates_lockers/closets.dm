@@ -430,5 +430,6 @@
 		src.visible_message("<span class='userdanger'><font size='5'>Woo Woo</font></span>");
 		playsound(src.loc, 'sound/spookoween/ghosty_wind.ogg', 300, 1)
 		new /mob/living/simple_animal/shade/howling_ghost (loc)
+		trapped = 0
 		return
 
