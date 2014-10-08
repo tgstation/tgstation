@@ -458,11 +458,7 @@
 	throw_speed = 3
 	throw_range = 3
 	m_amt = 66
-<<<<<<< HEAD
 	icon_state = "crowbar_large"
 
 /obj/item/weapon/crowbar/old
 	icon_state = "oldcrowbar"
-=======
-	icon_state = "crowbar_large"
->>>>>>> e611301f0f629ea937a37dbd3241a2b08c7012d6
