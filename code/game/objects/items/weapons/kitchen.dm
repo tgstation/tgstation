@@ -58,13 +58,11 @@
 
 	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
 		if(M == user)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='notice'>[] eats a delicious forkful of omelette!</span>", user), 1)
-				M.reagents.add_reagent("nutriment", 1)
+			M.visible_message("<span class='notice'>[user] eats a delicious forkful of omelette!</span>")
+			M.reagents.add_reagent("nutriment", 1)
 		else
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='notice'>[] feeds [] a delicious forkful of omelette!</span>", user, M), 1)
-				M.reagents.add_reagent("nutriment", 1)
+			M.visible_message("<span class='notice'>[user] feeds [M] a delicious forkful of omelette!</span>")
+			M.reagents.add_reagent("nutriment", 1)
 		src.icon_state = "fork"
 		return
 	else

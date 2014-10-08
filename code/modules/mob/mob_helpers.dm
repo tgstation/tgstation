@@ -455,8 +455,7 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			affecting.heal_damage(brute,burn,1)
 			H.update_damage_overlays(0)
 			H.updatehealth()
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]!</span>"), 1)
+			user.visible_message("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]!</span>")
 			return
 		else
 			user << "<span class='notice'>[H]'s [affecting.getDisplayName()] is already in good condition</span>"

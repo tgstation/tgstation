@@ -7,11 +7,11 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	slot_flags = SLOT_BACK
-	force = 5.0
-	throwforce = 5.0
+	force = 8
+	throwforce = 5
 	throw_speed = 2
-	throw_range = 4
-	w_class = 4.0
+	throw_range = 3
+	w_class = 4
 	g_amt = 7500
 	m_amt = 1000
 	origin_tech = "materials=2"
@@ -38,13 +38,13 @@
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
-	desc = "A shield capable of stopping most projectile and melee attacks. Energy projectiles are reflected. It can be retracted, expanded, and stored anywhere."
+	desc = "A shield capable of stopping most melee attacks. Protects user from almost all energy projectiles. It can be retracted, expanded, and stored anywhere."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "eshield0" // eshield1 for expanded
-	force = 3.0
-	throwforce = 5.0
-	throw_speed = 2
-	throw_range = 4
+	force = 3
+	throwforce = 3
+	throw_speed = 3
+	throw_range = 5
 	w_class = 1
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoved", "bashed")
@@ -61,19 +61,59 @@
 		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
 		user.take_organ_damage(5)
 	active = !active
+	icon_state = "eshield[active]"
 
 	if(active)
 		force = 10
-		icon_state = "eshield[active]"
+		throwforce = 8
+		throw_speed = 2
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
 		reflect_chance = 40
 	else
 		force = 3
-		icon_state = "eshield[active]"
+		throwforce = 3
+		throw_speed = 3
 		w_class = 1
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 		reflect_chance = 0
+	add_fingerprint(user)
+
+/obj/item/weapon/shield/riot/tele
+	name = "telescopic shield"
+	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "teleriot0"
+	slot_flags = null
+	force = 3
+	throwforce = 3
+	throw_speed = 3
+	throw_range = 4
+	w_class = 3
+	var/active = 0
+
+/obj/item/weapon/shield/riot/tele/IsShield()
+	return (active)
+
+/obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
+	active = !active
+	icon_state = "teleriot[active]"
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+
+	if(active)
+		force = 8
+		throwforce = 5
+		throw_speed = 2
+		w_class = 4
+		slot_flags = SLOT_BACK
+		user << "<span class='notice'>You extend the [src].</span>"
+	else
+		force = 3
+		throwforce = 3
+		throw_speed = 3
+		w_class = 3
+		slot_flags = null
+		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
