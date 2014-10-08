@@ -38,7 +38,7 @@
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
 #define SECBOT_HUNT 		1		// found target, hunting
-#define SECBOT_PREP_ARREST 	2		// at target, preparing to arrest
+#define SECBOT_PREP_ARREST  2		// at target, preparing to arrest
 #define SECBOT_ARREST		3		// arresting target
 #define SECBOT_START_PATROL	4		// start patrol
 #define SECBOT_PATROL		5		// patrolling
@@ -282,8 +282,6 @@ Auto Patrol: []"},
 
 		targets += C
 	if (targets.len>0)
-		if(lasercolor) // lasertag bots stop if they have a target to shoot
-			mode = SECBOT_IDLE
 		var/mob/living/carbon/t = pick(targets)
 		if ((t.stat!=2) && (t.lying != 1) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
 			src.shootAt(t)
@@ -326,11 +324,11 @@ Auto Patrol: []"},
 
 					if(declare_arrests)
 						var/area/location = get_area(src)
-						broadcast_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b>", src)
+						broadcast_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target.name]</b> in <b>[location]</b>", src)
 					target.visible_message("<span class='danger'>[src.target] has been stunned by [src]!</span>",\
 											"<span class='userdanger'>[src.target] has been stunned by [src]!</span></span>")
 
-					mode = SECBOT_PREP_ARREST
+					mode = SECBOT_ARREST
 					src.anchored = 1
 					src.target_lastloc = M.loc
 					return
@@ -344,52 +342,53 @@ Auto Patrol: []"},
 						src.frustration = 0
 
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
-			if (!target)
-				mode = SECBOT_IDLE
-				src.anchored = 0
-				return
+
 			// see if he got away
-			if ((get_dist(src, src.target) > 1) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2))
+			if( !src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2)  )
 				src.anchored = 0
 				mode = SECBOT_HUNT
 				return
 
+			var/back_to_idle = 0
 			if(iscarbon(target) && target.canBeHandcuffed())
-				if (!src.target.handcuffed && !src.arrest_type)
-					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-					mode = SECBOT_ARREST
-					target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
+				if(!src.arrest_type)
+					if(!src.target.handcuffed)  //no cuffs? Try to cuff him!
+						mode = SECBOT_ARREST
+						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+						target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
 											"<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
 
-					spawn(60)
-						if (get_dist(src, src.target) <= 1)
-							if (src.target.handcuffed)
+						spawn(60)
+							if(!src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2) ) // is the perp still at the same place?
+								src.anchored = 0
+								mode = SECBOT_HUNT
 								return
+							if(!src.target.handcuffed)
+								target.handcuffed = new /obj/item/weapon/handcuffs(target)
+								target.update_inv_handcuffed(0)	//update the handcuffs overlay
+								playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 
-							if(istype(src.target,/mob/living/carbon))
-								src.target.handcuffed = new /obj/item/weapon/handcuffs(src.target)
-								target.update_inv_handcuffed(0)	//update handcuff overlays
-
-							mode = SECBOT_IDLE
-							src.target = null
-							src.anchored = 0
-							src.last_found = world.time
-							src.frustration = 0
-
-		//					playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
-		//					src.speak(arrest_message)
+					else
+						back_to_idle = 1
 			else
+				back_to_idle = 1
+
+			if(back_to_idle)
 				mode = SECBOT_IDLE
 				src.target = null
 				src.anchored = 0
 				src.last_found = world.time
 				src.frustration = 0
 
-		if(SECBOT_ARREST)		// arresting
+		if(SECBOT_ARREST)
+
 			if (!target || src.target.handcuffed)
 				src.anchored = 0
 				mode = SECBOT_IDLE
+				return
+			if( !src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2) )
+				src.anchored = 0
+				mode = SECBOT_HUNT
 				return
 
 

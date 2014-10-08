@@ -80,6 +80,8 @@
 		if(!locked)
 			open = !open
 			user << "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>"
+		else
+			user << "<span class='warning'>Maintenance panel is locked.</span>"
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
 		if(health < maxhealth)
 			if(open)
@@ -176,7 +178,6 @@
 /obj/machinery/bot/proc/speak(var/message)
 	if((!src.on) || (!message))
 		return
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>",2)
+	audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>",2)
 	return
 

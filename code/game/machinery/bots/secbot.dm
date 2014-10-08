@@ -28,10 +28,11 @@
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
 #define SECBOT_HUNT 		1		// found target, hunting
-#define SECBOT_ARREST		2		// arresting target
-#define SECBOT_START_PATROL	3		// start patrol
-#define SECBOT_PATROL		4		// patrolling
-#define SECBOT_SUMMON		5		// summoned by PDA
+#define SECBOT_PREP_ARREST  2		// at target, preparing to arrest
+#define SECBOT_ARREST		3		// arresting target
+#define SECBOT_START_PATROL	4		// start patrol
+#define SECBOT_PATROL		5		// patrolling
+#define SECBOT_SUMMON		6		// summoned by PDA
 
 	var/auto_patrol = 0		// set to make bot automatically patrol
 
@@ -249,8 +250,6 @@ Auto Patrol: []"},
 
 			// if can't reach perp for long enough, go idle
 			if(src.frustration >= 8)
-		//		for(var/mob/O in hearers(src, null))
-		//			O << "<span class='game say'><span class='name'>[src]</span> beeps, \"Backup requested! Suspect has evaded arrest.\""
 				src.target = null
 				src.last_found = world.time
 				src.frustration = 0
@@ -276,11 +275,11 @@ Auto Patrol: []"},
 
 					if(declare_arrests)
 						var/area/location = get_area(src)
-						broadcast_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b>", src)
+						broadcast_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target.name]</b> in <b>[location]</b>", src)
 					target.visible_message("<span class='danger'>[src.target] has been stunned by [src]!</span>",\
 											"<span class='userdanger'>[src.target] has been stunned by [src]!</span>")
 
-					mode = SECBOT_ARREST
+					mode = SECBOT_PREP_ARREST
 					src.anchored = 1
 					src.target_lastloc = M.loc
 					return
@@ -293,37 +292,35 @@ Auto Patrol: []"},
 					else
 						src.frustration = 0
 
-		if(SECBOT_ARREST)		// preparing to arrest target
+		if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away
-			if( !src.Adjacent(target) || (src.target:loc != src.target_lastloc)  )
+			if( !src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2)  )
 				src.anchored = 0
 				mode = SECBOT_HUNT
 				return
 
 			var/back_to_idle = 0
 			if(iscarbon(target) && target.canBeHandcuffed())
-				if(src.arrest_type)  //if we want to detain, we don't cuff.
-					if(src.target.weakened < 2)
-						src.anchored = 0
-						mode = SECBOT_HUNT
-					return
-
-				if(!src.target.handcuffed)  //no cuffs? Try to cuff him!
-					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-					target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
+				if(!src.arrest_type)
+					if(!src.target.handcuffed)  //no cuffs? Try to cuff him!
+						mode = SECBOT_ARREST
+						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+						target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
 											"<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
 
-					spawn(60)
-						if(!src.Adjacent(target) || !isturf(src.target.loc)) // is the perp still at the same place?
-							return
-						if(istype(src.target,/mob/living/carbon) && !src.target.handcuffed)
-							target.handcuffed = new /obj/item/weapon/handcuffs(target)
-							target.update_inv_handcuffed(0)	//update the handcuffs overlay
-							playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-							back_to_idle = 1
-				else
-					back_to_idle = 1
+						spawn(60)
+							if(!src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2) ) // is the perp still at the same place?
+								src.anchored = 0
+								mode = SECBOT_HUNT
+								return
+							if(!src.target.handcuffed)
+								target.handcuffed = new /obj/item/weapon/handcuffs(target)
+								target.update_inv_handcuffed(0)	//update the handcuffs overlay
+								playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+
+					else
+						back_to_idle = 1
 			else
 				back_to_idle = 1
 
@@ -333,6 +330,17 @@ Auto Patrol: []"},
 				src.anchored = 0
 				src.last_found = world.time
 				src.frustration = 0
+
+		if(SECBOT_ARREST)
+
+			if (!target || src.target.handcuffed)
+				src.anchored = 0
+				mode = SECBOT_IDLE
+				return
+			if( !src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2) )
+				src.anchored = 0
+				mode = SECBOT_HUNT
+				return
 
 
 		if(SECBOT_START_PATROL)	// start a patrol
