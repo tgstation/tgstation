@@ -1,0 +1,4 @@
+author: Paprika
+delete-after: True
+changes:
+  - rscadd: Added inaprovaline MediPens (autoinjectors) that replace inaprovaline syringes in medkits. Like the syringes, these can be used to stabilize patients in critical condition, but require no medical knowledge to use.
