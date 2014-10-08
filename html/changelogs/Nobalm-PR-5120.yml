@@ -1,4 +1,0 @@
-author: Nobalm
-delete-after: True
-changes: 
-  - bugfix: All turrets make projectile-appropriate sounds now.
