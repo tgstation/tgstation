@@ -31,6 +31,29 @@
 
 	mymob.client.screen += list(blobpwrdisplay, blobhealthdisplay)
 
+/datum/hud/proc/shade_hud()
+
+	mymob.healths = new /obj/screen()
+	mymob.healths.icon = 'icons/mob/screen1_shade.dmi'
+	mymob.healths.icon_state = "shade_health0"
+	mymob.healths.name = "health"
+	mymob.healths.screen_loc = ui_construct_health
+
+	mymob.pullin = new /obj/screen()
+	mymob.pullin.icon = 'icons/mob/screen1_shade.dmi'
+	mymob.pullin.icon_state = "pull0"
+	mymob.pullin.name = "pull"
+	mymob.pullin.screen_loc = ui_construct_pull
+
+	mymob.zone_sel = new /obj/screen/zone_sel()
+	mymob.zone_sel.icon = 'icons/mob/screen1_shade.dmi'
+	mymob.zone_sel.overlays.Cut()
+	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+
+	mymob.client.screen = null
+
+	mymob.client.screen += list(mymob.healths, mymob.pullin, mymob.zone_sel)
+
 /datum/hud/proc/construct_hud()
 	var/constructtype
 
