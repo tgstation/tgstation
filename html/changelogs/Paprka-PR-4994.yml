@@ -1,0 +1,8 @@
+author: Paprika
+delete-after: True
+changes:
+  - experiment: Reverted the mining scanner to a manual scanner.
+  - bugfix: Buffed the rate of the automatic scanner
+  - rscadd: Added automatic scanner to equipment locker. It is also available by redeeming your voucher.
+  - bugfix: Reduced the size of the mining jetpack, it now fits in backpacks. The capacity of the jetpack has been reduced as well, however.
+  - experiment: Removed resonator from the mining voucher redemption. Replaced it with a mining drill.
