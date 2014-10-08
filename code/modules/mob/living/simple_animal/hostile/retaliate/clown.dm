@@ -63,7 +63,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane/New()
 	..()
 	//timer = rand(10,180)
-	timer = rand(10,120)
+	timer = rand(5,15)
 	status_flags = (status_flags | GODMODE)
 	return
 
@@ -86,7 +86,7 @@
 		qdel(src)
 	if(timer == 0)
 		//timer = rand(10,180)
-		timer = rand(10,120)
+		timer = rand(5,15)
 		playsound(M.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 300, 1)
 		spawn(12)
 			loc = M.loc

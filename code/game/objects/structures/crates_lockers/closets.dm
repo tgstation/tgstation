@@ -349,6 +349,7 @@
 #define ANGRY_FAITHLESS 2
 #define SCARY_BATS 		3
 #define INSANE_CLOWN	4
+#define HOWLING_GHOST	5
 
 /obj/structure/closet/proc/set_spooky_trap()
 	if(prob(0.1))
@@ -357,8 +358,11 @@
 	if(prob(1))
 		trapped = ANGRY_FAITHLESS
 		return
-	if(prob(20))
+	if(prob(15))
 		trapped = SCARY_BATS
+		return
+	if(prob(20))
+		trapped = HOWLING_GHOST
 		return
 	else
 		var/mob/living/carbon/human/H = new (loc)
@@ -375,7 +379,7 @@
 
 	if(trapped == SPOOKY_SKELETON)
 		src.visible_message("<span class='userdanger'><font size='5'>BOO!</font></span>");
-		playsound(src.loc, pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg'), 300, 1)
+		playsound(src.loc, pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg','sound/spookoween/girlscream.ogg'), 300, 1)
 		trapped = 0
 		spawn(60)
 			if(trapped_mob.loc != loc)
@@ -389,7 +393,7 @@
 
 	if(trapped == ANGRY_FAITHLESS)
 		src.visible_message("<span class='userdanger'>The closet bursts open!</span>");
-		src.visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN BOY!</font></span>");
+		src.visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN !!!</font></span>");
 		playsound(src.loc, 'sound/hallucinations/wail.ogg', 300, 1)
 		var/mob/living/simple_animal/hostile/faithless/F = new (loc)
 		F.health =1e5
@@ -420,5 +424,11 @@
 		var/mob/living/simple_animal/hostile/retaliate/clown/insane/IC = new (loc)
 		IC.GiveTarget(usr)
 		trapped = 0
+		return
+
+	if(trapped == HOWLING_GHOST)
+		src.visible_message("<span class='userdanger'><font size='5'>Woo Woo</font></span>");
+		playsound(src.loc, 'sound/spookoween/ghosty_wind.ogg', 300, 1)
+		new /mob/living/simple_animal/shade/howling_ghost (loc)
 		return
 
