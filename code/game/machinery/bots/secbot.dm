@@ -319,7 +319,7 @@ Auto Patrol: []"},
 								return
 
 							if(istype(src.target,/mob/living/carbon))
-								target.handcuffed = new /obj/item/weapon/handcuffs/zipties(target)
+								target.handcuffed = new /obj/item/weapon/restraints/handcuffs/zipties/used(target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
 
 							mode = SECBOT_IDLE

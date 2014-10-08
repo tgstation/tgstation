@@ -544,7 +544,7 @@ obj/structure/cable/proc/avail()
 		if(src.amount <= 14)
 			usr << "<span class='danger'>You need at least 15 lengths to make restraints!</span>"
 			return
-		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
+		var/obj/item/weapon/restraints/handcuffs/cable/B = new /obj/item/weapon/restraints/handcuffs/cable(usr.loc)
 		B.icon_state = "cuff_[item_color]"
 		usr << "<span class='notice'>You wind some cable together to make some restraints.</span>"
 		src.use(15)
