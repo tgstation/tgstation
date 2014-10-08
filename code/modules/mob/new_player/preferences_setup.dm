@@ -33,7 +33,7 @@
 
 	var/datum/sprite_accessory/S
 	if(underwear)
-		S = underwear_all[underwear]
+		S = underwear_list[underwear]
 		if(S)
 			preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
 

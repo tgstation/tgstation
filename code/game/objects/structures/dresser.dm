@@ -14,18 +14,16 @@
 
 		var/choice = input(user, "Underwear or Undershirt?", "Changing") as null|anything in list("Underwear","Undershirt")
 
+		if(!Adjacent(user))
+			return
 		switch(choice)
 			if("Underwear")
-				var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in underwear_all
-				if(!Adjacent(user))
-					return
+				var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in underwear_list
 				if(new_undies)
 					H.underwear = new_undies
 
 			if("Undershirt")
 				var/new_undershirt = input(user, "Select your undershirt", "Changing") as null|anything in undershirt_list
-				if(!Adjacent(user))
-					return
 				if(new_undershirt)
 					H.undershirt = new_undershirt
 

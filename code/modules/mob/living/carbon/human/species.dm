@@ -178,7 +178,7 @@
 
 	//Underwear & Undershirts
 	if(H.underwear)
-		var/datum/sprite_accessory/underwear/U = underwear_all[H.underwear]
+		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
 		if(U)
 			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
 
