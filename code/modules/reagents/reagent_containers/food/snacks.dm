@@ -220,6 +220,11 @@
 					if (O.client && !( O.blinded ))
 						O << text("[M] [pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")].")
 				playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+				var/mob/living/simple_animal/corgi/C = M
+				if (C.health <= C.maxHealth + 5)
+					C.health += 5
+				else
+					C.health = C.maxHealth
 				del(src)
 			else
 				M << text("\blue You take a bite of [src].")
