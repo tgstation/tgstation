@@ -81,8 +81,10 @@
 
 /obj/machinery/bot/ed209/New(loc,created_name,created_lasercolor)
 	..()
-	if(created_name)		name = created_name
-	if(created_lasercolor)	lasercolor = created_lasercolor
+	if(created_name)
+		name = created_name
+	if(created_lasercolor)
+		lasercolor = created_lasercolor
 	src.icon_state = "[lasercolor]ed209[src.on]"
 	src.set_weapon() //giving it the right projectile and firing sound.
 	spawn(3)
@@ -280,23 +282,21 @@ Auto Patrol: []"},
 
 		targets += C
 	if (targets.len>0)
-		var/mob/t = pick(targets)
-		if (istype(t, /mob/living))
-			if ((t.stat!=2) && (t.lying != 1))
-				//src.speak("selected target: " + t.real_name)
-				src.shootAt(t)
+		if(lasercolor) // lasertag bots stop if they have a target to shoot
+			mode = SECBOT_IDLE
+		var/mob/living/carbon/t = pick(targets)
+		if ((t.stat!=2) && (t.lying != 1) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
+			src.shootAt(t)
 	switch(mode)
 
 		if(SECBOT_IDLE)		// idle
 			walk_to(src,0)
-			look_for_perp()	// see if any criminals are in range
+			if(!src.lasercolor) //lasertag bots don't want to arrest anyone
+				look_for_perp()	// see if any criminals are in range
 			if(!mode && auto_patrol)	// still idle, and set to patrol
 				mode = SECBOT_START_PATROL	// switch to patrol mode
 
 		if(SECBOT_HUNT)		// hunting for perp
-			if(src.lasercolor)//Lasertag bots do not tase or arrest anyone, just patrol and shoot and whatnot
-				mode = SECBOT_IDLE
-				return
 			// if can't reach perp for long enough, go idle
 			if (src.frustration >= 8)
 		//		for(var/mob/O in hearers(src, null))
@@ -308,13 +308,12 @@ Auto Patrol: []"},
 				walk_to(src,0)
 
 			if (target)		// make sure target exists
-				if (get_dist(src, src.target) <= 1)		// if right next to perp
+				if(src.Adjacent(target) && isturf(src.target.loc)) // if right next to perp
 					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 					src.icon_state = "[lasercolor]ed209-c"
 					spawn(2)
 						src.icon_state = "[lasercolor]ed209[src.on]"
 					var/mob/living/carbon/M = src.target
-					var/maxstuns = 4
 					if (istype(M, /mob/living/carbon/human))
 						if (M.stuttering < 5 && (!(HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 							M.stuttering = 5
@@ -331,10 +330,6 @@ Auto Patrol: []"},
 					target.visible_message("<span class='danger'>[src.target] has been stunned by [src]!</span>",\
 											"<span class='userdanger'>[src.target] has been stunned by [src]!</span></span>")
 
-					maxstuns--
-					if(maxstuns <= 0)
-						target = null
-
 					mode = SECBOT_PREP_ARREST
 					src.anchored = 1
 					src.target_lastloc = M.loc
@@ -349,9 +344,6 @@ Auto Patrol: []"},
 						src.frustration = 0
 
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
-			if(src.lasercolor)
-				mode = SECBOT_IDLE
-				return
 			if (!target)
 				mode = SECBOT_IDLE
 				src.anchored = 0
@@ -395,9 +387,6 @@ Auto Patrol: []"},
 				src.frustration = 0
 
 		if(SECBOT_ARREST)		// arresting
-			if(src.lasercolor)
-				mode = SECBOT_IDLE
-				return
 			if (!target || src.target.handcuffed)
 				src.anchored = 0
 				mode = SECBOT_IDLE
@@ -464,9 +453,10 @@ Auto Patrol: []"},
 				blockcount = 0
 				path -= loc
 
-				look_for_perp()
 				if(lasercolor)
 					sleep(20)
+				else
+					look_for_perp()
 			else		// failed to move
 
 				blockcount++
@@ -674,9 +664,6 @@ Auto Patrol: []"},
 		if ((C.stat) || (C.handcuffed))
 			continue
 
-		if((src.lasercolor) && (C.lying))
-			continue//Does not shoot at people lyind down when in lasertag mode, because it's just annoying, and they can fire once they get up.
-
 		if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
 			continue
 
@@ -689,8 +676,7 @@ Auto Patrol: []"},
 			src.target = C
 			src.oldtarget_name = C.name
 			src.speak("Level [src.threatlevel] infraction alert!")
-			if(!src.lasercolor)
-				playsound(src.loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
+			playsound(src.loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
 			src.visible_message("<b>[src]</b> points at [C.name]!")
 			mode = SECBOT_HUNT
 			spawn(0)
