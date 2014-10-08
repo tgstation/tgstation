@@ -693,6 +693,11 @@
 	icon_state = "shirt_black"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/shirt_grey
+	name = "Grey Shirt"
+	icon_state = "shirt_grey"
+	gender = NEUTER
+
 /datum/sprite_accessory/undershirt/tank_white
 	name = "White Tank-Top"
 	icon_state = "tank_white"
@@ -701,6 +706,11 @@
 /datum/sprite_accessory/undershirt/tank_black
 	name = "Black Tank-Top"
 	icon_state = "tank_black"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/tank_grey
+	name = "Grey Tank Top"
+	icon_state = "tank_grey"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/female_midriff
