@@ -292,6 +292,10 @@
 	doortype = 37
 	glass = 1
 
+/obj/machinery/door/airlock/oldstation
+	icon = 'icons/obj/doors/Dooroldstation.dmi'
+	doortype = 36
+
 /*
 About the new airlock wires panel:
 *	An airlock wire dialog can be accessed by the normal way or by using wirecutters or a multitool on the door while the wire-panel is open. This would show the following wires, which you can either wirecut/mend or send a multitool pulse through. There are 9 wires.

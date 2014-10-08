@@ -12,6 +12,7 @@
 	var/state = 0
 	var/reinf = 0
 	var/disassembled = 0
+	var/obj/item/weapon/shard/shardtype = /obj/item/weapon/shard
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
@@ -21,7 +22,7 @@
 		health -= Proj.damage
 	..()
 	if(health <= 0)
-		new /obj/item/weapon/shard(loc)
+		new shardtype(loc)
 		new /obj/item/stack/rods(loc)
 		qdel(src)
 	return
@@ -33,20 +34,20 @@
 			qdel(src)
 			return
 		if(2.0)
-			new /obj/item/weapon/shard(loc)
+			new shardtype(loc)
 			if(reinf) new /obj/item/stack/rods(loc)
 			qdel(src)
 			return
 		if(3.0)
 			if(prob(50))
-				new /obj/item/weapon/shard(loc)
+				new shardtype(loc)
 				if(reinf) new /obj/item/stack/rods(loc)
 				qdel(src)
 				return
 
 
 /obj/structure/window/blob_act()
-	new /obj/item/weapon/shard(loc)
+	new shardtype(loc)
 	if(reinf) new /obj/item/stack/rods(loc)
 	qdel(src)
 
@@ -87,7 +88,7 @@
 		update_nearby_icons()
 		step(src, get_dir(AM, src))
 	if(health <= 0)
-		new /obj/item/weapon/shard(loc)
+		new shardtype(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
 		qdel(src)
 
@@ -126,7 +127,7 @@
 	health -= damage
 	if(health <= 0)
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
-		new /obj/item/weapon/shard(loc)
+		new shardtype(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
 		qdel(src)
 	else	//for nicer text~
@@ -228,7 +229,7 @@
 		return
 
 /obj/structure/window/proc/spawnfragments()
-	var/newshard = new /obj/item/weapon/shard(loc)
+	var/newshard = new shardtype(loc)
 	transfer_fingerprints_to(newshard)
 	if(reinf)
 		var/newrods = new /obj/item/stack/rods(loc)
@@ -390,3 +391,12 @@
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	icon_state = "fwindow"
+
+
+/obj/structure/window/basic/old
+	icon_state = "oldwindow"
+	shardtype = /obj/item/weapon/shard/old
+
+/obj/structure/window/reinforced/old
+	icon_state = "oldrwindow"
+	shardtype = /obj/item/weapon/shard/old

@@ -13,7 +13,7 @@
 	var/destination_y
 
 /turf/space/New()
-	if(!istype(src, /turf/space/transit))
+	if(!istype(src, /turf/space/transit) || !istype(src, /turf/space/oldstation))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 
 /turf/space/attack_paw(mob/user as mob)

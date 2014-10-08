@@ -218,7 +218,7 @@
 		the signal gets processed and logged, and an audible transmission gets sent
 		to each individual headset.
 	*/
-		
+
 	/*
 		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
 	*/
@@ -608,3 +608,6 @@
 
 /obj/item/device/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.
+/obj/item/device/radio/off/old
+	icon = 'icons/obj/items.dmi'
+	icon_state = "oldradio"

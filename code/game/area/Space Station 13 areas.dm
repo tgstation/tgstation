@@ -1641,9 +1641,9 @@ proc/process_ghost_teleport_locs()
 /area/spacecontent/a29
 	icon_state = "spacecontent29"
 
-/area/spacecontent/a30
+/area/spacecontent/a30 // Used for OLDSTATION space content area. - Iamgoofball
 	icon_state = "spacecontent30"
-
+	requires_power = 0
 /area/awaycontent
 	name = "space"
 

@@ -28,6 +28,8 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
+/obj/item/weapon/wrench/old
+	icon_state = "oldwrench"
 
 /*
  * Screwdriver
@@ -90,6 +92,12 @@
 		M = user
 	return eyestab(M,user)
 
+/obj/item/weapon/screwdriver/old
+	icon_state = "oldscrewdriver"
+
+/obj/item/weapon/screwdriver/old/New()
+	return
+
 /*
  * Wirecutters
  */
@@ -113,6 +121,12 @@
 	if(prob(50))
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
+
+/obj/item/weapon/wirecutters/old
+	icon_state = "oldcutters"
+
+/obj/item/weapon/wirecutters/old/New()
+	return
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
@@ -446,3 +460,6 @@
 	throw_range = 3
 	m_amt = 66
 	icon_state = "crowbar_large"
+
+/obj/item/weapon/crowbar/old
+	icon_state = "oldcrowbar"

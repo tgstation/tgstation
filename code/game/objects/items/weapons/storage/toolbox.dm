@@ -83,3 +83,18 @@
 	new /obj/item/stack/cable_coil(src,30,color)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
+
+
+/obj/item/weapon/storage/toolbox/old
+	name = "old toolbox"
+	icon_state = "oldtoolbox"
+	item_state = "toolbox_red"
+
+/obj/item/weapon/storage/toolbox/old/New()
+	..()
+	new /obj/item/weapon/screwdriver/old(src)
+	new /obj/item/weapon/wrench/old(src)
+	new /obj/item/weapon/crowbar/old(src)
+	new /obj/item/weapon/wirecutters/old(src)
+	new /obj/item/device/multitool/old(src)
+	new /obj/item/device/radio/off/old(src)

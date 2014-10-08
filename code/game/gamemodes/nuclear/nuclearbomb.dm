@@ -16,6 +16,7 @@ var/bomb_set
 	var/obj/item/weapon/disk/nuclear/auth = null
 	use_power = 0
 	var/previous_level = ""
+	var/bombtype = "nuclearbomb"
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
@@ -114,7 +115,7 @@ var/bomb_set
 					return
 				src.timing = !( src.timing )
 				if (src.timing)
-					src.icon_state = "nuclearbomb2"
+					src.icon_state = "[bombtype]2"
 					if(!src.safety)
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 						src.previous_level = "[get_security_level()]"
@@ -123,12 +124,12 @@ var/bomb_set
 						bomb_set = 0
 						set_security_level("[previous_level]")
 				else
-					src.icon_state = "nuclearbomb1"
+					src.icon_state = "[bombtype]1"
 					bomb_set = 0
 					set_security_level("[previous_level]")
 			if (href_list["safety"])
 				src.safety = !( src.safety )
-				src.icon_state = "nuclearbomb1"
+				src.icon_state = "[bombtype]1"
 				if(safety)
 					src.timing = 0
 					bomb_set = 0
@@ -161,7 +162,7 @@ var/bomb_set
 	src.timing = -1.0
 	src.yes_code = 0
 	src.safety = 1
-	src.icon_state = "nuclearbomb3"
+	src.icon_state = "[bombtype]3"
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
 	if (ticker && ticker.mode)
@@ -210,6 +211,11 @@ var/bomb_set
 	return
 
 
+/obj/machinery/nuclearbomb/old
+	name = "old nuclear fission explosive"
+	desc = "You consider running, but assume it's probably defused due to how old it is."
+	icon_state = "oldbomb0"
+	bombtype = "oldbomb"
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
