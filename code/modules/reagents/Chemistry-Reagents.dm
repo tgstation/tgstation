@@ -3082,7 +3082,10 @@ datum
 					if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 						M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				// Drinks should be used up faster than other reagents.
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
+				if(!holder)
+					holder = M.reagents
+				if(holder)
+					holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
@@ -3244,11 +3247,14 @@ datum
 
 					if(!holder) return
 					..()
-					M.make_jittery(5)
-					if(adj_temp > 0 && holder.has_reagent("frostoil"))
-						holder.remove_reagent("frostoil", 10*REAGENTS_METABOLISM)
+					if(!holder)
+						holder = M.reagents
+					if(holder)
+						M.make_jittery(5)
+						if(adj_temp > 0 && holder.has_reagent("frostoil"))
+							holder.remove_reagent("frostoil", 10*REAGENTS_METABOLISM)
 
-					holder.remove_reagent(src.id, 0.1)
+						holder.remove_reagent(src.id, 0.1)
 				icecoffee
 					name = "Iced Coffee"
 					id = "icecoffee"
@@ -3307,7 +3313,7 @@ datum
 				icetea
 					name = "Iced Tea"
 					id = "icetea"
-					description = "No relation to a certain rap artist/ actor."
+					description = "No relation to a certain rapper or actor."
 					color = "#104038" // rgb: 16, 64, 56
 					adj_temp = -5
 
@@ -3539,7 +3545,10 @@ datum
 				var/sober_str=!(M_SOBER in M.mutations)?1:2
 
 				M:nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
+				if(!holder)
+					holder = M.reagents
+				if(holder)
+					holder.remove_reagent(src.id, FOOD_METABOLISM)
 				if(!src.data) data = 1
 				src.data++
 
@@ -3572,8 +3581,10 @@ datum
 						else if(istype(L))
 							L.take_damage(0.1, 1)
 						H.adjustToxLoss(0.1)
-
-				holder.remove_reagent(src.id, 0.4)
+				if(!holder)
+					holder = M.reagents
+				if(holder)
+					holder.remove_reagent(src.id, 0.4)
 				..()
 				return
 

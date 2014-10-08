@@ -132,6 +132,8 @@
 	return
 
 /obj/machinery/dna_scannernew/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(!istype(O) || isturf(O)) // Cant drag the floor man
+		return
 	if(O.loc == user) //no you can't pull things out of your ass
 		return
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
