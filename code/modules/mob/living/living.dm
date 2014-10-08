@@ -462,7 +462,7 @@
 						"<span class='notice'>You successfully remove [I].</span>")
 
 				if(C.handcuffed)
-					if(istype(I,/obj/item/weapon/handcuffs/zipties))
+					if(I.del_on_strip)
 						qdel(I)
 					else
 						C.handcuffed.loc = usr.loc
@@ -616,10 +616,9 @@
 	what.add_fingerprint(src)
 	if(do_mob(src, who, STRIP_DELAY))
 		if(what && Adjacent(who))
-			if(istype(what,/obj/item/weapon/handcuffs/zipties))
+			who.unEquip(what)
+			if(what.del_on_strip)
 				qdel(what)
-			else
-				who.unEquip(what)
 			add_logs(src, who, "stripped", addition="of [what]")
 
 // The src mob is trying to place an item on someone

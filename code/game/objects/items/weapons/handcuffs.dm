@@ -13,6 +13,7 @@
 	m_amt = 500
 	origin_tech = "materials=1"
 	var/breakouttime = 600 //Deciseconds = 120s = 2 minutes
+	del_on_strip = 0
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
 	if(CLUMSY in user.mutations && prob(50))
@@ -97,11 +98,7 @@
 			user << "<span class='warning'>You need one rod to make a wired rod.</span>"
 			return
 
-/obj/item/weapon/handcuffs/cyborg
-	name = "zipties"
-	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
-
-/obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
+/obj/item/weapon/handcuffs/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
 		if(!C.handcuffed)
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
@@ -119,3 +116,4 @@
 	icon_state = "cuff_white"
 	item_state = "coil_white"
 	breakouttime = 450 //Deciseconds = 45s
+	del_on_strip = 1
