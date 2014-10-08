@@ -47,11 +47,3 @@ turf/unsimulated/wall/splashscreen
 	name = "floor"
 	icon_state = "floor"
 
-/turf/unsimulated/wall/oldspace
-	name = "solidified space"
-	desc = "The laws of physics don't seem to apply to this. No one knows why."
-	icon = 'icons/turf/space.dmi'
-	icon_state = "oldspace"
-	opacity = 0
-	density = 1
-	blocks_air = 1

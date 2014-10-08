@@ -62,7 +62,3 @@
 
 	track_delay = world.time + 10 // 1 second
 	return
-
-/obj/item/device/multitool/old
-	icon = 'icons/obj/items.dmi'
-	icon_state = "oldmultitool"

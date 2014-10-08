@@ -339,23 +339,3 @@
 					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
 							"<span class='userdanger'>You step in the broken glass!</span>")
 					cooldown = world.time
-
-
-/obj/item/weapon/shard
-	name = "shard"
-	desc = "A nasty looking shard of glass."
-	icon = 'icons/obj/shards.dmi'
-	icon_state = "oldlarge"
-
-/obj/item/weapon/shard/old/New()
-	icon_state = pick("oldlarge", "oldmedium", "oldsmall")
-	switch(icon_state)
-		if("oldsmall")
-			pixel_x = rand(-12, 12)
-			pixel_y = rand(-12, 12)
-		if("oldmedium")
-			pixel_x = rand(-8, 8)
-			pixel_y = rand(-8, 8)
-		if("oldlarge")
-			pixel_x = rand(-5, 5)
-			pixel_y = rand(-5, 5)

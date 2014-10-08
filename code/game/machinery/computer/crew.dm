@@ -90,9 +90,3 @@ proc/crewscan()
 			if(U.has_sensor && U.sensor_mode)
 				tracked.Add(H)
 	return tracked
-
-
-/obj/machinery/computer/crew/oldstation
-	name = "ancient computer"
-	desc = "It seems to be unable to get a connection to the databases. The program running says it's copyright 1995. The computer looks old as fuck."
-	icon_state = "oldstation"

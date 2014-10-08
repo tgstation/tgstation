@@ -242,13 +242,6 @@
 	table_type = /obj/structure/table/woodentable/poker
 	flags = null
 
-/obj/item/weapon/table_parts/old
-	name = "old table parts"
-	desc = "Somehow still hasn't fallen apart yet."
-	icon_state = "table_parts"
-	table_type = /obj/structure/table/old
-	flags = CONDUCT
-
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"

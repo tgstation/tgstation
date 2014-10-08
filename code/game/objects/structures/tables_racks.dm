@@ -666,12 +666,6 @@ Destroy type values:
 	icon_state = "pokertable"
 	parts = /obj/item/weapon/table_parts/wood/poker
 
-/obj/structure/table/old
-	name = "old table"
-	desc = "Somehow, this table is still intact after all these years."
-	icon_state = "oldtable"
-	parts = /obj/item/weapon/table_parts/old
-
 /*
  * Reinforced tables
  */

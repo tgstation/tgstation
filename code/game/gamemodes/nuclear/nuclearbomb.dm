@@ -210,12 +210,6 @@ var/bomb_set
 				return
 	return
 
-
-/obj/machinery/nuclearbomb/old
-	name = "old nuclear fission explosive"
-	desc = "You consider running, but assume it's probably defused due to how old it is."
-	icon_state = "oldbomb0"
-	bombtype = "oldbomb"
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"

@@ -391,12 +391,3 @@
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	icon_state = "fwindow"
-
-
-/obj/structure/window/basic/old
-	icon_state = "oldwindow"
-	shardtype = /obj/item/weapon/shard/old
-
-/obj/structure/window/reinforced/old
-	icon_state = "oldrwindow"
-	shardtype = /obj/item/weapon/shard/old
