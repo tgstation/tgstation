@@ -70,7 +70,7 @@ var/round_start_time = 0
 		if((master_mode=="secret") && (secret_force_mode != "secret"))
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
 			if (!smode.can_start())
-				message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.", 1)
+				message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
 			else
 				src.mode = smode
 

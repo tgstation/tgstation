@@ -159,9 +159,9 @@
 		return
 	playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 	src.bullets--
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("<span class='danger'>[user] fires [src] at [target]!</span>"), 1,
-						 "<span class='warning'> You hear a gunshot.</span>", 2)
+	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
+						"<span class='danger'>You fire [src] at [target]!</span>", \
+						 "<span class='danger'> You hear a gunshot.</span>")
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
@@ -232,8 +232,7 @@
 				for(var/mob/living/M in D.loc)
 					if(!istype(M,/mob/living)) continue
 					if(M == user) continue
-					for(var/mob/O in viewers(world.view, D))
-						O.show_message(text("<span class='danger'>[] was hit by the foam dart!</span>", M), 1)
+					D.visible_message("<span class='danger'>[M] was hit by the foam dart!</span>")
 					new /obj/item/toy/ammo/crossbow(M.loc)
 					qdel(D)
 					return
@@ -254,8 +253,7 @@
 		return
 	else if (bullets == 0)
 		user.Weaken(5)
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message(text("<span class='danger'>[] realized they were out of ammo and starting scrounging for some!</span>", user), 1)
+		user.visible_message("<span class='danger'>[user] realized they were out of ammo and starting scrounging for some!</span>")
 
 
 /obj/item/toy/crossbow/attack(mob/M as mob, mob/user as mob)
@@ -265,17 +263,16 @@
 
 	if (src.bullets > 0 && M.lying)
 
-		for(var/mob/O in viewers(M, null))
-			if(O.client)
-				O.show_message(text("<span class='userdanger'>[] casually lines up a shot with []'s head and pulls the trigger!</span>", user, M), 1, "<span class='danger'>You hear the sound of foam against skull.</span>", 2)
-				O.show_message(text("<span class='danger'>[] was hit in the head by the foam dart!</span>", M), 1)
+		M.visible_message("<span class='danger'>[user] casually lines up a shot with [M]'s head and pulls the trigger!</span>")
+		M.visible_message("<span class='danger'>[M] was hit in the head by the foam dart!</span>", \
+							"<span class='userdanger'>You're hit in the head by the foam dart!</span>", \
+							"<span class='danger'>You hear the sound of foam against skull.</span>")
 
 		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
 		new /obj/item/toy/ammo/crossbow(M.loc)
 		src.bullets--
 	else if (M.lying && src.bullets == 0)
-		for(var/mob/O in viewers(M, null))
-			if (O.client)	O.show_message(text("<span class='userdanger'>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</span>", user, M), 1, "<span class='danger'>You hear someone fall</span>", 2)
+		M.visible_message("<span class='danger'>[user] casually lines up a shot with [M]'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</span>")
 		user.Weaken(5)
 	return
 

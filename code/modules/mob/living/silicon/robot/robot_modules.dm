@@ -68,7 +68,7 @@
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/device/healthanalyzer(src)
-	emag = new /obj/item/weapon/melee/energy/sword(src)
+	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
 
 
 /obj/item/weapon/robot_module/medical

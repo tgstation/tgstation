@@ -234,8 +234,7 @@ Auto Patrol: []"},
 	if(open && !locked)
 		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
+			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -715,7 +714,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
-	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
