@@ -12,11 +12,22 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 
-		var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in underwear_all
-		if(!Adjacent(user))//no tele-grooming
-			return
-		if(new_undies)
-			H.underwear = new_undies
+		var/choice = input(user, "Underwear or Undershirt?", "Changing") as null|anything in list("Underwear","Undershirt")
+
+		switch(choice)
+			if("Underwear")
+				var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in underwear_all
+				if(!Adjacent(user))
+					return
+				if(new_undies)
+					H.underwear = new_undies
+
+			if("Undershirt")
+				var/new_undershirt = input(user, "Select your undershirt", "Changing") as null|anything in undershirt_list
+				if(!Adjacent(user))
+					return
+				if(new_undershirt)
+					H.undershirt = new_undershirt
 
 		add_fingerprint(H)
 		H.update_body()

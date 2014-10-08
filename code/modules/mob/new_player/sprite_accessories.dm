@@ -671,7 +671,39 @@
 	icon_state = "female_kinky"
 	gender = FEMALE
 
-/datum/sprite_accessory/underwear/female_tankini
-	name = "Tankini"
-	icon_state = "female_tankini"
+
+////////////////////////////
+// Undershirt Definitions //
+////////////////////////////
+/datum/sprite_accessory/undershirt
+	icon = 'icons/mob/underwear.dmi'
+
+/datum/sprite_accessory/undershirt/nude
+	name = "Nude"
+	icon_state = null
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_white
+	name = "White Shirt"
+	icon_state = "shirt_white"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_black
+	name = "Black Shirt"
+	icon_state = "shirt_black"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/tank_white
+	name = "White Tank-Top"
+	icon_state = "tank_white"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/tank_black
+	name = "Black Tank-Top"
+	icon_state = "tank_black"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/female_midriff
+	name = "Midriff Tank Top"
+	icon_state = "tank_midriff"
 	gender = FEMALE
