@@ -18,5 +18,8 @@
 
 	spawn_meteors(5, meteorsSPOOKY)
 
+	var/datum/round_event_control/carp_migration/eyeballs/SpookyMigration = locate() in events.control
+	SpookyMigration.runEvent()
+
 /datum/round_event/spooky/announce()
 	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
