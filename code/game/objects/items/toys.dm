@@ -149,7 +149,7 @@
 /obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (flag)
 		return
-	if(!user.IsAdvancedToolUser())
+	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 	src.add_fingerprint(user)
@@ -412,18 +412,106 @@
 	w_class = 1.0
 	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
+	var/drawtype = "rune"
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
+	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
+	var/dat
+
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|OXYLOSS)
+
 /obj/item/toy/crayon/New()
 	..()
 	name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
+	drawtype = pick(pick(graffiti), pick(letters), "rune[rand(1,6)]")
+
+/obj/item/toy/crayon/attack_self(mob/living/user as mob)
+	update_window(user)
+
+/obj/item/toy/crayon/proc/update_window(mob/living/user as mob)
+	dat += "<center><h2>Currently selected: [drawtype]</h2><br>"
+	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter</a>"
+	dat += "<hr>"
+	dat += "<h3>Runes:</h3><br>"
+	dat += "<a href='?src=\ref[src];type=random_rune'>Random rune</a>"
+	for(var/i = 1; i <= 6; i++)
+		dat += "<a href='?src=\ref[src];type=rune[i]'>Rune[i]</a>"
+		if(!((i + 1) % 3)) //3 buttons in a row
+			dat += "<br>"
+	dat += "<hr>"
+	graffiti.Find()
+	dat += "<h3>Graffiti:</h3><br>"
+	dat += "<a href='?src=\ref[src];type=random_graffiti'>Random graffiti</a>"
+	var/c = 1
+	for(var/T in graffiti)
+		dat += "<a href='?src=\ref[src];type=[T]'>[T]</a>"
+		if(!((c + 1) % 3)) //3 buttons in a row
+			dat += "<br>"
+		c++
+	dat += "<hr>"
+	var/datum/browser/popup = new(user, "crayon", name, 300, 500)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+	dat = ""
+
+/obj/item/toy/crayon/Topic(href, href_list, hsrc)
+	var/temp = "a"
+	switch(href_list["type"])
+		if("random_letter")
+			temp = pick(letters)
+		if("letter")
+			temp = input("Choose the letter.", "Crayon scribbles") in letters
+		if("random_rune")
+			temp = "rune[rand(1,6)]"
+		if("random_graffiti")
+			temp = pick(graffiti)
+		else
+			temp = href_list["type"]
+	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+		return
+	drawtype = temp
+	update_window(usr)
+
+/obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
+	if(!proximity) return
+	if(istype(target,/turf/simulated/floor))
+		var/temp = "rune"
+		if(letters.Find(drawtype))
+			temp = "letter"
+		else if(graffiti.Find(drawtype))
+			temp = "graffiti"
+		user << "You start drawing a [temp] on the [target.name]."
+		if(instant || do_after(user, 50))
+			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp)
+			user << "You finish drawing [temp]."
+			if(uses)
+				uses--
+				if(!uses)
+					user << "<span class='danger'>You used up your crayon!</span>"
+					qdel(src)
+	return
+
+/obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
+	if(M == user)
+		user << "You take a bite of the crayon. Delicious!"
+		user.nutrition += 5
+		if(uses)
+			uses -= 5
+			if(uses <= 0)
+				user << "<span class='danger'>You ate your crayon!</span>"
+				qdel(src)
+	else
+		..()
+
 /*
  * Snap pops
  */
+
 /obj/item/toy/snappop
 	name = "snap pop"
 	desc = "Wow!"
