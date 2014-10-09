@@ -706,3 +706,11 @@
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
 	regenerate_icons()
+
+/mob/living/carbon/human/start_pulling(var/atom/movable/AM)
+	if(l_hand && r_hand)
+		return
+	if(istype(AM,/obj/item))
+		put_in_active_hand(AM)
+		return
+	..()
