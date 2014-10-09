@@ -74,7 +74,7 @@
 	new /obj/item/clothing/head/HoS/dermal(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos/alt(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/clothing/glasses/hud/security/eyepatch(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/clothing/mask/gas/sechailer/hos(src)
