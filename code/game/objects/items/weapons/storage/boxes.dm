@@ -423,13 +423,13 @@
 
 /obj/item/weapon/storage/box/zipties/New()
 	..()
-	new /obj/item/weapon/restraints/handcuffs/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/zipties(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 
 /obj/item/weapon/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"

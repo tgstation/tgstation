@@ -1190,7 +1190,7 @@
 "awT" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/turf/simulated/floor{dir = 4; icon_state = "arrival"},/area/hallway/secondary/entry)
 "awU" = (/obj/structure/closet/wardrobe/white,/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "awV" = (/obj/structure/table,/obj/item/weapon/hemostat,/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
-"awW" = (/obj/structure/table,/obj/item/weapon/restraints/handcuffs/zipties,/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
+"awW" = (/obj/structure/table,/obj/item/weapon/restraints/handcuffs/cable/zipties,/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "awX" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/manifold{pipe_color = "blue"; dir = 8; icon_state = "manifold-b-f"; initialize_directions = 11; level = 1; name = "pipe manifold"},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "awY" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "awZ" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
