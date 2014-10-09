@@ -510,7 +510,7 @@
 			var/mob/living/carbon/C = L
 			if(C.handcuffed)
 				C.changeNext_move(CLICK_CD_BREAKOUT)
-				C.last_special = world.time + 100
+				C.last_special = world.time + CLICK_CD_BREAKOUT
 				C.visible_message("<span class='warning'>[usr] attempts to unbuckle themself!</span>", \
 							"<span class='notice'>You attempt to unbuckle yourself. (This will take around one minute and you need to stay still.)</span>")
 				spawn(0)
@@ -549,7 +549,7 @@
 		if(CM.canmove && (CM.last_special <= world.time))
 			if(CM.handcuffed || CM.legcuffed)
 				CM.changeNext_move(CLICK_CD_BREAKOUT)
-				CM.last_special = world.time + 100
+				CM.last_special = world.time + CLICK_CD_BREAKOUT
 				if(CM.handcuffed)
 					cuff_resist(CM.handcuffed, CM)
 				else

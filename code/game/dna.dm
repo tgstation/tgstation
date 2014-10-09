@@ -384,7 +384,7 @@
 		open = 1
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + 100
+	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
 
