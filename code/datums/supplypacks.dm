@@ -531,7 +531,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/glass/beaker/large,
 					/obj/item/weapon/reagent_containers/glass/beaker/large,
 					/obj/item/weapon/storage/box/beakers,
-					/obj/item/weapon/storage/box/syringes)
+					/obj/item/weapon/storage/box/syringes,
+				    /obj/item/weapon/storage/box/bodybags)
 	cost = 20
 	containertype = /obj/structure/closet/crate/medical
 	containername = "medical supplies crate"
