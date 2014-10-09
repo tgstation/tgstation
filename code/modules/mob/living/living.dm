@@ -414,7 +414,7 @@
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
     return null
 
-/mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
+/mob/living/proc/cuff_break(obj/item/weapon/restraints/I, mob/living/carbon/C)
 
 	if(HULK in usr.mutations)
 		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -431,14 +431,14 @@
 		C.update_inv_legcuffed(0)
 
 
-/mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)
+/mob/living/proc/cuff_resist(obj/item/weapon/restraints/I, mob/living/carbon/C)
 	var/breakouttime = 600
 	var/displaytime = 1
-	if(istype(I, /obj/item/weapon/handcuffs))
-		var/obj/item/weapon/handcuffs/HC = C.handcuffed
+	if(istype(I, /obj/item/weapon/restraints/handcuffs))
+		var/obj/item/weapon/restraints/handcuffs/HC = C.handcuffed
 		breakouttime = HC.breakouttime
-	else if(istype(I, /obj/item/weapon/legcuffs))
-		var/obj/item/weapon/legcuffs/LC = C.legcuffed
+	else if(istype(I, /obj/item/weapon/restraints/legcuffs))
+		var/obj/item/weapon/restraints/legcuffs/LC = C.legcuffed
 		breakouttime = LC.breakouttime
 	displaytime = breakouttime / 600
 
