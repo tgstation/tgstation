@@ -250,11 +250,9 @@ Auto Patrol: []"},
 
 			// if can't reach perp for long enough, go idle
 			if(src.frustration >= 8)
-				src.target = null
-				src.last_found = world.time
-				src.frustration = 0
-				src.mode = SECBOT_IDLE
 				walk_to(src,0)
+				back_to_idle()
+				return
 
 			if(target)		// make sure target exists
 				if(src.Adjacent(target) && isturf(src.target.loc))				// if right next to perp
@@ -291,55 +289,54 @@ Auto Patrol: []"},
 						src.frustration++
 					else
 						src.frustration = 0
+			else
+				back_to_idle()
 
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
-			// see if he got away
-			if( !src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2)  )
-				src.anchored = 0
-				mode = SECBOT_HUNT
+			// see if he got away. if he's no no longer adjacent or inside a closet or changed loc and about to get up, we hunt again.
+			if( !src.Adjacent(target) || (!isturf(src.target.loc)) || (src.target.loc != src.target_lastloc && src.target.weakened < 2) )
+				back_to_hunt()
 				return
 
-			var/back_to_idle = 0
 			if(iscarbon(target) && target.canBeHandcuffed())
 				if(!src.arrest_type)
-					if(!src.target.handcuffed)  //no cuffs? Try to cuff him!
+					if(!src.target.handcuffed)  //not cuffed? Try to cuff him!
 						mode = SECBOT_ARREST
 						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 						target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
 											"<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
 
 						spawn(60)
-							if(!src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2) ) // is the perp still at the same place?
-								src.anchored = 0
-								mode = SECBOT_HUNT
+							if( !src.Adjacent(target) || !isturf(src.target.loc) || src.target.loc != src.target_lastloc ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
 							if(!src.target.handcuffed)
 								target.handcuffed = new /obj/item/weapon/handcuffs(target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
 								playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-
+								back_to_idle()
 					else
-						back_to_idle = 1
+						back_to_idle()
+						return
 			else
-				back_to_idle = 1
-
-			if(back_to_idle)
-				mode = SECBOT_IDLE
-				src.target = null
-				src.anchored = 0
-				src.last_found = world.time
-				src.frustration = 0
+				back_to_idle()
+				return
 
 		if(SECBOT_ARREST)
 
-			if (!target || src.target.handcuffed)
+			if (!target)
 				src.anchored = 0
 				mode = SECBOT_IDLE
+				src.last_found = world.time
+				frustration = 0
 				return
-			if( !src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2) )
-				src.anchored = 0
-				mode = SECBOT_HUNT
+
+			if(src.target.handcuffed) //no target or target cuffed? back to idle.
+				back_to_idle()
+				return
+
+			if( !src.Adjacent(target) || (src.target.loc != src.target_lastloc && src.target.weakened < 2) ) //if he's changed loc and about to get up or not adjacent we prep arrest again.
+				back_to_hunt()
 				return
 
 
@@ -379,6 +376,23 @@ Auto Patrol: []"},
 					patrol_step()
 
 	return
+
+/obj/machinery/bot/secbot/proc/back_to_idle()  //
+	src.anchored = 0
+	mode = SECBOT_IDLE
+	src.target = null
+	src.last_found = world.time
+	frustration = 0
+	spawn(0)
+		process()
+
+
+/obj/machinery/bot/secbot/proc/back_to_hunt()
+	src.anchored = 0
+	src.frustration = 0
+	mode = SECBOT_HUNT
+	spawn(0)
+		process()
 
 
 // perform a single patrol step
