@@ -26,6 +26,7 @@
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
+	strip_delay = 130
 
 /obj/item/clothing/suit/space/deathsquad
 	name = "deathsquad suit"
@@ -35,6 +36,7 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	armor = list(melee = 80, bullet = 80, laser = 50,energy = 50, bomb = 100, bio = 100, rad = 100)
 	slowdown = 1
+	strip_delay = 130
 
 /obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "officer's beret"
@@ -95,6 +97,8 @@
 	item_state = "pirate"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
+	strip_delay = 40
+	put_on_delay = 20
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"
@@ -105,5 +109,5 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-
-
+	strip_delay = 40
+	put_on_delay = 20

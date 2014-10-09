@@ -611,7 +611,7 @@
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
 	what.add_fingerprint(src)
-	if(do_mob(src, who, STRIP_DELAY))
+	if(do_mob(src, who, what.strip_delay))
 		if(what && Adjacent(who))
 			who.unEquip(what)
 			add_logs(src, who, "stripped", addition="of [what]")
@@ -625,7 +625,7 @@
 		return
 	if(what && what.mob_can_equip(who, where, 1))
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
-		if(do_mob(src, who, STRIP_DELAY * 0.5))
+		if(do_mob(src, who, what.put_on_delay))
 			if(what && Adjacent(who))
 				src.unEquip(what)
 				who.equip_to_slot_if_possible(what, where, 0, 1)

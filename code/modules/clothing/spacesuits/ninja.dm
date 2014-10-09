@@ -5,6 +5,7 @@
 	item_state = "s-ninja_mask"
 	allowed = list(/obj/item/weapon/stock_parts/cell)
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 25)
+	strip_delay = 12
 
 
 /obj/item/clothing/suit/space/space_ninja
@@ -15,6 +16,7 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/stock_parts/cell)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	strip_delay = 12
 
 		//Important parts of the suit.
 	var/mob/living/carbon/affecting = null//The wearer.
