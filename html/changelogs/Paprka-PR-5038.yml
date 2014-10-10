@@ -1,4 +1,0 @@
-author: Paprika
-delete-after: True
-changes:
-  - bugfix: Toolbelts can now hold pocket fire extinguishers. Atmos technicians spawn with them.

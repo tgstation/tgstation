@@ -80,10 +80,9 @@
 		t += "The connect error light is blinking."
 	return t
 
-/obj/machinery/meter/examine()
-	set src in view(3)
+/obj/machinery/meter/examine(mob/user)
 	..()
-	usr << status()
+	user << status()
 
 
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)

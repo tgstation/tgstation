@@ -23,7 +23,7 @@
 /datum/table_recipe/IED
 	name = "IED"
 	result_path = /obj/item/weapon/grenade/iedcasing
-	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
+	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1,
@@ -33,7 +33,7 @@
 /datum/table_recipe/stunprod
 	name = "Stunprod"
 	result_path = /obj/item/weapon/melee/baton/cattleprod
-	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
+	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/stock_parts/cell = 1)

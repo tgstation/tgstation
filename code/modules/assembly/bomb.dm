@@ -11,9 +11,9 @@
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a plasma tank
 
-/obj/item/device/onetankbomb/examine()
+/obj/item/device/onetankbomb/examine(mob/user)
 	..()
-	bombtank.examine()
+	user.examinate(bombtank)
 
 /obj/item/device/onetankbomb/update_icon()
 	if(bombtank)

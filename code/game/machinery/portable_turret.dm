@@ -24,12 +24,11 @@
 	var/locked = 1			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
 
-	var/installation		//the type of weapon installed
+	var/installation = /obj/item/weapon/gun/energy/gun		//the type of weapon installed
 	var/gun_charge = 0		//the charge of the gun inserted
 	var/projectile = null	//holder for bullettype
 	var/eprojectile = null	//holder for the shot when emagged
 	var/reqpower = 500		//holder for power needed
-	var/sound = null		//So the taser can have sound
 	var/iconholder = null	//holder for the icon_state. 1 for orange sprite, null for blue.
 	var/egun = null			//holder to handle certain guns switching bullettypes
 
@@ -49,6 +48,9 @@
 	var/on = 1				//determines if the turret is on
 	var/disabled = 0
 
+	var/shot_sound 			//what sound should play when the turret fires
+	var/eshot_sound			//what sound should play when the emagged turret fires
+
 	var/datum/effect/effect/system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
 /obj/machinery/porta_turret/New()
@@ -64,74 +66,76 @@
 	setup()
 
 /obj/machinery/porta_turret/proc/setup()
-	if(!installation)	//if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
-		projectile = /obj/item/projectile/energy/electrode	//holder for the projectile, here it is being set
-		eprojectile = /obj/item/projectile/beam				//holder for the projectile when emagged, if it is different
-		sound = 1
-	else
-		sound = null
-		var/obj/item/weapon/gun/energy/E=new installation	//All energy-based weapons are applicable
-		var/obj/item/ammo_casing/shottype = E.ammo_type[1]
-		projectile = shottype.projectile_type
-		eprojectile = projectile
 
-		switch(E.type)
-			if(/obj/item/weapon/gun/energy/laser/bluetag)
-				eprojectile = /obj/item/projectile/lasertag/bluetag
-				lasercolor = "b"
-				req_access = list(access_maint_tunnels, access_theatre)
-				check_records = 0
-				criminals = 0
-				auth_weapons = 1
-				stun_all = 0
-				check_anomalies = 0
-				shot_delay = 30
+	var/obj/item/weapon/gun/energy/E=new installation	//All energy-based weapons are applicable
+	var/obj/item/ammo_casing/shottype = E.ammo_type[1]
 
-			if(/obj/item/weapon/gun/energy/laser/redtag)
-				eprojectile = /obj/item/projectile/lasertag/redtag
-				lasercolor = "r"
-				req_access = list(access_maint_tunnels, access_theatre)
-				check_records = 0
-				criminals = 0
-				auth_weapons = 1
-				stun_all = 0
-				check_anomalies = 0
-				shot_delay = 30
-				iconholder = 1
+	projectile = shottype.projectile_type
+	eprojectile = projectile
+	shot_sound = shottype.fire_sound
+	eshot_sound = shot_sound
 
-			if(/obj/item/weapon/gun/energy/laser/practice)
-				iconholder = 1
-				eprojectile = /obj/item/projectile/beam
+	switch(E.type)
+		if(/obj/item/weapon/gun/energy/laser/bluetag)
+			eprojectile = /obj/item/projectile/lasertag/bluetag
+			lasercolor = "b"
+			req_access = list(access_maint_tunnels, access_theatre)
+			check_records = 0
+			criminals = 0
+			auth_weapons = 1
+			stun_all = 0
+			check_anomalies = 0
+			shot_delay = 30
+
+		if(/obj/item/weapon/gun/energy/laser/redtag)
+			eprojectile = /obj/item/projectile/lasertag/redtag
+			lasercolor = "r"
+			req_access = list(access_maint_tunnels, access_theatre)
+			check_records = 0
+			criminals = 0
+			auth_weapons = 1
+			stun_all = 0
+			check_anomalies = 0
+			shot_delay = 30
+			iconholder = 1
+
+		if(/obj/item/weapon/gun/energy/laser/practice)
+			iconholder = 1
+			eprojectile = /obj/item/projectile/beam
 
 //			if(/obj/item/weapon/gun/energy/laser/practice/sc_laser)
 //				iconholder = 1
 //				eprojectile = /obj/item/projectile/beam
 
-			if(/obj/item/weapon/gun/energy/laser/retro)
-				iconholder = 1
+		if(/obj/item/weapon/gun/energy/laser/retro)
+			iconholder = 1
 
 //			if(/obj/item/weapon/gun/energy/laser/retro/sc_retro)
 //				iconholder = 1
 
-			if(/obj/item/weapon/gun/energy/laser/captain)
-				iconholder = 1
+		if(/obj/item/weapon/gun/energy/laser/captain)
+			iconholder = 1
 
-			if(/obj/item/weapon/gun/energy/lasercannon)
-				iconholder = 1
+		if(/obj/item/weapon/gun/energy/lasercannon)
+			iconholder = 1
 
-			if(/obj/item/weapon/gun/energy/taser)
-				eprojectile = /obj/item/projectile/beam
+		if(/obj/item/weapon/gun/energy/taser)
+			eprojectile = /obj/item/projectile/beam
+			eshot_sound = 'sound/weapons/Laser.ogg'
 
-			if(/obj/item/weapon/gun/energy/stunrevolver)
-				eprojectile = /obj/item/projectile/beam
+		if(/obj/item/weapon/gun/energy/stunrevolver)
+			eprojectile = /obj/item/projectile/beam
+			eshot_sound = 'sound/weapons/Laser.ogg'
 
-			if(/obj/item/weapon/gun/energy/gun)
-				eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
-				egun = 1
+		if(/obj/item/weapon/gun/energy/gun)
+			eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
+			eshot_sound = 'sound/weapons/Laser.ogg'
+			egun = 1
 
-			if(/obj/item/weapon/gun/energy/gun/nuclear)
-				eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
-				egun = 1
+		if(/obj/item/weapon/gun/energy/gun/nuclear)
+			eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
+			eshot_sound = 'sound/weapons/Laser.ogg'
+			egun = 1
 
 
 /obj/machinery/porta_turret/Destroy()
@@ -599,13 +603,13 @@
 		icon_state = "[lasercolor]orange_target_prism"
 	else
 		icon_state = "[lasercolor]target_prism"
-	if(sound)
-		playsound(loc, 'sound/weapons/Taser.ogg', 75, 1)
 	var/obj/item/projectile/A
 	if(emagged)
 		A = new eprojectile(loc)
+		playsound(loc, eshot_sound, 75, 1)
 	else
 		A = new projectile(loc)
+		playsound(loc, shot_sound, 75, 1)
 	A.original = target
 	if(!emagged)
 		use_power(reqpower)
