@@ -8,6 +8,11 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
+	action_button_name = "Adjust Breath Mask"
+	ignore_madjust = 0
+
+/obj/item/clothing/mask/breath/attack_self()
+	adjustmask()
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
