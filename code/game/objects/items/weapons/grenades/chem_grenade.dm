@@ -172,6 +172,8 @@
 
 		playsound(get_turf(src), 'sound/effects/bamfgas.ogg', 50, 1)
 
+		visible_message("<span class='warning'>\icon[src] \The [src] bursts open.</span>")
+
 		reservoir = new /obj/item/weapon/reagent_containers/glass/beaker/noreactgrenade() //acts like a stasis beaker, so the chemical reactions don't occur before all the slime reactions have occured
 
 		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
@@ -190,6 +192,9 @@
 				else if (reservoir.reagents.has_reagent("water", 5))
 					reservoir.reagents.trans_id_to(E, "water", 5)
 					extract_uses--
+				else if (reservoir.reagents.has_reagent("sugar", 5))
+					reservoir.reagents.trans_id_to(E, "sugar", 5)
+					extract_uses--
 				else
 					extract_uses-- //<--don't remove! could crash the server!
 			if(E.reagents.total_volume)						  //<-------//exception for green and black slime extracts. The grenade checks if any
@@ -205,6 +210,9 @@
 						extract_uses--
 					else if (reservoir.reagents.has_reagent("water", 5))
 						reservoir.reagents.trans_id_to(C, "water", 5)
+						extract_uses--
+					else if (reservoir.reagents.has_reagent("sugar", 5))
+						reservoir.reagents.trans_id_to(C, "sugar", 5)
 						extract_uses--
 					else
 						extract_uses--
@@ -224,7 +232,6 @@
 			for(var/atom/A in view(affected_area, src.loc))
 				if( A == src ) continue
 				src.reagents.reaction(A, 1, 10)
-
 
 		invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
 		spawn(50)		   //To make sure all reagents can work
