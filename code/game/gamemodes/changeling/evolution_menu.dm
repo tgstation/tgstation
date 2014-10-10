@@ -338,14 +338,17 @@ var/list/sting_paths
 
 //Reselect powers
 /datum/changeling/proc/lingRespec(var/mob/user)
+	if(!ishuman(user))
+		user << "<span class='danger'>We can't remove our evolutions in this form!</span>"
+		return
 	if(canrespec)
-		user << "We have removed our evolutions from this form, and are now ready to readapt."
+		user << "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>"
 		user.remove_changeling_powers(1)
 		canrespec = 0
 		user.make_changeling()
 		return 1
 	else
-		user << "You lack the power to readapt your evolutions!"
+		user << "<span class='danger'>You lack the power to readapt your evolutions!</span>"
 		return 0
 
 /mob/proc/make_changeling()
@@ -365,7 +368,7 @@ var/list/sting_paths
 		if(!S.dna_cost)
 			if(!mind.changeling.has_sting(S))
 				mind.changeling.purchasedpowers+=S
-				S.on_purchase(src)
+			S.on_purchase(src)
 
 	var/mob/living/carbon/C = src		//only carbons have dna now, so we have to typecaste
 	mind.changeling.absorbed_dna |= C.dna

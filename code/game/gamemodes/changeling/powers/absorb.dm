@@ -96,7 +96,7 @@
 	new_dna.mutant_color = T.dna.mutant_color
 	new_dna.blood_type = T.dna.blood_type
 	absorbedcount++
-	store_dna(new_dna)
+	store_dna(new_dna, user)
 
 /datum/changeling/proc/store_dna(var/datum/dna/new_dna, var/mob/user)
 	for(var/datum/objective/escape/escape_with_identity/E in user.mind.objectives)

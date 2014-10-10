@@ -86,7 +86,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 	if(changeling.absorbed_dna.len)
 		changeling.absorbed_dna.Cut(1,2)
-	store_dna(chosen_dna, user)
+	changeling.store_dna(chosen_dna, user)
 	user << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
 	feedback_add_details("changeling_powers","HD")
 	return 1
