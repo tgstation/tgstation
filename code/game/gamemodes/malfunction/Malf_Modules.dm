@@ -161,6 +161,8 @@
 	set name = "Overload Machine"
 	set category = "Malfunction"
 	if (istype(M, /obj/machinery))
+		if(!M.allow_malf_AI_verbs)
+			return
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
@@ -187,6 +189,8 @@
 	set name = "Override Machine"
 	set category = "Malfunction"
 	if (istype(M, /obj/machinery))
+		if(!M.allow_malf_AI_verbs)
+			return
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --

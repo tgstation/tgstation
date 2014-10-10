@@ -11,6 +11,7 @@
 	luminosity = 6
 	unacidable = 1 //Don't comment this out.
 	use_power = 0
+	allow_malf_AI_verbs = 0
 	var/current_size = 1
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?

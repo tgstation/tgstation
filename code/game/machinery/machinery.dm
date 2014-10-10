@@ -110,6 +110,8 @@ Class Procs:
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 
+	var/allow_malf_AI_verbs = 1 //Can the malf AI use its machine verbs on this machine?
+
 /obj/machinery/New()
 	..()
 	machines += src

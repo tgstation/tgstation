@@ -7,6 +7,7 @@
 	density = 1
 	anchored = 1
 	use_power = 0
+	allow_malf_AI_verbs = 0
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/list/components = null
 	var/list/req_components = null
