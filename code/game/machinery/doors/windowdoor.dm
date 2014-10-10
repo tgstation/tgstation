@@ -238,6 +238,7 @@
 		src.operating = -1
 		flick("[src.base_state]spark", src)
 		sleep(6)
+		desc += "<BR><span class='warning'>Its electronics look damaged.</span>"
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
