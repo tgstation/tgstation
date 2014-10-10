@@ -1,0 +1,4 @@
+author: Paprika
+delete-after: True
+changes:
+  - experiment: "Changed cult conversion rune to only require two cultists instead of three."
