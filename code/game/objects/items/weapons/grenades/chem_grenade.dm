@@ -12,6 +12,10 @@
 	var/list/beakers = new/list()
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
 	var/affected_area = 3
+	var/inserted_cores = 0
+	var/obj/item/slime_extract/E = null	//for large and Ex grenades
+	var/obj/item/slime_extract/C = null	//for Ex grenades
+	var/obj/item/weapon/reagent_containers/glass/beaker/noreactgrenade/reservoir = null
 
 	hear_talk(mob/M as mob, message)
 		if(detonator)
@@ -30,6 +34,9 @@
 					if(istype(B))
 						beakers -= B
 						user.put_in_hands(B)
+						E = null
+						C = null
+						inserted_cores = 0
 			name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		if(stage > 1 && !active && clown_check(user))
 			user << "<span class='warning'>You prime \the [name]!</span>"
@@ -94,7 +101,19 @@
 				user << "\red The grenade can not hold more containers."
 				return
 			else
-				if(W.reagents.total_volume)
+				if (istype(W,/obj/item/slime_extract))
+					if (inserted_cores > 0)
+						user << "\red This type of grenade cannot hold more than one slime core."
+					else
+						user << "\blue You add \the [W] to the assembly."
+						user.drop_item()
+						W.loc = src
+						beakers += W
+						E = W
+						inserted_cores++
+						stage = 1
+						name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
+				else if(W.reagents.total_volume)
 					user << "\blue You add \the [W] to the assembly."
 					user.drop_item()
 					W.loc = src
@@ -103,6 +122,8 @@
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				else
 					user << "\red \the [W] is empty."
+		else if (istype(W,/obj/item/slime_extract))
+			user << "\red This grenade case is too small for a slime core to fit in it."
 
 	examine()
 		set src in usr
@@ -150,8 +171,29 @@
 
 		playsound(get_turf(src), 'sound/effects/bamfgas.ogg', 50, 1)
 
+		reservoir = new /obj/item/weapon/reagent_containers/glass/beaker/noreactgrenade() //acts like a stasis beaker, so the chemical reactions don't occur before all the slime reactions have occured
+
 		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-			G.reagents.trans_to(src, G.reagents.total_volume)
+			G.reagents.trans_to(reservoir, G.reagents.total_volume)
+		for(var/obj/item/slime_extract/S in beakers)		//checking for reagents inside the slime extracts
+			S.reagents.trans_to(reservoir, S.reagents.total_volume)
+		if (E != null)
+			if (reservoir.reagents.has_reagent("plasma", 5))		//If the grenade contains a slime extract, the grenade will check in this order
+				reservoir.reagents.trans_id_to(E, "plasma", 5)		//for any Plasma -> Blood ->or Water among the reagents of the other containers
+			else if (reservoir.reagents.has_reagent("blood", 5))	//and inject 5u of it into the slime extract.
+				reservoir.reagents.trans_id_to(E, "blood", 5)
+			else if (reservoir.reagents.has_reagent("water", 5))
+				reservoir.reagents.trans_id_to(E, "water", 5)
+			if (C != null)
+				if (reservoir.reagents.has_reagent("plasma", 5))
+					reservoir.reagents.trans_id_to(C, "plasma", 5)	//since the order in which slime extracts are inserted matters (in the case of an Ex grenade)
+				else if (reservoir.reagents.has_reagent("blood", 5))//this allow users to plannify which reagent will get into which extract.
+					reservoir.reagents.trans_id_to(C, "blood", 5)
+				else if (reservoir.reagents.has_reagent("water", 5))
+					reservoir.reagents.trans_id_to(C, "water", 5)
+			reservoir.reagents.update_total()
+
+		reservoir.reagents.trans_to(src, reservoir.reagents.total_volume)
 
 		if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
 			var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
@@ -181,7 +223,7 @@
 	name = "Large Chem Grenade"
 	desc = "An oversized grenade that affects a larger area."
 	icon_state = "large_grenade"
-	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
+	allowed_containers = list(/obj/item/weapon/reagent_containers/glass, /obj/item/slime_extract)
 	origin_tech = "combat=3;materials=3"
 	affected_area = 4
 
@@ -189,7 +231,7 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 	name = "EX Chem Grenade"
 	desc = "A specially designed large grenade that can hold three containers."
 	icon_state = "ex_grenade"
-	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
+	allowed_containers = list(/obj/item/weapon/reagent_containers/glass, /obj/item/slime_extract)
 	origin_tech = "combat=4;materials=3;engineering=2"
 	affected_area = 4
 
@@ -242,7 +284,22 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 				user << "\red The grenade can not hold more containers."
 				return
 			else
-				if(W.reagents.total_volume)
+				if (istype(W,/obj/item/slime_extract))
+					if (inserted_cores > 1)
+						user << "\red You cannot fit more than two slime cores in this grenade."
+					else
+						user << "\blue You add \the [W] to the assembly."
+						user.drop_item()
+						W.loc = src
+						beakers += W
+						if (E == null)//E = first slime extract, C = second slime extract
+							E = W
+						else
+							C = W
+						inserted_cores++
+						stage = 1
+						name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
+				else if(W.reagents.total_volume)
 					user << "\blue You add \the [W] to the assembly."
 					user.drop_item()
 					W.loc = src
@@ -336,3 +393,10 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 		beakers += B1
 		beakers += B2
 		icon_state = initial(icon_state) +"_locked"
+
+/obj/item/weapon/reagent_containers/glass/beaker/noreactgrenade
+	name = "grenade reservoir"
+	desc = "..."
+	icon_state = null
+	volume = 1000
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
