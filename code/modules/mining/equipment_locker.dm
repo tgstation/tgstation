@@ -228,8 +228,8 @@
 	anchored = 1.0
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-		new /datum/data/mining_equipment("Stimpack MediPen",	/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,    100),
-		new /datum/data/mining_equipment("Leporazine MediPen",	/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine,  100),
+		new /datum/data/mining_equipment("Stimpack MediPen",	/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    50),
+		new /datum/data/mining_equipment("Leporazine MediPen",	/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine,   50),
 		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    100),
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    150),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           200),
