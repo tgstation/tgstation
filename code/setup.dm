@@ -882,3 +882,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define AUTOIGNITION_WOOD  573.15
 #define AUTOIGNITION_PAPER 519.15
+
+//gun shit - prepare to have various things added to this
+#define SILENCECOMP 1 		//Silencer-compatible
+#define AUTOMAGDROP 2		//Does the mag drop when it's empty?
+#define EMPTYCASINGS 4		//Does the gun eject empty casings?

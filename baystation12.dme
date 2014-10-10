@@ -1284,6 +1284,7 @@
 #include "code\modules\projectiles\ammunition\rocket.dm"
 #include "code\modules\projectiles\ammunition\speedloaders.dm"
 #include "code\modules\projectiles\guns\energy.dm"
+#include "code\modules\projectiles\guns\gun_parts.dm"
 #include "code\modules\projectiles\guns\projectile.dm"
 #include "code\modules\projectiles\guns\energy\laser.dm"
 #include "code\modules\projectiles\guns\energy\nuclear.dm"
