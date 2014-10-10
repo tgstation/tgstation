@@ -68,6 +68,7 @@
 	item_state = "medipen"
 	amount_per_transfer_from_this = 10
 	volume = 10
+	ignore_flags = 1 //so you can medipen through hardsuits
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()
@@ -116,7 +117,7 @@
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/New()
 	..()
 	reagents.remove_reagent("inaprovaline", 10)
-	reagents.add_reagent("hyperzine", 7)
-	reagents.add_reagent("toxin", 3)
+	reagents.add_reagent("hyperzine", 8)
+	reagents.add_reagent("toxin", 2)
 	update_icon()
 	return
