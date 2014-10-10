@@ -54,8 +54,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/combat/New()
 	..()
-	reagents.add_reagent("tricordazine", 15)
-	reagents.add_reagent("synaptizine", 15)
+	reagents.add_reagent("synaptizine", 30)
 
 
 
