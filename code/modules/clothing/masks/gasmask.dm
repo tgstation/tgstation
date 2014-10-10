@@ -8,7 +8,6 @@
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	ignore_maskadjust = 1
 
 // **** Welding gas mask ****
 
