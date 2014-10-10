@@ -9,7 +9,7 @@
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	action_button_name = "Adjust Breath Mask"
-	ignore_madjust = 0
+	ignore_maskadjust = 0
 
 /obj/item/clothing/mask/breath/attack_self()
 	adjustmask()

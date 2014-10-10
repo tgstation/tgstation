@@ -86,8 +86,8 @@ BLIND     // can't see anything
 	var/alloweat = 0
 	strip_delay = 40
 	put_on_delay = 40
-	var/is_madjusted = 0
-	var/ignore_madjust = 1
+	var/mask_adjusted = 0
+	var/ignore_maskadjust = 1
 
 //Override this to modify speech like luchador masks.
 /obj/item/clothing/mask/proc/speechModification(message)
@@ -95,21 +95,17 @@ BLIND     // can't see anything
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/proc/adjustmask()
-	if(!ignore_madjust)
+	if(!ignore_maskadjust)
 		if(!usr.canmove || usr.stat || usr.restrained())
 			return
-		if(ignore_madjust)
-			if(!can_flip)
-			usr << "<span class='warning'>You can't wear \the [src] anywhere else but your face.</span>"
-			return
-		if(src.is_madjusted == 1)
+		if(src.mask_adjusted == 1)
 			src.icon_state = initial(icon_state)
 			gas_transfer_coefficient = initial(gas_transfer_coefficient)
 			permeability_coefficient = initial(permeability_coefficient)
 			flags = initial(flags)
 			flags_inv = initial(flags_inv)
 			usr << "You push \the [src] back into place."
-			src.is_madjusted = 0
+			src.mask_adjusted = 0
 		else
 			src.icon_state += "_up"
 			usr << "You push \the [src] out of the way."
@@ -117,7 +113,7 @@ BLIND     // can't see anything
 			permeability_coefficient = null
 			flags = null
 			flags_inv = null
-			src.is_madjusted = 1
+			src.mask_adjusted = 1
 		usr.update_inv_wear_mask()
 
 
