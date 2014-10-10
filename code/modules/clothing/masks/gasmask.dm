@@ -8,11 +8,7 @@
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	action_button_name = "Adjust Gas Mask"
-	ignore_madjust = 0
-
-/obj/item/clothing/mask/gas/attack_self()
-	adjustmask()
+	ignore_madjust = 1
 
 // **** Welding gas mask ****
 
