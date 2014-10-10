@@ -16,6 +16,7 @@
 	var/obj/item/slime_extract/E = null	//for large and Ex grenades
 	var/obj/item/slime_extract/C = null	//for Ex grenades
 	var/obj/item/weapon/reagent_containers/glass/beaker/noreactgrenade/reservoir = null
+	var/extract_uses = 0
 
 	hear_talk(mob/M as mob, message)
 		if(detonator)
@@ -178,19 +179,38 @@
 		for(var/obj/item/slime_extract/S in beakers)		//checking for reagents inside the slime extracts
 			S.reagents.trans_to(reservoir, S.reagents.total_volume)
 		if (E != null)
-			if (reservoir.reagents.has_reagent("plasma", 5))		//If the grenade contains a slime extract, the grenade will check in this order
-				reservoir.reagents.trans_id_to(E, "plasma", 5)		//for any Plasma -> Blood ->or Water among the reagents of the other containers
-			else if (reservoir.reagents.has_reagent("blood", 5))	//and inject 5u of it into the slime extract.
-				reservoir.reagents.trans_id_to(E, "blood", 5)
-			else if (reservoir.reagents.has_reagent("water", 5))
-				reservoir.reagents.trans_id_to(E, "water", 5)
-			if (C != null)
+			extract_uses = E.Uses
+			while(extract_uses)	//<-------//exception for slime extracts injected with steroids. The grenade will repeat its checks untill all its remaining uses are gone
 				if (reservoir.reagents.has_reagent("plasma", 5))
-					reservoir.reagents.trans_id_to(C, "plasma", 5)	//since the order in which slime extracts are inserted matters (in the case of an Ex grenade)
-				else if (reservoir.reagents.has_reagent("blood", 5))//this allow users to plannify which reagent will get into which extract.
-					reservoir.reagents.trans_id_to(C, "blood", 5)
+					reservoir.reagents.trans_id_to(E, "plasma", 5)		//If the grenade contains a slime extract, the grenade will check in this order
+					extract_uses--
+				else if (reservoir.reagents.has_reagent("blood", 5))	//for any Plasma -> Blood ->or Water among the reagents of the other containers
+					reservoir.reagents.trans_id_to(E, "blood", 5)		//and inject 5u of it into the slime extract.
+					extract_uses--
 				else if (reservoir.reagents.has_reagent("water", 5))
-					reservoir.reagents.trans_id_to(C, "water", 5)
+					reservoir.reagents.trans_id_to(E, "water", 5)
+					extract_uses--
+				else
+					extract_uses-- //<--don't remove! could crash the server!
+			if(E.reagents.total_volume)						  //<-------//exception for green and black slime extracts. The grenade checks if any
+				E.reagents.trans_to(reservoir, E.reagents.total_volume)	//reagents are left in the slime extracts after the slime reactions occured
+			if (C != null)
+				extract_uses = C.Uses
+				while(extract_uses)	//why don't anyone ever uses "while" directives anyway?
+					if (reservoir.reagents.has_reagent("plasma", 5))
+						reservoir.reagents.trans_id_to(C, "plasma", 5)	//since the order in which slime extracts are inserted matters (in the case of an Ex grenade)
+						extract_uses--
+					else if (reservoir.reagents.has_reagent("blood", 5))//this allow users to plannify which reagent will get into which extract.
+						reservoir.reagents.trans_id_to(C, "blood", 5)
+						extract_uses--
+					else if (reservoir.reagents.has_reagent("water", 5))
+						reservoir.reagents.trans_id_to(C, "water", 5)
+						extract_uses--
+					else
+						extract_uses--
+				if(C.reagents.total_volume)
+					C.reagents.trans_to(reservoir, C.reagents.total_volume)
+
 			reservoir.reagents.update_total()
 
 		reservoir.reagents.trans_to(src, reservoir.reagents.total_volume)
