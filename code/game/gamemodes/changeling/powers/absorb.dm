@@ -56,7 +56,7 @@
 	target << "<span class='danger'>You have been absorbed by the changeling!</span>"
 
 	if(!changeling.has_dna(target.dna))
-		changeling.absorb_dna(target)
+		changeling.absorb_dna(target, user)
 
 	if(user.nutrition < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
 
@@ -66,14 +66,13 @@
 
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
-			changeling.absorbedcount += (target.mind.changeling.absorbedcount-1)
+			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
 
 			target.mind.changeling.absorbed_dna.len = 1
 			target.mind.changeling.absorbedcount = 0
 
 
 	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)
-	changeling.absorbedcount += 1
 
 	changeling.isabsorbing = 0
 	changeling.canrespec = 1
@@ -85,7 +84,7 @@
 
 
 //Absorbs the target DNA.
-/datum/changeling/proc/absorb_dna(mob/living/carbon/T)
+/datum/changeling/proc/absorb_dna(mob/living/carbon/T, var/mob/user)
 	if(absorbed_dna.len)
 		absorbed_dna.Cut(1,2)
 	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
@@ -96,4 +95,12 @@
 	new_dna.species = T.dna.species
 	new_dna.mutant_color = T.dna.mutant_color
 	new_dna.blood_type = T.dna.blood_type
-	absorbed_dna |= new_dna //And add the target DNA to our absorbed list.
+	absorbedcount++
+	store_dna(new_dna)
+
+/datum/changeling/proc/store_dna(var/datum/dna/new_dna, var/mob/user)
+	for(var/datum/objective/escape/escape_with_identity/E in user.mind.objectives)
+		if(E.target_real_name == new_dna.real_name)
+			protected_dna |= new_dna
+			return
+	absorbed_dna |= new_dna

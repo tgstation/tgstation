@@ -94,6 +94,11 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
 
 
+	var/datum/objective/absorb/absorb_objective = new
+	absorb_objective.owner = changeling
+	absorb_objective.gen_amount_goal(6, 8)
+	changeling.objectives += absorb_objective
+
 	if(prob(60))
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = changeling
@@ -222,6 +227,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
 	var/list/absorbed_dna = list()
+	var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
 	var/dna_max = 4 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 1 //We would require at least 1 sample of compatible DNA to have taken on the form of a human.
 	var/chem_charges = 20
@@ -260,12 +266,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 
 /datum/changeling/proc/get_dna(var/dna_owner)
-	for(var/datum/dna/DNA in absorbed_dna)
+	for(var/datum/dna/DNA in (absorbed_dna+protected_dna))
 		if(dna_owner == DNA.real_name)
 			return DNA
 
 /datum/changeling/proc/has_dna(var/datum/dna/tDNA)
-	for(var/datum/dna/D in absorbed_dna)
+	for(var/datum/dna/D in (absorbed_dna+protected_dna))
 		if(tDNA.is_same_as(D))
 			return 1
 	return 0
