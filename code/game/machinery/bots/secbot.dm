@@ -302,7 +302,7 @@ Auto Patrol: []"},
 				if(!src.arrest_type)
 					if(!src.target.handcuffed)  //he's not cuffed? Try to cuff him!
 						mode = SECBOT_ARREST
-						playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2
+						playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 						target.visible_message("<span class='danger'>[src] is trying to put zipties on [src.target]!</span>",\
 											"<span class='userdanger'>[src] is trying to put zipties on [src.target]!</span>")
 						spawn(60)
