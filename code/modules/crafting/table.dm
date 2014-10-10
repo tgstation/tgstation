@@ -62,10 +62,7 @@
 			if(!check_contents(R) || !check_tools(user, R))
 				return 0
 			var/list/parts = del_reqs(R)
-			var/list/constructed_stuff = list()
-			for(var/result_path in R.results)
-				constructed_stuff += new result_path(loc)
-			var/atom/movable/I = constructed_stuff[1] //We're assuming item 1 is where everything goes
+			var/atom/movable/I = new R.result (loc)
 			for(var/A in parts)
 				if(istype(A, /obj/item))
 					var/atom/movable/B = A

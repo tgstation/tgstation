@@ -568,7 +568,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		spawn(600)//One minute cooldown
 			message_cooldown = 0
 	log_say("[key_name(user)] has made a priority announcement: [input]")
-	message_admins("[key_name_admin(user)] has made a priority announcement.", 1)
+	message_admins("[key_name_admin(user)] has made a priority announcement.")
 
 /proc/call_shuttle_proc(var/mob/user, var/call_reason)
 	if ((!( ticker ) || emergency_shuttle.location))
@@ -599,7 +599,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		emergency_shuttle.incall(1, signal_origin, emergency_reason, 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
+	message_admins("[key_name_admin(user)] has called the shuttle.")
 
 	return
 
@@ -621,7 +621,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		var/area/signal_origin = get_area(user)
 		emergency_shuttle.recall(signal_origin)
 		log_game("[key_name(user)] has recalled the shuttle.")
-		message_admins("[key_name_admin(user)] has recalled the shuttle.", 1)
+		message_admins("[key_name_admin(user)] has recalled the shuttle.")
 		return 1
 	return
 

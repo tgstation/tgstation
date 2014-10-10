@@ -42,11 +42,9 @@
 		return 1
 
 	else if( istype(M, /mob/living/carbon/human) )
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span class='warning'>[user] attempts to feed [M] [src].</span>", 1)
+		visible_message("<span class='warning'>[user] attempts to feed [M] [src].</span>")
 		if(!do_mob(user, M)) return
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span class='warning'>[user] feeds [M] [src].</span>", 1)
+		visible_message("<span class='warning'>[user] feeds [M] [src].</span>")
 
 		add_logs(user, M, "fed", object="[reagentlist(src)]")
 

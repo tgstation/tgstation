@@ -3,13 +3,6 @@
 	var/imbue = null
 	var/uses = 0
 
-
-	examine()
-		set src in view(2)
-		..()
-		return
-
-
 	attack_self(mob/living/user as mob)
 		if(iscultist(user))
 			var/delete = 1
