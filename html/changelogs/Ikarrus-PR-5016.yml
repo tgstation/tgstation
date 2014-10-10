@@ -1,6 +1,0 @@
-author: Ikarrus
-
-delete-after: True
-
-changes: 
-  - bugfix: Character Save Files will now remember Species.

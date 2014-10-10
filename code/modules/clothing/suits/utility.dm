@@ -26,7 +26,8 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-
+	strip_delay = 60
+	put_on_delay = 60
 
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
@@ -54,6 +55,8 @@
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	strip_delay = 70
+	put_on_delay = 70
 
 
 /obj/item/clothing/suit/bomb_suit
@@ -73,6 +76,8 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+	strip_delay = 70
+	put_on_delay = 70
 
 
 
@@ -84,7 +89,7 @@
 /obj/item/clothing/suit/bomb_suit/security
 	icon_state = "bombsuitsec"
 	item_state = "bombsuitsec"
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
 
 /*
  * Radiation protection
@@ -95,6 +100,8 @@
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR|THICKMATERIAL
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
+	strip_delay = 60
+	put_on_delay = 60
 
 
 /obj/item/clothing/suit/radiation
@@ -110,4 +117,6 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
+	strip_delay = 60
+	put_on_delay = 60
 	flags_inv = HIDEJUMPSUIT

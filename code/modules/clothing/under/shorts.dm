@@ -4,6 +4,7 @@
 	gender = PLURAL
 	body_parts_covered = GROIN
 	fitted = 0
+	can_adjust = 0
 
 /obj/item/clothing/under/shorts/red
 	icon_state = "redshorts"

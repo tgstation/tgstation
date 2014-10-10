@@ -28,7 +28,7 @@
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
 #define SECBOT_HUNT 		1		// found target, hunting
-#define SECBOT_PREP_ARREST  2		// at target, preparing to arrest
+#define SECBOT_PREP_ARREST 	2		// at target, preparing to arrest
 #define SECBOT_ARREST		3		// arresting target
 #define SECBOT_START_PATROL	4		// start patrol
 #define SECBOT_PATROL		5		// patrolling
@@ -219,8 +219,7 @@ Auto Patrol: []"},
 	if(open && !locked)
 		if(user) user << "<span class='danger'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
+			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -303,15 +302,14 @@ Auto Patrol: []"},
 				if(!src.arrest_type)
 					if(!src.target.handcuffed)  //he's not cuffed? Try to cuff him!
 						mode = SECBOT_ARREST
-						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-						target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
-
+						playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2
+						target.visible_message("<span class='danger'>[src] is trying to put zipties on [src.target]!</span>",\
+											"<span class='userdanger'>[src] is trying to put zipties on [src.target]!</span>")
 						spawn(60)
 							if( !src.Adjacent(target) || !isturf(src.target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
 							if(!src.target.handcuffed)
-								target.handcuffed = new /obj/item/weapon/handcuffs(target)
+								target.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
 								playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 								back_to_idle()
@@ -671,7 +669,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
-	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

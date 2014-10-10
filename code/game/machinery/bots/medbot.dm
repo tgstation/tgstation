@@ -232,7 +232,7 @@
 	if(open && !locked)
 		if(user) user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
 		spawn(0)
-			src.visible_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
+			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		src.patient = null
 		if(user) src.oldpatient = user
@@ -473,7 +473,7 @@
 
 /obj/machinery/bot/medbot/explode()
 	src.on = 0
-	visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
+	visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)

@@ -16,7 +16,7 @@
 	icon_state = "bookempty"
 	anchored = 0
 	density = 1
-	opacity = 1
+	opacity = 0
 	var/state = 0
 
 

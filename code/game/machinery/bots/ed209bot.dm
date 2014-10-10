@@ -38,7 +38,7 @@
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
 #define SECBOT_HUNT 		1		// found target, hunting
-#define SECBOT_PREP_ARREST  2		// at target, preparing to arrest
+#define SECBOT_PREP_ARREST 	2		// at target, preparing to arrest
 #define SECBOT_ARREST		3		// arresting target
 #define SECBOT_START_PATROL	4		// start patrol
 #define SECBOT_PATROL		5		// patrolling
@@ -151,13 +151,10 @@ Report Arrests[]"},
 "<A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A>",
 "<A href='?src=\ref[src];operation=declarearrests'>[src.declare_arrests ? "Yes" : "No"]</A>" )
 
-
 		dat += text({"<BR>
 Auto Patrol: []"},
 
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-
-
 
 	var/datum/browser/popup = new(user, "autosec", "Securitron v2.0.9 controls")
 	popup.set_content(dat)
@@ -248,8 +245,7 @@ Auto Patrol: []"},
 	if(open && !locked)
 		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
+			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -357,7 +353,7 @@ Auto Patrol: []"},
 							if( !src.Adjacent(target) || !isturf(src.target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
 							if(!src.target.handcuffed)
-								target.handcuffed = new /obj/item/weapon/handcuffs(target)
+								src.target.handcuffed = new /obj/item/weapon/restraints/handcuffs(src.target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
 								back_to_idle()
 					else
@@ -368,7 +364,6 @@ Auto Patrol: []"},
 				return
 
 		if(SECBOT_ARREST)
-
 			if (!target)
 				src.anchored = 0
 				mode = SECBOT_IDLE
@@ -720,7 +715,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
-	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
@@ -764,7 +759,6 @@ Auto Patrol: []"},
 	new /obj/effect/decal/cleanable/oil(src.loc)
 	qdel(src)
 
-
 /obj/machinery/bot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'
 	if(src.emagged == 2)
@@ -780,7 +774,6 @@ Auto Patrol: []"},
 			projectile = /obj/item/projectile/lasertag/bluetag
 		else if(lasercolor == "r")
 			projectile = /obj/item/projectile/lasertag/redtag
-
 
 /obj/machinery/bot/ed209/proc/shootAt(var/mob/target)
 	if(lastfired && world.time - lastfired < shot_delay)
