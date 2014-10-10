@@ -255,14 +255,14 @@ Auto Patrol: []"},
 				return
 
 			if(target)		// make sure target exists
-				if(src.Adjacent(target) && isturf(src.target.loc))				// if right next to perp
+				if(src.Adjacent(target) && isturf(src.target.loc))	// if right next to perp
 					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 					src.icon_state = "secbot-c"
 					spawn(2)
 						src.icon_state = "secbot[src.on]"
 					var/mob/living/carbon/M = src.target
 					if(istype(M, /mob/living/carbon/human))
-						if(M.stuttering < 5 && (!(HULK in M.mutations)))
+						if( M.stuttering < 5 && !(HULK in M.mutations) )
 							M.stuttering = 5
 						M.Stun(5)
 						M.Weaken(5)
@@ -294,21 +294,21 @@ Auto Patrol: []"},
 
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
-			// see if he got away. if he's no no longer adjacent or inside a closet or changed loc and about to get up, we hunt again.
-			if( !src.Adjacent(target) || (!isturf(src.target.loc)) || (src.target.loc != src.target_lastloc && src.target.weakened < 2) )
+			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
+			if( !src.Adjacent(target) || !isturf(src.target.loc) ||  src.target.weakened < 2 )
 				back_to_hunt()
 				return
 
 			if(iscarbon(target) && target.canBeHandcuffed())
 				if(!src.arrest_type)
-					if(!src.target.handcuffed)  //not cuffed? Try to cuff him!
+					if(!src.target.handcuffed)  //he's not cuffed? Try to cuff him!
 						mode = SECBOT_ARREST
 						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 						target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
 											"<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
 
 						spawn(60)
-							if( !src.Adjacent(target) || !isturf(src.target.loc) || src.target.loc != src.target_lastloc ) //if he's in a closet or not adjacent, we cancel cuffing.
+							if( !src.Adjacent(target) || !isturf(src.target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
 							if(!src.target.handcuffed)
 								target.handcuffed = new /obj/item/weapon/handcuffs(target)
@@ -335,7 +335,7 @@ Auto Patrol: []"},
 				back_to_idle()
 				return
 
-			if( !src.Adjacent(target) || (src.target.loc != src.target_lastloc && src.target.weakened < 2) ) //if he's changed loc and about to get up or not adjacent we prep arrest again.
+			if( !src.Adjacent(target) || !isturf(src.target.loc) || (src.target.loc != src.target_lastloc && src.target.weakened < 2) ) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
 				back_to_hunt()
 				return
 
@@ -374,26 +374,23 @@ Auto Patrol: []"},
 					patrol_step()
 					sleep(4)
 					patrol_step()
-
 	return
 
-/obj/machinery/bot/secbot/proc/back_to_idle()  //
+/obj/machinery/bot/secbot/proc/back_to_idle()
 	src.anchored = 0
 	mode = SECBOT_IDLE
 	src.target = null
 	src.last_found = world.time
 	frustration = 0
 	spawn(0)
-		process()
-
+		process() //ensure bot quickly responds
 
 /obj/machinery/bot/secbot/proc/back_to_hunt()
 	src.anchored = 0
 	src.frustration = 0
 	mode = SECBOT_HUNT
 	spawn(0)
-		process()
-
+		process() //ensure bot quickly responds
 
 // perform a single patrol step
 /obj/machinery/bot/secbot/proc/patrol_step()
@@ -479,7 +476,10 @@ Auto Patrol: []"},
 
 
 /obj/machinery/bot/secbot/proc/at_patrol_target()
-	find_patrol_target()
+	if(auto_patrol)
+		find_patrol_target()
+	else
+		mode = SECBOT_IDLE
 	return
 
 

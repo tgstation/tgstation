@@ -101,9 +101,9 @@
 			arrest_type = 1//Don't even try to cuff
 			req_access = list(access_maint_tunnels, access_theatre)
 			arrest_type = 1
-			if((lasercolor == "b") && (name == "ED-209 Security Robot"))//Picks a name if there isn't already a custome one
+			if((lasercolor == "b") && (name == "\improper ED-209 Security Robot"))//Picks a name if there isn't already a custome one
 				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
-			if((lasercolor == "r") && (name == "ED-209 Security Robot"))
+			if((lasercolor == "r") && (name == "\improper ED-209 Security Robot"))
 				name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
 
 /obj/machinery/bot/ed209/turn_on()
@@ -296,24 +296,19 @@ Auto Patrol: []"},
 
 		if(SECBOT_HUNT)		// hunting for perp
 			// if can't reach perp for long enough, go idle
-			if (src.frustration >= 8)
-		//		for(var/mob/O in hearers(src, null))
-		//			O << "<span class='game say'><span class='name'>[src]</span> beeps, \"Backup requested! Suspect has evaded arrest.\""
-				src.target = null
-				src.last_found = world.time
-				src.frustration = 0
-				src.mode = 0
+			if(src.frustration >= 8)
 				walk_to(src,0)
+				back_to_idle()
 
-			if (target)		// make sure target exists
+			if(target)		// make sure target exists
 				if(src.Adjacent(target) && isturf(src.target.loc)) // if right next to perp
 					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 					src.icon_state = "[lasercolor]ed209-c"
 					spawn(2)
 						src.icon_state = "[lasercolor]ed209[src.on]"
 					var/mob/living/carbon/M = src.target
-					if (istype(M, /mob/living/carbon/human))
-						if (M.stuttering < 5 && (!(HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+					if(istype(M, /mob/living/carbon/human))
+						if( M.stuttering < 5 && !(HULK in M.mutations) )
 							M.stuttering = 5
 						M.Stun(5)
 						M.Weaken(5)
@@ -328,7 +323,7 @@ Auto Patrol: []"},
 					target.visible_message("<span class='danger'>[src.target] has been stunned by [src]!</span>",\
 											"<span class='userdanger'>[src.target] has been stunned by [src]!</span></span>")
 
-					mode = SECBOT_ARREST
+					mode = SECBOT_PREP_ARREST
 					src.anchored = 1
 					src.target_lastloc = M.loc
 					return
@@ -336,59 +331,57 @@ Auto Patrol: []"},
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, src.target)
 					walk_to(src, src.target,1,4)
-					if ((get_dist(src, src.target)) >= (olddist))
+					if((get_dist(src, src.target)) >= (olddist))
 						src.frustration++
 					else
 						src.frustration = 0
+			else
+				back_to_idle()
 
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
-			// see if he got away
-			if( !src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2)  )
-				src.anchored = 0
-				mode = SECBOT_HUNT
+			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
+			if( !src.Adjacent(target) || !isturf(src.target.loc) ||  src.target.weakened < 2 )
+				back_to_hunt()
 				return
 
-			var/back_to_idle = 0
 			if(iscarbon(target) && target.canBeHandcuffed())
 				if(!src.arrest_type)
-					if(!src.target.handcuffed)  //no cuffs? Try to cuff him!
+					if(!src.target.handcuffed)  //he's not cuffed? Try to cuff him!
 						mode = SECBOT_ARREST
 						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 						target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
 											"<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
 
 						spawn(60)
-							if(!src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2) ) // is the perp still at the same place?
-								src.anchored = 0
-								mode = SECBOT_HUNT
+							if( !src.Adjacent(target) || !isturf(src.target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
 							if(!src.target.handcuffed)
 								target.handcuffed = new /obj/item/weapon/handcuffs(target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
-								playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-
+								back_to_idle()
 					else
-						back_to_idle = 1
+						back_to_idle()
+						return
 			else
-				back_to_idle = 1
-
-			if(back_to_idle)
-				mode = SECBOT_IDLE
-				src.target = null
-				src.anchored = 0
-				src.last_found = world.time
-				src.frustration = 0
+				back_to_idle()
+				return
 
 		if(SECBOT_ARREST)
 
-			if (!target || src.target.handcuffed)
+			if (!target)
 				src.anchored = 0
 				mode = SECBOT_IDLE
+				src.last_found = world.time
+				frustration = 0
 				return
-			if( !src.Adjacent(target) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2) )
-				src.anchored = 0
-				mode = SECBOT_HUNT
+
+			if(src.target.handcuffed) //no target or target cuffed? back to idle.
+				back_to_idle()
+				return
+
+			if( !src.Adjacent(target) || !isturf(src.target.loc) || (src.target.loc != src.target_lastloc && src.target.weakened < 2) ) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
+				back_to_hunt()
 				return
 
 
@@ -425,12 +418,25 @@ Auto Patrol: []"},
 					patrol_step()
 					sleep(4)
 					patrol_step()
-
 	return
 
+/obj/machinery/bot/ed209/proc/back_to_idle()
+	src.anchored = 0
+	mode = SECBOT_IDLE
+	src.target = null
+	src.last_found = world.time
+	frustration = 0
+	spawn(0)
+		process() //ensure bot quickly responds
+
+/obj/machinery/bot/ed209/proc/back_to_hunt()
+	src.anchored = 0
+	src.frustration = 0
+	mode = SECBOT_HUNT
+	spawn(0)
+		process() //ensure bot quickly responds
 
 // perform a single patrol step
-
 /obj/machinery/bot/ed209/proc/patrol_step()
 
 	if(loc == patrol_target)		// reached target
@@ -517,7 +523,10 @@ Auto Patrol: []"},
 
 
 /obj/machinery/bot/ed209/proc/at_patrol_target()
-	find_patrol_target()
+	if(auto_patrol)
+		find_patrol_target()
+	else
+		mode = SECBOT_IDLE
 	return
 
 
