@@ -40,7 +40,7 @@
 		agent_number--
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.need_job_assign = 0
+		synd_mind.assigned_role = "MODE"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
 	return 1
@@ -214,6 +214,7 @@
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
 	E.imp_in = synd_mob
 	E.implanted = 1
+	E.implanted(synd_mob)
 	synd_mob.faction |= "syndicate"
 	synd_mob.update_icons()
 	return 1

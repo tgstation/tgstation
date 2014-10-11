@@ -226,8 +226,10 @@
 	if(istype(holder))
 		attempts++
 		defusals++
-		holder.loc.visible_message("<span class='notice'>\icon[holder] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires...</span>")
-		reset()
+		holder.loc.visible_message("<span class='notice'>\icon[holder] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds...</span>")
+		sleep(50)	//Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
+		if(istype(holder))
+			reset()
 
 /obj/item/weapon/bombcore/badmin
 	name = "badmin payload"

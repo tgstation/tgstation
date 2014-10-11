@@ -18,6 +18,8 @@
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
+	strip_delay = 15
+	put_on_delay = 25
 
 
 //Glasses
@@ -33,6 +35,8 @@
 	var/emagged = 0
 	var/hud = null
 	var/list/icon/current = list() //the current hud icons
+	strip_delay = 20
+	put_on_delay = 25
 
 /obj/item/clothing/glasses/proc/process_hud(var/mob/M)
 	return
@@ -59,6 +63,8 @@ BLIND     // can't see anything
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
 	var/transfer_prints = FALSE
+	strip_delay = 20
+	put_on_delay = 40
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
@@ -78,6 +84,8 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
 	var/alloweat = 0
+	strip_delay = 40
+	put_on_delay = 40
 
 
 //Override this to modify speech like luchador masks.
@@ -128,6 +136,8 @@ BLIND     // can't see anything
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flash_protect = 2
+	strip_delay = 50
+	put_on_delay = 50
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -147,6 +157,8 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	strip_delay = 80
+	put_on_delay = 80
 
 
 //Under clothing
@@ -216,12 +228,12 @@ BLIND     // can't see anything
 	if(hastie)
 		user << "\A [hastie] is attached to it."
 
-atom/proc/generate_uniform(index,t_color)
-	var/icon/female_uniform_icon	= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
+atom/proc/generate_female_clothing(index,t_color,icon)
+	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"="[t_color]_s")
 	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
-	female_uniform_icon.Blend(female_s, ICON_MULTIPLY)
-	female_uniform_icon 			= fcopy_rsc(female_uniform_icon)
-	female_uniform_icons[index] = female_uniform_icon
+	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
+	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
+	female_clothing_icons[index] = female_clothing_icon
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"

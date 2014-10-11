@@ -146,7 +146,7 @@
 					if (S.chained == 1)
 						S.chained = 0
 						S.slowdown = SHOES_SLOWDOWN
-						new /obj/item/weapon/handcuffs( src )
+						new /obj/item/weapon/restraints/handcuffs( src )
 					S.icon_state = new_shoe_icon_state
 					S.item_color = wash_color
 					S.name = new_shoe_name
