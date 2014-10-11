@@ -12,36 +12,11 @@
 	infra_luminosity = 3
 	wreckage = /obj/structure/mecha_wreckage/phazon
 	add_req_access = 1
-	//operation_req_access = list()
 	internal_damage_threshold = 25
 	force = 15
 	var/phasing = 0
 	var/phasing_energy_drain = 200
 	max_equip = 3
-
-/* //The Phazon spawned with an RCD and a Gravcatapult normally, but now that it's buildable we can't have that anymore now, can we
-/obj/mecha/combat/phazon/New()
-	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/rcd
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/gravcatapult
-	ME.attach(src)
-	return
-
-/obj/mecha/combat/phazon/Bump(var/atom/obstacle)
-	if(phasing && get_charge()>=phasing_energy_drain)
-		spawn()
-			if(can_move)
-				can_move = 0
-				flick("phazon-phase", src)
-				src.loc = get_step(src,src.dir)
-				src.use_power(phasing_energy_drain)
-				sleep(step_in*3)
-				can_move = 1
-	else
-		. = ..()
-	return
-*/
 
 /obj/mecha/combat/phazon/click_action(atom/target,mob/user)
 	if(phasing)
@@ -68,12 +43,6 @@
 		if("Toxic injector")
 			damtype = "tox"
 			src.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
-//	if (new_damtype == "Fists")
-//		src.occupant_message("Your exosuit's hands form into fists.")
-//	if (new_damtype == "Torch")
-//		src.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
-//	if (new_damtype == "Toxic injector")
-//		src.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
 	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
 	return
 
