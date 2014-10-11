@@ -1,9 +1,9 @@
 /obj/mecha/combat/phazon
-	desc = "An exosuit which can only be described as 'WTF?'."
+	desc = "This is a Phazon exosuit. The pinnacle of scientific research and pride of Nanotrasen, it uses cutting edge bluespace technology and expensive materials."
 	name = "\improper Phazon"
 	icon_state = "phazon"
-	step_in = 1
-	dir_in = 1 //Facing North.
+	step_in = 2
+	dir_in = 2 //Facing South.
 	step_energy_drain = 3
 	health = 200
 	deflect_chance = 30
@@ -17,9 +17,9 @@
 	force = 15
 	var/phasing = 0
 	var/phasing_energy_drain = 200
-	max_equip = 4
+	max_equip = 3
 
-
+/* //The Phazon spawned with an RCD and a Gravcatapult normally, but now that it's buildable we can't have that anymore now, can we
 /obj/mecha/combat/phazon/New()
 	..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/rcd
@@ -41,6 +41,7 @@
 	else
 		. = ..()
 	return
+*/
 
 /obj/mecha/combat/phazon/click_action(atom/target,mob/user)
 	if(phasing)
@@ -51,20 +52,26 @@
 
 /obj/mecha/combat/phazon/verb/switch_damtype()
 	set category = "Exosuit Interface"
-	set name = "Change melee damage type"
+	set name = "Reconfigure arm microtool arrays"
 	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
-	var/new_damtype = alert(src.occupant,"Melee Damage Type",null,"Brute","Fire","Toxic")
+	var/new_damtype = alert(src.occupant,"Arm tool selection",null,"Fists","Torch","Toxic injector")
 	switch(new_damtype)
-		if("Brute")
+		if("Fists")
 			damtype = "brute"
-		if("Fire")
+		if("Torch")
 			damtype = "fire"
-		if("Toxic")
+		if("Toxic injector")
 			damtype = "tox"
-	src.occupant_message("Melee damage type switched to [new_damtype ]")
+	if (new_damtype == "Fists")
+		src.occupant_message("Your exosuit's hands form into fists.")
+	if (new_damtype == "Torch")
+		src.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
+	if (new_damtype == "Toxic injector")
+		src.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
+	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
 	return
 
 /obj/mecha/combat/phazon/get_commands()
@@ -72,7 +79,7 @@
 						<div class='header'>Special</div>
 						<div class='links'>
 						<a href='?src=\ref[src];phasing=1'><span id="phasing_command">[phasing?"Dis":"En"]able phasing</span></a><br>
-						<a href='?src=\ref[src];switch_damtype=1'>Change melee damage type</a><br>
+						<a href='?src=\ref[src];switch_damtype=1'>Reconfigure arm microtool arrays</a><br>
 						</div>
 						</div>
 						"}

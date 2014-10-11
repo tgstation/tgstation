@@ -480,6 +480,7 @@
 
 /obj/mecha/attack_alien(mob/user as mob)
 	src.log_message("Attack by alien. Attacker - [user].",1)
+	user.changeNext_move(CLICK_CD_MELEE) //Now stompy alien killer mechs are actually scary to aliens!
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -662,6 +663,9 @@
 			user << "[src]-MMI interface initialization failed."
 		return
 
+	if(istype(W, /obj/item/asteroid/goliath_hide))
+		return
+
 	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
@@ -784,8 +788,6 @@
 */
 	return
 
-
-
 /*
 /obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
 	if(!istype(user, /mob/living/silicon/ai))
@@ -796,6 +798,8 @@
 	user << browse(output, "window=mecha_attack_ai")
 	return
 */
+
+
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
