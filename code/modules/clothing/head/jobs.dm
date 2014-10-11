@@ -6,6 +6,8 @@
 	icon_state = "chef"
 	item_state = "chef"
 	desc = "The commander in chef's head wear."
+	strip_delay = 10
+	put_on_delay = 10
 
 //Captain
 /obj/item/clothing/head/caphat
@@ -15,6 +17,7 @@
 	item_state = "that"
 	flags_inv = 0
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 30, bomb = 25, bio = 0, rad = 0)
+	strip_delay = 60
 
 //Captain: This is no longer space-worthy
 /obj/item/clothing/head/caphat/parade
@@ -66,6 +69,7 @@
 	armor = list(melee = 75, bullet = 60, laser = 60, energy = 50, bomb = 25, bio = 10, rad = 0)
 	flags = 0
 	flags_inv = HIDEEARS
+	strip_delay = 80
 
 /obj/item/clothing/head/HoS/dermal
 	name = "Dermal Armor Patch"
@@ -81,6 +85,7 @@
 	armor = list(melee = 60, bullet = 5, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags = 0
 	flags_inv = HIDEEARS
+	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
