@@ -1033,7 +1033,10 @@ datum
 			required_container = /obj/item/slime_extract/grey
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
-				send_admin_alert(holder, reaction_name="grey slime")
+				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="grey slime in a grenade")
+				else
+					send_admin_alert(holder, reaction_name="grey slime")
 
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
@@ -1096,7 +1099,10 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 					holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
+					send_admin_alert(holder, reaction_name="gold slime + plasma")
 					sleep(50)
+				else
+					send_admin_alert(holder, reaction_name="gold slime + plasma in a grenade!!")//expect to this this one spammed in the times to come
 
 				var/blocked = list(/mob/living/simple_animal/hostile,
 					/mob/living/simple_animal/hostile/pirate,
@@ -1125,7 +1131,6 @@ datum
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
-				send_admin_alert(holder, reaction_name="gold slime + plasma")
 
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
@@ -1161,7 +1166,10 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 					holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
+					send_admin_alert(holder, reaction_name="gold slime + blood")
 					sleep(50)
+				else
+					send_admin_alert(holder, reaction_name="gold slime + blood in a grenade")
 
 				var/blocked = list(/mob/living/simple_animal/hostile,
 					/mob/living/simple_animal/hostile/pirate,
@@ -1305,7 +1313,11 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 					holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
+					send_admin_alert(holder, reaction_name="dark blue slime + plasma (Freeze)")
 					sleep(50)
+				else
+					send_admin_alert(holder, reaction_name="dark blue slime + plasma (Freeze) in a grenade")
+
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 				for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
 					M.bodytemperature -= 240
@@ -1335,7 +1347,10 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 					holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
+					send_admin_alert(holder, reaction_name="orange slime + plasma (Napalm)")
 					sleep(50)
+				else
+					send_admin_alert(holder, reaction_name="orange slime + plasma (Napalm)in a grenade")
 				var/turf/location = get_turf(holder.my_atom.loc)
 				for(var/turf/simulated/floor/target_tile in range(0,location))
 
@@ -1358,6 +1373,10 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="yellow slime + blood (EMP)")
+				else
+					send_admin_alert(holder, reaction_name="yellow slime + blood (EMP) in a grenade")
 				empulse(get_turf(holder.my_atom), 3, 7)
 
 
@@ -1412,6 +1431,8 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="purple slime + sugar (Slime Jelly) in a grenade")
 
 
 //Dark Purple
@@ -1440,6 +1461,8 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="red slime + plasma (Glycerol) in a grenade")
 
 
 		slimebloodlust
@@ -1452,6 +1475,10 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="red slime + blood (Slime Frenzy)")
+				else
+					send_admin_alert(holder, reaction_name="red slime + blood (Slime Frenzy) in a grenade")
 				for(var/mob/living/carbon/slime/slime in viewers(get_turf(holder.my_atom), null))
 					slime.tame = 0
 					slime.rabid = 1
@@ -1483,6 +1510,8 @@ datum
 			required_container = /obj/item/slime_extract/black
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="black slime + plasma (Mutates to Slime) in a grenade")
 
 //Oil
 		slimeexplosion
@@ -1497,7 +1526,10 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 					holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
+					send_admin_alert(holder, reaction_name="oil slime + plasma (Explosion)")
 					sleep(50)
+				else
+					send_admin_alert(holder, reaction_name="oil slime + plasma (Explosion) in a grenade")
 				explosion(get_turf(holder.my_atom), 1 ,3, 6)
 //Light Pink
 		slimepotion2
@@ -1539,7 +1571,10 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="bluespace slime + plasma (Mass Teleport)")
+				else
+					send_admin_alert(holder, reaction_name="bluespace slime + plasma (Mass Teleport) in a grenade")
 				// Calculate new position (searches through beacons in world)
 				var/obj/item/device/radio/beacon/chosen
 				var/list/possible = list()
