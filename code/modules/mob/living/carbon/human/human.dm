@@ -709,6 +709,6 @@
 
 /mob/living/carbon/human/start_pulling(var/atom/movable/AM)
 	if(l_hand && r_hand)
-		user << "<span class='notice'>Your hands are full.</span>"
+		usr << "<span class='notice'>Your hands are full.</span>"
 		return
 	..()
