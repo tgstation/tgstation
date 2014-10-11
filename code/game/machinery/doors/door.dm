@@ -134,7 +134,7 @@
 		sleep(6)
 		open()
 		emagged = 1
-		desc = "<span class='warning'>Its electronics look damaged.</span>"
+		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		if(istype(src, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/A = src
 			A.lights = 0
