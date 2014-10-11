@@ -185,7 +185,10 @@
 	if(H.undershirt)
 		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[H.undershirt]
 		if(U2)
-			standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
+			if(H.dna && H.dna.species.sexes && H.gender == FEMALE)
+				standing	+=	H.wear_female_version(U2.icon_state, U2.icon, BODY_LAYER)
+			else
+				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing

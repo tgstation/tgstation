@@ -17,7 +17,7 @@ var/global/list/undershirt_f = list()	 //stores only undershirt name
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 	//Female Uniforms
-var/global/list/female_uniform_icons = list()
+var/global/list/female_clothing_icons = list()
 
 	//radical shit
 var/list/hit_appends = list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF")
