@@ -218,3 +218,66 @@
 /obj/item/device/flashlight/flare/dropped(mob/user)
 	..()
 	user.l_color = initial(user.l_color)
+
+
+// SLIME LAMP
+/obj/item/device/flashlight/lamp/slime
+	name = "slime lamp"
+	desc = "A lamp powered by a slime core. You can adjust its brightness by touching it."
+	icon_state = "slimelamp"
+	item_state = ""
+	l_color = "#333300"
+	luminosity = 2
+	on = 0
+
+/obj/item/device/flashlight/lamp/slime/initialize()
+	..()
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		SetLuminosity(6)
+	else
+		icon_state = initial(icon_state)
+		SetLuminosity(2)
+
+/obj/item/device/flashlight/lamp/slime/proc/slime_brightness(var/mob/user = null)
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		if(user && loc == user)
+			user.SetLuminosity(user.luminosity + 4)
+		else if(isturf(loc))
+			SetLuminosity(6)
+	else
+		icon_state = initial(icon_state)
+		if(user && loc == user)
+			user.SetLuminosity(user.luminosity - 4)
+		else if(isturf(loc))
+			SetLuminosity(2)
+
+/obj/item/device/flashlight/lamp/slime/attack_self(mob/user)
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]."
+		return 0
+	on = !on
+	slime_brightness(user)
+	return 1
+
+	slime_brightness(user)
+
+/obj/item/device/flashlight/lamp/slime/pickup(mob/user)
+	user.l_color = l_color
+	if(on)
+		user.SetLuminosity(user.luminosity + 6)
+		SetLuminosity(0)
+	else
+		user.SetLuminosity(user.luminosity + 2)
+		SetLuminosity(0)
+
+
+/obj/item/device/flashlight/lamp/slime/dropped(mob/user)
+	user.l_color = initial(user.l_color)
+	if(on)
+		user.SetLuminosity(user.luminosity - 6)
+		SetLuminosity(6)
+	else
+		user.SetLuminosity(user.luminosity - 2)
+		SetLuminosity(2)

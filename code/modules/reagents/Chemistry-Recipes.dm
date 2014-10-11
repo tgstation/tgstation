@@ -422,21 +422,21 @@ datum
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, location)
 				s.start()
-				for(var/mob/living/carbon/M in viewers(world.view, location))
-					switch(get_dist(M, location))
-						if(0 to 3)
-							if(hasvar(M, "glasses"))
-								if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
-									continue
 
+				playsound(get_turf(src), 'sound/effects/phasein.ogg', 25, 1)
+
+				var/eye_safety = 0
+
+				for(var/mob/living/carbon/M in viewers(get_turf_loc(holder.my_atom), null))
+					if(iscarbon(M))
+						eye_safety = M.eyecheck()
+
+					if (get_dist(M, location) <= 3)
+						if(eye_safety < 1)
 							flick("e_flash", M.flash)
 							M.Weaken(15)
-
-						if(4 to 5)
-							if(hasvar(M, "glasses"))
-								if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
-									continue
-
+					else if (get_dist(M, location) <= 5)
+						if(eye_safety < 1)
 							flick("e_flash", M.flash)
 							M.Stun(5)
 
@@ -1374,24 +1374,18 @@ datum
 				var/obj/item/weapon/cell/slime/P = new /obj/item/weapon/cell/slime
 				P.loc = get_turf(holder.my_atom)
 
-		slimeglow
-			name = "Slime Glow"
-			id = "m_glow"
+		slimeglow					//Was a broken recipe that was supposed to make the extract produce some light
+			name = "Slime Glow"		//I changed it, so it now creates an /obj/item/device/flashlight/lamp/slime.
+			id = "m_glow"			//Basically a lamp with two brightness settings. light slightly yellow.
 			result = null
 			required_reagents = list("water" = 5)
 			result_amount = 1
 			required_container = /obj/item/slime_extract/yellow
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
-				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")	//if the slime core was inside a chem grenade, it'll instead cause a flash before disappearing
-				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
-					for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-						if((M:eyecheck() <= 0)&&(!istype(M.glasses, /obj/item/clothing/glasses/science)))
-							flick("e_flash", M.flash)
-				else
-					holder.my_atom.visible_message("<span class='notice'>The slime begins to emit a soft light. Squeezing it will cause it to grow brightly.</span>")
-					var/obj/item/slime_extract/yellow/Y = holder
-					Y.luminosity = 6
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/device/flashlight/lamp/slime/P = new /obj/item/device/flashlight/lamp/slime
+				P.loc = get_turf(holder.my_atom)
 
 //Purple
 
