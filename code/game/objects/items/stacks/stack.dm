@@ -32,23 +32,25 @@
 	src.loc = null
 	..()
 
-/obj/item/stack/examine(mob/user)
+/obj/item/stack/examine()
+	set src in view(1)
 	..()
 	if (is_cyborg)
 		if(src.singular_name)
-			user << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
+			usr << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
 		else
-			user << "There is enough energy for [src.get_amount()]."
+			usr << "There is enough energy for [src.get_amount()]."
 		return
 	if(src.singular_name)
 		if(src.get_amount()>1)
-			user << "There are [src.get_amount()] [src.singular_name]\s in the stack."
+			usr << "There are [src.get_amount()] [src.singular_name]\s in the stack."
 		else
-			user << "There is [src.get_amount()] [src.singular_name] in the stack."
+			usr << "There is [src.get_amount()] [src.singular_name] in the stack."
 	else if(src.get_amount()>1)
-		user << "There are [src.get_amount()] in the stack."
+		usr << "There are [src.get_amount()] in the stack."
 	else
-		user << "There is [src.get_amount()] in the stack."
+		usr << "There is [src.get_amount()] in the stack."
+	return
 
 /obj/item/stack/proc/get_amount()
 	if (is_cyborg)

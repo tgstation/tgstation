@@ -41,9 +41,9 @@
 	..()
 
 
-/obj/machinery/syndicatebomb/examine(mob/user)
+/obj/machinery/syndicatebomb/examine()
 	..()
-	user << "A digital display on it reads \"[timer]\"."
+	usr << "A digital display on it reads \"[timer]\"."
 
 /obj/machinery/syndicatebomb/update_icon()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"

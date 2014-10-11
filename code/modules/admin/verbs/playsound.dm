@@ -11,7 +11,7 @@ var/sound/admin_sound
 	admin_sound.status = SOUND_UPDATE|SOUND_STREAM
 
 	log_admin("[key_name(src)] played sound [S]")
-	message_admins("[key_name_admin(src)] played sound [S]")
+	message_admins("[key_name_admin(src)] played sound [S]", 1)
 
 	if(events.holiday == "April Fool's Day")
 		admin_sound.frequency = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
@@ -32,7 +32,7 @@ var/sound/admin_sound
 	if(!check_rights(R_SOUNDS))	return
 
 	log_admin("[key_name(src)] played a local sound [S]")
-	message_admins("[key_name_admin(src)] played a local sound [S]")
+	message_admins("[key_name_admin(src)] played a local sound [S]", 1)
 	playsound(get_turf(src.mob), S, 50, 0, 0)
 	feedback_add_details("admin_verb","PLS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

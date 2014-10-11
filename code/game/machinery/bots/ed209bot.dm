@@ -234,7 +234,8 @@ Auto Patrol: []"},
 	if(open && !locked)
 		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
-			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
+			for(var/mob/O in hearers(src, null))
+				O.show_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -363,7 +364,7 @@ Auto Patrol: []"},
 								return
 
 							if(istype(src.target,/mob/living/carbon))
-								src.target.handcuffed = new /obj/item/weapon/restraints/handcuffs(src.target)
+								src.target.handcuffed = new /obj/item/weapon/handcuffs(src.target)
 								target.update_inv_handcuffed(0)	//update handcuff overlays
 
 							mode = SECBOT_IDLE
@@ -714,7 +715,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
-	src.visible_message("<span class='userdanger'>[src] blows apart!</span>")
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)

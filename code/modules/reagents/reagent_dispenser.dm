@@ -39,6 +39,17 @@
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 	..()
 
+/obj/structure/reagent_dispensers/examine()
+	set src in view()
+	..()
+	if (!(usr in view(2)) && usr!=src.loc) return
+	usr << "<span class='notice'>It contains:</span>"
+	if(reagents && reagents.reagent_list.len)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			usr << "<span class='notice'>[R.volume] units of [R.name]</span>"
+	else
+		usr << "<span class='danger'>Nothing.</span>"
+
 /obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
 	set category = "Object"

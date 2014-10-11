@@ -85,16 +85,19 @@
 	open_machine()
 	return
 
-/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
+/obj/machinery/atmospherics/unary/cryo_cell/examine()
 	..()
 
-	var/list/otherstuff = contents - beaker
-	if(otherstuff.len > 0)
-		user << "You can just about make out some loose objects floating in the murk:"
-		for(var/atom/movable/floater in otherstuff)
-			user << "\icon[floater] [floater.name]"
+	if(in_range(usr, src))
+		usr << "You can just about make out some loose objects floating in the murk:"
+		for(var/obj/O in src)
+			if(O != beaker)
+				usr << O.name
+		for(var/mob/M in src)
+			if(M != occupant)
+				usr << M.name
 	else
-		user << "Seems empty."
+		usr << "<span class='notice'>Too far away to view contents.</span>"
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))

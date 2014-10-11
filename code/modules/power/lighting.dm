@@ -84,15 +84,20 @@
 	if (fixture_type == "bulb")
 		icon_state = "bulb-construct-stage1"
 
-/obj/machinery/light_construct/examine(mob/user)
+/obj/machinery/light_construct/examine()
+	set src in view()
 	..()
+	if (!(usr in view(2))) return
 	switch(src.stage)
 		if(1)
-			user << "It's an empty frame."
+			usr << "It's an empty frame."
+			return
 		if(2)
-			user << "It's wired."
+			usr << "It's wired."
+			return
 		if(3)
-			user << "The casing is closed."
+			usr << "The casing is closed."
+			return
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	src.add_fingerprint(user)
@@ -312,17 +317,19 @@
 	update()
 
 // examine verb
-/obj/machinery/light/examine(mob/user)
+/obj/machinery/light/examine()
+	set src in oview(1)
 	..()
-	switch(status)
-		if(LIGHT_OK)
-			user << "It is turned [on? "on" : "off"]."
-		if(LIGHT_EMPTY)
-			user << "The [fitting] has been removed."
-		if(LIGHT_BURNED)
-			user << "The [fitting] is burnt out."
-		if(LIGHT_BROKEN)
-			user << "The [fitting] has been smashed."
+	if(usr && !usr.stat)
+		switch(status)
+			if(LIGHT_OK)
+				usr << "It is turned [on? "on" : "off"]."
+			if(LIGHT_EMPTY)
+				usr << "The [fitting] has been removed."
+			if(LIGHT_BURNED)
+				usr << "The [fitting] is burnt out."
+			if(LIGHT_BROKEN)
+				usr << "The [fitting] has been smashed."
 
 
 
@@ -372,9 +379,11 @@
 
 		if(prob(1+W.force * 5))
 
-			user.visible_message("<span class='danger'>[user.name] smashed the light!</span>", \
-								"<span class='danger'>You hit the light, and it smashes!</span>", \
-								 "You hear a tinkle of breaking glass")
+			user << "You hit the light, and it smashes!"
+			for(var/mob/M in viewers(src))
+				if(M == user)
+					continue
+				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 			if(on && (W.flags & CONDUCT))
 				//if(!user.mutations & COLD_RESISTANCE)
 				if (prob(12))
@@ -382,14 +391,14 @@
 			broken()
 
 		else
-			user.visible_message("<span class='warning'>[user.name] hits the light.</span>")
+			user << "You hit the light!"
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			user.visible_message("<span class='notice'>[user.name] opens [src]'s casing.</span>", \
-				"<span class='notice'>You open [src]'s casing.</span>", "You hear a noise.")
+			user.visible_message("[user.name] opens [src]'s casing.", \
+				"You open [src]'s casing.", "You hear a noise.")
 			var/obj/machinery/light_construct/newlight = null
 			switch(fitting)
 				if("tube")
@@ -449,7 +458,8 @@
 		user << "\green That object is useless to you."
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
-		visible_message("<span class='danger'>[user.name] smashed the light!</span>", "You hear a tinkle of breaking glass")
+		for(var/mob/M in viewers(src))
+			M.show_message("<span class='danger'>[user.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 
@@ -459,7 +469,8 @@
 		M << "<span class='danger'>That object is useless to you.</span>"
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
-		visible_message("<span class='danger'>[M.name] smashed the light!</span>", "You hear a tinkle of breaking glass")
+		for(var/mob/O in viewers(src))
+			O.show_message("<span class='danger'>[M.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 // attack with hand - remove tube/bulb

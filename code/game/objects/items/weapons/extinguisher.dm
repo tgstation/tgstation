@@ -36,6 +36,12 @@
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
 
+/obj/item/weapon/extinguisher/examine()
+	set src in usr
+	..()
+	usr << "It contains [src.reagents.total_volume] units of water!"
+	return
+
 /obj/item/weapon/extinguisher/attack_self(mob/user as mob)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"

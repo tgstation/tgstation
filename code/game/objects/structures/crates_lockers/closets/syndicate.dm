@@ -12,14 +12,16 @@
 /obj/structure/closet/syndicate/personal/New()
 	..()
 	sleep(2)
+	new /obj/item/weapon/tank/jetpack/oxygen/harness(src)
+	new /obj/item/clothing/mask/gas/syndicate(src)
 	new /obj/item/clothing/under/syndicate(src)
-	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/clothing/head/helmet/swat/syndicate(src)
-	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/clothing/head/helmet/space/hardsuit/syndi(src)
+	new /obj/item/clothing/suit/space/hardsuit/syndi(src)
 	new /obj/item/weapon/storage/belt/military(src)
 	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/clothing/glasses/night(src)
-	return
+	new /obj/item/weapon/stock_parts/cell/high(src)
+	new /obj/item/device/multitool(src)
+
 
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for a Syndicate boarding party."
@@ -32,6 +34,7 @@
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/teargas(src)
 	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)

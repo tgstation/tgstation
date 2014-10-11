@@ -107,16 +107,19 @@
 	return
 
 
-/obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/examine()
+	set src in view()
 	..()
+	if(!(usr in range(1)) && usr != loc)
+		return
 	if(bitecount == 0)
 		return
 	else if(bitecount == 1)
-		user << "[src] was bitten by someone!"
+		usr << "[src] was bitten by someone!"
 	else if(bitecount <= 3)
-		user << "[src] was bitten [bitecount] times!"
+		usr << "[src] was bitten [bitecount] times!"
 	else
-		user << "[src] was bitten multiple times!"
+		usr << "[src] was bitten multiple times!"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)

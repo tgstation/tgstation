@@ -16,7 +16,8 @@
 	stat = DEAD
 	icon_state = "[colour] baby slime dead"
 	overlays.len = 0
-	visible_message("<b>The [name]</b> seizes up and falls limp...") //ded -- Urist
+	for(var/mob/O in viewers(src, null))
+		O.show_message("<b>The [name]</b> seizes up and falls limp...", 1) //ded -- Urist
 
 	update_canmove()
 	if(blind)	blind.layer = 0

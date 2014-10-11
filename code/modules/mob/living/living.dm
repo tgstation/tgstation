@@ -414,7 +414,7 @@
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
     return null
 
-/mob/living/proc/cuff_break(obj/item/weapon/restraints/I, mob/living/carbon/C)
+/mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
 
 	if(HULK in usr.mutations)
 		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -431,14 +431,14 @@
 		C.update_inv_legcuffed(0)
 
 
-/mob/living/proc/cuff_resist(obj/item/weapon/restraints/I, mob/living/carbon/C)
+/mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)
 	var/breakouttime = 600
 	var/displaytime = 1
-	if(istype(I, /obj/item/weapon/restraints/handcuffs))
-		var/obj/item/weapon/restraints/handcuffs/HC = C.handcuffed
+	if(istype(I, /obj/item/weapon/handcuffs))
+		var/obj/item/weapon/handcuffs/HC = C.handcuffed
 		breakouttime = HC.breakouttime
-	else if(istype(I, /obj/item/weapon/restraints/legcuffs))
-		var/obj/item/weapon/restraints/legcuffs/LC = C.legcuffed
+	else if(istype(I, /obj/item/weapon/legcuffs))
+		var/obj/item/weapon/legcuffs/LC = C.legcuffed
 		breakouttime = LC.breakouttime
 	displaytime = breakouttime / 600
 
@@ -611,7 +611,7 @@
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
 	what.add_fingerprint(src)
-	if(do_mob(src, who, what.strip_delay))
+	if(do_mob(src, who, STRIP_DELAY))
 		if(what && Adjacent(who))
 			who.unEquip(what)
 			add_logs(src, who, "stripped", addition="of [what]")
@@ -625,7 +625,7 @@
 		return
 	if(what && what.mob_can_equip(who, where, 1))
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
-		if(do_mob(src, who, what.put_on_delay))
+		if(do_mob(src, who, STRIP_DELAY * 0.5))
 			if(what && Adjacent(who))
 				src.unEquip(what)
 				who.equip_to_slot_if_possible(what, where, 0, 1)

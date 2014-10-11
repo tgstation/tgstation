@@ -298,10 +298,11 @@
 	else
 		return ..()
 
-/obj/machinery/atmospherics/unary/vent_pump/examine(mob/user)
+/obj/machinery/atmospherics/unary/vent_pump/examine()
+	set src in oview(1)
 	..()
 	if(welded)
-		user << "It seems welded shut."
+		usr << "It seems welded shut."
 
 /obj/machinery/atmospherics/unary/vent_pump/power_change()
 	if(powered(power_channel))

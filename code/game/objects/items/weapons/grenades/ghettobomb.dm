@@ -97,7 +97,8 @@
 	explosion(src.loc,-1,-1,-1, flame_range = range)	// no explosive damage, only a large fireball.
 	qdel(src)
 
-/obj/item/weapon/grenade/iedcasing/examine(mob/user)
+/obj/item/weapon/grenade/iedcasing/examine()
+	set src in usr
 	..()
 	if(assembled == 3)
-		user << "You can't tell when it will explode!"
+		usr << "You can't tell when it will explode!"

@@ -213,24 +213,25 @@
 	else
 		return 0
 
-/obj/mecha/examine(mob/user)
+/obj/mecha/examine()
+	set src in view()
 	..()
 	var/integrity = health/initial(health)*100
 	switch(integrity)
 		if(85 to 100)
-			user << "It's fully intact."
+			usr << "It's fully intact."
 		if(65 to 85)
-			user << "It's slightly damaged."
+			usr << "It's slightly damaged."
 		if(45 to 65)
-			user << "It's badly damaged."
+			usr << "It's badly damaged."
 		if(25 to 45)
-			user << "It's heavily damaged."
+			usr << "It's heavily damaged."
 		else
-			user << "It's falling apart."
+			usr << "It's falling apart."
 	if(equipment && equipment.len)
-		user << "It's equipped with:"
+		usr << "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
-			user << "\icon[ME] [ME]"
+			usr << "\icon[ME] [ME]"
 	return
 
 

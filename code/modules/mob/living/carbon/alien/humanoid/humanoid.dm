@@ -371,6 +371,6 @@ In all, this is a lot like the monkey code. /N
 		if(href_list["pouches"])
 			visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")
-			if(do_mob(usr, src, POCKET_STRIP_DELAY * 0.5))
+			if(do_mob(usr, src, STRIP_DELAY * 0.5))
 				unEquip(r_store)
 				unEquip(l_store)

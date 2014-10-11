@@ -1703,7 +1703,8 @@ datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(get_turf(O))
 			I.desc = "Looks like this was \an [O] some time ago."
-			O.visible_message("<span class='danger'> \the [O] melts.</span>")
+			for(var/mob/M in viewers(5, O))
+				M << "<span class='danger'> \the [O] melts.</span>"
 			qdel(O)
 
 datum/reagent/toxin/acid/polyacid

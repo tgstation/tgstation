@@ -219,18 +219,15 @@
 			src.use(2)
 
 		if("Windoor")
-			if(!src || src.loc != user || !isturf(user.loc))
+			if(!src || src.loc != user) return 1
+
+			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
+				user << "<span class='warning'>There is already a windoor assembly in that location.</span>"
 				return 1
 
-			for(var/obj/structure/windoor_assembly/WA in user.loc)
-				if(WA.dir == user.dir)
-					user << "<span class='warning'>There is already a windoor assembly in that location.</span>"
-					return 1
-
-			for(var/obj/machinery/door/window/W in user.loc)
-				if(W.dir == user.dir)
-					user << "<span class='warning'>There is already a windoor in that location.</span>"
-					return 1
+			if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
+				user << "<span class='warning'>There is already a windoor in that location.</span>"
+				return 1
 
 			if(src.get_amount() < 5)
 				user << "<span class='warning'>You need more glass to do that.</span>"

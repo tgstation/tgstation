@@ -22,7 +22,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = 0
-	var/real = 1 //0 for the toy, 1 for real. Sure I could istype, but fuck that.
+
 	var/strength = 5
 
 	var/attached = 0
@@ -44,17 +44,16 @@ var/const/MAX_ACTIVE_TIME = 400
 	user.unEquip(src)
 	Attach(M)
 
-/obj/item/clothing/mask/facehugger/examine(mob/user)
+/obj/item/clothing/mask/facehugger/examine()
 	..()
-	if(!real)//So that giant red text about probisci doesn't show up.
-		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			user << "<span class='userdanger'>[src] is not moving.</span>"
+			usr << "<span class='userdanger'>[src] is not moving.</span>"
 		if(CONSCIOUS)
-			user << "<span class='userdanger'>[src] seems to be active!</span>"
+			usr << "<span class='userdanger'>[src] seems to be active.</span>"
 	if (sterile)
-		user << "<span class='userdanger'>It looks like the proboscis has been removed.</span>"
+		usr << "<span class='userdanger'>It looks like the proboscis has been removed.</span>"
+	return
 
 /obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m)
 	if(O.force)

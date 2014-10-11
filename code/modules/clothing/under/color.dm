@@ -11,7 +11,6 @@
 	item_state = "bl_suit"
 	item_color = "blackf"
 	fitted = 0
-	can_adjust = 0
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"

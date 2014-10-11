@@ -42,15 +42,15 @@
 	if(!locked && open)
 		emagged = 2
 
-/obj/machinery/bot/examine(mob/user)
+/obj/machinery/bot/examine()
+	set src in view()
 	..()
 	if (src.health < maxhealth)
 		if (src.health > maxhealth/3)
-			user << "<span class='danger'>[src]'s parts look loose.</span>"
+			usr << "<span class='warning'>[src]'s parts look loose.</span>"
 		else
-			user << "<span class='danger'>[src]'s parts look very loose.</span>"
-	else
-		user << "[src] is in pristine condition."
+			usr << "<span class='danger'>[src]'s parts look very loose!</span>"
+	return
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)

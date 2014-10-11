@@ -148,8 +148,8 @@
 	density = 0
 	anchored = 1
 
-/obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
-	user.examinate(src)
+/obj/machinery/mineral/labor_points_checker/attack_hand(user as mob)
+	examine(user)
 
 /obj/machinery/mineral/labor_points_checker/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/card/id))

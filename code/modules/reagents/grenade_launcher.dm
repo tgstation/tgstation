@@ -12,9 +12,12 @@
 	var/max_grenades = 3
 	m_amt = 2000
 
-/obj/item/weapon/gun/grenadelauncher/examine(mob/user)
+/obj/item/weapon/gun/grenadelauncher/examine()
+	set src in view()
 	..()
-	user << "[grenades] / [max_grenades] grenades loaded."
+	if(!(usr in view(2)) && usr != loc)
+		return
+	usr << "[grenades] / [max_grenades] grenades."
 
 /obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I as obj, mob/user as mob)
 

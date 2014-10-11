@@ -27,14 +27,18 @@
 		overlays  += "sheater-open"
 	return
 
-/obj/machinery/space_heater/examine(mob/user)
-
+/obj/machinery/space_heater/examine()
+	set src in oview(12)
+	if (!( usr ))
+		return
 	..()
-	user << "The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
+
+	usr << "The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"]."
 	if(open)
-		user << "A power cell is [cell ? "installed" : "missing"]."
+		usr << "The power cell is [cell ? "installed" : "missing"]."
 	else
-		user << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%."
+		usr << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
+	return
 
 /obj/machinery/space_heater/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

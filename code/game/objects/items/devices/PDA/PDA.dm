@@ -893,7 +893,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				// Unused
 
 			if(4)
-				C.visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
+				for (var/mob/O in viewers(C, null))
+					O.show_message("<span class='danger'>[user] has analyzed [C]'s radiation levels!</span>", 1)
 
 				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
 				if(C.radiation)

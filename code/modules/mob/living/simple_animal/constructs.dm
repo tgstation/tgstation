@@ -43,7 +43,9 @@
 	qdel(src)
 	return
 
-/mob/living/simple_animal/construct/examine(mob/user)
+/mob/living/simple_animal/construct/examine()
+	set src in oview()
+
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 	if (src.health < src.maxHealth)
 		msg += "<span class='warning'>"
@@ -54,7 +56,8 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	user << msg
+	usr << msg
+	return
 
 /mob/living/simple_animal/construct/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))

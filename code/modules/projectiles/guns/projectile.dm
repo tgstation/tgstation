@@ -69,9 +69,10 @@
 	return
 
 
-/obj/item/weapon/gun/projectile/examine(mob/user)
+/obj/item/weapon/gun/projectile/examine()
 	..()
-	user << "Has [get_ammo()] round\s remaining."
+	usr << "Has [get_ammo()] round\s remaining."
+	return
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(var/countchambered = 1)
 	var/boolets = 0 //mature var names for mature people

@@ -64,7 +64,8 @@
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	visible_message("<span class='danger'>[user] hits [src] with [W]!</span>")
+	for(var/mob/M in viewers(src, 7))
+		M.show_message("<span class='warning'>[user] hits [src] with [W]!</span>", 1)
 	healthcheck()
 
 /obj/structure/stool/bed/nest/proc/healthcheck()

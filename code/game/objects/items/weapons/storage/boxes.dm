@@ -57,9 +57,8 @@
 	..()
 	contents = list()
 	sleep(1)
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/weapon/tank/emergency_oxygen(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/clothing/mask/breath( src )
+	new /obj/item/weapon/tank/emergency_oxygen( src )
 	return
 
 /obj/item/weapon/storage/box/engineer
@@ -68,9 +67,8 @@
 	..()
 	contents = list()
 	sleep(1)
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/clothing/mask/breath( src )
+	new /obj/item/weapon/tank/emergency_oxygen/engi( src )
 	return
 
 /obj/item/weapon/storage/box/gloves
@@ -410,28 +408,13 @@
 
 /obj/item/weapon/storage/box/handcuffs/New()
 	..()
-	new /obj/item/weapon/restraints/handcuffs(src)
-	new /obj/item/weapon/restraints/handcuffs(src)
-	new /obj/item/weapon/restraints/handcuffs(src)
-	new /obj/item/weapon/restraints/handcuffs(src)
-	new /obj/item/weapon/restraints/handcuffs(src)
-	new /obj/item/weapon/restraints/handcuffs(src)
-	new /obj/item/weapon/restraints/handcuffs(src)
-
-/obj/item/weapon/storage/box/zipties
-	name = "box of spare zipties"
-	desc = "A box full of zipties."
-	icon_state = "handcuff"
-
-/obj/item/weapon/storage/box/zipties/New()
-	..()
-	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
+	new /obj/item/weapon/handcuffs(src)
+	new /obj/item/weapon/handcuffs(src)
+	new /obj/item/weapon/handcuffs(src)
+	new /obj/item/weapon/handcuffs(src)
+	new /obj/item/weapon/handcuffs(src)
+	new /obj/item/weapon/handcuffs(src)
+	new /obj/item/weapon/handcuffs(src)
 
 /obj/item/weapon/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"

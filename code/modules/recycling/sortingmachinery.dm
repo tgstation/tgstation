@@ -161,9 +161,11 @@
 	return
 
 
-/obj/item/weapon/packageWrap/examine(mob/user)
+/obj/item/weapon/packageWrap/examine()
+	if(src in usr)
+		usr << "<span class='notice'>There are [amount] units of package wrap left.</span>"
 	..()
-	user << "<span class='notice'>There are [amount] units of package wrap left.</span>"
+	return
 
 
 /obj/item/device/destTagger

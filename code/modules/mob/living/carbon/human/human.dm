@@ -437,18 +437,16 @@
 
 			//visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>") // Pickpocketing!
-			var/placing = 0
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
 				if(pocket_item.flags & NODROP)
 					usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
 				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
 			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1) && !(place_item.flags&ABSTRACT))
 				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
-				placing = 1
 			else
 				return
 
-			if(do_mob(usr, src, POCKET_STRIP_DELAY/(4*placing))) //placing an item into the pocket is 4 times faster
+			if(do_mob(usr, src, STRIP_DELAY))
 				if(pocket_item)
 					unEquip(pocket_item)
 				else

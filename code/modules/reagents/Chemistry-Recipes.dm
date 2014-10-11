@@ -585,7 +585,6 @@ silicate
 
 	var/location = get_turf(holder.my_atom)
 
-
 	for(var/mob/M in viewers(5, location))
 		M << "<span class='danger'>The solution spews out a metalic foam!</span>"
 

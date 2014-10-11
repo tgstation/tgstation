@@ -19,7 +19,6 @@
 	item_state = "jackboots"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
-	strip_delay = 70
 
 /obj/item/clothing/shoes/swat/combat
 	name = "combat boots"
@@ -38,7 +37,7 @@
 	permeability_coefficient = 0.01
 	flags = NOSLIP
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	strip_delay = 120
+
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
@@ -48,8 +47,6 @@
 	desc = "A pair of rather plain, wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
-	strip_delay = 50
-	put_on_delay = 50
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -63,8 +60,6 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
-	strip_delay = 50
-	put_on_delay = 50
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
@@ -81,8 +76,6 @@
 	icon_state = "jackboots"
 	item_state = "jackboots"
 	item_color = "hosred"
-	strip_delay = 50
-	put_on_delay = 50
 
 /obj/item/clothing/shoes/cult
 	name = "boots"
@@ -105,12 +98,9 @@
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
-	put_on_delay = 50
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
 	icon_state = "roman"
 	item_state = "roman"
-	strip_delay = 100
-	put_on_delay = 100

@@ -2247,20 +2247,21 @@ ________________________________________________________________________________
 				U.drop_item()
 	return 0
 
-/obj/item/clothing/suit/space/space_ninja/examine(mob/user)
+/obj/item/clothing/suit/space/space_ninja/examine()
+	set src in view()
 	..()
 	if(s_initialized)
-		if(user == affecting)
-			if(s_control)
-				user << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
-				if(!kamikaze)
-					user << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
-				else
-					user << "<span class='userdanger'>KAMIKAZE MODE ENGAGED!</span>"
-				user << "There are <B>[s_bombs]</B> smoke bomb\s remaining."
-				user << "There are <B>[a_boost]</B> adrenaline booster\s remaining."
+		var/mob/living/carbon/human/U = affecting
+		if(s_control)
+			U << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
+			if(!kamikaze)
+				U << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
 			else
-				user <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
+				U << "<span class='danger'>KAMIKAZE MODE ENGAGED!</span>"
+			U << "There are <B>[s_bombs]</B> smoke bombs remaining."
+			U << "There are <B>[a_boost]</B> adrenaline boosters remaining."
+		else
+			U <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
 
 /*
 ===================================================================================
@@ -2505,10 +2506,12 @@ ________________________________________________________________________________
 	U << "You <b>[candrain?"disable":"enable"]</b> special interaction."
 	candrain=!candrain
 
-/obj/item/clothing/gloves/space_ninja/examine(mob/user)
+/obj/item/clothing/gloves/space_ninja/examine()
+	set src in view()
 	..()
 	if(flags & NODROP)
-		user << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
+		var/mob/living/carbon/human/U = loc
+		U << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
 
 /*
 ===================================================================================
@@ -2582,9 +2585,9 @@ ________________________________________________________________________________
 		voice = "Unknown"
 	return
 
-/obj/item/clothing/mask/gas/voice/space_ninja/examine(mob/user)
+/obj/item/clothing/mask/gas/voice/space_ninja/examine()
 	..()
-	user << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
+	usr << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
 
 /*
 ===================================================================================

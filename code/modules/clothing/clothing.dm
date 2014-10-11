@@ -18,8 +18,6 @@
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
-	strip_delay = 15
-	put_on_delay = 25
 
 
 //Glasses
@@ -35,8 +33,6 @@
 	var/emagged = 0
 	var/hud = null
 	var/list/icon/current = list() //the current hud icons
-	strip_delay = 20
-	put_on_delay = 25
 
 /obj/item/clothing/glasses/proc/process_hud(var/mob/M)
 	return
@@ -63,8 +59,6 @@ BLIND     // can't see anything
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
 	var/transfer_prints = FALSE
-	strip_delay = 20
-	put_on_delay = 40
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
@@ -84,8 +78,6 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
 	var/alloweat = 0
-	strip_delay = 40
-	put_on_delay = 40
 
 
 //Override this to modify speech like luchador masks.
@@ -136,8 +128,6 @@ BLIND     // can't see anything
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flash_protect = 2
-	strip_delay = 50
-	put_on_delay = 50
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -157,8 +147,6 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	strip_delay = 80
-	put_on_delay = 80
 
 
 //Under clothing
@@ -172,10 +160,6 @@ BLIND     // can't see anything
 	var/fitted = 1// For use in alternate clothing styles for women, if clothes vary from a jumpsuit in shape, set this to 0
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
-	var/can_adjust = 1
-	var/adjusted = 0
-	var/suit_color = null
-
 		/*
 		1 = Report living/dead
 		2 = Report detailed damages
@@ -214,19 +198,20 @@ BLIND     // can't see anything
 			return 1
 
 
-/obj/item/clothing/under/examine(mob/user)
+/obj/item/clothing/under/examine()
+	set src in view()
 	..()
 	switch(src.sensor_mode)
 		if(0)
-			user << "Its sensors appear to be disabled."
+			usr << "Its sensors appear to be disabled."
 		if(1)
-			user << "Its binary life sensors appear to be enabled."
+			usr << "Its binary life sensors appear to be enabled."
 		if(2)
-			user << "Its vital tracker appears to be enabled."
+			usr << "Its vital tracker appears to be enabled."
 		if(3)
-			user << "Its vital tracker and tracking beacon appear to be enabled."
+			usr << "Its vital tracker and tracking beacon appear to be enabled."
 	if(hastie)
-		user << "\A [hastie] is attached to it."
+		usr << "\A [hastie] is attached to it."
 
 atom/proc/generate_uniform(index,t_color)
 	var/icon/female_uniform_icon	= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
@@ -262,27 +247,6 @@ atom/proc/generate_uniform(index,t_color)
 			usr << "Your suit will now report your vital lifesigns as well as your coordinate position."
 	..()
 
-/obj/item/clothing/under/verb/rolldown()
-	set name = "Adjust Jumpsuit Style"
-	set category = "Object"
-	set src in usr
-	if(usr.stat)
-		return
-	if(!can_adjust)
-		usr << "You cannot wear this suit any differently."
-		return
-	if(src.adjusted == 1)
-		src.item_color = initial(item_color)
-		src.item_color = src.suit_color //colored jumpsuits are shit and break without this
-		usr << "You adjust the suit back to normal."
-		src.adjusted = 0
-	else
-		src.item_color += "_d"
-		usr << "You adjust the suit to wear it more casually."
-		src.adjusted = 1
-	usr.update_inv_w_uniform()
-	..()
-
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"
 	set category = "Object"
@@ -303,10 +267,8 @@ atom/proc/generate_uniform(index,t_color)
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform(0)
 
-/obj/item/clothing/under/New()
+/obj/item/clothing/under/rank/New()
 	sensor_mode = pick(0,1,2,3)
-	adjusted = 0
-	suit_color = item_color
 	..()
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.

@@ -16,7 +16,6 @@
 	item_state = "r_suit"
 	item_color = "warden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 50
 
 /obj/item/clothing/under/rank/security
 	name = "security officer's jumpsuit"
@@ -25,7 +24,6 @@
 	item_state = "r_suit"
 	item_color = "secred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 50
 
 /*
  * Detective
@@ -36,15 +34,6 @@
 	icon_state = "detective"
 	item_state = "det"
 	item_color = "detective"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 50
-
-/obj/item/clothing/under/det/grey
-	name = "noir suit"
-	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
-	icon_state = "greydet"
-	item_state = "greydet"
-	item_color = "greydet"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /*
@@ -57,7 +46,6 @@
 	item_state = "r_suit"
 	item_color = "hosred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 60
 
 /*
  * Jensen cosplay gear
@@ -68,7 +56,6 @@
 	icon_state = "jensen"
 	item_state = "jensen"
 	item_color = "jensen"
-	can_adjust = 0
 
 /obj/item/clothing/suit/armor/hos/jensen
 	name = "armored trenchoat"
@@ -76,8 +63,6 @@
 	icon_state = "jensencoat"
 	item_state = "jensencoat"
 	flags_inv = 0
-	strip_delay = 80
-	put_on_delay = 40
 
 
 /*

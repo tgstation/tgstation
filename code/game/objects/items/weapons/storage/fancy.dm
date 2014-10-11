@@ -24,14 +24,19 @@
 	src.icon_state = "[src.icon_type]box[total_contents]"
 	return
 
-/obj/item/weapon/storage/fancy/examine(mob/user)
+/obj/item/weapon/storage/fancy/examine()
+	set src in oview(1)
 	..()
 	if(contents.len <= 0)
-		user << "There are no [src.icon_type]s left in the box."
+		usr << "There are no [src.icon_type]s left in the box."
 	else if(contents.len == 1)
-		user << "There is one [src.icon_type] left in the box."
+		usr << "There is one [src.icon_type] left in the box."
 	else
-		user << "There are [src.contents.len] [src.icon_type]s in the box."
+		usr << "There are [src.contents.len] [src.icon_type]s in the box."
+
+	return
+
+
 
 /*
  * Donut Box

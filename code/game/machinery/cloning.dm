@@ -85,9 +85,11 @@
 	read_only = !read_only
 	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
 
-/obj/item/weapon/disk/data/examine(mob/user)
+/obj/item/weapon/disk/data/examine()
+	set src in oview(5)
 	..()
-	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
+	usr << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
+	return
 
 //Health Tracker Implant
 

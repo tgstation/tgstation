@@ -32,7 +32,15 @@
 		/mob/living/simple_animal/hostile/retaliate/goat
 	)
 
-
+/obj/item/weapon/reagent_containers/glass/examine()
+	set src in view()
+	..()
+	if(!(usr in view(2)) && usr != loc)
+		return
+	if(reagents && reagents.reagent_list.len)
+		usr << "It contains:"
+		for(var/datum/reagent/R in reagents.reagent_list)
+			usr << "[R.volume] units of [R.name]"
 
 /obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return // not adjacent

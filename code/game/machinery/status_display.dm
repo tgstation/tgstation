@@ -122,11 +122,12 @@
 					line1 = ""
 			update_display(line1, line2)
 
-/obj/machinery/status_display/examine(mob/user)
+/obj/machinery/status_display/examine()
+	set src in view()
 	. = ..()
 	switch(mode)
 		if(1,2,4)
-			user << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+			usr << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)

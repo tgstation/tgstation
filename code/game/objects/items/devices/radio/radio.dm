@@ -443,12 +443,16 @@
 		return get_hearers_in_view(canhear_range, src)
 
 
-/obj/item/device/radio/examine(mob/user)
+/obj/item/device/radio/examine()
+	set src in view()
+
 	..()
-	if (b_stat)
-		user << "<span class='notice'>[name] can be attached and modified.</span>"
-	else
-		user << "<span class='notice'>[name] can not be modified or attached.</span>"
+	if ((in_range(src, usr) || loc == usr))
+		if (b_stat)
+			usr.show_message("<span class='notice'>\the [src] can be attached and modified!</span>")
+		else
+			usr.show_message("<span class='notice'>\the [src] can not be modified or attached!</span>")
+	return
 
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

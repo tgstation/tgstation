@@ -45,13 +45,14 @@
 	return*/
 
 
-/obj/item/weapon/grenade/examine(mob/user)
+/obj/item/weapon/grenade/examine()
+	set src in usr
 	..()
 	if(display_timer)
 		if(det_time > 1)
-			user << "The timer is set to [det_time/10] second\s."
+			usr << "The timer is set to [det_time/10] seconds."
 		else
-			user << "\The [src] is set for instant detonation."
+			usr << "\The [src] is set for instant detonation."
 
 
 /obj/item/weapon/grenade/attack_self(mob/user as mob)

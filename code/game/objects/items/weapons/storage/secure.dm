@@ -27,9 +27,10 @@
 	max_w_class = 2
 	max_combined_w_class = 14
 
-/obj/item/weapon/storage/secure/examine(mob/user)
+/obj/item/weapon/storage/secure/examine()
+	set src in oview(1)
 	..()
-	user << text("The service panel is [src.open ? "open" : "closed"].")
+	usr << text("The service panel is [src.open ? "open" : "closed"].")
 
 /obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(locked)

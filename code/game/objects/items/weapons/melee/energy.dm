@@ -1,4 +1,4 @@
-/obj/item/weapon/melee/energy
+/obj/item/weapon/melee/energy/
 	var/active = 0
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
@@ -44,6 +44,7 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/energy/sword
+	color
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"
@@ -56,11 +57,9 @@
 	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	var/hacked = 0
-	item_color = null
 
 /obj/item/weapon/melee/energy/sword/New()
-	if(item_color == null)
-		item_color = pick("red", "blue", "green", "purple")
+	item_color = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/melee/energy/sword/IsShield()
 	if(active)
@@ -99,36 +98,9 @@
 	add_fingerprint(user)
 	return
 
-/obj/item/weapon/melee/energy/sword/cyborg
-	var/hitcost = 500
-
-/obj/item/weapon/melee/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
-	if(R.cell)
-		var/obj/item/weapon/stock_parts/cell/C = R.cell
-		if(active && !(C.use(hitcost)))
-			attack_self(R)
-			R << "<span class='notice'>It's out of charge!</span>"
-			return
-		..()
-	return
-
-/obj/item/weapon/melee/energy/sword/saber
-
-/obj/item/weapon/melee/energy/sword/saber/blue
-	item_color = "blue"
-
-/obj/item/weapon/melee/energy/sword/saber/purple
-	item_color = "purple"
-
-/obj/item/weapon/melee/energy/sword/saber/green
-	item_color = "green"
-
-/obj/item/weapon/melee/energy/sword/saber/red
-	item_color = "red"
-
-/obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user)
+/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
 	..()
-	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
+	if(istype(W, /obj/item/weapon/melee/energy/sword))
 		if(W == src)
 			user << "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>"
 			if(ishuman(user))
@@ -143,7 +115,6 @@
 			user.unEquip(src)
 			qdel(W)
 			qdel(src)
-			user.put_in_hands(newSaber)
 	else if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
@@ -162,10 +133,31 @@
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
 
+/obj/item/weapon/melee/energy/sword/cyborg
+	var/hitcost = 500
+
+/obj/item/weapon/melee/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
+	if(R.cell)
+		var/obj/item/weapon/stock_parts/cell/C = R.cell
+		if(active && !(C.use(hitcost)))
+			attack_self(R)
+			R << "<span class='notice'>It's out of charge!</span>"
+			return
+		..()
+	return
+
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
 	desc = "Arrrr matey."
 	icon_state = "cutlass0"
+
+/obj/item/weapon/melee/energy/sword/green
+	New()
+		item_color = "green"
+
+/obj/item/weapon/melee/energy/sword/red
+	New()
+		item_color = "red"
 
 /obj/item/weapon/melee/energy/blade
 	name = "energy blade"

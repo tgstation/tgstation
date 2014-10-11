@@ -35,7 +35,7 @@
 
 
 /obj/item/weapon/photo/attack_self(mob/user)
-	user.examinate(src)
+	examine()
 
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
@@ -47,13 +47,15 @@
 	..()
 
 
-/obj/item/weapon/photo/examine(mob/user)
-	..()
+/obj/item/weapon/photo/examine()
+	set src in oview(1)
+	if(is_blind(usr))	return
 
-	if(in_range(user, src))
-		show(user)
+	if(in_range(usr, src))
+		show(usr)
+		usr << desc
 	else
-		user << "You need to get closer to get a good look at this photo."
+		usr << "<span class='notice'>It is too far away.</span>"
 
 
 /obj/item/weapon/photo/proc/show(mob/user)
@@ -148,9 +150,9 @@
 	..()
 
 
-/obj/item/device/camera/examine(mob/user)
+/obj/item/device/camera/examine()
 	..()
-	user << "It has [pictures_left] photos left."
+	usr << "It has [pictures_left] photos left."
 
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)

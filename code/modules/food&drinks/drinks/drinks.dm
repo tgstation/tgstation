@@ -87,6 +87,22 @@
 
 	return
 
+/obj/item/weapon/reagent_containers/food/drinks/examine()
+	set src in view()
+	..()
+	if (!(usr in range(0)) && usr!=src.loc) return
+	if(!reagents || reagents.total_volume==0)
+		usr << "<span class='notice'>\The [src] is empty!</span>"
+	else if (reagents.total_volume<=src.volume/4)
+		usr << "<span class='notice'>\The [src] is almost empty!</span>"
+	else if (reagents.total_volume<=src.volume*0.66)
+		usr << "<span class='notice'>\The [src] is half full!</span>"
+	else if (reagents.total_volume<=src.volume*0.90)
+		usr << "<span class='notice'>\The [src] is almost full!</span>"
+	else
+		usr << "<span class='notice'>\The [src] is full!</span>"
+
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
@@ -261,18 +277,10 @@
 	volume = 100
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
-	name = "captain's flask"
-	desc = "A silver flask belonging to the captain"
+	name = "Captain's Flask"
+	desc = "A metal flask belonging to the captain"
 	icon_state = "flask"
 	volume = 60
-
-/obj/item/weapon/reagent_containers/food/drinks/flask/det
-	name = "detective's flask"
-	desc = "The detective's only true friend."
-	icon_state = "detflask"
-	New()
-		..()
-		reagents.add_reagent("whiskey", 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/britcup
 	name = "cup"

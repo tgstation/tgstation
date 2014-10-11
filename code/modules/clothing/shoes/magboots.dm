@@ -6,8 +6,6 @@
 	var/magpulse = 0
 	var/slowdown_active = 2
 	action_button_name = "Toggle Magboots"
-	strip_delay = 70
-	put_on_delay = 70
 
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
@@ -33,9 +31,10 @@
 /obj/item/clothing/shoes/magboots/negates_gravity()
 	return flags & NOSLIP
 
-/obj/item/clothing/shoes/magboots/examine(mob/user)
+/obj/item/clothing/shoes/magboots/examine()
+	set src in view()
 	..()
-	user << "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
+	usr << "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
 
 
 /obj/item/clothing/shoes/magboots/advance

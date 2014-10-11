@@ -39,9 +39,10 @@
 	newshot()
 	..()
 
-/obj/item/weapon/gun/syringe/examine(mob/user)
+/obj/item/weapon/gun/syringe/examine()
 	..()
-	user << "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
+	usr << "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
+	return
 
 /obj/item/weapon/gun/syringe/attack_self(mob/living/user as mob)
 	if(!syringes.len)

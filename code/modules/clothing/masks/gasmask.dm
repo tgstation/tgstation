@@ -182,13 +182,11 @@
 	name = "\improper SWAT mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
-	strip_delay = 60
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
-	strip_delay = 60
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
@@ -209,7 +207,6 @@
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
 	vchange = 1
-	strip_delay = 120
 
 /obj/item/clothing/mask/gas/voice/space_ninja/speechModification(message)
 	if(voice == "Unknown")

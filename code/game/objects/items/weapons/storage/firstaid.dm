@@ -30,7 +30,7 @@
 	icon_state = pick("ointment","firefirstaid")
 
 	new /obj/item/device/healthanalyzer( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/syringe/inaprovaline( src )
 	new /obj/item/stack/medical/ointment( src )
 	new /obj/item/stack/medical/ointment( src )
 	new /obj/item/weapon/reagent_containers/pill/kelotane( src )
@@ -51,7 +51,7 @@
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/device/healthanalyzer(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/syringe/inaprovaline( src )
 	return
 
 /obj/item/weapon/storage/firstaid/toxin
@@ -88,8 +88,8 @@
 	new /obj/item/weapon/reagent_containers/pill/dexalin( src )
 	new /obj/item/weapon/reagent_containers/pill/dexalin( src )
 	new /obj/item/weapon/reagent_containers/pill/dexalin( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/syringe/inaprovaline( src )
+	new /obj/item/weapon/reagent_containers/syringe/inaprovaline( src )
 	new /obj/item/device/healthanalyzer( src )
 	return
 
@@ -108,7 +108,7 @@
 	new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
 	new /obj/item/weapon/reagent_containers/pill/dermaline( src )
 	new /obj/item/weapon/reagent_containers/syringe/lethal/choral( src )
-	new /obj/item/clothing/glasses/hud/health/night( src )
+	new /obj/item/clothing/glasses/hud/health( src )
 	return
 
 

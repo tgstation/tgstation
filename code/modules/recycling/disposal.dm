@@ -128,8 +128,11 @@
 	if(I)
 		I.loc = src
 
-	user.visible_message("<span class='notice'>[user.name] places \the [I] into \the [src].</span>", \
-						"<span class='notice'>You place \the [I] into \the [src].</span>")
+	user << "<span class='notice'>You place \the [I] into \the [src].</span>"
+	for(var/mob/M in viewers(src))
+		if(M == user)
+			continue
+		M.show_message("[user.name] places \the [I] into \the [src].", 3)
 
 	update()
 
@@ -148,7 +151,7 @@
 								"<span class='notice'>[user] starts climbing into [src].</span>")
 	else
 		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
-								"<span class='userdanger'>[user] starts putting [target] into [src]!</span>")
+								"<span class='userdanger'>[user] starts putting [target] into [src].</span>")
 	if(do_mob(usr, target, 20))
 		if (target.client)
 			target.client.perspective = EYE_PERSPECTIVE
@@ -445,9 +448,11 @@
 			return
 		if(prob(75))
 			I.loc = src
-			visible_message("\the [I] lands in \the [src].")
+			for(var/mob/M in viewers(src))
+				M.show_message("\the [I] lands in \the [src].", 3)
 		else
-			visible_message("\the [I] bounces off of \the [src]'s rim!")
+			for(var/mob/M in viewers(src))
+				M.show_message("\the [I] bounces off of \the [src]'s rim!", 3)
 		return 0
 	else
 		return ..(mover, target, height, air_group)

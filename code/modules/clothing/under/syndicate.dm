@@ -16,4 +16,5 @@
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	item_color = "tactifool"
-	can_adjust = 0
+
+

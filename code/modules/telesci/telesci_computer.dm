@@ -40,14 +40,25 @@
 		inserted_gps = null
 	..()
 
-/obj/machinery/computer/telescience/examine(mob/user)
+/obj/machinery/computer/telescience/examine()
 	..()
-	user << "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots."
+	usr << "There are [crystals.len ? crystals.len : "no"] bluespace crystals in the crystal slots."
 
 /obj/machinery/computer/telescience/initialize()
 	..()
 	for(var/i = 1; i <= starting_crystals; i++)
 		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
+
+/obj/machinery/computer/telescience/update_icon()
+	if(stat & BROKEN)
+		icon_state = "telescib"
+	else
+		if(stat & NOPOWER)
+			src.icon_state = "teleport0"
+			stat |= NOPOWER
+		else
+			icon_state = initial(icon_state)
+			stat &= ~NOPOWER
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	user << "You are too primitive to use this computer."

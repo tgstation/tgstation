@@ -455,7 +455,8 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			affecting.heal_damage(brute,burn,1)
 			H.update_damage_overlays(0)
 			H.updatehealth()
-			user.visible_message("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]!</span>")
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]!</span>"), 1)
 			return
 		else
 			user << "<span class='notice'>[H]'s [affecting.getDisplayName()] is already in good condition</span>"
@@ -466,7 +467,7 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 /proc/broadcast_hud_message(var/message, var/broadcast_source)
 	var/turf/sourceturf = get_turf(broadcast_source)
 	var/user_list = sec_hud_users //A local var is used for easy addition of other HUD types.
-	var/hud_icon = /obj/item/weapon/restraints/handcuffs //Icon displayed when the HUD triggered. Handcuffs for Sec HUDs.
+	var/hud_icon = /obj/item/weapon/handcuffs //Icon displayed when the HUD triggered. Handcuffs for Sec HUDs.
 	for(var/mob/hud_user in user_list)
 		var/turf/userturf = get_turf(hud_user)
 		if(userturf.z == sourceturf.z) //Must have same z-level.

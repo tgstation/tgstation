@@ -79,7 +79,7 @@
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
 	..()
-	if(!stat && !ckey)
+	if(!stat)
 		if(stance == HOSTILE_STANCE_IDLE)
 			//1% chance to skitter madly away
 			if(!busy && prob(1))
@@ -115,7 +115,7 @@
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/Life()
 	..()
-	if(!stat && !ckey)
+	if(!stat)
 		if(stance == HOSTILE_STANCE_IDLE)
 			var/list/can_see = view(src, 10)
 			//30% chance to stop wandering and do something
@@ -133,11 +133,29 @@
 				//second, spin a sticky spiderweb on this tile
 				var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 				if(!W)
-					Web()
+					busy = SPINNING_WEB
+					src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
+					stop_automated_movement = 1
+					spawn(40)
+						if(busy == SPINNING_WEB)
+							new /obj/effect/spider/stickyweb(src.loc)
+							busy = 0
+							stop_automated_movement = 0
 				else
 					//third, lay an egg cluster there
-					if(fed)
-						LayEggs()
+					var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
+					if(!E && fed > 0)
+						busy = LAYING_EGGS
+						src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
+						stop_automated_movement = 1
+						spawn(50)
+							if(busy == LAYING_EGGS)
+								E = locate() in get_turf(src)
+								if(!E)
+									new /obj/effect/spider/eggcluster(src.loc)
+									fed--
+								busy = 0
+								stop_automated_movement = 0
 					else
 						//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
 						for(var/obj/O in can_see)
@@ -155,108 +173,43 @@
 
 			else if(busy == MOVING_TO_TARGET && cocoon_target)
 				if(get_dist(src, cocoon_target) <= 1)
-					Wrap()
+					busy = SPINNING_COCOON
+					src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
+					stop_automated_movement = 1
+					walk(src,0)
+					spawn(50)
+						if(busy == SPINNING_COCOON)
+							if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
+								var/obj/effect/spider/cocoon/C = new(cocoon_target.loc)
+								var/large_cocoon = 0
+								C.pixel_x = cocoon_target.pixel_x
+								C.pixel_y = cocoon_target.pixel_y
+								for(var/mob/living/M in C.loc)
+									if(istype(M, /mob/living/simple_animal/hostile/giant_spider))
+										continue
+									large_cocoon = 1
+									fed++
+									src.visible_message("<span class='danger'>\the [src] sticks a proboscis into \the [cocoon_target] and sucks a viscous substance out.</span>")
+									M.loc = C
+									C.pixel_x = M.pixel_x
+									C.pixel_y = M.pixel_y
+									break
+								for(var/obj/item/I in C.loc)
+									I.loc = C
+								for(var/obj/structure/S in C.loc)
+									if(!S.anchored)
+										S.loc = C
+										large_cocoon = 1
+								for(var/obj/machinery/M in C.loc)
+									if(!M.anchored)
+										M.loc = C
+										large_cocoon = 1
+								if(large_cocoon)
+									C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
+							busy = 0
+							stop_automated_movement = 0
 
 		else
-			busy = 0
-			stop_automated_movement = 0
-
-/mob/living/simple_animal/hostile/giant_spider/verb/Web()
-	set name = "Lay Web"
-	set category = "Spider"
-	set desc = "Spread a sticky web to slow down prey."
-
-	var/T = src.loc
-
-	if(busy != SPINNING_WEB)
-		busy = SPINNING_WEB
-		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
-		stop_automated_movement = 1
-		spawn(40)
-			if(busy == SPINNING_WEB && src.loc == T)
-				new /obj/effect/spider/stickyweb(T)
-			busy = 0
-			stop_automated_movement = 0
-
-
-/mob/living/simple_animal/hostile/giant_spider/nurse/verb/Wrap()
-	set name = "Wrap"
-	set category = "Spider"
-	set desc = "Wrap up prey to feast upon and objects for safe keeping."
-
-	if(!cocoon_target)
-		var/list/choices = list()
-		for(var/mob/living/L in view(1,src))
-			if(L == src)
-				continue
-			if(Adjacent(L))
-				choices += L
-		for(var/obj/O in src.loc)
-			if(Adjacent(O))
-				choices += O
-		cocoon_target = input(src,"What do you wish to cocoon?") in null|choices
-
-	if(cocoon_target && busy != SPINNING_COCOON)
-		busy = SPINNING_COCOON
-		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
-		stop_automated_movement = 1
-		walk(src,0)
-		spawn(50)
-			if(busy == SPINNING_COCOON)
-				if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
-					var/obj/effect/spider/cocoon/C = new(cocoon_target.loc)
-					var/large_cocoon = 0
-					C.pixel_x = cocoon_target.pixel_x
-					C.pixel_y = cocoon_target.pixel_y
-					for(var/obj/item/I in C.loc)
-						I.loc = C
-					for(var/obj/structure/S in C.loc)
-						if(!S.anchored)
-							S.loc = C
-							large_cocoon = 1
-					for(var/obj/machinery/M in C.loc)
-						if(!M.anchored)
-							M.loc = C
-							large_cocoon = 1
-					for(var/mob/living/L in C.loc)
-						if(istype(L, /mob/living/simple_animal/hostile/giant_spider))
-							continue
-						large_cocoon = 1
-						L.loc = C
-						C.pixel_x = L.pixel_x
-						C.pixel_y = L.pixel_y
-						fed++
-						visible_message("<span class='danger'>\the [src] sticks a proboscis into \the [L] and sucks a viscous substance out.</span>")
-
-						break
-					if(large_cocoon)
-						C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
-			cocoon_target = null
-			busy = 0
-			stop_automated_movement = 0
-
-/mob/living/simple_animal/hostile/giant_spider/nurse/verb/LayEggs()
-	set name = "Lay Eggs"
-	set category = "Spider"
-	set desc = "Lay a clutch of eggs, but you must wrap a creature for feeding first."
-
-	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
-	if(E)
-		src << "<span class='notice'>There is already a cluster of eggs here!</span>"
-	else if(!fed)
-		src << "<span class='warning'>You are too hungry to do this!</span>"
-	else if(busy != LAYING_EGGS)
-		busy = LAYING_EGGS
-		src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
-		stop_automated_movement = 1
-		spawn(50)
-			if(busy == LAYING_EGGS)
-				E = locate() in get_turf(src)
-				if(!E)
-					var/obj/effect/spider/eggcluster/C = new /obj/effect/spider/eggcluster(src.loc)
-					if(ckey)
-						C.player_spiders = 1
-					fed--
 			busy = 0
 			stop_automated_movement = 0
 

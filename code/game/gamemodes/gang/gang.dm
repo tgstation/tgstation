@@ -46,6 +46,12 @@
 	if(!A_bosses.len || !B_bosses.len)
 		return 0
 
+//Set a temporary special_role so the job controller doesn't hand out invalid jobs for these antags
+	for(var/datum/mind/boss_mind in A_bosses)
+		boss_mind.special_role = "Gang member"
+	for(var/datum/mind/boss_mind in B_bosses)
+		boss_mind.special_role = "Gang member"
+
 	return 1
 
 

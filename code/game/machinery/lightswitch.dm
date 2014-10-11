@@ -36,9 +36,11 @@
 		else
 			icon_state = "light0"
 
-/obj/machinery/light_switch/examine(mob/user)
+/obj/machinery/light_switch/examine()
+	set src in oview(1)
 	..()
-	user << "It is [on? "on" : "off"]."
+	if(usr && !usr.stat)
+		usr << "It is [on? "on" : "off"]."
 
 
 /obj/machinery/light_switch/attack_paw(mob/user)

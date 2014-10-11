@@ -108,10 +108,9 @@ Borg Hypospray
 	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
 	return
 
-/obj/item/weapon/reagent_containers/borghypo/examine(mob/user)
-	usr = user
+/obj/item/weapon/reagent_containers/borghypo/examine()
 	..()
-	DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
+	DescribeContents()
 
 /obj/item/weapon/reagent_containers/borghypo/proc/DescribeContents()
 	var/empty = 1

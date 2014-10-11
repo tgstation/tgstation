@@ -31,12 +31,12 @@
 	var/image/cap_living = null //Where we store our cap icons so we dont generate them constantly to update our icon
 	var/image/cap_dead = null
 
-/mob/living/simple_animal/hostile/mushroom/examine(mob/user)
+/mob/living/simple_animal/hostile/mushroom/examine()
 	..()
 	if(health >= maxHealth)
-		user << "<span class='info'>It looks healthy.</span>"
+		usr << "<span class='info'>It looks healthy.</span>"
 	else
-		user << "<span class='info'>It looks like it's been roughed up.</span>"
+		usr << "<span class='info'>It looks like it's been roughed up.</span>"
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()

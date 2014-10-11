@@ -115,9 +115,9 @@
 		item_state = "cutters_yellow"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
-	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/restraints/handcuffs/cable))
+	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
-		qdel(C)
+		C.handcuffed.loc = null	//garbage collector awaaaaay
 		C.handcuffed = null
 		C.update_inv_handcuffed(0)
 		return
@@ -131,7 +131,6 @@
 	name = "welding tool"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
-	item_state = "welder"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 3
@@ -148,31 +147,14 @@
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 
 /obj/item/weapon/weldingtool/New()
-	..()
 	create_reagents(max_fuel)
 	reagents.add_reagent("fuel", max_fuel)
-	update_icon()
-	return
 
-/obj/item/weapon/weldingtool/proc/update_torch()
-	if(welding)
-		src.overlays = 0
-		overlays += "["-won"]"
-		item_state = "welder1"
-	else
-		item_state = "welder"
 
-/obj/item/weapon/weldingtool/update_icon()
-	src.overlays = 0
-	var/ratio = get_fuel() / max_fuel
-	ratio = Ceiling(ratio*4) * 25
-	icon_state = "[initial(icon_state)][ratio]"
-	update_torch()
-	return
-
-/obj/item/weapon/weldingtool/examine(mob/user)
+/obj/item/weapon/weldingtool/examine()
+	set src in usr
 	..()
-	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+	usr << "It contains [get_fuel()]/[max_fuel] units of fuel!"
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user)
@@ -201,16 +183,19 @@
 /obj/item/weapon/weldingtool/process()
 	switch(welding)
 		if(0)
-			force = 3
-			damtype = "brute"
-			update_icon()
+			if(icon_state != "welder")	//Check that the sprite is correct, if it isnt, it means toggle() was not called
+				force = 3
+				damtype = "brute"
+				icon_state = "welder"
+				welding = 0
 			processing_objects.Remove(src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
-			force = 15
-			damtype = "fire"
-			update_icon()
+			if(icon_state != "welder1")	//Check that the sprite is correct, if it isnt, it means toggle() was not called
+				force = 15
+				damtype = "fire"
+				icon_state = "welder1"
 			if(prob(5))
 				remove_fuel(1)
 
@@ -231,7 +216,6 @@
 			O.reagents.trans_to(src, max_fuel)
 			user << "<span class='notice'>[src] refueled.</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-			update_icon()
 			return
 		else
 			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
@@ -251,7 +235,7 @@
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	toggle(user)
-	update_icon()
+
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()

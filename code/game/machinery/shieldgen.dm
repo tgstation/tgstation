@@ -343,7 +343,7 @@
 		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
 			storedpower += shieldload
 			PN.load += shieldload //uses powernet power.
-//		message_admins("[PN.load]")
+//		message_admins("[PN.load]", 1)
 //		use_power(250) //uses APC power
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)

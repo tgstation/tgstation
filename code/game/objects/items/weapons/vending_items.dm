@@ -20,12 +20,13 @@
 	if(isnum(amt) && amt > -1)
 		charges = amt
 
-/obj/item/weapon/vending_refill/examine(mob/user)
+/obj/item/weapon/vending_refill/examine()
+	set src in usr
 	..()
 	if(charges)
-		user << "It can restock [charges] item(s)."
+		usr << "It can restock [charges] item(s)."
 	else
-		user << "It's empty!"
+		usr << "It's empty!"
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
 
