@@ -2,10 +2,24 @@
 
 /obj/machinery/bioprinter
 	name = "bioprinter"
-	desc = "It's a machine that grows replacement organs."
+	desc = "It's a machine that grows replacement organs using meat and metal."
 	icon = 'icons/obj/surgery.dmi'
 
 	icon_state = "bioprinter"
+
+	density = 1
+	anchored = 1
+	use_power = 1
+	idle_power_usage = 50
+
+	l_color = "#7BF9FF"
+
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 	var/prints_prosthetics
 	var/stored_matter = 200
@@ -39,24 +53,25 @@
 
 		if(prints_prosthetics)
 			O.robotic = 2
-		else if(loaded_dna)
-			visible_message("The printer would be using the DNA sample if it was coded.")
+		//else if(loaded_dna)
+			//visible_message("<span class='notice'>The printer would be using the DNA sample if it was coded.</span>")
 			//TODO: Copy DNA hash or donor reference over to new organ.
 
-		visible_message("The bioprinter spits out a new organ.")
+		visible_message("<span class='notice'>\The [src] spits out a new organ.</span>")
 
 	else
-		user << "There is not enough matter in the printer."
+		visible_message("<span class='warning'>\The [src]'s error light flickers. It can't make new organs out of thin air, fill it up first.</span>")
 
 /obj/machinery/bioprinter/attackby(obj/item/weapon/W, mob/user)
 
 	// DNA sample from syringe.
-	if(!prints_prosthetics && istype(W,/obj/item/weapon/reagent_containers/syringe))
-		user << "You inject the blood sample into the bioprinter, but it isn't coded yet."
+	if(!prints_prosthetics && istype(W, /obj/item/weapon/reagent_containers/syringe))
+		//Finish the feature first, muh immulsions
+		//user << "<span class='notice'>You inject the blood sample into \the [src], but it simply drains away through a tube in the back.</span>."
 		return
 	// Meat for biomass.
 	else if(!prints_prosthetics && istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		user << "\blue \The [src] processes \the [W]."
+		visible_message("<span class='notice'>\The [src] processes \the [W].</span>")
 		stored_matter += 50
 		user.drop_item()
 		del(W)
@@ -64,10 +79,19 @@
 	// Steel for matter.
 	else if(prints_prosthetics && istype(W, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = W
-		user << "\blue \The [src] processes \the [W]."
+		visible_message("<span class='notice'>\The [src] processes \the [W].</span>")
 		stored_matter += M.amount * 10
 		user.drop_item()
 		del(W)
 		return
+	else if(istype(W, /obj/item/weapon/wrench))
+		user.visible_message("<span class='notice'>[user] begins to [anchored? "unfasten" : "fasten"] \the [src].</span>", "<span class='notice'>You begin to [anchored? "unfasten" : "fasten"] \the [src].</span>", "<span class='notice'>You hear a ratchet.</span>")
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 30))
+			user.visible_message("<span class='notice'>[user] begins to [anchored? "unfasten" : "fasten"] \the [src].</span>", "<span class='notice'>You [anchored? "unfasten" : "fasten"] \the [src].</span>", "<span class='notice'>You hear a ratchet.</span>")
+			if(anchored)
+				src.anchored = 0
+			else
+				src.anchored = 1
 	else
 		return..()
