@@ -228,12 +228,12 @@ BLIND     // can't see anything
 	if(hastie)
 		user << "\A [hastie] is attached to it."
 
-atom/proc/generate_uniform(index,t_color)
-	var/icon/female_uniform_icon	= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
+atom/proc/generate_female_clothing(index,t_color,icon)
+	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"="[t_color]_s")
 	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
-	female_uniform_icon.Blend(female_s, ICON_MULTIPLY)
-	female_uniform_icon 			= fcopy_rsc(female_uniform_icon)
-	female_uniform_icons[index] = female_uniform_icon
+	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
+	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
+	female_clothing_icons[index] = female_clothing_icon
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
