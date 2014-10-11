@@ -94,13 +94,6 @@
 			leaping = 0
 			weakened = 2
 			update_canmove()
-			/*
-			update_icons()
-			canmove = 0
-			icon_state = "alien[caste]_unconscious"
-			sleep(40)
-			update_icons()
-			canmove = 0*/
 			return
 
 /mob/living/carbon/alien/humanoid/float(on)
