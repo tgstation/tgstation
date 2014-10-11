@@ -75,7 +75,7 @@ Roboticist
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 2
-	spawn_positions = 1
+	spawn_positions = 2
 	supervisors = "research director"
 	selection_color = "#ffeeff"
 
