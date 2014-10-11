@@ -93,6 +93,7 @@
 
 /obj/item/weapon/implant/health
 	name = "health implant"
+	activated = 0
 	var/healthstring = ""
 
 /obj/item/weapon/implant/health/proc/sensehealth()
