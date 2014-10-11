@@ -1,0 +1,5 @@
+author: Dylanstrategie
+delete_after: true
+changes:
+  - wip: Bioprinter now has density (aka solid, can't walk over it), can be anchored and deanchored using a wrench, has luminescence, uses top-quality visible_message and span
+  - tweak: Surgery now starts with three full advanced trauma kits to perform actual organ surgery. R&D never does their job, and lungs seem to be made of nitroglycerin now.
