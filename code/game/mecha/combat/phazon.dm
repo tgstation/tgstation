@@ -61,16 +61,19 @@
 	switch(new_damtype)
 		if("Fists")
 			damtype = "brute"
+			src.occupant_message("Your exosuit's hands form into fists.")
 		if("Torch")
 			damtype = "fire"
+			src.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
 		if("Toxic injector")
 			damtype = "tox"
-	if (new_damtype == "Fists")
-		src.occupant_message("Your exosuit's hands form into fists.")
-	if (new_damtype == "Torch")
-		src.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
-	if (new_damtype == "Toxic injector")
-		src.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
+			src.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
+//	if (new_damtype == "Fists")
+//		src.occupant_message("Your exosuit's hands form into fists.")
+//	if (new_damtype == "Torch")
+//		src.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
+//	if (new_damtype == "Toxic injector")
+//		src.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
 	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
 	return
 
