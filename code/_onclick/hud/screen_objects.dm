@@ -394,6 +394,10 @@
 			if(issilicon(usr))
 				var/mob/living/silicon/S = usr
 				S.sensor_mode()
+		if("leap")
+			if(istype(usr, /mob/living/carbon/alien/humanoid))
+				var/mob/living/carbon/alien/humanoid/hunter/AH = usr
+				AH.toggle_leap()
 		else
 			return 0
 	return 1
