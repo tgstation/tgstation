@@ -1,0 +1,4 @@
+author: Paprika
+delete-after: True
+changes:
+  - rscadd: "Added zipties for security and nuke operatives. These have a slightly shorter 'breakout time' as normal cuffs but they are destroyed upon removal. Beepsky and sec borgs now use these by default."

@@ -219,8 +219,7 @@ Auto Patrol: []"},
 	if(open && !locked)
 		if(user) user << "<span class='danger'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
+			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -309,10 +308,10 @@ Auto Patrol: []"},
 
 			if(iscarbon(target) && target.canBeHandcuffed())
 				if(!src.target.handcuffed && !src.arrest_type)
-					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+					playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
-					target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
+					target.visible_message("<span class='danger'>[src] is trying to put zipties on [src.target]!</span>",\
+											"<span class='userdanger'>[src] is trying to put zipeties on [src.target]!</span>")
 
 					spawn(60)
 						if(get_dist(src, src.target) <= 1)
@@ -320,7 +319,7 @@ Auto Patrol: []"},
 								return
 
 							if(istype(src.target,/mob/living/carbon))
-								target.handcuffed = new /obj/item/weapon/handcuffs(target)
+								target.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
 
 							mode = SECBOT_IDLE
@@ -661,7 +660,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
-	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

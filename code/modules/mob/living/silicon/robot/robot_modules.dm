@@ -145,7 +145,7 @@
 
 /obj/item/weapon/robot_module/security/New()
 	..()
-	modules += new /obj/item/weapon/handcuffs/cyborg(src)
+	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 	modules += new /obj/item/weapon/melee/baton/loaded(src)
 	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
@@ -207,7 +207,7 @@
 	else
 		modules += new /obj/item/weapon/pickaxe/borgdrill(src)
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
-	modules += new /obj/item/device/t_scanner/mining_scanner(src)
+	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 
 /obj/item/weapon/robot_module/miner/on_emag()

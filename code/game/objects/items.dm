@@ -17,6 +17,7 @@
 
 	//If this is set, The item will make an action button on the player's HUD when picked up.
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
+	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -31,6 +32,8 @@
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/reflect_chance = 0 //This var dictates what % of a time an object will reflect an energy based weapon's shot
+	var/strip_delay = 40
+	var/put_on_delay = 20
 
 	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
 
@@ -324,14 +327,12 @@
 		M.adjustBruteLoss(10)
 		*/
 	if(M != user)
-		for(var/mob/O in (viewers(M) - user - M))
-			O.show_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
-		M << "<span class='danger'>[user] stabs you in the eye with [src]!</span>"
-		user << "<span class='danger'>You stab [M] in the eye with [src]!</span>"
+		M.visible_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user]!</span>", \
+							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
 	else
 		user.visible_message( \
-			"<span class='danger'>[user] has stabbed themself with [src]!</span>", \
-			"<span class='danger'>You stab yourself in the eyes with [src]!</span>" \
+			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
+			"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
 		)
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/U = M

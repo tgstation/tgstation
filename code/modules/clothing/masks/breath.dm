@@ -15,3 +15,4 @@
 	icon_state = "medical"
 	item_state = "m_mask"
 	permeability_coefficient = 0.01
+	put_on_delay = 10
