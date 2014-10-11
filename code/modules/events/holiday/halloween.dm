@@ -13,6 +13,9 @@
 				hardset_dna(H, null, null, null, null, /datum/species/skeleton)
 			else
 				hardset_dna(H, null, null, null, null, /datum/species/zombie)
+			for(var/obj/item/weapon/storage/backpack/b in H.contents)
+				new /obj/item/weapon/storage/spooky(b)
+
 	for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
 
