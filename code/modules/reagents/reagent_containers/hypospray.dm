@@ -110,13 +110,13 @@
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack
 	name = "stimpack medipen"
-	desc = "A rapid and safe way to stimulate your body's adrenaline, allowing for freer movement in bulky clothing at the cost of toxicity."
+	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in bulky clothing at the cost of some muscle tissue tearing."
 	icon_state = "stimpen"
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/New()
 	..()
 	reagents.remove_reagent("inaprovaline", 10)
 	reagents.add_reagent("hyperzine", 8)
-	reagents.add_reagent("toxin", 2)
+	reagents.add_reagent("lexorin", 2)
 	update_icon()
 	return
