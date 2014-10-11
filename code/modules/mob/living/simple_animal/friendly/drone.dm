@@ -37,6 +37,7 @@
 	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
 	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
+	var/health_repair_max = 0 //Drone will only be able to be repaired/reactivated up to this point, defaults to health
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
@@ -53,6 +54,9 @@
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
+
+	if(!health_repair_max)
+		health_repair_max = initial(health)
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
@@ -87,7 +91,7 @@
 								return
 							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>")
 							if(do_after(user,30,needhand = 1))
-								health = maxHealth
+								health = health_repair_max
 								stat = CONSCIOUS
 								icon_state = icon_living
 								D.visible_message("<span class='notice'>[D] reactivates [src]!</span>")
@@ -138,6 +142,20 @@
 		return
 
 	..()
+
+/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
+		if(health < health_repair_max)
+			user << "<span class='notice'>You start to tighten loose screws on [src].</span>"
+			if(do_after(user,80))
+				health = health_repair_max
+				visible_message("<span class='notice'>[user] tightens [src == user ? "their" : "[src]'s"] loose screws!</span>")
+			else
+				user << "<span class='notice'>You need to remain still to tighten [src]'s screws.</span>"
+		else
+			user << "<span class='notice'>[src]'s screws can't get any tighter!</span>"
+	else
+		..()
 
 /mob/living/simple_animal/drone/examine(mob/user)
 	. = ..()
@@ -329,6 +347,12 @@
 		else
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return
+
+/mob/living/simple_animal/drone/stripPanelUnequip(obj/item/what, mob/who, where)
+	..(what, who, where, 1)
+
+/mob/living/simple_animal/drone/stripPanelEquip(obj/item/what, mob/who, where)
+	..(what, who, where, 1)
 
 /mob/living/simple_animal/drone/emp_act(severity)
 	Stun(5)
