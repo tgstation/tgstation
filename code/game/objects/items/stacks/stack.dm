@@ -117,7 +117,8 @@
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
-		if (!multiplier) multiplier = 1
+		if (multiplier <= 0) //href protection
+			return
 		if (src.get_amount() < R.req_amount*multiplier)
 			if (R.req_amount*multiplier>1)
 				usr << "<span class='danger'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
