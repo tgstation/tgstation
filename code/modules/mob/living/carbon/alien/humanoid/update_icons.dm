@@ -23,7 +23,7 @@
 		else
 			icon_state = "alien[caste]_dead"
 			pixel_y = 0
-	else if(stat == UNCONSCIOUS)
+	else if(stat == UNCONSCIOUS || weakened)
 		icon_state = "alien[caste]_unconscious"
 		pixel_y = 0
 	else if(lying || resting)

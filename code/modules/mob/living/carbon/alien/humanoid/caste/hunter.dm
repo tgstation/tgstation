@@ -67,6 +67,13 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(var/atom/A)
+	if(!has_gravity(src) || !has_gravity(A))
+		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
+		//It's also extremely buggy visually, so it's balance+bugfix
+		return
+	if(lying)
+		return
+
 	leaping = 1
 	update_icons()
 	throw_at(A,MAX_ALIEN_LEAP_DIST,1)
@@ -79,17 +86,28 @@
 			var/mob/living/L = A
 			L.Weaken(5)
 			step_towards(src,L)
+			visible_message("<span class ='alertalien'>[src] pounces on [A]!</span>")
 			return
-		else if(leaping)
+		else
+			if(leaping)
+				visible_message("<span class ='alertalien'>[src] smashes into [A]!</span>")
 			leaping = 0
+			weakened = 2
+			update_canmove()
+			/*
 			update_icons()
-			visible_message("<span class ='alertalien'>[src] smashes into [A]!</span>")
 			canmove = 0
 			icon_state = "alien[caste]_unconscious"
 			sleep(40)
 			update_icons()
-			canmove = 1
+			canmove = 0*/
 			return
+
+/mob/living/carbon/alien/humanoid/float(on)
+	if(leaping)
+		return
+	..()
+
 
 //Modified throw_at() that will use diagonal dirs where appropriate
 //instead of locking it to cardinal dirs
