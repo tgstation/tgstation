@@ -709,8 +709,6 @@
 
 /mob/living/carbon/human/start_pulling(var/atom/movable/AM)
 	if(l_hand && r_hand)
-		return
-	if(istype(AM,/obj/item))
-		put_in_active_hand(AM)
+		user << "<span class='notice'>Your hands are full.</span>"
 		return
 	..()
