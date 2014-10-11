@@ -18,6 +18,20 @@
 	var/phasing_energy_drain = 200
 	max_equip = 3
 
+/obj/mecha/combat/phazon/Bump(var/atom/obstacle)
+	if(phasing && get_charge()>=phasing_energy_drain)
+		spawn()
+			if(can_move)
+				can_move = 0
+				flick("phazon-phase", src)
+				src.loc = get_step(src,src.dir)
+				src.use_power(phasing_energy_drain)
+				sleep(step_in*3)
+				can_move = 1
+	else
+		. = ..()
+	return
+
 /obj/mecha/combat/phazon/click_action(atom/target,mob/user)
 	if(phasing)
 		src.occupant_message("Unable to interact with objects while phasing")
