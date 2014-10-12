@@ -1,4 +1,0 @@
-author: Paprika
-delete-after: True
-changes:
-  - bugfix: Changed the medical HUD in the tactical medkit to a night vision HUD so syndicate medics don't stumble around in the dark. Can be purchased through nuke op uplinks.
