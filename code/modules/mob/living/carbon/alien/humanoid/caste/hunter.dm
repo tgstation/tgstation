@@ -7,7 +7,6 @@
 	max_plasma = 150
 	icon_state = "alienh_s"
 	plasma_rate = 5
-	var/leap_on_click = 0
 
 /mob/living/carbon/alien/humanoid/hunter/New()
 	create_reagents(100)

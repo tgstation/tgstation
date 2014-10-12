@@ -33,6 +33,9 @@
 	else
 		icon_state = "alien[caste]_s"
 
+	if(leap_on_click)
+		icon_state = "alien[caste]_pounce"
+
 	if(leaping)
 		icon = 'icons/mob/alienleap.dmi'
 		icon_state = "alien[caste]_leap"
