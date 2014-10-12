@@ -757,3 +757,38 @@
 	name = "Striped Shirt"
 	icon_state = "shirt_stripes"
 	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_blue
+	name = "Blue Shirt"
+	icon_state = "shirt_blue"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_red
+	name = "Red Shirt"
+	icon_state = "shirt_red"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_green
+	name = "Green Shirt"
+	icon_state = "shirt_green"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_meat
+	name = "Meat Shirt"
+	icon_state = "shirt_meat"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_tiedye
+	name = "Tie-dyed Shirt"
+	icon_state = "shirt_tiedye"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_redjersey
+	name = "Red Sports Jersey"
+	icon_state = "shirt_redjersey"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_bluejersey
+	name = "Blue Sports Jersey"
+	icon_state = "shirt_bluejersey"
+	gender = NEUTER
