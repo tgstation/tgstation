@@ -12,6 +12,10 @@
 	use_power = 1
 	idle_power_usage = 50
 
+	//Don't let ghosts fuck with it
+	ghost_read = 0
+	ghost_write = 0
+
 	l_color = "#7BF9FF"
 
 	power_change()
@@ -31,6 +35,25 @@
 		"eyes" =    list(/obj/item/organ/eyes,   30),
 		"liver" =   list(/obj/item/organ/liver,  50)
 		)
+
+/obj/machinery/bioprinter/New()
+	. = ..()
+
+	component_parts = newlist(\
+		/obj/item/weapon/circuitboard/bioprinter,\
+		/obj/item/weapon/stock_parts/manipulator,\
+		/obj/item/weapon/stock_parts/manipulator,\
+		/obj/item/weapon/stock_parts/matter_bin,\
+		/obj/item/weapon/stock_parts/matter_bin,\
+		/obj/item/weapon/stock_parts/micro_laser,\
+		/obj/item/weapon/stock_parts/micro_laser,\
+		/obj/item/weapon/stock_parts/micro_laser,\
+		/obj/item/weapon/stock_parts/scanning_module,\
+		/obj/item/weapon/stock_parts/scanning_module,\
+		/obj/item/weapon/stock_parts/console_screen\
+	)
+
+	RefreshParts()
 
 /obj/machinery/bioprinter/prosthetics
 	name = "prosthetics fabricator"
@@ -57,7 +80,7 @@
 			//visible_message("<span class='notice'>The printer would be using the DNA sample if it was coded.</span>")
 			//TODO: Copy DNA hash or donor reference over to new organ.
 
-		visible_message("<span class='notice'>\The [src] spits out a new organ.</span>")
+		visible_message("<span class='notice'>\The [src] spits out a brand new organ.</span>")
 
 	else
 		visible_message("<span class='warning'>\The [src]'s error light flickers. It can't make new organs out of thin air, fill it up first.</span>")

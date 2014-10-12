@@ -724,6 +724,15 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telecomms/broadcaster
 
+/datum/design/bioprinter
+	name = "Circuit Design (Bioprinter)"
+	desc = "Allows for the construction of Bioprinter equipment."
+	id = "s-bioprinter"
+	req_tech = list("programming" = 3, "engineering" = 2, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/bioprinter
+
 
 ///////////////////////////////////
 /////Non-Board Computer Stuff//////
