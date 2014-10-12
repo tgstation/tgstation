@@ -20,8 +20,6 @@
 
 	var/emagged = 0			//ups the temperature cap from 500 to 1000, targets hit by beams over 500 Kelvin will burst into flames
 
-	var/charge_tick = 0
-
 	var/overlay_layer = LIGHTING_LAYER+1
 
 	New()
@@ -115,11 +113,8 @@
 				temperature = current_temperature
 			update_icon()
 
-		charge_tick++
-		if(charge_tick > 4)
-			charge_tick = 0
 		if(power_supply)
-			power_supply.give(100)
+			power_supply.give(50)
 			update_icon()
 		return
 
