@@ -754,8 +754,13 @@
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/shirt_stripes
-	name = "Striped Shirt"
+	name = "Telnyashka Shirt"
 	icon_state = "shirt_stripes"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/tank_stripes
+	name = "Telnyashka Tank Top"
+	icon_state = "tank_stripes"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/shirt_blue
