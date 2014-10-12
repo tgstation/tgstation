@@ -557,7 +557,6 @@
 #include "code\game\objects\items\weapons\flamethrower.dm"
 #include "code\game\objects\items\weapons\gift_wrappaper.dm"
 #include "code\game\objects\items\weapons\handcuffs.dm"
-#include "code\game\objects\items\weapons\janisigns.dm"
 #include "code\game\objects\items\weapons\kitchen.dm"
 #include "code\game\objects\items\weapons\manuals.dm"
 #include "code\game\objects\items\weapons\mop.dm"
