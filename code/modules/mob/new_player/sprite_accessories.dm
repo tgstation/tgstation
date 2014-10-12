@@ -717,3 +717,43 @@
 	name = "Midriff Tank Top"
 	icon_state = "tank_midriff"
 	gender = FEMALE
+
+/datum/sprite_accessory/undershirt/tank_fire
+	name = "Fire Tank-Top"
+	icon_state = "tank_fire"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_ss13
+	name = "Space Station 13 Shirt"
+	icon_state = "shirt_ss13"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_question
+	name = "Question Mark Shirt"
+	icon_state = "shirt_question"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_ian
+	name = "Ian Shirt"
+	icon_state = "shirt_ian"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_skull
+	name = "Skull Shirt"
+	icon_state = "shirt_skull"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_commie
+	name = "Communist Shirt"
+	icon_state = "shirt_commie"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_nano
+	name = "Nanotrasen Shirt"
+	icon_state = "shirt_nano"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_stripes
+	name = "Striped Shirt"
+	icon_state = "shirt_stripes"
+	gender = NEUTER
