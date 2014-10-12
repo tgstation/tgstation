@@ -58,6 +58,7 @@
 // Used for overriding certain procs
 
 /obj/machinery/field
+	allow_malf_AI_verbs = 0
 	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 
 /obj/machinery/field/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

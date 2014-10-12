@@ -7,6 +7,7 @@
 		opacity = 0
 		anchored = 1
 		unacidable = 1
+		allow_malf_AI_verbs = 0
 		var/const/max_health = 200
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
