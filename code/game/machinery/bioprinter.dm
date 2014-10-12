@@ -12,10 +12,6 @@
 	use_power = 1
 	idle_power_usage = 50
 
-	//Don't let ghosts fuck with it
-	ghost_read = 0
-	ghost_write = 0
-
 	l_color = "#7BF9FF"
 
 	power_change()
