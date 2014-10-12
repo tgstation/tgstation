@@ -58,9 +58,8 @@
 
 	add_logs(user, target, "injected", object="[name]")
 
-	user.drop_item()
 	inject(target, user)	//Now we actually do the heavy lifting.
-	loc = null				//garbage collect
+	qdel(src)
 
 
 /obj/item/weapon/dnainjector/antihulk
