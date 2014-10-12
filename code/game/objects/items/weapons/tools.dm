@@ -117,7 +117,8 @@
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/restraints/handcuffs/cable))
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
-		qdel(C)
+		var/obj/item/I = C.handcuffed
+		qdel(I)
 		C.handcuffed = null
 		C.update_inv_handcuffed(0)
 		return
