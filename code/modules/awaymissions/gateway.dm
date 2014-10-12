@@ -5,6 +5,7 @@
 	icon_state = "off"
 	density = 1
 	anchored = 1
+	unacidable = 1
 	var/active = 0
 
 
