@@ -74,6 +74,7 @@
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s"
 	pixel_x = -16
+	mob_size = 2
 
 /mob/living/carbon/alien/humanoid/queen/large/update_icons()
 	update_hud()		//TODO: remove the need for this to be here

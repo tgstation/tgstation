@@ -29,6 +29,7 @@
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	languages = DRONE
+	mob_size = 0
 	var/picked = FALSE
 	var/list/drone_overlays[TOTAL_LAYERS]
 	var/laws = \

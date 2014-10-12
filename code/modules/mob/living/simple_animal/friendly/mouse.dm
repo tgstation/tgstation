@@ -20,6 +20,7 @@
 	response_harm   = "splats"
 	density = 0
 	ventcrawler = 2
+	mob_size = 0
 	var/body_color //brown, gray and white, leave blank for random
 
 /mob/living/simple_animal/mouse/New()
