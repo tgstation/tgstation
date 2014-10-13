@@ -58,8 +58,8 @@
 /datum/surgery_step/internal/fix_organ
 	allowed_tools = list(
 	/obj/item/stack/medical/advanced/bruise_pack= 100,		\
-	/obj/item/stack/medical/bruise_pack = 20,	\
-	/obj/item/stack/medical/bruise_pack/tajaran = 70, 		\
+	/obj/item/stack/medical/bruise_pack = 50,	\
+	/obj/item/stack/medical/bruise_pack/tajaran = 75, 		\
 	)
 
 	min_duration = 70
@@ -81,7 +81,7 @@
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/tool_name = "\the [tool]"
 		if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
-			tool_name = "regenerative membrane"
+			tool_name = "the regenerative membrane"
 		if (istype(tool, /obj/item/stack/medical/bruise_pack))
 			if (istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
 				tool_name = "the poultice"
@@ -104,7 +104,7 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/tool_name = "\the [tool]"
 		if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
-			tool_name = "regenerative membrane"
+			tool_name = "the regenerative membrane"
 		if (istype(tool, /obj/item/stack/medical/bruise_pack))
 			if (istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
 				tool_name = "the poultice"
@@ -121,6 +121,9 @@
 					user.visible_message("\blue [user] treats damage to [target]'s [I.name] with [tool_name].", \
 					"\blue You treat damage to [target]'s [I.name] with [tool_name]." )
 					I.damage = 0
+			if(I)
+				I.status &= ~ORGAN_BROKEN
+				I.status &= ~ORGAN_SPLINTED
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 
@@ -198,6 +201,9 @@
 					user.visible_message("\blue [user] repairs [target]'s [I.name] with [tool].", \
 					"\blue You repair [target]'s [I.name] with [tool]." )
 					I.damage = 0
+			if(I)
+				I.status &= ~ORGAN_BROKEN
+				I.status &= ~ORGAN_SPLINTED
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 
