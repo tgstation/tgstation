@@ -14,8 +14,9 @@
 	prosthetic_name = "cyberbrain"
 	prosthetic_icon = "brain-prosthetic"
 	organ_tag = "brain"
+	organ_type = /datum/organ/internal/brain
 	nonplant_seed_type = /obj/item/seeds/synthbrainseed
-	
+
 	var/mob/living/carbon/brain/brainmob = null
 
 /obj/item/organ/brain/New()
