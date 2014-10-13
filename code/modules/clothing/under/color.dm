@@ -1,17 +1,18 @@
+/obj/item/clothing/under/color
+	desc = "A standard issue colored jumpsuit for assistants. Variety is the spice of life!"
+
+/obj/item/clothing/under/color/random/New()
+	var/obj/item/clothing/under/color/C = pick(typesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
+	name = initial(C.name)
+	icon_state = initial(C.icon_state)
+	item_state = initial(C.item_state)
+	item_color = initial(C.item_color)
+
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-
-/obj/item/clothing/under/color/blackf
-	name = "feminine black jumpsuit"
-	desc = "It's very smart and in a ladies-size!"
-	icon_state = "black"
-	item_state = "bl_suit"
-	item_color = "blackf"
-	fitted = 0
-	can_adjust = 0
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
@@ -33,12 +34,10 @@
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
-	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	desc = "Don't wear this near paranoid security officers."
 	icon_state = "orange"
 	item_state = "o_suit"
 	item_color = "orange"
-	has_sensor = 2
-	sensor_mode = 3
 
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
@@ -68,16 +67,19 @@
 	name = "psychedelic jumpsuit"
 	desc = "Groovy!"
 	icon_state = "psyche"
+	item_state = "p_suit"
 	item_color = "psyche"
 
 /obj/item/clothing/under/color/lightblue
 	name = "lightblue jumpsuit"
 	icon_state = "lightblue"
+	item_state = "b_suit"
 	item_color = "lightblue"
 
 /obj/item/clothing/under/color/aqua
 	name = "aqua jumpsuit"
 	icon_state = "aqua"
+	item_state = "b_suit"
 	item_color = "aqua"
 
 /obj/item/clothing/under/color/purple
@@ -89,16 +91,19 @@
 /obj/item/clothing/under/color/lightpurple
 	name = "lightpurple jumpsuit"
 	icon_state = "lightpurple"
+	item_state = "p_suit"
 	item_color = "lightpurple"
 
 /obj/item/clothing/under/color/lightgreen
 	name = "lightgreen jumpsuit"
 	icon_state = "lightgreen"
+	item_state = "g_suit"
 	item_color = "lightgreen"
 
 /obj/item/clothing/under/color/lightblue
 	name = "lightblue jumpsuit"
 	icon_state = "lightblue"
+	item_state = "b_suit"
 	item_color = "lightblue"
 
 /obj/item/clothing/under/color/lightbrown
@@ -114,24 +119,29 @@
 /obj/item/clothing/under/color/yellowgreen
 	name = "yellowgreen jumpsuit"
 	icon_state = "yellowgreen"
+	item_state = "y_suit"
 	item_color = "yellowgreen"
 
 /obj/item/clothing/under/color/darkblue
 	name = "darkblue jumpsuit"
 	icon_state = "darkblue"
+	item_state = "b_suit"
 	item_color = "darkblue"
 
 /obj/item/clothing/under/color/lightred
 	name = "lightred jumpsuit"
 	icon_state = "lightred"
+	item_state = "r_suit"
 	item_color = "lightred"
 
 /obj/item/clothing/under/color/darkred
 	name = "darkred jumpsuit"
 	icon_state = "darkred"
+	item_state = "r_suit"
 	item_color = "darkred"
 
 /obj/item/clothing/under/color/maroon
 	name = "maroon jumpsuit"
 	icon_state = "maroon"
+	item_state = "r_suit"
 	item_color = "maroon"
