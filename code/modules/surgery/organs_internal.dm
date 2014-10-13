@@ -365,25 +365,33 @@
 		if(!istype(O))
 			return 0
 
-		if(target.species && target.species.has_organ[O.organ_tag])
+		if(!target.species)
+			user << "<span class='warning'>You have no idea what species this person is. Report this on the bug tracker.</span>"
+			return 0
 
+		var/o_is = (O.gender == PLURAL) ? "are" : "is"
+		var/o_a =  (O.gender == PLURAL) ? "" : " a"
+		var/o_do = (O.gender == PLURAL) ? "don't" : "doesn't"
+
+		if(target.species.has_organ[O.organ_tag])
+		
 			if(!O.health)
-				user << "\red \The [O.organ_tag] is dead."
+				user << "<span class='warning'>\The [O.organ_tag] [o_is] in no state to be transplanted.</span>"
 				return 0
 
 			if(!target.internal_organs_by_name[O.organ_tag])
 				organ_missing = 1
 			else
-				user << "\red \The [target] already has a [O.organ_tag]." //TODO: grammar.
+				user << "<span class='warning'>\The [target] already has [o_a][O.organ_tag].</span>"
 				return 0
 
 			if(O.organ_data && affected.name == O.organ_data.parent_organ)
 				organ_compatible = 1
 			else
-				user << "\red \The [O.organ_tag] doesn't normally go in \the [affected.display_name]."
+				user << "<span class='warning'>\The [O.organ_tag] [o_do] normally go in \the [affected.display_name].</span>"
 				return 0
 		else
-			user << "\red \A [target.species.name] doesn't normally have a [O.organ_tag]." //TODO: grammar.
+			user << "<span class='warning'>\A [target.species.name] doesn't normally have [o_a][O.organ_tag].</span>"
 			return 0
 
 		return ..() && organ_missing && organ_compatible
@@ -404,12 +412,19 @@
 
 		if(istype(O))
 
-			if(!O.organ_data.transplant_data)
+			var/datum/reagent/blood/transplant_blood = O.reagents.reagent_list["blood"]
+			if(!transplant_blood)
 				O.organ_data.transplant_data = list()
-				O.organ_data.transplant_data["species"] = target.species.name
+				O.organ_data.transplant_data["species"] =    target.species.name
 				O.organ_data.transplant_data["blood_type"] = target.dna.b_type
-				O.organ_data.transplant_data["blood_DNA"] = target.dna.unique_enzymes
+				O.organ_data.transplant_data["blood_DNA"] =  target.dna.unique_enzymes
+			else
+				O.organ_data.transplant_data = list()
+				O.organ_data.transplant_data["species"] =    transplant_blood.data["species"]
+				O.organ_data.transplant_data["blood_type"] = transplant_blood.data["blood_type"]
+				O.organ_data.transplant_data["blood_DNA"] =  transplant_blood.data["blood_DNA"]
 
+			O.organ_data.organ_holder = null
 			O.organ_data.owner = target
 			target.internal_organs |= O.organ_data
 			affected.internal_organs |= O.organ_data

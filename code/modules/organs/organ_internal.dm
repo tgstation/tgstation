@@ -13,6 +13,7 @@
 	var/removed_type //When removed, forms this object.
 	var/list/transplant_data // Blood DNA and colour of donor
 	var/rejecting            // Is this organ already being rejected?
+	var/obj/item/organ/organ_holder
 
 /datum/organ/internal/proc/rejuvenate()
 	damage=0
@@ -68,7 +69,7 @@
 		// immunosuppressant that changes transplant data to make it match.
 		if(transplant_data)
 			if(!rejecting) //Should this transplant reject?
-				if(owner.species != transplant_data["species"]) //Nope.
+				if(owner.species.name != transplant_data["species"]) //Nope.
 					rejecting = 1
 				else if(prob(20) && owner.dna && blood_incompatible(transplant_data["blood_type"],owner.dna.b_type))
 					rejecting = 1
@@ -243,5 +244,6 @@
 	if(istype(removed_organ))
 		removed_organ.organ_data = src
 		removed_organ.update()
+		organ_holder = removed_organ
 
 	return removed_organ
