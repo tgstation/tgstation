@@ -72,73 +72,66 @@
 
 /obj/item/clothing/under/color/lightblue
 	name = "lightblue jumpsuit"
-	desc = "lightblue"
 	icon_state = "lightblue"
 	item_color = "lightblue"
 
 /obj/item/clothing/under/color/aqua
 	name = "aqua jumpsuit"
-	desc = "aqua"
 	icon_state = "aqua"
 	item_color = "aqua"
 
 /obj/item/clothing/under/color/purple
 	name = "purple jumpsuit"
-	desc = "purple"
 	icon_state = "purple"
 	item_state = "p_suit"
 	item_color = "purple"
 
 /obj/item/clothing/under/color/lightpurple
 	name = "lightpurple jumpsuit"
-	desc = "lightpurple"
 	icon_state = "lightpurple"
 	item_color = "lightpurple"
 
 /obj/item/clothing/under/color/lightgreen
 	name = "lightgreen jumpsuit"
-	desc = "lightgreen"
 	icon_state = "lightgreen"
 	item_color = "lightgreen"
 
 /obj/item/clothing/under/color/lightblue
 	name = "lightblue jumpsuit"
-	desc = "lightblue"
 	icon_state = "lightblue"
 	item_color = "lightblue"
 
 /obj/item/clothing/under/color/lightbrown
 	name = "lightbrown jumpsuit"
-	desc = "lightbrown"
 	icon_state = "lightbrown"
 	item_color = "lightbrown"
 
 /obj/item/clothing/under/color/brown
 	name = "brown jumpsuit"
-	desc = "brown"
 	icon_state = "brown"
 	item_color = "brown"
 
 /obj/item/clothing/under/color/yellowgreen
 	name = "yellowgreen jumpsuit"
-	desc = "yellowgreen"
 	icon_state = "yellowgreen"
 	item_color = "yellowgreen"
 
 /obj/item/clothing/under/color/darkblue
 	name = "darkblue jumpsuit"
-	desc = "darkblue"
 	icon_state = "darkblue"
 	item_color = "darkblue"
 
 /obj/item/clothing/under/color/lightred
 	name = "lightred jumpsuit"
-	desc = "lightred"
 	icon_state = "lightred"
 	item_color = "lightred"
 
 /obj/item/clothing/under/color/darkred
 	name = "darkred jumpsuit"
-	desc = "darkred"
 	icon_state = "darkred"
 	item_color = "darkred"
+
+/obj/item/clothing/under/color/maroon
+	name = "maroon jumpsuit"
+	icon_state = "maroon"
+	item_color = "maroon"
