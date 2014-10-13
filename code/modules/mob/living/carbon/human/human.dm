@@ -706,9 +706,3 @@
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
 	regenerate_icons()
-
-/mob/living/carbon/human/start_pulling(var/atom/movable/AM)
-	if(l_hand && r_hand)
-		src << "<span class='notice'>Your hands are full.</span>"
-		return
-	..()
