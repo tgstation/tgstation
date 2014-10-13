@@ -14,7 +14,7 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
-	var/mob_storage_capacity = 2 // how many human sized mob/living can fit together inside a closet.
+	var/mob_storage_capacity = 4 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
