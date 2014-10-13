@@ -146,7 +146,7 @@
 /obj/item/roller
 	name = "roller bed"
 	desc = "A collapsed roller bed that can be carried around."
-	icon = 'rollerbed.dmi'
+	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
 	w_class = 4.0 // Can't be put in backpacks.
 
