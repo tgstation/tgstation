@@ -107,3 +107,7 @@
 		user << "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
+
+/obj/item/weapon/gun/projectile/shotgun/riot //for spawn in the armory
+	name = "riot shotgun"
+	desc = "A sturdy shotgun designed for non-lethal riot control."
