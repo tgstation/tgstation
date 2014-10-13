@@ -473,7 +473,7 @@
 					shootAt(M)			//shoot the target, finally
 
 	else
-		if(secondarytargets.len > 0)	//if there are no primary targets, go for secondary targets
+		if(secondarytargets.len > 0 && projectile != /obj/item/projectile/energy/electrode)	//if there are no primary targets, go for secondary targets unless we're in taser mode
 			var/mob/t = pick(secondarytargets)
 			if(istype(t, /mob/living))
 				if(t.stat != DEAD)
