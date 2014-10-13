@@ -1,0 +1,7 @@
+author: Deity Link
+delete-after: True
+changes:
+  - rscadd: Slime Extracts can now be put in Large Chem Grenades (up to one) and Ex Chem Grenades (up to two). Mechanics explained <a href="https://cloud.githubusercontent.com/assets/7573912/4601459/fa2d7194-50ff-11e4-8f5f-dea1be8a82ca.png">here</a>.
+  - rscadd: The yellow slime extract + water reaction now actually does something to bring you light. Added <a href="https://cloud.githubusercontent.com/assets/7573912/4601438/55b4baba-50fe-11e4-9c67-9339b8817b17.gif">slime lamps</a>.
+  - tweak: Science Goggles now actually protect you from the slime extract reaction-based flashs (gold/silver slime reactions).
+  - tweak: Replaced "The solution begins to bubble." with fitting lines when the reaction occurs in a human's body or in a grenade.
