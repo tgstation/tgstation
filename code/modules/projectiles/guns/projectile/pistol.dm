@@ -22,7 +22,8 @@
 	ammo_type ="/obj/item/ammo_casing/a50"
 	mag_type = "/obj/item/ammo_storage/magazine/a50"
 	load_method = 2
-	auto_mag_drop = 1
+
+	gun_flags = AUTOMAGDROP | EMPTYCASINGS
 
 /obj/item/weapon/gun/projectile/deagle/gold
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
@@ -49,7 +50,8 @@
 	ammo_type = "/obj/item/ammo_casing/a75"
 	mag_type = "/obj/item/ammo_storage/magazine/a75"
 	load_method = 2
-	auto_mag_drop = 1
+
+	gun_flags = AUTOMAGDROP | EMPTYCASINGS
 
 	update_icon()
 		..()
@@ -71,47 +73,14 @@
 	ammo_type = "/obj/item/ammo_casing/c45"
 	mag_type = "/obj/item/ammo_storage/magazine/c45"
 	load_method = 2
-	auto_mag_drop = 1
 
-/obj/item/weapon/gun/projectile/pistol/attack_hand(mob/user as mob)
-	if(loc == user)
-		if(silenced)
-			if(user.l_hand != src && user.r_hand != src)
-				..()
-				return
-			user << "<span class='notice'>You unscrew [silenced] from [src].</span>"
-			user.put_in_hands(silenced)
-			silenced = 0
-			w_class = 2
-			update_icon()
-			return
-	..()
-
-
-/obj/item/weapon/gun/projectile/pistol/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/silencer))
-		if(user.l_hand != src && user.r_hand != src)	//if we're not in his hands
-			user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
-			return
-		user.drop_item()
-		user << "<span class='notice'>You screw [I] onto [src].</span>"
-		silenced = I	//dodgy?
-		w_class = 3
-		I.loc = src		//put the silencer into the gun
-		update_icon()
-		return
-	..()
+	gun_flags = AUTOMAGDROP | EMPTYCASINGS | SILENCECOMP
 
 /obj/item/weapon/gun/projectile/pistol/update_icon()
 	..()
 	if(silenced)
 		icon_state = "pistol-silencer"
-	else
+	else if(stored_magazine)
 		icon_state = initial(icon_state)
-
-/obj/item/weapon/silencer
-	name = "silencer"
-	desc = "a silencer"
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "silencer"
-	w_class = 2
+	else
+		icon_state = "pistol-e"

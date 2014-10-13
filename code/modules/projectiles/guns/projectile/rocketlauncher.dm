@@ -5,7 +5,6 @@
 	icon_state = "rpg"
 	item_state = "rpg"
 	max_shells = 1
-	empty_casings = 0
 	w_class = 4.0
 	m_amt = 5000
 	w_type = RECYK_METAL
@@ -20,6 +19,8 @@
 	origin_tech = "combat=4;materials=2;syndicate=2"
 	ammo_type = "/obj/item/ammo_casing/rocket_rpg"
 	attack_verb = list("struck", "hit", "bashed")
+
+	gun_flags = 0
 
 /obj/item/weapon/gun/projectile/rocketlauncher/isHandgun()
 	return 0
