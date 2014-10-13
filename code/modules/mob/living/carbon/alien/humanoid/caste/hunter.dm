@@ -80,20 +80,24 @@
 	update_icons()
 
 /mob/living/carbon/alien/humanoid/throw_impact(A)
+	var/msg = ""
+
 	if(A)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
+			msg = "<span class ='alertalien'>[src] pounces on [A]!</span>"
 			L.Weaken(5)
+			sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src,L)
-			visible_message("<span class ='alertalien'>[src] pounces on [A]!</span>")
-			return
 		else
-			if(leaping)
-				visible_message("<span class ='alertalien'>[src] smashes into [A]!</span>")
-			leaping = 0
+			msg = "<span class ='alertalien'>[src] smashes into [A]!</span>"
 			weakened = 2
+
+		if(leaping)
+			leaping = 0
 			update_canmove()
-			return
+			visible_message(msg)
+
 
 /mob/living/carbon/alien/humanoid/float(on)
 	if(leaping)

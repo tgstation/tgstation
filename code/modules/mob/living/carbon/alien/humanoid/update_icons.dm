@@ -23,18 +23,19 @@
 		else
 			icon_state = "alien[caste]_dead"
 			pixel_y = 0
+
 	else if(stat == UNCONSCIOUS || weakened)
 		icon_state = "alien[caste]_unconscious"
 		pixel_y = 0
+	else if(leap_on_click)
+		icon_state = "alien[caste]_pounce"
+
 	else if(lying || resting)
 		icon_state = "alien[caste]_sleep"
 	else if(m_intent == "run")
 		icon_state = "alien[caste]_running"
 	else
 		icon_state = "alien[caste]_s"
-
-	if(leap_on_click)
-		icon_state = "alien[caste]_pounce"
 
 	if(leaping)
 		icon = 'icons/mob/alienleap.dmi'
