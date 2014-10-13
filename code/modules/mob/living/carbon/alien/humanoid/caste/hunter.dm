@@ -66,6 +66,9 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(var/atom/A)
+	if(leaping) //Leap while you leap, so you can leap while you leap
+		return
+
 	if(!has_gravity(src) || !has_gravity(A))
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
