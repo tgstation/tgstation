@@ -948,10 +948,10 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		handle_trace_chems()
 
 		var/datum/organ/internal/liver/liver = internal_organs_by_name["liver"]
-		liver.process()
+		if(liver) liver.process()
 
 		var/datum/organ/internal/eyes/eyes = internal_organs_by_name["eyes"]
-		eyes.process()
+		if(eyes) eyes.process()
 
 		updatehealth()
 
