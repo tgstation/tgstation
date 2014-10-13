@@ -161,7 +161,7 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] mends hematoma in [target]'s brain with \the [tool].",	\
 		"\blue You mend hematoma in [target]'s brain with \the [tool].")
-		var/datum/organ/internal/brain/sponge = target.internal_organs["brain"]
+		var/datum/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
 		if (sponge)
 			sponge.damage = 0
 

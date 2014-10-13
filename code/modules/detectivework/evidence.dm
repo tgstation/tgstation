@@ -8,8 +8,8 @@
 	item_state = ""
 	w_class = 1
 
-/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user as mob)
-	if(!in_range(I, user))
+/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag == 0) // not adjacent
 		return
 
 	if(!istype(I) || I.anchored == 1)

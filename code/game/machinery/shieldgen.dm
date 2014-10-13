@@ -230,6 +230,10 @@
 				malfunction = 1
 	checkhp()
 
+/obj/machinery/shieldgen/attack_ghost(mob/user)
+	if(isAdminGhost(user)) src.attack_hand(user)
+	return
+	
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
 	if(locked)
 		user << "The machine is locked, you are unable to use it."

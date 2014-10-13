@@ -222,7 +222,7 @@
 			blinded = 1
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
-			if(health < -25 || brain_op_stage == 4.0)
+			if(health < -25 || !has_brain())
 				death()
 				blinded = 1
 				silent = 0

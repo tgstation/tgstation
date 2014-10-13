@@ -45,7 +45,7 @@
 					new /obj/item/weapon/gun/energy/pulse_rifle(get_turf(H))
 				if("silenced")
 					new /obj/item/weapon/gun/projectile/pistol(get_turf(H))
-					new /obj/item/weapon/silencer(get_turf(H))
+					new /obj/item/gun_part/silencer(get_turf(H))
 				if("cannon")
 					new /obj/item/weapon/gun/energy/lasercannon(get_turf(H))
 				if("doublebarrel")

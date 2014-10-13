@@ -12,7 +12,6 @@
 	m_amt = 1000
 	w_type = RECYK_METAL
 	recoil = 1
-	var/empty_casings = 1 //Set to 0 to not eject empty casings
 	var/ammo_type = "/obj/item/ammo_casing/a357"
 	var/list/loaded = list()
 	var/max_shells = 7 //only used by guns with no magazine
@@ -20,7 +19,8 @@
 	var/obj/item/ammo_storage/magazine/stored_magazine = null
 	var/obj/item/ammo_casing/chambered = null
 	var/mag_type = ""
-	var/auto_mag_drop = 0 //whether the mag drops when it empties, or if the user has to do it
+
+	var/gun_flags = EMPTYCASINGS	//Yay, flags
 
 /obj/item/weapon/gun/projectile/New()
 	..()
@@ -99,7 +99,7 @@
 		chamber_round()
 	else
 		loaded -= AC //Remove casing from loaded list.
-	if(empty_casings == 1)
+	if(gun_flags &EMPTYCASINGS)
 		AC.loc = get_turf(src) //Eject casing onto ground.
 	if(AC.BB)
 		in_chamber = AC.BB //Load projectile into chamber.
@@ -110,6 +110,18 @@
 	return 0
 
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
+
+	if(istype(A, /obj/item/gun_part/silencer) && src.gun_flags &SILENCECOMP)
+		if(user.l_hand != src && user.r_hand != src)	//if we're not in his hands
+			user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+			return
+		user.drop_item()
+		user << "<span class='notice'>You screw [A] onto [src].</span>"
+		silenced = A	//dodgy?
+		w_class = 3
+		A.loc = src		//put the silencer into the gun
+		update_icon()
+		return 1
 
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_storage/magazine))
@@ -160,28 +172,43 @@
 			return
 		if (load_method == MAGAZINE && stored_magazine)
 			RemoveMag(user)
-			return
-	else
-		if(chambered)
+	else if(loc == user)
+		if(chambered) // So it processing unloading of a bullet first
 			var/obj/item/ammo_casing/AC = chambered
 			AC.loc = get_turf(src) //Eject casing onto ground.
 			chambered = null
 			user << "\blue You unload \the [AC] from \the [src]!"
 			update_icon()
 			return
-		else
-			user << "\red Nothing loaded in \the [src]!"
+		if(silenced)
+			if(user.l_hand != src && user.r_hand != src)
+				..()
+				return
+			user << "<span class='notice'>You unscrew [silenced] from [src].</span>"
+			user.put_in_hands(silenced)
+			silenced = 0
+			w_class = 2
+			update_icon()
+			return
+	else
+		user << "\red Nothing loaded in \the [src]!"
 
 /obj/item/weapon/gun/projectile/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
 	..()
-	if(!chambered && stored_magazine && !stored_magazine.ammo_count() && auto_mag_drop) //auto_mag_drop decides whether or not the mag is dropped once it empties
+	if(!chambered && stored_magazine && !stored_magazine.ammo_count() && gun_flags &AUTOMAGDROP) //auto_mag_drop decides whether or not the mag is dropped once it empties
 		RemoveMag()
 		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
 	return
 
-/obj/item/weapon/gun/projectile/examine()
+/obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
-	usr << "Has [getAmmo()] round\s remaining."
+	user << "Has [getAmmo()] round\s remaining."
+//		if(in_chamber && !loaded.len)
+//			usr << "However, it has a chambered round."
+//		if(in_chamber && loaded.len)
+//			usr << "It also has a chambered round." {R}
+	if(silenced && /obj/item/gun_part/silencer in src)
+		user <<"It has a supressor attached to the barrel."
 	return
 
 /obj/item/weapon/gun/projectile/proc/getAmmo()

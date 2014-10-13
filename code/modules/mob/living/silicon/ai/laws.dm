@@ -52,8 +52,6 @@
 	src.laws.clear_supplied_laws()
 
 /mob/living/silicon/ai/proc/statelaws() // -- TLE
-//	set category = "AI Commands"
-//	set name = "State Laws"
 	src.say("Current Active Laws:")
 	//src.laws_sanity_check()
 	//src.laws.show_laws(world)
@@ -96,8 +94,6 @@
 				number++
 
 /mob/living/silicon/ai/verb/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
-	set category = "AI Commands"
-	set name = "State Laws"
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 

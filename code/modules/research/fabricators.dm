@@ -237,7 +237,7 @@
 			being_built.loc = L //Put the thing in the lockbox
 			L.name += " ([being_built.name])"
 			being_built = L //Building the lockbox now, with the thing in it
-		src.being_built.Move(get_turf(output))
+		being_built.loc = get_turf(output)
 		src.being_built = null
 	src.updateUsrDialog()
 	src.busy = 0
