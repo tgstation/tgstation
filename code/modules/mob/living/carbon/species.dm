@@ -326,6 +326,15 @@ var/global/list/whitelisted_species = list("Human")
 
 	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
 
+/datum/species/manifested
+	name = "Manifested"
+	icobase = 'icons/mob/human_races/r_manifested.dmi'
+	deform = 'icons/mob/human_races/r_def_manifested.dmi'
+	language = "Sol Common"
+	primitive = /mob/living/carbon/monkey
+
+	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
+
 /datum/species/unathi
 	name = "Unathi"
 	icobase = 'icons/mob/human_races/r_lizard.dmi'

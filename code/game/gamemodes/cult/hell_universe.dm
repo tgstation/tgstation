@@ -73,7 +73,7 @@ In short:
 
 	for(var/turf/T in world)
 		if(istype(T,/turf/simulated/floor) && prob(1))
-			new /obj/effect/gateway/active(T)
+			new /obj/effect/gateway/active/cult(T)
 
 	for (var/obj/machinery/firealarm/alm in world)
 		if (!(alm.stat & BROKEN))
