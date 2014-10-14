@@ -44,7 +44,7 @@ var/scheduledEvent = null
 
 		var/next_event_delay = rand(eventTimeLower, eventTimeUpper)*playercount_modifier*roundlength_modifier
 		scheduledEvent = world.timeofday + next_event_delay
-		admin_message("A random event has been triggered. Next event in [next_event_delay/600] minutes.")
+		message_admins("A random event has been triggered. Next event in [next_event_delay/600] minutes.")
 
 	else if(world.timeofday > scheduledEvent)
 		spawn_dynamic_event()
