@@ -3,7 +3,7 @@
 /client/proc/timed_alert(time = 300,target,message,title,button1,button2,button3)
 	if(timed_alert) return ""
 
-	timed_alert = new(target,title,message,button1,button2,button3)
+	timed_alert = new(target,message,title,button1,button2,button3)
 	sleep(time)
 	del(timed_alert)
 
