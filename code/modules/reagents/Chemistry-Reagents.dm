@@ -1482,7 +1482,7 @@ datum
 			id = "fertilizer"
 			description = "A chemical mix good for growing plants with."
 			reagent_state = LIQUID
-			toxpwr = 0.2 //It's not THAT poisonous.
+
 			color = "#664330" // rgb: 102, 67, 48
 
 		toxin/fertilizer/eznutrient
@@ -1503,7 +1503,7 @@ datum
 			description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 			reagent_state = LIQUID
 			color = "#49002E" // rgb: 73, 0, 46
-			toxpwr = 1
+
 
 			// Clear off wallrot fungi
 			reaction_turf(var/turf/T, var/volume)
