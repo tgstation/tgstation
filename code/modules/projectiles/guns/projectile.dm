@@ -175,13 +175,13 @@
 
 /obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
-	user << "Has [getAmmo()] round\s remaining."
+	usr << "Has [getAmmo()] round\s remaining."
 //		if(in_chamber && !loaded.len)
 //			usr << "However, it has a chambered round."
 //		if(in_chamber && loaded.len)
 //			usr << "It also has a chambered round." {R}
-	if(silenced && /obj/item/gun_part/silencer in src)
-		user <<"It has a supressor attached to the barrel."
+	if(istype(silenced, /obj/item/gun_part/silencer))
+		usr <<"It has a supressor attached to the barrel."
 	return
 
 /obj/item/weapon/gun/projectile/proc/getAmmo()
