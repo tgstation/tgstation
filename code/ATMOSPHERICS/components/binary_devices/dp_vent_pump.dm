@@ -72,6 +72,7 @@
 				var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 
 				loc.assume_air(removed)
+				air_update_turf()
 
 				if(network1)
 					network1.update = 1
@@ -91,6 +92,7 @@
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
 				air2.merge(removed)
+				air_update_turf()
 
 				if(network2)
 					network2.update = 1
