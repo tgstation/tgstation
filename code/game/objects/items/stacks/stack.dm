@@ -89,7 +89,7 @@
 			title+= "[R.title]"
 		title+= " ([R.req_amount] [src.singular_name]\s)"
 		if (can_build)
-			t1 += text("<A href='?src=\ref[];make=[]'>[]</A>  ", src, i, title)
+			t1 += text("<A href='?src=\ref[];make=[];multiplier=1'>[]</A>  ", src, i, title)
 		else
 			t1 += text("[]", title)
 			continue
@@ -117,7 +117,7 @@
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
-		if (multiplier <= 0) //href protection
+		if (!multiplier ||(multiplier <= 0)) //href protection
 			return
 		if (src.get_amount() < R.req_amount*multiplier)
 			if (R.req_amount*multiplier>1)
