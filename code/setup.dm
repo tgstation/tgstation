@@ -803,6 +803,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define CAN_BE_FAT 8192 // /vg/
 
+#define IS_SYNTHETIC 16384 // from baystation
+
+
+// from bay station
+#define INFECTION_LEVEL_ONE 100
+#define INFECTION_LEVEL_TWO 500
+#define INFECTION_LEVEL_THREE 1000
+
+
+
 //Language flags.
 #define WHITELISTED 1  // Language is available if the speaker is whitelisted.
 #define RESTRICTED 2   // Language can only be accquired by spawning or an admin.
@@ -872,3 +882,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define AUTOIGNITION_WOOD  573.15
 #define AUTOIGNITION_PAPER 519.15
+
+//gun shit - prepare to have various things added to this
+#define SILENCECOMP 1 		//Silencer-compatible
+#define AUTOMAGDROP 2		//Does the mag drop when it's empty?
+#define EMPTYCASINGS 4		//Does the gun eject empty casings?

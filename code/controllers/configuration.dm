@@ -83,6 +83,7 @@
 	var/forumurl = "http://baystation12.net/forums/"
 
 	var/media_base_url = "" // http://ss13.nexisonline.net/media
+	var/media_secret_key = "" // Random string
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -490,6 +491,8 @@
 					copy_logs=value
 				if("media_base_url")
 					media_base_url = value
+				if("media_secret_key")
+					media_secret_key = value
 				if("vgws_base_url")
 					vgws_base_url = value
 				else

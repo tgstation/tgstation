@@ -86,7 +86,7 @@
 	return
 
 /obj/item/weapon/melee/defibrillator/proc/shockAttack(mob/living/carbon/human/target,mob/user)
-	var/datum/organ/internal/heart/heart = target.internal_organs["heart"]
+	var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
 	target.visible_message("<span class='danger'>[target.name] has been shocked in the chest with the [src] by [user]!</span>")
 	target.Weaken(rand(6,12))
 	target.apply_damage(rand(30,60),BURN,"chest")
@@ -128,7 +128,7 @@
 		else if(target.w_uniform && istype(target.w_uniform,/obj/item/clothing/under && prob(50)))
 			user << "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>"
 		else
-			var/datum/organ/internal/heart/heart = target.internal_organs["heart"]
+			var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
 			if(prob(25)) heart.damage += 5 //Allow the defibrilator to possibly worsen heart damage. Still rare enough to just be the "clone damage" of the defib
 			target.apply_damage(-target.getOxyLoss(),OXY)
 			target.updatehealth()
@@ -137,14 +137,14 @@
 			if((target.health > config.health_threshold_dead)\
 			&&(!(head.status & ORGAN_DESTROYED))\
 			&&(!(M_NOCLONE in target.mutations))\
-			&&(target.brain_op_stage < 4))
+			&&(target.has_brain()))
 				target.visible_message("<span class='notice'>[src] beeps: Defibrillation successful.</span>")
 				dead_mob_list -= target
-				living_mob_list += target
+				living_mob_list |= list(target)
 				target.tod = null
-				target.stat = CONSCIOUS
+				target.stat = UNCONSCIOUS
 				target.regenerate_icons()
-				//target.update_canmove()
+				target.update_canmove()
 				flick("e_flash",target.flash)
 				target.apply_effect(10, EYE_BLUR) //I'll still put this back in to avoid dumd "pounce back up" behavior
 				target.apply_effect(10, PARALYZE)

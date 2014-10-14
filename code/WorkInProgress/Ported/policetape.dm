@@ -115,18 +115,26 @@
 		usr << "<span class='notice'>You finish placing [src].</span>"
 		user.visible_message("<span class='warning'>[user] finishes placing [src].</span>") //Now you know who to whack with a stun baton
 
-/obj/item/taperoll/afterattack(var/atom/A, mob/user as mob)
-	if (istype(A, /obj/machinery/door/airlock)) //Airlocks
-		if(!user.Adjacent(A)) //There, it's unfucked
+/obj/item/taperoll/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag == 0) // not adjacent
+		return
+
+	if(istype(target, /obj/machinery/door/airlock))
+		var/turf = get_turf(target)
+
+		if(locate(tape_type) in turf) //Don't you dare stack tape // can be remove for a new feature
 			return
-		var/turf/T = get_turf(A)
-		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
-		if(P in T) //Don't you dare stack tape
+
+		user << "<span class='notice'>You start placing [src].</span>"
+
+		if(!do_mob(user, target, 30))
 			return
-		P.loc = locate(T.x,T.y,T.z)
-		P.icon_state = "[src.icon_base]_door"
-		P.layer = 3.2
-		user << "<span class='notice'>You finish placing [src].</span>"
+
+		var/atom/tape = new tape_type(turf)
+		tape.icon_state = "[icon_base]_door"
+		tape.layer = 3.2
+
+		user << "<span class='notice'>You placed [src].</span>"
 
 /obj/item/tape/Bumped(M as mob)
 	if(src.allowed(M))

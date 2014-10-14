@@ -109,6 +109,9 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		//Disabilities
 		handle_disabilities()
 
+		//Organ failure.
+		handle_organs()
+
 		//Random events (vomiting etc)
 		handle_random_events()
 
@@ -350,7 +353,7 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 		if(species && species.flags & NO_BREATHE) return
 
-		var/datum/organ/internal/lungs/L = internal_organs["lungs"]
+		var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
 		L.process()
 
 		var/datum/gas_mixture/environment = loc.return_air()
@@ -944,11 +947,11 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 
 		handle_trace_chems()
 
-		var/datum/organ/internal/liver/liver = internal_organs["liver"]
-		liver.process()
+		var/datum/organ/internal/liver/liver = internal_organs_by_name["liver"]
+		if(liver) liver.process()
 
-		var/datum/organ/internal/eyes/eyes = internal_organs["eyes"]
-		eyes.process()
+		var/datum/organ/internal/eyes/eyes = internal_organs_by_name["eyes"]
+		if(eyes) eyes.process()
 
 		updatehealth()
 
@@ -969,7 +972,7 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 				handle_organs()	//Optimized.
 				handle_blood()
 
-			if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
+			if(health <= config.health_threshold_dead || !has_brain())
 				death()
 				blinded = 1
 				silent = 0
@@ -1046,15 +1049,23 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 					adjustHalLoss(-1)
 
 			//Eyes
-			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
-				blinded = 1
-			else if(eye_blind)			//blindness, heals slowly over time
-				eye_blind = max(eye_blind-1,0)
-				blinded = 1
+			if(!species.has_organ["eyes"]) // Presumably if a species has no eyes, they see via something else.
+				eye_blind =  0
+				blinded =    0
+				eye_blurry = 0
+			else if(!has_eyes())           // Eyes cut out? Permablind.
+				eye_blind =  1
+				blinded =    1
+				eye_blurry = 1
+			else if(sdisabilities & BLIND) // Disabled-blind, doesn't get better on its own
+				blinded =    1
+			else if(eye_blind)		       // Blindness, heals slowly over time
+				eye_blind =  max(eye_blind-1,0)
+				blinded =    1
 			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold))	//resting your eyes with a blindfold heals blurry eyes faster
 				eye_blurry = max(eye_blurry-3, 0)
-				blinded = 1
-			else if(eye_blurry)	//blurry eyes heal slowly
+				blinded =    1
+			else if(eye_blurry)	           // Blurry eyes heal slowly
 				eye_blurry = max(eye_blurry-1, 0)
 
 			//Ears

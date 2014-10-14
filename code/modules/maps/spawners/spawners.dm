@@ -671,7 +671,7 @@
 		/obj/item/weapon/rsf,
 		/obj/item/weapon/weldingtool/hugetank,
 		/obj/item/weapon/tank/plasma,
-		/obj/item/weapon/silencer,
+		/obj/item/gun_part/silencer,
 		/obj/item/weapon/storage/backpack/holding,
 		)
 
