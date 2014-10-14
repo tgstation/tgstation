@@ -40,14 +40,15 @@
 
 /obj/item/weapon/ore/glass/attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
-	for(var/i = 0,i < 2,i++)
+	for(var/i = 0,i < 1,i++)
 		var/obj/item/stack/sheet/mineral/sandstone/S = new (user.loc)
 		for (var/obj/item/weapon/ore/glass/G in user.loc)
 			if(S.amount < S.max_amount)
 				S.amount++
 				qdel(G)
 			else
-				continue
+				i--
+				break
 	qdel(src)
 	return
 
