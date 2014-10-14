@@ -62,6 +62,13 @@
 	item_state = "b_suit"
 	item_color = "mailman"
 
+/obj/item/clothing/under/rank/psyche
+	name = "psychedelic jumpsuit"
+	desc = "Groovy!"
+	icon_state = "psyche"
+	item_state = "p_suit"
+	item_color = "psyche"
+
 /obj/item/clothing/under/sexyclown
 	name = "sexy-clown suit"
 	desc = "It makes you look HONKable!"
