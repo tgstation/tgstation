@@ -1476,18 +1476,34 @@ datum
 								H.update_inv_shoes(0)
 					M.clean_blood()
 
-		plantbgone
+		//Reagents used for plant fertilizers.
+		toxin/fertilizer
+			name = "fertilizer"
+			id = "fertilizer"
+			description = "A chemical mix good for growing plants with."
+			reagent_state = LIQUID
+			toxpwr = 0.2 //It's not THAT poisonous.
+			color = "#664330" // rgb: 102, 67, 48
+
+		toxin/fertilizer/eznutrient
+			name = "EZ Nutrient"
+			id = "eznutrient"
+
+		toxin/fertilizer/left4zed
+			name = "Left-4-Zed"
+			id = "left4zed"
+
+		toxin/fertilizer/robustharvest
+			name = "Robust Harvest"
+			id = "robustharvest"
+
+		toxin/plantbgone
 			name = "Plant-B-Gone"
 			id = "plantbgone"
 			description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 			reagent_state = LIQUID
 			color = "#49002E" // rgb: 73, 0, 46
-
-			on_mob_life(var/mob/living/carbon/M)
-				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1.0)
-				..()
-				return
+			toxpwr = 1
 
 			// Clear off wallrot fungi
 			reaction_turf(var/turf/T, var/volume)
@@ -1511,12 +1527,13 @@ datum
 					if(prob(50)) del(O) //Kills kudzu too.
 				else if(istype(O,/obj/machinery/portable_atmospherics/hydroponics))
 					var/obj/machinery/portable_atmospherics/hydroponics/tray = O
+
 					if(tray.seed)
 						tray.health -= rand(30,50)
-					if(tray.pestlevel > 0)
-						tray.pestlevel -= 2
-					if(tray.weedlevel > 0)
-						tray.weedlevel -= 3
+						if(tray.pestlevel > 0)
+							tray.pestlevel -= 2
+						if(tray.weedlevel > 0)
+							tray.weedlevel -= 3
 						tray.toxins += 4
 						tray.check_level_sanity()
 						tray.update_icon()
@@ -1531,7 +1548,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
 							if(H.species.flags & IS_PLANT) //plantmen take a LOT of damage
-								H.adjustToxLoss(10)
+								H.adjustToxLoss(50)
 
 		plasma
 			name = "Plasma"
