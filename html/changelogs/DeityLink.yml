@@ -1,0 +1,11 @@
+author: Deity Link
+delete-after: True
+changes: 
+  - imageadd: manifested ghosts are now their own mob (no longer Test Dummies) and as such have a new sprite.
+  - imageadd: added new animations for appearing/disappearing manifested ghosts.
+  - bugfix: manifested ghosts are no longer affected by DNA Injectors.
+  - bugfix: manifested ghosts are no longer affected by green slimes/black slimes mutation toxins.
+  - bugfix: manifested ghosts can no longer be put in DNA Modifiers.
+  - bugfix: manifested ghosts are no longer affected by Staff of Change (yes, I do really intend to plug that loophole).
+  - bugfix: manifested ghosts can now see other cultists/ be seen by other cultists as one of them.
+  - tweak: re-styled runes.dm to use absolute pathing instead of relative pathing (and that one is for you Comic).

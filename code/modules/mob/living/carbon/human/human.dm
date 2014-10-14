@@ -12,6 +12,14 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
+/mob/living/carbon/human/manifested
+	real_name = "Manifested Ghost"
+	status_flags = GODMODE|CANPUSH
+
+/mob/living/carbon/human/manifested/New(var/new_loc)
+	underwear = 0
+	..(new_loc, "Manifested")
+
 /mob/living/carbon/human/skrell/New(var/new_loc)
 	h_style = "Skrell Male Tentacles"
 	..(new_loc, "Skrell")

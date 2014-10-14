@@ -42,7 +42,10 @@
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
-	flick("dust-h", animation)
+	if (istype(src, /mob/living/carbon/human/manifested))
+		flick("dust-hm", animation)
+	else
+		flick("dust-h", animation)
 	new /obj/effect/decal/remains/human(loc)
 
 	spawn(15)

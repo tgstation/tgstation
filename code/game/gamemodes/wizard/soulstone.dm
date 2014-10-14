@@ -16,8 +16,9 @@
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 			return ..()
-		if(istype(M, /mob/living/carbon/human/dummy))
-			return..()
+		if(istype(M, /mob/living/carbon/human/manifested))
+			user << "The soul stone shard seems unable to pull the soul out of that poor manifested ghost back onto our plane."
+			return
 		add_logs(user, M, "captured [M.name]'s soul", object=src)
 
 		transfer_soul("VICTIM", M, user)
