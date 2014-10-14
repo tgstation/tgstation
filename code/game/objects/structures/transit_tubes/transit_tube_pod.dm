@@ -48,8 +48,6 @@
 		user.last_special = world.time + 100
 		user << "<span class='notice'>You start trying to escape from the pod.</span>"
 		if(do_after(user, 600))
-			if(!user || user.stat != CONSCIOUS)
-				return
 			user << "<span class='notice'>You manage to open the pod.</span>"
 			src.empty()
 
