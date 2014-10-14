@@ -342,9 +342,13 @@
 					diary <<"REPORT THIS"
 
 		/////
-		if(pulling && pulling.anchored)
-			stop_pulling()
-			return
+		if(pulling)
+			if(pulling.anchored)
+				stop_pulling()
+				return
+			if(r_hand && l_hand)
+				stop_pulling()
+				return
 
 		if (!restrained())
 			var/diag = get_dir(src, pulling)
@@ -630,3 +634,10 @@
 				src.unEquip(what)
 				who.equip_to_slot_if_possible(what, where, 0, 1)
 				add_logs(src, who, "equipped", object=what)
+
+
+/mob/living/start_pulling(var/atom/movable/AM)
+	if(l_hand && r_hand)
+		src << "<span class='notice'>Your hands are full.</span>"
+		return
+	..()

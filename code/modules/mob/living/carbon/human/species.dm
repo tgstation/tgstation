@@ -644,6 +644,8 @@
 	if(H.bodytemperature < 283.222)
 		mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
 
+	if(H.pulling)
+		mspeed += 1.5
 	mspeed += speedmod
 
 	return mspeed

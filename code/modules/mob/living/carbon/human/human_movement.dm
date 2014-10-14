@@ -49,6 +49,3 @@
 	if(!.)
 		if(mob_negates_gravity())
 			. = 1
-
-/mob/living/carbon/human/mob_negates_gravity()
-	return shoes && shoes.negates_gravity()
