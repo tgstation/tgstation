@@ -7,6 +7,7 @@
 #define RECOMMENDED_VERSION 501
 /world/New()
 	// Honk honk, fuck you science
+	populate_seed_list()
 	WORLD_X_OFFSET=rand(-50,50)
 	WORLD_Y_OFFSET=rand(-50,50)
 

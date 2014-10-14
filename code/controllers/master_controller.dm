@@ -108,7 +108,7 @@ datum/controller/game_controller/proc/setup_objects()
 	sleep(-1)
 	for(var/atom/movable/object in world)
 		object.initialize()
-	populate_seed_list()
+
 
 	world << "\red \b Initializing pipe networks"
 	sleep(-1)
