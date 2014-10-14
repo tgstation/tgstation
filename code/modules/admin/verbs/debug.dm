@@ -397,7 +397,6 @@ var/global/list/g_fancy_list_of_types = null
 	set category = "Debug"
 	set name = "Del-All"
 
-	// usng "safe" to prevent REALLY stupid deletions
 	var/list/matches = get_fancy_list_of_types()
 	if (!isnull(object) && object!="")
 		matches = filter_fancy_list(matches, object)
