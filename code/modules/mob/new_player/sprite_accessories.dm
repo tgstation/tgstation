@@ -580,12 +580,12 @@
 	name = "Mens Black"
 	icon_state = "male_black"
 	gender = MALE
-
+/*
 /datum/sprite_accessory/underwear/male_mankini
 	name = "Mankini"
 	icon_state = "male_mankini"
 	gender = MALE
-
+*/
 /datum/sprite_accessory/underwear/male_hearts
 	name = "Mens Hearts Boxer"
 	icon_state = "male_hearts"
@@ -605,12 +605,12 @@
 	name = "Mens Striped Boxer"
 	icon_state = "male_stripe"
 	gender = MALE
-
+/*
 /datum/sprite_accessory/underwear/male_kinky
 	name = "Mens Kinky"
 	icon_state = "male_kinky"
 	gender = MALE
-
+*/
 /datum/sprite_accessory/underwear/male_red
 	name = "Mens Red"
 	icon_state = "male_red"
@@ -665,12 +665,21 @@
 	name = "Ladies Pink"
 	icon_state = "female_pink"
 	gender = FEMALE
-
+/*
 /datum/sprite_accessory/underwear/female_kinky
 	name = "Ladies Kinky"
 	icon_state = "female_kinky"
 	gender = FEMALE
+*/
+/datum/sprite_accessory/underwear/female_whitealt
+	name = "Ladies White Sport"
+	icon_state = "female_whitealt"
+	gender = FEMALE
 
+/datum/sprite_accessory/underwear/female_blackalt
+	name = "Ladies Black Sport"
+	icon_state = "female_blackalt"
+	gender = FEMALE
 
 ////////////////////////////
 // Undershirt Definitions //
