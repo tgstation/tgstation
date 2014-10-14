@@ -95,6 +95,22 @@
 	icon_broken = "secureengbroken"
 	icon_off = "secureengoff"
 
+/obj/structure/closet/secure_closet/atmospherics_secure/New()
+	name = "atmospherics wardrobe"
+	new /obj/item/weapon/storage/belt/utility(src)
+	new /obj/item/weapon/storage/belt/utility(src)
+	new /obj/item/weapon/storage/belt/utility(src)
+	new /obj/item/clothing/under/rank/atmospheric_technician(src)
+	new /obj/item/clothing/under/rank/atmospheric_technician(src)
+	new /obj/item/clothing/under/rank/atmospheric_technician(src)
+	new /obj/item/device/analyzer(src)
+	new /obj/item/device/analyzer(src)
+	new /obj/item/device/analyzer(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	return
+
 
 /obj/structure/closet/secure_closet/engineering_personal/New()
 	..()

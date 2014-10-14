@@ -5539,7 +5539,7 @@
 "ccA" = (/obj/structure/table,/obj/item/weapon/folder/blue,/obj/item/weapon/pen/blue,/turf/simulated/floor,/area/tcommsat/computer)
 "ccB" = (/turf/simulated/floor{dir = 1; icon_state = "caution"},/area/engine/break_room)
 "ccC" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/turf/simulated/floor/plating,/area/maintenance/port)
-"ccD" = (/obj/structure/closet/wardrobe/atmospherics_yellow,/turf/simulated/floor,/area/atmos)
+"ccD" = (/obj/structure/closet/secure_closet/atmospherics_secure{name = "Atmospherics Locker"; req_access_txt = "24"},/turf/simulated/floor,/area/atmos)
 "ccE" = (/obj/machinery/space_heater,/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/atmos)
 "ccF" = (/obj/machinery/space_heater,/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/atmos)
 "ccG" = (/obj/machinery/atmospherics/binary/pump{dir = 8; icon_state = "intact_off"; name = "Port to Filter"; on = 0},/turf/simulated/floor,/area/atmos)
