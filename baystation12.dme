@@ -1194,6 +1194,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\mimic.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mushroom.dm"
+#include "code\modules\mob\living\simple_animal\hostile\necro.dm"
 #include "code\modules\mob\living\simple_animal\hostile\pirate.dm"
 #include "code\modules\mob\living\simple_animal\hostile\russian.dm"
 #include "code\modules\mob\living\simple_animal\hostile\syndicate.dm"
