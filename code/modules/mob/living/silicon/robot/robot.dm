@@ -163,6 +163,8 @@
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
 		if(mind)	mind.transfer_to(mmi.brainmob)
+		if(mmi.brainmob)
+			mmi.brainmob.locked_to_z = locked_to_z
 		mmi = null
 	..()
 
