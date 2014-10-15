@@ -44,8 +44,8 @@
 /obj/structure/transit_tube_pod/container_resist()
 	var/mob/living/user = usr
 	if(!moving)
-		user.changeNext_move(100)
-		user.last_special = world.time + 100
+		user.changeNext_move(CLICK_CD_BREAKOUT)
+		user.last_special = world.time + CLICK_CD_BREAKOUT
 		user << "<span class='notice'>You start trying to escape from the pod.</span>"
 		if(do_after(user, 600))
 			user << "<span class='notice'>You manage to open the pod.</span>"
