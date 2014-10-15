@@ -465,13 +465,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			hitsound = 'sound/items/welder.ogg'
 			attack_verb = list("burnt", "singed")
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				user << "<span class='notice'>You light the [src] in one smooth motion.</span>"
+				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
 				if(prob(75))
-					user << "<span class='notice'>After a few attempts, you manage to light [src].</span>")
+					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src].</span>")
 				else
-					user << "<span class='danger'>You burn yourself while lighting the lighter!</span>"
+					user << "<span class='warning'>You burn yourself while lighting the lighter.</span>"
 					user.adjustFireLoss(5)
+					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src], they however burn their finger in the process.</span>")
 
 			user.AddLuminosity(1)
 			processing_objects.Add(src)
@@ -482,7 +483,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			hitsound = "swing_hit"
 			force = 0
 			attack_verb = null //human_defense.dm takes care of it
-			usr << "<span class='notice'>You shut off the [src]."
+			if(istype(src, /obj/item/weapon/lighter/zippo) )
+				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.")
+			else
+				user.visible_message("<span class='notice'>[user] quietly shuts off [src].")
 
 			user.AddLuminosity(-1)
 			processing_objects.Remove(src)
