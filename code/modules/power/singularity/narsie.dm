@@ -32,6 +32,8 @@
 	if(A)
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
 
+	narsie_spawn_animation()
+
 	sleep(70)
 	if(emergency_shuttle)
 		emergency_shuttle.incall(0.3) // Cannot recall
@@ -160,3 +162,14 @@
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 0
 	return
+
+
+/obj/machinery/singularity/narsie/proc/narsie_spawn_animation()
+	icon = 'icons/obj/narsie_spawn_anim.dmi'
+	dir = SOUTH
+	move_self = 0
+	flick("narsie_spawn_anim",src)
+	sleep(11)
+	move_self = 1
+	icon = initial(icon)
+

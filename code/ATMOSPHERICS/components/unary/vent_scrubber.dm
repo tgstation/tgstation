@@ -1,6 +1,5 @@
 /obj/machinery/atmospherics/unary/vent_scrubber
-	icon = 'icons/obj/atmospherics/vent_scrubber.dmi'
-	icon_state = "off"
+	icon_state = "scrub_map"
 
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it"
@@ -41,15 +40,19 @@
 		src.initialize()
 		src.broadcast_status()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/update_icon()
-	if(node && on && !(stat & (NOPOWER|BROKEN)))
-		if(scrubbing)
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
-		else
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
+/obj/machinery/atmospherics/unary/vent_scrubber/update_icon_nopipes()
+	overlays.Cut()
+	if(showpipe)
+		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions)
+
+	if(!node || !on || stat & (NOPOWER|BROKEN))
+		icon_state = "scrub_off"
+		return
+
+	if(scrubbing)
+		icon_state = "scrub_on"
 	else
-		icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-	return
+		icon_state = "scrub_purge"
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -158,18 +161,6 @@
 			network.update = 1
 
 	return 1
-/* //unused piece of code
-/obj/machinery/atmospherics/unary/vent_scrubber/hide(var/i) //to make the little pipe section invisible, the icon changes.
-	if(on&&node)
-		if(scrubbing)
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
-		else
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
-	else
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-		on = 0
-	return
-*/
 
 /obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -241,7 +232,7 @@
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
-	update_icon()
+	update_icon_nopipes()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (!istype(W, /obj/item/weapon/wrench))
