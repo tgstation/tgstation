@@ -449,7 +449,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
-	set name = "List free slots"
+	set name = "Manage Job Slots"
 
 	if (!holder)
 		src << "Only administrators may use this command."

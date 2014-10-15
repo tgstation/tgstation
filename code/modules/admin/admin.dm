@@ -797,22 +797,35 @@ var/global/floorIsLava = 0
 /datum/admins/proc/list_free_slots()
 	if(!check_rights())
 		return
-	var/dat = "<html><head><title>List Free Slots</title></head><body>"
+	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
 	var/count = 0
+
+	if(ticker && !ticker.mode)
+		alert(usr, "You cannot manage jobs before the round starts!")
+		return
 
 	if(job_master)
 		for(var/datum/job/job in job_master.occupations)
 			count++
 			var/J_title = html_encode(job.title)
+			var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
 			var/J_totPos = html_encode(job.total_positions)
-			dat += "[J_title]: [J_totPos]<br>"
+			if(job.total_positions <= 0)
+				dat += "[J_title]: [J_opPos]"
+			else
+				dat += "[J_title]: [J_opPos]/[J_totPos]"
+			if(initial(job.total_positions) > 0)
+				dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
+				if(job.total_positions > job.current_positions)
+					dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>"
+				else
+					dat += "Remove"
+			dat += "<br>"
 
 	dat += "</body>"
 	var/winheight = 100 + (count * 20)
 	winheight = min(winheight, 690)
 	usr << browse(dat, "window=players;size=316x[winheight]")
-
-
 
 //
 //
