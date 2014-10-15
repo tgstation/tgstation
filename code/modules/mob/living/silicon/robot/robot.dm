@@ -581,7 +581,7 @@
 			usr << "You fill the toner level of [src] to it's max capacity"
 
 	else
-		if(W.force)
+		if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.
 			spark_system.start()
 		return ..()
 
