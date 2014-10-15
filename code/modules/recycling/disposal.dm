@@ -445,8 +445,10 @@
 			return
 		if(prob(75))
 			I.loc = src
-			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")		else
-			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")		return 0
+			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
+		else
+			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")
+		return 0
 	else
 		return ..(mover, target, height)
 
