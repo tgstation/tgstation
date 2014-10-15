@@ -164,7 +164,7 @@
 	return
 
 
-/obj/machinery/singularity/narsie/narsie_spawn_animation()
+/obj/machinery/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/obj/narsie_spawn_anim.dmi'
 	dir = SOUTH
 	move_self = 0
