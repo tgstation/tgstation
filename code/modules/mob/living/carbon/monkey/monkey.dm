@@ -374,7 +374,7 @@
 	var/threatcount = 0
 
 	//Securitrons can't identify monkeys
-	if(judgebot.idcheck)
+	if(!lasercolor && judgebot.idcheck )
 		threatcount += 4
 
 	//Lasertag bullshit

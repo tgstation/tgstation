@@ -182,12 +182,12 @@
 	if(isanimal(M))
 		if(iscorgi(M))
 			if(bitecount == 0 || prob(50))
-				M.emote("nibbles away at the [src]")
+				M.emote("me", 1, "nibbles away at the [src]")
 			bitecount++
 			if(bitecount >= 5)
 				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
 				if(sattisfaction_text)
-					M.emote("[sattisfaction_text]")
+					M.emote("me", 1, "[sattisfaction_text]")
 				qdel(src)
 
 

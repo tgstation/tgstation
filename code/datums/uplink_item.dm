@@ -577,6 +577,7 @@ var/list/uplink_items = list()
 		buyable_items += temp_uplink_list[category]
 	var/list/bought_items = list()
 	U.uses -= cost
+	U.used_TC = 20
 	var/remaining_TC = 50
 
 	var/datum/uplink_item/I
@@ -591,5 +592,7 @@ var/list/uplink_items = list()
 		bought_items += I.item
 		remaining_TC -= I.cost
 
+	U.purchase_log += "<BIG>\icon[C]</BIG>"
 	for(var/item in bought_items)
 		new item(C)
+		U.purchase_log += "<BIG>\icon[item]</BIG>"

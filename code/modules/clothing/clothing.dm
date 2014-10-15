@@ -86,11 +86,37 @@ BLIND     // can't see anything
 	var/alloweat = 0
 	strip_delay = 40
 	put_on_delay = 40
-
+	var/mask_adjusted = 0
+	var/ignore_maskadjust = 1
 
 //Override this to modify speech like luchador masks.
 /obj/item/clothing/mask/proc/speechModification(message)
 	return message
+
+//Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
+/obj/item/clothing/mask/proc/adjustmask()
+	if(!ignore_maskadjust)
+		if(!usr.canmove || usr.stat || usr.restrained())
+			return
+		if(src.mask_adjusted == 1)
+			src.icon_state = initial(icon_state)
+			gas_transfer_coefficient = initial(gas_transfer_coefficient)
+			permeability_coefficient = initial(permeability_coefficient)
+			flags = initial(flags)
+			flags_inv = initial(flags_inv)
+			usr << "You push \the [src] back into place."
+			src.mask_adjusted = 0
+		else
+			src.icon_state += "_up"
+			usr << "You push \the [src] out of the way."
+			gas_transfer_coefficient = null
+			permeability_coefficient = null
+			flags = null
+			flags_inv = null
+			src.mask_adjusted = 1
+		usr.update_inv_wear_mask()
+
+
 
 //Shoes
 /obj/item/clothing/shoes

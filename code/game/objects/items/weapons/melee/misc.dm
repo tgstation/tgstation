@@ -124,6 +124,7 @@
 			if(cooldown <= 0)
 				playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
 				target.Weaken(3)
+				add_logs(user, target, "stunned", object="telescopic baton")
 				src.add_fingerprint(user)
 				target.visible_message("<span class ='danger'>[target] has been knocked down with \the [src] by [user]!</span>")
 				if(!iscarbon(user))
