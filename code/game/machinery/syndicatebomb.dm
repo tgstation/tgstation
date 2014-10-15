@@ -208,9 +208,9 @@
 		if(holder.wires)
 			holder.wires.Shuffle()
 		holder.defused = 0
-		holder.update_icon()
 		holder.updateDialog()
 		holder.open_panel = 0
+		holder.update_icon()
 
 /obj/item/weapon/bombcore/training/detonate()
 	var/obj/machinery/syndicatebomb/holder = src.loc
