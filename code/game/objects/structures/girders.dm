@@ -19,6 +19,9 @@
 				new /obj/item/stack/sheet/metal(get_turf(src))
 				qdel(src)
 		else if(!anchored)
+			if (!istype(src.loc, /turf/simulated/floor))
+				usr << "<span class='danger'>A floor must be present to secure the girder!</span>"
+				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'>Now securing the girder...</span>"
 			if(do_after(user, 40))
@@ -70,6 +73,9 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet))
+		if (!istype(src.loc, /turf/simulated/floor))
+			usr << "<span class='danger'>The girder is too unstable to build anything!</span>"
+			return
 
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)

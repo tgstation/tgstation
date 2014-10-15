@@ -7,13 +7,17 @@ var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessor
 var/global/list/facial_hair_styles_male_list = list()	//stores only hair names
 var/global/list/facial_hair_styles_female_list = list()	//stores only hair names
 	//Underwear
-var/global/list/underwear_all = list()		//stores /datum/sprite_accessory/underwear indexed by name
+var/global/list/underwear_list = list()		//stores /datum/sprite_accessory/underwear indexed by name
 var/global/list/underwear_m = list()	//stores only underwear name
 var/global/list/underwear_f = list()	//stores only underwear name
+	//Undershirts
+var/global/list/undershirt_list = list() 	//stores /datum/sprite_accessory/undershirt indexed by name
+var/global/list/undershirt_m = list()	 //stores only undershirt name
+var/global/list/undershirt_f = list()	 //stores only undershirt name
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 	//Female Uniforms
-var/global/list/female_uniform_icons = list()
+var/global/list/female_clothing_icons = list()
 
 	//radical shit
 var/list/hit_appends = list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF")

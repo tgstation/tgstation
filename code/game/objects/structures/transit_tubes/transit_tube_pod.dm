@@ -25,6 +25,23 @@
 
 	..()
 
+/obj/structure/transit_tube_pod/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I, /obj/item/weapon/crowbar))
+		if(!moving)
+			for(var/obj/structure/transit_tube/station/T in loc)
+				return
+			if(src.contents.len)
+				user.visible_message("<span class='notice'>[user] empties the [src].</span>", "<span class='notice'>You empty the [src].</span>")
+				for(var/atom/movable/M in src.contents)
+					M.loc = src.loc
+				return
+			else
+				user << "<span class='notice'>You free the [src].</span>"
+				var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(src.loc)
+				src.transfer_fingerprints_to(R)
+				R.add_fingerprint(user)
+				qdel(src)
+
 /obj/structure/transit_tube_pod/proc/follow_tube(var/reverse_launch)
 	if(moving)
 		return

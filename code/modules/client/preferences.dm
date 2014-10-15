@@ -47,6 +47,7 @@ datum/preferences
 	var/age = 30						//age of character
 	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
+	var/undershirt = "Nude"				//undershirt type
 	var/backbag = 2						//backpack type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
@@ -174,6 +175,7 @@ datum/preferences
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
 				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
+				dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
 
 
@@ -556,6 +558,8 @@ datum/preferences
 						facial_hair_style = random_facial_hair_style(gender)
 					if("underwear")
 						underwear = random_underwear(gender)
+					if("undershirt")
+						undershirt = random_undershirt(gender)
 					if("eyes")
 						eye_color = random_eye_color()
 					if("s_tone")
@@ -651,6 +655,15 @@ datum/preferences
 						if(new_underwear)
 							underwear = new_underwear
 
+					if("undershirt")
+						var/new_undershirt
+						if(gender == MALE)
+							new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_m
+						else
+							new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_f
+						if(new_undershirt)
+							undershirt = new_undershirt
+
 					if("eyes")
 						var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
 						if(new_eyes)
@@ -705,6 +718,7 @@ datum/preferences
 						else
 							gender = MALE
 						underwear = random_underwear(gender)
+						undershirt = random_undershirt(gender)
 						facial_hair_style = random_facial_hair_style(gender)
 						hair_style = random_hair_style(gender)
 
@@ -806,6 +820,7 @@ datum/preferences
 		character.hair_style = hair_style
 		character.facial_hair_style = facial_hair_style
 		character.underwear = underwear
+		character.undershirt = undershirt
 
 		if(backbag > 3 || backbag < 1)
 			backbag = 1 //Same as above

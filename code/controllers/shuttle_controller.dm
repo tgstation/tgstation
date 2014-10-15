@@ -137,7 +137,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 		if(!online && direction == 1) //we don't call the shuttle if it's already coming
 			incall(SHUTTLEAUTOCALLTIMER) //X minutes! If they want to recall, they have X-(X-5) minutes to do so
 			log_game("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
-			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.", 1)
+			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 
 /datum/shuttle_controller/proc/move_shuttles()
 	var/datum/shuttle_manager/s

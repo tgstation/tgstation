@@ -94,7 +94,7 @@
 /obj/structure/window/attack_tk(mob/user as mob)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
-	playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
+	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
 /obj/structure/window/attack_hand(mob/user as mob)
 	if(!can_be_reached(user))
@@ -112,7 +112,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
 		add_fingerprint(user)
-		playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
+		playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
 
 /obj/structure/window/attack_paw(mob/user as mob)

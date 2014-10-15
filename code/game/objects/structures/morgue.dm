@@ -144,8 +144,7 @@
 	O.loc = src.loc
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
-			if ((B.client && !( B.blinded )))
-				B << text("<span class='danger'>[] stuffs [] into []!</span>", user, O, src)
+			B.show_message("<span class='danger'>[user] stuffs [O] into [src]!</span>", 1)
 	return
 
 
@@ -235,13 +234,11 @@
 		return //don't let you cremate something twice or w/e
 
 	if(contents.len <= 1)
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='danger'>You hear a hollow crackle.</span>", 1)
-			return
+		audible_message("<span class='danger'>You hear a hollow crackle.</span>")
+		return
 
 	else
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='danger'>You hear a roar as the crematorium activates.</span>", 1)
+		audible_message("<span class='danger'>You hear a roar as the crematorium activates.</span>")
 
 		cremating = 1
 		locked = 1
@@ -324,8 +321,7 @@
 	O.loc = src.loc
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
-			if ((B.client && !( B.blinded )))
-				B << text("<span class='danger'>[] stuffs [] into []!</span>", user, O, src)
+			B.show_message("<span class='danger'>[user] stuffs [O] into [src]!</span>", 1)
 			//Foreach goto(99)
 	return
 

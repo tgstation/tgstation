@@ -110,14 +110,15 @@
 		/obj/item/weapon/melee/classic_baton,
 		/obj/item/weapon/grenade/flashbang,
 		/obj/item/weapon/reagent_containers/spray/pepper,
-		/obj/item/weapon/handcuffs,
+		/obj/item/weapon/restraints/handcuffs,
 		/obj/item/device/flash,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
-		/obj/item/device/flashlight/seclite
+		/obj/item/device/flashlight/seclite,
+		/obj/item/weapon/melee/telebaton
 		)
 
 /obj/item/weapon/storage/belt/security/New()
@@ -195,5 +196,6 @@
 		/obj/item/device/lightreplacer,
 		/obj/item/device/flashlight,
 		/obj/item/weapon/reagent_containers/spray,
-		/obj/item/weapon/soap
+		/obj/item/weapon/soap,
+		/obj/item/weapon/holosign_creator
 		)
