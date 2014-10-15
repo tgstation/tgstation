@@ -611,6 +611,7 @@
 #include "code\game\objects\items\weapons\tanks\tank_types.dm"
 #include "code\game\objects\items\weapons\tanks\tanks.dm"
 #include "code\game\objects\items\weapons\tanks\watertank.dm"
+#include "code\game\objects\structures\barsign.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
 #include "code\game\objects\structures\displaycase.dm"
 #include "code\game\objects\structures\door_assembly.dm"
