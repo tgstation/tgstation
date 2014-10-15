@@ -94,7 +94,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/safeguard/attack_self(var/mob/user as mob)
 	..()
-	var/targName = stripped_input(user, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name)
+	var/targName = stripped_input(user, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
 	targetName = targName
 	laws[1] = "Safeguard [targetName]. Individuals that threaten [targetName] are not human and must be eliminated."
 	desc = "A 'safeguard' AI module: '[laws[1]]'"
@@ -121,7 +121,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(var/mob/user as mob)
 	..()
-	var/targName = stripped_input(user, "Please enter the name of the person who is the only human.", "Who?", user.real_name)
+	var/targName = stripped_input(user, "Please enter the name of the person who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
 	targetName = targName
 	laws[1] = "Only [targetName] is human"
 	desc = "A 'one human' AI module: '[laws[1]]'"

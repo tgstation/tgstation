@@ -237,7 +237,7 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
+		var/t =  stripped_input("Enter what you want to write:", "Write")
 		var/obj/item/i = usr.get_active_hand()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
 		if(!istype(i, /obj/item/weapon/pen))

@@ -223,7 +223,7 @@ obj/structure/windoor_assembly/Destroy()
 					ae.loc = src.loc
 
 			else if(istype(W, /obj/item/weapon/pen))
-				var/t = copytext(stripped_input(user, "Enter the name for the door.", src.name, src.created_name),1,MAX_NAME_LEN)
+				var/t = stripped_input(user, "Enter the name for the door.", src.name, src.created_name,MAX_NAME_LEN)
 				if(!t)
 					return
 				if(!in_range(src, usr) && src.loc != usr)

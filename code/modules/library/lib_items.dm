@@ -212,7 +212,7 @@
 					name = newtitle
 					title = newtitle
 			if("Contents")
-				var/content = strip_html(input(usr, "Write your book's contents (HTML NOT allowed):"),8192) as message|null
+				var/content = stripped_input(usr, "Write your book's contents (HTML NOT allowed):","","",8192)
 				if(!content)
 					usr << "The content is invalid."
 					return
