@@ -86,11 +86,37 @@ BLIND     // can't see anything
 	var/alloweat = 0
 	strip_delay = 40
 	put_on_delay = 40
-
+	var/mask_adjusted = 0
+	var/ignore_maskadjust = 1
 
 //Override this to modify speech like luchador masks.
 /obj/item/clothing/mask/proc/speechModification(message)
 	return message
+
+//Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
+/obj/item/clothing/mask/proc/adjustmask()
+	if(!ignore_maskadjust)
+		if(!usr.canmove || usr.stat || usr.restrained())
+			return
+		if(src.mask_adjusted == 1)
+			src.icon_state = initial(icon_state)
+			gas_transfer_coefficient = initial(gas_transfer_coefficient)
+			permeability_coefficient = initial(permeability_coefficient)
+			flags = initial(flags)
+			flags_inv = initial(flags_inv)
+			usr << "You push \the [src] back into place."
+			src.mask_adjusted = 0
+		else
+			src.icon_state += "_up"
+			usr << "You push \the [src] out of the way."
+			gas_transfer_coefficient = null
+			permeability_coefficient = null
+			flags = null
+			flags_inv = null
+			src.mask_adjusted = 1
+		usr.update_inv_wear_mask()
+
+
 
 //Shoes
 /obj/item/clothing/shoes
@@ -228,12 +254,12 @@ BLIND     // can't see anything
 	if(hastie)
 		user << "\A [hastie] is attached to it."
 
-atom/proc/generate_uniform(index,t_color)
-	var/icon/female_uniform_icon	= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s")
+atom/proc/generate_female_clothing(index,t_color,icon)
+	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"="[t_color]_s")
 	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
-	female_uniform_icon.Blend(female_s, ICON_MULTIPLY)
-	female_uniform_icon 			= fcopy_rsc(female_uniform_icon)
-	female_uniform_icons[index] = female_uniform_icon
+	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
+	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
+	female_clothing_icons[index] = female_clothing_icon
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"

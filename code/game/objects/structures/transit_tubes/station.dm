@@ -44,13 +44,13 @@
 
 //pod insertion
 /obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R as obj, mob/user as mob)
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(!user.canmove || user.stat || user.restrained())
 		return
 	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
 		return
 	var/obj/structure/transit_tube_pod/T = new/obj/structure/transit_tube_pod(src)
 	R.transfer_fingerprints_to(T)
-	T.add_fingerprint(usr)
+	T.add_fingerprint(user)
 	T.loc = src.loc
 	T.dir = turn(src.dir, -90)
 	user.visible_message("<span class='notice'>[user] inserts the [R].</span>", "<span class='notice'>You insert the [R].</span>")

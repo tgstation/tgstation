@@ -30,7 +30,7 @@
 		if(!moving)
 			for(var/obj/structure/transit_tube/station/T in loc)
 				return
-			if(src.contents)
+			if(src.contents.len)
 				user.visible_message("<span class='notice'>[user] empties the [src].</span>", "<span class='notice'>You empty the [src].</span>")
 				for(var/atom/movable/M in src.contents)
 					M.loc = src.loc

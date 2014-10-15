@@ -384,6 +384,7 @@ ________________________________________________________________________________
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
 	E.imp_in = src
 	E.implanted = 1
+	E.implanted(src)
 	return 1
 
 //=======//HELPER PROCS//=======//
