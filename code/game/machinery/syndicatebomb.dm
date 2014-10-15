@@ -205,12 +205,12 @@
 /obj/item/weapon/bombcore/training/proc/reset()
 	var/obj/machinery/syndicatebomb/holder = src.loc
 	if(istype(holder))
-		holder.open_panel = 0
 		if(holder.wires)
 			holder.wires.Shuffle()
 		holder.defused = 0
 		holder.update_icon()
 		holder.updateDialog()
+		holder.open_panel = 0
 
 /obj/item/weapon/bombcore/training/detonate()
 	var/obj/machinery/syndicatebomb/holder = src.loc
