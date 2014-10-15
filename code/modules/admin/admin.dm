@@ -794,7 +794,7 @@ var/global/floorIsLava = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
-/datum/admins/proc/list_free_slots()
+/datum/admins/proc/manage_free_slots()
 	if(!check_rights())
 		return
 	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"

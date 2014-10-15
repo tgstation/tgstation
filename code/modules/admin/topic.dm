@@ -1334,7 +1334,7 @@
 				job.total_positions += 1
 				break
 
-		src.list_free_slots()
+		src.manage_free_slots()
 
 	else if(href_list["removejobslot"])
 		if(!check_rights(R_ADMIN))	return
@@ -1346,7 +1346,7 @@
 				job.total_positions -= 1
 				break
 
-		src.list_free_slots()
+		src.manage_free_slots()
 
 	else if(href_list["adminspawncookie"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
