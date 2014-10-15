@@ -107,3 +107,112 @@
 		user << "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
+
+
+// IMPROVISED SHOTGUN //
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
+	name = "improvised shotgun"
+	desc = "Essentially a tube that aims shotgun shells."
+	icon_state = "ishotgun"
+	item_state = "shotgun"
+	w_class = 4.0
+	force = 10
+	origin_tech = "combat=2;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/improvised
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(var/obj/item/I, mob/user as mob)
+	..()
+	if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = I
+		if (C.use(10))
+			flags =  CONDUCT
+			slot_flags = SLOT_BACK
+			icon_state = "ishotgunsling"
+			user << "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>"
+			update_icon()
+		else
+			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling.</span>"
+			return
+
+/obj/item/ishotgunreciever
+	name = "firearm reciever"
+	desc = "An improvised trigger assembly for a firearm."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunreciever"
+	m_amt = 200000 //You need to upgrade the autolathe to make either of these
+
+/obj/item/ishotgunbarrel
+	name = "shotgun barrel"
+	desc = "A long metal slug barrel, with threading and pin holes that are only compatible with specific weapon recievers."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunbarrel"
+	m_amt = 200000
+
+/obj/item/ishotgunstock
+	name = "rifle stock"
+	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunstock"
+
+/obj/item/ishotgunreciever/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/ishotgunbarrel))
+		user << "You attach the shotgun barrel to the reciever. The pins seem loose."
+		var/obj/item/ishotgunconstruction/I = new /obj/item/ishotgunconstruction
+		user.unEquip(src)
+		user.put_in_hands(I)
+		del(W)
+		del(src)
+		return
+
+/obj/item/ishotgunconstruction
+	name = "slightly conspicuous metal construction"
+	desc = "A long shotgun barrel attached to a trigger assembly."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunstep1"
+
+/obj/item/ishotgunconstruction/attackby(var/obj/item/I, mob/user as mob)
+	..()
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/obj/item/ishotgunconstruction2/C = new /obj/item/ishotgunconstruction2
+		user.unEquip(src)
+		user.put_in_hands(C)
+		user << "<span class='notice'>You screw the pins into place, attaching the .</span>"
+		qdel(src)
+
+/obj/item/ishotgunconstruction2
+	name = "very conspicuous metal construction"
+	desc = "A long shotgun barrel attached to a trigger assembly."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunstep1"
+
+/obj/item/ishotgunconstruction2/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/ishotgunstock))
+		user << "You attach the stock to the reciever-barrel assembly."
+		var/obj/item/ishotgunconstruction3/I = new /obj/item/ishotgunconstruction3
+		user.unEquip(src)
+		user.put_in_hands(I)
+		del(W)
+		del(src)
+		return
+
+/obj/item/ishotgunconstruction3
+	name = "extremely conspicuous metal construction"
+	desc = "A reicever-barrel shotgun assembly with a loose wooden stock. There's no way you can fire it without the stock coming loose."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "ishotgunstep2"
+
+/obj/item/ishotgunconstruction3/attackby(var/obj/item/I, mob/user as mob)
+	..()
+	if(istype(I, /obj/item/stack/packageWrap))
+		var/obj/item/stack/packageWrap/C = I
+		if (C.use(5))
+			var/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/W = new /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
+			user.unEquip(src)
+			user.put_in_hands(W)
+			user << "<span class='notice'>You tie the wrapping paper around the stock and the barrel to secure it.</span>"
+			qdel(src)
+		else
+			user << "<span class='warning'>You need at least five feet of wrapping paper to secure the grip.</span>"
+			return
+

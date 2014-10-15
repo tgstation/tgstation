@@ -116,3 +116,13 @@
 				/datum/reagent/phosphorus = 5,)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
+
+/datum/table_recipe/ishotgun
+	name = "Improvised Shotgun"
+	result = /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
+	reqs = list(/obj/item/ishotgunreciever = 1,
+				/obj/item/ishotgunbarrel = 1,
+				/obj/item/ishotgunstock = 1,
+				/obj/item/stack/packageWrap = 5,)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 200

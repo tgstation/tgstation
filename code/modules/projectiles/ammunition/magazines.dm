@@ -59,6 +59,14 @@
 	max_ammo = 2
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/improvised
+	name = "improvised shotgun internal magazine"
+	desc = "This doesn't even exist"
+	ammo_type = /obj/item/ammo_casing/shotgun/improvised
+	caliber = "shotgun"
+	max_ammo = 1
+	multiload = 0
+
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm
 	name = "handgun magazine (9mm)"
