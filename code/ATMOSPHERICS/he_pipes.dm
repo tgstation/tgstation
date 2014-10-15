@@ -1,5 +1,7 @@
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging
+	name = "heat exchange pipe"
+	desc = "A one meter section of flat and wide heat exchange pipe"
 	icon = 'icons/obj/pipes/heat.dmi'
 	icon_state = "intact"
 	level = 2
@@ -42,6 +44,8 @@
 		parent.temperature_interact(loc, volume, thermal_conductivity)
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction
+	name = "heat exchange junction"
+	desc = "Normal pipe goes in, heat exchange pipe goes out"
 	icon = 'icons/obj/pipes/junction.dmi'
 	icon_state = "intact"
 	level = 2
