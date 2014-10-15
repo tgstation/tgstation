@@ -359,7 +359,7 @@
 
 		if(SYRINGE_INJECT)
 			if(!reagents.total_volume)
-				user << "\red The Syringe is empty."
+				user << "\red The syringe is empty."
 				return
 			if(istype(target, /obj/item/weapon/implantcase/chem))
 				return

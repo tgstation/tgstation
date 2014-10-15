@@ -7,19 +7,21 @@
 
 	prime()
 		..()
-		for(var/obj/structure/closet/L in view(get_turf(src), null))
+		for(var/obj/structure/closet/L in hear(7, get_turf(src)))
 			if(locate(/mob/living/carbon/, L))
 				for(var/mob/living/carbon/M in L)
 					bang(get_turf(src), M)
 
 
-		for(var/mob/living/carbon/M in viewers(get_turf(src), null))
+		for(var/mob/living/carbon/M in hear(7, get_turf(src)))
 			bang(get_turf(src), M)
 
-		for(var/obj/effect/blob/B in view(8,get_turf(src)))       		//Blob damage here
+		for(var/obj/effect/blob/B in hear(8,get_turf(src)))       		//Blob damage here
 			var/damage = round(30/(get_dist(B,get_turf(src))+1))
 			B.health -= damage
 			B.update_icon()
+
+		new/obj/effect/effect/smoke/flashbang(src.loc)
 		del(src)
 		return
 
@@ -38,7 +40,7 @@
 		if(iscarbon(M))
 			eye_safety = M.eyecheck()
 			if(ishuman(M))
-				if(istype(M:ears, /obj/item/clothing/ears/earmuffs))
+				if(istype(M:l_ear, /obj/item/clothing/ears/earmuffs) || istype(M:r_ear, /obj/item/clothing/ears/earmuffs))
 					ear_safety += 2
 				if(M_HULK in M.mutations)
 					ear_safety += 1
@@ -81,8 +83,8 @@
 //This really should be in mob not every check
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/datum/organ/internal/eyes/E = H.internal_organs["eyes"]
-			if (E.damage >= E.min_bruised_damage)
+			var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
+			if (E && E.damage >= E.min_bruised_damage)
 				M << "\red Your eyes start to burn badly!"
 				if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
 					if (E.damage >= E.min_broken_damage)
@@ -98,6 +100,15 @@
 				M << "\red Your ears start to ring!"
 		M.update_icons()
 
+/obj/effect/effect/smoke/flashbang
+	name = "illumination"
+	time_to_live = 10
+	opacity = 0
+	icon_state = "sparks"
+
+/obj/effect/effect/smoke/flashbang/New()
+	..()
+	SetLuminosity(15)
 
 /obj/item/weapon/grenade/flashbang/clusterbang//Created by Polymorph, fixed by Sieve
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."

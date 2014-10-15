@@ -39,6 +39,8 @@
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
+	var/obj/item/l_ear	 = null
+	var/obj/item/r_ear	 = null
 
 	var/used_skillpoints = 0
 	var/skill_specialization = null

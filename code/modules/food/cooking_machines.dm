@@ -11,10 +11,10 @@
 
 // Globals /////////////////////////////////////////////////////
 
-var/global/deepFriedEverything = 1
-var/global/deepFriedNutriment = 1
-var/global/foodNesting = 1
-var/global/ingredientLimit = 30
+var/global/deepFriedEverything = 0
+var/global/deepFriedNutriment = 0
+var/global/foodNesting = 0
+var/global/ingredientLimit = 10
 
 /client/proc/configFood()
 	set name = "Configure Food"

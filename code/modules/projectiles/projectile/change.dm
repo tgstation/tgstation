@@ -19,6 +19,9 @@
 			return
 		if(M.has_brain_worms())
 			return //Borer stuff - RR
+		if(istype(M, /mob/living/carbon/human/manifested))
+			visible_message("<span class='caution'>The bolt of change doesn't seem to affect [M] in any way.</span>")
+			return
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null

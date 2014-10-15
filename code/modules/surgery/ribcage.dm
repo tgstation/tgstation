@@ -205,10 +205,10 @@
 		return ..() && is_chest_organ_damaged && target.op_stage.ribcage == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/internal/heart/heart = target.internal_organs["heart"]
-		var/datum/organ/internal/lungs/lungs = target.internal_organs["lungs"]
-		var/datum/organ/internal/liver/liver = target.internal_organs["liver"]
-		var/datum/organ/internal/liver/kidney = target.internal_organs["kidney"]
+		var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
+		var/datum/organ/internal/lungs/lungs = target.internal_organs_by_name["lungs"]
+		var/datum/organ/internal/liver/liver = target.internal_organs_by_name["liver"]
+		var/datum/organ/internal/liver/kidney = target.internal_organs_by_name["kidney"]
 
 		if(lungs.damage > 0)
 			user.visible_message("[user] starts mending the rupture in [target]'s lungs with \the [tool].", \

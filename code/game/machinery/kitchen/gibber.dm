@@ -309,7 +309,7 @@ obj/machinery/gibber/New()
 	log_attack("\[[time_stamp()]\] <b>[src]</b> auto-gibbed <b>[victim]/[victim.ckey]</b>")
 	victim.death(1)
 	if(ishuman(victim) || ismonkey(victim) || isalien(victim))
-		var/obj/item/brain/B = new(src.loc)
+		var/obj/item/organ/brain/B = new(src.loc)
 		B.transfer_identity(victim)
 		var/turf/Tx = locate(src.x - 2, src.y, src.z)
 		B.loc = src.loc

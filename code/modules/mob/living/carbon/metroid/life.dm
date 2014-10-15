@@ -178,10 +178,6 @@
 	*/
 
 
-	if(loc_temp < 310.15) // a cold place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
-	else // a hot place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
 
 	/*
 	if(stat==2)
@@ -196,14 +192,21 @@
 
 		if(bodytemperature <= (T0C - 50)) // hurt temperature
 			if(bodytemperature <= 50) // sqrting negative numbers is bad
-				adjustToxLoss(200)
-			else
+				adjustToxLoss(301)				//The config.health_threshold_dead is -100 by default, and slimes have 150hp (200hp for adults),
+			else								//so the ToxLoss needs to be 300 or above to guarrantee an instant death -Deity Link
 				adjustToxLoss(round(sqrt(bodytemperature)) * 2)
-
 	else
 		Tempstun = 0
 
+	/*moved after the temperature damage code so freeze beams can instantly kill slimes -Deity Link*/
+	if(loc_temp < 310.15) // a cold place
+		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+	else // a hot place
+		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+
+
 	updatehealth()
+
 
 	return //TODO: DEFERRED
 
@@ -257,7 +260,7 @@
 
 		if(src.stat != DEAD)	src.stat = UNCONSCIOUS
 
-	if(prob(30))
+	if(prob(30))	//I think this is meant to allow slimes to starve to death -Deity Link
 		adjustOxyLoss(-1)
 		adjustToxLoss(-1)
 		adjustFireLoss(-1)

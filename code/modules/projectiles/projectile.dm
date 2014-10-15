@@ -185,6 +185,9 @@
 	proc/OnDeath()	//if assigned, allows for code when the projectile disappears
 		return 1
 
+	proc/OnFired()	//if assigned, allows for code when the projectile gets fired
+		return 1
+
 	process()
 		if(kill_count < 1)
 			//del(src)

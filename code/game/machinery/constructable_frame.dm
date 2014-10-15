@@ -823,6 +823,19 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
 
+/obj/item/weapon/circuitboard/bioprinter
+	name = "Circuit Board (Bioprinter)"
+	build_path = "/obj/machinery/bioprinter"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2;biotech=3"
+	frame_desc = "Requires 2 Manipulators, 2 Matter Bins, 3 Micro-Lasers, 2 Scanning Modules, 1 Console Screen. "
+	req_components = list(
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 3,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
 
 
 

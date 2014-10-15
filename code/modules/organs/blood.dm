@@ -12,8 +12,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Initializes blood vessels
 /mob/living/carbon/human/proc/make_blood()
-	if (vessel)
+	if(vessel)
 		return
+
 	vessel = new/datum/reagents(600)
 	vessel.my_atom = src
 
@@ -28,8 +29,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/proc/fixblood()
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
-			B.data = list(	"donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,	\
+			B.data = list(	"donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_colour"= species.blood_color,"blood_type"=dna.b_type,	\
 							"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = null)
+			B.color = B.data["blood_color"]
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/proc/handle_blood()
@@ -61,14 +63,15 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 		// Damaged heart virtually reduces the blood volume, as the blood isn't
 		// being pumped properly anymore.
-		var/datum/organ/internal/heart/heart = internal_organs["heart"]
+		if(species && species.has_organ["heart"])
+			var/datum/organ/internal/heart/heart = internal_organs_by_name["heart"]
 
-		if(heart.damage > 1 && heart.damage < heart.min_bruised_damage)
-			blood_volume *= 0.8
-		else if(heart.damage >= heart.min_bruised_damage && heart.damage < heart.min_broken_damage)
-			blood_volume *= 0.6
-		else if(heart.damage >= heart.min_broken_damage && heart.damage < INFINITY)
-			blood_volume *= 0.3
+			if(!heart)
+				blood_volume = 0
+			else if(heart.damage > 1 && heart.damage < heart.min_bruised_damage)
+				blood_volume *= 0.8
+			else if(heart.damage >= heart.min_bruised_damage && heart.damage < heart.min_broken_damage)
+				blood_volume *= 0.6
 
 		vessel.update_total()
 
@@ -134,7 +137,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				blood_max += 2  //Yer stomach is cut open
 		drip(blood_max)
 
-//Makes a blood drop, leaking certain amount of blood from the mob
+//Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/human/proc/drip(var/amt as num)
 
 	if(species && species.flags & NO_BLOOD) //TODO: Make drips come from the reagents instead.
@@ -143,29 +146,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(!amt)
 		return
 
-	var/amm = 0.1 * amt
-	var/turf/T = get_turf(src)
-	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
-	var/list/iconL = list("1","2","3","4","5")
-
-	vessel.remove_reagent("blood",amm)
-
-	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
-		nums += G
-		iconL.Remove(G.icon_state)
-
-	if (nums.len < 5)
-		var/obj/effect/decal/cleanable/blood/drip/this = new(T)
-		this.icon_state = pick(iconL)
-		this.blood_DNA = list()
-		this.blood_DNA[dna.unique_enzymes] = dna.b_type
-		if (species) this.basecolor = species.blood_color
-		this.update_icon()
-
-	else
-		for(var/obj/effect/decal/cleanable/blood/drip/G in nums)
-			del G
-		T.add_blood(src)
+	vessel.remove_reagent("blood",amt)
+	blood_splatter(src,src)
 
 /****************************************************
 				BLOOD TRANSFERS
@@ -192,6 +174,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		else
 			B.data["resistances"] = src.resistances.Copy()
 	B.data["blood_type"] = copytext(src.dna.b_type,1,0)
+
+	// Putting this here due to return shenanigans.
+	if(istype(src,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = src
+		B.data["blood_colour"] = H.species.blood_color
+		B.color = B.data["blood_colour"]
 
 	var/list/temp_chem = list()
 	for(var/datum/reagent/R in src.reagents.reagent_list)
@@ -263,8 +251,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 proc/blood_incompatible(donor,receiver)
 	if(!donor || !receiver) return 0
 	var
-		donor_antigen = copytext(donor,1,length(donor))
-		receiver_antigen = copytext(receiver,1,length(receiver))
+		donor_antigen = copytext(donor,1,lentext(donor))
+		receiver_antigen = copytext(receiver,1,lentext(receiver))
 		donor_rh = (findtext(donor,"+")>0)
 		receiver_rh = (findtext(receiver,"+")>0)
 	if(donor_rh && !receiver_rh) return 1
@@ -277,3 +265,70 @@ proc/blood_incompatible(donor,receiver)
 			if(donor_antigen != "O") return 1
 		//AB is a universal receiver.
 	return 0
+
+proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
+
+	var/obj/effect/decal/cleanable/blood/B
+	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
+	var/turf/T = get_turf(target)
+
+	if(istype(source,/mob/living/carbon/human))
+		var/mob/living/carbon/human/M = source
+		source = M.get_blood(M.vessel)
+	else if(istype(source,/mob/living/carbon/monkey))
+		var/mob/living/carbon/monkey/donor = source
+		if(donor.dna)
+			source = new()
+			source.data["blood_DNA"] = donor.dna.unique_enzymes
+			source.data["blood_type"] = donor.dna.b_type
+
+	// Are we dripping or splattering?
+	if(!large)
+
+		// Only a certain number of drips can be on a given turf.
+		var/list/drips = list()
+		var/list/drip_icons = list("1","2","3","4","5")
+
+		for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
+			drips += drop
+			drip_icons.Remove(drop.icon_state)
+
+		// If we have too many drips, remove them and spawn a proper blood splatter.
+		if(drips.len >= 5)
+			//TODO: copy all virus data from drips to new splatter?
+			for(var/obj/effect/decal/cleanable/blood/drip/drop in drips)
+				del drop
+		else
+			decal_type = /obj/effect/decal/cleanable/blood/drip
+
+	// Find a blood decal or create a new one.
+	B = locate(decal_type) in T
+	if(!B)
+		B = new decal_type(T)
+
+	// If there's no data to copy, call it quits here.
+	if(!source)
+		return B
+
+	// Update appearance.
+	if(source.data["blood_colour"])
+		B.basecolor = source.data["blood_colour"]
+		B.update_icon()
+
+	// Update blood information.
+	if(source.data["blood_DNA"])
+		B.blood_DNA = list()
+		if(source.data["blood_type"])
+			B.blood_DNA[source.data["blood_DNA"]] = source.data["blood_type"]
+		else
+			B.blood_DNA[source.data["blood_DNA"]] = "O+"
+
+	// Update virus information. //Looks like this is out of date.
+	//for(var/datum/disease/D in source.data["viruses"])
+	//	var/datum/disease/new_virus = D.Copy(1)
+	//	source.viruses += new_virus
+	//	new_virus.holder = B
+	if(source.data["virus2"])
+		B.virus2 = virus_copylist(source.data["virus2"])
+
+	return B

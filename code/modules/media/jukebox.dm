@@ -410,6 +410,15 @@ var/global/loopModeNames=list(
 	if(!playlist)
 		var/url="[config.media_base_url]/index.php?playlist=[playlist_id]"
 		testing("[src] - Updating playlist from [url]...")
+
+		//  Media Server 2 requires a secret key in order to tell the jukebox
+		// where the music files are. It's set in config with MEDIA_SECRET_KEY
+		// and MUST be the same as the media server's.
+		//
+		//  Do NOT log this, it's like a password.
+		if(config.media_secret_key!="")
+			url += "&key=[config.media_secret_key]"
+
 		var/response = world.Export(url)
 		playlist=list()
 		if(response)

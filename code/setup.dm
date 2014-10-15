@@ -803,6 +803,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define CAN_BE_FAT 8192 // /vg/
 
+#define IS_SYNTHETIC 16384 // from baystation
+
+
+// from bay station
+#define INFECTION_LEVEL_ONE 100
+#define INFECTION_LEVEL_TWO 500
+#define INFECTION_LEVEL_THREE 1000
+
+
+
 //Language flags.
 #define WHITELISTED 1  // Language is available if the speaker is whitelisted.
 #define RESTRICTED 2   // Language can only be accquired by spawning or an admin.
@@ -884,3 +894,10 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define WRENCHMOVE		8	//does hitting it with a wrench toggle its anchored state?
 #define FIXED2WORK		16	//does it need to be anchored to work? Try to use this with WRENCHMOVE
 #define EJECTNOTDEL		32 	//when we destroy the machine, does it remove all its items or destroy them?
+
+/////////////////////////
+//gun shit - prepare to have various things added to this
+#define SILENCECOMP 1 		//Silencer-compatible
+#define AUTOMAGDROP 2		//Does the mag drop when it's empty?
+#define EMPTYCASINGS 4		//Does the gun eject empty casings?
+
