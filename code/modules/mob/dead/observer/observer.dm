@@ -56,7 +56,7 @@
 
 	..()
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.

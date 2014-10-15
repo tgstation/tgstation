@@ -242,6 +242,6 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 			var/turf/T = get_step(L, dir)
 			if(T)
 				for(var/obj/O in T) // For doors and such (kinda ugly but we can't have people opening doors)
-					if(!O.CanPass(L, L.loc, 1, 0))
+					if(!O.CanPass(L, L.loc, 1))
 						return
 				L.Move(get_step(L, dir), dir)
