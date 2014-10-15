@@ -311,7 +311,7 @@ Auto Patrol: []"},
 					playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
 					target.visible_message("<span class='danger'>[src] is trying to put zipties on [src.target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put zipeties on [src.target]!</span>")
+											"<span class='userdanger'>[src] is trying to put zipties on [src.target]!</span>")
 
 					spawn(60)
 						if(get_dist(src, src.target) <= 1)
