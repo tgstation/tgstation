@@ -402,6 +402,13 @@ var/list/uplink_items = list()
 	cost = 6
 	surplus = 75
 
+/datum/uplink_item/device_tools/encryptionkey
+	name = "Syndicate Encryption Key"
+	desc = "A key, that when inserted into a radio headset, allows you to listen to all station department channels as well as talk on an encrypted Syndicate channel."
+	item = /obj/item/device/encryptionkey/syndicate
+	cost = 6
+	surplus = 75
+
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
