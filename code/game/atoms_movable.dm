@@ -8,7 +8,6 @@
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
-	var/moved_recently = 0
 	var/mob/pulledby = null
 	var/languages = 0 //For say() and Hear()
 	glide_size = 8
@@ -130,7 +129,7 @@
 	src.throwing = 0
 	if(isobj(src))
 		src.throw_impact(get_turf(src))
-	
+
 	return 1
 
 
