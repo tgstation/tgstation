@@ -1,0 +1,11 @@
+author: JJRcop
+delete-after: True
+changes:
+  - rscadd: "We have managed to re-discover drones! We improved the formula, and have discovered some cool stuff."
+  - rscadd: "After some fiddling with audio recognition, drones can now understand human speech!"
+  - rscadd: "One of our engineers found some screws that were loose on some of our tests, screwing them in made the drone work as if it had just come out of robotics."
+  - tweak: "We had to sacrifice some of our NT brand EMP protection for the speech recognition, so drones can get damaged if subjected to heavy EMP radiation."
+  - bugfix: "We figured out why drones couldn't remove objects from people, that has been fixed."
+  - bugfix: "The standby light wasn't wired correctly."
+# ^ These aren't actually code bugs, but I'm writing this all In Character from Nanotrasen, and the icons fit well
+  - rscdel: "Unfortunately one of our assistants tasked with transporting the only copy of the data dropped the flash drive in hot water because he wanted to see what \"drone tea\" tasted like. You'll have to discover them again."

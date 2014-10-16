@@ -25,7 +25,7 @@
 	ventcrawler = 2
 	pass_flags = PASSTABLE | PASSMOB
 	sight = (SEE_TURFS | SEE_OBJS)
-	status_flags = (CANPUSH | CANSTUN)
+	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	languages = DRONE
@@ -36,6 +36,8 @@
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
 	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
 	var/light_on = 0
+	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
+	var/health_repair_max = 0 //Drone will only be able to be repaired/reactivated up to this point, defaults to health
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
@@ -52,6 +54,9 @@
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
+
+	if(!health_repair_max)
+		health_repair_max = initial(health)
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
@@ -71,16 +76,28 @@
 				if(d_input)
 					switch(d_input)
 						if("Reactivate")
-							if(!client)
-								D << "<span class='notice'>This drone's OS has blue screened, there is no point in repairing them.</span>"
+							var/mob/dead/observer/G = get_ghost()
+							if(!client && !G)
+								var/list/faux_gadgets = list("hypertext inflator","failsafe directory","DRM switch","stack initializer",\
+															 "anti-freeze capacitor","data stream diode","TCP bottleneck","supercharged I/O bolt",\
+															 "tradewind stablizer","radiated XML cable","registry fluid tank","open-source debunker")
+
+								var/list/faux_problems = list("won't be able to tune their bootstrap projector","will constantly remix their binary pool"+\
+															  " even though the BMX calibrator is working","will start leaking their XSS coolant",\
+															  "can't tell if their ethernet detour is moving or not", "won't be able to reseed enough"+\
+															  " kernels to function properly","can't start their neurotube console")
+
+								D << "<span class='notice'>You can't seem to find the [pick(faux_gadgets)]. Without it, [src] [pick(faux_problems)].</span>"
 								return
 							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>")
 							if(do_after(user,30,needhand = 1))
-								health = maxHealth
+								health = health_repair_max
 								stat = CONSCIOUS
 								icon_state = icon_living
 								D.visible_message("<span class='notice'>[D] reactivates [src]!</span>")
 								alert_drones(DRONE_NET_CONNECT)
+								if(G)
+									G << "<span class='boldnotice'>DRONE NETWORK: </span><span class='ghostalert'>You were reactivated by [D]!</span>"
 							else
 								D << "<span class='notice'>You need to remain still to reactivate [src].</span>"
 
@@ -126,6 +143,25 @@
 
 	..()
 
+/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
+		if(health < health_repair_max)
+			user << "<span class='notice'>You start to tighten loose screws on [src].</span>"
+			if(do_after(user,80))
+				health = health_repair_max
+				visible_message("<span class='notice'>[user] tightens [src == user ? "their" : "[src]'s"] loose screws!</span>")
+			else
+				user << "<span class='notice'>You need to remain still to tighten [src]'s screws.</span>"
+		else
+			user << "<span class='notice'>[src]'s screws can't get any tighter!</span>"
+	else
+		..()
+
+/mob/living/simple_animal/drone/examine(mob/user)
+	. = ..()
+	if(!client && stat != DEAD)
+		user << "<span class='notice'>A small blue LED is blinking on and off at a steady rate.</span>"
+
 /mob/living/simple_animal/drone/Move()
 	if(pullin)
 		if(pulling)
@@ -137,7 +173,16 @@
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
 	return 1
 
-/mob/living/simple_animal/drone/radio(message, message_mode)
+/mob/living/simple_animal/drone/say(var/message)
+	return ..(message, "R")
+
+/mob/living/simple_animal/drone/lang_treat(atom/movable/speaker, message_langs, raw_message) //This is so drones can understand humans without being able to speak human
+	. = ..()
+	var/hear_override_langs = HUMAN
+	if(message_langs & hear_override_langs)
+		return ..(speaker, languages, raw_message)
+
+/mob/living/simple_animal/drone/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_BINARY)
 		drone_chat(message)
 		return ITALICS | REDUCE_RANGE
@@ -208,7 +253,7 @@
 				if(F in M.faction)
 					send_msg = 1
 					break
-		else if(dead_can_hear && (M.stat == DEAD) && (M.client.prefs.toggles & CHAT_GHOSTEARS) && !istype(M, /mob/new_player))
+		else if(dead_can_hear && (M in dead_mob_list))
 			send_msg = 1
 
 		if(send_msg)
@@ -303,9 +348,18 @@
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return
 
-/mob/living/simple_animal/drone/emp_act()
+/mob/living/simple_animal/drone/stripPanelUnequip(obj/item/what, mob/who, where)
+	..(what, who, where, 1)
+
+/mob/living/simple_animal/drone/stripPanelEquip(obj/item/what, mob/who, where)
+	..(what, who, where, 1)
+
+/mob/living/simple_animal/drone/emp_act(severity)
 	Stun(5)
-	src << "<span class='alert'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>"
+	src << "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>"
+	if(severity == 1)
+		adjustBruteLoss(heavy_emp_damage)
+		src << "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>"
 
 
 /mob/living/simple_animal/drone/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
@@ -516,6 +570,7 @@
 	health = 30
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
 	faction = list("syndicate")
+	heavy_emp_damage = 10
 	laws = \
 	"1. Interfere.\n"+\
 	"2. Kill.\n"+\
@@ -526,7 +581,7 @@
 /mob/living/simple_animal/drone/syndrone/New()
 	..()
 	if(internal_storage && internal_storage.hidden_uplink)
-		internal_storage.hidden_uplink.uses = 5
+		internal_storage.hidden_uplink.uses = (initial(internal_storage.hidden_uplink.uses) / 2)
 		internal_storage.name = "syndicate uplink"
 
 /mob/living/simple_animal/drone/syndrone/Login()
