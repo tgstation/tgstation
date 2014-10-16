@@ -2116,7 +2116,7 @@
 "aOJ" = (/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/hallway/secondary/entry)
 "aOK" = (/obj/item/device/radio/intercom{broadcasting = 0; name = "Station Intercom (General)"; pixel_y = 20},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/hallway/secondary/entry)
 "aOL" = (/turf/simulated/floor{icon_state = "warningcorner"; dir = 4},/area/hallway/secondary/entry)
-"aOM" = (/obj/structure/stool/bed/chair/comfy/beige{dir = 1; icon_state = "comfychair_beige"},/turf/simulated/floor{icon_state = "grimy"},/area/hallway/secondary/entry)
+"aOM" = (/obj/structure/stool/bed/chair/comfy/beige{dir = 1; icon_state = "comfychair"},/turf/simulated/floor{icon_state = "grimy"},/area/hallway/secondary/entry)
 "aON" = (/obj/machinery/vending/snack,/turf/simulated/floor{icon_state = "dark"},/area/hallway/secondary/entry)
 "aOO" = (/turf/simulated/wall,/area/maintenance/port)
 "aOP" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor{icon_state = "whitehall"; dir = 4},/area/crew_quarters/theatre)
