@@ -127,18 +127,14 @@
 			user << "<span class='notice'>Your hands are full.</span>"
 			return
 		src << "<span class='warning'>[user] is trying to pick you up!</span>"
-		user << "<span class='notice'>You start picking [src] up...</span>"
-		if(do_after(user, 20, needhand = 1))
-			drop_l_hand()
-			drop_r_hand()
-			var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
-			DH.contents += src
-			DH.drone = src
-			user.put_in_hands(DH)
-			src.loc = DH
-		else
-			user << "<span class='notice'>[src] got away!</span>"
-			src << "<span class='warning'>You got away from [user]!</span>"
+		user << "<span class='notice'>You pick [src] up.</span>"
+		drop_l_hand()
+		drop_r_hand()
+		var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
+		DH.contents += src
+		DH.drone = src
+		user.put_in_hands(DH)
+		src.loc = DH
 		return
 
 	..()
@@ -538,19 +534,25 @@
 	var/mob/living/simple_animal/drone/drone //stored drone
 
 /obj/item/clothing/head/drone_holder/proc/uncurl()
+	if(!drone)
+		return
+
 	if(istype(loc, /mob/living))
 		var/mob/living/L = loc
-		L.unEquip(src)
-	if(drone)
-		contents -= drone
-		drone.loc = get_turf(src)
-		drone.reset_view()
-		drone.dir = SOUTH //Looks better
-		drone.visible_message("<span class='notice'>[drone] uncurls!</span>")
-		drone = null
-		qdel(src)
-	else
-		..()
+		L.show_message("<span class='notice'>[drone] is trying to escape!</span>")
+		if(do_after(L, 50))
+			L.unEquip(src)
+		else
+			return
+
+	contents -= drone
+	drone.loc = get_turf(src)
+	drone.reset_view()
+	drone.dir = SOUTH //Looks better
+	drone.visible_message("<span class='notice'>[drone] uncurls!</span>")
+	drone = null
+	qdel(src)
+
 
 /obj/item/clothing/head/drone_holder/relaymove()
 	uncurl()
