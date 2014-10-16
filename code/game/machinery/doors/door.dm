@@ -7,6 +7,7 @@
 	opacity = 1
 	density = 1
 	layer = 2.7
+	allow_malf_AI_verbs = 0
 
 	var/secondsElectrified = 0
 	var/visible = 1

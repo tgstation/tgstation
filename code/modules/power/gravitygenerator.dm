@@ -26,6 +26,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	density = 1
 	use_power = 0
 	unacidable = 1
+	allow_malf_AI_verbs = 0
 	var/sprite_number = 0
 
 /obj/machinery/gravity_generator/ex_act(severity)
