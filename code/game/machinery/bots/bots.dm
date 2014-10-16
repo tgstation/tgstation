@@ -20,11 +20,11 @@
 	var/text_dehack_fail = "" //Shown when a silicon tries to reset a bot emagged with the emag item, which cannot be reset.
 	var/declare_message = "" //What the bot will display to the HUD user.
 	var/frustration = 0 //Used by some bots for tracking failures to reach their target.
-	var/list/call_path = list() //Path calculated by the AI and given to the bot to follow.
-	var/list/path = new() //Every bot has this, so it is best to put it here.
-	var/list/patrol_path = list() //The path a bot has while on patrol.
-	var/list/summon_path = list() //Path bot has while summoned.
+	var/speed = 2 //The speed at which the bot moves, or the number of times it moves per process() tick.
+	var/turf/ai_waypoint //The end point of a bot's path, or the target location.
+	var/list/path = list() //List of turfs through which a bot 'steps' to reach the waypoint.
 	var/pathset = 0
+	var/list/ignore_list //List of unreachable targets for an ignore-list enabled bot to ignore.
 	var/mode = 0 //Standardizes the vars that indicate the bot is busy with its function.
 	var/tries = 0 //Number of times the bot tried and failed to move.
 	var/remote_disabled = 0 //If enabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
@@ -56,6 +56,8 @@
 	#define FLOOR_BOT			3	// Floorbots
 	#define CLEAN_BOT			4	// Cleanbots
 	#define MED_BOT				5	// Medibots
+
+	#define DEFAULT_SCAN_RANGE		7	//default view range for finding targets.
 
 	//Mode defines
 	#define BOT_IDLE 			0	// idle
@@ -106,8 +108,6 @@
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 		if(bot_filter)
 			radio_controller.add_object(src, control_freq, filter = bot_filter)
-
-
 
 /obj/machinery/bot/proc/explode()
 	qdel(src)
@@ -162,10 +162,10 @@
 	healthcheck()
 
 /obj/machinery/bot/Topic(href, href_list) //Master Topic to handle common functions.
-	if(..())
+	. = ..()
+	if (.)
 		return
-
-	if(topic_denied())
+	if(topic_denied(usr))
 		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
 		href_list = list()
 		return
@@ -201,15 +201,27 @@
 				bot_reset()
 	updateUsrDialog()
 
-/obj/machinery/bot/proc/topic_denied() //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
+/obj/machinery/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
 	// 0 for access, 1 for denied.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!hacked) //Manually emagged by a human - access denied to all.
 			return 1
-		else if(!issilicon(usr)) //Bot is hacked, so only silicons are allowed access.
+		else if(!issilicon(user)) //Bot is hacked, so only silicons are allowed access.
 			return 1
 	else
 		return 0
+
+/obj/machinery/bot/process() //Master process which handles code common across all bots.
+
+	set background = BACKGROUND_ENABLED
+
+	if(!on)
+		return
+
+	if(mode == BOT_RESPONDING)
+		call_mode()
+		return
+	return 1 //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
 /obj/machinery/bot/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -308,7 +320,7 @@
 	src.attack_hand(user)
 
 /obj/machinery/bot/proc/speak(var/message, freq) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
-	if((!src.on) || (!message))
+	if((!on) || (!message))
 		return
 	if(freq)
 		Radio.set_frequency(radio_frequency)
@@ -317,13 +329,84 @@
 		say(message)
 	return
 
+	//Generalized behavior code, override where needed!
+
+/*
+scan() will search for a given type (such as turfs, human mobs, or objects) in the bot's view range, and return a single result.
+Arguments: The object type to be searched (such as "/mob/living/carbon/human"), the view range (usually 7, a full screen),
+the old scan result to be ignored, if one exists, and a list of multiple objects to be ignored, for bots which support it.
+*/
+obj/machinery/bot/proc/scan(var/scan_type, var/scan_range, var/old_target, var/list/ignorelist)
+	var/scan_result
+	var/final_result
+	ignorelist |= old_target
+	for (scan_type in view (scan_range ? scan_range : DEFAULT_SCAN_RANGE,src) )
+		if( !(scan_type in ignorelist) )
+			scan_result = process_scan(scan_type)
+			if( scan_result )
+				final_result = scan_result
+			else
+				continue //The current element failed assessment, move on to the next.
+	return final_result
+
+//When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
+obj/machinery/bot/proc/process_scan(var/scan_target)
+	return scan_target
+
+
+/obj/machinery/bot/proc/add_to_ignore(var/subject)
+	if(ignore_list.len < 50) //This will help keep track of them, so the bot is always trying to reach a blocked spot.
+		ignore_list |= subject
+	else if (ignore_list.len >= subject) //If the list is full, insert newest, delete oldest.
+		ignore_list -= ignore_list[1]
+		ignore_list |= subject
+
+/*
+Movement proc for stepping a bot through a path generated through A-star.
+Pass a positive integer as an argument to override a bot's default speed.
+*/
+obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
+
+	if(!dest || !path || path.len == 0) //A-star failed or a path/destination was not set.
+		path = list()
+		return 0
+	if(get_turf(src) == get_turf(dest)) //We have arrived, no need to move again.
+		return 1
+	var/success
+	var/step_count = move_speed ? move_speed : speed //If a value is passed into move_speed, use that instead of the default speed var.
+	if(step_count >= 1 && tries < 4)
+		for(step_count, step_count >= 1,step_count--)
+			success = bot_step(dest)
+			if (success)
+				tries = 0
+			else
+				tries++
+				break
+			sleep(4)
+	else
+		return 0
+	return 1
+
+
+obj/machinery/bot/proc/bot_step(var/dest)
+	if(path.len > 1)
+		step_to(src, path[1])
+		if(get_turf(src) == path[1]) //Successful move
+			path -= path[1]
+		else
+			return 0
+	else if(path.len == 1)
+		step_to(src, dest)
+		path = list()
+	return 1
+
 
 /obj/machinery/bot/proc/check_bot_access()
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
 		botcard.access = prev_access
 
 /obj/machinery/bot/proc/call_bot(var/caller, var/turf/waypoint)
-	bot_reset() //Reset a bot becore setting it to call mode.
+	bot_reset() //Reset a bot before setting it to call mode.
 	var/area/end_area = get_area(waypoint)
 
 	//For giving the bot temporary all-access.
@@ -331,14 +414,15 @@
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
-	call_path = AStar(src, waypoint, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
+	path = AStar(src, waypoint, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
 	calling_ai = caller //Link the AI to the bot!
+	ai_waypoint = waypoint
 
-	if(call_path && call_path.len) //Ensures that a valid path is calculated!
+	if(path && path.len) //Ensures that a valid path is calculated!
 		if(!on)
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		botcard = all_access //Give the bot all-access while under the AI's command.
-		calling_ai << "<span class='notice'>\icon[src] [name] called to [end_area.name]. [call_path.len-1] meters to destination.</span>"
+		calling_ai << "<span class='notice'>\icon[src] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>"
 		pathset = 1
 		mode = BOT_RESPONDING
 		tries = 0
@@ -348,23 +432,10 @@
 
 /obj/machinery/bot/proc/call_mode() //Handles preparing a bot for a call, as well as calling the move proc.
 //Handles the bot's movement during a call.
-		move_to_call()
-		sleep(5)
-		move_to_call() //Called twice so that the bot moves faster.
-		return
-
-/obj/machinery/bot/proc/move_to_call()
-	if(call_path && call_path.len && tries < 6)
-		step_towards(src, call_path[1])
-
-		if(loc == call_path[1])//Remove turfs from the path list if the bot moved there.
-			tries = 0
-			call_path -= call_path[1]
-		else //Could not move because of an obstruction.
-			tries++
-	else
+	var/success = bot_move(ai_waypoint, 3)
+	if (!success)
 		if(calling_ai)
-			calling_ai << "\icon[src] [tries ? "<span class='danger'>[src] failed to reach waypoint.</span>" : "<span class='notice'>[src] successfully arrived to waypoint.</span>"]"
+			calling_ai << "\icon[src] [get_turf(src) == ai_waypoint ? "<span class='notice'>[src] successfully arrived to waypoint.</span>" : "<span class='danger'>[src] failed to reach waypoint.</span>"]"
 			calling_ai = null
 		bot_reset()
 
@@ -372,15 +443,15 @@ obj/machinery/bot/proc/bot_reset()
 	if(calling_ai) //Simple notification to the AI if it called a bot. It will not know the cause or identity of the bot.
 		calling_ai << "<span class='danger'>Call command to a bot has been reset.</span>"
 		calling_ai = null
-	call_path = null
-	path = new()
-	patrol_path = list()
-	summon_path = list()
+	path = list()
 	summon_target = null
 	pathset = 0
 	botcard.access = prev_access
 	tries = 0
 	mode = BOT_IDLE
+
+
+
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -407,14 +478,10 @@ obj/machinery/bot/proc/start_patrol()
 		mode = BOT_IDLE
 		return
 
-	if(patrol_path && patrol_path.len > 0 && patrol_target)	// have a valid path, so just resume
-		mode = BOT_PATROL
-		return
-
-	else if(patrol_target)		// has patrol target already
+	if(patrol_target)		// has patrol target
 		spawn(0)
-			calc_path()		// so just find a route to it
-			if(patrol_path.len == 0)
+			calc_path()		// Find a route to it
+			if(path.len == 0)
 				patrol_target = 0
 				return
 			mode = BOT_PATROL
@@ -430,44 +497,36 @@ obj/machinery/bot/proc/start_patrol()
 
 	if(loc == patrol_target)		// reached target
 
-
 		at_patrol_target()
 		return
 
-	else if(patrol_path.len > 0 && patrol_target)		// valid path
-		var/turf/next = patrol_path[1]
+	else if(path.len > 0 && patrol_target)		// valid path
+		var/turf/next = path[1]
 		if(next == loc)
-			patrol_path -= next
+			path -= next
 			return
 
 
-		if(istype( next, /turf/simulated))
+		var/moved = bot_move(patrol_target)//step_towards(src, next)	// attempt to move
+		if(moved)	// successful move
+			blockcount = 0
 
-			var/moved = step_towards(src, next)	// attempt to move
-			if(moved)	// successful move
-				blockcount = 0
-				patrol_path -= loc
+		else		// failed to move
+			blockcount++
 
-			else		// failed to move
-				blockcount++
+			if(blockcount > 5)	// attempt 5 times before recomputing
+				// find new path excluding blocked turf
 
-				if(blockcount > 5)	// attempt 5 times before recomputing
-					// find new path excluding blocked turf
-
-					spawn(2)
-						calc_path(next)
-						if(patrol_path.len == 0)
-							find_patrol_target()
-						else
-							blockcount = 0
-							tries = 0
-
-					return
+				spawn(2)
+					calc_path(next)
+					if(path.len == 0)
+						find_patrol_target()
+					else
+						blockcount = 0
+						tries = 0
 
 				return
 
-		else	// not a valid turf
-			mode = BOT_IDLE
 			return
 
 	else	// no path, so calculate new one
@@ -640,25 +699,20 @@ obj/machinery/bot/proc/start_patrol()
 obj/machinery/bot/proc/bot_summon()
 		// summoned to PDA
 	summon_step()
-	spawn(4)
-		if(mode == BOT_SUMMON)
-			summon_step()
-			sleep(4)
-			summon_step()
 	return
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/obj/machinery/bot/proc/calc_path(var/turf/avoid = null)
+/obj/machinery/bot/proc/calc_path(var/turf/avoid)
 	check_bot_access()
-	patrol_path = AStar(loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
-	if(!patrol_path)
-		patrol_path = list()
+	path = AStar(loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
+	if(!path)
+		path = list()
 
-/obj/machinery/bot/proc/calc_summon_path(var/turf/avoid = null)
+/obj/machinery/bot/proc/calc_summon_path(var/turf/avoid)
 	check_bot_access()
-	summon_path = AStar(loc, summon_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 150, id=botcard, exclude=avoid)
-	if(!summon_path || tries >= 5)
+	path = AStar(loc, summon_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 150, id=botcard, exclude=avoid)
+	if(!path || tries >= 5)
 		bot_reset()
 
 /obj/machinery/bot/proc/summon_step()
@@ -667,35 +721,28 @@ obj/machinery/bot/proc/bot_summon()
 		bot_reset()
 		return
 
-	else if(summon_path.len > 0 && summon_target)		//Proper path acquired!
-		var/turf/next = summon_path[1]
+	else if(path.len > 0 && summon_target)		//Proper path acquired!
+		var/turf/next = path[1]
 		if(next == loc)
-			summon_path -= next
+			path -= next
 			return
 
+		var/moved = bot_move(summon_target, 3)	// Move attempt
+		if(moved)
+			blockcount = 0
+			path -= loc
 
-		if(istype( next, /turf/simulated))
+		else		// failed to move
+			blockcount++
 
-			var/moved = step_towards(src, next)	// Move attempt
-			if(moved)
-				blockcount = 0
-				summon_path -= loc
-
-			else		// failed to move
-				blockcount++
-
-				if(blockcount > 5)	// attempt 5 times before recomputing
-					// find new path excluding blocked turf
-					spawn(2)
-						calc_summon_path(next)
-						tries++
-						return
+			if(blockcount > 5)	// attempt 5 times before recomputing
+				// find new path excluding blocked turf
+				spawn(2)
+					calc_summon_path(next)
+					tries++
+					return
 
 				return
-
-		else	// not a valid turf
-			bot_reset()
-			return
 
 	else	// no path, so calculate new one
 		calc_summon_path()

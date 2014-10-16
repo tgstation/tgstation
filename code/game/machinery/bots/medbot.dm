@@ -256,13 +256,10 @@
 			oldpatient = user
 
 /obj/machinery/bot/medbot/process()
-	set background = BACKGROUND_ENABLED
-
-	if(!on || mode == BOT_HEALING)
+	if (!..())
 		return
 
-	if(call_path)
-		call_mode()
+	if(mode == BOT_HEALING)
 		return
 
 	if(stunned)
@@ -535,45 +532,6 @@
 	declare_cooldown = 1
 	spawn(200) //Twenty seconds
 	declare_cooldown = 0
-
-
-/* terrible
-/obj/machinery/bot/medbot/Bumped(atom/movable/M as mob|obj)
-	spawn(0)
-		if (M)
-			var/turf/T = get_turf(src)
-			M:loc = T
-*/
-
-/*
- *	Pathfinding procs, allow the medibot to path through doors it has access to.
- */
-
-//Pretty ugh
-/*
-/turf/proc/AdjacentTurfsAllowMedAccess()
-	var/L[] = new()
-	for(var/turf/t in oview(src,1))
-		if(!t.density)
-			if(!LinkBlocked(src, t) && !TurfBlockedNonWindowNonDoor(t,get_access("Medical Doctor")))
-				L.Add(t)
-	return L
-
-
-//It isn't blocked if we can open it, man.
-/proc/TurfBlockedNonWindowNonDoor(turf/loc, var/list/access)
-	for(var/obj/O in loc)
-		if(O.density && !istype(O, /obj/structure/window) && !istype(O, /obj/machinery/door))
-			return 1
-
-		if (O.density && (istype(O, /obj/machinery/door)) && (access.len))
-			var/obj/machinery/door/D = O
-			for(var/req in D.req_access)
-				if(!(req in access)) //doesn't have this access
-					return 1
-
-	return 0
-*/
 
 /*
  *	Medbot Assembly -- Can be made out of all three medkits.

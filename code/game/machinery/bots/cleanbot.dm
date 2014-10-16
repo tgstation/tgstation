@@ -28,7 +28,6 @@
 	var/list/target_types = list()
 	var/obj/effect/decal/cleanable/target
 	var/obj/effect/decal/cleanable/oldtarget
-	var/list/cleanbottargets = list() //Targets that the cleanbot cannot reach and will thus ignore.
 	var/max_targets = 50 //Maximum number of targets a cleanbot can ignore.
 	var/oldloc = null
 	req_one_access = list(access_janitor, access_robotics)
@@ -55,7 +54,7 @@
 		add_to_beacons(bot_filter)
 
 /obj/machinery/bot/cleanbot/turn_on()
-	. = ..()
+	..()
 	icon_state = "cleanbot[on]"
 	updateUsrDialog()
 
@@ -66,7 +65,7 @@
 
 /obj/machinery/bot/cleanbot/bot_reset()
 	..()
-	cleanbottargets = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
+	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
 	oldtarget = null
 	oldloc = null
@@ -95,13 +94,6 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	if(!locked || issilicon(user))
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[blood ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"))
-	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[beacon_freq]</A>"))
-/*	if(open && !locked)
-		dat += text({"
-Odd looking screw twiddled: []<BR>
-Weird button pressed: []"},
-text("<A href='?src=\ref[src];operation=screw'>[screwloose ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=oddbutton'>[oddbutton ? "Yes" : "No"]</A>"))*/
 
 	var/datum/browser/popup = new(user, "autoclean", "Automatic Station Cleaner v1.1")
 	popup.set_content(dat)
@@ -121,15 +113,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[oddbutton ? "Yes" : "No"]</A
 			if (freq > 0)
 				beacon_freq = freq
 			updateUsrDialog()
-
-/*		if("screw")
-			screwloose = !screwloose
-			usr << "<span class='notice>You twiddle the screw.</span>"
-			updateUsrDialog()
-		if("oddbutton")
-			oddbutton = !oddbutton
-			usr << "<span class='notice'>You press the weird button.</span>"
-			updateUsrDialog() */
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -151,42 +134,41 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[oddbutton ? "Yes" : "No"]</A
 	if(emagged == 2)
 		if(user) user << "<span class='danger'>[src] buzzes and beeps.</span>"
 
+/obj/machinery/bot/cleanbot/process_scan(var/obj/effect/decal/cleanable/D)
+	for(var/T in target_types)
+		if(!(D in ignore_list) && istype(D, T))
+			return D
+
 /obj/machinery/bot/cleanbot/process()
-	set background = BACKGROUND_ENABLED
-
-	if(!on)
-		return
-
-	if(call_path)
-		call_mode()
+	if (!..())
 		return
 
 	if(mode == BOT_CLEANING)
 		return
 
-	if(!emagged && prob(5))
-		visible_message("[src] makes an excited beeping booping sound!")
-
-	if(emagged == 2 && prob(10)) //Wets floors randomly
+	if(emagged == 2) //Emag functions
 		if(istype(loc,/turf/simulated))
-			var/turf/simulated/T = loc
-			T.MakeSlippery()
 
-	if(emagged == 2 && prob(5)) //Spawns foam!
-		visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
-		new /obj/effect/effect/foam(loc)
+			if(prob(10)) //Wets floors randomly
+				var/turf/simulated/T = loc
+				T.MakeSlippery()
+
+			if(prob(5)) //Spawns foam!
+				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
+				new /obj/effect/effect/foam(loc)
+
+	else if (prob(5))
+		visible_message("[src] makes an excited beeping booping sound!")
 
 	if(mode == BOT_SUMMON)
 		bot_summon()
 		return
 
 	if(!target) //Search for cleanables it can see.
-		for (var/obj/effect/decal/cleanable/D in view(7,src))
-			for(var/T in target_types)
-				if(!(D in cleanbottargets) && (D.type == T || D.parent_type == T) && D != oldtarget)
-					oldtarget = D
-					target = D
-					break
+		var/obj/effect/decal/cleanable/D
+		D = scan(D, DEFAULT_SCAN_RANGE, oldtarget, ignore_list)
+		oldtarget = D
+		target = D
 
 	if(!target)
 		if(loc != oldloc)
@@ -199,47 +181,27 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[oddbutton ? "Yes" : "No"]</A
 			if(mode == BOT_PATROL)
 				bot_patrol()
 
-
-
 		return
 
-	if(target && path.len == 0)
-		spawn(0)
+	if(target)
+		if(!path || path.len == 0)
 			if(!src || !target)
 				return
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = AStar(loc, target.loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30, id=botcard)
-			if(!path)
-				path = list()
-			if(path.len == 0) //Target is unreachable, so add it to ignore list and prepare to find another target or remain idle/patrol.
+			path = AStar(loc, target.loc, /turf/proc/AdjacentTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
+			if (!bot_move(target))
 				add_to_ignore(target)
-				oldtarget = target
-				target = null
-				mode = BOT_IDLE
-		return
-	if(path.len > 0 && target)
-		mode = BOT_MOVING
-		step_to(src, path[1])
-		path -= path[1]
-	else if(path.len == 1)
-		step_to(src, target)
+				return
+		else
+			bot_move(target)
 
-	if(target)
 		if(loc == target.loc)
 			clean(target)
-			path = new()
+			path = list()
 			target = null
 			return
 
 	oldloc = loc
-
-
-/obj/machinery/bot/cleanbot/proc/add_to_ignore(target)
-	if(cleanbottargets.len < max_targets && !(target in cleanbottargets)) //Add the target to the ignore list if it is not full or already inside.
-		cleanbottargets += target
-	else if (cleanbottargets.len >= max_targets)
-		cleanbottargets -= cleanbottargets[1] // ignore list is full, so remove the oldest target.
-		cleanbottargets += target // then add the newest one.
 
 /obj/machinery/bot/cleanbot/proc/get_targets()
 	target_types = new/list()

@@ -178,7 +178,9 @@ Auto Patrol: []"},
 				mode = BOT_HUNT
 
 /obj/machinery/bot/secbot/Emag(mob/user as mob)
-	..()
+	if (..())
+		return
+
 	if(emagged == 2)
 		if(user) user << "<span class='danger'> You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
@@ -188,13 +190,7 @@ Auto Patrol: []"},
 		declare_arrests = 0
 
 /obj/machinery/bot/secbot/process()
-	set background = BACKGROUND_ENABLED
-
-	if(!on)
-		return
-
-	if(call_path)
-		call_mode()
+	if (!..())
 		return
 
 	switch(mode)

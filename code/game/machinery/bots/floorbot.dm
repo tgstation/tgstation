@@ -46,7 +46,6 @@
 	var/max_targets = 50
 	var/turf/target
 	var/turf/oldtarget
-	var/list/ignore_list = list() //List of unreachable targets
 	var/oldloc = null
 	req_one_access = list(access_construction, access_robotics)
 	var/targetdirection
@@ -191,13 +190,10 @@
 	updateUsrDialog()
 
 /obj/machinery/bot/floorbot/process()
-	set background = BACKGROUND_ENABLED
-
-	if(!on || mode == BOT_REPAIRING)
+	if (!..())
 		return
 
-	if(call_path)
-		call_mode()
+	if(mode == BOT_REPAIRING)
 		return
 
 	if(mode == BOT_SUMMON)
@@ -340,13 +336,6 @@
 	if(!nagged)
 		speak("Requesting refill at <b>[get_area(src)]</b>!", radio_frequency)
 		nagged = 1
-
-/obj/machinery/bot/floorbot/proc/add_to_ignore(target) //Often objects may block access to damaged tiles or open space.
-	if(ignore_list.len < max_targets && !(target in ignore_list)) //This will help keep track of them, so the bot is always trying to reach a blocked spot.
-		ignore_list += target
-	else if (ignore_list.len >= max_targets) //If the list is full, insert newest, delete oldest.
-		ignore_list -= ignore_list[1]
-		ignore_list += target
 
 /obj/machinery/bot/floorbot/proc/is_hull_breach(var/turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
 	var/area/t_area = get_area(t)

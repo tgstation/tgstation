@@ -489,12 +489,10 @@ var/global/mulebot_count = 0
 /obj/machinery/bot/mulebot/call_bot()
 	..()
 	var/area/dest_area
-	if (call_path && call_path.len)
-		target = call_path[call_path.len] //Target is the end point of the path, the waypoint set by the AI.
+	if (path && path.len)
+		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		dest_area = get_area(target)
 		destination = format_text(dest_area.name)
-		path = call_path
-		call_path = null //Once the MULE is commanded, follow normal procedures to reach the waypoint.
 		pathset = 1 //Indicates the AI's custom path is initialized.
 		start()
 
@@ -698,7 +696,6 @@ var/global/mulebot_count = 0
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
 				radio_frequency = 1447 //Report on AI Private instead if the AI is controlling us.
-			//bot_reset()
 
 		if(load)		// if loaded, unload at target
 			speak("Destination <b>[destination]</b> reached. Unloading [load].",radio_frequency)

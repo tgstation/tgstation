@@ -188,7 +188,8 @@ Auto Patrol: []"},
 					mode = BOT_HUNT
 
 /obj/machinery/bot/ed209/Emag(mob/user as mob)
-	..()
+	if (!..())
+		return
 	if(open && !locked)
 		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
@@ -200,13 +201,9 @@ Auto Patrol: []"},
 		declare_arrests = 0
 
 /obj/machinery/bot/ed209/process()
-	set background = BACKGROUND_ENABLED
+	..()
 
-	if(!on || disabled)
-		return
-
-	if(call_path)
-		call_mode()
+	if(disabled)
 		return
 
 	var/list/targets = list()
