@@ -90,63 +90,12 @@
 	icon = "officerbeersky"
 	desc = "Man eat a dong, these drinks are great"
 
-/datum/barsign/zocalo
-	name = "Zocalo"
-	icon = "zocalo"
-	desc = "The bar that is supposed to be located at the center of the station.  It's not"
-
 /datum/barsign/thecavern
 	name = "The Cavern"
 	icon =  "thecavern"
 	desc = "Fine drinks while listening to some fine tunes"
 
-/datum/barsign/quarks
-	name = "Quark's"
-	icon = "quarks"
-	desc = "Quark's Deep space bar and casino"
-
-/datum/barsign/tenforward
-	name = "Ten Forward"
-	icon = "tenforward"
-	desc = "The Final Frontier of bars in space"
-
-/datum/barsign/prancingpony
-	name = "The Prancing Pony"
-	icon = "theprancingpony"
-	desc = "Looks like a place suitable to get some drinks and rings...er, Wings."
-
-/datum/barsign/vault13
-	name = "Vault 13"
-	icon = "vault13"
-	desc = "Vault 13, I thought this was a space station"
-
-/datum/barsign/solaris
-	name = "Solaris"
-	icon = "solaris"
-	desc = "You will go crazy for these drinks"
-
-/datum/barsign/thehive
-	name = "The Hive"
-	icon = "thehive"
-	desc = "Augmented crew members get a discount"
-
-/datum/barsign/chalmunscatina
-	name = "Chalmun's Catina"
-	icon = "chalmunscantina"
-	desc = "This bar is known for it's popular band that seems to only play one song"
-
 /datum/barsign/theouterspess
 	name = "The Outer Spess"
 	icon = "theouterspess"
-	desc = "This bar isn't actually located in space, don't worry"
-
-/datum/barsign/milliways42
-	name = "Milliways 42"
-	icon = "milliways42"
-	desc = "The bar located at the end of the universe"
-
-/datum/barsign/thetimeofeve
-	name = "The Time of Eve"
-	icon = "thetimeofeve"
-	desc = "Everyone is welcome here, even cyborgs"
-
+	desc = "This bar isn't actually located in outer space"
