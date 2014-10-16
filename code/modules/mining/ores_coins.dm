@@ -176,7 +176,7 @@
 /obj/item/weapon/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
-	icon_state = "coin"
+	icon_state = "coin__heads"
 	flags = CONDUCT
 	force = 1
 	throwforce = 2
@@ -197,42 +197,52 @@
 
 /obj/item/weapon/coin/gold
 	cmineral = "gold"
+	icon_state = "coin_gold_heads"
 	value = 160
 
 /obj/item/weapon/coin/silver
 	cmineral = "silver"
+	icon_state = "coin_silver_heads"
 	value = 40
 
 /obj/item/weapon/coin/diamond
 	cmineral = "diamond"
+	icon_state = "coin_diamond_heads"
 	value = 120
 
 /obj/item/weapon/coin/iron
 	cmineral = "iron"
+	icon_state = "coin_iron_heads"
 	value = 20
 
 /obj/item/weapon/coin/plasma
 	cmineral = "plasma"
+	icon_state = "coin_plasma_heads"
 	value = 80
 
 /obj/item/weapon/coin/uranium
 	cmineral = "uranium"
+	icon_state = "coin_uranium_heads"
 	value = 160
 
 /obj/item/weapon/coin/clown
 	cmineral = "bananium"
+	icon_state = "coin_bananium_heads"
 	value = 600 //makes the clown cri
 
 /obj/item/weapon/coin/adamantine
 	cmineral = "adamantine"
+	icon_state = "coin_adamantine_heads"
 	value = 400
 
 /obj/item/weapon/coin/mythril
 	cmineral = "mythril"
+	icon_state = "coin_mythril_heads"
 	value = 400
 
 /obj/item/weapon/coin/twoheaded
 	cmineral = "iron"
+	icon_state = "coin_iron_heads"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
 	value = 20

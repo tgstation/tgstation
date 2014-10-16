@@ -119,6 +119,21 @@
 	new /obj/item/weapon/reagent_containers/syringe( src )
 	new /obj/item/weapon/reagent_containers/syringe( src )
 
+/obj/item/weapon/storage/box/medipens
+	name = "box of medipens"
+	desc = "A box full of inaprovaline MediPens."
+	icon_state = "syringe"
+
+/obj/item/weapon/storage/box/medipens/New()
+	..()
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
 	icon_state = "beaker"
