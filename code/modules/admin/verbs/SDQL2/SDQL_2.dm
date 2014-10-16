@@ -21,8 +21,8 @@
 /client/proc/SDQL2_query(query_text as message)
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
-		message_admins("<span class='danger'>ERROR: Non-admin [usr.key] attempted to execute a SDQL query!</span>")
-		log_admin("Non-admin [usr.key] attempted to execute a SDQL query!")
+		message_admins("<span class='danger'>ERROR: Non-admin [key_name(usr, usr.client)] attempted to execute a SDQL query!</span>")
+		log_admin("Non-admin [usr.ckey]([usr]) attempted to execute a SDQL query!")
 
 	if(!query_text || length(query_text) < 1)
 		return
@@ -40,10 +40,12 @@
 		return
 
 
-	var/query_log = "[usr] executed SDQL query: \"[query_text]\"."
-	world.log << query_log
-	message_admins(query_log)
+	var/query_log = "executed SDQL query: \"[query_text]\"."
+	message_admins("[key_name_admin(usr)] [query_log]")
+	query_log = "[usr.ckey]([usr]) [query_log]"
 	log_game(query_log)
+	NOTICE(query_log)
+
 
 	for(var/list/query_tree in querys)
 		var/list/from_objs = list()

@@ -135,9 +135,9 @@
 	..()
 	sleep(2)
 	new /obj/item/device/assembly/signaler(src)
-	new /obj/item/device/radio/electropack(src)
-	new /obj/item/device/radio/electropack(src)
-	new /obj/item/device/radio/electropack(src)
+	new /obj/item/device/electropack(src)
+	new /obj/item/device/electropack(src)
+	new /obj/item/device/electropack(src)
 	return
 
 

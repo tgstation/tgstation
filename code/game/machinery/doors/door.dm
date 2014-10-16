@@ -7,6 +7,7 @@
 	opacity = 1
 	density = 1
 	layer = 2.7
+	power_channel = ENVIRON
 
 	var/secondsElectrified = 0
 	var/visible = 1

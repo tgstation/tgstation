@@ -7,7 +7,7 @@
 
 /datum/round_event/wizard/greentext/start()
 
-	var/list/holder_canadates = player_list
+	var/list/holder_canadates = player_list.Copy()
 	for(var/mob/M in holder_canadates)
 		if(!ishuman(M))
 			holder_canadates -= M
