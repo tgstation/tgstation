@@ -71,28 +71,33 @@
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
+	var/sawn_desc = "Omar's coming!"
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
-	if (istype(A,/obj/item/ammo_box) || istype(A,/obj/item/ammo_casing))
+	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
-		user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
-		if(get_ammo())
-			afterattack(user, user)	//will this work?
-			afterattack(user, user)	//it will. we call it twice, for twice the FUN
-			playsound(user, fire_sound, 50, 1)
-			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
-			return
-		if(do_after(user, 30))	//SHIT IS STEALTHY EYYYYY
-			icon_state = "sawnshotgun"
-			w_class = 3.0
-			item_state = "gun"
-			slot_flags &= ~SLOT_BACK	//you can't sling it on your back
-			slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-			user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
-			name = "sawn-off shotgun"
-			desc = "Omar's coming!"
+		sawoff(user)
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/proc/sawoff(mob/user as mob)
+	user << "<span class='notice'>You begin to shorten \the [src].</span>"
+	if(get_ammo())
+		afterattack(user, user)	//will this work?
+		afterattack(user, user)	//it will. we call it twice, for twice the FUN
+		playsound(user, fire_sound, 50, 1)
+		user.visible_message("<span class='danger'>The [src] goes off!</span>", "<span class='danger'>The [src] goes off in your face!</span>")
+		return
+	if(do_after(user, 30))
+		name = "sawn-off [src.name]"
+		desc = sawn_desc
+		icon_state = initial(icon_state) + "-sawn"
+		w_class = 3.0
+		item_state = "gun"
+		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
+		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+		user << "<span class='warning'>You shorten \the [src]!</span>"
+		return
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user as mob)
 	var/num_unloaded = 0
@@ -120,12 +125,13 @@
 	force = 10
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/improvised
+	sawn_desc = "I'm just here for the gasoline."
 
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(var/obj/item/I, mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
-	if(istype(I, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = I
-		if (C.use(10))
+	if(istype(A, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = A
+		if(C.use(10))
 			flags =  CONDUCT
 			slot_flags = SLOT_BACK
 			icon_state = "ishotgunsling"
