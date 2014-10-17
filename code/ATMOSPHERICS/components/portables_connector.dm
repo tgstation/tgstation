@@ -1,6 +1,9 @@
+/*
+This should ideally have /unary/ as parent, why doesn't it? //Donkie
+*/
 /obj/machinery/atmospherics/portables_connector
-	icon = 'icons/obj/atmospherics/portables_connector.dmi'
-	icon_state = "intact"
+	icon = 'icons/obj/atmospherics/unary_devices.dmi'
+	icon_state = "connector_map" //Only for mapping purposes, so mappers can see direction
 
 	name = "connector port"
 	desc = "For connecting portables devices related to atmospherics control."
@@ -16,30 +19,42 @@
 
 	var/datum/pipe_network/network
 
+	var/showpipe = 0
 	var/on = 0
 	use_power = 0
 	level = 0
 
+
+/obj/machinery/atmospherics/portables_connector/visible
+	level = 2
 
 /obj/machinery/atmospherics/portables_connector/New()
 	initialize_directions = dir
 	..()
 
 /obj/machinery/atmospherics/portables_connector/update_icon()
-	if(node)
-		icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-		dir = get_dir(src, node)
-	else
-		icon_state = "exposed"
+	icon_state = "connector"
+
+	underlays.Cut()
+
+	if(showpipe)
+		var/state
+		var/col
+		if(node)
+			state = "pipe_intact"
+			col = node.pipe_color
+		else
+			state = "pipe_exposed"
+
+		underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, col)
 
 	return
 
-/obj/machinery/atmospherics/portables_connector/hide(var/i) //to make the little pipe section invisible, the icon changes.
-	if(node)
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-		dir = get_dir(src, node)
-	else
-		icon_state = "exposed"
+/obj/machinery/atmospherics/portables_connector/hide(var/intact)
+	showpipe = !intact
+	update_icon()
+
+	..(intact)
 
 /obj/machinery/atmospherics/portables_connector/process()
 	..()
@@ -85,6 +100,10 @@
 		if(target.initialize_directions & get_dir(target,src))
 			node = target
 			break
+	//build_network() //might need this
+
+	if(level == 2)
+		showpipe = 1
 
 	update_icon()
 
@@ -124,6 +143,8 @@
 	if(reference==node)
 		del(network)
 		node = null
+
+	update_icon()
 
 	return null
 

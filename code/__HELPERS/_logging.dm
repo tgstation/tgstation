@@ -8,6 +8,11 @@
 /proc/warning(msg)
 	world.log << "## WARNING: [msg]"
 
+//not an error or a warning, but worth to mention on the world log, just in case.
+#define NOTICE(MSG) notice(MSG)
+/proc/notice(msg)
+	world.log << "## NOTICE: [msg]"
+
 //print a testing-mode debug message to world.log
 /proc/testing(msg)
 #ifdef TESTING

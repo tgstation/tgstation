@@ -8,7 +8,6 @@
 	icon_state = "door_open"
 	opacity = 0
 	density = 0
-	power_channel = ENVIRON
 	var/blocked = 0
 	var/nextstate = null
 

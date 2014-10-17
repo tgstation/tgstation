@@ -7,6 +7,7 @@
 	opacity = 1
 	density = 1
 	layer = 2.7
+	power_channel = ENVIRON
 
 	var/secondsElectrified = 0
 	var/visible = 1
@@ -134,6 +135,7 @@
 		sleep(6)
 		open()
 		emagged = 1
+		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		if(istype(src, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/A = src
 			A.lights = 0
