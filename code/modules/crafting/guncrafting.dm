@@ -19,7 +19,7 @@
 // CRAFTING //
 
 /obj/item/weaponcrafting/reciever/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/machinery/atmospherics/pipe/simple))
+	if(istype(W,/obj/item/pipe))
 		user << "You attach the shotgun barrel to the reciever. The pins seem loose."
 		var/obj/item/weaponcrafting/ishotgunconstruction/I = new /obj/item/weaponcrafting/ishotgunconstruction
 		user.unEquip(src)
