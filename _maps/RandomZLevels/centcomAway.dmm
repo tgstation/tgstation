@@ -591,7 +591,7 @@
 "ls" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor{tag = "icon-vault (NORTHEAST)"; icon_state = "vault"; dir = 5},/area/awaymission/centcomAway/thunderdome)
 "lt" = (/obj/structure/stool/bed/chair,/turf/simulated/floor{tag = "icon-redbluefull (WEST)"; icon_state = "redbluefull"; dir = 8},/area/awaymission/centcomAway/thunderdome)
 "lu" = (/turf/simulated/floor{dir = 8; icon_state = "red"},/area/awaymission/centcomAway/thunderdome)
-"lv" = (/obj/structure/rack,/obj/item/weapon/legcuffs/beartrap,/obj/item/weapon/twohanded/fireaxe,/turf/simulated/floor{icon_state = "dark"},/area/awaymission/centcomAway/thunderdome)
+"lv" = (/obj/structure/rack,/obj/item/weapon/restraints/legcuffs/beartrap,/obj/item/weapon/twohanded/fireaxe,/turf/simulated/floor{icon_state = "dark"},/area/awaymission/centcomAway/thunderdome)
 "lw" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/awaymission/centcomAway/thunderdome)
 "lx" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/awaymission/centcomAway/thunderdome)
 "ly" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/awaymission/centcomAway/thunderdome)
