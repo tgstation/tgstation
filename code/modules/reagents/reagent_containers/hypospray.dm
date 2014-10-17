@@ -1,3 +1,5 @@
+//Hyposprays
+
 /obj/item/weapon/reagent_containers/hypospray
 	name = "hypospray"
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
@@ -44,7 +46,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
-	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field."
+	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat."
 	amount_per_transfer_from_this = 10
 	icon_state = "combat_hypo"
 	volume = 60
@@ -54,14 +56,18 @@
 	..()
 	reagents.add_reagent("synaptizine", 30)
 
+
+
+//MediPens
+
 /obj/item/weapon/reagent_containers/hypospray/medipen
-	name = "\improper MediPen" //lol epipen is copyrighted
+	name = "inaprovaline medipen" //lol epipen is copyrighted
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
 	icon_state = "medipen"
-	item_state = "syringe_10"
+	item_state = "medipen"
 	amount_per_transfer_from_this = 10
 	volume = 10
-	var/emagged = 0
+	ignore_flags = 1 //so you can medipen through hardsuits
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()
@@ -88,3 +94,29 @@
 		usr << "<span class='notice'>It is currently loaded.</span>"
 	else
 		usr << "<span class='notice'>It is spent.</span>"
+
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine
+	name = "leporazine medipen"
+	desc = "A rapid and safe way to regulate your body's temperature."
+	icon_state = "lepopen"
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine/New()
+	..()
+	reagents.remove_reagent("inaprovaline", 10)
+	reagents.add_reagent("leporazine", 10)
+	update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack
+	name = "stimpack medipen"
+	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in bulky clothing at the cost of some muscle tissue tearing."
+	icon_state = "stimpen"
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/New()
+	..()
+	reagents.remove_reagent("inaprovaline", 10)
+	reagents.add_reagent("hyperzine", 8)
+	reagents.add_reagent("lexorin", 2)
+	update_icon()
+	return

@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/binary/dp_vent_pump
-	icon = 'icons/obj/atmospherics/dp_vent_pump.dmi'
-	icon_state = "off"
+	icon = 'icons/obj/atmospherics/unary_devices.dmi' //We reuse the normal vent icons!
+	icon_state = "dpvent_map"
 
 	//node2 is output port
 	//node1 is input port
@@ -13,6 +13,18 @@
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	var/on = 0
+	var/pump_direction = 1 //0 = siphoning, 1 = releasing
+
+	var/external_pressure_bound = ONE_ATMOSPHERE
+	var/input_pressure_min = 0
+	var/output_pressure_max = 0
+
+	var/pressure_checks = 1
+	//1: Do not pass external_pressure_bound
+	//2: Do not pass input_pressure_min
+	//4: Do not pass output_pressure_max
+
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
 
@@ -22,40 +34,19 @@
 	air1.volume = 1000
 	air2.volume = 1000
 
-var/on = 0
-var/pump_direction = 1 //0 = siphoning, 1 = releasing
+/obj/machinery/atmospherics/binary/dp_vent_pump/update_icon_nopipes()
+	overlays.Cut()
+	if(showpipe)
+		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "dpvent_cap")
 
-var/external_pressure_bound = ONE_ATMOSPHERE
-var/input_pressure_min = 0
-var/output_pressure_max = 0
+	if(!on || stat & (NOPOWER|BROKEN))
+		icon_state = "vent_off"
+		return
 
-var/pressure_checks = 1
-//1: Do not pass external_pressure_bound
-//2: Do not pass input_pressure_min
-//4: Do not pass output_pressure_max
-
-/obj/machinery/atmospherics/binary/dp_vent_pump/update_icon()
-	if(on)
-		if(pump_direction)
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
-		else
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
+	if(pump_direction)
+		icon_state = "vent_out"
 	else
-		icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-		on = 0
-
-	return
-
-/obj/machinery/atmospherics/binary/dp_vent_pump/hide(var/i) //to make the little pipe section invisible, the icon changes.
-	if(on)
-		if(pump_direction)
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
-		else
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
-	else
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-		on = 0
-	return
+		icon_state = "vent_in"
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/process()
 	..()
@@ -81,6 +72,7 @@ var/pressure_checks = 1
 				var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 
 				loc.assume_air(removed)
+				air_update_turf()
 
 				if(network1)
 					network1.update = 1
@@ -100,6 +92,7 @@ var/pressure_checks = 1
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
 				air2.merge(removed)
+				air_update_turf()
 
 				if(network2)
 					network2.update = 1

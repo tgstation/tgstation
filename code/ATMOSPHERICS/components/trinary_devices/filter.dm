@@ -1,6 +1,5 @@
 /obj/machinery/atmospherics/trinary/filter
-	icon = 'icons/obj/atmospherics/filter.dmi'
-	icon_state = "intact_off"
+	icon_state = "filter_off"
 	density = 1
 
 	name = "gas filter"
@@ -28,6 +27,10 @@ Filter types:
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
+/obj/machinery/atmospherics/trinary/filter/flipped
+	icon_state = "filter_off_f"
+	flipped = 1
+
 /obj/machinery/atmospherics/trinary/filter/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
@@ -39,16 +42,13 @@ Filter types:
 	if(radio_controller)
 		initialize()
 
-/obj/machinery/atmospherics/trinary/filter/update_icon()
-	if(stat & NOPOWER)
-		icon_state = "intact_off"
-	else if(node2 && node3 && node1)
-		icon_state = "intact_[on?("on"):("off")]"
-	else
-		icon_state = "intact_off"
-		on = 0
+/obj/machinery/atmospherics/trinary/filter/update_icon_nopipes()
+	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
+		icon_state = "filter_on[flipped?"_f":""]"
+		return
 
-	return
+	on = 0
+	icon_state = "filter_off[flipped?"_f":""]"
 
 /obj/machinery/atmospherics/trinary/filter/power_change()
 	var/old_stat = stat
