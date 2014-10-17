@@ -717,3 +717,83 @@
 	name = "Midriff Tank Top"
 	icon_state = "tank_midriff"
 	gender = FEMALE
+
+/datum/sprite_accessory/undershirt/tank_fire
+	name = "Fire Tank-Top"
+	icon_state = "tank_fire"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_ss13
+	name = "Space Station 13 Shirt"
+	icon_state = "shirt_ss13"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_question
+	name = "Question Mark Shirt"
+	icon_state = "shirt_question"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_ian
+	name = "Ian Shirt"
+	icon_state = "shirt_ian"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_skull
+	name = "Skull Shirt"
+	icon_state = "shirt_skull"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_commie
+	name = "Communist Shirt"
+	icon_state = "shirt_commie"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_nano
+	name = "Nanotrasen Shirt"
+	icon_state = "shirt_nano"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_stripes
+	name = "Telnyashka Shirt"
+	icon_state = "shirt_stripes"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/tank_stripes
+	name = "Telnyashka Tank Top"
+	icon_state = "tank_stripes"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_blue
+	name = "Blue Shirt"
+	icon_state = "shirt_blue"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_red
+	name = "Red Shirt"
+	icon_state = "shirt_red"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_green
+	name = "Green Shirt"
+	icon_state = "shirt_green"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_meat
+	name = "Meat Shirt"
+	icon_state = "shirt_meat"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_tiedye
+	name = "Tie-dyed Shirt"
+	icon_state = "shirt_tiedye"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_redjersey
+	name = "Red Sports Jersey"
+	icon_state = "shirt_redjersey"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_bluejersey
+	name = "Blue Sports Jersey"
+	icon_state = "shirt_bluejersey"
+	gender = NEUTER
