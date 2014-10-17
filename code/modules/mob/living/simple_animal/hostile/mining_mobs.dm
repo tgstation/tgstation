@@ -416,6 +416,7 @@
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "goliath_hide"
+	flags = NOBLUDGEON
 	w_class = 3
 	layer = 4
 
