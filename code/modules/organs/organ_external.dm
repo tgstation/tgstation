@@ -96,7 +96,9 @@
 		brute -= brute / 2
 
 	if(status & ORGAN_BROKEN && prob(40) && brute)
+		owner.agony = 1
 		owner.emote("scream")	//getting hit on broken hand hurts
+		owner.agony = 0
 	if(used_weapon)
 		add_autopsy_data("[used_weapon]", brute + burn)
 
@@ -719,7 +721,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	owner.visible_message("\red You hear a loud cracking sound coming from \the [owner].","\red <b>Something feels like it shattered in your [display_name]!</b>","You hear a sickening crack.")
 
 	if(owner.species && !(owner.species.flags & NO_PAIN))
+		owner.agony = 1
 		owner.emote("scream")
+		owner.agony = 0
 
 	status |= ORGAN_BROKEN
 	broken_description = pick("broken","fracture","hairline fracture")

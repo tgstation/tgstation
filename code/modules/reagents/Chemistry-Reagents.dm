@@ -270,7 +270,9 @@ datum
 										if(affecting.take_damage(25, 0))
 											H.UpdateDamageIcon()
 										H.status_flags |= DISFIGURED
+										H.agony = 1
 										H.emote("scream")
+										H.agony = 0
 								else
 									M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 						else
@@ -704,7 +706,9 @@ datum
 											if(affecting.take_damage(25, 0))
 												H.UpdateDamageIcon()
 											H.status_flags |= DISFIGURED
+											H.agony = 1
 											H.emote("scream")
+											H.agony = 0
 									else
 										M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 						else
@@ -1021,7 +1025,9 @@ datum
 								if(affecting.take_damage(25, 0))
 									H.UpdateDamageIcon()
 								H.status_flags |= DISFIGURED
+								H.agony = 1
 								H.emote("scream")
+								H.agony = 0
 						else
 							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 				else
@@ -1086,7 +1092,9 @@ datum
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting.take_damage(15, 0))
 								H.UpdateDamageIcon()
+							H.agony = 1
 							H.emote("scream")
+							H.agony = 0
 					else if(ismonkey(M))
 						var/mob/living/carbon/monkey/MK = M
 
@@ -1108,7 +1116,9 @@ datum
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting.take_damage(15, 0))
 								H.UpdateDamageIcon()
+							H.agony = 1
 							H.emote("scream")
+							H.agony = 0
 							H.status_flags |= DISFIGURED
 						else
 							M.take_organ_damage(min(15, volume * 4))
@@ -2480,11 +2490,15 @@ datum
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
 							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
+							victim.agony = 1
 							victim.emote("scream")
+							victim.agony = 0
 							victim.eye_blurry = max(M.eye_blurry, 5)
 							return
 						else // Oh dear :D
+							victim.agony = 1
 							victim.emote("scream")
+							victim.agony = 0
 							victim << "\red You're sprayed directly in the eyes with pepperspray!"
 							victim.eye_blurry = max(M.eye_blurry, 25)
 							victim.eye_blind = max(M.eye_blind, 10)

@@ -487,7 +487,9 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 					src << "<b>\red You continue to burn!</b>"
 				fire_stacks += 5
 				IgniteMob()
+		agony = 1
 		emote("scream")
+		agony = 0
 	else
 		switch(health)
 			if((-INFINITY) to 60)

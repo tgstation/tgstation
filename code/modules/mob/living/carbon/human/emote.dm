@@ -547,22 +547,21 @@
 				message = "<B>[src]</B> acts out a scream!"
 				m_type = 1
 			else
-				if (world.time-lastScream >= 50)
-					if (!muzzled)
+				if (!muzzled)
+					if (!agony)
 						message = "<B>[src]</B> screams!"
+						m_type = 2
+					else
+						message = "<B>[src]</B> screams in agony!"
 						var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
 						if (src.gender == FEMALE) //Females have their own screams. Trannys be damned.
 							screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
 						var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
-						playsound(get_turf(src), scream, 50, 1)
+						playsound(get_turf(src), scream, 50, 0)
 						m_type = 2
-					else
-						message = "<B>[src]</B> makes a very loud noise."
-						m_type = 2
-					lastScream = world.time
 				else
-					message = "<B>[src]</B> tries to scream, but doesn't make much noise."
-					m_type = 1
+					message = "<B>[src]</B> makes a very loud noise."
+					m_type = 2
 
 		// Needed for M_TOXIC_FART
 		if("fart")

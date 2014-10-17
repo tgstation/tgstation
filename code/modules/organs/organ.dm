@@ -147,7 +147,9 @@
 	// standing is poor
 	if(leg_tally <= 0 && !paralysis && !(lying || resting) && prob(5))
 		if(species && species.flags & NO_PAIN)
+			agony = 1
 			emote("scream")
+			agony = 0
 		emote("collapse")
 		paralysis = 10
 

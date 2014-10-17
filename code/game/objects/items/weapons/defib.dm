@@ -91,7 +91,9 @@
 	target.Weaken(rand(6,12))
 	target.apply_damage(rand(30,60),BURN,"chest")
 	heart.damage += rand(5,60)
+	target.agony = 1
 	target.emote("scream") //If we're going this route, it kinda hurts
+	target.agony = 0
 	target.updatehealth()
 	spawn() //Logging
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Shocked [target.name] ([target.ckey]) with an emagged [src.name]</font>"
