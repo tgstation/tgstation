@@ -33,46 +33,41 @@
 		return
 
 
+#define NA "Not Available"
 proc/crewmonitor(mob/user,var/atom/source)
 	var/t = "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
 	var/list/logs = list()
 	var/list/tracked = crewscan()
 	var/turf/srcturf = get_turf(source)
 	for(var/mob/living/carbon/human/H in tracked)
-		var/log = ""
 		var/turf/pos = get_turf(H)
 		if(istype(H.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = H.w_uniform
 			if(pos && pos.z == srcturf.z && U.sensor_mode)
-				var/obj/item/ID = null
-				if(H.wear_id)
-					ID = H.wear_id.GetID()
+				var/list/sensor_data = U.query_sensors()
+				if(sensor_data && sensor_data.len)
+					var/log = ""
 
+					var/subject_name = NA
+					var/subject_binary_lifesigns = NA
+					if(sensor_data.len >= 1)
+						var/list/level1_data = sensor_data[1]
+						subject_name = level1_data[1]
+						subject_binary_lifesigns = "[level1_data[2] > 1 ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"]"
 
-				var/life_status = "[H.stat > 1 ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"]"
+					var/subject_vital_lifesigns = ""
+					if(sensor_data.len >= 2)
+						var/list/level2_data = sensor_data[2]
+						subject_vital_lifesigns = " (<font color='blue'>[level2_data[1]]</font>/<font color='green'>[level2_data[2]]</font>/<font color='orange'>[level2_data[3]]</font>/<font color='red'>[level2_data[4]]</font>)"
 
-				if(ID)
-					log += "<tr><td width='40%'>[ID.name]</td>"
-				else
-					log += "<tr><td width='40%'>Unknown</td>"
+					var/subject_position = NA
+					if(sensor_data.len >= 3)
+						var/list/level3_data = sensor_data[3]
+						subject_position = "[level3_data[1]] ([level3_data[2]], [level3_data[3]])"
 
-				var/damage_report
-				if(U.sensor_mode > 1)
-					var/dam1 = round(H.getOxyLoss(),1)
-					var/dam2 = round(H.getToxLoss(),1)
-					var/dam3 = round(H.getFireLoss(),1)
-					var/dam4 = round(H.getBruteLoss(),1)
-					damage_report = "(<font color='blue'>[dam1]</font>/<font color='green'>[dam2]</font>/<font color='orange'>[dam3]</font>/<font color='red'>[dam4]</font>)"
+					log = "<tr><td width='40%'>[subject_name]</td><td width='30%'>[subject_binary_lifesigns][subject_vital_lifesigns]</td><td width='30%'>[subject_position]</td></tr>"
+					logs += log
 
-				switch(U.sensor_mode)
-					if(1)
-						log += "<td width='30%'>[life_status]</td><td width='30%'>Not Available</td></tr>"
-					if(2)
-						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'>Not Available</td></tr>"
-					if(3)
-						var/area/player_area = get_area(H)
-						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'>[format_text(player_area.name)] ([pos.x], [pos.y])</td></tr>"
-		logs += log
 	logs = sortList(logs)
 	for(var/log in logs)
 		t += log
@@ -80,6 +75,7 @@ proc/crewmonitor(mob/user,var/atom/source)
 	var/datum/browser/popup = new(user, "crewcomp", "Crew Monitoring", 900, 600)
 	popup.set_content(t)
 	popup.open()
+#undef NA
 
 
 proc/crewscan()

@@ -201,8 +201,11 @@ BLIND     // can't see anything
 	var/can_adjust = 1
 	var/adjusted = 0
 	var/suit_color = null
+	var/list/sensor_data_snapshot = null //if the suit is hacked, this will contain the data to report instead of updated data
 
 		/*
+		sensor_mode
+		0 = Report nothing
 		1 = Report living/dead
 		2 = Report detailed damages
 		3 = Report location
@@ -210,8 +213,17 @@ BLIND     // can't see anything
 	var/obj/item/clothing/tie/hastie = null
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	attachTie(I, user)
-	..()
+	if(istype(I, /obj/item/weapon/wirecutters))
+		if(!sensor_data_snapshot)
+			sensor_data_snapshot = query_sensors()
+			playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
+			user << "<span class='notice'>You cut some wires connecting the suit sensors to the embedded antenna.</span>"
+		else
+			sensor_data_snapshot = null
+			user << "<span class='notice'>You mend the wires connecting the suit sensors to the embedded antenna.</span>"
+	else
+		attachTie(I, user)
+		..()
 
 /obj/item/clothing/under/proc/attachTie(obj/item/I, mob/user, notifyAttach = 1)
 	if(istype(I, /obj/item/clothing/tie))
@@ -239,6 +251,49 @@ BLIND     // can't see anything
 
 			return 1
 
+/obj/item/clothing/under/proc/query_sensors()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.w_uniform == src && has_sensor && sensor_mode)
+			var/list/sensor_data = list()
+
+			if(sensor_mode >= 1)
+				var/list/level1_data = list()
+				var/obj/item/ID = null
+				if(H.wear_id)
+					ID = H.wear_id.GetID()
+				if(ID)
+					level1_data += ID.name
+				else
+					level1_data += "Unknown"
+				level1_data += H.stat
+				sensor_data.len = 1
+				sensor_data[1] = level1_data
+
+			if(sensor_mode >= 2)
+				var/list/level2_data = list()
+				level2_data += round(H.getOxyLoss(),1)
+				level2_data += round(H.getToxLoss(),1)
+				level2_data += round(H.getFireLoss(),1)
+				level2_data += round(H.getBruteLoss(),1)
+				sensor_data.len = 2
+				sensor_data[2] = level2_data
+
+			if(sensor_mode >= 3)
+				var/list/level3_data = list()
+				var/area/A = get_area(H)
+				level3_data += format_text(A.name)
+				level3_data += H.x
+				level3_data += H.y
+				sensor_data.len = 3
+				sensor_data[3] = level3_data
+
+			if(!sensor_data_snapshot)
+				return sensor_data
+			else
+				return sensor_data_snapshot
+	return list()
+
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
@@ -253,6 +308,8 @@ BLIND     // can't see anything
 			user << "Its vital tracker and tracking beacon appear to be enabled."
 	if(hastie)
 		user << "\A [hastie] is attached to it."
+	if(sensor_data_snapshot)
+		user << "<span class='warning'>There are some cut wires poking through the fabric!</span>"
 
 atom/proc/generate_female_clothing(index,t_color,icon)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"="[t_color]_s")
