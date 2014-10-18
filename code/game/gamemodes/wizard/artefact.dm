@@ -145,7 +145,7 @@
 	if(!ishuman(target) || !charges || get_dist(target, user) > 7)
 		return 0
 	var/mob/living/carbon/human/H = target
-	if(H.stat != DEAD)
+	if(!H.stat || H.health > config.health_threshold_crit)
 		return 0
 	switch(raisetype)
 		if(ZOMBIE)
@@ -159,6 +159,8 @@
 
 
 /obj/item/weapon/staff/necro/attack(mob/living/target as mob, mob/living/user as mob)
+	afterattack(target,user,1)
+
 #undef ZOMBIE
 #undef SKELETON
 //#undef FAITHLESS
