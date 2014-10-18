@@ -810,7 +810,7 @@
 	steps = list(list("key"=/obj/item/weapon/bikehorn),//1
 					 list("key"=/obj/item/clothing/shoes/clown_shoes),//2
 					 list("key"=/obj/item/weapon/bikehorn),//3
-					 list("key"=/obj/item/clothing/mask/gas/clown_hat),//4
+					 list("key"=/obj/item/device/radio/headset/clown_hat),//4
 					 list("key"=/obj/item/weapon/bikehorn),//5
 					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/targeting),//6
 					 list("key"=/obj/item/weapon/bikehorn),//7

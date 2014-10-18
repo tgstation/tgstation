@@ -80,14 +80,14 @@
 /datum/recipe/burger/clown
 	reagents = list("flour" = 5)
 	items = list(
-		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/item/device/radio/headset/clown_hat,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/clown
 
 /datum/recipe/burger/mime
 	reagents = list("flour" = 5)
 	items = list(
-		/obj/item/clothing/mask/gas/mime
+		/obj/item/device/radio/headset/mime
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/mime
 

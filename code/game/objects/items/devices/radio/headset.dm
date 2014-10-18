@@ -288,3 +288,45 @@
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 	return
+
+
+/obj/item/device/radio/headset/clown_hat
+	name = "clown wig and mask"
+	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask.(equip it to your ear slot)"
+	icon_state = "clown"
+	item_state = "clown_hat"
+
+
+/obj/item/device/radio/headset/clown_hat/attack_self(mob/user)
+
+	var/mob/M = usr
+	var/list/options = list()
+	options["True Form"] = "clown"
+	options["The Feminist"] = "sexyclown"
+	options["The Madman"] = "joker"
+	options["The Rainbow Color"] ="rainbow"
+
+	var/choice = input(M,"To what form do you wish to Morph this mask?","Morph Mask") in options
+
+	if(src && choice && !M.stat && in_range(M,src))
+		icon_state = options[choice]
+		M << "Your Clown Mask has now morphed into [choice], all praise the Honk Mother!"
+		return 1
+
+/obj/item/device/radio/headset/sexyclown
+	name = "sexy-clown wig and mask"
+	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
+	icon_state = "sexyclown"
+	item_state = "sexyclown"
+
+/obj/item/device/radio/headset/mime
+	name = "mime mask"
+	desc = "The traditional mime's mask. It has an eerie facial posture."
+	icon_state = "mime"
+	item_state = "mime"
+
+/obj/item/device/radio/headset/sexymime
+	name = "sexy mime mask"
+	desc = "A traditional female mime's mask."
+	icon_state = "sexymime"
+	item_state = "sexymime"
