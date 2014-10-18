@@ -1,8 +1,8 @@
 /obj/item/clothing/under/color
 	desc = "A standard issue colored jumpsuit for assistants. Variety is the spice of life!"
 
-/obj/item/clothing/under/color/random/New()
-	var/obj/item/clothing/under/color/C = pick(typesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
+/obj/item/clothing/under/random_color/New()
+	var/obj/item/clothing/under/color/C = pick(typesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/random_color)
 	name = initial(C.name)
 	icon_state = initial(C.icon_state)
 	item_state = initial(C.item_state)
