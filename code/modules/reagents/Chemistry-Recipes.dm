@@ -872,7 +872,7 @@ datum
 
 					var/list/flashers = list()
 					for(var/mob/living/carbon/human/M in viewers(TO, null))
-						if(M:eyecheck() <= 0)
+						if(M.eyecheck() <= 0)
 							flick("e_flash", M.flash) // flash dose faggots
 							flashers += M
 
@@ -930,7 +930,7 @@ datum
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-					if(M:eyecheck() <= 0)
+					if(M.eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
 				for(var/i = 1, i <= created_volume, i++)
@@ -956,7 +956,7 @@ datum
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-					if(M:eyecheck() <= 0)
+					if(M.eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
 				for(var/i = 1, i <= created_volume + rand(1,2), i++)
@@ -1594,7 +1594,7 @@ datum
 
 					var/list/flashers = list()
 					for(var/mob/living/carbon/human/M in viewers(TO, null))
-						if((M:eyecheck() <= 0)&&(!istype(M.glasses, /obj/item/clothing/glasses/science)))
+						if((M.eyecheck() <= 0)&&(!istype(M.glasses, /obj/item/clothing/glasses/science)))
 							flick("e_flash", M.flash) // flash dose faggots
 							flashers += M
 
