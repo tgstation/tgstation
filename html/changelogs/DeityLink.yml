@@ -1,14 +1,3 @@
 author: Deity Link
-delete-after: true
-changes:
-  - tweak: tweaked the Pylon, Forge, and Tome sprites of cult.dmi (set their animation speeds to much nicer looking onces)
-  - tweak: Red Pylons light color now bright red.
-  - tweak: Red Pylons can now be broken like light fixtures leaving a passable broken pylon that can be attacked again to completely erase it.
-  - rscadd: Artificers now have a "Red Pylon" spell. 10 seconds cooldown. Places a Red Pylon (or repair a broken one) under them.<br>Pylons have collisions but can be broken very easily even bare-handed. Their main use is as a light source.
-  - tweak: when floor tiles periodically  decay once <span class="redletter">narsie has risen</span>, they will now spawn a Pylon in place of any light fixtures that were on that tile
-  - imageadd: <span class="redletter">NARSIE HAS GOTTEN A NEW LOOK</span>, upgraded sprites for narsie, now with twice more pixels!
-  - rscadd: coded new interactions with the environnement for <span class="redletter">narsie</span>:<br>Floor tiles (except carpets) and Wall tiles are replaced with their cult counterparts.<br>Grilles are replaced with cult walls.<br>Light bulbs are replaced with Red Pylons.<br>Chairs become pretty wooden chairs.<br>Tables become wooden tables.<br>Most machines and all computers get replaced by various cult structures, unused up to now.<br>Cultists become constructs on contact with narsie.
-  - tweak: the monsters spawned across the universe once <span class="redletter">narsie has risen</span> aren't affected by narsie, and do not attack constructs or cultists either.
-  - rscadd: once the shuttle docks after <span class="redletter">narsie has risen</span>, All the monsters will make their way toward the station's escape hallway.
-  - rscadd: added a button in the Admin Secret menu that lets them choose <span class="redletter">narsie</span>'s behaviour (either the above mentionned new interactions, or going back to the old oversized singulo. Defaults with the new interactions).
-  - tweak: once <span class="redletter">narsie has risen</span>, the rune count cap is increased by 9000. Mostly for fluff.
+changes: []
+delete_after: true
