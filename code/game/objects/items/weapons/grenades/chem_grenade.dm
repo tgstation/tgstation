@@ -57,13 +57,13 @@
 		if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 			var/obj/item/device/assembly_holder/det = W
 			if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
-				user << "\red Assembly must contain one igniter."
+				user << "<span class='warning'> Assembly must contain one igniter.</span>"
 				return
 			if(!det.secured)
-				user << "\red Assembly must be secured with screwdriver."
+				user << "<span class='warning'> Assembly must be secured with screwdriver.</span>"
 				return
 			path = 1
-			user << "\blue You add [W] to the metal casing."
+			user << "<span class='notice'> You add [W] to the metal casing.</span>"
 			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 			user.remove_from_mob(det)
 			det.loc = src
@@ -75,22 +75,22 @@
 			if(stage == 1)
 				path = 1
 				if(beakers.len)
-					user << "\blue You lock the assembly."
+					user << "<span class='notice'> You lock the assembly.</span>"
 					name = "grenade"
 				else
-//					user << "\red You need to add at least one beaker before locking the assembly."
-					user << "\blue You lock the empty assembly."
+//					user << "<span class='warning'> You need to add at least one beaker before locking the assembly.</span>"
+					user << "<span class='warning'> You lock the empty assembly.</span>"
 					name = "fake grenade"
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 				icon_state = initial(icon_state) +"_locked"
 				stage = 2
 			else if(stage == 2)
 				if(active && prob(95))
-					user << "\red You trigger the assembly!"
+					user << "<span class='warning'> You trigger the assembly!</span>"
 					prime()
 					return
 				else
-					user << "\blue You unlock the assembly."
+					user << "<span class='notice'> You unlock the assembly.</span>"
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 					icon_state = initial(icon_state) + (detonator?"_ass":"")
@@ -99,14 +99,14 @@
 		else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 			path = 1
 			if(beakers.len == 2)
-				user << "\red The grenade can not hold more containers."
+				user << "<span class='warning'> The grenade can not hold more containers.</span>"
 				return
 			else
 				if (istype(W,/obj/item/slime_extract))
 					if (inserted_cores > 0)
-						user << "\red This type of grenade cannot hold more than one slime core."
+						user << "<span class='warning'> This type of grenade cannot hold more than one slime core.</span>"
 					else
-						user << "\blue You add \the [W] to the assembly."
+						user << "<span class='notice'> You add \the [W] to the assembly.</span>"
 						user.drop_item()
 						W.loc = src
 						beakers += W
@@ -115,16 +115,16 @@
 						stage = 1
 						name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				else if(W.reagents.total_volume)
-					user << "\blue You add \the [W] to the assembly."
+					user << "<span class='notice'> You add \the [W] to the assembly.</span>"
 					user.drop_item()
 					W.loc = src
 					beakers += W
 					stage = 1
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				else
-					user << "\red \the [W] is empty."
+					user << "<span class='warning'> \the [W] is empty.</span>"
 		else if (istype(W,/obj/item/slime_extract))
-			user << "\red This grenade case is too small for a slime core to fit in it."
+			user << "<span class='warning'> This grenade case is too small for a slime core to fit in it.</span>"
 
 	examine()
 		set src in usr
@@ -182,40 +182,28 @@
 			S.reagents.trans_to(reservoir, S.reagents.total_volume)
 		if (E != null)
 			extract_uses = E.Uses
-			while(extract_uses)	//<-------//exception for slime extracts injected with steroids. The grenade will repeat its checks untill all its remaining uses are gone
+			for(var/i=1,i<=extract_uses,i++)//<-------//exception for slime extracts injected with steroids. The grenade will repeat its checks untill all its remaining uses are gone
 				if (reservoir.reagents.has_reagent("plasma", 5))
 					reservoir.reagents.trans_id_to(E, "plasma", 5)		//If the grenade contains a slime extract, the grenade will check in this order
-					extract_uses--
 				else if (reservoir.reagents.has_reagent("blood", 5))	//for any Plasma -> Blood ->or Water among the reagents of the other containers
 					reservoir.reagents.trans_id_to(E, "blood", 5)		//and inject 5u of it into the slime extract.
-					extract_uses--
 				else if (reservoir.reagents.has_reagent("water", 5))
 					reservoir.reagents.trans_id_to(E, "water", 5)
-					extract_uses--
 				else if (reservoir.reagents.has_reagent("sugar", 5))
 					reservoir.reagents.trans_id_to(E, "sugar", 5)
-					extract_uses--
-				else
-					extract_uses-- //<--don't remove! could crash the server!
-			if(E.reagents.total_volume)						  //<-------//exception for green and black slime extracts. The grenade checks if any
+			if(E.reagents.total_volume)						  //<-------//exception for slime reactions that produce new reagents. The grenade checks if any
 				E.reagents.trans_to(reservoir, E.reagents.total_volume)	//reagents are left in the slime extracts after the slime reactions occured
 			if (C != null)
 				extract_uses = C.Uses
-				while(extract_uses)	//why don't anyone ever uses "while" directives anyway?
+				for(var/j=1,j<=extract_uses,j++)	//why don't anyone ever uses "while" directives anyway?
 					if (reservoir.reagents.has_reagent("plasma", 5))
 						reservoir.reagents.trans_id_to(C, "plasma", 5)	//since the order in which slime extracts are inserted matters (in the case of an Ex grenade)
-						extract_uses--
 					else if (reservoir.reagents.has_reagent("blood", 5))//this allow users to plannify which reagent will get into which extract.
 						reservoir.reagents.trans_id_to(C, "blood", 5)
-						extract_uses--
 					else if (reservoir.reagents.has_reagent("water", 5))
 						reservoir.reagents.trans_id_to(C, "water", 5)
-						extract_uses--
 					else if (reservoir.reagents.has_reagent("sugar", 5))
 						reservoir.reagents.trans_id_to(C, "sugar", 5)
-						extract_uses--
-					else
-						extract_uses--
 				if(C.reagents.total_volume)
 					C.reagents.trans_to(reservoir, C.reagents.total_volume)
 
@@ -267,13 +255,13 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 		if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 			var/obj/item/device/assembly_holder/det = W
 			if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
-				user << "\red Assembly must contain one igniter."
+				user << "<span class='warning'> Assembly must contain one igniter.</span>"
 				return
 			if(!det.secured)
-				user << "\red Assembly must be secured with screwdriver."
+				user << "<span class='warning'> Assembly must be secured with screwdriver.</span>"
 				return
 			path = 1
-			user << "\blue You insert [W] into the grenade."
+			user << "<span class='notice'> You insert [W] into the grenade.</span>"
 			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 			user.remove_from_mob(det)
 			det.loc = src
@@ -285,21 +273,21 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 			if(stage == 1)
 				path = 1
 				if(beakers.len)
-					user << "\blue You lock the assembly."
+					user << "<span class='notice'> You lock the assembly.</span>"
 					name = "EX Grenade"
 				else
-					user << "\blue You lock the empty assembly."
+					user << "<span class='notice'> You lock the empty assembly.</span>"
 					name = "fake grenade"
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 				icon_state = initial(icon_state) +"_locked"
 				stage = 2
 			else if(stage == 2)
 				if(active && prob(95))
-					user << "\red You trigger the assembly!"
+					user << "<span class='warning'> You trigger the assembly!</span>"
 					prime()
 					return
 				else
-					user << "\blue You unlock the assembly."
+					user << "<span class='notice'> You unlock the assembly.</span>"
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 					name = "unsecured EX grenade with [beakers.len] containers[detonator?" and detonator":""]"
 					icon_state = initial(icon_state) + (detonator?"_ass":"")
@@ -308,14 +296,14 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 		else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 			path = 1
 			if(beakers.len == 3)
-				user << "\red The grenade can not hold more containers."
+				user << "<span class='warning'> The grenade can not hold more containers.</span>"
 				return
 			else
 				if (istype(W,/obj/item/slime_extract))
 					if (inserted_cores > 1)
-						user << "\red You cannot fit more than two slime cores in this grenade."
+						user << "<span class='warning'> You cannot fit more than two slime cores in this grenade.</span>"
 					else
-						user << "\blue You add \the [W] to the assembly."
+						user << "<span class='notice'> You add \the [W] to the assembly.</span>"
 						user.drop_item()
 						W.loc = src
 						beakers += W
@@ -327,14 +315,14 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 						stage = 1
 						name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				else if(W.reagents.total_volume)
-					user << "\blue You add \the [W] to the assembly."
+					user << "<span class='notice'> You add \the [W] to the assembly.</span>"
 					user.drop_item()
 					W.loc = src
 					beakers += W
 					stage = 1
 					name = "unsecured EX grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				else
-					user << "\red \the [W] is empty."
+					user << "<span class='warning'> \the [W] is empty.</span>"
 
 /obj/item/weapon/grenade/chem_grenade/metalfoam
 	name = "Metal-Foam Grenade"

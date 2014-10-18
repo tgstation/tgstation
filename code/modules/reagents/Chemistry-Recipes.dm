@@ -1137,7 +1137,7 @@ datum
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
-						if((H:eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
+						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
 							flick("e_flash", O.flash)
 							O << "<span class='danger'>A flash blinds you while you start hearing terrifying noises !</span>"
 						else
@@ -1202,7 +1202,7 @@ datum
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
-						if((H:eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
+						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
 							flick("e_flash", O.flash)
 							O << "<span class='rose'>A flash blinds and you can feel a new presence !</span>"
 						else
@@ -1234,7 +1234,7 @@ datum
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
-						if((H:eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
+						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
 							flick("e_flash", O.flash)
 							O << "<span class='caution'>A white light blinds you and you think you can smell some food nearby !</span>"
 						else
@@ -1270,7 +1270,7 @@ datum
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
-						if((H:eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
+						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
 							flick("e_flash", O.flash)
 							O << "<span class='caution'>A white light blinds you and you think you can hear bottles rolling on the floor !</span>"
 						else

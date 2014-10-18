@@ -261,8 +261,6 @@
 	slime_brightness(user)
 	return 1
 
-	slime_brightness(user)
-
 /obj/item/device/flashlight/lamp/slime/pickup(mob/user)
 	user.l_color = l_color
 	if(on)
