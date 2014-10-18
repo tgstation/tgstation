@@ -27,7 +27,7 @@
 				shuttletarget = pick(get_area_turfs(locate(/area/hallway/secondary/exit)))
 			enroute = 1
 			stop_automated_movement = 1
-			spawn(1)
+			spawn()
 				horde()
 
 		if(get_dist(src, shuttletarget) <= 2)		//The monster reached the escape hallway

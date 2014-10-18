@@ -24,21 +24,17 @@
 	var/obj/item/wepon = null
 
 /obj/structure/cult/pylon/attack_hand(mob/M as mob)
-	wepon = new /obj/item
-	wepon.force = 5
-	attackby(wepon, M)
-	wepon = null
+	attackpylon(M, 5)
 
 /obj/structure/cult/pylon/attack_animal(mob/living/simple_animal/user as mob)
-	if(user.environment_smash)
-		wepon = new /obj/item
-		wepon.force = user.melee_damage_upper
-		attackby(wepon, user)
-		wepon = null
+	attackpylon(user, user.melee_damage_upper)
 
 /obj/structure/cult/pylon/attackby(obj/item/W as obj, mob/user as mob)
+	attackpylon(mob, W.force)
+
+/obj/structure/cult/pylon/proc/attackpylon(mob/user as mob, var/damage)
 	if(!isbroken)
-		if(prob(1+W.force * 5))
+		if(prob(1+ damage * 5))
 			user << "You hit the pylon, and its crystal breaks apart!"
 			for(var/mob/M in viewers(src))
 				if(M == user)
@@ -59,6 +55,7 @@
 		else
 			user << "You hit the pylon!"
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
+
 
 /obj/structure/cult/pylon/proc/repair(mob/user as mob)
 	if(isbroken)
