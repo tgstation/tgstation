@@ -1335,7 +1335,6 @@
 #include "code\modules\reagents\reagent_containers\food\condiment.dm"
 #include "code\modules\reagents\reagent_containers\food\drinks.dm"
 #include "code\modules\reagents\reagent_containers\food\snacks.dm"
-#include "code\modules\reagents\reagent_containers\food\drinks\bottle.dm"
 #include "code\modules\reagents\reagent_containers\food\drinks\drinkingglass.dm"
 #include "code\modules\reagents\reagent_containers\food\drinks\jar.dm"
 #include "code\modules\reagents\reagent_containers\food\drinks\bottle\robot.dm"

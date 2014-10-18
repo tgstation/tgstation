@@ -7,78 +7,10 @@
 	amount_per_transfer_from_this = 10
 	volume = 50
 	g_amt = 500
+	force = 5
 
-
-	proc/smash(mob/living/target as mob, mob/living/user as mob)
-		//Creates a shattering noise and replaces the drinking glass with a glass shard
-		user.drop_item()
-		var/obj/item/weapon/shard/S = getFromPool(/obj/item/weapon/shard, user.loc)
-		user.put_in_active_hand(S)
-
-		playsound(src, "shatter", 70, 1)
-		user.put_in_active_hand(S)
-		src.transfer_fingerprints_to(S)
-
-		del(src)
-
-
-	attack(mob/living/target as mob, mob/living/user as mob)
-
-		if(!target)
-			return
-
-		if(user.a_intent != "hurt")
-			return ..()
-
-		force = 5
-
-		var/datum/organ/external/affecting = user.zone_sel.selecting //Find what the player is aiming at
-
-		var/armor_block = 0 //Get the target's armour values for normal attack damage.
-
-		//Calculating damage.
-		if(ishuman(target))
-
-			var/mob/living/carbon/human/H = target
-			armor_block = H.run_armor_check(affecting, "melee") // For normal attack damage
-
-		else
-			//Only humans can have armour, right?
-			armor_block = target.run_armor_check(affecting, "melee")
-
-		//Apply the damage!
-		target.apply_damage(force, BRUTE, affecting, armor_block)
-
-		if(affecting == "head" && istype(target, /mob/living/carbon/))
-
-			//Display an attack message.
-			for(var/mob/O in viewers(user, null))
-				if(target != user) O.show_message(text("\red <B>[target] has been hit over the head with a [src.name], by [user]!</B>"), 1)
-				else O.show_message(text("\red <B>[target] hit himself with a [src.name] on the head!</B>"), 1)
-
-		else
-			//Default attack message
-			for(var/mob/O in viewers(user, null))
-				if(target != user) O.show_message(text("\red <B>[target] has been attacked with a [src.name], by [user]!</B>"), 1)
-				else O.show_message(text("\red <B>[target] has attacked himself with a [src.name]!</B>"), 1)
-
-		//Attack logs
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [target.name] ([target.ckey]) with a drinking glass!</font>")
-		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a drinking glass by [user.name] ([user.ckey])</font>")
-		log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] with a drinking glass. ([target.ckey])</font>")
-		if(!iscarbon(user))
-			target.LAssailant = null
-		else
-			target.LAssailant = user
-
-		//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
-		if(src.reagents)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\blue <B>The contents of the [src] splashes all over [target]!</B>"), 1)
-			src.reagents.reaction(target, TOUCH)
-
-		//Finally, smash the bottle. This kills (del) the bottle.
-		src.smash(target, user)
+//removed smashing - now uses smashing proc from drinks.dm - Hinaichigo
+//also now produces a broken glass when smashed instead of just a shard
 
 
 	on_reagent_change()
