@@ -2444,7 +2444,7 @@
 			if("togglenarsie")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","NA")
-				var/choice = input("How do you wish for narsie to interract with her surroundings?.") in list("CultStation13", "Nar-Singulo")
+				var/choice = input("How do you wish for narsie to interact with her surroundings?") in list("CultStation13", "Nar-Singulo")
 				if(choice == "CultStation13")
 					message_admins("[key_name_admin(usr)] has set narsie's behaviour to \"CultStation13\".")
 					narsie_behaviour = "CultStation13"
