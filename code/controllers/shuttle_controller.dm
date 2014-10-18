@@ -253,6 +253,10 @@ datum/shuttle_controller
 						captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
 						world << sound('sound/AI/shuttledock.ogg')
 
+						if(universe.name == "Hell Rising")
+							world << "___________________________________________________________________"
+							world << "<span class='sinister' style='font-size:3'> A vile force of darkness is making its way toward the escape shuttle.</span>"
+
 						return 1
 
 				if(1)

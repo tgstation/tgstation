@@ -356,6 +356,24 @@ var/global/mr_clean_targets = list(
 	icon = 'icons/obj/mrclean.dmi'
 	icon_state = ""
 
+/obj/machinery/singularity/narsie/large/clean/process()
+	eat()
+
+	if (!target || prob(5))
+		pickuptrash()
+
+	move()
+
+	if (prob(25))
+		mezzer()
+
+/obj/machinery/singularity/narsie/large/clean/mezzer()
+	for(var/mob/living/carbon/M in oviewers(8, src))
+		if(M.stat == CONSCIOUS)
+			if(!iscultist(M))
+				M << "<span class='warning'> You take a moment to admire [src.name] hard at work...</span>"
+				M.apply_effect(3, STUN)
+
 /obj/machinery/singularity/narsie/large/clean/update_icon()
 	overlays = 0
 
@@ -405,7 +423,7 @@ var/global/mr_clean_targets = list(
 /*
  * Mr. Clean just follows the dirt and grime.
  */
-/obj/machinery/singularity/narsie/large/clean/pickcultist()
+/obj/machinery/singularity/narsie/large/clean/proc/pickuptrash()
 	var/list/targets = list()
 	for(var/obj/effect/E in world)
 		if(is_type_in_list(E, mr_clean_targets) && E.z == src.z)

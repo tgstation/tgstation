@@ -89,9 +89,8 @@
 			for(var/obj/structure/cult/pylon/P in spawn_place.contents)
 				if(P.isbroken)
 					P.repair(usr)
-					return
-				else
-					return
+				return
+
 			var/atom/summoned_object = new summoned_object_type(spawn_place)
 
 			for(var/varName in newVars)
