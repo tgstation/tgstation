@@ -48,7 +48,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		/obj/machinery/r_n_d/protolathe,
 		/obj/machinery/r_n_d/destructive_analyzer,
 		/obj/machinery/r_n_d/circuit_imprinter,
-		/obj/machinery/r_n_d/fabricator/mech
+		/obj/machinery/r_n_d/fabricator/mech,
+		/obj/machinery/r_n_d/fabricator/pod
 		)
 
 	var/screen = 1.0	//Which screen is currently showing.

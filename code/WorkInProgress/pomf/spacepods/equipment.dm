@@ -59,6 +59,8 @@
 /obj/item/device/spacepod_equipment
 	name = "equipment"
 	var/obj/spacepod/my_atom
+	var/construction_time = 150
+	var/construction_cost = list("iron" = 15000)
 // base item for spacepod weapons
 
 /obj/item/device/spacepod_equipment/weaponry
@@ -89,7 +91,7 @@
 	fire_weapons()
 
 /obj/item/device/spacepod_equipment/weaponry/taser/burst
-	name = "\improper taser system"
+	name = "\improper burst taser system"
 	desc = "A weak taser system for space pods, this one fires 3 at a time."
 	icon_state = "pod_b_taser"
 	shot_cost = 20

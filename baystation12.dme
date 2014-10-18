@@ -1511,6 +1511,7 @@
 #include "code\WorkInProgress\pomf\spacepods\construction.dm"
 #include "code\WorkInProgress\pomf\spacepods\equipment.dm"
 #include "code\WorkInProgress\pomf\spacepods\parts.dm"
+#include "code\WorkInProgress\pomf\spacepods\pod_fabricator.dm"
 #include "code\WorkInProgress\pomf\spacepods\spacepods.dm"
 #include "code\WorkInProgress\Ported\policetape.dm"
 #include "code\WorkInProgress\SkyMarshal\officer_stuff.dm"
