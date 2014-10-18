@@ -6,6 +6,10 @@ var/list/event_last_fired = list()
 		return
 
 	var/minutes_passed = world.time/600
+	var/roundstart_delay = 30
+
+	if(minutes_passed < roundstart_delay) //Self-explanatory
+		return
 
 	var/list/active_with_role = number_active_with_role()
 
