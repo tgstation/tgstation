@@ -333,19 +333,20 @@
 	..()
 	if(istype(W, /obj/item/device/flash))
 		var/obj/item/device/flash/F = W
-		if(src.flash1 && src.flash2)
-			user << "<span class='notice'>You have already inserted the eyes!</span>"
-			return
-		else if(F.broken)
-			user << "<span class='notice'>You can't use a broken flash!</span>"
-			return
-		else
-			user.drop_item()
-			F.loc = src
-			if(src.flash1)
-				src.flash2 = F
+		if(!istype(F,/obj/item/device/flash/cyborg))
+			if(src.flash1 && src.flash2)
+				user << "<span class='notice'>You have already inserted the eyes!</span>"
+				return
+			else if(F.broken)
+				user << "<span class='notice'>You can't use a broken flash!</span>"
+				return
 			else
-				src.flash1 = F
-			user << "<span class='notice'>You insert the flash into the eye socket!</span>"
+				user.drop_item()
+				F.loc = src
+				if(src.flash1)
+					src.flash2 = F
+				else
+					src.flash1 = F
+				user << "<span class='notice'>You insert the flash into the eye socket!</span>"
 	return
 

@@ -47,14 +47,16 @@
 			power_change()
 
 	else if (istype(W, /obj/item/device/flash))
-		if (!bulb)
-			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
-			user.drop_item()
-			W.loc = src
-			bulb = W
-			power_change()
-		else
-			user << "<span class='notice'>A flashbulb is already installed in [src].</span>"
+		var/obj/item/device/flash/F = W
+		if(!istype(F,/obj/item/device/flash/cyborg))
+			if (!bulb)
+				user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
+				user.drop_item()
+				W.loc = src
+				bulb = W
+				power_change()
+			else
+				user << "<span class='notice'>A flashbulb is already installed in [src].</span>"
 	add_fingerprint(user)
 
 //Let the AI trigger them directly.
