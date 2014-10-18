@@ -44,7 +44,7 @@
 					affected_mob.nutrition -= 95
 					affected_mob.adjustToxLoss(-1)
 				else
-					affected_mob << "<span class='warning'>You gag as you want to throw up, but there's nothing in your stomach!</span>"
+					affected_mob << "<span class='userdanger'>You gag as you want to throw up, but there's nothing in your stomach!</span>"
 					affected_mob.Weaken(10)
 					affected_mob.adjustToxLoss(3)
 
