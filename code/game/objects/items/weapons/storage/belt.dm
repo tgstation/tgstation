@@ -111,7 +111,7 @@
 		/obj/item/weapon/grenade/flashbang,
 		/obj/item/weapon/reagent_containers/spray/pepper,
 		/obj/item/weapon/restraints/handcuffs,
-		/obj/item/device/flash,
+		/obj/item/device/flash/handheld,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
