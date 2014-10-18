@@ -789,7 +789,7 @@
 					usr.u_equip(place_item)
 					equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
 			// Update strip window
-			if(usr.machine == src && in_range(src, usr))
+			if(in_range(src, usr))
 				show_inv(usr)
 
 		else if(!pickpocket)
