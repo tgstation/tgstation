@@ -59,6 +59,14 @@
 	max_ammo = 2
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/shotriot
+	name = "riot shotgun internal magazine"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+	caliber = "shotgun"
+	max_ammo = 6
+	multiload = 0
+
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm
 	name = "handgun magazine (9mm)"
