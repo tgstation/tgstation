@@ -764,7 +764,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else return get_step(ref, base_dir)
 
 /proc/do_mob(var/mob/user , var/mob/target, var/time = 30, numticks = 5) //This is quite an ugly solution but i refuse to use the old request system.
-	if(!user || !target) return 0
+	if(!user || !target)
+		return 0
+	if(numticks == 0)
+		return 0
 	var/user_loc = user.loc
 	var/target_loc = target.loc
 	var/holding = user.get_active_hand()
