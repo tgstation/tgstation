@@ -57,6 +57,57 @@
 
 	summon_type = list(/obj/item/device/soulstone)
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/pylon
+	name = "Red Pylon"
+	desc = "This spell conjures a fragile crystal from Nar-Sie's realm. Makes for a convenient light source."
+
+	school = "conjuration"
+	charge_max = 200
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 0
+
+	summon_type = list(/obj/structure/cult/pylon)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/pylon/cast(list/targets)
+	for(var/turf/T in targets)
+		if(T.density && !summon_ignore_density)
+			targets -= T
+
+	playsound(get_turf(src), cast_sound, 50, 1)
+
+	if(do_after(usr,delay))
+		for(var/i=0,i<summon_amt,i++)
+			if(!targets.len)
+				break
+			var/summoned_object_type = pick(summon_type)
+			var/turf/spawn_place = pick(targets)
+			if(summon_ignore_prev_spawn_points)
+				targets -= spawn_place
+
+			for(var/obj/structure/cult/pylon/P in spawn_place.contents)
+				if(P.isbroken)
+					P.repair(usr)
+					return
+				else
+					return
+			var/atom/summoned_object = new summoned_object_type(spawn_place)
+
+			for(var/varName in newVars)
+				if(varName in summoned_object.vars)
+					summoned_object.vars[varName] = newVars[varName]
+
+	else
+		switch(charge_type)
+			if("recharge")
+				charge_counter = charge_max - 5//So you don't lose charge for a failed spell(Also prevents most over-fill)
+			if("charges")
+				charge_counter++//Ditto, just for different spell types
+
+
+	return
+
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
 	name = "Shield"

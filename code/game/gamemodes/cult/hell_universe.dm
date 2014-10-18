@@ -27,8 +27,11 @@ In short:
 	if(istype(T,/turf/simulated/wall) && !istype(T,/turf/simulated/wall/cult))
 		T.ChangeTurf(/turf/simulated/wall/cult)
 		return
-	if(istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/engine/cult))
+	if(istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/engine/cult) && !istype(T,/turf/simulated/floor/carpet))
 		T.ChangeTurf(/turf/simulated/floor/engine/cult)
+		for(var/obj/machinery/light/L in T.contents)
+			new /obj/structure/cult/pylon(L.loc)
+			qdel(L)
 		return
 
 
@@ -57,6 +60,7 @@ In short:
 		A.party    = null
 		A.radalert = 0
 
+/*
 		// Slap random alerts on shit
 		if(prob(25))
 			switch(rand(1,4))
@@ -68,6 +72,7 @@ In short:
 					A.radalert=1
 				if(4)
 					A.party=1
+*/
 
 		A.updateicon()
 
@@ -90,5 +95,7 @@ In short:
 	for(var/mob/living/simple_animal/M in world)
 		if(M && !M.client)
 			M.stat = DEAD
+
+	runedec += 9000	//basically removing the rune cap
 
 	ticker.StartThematic("endgame")

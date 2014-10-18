@@ -225,6 +225,7 @@
 	melee_damage_upper = 25
 	attacktext = "slashes"
 	speed = -1
+	environment_smash = 1
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/rapidslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
@@ -256,6 +257,7 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/pylon,
 							///obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser
 							)
 
