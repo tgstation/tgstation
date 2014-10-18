@@ -4,7 +4,6 @@
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
-	var/leap_on_click = 0
 	update_icon = 1
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated

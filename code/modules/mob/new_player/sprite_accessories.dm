@@ -671,15 +671,6 @@
 	icon_state = "female_kinky"
 	gender = FEMALE
 
-/datum/sprite_accessory/underwear/female_whitealt
-	name = "Ladies White Sport"
-	icon_state = "female_whitealt"
-	gender = FEMALE
-
-/datum/sprite_accessory/underwear/female_blackalt
-	name = "Ladies Black Sport"
-	icon_state = "female_blackalt"
-	gender = FEMALE
 
 ////////////////////////////
 // Undershirt Definitions //

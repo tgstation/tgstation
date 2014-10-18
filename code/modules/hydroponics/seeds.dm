@@ -1013,23 +1013,6 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 2
-	mutatelist = list(/obj/item/seeds/carpetseed)
-
-/obj/item/seeds/carpetseed
-	name = "pack of carpet seeds"
-	desc = "These seeds grow into stylish carpet samples."
-	icon_state = "seed-carpet"
-	species = "carpet"
-	plantname = "Carpet"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/carpet
-	lifespan = 40
-	endurance = 40
-	maturation = 2
-	production = 5
-	yield = 5
-	potency = 10
-	plant_type = 0
-	growthstages = 2
 
 /obj/item/seeds/cocoapodseed
 	name = "pack of cocoa pod seeds"

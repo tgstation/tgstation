@@ -1030,7 +1030,7 @@ About the new airlock wires panel:
 		if(locate(/mob/living) in get_turf(src))
 		//	playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)	//THE BUZZING IT NEVER STOPS	-Pete
 			spawn (60)
-				autoclose()
+				close()
 			return
 
 	crush()
