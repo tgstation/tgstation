@@ -985,8 +985,8 @@
 		src.transfer_fingerprints_to(B)
 
 
-	spawn(50)
-		del(src)
+		spawn(50)
+			del(src)
 
 //////////////////////
 // molotov cocktail //
