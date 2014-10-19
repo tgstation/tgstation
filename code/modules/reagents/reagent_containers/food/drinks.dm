@@ -906,11 +906,15 @@
 	target.apply_damage(force, BRUTE, affecting, armor_block)
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.
+	// For drinking glass
+	var/temp ="bottle of "
+	if(istype(src, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || istype(src, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater) || istype(src, /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing))  //to avoid weird phrases
+		temp = ""
 	if(affecting == "head" && istype(target, /mob/living/carbon/))
 
 		//Display an attack message.
 		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("\red <B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B>"), 1)
+			if(target != user) O.show_message(text("\red <B>[target] has been hit over the head with a [temp][src.name], by [user]!</B>"), 1)
 			else O.show_message(text("\red <B>[target] hit himself with a bottle of [src.name] on the head!</B>"), 1)
 		//Weaken the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
@@ -919,7 +923,7 @@
 	else
 		//Default attack message and don't weaken the target.
 		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("\red <B>[target] has been attacked with a bottle of [src.name], by [user]!</B>"), 1)
+			if(target != user) O.show_message(text("\red <B>[target] has been attacked with a bottle of [temp][src.name], by [user]!</B>"), 1)
 			else O.show_message(text("\red <B>[target] has attacked himself with a bottle of [src.name]!</B>"), 1)
 
 	//Attack logs
