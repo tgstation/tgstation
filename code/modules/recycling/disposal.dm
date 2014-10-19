@@ -692,12 +692,10 @@
 
 	var/turf/target
 
-	if(istype(T, /turf/simulated/floor)) //intact floor, pop the tile
-		var/turf/simulated/floor/F = T
-		if(F.floor_tile)
-			F.floor_tile.loc = H //It took me a day to figure out this was the right way to do it.
-		F.floor_tile = null //So it doesn't get deleted in make_plating()
-		F.make_plating()
+	if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/plating)) //intact floor, pop the tile
+		var/turf/simulated/floor/myturf = T
+		new myturf.floor_tile(T)
+		myturf.make_plating()
 
 	if(direction)		// direction is specified
 		if(istype(T, /turf/space)) // if ended in space, then range is unlimited

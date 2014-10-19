@@ -2,7 +2,6 @@
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
 
-	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 
 	//Properties for open tiles (/floor)
@@ -104,26 +103,6 @@
 /turf/proc/is_asteroid_floor()
 	return 0
 /turf/proc/is_plasteel_floor()
-	return 0
-/turf/proc/is_light_floor()
-	return 0
-/turf/proc/is_grass_floor()
-	return 0
-/turf/proc/is_wood_floor()
-	return 0
-/turf/proc/is_gold_floor()
-	return 0
-/turf/proc/is_silver_floor()
-	return 0
-/turf/proc/is_plasma_floor()
-	return 0
-/turf/proc/is_uranium_floor()
-	return 0
-/turf/proc/is_bananium_floor()
-	return 0
-/turf/proc/is_diamond_floor()
-	return 0
-/turf/proc/is_carpet_floor()
 	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
