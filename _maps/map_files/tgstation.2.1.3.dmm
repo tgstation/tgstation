@@ -3714,7 +3714,7 @@
 "btv" = (/turf/simulated/wall,/area/medical/genetics)
 "btw" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor,/area/janitor)
 "btx" = (/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/simulated/floor{dir = 2; icon_state = "yellowcorner"},/area/hallway/primary/aft)
-"bty" = (/obj/structure/window/reinforced{dir = 4},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{tag = "icon-manifold-r-f (NORTH)"; dir = 1},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
+"bty" = (/obj/structure/window/reinforced{dir = 4},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{tag = "icon-manifold-r-f (NORTH)"; dir = 1},/obj/structure/closet/wardrobe/genetics_white,/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "btz" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "btA" = (/obj/structure/stool/bed/chair/office/light{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "btB" = (/obj/machinery/computer/scan_consolenew,/turf/simulated/floor{dir = 5; icon_state = "whiteblue"},/area/medical/genetics)
