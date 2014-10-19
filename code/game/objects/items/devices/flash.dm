@@ -157,3 +157,5 @@
 	desc = "If you see this, you're not likely to remember it any time soon."
 	icon_state = "memorizer"
 	item_state = "nullrod"
+
+/obj/item/device/flash/handheld //this is now the regular pocket flashes
