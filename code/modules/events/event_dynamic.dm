@@ -9,6 +9,7 @@ var/list/event_last_fired = list()
 	var/roundstart_delay = 30
 
 	if(minutes_passed < roundstart_delay) //Self-explanatory
+		message_admins("Too early to trigger random event, aborting.")
 		return
 
 	var/list/active_with_role = number_active_with_role()
@@ -95,6 +96,8 @@ var/list/event_last_fired = list()
 	//The event will add itself to the MC's event list
 	//and start working via the constructor.
 	new picked_event
+
+	message_admins("[picked_event] firing. Time to have fun.")
 
 	return 1
 
