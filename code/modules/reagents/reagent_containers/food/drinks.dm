@@ -826,9 +826,9 @@
 
 	if(molotov) //for molotovs
 		if(lit)
-			new /obj/effect/decal/cleanable/ash(src.loc)
+			new /obj/effect/decal/cleanable/ash(get_turf(src))
 		else
-			new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
+			new /obj/item/weapon/reagent_containers/glass/rag(get_turf(src))
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	user.drop_item()
@@ -963,9 +963,9 @@
 
 		if(molotov) //for molotovs
 			if(lit)
-				new /obj/effect/decal/cleanable/ash(src.loc)
+				new /obj/effect/decal/cleanable/ash(get_turf(src))
 			else
-				new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
+				new /obj/item/weapon/reagent_containers/glass/rag(get_turf(src))
 
 		//create new broken bottle
 		var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(loc)
