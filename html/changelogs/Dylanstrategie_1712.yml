@@ -1,4 +1,4 @@
 author: Dylanstrategie
 delete_after: true
 changes:
-  - wip: Reweighting event odds. Furthermore, events no longer trigger until about 30 minutes in. By all logic, this only affects DYNAMIC EVENTS, not admin ones
+  - wip: Reweighting event odds. Furthermore, events no longer trigger until about 50 minutes in. By all logic, this only affects DYNAMIC EVENTS, not admin ones

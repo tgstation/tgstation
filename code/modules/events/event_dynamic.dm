@@ -6,7 +6,7 @@ var/list/event_last_fired = list()
 		return
 
 	var/minutes_passed = world.time/600
-	var/roundstart_delay = 30
+	var/roundstart_delay = 50
 
 	if(minutes_passed < roundstart_delay) //Self-explanatory
 		message_admins("Too early to trigger random event, aborting.")
