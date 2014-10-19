@@ -760,7 +760,7 @@
 			var/light_available
 			if(A)
 				if(A.lighting_use_dynamic)
-					light_available = max(0,min(10,T.lighting_lumcount)-5)
+					light_available = max(0,min(10,T.lighting_lumcount))
 				else
 					light_available =  5
 
