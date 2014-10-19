@@ -75,7 +75,7 @@
 		G.process()
 
 	if(dir!=oldir)
-		update_inv_hat(0)
+		regenerate_icons()
 	oldir = dir
 
 	if(!client && stat == CONSCIOUS)
