@@ -227,31 +227,32 @@
 	icon_state = "slimelamp"
 	item_state = ""
 	l_color = "#333300"
-	luminosity = 2
 	on = 0
+	var/brightness_max = 6
+	var/brightness_min = 2
 
 /obj/item/device/flashlight/lamp/slime/initialize()
 	..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		SetLuminosity(6)
+		SetLuminosity(brightness_max)
 	else
 		icon_state = initial(icon_state)
-		SetLuminosity(2)
+		SetLuminosity(brightness_min)
 
 /obj/item/device/flashlight/lamp/slime/proc/slime_brightness(var/mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(user && loc == user)
-			user.SetLuminosity(user.luminosity + 4)
+			user.SetLuminosity(user.luminosity + brightness_max - brightness_min)
 		else if(isturf(loc))
-			SetLuminosity(6)
+			SetLuminosity(brightness_max)
 	else
 		icon_state = initial(icon_state)
 		if(user && loc == user)
-			user.SetLuminosity(user.luminosity - 4)
+			user.SetLuminosity(user.luminosity - brightness_max + brightness_min)
 		else if(isturf(loc))
-			SetLuminosity(2)
+			SetLuminosity(brightness_min)
 
 /obj/item/device/flashlight/lamp/slime/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -264,18 +265,18 @@
 /obj/item/device/flashlight/lamp/slime/pickup(mob/user)
 	user.l_color = l_color
 	if(on)
-		user.SetLuminosity(user.luminosity + 6)
+		user.SetLuminosity(user.luminosity + brightness_max)
 		SetLuminosity(0)
 	else
-		user.SetLuminosity(user.luminosity + 2)
+		user.SetLuminosity(user.luminosity + brightness_min)
 		SetLuminosity(0)
 
 
 /obj/item/device/flashlight/lamp/slime/dropped(mob/user)
 	user.l_color = initial(user.l_color)
 	if(on)
-		user.SetLuminosity(user.luminosity - 6)
-		SetLuminosity(6)
+		user.SetLuminosity(user.luminosity - brightness_max)
+		SetLuminosity(brightness_max)
 	else
-		user.SetLuminosity(user.luminosity - 2)
-		SetLuminosity(2)
+		user.SetLuminosity(user.luminosity - brightness_min)
+		SetLuminosity(brightness_min)
