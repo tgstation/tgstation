@@ -422,21 +422,21 @@ datum
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, location)
 				s.start()
-				for(var/mob/living/carbon/M in viewers(world.view, location))
-					switch(get_dist(M, location))
-						if(0 to 3)
-							if(hasvar(M, "glasses"))
-								if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
-									continue
 
+				playsound(get_turf(src), 'sound/effects/phasein.ogg', 25, 1)
+
+				var/eye_safety = 0
+
+				for(var/mob/living/carbon/M in viewers(get_turf_loc(holder.my_atom), null))
+					if(iscarbon(M))
+						eye_safety = M.eyecheck()
+
+					if (get_dist(M, location) <= 3)
+						if(eye_safety < 1)
 							flick("e_flash", M.flash)
 							M.Weaken(15)
-
-						if(4 to 5)
-							if(hasvar(M, "glasses"))
-								if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
-									continue
-
+					else if (get_dist(M, location) <= 5)
+						if(eye_safety < 1)
 							flick("e_flash", M.flash)
 							M.Stun(5)
 
@@ -872,7 +872,7 @@ datum
 
 					var/list/flashers = list()
 					for(var/mob/living/carbon/human/M in viewers(TO, null))
-						if(M:eyecheck() <= 0)
+						if(M.eyecheck() <= 0)
 							flick("e_flash", M.flash) // flash dose faggots
 							flashers += M
 
@@ -930,7 +930,7 @@ datum
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-					if(M:eyecheck() <= 0)
+					if(M.eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
 				for(var/i = 1, i <= created_volume, i++)
@@ -956,7 +956,7 @@ datum
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-					if(M:eyecheck() <= 0)
+					if(M.eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
 				for(var/i = 1, i <= created_volume + rand(1,2), i++)
@@ -1033,11 +1033,16 @@ datum
 			required_container = /obj/item/slime_extract/grey
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
-				send_admin_alert(holder, reaction_name="grey slime")
+				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="grey slime in a grenade")
+				else
+					send_admin_alert(holder, reaction_name="grey slime")
 
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!"), 1)
+				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					holder.my_atom.visible_message("<span class='rose'>The grenade bursts open and a new baby slime emerges from it!</span>")
+				else
+					holder.my_atom.visible_message("<span class='rose'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
 				var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
 				S.loc = get_turf_loc(holder.my_atom)
 
@@ -1092,9 +1097,12 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
-				sleep(50)
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
+					send_admin_alert(holder, reaction_name="gold slime + plasma")
+					sleep(50)
+				else
+					send_admin_alert(holder, reaction_name="gold slime + plasma in a grenade!!")//expect to this this one spammed in the times to come
 
 				var/blocked = list(/mob/living/simple_animal/hostile,
 					/mob/living/simple_animal/hostile/pirate,
@@ -1123,13 +1131,19 @@ datum
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
-				send_admin_alert(holder, reaction_name="gold slime + plasma")
 
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
-					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+					if (istype(O, /mob/living/carbon/human/))
+						var /mob/living/carbon/human/H = O
+						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
+							flick("e_flash", O.flash)
+							O << "<span class='danger'>A flash blinds you while you start hearing terrifying noises !</span>"
+						else
+							O << "<span class='danger'>You hear a rumbling as a troup of monsters phases into existence !</span>"
+					else
+						O << "<span class='danger'>You hear a rumbling as a troup of monsters phases into existence !</span>"
 
 				for(var/i = 1, i <= 5, i++)
 					var/chosen = pick(critters)
@@ -1150,9 +1164,12 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
-				sleep(50)
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
+					send_admin_alert(holder, reaction_name="gold slime + blood")
+					sleep(50)
+				else
+					send_admin_alert(holder, reaction_name="gold slime + blood in a grenade")
 
 				var/blocked = list(/mob/living/simple_animal/hostile,
 					/mob/living/simple_animal/hostile/pirate,
@@ -1182,9 +1199,16 @@ datum
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+					if (istype(O, /mob/living/carbon/human/))
+						var /mob/living/carbon/human/H = O
+						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
+							flick("e_flash", O.flash)
+							O << "<span class='rose'>A flash blinds and you can feel a new presence !</span>"
+						else
+							O << "<span class='rose'>You hear a crackling as a creature manifests before you !</span>"
+					else
+						O << "<span class='rose'>You hear a crackling as a creature manifests before you !</span>"
 
 				var/chosen = pick(critters)
 				var/mob/living/simple_animal/hostile/C = new chosen
@@ -1207,9 +1231,16 @@ datum
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+					if (istype(O, /mob/living/carbon/human/))
+						var /mob/living/carbon/human/H = O
+						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
+							flick("e_flash", O.flash)
+							O << "<span class='caution'>A white light blinds you and you think you can smell some food nearby !</span>"
+						else
+							O << "<span class='notice'>A bunch of snacks appears before your very eyes !</span>"
+					else
+						O << "<span class='notice'>A bunch of snacks appears before your very eyes !</span>"
 
 				for(var/i = 1, i <= 4 + rand(1,2), i++)
 					var/chosen = pick(borks)
@@ -1236,9 +1267,16 @@ datum
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+					if (istype(O, /mob/living/carbon/human/))
+						var /mob/living/carbon/human/H = O
+						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
+							flick("e_flash", O.flash)
+							O << "<span class='caution'>A white light blinds you and you think you can hear bottles rolling on the floor !</span>"
+						else
+							O << "<span class='notice'>A bunch of drinks appears before you !</span>"
+					else
+						O << "<span class='notice'>A bunch of drinks appears before you !</span>"
 
 				for(var/i = 1, i <= 4 + rand(1,2), i++)
 					var/chosen = pick(borks)
@@ -1273,9 +1311,13 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
-				sleep(50)
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
+					send_admin_alert(holder, reaction_name="dark blue slime + plasma (Freeze)")
+					sleep(50)
+				else
+					send_admin_alert(holder, reaction_name="dark blue slime + plasma (Freeze) in a grenade")
+
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 				for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
 					M.bodytemperature -= 240
@@ -1303,9 +1345,12 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
-				sleep(50)
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
+					send_admin_alert(holder, reaction_name="orange slime + plasma (Napalm)")
+					sleep(50)
+				else
+					send_admin_alert(holder, reaction_name="orange slime + plasma (Napalm)in a grenade")
 				var/turf/location = get_turf(holder.my_atom.loc)
 				for(var/turf/simulated/floor/target_tile in range(0,location))
 
@@ -1328,6 +1373,10 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="yellow slime + blood (EMP)")
+				else
+					send_admin_alert(holder, reaction_name="yellow slime + blood (EMP) in a grenade")
 				empulse(get_turf(holder.my_atom), 3, 7)
 
 
@@ -1344,9 +1393,9 @@ datum
 				var/obj/item/weapon/cell/slime/P = new /obj/item/weapon/cell/slime
 				P.loc = get_turf(holder.my_atom)
 
-		slimeglow
-			name = "Slime Glow"
-			id = "m_glow"
+		slimeglow					//Was a broken recipe that was supposed to make the extract produce some light
+			name = "Slime Glow"		//I changed it, so it now creates an /obj/item/device/flashlight/lamp/slime.
+			id = "m_glow"			//Basically a lamp with two brightness settings. light slightly yellow.
 			result = null
 			required_reagents = list("water" = 5)
 			result_amount = 1
@@ -1354,10 +1403,8 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The slime begins to emit a soft light. Squeezing it will cause it to grow brightly."), 1)
-				var/obj/item/slime_extract/yellow/Y = holder
-				Y.luminosity = 6
+				var/obj/item/device/flashlight/lamp/slime/P = new /obj/item/device/flashlight/lamp/slime
+				P.loc = get_turf(holder.my_atom)
 
 //Purple
 
@@ -1384,6 +1431,8 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="purple slime + sugar (Slime Jelly) in a grenade")
 
 
 //Dark Purple
@@ -1412,6 +1461,8 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="red slime + plasma (Glycerol) in a grenade")
 
 
 		slimebloodlust
@@ -1424,11 +1475,14 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="red slime + blood (Slime Frenzy)")
+				else
+					send_admin_alert(holder, reaction_name="red slime + blood (Slime Frenzy) in a grenade")
 				for(var/mob/living/carbon/slime/slime in viewers(get_turf(holder.my_atom), null))
 					slime.tame = 0
 					slime.rabid = 1
-					for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-						O.show_message(text("\red The [slime] is driven into a frenzy!."), 1)
+					holder.my_atom.visible_message("<span class='warning'>The [slime] is driven into a frenzy !</span>")
 
 //Pink
 		slimeppotion
@@ -1456,6 +1510,8 @@ datum
 			required_container = /obj/item/slime_extract/black
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="black slime + plasma (Mutates to Slime) in a grenade")
 
 //Oil
 		slimeexplosion
@@ -1468,9 +1524,12 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
-				sleep(50)
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
+					send_admin_alert(holder, reaction_name="oil slime + plasma (Explosion)")
+					sleep(50)
+				else
+					send_admin_alert(holder, reaction_name="oil slime + plasma (Explosion) in a grenade")
 				explosion(get_turf(holder.my_atom), 1 ,3, 6)
 //Light Pink
 		slimepotion2
@@ -1512,7 +1571,10 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="bluespace slime + plasma (Mass Teleport)")
+				else
+					send_admin_alert(holder, reaction_name="bluespace slime + plasma (Mass Teleport) in a grenade")
 				// Calculate new position (searches through beacons in world)
 				var/obj/item/device/radio/beacon/chosen
 				var/list/possible = list()
@@ -1532,7 +1594,7 @@ datum
 
 					var/list/flashers = list()
 					for(var/mob/living/carbon/human/M in viewers(TO, null))
-						if(M:eyecheck() <= 0)
+						if((M.eyecheck() <= 0)&&(!istype(M.glasses, /obj/item/clothing/glasses/science)))
 							flick("e_flash", M.flash) // flash dose faggots
 							flashers += M
 

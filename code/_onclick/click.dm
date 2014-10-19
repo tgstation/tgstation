@@ -242,7 +242,6 @@
 /atom/proc/ShiftClick(var/mob/user)
 	if(user.client && user.client.eye == user)
 		examine()
-		user.face_atom(src)
 	return
 
 /*
@@ -381,24 +380,34 @@
 
 	next_move = world.time + 12
 	G.next_shock = world.time + time
+
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)
-	// Snowflake for space vines.
-	var/is_buckled = 0
-	if(buckled)
-		if(istype(buckled))
-			if(!buckled.anchored)
-				is_buckled = 1
-		else
-			is_buckled = 0
-	if( stat || is_buckled || !A || !x || !y || !A.x || !A.y ) return
+	if(stat != CONSCIOUS || buckled || !A || !x || !y || !A.x || !A.y )
+		return
+
 	var/dx = A.x - x
 	var/dy = A.y - y
-	if(!dx && !dy) return
+
+	if(!dx && !dy) // Wall items are graphically shifted but on the floor
+		if(A.pixel_y > 16)
+			dir = NORTH
+		else if(A.pixel_y < -16)
+			dir = SOUTH
+		else if(A.pixel_x > 16)
+			dir = EAST
+		else if(A.pixel_x < -16)
+			dir = WEST
+
+		return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	usr.dir = NORTH
-		else		usr.dir = SOUTH
+		if(dy > 0)
+			dir = NORTH
+		else
+			dir = SOUTH
 	else
-		if(dx > 0)	usr.dir = EAST
-		else		usr.dir = WEST
+		if(dx > 0)
+			dir = EAST
+		else
+			dir = WEST
