@@ -1,5 +1,5 @@
 /obj/item/clothing/under/color
-	desc = "A standard issue colored jumpsuit for assistants. Variety is the spice of life!"
+	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 
 /obj/item/clothing/under/color/random/New()
 	var/list/excluded = list(/obj/item/clothing/under/color/random, /obj/item/clothing/under/color)

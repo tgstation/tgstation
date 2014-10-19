@@ -14,13 +14,6 @@
 	item_state = "w_suit"
 	can_adjust = 0
 
-/obj/item/clothing/under/wizard
-	name = "wizard's jumpsuit" //someone can make a unique sprite for this in the future
-	desc = "A magical jumpsuit that radiates powerful auras."
-	icon_state = "lightpurple"
-	item_state = "p_suit"
-	item_color = "lightpurple"
-
 /obj/item/clothing/under/scratch
 	name = "white suit"
 	desc = "A white suit, suitable for an excellent host"
