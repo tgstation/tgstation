@@ -17,6 +17,34 @@ LINEN BINS
 	w_class = 1.0
 	_color = "white"
 
+//cutting the bedsheet into rags
+/obj/item/weapon/bedsheet/attackby(var/obj/item/I, mob/user as mob)
+	var/cut_time=0
+	if(istype(I, /obj/item/weapon/scalpel))
+		cut_time=20
+	else if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/butch))
+		cut_time=40
+	else if(istype(I, /obj/item/weapon/shard))
+		cut_time=80
+	else if(istype(I, /obj/item/weapon/kitchen/utensil/pknife))
+		cut_time=160
+	if(cut_time)
+		user << "<span  class='notice'>You begin cutting the [src].</span>"
+		if(do_after(user, cut_time))
+			if(!src) return
+			user << "<span  class='notice'>You have cut the [src] into rags.</span>"
+			var/turf/location = get_turf(src)
+			for(var/x=0; x<=8; x++)
+				var/obj/item/weapon/reagent_containers/glass/rag/S = new/obj/item/weapon/reagent_containers/glass/rag/(location)
+				S.pixel_x = rand(-5.0, 5)
+				S.pixel_y = rand(-5.0, 5)
+			del(src)
+
+//todo: hold one if possible?
+//todo: coloring and molotov coloring?
+//todo: finger prints?
+//todo: more cutting tools?
+//todo: sharp thing code/game/objects/objs.dm
 
 /obj/item/weapon/bedsheet/attack_self(mob/user as mob)
 	user.drop_item()
@@ -189,3 +217,4 @@ LINEN BINS
 
 
 	add_fingerprint(user)
+
