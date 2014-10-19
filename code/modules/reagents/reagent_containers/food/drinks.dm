@@ -923,7 +923,7 @@
 	else
 		//Default attack message and don't weaken the target.
 		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("\red <B>[target] has been attacked with a bottle of [temp][src.name], by [user]!</B>"), 1)
+			if(target != user) O.show_message(text("\red <B>[target] has been attacked with a [temp][src.name], by [user]!</B>"), 1)
 			else O.show_message(text("\red <B>[target] has attacked himself with a [temp][src.name]!</B>"), 1)
 
 	//Attack logs
