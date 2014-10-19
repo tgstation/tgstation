@@ -756,7 +756,7 @@
 			if(!environment) //We're in a crate or nullspace, bail out.
 				return
 
-			var/area/A = T.loc
+			var/area/A = get_area(T)
 			var/light_available
 			if(A)
 				if(A.lighting_use_dynamic)
