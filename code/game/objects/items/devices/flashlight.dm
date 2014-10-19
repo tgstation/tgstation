@@ -228,6 +228,7 @@
 	item_state = ""
 	l_color = "#333300"
 	on = 0
+	luminosity = 2
 	var/brightness_max = 6
 	var/brightness_min = 2
 
