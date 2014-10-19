@@ -74,6 +74,10 @@
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
+	if(dir!=oldir)
+		update_inv_hat(0)
+	oldir = dir
+
 	if(!client && stat == CONSCIOUS)
 
 		if(prob(33) && canmove && isturf(loc) && !pulledby) //won't move if being pulled

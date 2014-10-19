@@ -127,6 +127,30 @@
 	using.layer = 19
 	src.adding += using
 
+	mymob.m_suitclothesbg = new /obj/screen()
+	mymob.m_suitclothesbg.icon = ui_style
+	mymob.m_suitclothesbg.icon_state = "center"
+	mymob.m_suitclothesbg.name = "uniform-bg"
+	mymob.m_suitclothesbg.screen_loc = ui_monkey_uniform
+
+	mymob.m_suitclothes = new /obj/screen()
+	mymob.m_suitclothes.icon = 'icons/mob/monkey.dmi'
+	mymob.m_suitclothes.icon_state = "none"
+	mymob.m_suitclothes.name = "uniform"
+	mymob.m_suitclothes.screen_loc = ui_monkey_uniform
+
+	mymob.m_hatbg = new /obj/screen()
+	mymob.m_hatbg.icon = ui_style
+	mymob.m_hatbg.icon_state = "hair"
+	mymob.m_hatbg.name = "hat-bg"
+	mymob.m_hatbg.screen_loc = ui_monkey_hat
+
+	mymob.m_hat = new /obj/screen()
+	mymob.m_hat.icon = 'icons/obj/clothing/hats.dmi'
+	mymob.m_hat.icon_state = "none"
+	mymob.m_hat.name = "hat"
+	mymob.m_hat.screen_loc = ui_monkey_hat
+
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "mask"
 	inv_box.dir = NORTH
@@ -242,7 +266,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.m_hatbg, mymob.m_hat, mymob.m_suitclothesbg, mymob.m_suitclothes, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 	return
