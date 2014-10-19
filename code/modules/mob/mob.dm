@@ -1276,6 +1276,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	if(!canface())	return 0
 	dir = EAST
+	OnFaceEast()
 	client.move_delay += movement_delay()
 	return 1
 
@@ -1284,6 +1285,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	if(!canface())	return 0
 	dir = WEST
+	OnFaceWest()
 	client.move_delay += movement_delay()
 	return 1
 
@@ -1303,6 +1305,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 	client.move_delay += movement_delay()
 	return 1
 
+/mob/proc/OnFaceEast()
+	return
+
+/mob/proc/OnFaceWest()
+	return
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
