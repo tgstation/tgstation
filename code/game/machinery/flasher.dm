@@ -46,11 +46,7 @@
 			bulb = null
 			power_change()
 
-<<<<<<< HEAD
-	else if (istype(W, /obj/item/device/flash))
-=======
 	else if (istype(W, /obj/item/device/flash/handheld))
->>>>>>> 364898b... Fix cyborg flashes being useable in flashers and cyborg heads.
 		if (!bulb)
 			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
 			user.drop_item()
