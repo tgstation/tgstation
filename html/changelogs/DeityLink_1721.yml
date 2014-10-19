@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Adding maracas. Hold CTRL and move in all directions to shake them like Cuban Pete!
+  - rscadd: Added a pair of maracas to the Party supply crate
+  - rscadd: Awarding a pair of maracas to those who outbomb Cuban Pete
