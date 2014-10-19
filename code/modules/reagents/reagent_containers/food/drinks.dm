@@ -13,7 +13,7 @@
 
 	//merged from bottle.dm - Hinaichigo
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
-	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	var/isGlass = 0 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
 	//molotov variables
 	var/molotov = 0 //-1 = can be made into molotov, 0 = can't, 1 = has had rag stuffed into it
@@ -172,7 +172,6 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = null
 	volume = 150
-	isGlass = 0
 	flags = FPRINT | CONDUCT | TABLEPASS | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/food/drinks/golden_cup/tournament_26_06_2011
@@ -189,7 +188,6 @@
 	desc = "It's milk. White and nutritious goodness!"
 	icon_state = "milk"
 	item_state = "carton"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("milk", 50)
@@ -202,7 +200,6 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "flour"
 	item_state = "flour"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("flour", 30)
@@ -214,7 +211,6 @@
 	desc = "It's soy milk. White and nutritious goodness!"
 	icon_state = "soymilk"
 	item_state = "carton"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("soymilk", 50)
@@ -225,7 +221,6 @@
 	name = "Robust Coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("coffee", 30)
@@ -237,7 +232,6 @@
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	icon_state = "tea"
 	item_state = "coffee"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("tea", 30)
@@ -248,7 +242,6 @@
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
 	icon_state = "coffee"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("ice", 30)
@@ -260,7 +253,6 @@
 	desc = "Made in Space South America."
 	icon_state = "tea"
 	item_state = "coffee"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("hot_coco", 30)
@@ -271,7 +263,6 @@
 	name = "Cup Ramen"
 	desc = "Just add 10ml water, self heats! A taste that reminds you of your school years."
 	icon_state = "ramen"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("dry_ramen", 30)
@@ -469,6 +460,7 @@
 	desc = "Beer. In space."
 	icon_state = "beer"
 	molotov = -1 //can become a molotov
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("beer", 30)
@@ -481,6 +473,7 @@
 	icon_state = "alebottle"
 	item_state = "beer"
 	molotov = -1 //can become a molotov
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("ale", 30)
@@ -491,7 +484,6 @@
 	name = "Space Cola"
 	desc = "Cola. in space."
 	icon_state = "cola"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("cola", 30)
@@ -502,7 +494,6 @@
 	name = "T-Borg's Tonic Water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("tonic", 50)
@@ -511,7 +502,6 @@
 	name = "Soda Water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("sodawater", 50)
@@ -520,7 +510,6 @@
 	name = "Lemon-Lime"
 	desc = "You wanted ORANGE. It gave you Lemon Lime."
 	icon_state = "lemon-lime"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("lemon_lime", 30)
@@ -531,7 +520,6 @@
 	name = "Space-Up"
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("space_up", 30)
@@ -542,7 +530,6 @@
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("cola", 15)
@@ -554,7 +541,6 @@
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."
 	icon_state = "space_mountain_wind"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("spacemountainwind", 30)
@@ -565,7 +551,6 @@
 	name = "Thirteen Loko"
 	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsably."
 	icon_state = "thirteen_loko"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("thirteenloko", 30)
@@ -576,7 +561,6 @@
 	name = "Dr. Gibb"
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
-	isGlass = 0
 	New()
 		..()
 		reagents.add_reagent("dr_gibb", 30)
@@ -590,7 +574,6 @@
 	icon_state = "water_cup_e"
 	possible_transfer_amounts = null
 	volume = 10
-	isGlass = 0
 	New()
 		..()
 		src.pixel_x = rand(-10.0, 10)
@@ -610,35 +593,30 @@
 	desc = "A metal shaker to mix drinks in."
 	icon_state = "shaker"
 	amount_per_transfer_from_this = 10
-	isGlass = 0
 	volume = 100
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
 	name = "Captain's Flask"
 	desc = "A metal flask belonging to the captain"
 	icon_state = "flask"
-	isGlass = 0
 	volume = 60
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/detflask
 	name = "Detective's Flask"
 	desc = "A metal flask with a leather band and golden badge belonging to the detective."
 	icon_state = "detflask"
-	isGlass = 0
 	volume = 60
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/barflask
 	name = "flask"
 	desc = "For those who can't be bothered to hang out at the bar to drink."
 	icon_state = "barflask"
-	isGlass = 0
 	volume = 60
 
 /obj/item/weapon/reagent_containers/food/drinks/britcup
 	name = "cup"
 	desc = "A cup with the british flag emblazoned on it."
 	icon_state = "britcup"
-	isGlass = 0
 	volume = 30
 
 
@@ -677,6 +655,7 @@
 	name = "Griffeater Gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."
 	icon_state = "ginbottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("gin", 100)
@@ -685,6 +664,7 @@
 	name = "Uncle Git's Special Reserve"
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("whiskey", 100)
@@ -693,6 +673,7 @@
 	name = "Tunguska Triple Distilled"
 	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
 	icon_state = "vodkabottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("vodka", 100)
@@ -701,6 +682,7 @@
 	name = "Caccavo Guaranteed Quality Tequilla"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequillabottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("tequilla", 100)
@@ -709,6 +691,7 @@
 	name = "Bottle of Nothing"
 	desc = "A bottle filled with nothing"
 	icon_state = "bottleofnothing"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("nothing", 100)
@@ -717,6 +700,7 @@
 	name = "Wrapp Artiste Patron"
 	desc = "Silver laced tequilla, served in space night clubs across the galaxy."
 	icon_state = "patronbottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("patron", 100)
@@ -725,6 +709,7 @@
 	name = "Captain Pete's Cuban Spiced Rum"
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("rum", 100)
@@ -733,6 +718,7 @@
 	name = "Flask of Holy Water"
 	desc = "A flask of the chaplain's holy water."
 	icon_state = "holyflask"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("holywater", 100)
@@ -741,6 +727,7 @@
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"
 	icon_state = "vermouthbottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("vermouth", 100)
@@ -749,6 +736,7 @@
 	name = "Robert Robust's Coffee Liqueur"
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK"
 	icon_state = "kahluabottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("kahlua", 100)
@@ -757,6 +745,7 @@
 	name = "College Girl Goldschlager"
 	desc = "Because they are the only ones who will drink 100 proof cinnamon schnapps."
 	icon_state = "goldschlagerbottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("goldschlager", 100)
@@ -765,6 +754,7 @@
 	name = "Chateau De Baton Premium Cognac"
 	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
 	icon_state = "cognacbottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("cognac", 100)
@@ -773,6 +763,7 @@
 	name = "Doublebeard Bearded Special Wine"
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("wine", 100)
@@ -781,6 +772,7 @@
 	name = "Jailbreaker Verte"
 	desc = "One sip of this and you just know you're gonna have a good time."
 	icon_state = "absinthebottle"
+	isGlass = 1
 	New()
 		..()
 		reagents.add_reagent("absinthe", 100)
@@ -792,7 +784,6 @@
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
 	item_state = "carton"
-	isGlass = 0
 	g_amt=0
 	New()
 		..()
@@ -803,7 +794,6 @@
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
 	item_state = "carton"
-	isGlass = 0
 	g_amt=0
 	New()
 		..()
@@ -814,7 +804,6 @@
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
 	item_state = "carton"
-	isGlass = 0
 	g_amt=0
 	New()
 		..()
@@ -825,7 +814,6 @@
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
 	item_state = "carton"
-	isGlass = 0
 	g_amt=0
 	New()
 		..()
