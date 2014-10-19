@@ -1,6 +1,4 @@
 
-#define PIPE_PAINTER_DELAY 10
-
 /obj/item/device/pipe_painter
 	name = "pipe painter"
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -22,8 +20,6 @@
 	g_amt = 2000
 
 /obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob)
-	if(!on)
-		return
 
 	if(!istype(A,/obj/machinery/atmospherics/pipe/simple) && !istype(A,/obj/machinery/atmospherics/pipe/manifold) && !istype(A,/obj/machinery/atmospherics/pipe/manifold4w))
 		return
@@ -62,9 +58,6 @@
 		if(pipe.node4)
 			pipe.node4.update_icon()
 
-	on = 0
-	spawn(PIPE_PAINTER_DELAY)
-		on = 1
 
 /obj/item/device/pipe_painter/attack_self(mob/user as mob)
 	mode = input("Which colour do you want to use?","Pipe painter") in modes
