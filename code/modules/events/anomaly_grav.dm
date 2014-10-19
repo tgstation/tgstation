@@ -1,13 +1,13 @@
 /datum/round_event_control/anomaly/anomaly_grav
-	name = "Gravitational Anomaly"
+	name = "Anomaly: Gravitational"
 	typepath = /datum/round_event/anomaly/anomaly_grav
-	max_occurrences = 2
-	weight = 15
+	max_occurrences = 5
+	weight = 20
 
 /datum/round_event/anomaly/anomaly_grav
 	startWhen = 3
 	announceWhen = 20
-	endWhen = 50
+	endWhen = 120
 
 
 /datum/round_event/anomaly/anomaly_grav/announce()
