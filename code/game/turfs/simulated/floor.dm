@@ -61,7 +61,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				if(2)
 					src.ChangeTurf(/turf/space)
 				if(3)
-					src.break_tile()
+					if(prob(80))
+						src.break_tile_to_plating()
+					else
+						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(3.0)
@@ -104,6 +107,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	return
 
 /turf/simulated/floor/proc/break_tile_to_plating()
+	make_plating()
 	break_tile()
 
 /turf/simulated/floor/proc/break_tile()

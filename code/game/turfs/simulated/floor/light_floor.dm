@@ -13,12 +13,11 @@
 	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 
 /turf/simulated/floor/light/New()
-	var/n = name //just in case commands rename it in the ..() call
 	..()
 	spawn(4)
 		if(src)
 			update_icon()
-			name = n
+			name = initial(name)
 
 /turf/simulated/floor/light/update_icon()
 	if(on)

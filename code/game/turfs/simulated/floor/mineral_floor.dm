@@ -15,7 +15,8 @@
 	var/active = null
 	var/list/icons = list()
 
-/turf/simulated/floor/New()
+/turf/simulated/floor/mineral/New()
+	..()
 	broken_states = list("[initial(icon_state)]_dam")
 
 /turf/simulated/floor/mineral/update_icon()
