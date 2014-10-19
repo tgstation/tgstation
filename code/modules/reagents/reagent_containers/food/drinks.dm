@@ -51,10 +51,10 @@
 		else if( istype(M, /mob/living/carbon/human) )
 
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] attempts to feed [M] [src].", 1)
+				O.show_message("<span  class='rose'>[user] attempts to feed [M] [src].</span>", 1)
 			if(!do_mob(user, M)) return
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] feeds [M] [src].", 1)
+				O.show_message("<span  class='rose'>[user] feeds [M] [src].</span>", 1)
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
@@ -151,6 +151,10 @@
 			usr << "<span  class='notice'>\The [src] is almost full!</span>"
 		else
 			usr << "<span  class='notice'>\The [src] is full!</span>"
+
+	New()
+		..()
+		score["meals"]++
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -273,6 +277,192 @@
 		reagents.add_reagent("dry_ramen", 30)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/groans
+	name = "Groans Soda"
+	desc = "Groans Soda: We'll make you groan."
+	icon_state = "groans"
+	New()
+		..()
+		switch(pick(1,2,3,4,5))
+			if(1)
+				name = "Groans Soda: Cuban Spice Flavor"
+				desc = "Warning: Long exposure to liquid inside may cause you to follow the rumba beat."
+				icon_state += "_hot"
+				reagents.add_reagent("condensedcapsaicin", 10)
+				reagents.add_reagent("rum", 10)
+			if(2)
+				name = "Groans Soda: Icey Cold Flavor"
+				desc = "Cold in a can. Er, bottle."
+				icon_state += "_cold"
+				reagents.add_reagent("frostoil", 10)
+				reagents.add_reagent("ice", 10)
+			if(3)
+				name = "Groans Soda: Zero Calories"
+				desc = "Zero Point Calories. That's right, we fit even MORE nutriment in this thing."
+				icon_state += "_nutriment"
+				reagents.add_reagent("nutriment", 20)
+			if(4)
+				name = "Groans Soda: Energy Shot"
+				desc = "Warning: The Groans Energy Blend(tm), may be toxic to those without constant exposure to chemical waste. Drink responsibly."
+				icon_state += "_energy"
+				reagents.add_reagent("sugar", 10)
+				reagents.add_reagent("chemical_waste", 10)
+			if(5)
+				name = "Groans Soda: Double Dan"
+				desc = "Just when you thought you've had enough Dan, The 'Double Dan' strikes back with this wonderful mixture of too many flavors. Bring a barf bag, Drink responsibly."
+				icon_state += "_doubledew"
+				reagents.add_reagent("discount", 20)
+		reagents.add_reagent("discount", 10)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/filk
+	name = "Filk"
+	desc = "Only the best Filk for your crew."
+	icon_state = "filk"
+	New()
+		..()
+		switch(pick(1,2,3,4,5))
+			if(1)
+				name = "Filk: Chocolate Edition"
+				reagents.add_reagent("hot_coco", 10)
+			if(2)
+				name = "Filk: Scripture Edition"
+				reagents.add_reagent("holywater", 30)
+			if(3)
+				name = "Filk: Carribean Edition"
+				reagents.add_reagent("rum", 30)
+			if(4)
+				name = "Filk: Sugar Blast Editon"
+				reagents.add_reagent("sugar", 30)
+				reagents.add_reagent("radium", 10) // le epik fallout may mays
+				reagents.add_reagent("toxicwaste", 10)
+			if(5)
+				name = "Filk: Pure Filk Edition"
+				reagents.add_reagent("discount", 20)
+		reagents.add_reagent("discount", 10)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo
+	name = "Grifeo"
+	desc = "A quality drink."
+	icon_state = "griefo"
+	New()
+		..()
+		switch(pick(1,2,3,4,5))
+			if(1)
+				name = "Grifeo: Spicy"
+				reagents.add_reagent("condensedcapsaicin", 30)
+			if(2)
+				name = "Grifeo: Frozen"
+				reagents.add_reagent("frostoil", 30)
+			if(3)
+				name = "Grifeo: Crystallic"
+				reagents.add_reagent("sugar", 20)
+				reagents.add_reagent("ice", 20)
+				reagents.add_reagent("space_drugs", 20)
+			if(4)
+				name = "Grifeo: Rich"
+				reagents.add_reagent("tequilla", 10)
+				reagents.add_reagent("chemical_waste", 10)
+			if(5)
+				name = "Grifeo: Pure"
+				reagents.add_reagent("discount", 20)
+		reagents.add_reagent("discount", 10)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/groansbanned
+	name = "Groans: Banned Edition"
+	desc = "Banned literally everywhere."
+	icon_state = "groansevil"
+	New()
+		..()
+		switch(pick(1,2,3,4,5))
+			if(1)
+				name = "Groans Banned Soda: Fish Suprise"
+				reagents.add_reagent("carpotoxin", 10)
+			if(2)
+				name = "Groans Banned Soda: Bitter Suprise"
+				reagents.add_reagent("toxin", 20)
+			if(3)
+				name = "Groans Banned Soda: Sour Suprise"
+				reagents.add_reagent("pacid", 20)
+			if(4)
+				name = "Groans Banned Soda: Sleepy Suprise"
+				reagents.add_reagent("stoxin", 10)
+			if(5)
+				name = "Groans Banned Soda: Quadruple Dan"
+				reagents.add_reagent("discount", 40)
+		reagents.add_reagent("discount", 10)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/mannsdrink
+	name = "Mann's Drink"
+	desc = "The only thing a <B>REAL MAN</B> needs."
+	icon_state = "mannsdrink"
+	New()
+		..()
+		reagents.add_reagent("discount", 30)
+		reagents.add_reagent("water", 20)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/groans
+	name = "Groan-o-matic 9000"
+	desc = "This is for testing reasons."
+	icon_state = "toddler"
+
+/obj/item/weapon/groans/attack_self(mob/user as mob)
+	user << "Now spawning groans."
+	var/turf/T = get_turf(user.loc)
+	var/obj/item/weapon/reagent_containers/food/drinks/groans/A = new /obj/item/weapon/reagent_containers/food/drinks/groans(T)
+	A.desc += " It also smells like a toddler." //This is required
+
+/obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot
+	name = "\improper Discount Dan's Noodle Soup"
+	desc = "Discount Dan is proud to introduce his own take on noodle soups, with this on the go treat! Simply pull the tab, and a self heating mechanism activates!"
+	icon_state = "ramen"
+	var/list/ddname = list("Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor","Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown Flavor","Rabatt Dan's Snabb-Nudlar - Inkokt Lax Sm?rg?sbord Smak","Discount Deng's Quik-Noodles - Teriyaki TVP Flavor","Sconto Danilo's Quik-Noodles - Italian Strozzapreti Lunare Flavor")
+	New()
+		..()
+		name = pick(ddname)
+		reagents.add_reagent("hot_ramen", 20)
+		reagents.add_reagent("discount", 10)
+		reagents.add_reagent("glowingramen", 8)
+		reagents.add_reagent("toxicwaste", 8)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/discount_ramen
+	name = "\improper Discount Dan's Noodle Soup"
+	desc = "Discount Dan is proud to introduce his own take on noodle soups, with this on the go treat! Simply pull the tab, and a self heating mechanism activates!"
+	icon_state = "ramen"
+	var/list/ddname = list("Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor","Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown Flavor","Rabatt Dan's Snabb-Nudlar - Inkokt Lax Sm?rg?sbord Smak","Discount Deng's Quik-Noodles - Teriyaki TVP Flavor","Sconto Danilo's Quik-Noodles - Italian Strozzapreti Lunare Flavor")
+	New()
+		..()
+		name = pick(ddname)
+		reagents.add_reagent("dry_ramen", 20)
+		reagents.add_reagent("discount", 10)
+		reagents.add_reagent("toxicwaste", 4)
+		reagents.add_reagent("greenramen", 4)
+		reagents.add_reagent("glowingramen", 4)
+		reagents.add_reagent("deepfriedramen", 4)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/discount_ramen/attack_self(mob/user as mob)
+	user << "You pull the tab, you feel the drink heat up in your hands, and its horrible fumes hits your nose like a ton of bricks. You drop the soup in disgust."
+	var/turf/T = get_turf(user.loc)
+	var/obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot/A = new /obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot(T)
+	A.desc += " It feels warm.." //This is required
+	user.drop_from_inventory(src)
+	del(src)
+
+
 
 /obj/item/weapon/reagent_containers/food/drinks/beer
 	name = "Space Beer"
@@ -680,7 +870,7 @@
 
 	if(!target)
 		return
-		
+
 	if(src.molotov == 1)  //once there's a rag inside, can't be smashed on someone
 		return
 
@@ -777,7 +967,7 @@
 			src.reagents.reaction(hit_atom, TOUCH)  //maybe this could be improved?
 			spawn(5) src.reagents.clear_reagents()  //maybe this could be improved?
 		invisibility = INVISIBILITY_MAXIMUM  //so it stays a while to ignite any fuel
-	
+
 		if(molotov) //for molotovs
 			if(lit)
 				new /obj/effect/decal/cleanable/ash(src.loc)
@@ -799,8 +989,8 @@
 		Q.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 		B.icon = Q
 		src.transfer_fingerprints_to(B)
-	
-	
+
+
 	spawn(50)
 		del(src)
 
