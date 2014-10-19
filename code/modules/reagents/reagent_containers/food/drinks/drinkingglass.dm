@@ -1,7 +1,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
-	name = "glass"
+	name = "drinking glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
 	isGlass = 1
@@ -28,15 +28,15 @@
 				if("beer")
 					icon_state = "beerglass"
 					name = "beer glass"
-					desc = "A freezing pint of beer"
+					desc = "A freezing pint of beer."
 				if("beer2")
 					icon_state = "beerglass"
 					name = "beer glass"
-					desc = "A freezing pint of beer"
+					desc = "A freezing pint of beer."
 				if("ale")
 					icon_state = "aleglass"
 					name = "ale glass"
-					desc = "A freezing pint of delicious ale"
+					desc = "A freezing pint of delicious ale."
 				if("milk")
 					icon_state = "glass_white"
 					name = "glass of milk"
@@ -48,7 +48,7 @@
 				if("chocolate")
 					icon_state  = "chocolateglass"
 					name = "glass of chocolate"
-					desc = "Tasty"
+					desc = "Tasty."
 				if("lemonjuice")
 					icon_state  = "lemonglass"
 					name = "glass of lemonjuice"
@@ -56,7 +56,7 @@
 				if("cola")
 					icon_state  = "glass_brown"
 					name = "glass of Space Cola"
-					desc = "A glass of refreshing Space Cola"
+					desc = "A glass of refreshing Space Cola."
 				if("nuka_cola")
 					icon_state = "nuka_colaglass"
 					name = "Nuka Cola"
@@ -168,7 +168,7 @@
 				if("toxinsspecial")
 					icon_state = "toxinsspecialglass"
 					name = "Toxins Special"
-					desc = "Whoah, this thing is on FIRE"
+					desc = "Whoah, this thing is on FIRE!"
 				if("beepskysmash")
 					icon_state = "beepskysmashglass"
 					name = "Beepsky Smash"
@@ -260,7 +260,7 @@
 				if("thirteenloko")
 					icon_state = "thirteen_loko_glass"
 					name = "glass of Thirteen Loko"
-					desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass"
+					desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
 				if("dr_gibb")
 					icon_state = "dr_gibb_glass"
 					name = "glass of Dr. Gibb"
@@ -296,7 +296,7 @@
 				if("bahama_mama")
 					icon_state = "bahama_mama"
 					name = "Bahama Mama"
-					desc = "Tropic cocktail"
+					desc = "Tropic cocktail."
 				if("singulo")
 					icon_state = "singulo"
 					name = "Singulo"
@@ -312,7 +312,7 @@
 				if("barefoot")
 					icon_state = "b&p"
 					name = "Barefoot"
-					desc = "Barefoot and pregnant"
+					desc = "Barefoot and pregnant."
 				if("demonsblood")
 					icon_state = "demonsblood"
 					name = "Demon's Blood"
@@ -380,11 +380,11 @@
 				if("bananahonk")
 					icon_state = "bananahonkglass"
 					name = "Banana Honk"
-					desc = "A drink from Banana Heaven."
+					desc = "A drink from banana heaven."
 				if("silencer")
 					icon_state = "silencerglass"
 					name = "Silencer"
-					desc = "A drink from mime Heaven."
+					desc = "A drink from mime heaven."
 				if("nothing")
 					icon_state = "nothing"
 					name = "nothing"
@@ -464,7 +464,7 @@
 		else
 			icon_state = "glass_empty"
 			name = "drinking glass"
-			desc = "Your standard drinking glass"
+			desc = "Your standard drinking glass."
 			return
 
 // for /obj/machinery/vending/sovietsoda
