@@ -1276,7 +1276,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	if(!canface())	return 0
 	dir = EAST
-	Shake()
+	Facing()
 	client.move_delay += movement_delay()
 	return 1
 
@@ -1285,7 +1285,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	if(!canface())	return 0
 	dir = WEST
-	Shake()
+	Facing()
 	client.move_delay += movement_delay()
 	return 1
 
@@ -1294,7 +1294,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	if(!canface())	return 0
 	dir = NORTH
-	Shake()
+	Facing()
 	client.move_delay += movement_delay()
 	return 1
 
@@ -1303,22 +1303,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	if(!canface())	return 0
 	dir = SOUTH
-	Shake()
+	Facing()
 	client.move_delay += movement_delay()
 	return 1
 
 
-/mob/proc/Shake()
-	for(var/obj/item/device/maracas/M in canshake)
-		M.chickchicky()
-
-/mob/proc/AddCanShake(var/obj/item/device/maracas/M)
-	canshake += M
-	return
-
-/mob/proc/RemoveCanShake(var/obj/item/device/maracas/M)
-	canshake -= M
-	return
+/mob/proc/Facing()
+    var/datum/listener
+    for(. in src.callOnFace)
+        listener = locate(.)
+        if(listener) call(listener,src.callOnFace[.])(src)
+        else src.callOnFace -= .
 
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
