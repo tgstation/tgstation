@@ -235,7 +235,10 @@ datum/shuttle_controller
 									var/atom/movable/AM=A
 									AM.Move(D)
 								// Remove windows, grills, lattice, etc.
-								else if(istype(A,/obj/structure) || istype(A,/obj/machinery))
+								else if(istype(A,/obj/structure) 
+									|| istype(A,/obj/machinery)
+									|| istype(A, /obj/structure/window) 
+									|| istype(A, /obj/structure/grille))
 									del(A)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*
