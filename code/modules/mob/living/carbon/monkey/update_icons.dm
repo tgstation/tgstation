@@ -119,8 +119,20 @@
 
 
 /mob/living/carbon/monkey/update_hud()
-	if (client)
+	if(client)
 		client.screen |= contents
+
+		if(m_hat)
+			if(hat)
+				m_hat.icon_state = hat.icon_state
+			else
+				m_hat.icon_state = "none"
+
+		if(m_suitclothes)
+			if(uniform)
+				m_suitclothes.icon_state = uniform.icon_state
+			else
+				m_suitclothes.icon_state = "none"
 
 //Call when target overlay should be added/removed
 /mob/living/carbon/monkey/update_targeted(var/update_icons=1)

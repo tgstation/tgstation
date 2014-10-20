@@ -223,12 +223,6 @@
 			hat = null
 			regenerate_icons()
 
-	if(m_hat)
-		if(hat)
-			m_hat.icon_state = hat.icon_state
-		else
-			m_hat.icon_state = "none"
-
 /mob/living/carbon/monkey/proc/wearclothes(var/obj/item/weapon/monkeyclothes/C as obj)
 	if(C)
 		var/obj/item/weapon/monkeyclothes/olduniform = null
@@ -246,12 +240,6 @@
 			usr.put_in_hands(uniform)
 			uniform = null
 			regenerate_icons()
-
-	if(m_suitclothes)
-		if(uniform)
-			m_suitclothes.icon_state = uniform.icon_state
-		else
-			m_suitclothes.icon_state = "none"
 
 /mob/living/carbon/monkey/Topic(href, href_list)
 	..()

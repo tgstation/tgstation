@@ -130,7 +130,7 @@
 	mymob.m_suitclothesbg = new /obj/screen()
 	mymob.m_suitclothesbg.icon = ui_style
 	mymob.m_suitclothesbg.icon_state = "center"
-	mymob.m_suitclothesbg.name = "uniform-bg"
+	mymob.m_suitclothesbg.name = "uniform"
 	mymob.m_suitclothesbg.screen_loc = ui_monkey_uniform
 
 	mymob.m_suitclothes = new /obj/screen()
@@ -142,7 +142,7 @@
 	mymob.m_hatbg = new /obj/screen()
 	mymob.m_hatbg.icon = ui_style
 	mymob.m_hatbg.icon_state = "hair"
-	mymob.m_hatbg.name = "hat-bg"
+	mymob.m_hatbg.name = "hat"
 	mymob.m_hatbg.screen_loc = ui_monkey_hat
 
 	mymob.m_hat = new /obj/screen()

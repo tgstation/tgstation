@@ -549,18 +549,11 @@
 		if("uniform")
 			if(ismonkey(usr))
 				var/mob/living/carbon/monkey/M = usr
-				if (!M.get_active_hand())
-					M.wearclothes(null)
-				else if (istype(M.get_active_hand(), /obj/item/weapon/monkeyclothes))
-					M.wearclothes(M.get_active_hand())
-
-		if("uniform-bg")
-			if(ismonkey(usr))
-				var/mob/living/carbon/monkey/M = usr
-				if (!M.get_active_hand())
-					M.wearclothes(null)
-				else if (istype(M.get_active_hand(), /obj/item/weapon/monkeyclothes))
-					M.wearclothes(M.get_active_hand())
+				if(M.canWearClothes)
+					if (!M.get_active_hand())
+						M.wearclothes(null)
+					else if (istype(M.get_active_hand(), /obj/item/weapon/monkeyclothes))
+						M.wearclothes(M.get_active_hand())
 
 		if("hat")
 			if(ismonkey(usr))
@@ -571,14 +564,6 @@
 					else if (istype(M.get_active_hand(), /obj/item/clothing/head))
 						M.wearhat(M.get_active_hand())
 
-		if("hat-bg")
-			if(ismonkey(usr))
-				var/mob/living/carbon/monkey/M = usr
-				if(M.canWearClothes)
-					if (!M.get_active_hand())
-						M.wearhat(null)
-					else if (istype(M.get_active_hand(), /obj/item/clothing/head))
-						M.wearhat(M.get_active_hand())
 		else
 			return 0
 	return 1
