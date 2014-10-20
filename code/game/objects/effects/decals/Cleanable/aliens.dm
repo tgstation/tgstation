@@ -1,66 +1,55 @@
-// Note: BYOND is object oriented. There is no reason for this to be copy/pasted blood code.
 
-/obj/effect/decal/cleanable/xenoblood
+/obj/effect/decal/cleanable/blood/xeno
 	name = "xeno blood"
 	desc = "It's green and acidic. It looks like... <i>blood?</i>"
-	gender = PLURAL
-	density = 0
-	anchored = 1
-	layer = 2
-	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	var/list/viruses = list()
-	blood_DNA = list()
+	splatter_type = /obj/effect/decal/cleanable/blood/splatter/xeno
 
-/obj/effect/decal/cleanable/xenoblood/Destroy()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	..()
-
-/obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(var/list/directions)
-	spawn (0)
-		var/direction = pick(directions)
-		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-			sleep(3)
-			if (i > 0)
-				var/obj/effect/decal/cleanable/xenoblood/b = new /obj/effect/decal/cleanable/xenoblood/xsplatter(src.loc)
-				for(var/datum/disease/D in src.viruses)
-					var/datum/disease/ND = D.Copy(1)
-					b.viruses += ND
-					ND.holder = b
-			if (step_to(src, get_step(src, direction), 0))
-				break
-
-/obj/effect/decal/cleanable/xenoblood/xsplatter
+/obj/effect/decal/cleanable/blood/splatter/xeno
 	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs
+/obj/effect/decal/cleanable/blood/gibs/xeno
 	name = "xeno gibs"
 	desc = "Gnarly..."
-	gender = PLURAL
-	icon = 'icons/effects/blood.dmi'
 	icon_state = "xgib1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
-	return
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/up
+/obj/effect/decal/cleanable/blood/gibs/up/xeno
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/down
+/obj/effect/decal/cleanable/blood/gibs/down/xeno
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibdown1","xgibdown1","xgibdown1")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/body
+/obj/effect/decal/cleanable/blood/gibs/body/xeno
 	random_icon_states = list("xgibhead", "xgibtorso")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/limb
+/obj/effect/decal/cleanable/blood/gibs/limb/xeno
 	random_icon_states = list("xgibleg", "xgibarm")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/core
+/obj/effect/decal/cleanable/blood/gibs/core/xeno
 	random_icon_states = list("xgibmid1", "xgibmid2", "xgibmid3")
 
 /obj/effect/decal/cleanable/blood/xtracks
 	icon_state = "xtracks"
 	random_icon_states = null
+
+//Xeno blood burns\\
+
+/atom/proc/xeno_acid_blood() //Muh OOP
+	return
+
+/obj/effect/decal/cleanable/trail_holder/Crossed(atom/movable/O)
+	if(trail_type && trail_type == "xltrails") //This is messy but I'm not doing it with icon_states and trail_holders are snowflake magic shits
+		O.xeno_acid_blood()
+
+/obj/effect/decal/cleanable/blood/xeno/Crossed(atom/movable/O)
+	O.xeno_acid_blood()
+
+/obj/effect/decal/cleanable/blood/xtracks/Crossed(atom/movable/O)
+	O.xeno_acid_blood()
+
+/mob/living/xeno_acid_blood()
+	apply_damage(10,BURN)
+	src << "<span class='noticealien'>Stepping in the acid burns you!</span>"

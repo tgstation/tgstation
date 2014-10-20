@@ -392,6 +392,7 @@
 									if((!(newdir in H.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 										H.existing_dirs += newdir
 										H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+										H.trail_type = trail_type
 										if(check_dna_integrity(M)) //blood DNA
 											var/mob/living/carbon/DNA_helper = pulling
 											H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
