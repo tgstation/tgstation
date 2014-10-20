@@ -34,7 +34,6 @@
 
 #define CLICK_CD_MELEE 8
 #define CLICK_CD_RANGE 4
-#define CLICK_CD_HANDCUFFED 10
 //click cooldowns, in tenths of a second
 
 
