@@ -11,7 +11,7 @@
 	var/canWearClothes = 1
 	var/canWearHats = 1
 
-	var/obj/item/weapon/monkeyclothes/uniform = null
+	var/obj/item/clothing/monkeyclothes/uniform = null
 	var/obj/item/clothing/head/hat = null
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
@@ -223,9 +223,9 @@
 			hat = null
 			regenerate_icons()
 
-/mob/living/carbon/monkey/proc/wearclothes(var/obj/item/weapon/monkeyclothes/C as obj)
+/mob/living/carbon/monkey/proc/wearclothes(var/obj/item/clothing/monkeyclothes/C as obj)
 	if(C)
-		var/obj/item/weapon/monkeyclothes/olduniform = null
+		var/obj/item/clothing/monkeyclothes/olduniform = null
 		if(uniform)
 			olduniform = uniform
 			uniform = null

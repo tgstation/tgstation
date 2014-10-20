@@ -552,7 +552,7 @@
 				if(M.canWearClothes)
 					if (!M.get_active_hand())
 						M.wearclothes(null)
-					else if (istype(M.get_active_hand(), /obj/item/weapon/monkeyclothes))
+					else if (istype(M.get_active_hand(), /obj/item/clothing/monkeyclothes))
 						M.wearclothes(M.get_active_hand())
 
 		if("hat")
