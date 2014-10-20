@@ -1,0 +1,6 @@
+author: Jordie0608
+
+delete-after: True
+
+changes: 
+  - rscadd: Adds a new riot shotgun that spawns in the armory with a 6 round beanbag magazine.

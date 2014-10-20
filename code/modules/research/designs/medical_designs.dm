@@ -52,7 +52,7 @@ datum/design/synthetic_flash
 	build_type = MECHFAB
 	materials = list("$metal" = 750, "$glass" = 750)
 	reliability = 76
-	build_path = /obj/item/device/flash/
+	build_path = /obj/item/device/flash/handheld
 	category = "Misc"
 
 datum/design/bluespacebeaker

@@ -186,7 +186,7 @@
 
 		res.Blend(img, blendMode2iconMode(A.blend_mode), offX, offY)
 
-		if(istype(A, /obj/item/blueprints))
+		if(istype(A, /obj/item/areaeditor/blueprints))
 			blueprints = 1
 
 	for(var/turf/T in turfs)

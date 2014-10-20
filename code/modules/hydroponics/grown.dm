@@ -750,6 +750,23 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	qdel(src)
 	return
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/carpet
+	seed = /obj/item/seeds/carpetseed
+	name = "carpet"
+	desc = "The textile industry's dark secret."
+	icon_state = "carpetclump"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/carpet/attack_self(mob/user as mob)
+	user << "<span class='notice'>You roll out the red carpet.</span>"
+	var/location = get_turf(user)
+	var/carpetAmt = 1 + round(potency / 50) // The carpet we're holding
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/carpet/carpetToConvert in location) // The carpet on the floor
+		carpetAmt += 1
+		qdel(carpetToConvert)
+	var/obj/item/stack/tile/newAstroturf = new /obj/item/stack/tile/carpet(location)
+	newAstroturf.amount = carpetAmt
+	qdel(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
 	seed = /obj/item/seeds/kudzuseed
 	name = "kudzu pod"
