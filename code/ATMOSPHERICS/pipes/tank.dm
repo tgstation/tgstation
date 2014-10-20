@@ -15,41 +15,58 @@ Atmospheric Tanks
 	initialize_directions = SOUTH
 	density = 1
 	can_unwrench = 0
-	var/obj/machinery/atmospherics/node1
+	var/obj/machinery/atmospherics/node
+	var/showpipe = 0
 
 /obj/machinery/atmospherics/pipe/tank/New()
 	initialize_directions = dir
 	..()
 
+/obj/machinery/atmospherics/pipe/tank/hide(var/intact)
+	showpipe = !intact
+	update_icon()
+
+	..(intact)
 
 /obj/machinery/atmospherics/pipe/tank/Destroy()
-	if(node1)
-		node1.disconnect(src)
+	if(node)
+		node.disconnect(src)
 	..()
 
 /obj/machinery/atmospherics/pipe/tank/pipeline_expansion()
-	return list(node1)
+	return list(node)
 
 /obj/machinery/atmospherics/pipe/tank/update_icon()
-	if(node1)
-		icon_state = "intact"
-		dir = get_dir(src, node1)
-	else
-		icon_state = "exposed"
+	underlays.Cut()
+
+	if(showpipe)
+		var/state
+		var/col
+		if(node)
+			state = "pipe_intact"
+			col = node.pipe_color
+		else
+			state = "pipe_exposed"
+
+		underlays += getpipeimage('icons/obj/atmospherics/pipe_tank.dmi', state, initialize_directions, col)
 
 /obj/machinery/atmospherics/pipe/tank/initialize()
 	var/connect_direction = dir
 	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
 		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
+			node = target
 			break
+
+	if(level == 2)
+		showpipe = 1
+
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/tank/disconnect(obj/machinery/atmospherics/reference)
-	if(reference == node1)
-		if(istype(node1, /obj/machinery/atmospherics/pipe))
+	if(reference == node)
+		if(istype(node, /obj/machinery/atmospherics/pipe))
 			del(parent)
-		node1 = null
+		node = null
 	update_icon()
 
 
