@@ -49,7 +49,7 @@
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/weapon/storage/id_kit(src)
 		new /obj/item/weapon/storage/id_kit( src )
-		new /obj/item/device/flash(src)
+		new /obj/item/device/flash/handheld(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		return
 
@@ -73,7 +73,7 @@
 		new /obj/item/weapon/storage/lockbox/loyalty(src)
 		new /obj/item/weapon/storage/flashbang_kit(src)
 		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/device/flash(src)
+		new /obj/item/device/flash/handheld(src)
 		new /obj/item/weapon/melee/baton(src)
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
@@ -122,7 +122,7 @@
 		new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/device/flash(src)
+		new /obj/item/device/flash/handheld(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
