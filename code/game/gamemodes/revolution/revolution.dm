@@ -17,7 +17,7 @@
 	antag_flag = BE_REV
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
-	required_enemies = 3
+	required_enemies = 1
 	recommended_enemies = 3
 
 	var/finished = 0
@@ -52,17 +52,12 @@
 			if(player.assigned_role == job)
 				antag_candidates -= player
 
-	var/list/heads = get_living_heads()
-	if(heads.len < max_headrevs)
-		max_headrevs = heads.len
-
 	for (var/i=1 to max_headrevs)
 		if (antag_candidates.len==0)
 			break
 		var/datum/mind/lenin = pick(antag_candidates)
 		antag_candidates -= lenin
 		head_revolutionaries += lenin
-		log_game("[lenin.key] (ckey) has been selected as a head rev")
 
 	if((head_revolutionaries.len < required_enemies)||(!head_check))
 		return 0
@@ -73,9 +68,15 @@
 /datum/game_mode/revolution/post_setup()
 	var/list/heads = get_living_heads()
 
+	while(heads.len < head_revolutionaries) //das vi danya
+		var/datum/mind/trotsky = pick(head_revolutionaries)
+		antag_candidates += trotsky
+		head_revolutionaries -= trotsky
+
 	heads_to_kill = heads
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
+		log_game("[rev_mind.key] (ckey) has been selected as a head rev")
 		for(var/datum/mind/head_mind in heads)
 			mark_for_death(rev_mind, head_mind)
 
