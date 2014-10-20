@@ -68,7 +68,7 @@
 /datum/game_mode/revolution/post_setup()
 	var/list/heads = get_living_heads()
 
-	while(heads.len < head_revolutionaries) //das vi danya
+	while(heads.len < head_revolutionaries.len) //das vi danya
 		var/datum/mind/trotsky = pick(head_revolutionaries)
 		antag_candidates += trotsky
 		head_revolutionaries -= trotsky
