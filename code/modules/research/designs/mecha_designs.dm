@@ -119,6 +119,33 @@ datum/design/honker_targ
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/targeting
 
+datum/design/phazon_main
+	name = "Exosuit Design (\"Phazon\" Central Control module)"
+	desc = "Allows for the construction of a \"Phazon\" Central Control module."
+	id = "phazon_main"
+	req_tech = list("programming" = 5, "materials" = 7, "powerstorage" = 6)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mecha/phazon/main
+
+datum/design/phazon_peri
+	name = "Exosuit Design (\"Phazon\" Peripherals Control module)"
+	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
+	id = "phazon_peri"
+	req_tech = list("programming" = 5, "bluespace" = 6)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mecha/phazon/peripherals
+
+datum/design/phazon_targ
+	name = "Exosuit Design (\"Phazon\" Weapons & Targeting Control module)"
+	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
+	id = "phazon_targ"
+	req_tech = list("programming" = 5, "magnets" = 6)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mecha/phazon/targeting
+
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////

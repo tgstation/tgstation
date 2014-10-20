@@ -296,7 +296,7 @@
 
 /obj/item/mecha_parts/chassis/phazon
 	name = "\improper Phazon chassis"
-	origin_tech = "materials=7"
+	origin_tech = "materials=6"
 
 /obj/item/mecha_parts/chassis/phazon/New()
 	..()
@@ -304,20 +304,23 @@
 
 /obj/item/mecha_parts/part/phazon_torso
 	name="\improper Phazon torso"
+	desc="A Phazon torso part. The socket for the bluespace core that powers the exosuit's unique phase drives is located in the middle."
 	icon_state = "phazon_harness"
 	construction_time = 300
 	construction_cost = list("metal"=35000,"glass"=10000,"plasma"=20000)
-	origin_tech = "programming=5;materials=7;bluespace=6;powerstorage=6"
+	origin_tech = "programming=5;materials=6;bluespace=5;powerstorage=5"
 
 /obj/item/mecha_parts/part/phazon_head
 	name="\improper Phazon head"
+	desc="A Phazon head. Its sensors are carefully calibrated to provide vision and data even when the exosuit is phasing."
 	icon_state = "phazon_head"
 	construction_time = 200
 	construction_cost = list("metal"=15000,"glass"=5000,"plasma"=10000)
-	origin_tech = "programming=4;materials=5;magnets=6"
+	origin_tech = "programming=4;materials=5;magnets=5"
 
 /obj/item/mecha_parts/part/phazon_left_arm
 	name="\improper Phazon left arm"
+	desc="A Phazon left arm. Several microtool arrays are located under the armor plating, which can be adjusted to the situation at hand."
 	icon_state = "phazon_l_arm"
 	construction_time = 200
 	construction_cost = list("metal"=20000,"plasma"=10000)
@@ -325,6 +328,7 @@
 
 /obj/item/mecha_parts/part/phazon_right_arm
 	name="\improper Phazon right arm"
+	desc="A Phazon right arm. Several microtool arrays are located under the armor plating, which can be adjusted to the situation at hand."
 	icon_state = "phazon_r_arm"
 	construction_time = 200
 	construction_cost = list("metal"=20000,"plasma"=10000)
@@ -332,6 +336,7 @@
 
 /obj/item/mecha_parts/part/phazon_left_leg
 	name="\improper Phazon left leg"
+	desc="A Phazon left leg. It contains the unique phase drives that allow the exosuit to phase through solid matter when engaged."
 	icon_state = "phazon_l_leg"
 	construction_time = 200
 	construction_cost = list("metal"=20000,"plasma"=10000)
@@ -339,11 +344,19 @@
 
 /obj/item/mecha_parts/part/phazon_right_leg
 	name="\improper Phazon right leg"
+	desc="A Phazon right leg. It contains the unique phase drives that allow the exosuit to phase through solid matter when engaged."
 	icon_state = "phazon_r_leg"
 	construction_time = 200
 	construction_cost = list("metal"=20000,"plasma"=10000)
 	origin_tech = "materials=5;bluespace=3;magnets=3"
 
+/obj/item/mecha_parts/part/phazon_armor
+	name="Phazon armor"
+	desc="Phazon armor plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
+	icon_state = "phazon_armor"
+	construction_time = 300
+	construction_cost = list("metal"=45000,"plasma"=30000)
+	origin_tech = "materials=6;bluespace=5;magnets=5"
 ///////// Odysseus
 
 
@@ -494,4 +507,16 @@
 	name = "circuit board (Odysseus Central Control module)"
 	icon_state = "mainboard"
 
+/obj/item/weapon/circuitboard/mecha/phazon
+	origin_tech = "programming=5"
 
+/obj/item/weapon/circuitboard/mecha/phazon/peripherals
+	name = "circuit board (Phazon Peripherals Control module)"
+	icon_state = "mcontroller"
+
+/obj/item/weapon/circuitboard/mecha/phazon/targeting
+	name = "circuit board (Phazon Weapon Control and Targeting module)"
+	icon_state = "mcontroller"
+
+/obj/item/weapon/circuitboard/mecha/phazon/main
+	name = "circuit board (Phazon Central Control module)"
