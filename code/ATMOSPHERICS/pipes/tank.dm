@@ -38,7 +38,6 @@ Atmospheric Tanks
 
 /obj/machinery/atmospherics/pipe/tank/update_icon()
 	underlays.Cut()
-
 	if(showpipe)
 		var/state
 		var/col
