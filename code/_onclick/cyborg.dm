@@ -56,6 +56,8 @@
 	// Cyborgs have no range-checking unless there is item use
 	if(!W)
 		A.attack_robot(src)
+		if(ismob(A))
+			changeNext_move(CLICK_CD_RANGE)
 		return
 
 	// buckled cannot prevent machine interlinking but stops arm movement
@@ -64,6 +66,7 @@
 
 	if(W == A)
 		W.attack_self(src)
+		changeNext_move(CLICK_CD_MELEE)
 		return
 
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
@@ -72,6 +75,8 @@
 		var/resolved = A.attackby(W,src)
 		if(!resolved && A && W)
 			W.afterattack(A,src,1,params)
+		if(ismob(A))
+			changeNext_move(CLICK_CD_RANGE)
 		return
 
 	if(!isturf(loc))
@@ -83,9 +88,13 @@
 			var/resolved = A.attackby(W, src)
 			if(!resolved && A && W)
 				W.afterattack(A, src, 1, params)
+			if(ismob(A))
+				changeNext_move(CLICK_CD_MELEE)
 			return
 		else
 			W.afterattack(A, src, 0, params)
+			if(ismob(A))
+				changeNext_move(CLICK_CD_RANGE)
 			return
 	return
 
