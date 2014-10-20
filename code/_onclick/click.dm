@@ -87,6 +87,7 @@
 
 	if(W == A)
 		W.attack_self(src)
+		changeNext_move(CLICK_CD_MELEE
 		if(hand)
 			update_inv_l_hand(0)
 		else
