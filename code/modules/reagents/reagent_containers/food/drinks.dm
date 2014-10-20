@@ -833,17 +833,17 @@
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	user.drop_item()
 	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(user.loc)
+
+	user.put_in_active_hand(B)
+	if(prob(33))
+		getFromPool(/obj/item/weapon/shard, target.loc) // Create a glass shard at the target's location!
+	B.icon_state = src.icon_state
 	if(istype(src, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass))  //for drinking glasses
 		B.icon_state = "glass_empty"
 		B.name = "broken glass"
 		B.force = 5
 	else if(istype(src, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater)) //for holy water flasks
 		B.name = "broken flask"
-	user.put_in_active_hand(B)
-	if(prob(33))
-		getFromPool(/obj/item/weapon/shard, target.loc) // Create a glass shard at the target's location!
-	B.icon_state = src.icon_state
-
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
