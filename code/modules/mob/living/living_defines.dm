@@ -46,5 +46,3 @@
 	var/silent = null 		//Can't talk. Value goes down every life proc.
 
 	var/locked_to_z = 0 // Locked to a Z-level if nonzero.
-
-	var/agony = 0 // Manual vs Auto scream differentiator

@@ -636,9 +636,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	name = "Loudness Syndrome"
 	stage = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.agony = 1
-		mob.say("*scream")
-		mob.agony = 0
+		mob.emote("scream",,, 1)
 
 /datum/disease2/effect/drowsness
 	name = "Automated Sleeping Syndrome"
