@@ -1252,13 +1252,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 		canmove = has_limbs
 
 	if(lying)
-		layer = 3.9
+		if(ishuman(src))
+			layer = 3.9
 		density = 0
 		drop_l_hand()
 		drop_r_hand()
 	else
+		if(ishuman(src))
+			layer = 4
 		density = 1
-		layer = 4
 
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.

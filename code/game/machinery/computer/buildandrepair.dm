@@ -17,7 +17,7 @@
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
-	item_state = "electronic"
+	item_state = "circuitboard"
 	origin_tech = "programming=2"
 	g_amt=2000 // Recycle glass only
 	w_type = RECYK_ELECTRONIC
