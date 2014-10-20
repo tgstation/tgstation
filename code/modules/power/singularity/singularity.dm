@@ -26,7 +26,6 @@
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
-	var/list/uneatable = null
 
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -211,7 +210,6 @@
 		var/dist = get_dist(X, src)
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
-			if(is_type_in_list(X, uneatable))	continue
 			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
 
@@ -243,8 +241,7 @@
 
 
 /obj/machinery/singularity/proc/consume(var/atom/A)
-	var/gain = A.singularity_act()
-	A.singularity_act(current_size)
+	var/gain = A.singularity_act(current_size)
 	src.energy += gain
 	return
 

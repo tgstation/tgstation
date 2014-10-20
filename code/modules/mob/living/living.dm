@@ -635,5 +635,4 @@
 	var/gain = 20
 	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
 	gib()
-	sleep(1)
 	return(gain)
