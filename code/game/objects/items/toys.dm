@@ -11,6 +11,7 @@
  *		Water flower
  *		Cards
  *		Toy nuke
+ *		Mini-Meteor
  */
 
 
@@ -631,6 +632,7 @@
 	desc = "A little toy model AI core with real law announcing action!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "AI"
+	w_class = 2.0
 	var/cooldown = 0
 
 /obj/item/toy/AI/attack_self(mob/user)
@@ -1004,6 +1006,9 @@ obj/item/toy/cards/deck/syndicate
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
 
+/*
+ * Fake nuke
+ */
 
 /obj/item/toy/nuke
 	name = "\improper Nuclear Fission Explosive toy"
@@ -1027,3 +1032,20 @@ obj/item/toy/cards/deck/syndicate
 	else
 		var/timeleft = (cooldown - world.time)
 		user << "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>"
+
+/*
+ * Fake meteor
+ */
+
+/obj/item/toy/minimeteor
+	name = "\improper Mini-Meteor"
+	desc = "Relive the fun of a meteor shower! SweetMeat-eor. Co is not responsible for any headaches or hearing loss caused by Mini-Meteor™"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "minimeteor"
+
+/obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
+	..()
+	playsound(src, 'sound/effects/meteorimpact.ogg', 50, 1)
+	for(var/mob/M in range(10, src))
+		shake_camera(M, 3, 1)
+	qdel(src)
