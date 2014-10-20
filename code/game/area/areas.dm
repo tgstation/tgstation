@@ -377,7 +377,9 @@
 	CallHook("MobAreaChange", list("mob" = M, "new" = Obj.areaMaster, "old" = oldAreaMaster))
 
 	// Being ready when you change areas gives you a chance to avoid falling all together.
-	if (!oldAreaMaster.has_gravity && M.areaMaster.has_gravity && M.m_intent == "run")
+	if(!oldAreaMaster || !M.areaMaster)
+		thunk(M)
+	else if (!oldAreaMaster.has_gravity && M.areaMaster.has_gravity && M.m_intent == "run")
 		thunk(M)
 
 	if (isnull(M.client))

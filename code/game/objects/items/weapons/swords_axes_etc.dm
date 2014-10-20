@@ -16,56 +16,6 @@
 	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
 
 /*
- * Sword
- */
-/obj/item/weapon/melee/energy/sword/IsShield()
-	if(active)
-		return 1
-	return 0
-
-/obj/item/weapon/melee/energy/sword/New()
-	_color = pick("red","blue","green","purple")
-
-/obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
-	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "\red You accidentally cut yourself with [src]."
-		user.take_organ_damage(5,5)
-	active = !active
-	if (active)
-		force = 30
-		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
-			icon_state = "cutlass1"
-		else
-			icon_state = "sword[_color]"
-		w_class = 4
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "\blue [src] is now active."
-	else
-		force = 3
-		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
-			icon_state = "cutlass0"
-		else
-			icon_state = "sword0"
-		w_class = 2
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "\blue [src] can now be concealed."
-	add_fingerprint(user)
-	return
-
-/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
-	..()
-	if(istype(W, /obj/item/weapon/melee/energy/sword))
-		if(W == src)
-			user << "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>"
-			if(ishuman(user))
-				user.adjustBrainLoss(10)
-		else
-			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			new /obj/item/weapon/twohanded/dualsaber(user.loc)
-			del(W)
-			del(src)
-
-/*
  * Classic Baton
  */
 /obj/item/weapon/melee/classic_baton

@@ -5,8 +5,6 @@ obj/machinery/atmospherics/trinary/filter
 
 	name = "Gas filter"
 
-	req_access = list(access_atmospherics)
-
 	var/on = 0
 	var/temp = null // -- TLE
 

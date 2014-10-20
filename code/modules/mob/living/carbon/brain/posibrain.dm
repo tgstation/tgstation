@@ -163,7 +163,6 @@
 	src.brainmob.robot_talk_understand = 0
 	src.brainmob.stat = 0
 	src.brainmob.silent = 0
-	src.brainmob.brain_op_stage = 4.0
 	dead_mob_list -= src.brainmob
 
 	..()

@@ -25,17 +25,59 @@
 
 /obj/item/projectile/temp
 	name = "freeze beam"
-	icon_state = "ice_2"
+	icon_state = "temp_4"
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
 	var/temperature = 300
+	var/obj/item/weapon/gun/energy/temperature/T = null
+
+	OnFired()
+		T = shot_from
+		temperature = T.temperature
+		switch(temperature)
+			if(501 to INFINITY)
+				name = "searing beam"	//if emagged
+				icon_state = "temp_8"
+			if(400 to 500)
+				name = "burning beam"	//temp at which mobs start taking HEAT_DAMAGE_LEVEL_2
+				icon_state = "temp_7"
+			if(360 to 400)
+				name = "hot beam"		//temp at which mobs start taking HEAT_DAMAGE_LEVEL_1
+				icon_state = "temp_6"
+			if(335 to 360)
+				name = "warm beam"		//temp at which players get notified of their high body temp
+				icon_state = "temp_5"
+			if(295 to 335)
+				name = "ambient beam"
+				icon_state = "temp_4"
+			if(260 to 295)
+				name = "cool beam"		//temp at which players get notified of their low body temp
+				icon_state = "temp_3"
+			if(200 to 260)
+				name = "cold beam"		//temp at which mobs start taking COLD_DAMAGE_LEVEL_1
+				icon_state = "temp_2"
+			if(120 to 260)
+				name = "ice beam"		//temp at which mobs start taking COLD_DAMAGE_LEVEL_2
+				icon_state = "temp_1"
+			if(-INFINITY to 120)
+				name = "freeze beam"	//temp at which mobs start taking COLD_DAMAGE_LEVEL_3
+				icon_state = "temp_0"
+			else
+				name = "temperature beam"//failsafe
+				icon_state = "temp_4"
+
 
 	on_hit(var/atom/target, var/blocked = 0)//These two could likely check temp protection on the mob
 		if(istype(target, /mob/living))
-			var/mob/M = target
+			var/mob/living/M = target
 			M.bodytemperature = temperature
+			if(temperature > 500)//emagged
+				M.adjust_fire_stacks(0.5)
+				M.on_fire = 1
+				M.update_icon = 1
+				playsound(M.loc, 'sound/effects/bamf.ogg', 50, 0)
 		return 1
 
 /obj/item/projectile/meteor

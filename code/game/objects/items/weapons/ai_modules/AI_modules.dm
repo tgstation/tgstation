@@ -10,7 +10,7 @@ Refactored AI modules by N3X15
 	name = "AI Module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
-	item_state = "electronic"
+	item_state = "circuitboard"
 	desc = "An AI Module for transmitting encrypted instructions to the AI."
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0

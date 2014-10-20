@@ -45,6 +45,7 @@
 	density = 1
 	unacidable = 1
 	anchored = 1.0
+	var/spawnable = null
 
 /obj/effect/gateway/Bumped(mob/M as mob|obj)
 	spawn(0)
@@ -59,11 +60,21 @@
 /obj/effect/gateway/active
 	luminosity=5
 	l_color="#ff0000"
-	var/spawnable=list(
+	spawnable=list(
 		/mob/living/simple_animal/hostile/scarybat,
 		/mob/living/simple_animal/hostile/creature,
 		/mob/living/simple_animal/hostile/faithless
 	)
+
+/obj/effect/gateway/active/cult
+	luminosity=5
+	l_color="#ff0000"
+	spawnable=list(
+		/mob/living/simple_animal/hostile/scarybat/cult,
+		/mob/living/simple_animal/hostile/creature/cult,
+		/mob/living/simple_animal/hostile/faithless/cult
+	)
+
 /obj/effect/gateway/active/New()
 	spawn(rand(30,60) SECONDS)
 		var/t = pick(spawnable)

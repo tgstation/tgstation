@@ -95,6 +95,9 @@
 			<A href='byond://?src=\ref[src];spell_choice=staffanimation'>Staff of Animation</A><BR>
 			<I>An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines.</I><BR>
 			<HR>
+			<A href='byond://?src=\ref[src];spell_choice=staffnecro'>Staff of Necromancy</A><BR>
+			<I>An arcane staff capable of summoning undying minions from the corpses of your enemies. This magic doesn't affect machines.</I><BR>
+			<HR>
 			<A href='byond://?src=\ref[src];spell_choice=contract'>Contract of Apprenticeship</A><BR>
 			<I>A magical contract binding an apprentice wizard to your service, using it will summon them to your side.</I><BR>
 			<HR>
@@ -289,6 +292,11 @@
 							feedback_add_details("wizard_spell_learned","SA") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/gun/energy/staff/animate(get_turf(H))
 							temp = "You have purchased a staff of animation."
+							max_uses--
+						if("staffnecro")
+							feedback_add_details("wizard_spell_learned","SN") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							new /obj/item/weapon/staff/necro(get_turf(H))
+							temp = "You have purchased a staff of necromancy."
 							max_uses--
 						if("contract")
 							feedback_add_details("wizard_spell_learned","CT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells

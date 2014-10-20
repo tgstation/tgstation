@@ -5,6 +5,7 @@
 	force = 8.0
 	throwforce = 15.0
 	icon_state = "plasmalarge"
+	item_state = "shard-plasglass"
 
 /obj/item/weapon/shard/plasma/New()
 

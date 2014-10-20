@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete_after: true
+changes:
+  - bugfix: Re-add second bioprinter to Medbay

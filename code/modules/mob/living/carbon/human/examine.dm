@@ -7,6 +7,7 @@
 		return
 
 	var/skipgloves = 0
+	//var/skipsuitstorage = 0
 	var/skipjumpsuit = 0
 	var/skipshoes = 0
 	var/skipmask = 0
@@ -179,9 +180,13 @@
 		else
 			msg += "[t_He] [t_has] \icon[glasses] \a [glasses] covering [t_his] eyes.\n"
 
-	//ears
-	if(ears && !(slot_ears in obscured))
-		msg += "[t_He] [t_has] \icon[ears] \a [ears] on [t_his] ears.\n"
+	//left ear
+	if(l_ear && !(slot_ears in obscured))
+		msg += "[t_He] [t_has] \icon[l_ear] \a [l_ear] on [t_his] left ear.\n"
+
+	//right ear
+	if(r_ear && !(slot_ears in obscured))
+		msg += "[t_He] [t_has] \icon[r_ear] \a [r_ear] on [t_his] right ear.\n"
 
 	//ID
 	if(wear_id)
@@ -222,9 +227,9 @@
 	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
 		distance = 1
 	if(distance <= 3)
-		if(brain_op_stage == 4)
+		if(!has_brain())
 			msg += "<font color='blue'><b>[t_He] has had [t_his] brain removed.</b></font>\n"
-	if (src.stat == 1 || stat == 2 || status_flags & FAKEDEATH)
+	if (src.stat)
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == 2 || src.health < config.health_threshold_crit || status_flags & FAKEDEATH) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
@@ -250,17 +255,14 @@
 
 	msg += "</span>"
 
-/*removing redundant examine if statement
-	if(stat == UNCONSCIOUS)
-		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-*/
 	if(getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if(!key && brain_op_stage != 4 && stat != DEAD)
-		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
-	else if(!client && brain_op_stage != 4 && stat != DEAD && !(status_flags & FAKEDEATH))
-		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
+	if(has_brain() && stat != DEAD)
+		if(!key)
+			msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
+		else if(!client)
+			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
@@ -316,8 +318,8 @@
 					var/this_wound_desc = W.desc
 					if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
 					else if(W.bandaged) this_wound_desc = "bandaged [this_wound_desc]"
-					if(W.germ_level > 1000) this_wound_desc = "badly infected [this_wound_desc]"
-					else if(W.germ_level > 100) this_wound_desc = "lightly infected [this_wound_desc]"
+					if(W.germ_level > 600) this_wound_desc = "badly infected [this_wound_desc]"
+					else if(W.germ_level > 330) this_wound_desc = "lightly infected [this_wound_desc]"
 					if(this_wound_desc in wound_descriptors)
 						wound_descriptors[this_wound_desc] += W.amount
 						continue
@@ -421,7 +423,7 @@
 		msg += "<span class='warning'><b>[src] has blood running from under [t_his] gloves!</b></span>\n"
 
 	for(var/implant in get_visible_implants(1))
-		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their flesh!</span>\n"
+		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of [t_his] flesh!</span>\n"
 	if(digitalcamo)
 		msg += "[t_He] [t_is] repulsively uncanny!\n"
 

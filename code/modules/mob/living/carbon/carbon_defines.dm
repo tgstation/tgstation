@@ -1,7 +1,6 @@
 /mob/living/carbon/
 	gender = MALE
 	var/list/stomach_contents = list()
-	var/brain_op_stage = 0.0
 	var/list/datum/disease2/disease/virus2 = list()
 	var/antibodies = 0
 
