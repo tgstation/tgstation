@@ -97,6 +97,7 @@ var/global/narsie_behaviour = "CultStation13"
 	// Pixel stuff centers Narsie.
 	pixel_x = -236
 	pixel_y = -256
+	luminosity = 1
 
 	current_size = 12
 	consume_range = 12 // How many tiles out do we eat.
@@ -112,6 +113,8 @@ var/global/narsie_behaviour = "CultStation13"
 
 	if(cultspawn)
 		SetUniversalState(/datum/universal_state/hell)
+
+	updateicon()
 
 /obj/machinery/singularity/narsie/process()
 	eat()
@@ -319,6 +322,13 @@ var/global/narsie_behaviour = "CultStation13"
 		target << "\red <b>[capname] HUNGERS FOR YOUR SOUL.</b>"
 	else
 		target << "\red <b>[capname] HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL.</b>"
+
+
+////////////////Glow//////////////////
+/obj/machinery/singularity/narsie/proc/updateicon()
+	overlays = 0
+	var/overlay_layer = LIGHTING_LAYER+1
+	overlays += image(icon,"glow-[icon_state]",overlay_layer)
 
 /**
  * Wizard narsie.

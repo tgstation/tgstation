@@ -1083,7 +1083,7 @@ var/list/sacrificed = list()
 					return
 				else if(isconstruct(M))
 					if(universe.name == "Hell Rising")
-						var/construct_class = alert(usr, "Please choose which type of construct you wish [M] to become.",,"Harvester","Juggernaut","Wraith","Artificer")
+						var/construct_class = alert(usr, "Please choose which type of construct you wish [M] to become.","Harvester","Juggernaut","Wraith","Artificer")
 						switch(construct_class)
 							if("Juggernaut")
 								var/mob/living/simple_animal/construct/armoured/C = new /mob/living/simple_animal/construct/armoured (get_turf(src.loc))
