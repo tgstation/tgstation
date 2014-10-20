@@ -231,7 +231,7 @@ datum/shuttle_controller
 								if(ismob(A))
 									var/mob/M=A
 									M.gib()
-								if(istype(A,/atom/movable))
+								else if(istype(A,/atom/movable))
 									var/atom/movable/AM=A
 									AM.Move(D)
 								// Remove windows, grills, lattice, etc.
