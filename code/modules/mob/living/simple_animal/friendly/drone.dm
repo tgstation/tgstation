@@ -494,6 +494,10 @@
 	else
 		mode()
 
+/mob/living/simple_animal/drone/assess_threat() //Secbots won't hunt maintenance drones.
+	return -10
+
+
 #undef HANDS_LAYER
 #undef HEAD_LAYER
 #undef TOTAL_LAYERS
