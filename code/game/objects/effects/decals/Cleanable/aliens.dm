@@ -16,19 +16,19 @@
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 
 
-/obj/effect/decal/cleanable/blood/gibs/up/xeno
+/obj/effect/decal/cleanable/blood/gibs/xeno/up
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")
 
-/obj/effect/decal/cleanable/blood/gibs/down/xeno
+/obj/effect/decal/cleanable/blood/gibs/xeno/down
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibdown1","xgibdown1","xgibdown1")
 
-/obj/effect/decal/cleanable/blood/gibs/body/xeno
+/obj/effect/decal/cleanable/blood/gibs/xeno/body
 	random_icon_states = list("xgibhead", "xgibtorso")
 
-/obj/effect/decal/cleanable/blood/gibs/limb/xeno
+/obj/effect/decal/cleanable/blood/gibs/xeno/limb
 	random_icon_states = list("xgibleg", "xgibarm")
 
-/obj/effect/decal/cleanable/blood/gibs/core/xeno
+/obj/effect/decal/cleanable/blood/gibs/xeno/core
 	random_icon_states = list("xgibmid1", "xgibmid2", "xgibmid3")
 
 /obj/effect/decal/cleanable/blood/xtracks
@@ -39,6 +39,9 @@
 
 /atom/proc/xeno_acid_blood() //Muh OOP
 	return
+
+/obj/effect/decal/cleanable/blood/gibs/xeno/Crossed(atom/movable/O)
+	O.xeno_acid_blood()
 
 /obj/effect/decal/cleanable/trail_holder/Crossed(atom/movable/O)
 	if(trail_type && trail_type == "xltrails") //This is messy but I'm not doing it with icon_states and trail_holders are snowflake magic shits
@@ -53,3 +56,6 @@
 /mob/living/xeno_acid_blood()
 	apply_damage(10,BURN)
 	src << "<span class='noticealien'>Stepping in the acid burns you!</span>"
+
+/mob/living/carbon/alien/xeno_acid_blood()
+	return //Alien blood doesn't harm aliens
