@@ -1042,10 +1042,12 @@ obj/item/toy/cards/deck/syndicate
 	desc = "Relive the fun of a meteor shower! SweetMeat-eor. Co is not responsible for any headaches or hearing loss caused by Mini-Meteor™"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
+	w_class = 2.0
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
 	..()
-	playsound(src, 'sound/effects/meteorimpact.ogg', 50, 1)
+	playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
 	for(var/mob/M in range(10, src))
-		shake_camera(M, 3, 1)
+		if(!M.stat && !istype(M, /mob/living/silicon/ai))\
+			shake_camera(M, 3, 1)
 	qdel(src)
