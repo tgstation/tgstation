@@ -154,6 +154,8 @@
 	in human click code to allow glove touches only at melee range.
 */
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
+	if(ismob(A))
+		changeNext_move(CLICK_CD_MELEE)
 	return
 
 /*
