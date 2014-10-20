@@ -21,6 +21,7 @@
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
 	var/trigger_guard = 1
+	var/sawn_desc = null
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0

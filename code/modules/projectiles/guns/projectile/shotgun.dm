@@ -65,6 +65,12 @@
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotriot
+	sawn_desc = "Come with me if you want to live."
+
+/obj/item/weapon/gun/projectile/shotgun/riot/attackby(var/obj/item/A as obj, mob/user as mob)
+	..()
+	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
+		sawoff(user)
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel
 	name = "double-barreled shotgun"
@@ -77,7 +83,7 @@
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
-	var/sawn_desc = "Omar's coming!"
+	sawn_desc = "Omar's coming!"
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
@@ -86,12 +92,10 @@
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
 		sawoff(user)
 
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/proc/sawoff(mob/user as mob)
+/obj/item/weapon/gun/projectile/proc/sawoff(mob/user as mob)
 	user << "<span class='notice'>You begin to shorten \the [src].</span>"
 	if(get_ammo())
-		afterattack(user, user)	//will this work?
-		afterattack(user, user)	//it will. we call it twice, for twice the FUN
-		playsound(user, fire_sound, 50, 1)
+		afterattack(user, user)
 		user.visible_message("<span class='danger'>The [src] goes off!</span>", "<span class='danger'>The [src] goes off in your face!</span>")
 		return
 	if(do_after(user, 30))
@@ -103,6 +107,7 @@
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		user << "<span class='warning'>You shorten \the [src]!</span>"
+		update_icon()
 		return
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user as mob)
