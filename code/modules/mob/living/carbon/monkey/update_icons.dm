@@ -60,13 +60,7 @@
 /mob/living/carbon/monkey/proc/update_inv_hat(var/update_icons=1)
 	if(hat)
 		var/t_state = hat.icon_state
-		var/image/hatoffset = image("icon" = 'icons/mob/head.dmi', "icon_state" = t_state)
-		hatoffset.pixel_y = -1
-		if(dir == 4)
-			hatoffset.pixel_x = -1
-		else if(dir == 8)
-			hatoffset.pixel_x = 1
-		overlays_standing[M_HAT_LAYER]	= hatoffset
+		overlays_standing[M_HAT_LAYER]	= image("icon" = 'icons/mob/monkey_head.dmi', "icon_state" = t_state)
 	else
 		overlays_standing[M_HAT_LAYER]	= null
 	if(update_icons)		update_icons()

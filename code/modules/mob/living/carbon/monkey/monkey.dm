@@ -8,9 +8,11 @@
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 
+	var/canWearClothes = 1
+	var/canWearHats = 1
+
 	var/obj/item/weapon/monkeyclothes/uniform = null
 	var/obj/item/clothing/head/hat = null
-	var/oldir = 0
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/greaterform = "Human"                  // Used when humanizing a monkey.
@@ -40,6 +42,7 @@
 	speak_emote = list("hisses")
 	icon_state = "stokkey1"
 	uni_append = list(0x044,0xC5D) // 044C5D
+	canWearClothes = 0
 
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
@@ -127,17 +130,19 @@
 
 	dat += "<BR>"
 
-	if(hat)
-		dat +=	"<br><b>Uniform:</b> [uniform] (<a href='?src=\ref[src];remove_inv=hat'>Remove</a>)"
-	else
-		dat +=	"<br><b>Uniform:</b> <a href='?src=\ref[src];add_inv=hat'><font color=grey>Empty</font></a>"
+	if(canWearHats)
+		if(hat)
+			dat +=	"<br><b>Headwear:</b> [uniform] (<a href='?src=\ref[src];remove_inv=hat'>Remove</a>)"
+		else
+			dat +=	"<br><b>Headwear:</b> <a href='?src=\ref[src];add_inv=hat'><font color=grey>Empty</font></a>"
 
 	dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=mask'>		[(wear_mask && !(src.wear_mask.abstract))	? wear_mask	: "<font color=grey>Empty</font>"]</A>"
 
-	if(uniform)
-		dat +=	"<br><b>Uniform:</b> [uniform] (<a href='?src=\ref[src];remove_inv=uniform'>Remove</a>)"
-	else
-		dat +=	"<br><b>Uniform:</b> <a href='?src=\ref[src];add_inv=uniform'><font color=grey>Empty</font></a>"
+	if(canWearClothes)
+		if(uniform)
+			dat +=	"<br><b>Uniform:</b> [uniform] (<a href='?src=\ref[src];remove_inv=uniform'>Remove</a>)"
+		else
+			dat +=	"<br><b>Uniform:</b> <a href='?src=\ref[src];add_inv=uniform'><font color=grey>Empty</font></a>"
 
 	if(handcuffed)
 		dat += "<BR><B>Handcuffed:</B> <A href='?src=\ref[src];item=handcuff'>Remove</A>"
