@@ -160,3 +160,192 @@
 	invocation_type = "none"
 	proj_lifespan = 10
 	max_targets = 6
+
+/mob/living/simple_animal/construct/harvester/verb/harvesterknock()
+	set name = "Open Doors"
+	set desc = "No door shall stop you."
+	set category = "Harvester"
+	var/mob/living/simple_animal/construct/harvester/user = src
+	if(user.doorcooldown >= 10)
+		for(var/turf/T in range(3, src))
+			for(var/obj/machinery/door/door in T.contents)
+				spawn()
+					if(istype(door,/obj/machinery/door/airlock))
+						door:locked = 0
+					door.open()
+		user.doorcooldown = 0
+	else
+		user << "<span class='warning'> You aren't ready to write another rune just yet.</span>"
+
+/mob/living/simple_animal/construct/harvester/verb/harvesterune()
+	set name = "Scribe a Rune"
+	set desc = "Let's you instantly manifest a working rune."
+	set category = "Harvester"
+	var/mob/living/simple_animal/construct/harvester/user = src
+	var/r											//shamelessly copied from /obj/item/weapon/tome/imbued
+	if(user.runecooldown >= 10)
+		if (!istype(user.loc,/turf))
+			user << "<span class='warning'> You do not have enough space to write a proper rune.</span>"
+		var/list/runes = list("Teleport", "Item Teleport", "Spawn a Tome", "Change Construct Type", "Convert", "EMP", "Drain Blood", "See Invisible", "Resurrect", "Hide Runes", "Reveal Runes", "Astral Journey", "Manifest a Ghost", "Imbue Talisman", "Sacrifice", "Wall", "Free Cultist", "Summon Cultist", "Deafen", "Blind", "BloodBoil", "Communicate", "Stun")
+		r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
+		var/obj/effect/rune/R = new /obj/effect/rune
+		if(istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			R.blood_DNA = list()
+			R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+		switch(r)
+			if("Teleport")
+				var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
+				var/beacon
+				if(usr)
+					beacon = input("Select the last rune", "Rune Scribing") in words
+				R.word1=cultwords["travel"]
+				R.word2=cultwords["self"]
+				R.word3=beacon
+				R.loc = user.loc
+				R.check_icon()
+			if("Item Teleport")
+				var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
+				var/beacon
+				if(usr)
+					beacon = input("Select the last rune", "Rune Scribing") in words
+				R.word1=cultwords["travel"]
+				R.word2=cultwords["other"]
+				R.word3=beacon
+				R.loc = user.loc
+				R.check_icon()
+			if("Spawn a Tome")
+				R.word1=cultwords["see"]
+				R.word2=cultwords["blood"]
+				R.word3=cultwords["hell"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Change Construct Type")
+				R.word1=cultwords["hell"]
+				R.word2=cultwords["destroy"]
+				R.word3=cultwords["other"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Convert")
+				R.word1=cultwords["join"]
+				R.word2=cultwords["blood"]
+				R.word3=cultwords["self"]
+				R.loc = user.loc
+				R.check_icon()
+			if("EMP")
+				R.word1=cultwords["destroy"]
+				R.word2=cultwords["see"]
+				R.word3=cultwords["technology"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Drain Blood")
+				R.word1=cultwords["travel"]
+				R.word2=cultwords["blood"]
+				R.word3=cultwords["self"]
+				R.loc = user.loc
+				R.check_icon()
+			if("See Invisible")
+				R.word1=cultwords["see"]
+				R.word2=cultwords["hell"]
+				R.word3=cultwords["join"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Resurrect")
+				R.word1=cultwords["blood"]
+				R.word2=cultwords["join"]
+				R.word3=cultwords["hell"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Hide Runes")
+				R.word1=cultwords["hide"]
+				R.word2=cultwords["see"]
+				R.word3=cultwords["blood"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Astral Journey")
+				R.word1=cultwords["hell"]
+				R.word2=cultwords["travel"]
+				R.word3=cultwords["self"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Manifest a Ghost")
+				R.word1=cultwords["blood"]
+				R.word2=cultwords["see"]
+				R.word3=cultwords["travel"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Imbue Talisman")
+				R.word1=cultwords["hell"]
+				R.word2=cultwords["technology"]
+				R.word3=cultwords["join"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Sacrifice")
+				R.word1=cultwords["hell"]
+				R.word2=cultwords["blood"]
+				R.word3=cultwords["join"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Reveal Runes")
+				R.word1=cultwords["blood"]
+				R.word2=cultwords["see"]
+				R.word3=cultwords["hide"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Wall")
+				R.word1=cultwords["destroy"]
+				R.word2=cultwords["travel"]
+				R.word3=cultwords["self"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Freedom")
+				R.word1=cultwords["travel"]
+				R.word2=cultwords["technology"]
+				R.word3=cultwords["other"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Cultsummon")
+				R.word1=cultwords["join"]
+				R.word2=cultwords["other"]
+				R.word3=cultwords["self"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Deafen")
+				R.word1=cultwords["hide"]
+				R.word2=cultwords["other"]
+				R.word3=cultwords["see"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Blind")
+				R.word1=cultwords["destroy"]
+				R.word2=cultwords["see"]
+				R.word3=cultwords["other"]
+				R.loc = user.loc
+				R.check_icon()
+			if("BloodBoil")
+				R.word1=cultwords["destroy"]
+				R.word2=cultwords["see"]
+				R.word3=cultwords["blood"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Communicate")
+				R.word1=cultwords["self"]
+				R.word2=cultwords["other"]
+				R.word3=cultwords["technology"]
+				R.loc = user.loc
+				R.check_icon()
+			if("Stun")
+				R.word1=cultwords["join"]
+				R.word2=cultwords["hide"]
+				R.word3=cultwords["technology"]
+				R.loc = user.loc
+				R.check_icon()
+		if(user.runecooldown >= 10)	//so players don't try to spam the spell without choosing a Rune.
+			R.loc = user.loc
+			R.check_icon()
+			user.runecooldown = 0
+		else
+			del(R)
+	else
+		user << "<span class='warning'> You aren't ready to write another rune just yet.</span>"
+

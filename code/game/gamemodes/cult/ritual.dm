@@ -101,6 +101,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return
 		return
 
+	attack_animal(mob/living/simple_animal/user as mob)
+		if(istype(user, /mob/living/simple_animal/construct/harvester))
+			attack_hand(user)
 
 	attack_hand(mob/living/user as mob)
 		if(!iscultist(user))

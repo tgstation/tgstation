@@ -30,7 +30,7 @@
 	attackpylon(user, user.melee_damage_upper)
 
 /obj/structure/cult/pylon/attackby(obj/item/W as obj, mob/user as mob)
-	attackpylon(mob, W.force)
+	attackpylon(user, W.force)
 
 /obj/structure/cult/pylon/proc/attackpylon(mob/user as mob, var/damage)
 	if(!isbroken)
@@ -49,7 +49,7 @@
 			user << "You hit the pylon!"
 			playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 	else
-		if(prob(W.force * 2))
+		if(prob(damage * 2))
 			user << "You pulverize what was left of the pylon!"
 			qdel(src)
 		else

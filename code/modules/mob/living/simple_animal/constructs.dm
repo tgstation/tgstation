@@ -307,6 +307,30 @@
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 
+////////////////////////Harvester////////////////////////////////
+
+
+
+/mob/living/simple_animal/construct/harvester
+	name = "Harvester"
+	real_name = "Harvester"
+	desc = "The promised reward of the livings who follow narsie. Obtained by offering their bodies to the geometer of blood"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "harvester"
+	icon_living = "harvester"
+	maxHealth = 200
+	health = 200
+	melee_damage_lower = 25
+	melee_damage_upper = 25
+	attacktext = "violently stabs"
+	speed = -1
+	environment_smash = 1
+	see_in_dark = 7
+	attack_sound = 'sound/weapons/pierce.ogg'
+	var/doorcooldown = 10
+	var/runecooldown = 10
+
+
 ////////////////Glow//////////////////
 /mob/living/simple_animal/construct/proc/updateicon()
 	overlays = 0
@@ -406,3 +430,10 @@
 		if(12 to 24)			healths.icon_state = "wraith_health5"
 		if(1 to 11)				healths.icon_state = "wraith_health6"
 		else					healths.icon_state = "wraith_health7"
+
+/mob/living/simple_animal/construct/harvester/Life()
+	..()
+	if(runecooldown < 10)
+		runecooldown++
+	if(doorcooldown < 10)
+		doorcooldown++

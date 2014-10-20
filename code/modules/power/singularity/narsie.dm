@@ -19,6 +19,9 @@ var/global/narsie_behaviour = "CultStation13"
 		/mob/dead,
 		/mob/camera,
 		/mob/new_player,
+		/obj/effect/rune,
+		/obj/effect/decal/cleanable/blood,
+		/obj/effect/decal/remains,
 		/mob/living/simple_animal/construct,
 		/mob/living/simple_animal/hostile/scarybat/cult,
 		/mob/living/simple_animal/hostile/creature/cult,
@@ -129,6 +132,7 @@ var/global/narsie_behaviour = "CultStation13"
 				M.apply_effect(3, STUN)
 
 
+
 /obj/machinery/singularity/narsie/consume(const/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
 //NEW BEHAVIOUR
 	if(narsie_behaviour == "CultStation13")
@@ -138,9 +142,9 @@ var/global/narsie_behaviour = "CultStation13"
 		if (istype(A, /mob/living/))
 			var/mob/living/M = A
 			if(iscultist(M) && M.client)
-				var/pickedpath = pick(construct_types)
-				var/mob/living/simple_animal/construct/C = new pickedpath(get_turf(M))
+				var/mob/living/simple_animal/construct/harvester/C = new /mob/living/simple_animal/construct/harvester(get_turf(M))
 				M.mind.transfer_to(C)
+				C << "<span class='sinister'>The Geometer of Blood is overjoyed to be reunited with its followers, and accepts your body in sacrifice. As reward, you have been gifted with the shell of an Harvester.<br>Your tendrils can use and draw runes without need for a tome, your eyes can see beings through walls, and your mind can open any door. Use these assets to serve Nar-Sie and bring him any remaining living human in the world.<br>You can teleport yourself back to Nar-Sie along with any being under yourself at any time using your \"Harvest\" spell.</span>"
 			M.dust()
 	//ITEM PROCESSING
 		else if (istype(A, /obj/))
@@ -370,9 +374,8 @@ var/global/mr_clean_targets = list(
 /obj/machinery/singularity/narsie/large/clean/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
-			if(!iscultist(M))
-				M << "<span class='warning'> You take a moment to admire [src.name] hard at work...</span>"
-				M.apply_effect(3, STUN)
+			M << "<span class='warning'> You take a moment to admire [src.name] hard at work...</span>"
+			M.apply_effect(3, STUN)
 
 /obj/machinery/singularity/narsie/large/clean/update_icon()
 	overlays = 0

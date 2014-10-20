@@ -78,7 +78,8 @@
 			enroute = 1
 			stop_automated_movement = 1
 			spawn()
-				horde()
+				if(!src.stat)
+					horde()
 
 		if(get_dist(src, shuttletarget) <= 2)		//The monster reached the escape hallway
 			enroute = 0
@@ -104,4 +105,5 @@
 	GiveTarget(new_target)
 	if(!target || enroute)
 		spawn(10)
-			horde()
+			if(!src.stat)
+				horde()
