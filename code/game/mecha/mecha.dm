@@ -468,9 +468,10 @@
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		user.visible_message("<span class='userdanger'>[user] hits [src.name], doing some damage.</span>", "<span class='userdanger'>You hit [src.name] with all your might. The metal creaks and bends.</span>")
+		user.visible_message("<span class='danger'>[user] hits [src.name], doing some damage.</span>", "<span class='danger'>You hit [src.name] with all your might. The metal creaks and bends.</span>")
+		src.occupant_message("<span class='userdanger'>[user] hits [src.name], doing some damage.</span>")
 	else
-		user.visible_message("<span class='userdanger'>[user] hits [src.name]. Nothing happens</span>","<span class='userdanger'>You hit [src.name] with no visible effect.</span>")
+		user.visible_message("<span class='danger'>[user] hits [src.name]. Nothing happens</span>","<span class='danger'>You hit [src.name] with no visible effect.</span>")
 		src.log_append_to_last("Armor saved.")
 	return
 
@@ -486,6 +487,7 @@
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 		user << "<span class='danger'>You slash at the armored suit!</span>"
 		visible_message("<span class='danger'>The [user] slashes at [src.name]'s armor!</span>")
+		src.occupant_message("<span class='userdanger'>The [user] slashes at [src.name]'s armor!</span>")
 	else
 		src.log_append_to_last("Armor saved.")
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
@@ -504,12 +506,13 @@
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			src.take_damage(damage)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-			visible_message("<span class='danger'><B>[user]</B> [user.attacktext] [src]!</span>")
+			visible_message("<span class='danger'>[user] [user.attacktext] [src]!</span>")
+			src.occupant_message("<span class='userdanger'>[user] [user.attacktext] [src]!</span>")
 			add_logs(user, src, "attacked", admin=0)
 		else
 			src.log_append_to_last("Armor saved.")
 			playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
-			src.occupant_message("<span class='notice'>The [user]'s attack is stopped by the armor.</span>")
+			src.occupant_message("<span class='notice'>[user]'s attack is stopped by the armor.</span>")
 			visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
 			add_logs(user, src, "attacked", admin=0)
 	return
@@ -537,6 +540,8 @@
 	else if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)
+			src.occupant_message("<span class='userdanger'>[src.name] is hit by [A].</span>")
+			src.visible_message("<span class='danger'>[src.name] is hit by [A].</span>")
 			src.take_damage(O.throwforce)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 	return
@@ -562,6 +567,8 @@
 		ignore_threshold = 1
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		src.take_damage(Proj.damage,Proj.flag)
+		src.occupant_message("<span class='userdanger'>[src.name] is hit by [Proj]!</span>")
+		src.visible_message("<span class='danger'>[src.name] is hit by [Proj].</span>")
 		src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
 	Proj.on_hit(src)
 	return
@@ -644,7 +651,7 @@
 		return 0
 	else
 		src.occupant_message("<span class='userdanger'>[user] hits [src] with [W].</span>")
-		user.visible_message("<span class='userdanger'>[user] hits [src] with [W].</span>", "<span class='userdanger'>You hit [src] with [W].</span>")
+		user.visible_message("<span class='danger'>[user] hits [src] with [W].</span>", "<span class='danger'>You hit [src] with [W].</span>")
 		src.take_damage(W.force,W.damtype)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		return 1
