@@ -37,25 +37,27 @@
 
 //Xeno blood burns\\
 
-/atom/proc/xeno_acid_blood() //Muh OOP
+/atom/proc/xeno_acid_blood(var/dmg) //Muh OOP
 	return
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/Crossed(atom/movable/O)
-	O.xeno_acid_blood()
+	O.xeno_acid_blood(15)
 
 /obj/effect/decal/cleanable/trail_holder/Crossed(atom/movable/O)
 	if(trail_type && trail_type == "xltrails") //This is messy but I'm not doing it with icon_states and trail_holders are snowflake magic shits
-		O.xeno_acid_blood()
+		O.xeno_acid_blood(5)
 
 /obj/effect/decal/cleanable/blood/xeno/Crossed(atom/movable/O)
-	O.xeno_acid_blood()
+	O.xeno_acid_blood(10)
 
 /obj/effect/decal/cleanable/blood/xtracks/Crossed(atom/movable/O)
-	O.xeno_acid_blood()
+	O.xeno_acid_blood(10)
 
-/mob/living/xeno_acid_blood()
-	apply_damage(10,BURN)
+/mob/living/xeno_acid_blood(var/dmg)
+	if(!dmg)
+		return
+	apply_damage(dmg,BURN)
 	src << "<span class='noticealien'>Stepping in the acid burns you!</span>"
 
-/mob/living/carbon/alien/xeno_acid_blood()
+/mob/living/carbon/alien/xeno_acid_blood(var/dmg)
 	return //Alien blood doesn't harm aliens
