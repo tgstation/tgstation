@@ -18,4 +18,4 @@ author: optimumtact
 delete-after: True
 
 changes:
-  - tweak: "The pipe painter no longer has a click cooldown"
+  - tweak: "The pipe painter no longer has a click cooldown and now only works on adjacent pipes"

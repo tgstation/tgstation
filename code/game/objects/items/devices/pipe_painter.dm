@@ -19,7 +19,10 @@
 	m_amt = 5000
 	g_amt = 2000
 
-/obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob)
+/obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob, proximity_flag)
+	//Make sure we only paint adjacent items
+	if(proximity_flag!= 1)
+		return
 
 	if(!istype(A,/obj/machinery/atmospherics/pipe/simple) && !istype(A,/obj/machinery/atmospherics/pipe/manifold) && !istype(A,/obj/machinery/atmospherics/pipe/manifold4w))
 		return
