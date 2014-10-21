@@ -12,6 +12,7 @@
  *		Cards
  *		Toy nuke
  *		Mini-Meteor
+ *		Carp plushie
  */
 
 
@@ -1039,7 +1040,7 @@ obj/item/toy/cards/deck/syndicate
 
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
-	desc = "Relive the fun of a meteor shower! SweetMeat-eor. Co is not responsible for any headaches or hearing loss caused by Mini-Meteor™"
+	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor™"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
 	w_class = 2.0
@@ -1051,3 +1052,14 @@ obj/item/toy/cards/deck/syndicate
 		if(!M.stat && !istype(M, /mob/living/silicon/ai))\
 			shake_camera(M, 3, 1)
 	qdel(src)
+
+/*
+ * Carp plushie
+ */
+
+/obj/item/toy/carpplushie
+	name = "space carp plushie"
+	desc = "An adorable stuffed toy that resembles a space carp."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "carpplushie"
+	w_class = 2.0
