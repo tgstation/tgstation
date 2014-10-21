@@ -1,5 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - bugfix: Vending machines should no longer shock users remotely if someone else interacts with it after them
-  - tweak: If you get shocked while trying to interact with a vending machine, do not show the menu

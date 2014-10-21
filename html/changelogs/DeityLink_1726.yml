@@ -1,9 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Monkeys have two new inventory slots: Headwear and Uniform. They can wear any hat, but they can only wear monkey-sized uniforms.
-  - rscadd: Farwa and Neaera can use them slots as well, but Stok can only use hats. Diona can't use either :(
-  - imageadd: The unused Pun Pun sprite has been modified a bit so it can now be used for a monkey-sized waiter suit.
-  - rscadd: Added two of those suits in the bartender's closet at roundstart.
-  - imageadd: Duplicated the hat folder and edited some of them so they fit well on monkeys.
-  - imageadd: Added monkey-sized cult robes.
