@@ -95,7 +95,7 @@
 
 // Crucial to make things work!!!!
 // OLD FIX - explanation given down below.
-// /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+// /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target, height=0)
 // 		return !density
 
 /obj/machinery/power/compressor/RefreshParts()
@@ -209,7 +209,7 @@
 // OLD FIX . Dunno how other engines handle this but this is how it should work: Turbine and compressor should be
 // treated as walls to avoid conductivity and gas spread. This was the problem of the original turbine which was just
 // a machinery - it didn't block the gas passage.
-// /obj/machinery/power/turbine/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+// /obj/machinery/power/turbine/CanPass(atom/movable/mover, turf/target, height=0)
 //		return !density
 
 /obj/machinery/power/turbine/RefreshParts()

@@ -384,30 +384,6 @@ var/global/list/g_fancy_list_of_types = null
 			g_fancy_list_of_types[typename] = type
 	return g_fancy_list_of_types
 
-var/global/list/g_fancy_list_of_safe_types = null
-/proc/get_fancy_list_of_safe_types()
-	if (isnull(g_fancy_list_of_safe_types)) //init
-		var/blocked = list(
-			/turf,
-			/obj,
-			/mob,
-			/mob/living,
-			/mob/living/carbon,
-			/mob/living/carbon/human,
-			/mob/dead,
-			/mob/dead/observer,
-			/mob/living/silicon,
-			/mob/living/silicon/robot,
-			/mob/living/silicon/ai
-		)
-		var/list/source = get_fancy_list_of_types()
-		g_fancy_list_of_safe_types = new
-		for(var/typename in source)
-			var/type = source[typename]
-			if(!(type in blocked))
-				g_fancy_list_of_safe_types[typename] = type
-	return g_fancy_list_of_safe_types
-
 /proc/filter_fancy_list(list/L, filter as text)
 	var/list/matches = new
 	for(var/key in L)
@@ -421,8 +397,7 @@ var/global/list/g_fancy_list_of_safe_types = null
 	set category = "Debug"
 	set name = "Del-All"
 
-	// usng "safe" to prevent REALLY stupid deletions
-	var/list/matches = get_fancy_list_of_safe_types()
+	var/list/matches = get_fancy_list_of_types()
 	if (!isnull(object) && object!="")
 		matches = filter_fancy_list(matches, object)
 
