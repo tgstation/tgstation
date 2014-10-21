@@ -1,17 +1,17 @@
 /* Toys!
  * ContainsL
  *		Balloons
- *		Fake telebeacon
  *		Fake singularity
  *		Toy gun
  *		Toy crossbow
  *		Toy swords
  *		Crayons
  *		Snap pops
- *		Water flower
+ *		Mech prizes
+ *		AI core prizes
  *		Cards
  *		Toy nuke
- *		Mini-Meteor
+ *		Fake meteor
  *		Carp plushie
  */
 
@@ -552,78 +552,89 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
 	var/cooldown = 0
+	var/quiet = 0
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user as mob)
 	if(!cooldown)
 		user << "<span class='notice'>You play with [src].</span>"
-		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
 		cooldown = 1
 		spawn(30) cooldown = 0
+		if (!quiet)
+			playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
+		return
+	..()
 
 /obj/item/toy/prize/attack_hand(mob/user as mob)
 	if(loc == user)
 		if(!cooldown)
 			user << "<span class='notice'>You play with [src].</span>"
-			playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
 			cooldown = 1
 			spawn(30) cooldown = 0
+			if (!quiet)
+				playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
 			return
 	..()
 
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/11."
+	desc = "Mini-Mecha action figure! Collect them all! 1/12."
 
 /obj/item/toy/prize/fireripley
 	name = "toy firefighting Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/11."
+	desc = "Mini-Mecha action figure! Collect them all! 2/12."
 	icon_state = "fireripleytoy"
 
 /obj/item/toy/prize/deathripley
 	name = "toy deathsquad Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/11."
+	desc = "Mini-Mecha action figure! Collect them all! 3/12."
 	icon_state = "deathripleytoy"
 
 /obj/item/toy/prize/gygax
 	name = "toy Gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/11."
+	desc = "Mini-Mecha action figure! Collect them all! 4/12."
 	icon_state = "gygaxtoy"
 
 /obj/item/toy/prize/durand
 	name = "toy Durand"
-	desc = "Mini-Mecha action figure! Collect them all! 5/11."
+	desc = "Mini-Mecha action figure! Collect them all! 5/12."
 	icon_state = "durandprize"
 
 /obj/item/toy/prize/honk
 	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/11."
+	desc = "Mini-Mecha action figure! Collect them all! 6/12."
 	icon_state = "honkprize"
 
 /obj/item/toy/prize/marauder
 	name = "toy Marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/11."
+	desc = "Mini-Mecha action figure! Collect them all! 7/12."
 	icon_state = "marauderprize"
 
 /obj/item/toy/prize/seraph
 	name = "toy Seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/11."
+	desc = "Mini-Mecha action figure! Collect them all! 8/12."
 	icon_state = "seraphprize"
 
 /obj/item/toy/prize/mauler
 	name = "toy Mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/11."
+	desc = "Mini-Mecha action figure! Collect them all! 9/12."
 	icon_state = "maulerprize"
 
 /obj/item/toy/prize/odysseus
 	name = "toy Odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/11."
+	desc = "Mini-Mecha action figure! Collect them all! 10/12."
 	icon_state = "odysseusprize"
 
 /obj/item/toy/prize/phazon
 	name = "toy Phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/11."
+	desc = "Mini-Mecha action figure! Collect them all! 11/12."
 	icon_state = "phazonprize"
+
+/obj/item/toy/prize/reticence
+	name = "toy Reticence"
+	desc = "Mini-Mecha action figure! Collect them all! 12/12."
+	icon_state = "reticenceprize"
+	quiet = 1
 
 /*
  * AI core prizes
