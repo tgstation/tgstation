@@ -237,8 +237,9 @@
 	// -- End mode specific stuff
 
 	H.UpdateAppearance()
-	H.set_species()
+	H.set_species(R.dna.species)
 	randmutb(H) // sometimes the clones come out wrong.
+	H.dna.mutantrace = R.dna.mutantrace
 	H.update_mutantrace()
 	H.real_name = H.dna.real_name
 

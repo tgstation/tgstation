@@ -68,32 +68,37 @@
 		return buf.dna.SetUIValue(real_block,val)
 
 /obj/item/weapon/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
-	if(istype(M,/mob/living))
-		M.radiation += rand(5,20)
+	if(istype(M,/mob/living/carbon/human/manifested))
+		M << "<span class='warning'> Apparently it didn't work.</span>"
+		if(M != user)
+			user << "<span class='warning'> Apparently it didn't work.</span>"
+	else
+		if(istype(M,/mob/living))
+			M.radiation += rand(5,20)
 
-	if (!(M_NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
-		// UI in syringe.
-		if (buf.types & DNA2_BUF_UI)
-			if (!block) //isolated block?
-				M.UpdateAppearance(buf.dna.UI.Copy())
-				if (buf.types & DNA2_BUF_UE) //unique enzymes? yes
-					M.real_name = buf.dna.real_name
-					M.name = buf.dna.real_name
+		if (!(M_NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
+			// UI in syringe.
+			if (buf.types & DNA2_BUF_UI)
+				if (!block) //isolated block?
+					M.UpdateAppearance(buf.dna.UI.Copy())
+					if (buf.types & DNA2_BUF_UE) //unique enzymes? yes
+						M.real_name = buf.dna.real_name
+						M.name = buf.dna.real_name
+					uses--
+				else
+					M.dna.SetUIValue(block,src.GetValue())
+					M.UpdateAppearance()
+					uses--
+			if (buf.types & DNA2_BUF_SE)
+				if (!block) //isolated block?
+					M.dna.SE = buf.dna.SE.Copy()
+					M.dna.UpdateSE()
+				else
+					M.dna.SetSEValue(block,src.GetValue())
+				domutcheck(M, null)
 				uses--
-			else
-				M.dna.SetUIValue(block,src.GetValue())
-				M.UpdateAppearance()
-				uses--
-		if (buf.types & DNA2_BUF_SE)
-			if (!block) //isolated block?
-				M.dna.SE = buf.dna.SE.Copy()
-				M.dna.UpdateSE()
-			else
-				M.dna.SetSEValue(block,src.GetValue())
-			domutcheck(M, null)
-			uses--
-			if(prob(5))
-				trigger_side_effect(M)
+				if(prob(5))
+					trigger_side_effect(M)
 
 	spawn(0)//this prevents the collapse of space-time continuum
 		if (user)
@@ -1171,7 +1176,7 @@
 	New()
 		block = DIZZYBLOCK
 		..()
-		
+
 /obj/item/weapon/dnainjector/sans
 	name = "DNA-Injector (Wacky)"
 	desc = "<span class='sans'>#wow #woah</span>"

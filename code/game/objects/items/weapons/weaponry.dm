@@ -82,7 +82,8 @@
 		return(BRUTELOSS)
 
 /obj/item/weapon/sord/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(get_turf(src), 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	user.adjustBruteLoss(0.5)
 	return ..()
 
 /obj/item/weapon/claymore

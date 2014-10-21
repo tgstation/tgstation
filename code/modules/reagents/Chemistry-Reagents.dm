@@ -494,7 +494,13 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
+				if(!M)
+					M = holder.my_atom
+				if(istype(M, /mob/living/carbon/human/manifested))
+					M << "<span class='warning'> You can feel intriguing reagents seeping into your body, but they don't seem to react at all.</span>"
+					M.reagents.del_reagent("mutationtoxin")
+					..()
+					return
 				if(ishuman(M))
 					var/mob/living/carbon/human/human = M
 					if(human.dna.mutantrace == null)
@@ -515,28 +521,34 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(istype(M, /mob/living/carbon) && M.stat != DEAD)
-					M << "\red Your flesh rapidly mutates!"
-					if(M.monkeyizing)	return
-					M.monkeyizing = 1
-					M.canmove = 0
-					M.icon = null
-					M.overlays.Cut()
-					M.invisibility = 101
-					for(var/obj/item/W in M)
-						if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-							del(W)
-							continue
-						W.layer = initial(W.layer)
-						W.loc = M.loc
-						W.dropped(M)
-					var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
-					new_mob.a_intent = "hurt"
-					new_mob.universal_speak = 1
-					if(M.mind)
-						M.mind.transfer_to(new_mob)
+					if(istype(M, /mob/living/carbon/human/manifested))
+						M << "<span class='warning'> You can feel intriguing reagents seeping into your body, but they don't seem to react at all.</span>"
+						M.reagents.del_reagent("amutationtoxin")
+						..()
+						return
 					else
-						new_mob.key = M.key
-					del(M)
+						M << "<span class='warning'> Your flesh rapidly mutates!</span>"
+						if(M.monkeyizing)	return
+						M.monkeyizing = 1
+						M.canmove = 0
+						M.icon = null
+						M.overlays.Cut()
+						M.invisibility = 101
+						for(var/obj/item/W in M)
+							if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
+								del(W)
+								continue
+							W.layer = initial(W.layer)
+							W.loc = M.loc
+							W.dropped(M)
+						var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
+						new_mob.a_intent = "hurt"
+						new_mob.universal_speak = 1
+						if(M.mind)
+							M.mind.transfer_to(new_mob)
+						else
+							new_mob.key = M.key
+						del(M)
 				..()
 				return
 

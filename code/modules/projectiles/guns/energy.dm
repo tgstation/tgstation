@@ -9,29 +9,30 @@
 	var/cell_type = "/obj/item/weapon/cell"
 	var/projectile_type = "/obj/item/projectile/beam/practice"
 	var/modifystate
+	var/charge_states = 1 //if the gun changes icon states depending on charge, this is 1. Uses a var so it can be changed easily
 
-	emp_act(severity)
+/obj/item/weapon/gun/energy/emp_act(severity)
 		power_supply.use(round(power_supply.maxcharge / severity))
 		update_icon()
 		..()
 
 
-	process_chambered()
-		if(in_chamber)	return 1
-		if(!power_supply)	return 0
-		if(!power_supply.use(charge_cost))	return 0
-		if(!projectile_type)	return 0
-		in_chamber = new projectile_type(src)
-		return 1
+/obj/item/weapon/gun/energy/process_chambered()
+	if(in_chamber)	return 1
+	if(!power_supply)	return 0
+	if(!power_supply.use(charge_cost))	return 0
+	if(!projectile_type)	return 0
+	in_chamber = new projectile_type(src)
+	return 1
 
 
-	update_icon()
-		var/ratio = power_supply.charge / power_supply.maxcharge
-		ratio = round(ratio, 0.25) * 100
-		if(modifystate)
-			icon_state = "[modifystate][ratio]"
-		else
-			icon_state = "[initial(icon_state)][ratio]"
+/obj/item/weapon/gun/energy/update_icon()
+	var/ratio = power_supply.charge / power_supply.maxcharge
+	ratio = round(ratio, 0.25) * 100
+	if(modifystate && charge_states)
+		icon_state = "[modifystate][ratio]"
+	else if(charge_states)
+		icon_state = "[initial(icon_state)][ratio]"
 
 /obj/item/weapon/gun/energy/New()
 	. = ..()

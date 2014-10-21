@@ -44,6 +44,8 @@
 #define ui_inv3 "8:16,1:5"			//borgs
 #define ui_borg_store "9:16,1:5"	//borgs
 
+#define ui_monkey_uniform "3:14,1:5"//monkey
+#define ui_monkey_hat "4:14,1:5"	//monkey
 #define ui_monkey_mask "5:14,1:5"	//monkey
 #define ui_monkey_back "6:14,1:5"	//monkey
 

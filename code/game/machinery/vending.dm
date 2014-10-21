@@ -276,11 +276,12 @@
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	user.set_machine(src)
 
 	if(seconds_electrified != 0)
 		if(shock(user, 100))
 			return
+
+	user.set_machine(src)
 
 	var/vendorname = (src.name)  //import the machine's name
 

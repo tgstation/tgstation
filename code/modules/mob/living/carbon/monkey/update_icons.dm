@@ -1,12 +1,14 @@
 //Monkey Overlays Indexes////////
-#define M_MASK_LAYER			1
-#define M_BACK_LAYER			2
-#define M_HANDCUFF_LAYER		3
-#define M_L_HAND_LAYER			4
-#define M_R_HAND_LAYER			5
-#define M_FIRE_LAYER			6
-#define TARGETED_LAYER			7
-#define M_TOTAL_LAYERS			7
+#define M_UNIFORM_LAYER			1
+#define M_MASK_LAYER			2
+#define M_BACK_LAYER			3
+#define M_HAT_LAYER				4
+#define M_HANDCUFF_LAYER		5
+#define M_L_HAND_LAYER			6
+#define M_R_HAND_LAYER			7
+#define M_FIRE_LAYER			8
+#define TARGETED_LAYER			9
+#define M_TOTAL_LAYERS			10
 /////////////////////////////////
 
 /mob/living/carbon/monkey
@@ -15,8 +17,10 @@
 
 /mob/living/carbon/monkey/regenerate_icons()
 	..()
+	update_inv_uniform(0)
 	update_inv_wear_mask(0)
 	update_inv_back(0)
+	update_inv_hat(0)
 	update_inv_r_hand(0)
 	update_inv_l_hand(0)
 	update_inv_handcuffed(0)
@@ -44,6 +48,23 @@
 
 
 ////////
+/mob/living/carbon/monkey/proc/update_inv_uniform(var/update_icons=1)
+	if(uniform)
+		var/t_state = uniform.item_state
+		if(!t_state)	t_state = uniform.icon_state
+		overlays_standing[M_UNIFORM_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = t_state)
+	else
+		overlays_standing[M_UNIFORM_LAYER]	= null
+	if(update_icons)		update_icons()
+
+/mob/living/carbon/monkey/proc/update_inv_hat(var/update_icons=1)
+	if(hat)
+		var/t_state = hat.icon_state
+		overlays_standing[M_HAT_LAYER]	= image("icon" = 'icons/mob/monkey_head.dmi', "icon_state" = t_state)
+	else
+		overlays_standing[M_HAT_LAYER]	= null
+	if(update_icons)		update_icons()
+
 /mob/living/carbon/monkey/update_inv_wear_mask(var/update_icons=1)
 	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
 		overlays_standing[M_MASK_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "[wear_mask.icon_state]")
@@ -98,8 +119,20 @@
 
 
 /mob/living/carbon/monkey/update_hud()
-	if (client)
+	if(client)
 		client.screen |= contents
+
+		if(m_hat)
+			if(hat)
+				m_hat.icon_state = hat.icon_state
+			else
+				m_hat.icon_state = "none"
+
+		if(m_suitclothes)
+			if(uniform)
+				m_suitclothes.icon_state = uniform.icon_state
+			else
+				m_suitclothes.icon_state = "none"
 
 //Call when target overlay should be added/removed
 /mob/living/carbon/monkey/update_targeted(var/update_icons=1)
@@ -120,6 +153,8 @@
 		overlays_standing[M_FIRE_LAYER] = null
 
 //Monkey Overlays Indexes////////
+#undef M_HAT_LAYER
+#undef M_UNIFORM_LAYER
 #undef M_FIRE_LAYER
 #undef M_MASK_LAYER
 #undef M_BACK_LAYER

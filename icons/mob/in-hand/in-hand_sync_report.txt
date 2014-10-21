@@ -9,6 +9,14 @@
 +++ Y:\Documents\GitHub\vgstation13\icons\mob\in-hand\right\guns.dmi
  + scythe0
  + taser100
+--- Y:\Documents\GitHub\vgstation13\icons\mob\in-hand\left\newsprites_lefthand.dmi
++++ Y:\Documents\GitHub\vgstation13\icons\mob\in-hand\right\newsprites_lefthand.dmi
+ + chapmask
+ + honkbook
+ + ianism
+ + necronomicon
+ + shadows
+ + torah
 --- Y:\Documents\GitHub\vgstation13\icons\mob\in-hand\left\paramedic_eva.dmi
 +++ Y:\Documents\GitHub\vgstation13\icons\mob\in-hand\right\paramedic_eva.dmi
  + paramedic-eva

@@ -12,6 +12,14 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
+/mob/living/carbon/human/manifested
+	real_name = "Manifested Ghost"
+	status_flags = GODMODE|CANPUSH
+
+/mob/living/carbon/human/manifested/New(var/new_loc)
+	underwear = 0
+	..(new_loc, "Manifested")
+
 /mob/living/carbon/human/skrell/New(var/new_loc)
 	h_style = "Skrell Male Tentacles"
 	..(new_loc, "Skrell")
@@ -781,7 +789,7 @@
 					usr.u_equip(place_item)
 					equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
 			// Update strip window
-			if(usr.machine == src && in_range(src, usr))
+			if(in_range(src, usr))
 				show_inv(usr)
 
 		else if(!pickpocket)

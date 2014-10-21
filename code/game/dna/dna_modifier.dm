@@ -114,13 +114,16 @@
 	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
 		return
 	if (!ishuman(usr) && !ismonkey(usr)) //Make sure they're a mob that has dna
-		usr << "\blue Try as you might, you can not climb up into the scanner."
+		usr << "<span class='notice'> Try as you might, you can not climb up into the scanner.</span>"
+		return
+	if (istype(usr, /mob/living/carbon/human/manifested))
+		usr << "<span class='notice'> For some reason, the scanner is unable to read your genes.</span>"//to prevent a loophole that allows cultist to turn manifested ghosts into normal humans
 		return
 	if (src.occupant)
-		usr << "\blue <B>The scanner is already occupied!</B>"
+		usr << "<span class='notice'> <B>The scanner is already occupied!</B></span>"
 		return
 	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
+		usr << "<span class='notice'> <B>Subject cannot have abiotic items on.</B></span>"
 		return
 	usr.stop_pulling()
 	usr.client.perspective = EYE_PERSPECTIVE
@@ -152,6 +155,9 @@
 		return
 	if(occupant)
 		user << "\blue <B>The DNA Scanner is already occupied!</B>"
+		return
+	if (istype(O, /mob/living/carbon/human/manifested))
+		usr << "<span class='notice'> For some reason, the scanner is unable to read that person's genes.</span>"//to prevent a loophole that allows cultist to turn manifested ghosts into normal humans
 		return
 	if(isrobot(user))
 		if(!istype(user:module, /obj/item/weapon/robot_module/medical))

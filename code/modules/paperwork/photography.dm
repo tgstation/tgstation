@@ -99,8 +99,8 @@
 	name = "camera"
 	icon = 'icons/obj/items.dmi'
 	desc = "A polaroid camera."
-	icon_state = "camera"
-	item_state = "electropack"
+	icon_state = "polaroid"
+	item_state = "polaroid"
 	w_class = 2.0
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS
 	slot_flags = SLOT_BELT
