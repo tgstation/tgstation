@@ -57,7 +57,7 @@ var/list/sacrificed = list()
 		if (istype(user, /mob/living))
 			user.take_overall_damage(5, 0)
 		qdel(src)
-	for(var/mob/living/carbon/C in orange(1,src))
+	for(var/mob/living/C in orange(1,src))
 		if(iscultist(C) && !C.stat)
 			culcount++
 	if(user.loc==src.loc)
@@ -98,17 +98,17 @@ var/list/sacrificed = list()
 /////////////////////////////////////////THIRD RUNE
 
 /obj/effect/rune/proc/convert()
-	var/list/mob/living/carbon/human/cultsinrange = list()
+	var/list/mob/living/cultsinrange = list()
 	for(var/mob/living/carbon/M in src.loc)
 		if(iscultist(M))
 			continue
 		if(M.stat==2)
 			continue
-		for(var/mob/living/carbon/C in orange(1,src))
+		for(var/mob/living/C in orange(1,src))
 			if(iscultist(C) && !C.stat)		//converting requires three cultists
 				cultsinrange += C
 				C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
-		if(cultsinrange.len >= 2)
+		if(cultsinrange.len >= 3)
 			M.visible_message("<span class='danger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
 			"<span class='danger'>AAAAAAHHHH!</span>", \
 			"<span class='danger'>You hear an anguished scream.</span>")
@@ -792,12 +792,12 @@ var/list/sacrificed = list()
 
 /obj/effect/rune/proc/freedom()
 	var/mob/living/user = usr
-	var/list/mob/living/carbon/cultists = new
+	var/list/mob/living/cultists = new
 	for(var/datum/mind/H in ticker.mode.cult)
 		if (istype(H.current,/mob/living/carbon))
 			cultists+=H.current
-	var/list/mob/living/carbon/users = new
-	for(var/mob/living/carbon/C in orange(1,src))
+	var/list/mob/living/users = new
+	for(var/mob/living/C in orange(1,src))
 		if(iscultist(C) && !C.stat)
 			users+=C
 	if(users.len>=1)
@@ -832,7 +832,7 @@ var/list/sacrificed = list()
 			cultist.loc:locked = 0
 		if(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked)
 			cultist.loc:locked = 0
-		for(var/mob/living/carbon/C in users)
+		for(var/mob/living/C in users)
 			user.take_overall_damage(15, 0)
 			C.say("Khari[pick("'","`")]d! Gual'te nikka!")
 		qdel(src)
@@ -846,8 +846,8 @@ var/list/sacrificed = list()
 	for(var/datum/mind/H in ticker.mode.cult)
 		if (istype(H.current,/mob/living/carbon))
 			cultists+=H.current
-	var/list/mob/living/carbon/users = new
-	for(var/mob/living/carbon/C in orange(1,src))
+	var/list/mob/living/users = new
+	for(var/mob/living/C in orange(1,src))
 		if(iscultist(C) && !C.stat)
 			users+=C
 	if(users.len>=3)
@@ -862,7 +862,7 @@ var/list/sacrificed = list()
 		cultist.loc = src.loc
 		cultist.Weaken(5)
 		cultist.regenerate_icons()
-		for(var/mob/living/carbon/human/C in orange(1,src))
+		for(var/mob/living/C in orange(1,src))
 			if(iscultist(C) && !C.stat)
 				C.say("N'ath reth sh'yro eth d[pick("'","`")]rekkathnor!")
 				C.take_overall_damage(25, 0)
