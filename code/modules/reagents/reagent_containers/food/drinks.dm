@@ -824,7 +824,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/smash(mob/living/target as mob, mob/living/user as mob)
 
-	if(molotov) //for molotovs
+	if(molotov == 1) //for molotovs
 		if(lit)
 			new /obj/effect/decal/cleanable/ash(get_turf(src))
 		else
@@ -961,7 +961,7 @@
 			spawn(5) src.reagents.clear_reagents()  //maybe this could be improved?
 		invisibility = INVISIBILITY_MAXIMUM  //so it stays a while to ignite any fuel
 
-		if(molotov) //for molotovs
+		if(molotov == 1) //for molotovs
 			if(lit)
 				new /obj/effect/decal/cleanable/ash(get_turf(src))
 			else
