@@ -49,6 +49,8 @@
 	icon_state = "nymph1"
 	var/list/donors = list()
 	var/ready_evolve = 0
+	canWearHats = 0
+	canWearClothes = 0
 
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M as mob)
 

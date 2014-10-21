@@ -1252,13 +1252,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 		canmove = has_limbs
 
 	if(lying)
-		layer = 3.9
+		if(ishuman(src))
+			layer = 3.9
 		density = 0
 		drop_l_hand()
 		drop_r_hand()
 	else
+		if(ishuman(src))
+			layer = 4
 		density = 1
-		layer = 4
 
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
@@ -1276,6 +1278,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	if(!canface())	return 0
 	dir = EAST
+	Facing()
 	client.move_delay += movement_delay()
 	return 1
 
@@ -1284,6 +1287,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	if(!canface())	return 0
 	dir = WEST
+	Facing()
 	client.move_delay += movement_delay()
 	return 1
 
@@ -1292,6 +1296,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	if(!canface())	return 0
 	dir = NORTH
+	Facing()
 	client.move_delay += movement_delay()
 	return 1
 
@@ -1300,8 +1305,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	if(!canface())	return 0
 	dir = SOUTH
+	Facing()
 	client.move_delay += movement_delay()
 	return 1
+
+
+/mob/proc/Facing()
+    var/datum/listener
+    for(. in src.callOnFace)
+        listener = locate(.)
+        if(listener) call(listener,src.callOnFace[.])(src)
+        else src.callOnFace -= .
 
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
@@ -1386,7 +1400,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)
 
-mob/verb/yank_out_object()
+mob/proc/yank_out_object()
 	set category = "Object"
 	set name = "Yank out object"
 	set desc = "Remove an embedded item at the cost of bleeding and pain."

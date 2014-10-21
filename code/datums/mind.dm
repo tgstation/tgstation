@@ -531,18 +531,22 @@ datum/mind
 			if (objective)
 				objectives -= objective
 				objectives.Insert(objective_pos, new_objective)
+				log_admin("[usr.key]/([usr.name]) changed [key]/([name])'s objective from [objective.explanation_text] to [new_objective.explanation_text]")
 			else
 				objectives += new_objective
+				log_admin("[usr.key]/([usr.name]) gave [key]/([name]) the objective: [new_objective.explanation_text]")
 
 		else if (href_list["obj_delete"])
 			var/datum/objective/objective = locate(href_list["obj_delete"])
 			if(!istype(objective))	return
 			objectives -= objective
+			log_admin("[usr.key]/([usr.name]) removed [key]/([name])'s objective ([objective.explanation_text])")
 
 		else if(href_list["obj_completed"])
 			var/datum/objective/objective = locate(href_list["obj_completed"])
 			if(!istype(objective))	return
 			objective.completed = !objective.completed
+			log_admin("[usr.key]/([usr.name]) toggled [key]/([name]) [objective.explanation_text] to [objective.completed ? "completed" : "incomplete"]")
 
 		else if (href_list["revolution"])
 			switch(href_list["revolution"])

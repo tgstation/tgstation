@@ -8,6 +8,12 @@
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 
+	var/canWearClothes = 1
+	var/canWearHats = 1
+
+	var/obj/item/clothing/monkeyclothes/uniform = null
+	var/obj/item/clothing/head/hat = null
+
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/greaterform = "Human"                  // Used when humanizing a monkey.
 	icon_state = "monkey1"
@@ -36,6 +42,7 @@
 	speak_emote = list("hisses")
 	icon_state = "stokkey1"
 	uni_append = list(0x044,0xC5D) // 044C5D
+	canWearClothes = 0
 
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
@@ -107,6 +114,48 @@
 	greaterform = "Diona"
 	add_language("Rootspeak")
 
+/mob/living/carbon/monkey/show_inv(mob/living/carbon/user as mob)
+	user.set_machine(src)
+	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
+	var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
+
+	var/dat = {"
+	<B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>		[(l_hand && !( src.l_hand.abstract ))		? l_hand	: "<font color=grey>Empty</font>"]</A><BR>
+	<B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>		[(r_hand && !( src.r_hand.abstract ))		? r_hand	: "<font color=grey>Empty</font>"]</A><BR>
+	"}
+
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=back'> [(back && !(src.back.abstract)) ? back : "<font color=grey>Empty</font>"]</A>"
+	if(has_breathable_mask && istype(back, /obj/item/weapon/tank))
+		dat += "<BR>[TAB]&#8627;<A href='?src=\ref[src];item=internal'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+
+	dat += "<BR>"
+
+	if(canWearHats)
+		if(hat)
+			dat +=	"<br><b>Headwear:</b> [uniform] (<a href='?src=\ref[src];remove_inv=hat'>Remove</a>)"
+		else
+			dat +=	"<br><b>Headwear:</b> <a href='?src=\ref[src];add_inv=hat'><font color=grey>Empty</font></a>"
+
+	dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=mask'>		[(wear_mask && !(src.wear_mask.abstract))	? wear_mask	: "<font color=grey>Empty</font>"]</A>"
+
+	if(canWearClothes)
+		if(uniform)
+			dat +=	"<br><b>Uniform:</b> [uniform] (<a href='?src=\ref[src];remove_inv=uniform'>Remove</a>)"
+		else
+			dat +=	"<br><b>Uniform:</b> <a href='?src=\ref[src];add_inv=uniform'><font color=grey>Empty</font></a>"
+
+	if(handcuffed)
+		dat += "<BR><B>Handcuffed:</B> <A href='?src=\ref[src];item=handcuff'>Remove</A>"
+
+	dat += {"
+	<BR>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	"}
+
+	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 340, 500)
+	popup.set_content(dat)
+	popup.open()
+
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0
 	if(reagents)
@@ -156,6 +205,42 @@
 		return
 	return
 
+/mob/living/carbon/monkey/proc/wearhat(var/obj/item/clothing/head/H as obj)
+	if(H)
+		var/obj/item/clothing/head/oldhat = null
+		if(hat)
+			oldhat = hat
+			hat = null
+		hat = usr.get_active_hand()
+		usr.drop_item()
+		hat.loc = src
+		regenerate_icons()
+		if (hat)
+			usr.put_in_hands(oldhat)
+	else
+		if(hat)
+			usr.put_in_hands(hat)
+			hat = null
+			regenerate_icons()
+
+/mob/living/carbon/monkey/proc/wearclothes(var/obj/item/clothing/monkeyclothes/C as obj)
+	if(C)
+		var/obj/item/clothing/monkeyclothes/olduniform = null
+		if(uniform)
+			olduniform = uniform
+			uniform = null
+		uniform = usr.get_active_hand()
+		usr.drop_item()
+		uniform.loc = src
+		regenerate_icons()
+		if (olduniform)
+			usr.put_in_hands(olduniform)
+	else
+		if(uniform)
+			usr.put_in_hands(uniform)
+			uniform = null
+			regenerate_icons()
+
 /mob/living/carbon/monkey/Topic(href, href_list)
 	..()
 	if (href_list["mach_close"])
@@ -174,6 +259,50 @@
 		spawn( 0 )
 			O.process()
 			return
+	if(href_list["remove_inv"])
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+			return
+		var/remove_from = href_list["remove_inv"]
+		switch(remove_from)
+			if("uniform")
+				if(uniform)
+					uniform.loc = src.loc
+					uniform = null
+					regenerate_icons()
+				else
+					usr << "<span class='warning'>He has no uniform to remove.</span>"
+					return
+			if("hat")
+				if(hat)
+					hat.loc = src.loc
+					hat = null
+					regenerate_icons()
+				else
+					usr << "<span class='warning'>He has no hat to remove</span>"
+					return
+		show_inv(usr)
+	else if(href_list["add_inv"])
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+			return
+
+		var/add_to = href_list["add_inv"]
+		if(!usr.get_active_hand())
+			usr << "<span class='warning'> You have nothing in your hand to put on him.</span>"
+			return
+		switch(add_to)
+			if("uniform")
+				if(uniform)
+					usr << "<span class='warning'>He's already wearing something.</span>"
+					return
+				else
+					wearclothes(usr.get_active_hand())
+			if("hat")
+				if(hat)
+					usr << "<span class='warning'>He's already wearing something.</span>"
+					return
+				else
+					wearhat(usr.get_active_hand())
+		show_inv(usr)
 	..()
 	return
 

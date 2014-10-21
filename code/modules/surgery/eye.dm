@@ -12,7 +12,10 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		if (!affected)
 			return 0
-		return target_zone == "eyes"
+
+		var/datum/organ/internal/eyes = target.internal_organs_by_name["eyes"]
+
+		return target_zone == "eyes" && eyes
 
 /datum/surgery_step/eye/cut_open
 	allowed_tools = list(
@@ -39,7 +42,7 @@
 		target.blinded += 1.5
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/internal/eyes/eyes = target.internal_organs["eyes"]
+		var/datum/organ/internal/eyes/eyes = target.internal_organs_by_name["eyes"]
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, slicing [target]'s eyes wth \the [tool]!" , \
 		"\red Your hand slips, slicing [target]'s eyes wth \the [tool]!" )
@@ -69,7 +72,7 @@
 		target.op_stage.eyes = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/internal/eyes/eyes = target.internal_organs["eyes"]
+		var/datum/organ/internal/eyes/eyes = target.internal_organs_by_name["eyes"]
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, damaging [target]'s eyes with \the [tool]!", \
 		"\red Your hand slips, damaging [target]'s eyes with \the [tool]!")
@@ -100,7 +103,7 @@
 		target.op_stage.eyes = 3
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/internal/eyes/eyes = target.internal_organs["eyes"]
+		var/datum/organ/internal/eyes/eyes = target.internal_organs_by_name["eyes"]
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, stabbing \the [tool] into [target]'s eye!", \
 		"\red Your hand slips, stabbing \the [tool] into [target]'s eye!")
@@ -126,7 +129,7 @@
 		"You are beginning to cauterize the incision around [target]'s eyes with \the [tool].")
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/internal/eyes/eyes = target.internal_organs["eyes"]
+		var/datum/organ/internal/eyes/eyes = target.internal_organs_by_name["eyes"]
 		user.visible_message("\blue [user] cauterizes the incision around [target]'s eyes with \the [tool].", \
 		"\blue You cauterize the incision around [target]'s eyes with \the [tool].")
 		if (target.op_stage.eyes == 3)
@@ -136,7 +139,7 @@
 		target.op_stage.eyes = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/internal/eyes/eyes = target.internal_organs["eyes"]
+		var/datum/organ/internal/eyes/eyes = target.internal_organs_by_name["eyes"]
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, searing [target]'s eyes with \the [tool]!", \
 		"\red Your hand slips, searing [target]'s eyes with \the [tool]!")

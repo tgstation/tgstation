@@ -12,10 +12,12 @@
 	caliber = list("shotgun" = 1, "flare" = 1) //flare shells are still shells
 	origin_tech = "combat=4;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
-	empty_casings = 0
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
 	var/obj/item/ammo_casing/current_shell = null
+
+
+	gun_flags = 0
 
 	isHandgun()
 		return 0

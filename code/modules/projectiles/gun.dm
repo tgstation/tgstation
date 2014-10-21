@@ -141,6 +141,7 @@
 	user.next_move = world.time + 4
 	in_chamber.silenced = silenced
 	in_chamber.current = curloc
+	in_chamber.OnFired()
 	in_chamber.yo = targloc.y - curloc.y
 	in_chamber.xo = targloc.x - curloc.x
 

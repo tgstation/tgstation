@@ -497,7 +497,8 @@
 			blinded = 1
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
-			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+			updatehealth()
+			if(health < config.health_threshold_dead || !has_brain())
 				death()
 				blinded = 1
 				stat = DEAD
@@ -579,6 +580,15 @@
 
 
 	proc/handle_regular_hud_updates()
+
+		if(!canWearHats && m_hatbg)
+			if(m_hatbg.icon_state != "blank")
+				m_hatbg.icon_state = "blank"
+
+		if(!canWearClothes && m_suitclothesbg)
+			if(m_suitclothesbg.icon_state != "blank")
+				m_suitclothesbg.icon_state = "blank"
+
 
 		if (stat == 2 || (M_XRAY in mutations))
 			sight |= SEE_TURFS
