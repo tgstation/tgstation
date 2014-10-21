@@ -9,6 +9,8 @@
 	item_state = "pill"
 	possible_transfer_amounts = null
 	volume = 50
+	m_amt = 5
+	w_type = RECYK_METAL
 
 	New()
 		..()
