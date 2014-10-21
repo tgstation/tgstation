@@ -6,7 +6,7 @@
 	var/e_cost = 100 //The amount of energy a cell needs to expend to create this shot.
 	var/select_name = "energy"
 	var/mod_name = null
-	var/fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/Laser.ogg'
 
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/item/projectile/beam

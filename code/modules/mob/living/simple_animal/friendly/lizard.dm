@@ -15,3 +15,4 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	ventcrawler = 2
+	mob_size = 0

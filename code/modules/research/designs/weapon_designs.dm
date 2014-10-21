@@ -23,6 +23,16 @@ datum/design/stunrevolver
 	build_path = /obj/item/weapon/gun/energy/stunrevolver
 	locked = 1
 
+datum/design/tele_shield
+	name = "Telescopic Riot Shield"
+	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
+	id = "tele_shield"
+	req_tech = list("combat" = 4, "materials" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000, "$glass" = 5000, "$silver" = 300)
+	build_path = /obj/item/weapon/shield/riot/tele
+	locked = 1
+
 datum/design/lasercannon
 	name = "Laser Cannon"
 	desc = "A heavy duty laser cannon."
@@ -61,16 +71,17 @@ datum/design/rapidsyringe
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1000)
 	build_path = /obj/item/weapon/gun/syringe/rapidsyringe
-/*
+
 datum/design/largecrossbow
 	name = "Energy Crossbow"
-	desc = "A weapon favoured by syndicate infiltration teams."
+	desc = "A reverse-engineered energy crossbow favored by syndicate infiltration teams and carp hunters."
 	id = "largecrossbow"
-	req_tech = list("combat" = 4, "materials" = 5, "engineering" = 3, "biotech" = 4, "syndicate" = 3)
+	req_tech = list("combat" = 5, "materials" = 5, "engineering" = 3, "biotech" = 4, "syndicate" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 1000, "$silver" = 1000)
-	build_path = /obj/item/weapon/gun/energy/crossbow/largecrossbow"
-*/
+	materials = list("$metal" = 5000, "$glass" = 1500, "$uranium" = 1500, "$silver" = 1500)
+	build_path = /obj/item/weapon/gun/energy/crossbow/largecrossbow
+	locked = 1
+
 datum/design/temp_gun
 	name = "Temperature Gun"
 	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
@@ -130,6 +141,15 @@ datum/design/ionrifle
 	build_path = /obj/item/weapon/gun/energy/ionrifle
 	locked = 1
 
+datum/design/reciever
+	name = "Modular Reciever"
+	desc = "A prototype modular reciever and trigger assembly for a variety of firearms."
+	id = "reciever"
+	req_tech = list("combat" = 5, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 6500, "$silver" = 500)
+	build_path = /obj/item/weaponcrafting/reciever
+
 datum/design/ammo_9mm
 	name = "Ammunition Box (9mm)"
 	desc = "A box of prototype 9mm ammunition."
@@ -155,7 +175,7 @@ datum/design/stunshell
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200)
-	build_path = /obj/item/ammo_casing/shotgun/stunshell
+	build_path = /obj/item/ammo_casing/shotgun/stunslug
 
 datum/design/techshell
 	name = "Unloaded Technological Shotshell"

@@ -176,11 +176,19 @@
 		img_eyes_s.color = "#" + H.eye_color
 		standing	+= img_eyes_s
 
-	//Underwear
+	//Underwear & Undershirts
 	if(H.underwear)
-		var/datum/sprite_accessory/underwear/U = underwear_all[H.underwear]
+		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
 		if(U)
 			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
+
+	if(H.undershirt)
+		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[H.undershirt]
+		if(U2)
+			if(H.dna && H.dna.species.sexes && H.gender == FEMALE)
+				standing	+=	H.wear_female_version(U2.icon_state, U2.icon, BODY_LAYER)
+			else
+				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
@@ -337,13 +345,13 @@
 		if(slot_handcuffed)
 			if(H.handcuffed)
 				return 0
-			if(!istype(I, /obj/item/weapon/handcuffs))
+			if(!istype(I, /obj/item/weapon/restraints/handcuffs))
 				return 0
 			return 1
 		if(slot_legcuffed)
 			if(H.legcuffed)
 				return 0
-			if(!istype(I, /obj/item/weapon/legcuffs))
+			if(!istype(I, /obj/item/weapon/restraints/legcuffs))
 				return 0
 			return 1
 		if(slot_in_backpack)
@@ -570,13 +578,13 @@
 
 		else
 			switch(H.radiation)
-				if(1 to 49)
+				if(0 to 50)
 					H.radiation--
 					if(prob(25))
 						H.adjustToxLoss(1)
 						H.updatehealth()
 
-				if(50 to 74)
+				if(50 to 75)
 					H.radiation -= 2
 					H.adjustToxLoss(1)
 					if(prob(5))

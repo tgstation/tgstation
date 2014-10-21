@@ -763,9 +763,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
 
 		if (!P.silent)
-			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-		for (var/mob/O in hearers(3, P.loc))
-			if(!P.silent) O.show_message(text("\icon[P] *[P.ttone]*"))
+			P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
@@ -903,8 +901,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				// Unused
 
 			if(4)
-				for (var/mob/O in viewers(C, null))
-					O.show_message("<span class='danger'>[user] has analyzed [C]'s radiation levels!</span>", 1)
+				C.visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
 
 				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
 				if(C.radiation)

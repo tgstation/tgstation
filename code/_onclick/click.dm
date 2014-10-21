@@ -74,7 +74,7 @@
 		return M.click_action(A,src)
 
 	if(restrained())
-		changeNext_move(10)   //Doing shit in cuffs shall be vey slow
+		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
 		RestrainedClickOn(A)
 		return
 
@@ -101,9 +101,11 @@
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
+
+		//If we click on a mob make sure we add cooldown
+		if(ismob(A))
+			changeNext_move(CLICK_CD_MELEE)
 		return
 
 	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
@@ -118,15 +120,18 @@
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
-				if(ismob(A))
-					changeNext_move(CLICK_CD_MELEE)
 				UnarmedAttack(A, 1)
+
+			if(ismob(A))
+				changeNext_move(CLICK_CD_MELEE)
 			return
 		else // non-adjacent click
 			if(W)
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
+			if(ismob(A))
+				changeNext_move(CLICK_CD_RANGE)
 
 	return
 
@@ -149,8 +154,6 @@
 	in human click code to allow glove touches only at melee range.
 */
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
-	if(ismob(A))
-		changeNext_move(CLICK_CD_MELEE)
 	return
 
 /*
@@ -202,7 +205,7 @@
 	return
 /atom/proc/ShiftClick(var/mob/user)
 	if(user.client && user.client.eye == user)
-		examine()
+		user.examinate(src)
 	return
 
 /*

@@ -76,6 +76,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /obj/machinery/computer/supplycomp
 	name = "supply shuttle console"
+	desc = "Used to order supplies."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
 	req_access = list(access_cargo)
@@ -89,6 +90,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 /obj/machinery/computer/ordercomp
 	name = "supply ordering console"
+	desc = "Used to order supplies from cargo staff."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
 	circuit = /obj/item/weapon/circuitboard/ordercomp
@@ -467,8 +469,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
-			for(var/mob/V in hearers(src))
-				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
+			say("[world.time - reqtime] seconds remaining until another requisition form may be printed.")
 			return
 
 		//Find the correct supply_pack datum
@@ -537,6 +538,10 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
+
+/obj/machinery/computer/ordercomp/say_quote(text)
+	return "flashes, \"[text]\""
+
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
@@ -657,8 +662,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
-			for(var/mob/V in hearers(src))
-				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
+			say("[world.time - reqtime] seconds remaining until another requisition form may be printed.")
 			return
 
 		//Find the correct supply_pack datum
@@ -792,5 +796,7 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	frequency.post_signal(src, status_signal)
 
 
+/obj/machinery/computer/supplycomp/say_quote(text)
+	return "flashes, \"[text]\""
 
 

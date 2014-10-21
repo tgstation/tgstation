@@ -170,7 +170,7 @@ Auto Patrol: []"},
 		..()
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
 			return
-		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!target) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 			threatlevel = user.assess_threat(src)
 			threatlevel += 6
 			if(threatlevel >= 4)
@@ -184,10 +184,13 @@ Auto Patrol: []"},
 	if(emagged == 2)
 		if(user) user << "<span class='danger'> You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='danger'><B>[src] buzzes oddly!</B></span>", 1)
-		if(user) oldtarget_name = user.name
-		declare_arrests = 0
+			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
+		src.target = null
+		if(user) src.oldtarget_name = user.name
+		src.last_found = world.time
+		src.anchored = 0
+		src.declare_arrests = 0
+		src.icon_state = "secbot[src.on]"
 
 /obj/machinery/bot/secbot/process()
 	if (!..())
@@ -206,20 +209,19 @@ Auto Patrol: []"},
 
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
-		//		for(var/mob/O in hearers(src, null))
-		//			O << "<span class='game say'><span class='name'>[src]</span> beeps, \"Backup requested! Suspect has evaded arrest.\""
-				bot_reset()
+				walk_to(src,0)
+				back_to_idle()
+				return
 
 			if(target)		// make sure target exists
-				if(Adjacent(target) && isturf(target.loc))				// if right next to perp
-					playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-					icon_state = "secbot-c"
+				if(src.Adjacent(target) && isturf(src.target.loc))	// if right next to perp
+					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+					src.icon_state = "secbot-c"
 					spawn(2)
 						icon_state = "secbot[on]"
 					var/mob/living/carbon/M = target
-					var/maxstuns = 4
 					if(istype(M, /mob/living/carbon/human))
-						if(M.stuttering < 5 && (!(HULK in M.mutations)))
+						if( M.stuttering < 5 && !(HULK in M.mutations) )
 							M.stuttering = 5
 						M.Stun(5)
 						M.Weaken(5)
@@ -234,10 +236,6 @@ Auto Patrol: []"},
 					target.visible_message("<span class='danger'>[src.target] has been stunned by [src]!</span>",\
 											"<span class='userdanger'>[src.target] has been stunned by [src]!</span>")
 
-					maxstuns--
-					if(maxstuns <= 0)
-						target = null
-
 					mode = BOT_PREP_ARREST
 					anchored = 1
 					target_lastloc = M.loc
@@ -250,52 +248,57 @@ Auto Patrol: []"},
 						frustration++
 					else
 						frustration = 0
+			else
+				back_to_idle()
 
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
-			// see if he got away
-			if((get_dist(src, target) > 1) || ((target.loc != target_lastloc) && target.weakened < 2))
-				anchored = 0
-				mode = BOT_HUNT
+			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
+			if( !src.Adjacent(target) || !isturf(src.target.loc) ||  src.target.weakened < 2 )
+				back_to_hunt()
 				return
 
 			if(iscarbon(target) && target.canBeHandcuffed())
-				if(!target.handcuffed && !arrest_type)
-					playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-					mode = BOT_ARREST
-					target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
-
-					spawn(60)
-						if(get_dist(src, target) <= 1)
-							if(target.handcuffed)
+				if(!src.arrest_type)
+					if(!src.target.handcuffed)  //he's not cuffed? Try to cuff him!
+						mode = BOT_ARREST
+						playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+						target.visible_message("<span class='danger'>[src] is trying to put zipties on [src.target]!</span>",\
+											"<span class='userdanger'>[src] is trying to put zipties on [src.target]!</span>")
+						spawn(60)
+							if( !src.Adjacent(target) || !isturf(src.target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
-
-							if(istype(target,/mob/living/carbon))
-								target.handcuffed = new /obj/item/weapon/handcuffs(target)
+							if(!src.target.handcuffed)
+								target.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
+								playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+								back_to_idle()
+					else
+						back_to_idle()
+						return
+			else
+				back_to_idle()
+				return
 
-							mode = BOT_IDLE
-							target = null
-							anchored = 0
-							last_found = world.time
-							frustration = 0
+		if(BOT_ARREST)
 
 							playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
 		//					speak(arrest_message)
 			else
+			if (!target)
+				src.anchored = 0
 				mode = BOT_IDLE
-				target = null
-				anchored = 0
-				last_found = world.time
+				src.last_found = world.time
 				frustration = 0
+				return
 
-		if(BOT_ARREST)		// arresting
+			if(src.target.handcuffed) //no target or target cuffed? back to idle.
+				back_to_idle()
+				return
 
-			if(!target || target.handcuffed)
-				anchored = 0
-				mode = BOT_IDLE
+			if( !src.Adjacent(target) || !isturf(src.target.loc) || (src.target.loc != src.target_lastloc && src.target.weakened < 2) ) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
+				back_to_hunt()
 				return
 			else //Try arresting again if the target escapes.
 				mode = BOT_PREP_ARREST
@@ -309,10 +312,24 @@ Auto Patrol: []"},
 			look_for_perp()
 			bot_patrol()
 
-		if(BOT_SUMMON)
-			bot_summon()
+
 	return
 
+/obj/machinery/bot/secbot/proc/back_to_idle()
+	src.anchored = 0
+	mode = SECBOT_IDLE
+	src.target = null
+	src.last_found = world.time
+	frustration = 0
+	spawn(0)
+		process() //ensure bot quickly responds
+
+/obj/machinery/bot/secbot/proc/back_to_hunt()
+	src.anchored = 0
+	src.frustration = 0
+	mode = SECBOT_HUNT
+	spawn(0)
+		process() //ensure bot quickly responds
 // look for a criminal in view of the bot
 
 /obj/machinery/bot/secbot/proc/look_for_perp()
@@ -359,7 +376,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
-	visible_message("<span class='danger'> <B>[src] blows apart!</B></span>", 1)
+	visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

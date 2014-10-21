@@ -46,7 +46,7 @@
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
-	icon_state = "resinwall"	//same as resin, but consistency ho!
+	icon_state = "wall0"	//same as resin, but consistency ho!
 	resintype = "wall"
 
 /obj/structure/alien/resin/wall/New()
@@ -59,7 +59,7 @@
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
-	icon_state = "resinmembrane"
+	icon_state = "membrane0"
 	opacity = 0
 	health = 120
 	resintype = "membrane"
@@ -140,8 +140,7 @@
 	..()
 
 
-/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return 0
+/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density

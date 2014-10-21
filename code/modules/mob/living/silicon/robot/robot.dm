@@ -303,11 +303,10 @@
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
 				if(connected_ai)
-					if(connected_ai.mind == malfai)
-						if(malf.apcs >= 3)
-							stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
-				else if(ticker.mode:malf_mode_declared)
-					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+					if((connected_ai.mind == malfai) && (malf.apcs > 0))
+						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
+				else if(malf.malf_mode_declared && (malf.apcs > 0))
+					stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
 
 		if(cell)
 			stat(null, text("Charge Left: [cell.charge]/[cell.maxcharge]"))
@@ -394,7 +393,7 @@
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
 	if (istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -532,7 +531,7 @@
 						laws = new /datum/ai_laws/syndicate_override
 						var/time = time2text(world.realtime,"hh:mm:ss")
 						lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-						set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+						set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
 						src << "<span class='danger'>ALERT: Foreign software detected.</span>"
 						sleep(5)
 						src << "<span class='danger'>Initiating diagnostics...</span>"
@@ -548,7 +547,7 @@
 						src << "<span class='danger'>ERRORERRORERROR</span>"
 						src << "<b>Obey these laws:</b>"
 						laws.show_laws(src)
-						src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</span>"
+						src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
 						updateicon()
 					else
 						user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
@@ -561,7 +560,7 @@
 		if(!opened)
 			usr << "You must access the borgs internals!"
 		else if(!src.module && U.require_module)
-			usr << "The borg must choose a module before he can be upgraded!"
+			usr << "The borg must choose a module before it can be upgraded!"
 		else if(U.locked)
 			usr << "The upgrade is locked and cannot be used yet!"
 		else
@@ -582,7 +581,7 @@
 			usr << "You fill the toner level of [src] to it's max capacity"
 
 	else
-		if(W.force)
+		if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.
 			spark_system.start()
 		return ..()
 
@@ -733,8 +732,7 @@
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>", 1)
+		visible_message("<span class='danger'><B>[M]</B> [M.attacktext] [src]!</span>")
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
@@ -775,8 +773,8 @@
 	else if(istype(M, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
-			return 1
+		if(istype(george.get_active_hand(), /obj/item))
+			return check_access(george.get_active_hand())
 	return 0
 
 /mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
@@ -786,7 +784,11 @@
 	var/list/L = req_access
 	if(!L.len) //no requirements
 		return 1
-	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
+
+	if(!istype(I, /obj/item/weapon/card/id) && istype(I, /obj/item))
+		I = I.GetID()
+
+	if(!I || !I.access) //not ID or no access
 		return 0
 	for(var/req in req_access)
 		if(!(req in I.access)) //doesn't have this access

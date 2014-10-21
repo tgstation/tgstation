@@ -1,4 +1,4 @@
-
+F
 
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
@@ -44,7 +44,7 @@
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()
 	if(.)
-		emote("nashes at [.]")
+		emote("me", 1, "nashes at [.]!")
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	. =..()
@@ -62,3 +62,17 @@
 /mob/living/simple_animal/hostile/carp/holocarp/Die()
 	qdel(src)
 	return
+
+/mob/living/simple_animal/hostile/carp/megacarp
+	icon = 'icons/mob/alienqueen.dmi'
+	name = "Mega Space Carp"
+	desc = "A ferocious, fang bearing creature that resembles a shark. This one seems especially ticked off."
+	icon_state = "megacarp"
+	icon_living = "megacarp"
+	icon_dead = "megacarp_dead"
+	icon_gib = "megacarp_gib"
+	maxHealth = 65
+	health = 65
+
+	melee_damage_lower = 20
+	melee_damage_upper = 20

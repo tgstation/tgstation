@@ -224,7 +224,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
 	anchored = 1
 	icon_state = "cleanbot-c"
-	visible_message("<span class='danger'>[src] begins to clean up [target]</span>")
+	visible_message("<span class='notice'>[src] begins to clean up [target]</span>")
 	mode = BOT_CLEANING
 	spawn(50)
 		if(mode == BOT_CLEANING)
@@ -236,7 +236,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 
 /obj/machinery/bot/cleanbot/explode()
 	on = 0
-	visible_message("<span class='danger'><B>[src] blows apart!</B></span>", 1)
+	visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)

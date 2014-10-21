@@ -5,18 +5,15 @@
 
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/-tg-station <BR>
+**Wiki** http://tgstation13.org/wiki/Main_Page<BR>
 **IRC:** irc://irc.rizon.net/coderbus <BR>
 
 ##DOWNLOADING
 
-There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/index.php/Downloading_the_source_code
+There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/Downloading_the_source_code
 
-Option 1: Download the source code as a zip by clicking the ZIP button in the
-code tab of https://github.com/tgstation/-tg-station
-(note: this will use a lot of bandwidth if you wish to update and is a lot of
-hassle if you want to make any changes at all, so it's not recommended.)
-
-(Options 2/3): Install Git-scm from here first: http://git-scm.com/download/win
+Option 1:
+Follow this: http://www.tgstation13.org/wiki/Setting_up_git
 
 Option 2:
 Install GitHub::windows from http://windows.github.com/
@@ -24,10 +21,10 @@ It handles most of the setup and configuraton of Git for you.
 Then you simply search for the -tg-station repository and click the big clone
 button.
 
-Option 3:
-Follow this: http://www.tgstation13.org/wiki/index.php/Setting_up_git
-(It's recommended that you use git-scm, as above, rather than the git CLI
-suggested by the guide)
+Option 3: Download the source code as a zip by clicking the ZIP button in the
+code tab of https://github.com/tgstation/-tg-station
+(note: this will use a lot of bandwidth if you wish to update and is a lot of
+hassle if you want to make any changes at all, so it's not recommended.)
 
 ##INSTALLATION
 
@@ -97,6 +94,8 @@ All maps have their own code file that is in the base of the _maps directory. In
 
 If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all of the other map code files are unticked in the file tree, in the left side of the screen, and then make sure the map code file you want is ticked.
 
+Anytime you want to make changes to a map it's imperative you use the [Map Merging tools](http://tgstation13.org/wiki/Map_Merger)
+
 ##AWAY MISSIONS
 
 /tg/station supports loading away missions however they are disabled by default.
@@ -109,7 +108,7 @@ To enable an away mission open fileList.txt in the _maps/RandomZLevels directory
 
 The SQL backend for the library and stats tracking requires a 
 MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
-schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/index.php/Downloading_the_source_code#Setting_up_the_database
+schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
 
 ##IRC BOT SETUP
 

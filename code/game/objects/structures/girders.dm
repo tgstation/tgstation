@@ -1,9 +1,11 @@
 /obj/structure/girder
+	name = "girder"
 	icon_state = "girder"
 	anchored = 1
 	density = 1
 	layer = 2
 	var/state = 0
+	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 
 /obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob)
 	add_fingerprint(user)
@@ -17,6 +19,9 @@
 				new /obj/item/stack/sheet/metal(get_turf(src))
 				qdel(src)
 		else if(!anchored)
+			if (!istype(src.loc, /turf/simulated/floor))
+				usr << "<span class='danger'>A floor must be present to secure the girder!</span>"
+				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'>Now securing the girder...</span>"
 			if(do_after(user, 40))
@@ -68,6 +73,9 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet))
+		if (!istype(src.loc, /turf/simulated/floor))
+			usr << "<span class='danger'>The girder is too unstable to build anything!</span>"
+			return
 
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
@@ -174,6 +182,17 @@
 		..()
 
 
+/obj/structure/girder/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0)
+		return 1
+	if(istype(mover) && mover.checkpass(PASSGRILLE))
+		return prob(girderpasschance)
+	else
+		if(istype(mover, /obj/item/projectile))
+			return prob(girderpasschance)
+		else
+			return 0
+
 /obj/structure/girder/blob_act()
 	if(prob(40))
 		qdel(src)
@@ -200,12 +219,16 @@
 	return
 
 /obj/structure/girder/displaced
+	name = "displaced girder"
 	icon_state = "displaced"
 	anchored = 0
+	girderpasschance = 25
 
 /obj/structure/girder/reinforced
+	name = "reinforced girder"
 	icon_state = "reinforced"
 	state = 2
+	girderpasschance = 0
 
 /obj/structure/cultgirder
 	icon= 'icons/obj/cult.dmi'

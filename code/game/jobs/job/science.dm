@@ -36,6 +36,10 @@ Research Director
 	H.equip_to_slot_or_del(new /obj/item/weapon/clipboard(H), slot_l_hand)
 	H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
 
+	//Equip telebaton
+	if(H.backbag == 2 || H.backbag == 3)
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/telebaton(H), slot_in_backpack)
+
 /*
 Scientist
 */
@@ -71,7 +75,7 @@ Roboticist
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 2
-	spawn_positions = 1
+	spawn_positions = 2
 	supervisors = "research director"
 	selection_color = "#ffeeff"
 

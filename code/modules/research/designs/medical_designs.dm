@@ -45,14 +45,14 @@ datum/design/mmi_radio
 	category = "Misc"
 
 datum/design/synthetic_flash
-	name = "Synthetic Flash"
+	name = "Flash"
 	desc = "When a problem arises, SCIENCE is the solution."
 	id = "sflash"
 	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = MECHFAB
 	materials = list("$metal" = 750, "$glass" = 750)
 	reliability = 76
-	build_path = /obj/item/device/flash/synthetic
+	build_path = /obj/item/device/flash/handheld
 	category = "Misc"
 
 datum/design/bluespacebeaker
@@ -75,4 +75,15 @@ datum/design/noreactbeaker
 	materials = list("$metal" = 3000)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
+	category = "Misc"
+
+datum/design/bluespacebodybag
+	name = "Bluespace body bag"
+	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
+	id = "bluespacebodybag"
+	req_tech = list("bluespace" = 2, "materials" = 6)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3000, "$plasma" = 2000, "$diamond" = 500)
+	reliability = 76
+	build_path = /obj/item/bodybag/bluespace
 	category = "Misc"

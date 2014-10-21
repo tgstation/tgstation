@@ -53,7 +53,7 @@ datum/objective_item/steal/capmedal
 
 datum/objective_item/steal/hypo
 	name = "the hypospray"
-	targetitem = /obj/item/weapon/reagent_containers/hypospray
+	targetitem = /obj/item/weapon/reagent_containers/hypospray/CMO
 	difficulty = 5
 	excludefromjob = list("Chief Medical Officer")
 
@@ -107,13 +107,13 @@ datum/objective_item/functionalai/check_special_completion(var/obj/item/device/a
 
 datum/objective_item/steal/blueprints
 	name = "the station blueprints"
-	targetitem = /obj/item/blueprints
+	targetitem = /obj/item/areaeditor/blueprints
 	difficulty = 10
 	excludefromjob = list("Chief Engineer")
 	altitems = list(/obj/item/weapon/photo)
 
 datum/objective_item/blueprints/check_special_completion(var/obj/item/I)
-	if(istype(I, /obj/item/blueprints))
+	if(istype(I, /obj/item/areaeditor/blueprints))
 		return 1
 	if(istype(I, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = I

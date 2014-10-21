@@ -7,6 +7,7 @@
 	opacity = 1
 	density = 1
 	layer = 2.7
+	power_channel = ENVIRON
 
 	var/secondsElectrified = 0
 	var/visible = 1
@@ -74,8 +75,7 @@
 	..()
 	move_update_air(T)
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return 0
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
@@ -134,6 +134,7 @@
 		sleep(6)
 		open()
 		emagged = 1
+		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		if(istype(src, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/A = src
 			A.lights = 0

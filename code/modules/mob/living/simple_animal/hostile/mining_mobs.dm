@@ -8,7 +8,7 @@
 	max_co2 = 0
 	min_n2 = 0
 	max_n2 = 0
-	unsuitable_atoms_damage = 15
+	unsuitable_atmos_damage = 15
 	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
@@ -348,6 +348,7 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	anchored = 1 //Stays anchored until death as to be unpullable
+	mob_size = 2
 
 /mob/living/simple_animal/hostile/asteroid/goliath/revive()
 	anchored = 1
@@ -416,6 +417,7 @@
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "goliath_hide"
+	flags = NOBLUDGEON
 	w_class = 3
 	layer = 4
 
@@ -423,11 +425,32 @@
 	if(proximity_flag)
 		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining))
 			var/obj/item/clothing/C = target
-			var/current_armor = C.armor
+			var/list/current_armor = C.armor
 			if(current_armor.["melee"] < 80)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				qdel(src)
 			else
 				user << "<span class='info'>You can't improve [C] any further.</span>"
-	return
+				return
+		if(istype(target, /obj/mecha/working/ripley))
+			var/obj/mecha/D = target
+			var/list/damage_absorption = D.damage_absorption
+			if(damage_absorption.["brute"] > 0.3)
+				damage_absorption.["brute"] = max(damage_absorption.["brute"] - 0.1, 0.3)
+				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				qdel(src)
+				if(D.icon_state == "ripley-open")
+					D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-open")
+					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+				else
+					user << "<span class='info'>You can't add armour onto the mech while someone is inside!</span>"
+				if(damage_absorption.["brute"] == 0.3)
+					if(D.icon_state == "ripley-open")
+						D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-full-open")
+						D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - the pilot must be an experienced monster hunter."
+					else
+						user << "<span class='info'>You can't add armour onto the mech while someone is inside!</span>"
+			else
+				user << "<span class='info'>You can't improve [D] any further.</span>"
+				return

@@ -135,13 +135,13 @@
 			if(slot_handcuffed)
 				if(handcuffed)
 					return 0
-				if(!istype(I, /obj/item/weapon/handcuffs))
+				if(!istype(I, /obj/item/weapon/restraints/handcuffs))
 					return 0
 				return 1
 			if(slot_legcuffed)
 				if(legcuffed)
 					return 0
-				if(!istype(I, /obj/item/weapon/legcuffs))
+				if(!istype(I, /obj/item/weapon/restraints/legcuffs))
 					return 0
 				return 1
 			if(slot_in_backpack)

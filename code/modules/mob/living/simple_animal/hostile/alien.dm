@@ -28,7 +28,7 @@
 	max_co2 = 0
 	min_n2 = 0
 	max_n2 = 0
-	unsuitable_atoms_damage = 15
+	unsuitable_atmos_damage = 15
 	faction = list("alien")
 	status_flags = CANPUSH
 	minbodytemp = 0
@@ -84,6 +84,7 @@
 	move_to_delay = 4
 	maxHealth = 400
 	health = 400
+	mob_size = 2
 
 /obj/item/projectile/neurotox
 	name = "neurotoxin"

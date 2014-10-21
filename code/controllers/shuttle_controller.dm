@@ -48,10 +48,11 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 		else
 			last_call_loc = null
 
-		priority_announce("The emergency shuttle has been called. [red_alert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[emergency_reason][emergency_shuttle.last_call_loc ? "\n\nCall signal traced. Results can be viewed on any communcations console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
-
 		settimeleft(SHUTTLEARRIVETIME*coeff)
 		online = 1
+
+		priority_announce("The emergency shuttle has been called. [red_alert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[emergency_reason][emergency_shuttle.last_call_loc ? "\n\nCall signal traced. Results can be viewed on any communcations console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+
 		if(always_fake_recall)
 
 			if ((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
@@ -136,7 +137,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 		if(!online && direction == 1) //we don't call the shuttle if it's already coming
 			incall(SHUTTLEAUTOCALLTIMER) //X minutes! If they want to recall, they have X-(X-5) minutes to do so
 			log_game("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
-			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.", 1)
+			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 
 /datum/shuttle_controller/proc/move_shuttles()
 	var/datum/shuttle_manager/s
@@ -241,6 +242,6 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 			var/turf/T = get_step(L, dir)
 			if(T)
 				for(var/obj/O in T) // For doors and such (kinda ugly but we can't have people opening doors)
-					if(!O.CanPass(L, L.loc, 1, 0))
+					if(!O.CanPass(L, L.loc, 1))
 						return
 				L.Move(get_step(L, dir), dir)

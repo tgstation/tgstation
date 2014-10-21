@@ -229,7 +229,7 @@
 "eu" = (/obj/structure/rack,/obj/item/key,/obj/item/key,/obj/item/key,/obj/item/key,/obj/item/key,/turf/simulated/floor/carpet,/area/awaymission)
 "ev" = (/obj/structure/stool/bed/chair/comfy,/obj/effect/decal/cleanable/flour{desc = "Probably."},/obj/effect/decal/cleanable/pie_smudge,/turf/simulated/floor/carpet,/area/awaymission)
 "ew" = (/obj/structure/stool/bed/chair/comfy,/obj/effect/decal/cleanable/flour{desc = "Probably."},/obj/effect/decal/cleanable/flour{desc = "Probably."},/obj/effect/decal/cleanable/pie_smudge,/turf/simulated/floor/carpet,/area/awaymission)
-"ex" = (/obj/item/weapon/legcuffs,/turf/simulated/floor/engine/cult,/area/awaymission)
+"ex" = (/obj/item/weapon/restraints/legcuffs,/turf/simulated/floor/engine/cult,/area/awaymission)
 "ey" = (/obj/machinery/space_heater,/turf/simulated/floor/carpet,/area/awaymission)
 "ez" = (/obj/structure/table/woodentable,/turf/simulated/floor/carpet,/area/awaymission)
 "eA" = (/obj/structure/table,/obj/machinery/computer/security/telescreen{desc = "Not used to spy on hotel rooms."; dir = 1; network = "Hotel"; use_power = 0},/turf/simulated/floor/carpet,/area/awaymission)

@@ -37,7 +37,6 @@
 
 	var/memory
 
-	var/need_job_assign = 1 //Whether the job controller should give them a job
 	var/assigned_role
 	var/special_role
 
@@ -45,8 +44,6 @@
 
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
-
-	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
 	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
@@ -264,6 +261,17 @@
 			else
 				text += "."
 
+			text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
+			if (objectives.len==0)
+				text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
+		else if(isloyal(current))
+			text += "head|<b>LOYAL</b>|employee|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|rev"
+		else if (src in ticker.mode.revolutionaries)
+			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
+		else
+			text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+		sections["revolution"] = text
+
 		/** GANG ***/
 		text = "gang"
 		if (ticker.mode.config_tag=="gang")
@@ -285,6 +293,7 @@
 
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];gang=autoobjective'>Set to kill all rival gang leaders</a>."
+
 
 		else if (src in ticker.mode.B_bosses)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B)</B> <a href='?src=\ref[src];gang=bgang'>gangster</a> <b>BOSS</b>"
@@ -906,6 +915,7 @@
 					else
 						current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 					special_role = "Syndicate"
+					assigned_role = "MODE"
 					current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 					ticker.mode.forge_syndicate_objectives(src)
 					ticker.mode.greet_syndicate(src)
@@ -989,7 +999,7 @@
 					var/mob/living/carbon/monkey/M = current
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
-						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>", 1)
+						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>")
 						src = null
 						M = H.monkeyize()
 						src = M.mind
@@ -1151,6 +1161,7 @@
 	if(!(src in ticker.mode.wizards))
 		ticker.mode.wizards += src
 		special_role = "Wizard"
+		assigned_role = "MODE"
 		//ticker.mode.learn_basic_spells(current)
 		if(!wizardstart.len)
 			current.loc = pick(latejoin)

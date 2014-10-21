@@ -16,7 +16,8 @@
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)
-	new /obj/item/blueprints(src)
+	new /obj/item/areaeditor/blueprints(src)
+	new /obj/item/weapon/storage/box/permits(src)
 	new /obj/item/clothing/under/rank/chief_engineer(src)
 	new /obj/item/clothing/head/hardhat/white(src)
 	new /obj/item/clothing/head/welding(src)
@@ -29,7 +30,7 @@
 	new /obj/item/weapon/airlock_painter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/multitool(src)
-	new /obj/item/device/flash(src)
+	new /obj/item/device/flash/handheld(src)
 	return
 
 /obj/structure/closet/secure_closet/engineering_electrical

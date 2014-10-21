@@ -70,7 +70,7 @@ var/round_start_time = 0
 		if((master_mode=="secret") && (secret_force_mode != "secret"))
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
 			if (!smode.can_start())
-				message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.", 1)
+				message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
 			else
 				src.mode = smode
 
@@ -275,12 +275,11 @@ var/round_start_time = 0
 /datum/controller/gameticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
-		if(!player.mind.need_job_assign)
-			continue
 		if(player && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			job_master.EquipRank(player, player.mind.assigned_role, 0)
+			if(player.mind.assigned_role != "MODE")
+				job_master.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!istype(M,/mob/new_player))

@@ -239,8 +239,9 @@
 		return
 
 	else
+		var/current_health = health
 		..()
-		if (health < maxhealth && !istype(W, /obj/item/weapon/screwdriver) && W.force)
+		if (health < current_health) //if medbot took some damage
 			step_to(src, (get_step_away(src,user)))
 
 /obj/machinery/bot/medbot/Emag(mob/user as mob)
@@ -250,7 +251,7 @@
 		if(user)
 			user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
 		spawn(0)
-			visible_message("<span class='userdanger'>[src] buzzes oddly!</span>", 1)
+			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		if(user)
 			oldpatient = user
@@ -490,7 +491,7 @@
 
 /obj/machinery/bot/medbot/explode()
 	on = 0
-	visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
+	visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)

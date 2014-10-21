@@ -32,25 +32,23 @@
 	src.loc = null
 	..()
 
-/obj/item/stack/examine()
-	set src in view(1)
+/obj/item/stack/examine(mob/user)
 	..()
 	if (is_cyborg)
 		if(src.singular_name)
-			usr << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
+			user << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
 		else
-			usr << "There is enough energy for [src.get_amount()]."
+			user << "There is enough energy for [src.get_amount()]."
 		return
 	if(src.singular_name)
 		if(src.get_amount()>1)
-			usr << "There are [src.get_amount()] [src.singular_name]\s in the stack."
+			user << "There are [src.get_amount()] [src.singular_name]\s in the stack."
 		else
-			usr << "There is [src.get_amount()] [src.singular_name] in the stack."
+			user << "There is [src.get_amount()] [src.singular_name] in the stack."
 	else if(src.get_amount()>1)
-		usr << "There are [src.get_amount()] in the stack."
+		user << "There are [src.get_amount()] in the stack."
 	else
-		usr << "There is [src.get_amount()] in the stack."
-	return
+		user << "There is [src.get_amount()] in the stack."
 
 /obj/item/stack/proc/get_amount()
 	if (is_cyborg)
@@ -91,7 +89,7 @@
 			title+= "[R.title]"
 		title+= " ([R.req_amount] [src.singular_name]\s)"
 		if (can_build)
-			t1 += text("<A href='?src=\ref[];make=[]'>[]</A>  ", src, i, title)
+			t1 += text("<A href='?src=\ref[];make=[];multiplier=1'>[]</A>  ", src, i, title)
 		else
 			t1 += text("[]", title)
 			continue
@@ -119,7 +117,8 @@
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
-		if (!multiplier) multiplier = 1
+		if (!multiplier ||(multiplier <= 0)) //href protection
+			return
 		if (src.get_amount() < R.req_amount*multiplier)
 			if (R.req_amount*multiplier>1)
 				usr << "<span class='danger'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"

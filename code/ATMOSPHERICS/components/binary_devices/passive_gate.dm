@@ -1,8 +1,14 @@
+
+/*
+
+Passive gate is similar to the regular pump except:
+* It doesn't require power
+* Can not transfer low pressure to higher pressure (so it's more like a valve where you can control the flow)
+
+*/
+
 /obj/machinery/atmospherics/binary/passive_gate
-	//Tries to achieve target pressure at output (like a normal pump) except
-	//	Uses no power but can not transfer gases from a low pressure area to a high pressure area
-	icon = 'icons/obj/atmospherics/passive_gate.dmi'
-	icon_state = "intact_off"
+	icon_state = "passgate_map"
 
 	name = "passive gate"
 	desc = "A one-way air valve that does not require power"
@@ -16,19 +22,10 @@
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/atmospherics/binary/passive_gate/update_icon()
-	if(stat & NOPOWER)
-		icon_state = "intact_off"
-	else if(node1 && node2)
-		icon_state = "intact_[on?("on"):("off")]"
-	else
-		if(node1)
-			icon_state = "exposed_1_off"
-		else if(node2)
-			icon_state = "exposed_2_off"
-		else
-			icon_state = "exposed_3_off"
-	return
+/obj/machinery/atmospherics/binary/passive_gate/update_icon_nopipes()
+	overlays.Cut()
+	if(on & !(stat & NOPOWER))
+		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "passgate_on")
 
 /obj/machinery/atmospherics/binary/passive_gate/process()
 	..()

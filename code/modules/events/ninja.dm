@@ -365,10 +365,7 @@ ________________________________________________________________________________
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
 	equip_to_slot_or_del(R, slot_ears)
-	if(gender==FEMALE)
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), slot_w_uniform)
-	else
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
+	equip_to_slot_or_del(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/space_ninja(src), slot_shoes)
 	equip_to_slot_or_del(new /obj/item/clothing/suit/space/space_ninja(src), slot_wear_suit)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
@@ -384,6 +381,7 @@ ________________________________________________________________________________
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
 	E.imp_in = src
 	E.implanted = 1
+	E.implanted(src)
 	return 1
 
 //=======//HELPER PROCS//=======//
@@ -1875,8 +1873,7 @@ ________________________________________________________________________________
 			P.tnote += "<i><b>&larr; From [!s_control?(A):"an unknown source"]:</b></i><br>[t]<br>"
 			if (!P.silent)
 				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				for (var/mob/O in hearers(3, P.loc))
-					O.show_message(text("\icon[P] *[P.ttone]*"))
+				P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
 			P.overlays.Cut()
 			P.overlays += image('icons/obj/pda.dmi', "pda-r")
 
@@ -2210,9 +2207,8 @@ ________________________________________________________________________________
 			anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
 		U.alpha = 0
-		U << "<span class='notice'>You are now invisible to normal detection.</span>"
-		for(var/mob/O in oviewers(U))
-			O.show_message("[U.name] vanishes into thin air!",1)
+		U.visible_message("<span class='warning'>[U.name] vanishes into thin air!</span>", \
+						"<span class='notice'>You are now invisible to normal detection.</span>")
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
@@ -2222,9 +2218,8 @@ ________________________________________________________________________________
 			anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
 		U.alpha = 255
-		U << "<span class='notice'>You are now visible.</span>"
-		for(var/mob/O in oviewers(U))
-			O.show_message("[U.name] appears from thin air!",1)
+		U.visible_message("<span class='warning'>[U.name] appears from thin air!</span>", \
+						"<span class='notice'>You are now visible.</span>")
 		return 1
 	return 0
 
@@ -2248,21 +2243,20 @@ ________________________________________________________________________________
 				U.drop_item()
 	return 0
 
-/obj/item/clothing/suit/space/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/suit/space/space_ninja/examine(mob/user)
 	..()
 	if(s_initialized)
-		var/mob/living/carbon/human/U = affecting
-		if(s_control)
-			U << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
-			if(!kamikaze)
-				U << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
+		if(user == affecting)
+			if(s_control)
+				user << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
+				if(!kamikaze)
+					user << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
+				else
+					user << "<span class='userdanger'>KAMIKAZE MODE ENGAGED!</span>"
+				user << "There are <B>[s_bombs]</B> smoke bomb\s remaining."
+				user << "There are <B>[a_boost]</B> adrenaline booster\s remaining."
 			else
-				U << "<span class='danger'>KAMIKAZE MODE ENGAGED!</span>"
-			U << "There are <B>[s_bombs]</B> smoke bombs remaining."
-			U << "There are <B>[a_boost]</B> adrenaline boosters remaining."
-		else
-			U <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
+				user <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
 
 /*
 ===================================================================================
@@ -2507,12 +2501,10 @@ ________________________________________________________________________________
 	U << "You <b>[candrain?"disable":"enable"]</b> special interaction."
 	candrain=!candrain
 
-/obj/item/clothing/gloves/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
 	if(flags & NODROP)
-		var/mob/living/carbon/human/U = loc
-		U << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
+		user << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
 
 /*
 ===================================================================================
@@ -2586,9 +2578,9 @@ ________________________________________________________________________________
 		voice = "Unknown"
 	return
 
-/obj/item/clothing/mask/gas/voice/space_ninja/examine()
+/obj/item/clothing/mask/gas/voice/space_ninja/examine(mob/user)
 	..()
-	usr << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
+	user << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
 
 /*
 ===================================================================================
@@ -2616,143 +2608,139 @@ It is possible to destroy the net by the occupant or someone else.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
 	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
-	proc
-		healthcheck()
-			if(health <=0)
-				density = 0
-				if(affecting)
-					var/mob/living/carbon/M = affecting
-					M.anchored = 0
-					for(var/mob/O in viewers(src, 3))
-						O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
-					if(!isnull(master))//As long as they still exist.
-						master << "<span class='userdanger'>ERROR</span>: \black unable to initiate transport protocol. Procedure terminated."
-				qdel(src)
-			return
-
-	process(var/mob/living/carbon/M as mob)
-		var/check = 30//30 seconds before teleportation. Could be extended I guess.
-		var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
-		//The person can still try and attack the net when inside.
-		while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 30 seconds have not passed.
-			check--
-			sleep(10)
-
-		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
-			if(!isnull(master))//As long as they still exist.
-				master << "<span class='userdanger'>ERROR</span>: \black unable to locate \the [mob_name]. Procedure terminated."
-			qdel(src)//Get rid of the net.
-			return
-
-		if(!isnull(src))//As long as both net and person exist.
-			//No need to check for countdown here since while() broke, it's implicit that it finished.
-
-			density = 0//Make the net pass-through.
-			invisibility = 101//Make the net invisible so all the animations can play out.
-			health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
-			for(var/obj/item/W in M)
-				if(istype(M,/mob/living/carbon/human))
-					if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
-					if(W==M:shoes)	continue
-				M.unEquip(W)
-
-			spawn(0)
-				playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
-				anim(M.loc,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
-
-			M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
-			M << "<span class='danger'>You appear in a strange place!</span>"
-
-			spawn(0)
-				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-				spark_system.set_up(5, 0, M.loc)
-				spark_system.start()
-				playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
-				playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
-				anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
-				qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
-
+/obj/effect/energy_net/proc/healthcheck()
+	if(health <=0)
+		density = 0
+		if(affecting)
+			var/mob/living/carbon/M = affecting
+			M.anchored = 0
 			for(var/mob/O in viewers(src, 3))
-				O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
-
+				O.show_message("[M.name] was recovered from the energy net!", 1, "You hear a grunt.", 2)
 			if(!isnull(master))//As long as they still exist.
-				master << "<span class='notice'><b>SUCCESS</b>: \black transport procedure of \the [affecting] complete.</span>"
+				master << "<span class='userdanger'>ERROR</span>: \black unable to initiate transport protocol. Procedure terminated."
+		qdel(src)
+	return
 
-			M.anchored = 0//Important.
+/obj/effect/energy_net/process(var/mob/living/carbon/M as mob)
+	var/check = 30//30 seconds before teleportation. Could be extended I guess.
+	var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
+	//The person can still try and attack the net when inside.
+	while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 30 seconds have not passed.
+		check--
+		sleep(10)
 
-		else//And they are free.
-			M << "<span class='notice'>You are free of the net!</span>"
+	if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
+		if(!isnull(master))//As long as they still exist.
+			master << "<span class='userdanger'>ERROR</span>: \black unable to locate \the [mob_name]. Procedure terminated."
+		qdel(src)//Get rid of the net.
 		return
 
-	bullet_act(var/obj/item/projectile/Proj)
-		health -= Proj.damage
-		healthcheck()
-		..()
+	if(!isnull(src))//As long as both net and person exist.
+		//No need to check for countdown here since while() broke, it's implicit that it finished.
 
-	ex_act(severity)
-		switch(severity)
-			if(1.0)
-				health-=50
-			if(2.0)
-				health-=50
-			if(3.0)
-				health-=prob(50)?50:25
-		healthcheck()
-		return
+		density = 0//Make the net pass-through.
+		invisibility = 101//Make the net invisible so all the animations can play out.
+		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
+		for(var/obj/item/W in M)
+			if(istype(M,/mob/living/carbon/human))
+				if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
+				if(W==M:shoes)	continue
+			M.unEquip(W)
 
-	blob_act()
-		health-=50
-		healthcheck()
-		return
+		spawn(0)
+			playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
+			anim(M.loc,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
 
-	hitby(AM as mob|obj)
-		..()
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("<span class='danger'>[src] was hit by [AM].</span>"), 1)
-		var/tforce = 0
-		if(ismob(AM))
-			tforce = 10
-		else
-			tforce = AM:throwforce
-		playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-		health = max(0, health - tforce)
-		healthcheck()
-		..()
-		return
+		M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
+		M << "<span class='danger'>You appear in a strange place!</span>"
 
-	attack_hand()
-		if (HULK in usr.mutations)
-			usr << text("<span class='notice'>You easily destroy the energy net.</span>")
-			for(var/mob/O in oviewers(src))
-				O.show_message(text("<span class='danger'>[] rips the energy net apart!</span>", usr), 1)
+		spawn(0)
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, M.loc)
+			spark_system.start()
+			playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
+			playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
+			anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
+			qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
+
+		for(var/mob/O in viewers(src, 3))
+			O.show_message("[M] vanished!", 1, "You hear sparks flying!", 2)
+
+		if(!isnull(master))//As long as they still exist.
+			master << "<span class='notice'><b>SUCCESS</b>: \black transport procedure of \the [affecting] complete.</span>"
+
+		M.anchored = 0//Important.
+
+	else//And they are free.
+		M << "<span class='notice'>You are free of the net!</span>"
+	return
+
+/obj/effect/energy_net/bullet_act(var/obj/item/projectile/Proj)
+	health -= Proj.damage
+	healthcheck()
+	..()
+
+/obj/effect/energy_net/ex_act(severity)
+	switch(severity)
+		if(1.0)
 			health-=50
-		healthcheck()
-		return
+		if(2.0)
+			health-=50
+		if(3.0)
+			health-=prob(50)?50:25
+	healthcheck()
+	return
 
-	attack_paw()
-		return attack_hand()
+/obj/effect/energy_net/blob_act()
+	health-=50
+	healthcheck()
+	return
 
-	attack_alien()
-		if (islarva(usr))
-			return
-		usr << text("\green You claw at the net.")
-		for(var/mob/O in oviewers(src))
-			O.show_message(text("<span class='danger'>[] claws at the energy net!</span>", usr), 1)
-		playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-		health -= rand(10, 20)
-		if(health <= 0)
-			usr << text("\green You slice the energy net to pieces.")
-			for(var/mob/O in oviewers(src))
-				O.show_message(text("<span class='danger'>[] slices the energy net apart!</span>", usr), 1)
-		healthcheck()
-		return
+/obj/effect/energy_net/hitby(AM as mob|obj)
+	..()
+	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
+	var/tforce = 0
+	if(ismob(AM))
+		tforce = 10
+	else
+		tforce = AM:throwforce
+	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+	health = max(0, health - tforce)
+	healthcheck()
+	..()
+	return
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		var/aforce = W.force
-		health = max(0, health - aforce)
-		healthcheck()
-		..()
+/obj/effect/energy_net/attack_hand(mob/user)
+	if (HULK in user.mutations)
+		user.visible_message("<span class='danger'>[user] rips the energy net apart!</span>", \
+								"<span class='notice'>You easily destroy the energy net.</span>")
+		health-=50
+	healthcheck()
+	return
+
+/obj/effect/energy_net/attack_paw(mob/user)
+	return attack_hand()
+
+/obj/effect/energy_net/attack_alien(mob/user as mob)
+	if (islarva(user))
 		return
+	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+	health -= rand(10, 20)
+	if(health > 0)
+		user.visible_message("<span class='danger'>[user] claws at the energy net!</span>", \
+					 "\green You claw at the net.")
+	else
+		user.visible_message("<span class='danger'>[user] slices the energy net apart!</span>", \
+						 "\green You slice the energy net to pieces.")
+	healthcheck()
+	return
+
+/obj/effect/energy_net/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	var/aforce = W.force
+	health = max(0, health - aforce)
+	healthcheck()
+	..()
+	return
 
 proc/create_ninja_mind(key)
 	var/datum/mind/Mind = new /datum/mind(key)

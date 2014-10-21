@@ -129,8 +129,8 @@
 	return 1
 
 
-/obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0) return 1
 
 	if(istype(mover, /obj/item/projectile))
 		return prob(95)

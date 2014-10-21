@@ -130,15 +130,15 @@
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
 		user << "<span class='notice'>You need to open maintenance panel first.</span>"
 
-/obj/machinery/bot/examine()
-	set src in view()
+/obj/machinery/bot/examine(mob/user)
 	..()
 	if (src.health < maxhealth)
 		if (src.health > maxhealth/3)
-			usr << "<span class='warning'>[src]'s parts look loose.</span>"
+			user << "<span class='danger'>[src]'s parts look loose.</span>"
 		else
-			usr << "<span class='danger'>[src]'s parts look very loose!</span>"
-	return
+			user << "<span class='danger'>[src]'s parts look very loose.</span>"
+	else
+		user << "[src] is in pristine condition."
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -233,9 +233,14 @@
 		if(!locked)
 			open = !open
 			user << "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>"
+		else
+			user << "<span class='warning'>Maintenance panel is locked.</span>"
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
 		if(health < maxhealth)
 			if(open)
+				var/obj/item/weapon/weldingtool/WT = W
+				if(!WT.isOn())
+					user << "<span class='warning'>The welder must be on for this task.</span>"
 				health = min(maxhealth, health+10)
 				user.visible_message("<span class='danger'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
 			else
@@ -245,21 +250,28 @@
 	else if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
 		Emag(user)
 	else
-		if(hasvar(W,"force") && hasvar(W,"damtype"))
-			user.changeNext_move(CLICK_CD_MELEE)
+		user.changeNext_move(CLICK_CD_MELEE)
+		if(W.force) //if force is non-zero
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, src)
 			switch(W.damtype)
 				if("fire")
 					src.health -= W.force * fire_dam_coeff
+					s.start()
 				if("brute")
 					src.health -= W.force * brute_dam_coeff
+					s.start()
 			..()
 			healthcheck()
-		else
-			..()
+
 
 /obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
+		if(prob(75) && Proj.damage > 0)
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, src)
+			s.start()
 		..()
 		healthcheck()
 	return

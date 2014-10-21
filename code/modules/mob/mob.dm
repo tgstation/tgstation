@@ -93,6 +93,42 @@ var/next_mob_id = 0
 		M.show_message( message, 1, blind_message, 2)
 
 
+
+
+
+// Show a message to all mobs in earshot of this one
+// This would be for audible actions by the src mob
+// message is the message output to anyone who can hear.
+// self_message (optional) is what the src mob hears.
+// deaf_message (optional) is what deaf people will see.
+// hearing_distance (optional) is the range, how many tiles away the message can be heard.
+
+/mob/audible_message(var/message, var/deaf_message, var/hearing_distance, var/self_message)
+	var/range = 7
+	if(hearing_distance)
+		range = hearing_distance
+	var/msg = message
+	for(var/mob/M in get_hearers_in_view(range, src))
+		if(self_message && M==src)
+			msg = self_message
+		M.show_message( msg, 2, deaf_message, 1)
+
+// Show a message to all mobs in earshot of this atom
+// Use for objects performing audible actions
+// message is the message output to anyone who can hear.
+// deaf_message (optional) is what deaf people will see.
+// hearing_distance (optional) is the range, how many tiles away the message can be heard.
+
+/atom/proc/audible_message(var/message, var/deaf_message, var/hearing_distance)
+	var/range = 7
+	if(hearing_distance)
+		range = hearing_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
+		M.show_message( message, 2, deaf_message, 1)
+
+
+
+
 /mob/proc/movement_delay()
 	return 0
 
@@ -249,6 +285,18 @@ var/list/slot_equipment_priority = list( \
 	user << browse(dat, "window=mob\ref[src];size=325x500")
 	onclose(user, "mob\ref[src]")
 
+//mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
+/mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+	set name = "Examine"
+	set category = "IC"
+
+//	if( (sdisabilities & BLIND || blinded || stat) && !istype(src,/mob/dead/observer) )
+	if(is_blind(src))
+		src << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+
+	face_atom(A)
+	A.examine(src)
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -808,3 +856,11 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/assess_threat() //For sec bot threat assessment
 	return
+
+/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
+	if(mind)
+		for(var/mob/dead/observer/G in player_list)
+			if(G.mind == mind)
+				if(G.can_reenter_corpse || even_if_they_cant_reenter)
+					return G
+				break
