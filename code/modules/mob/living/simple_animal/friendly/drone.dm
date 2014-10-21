@@ -94,6 +94,8 @@
 								health = health_repair_max
 								stat = CONSCIOUS
 								icon_state = icon_living
+								dead_mob_list -= src
+								living_mob_list += src
 								D.visible_message("<span class='notice'>[D] reactivates [src]!</span>")
 								alert_drones(DRONE_NET_CONNECT)
 								if(G)

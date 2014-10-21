@@ -1324,6 +1324,30 @@
 		src.owner << "[special_role_description]"
 		src.owner << "(<a href='?priv_msg=[M.ckey]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
 
+	else if(href_list["addjobslot"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/Add = href_list["addjobslot"]
+
+		for(var/datum/job/job in job_master.occupations)
+			if(job.title == Add)
+				job.total_positions += 1
+				break
+
+		src.manage_free_slots()
+
+	else if(href_list["removejobslot"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/Remove = href_list["removejobslot"]
+
+		for(var/datum/job/job in job_master.occupations)
+			if(job.title == Remove && job.total_positions - job.current_positions > 0)
+				job.total_positions -= 1
+				break
+
+		src.manage_free_slots()
+
 	else if(href_list["adminspawncookie"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
 

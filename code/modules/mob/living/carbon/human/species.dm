@@ -578,13 +578,13 @@
 
 		else
 			switch(H.radiation)
-				if(1 to 49)
+				if(0 to 50)
 					H.radiation--
 					if(prob(25))
 						H.adjustToxLoss(1)
 						H.updatehealth()
 
-				if(50 to 74)
+				if(50 to 75)
 					H.radiation -= 2
 					H.adjustToxLoss(1)
 					if(prob(5))
