@@ -345,15 +345,15 @@ Auto Patrol: []"},
 				if(!src.arrest_type)
 					if(!src.target.handcuffed)  //he's not cuffed? Try to cuff him!
 						mode = SECBOT_ARREST
-						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-						target.visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put handcuffs on [src.target]!</span>")
+						playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+						target.visible_message("<span class='danger'>[src] is trying to put zipties on [src.target]!</span>",\
+											"<span class='userdanger'>[src] is trying to put zipties on [src.target]!</span>")
 
 						spawn(60)
 							if( !src.Adjacent(target) || !isturf(src.target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
 							if(!src.target.handcuffed)
-								src.target.handcuffed = new /obj/item/weapon/restraints/handcuffs(src.target)
+								src.target.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(src.target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
 								back_to_idle()
 					else
