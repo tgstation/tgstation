@@ -18,7 +18,7 @@
 	var/last_act = 0
 	var/datum/geosample/geologic_data
 	var/excavation_level = 0
-	var/list/finds
+	var/list/finds = list()//no longer null to prevent those pesky runtime errors
 	var/next_rock = 0
 	var/archaeo_overlay = ""
 	var/excav_overlay = ""
