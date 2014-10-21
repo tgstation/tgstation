@@ -35,6 +35,12 @@
 	var/obj/screen/gun/run/gun_run_icon = null
 	var/obj/screen/gun/mode/gun_setting_icon = null
 
+	//monkey inventory icons
+	var/obj/screen/m_suitclothes = null
+	var/obj/screen/m_suitclothesbg = null
+	var/obj/screen/m_hat = null
+	var/obj/screen/m_hatbg = null
+
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).
