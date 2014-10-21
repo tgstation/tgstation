@@ -1,4 +1,4 @@
 author: Paprika
 delete-after: True
 changes:
-  - experiment: "Changed cult conversion rune to only require two cultists instead of three."
+  - experiment: "Allowed constructs to assist in activating most runes. This includes conversion runes, but does NOT include sacrifice runes."
