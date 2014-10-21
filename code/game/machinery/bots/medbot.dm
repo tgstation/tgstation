@@ -255,6 +255,23 @@
 		if(user)
 			oldpatient = user
 
+/obj/machinery/bot/medbot/process_scan(var/mob/living/carbon/human/H)
+	if (H.stat == 2)
+		return
+
+	if ((H == oldpatient) && (world.time < last_found + 100))
+		return
+
+	if(assess_patient(H))
+		last_found = world.time
+		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
+			var/message = pick("Hey, [H.name]! Hold on, I'm coming.","Wait [H.name]! I want to help!","[H.name], you appear to be injured!")
+			speak(message)
+			last_newpatient_speak = world.time
+		return H
+	else
+		return
+
 /obj/machinery/bot/medbot/process()
 	if (!..())
 		return
@@ -283,36 +300,14 @@
 		path = new()
 
 	if(!patient)
-		if(mode == BOT_SUMMON) //A medibot will not search for new patients when summoned!
-			bot_summon()
-			return
-
 		if(!shut_up && prob(1))
 			var/message = pick("Radar, put a mask on!","There's always a catch, and it's the best there is.","I knew it, I should've been a plastic surgeon.","What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
 			speak(message)
+		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
+		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
+		oldpatient = patient
 
-		var/scan_range = (stationary_mode ? 1 : 7) //If in stationary mode, scan range is limited to adjacent patients.
-		for (var/mob/living/carbon/C in view(scan_range,src)) //Time to find a patient!
-			if ((C.stat == 2) || !istype(C, /mob/living/carbon/human))
-				continue
-
-			if ((C == oldpatient) && (world.time < last_found + 100))
-				continue
-
-			if(assess_patient(C))
-				patient = C
-				oldpatient = C
-				last_found = world.time
-				if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
-					var/message = pick("Hey, [C.name]! Hold on, I'm coming.","Wait [C.name]! I want to help!","[C.name], you appear to be injured!")
-					speak(message)
-					last_newpatient_speak = world.time
-				break
-			else
-				continue
-
-
-	if(patient && (get_dist(src,patient) <= 1))
+	if(patient && (get_dist(src,patient) <= 1)) //Patient is next to us, begin treatment!
 		if(mode != BOT_HEALING)
 			mode = BOT_HEALING
 			updateicon()
@@ -320,6 +315,7 @@
 			medicate_patient(patient)
 		return
 
+	//Patient has moved away from us!
 	else if(patient && (path.len) && (get_dist(patient,path[path.len]) > 2))
 		path = new()
 		mode = BOT_IDLE
@@ -328,22 +324,14 @@
 	if(!stationary_mode && patient && path.len == 0 && (get_dist(src,patient) > 1))
 		spawn(0)
 			path = AStar(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
-			if(!path)
-				path = list()
-			if(path.len == 0)
-				oldpatient = patient
-				patient = null
-				mode = BOT_IDLE
-				last_found = world.time
-		return
 
 	if(path.len > 0 && patient)
-		step_to(src, path[1])
-		path -= path[1]
-		spawn(3)
-			if(path.len)
-				step_to(src, path[1])
-				path -= path[1]
+		if(!bot_move(patient))
+			oldpatient = patient
+			patient = null
+			mode = BOT_IDLE
+			last_found = world.time
+		return
 
 	if(path.len > 8 && patient)
 		frustration++

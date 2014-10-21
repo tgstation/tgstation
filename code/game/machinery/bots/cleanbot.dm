@@ -136,7 +136,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 
 /obj/machinery/bot/cleanbot/process_scan(var/obj/effect/decal/cleanable/D)
 	for(var/T in target_types)
-		if(!(D in ignore_list) && istype(D, T))
+		if(istype(D, T))
 			return D
 
 /obj/machinery/bot/cleanbot/process()
@@ -160,15 +160,9 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	else if (prob(5))
 		visible_message("[src] makes an excited beeping booping sound!")
 
-	if(mode == BOT_SUMMON)
-		bot_summon()
-		return
-
 	if(!target) //Search for cleanables it can see.
-		var/obj/effect/decal/cleanable/D
-		D = scan(D, DEFAULT_SCAN_RANGE, oldtarget, ignore_list)
-		oldtarget = D
-		target = D
+		target = scan(/obj/effect/decal/cleanable/, oldtarget)
+		oldtarget = target
 
 	if(!target)
 		if(loc != oldloc)
@@ -184,16 +178,17 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		return
 
 	if(target)
-		if(!path || path.len == 0)
-			if(!src || !target)
-				return
+		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
 			path = AStar(loc, target.loc, /turf/proc/AdjacentTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
 			if (!bot_move(target))
 				add_to_ignore(target)
+				target = null
 				return
-		else
-			bot_move(target)
+			mode = BOT_MOVING
+		else if (!bot_move(target))
+			target = null
+			mode = BOT_IDLE
 
 		if(loc == target.loc)
 			clean(target)

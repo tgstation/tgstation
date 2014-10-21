@@ -24,7 +24,7 @@
 	var/turf/ai_waypoint //The end point of a bot's path, or the target location.
 	var/list/path = list() //List of turfs through which a bot 'steps' to reach the waypoint.
 	var/pathset = 0
-	var/list/ignore_list //List of unreachable targets for an ignore-list enabled bot to ignore.
+	var/list/ignore_list = list() //List of unreachable targets for an ignore-list enabled bot to ignore.
 	var/mode = 0 //Standardizes the vars that indicate the bot is busy with its function.
 	var/tries = 0 //Number of times the bot tried and failed to move.
 	var/remote_disabled = 0 //If enabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
@@ -211,16 +211,20 @@
 	else
 		return 0
 
-/obj/machinery/bot/process() //Master process which handles code common across all bots.
+/obj/machinery/bot/process() //Master process which handles code common across most bots.
 
 	set background = BACKGROUND_ENABLED
 
 	if(!on)
 		return
 
-	if(mode == BOT_RESPONDING)
-		call_mode()
-		return
+	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
+		if(BOT_RESPONDING)	//Called by the AI.
+			call_mode()
+			return
+		if(BOT_SUMMON)		//Called by PDA
+			bot_summon()
+			return
 	return 1 //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
@@ -333,21 +337,26 @@
 
 /*
 scan() will search for a given type (such as turfs, human mobs, or objects) in the bot's view range, and return a single result.
-Arguments: The object type to be searched (such as "/mob/living/carbon/human"), the view range (usually 7, a full screen),
-the old scan result to be ignored, if one exists, and a list of multiple objects to be ignored, for bots which support it.
+Arguments: The object type to be searched (such as "/mob/living/carbon/human"), the old scan result to be ignored, if one exists,
+and the view range, which defaults to 7 (full screen) if an override is not passed.
+If the bot maintains an ignore list, it is also checked here.
+
+Example usage: patient = scan(/mob/living/carbon/human, oldpatient, 1)
+The proc would return a human next to the bot to be set to the patient var.
+Pass the desired type path itself, declaring a temporary var beforehand is not required.
 */
-obj/machinery/bot/proc/scan(var/scan_type, var/scan_range, var/old_target, var/list/ignorelist)
-	var/scan_result
+obj/machinery/bot/proc/scan(var/scan_type, var/old_target, var/scan_range)
 	var/final_result
-	ignorelist |= old_target
-	for (scan_type in view (scan_range ? scan_range : DEFAULT_SCAN_RANGE,src) )
-		if( !(scan_type in ignorelist) )
-			scan_result = process_scan(scan_type)
+	for (var/scan in view (scan_range ? scan_range : DEFAULT_SCAN_RANGE, src) ) //Search for something in range!
+		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
+			continue //If not, keep searching!
+		if( !(scan in ignore_list) && !(scan in old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
+			var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
 			if( scan_result )
 				final_result = scan_result
 			else
 				continue //The current element failed assessment, move on to the next.
-	return final_result
+		return final_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
 obj/machinery/bot/proc/process_scan(var/scan_target)
