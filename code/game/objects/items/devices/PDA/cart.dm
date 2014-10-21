@@ -472,6 +472,9 @@ Code:
 					for(var/obj/machinery/bot/secbot/B in SC.botlist)
 						menu += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
 
+					for(var/obj/machinery/bot/ed209/B in SC.botlist)
+						menu += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
+
 				menu += "<BR><A href='byond://?src=\ref[SC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
 
 			else	// bot selected, control it

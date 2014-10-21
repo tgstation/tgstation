@@ -14,7 +14,7 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
-	var/mob_storage_capacity = 4 // how many human sized mob/living can fit together inside a closet.
+	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
@@ -26,8 +26,8 @@
 /obj/structure/closet/alter_health()
 	return get_turf(src)
 
-/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0 || wall_mounted)) return 1
+/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0 || wall_mounted) return 1
 	return (!density)
 
 /obj/structure/closet/proc/can_open()
@@ -186,16 +186,16 @@
 
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
-			user << "<span class='notice'>You begin cutting the [src] apart...</span>"
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user,40,5,1))
-				if(src.opened)
-					if(WT.remove_fuel(0,user))
-						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-						new /obj/item/stack/sheet/metal(src.loc)
-						for(var/mob/M in viewers(src))
-							M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
-						qdel(src)
+			if(WT.remove_fuel(0,user))
+				user << "<span class='notice'>You begin cutting the [src] apart...</span>"
+				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+				if(do_after(user,40,5,1))
+					if( !src.opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
+						return
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					new /obj/item/stack/sheet/metal(src.loc)
+					visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", "You hear welding.")
+					qdel(src)
 			return
 
 		if(isrobot(user))
@@ -208,16 +208,17 @@
 		return
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the [src]...</span>"
-		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-		if(do_after(user,40,5,1))
-			if(!src.opened)
-				if(WT.remove_fuel(0,user))
-					playsound(loc, 'sound/items/welder.ogg', 50, 1)
-					welded = !welded
-					user << "<span class='notice'>You [welded ? "welded the [src] shut":"unwelded the [src]"]</span>"
-					update_icon()
-					user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
+		if(WT.remove_fuel(0,user))
+			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] the [src]...</span>"
+			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+			if(do_after(user,40,5,1))
+				if(src.opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
+					return
+				playsound(loc, 'sound/items/welder.ogg', 50, 1)
+				welded = !welded
+				user << "<span class='notice'>You [welded ? "welded the [src] shut":"unwelded the [src]"]</span>"
+				update_icon()
+				user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>")
 		return
 	else if(!place(user, W))
 		src.attack_hand(user)
@@ -318,8 +319,8 @@
 		return  //Door's open, not locked or welded, no point in resisting.
 
 	//okay, so the closet is either welded or locked... resist!!!
-	user.changeNext_move(100)
-	user.last_special = world.time + 100
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
 	for(var/mob/O in viewers(src))
 		O << "<span class='warning'>[src] begins to shake violently!</span>"

@@ -46,7 +46,7 @@
 			bulb = null
 			power_change()
 
-	else if (istype(W, /obj/item/device/flash))
+	else if (istype(W, /obj/item/device/flash/handheld))
 		if (!bulb)
 			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
 			user.drop_item()

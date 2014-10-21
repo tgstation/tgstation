@@ -47,10 +47,10 @@
 	update_icon()	//I.E. fix the desc
 	return 1
 
-/obj/item/weapon/gun/projectile/shotgun/examine()
+/obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
 	if (chambered)
-		usr << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
+		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
 
 /obj/item/weapon/gun/projectile/shotgun/combat
 	name = "combat shotgun"
@@ -59,6 +59,12 @@
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
 	w_class = 5
+
+/obj/item/weapon/gun/projectile/shotgun/riot //for spawn in the armory
+	name = "riot shotgun"
+	desc = "A sturdy shotgun designed for non-lethal riot control."
+	icon_state = "riotshotgun"
+	mag_type = /obj/item/ammo_box/magazine/internal/shotriot
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel
 	name = "double-barreled shotgun"

@@ -736,14 +736,41 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass/attack_self(mob/user as mob)
 	user << "<span class='notice'>You prepare the astroturf.</span>"
-	var/location = get_turf(user)
 	var/grassAmt = 1 + round(potency / 50) // The grass we're holding
-	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/grass/grassToConvert in location) // The grass on the floor
-		grassAmt += 1
-		qdel(grassToConvert)
-	var/obj/item/stack/tile/newAstroturf = new /obj/item/stack/tile/grass(location)
-	newAstroturf.amount = grassAmt
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/grass/G in user.loc) // The grass on the floor
+		grassAmt += 1 + round(G.potency / 50)
+		qdel(G)
+	while(grassAmt > 0)
+		var/obj/item/stack/tile/GT = new /obj/item/stack/tile/grass(user.loc)
+		if(grassAmt >= GT.max_amount)
+			GT.amount = GT.max_amount
+		else
+			GT.amount = grassAmt
+		grassAmt -= GT.max_amount
 	qdel(src)
+	return
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/carpet
+	seed = /obj/item/seeds/carpetseed
+	name = "carpet"
+	desc = "The textile industry's dark secret."
+	icon_state = "carpetclump"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/carpet/attack_self(mob/user as mob)
+	user << "<span class='notice'>You roll out the red carpet.</span>"
+	var/carpetAmt = 1 + round(potency / 50) // The carpet we're holding
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/carpet/C in user.loc) // The carpet on the floor
+		carpetAmt += 1 + round(C.potency / 50)
+		qdel(C)
+	while(carpetAmt > 0)
+		var/obj/item/stack/tile/CT = new /obj/item/stack/tile/carpet(user.loc)
+		if(carpetAmt >= CT.max_amount)
+			CT.amount = CT.max_amount
+		else
+			CT.amount = carpetAmt
+		carpetAmt -= CT.max_amount
+	qdel(src)
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
 	seed = /obj/item/seeds/kudzuseed

@@ -37,7 +37,7 @@
 	icon_closed = "bodybag_closed"
 	icon_opened = "bodybag_open"
 	density = 0
-	mob_storage_capacity = 6
+	mob_storage_capacity = 2
 
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user)
@@ -70,7 +70,7 @@
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
 	..()
-	if(over_object == usr && (in_range(src, usr) || usr.contents.Find(src)))
+	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
 			return 0
 		if(opened)

@@ -5,7 +5,6 @@
 	required_players = 25
 	required_enemies = 5
 	recommended_enemies = 8
-	pre_setup_before_jobs = 1
 
 	traitor_name = "double agent"
 

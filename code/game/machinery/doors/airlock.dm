@@ -22,7 +22,6 @@
 	name = "airlock"
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door_closed"
-	power_channel = ENVIRON
 
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
@@ -889,14 +888,15 @@ About the new airlock wires panel:
 	src.add_fingerprint(user)
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
-		user.visible_message("<span class='warning'>[user] is [welded ? "unwelding":"welding"] the airlock.</span>", \
+		if(W.remove_fuel(0,user))
+			user.visible_message("<span class='warning'>[user] is [welded ? "unwelding":"welding"] the airlock.</span>", \
 							"You begin [welded ? "unwelding":"welding"] the airlock...", \
 							"You hear welding.")
-		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-		if(do_after(user,40,5,1))
-			if(density && !operating)//Door must be closed to weld.
-				if(W.remove_fuel(0,user))
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			if(do_after(user,40,5,1))
+				if(density && !operating)//Door must be closed to weld.
+					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
+						return					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					welded = !welded
 					user.visible_message("<span class='warning'>[src] has been [welded? "welded shut":"unwelded"] by [user.name].</span>", \
 										"<span class='notice'>You've [welded ? "welded the airlock shut":"unwelded the airlock"].</span>")
@@ -982,10 +982,11 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/plasma/attackby(C as obj, mob/user as mob)
-	if(C)
-		message_admins("Plasma airlock ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma airlock ignited by [user.ckey]([user]) in ([x],[y],[z])")
+	if(is_hot(C) > 300)//If the temperature of the object is over 300, then ignite
+		message_admins("Plasma wall ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+		log_game("Plasma wall ignited by [user.ckey]([user]) in ([x],[y],[z])")
 		ignite(is_hot(C))
+		return
 	..()
 
 /obj/machinery/door/airlock/open(var/forced=0)
@@ -1029,7 +1030,7 @@ About the new airlock wires panel:
 		if(locate(/mob/living) in get_turf(src))
 		//	playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)	//THE BUZZING IT NEVER STOPS	-Pete
 			spawn (60)
-				close()
+				autoclose()
 			return
 
 	crush()

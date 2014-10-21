@@ -316,7 +316,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
 	src.anchored = 1
 	src.icon_state = "cleanbot-c"
-	visible_message("<span class='danger'>[src] begins to clean up [target]</span>")
+	visible_message("<span class='notice'>[src] begins to clean up [target]</span>")
 	src.cleaning = 1
 	spawn(50)
 		src.cleaning = 0
@@ -327,7 +327,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 /obj/machinery/bot/cleanbot/explode()
 	src.on = 0
-	src.visible_message("<span class='danger'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='userdanger'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)

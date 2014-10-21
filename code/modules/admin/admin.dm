@@ -546,7 +546,7 @@ var/global/floorIsLava = 0
 	set name="Toggle OOC"
 	toggle_ooc()
 	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled OOC.", 1)
+	message_admins("[key_name_admin(usr)] toggled OOC.")
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleoocdead()
@@ -556,7 +556,7 @@ var/global/floorIsLava = 0
 	dooc_allowed = !( dooc_allowed )
 
 	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled Dead OOC.", 1)
+	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
 	feedback_add_details("admin_verb","TDOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /*
 /datum/admins/proc/toggletraitorscaling()
@@ -565,7 +565,7 @@ var/global/floorIsLava = 0
 	set name="Toggle Traitor Scaling"
 	traitor_scaling = !traitor_scaling
 	log_admin("[key_name(usr)] toggled Traitor Scaling to [traitor_scaling].")
-	message_admins("[key_name_admin(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].", 1)
+	message_admins("[key_name_admin(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].")
 	feedback_add_details("admin_verb","TTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 */
 /datum/admins/proc/startnow()
@@ -595,7 +595,7 @@ var/global/floorIsLava = 0
 	else
 		world << "<B>New players may now enter the game.</B>"
 	log_admin("[key_name(usr)] toggled new player game entering.")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled new player game entering.</span>", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled new player game entering.</span>")
 	world.update_status()
 	feedback_add_details("admin_verb","TE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -621,7 +621,7 @@ var/global/floorIsLava = 0
 		world << "<B>You may now respawn.</B>"
 	else
 		world << "<B>You may no longer respawn :(</B>"
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>")
 	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -664,7 +664,7 @@ var/global/floorIsLava = 0
 	set name = "Unprison"
 	if (M.z == 2)
 		M.loc = pick(latejoin)
-		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]", 1)
+		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
 		alert("[M.name] is not prisoned.")
@@ -749,7 +749,7 @@ var/global/floorIsLava = 0
 	else
 		world << "<B>The tinted_weldhelh has been disabled!</B>"
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
-	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.", 1)
+	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.")
 	feedback_add_details("admin_verb","TTWH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleguests()
@@ -762,7 +762,7 @@ var/global/floorIsLava = 0
 	else
 		world << "<B>Guests may now enter the game.</B>"
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.</span>", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.</span>")
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/unjobban_panel()
@@ -794,25 +794,38 @@ var/global/floorIsLava = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
-/datum/admins/proc/list_free_slots()
+/datum/admins/proc/manage_free_slots()
 	if(!check_rights())
 		return
-	var/dat = "<html><head><title>List Free Slots</title></head><body>"
+	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
 	var/count = 0
+
+	if(ticker && !ticker.mode)
+		alert(usr, "You cannot manage jobs before the round starts!")
+		return
 
 	if(job_master)
 		for(var/datum/job/job in job_master.occupations)
 			count++
 			var/J_title = html_encode(job.title)
+			var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
 			var/J_totPos = html_encode(job.total_positions)
-			dat += "[J_title]: [J_totPos]<br>"
+			if(job.total_positions <= 0)
+				dat += "[J_title]: [J_opPos]"
+			else
+				dat += "[J_title]: [J_opPos]/[J_totPos]"
+			if(initial(job.total_positions) > 0)
+				dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
+				if(job.total_positions > job.current_positions)
+					dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>"
+				else
+					dat += "Remove"
+			dat += "<br>"
 
 	dat += "</body>"
 	var/winheight = 100 + (count * 20)
 	winheight = min(winheight, 690)
 	usr << browse(dat, "window=players;size=316x[winheight]")
-
-
 
 //
 //

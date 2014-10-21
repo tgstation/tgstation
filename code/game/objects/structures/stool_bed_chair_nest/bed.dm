@@ -140,3 +140,30 @@
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = src.loc
+		else
+			buckled_mob = null
+
+/obj/item/roller
+	name = "roller bed"
+	desc = "A collapsed roller bed that can be carried around."
+	icon = 'icons/obj/rollerbed.dmi'
+	icon_state = "folded"
+	w_class = 4.0 // Can't be put in backpacks.
+
+
+/obj/item/roller/attack_self(mob/user)
+	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
+	R.add_fingerprint(user)
+	qdel(src)
+
+/obj/structure/stool/bed/roller/MouseDrop(over_object, src_location, over_location)
+	..()
+	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
+		if(!ishuman(usr))
+			return
+		if(buckled_mob)
+			return 0
+		visible_message("<span class='notice'>[usr] collapses \the [src.name].</span>")
+		new/obj/item/roller(get_turf(src))
+		qdel(src)
+		return

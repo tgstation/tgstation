@@ -21,8 +21,7 @@
 	name = "[initial(name)] casing" // By adding the " casing" part here we can use initial(name) to get the final name, making it nice to say "large grenade" when it is a large grenade.
 
 
-/obj/item/weapon/grenade/chem_grenade/examine()
-	set src in usr
+/obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state
 	..()
 

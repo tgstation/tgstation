@@ -45,14 +45,14 @@ datum/design/mmi_radio
 	category = "Misc"
 
 datum/design/synthetic_flash
-	name = "Synthetic Flash"
+	name = "Flash"
 	desc = "When a problem arises, SCIENCE is the solution."
 	id = "sflash"
 	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = MECHFAB
 	materials = list("$metal" = 750, "$glass" = 750)
 	reliability = 76
-	build_path = /obj/item/device/flash/synthetic
+	build_path = /obj/item/device/flash/handheld
 	category = "Misc"
 
 datum/design/bluespacebeaker

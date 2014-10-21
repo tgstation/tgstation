@@ -5,11 +5,18 @@
 	gas_transfer_coefficient = 0.01 // IT'S MAGICAL OKAY JEEZ +1 TO NOT DIE
 	permeability_coefficient = 0.01
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20)
+	strip_delay = 50
+	put_on_delay = 50
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
 	desc = "Strange-looking, red, hat-wear that most certainly belongs to a real magic user."
 	icon_state = "redwizard"
+
+/obj/item/clothing/head/wizard/yellow
+	name = "yellow wizard hat"
+	desc = "Strange-looking, yellow, hat-wear that most certainly belongs to a powerful magic user."
+	icon_state = "yellowwizard"
 
 /obj/item/clothing/head/wizard/fake
 	name = "wizard hat"
@@ -42,6 +49,8 @@
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20)
 	allowed = list(/obj/item/weapon/teleportation_scroll)
 	flags_inv = HIDEJUMPSUIT
+	strip_delay = 50
+	put_on_delay = 50
 
 
 /obj/item/clothing/suit/wizrobe/red
@@ -50,6 +59,11 @@
 	icon_state = "redwizard"
 	item_state = "redwizrobe"
 
+/obj/item/clothing/suit/wizrobe/yellow
+	name = "yellow wizard robe"
+	desc = "A magnificant, yellow, gem-lined robe that seems to radiate power."
+	icon_state = "yellowwizard"
+	item_state = "yellowwizrobe"
 
 /obj/item/clothing/suit/wizrobe/marisa
 	name = "witch robe"

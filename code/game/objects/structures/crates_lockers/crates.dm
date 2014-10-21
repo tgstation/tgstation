@@ -273,7 +273,7 @@
 	if(opened)
 		close()
 	else
-		if(rigged && locate(/obj/item/device/radio/electropack) in src)
+		if(rigged && locate(/obj/item/device/electropack) in src)
 			if(isliving(user))
 				var/mob/living/L = user
 				if(L.electrocute_act(17, src))
@@ -346,7 +346,7 @@
 		else
 			user << "<span class='warning'>You need 5 lengths of cable to rig [src].</span>"
 		return
-	else if(istype(W, /obj/item/device/radio/electropack))
+	else if(istype(W, /obj/item/device/electropack))
 		if(rigged)
 			user  << "<span class='notice'>You attach [W] to [src].</span>"
 			user.drop_item()

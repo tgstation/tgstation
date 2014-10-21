@@ -26,8 +26,8 @@
 	..()
 	move_update_air(T)
 
-/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
-	if(!height || air_group) return 0
+/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height)
+	if(!height) return 0
 	else return ..()
 
 /obj/machinery/shield/CanAtmosPass(var/turf/T)
@@ -343,7 +343,7 @@
 		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
 			storedpower += shieldload
 			PN.load += shieldload //uses powernet power.
-//		message_admins("[PN.load]", 1)
+//		message_admins("[PN.load]")
 //		use_power(250) //uses APC power
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
@@ -594,8 +594,8 @@
 	return
 
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0) return 1
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(20)

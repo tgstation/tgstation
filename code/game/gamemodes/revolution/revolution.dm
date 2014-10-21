@@ -19,7 +19,6 @@
 	required_players = 20
 	required_enemies = 3
 	recommended_enemies = 3
-	pre_setup_before_jobs = 1
 
 	var/finished = 0
 	var/check_counter = 0
@@ -41,6 +40,9 @@
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
+
+	if(config.protect_assistant_from_antagonist)
+		restricted_jobs += "Assistant"
 
 	var/head_check = 0
 	for(var/mob/new_player/player in player_list)

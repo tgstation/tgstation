@@ -31,6 +31,7 @@ author: N3X15
 # INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+# Please surround your changes in single (') or double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: Added a changelog editing system that should cause fewer conflicts and more accurate timestamps.
-  - rscdel: Killed innocent kittens.
+  - rscadd: "Added a changelog editing system that should cause fewer conflicts and more accurate timestamps."
+  - rscdel: 'Killed innocent kittens.'

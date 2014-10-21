@@ -51,7 +51,10 @@
 	if(usr.next_move >= world.time)
 		return
 
-	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
+	if(!owner.action_button_is_hands_free && (usr.restrained() || usr.stunned || usr.lying))
+		return 1
+
+	if(usr.stat)
 		return 1
 
 	if(!(owner in usr))
@@ -394,6 +397,10 @@
 			if(issilicon(usr))
 				var/mob/living/silicon/S = usr
 				S.sensor_mode()
+		if("leap")
+			if(istype(usr, /mob/living/carbon/alien/humanoid))
+				var/mob/living/carbon/alien/humanoid/hunter/AH = usr
+				AH.toggle_leap()
 		else
 			return 0
 	return 1

@@ -886,7 +886,7 @@ var/global/mulebot_count = 0
 
 
 /obj/machinery/bot/mulebot/explode()
-	src.visible_message("<span class='userdanger'>[src] blows apart!</span>", 1)
+	src.visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)

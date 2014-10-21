@@ -1,6 +1,16 @@
+
+/*
+This file contains:
+Manual Valve
+Digital Valve
+
+These pipes are not under the binary_atmos base because instead of doing pretty maths, they simply
+connect the networks together for a more efficient transfer
+*/
+
 /obj/machinery/atmospherics/valve
-	icon = 'icons/obj/atmospherics/valve.dmi'
-	icon_state = "valve0"
+	icon = 'icons/obj/atmospherics/binary_devices.dmi'
+	icon_state = "mvalve_map"
 
 	name = "manual valve"
 	desc = "A pipe valve"
@@ -24,13 +34,33 @@
 
 /obj/machinery/atmospherics/valve/open
 	open = 1
-	icon_state = "valve1"
 
-/obj/machinery/atmospherics/valve/update_icon(animation)
+//Separate this because we don't need to update pipe icons if we just are going to crank the handle
+/obj/machinery/atmospherics/valve/proc/update_icon_nopipes(var/animation = 0)
+	normalize_dir()
+	icon_state = "mvalve_off"
+
+	overlays.Cut()
 	if(animation)
-		flick("valve[src.open][!src.open]",src)
-	else
-		icon_state = "valve[open]"
+		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "mvalve_[open][!open]")
+	else if(open)
+		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "mvalve_on")
+
+/obj/machinery/atmospherics/valve/update_icon()
+	update_icon_nopipes()
+
+	var/connected = 0
+	underlays.Cut()
+
+	//Add non-broken pieces
+	if(node1)
+		connected = icon_addintact(node1, connected)
+
+	if(node2)
+		connected = icon_addintact(node2, connected)
+
+	//Add broken pieces
+	icon_addbroken(connected)
 
 /obj/machinery/atmospherics/valve/New()
 	..()
@@ -41,8 +71,6 @@
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-
-
 	if(reference == node1)
 		network_node1 = new_network
 		if(open)
@@ -81,11 +109,11 @@
 	..()
 
 /obj/machinery/atmospherics/valve/proc/open()
-
-	if(open) return 0
+	if(open)
+		return 0
 
 	open = 1
-	update_icon()
+	update_icon_nopipes()
 
 	if(network_node1&&network_node2)
 		network_node1.merge(network_node2)
@@ -99,12 +127,11 @@
 	return 1
 
 /obj/machinery/atmospherics/valve/proc/close()
-
 	if(!open)
 		return 0
 
 	open = 0
-	update_icon()
+	update_icon_nopipes()
 
 	if(network_node1)
 		del(network_node1)
@@ -129,7 +156,7 @@
 
 obj/machinery/atmospherics/valve/attack_hand(mob/user as mob)
 	src.add_fingerprint(usr)
-	update_icon(1)
+	update_icon_nopipes(1)
 	sleep(10)
 	if (src.open)
 		src.close()
@@ -179,6 +206,7 @@ obj/machinery/atmospherics/valve/attack_hand(mob/user as mob)
 			break
 
 	//build_network()
+	update_icon()
 
 /*
 	var/connect_directions
@@ -256,12 +284,14 @@ obj/machinery/atmospherics/valve/attack_hand(mob/user as mob)
 		del(network_node2)
 		node2 = null
 
+	update_icon()
+
 	return null
 
 /obj/machinery/atmospherics/valve/digital		// can be controlled by AI
 	name = "digital valve"
 	desc = "A digitally controlled valve."
-	icon = 'icons/obj/atmospherics/digital_valve.dmi'
+	icon_state = "dvalve_map"
 
 /obj/machinery/atmospherics/valve/digital/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
@@ -272,14 +302,29 @@ obj/machinery/atmospherics/valve/attack_hand(mob/user as mob)
 		return
 	..()
 
+/obj/machinery/atmospherics/valve/digital/update_icon_nopipes(var/animation)
+	normalize_dir()
+
+	if(stat & NOPOWER)
+		icon_state = "dvalve_nopower"
+		overlays.Cut()
+		return
+
+	icon_state = "dvalve_off"
+
+	overlays.Cut()
+	if(animation)
+		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "dvalve_[open][!open]")
+	else if(open)
+		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "dvalve_on")
+
 //Radio remote control
 
-/obj/machinery/atmospherics/valve/digital/proc
-	set_frequency(new_frequency)
-		radio_controller.remove_object(src, frequency)
-		frequency = new_frequency
-		if(frequency)
-			radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+/obj/machinery/atmospherics/valve/digital/proc/set_frequency(new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/valve/digital/initialize()
 	..()

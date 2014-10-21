@@ -59,6 +59,15 @@
 	adding += using
 	action_intent = using
 
+	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
+		mymob.leap_icon = new /obj/screen()
+		mymob.leap_icon.name = "leap"
+		mymob.leap_icon.icon = 'icons/mob/screen_alien.dmi'
+		mymob.leap_icon.icon_state = "leap_off"
+		mymob.leap_icon.screen_loc = ui_alien_storage_r
+		mymob.leap_icon.layer = 20
+		adding += mymob.leap_icon
+
 	using = new /obj/screen()
 	using.name = "mov_intent"
 	using.icon = 'icons/mob/screen_alien.dmi'
