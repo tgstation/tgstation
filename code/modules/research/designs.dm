@@ -229,6 +229,15 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/air_management
 
+/datum/design/atmos_automation
+	name = "Circuit Design (Atmospherics Automation Console)"
+	desc = "Allows for the construction of circuit boards used to build an Atmospherics Automation Console"
+	id = "atmos_automation"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/atmos_automation
+
 /datum/design/large_tank_control
 	name = "Circuit Design (Atmospheric Tank Control)"
 	desc = "Allows for the construction of circuit boards used to build an Atmospheric Tank Control."
