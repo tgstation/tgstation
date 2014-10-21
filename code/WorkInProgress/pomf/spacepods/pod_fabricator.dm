@@ -30,7 +30,7 @@
 		/obj/item/device/spacepod_equipment/weaponry //lock up the guns, yeah
 	)
 
-/obj/machinery/mecha_part_fabricator/New()
+/obj/machinery/r_n_d/fabricator/pod/New()
 	. = ..()
 
 	component_parts = newlist(
