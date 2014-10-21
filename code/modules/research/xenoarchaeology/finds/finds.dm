@@ -332,8 +332,10 @@
 			if(spawn_type)
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 				new_item = new_gun
+				new_item.icon = 'icons/obj/xenoarchaeology.dmi'
 				new_item.icon_state = "egun[rand(1,6)]"
 				new_gun.desc = "This is an antique energy weapon, you're not sure if it will fire or not."
+				new_gun.charge_states = 0 //let's prevent it from losing that great icon if we charge it
 
 				//5% chance to explode when first fired
 				//10% chance to have an unchargeable cell
@@ -355,9 +357,11 @@
 			new_item.icon_state = "gun[rand(1,4)]"
 			new_item.icon = 'icons/obj/xenoarchaeology.dmi'
 
-			//33% chance to be able to reload the gun with human ammunition
-			if(prob(66))
-				new_gun.caliber = "999"
+			//let's get some ammunition in this gun : weighted to pick available ammo
+			new_gun.caliber = pick(50;list("357" = 1),
+								   10;list("75" = 1),
+								   30;list("38" = 1),
+								   10;list("12mm" = 1))
 
 			//33% chance to fill it with a random amount of bullets
 			new_gun.max_shells = rand(1,12)
