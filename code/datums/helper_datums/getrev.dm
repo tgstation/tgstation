@@ -35,6 +35,7 @@ client/verb/showrevinfo()
 		src << "Revision unknown"
 	src << "<b>Current Infomational Settings:</b>"
 	src << "Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]"
+	src << "Protect Assistant Role From Traitor: [config.protect_assistant_from_antagonist]"
 	src << "Enforce Human Authority: [config.enforce_human_authority]"
 	src << "Allow Latejoin Antagonists: [config.allow_latejoin_antagonists]"
 	return
