@@ -1,0 +1,5 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - tweak: Syringes, beakers, toolboxes, pills and chemistry bottles now recycle
+  - tweak: Beaker glass cost changed slightly
