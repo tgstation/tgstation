@@ -16,6 +16,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	//NOTE: Floor code has been refactored, many procs were removed
 	//using intact should be safe, you can also use istype
 	//also worhy of note: floor_tile is now a path, and not a tile obj
+	//future improvements:
+	//- move fancy_update() to a new /turf/simulated/floor/fancy
+	//- move the default floor to /turf/simulated/floor/plasteel
+	//- unsnowflake the light floors somehow
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
@@ -28,12 +32,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
-	var/mineral = "metal"
-	var/floortype = "metal"
 	var/floor_tile = /obj/item/stack/tile/plasteel
 	var/list/broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	var/list/burnt_states = list()
-
 
 /turf/simulated/floor/New()
 	..()
@@ -49,7 +50,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 //	return ..()
 
 /turf/simulated/floor/ex_act(severity)
-	//set src in oview(1)
 	switch(severity)
 		if(1.0)
 			src.ChangeTurf(/turf/space)
@@ -83,12 +83,8 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		if(!broken && !burnt)
 			icon_state = icon_regular_floor
 		return 0
-
-	spawn(1)
-		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
-			if(air)
-				update_visuals(air)
-
+	if(air)
+		update_visuals(air)
 	return 1
 
 /turf/simulated/floor/attack_paw(mob/user as mob)
@@ -103,47 +99,53 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	else
 		return 0
 
-/turf/simulated/floor/proc/fancy_update()
-	return
+//updates neighboring carpet & grass
+/turf/simulated/floor/proc/fancy_update(fancy_type)
+	for(var/direction in list(1,2,4,8,5,6,9,10))
+		if(istype(get_step(src,direction), fancy_type))
+			var/turf/simulated/floor/FF = get_step(src,direction)
+			FF.update_icon()
 
 /turf/simulated/floor/proc/break_tile_to_plating()
-	make_plating()
-	break_tile()
+	var/turf/simulated/floor/plating/T = make_plating()
+	T.break_tile()
 
 /turf/simulated/floor/proc/break_tile()
 	if(broken)
 		return
-	src.icon_state = pick(broken_states)
+	icon_state = pick(broken_states)
 	broken = 1
 
 /turf/simulated/floor/proc/burn_tile()
 	if(broken || burnt)
 		return
-
 	if(is_plasteel_floor())
-		src.icon_state = "floorscorched[pick(1,2)]"
+		icon_state = "floorscorched[pick(1,2)]"
 	else if(burnt_states)
-		src.icon_state = pick(burnt_states)
+		icon_state = pick(burnt_states)
 	else
-		src.icon_state = pick(broken_states)
+		icon_state = pick(broken_states)
 	burnt = 1
 
 /turf/simulated/floor/proc/make_plating()
-	make_floor(/turf/simulated/floor/plating)
+	return make_floor(/turf/simulated/floor/plating)
 
-//wrapped for ChangeTurf that handles fancy flooring properly
+//wrapper for ChangeTurf that handles flooring properly
 /turf/simulated/floor/proc/make_floor(turf/simulated/floor/T as turf)
 	SetLuminosity(0)
-	fancy_update() //this has a spawn() so it will actually update after ChangeTurf
+	var/old_type = type
+	var/old_icon = icon_regular_floor
+	var/old_dir = dir
 	var/turf/simulated/floor/W = ChangeTurf(T)
+	W.icon_regular_floor = old_icon
+	W.dir = old_dir
 	W.update_icon()
-	W.levelupdate()
+	W.fancy_update(old_type)
 	return W
 
 /turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
 	if(!C || !user)
-		return 0
-
+		return 1
 	if(istype(C, /obj/item/weapon/crowbar))
 		if(broken || burnt)
 			broken = 0
@@ -161,6 +163,5 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 					L.state = F.state
 		make_plating()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
-		return 0
-
-	return 1
+		return 1
+	return 0

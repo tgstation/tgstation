@@ -8,18 +8,10 @@
 	name = "floor"
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
-	var/icons = list("wood","wood-broken")
-	broken_states = list("wood-broken")
-
-/turf/simulated/floor/wood/update_icon()
-	if(!..())
-		return
-	if(!broken && !burnt)
-		if( !(icon_state in icons) )
-			icon_state = "wood"
+	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
 /turf/simulated/floor/wood/attackby(obj/item/C as obj, mob/user as mob)
-	if(!..())
+	if(..())
 		return
 	if(istype(C, /obj/item/weapon/screwdriver))
 		if(broken || burnt)
@@ -37,18 +29,15 @@
 	broken_states = list("sand1", "sand2", "sand3")
 
 /turf/simulated/floor/grass/New()
-	icon_state = "grass[pick("1","2","3","4")]"
 	..()
-	spawn(4)
+	icon_state = "grass[pick("1","2","3","4")]"
+	spawn(1)
 		if(src)
 			update_icon()
-			for(var/direction in cardinal)
-				if(istype(get_step(src,direction),/turf/simulated/floor/grass))
-					var/turf/simulated/floor/grass/FF = get_step(src,direction)
-					FF.update_icon() //so siding get updated properly
+			fancy_update(type)
 
 /turf/simulated/floor/grass/attackby(obj/item/C as obj, mob/user as mob)
-	if(!..())
+	if(..())
 		return
 	if(istype(C, /obj/item/weapon/shovel))
 		new /obj/item/weapon/ore/glass(src)
@@ -56,27 +45,11 @@
 		user << "<span class='notice'>You shovel the grass.</span>"
 		make_plating()
 
-/turf/simulated/floor/grass/update_icon()
-	if(!..())
-		return
-	if(!broken && !burnt)
-		if(!(icon_state in list("grass1","grass2","grass3","grass4")))
-			icon_state = "grass[pick("1","2","3","4")]"
-
-/turf/simulated/floor/grass/fancy_update()
-	spawn(5)
-		for(var/direction in cardinal)
-			if(istype(get_step(src,direction),/turf/simulated/floor/grass))
-				var/turf/simulated/floor/grass/FF = get_step(src,direction)
-				FF.update_icon() //so siding get updated properly
-	..()
-
 /turf/simulated/floor/grass/return_siding_icon_state()
 	..()
 	var/dir_sum = 0
 	for(var/direction in cardinal)
-		var/turf/T = get_step(src,direction)
-		if(!istype(T, /turf/simulated/floor/grass))
+		if(!istype(get_step(src,direction), /turf/simulated/floor/grass))
 			dir_sum += direction
 	if(dir_sum)
 		return "wood_siding[dir_sum]"
@@ -90,16 +63,11 @@
 	broken_states = list("carpet-broken")
 
 /turf/simulated/floor/carpet/New()
-	if(!icon_state)
-		icon_state = "carpet"
 	..()
-	spawn(4)
+	spawn(1)
 		if(src)
 			update_icon()
-			for(var/direction in list(1,2,4,8,5,6,9,10))
-				if(istype(get_step(src,direction),/turf/simulated/floor/carpet))
-					var/turf/simulated/floor/carpet/FF = get_step(src,direction)
-					FF.update_icon() //so siding get updated properly
+			fancy_update(type)
 
 /turf/simulated/floor/carpet/update_icon()
 	if(!broken && !burnt)
@@ -145,12 +113,3 @@
 					diagonalconnect |= 8
 
 		icon_state = "carpet[connectdir]-[diagonalconnect]"
-
-/turf/simulated/floor/carpet/fancy_update()
-	spawn(5)
-		if(src)
-			for(var/direction in list(1,2,4,8,5,6,9,10))
-				if(istype(get_step(src,direction),/turf/simulated/floor/carpet))
-					var/turf/simulated/floor/FF = get_step(src,direction)
-					FF.update_icon() //so siding get updated properly
-	..()

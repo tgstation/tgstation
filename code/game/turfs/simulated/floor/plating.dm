@@ -5,7 +5,8 @@
  * Airless plating
  * Engine floor
  */
- // note that plating and engine floor do not call their parent attackby, unlike other flooring
+// note that plating and engine floor do not call their parent attackby, unlike other flooring
+// this is done in order to avoid inheriting the crowbar attackby
 
 /turf/simulated/floor/plating
 	name = "plating"
@@ -15,8 +16,12 @@
 	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	burnt_states = list("panelscorched")
 
+/turf/simulated/floor/plating/New()
+	..()
+	icon_plating = icon_state
+
 /turf/simulated/floor/plating/update_icon()
-	if(!..())
+	if(..())
 		return
 	if(!broken && !burnt)
 		icon_state = icon_plating //Because asteroids are 'platings' too.

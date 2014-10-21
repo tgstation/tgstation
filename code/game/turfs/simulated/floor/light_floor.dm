@@ -14,10 +14,7 @@
 
 /turf/simulated/floor/light/New()
 	..()
-	spawn(4)
-		if(src)
-			update_icon()
-			name = initial(name)
+	update_icon()
 
 /turf/simulated/floor/light/update_icon()
 	if(on)
@@ -45,7 +42,7 @@
 	..()
 
 /turf/simulated/floor/light/attackby(obj/item/C as obj, mob/user as mob)
-	if(!..())
+	if(..())
 		return
 	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
 		if(state)

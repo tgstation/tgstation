@@ -2,7 +2,7 @@
  *
  * Commemorative Plaque
  * Vault floor
- * Vault wall
+ * Vault wall (why)
  * Blue grid
  * Green grid
  * Shuttle floor
@@ -62,6 +62,9 @@
 /turf/simulated/floor/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
+
+/turf/simulated/floor/beach/ex_act(severity)
+	return
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
