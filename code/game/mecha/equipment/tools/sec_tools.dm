@@ -1,4 +1,4 @@
-#define MECH_JAIL_TIME 60
+#define MECH_JAIL_TIME 30
 
 /obj/item/mecha_parts/mecha_equipment/tool/jail
 	name = "Mounted Jail Cell"
@@ -144,8 +144,6 @@
 	return
 
 /datum/global_iterator/mech_jail/process(var/obj/item/mecha_parts/mecha_equipment/tool/jail/J)
-	var/mob/living/carbon/M = J.cell1
-	var/mob/living/carbon/N = J.cell2
 	log_admin("Timer 1: [J.ctimer1], Timer 2: [J.ctimer2]")
 	if(!J.chassis)
 		J.set_ready_state(1)
@@ -154,19 +152,23 @@
 		J.set_ready_state(1)
 		J.log_message("Deactivated.")
 		J.occupant_message("[src] deactivated - no power.")
-		J.go_out(M, J.ctimer1)
-		J.go_out(N, J.ctimer2)
+		J.go_out(J.cell1, J.ctimer1)
+		J.go_out(J.cell2, J.ctimer2)
 		return stop()
-	if(!M && !N)
+	if(!J.cell1 && !J.cell2)
 		return
-	if (M)
+	if (J.cell1)
 		J.ctimer1--
 		if (J.ctimer1 <= 0)
-			J.go_out(M, J.ctimer1)
-	if (N)
+			J.go_out(J.cell1, J.ctimer1)
+		if(J.ctimer1 == 5)
+			J.occupant_message("<span class='warning'>Occupant [J.cell1] ejected in 5 seconds!</span>")
+	if (J.cell2)
 		J.ctimer2--
 		if (J.ctimer2 <= 0)
-			J.go_out(N, J.ctimer2)
+			J.go_out(J.cell2, J.ctimer2)
+		if(J.ctimer1 == 5)
+			J.occupant_message("<span class='warning'>Occupant [J.cell2] ejected in 5 seconds!</span>")
 	//log_admin("Current cells of [M] and [N]")
 	J.chassis.use_power(J.energy_drain)
 	J.update_equip_info()

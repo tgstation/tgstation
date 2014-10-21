@@ -1110,6 +1110,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
 	category = "Exosuit_Equipment"
 
+/datum/design/mech_jail_cell
+	name = "Exosuit Module Design (Mounted Jail Cell)"
+	desc = "Exosuit-controlled secure holding cell"
+	id = "mech_jail_cell"
+	build_type = MECHFAB
+	req_tech = list("biotech" = 2, "combat" = 4)
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/jail
+	category = "Exosuit_Equipment"
+
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
