@@ -37,4 +37,5 @@ client/verb/showrevinfo()
 	src << "Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]"
 	src << "Enforce Human Authority: [config.enforce_human_authority]"
 	src << "Allow Latejoin Antagonists: [config.allow_latejoin_antagonists]"
+	src << "Protect Assistant From Antagonist: [config.protect_assistant_from_antagonist]"
 	return
