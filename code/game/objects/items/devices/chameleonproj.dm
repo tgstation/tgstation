@@ -80,6 +80,7 @@
 		if(ismob(A))
 			var/mob/M = A
 			M.reset_view(null)
+			M.layer = MOB_LAYER //Reset the mob's layer
 
 /obj/effect/dummy/chameleon
 	name = ""
@@ -97,6 +98,7 @@
 	overlays = new_overlays
 	dir = O.dir
 	M.loc = src
+	M.layer = OBJ_LAYER //Needed for some things, notably lockers
 	master = C
 	master.active_dummy = src
 
