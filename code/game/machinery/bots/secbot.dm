@@ -115,7 +115,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 Arrest Unidentifiable Persons: []<BR>
 Arrest for Unauthorized Weapons: []<BR>
 Arrest for Warrant: []<BR>
-<BR>
 Operating Mode: []<BR>
 Report Arrests[]<BR>
 Auto Patrol: []"},
@@ -281,11 +280,6 @@ Auto Patrol: []"},
 				return
 
 		if(BOT_ARREST)
-
-							playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
-		//					speak(arrest_message)
-			else
 			if (!target)
 				src.anchored = 0
 				mode = BOT_IDLE
@@ -317,7 +311,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/proc/back_to_idle()
 	src.anchored = 0
-	mode = SECBOT_IDLE
+	mode = BOT_IDLE
 	src.target = null
 	src.last_found = world.time
 	frustration = 0
@@ -327,7 +321,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/proc/back_to_hunt()
 	src.anchored = 0
 	src.frustration = 0
-	mode = SECBOT_HUNT
+	mode = BOT_HUNT
 	spawn(0)
 		process() //ensure bot quickly responds
 // look for a criminal in view of the bot

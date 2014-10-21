@@ -99,7 +99,7 @@
 	anchored = 0
 	walk_to(src,0)
 	last_found = world.time
-	projectile = null
+	set_weapon()
 
 /obj/machinery/bot/ed209/set_custom_texts()
 	text_hack = "You disable [name]'s combat inhibitor."
@@ -128,7 +128,8 @@ Arrest for Unauthorized Weapons: []<BR>
 Arrest for Warrant: []<BR>
 <BR>
 Operating Mode: []<BR>
-Report Arrests[]"},
+Report Arrests[]<BR>
+Auto Patrol[]"},
 
 "<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
@@ -208,7 +209,8 @@ Report Arrests[]"},
 		src.set_weapon()
 
 /obj/machinery/bot/ed209/process()
-	..()
+	if (!..())
+		return
 
 	if(disabled)
 		return
