@@ -14,6 +14,8 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
+	var/max_mob_size = 1 //Biggest mob_size accepted by the container
+	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
@@ -82,8 +84,14 @@
 
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
-		if(L.buckled)
+		if(L.buckled || L.mob_size > max_mob_size) //buckled mobs and mobs too big for the container don't get inside closets.
 			return 0
+		if(L.mob_size > 0)
+			var/mobs_stored = 0
+			for(var/mob/living/M in contents)
+				mobs_stored++
+				if(mobs_stored >= mob_storage_capacity)
+					return 0
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE
 			L.client.eye = src
