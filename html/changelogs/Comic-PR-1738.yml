@@ -1,0 +1,6 @@
+author: Comic
+
+delete-after: True
+
+changes: 
+  - rscadd: Added a spacepod fabricator. Use it to make all your spacepod parts from the getgo, and get guns from RnD
