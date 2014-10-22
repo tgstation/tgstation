@@ -9,6 +9,8 @@
 	volume = 50
 	g_amt = 500
 	force = 5
+	smashtext = ""  //due to inconsistencies in the names of the drinks just don't say anything
+	smashname = "broken glass"
 
 //removed smashing - now uses smashing proc from drinks.dm - Hinaichigo
 //also now produces a broken glass when smashed instead of just a shard
@@ -200,7 +202,9 @@
 				if("longislandicedtea")
 					icon_state = "longislandicedteaglass"
 					name = "Long Island Iced Tea"
-					desc = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
+					desc = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women
+
+only."
 				if("threemileisland")
 					icon_state = "threemileislandglass"
 					name = "Three Mile Island Ice Tea"
