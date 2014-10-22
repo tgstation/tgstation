@@ -30,11 +30,9 @@
 
 	attack_self(mob/user as mob)
 		if(!is_open_container())
-			user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc.
-
-from closed drink containers. - Hinaichigo
+			user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
 			return 0
-
+			
 		else if(!src.reagents.total_volume || !src)
 			user << "<span  class='rose'>None of [src] left, oh no!<span>"
 			return 0
@@ -42,7 +40,7 @@ from closed drink containers. - Hinaichigo
 		else
 			imbibe(user)
 			return 0
-
+		
 //todo: make it so one can't attack onself by attack_self
 
 	attack(mob/living/M as mob, mob/user as mob, def_zone)
@@ -51,29 +49,27 @@ from closed drink containers. - Hinaichigo
 		var/fillevel = gulp_size
 
 		//smashing on someone
-		if(user.a_intent == "hurt" && isGlass && molotov != 1)  //to smash on someone, must be harm intent, breakable glass, and have no rag
-
-inside
+		if(user.a_intent == "hurt" && isGlass && molotov != 1)  //to smash on someone, must be harm intent, breakable glass, and have no rag inside
 			if(!M)
 				return
-
+		
 			force = 15 //Smashing bottles over someoen's head hurts. //todo: check that this isn't overwriting anything it shouldn't be
-
+		
 			var/datum/organ/external/affecting = user.zone_sel.selecting //Find what the player is aiming at
-
+		
 			var/armor_block = 0 //Get the target's armour values for normal attack damage.
 			var/armor_duration = 0 //The more force the bottle has, the longer the duration.
-
+		
 			//Calculating duration and calculating damage.
 			if(ishuman(M))
-
+		
 				var/mob/living/carbon/human/H = M
 				var/headarmor = 0 // Target's head armour
 				armor_block = H.run_armor_check(affecting, "melee") // For normal attack damage
-
+		
 				//If they have a hat/helmet and the user is targeting their head.
 				if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
-
+		
 					// If their head has an armour value, assign headarmor to it, else give it 0.
 					if(H.head.armor["melee"])
 						headarmor = H.head.armor["melee"]
@@ -81,70 +77,62 @@ inside
 						headarmor = 0
 				else
 					headarmor = 0
-
+		
 				//Calculate the weakening duration for the target.
 				armor_duration = (duration - headarmor) + force
-
+		
 			else
 				//Only humans can have armour, right?
 				armor_block = M.run_armor_check(affecting, "melee")
 				if(affecting == "head")
 					armor_duration = duration + force
 			armor_duration /= 10
-
+		
 			//Apply the damage!
 			M.apply_damage(force, BRUTE, affecting, armor_block)
-
+		
 			// You are going to knock someone out for longer if they are not wearing a helmet.
 			// For drinking glass
 			if(affecting == "head" && istype(M, /mob/living/carbon/))
-
+		
 				//Display an attack message.
 				for(var/mob/O in viewers(user, null))
-					if(M != user) O.show_message(text("\red <B>[M] has been hit over the head with a [smashtext][src.name], by
-
-[user]!</B>"), 1)
+					if(M != user) O.show_message(text("\red <B>[M] has been hit over the head with a [smashtext][src.name], by [user]!</B>"), 1)
 					else O.show_message(text("\red <B>[M] hit himself with a [smashtext][src.name] on the head!</B>"), 1)
 				//Weaken the target for the duration that we calculated and divide it by 5.
 				if(armor_duration)
 					M.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
-
+		
 			else
 				//Default attack message and don't weaken the target.
 				for(var/mob/O in viewers(user, null))
-					if(M != user) O.show_message(text("\red <B>[M] has been attacked with a [smashtext][src.name], by [user]!
-
-</B>"), 1)
+					if(M != user) O.show_message(text("\red <B>[M] has been attacked with a [smashtext][src.name], by [user]!</B>"), 1)
 					else O.show_message(text("\red <B>[M] has attacked himself with a [smashtext][src.name]!</B>"), 1)
-
+		
 			//Attack logs
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [M.name] ([M.ckey]) with a bottle!</font>")
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [user.name] ([user.ckey])
-
-</font>")
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [user.name] ([user.ckey])</font>")
 			log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] with a bottle. ([M.ckey])</font>")
 			if(!iscarbon(user))
 				M.LAssailant = null
 			else
 				M.LAssailant = user
-
+		
 			//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 			if(src.reagents)
 				for(var/mob/O in viewers(user, null))
 					O.show_message(text("\blue <B>The contents of \the [smashtext][src] splashes all over [M]!</B>"), 1)
 				src.reagents.reaction(M, TOUCH)
-
+		
 			//Finally, smash the bottle. This kills (del) the bottle.
 			src.smash(M, user)
-
+		
 			return
 
 		else if(!is_open_container())
-			user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc.
-
-from closed drink containers. - Hinaichigo
+			user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
 			return 0
-
+			
 		else if(!R.total_volume || !R)
 			user << "<span  class='rose'>None of [src] left, oh no!<span>"
 			return 0
@@ -163,16 +151,10 @@ from closed drink containers. - Hinaichigo
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message("<span  class='rose'>[user] feeds [M] [src].</span>", 1)
 
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents:
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 
-[reagentlist(src)]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]
-
-</font>")
-
-			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext
-
-(user.a_intent)])</font>")
+			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 			if(!iscarbon(user))
 				M.LAssailant = null
 			else
@@ -264,7 +246,7 @@ from closed drink containers. - Hinaichigo
 			usr << "<span  class='notice'>\The [src] is almost full!</span>"
 		else
 			usr << "<span  class='notice'>\The [src] is full!</span>"
-
+	
 	proc/imbibe(mob/user) //drink the liquid within
 		user << "<span  class='notice'>You swallow a gulp of [src].</span>"
 		if(reagents.total_volume)
@@ -274,7 +256,7 @@ from closed drink containers. - Hinaichigo
 
 		playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
-
+		
 
 	New()
 		..()
@@ -419,17 +401,13 @@ from closed drink containers. - Hinaichigo
 				reagents.add_reagent("nutriment", 20)
 			if(4)
 				name = "Groans Soda: Energy Shot"
-				desc = "Warning: The Groans Energy Blend(tm), may be toxic to those without constant exposure to chemical waste. Drink
-
-responsibly."
+				desc = "Warning: The Groans Energy Blend(tm), may be toxic to those without constant exposure to chemical waste. Drink responsibly."
 				icon_state += "_energy"
 				reagents.add_reagent("sugar", 10)
 				reagents.add_reagent("chemical_waste", 10)
 			if(5)
 				name = "Groans Soda: Double Dan"
-				desc = "Just when you thought you've had enough Dan, The 'Double Dan' strikes back with this wonderful mixture of too
-
-many flavors. Bring a barf bag, Drink responsibly."
+				desc = "Just when you thought you've had enough Dan, The 'Double Dan' strikes back with this wonderful mixture of too many flavors. Bring a barf bag, Drink responsibly."
 				icon_state += "_doubledew"
 				reagents.add_reagent("discount", 20)
 		reagents.add_reagent("discount", 10)
@@ -543,15 +521,9 @@ many flavors. Bring a barf bag, Drink responsibly."
 
 /obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot
 	name = "\improper Discount Dan's Noodle Soup"
-	desc = "Discount Dan is proud to introduce his own take on noodle soups, with this on the go treat! Simply pull the tab, and a self heating
-
-mechanism activates!"
+	desc = "Discount Dan is proud to introduce his own take on noodle soups, with this on the go treat! Simply pull the tab, and a self heating mechanism activates!"
 	icon_state = "ramen"
-	var/list/ddname = list("Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor","Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown
-
-Flavor","Rabatt Dan's Snabb-Nudlar - Inkokt Lax Sm?rg?sbord Smak","Discount Deng's Quik-Noodles - Teriyaki TVP Flavor","Sconto Danilo's Quik-Noodles -
-
-Italian Strozzapreti Lunare Flavor")
+	var/list/ddname = list("Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor","Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown Flavor","Rabatt Dan's Snabb-Nudlar - Inkokt Lax Sm?rg?sbord Smak","Discount Deng's Quik-Noodles - Teriyaki TVP Flavor","Sconto Danilo's Quik-Noodles - Italian Strozzapreti Lunare Flavor")
 	New()
 		..()
 		name = pick(ddname)
@@ -564,15 +536,9 @@ Italian Strozzapreti Lunare Flavor")
 
 /obj/item/weapon/reagent_containers/food/drinks/discount_ramen
 	name = "\improper Discount Dan's Noodle Soup"
-	desc = "Discount Dan is proud to introduce his own take on noodle soups, with this on the go treat! Simply pull the tab, and a self heating
-
-mechanism activates!"
+	desc = "Discount Dan is proud to introduce his own take on noodle soups, with this on the go treat! Simply pull the tab, and a self heating mechanism activates!"
 	icon_state = "ramen"
-	var/list/ddname = list("Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor","Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown
-
-Flavor","Rabatt Dan's Snabb-Nudlar - Inkokt Lax Sm?rg?sbord Smak","Discount Deng's Quik-Noodles - Teriyaki TVP Flavor","Sconto Danilo's Quik-Noodles -
-
-Italian Strozzapreti Lunare Flavor")
+	var/list/ddname = list("Discount Deng's Quik-Noodles - Sweet and Sour Lo Mein Flavor","Frycook Dan's Quik-Noodles - Curly Fry Ketchup Hoedown Flavor","Rabatt Dan's Snabb-Nudlar - Inkokt Lax Sm?rg?sbord Smak","Discount Deng's Quik-Noodles - Teriyaki TVP Flavor","Sconto Danilo's Quik-Noodles - Italian Strozzapreti Lunare Flavor")
 	New()
 		..()
 		name = pick(ddname)
@@ -586,13 +552,9 @@ Italian Strozzapreti Lunare Flavor")
 		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/discount_ramen/attack_self(mob/user as mob)
-	user << "You pull the tab, you feel the drink heat up in your hands, and its horrible fumes hits your nose like a ton of bricks. You drop the
-
-soup in disgust."
+	user << "You pull the tab, you feel the drink heat up in your hands, and its horrible fumes hits your nose like a ton of bricks. You drop the soup in disgust."
 	var/turf/T = get_turf(user.loc)
-	var/obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot/A = new
-
-/obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot(T)
+	var/obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot/A = new /obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot(T)
 	A.desc += " It feels warm.." //This is required
 	user.drop_from_inventory(src)
 	del(src)
@@ -693,9 +655,7 @@ soup in disgust."
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko
 	name = "Thirteen Loko"
-	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please
-
-Drink Responsably."
+	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsably."
 	icon_state = "thirteen_loko"
 	New()
 		..()
@@ -916,9 +876,7 @@ Drink Responsably."
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac
 	name = "Chateau De Baton Premium Cognac"
-	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream
-
-'SHITCURITY' this time."
+	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
 	icon_state = "cognacbottle"
 	molotov = -1
 	isGlass = 1
@@ -1024,15 +982,13 @@ Drink Responsably."
 	playsound(src, "shatter", 70, 1)
 
 	del(src)
-
+	
 //smashing when thrown
 /obj/item/weapon/reagent_containers/food/drinks/throw_impact(atom/hit_atom)
 	..()
 	if(isGlass)
 		isGlass = 0 //to avoid it from hitting the wall, then hitting the floor, which would cause two broken bottles to appear
-		src.visible_message("<span  class='warning'>The [smashtext][src.name] shatters!</span>","<span  class='warning'>You hear a shatter!
-
-</span>")
+		src.visible_message("<span  class='warning'>The [smashtext][src.name] shatters!</span>","<span  class='warning'>You hear a shatter!</span>")
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		if(reagents.total_volume)
 			src.reagents.reaction(hit_atom, TOUCH)  //maybe this could be improved?
@@ -1048,7 +1004,7 @@ Drink Responsably."
 					loca.hotspot_expose(700, 1000,surfaces=istype(loc,/turf))
 			else
 				new /obj/item/weapon/reagent_containers/glass/rag(get_turf(src))
-
+				
 
 		//create new broken bottle
 		var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(loc)
@@ -1072,7 +1028,6 @@ Drink Responsably."
 		spawn(50)
 			del(src)
 
-//todo: merge with attack code
 
 
 //////////////////////
@@ -1081,9 +1036,7 @@ Drink Responsably."
 //////////////////////
 
 /obj/item/weapon/reagent_containers/food/drinks/attackby(var/obj/item/I, mob/user as mob)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass/rag) && molotov == -1)  //check if it is a molotovable drink - just beer and ale for now
-
-- other bottles require different rag overlay positions - if you can figure this out then go for it
+	if(istype(I, /obj/item/weapon/reagent_containers/glass/rag) && molotov == -1)  //check if it is a molotovable drink - just beer and ale for now - other bottles require different rag overlay positions - if you can figure this out then go for it
 		user << "<span  class='notice'>You stuff the [I] into the mouth of the [src].</span>"
 		del(I)
 		molotov = 1
@@ -1162,9 +1115,7 @@ Drink Responsably."
 	var/image/Im
 	if(molotov == 1)
 		Im = image('icons/obj/grenade.dmi', icon_state = "molotov_rag")
-		Im.pixel_y += src.bottleheight-23 //since the molotov rag and fire are placed one pixel above the mouth of the bottle, and start out at
-
-a height of 23 (for beer and ale)
+		Im.pixel_y += src.bottleheight-23 //since the molotov rag and fire are placed one pixel above the mouth of the bottle, and start out at a height of 23 (for beer and ale)
 		overlays += Im
 	if(molotov == 1 && lit)
 		Im = image('icons/obj/grenade.dmi', icon_state = "molotov_fire")
@@ -1187,7 +1138,6 @@ a height of 23 (for beer and ale)
 
 
 //todo: can light cigarettes with
-//todo: dont smash on self when harm click self
 //todo: is force = 15 overwriting the force?
 
 ////////  Could be expanded upon:
