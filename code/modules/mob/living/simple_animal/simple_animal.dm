@@ -429,6 +429,7 @@
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			harvest()
 
+	user.changeNext_move(CLICK_CD_MELEE)
 	var/damage = 0
 	if(O.force)
 		if(O.force >= force_threshold)
@@ -550,10 +551,16 @@
 	gib()
 	return
 
-/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who)
-	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
-	return
+/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
+	if(!child_override)
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+	else
+		..()
 
-/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who)
-	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
-	return
+/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where, child_override)
+	if(!child_override)
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+	else
+		..()

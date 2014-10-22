@@ -531,7 +531,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/glass/beaker/large,
 					/obj/item/weapon/reagent_containers/glass/beaker/large,
 					/obj/item/weapon/storage/box/beakers,
-					/obj/item/weapon/storage/box/syringes)
+					/obj/item/weapon/storage/box/syringes,
+				    /obj/item/weapon/storage/box/bodybags)
 	cost = 20
 	containertype = /obj/structure/closet/crate/medical
 	containername = "medical supplies crate"
@@ -1104,8 +1105,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/misc/randomised/contraband
 	num_contained = 5
 	contains = list(/obj/item/weapon/contraband/poster,
-					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
-					/obj/item/weapon/lipstick/random)
+					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco)
 	name = "Contraband crate"
 	cost = 30
 	containername = "crate"	//let's keep it subtle, eh?
@@ -1145,6 +1145,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/under/suit_jacket/navy,
 					/obj/item/clothing/under/suit_jacket/burgundy,
 					/obj/item/clothing/under/suit_jacket/checkered,
-					/obj/item/clothing/under/suit_jacket/tan)
+					/obj/item/clothing/under/suit_jacket/tan,
+					/obj/item/weapon/lipstick/random)
 	cost = 30 //Lots of very expensive items. You gotta pay up to look good!
 	containername = "formal-wear crate"

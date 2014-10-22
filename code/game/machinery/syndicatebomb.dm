@@ -110,8 +110,9 @@
 		wires.Interact(user)
 	if(!open_panel)
 		if(!active)
-			settings(user)
-			return
+			spawn()
+				settings(user)
+				return
 		else if(anchored)
 			user << "<span class='notice'>The bomb is bolted to the floor!</span>"
 			return
@@ -205,10 +206,10 @@
 /obj/item/weapon/bombcore/training/proc/reset()
 	var/obj/machinery/syndicatebomb/holder = src.loc
 	if(istype(holder))
-		holder.open_panel = 0
 		if(holder.wires)
 			holder.wires.Shuffle()
 		holder.defused = 0
+		holder.open_panel = 0
 		holder.update_icon()
 		holder.updateDialog()
 

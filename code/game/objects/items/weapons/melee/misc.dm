@@ -83,18 +83,14 @@
 /obj/item/weapon/melee/telebaton/attack_self(mob/user as mob)
 	on = !on
 	if(on)
-		user.visible_message("<span class ='warning'>With a flick of their wrist, [user] extends their telescopic baton.</span>",\
-		"<span class ='warning'>You extend the baton.</span>",\
-		"You hear an ominous click.")
+		user << "<span class ='warning'>You extend the baton.</span>"
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
 		w_class = 4 //doesnt fit in backpack when its on for balance
 		force = 10 //seclite damage
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
-		user.visible_message("<span class ='notice'>[user] collapses their telescopic baton.</span>",\
-		"<span class ='notice'>You collapse the baton.</span>",\
-		"You hear a click.")
+		user << "<span class ='notice'>You collapse the baton.</span>"
 		icon_state = "telebaton_0"
 		item_state = "telebaton_0" //no sprite in other words
 		slot_flags = SLOT_BELT

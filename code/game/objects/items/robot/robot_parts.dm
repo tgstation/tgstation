@@ -331,8 +331,8 @@
 
 /obj/item/robot_parts/head/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/device/flash))
-		var/obj/item/device/flash/F = W
+	if(istype(W, /obj/item/device/flash/handheld))
+		var/obj/item/device/flash/handheld/F = W
 		if(src.flash1 && src.flash2)
 			user << "<span class='notice'>You have already inserted the eyes!</span>"
 			return

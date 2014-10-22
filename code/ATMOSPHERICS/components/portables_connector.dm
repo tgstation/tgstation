@@ -39,12 +39,14 @@ This should ideally have /unary/ as parent, why doesn't it? //Donkie
 
 	if(showpipe)
 		var/state
+		var/col
 		if(node)
 			state = "pipe_intact"
+			col = node.pipe_color
 		else
 			state = "pipe_exposed"
 
-		underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, node.pipe_color)
+		underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, col)
 
 	return
 

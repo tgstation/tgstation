@@ -428,7 +428,7 @@
 	var/mob/living/user = usr
 	if(islocked)
 		user.changeNext_move(CLICK_CD_BREAKOUT)
-		user.last_special = world.time + CLICK_CD_BREAKOUT
+		user.last_special = world.time + CLICK_CD_BREAKOUT 
 		var/breakout_time = 2
 		user << "<span class='notice'>You start kicking against the doors to escape! (This will take about [breakout_time] minutes.)</span>"
 		visible_message("You see [user] kicking against the doors of the [src]!")

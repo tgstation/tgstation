@@ -119,6 +119,21 @@
 	new /obj/item/weapon/reagent_containers/syringe( src )
 	new /obj/item/weapon/reagent_containers/syringe( src )
 
+/obj/item/weapon/storage/box/medipens
+	name = "box of medipens"
+	desc = "A box full of inaprovaline MediPens."
+	icon_state = "syringe"
+
+/obj/item/weapon/storage/box/medipens/New()
+	..()
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
+
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
 	icon_state = "beaker"
@@ -146,20 +161,6 @@
 	new /obj/item/weapon/dnainjector/m2h(src)
 	new /obj/item/weapon/dnainjector/m2h(src)
 
-/*/obj/item/weapon/storage/box/blanks	//Blanks removed, go home
-	name = "box of blank shells"
-	desc = "It has a picture of a gun and several warning symbols on the front."
-
-/obj/item/weapon/storage/box/blanks/New()
-	..()
-	new /obj/item/ammo_casing/shotgun/blank(src)
-	new /obj/item/ammo_casing/shotgun/blank(src)
-	new /obj/item/ammo_casing/shotgun/blank(src)
-	new /obj/item/ammo_casing/shotgun/blank(src)
-	new /obj/item/ammo_casing/shotgun/blank(src)
-	new /obj/item/ammo_casing/shotgun/blank(src)
-	new /obj/item/ammo_casing/shotgun/blank(src)*/
-
 /obj/item/weapon/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.</B>"
@@ -182,12 +183,12 @@
 
 /obj/item/weapon/storage/box/flashes/New()
 	..()
-	new /obj/item/device/flash(src)
-	new /obj/item/device/flash(src)
-	new /obj/item/device/flash(src)
-	new /obj/item/device/flash(src)
-	new /obj/item/device/flash(src)
-	new /obj/item/device/flash(src)
+	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/flash/handheld(src)
 
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
@@ -342,6 +343,19 @@
 	..()
 	for(var/i = 1; i <= 5; i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
+
+
+/obj/item/weapon/storage/box/permits
+	name = "box of construction permits"
+	desc = "A box for containing construction permits, used to officially declare built rooms as additions to the station."
+	icon_state = "id"
+
+/obj/item/weapon/storage/box/permits/New() //There's only a few, so blueprints are still useful beyond setting every room's name to PRIMARY FART STORAGE
+	..()
+	new /obj/item/areaeditor/permit(src)
+	new /obj/item/areaeditor/permit(src)
+	new /obj/item/areaeditor/permit(src)
+
 
 /obj/item/weapon/storage/box/ids
 	name = "box of spare IDs"

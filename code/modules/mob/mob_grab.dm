@@ -169,7 +169,7 @@
 					assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 					add_logs(assailant, affecting, "strangled")
 
-					assailant.changeNext_move(10)
+					assailant.changeNext_move(CLICK_CD_TKSTRANGLE)
 					affecting.losebreath += 1
 				else
 					if(assailant)
