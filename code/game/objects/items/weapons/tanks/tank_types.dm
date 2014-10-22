@@ -146,6 +146,7 @@
 	name = "emergency nitrogen tank"
 	desc = "Used for emergencies. Not useful unless you only breathe nitrogen."
 	icon_state = "emergency_nitrogen"
+	slot_flags = SLOT_BELT
 	w_class = 2.0
 	volume = 2
 

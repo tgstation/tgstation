@@ -514,7 +514,7 @@
 	w_class = 1.0
 	force = 5.0
 	throwforce = 15.0
-	item_state = "shard-glass"
+	item_state = "shard-glassnew"
 	g_amt = 3750
 	w_type = RECYK_GLASS
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")

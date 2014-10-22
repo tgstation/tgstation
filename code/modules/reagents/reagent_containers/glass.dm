@@ -176,7 +176,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
-	m_amt = 0
 	g_amt = 500
 	w_type = RECYK_GLASS
 
@@ -222,8 +221,9 @@
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
-	g_amt = 5000
+	g_amt = 1500
 	volume = 100
+	w_type = RECYK_GLASS
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
@@ -234,6 +234,7 @@
 	icon_state = "beakernoreact"
 	g_amt = 500
 	volume = 50
+	w_type = RECYK_GLASS
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
 
@@ -241,8 +242,9 @@
 	name = "large stasis beaker"
 	desc = "A beaker powered by experimental bluespace technology. Chemicals are held in stasis and do not react inside of it. Can hold up to 100 units."
 	icon_state = "beakernoreactlarge"
-	g_amt = 5000
+	g_amt = 1500
 	volume = 100
+	w_type = RECYK_GLASS
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT
 
@@ -250,8 +252,9 @@
 	name = "bluespace beaker"
 	desc = "A newly-developed high-capacity beaker, courtesy of bluespace research. Can hold up to 200 units."
 	icon_state = "beakerbluespace"
-	g_amt = 5000
+	g_amt = 2000
 	volume = 200
+	w_type = RECYK_GLASS
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,200)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
@@ -262,6 +265,7 @@
 	icon_state = "beakerbluespacelarge"
 	g_amt = 5000
 	volume = 300
+	w_type = RECYK_GLASS
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,150,200,300)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
@@ -273,6 +277,7 @@
 	icon_state = "vial"
 	g_amt = 250
 	volume = 25
+	w_type = RECYK_GLASS
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER

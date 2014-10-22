@@ -190,6 +190,7 @@
 	prefs.toggles ^= SOUND_STREAMING
 	prefs.save_preferences_sqlite(src, ckey)
 	usr << "You will [(prefs.toggles & SOUND_STREAMING) ? "now" : "no longer"] hear streamed media."
-	// Restart.
-	media.stop_music()
-	media.update_music()
+	if(prefs.toggles & SOUND_STREAMING)
+		media.update_music()
+	else
+		media.stop_music()

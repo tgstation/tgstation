@@ -12,6 +12,11 @@
 	var/list/beakers = new/list()
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
 	var/affected_area = 3
+	var/inserted_cores = 0
+	var/obj/item/slime_extract/E = null	//for large and Ex grenades
+	var/obj/item/slime_extract/C = null	//for Ex grenades
+	var/obj/item/weapon/reagent_containers/glass/beaker/noreactgrenade/reservoir = null
+	var/extract_uses = 0
 
 	hear_talk(mob/M as mob, message)
 		if(detonator)
@@ -30,6 +35,9 @@
 					if(istype(B))
 						beakers -= B
 						user.put_in_hands(B)
+						E = null
+						C = null
+						inserted_cores = 0
 			name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		if(stage > 1 && !active && clown_check(user))
 			user << "<span class='warning'>You prime \the [name]!</span>"
@@ -49,13 +57,13 @@
 		if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 			var/obj/item/device/assembly_holder/det = W
 			if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
-				user << "\red Assembly must contain one igniter."
+				user << "<span class='warning'> Assembly must contain one igniter.</span>"
 				return
 			if(!det.secured)
-				user << "\red Assembly must be secured with screwdriver."
+				user << "<span class='warning'> Assembly must be secured with screwdriver.</span>"
 				return
 			path = 1
-			user << "\blue You add [W] to the metal casing."
+			user << "<span class='notice'> You add [W] to the metal casing.</span>"
 			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 			user.remove_from_mob(det)
 			det.loc = src
@@ -67,22 +75,22 @@
 			if(stage == 1)
 				path = 1
 				if(beakers.len)
-					user << "\blue You lock the assembly."
+					user << "<span class='notice'> You lock the assembly.</span>"
 					name = "grenade"
 				else
-//					user << "\red You need to add at least one beaker before locking the assembly."
-					user << "\blue You lock the empty assembly."
+//					user << "<span class='warning'> You need to add at least one beaker before locking the assembly.</span>"
+					user << "<span class='warning'> You lock the empty assembly.</span>"
 					name = "fake grenade"
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 				icon_state = initial(icon_state) +"_locked"
 				stage = 2
 			else if(stage == 2)
 				if(active && prob(95))
-					user << "\red You trigger the assembly!"
+					user << "<span class='warning'> You trigger the assembly!</span>"
 					prime()
 					return
 				else
-					user << "\blue You unlock the assembly."
+					user << "<span class='notice'> You unlock the assembly.</span>"
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 					icon_state = initial(icon_state) + (detonator?"_ass":"")
@@ -91,18 +99,32 @@
 		else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 			path = 1
 			if(beakers.len == 2)
-				user << "\red The grenade can not hold more containers."
+				user << "<span class='warning'> The grenade can not hold more containers.</span>"
 				return
 			else
-				if(W.reagents.total_volume)
-					user << "\blue You add \the [W] to the assembly."
+				if (istype(W,/obj/item/slime_extract))
+					if (inserted_cores > 0)
+						user << "<span class='warning'> This type of grenade cannot hold more than one slime core.</span>"
+					else
+						user << "<span class='notice'> You add \the [W] to the assembly.</span>"
+						user.drop_item()
+						W.loc = src
+						beakers += W
+						E = W
+						inserted_cores++
+						stage = 1
+						name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
+				else if(W.reagents.total_volume)
+					user << "<span class='notice'> You add \the [W] to the assembly.</span>"
 					user.drop_item()
 					W.loc = src
 					beakers += W
 					stage = 1
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				else
-					user << "\red \the [W] is empty."
+					user << "<span class='warning'> \the [W] is empty.</span>"
+		else if (istype(W,/obj/item/slime_extract))
+			user << "<span class='warning'> This grenade case is too small for a slime core to fit in it.</span>"
 
 	examine()
 		set src in usr
@@ -150,8 +172,44 @@
 
 		playsound(get_turf(src), 'sound/effects/bamfgas.ogg', 50, 1)
 
+		visible_message("<span class='warning'>\icon[src] \The [src] bursts open.</span>")
+
+		reservoir = new /obj/item/weapon/reagent_containers/glass/beaker/noreactgrenade() //acts like a stasis beaker, so the chemical reactions don't occur before all the slime reactions have occured
+
 		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-			G.reagents.trans_to(src, G.reagents.total_volume)
+			G.reagents.trans_to(reservoir, G.reagents.total_volume)
+		for(var/obj/item/slime_extract/S in beakers)		//checking for reagents inside the slime extracts
+			S.reagents.trans_to(reservoir, S.reagents.total_volume)
+		if (E != null)
+			extract_uses = E.Uses
+			for(var/i=1,i<=extract_uses,i++)//<-------//exception for slime extracts injected with steroids. The grenade will repeat its checks untill all its remaining uses are gone
+				if (reservoir.reagents.has_reagent("plasma", 5))
+					reservoir.reagents.trans_id_to(E, "plasma", 5)		//If the grenade contains a slime extract, the grenade will check in this order
+				else if (reservoir.reagents.has_reagent("blood", 5))	//for any Plasma -> Blood ->or Water among the reagents of the other containers
+					reservoir.reagents.trans_id_to(E, "blood", 5)		//and inject 5u of it into the slime extract.
+				else if (reservoir.reagents.has_reagent("water", 5))
+					reservoir.reagents.trans_id_to(E, "water", 5)
+				else if (reservoir.reagents.has_reagent("sugar", 5))
+					reservoir.reagents.trans_id_to(E, "sugar", 5)
+			if(E.reagents.total_volume)						  //<-------//exception for slime reactions that produce new reagents. The grenade checks if any
+				E.reagents.trans_to(reservoir, E.reagents.total_volume)	//reagents are left in the slime extracts after the slime reactions occured
+			if (C != null)
+				extract_uses = C.Uses
+				for(var/j=1,j<=extract_uses,j++)	//why don't anyone ever uses "while" directives anyway?
+					if (reservoir.reagents.has_reagent("plasma", 5))
+						reservoir.reagents.trans_id_to(C, "plasma", 5)	//since the order in which slime extracts are inserted matters (in the case of an Ex grenade)
+					else if (reservoir.reagents.has_reagent("blood", 5))//this allow users to plannify which reagent will get into which extract.
+						reservoir.reagents.trans_id_to(C, "blood", 5)
+					else if (reservoir.reagents.has_reagent("water", 5))
+						reservoir.reagents.trans_id_to(C, "water", 5)
+					else if (reservoir.reagents.has_reagent("sugar", 5))
+						reservoir.reagents.trans_id_to(C, "sugar", 5)
+				if(C.reagents.total_volume)
+					C.reagents.trans_to(reservoir, C.reagents.total_volume)
+
+			reservoir.reagents.update_total()
+
+		reservoir.reagents.trans_to(src, reservoir.reagents.total_volume)
 
 		if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
 			var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
@@ -162,7 +220,6 @@
 			for(var/atom/A in view(affected_area, src.loc))
 				if( A == src ) continue
 				src.reagents.reaction(A, 1, 10)
-
 
 		invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
 		spawn(50)		   //To make sure all reagents can work
@@ -181,7 +238,7 @@
 	name = "Large Chem Grenade"
 	desc = "An oversized grenade that affects a larger area."
 	icon_state = "large_grenade"
-	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
+	allowed_containers = list(/obj/item/weapon/reagent_containers/glass, /obj/item/slime_extract)
 	origin_tech = "combat=3;materials=3"
 	affected_area = 4
 
@@ -189,7 +246,7 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 	name = "EX Chem Grenade"
 	desc = "A specially designed large grenade that can hold three containers."
 	icon_state = "ex_grenade"
-	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
+	allowed_containers = list(/obj/item/weapon/reagent_containers/glass, /obj/item/slime_extract)
 	origin_tech = "combat=4;materials=3;engineering=2"
 	affected_area = 4
 
@@ -198,13 +255,13 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 		if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 			var/obj/item/device/assembly_holder/det = W
 			if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
-				user << "\red Assembly must contain one igniter."
+				user << "<span class='warning'> Assembly must contain one igniter.</span>"
 				return
 			if(!det.secured)
-				user << "\red Assembly must be secured with screwdriver."
+				user << "<span class='warning'> Assembly must be secured with screwdriver.</span>"
 				return
 			path = 1
-			user << "\blue You insert [W] into the grenade."
+			user << "<span class='notice'> You insert [W] into the grenade.</span>"
 			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 			user.remove_from_mob(det)
 			det.loc = src
@@ -216,21 +273,21 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 			if(stage == 1)
 				path = 1
 				if(beakers.len)
-					user << "\blue You lock the assembly."
+					user << "<span class='notice'> You lock the assembly.</span>"
 					name = "EX Grenade"
 				else
-					user << "\blue You lock the empty assembly."
+					user << "<span class='notice'> You lock the empty assembly.</span>"
 					name = "fake grenade"
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 				icon_state = initial(icon_state) +"_locked"
 				stage = 2
 			else if(stage == 2)
 				if(active && prob(95))
-					user << "\red You trigger the assembly!"
+					user << "<span class='warning'> You trigger the assembly!</span>"
 					prime()
 					return
 				else
-					user << "\blue You unlock the assembly."
+					user << "<span class='notice'> You unlock the assembly.</span>"
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 25, -3)
 					name = "unsecured EX grenade with [beakers.len] containers[detonator?" and detonator":""]"
 					icon_state = initial(icon_state) + (detonator?"_ass":"")
@@ -239,18 +296,33 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 		else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 			path = 1
 			if(beakers.len == 3)
-				user << "\red The grenade can not hold more containers."
+				user << "<span class='warning'> The grenade can not hold more containers.</span>"
 				return
 			else
-				if(W.reagents.total_volume)
-					user << "\blue You add \the [W] to the assembly."
+				if (istype(W,/obj/item/slime_extract))
+					if (inserted_cores > 1)
+						user << "<span class='warning'> You cannot fit more than two slime cores in this grenade.</span>"
+					else
+						user << "<span class='notice'> You add \the [W] to the assembly.</span>"
+						user.drop_item()
+						W.loc = src
+						beakers += W
+						if (E == null)//E = first slime extract, C = second slime extract
+							E = W
+						else
+							C = W
+						inserted_cores++
+						stage = 1
+						name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
+				else if(W.reagents.total_volume)
+					user << "<span class='notice'> You add \the [W] to the assembly.</span>"
 					user.drop_item()
 					W.loc = src
 					beakers += W
 					stage = 1
 					name = "unsecured EX grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				else
-					user << "\red \the [W] is empty."
+					user << "<span class='warning'> \the [W] is empty.</span>"
 
 /obj/item/weapon/grenade/chem_grenade/metalfoam
 	name = "Metal-Foam Grenade"
@@ -336,3 +408,10 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 		beakers += B1
 		beakers += B2
 		icon_state = initial(icon_state) +"_locked"
+
+/obj/item/weapon/reagent_containers/glass/beaker/noreactgrenade
+	name = "grenade reservoir"
+	desc = "..."
+	icon_state = null
+	volume = 1000
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOREACT

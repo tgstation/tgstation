@@ -214,9 +214,6 @@ var/global/list/brutefireloss_overlays = list("1" = image("icon" = 'icons/mob/sc
 					pixel_x = old_x
 					pixel_y = old_y
 					return
-		if (disabilities & NERVOUS)
-			if (prob(10))
-				stuttering = max(10, stuttering)
 		if (getBrainLoss() >= 60 && stat != 2)
 			if (prob(3))
 				switch(pick(1,2,3))

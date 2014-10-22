@@ -6,6 +6,11 @@ var/list/event_last_fired = list()
 		return
 
 	var/minutes_passed = world.time/600
+	var/roundstart_delay = 50
+
+	if(minutes_passed < roundstart_delay) //Self-explanatory
+		message_admins("Too early to trigger random event, aborting.")
+		return
 
 	var/list/active_with_role = number_active_with_role()
 
@@ -25,7 +30,7 @@ var/list/event_last_fired = list()
 	//It is this coder's thought that weighting events on job counts is dumb and predictable as hell. 10 Engies ? Hope you like Meteors
 	//Instead, weighting goes from 100 (boring and common) to 10 (exceptional)
 
-	possibleEvents[/datum/event/pda_spam] = 75
+	possibleEvents[/datum/event/pda_spam] = 50
 	possibleEvents[/datum/event/money_lotto] = 20
 	if(account_hack_attempted)
 		possibleEvents[/datum/event/money_hacker] = 30
@@ -33,7 +38,7 @@ var/list/event_last_fired = list()
 	possibleEvents[/datum/event/carp_migration] = 40
 	possibleEvents[/datum/event/brand_intelligence] = 30
 	possibleEvents[/datum/event/rogue_drone] = 25
-	possibleEvents[/datum/event/infestation] = 60
+	possibleEvents[/datum/event/infestation] = 50
 	possibleEvents[/datum/event/communications_blackout] = 25
 
 	if(active_with_role["AI"] > 0 || active_with_role["Cyborg"] > 0)
@@ -49,11 +54,11 @@ var/list/event_last_fired = list()
 		possibleEvents[/datum/event/meteor_shower] = 40
 		possibleEvents[/datum/event/blob] = 10
 
-	possibleEvents[/datum/event/viral_infection] = 40
+	possibleEvents[/datum/event/radiation_storm] = 50
 	if(active_with_role["Medical"] > 1)
-		possibleEvents[/datum/event/radiation_storm] = 50
-		possibleEvents[/datum/event/spontaneous_appendicitis] = 75
-		possibleEvents[/datum/event/viral_outbreak] = 25
+		possibleEvents[/datum/event/viral_infection] = 30
+		possibleEvents[/datum/event/spontaneous_appendicitis] = 50
+		possibleEvents[/datum/event/viral_outbreak] = 20
 		possibleEvents[/datum/event/organ_failure] = 30
 
 	possibleEvents[/datum/event/prison_break] = 25
@@ -91,6 +96,8 @@ var/list/event_last_fired = list()
 	//The event will add itself to the MC's event list
 	//and start working via the constructor.
 	new picked_event
+
+	message_admins("[picked_event] firing. Time to have fun.")
 
 	return 1
 

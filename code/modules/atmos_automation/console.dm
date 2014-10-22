@@ -1,10 +1,10 @@
 /obj/machinery/computer/general_air_control/atmos_automation
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "aac"
+	circuit = "/obj/item/weapon/circuitboard/atmos_automation"
 
-	show_sensors=0
-
-	var/on=0
+	show_sensors = 0
+	var/on = 0
 
 	name = "Atmospherics Automations Console"
 
