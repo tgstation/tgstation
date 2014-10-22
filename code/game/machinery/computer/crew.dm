@@ -63,7 +63,7 @@ proc/crewmonitor(mob/user,var/atom/source)
 	jobs["Clown"] = 66
 	jobs["Mime"] = 67
 	jobs["Janitor"] = 68
-	jobs["Assistant"] = 99
+	jobs["Assistant"] = 99	//Unknowns/custom jobs should appear after civilians, and before assistants
 	
 	var/t = "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
 	var/list/logs = list()
@@ -85,7 +85,7 @@ proc/crewmonitor(mob/user,var/atom/source)
 					var/style = null
 					var/ijob = jobs[I.assignment]
 					if(ijob % 10 == 0)
-						style += "font-weight: bold; "
+						style += "font-weight: bold; "	//head roles always end in 0
 					if(ijob >= 10 && ijob < 20)		
 						style += "color: #E74C3C; "	//security
 					if(ijob >= 20 && ijob < 30)		
@@ -96,7 +96,7 @@ proc/crewmonitor(mob/user,var/atom/source)
 						style += "color: #F1C40F; "	//engineering
 					if(ijob >= 50 && ijob < 60)		
 						style += "color: #F39C12; "	//cargo
-					log += "<span style=\"display: none\">[ijob]]</span><tr><td width='40%'><span style=\"[style]\">[I.registered_name]</span> ([I.assignment])</td>"
+					log += "<span style=\"display: none\">[ijob]]</span><tr><td width='40%'><span style=\"[style]\">[I.registered_name]</span> ([I.assignment])</td>"		//ijob does not get displayed, nor does it take up space, it's just used for the positioning of an entry
 				else
 					log += "<span style=\"display: none\">80</span><tr><td width='40%'><i>Unknown</i></td>"
 
