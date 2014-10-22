@@ -3,6 +3,7 @@
 	icon = 'icons/obj/status_display.dmi' //invisibility!
 	mouse_opacity
 	density = 0
+	mob_size = 0
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
