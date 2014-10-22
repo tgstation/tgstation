@@ -64,7 +64,8 @@
 				item_state = "nullrod"
 			else
 				return
-		update_icons()
+		M.update_inv_l_hand()
+		M.update_inv_r_hand()
 
 /obj/item/weapon/sord
 	name = "\improper SORD"
