@@ -21,7 +21,7 @@
 
 
 /obj/item/weapon/nullrod
-	name = "nullrod"
+	name = "null rod"
 	desc = "A holy weapon embibed with immense power; its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
@@ -47,7 +47,7 @@
 	if(src && !M.stat && in_range(M,src))
 		switch(holy_reskin)
 			if("Null Rod")
-				name = "nullrod"
+				name = "null rod"
 				icon_state = "nullrod"
 				item_state = "nullrod"
 			if("Crucifix")
