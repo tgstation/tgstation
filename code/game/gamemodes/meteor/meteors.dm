@@ -1,6 +1,6 @@
 #define METEOR_TEMPERATURE
 
-/var/meteor_wave_delay = 150 //Failsafe wait between waves in tenths of seconds
+/var/meteor_wave_delay = 200 //Failsafe wait between waves in tenths of seconds
 //Set it above 100 (10s delay) if you want to minimize lag for some reason
 
 /var/meteors_in_wave = 10 //Failsafe in case a number isn't called
@@ -10,9 +10,9 @@
 	if(!ticker || meteorwavecurrent)
 		return
 	meteorwavecurrent = 1
-	meteor_wave_delay = (rand(10,20))*10 //Between 10 and 25 seconds, makes everything more chaotic
+	meteor_wave_delay = (rand(10,30))*10 //Between 10 and 30 seconds, makes everything more chaotic
 	for(var/i = 0 to number)
-		spawn(rand(10,25)) //1 to 2.5 seconds between meteors
+		spawn(rand(5,15)) //0.5 to 1.5 seconds between meteors
 			spawn_meteor()
 	spawn(meteor_wave_delay)
 		meteorwavecurrent = 0
@@ -25,7 +25,7 @@
 	var/endy
 	var/turf/pickedstart
 	var/turf/pickedgoal
-	var/max_i = 10//number of tries to spawn meteor.
+	var/max_i = 3 //number of tries to spawn meteor. Was 10, now 3 as an attempt to minimize lag
 
 
 	do
@@ -57,7 +57,7 @@
 		if(max_i <= 0)
 			return
 
-	while(!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space")
+	while(!istype(pickedstart, /turf/space))
 
 	var/obj/effect/meteor/M
 	switch(rand(1, 100))
@@ -69,8 +69,8 @@
 			M = new /obj/effect/meteor/small(pickedstart)
 
 	M.dest = pickedgoal
-	spawn(0)
-		walk_towards(M, M.dest, 1)
+	//spawn(0)
+	walk_towards(M, M.dest, 1)
 	return
 
 /obj/effect/meteor
@@ -88,9 +88,9 @@
 	pass_flags = PASSTABLE
 
 /obj/effect/meteor/Move()
-	var/turf/T = src.loc
-	if(istype(T, /turf))
-		T.hotspot_expose(METEOR_TEMPERATURE, 1000, surfaces = 1)
+	//var/turf/T = src.loc
+	//if(istype(T, /turf))
+		//T.hotspot_expose(METEOR_TEMPERATURE, 1000, surfaces = 1)
 	..()
 	return
 
@@ -149,4 +149,8 @@
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pickaxe))
 		qdel(src)
+	..()
+
+/obj/effect/meteor/Destroy()
+	walk(src,0) //this cancels the walk_towards() proc
 	..()

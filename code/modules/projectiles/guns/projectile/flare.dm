@@ -8,7 +8,6 @@
 	icon_state = "flaregun"
 	item_state = "flaregun"
 	max_shells = 1
-	empty_casings = 1
 	w_class = 3.0
 	m_amt = 15000
 	g_amt = 7500
@@ -16,18 +15,15 @@
 	force = 4
 	recoil = 1
 	fire_delay = 10
-	empty_casings = 0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	caliber = list("flare" = 1)
 	origin_tech = "combat=2;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun/flare"
+	gun_flags = 0
 
 /obj/item/weapon/gun/projectile/flare/syndicate
 	desc = "An illegal flare gun with a modified hammer, allowing it to fire shotgun shells and flares at dangerous velocities."
-	force = 4
 	recoil = 3
 	fire_delay = 5 //faster, because it's also meant to be a weapon
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	caliber = list("flare" = 1, "shotgun" = 1)
 	origin_tech = "combat=4;materials=2;syndicate=2"
-	ammo_type = "/obj/item/ammo_casing/shotgun/flare"

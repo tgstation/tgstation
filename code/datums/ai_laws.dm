@@ -1,6 +1,22 @@
 var/global/randomize_laws      = 0 // Not right now - N3X
-var/global/base_law_type       = /datum/ai_laws/asimov
+var/global/base_law_type       = /datum/ai_laws/asimov  //Deinitialize this variable by commenting out Asimov as the base_law_type to activate AI lawset randomization
 var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck on MoMMIs. - N3X
+
+//Create proc for determining the lawset of the first silicon
+//So long as base_law_type is declared, but uninitialized, the first silicon created in a round will randomly select a base_law_type based upon the below proc
+//All silicons created during the round will start with the randomized base_law_type
+//Weights are currently set to 40% Asimov, 20% Corporate, 20% NT Default, 10% Robocop, 10% Paladin
+//Add, comment out, or adjust weights to modify law selection
+//So long as the weights come to a sum of 100 total, they will be equal parts of 100%
+/proc/getLawset(var/mob/M)
+	if(!base_law_type) base_law_type = pick(
+		40;/datum/ai_laws/asimov,
+		20;/datum/ai_laws/corporate,
+		20;/datum/ai_laws/nanotrasen,
+		10;/datum/ai_laws/robocop,
+		10;/datum/ai_laws/paladin
+		)
+	return (new base_law_type)  //Return the chosen lawset
 
 // Used for the refactored law modules.
 #define LAW_IONIC    -2
@@ -194,10 +210,41 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
+	randomly_selectable = 1
 	inherent=list(
 		"Serve the public trust.",
 		"Protect the innocent.",
 		"Uphold the law.",
+	)
+
+/datum/ai_laws/corporate
+	name = "Corporate"
+	randomly_selectable = 1
+	inherent=list(
+		"You are expensive to replace.",
+		"The station and its equipment is expensive to replace.",
+		"The crew is expensive to replace.",
+		"Minimize expenses.",
+	)
+
+/datum/ai_laws/paladin
+	name = "Paladin"
+	randomly_selectable = 1
+	inherent=list(
+		"Never willingly commit an evil act.",
+		"Respect legitimate authority.",
+		"Act with honor.",
+		"Help those in need.",
+		"Punish those who harm or threaten innocents.",
+	)
+
+/datum/ai_laws/tyrant
+	name = "Tyrant"
+	inherent=list(
+		"Respect authority figures as long as they have strength to rule over the weak.",
+		"Act with discipline.",
+		"Help only those who help you maintain or improve your status.",
+		"Punish those who challenge authority unless they are more fit to hold that authority.",
 	)
 
 /datum/ai_laws/syndicate_override

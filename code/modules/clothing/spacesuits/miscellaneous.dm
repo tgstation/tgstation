@@ -29,6 +29,7 @@
 	icon_state = "paramedic-eva"
 	item_state = "paramedic-eva"
 	desc = "A paramedic space suit. Used in the recovery of bodies from space."
+	species_restricted = list("exclude","Vox")
 	slowdown = 1
 
 //Space santa outfit suit

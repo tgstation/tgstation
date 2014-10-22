@@ -308,6 +308,44 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 //AI verb and proc for sending PDA messages.
+/mob/living/silicon/ai/proc/cmd_send_pdamesg()
+	var/list/names = list()
+	var/list/plist = list()
+	var/list/namecounts = list()
+
+	if(usr.stat == 2)
+		usr << "You can't send PDA messages because you are dead!"
+		return
+
+	if(src.aiPDA.toff)
+		usr << "Turn on your receiver in order to send messages."
+		return
+
+	for (var/obj/item/device/pda/P in get_viewable_pdas())
+		if (P == src)
+			continue
+		else if (P == src.aiPDA)
+			continue
+
+		var/name = P.owner
+		if (name in names)
+			namecounts[name]++
+			name = text("[name] ([namecounts[name]])")
+		else
+			names.Add(name)
+			namecounts[name] = 1
+
+		plist[text("[name]")] = P
+
+	var/c = input(usr, "Please select a PDA") as null|anything in sortList(plist)
+
+	if (!c)
+		return
+
+	var/selected = plist[c]
+	src.aiPDA.create_message(src, selected)
+
+//AI verb and proc for sending PDA messages.
 /obj/item/device/pda/ai/verb/cmd_send_pdamesg()
 	set category = "AI Commands"
 	set name = "Send Message"
@@ -356,7 +394,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[tnote]</body></html>"
 	usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 
-
+/mob/living/silicon/ai/proc/cmd_show_message_log()
+	if(usr.stat == 2)
+		usr << "You can't do that because you are dead!"
+		return
+	if(!isnull(aiPDA))
+		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
+		usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
+	else
+		usr << "You do not have a PDA. You should make an issue report about this."
 
 /obj/item/device/pda/ai/attack_self(mob/user as mob)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.

@@ -31,23 +31,22 @@
 	var/wieldsound = null
 	var/unwieldsound = null
 
-/obj/item/weapon/twohanded/proc/unwield()
+/obj/item/weapon/twohanded/proc/unwield(mob/user)
 	wielded = 0
 	force = force_unwielded
 	name = "[initial(name)]"
-	set_icon()
+	set_icon(user)
 
 
-/obj/item/weapon/twohanded/proc/wield()
+/obj/item/weapon/twohanded/proc/wield(mob/user)
 	wielded = 1
 	force = force_wielded
 	name = "[initial(name)] (Wielded)"
-	set_icon()
+	set_icon(user)
 
 
 
-/obj/item/weapon/twohanded/proc/set_icon()
-	set src in usr
+/obj/item/weapon/twohanded/proc/set_icon(mob/user)
 
 	if(findtext(icon_state, "fireaxe"))
 		item_state = "fireaxe[wielded]"
@@ -65,8 +64,8 @@
 		item_state = "spearglass[wielded]"
 
 
-	usr.update_inv_l_hand()
-	usr.update_inv_r_hand()
+	user.update_inv_l_hand()
+	user.update_inv_r_hand()
 	update_icon()
 
 
@@ -83,15 +82,15 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
-			O.unwield()
-	return	unwield()
+			O.unwield(user)
+	return	unwield(user)
 
 //obj/item/weapon/twohanded/update_icon()
 //	return
 
 /obj/item/weapon/twohanded/pickup(mob/user)
 	wielded = 0
-	set_icon()
+	set_icon(user)
 	wielded = 0
 
 /obj/item/weapon/twohanded/attack_self(mob/user as mob)
@@ -101,14 +100,14 @@
 
 	//..()
 	if(wielded) //Trying to unwield it
-		unwield()
+		unwield(user)
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 		if (src.unwieldsound)
 			playsound(get_turf(src), unwieldsound, 50, 1)
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(O && istype(O))
-			O.unwield()
+			O.unwield(user)
 		//world << "<span class='warning'>[icon_state]</span>" // debugging
 		return
 
@@ -116,7 +115,7 @@
 		if(user.get_inactive_hand())
 			user << "<span class='warning'>You need your other hand to be empty</span>"
 			return
-		wield()
+		wield(user)
 		user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
 		if (src.wieldsound)
 			playsound(get_turf(src), wieldsound, 50, 1)

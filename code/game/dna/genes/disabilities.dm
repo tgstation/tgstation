@@ -108,6 +108,12 @@
 	New()
 		block=NERVOUSBLOCK
 
+/datum/dna/gene/disability/nervousness/OnMobLife(mob/living/carbon/carbon)
+	..()
+
+	if(prob(10))
+		carbon.stuttering = max(10, carbon.stuttering)
+
 /datum/dna/gene/disability/blindness
 	name="Blindness"
 	activation_message="You can't seem to see anything."

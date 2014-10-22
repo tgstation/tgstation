@@ -3,6 +3,7 @@
 	name = "red space helmet"
 	icon_state = "syndicate"
 	item_state = "syndicate"
+	species_restricted = list("exclude","Vox")
 	desc = "Has a tag on it: Totally not property of a hostile corporation, honest!"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	siemens_coefficient = 0.8
@@ -13,6 +14,7 @@
 	item_state = "space_suit_syndicate"
 	desc = "Has a tag on it: Totally not property of a hostile corporation, honest!"
 	w_class = 3
+	species_restricted = list("exclude","Vox")
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_storage,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/jetpack,/obj/item/weapon/tank/jetpack/void,/obj/item/weapon/tank/jetpack/oxygen,/obj/item/weapon/tank/jetpack/nitrogen,/obj/item/weapon/tank/jetpack/carbondioxide,/obj/item/weapon/tank/oxygen,/obj/item/weapon/tank/air)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)

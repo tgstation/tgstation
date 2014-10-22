@@ -111,7 +111,7 @@ function SetMusic(url, time, volume) {
 
 	// Tell the player to play something via JS.
 	proc/send_update()
-		if(!(owner.prefs.toggles & SOUND_STREAMING))
+		if(!(owner.prefs.toggles & SOUND_STREAMING) && url != "")
 			return // Nope.
 		MP_DEBUG("\green Sending update to WMP ([url])...")
 		owner << output(list2params(list(url, (world.time - start_time) / 10, volume*source_volume)), "[window]:SetMusic")
@@ -166,4 +166,4 @@ function SetMusic(url, time, volume) {
 	media.update_volume(value)
 	if(prefs)
 		prefs.volume = value
-		prefs.save_volume()
+		prefs.save_preferences_sqlite(src, ckey)

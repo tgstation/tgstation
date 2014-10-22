@@ -236,6 +236,9 @@
 	return 0
 
 
+/mob/living/proc/can_inject()
+	return 1
+
 /mob/living/proc/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1.0)
 	  return 0 // only carbon liveforms have this proc
 				// now with silicons
@@ -291,7 +294,16 @@
 	buckled = initial(src.buckled)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
+
+		if (C.handcuffed && !initial(C.handcuffed))
+			C.drop_from_inventory(C.handcuffed)
 		C.handcuffed = initial(C.handcuffed)
+
+		if (C.legcuffed && !initial(C.legcuffed))
+			C.drop_from_inventory(C.legcuffed)
+		C.legcuffed = initial(C.legcuffed)
+	hud_updateflag |= 1 << HEALTH_HUD
+	hud_updateflag |= 1 << STATUS_HUD
 
 /mob/living/proc/rejuvenate()
 
@@ -351,10 +363,13 @@
 			O.trace_chemicals = list()
 			O.wounds = list()
 			O.wound_update_accuracy = 1
-		for(var/organ_name in H.internal_organs)
-			var/datum/organ/internal/IO = H.internal_organs[organ_name]
+		for(var/organ_name in H.internal_organs_by_name)
+			var/datum/organ/internal/IO = H.internal_organs_by_name[organ_name]
 			IO.damage = 0
-			IO.trace_chemicals = list()
+			IO.trace_chemicals.len = 0
+			IO.germ_level = 0
+			IO.status = 0
+			IO.robotic = 0
 		H.updatehealth()
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -373,6 +388,9 @@
 	regenerate_icons()
 	update_canmove()
 	..()
+
+	hud_updateflag |= 1 << HEALTH_HUD
+	hud_updateflag |= 1 << STATUS_HUD
 	return
 
 /mob/living/proc/UpdateDamageIcon()
@@ -525,14 +543,8 @@
 			B.host.adjustBrainLoss(rand(5,10))
 			H << "\red <B>With an immense exertion of will, you regain control of your body!</B>"
 			B.host << "\red <B>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</b>"
-			B.controlling = 0
 
-			B.ckey = B.host.ckey
-			B.host.ckey = H.ckey
-
-			H.ckey = null
-			H.name = "host brain"
-			H.real_name = "host brain"
+			B.detatch()
 
 			verbs -= /mob/living/carbon/proc/release_control
 			verbs -= /mob/living/carbon/proc/punish_host
@@ -761,4 +773,10 @@
 	set category = "IC"
 
 	resting = !resting
-	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
+	src << "\blue You are now [resting ? "resting" : "getting up"]"
+
+/mob/living/proc/has_brain()
+	return 1
+
+/mob/living/proc/has_eyes()
+	return 1
