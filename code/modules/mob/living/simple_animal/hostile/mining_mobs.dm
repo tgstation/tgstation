@@ -348,6 +348,7 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	anchored = 1 //Stays anchored until death as to be unpullable
+	mob_size = 2
 
 /mob/living/simple_animal/hostile/asteroid/goliath/revive()
 	anchored = 1

@@ -114,8 +114,8 @@ for reference:
 		qdel(src)
 	return
 
-/obj/structure/barricade/wooden/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
-	if(air_group || (height==0))
+/obj/structure/barricade/wooden/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
+	if(height==0)
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
@@ -235,8 +235,8 @@ for reference:
 		src.explode()
 	return
 
-/obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
-	if(air_group || (height==0))
+/obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
+	if(height==0)
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1

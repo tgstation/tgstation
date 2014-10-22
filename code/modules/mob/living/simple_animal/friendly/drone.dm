@@ -29,6 +29,7 @@
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	languages = DRONE
+	mob_size = 0
 	var/picked = FALSE
 	var/list/drone_overlays[TOTAL_LAYERS]
 	var/laws = \
@@ -94,6 +95,8 @@
 								health = health_repair_max
 								stat = CONSCIOUS
 								icon_state = icon_living
+								dead_mob_list -= src
+								living_mob_list += src
 								D.visible_message("<span class='notice'>[D] reactivates [src]!</span>")
 								alert_drones(DRONE_NET_CONNECT)
 								if(G)

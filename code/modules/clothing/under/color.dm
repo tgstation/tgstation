@@ -2,13 +2,14 @@
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 
 /obj/item/clothing/under/color/random/New()
+	..()
 	var/list/excluded = list(/obj/item/clothing/under/color/random, /obj/item/clothing/under/color)
 	var/obj/item/clothing/under/color/C = pick(typesof(/obj/item/clothing/under/color) - excluded)
 	name = initial(C.name)
 	icon_state = initial(C.icon_state)
 	item_state = initial(C.item_state)
 	item_color = initial(C.item_color)
-
+	suit_color = initial(C.item_color)
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
