@@ -1,0 +1,11 @@
+author: Cutelildick
+delete-after: True
+changes:
+  - bugfix: The Excavation Gear Belt now actually holds damn Pickaxes, Hand Picks, and Welders.
+  - bugfix: Anomaly Harvester now charges batteries at the variable rate of chargemaxlevel / effectrange
+  - bugfix: Anomaly Analyzer now properly identifies Touch, Aura, and Pulse types.
+  - bugfix: The Anomaly Battery Utilizer menu is no longer a piece of shit and infinite range.
+  - bugfix: The Anomaly Battery Utilizer now actually works with Aura and Pulse types of effects.
+  - tweak: Large Artifact secondary effects now appear in the Analyzer all of the time, no activation needed.
+  - tweak: Large Artifacts now only accept reagents from glasses, beakers, and droppers.
+  - tweak: Droppers now properly lose their reagents when used on Large Artifacts.
