@@ -1,6 +1,6 @@
 /datum/event/brand_intelligence
-	announceWhen	= 21
-	endWhen			= 1000	//Ends when all vending machines are subverted anyway.
+	announceWhen	= 30
+	endWhen			= 900	//Ends when all vending machines are subverted anyway.
 	oneShot			= 1
 
 	var/list/obj/machinery/vending/vendingMachines = list()
