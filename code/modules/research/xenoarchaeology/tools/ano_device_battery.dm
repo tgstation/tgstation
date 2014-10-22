@@ -117,16 +117,6 @@
 			//if someone is holding the device, do the effect on them
 			if(inserted_battery.battery_effect.effect == EFFECT_TOUCH && ismob(src.loc))
 				inserted_battery.battery_effect.DoEffectTouch(src.loc)
-//
-//			if(inserted_battery.battery_effect.chargelevel < inserted_battery.battery_effect.chargelevelmax)
-//				inserted_battery.battery_effect.chargelevel++
-//
-//			if(inserted_battery.battery_effect.activated)
-//				if(inserted_battery.battery_effect.effect == 1)
-//					inserted_battery.battery_effect.DoEffectAura()
-//				else if(inserted_battery.battery_effect.effect == 2 && inserted_battery.battery_effect.chargelevel >= inserted_battery.battery_effect.chargelevelmax)
-//					inserted_battery.battery_effect.chargelevel = 0
-//					inserted_battery.battery_effect.DoEffectPulse()
 
 			//handle charge
 			inserted_battery.stored_charge -= 1
