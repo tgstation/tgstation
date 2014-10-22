@@ -97,7 +97,7 @@
 	build_path = "/obj/machinery/computer/general_air_control"
 /obj/item/weapon/circuitboard/atmos_automation
 	name = "Circuit board (Atmospherics Automation)"
-	build_path = "/obj/machinery/computer/general_air_control/atmos_automation"
+	build_path = "/obj/item/weapon/circuitboard/atmos_automation"
 /obj/item/weapon/circuitboard/large_tank_control
 	name = "Circuit board (Atmospheric Tank Control)"
 	build_path = "/obj/machinery/computer/general_air_control/large_tank_control"
