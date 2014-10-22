@@ -202,9 +202,7 @@
 				if("longislandicedtea")
 					icon_state = "longislandicedteaglass"
 					name = "Long Island Iced Tea"
-					desc = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women
-
-only."
+					desc = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
 				if("threemileisland")
 					icon_state = "threemileislandglass"
 					name = "Three Mile Island Ice Tea"
