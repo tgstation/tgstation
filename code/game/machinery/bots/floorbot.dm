@@ -49,7 +49,7 @@
 	var/oldloc = null
 	req_one_access = list(access_construction, access_robotics)
 	var/targetdirection
-	radio_frequency = 1357 //Engineering channel
+	radio_frequency = ENG_FREQ //Engineering channel
 	bot_type = FLOOR_BOT
 	bot_filter = RADIO_FLOORBOT
 	var/process_type //Determines what to do when process_scan() recieves a target. See process_scan() for details.
@@ -163,7 +163,8 @@
 /obj/machinery/bot/floorbot/Emag(mob/user as mob)
 	..()
 	if(emagged == 2)
-		if(user) user << "<span class='danger'>[src] buzzes and beeps.</span>"
+		if(user)
+			user << "<span class='danger'>[src] buzzes and beeps.</span>"
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
 	..()
@@ -508,7 +509,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && loc != usr)

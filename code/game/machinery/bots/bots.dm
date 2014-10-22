@@ -30,7 +30,7 @@
 	var/remote_disabled = 0 //If enabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
 	var/mob/living/silicon/ai/calling_ai //Links a bot to the AI calling it.
 	var/obj/item/device/radio/Radio //The bot's radio, for speaking to people.
-	var/radio_frequency = 1459 //The bot's default radio speaking freqency. Recommended to be on a department frequency.
+	var/radio_frequency //The bot's default radio speaking freqency. Recommended to be on a department frequency.
 	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
 	var/auto_patrol = 0// set to make bot automatically patrol
 	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
@@ -113,8 +113,8 @@
 	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()
-	if (src.health <= 0)
-		src.explode()
+	if (health <= 0)
+		explode()
 
 /obj/machinery/bot/proc/Emag(mob/user as mob) //Master Emag proc. Ensure this is called in your bot before setting unique functions.
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
@@ -132,8 +132,8 @@
 
 /obj/machinery/bot/examine(mob/user)
 	..()
-	if (src.health < maxhealth)
-		if (src.health > maxhealth/3)
+	if (health < maxhealth)
+		if (health > maxhealth/3)
 			user << "<span class='danger'>[src]'s parts look loose.</span>"
 		else
 			user << "<span class='danger'>[src]'s parts look very loose.</span>"
@@ -142,11 +142,11 @@
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	src.health -= rand(15,30)*brute_dam_coeff
-	src.visible_message("<span class='userdanger'>[user] has slashed [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+	health -= rand(15,30)*brute_dam_coeff
+	visible_message("<span class='userdanger'>[user] has slashed [src]!</span>")
+	playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 	if(prob(10))
-		new /obj/effect/decal/cleanable/oil(src.loc)
+		new /obj/effect/decal/cleanable/oil(loc)
 	healthcheck()
 
 
@@ -154,11 +154,11 @@
 	if(M.melee_damage_upper == 0)
 		return
 	M.changeNext_move(CLICK_CD_MELEE)
-	src.health -= M.melee_damage_upper
-	src.visible_message("<span class='userdanger'>[M] has [M.attacktext] [src]!</span>")
+	health -= M.melee_damage_upper
+	visible_message("<span class='userdanger'>[M] has [M.attacktext] [src]!</span>")
 	add_logs(M, src, "attacked", admin=0)
 	if(prob(10))
-		new /obj/effect/decal/cleanable/oil(src.loc)
+		new /obj/effect/decal/cleanable/oil(loc)
 	healthcheck()
 
 /obj/machinery/bot/Topic(href, href_list) //Master Topic to handle common functions.
@@ -188,7 +188,6 @@
 			if(emagged != 2)
 				emagged = 2
 				hacked = 1
-				remote_disabled = 0
 				locked = 1
 				usr << "<span class='warning'>[text_hack]</span>"
 				bot_reset()
@@ -232,7 +231,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!locked)
 			open = !open
-			user << "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>"
+			user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
 		else
 			user << "<span class='warning'>Maintenance panel is locked.</span>"
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -256,10 +255,10 @@
 			s.set_up(5, 1, src)
 			switch(W.damtype)
 				if("fire")
-					src.health -= W.force * fire_dam_coeff
+					health -= W.force * fire_dam_coeff
 					s.start()
 				if("brute")
-					src.health -= W.force * brute_dam_coeff
+					health -= W.force * brute_dam_coeff
 					s.start()
 			..()
 			healthcheck()
@@ -277,24 +276,24 @@
 	return
 
 /obj/machinery/bot/blob_act()
-	src.health -= rand(20,40)*fire_dam_coeff
+	health -= rand(20,40)*fire_dam_coeff
 	healthcheck()
 	return
 
 /obj/machinery/bot/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			src.explode()
+			explode()
 			return
 		if(2.0)
-			src.health -= rand(5,10)*fire_dam_coeff
-			src.health -= rand(10,20)*brute_dam_coeff
+			health -= rand(5,10)*fire_dam_coeff
+			health -= rand(10,20)*brute_dam_coeff
 			healthcheck()
 			return
 		if(3.0)
 			if (prob(50))
-				src.health -= rand(1,5)*fire_dam_coeff
-				src.health -= rand(1,5)*brute_dam_coeff
+				health -= rand(1,5)*fire_dam_coeff
+				health -= rand(1,5)*brute_dam_coeff
 				healthcheck()
 				return
 	return
@@ -302,7 +301,7 @@
 /obj/machinery/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
+	var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( loc )
 	pulse2.icon = 'icons/effects/effects.dmi'
 	pulse2.icon_state = "empdisable"
 	pulse2.name = "emp sparks"
@@ -323,8 +322,8 @@
 	if(issilicon(user)) //Allows silicons to toggle the emag status of a bot.
 		hack += "[emagged == 2 ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
 		hack += "Harm Prevention Safety System: <A href='?src=\ref[src];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
-	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel.
-		hack += "AI remote control network port: <A href='?src=\ref[src];operation=remote'>[remote_disabled ? "Closed" : "Open"]</A><BR><BR>"
+	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
+		hack += "Remote network control radio: <A href='?src=\ref[src];operation=remote'>[remote_disabled ? "Disconnected" : "Connected"]</A><BR><BR>"
 	return hack
 
 /obj/machinery/bot/proc/set_custom_texts() //Superclass for setting hack texts. Appears only if a set is not given to a bot locally.
@@ -333,7 +332,7 @@
 	text_dehack_fail = "You fail to reset [name]."
 
 /obj/machinery/bot/attack_ai(mob/user as mob)
-	src.attack_hand(user)
+	attack_hand(user)
 
 /obj/machinery/bot/proc/speak(var/message, freq) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!on) || (!message))
@@ -627,7 +626,7 @@ obj/machinery/bot/proc/start_patrol()
 
 	// check to see if we are the commanded bot
 	if(signal.data["active"] == src)
-		if(emagged == 2) //Emagged bots do not respect anyone's authority!
+		if(emagged == 2 || remote_disabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
 			return
 	// process control input
 		switch(recv)
@@ -648,7 +647,7 @@ obj/machinery/bot/proc/start_patrol()
 					botcard.access = user_access + prev_access //Adds the user's access, if any.
 				mode = BOT_SUMMON
 				calc_summon_path()
-				speak("Responding.")
+				speak("Responding.", radio_frequency)
 				return
 
 	// receive response from beacon
@@ -708,6 +707,8 @@ obj/machinery/bot/proc/start_patrol()
 
 // signals bot status etc. to controller
 /obj/machinery/bot/proc/send_status()
+	if(remote_disabled || emagged == 2)
+		return
 	var/list/kv = list(
 	"type" = bot_type,
 	"name" = name,
@@ -733,7 +734,8 @@ obj/machinery/bot/proc/bot_summon()
 /obj/machinery/bot/proc/calc_summon_path(var/turf/avoid)
 	check_bot_access()
 	path = AStar(loc, summon_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 150, id=botcard, exclude=avoid)
-	if(!path || tries >= 5)
+	if(!path || tries >= 5) //Cannot reach target. Give up and announce the issue.
+		speak("Summon command failed, destination unreachable.",radio_frequency)
 		bot_reset()
 
 /obj/machinery/bot/proc/summon_step()
@@ -751,7 +753,6 @@ obj/machinery/bot/proc/bot_summon()
 		var/moved = bot_move(summon_target, 3)	// Move attempt
 		if(moved)
 			blockcount = 0
-			path -= loc
 
 		else		// failed to move
 			blockcount++

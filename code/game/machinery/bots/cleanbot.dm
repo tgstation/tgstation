@@ -38,6 +38,7 @@
 	var/failed_steps
 	var/next_dest
 	var/next_dest_loc
+	radio_frequency = SERV_FREQ //Service
 	bot_type = CLEAN_BOT
 	bot_filter = RADIO_CLEANBOT
 
@@ -132,7 +133,8 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 /obj/machinery/bot/cleanbot/Emag(mob/user as mob)
 	..()
 	if(emagged == 2)
-		if(user) user << "<span class='danger'>[src] buzzes and beeps.</span>"
+		if(user)
+			user << "<span class='danger'>[src] buzzes and beeps.</span>"
 
 /obj/machinery/bot/cleanbot/process_scan(var/obj/effect/decal/cleanable/D)
 	for(var/T in target_types)

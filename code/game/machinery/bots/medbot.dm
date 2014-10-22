@@ -30,7 +30,7 @@
 	var/declare_crit = 1 //If active, the bot will transmit a critical patient alert to MedHUD users.
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
-	radio_frequency = 1355 //Medical frequency
+	radio_frequency = MED_FREQ //Medical frequency
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute = "tricordrazine"
 	var/treatment_oxy = "tricordrazine"
@@ -387,7 +387,7 @@
 				return 0
 			if((D.stage > 1) || (D.spread_type == AIRBORNE)) // medibot can't detect a virus in its initial stage unless it spreads airborne.
 
-				if (!C.reagents.has_reagent(src.treatment_virus))
+				if (!C.reagents.has_reagent(treatment_virus))
 					return 1 //STOP DISEASE FOREVER
 
 	return 0
@@ -467,11 +467,11 @@
 			"<span class='userdanger'>[src] is trying to inject [patient]!</span>")
 
 		spawn(30)
-			if ((get_dist(src, src.patient) <= 1) && (src.on))
+			if ((get_dist(src, patient) <= 1) && (on))
 				if(reagent_id == "internal_beaker")
-					if(src.use_beaker && src.reagent_glass && src.reagent_glass.reagents.total_volume)
-						src.reagent_glass.reagents.trans_to(src.patient,src.injection_amount) //Inject from beaker instead.
-						src.reagent_glass.reagents.reaction(src.patient, 2)
+					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
+						reagent_glass.reagents.trans_to(patient,injection_amount) //Inject from beaker instead.
+						reagent_glass.reagents.reaction(patient, 2)
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
 				C.visible_message("<span class='danger'>[src] injects [patient] with the syringe!</span>", \

@@ -684,7 +684,7 @@ var/global/mulebot_count = 0
 // called when bot reaches current target
 /obj/machinery/bot/mulebot/proc/at_target()
 	if(!reached_target)
-		radio_frequency = 1347 //Supply channel
+		radio_frequency = SUPP_FREQ //Supply channel
 		visible_message("[src] makes a chiming sound!", "You hear a chime.")
 		playsound(loc, 'sound/machines/chime.ogg', 50, 0)
 		reached_target = 1
@@ -695,7 +695,7 @@ var/global/mulebot_count = 0
 				calling_ai << "<span class='notice'>\icon[src] [src] wirelessly plays a chiming sound!</span>"
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
-				radio_frequency = 1447 //Report on AI Private instead if the AI is controlling us.
+				radio_frequency = AIPRIV_FREQ //Report on AI Private instead if the AI is controlling us.
 
 		if(load)		// if loaded, unload at target
 			speak("Destination <b>[destination]</b> reached. Unloading [load].",radio_frequency)

@@ -333,7 +333,8 @@
 			menu += "<BR>\[<A href='byond://?src=\ref[SC];op=stop'>Stop Patrol</A>\] "
 			menu += "\[<A href='byond://?src=\ref[SC];op=go'>Start Patrol</A>\] "
 			menu += "\[<A href='byond://?src=\ref[SC];op=summon'>Summon Bot</A>\]<BR>"
-			menu += "<HR><A href='byond://?src=\ref[SC];op=botlist'><img src=pda_back.png>Return to bot list</A>"
+			menu += "<HR><A href='byond://?src=\ref[SC];op=botlist'><img src=pda_back.png>Return to bot list</A><BR>"
+			menu += "Keep an ID inserted to upload access codes upon summoning."
 	return menu
 
 
