@@ -68,6 +68,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
+	flags = null
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()
@@ -75,10 +76,9 @@
 	update_icon()
 	return
 
+
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M as mob, mob/user as mob)
 	..()
-	if(reagents.total_volume <= 0) //Prevents medipens from being refilled.
-		flags &= ~OPENCONTAINER
 	update_icon()
 	return
 
