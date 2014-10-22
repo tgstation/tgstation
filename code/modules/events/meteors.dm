@@ -9,7 +9,7 @@
 	endWhen = rand(20,30)*3 //Goes from two minutes to three minutes. Supposed to be a devastating event
 
 /datum/event/meteor_wave/announce()
-	command_alert("A meteor storm been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
+	command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
 	world << sound('sound/AI/meteors.ogg')
 
 /datum/event/meteor_wave/tick()
