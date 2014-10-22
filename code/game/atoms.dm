@@ -380,3 +380,5 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/handle_slip()
 	return
+/atom/proc/singularity_act()
+	return
