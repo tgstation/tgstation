@@ -364,9 +364,9 @@
 			emagged = 1
 
 		on=0
-		sleep(rand(60,600))
-		if(!on)
-			on=1
+		spawn(rand(60,600))
+			if(!on)
+				on=1
 
 	..()
 
