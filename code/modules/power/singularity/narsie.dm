@@ -23,6 +23,7 @@ var/global/narsie_behaviour = "CultStation13"
 		/obj/effect/rune,
 		/obj/effect/decal/cleanable/blood,
 		/obj/effect/decal/remains,
+		/obj/effect/forcefield/cult,
 		/mob/living/simple_animal/construct,
 		/mob/living/simple_animal/hostile/scarybat/cult,
 		/mob/living/simple_animal/hostile/creature/cult,
@@ -91,6 +92,7 @@ var/global/narsie_behaviour = "CultStation13"
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
 	icon = 'icons/obj/narsie.dmi'
+	icon_state = "narsie"//mobs perceive the geometer of blood through their see_narsie proc
 
 	// Pixel stuff centers Narsie.
 	pixel_x = -236
@@ -172,9 +174,13 @@ var/global/narsie_behaviour = "CultStation13"
 	spawn(0)
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
+		for (var/mob/M in orange(consume_range+10, src))
+			M.see_narsie(src)
 	spawn(1)
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
+		for (var/mob/M in orange(consume_range+10, src))
+			M.see_narsie(src)
 	return 1
 
 /obj/machinery/singularity/narsie/proc/narsiefloor(var/turf/T)//leaving "footprints"
@@ -383,8 +389,8 @@ var/global/narsie_behaviour = "CultStation13"
 	overlays = 0
 	var/overlay_layer = LIGHTING_LAYER+1
 	overlays += image(icon,"glow-[icon_state]",overlay_layer)
-
 */
+
 
 /**
  * Wizard narsie.

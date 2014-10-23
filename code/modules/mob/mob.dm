@@ -106,6 +106,20 @@
 /mob/proc/Life()
 	return
 
+/mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N)
+	if(!narsimage)
+		narsimage = image('icons/obj/narsie.dmi',src.loc,"narsie",9,1)
+	narsimage.pixel_x = 32 * (N.x - src.x) + N.pixel_x
+	narsimage.pixel_y = 32 * (N.y - src.y) + N.pixel_y
+	narsimage.loc = src.loc
+	if(!narglow)
+		narglow = image('icons/obj/narsie.dmi',narsimage.loc,"glow-narsie",LIGHTING_LAYER+2,1)
+	narglow.pixel_x = narsimage.pixel_x
+	narglow.pixel_y = narsimage.pixel_y
+	narglow.loc = narsimage.loc
+	src << narsimage
+	src << narglow
+
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)
 		if(slot_l_hand)
