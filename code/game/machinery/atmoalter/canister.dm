@@ -283,6 +283,7 @@
 		valve_open = !valve_open
 
 	if (href_list["remove_tank"])
+		var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
 		if(holding)
 			if(valve_open)
 				if(src.air_contents.toxins > 0 || (istype(S)))
