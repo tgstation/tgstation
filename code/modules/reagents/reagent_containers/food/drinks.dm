@@ -24,243 +24,240 @@
 	var/smashtext = "bottle of " //to handle drinking glasses and the flask of holy water
 	var/smashname = "broken bottle" //as above
 
-	on_reagent_change()
-		if (gulp_size < 5) gulp_size = 5
-		else gulp_size = max(round(reagents.total_volume / 5), 5)
+/obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
+	if (gulp_size < 5) gulp_size = 5
+	else gulp_size = max(round(reagents.total_volume / 5), 5)
 
-	attack_self(mob/user as mob)
-		if(!is_open_container())
-			user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
-			return 0
-			
-		else if(!src.reagents.total_volume || !src)
-			user << "<span  class='rose'>None of [src] left, oh no!<span>"
-			return 0
+/obj/item/weapon/reagent_containers/food/drinks/attack_self(mob/user as mob)
+	if(!is_open_container())
+		user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
+		return 0
+		
+	else if(!src.reagents.total_volume || !src)
+		user << "<span  class='rose'>None of [src] left, oh no!<span>"
+		return 0
 
-		else
-			imbibe(user)
-			return 0
-		
-//todo: make it so one can't attack onself by attack_self
+	else
+		imbibe(user)
+		return 0
 
-	attack(mob/living/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/reagent_containers/food/drinks/attack(mob/living/M as mob, mob/user as mob, def_zone)
+	var/datum/reagents/R = src.reagents
+	var/fillevel = gulp_size
 
-		var/datum/reagents/R = src.reagents
-		var/fillevel = gulp_size
-
-		//smashing on someone
-		if(user.a_intent == "hurt" && isGlass && molotov != 1)  //to smash on someone, must be harm intent, breakable glass, and have no rag inside
-			if(!M)
-				return
-		
-			force = 15 //Smashing bottles over someoen's head hurts. //todo: check that this isn't overwriting anything it shouldn't be
-		
-			var/datum/organ/external/affecting = user.zone_sel.selecting //Find what the player is aiming at
-		
-			var/armor_block = 0 //Get the target's armour values for normal attack damage.
-			var/armor_duration = 0 //The more force the bottle has, the longer the duration.
-		
-			//Calculating duration and calculating damage.
-			if(ishuman(M))
-		
-				var/mob/living/carbon/human/H = M
-				var/headarmor = 0 // Target's head armour
-				armor_block = H.run_armor_check(affecting, "melee") // For normal attack damage
-		
-				//If they have a hat/helmet and the user is targeting their head.
-				if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
-		
-					// If their head has an armour value, assign headarmor to it, else give it 0.
-					if(H.head.armor["melee"])
-						headarmor = H.head.armor["melee"]
-					else
-						headarmor = 0
+	//smashing on someone
+	if(user.a_intent == "hurt" && isGlass && molotov != 1)  //to smash on someone, must be harm intent, breakable glass, and have no rag inside
+		if(!M)
+			return
+	
+		force = 15 //Smashing bottles over someoen's head hurts. //todo: check that this isn't overwriting anything it shouldn't be
+	
+		var/datum/organ/external/affecting = user.zone_sel.selecting //Find what the player is aiming at
+	
+		var/armor_block = 0 //Get the target's armour values for normal attack damage.
+		var/armor_duration = 0 //The more force the bottle has, the longer the duration.
+	
+		//Calculating duration and calculating damage.
+		if(ishuman(M))
+	
+			var/mob/living/carbon/human/H = M
+			var/headarmor = 0 // Target's head armour
+			armor_block = H.run_armor_check(affecting, "melee") // For normal attack damage
+	
+			//If they have a hat/helmet and the user is targeting their head.
+			if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
+	
+				// If their head has an armour value, assign headarmor to it, else give it 0.
+				if(H.head.armor["melee"])
+					headarmor = H.head.armor["melee"]
 				else
 					headarmor = 0
-		
-				//Calculate the weakening duration for the target.
-				armor_duration = (duration - headarmor) + force
-		
 			else
-				//Only humans can have armour, right?
-				armor_block = M.run_armor_check(affecting, "melee")
-				if(affecting == "head")
-					armor_duration = duration + force
-			armor_duration /= 10
+				headarmor = 0
+	
+			//Calculate the weakening duration for the target.
+			armor_duration = (duration - headarmor) + force
+	
+		else
+			//Only humans can have armour, right?
+			armor_block = M.run_armor_check(affecting, "melee")
+			if(affecting == "head")
+				armor_duration = duration + force
+		armor_duration /= 10
+	
+		//Apply the damage!
+		M.apply_damage(force, BRUTE, affecting, armor_block)
+	
+		// You are going to knock someone out for longer if they are not wearing a helmet.
+		// For drinking glass
+		if(affecting == "head" && istype(M, /mob/living/carbon/))
+	
+			//Display an attack message.
+			for(var/mob/O in viewers(user, null))
+				if(M != user) O.show_message(text("\red <B>[M] has been hit over the head with a [smashtext][src.name], by [user]!</B>"), 1)
+				else O.show_message(text("\red <B>[M] hit himself with a [smashtext][src.name] on the head!</B>"), 1)
+			//Weaken the target for the duration that we calculated and divide it by 5.
+			if(armor_duration)
+				M.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
+	
+		else
+			//Default attack message and don't weaken the target.
+			for(var/mob/O in viewers(user, null))
+				if(M != user) O.show_message(text("\red <B>[M] has been attacked with a [smashtext][src.name], by [user]!</B>"), 1)
+				else O.show_message(text("\red <B>[M] has attacked himself with a [smashtext][src.name]!</B>"), 1)
+	
+		//Attack logs
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [M.name] ([M.ckey]) with a bottle!</font>")
+		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [user.name] ([user.ckey])</font>")
+		log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] with a bottle. ([M.ckey])</font>")
+		if(!iscarbon(user))
+			M.LAssailant = null
+		else
+			M.LAssailant = user
+	
+		//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
+		if(src.reagents)
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\blue <B>The contents of \the [smashtext][src] splashes all over [M]!</B>"), 1)
+			src.reagents.reaction(M, TOUCH)
+	
+		//Finally, smash the bottle. This kills (del) the bottle.
+		src.smash(M, user)
+	
+		return
+
+	else if(!is_open_container())
+		user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
+		return 0
 		
-			//Apply the damage!
-			M.apply_damage(force, BRUTE, affecting, armor_block)
-		
-			// You are going to knock someone out for longer if they are not wearing a helmet.
-			// For drinking glass
-			if(affecting == "head" && istype(M, /mob/living/carbon/))
-		
-				//Display an attack message.
-				for(var/mob/O in viewers(user, null))
-					if(M != user) O.show_message(text("\red <B>[M] has been hit over the head with a [smashtext][src.name], by [user]!</B>"), 1)
-					else O.show_message(text("\red <B>[M] hit himself with a [smashtext][src.name] on the head!</B>"), 1)
-				//Weaken the target for the duration that we calculated and divide it by 5.
-				if(armor_duration)
-					M.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
-		
-			else
-				//Default attack message and don't weaken the target.
-				for(var/mob/O in viewers(user, null))
-					if(M != user) O.show_message(text("\red <B>[M] has been attacked with a [smashtext][src.name], by [user]!</B>"), 1)
-					else O.show_message(text("\red <B>[M] has attacked himself with a [smashtext][src.name]!</B>"), 1)
-		
-			//Attack logs
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [M.name] ([M.ckey]) with a bottle!</font>")
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [user.name] ([user.ckey])</font>")
-			log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] with a bottle. ([M.ckey])</font>")
-			if(!iscarbon(user))
-				M.LAssailant = null
-			else
-				M.LAssailant = user
-		
-			//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
-			if(src.reagents)
-				for(var/mob/O in viewers(user, null))
-					O.show_message(text("\blue <B>The contents of \the [smashtext][src] splashes all over [M]!</B>"), 1)
-				src.reagents.reaction(M, TOUCH)
-		
-			//Finally, smash the bottle. This kills (del) the bottle.
-			src.smash(M, user)
-		
-			return
+	else if(!R.total_volume || !R)
+		user << "<span  class='rose'>None of [src] left, oh no!<span>"
+		return 0
 
-		else if(!is_open_container())
-			user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
-			return 0
-			
-		else if(!R.total_volume || !R)
-			user << "<span  class='rose'>None of [src] left, oh no!<span>"
-			return 0
-
-		else if(M == user)
-			imbibe(user)
-			return 0
-
-
-
-		else if( istype(M, /mob/living/carbon/human) )
-
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("<span  class='rose'>[user] attempts to feed [M] [src].</span>", 1)
-			if(!do_mob(user, M)) return
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("<span  class='rose'>[user] feeds [M] [src].</span>", 1)
-
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-
-			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-			if(!iscarbon(user))
-				M.LAssailant = null
-			else
-				M.LAssailant = user
-
-			if(reagents.total_volume)
-				reagents.reaction(M, INGEST)
-				spawn(5)
-					reagents.trans_to(M, gulp_size)
-
-			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-				var/mob/living/silicon/robot/bro = user
-				bro.cell.use(30)
-				var/refill = R.get_master_reagent_id()
-				spawn(600)
-					R.add_reagent(refill, fillevel)
-
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			return 1
-
+	else if(M == user)
+		imbibe(user)
 		return 0
 
 
-	afterattack(obj/target, mob/user , flag)
-		if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-			if(!is_open_container())
-				user << "<span  class='rose'>You can't; [src] is closed.</span>"
-				return 0
 
-			if(!target.reagents.total_volume)
-				user << "<span  class='rose'>[target] is empty.</span>"
-				return
+	else if( istype(M, /mob/living/carbon/human) )
 
-			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "<span  class='rose'>[src] is full.</span>"
-				return
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message("<span  class='rose'>[user] attempts to feed [M] [src].</span>", 1)
+		if(!do_mob(user, M)) return
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message("<span  class='rose'>[user] feeds [M] [src].</span>", 1)
 
-			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			user << "<span  class='notice'>You fill [src] with [trans] units of the contents of [target].<span>"
+		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 
-		else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
-			if(!is_open_container())
-				user << "<span  class='rose'>You can't; [src] is closed.</span>"
-				return 0
-
-			if(!reagents.total_volume)
-				user << "<span  class='rose'>[src] is empty.</span>"
-				return
-
-			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "<span  class='rose'>[target] is full.</span>"
-				return
-
-
-
-			var/datum/reagent/refill
-			var/datum/reagent/refillName
-			if(isrobot(user))
-				refill = reagents.get_master_reagent_id()
-				refillName = reagents.get_master_reagent_name()
-
-			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			user << "<span  class='notice'>You transfer [trans] units of the solution to [target].</span>"
-
-			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-				var/mob/living/silicon/robot/bro = user
-				var/chargeAmount = max(30,4*trans)
-				bro.cell.use(chargeAmount)
-				user << "Now synthesizing [trans] units of [refillName]..."
-
-
-				spawn(300)
-					reagents.add_reagent(refill, trans)
-					user << "Cyborg [src] refilled."
-
-		return
-
-	examine()
-		set src in view()
-		..()
-		if (!(usr in range(0)) && usr!=src.loc) return
-		if(!reagents || reagents.total_volume==0)
-			usr << "<span  class='notice'>\The [src] is empty!</span>"
-		else if (reagents.total_volume<=src.volume/4)
-			usr << "<span  class='notice'>\The [src] is almost empty!</span>"
-		else if (reagents.total_volume<=src.volume*0.66)
-			usr << "<span  class='notice'>\The [src] is half full!</span>"
-		else if (reagents.total_volume<=src.volume*0.90)
-			usr << "<span  class='notice'>\The [src] is almost full!</span>"
+		log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+		if(!iscarbon(user))
+			M.LAssailant = null
 		else
-			usr << "<span  class='notice'>\The [src] is full!</span>"
-	
-	proc/imbibe(mob/user) //drink the liquid within
-		user << "<span  class='notice'>You swallow a gulp of [src].</span>"
-		if(reagents.total_volume)
-			reagents.reaction(user, INGEST)
-			spawn(5)
-				reagents.trans_to(user, gulp_size)
+			M.LAssailant = user
 
-		playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		if(reagents.total_volume)
+			reagents.reaction(M, INGEST)
+			spawn(5)
+				reagents.trans_to(M, gulp_size)
+
+		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+			var/mob/living/silicon/robot/bro = user
+			bro.cell.use(30)
+			var/refill = R.get_master_reagent_id()
+			spawn(600)
+				R.add_reagent(refill, fillevel)
+
+		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
+
+	return 0
+
+
+/obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , flag)
+	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+		if(!is_open_container())
+			user << "<span  class='rose'>You can't; [src] is closed.</span>"
+			return 0
+
+		if(!target.reagents.total_volume)
+			user << "<span  class='rose'>[target] is empty.</span>"
+			return
+
+		if(reagents.total_volume >= reagents.maximum_volume)
+			user << "<span  class='rose'>[src] is full.</span>"
+			return
+
+		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		user << "<span  class='notice'>You fill [src] with [trans] units of the contents of [target].<span>"
+
+	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+		if(!is_open_container())
+			user << "<span  class='rose'>You can't; [src] is closed.</span>"
+			return 0
+
+		if(!reagents.total_volume)
+			user << "<span  class='rose'>[src] is empty.</span>"
+			return
+
+		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+			user << "<span  class='rose'>[target] is full.</span>"
+			return
+
+
+
+		var/datum/reagent/refill
+		var/datum/reagent/refillName
+		if(isrobot(user))
+			refill = reagents.get_master_reagent_id()
+			refillName = reagents.get_master_reagent_name()
+
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		user << "<span  class='notice'>You transfer [trans] units of the solution to [target].</span>"
+
+		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+			var/mob/living/silicon/robot/bro = user
+			var/chargeAmount = max(30,4*trans)
+			bro.cell.use(chargeAmount)
+			user << "Now synthesizing [trans] units of [refillName]..."
+
+
+			spawn(300)
+				reagents.add_reagent(refill, trans)
+				user << "Cyborg [src] refilled."
+
+	return
+
+/obj/item/weapon/reagent_containers/food/drinks/examine()
+	set src in view()
+	..()
+	if (!(usr in range(0)) && usr!=src.loc) return
+	if(!reagents || reagents.total_volume==0)
+		usr << "<span  class='notice'>\The [src] is empty!</span>"
+	else if (reagents.total_volume<=src.volume/4)
+		usr << "<span  class='notice'>\The [src] is almost empty!</span>"
+	else if (reagents.total_volume<=src.volume*0.66)
+		usr << "<span  class='notice'>\The [src] is half full!</span>"
+	else if (reagents.total_volume<=src.volume*0.90)
+		usr << "<span  class='notice'>\The [src] is almost full!</span>"
+	else
+		usr << "<span  class='notice'>\The [src] is full!</span>"
+	
+/obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //drink the liquid within
+	user << "<span  class='notice'>You swallow a gulp of [src].</span>"
+	if(reagents.total_volume)
+		reagents.reaction(user, INGEST)
+		spawn(5)
+			reagents.trans_to(user, gulp_size)
+
+	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+	return 1
 		
 
-	New()
-		..()
-		score["meals"]++
+/obj/item/weapon/reagent_containers/food/drinks/New()
+	..()
+	score["meals"]++
 
 
 ////////////////////////////////////////////////////////////////////////////////
