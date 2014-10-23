@@ -42,7 +42,7 @@
 		shock(mover)
 
 /obj/machinery/field/containment/Crossed(obj/mover as obj)
-	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure))
+	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
 		bump(mover)
 
 /obj/machinery/field/containment/proc/set_master(var/master1,var/master2)
@@ -71,7 +71,7 @@
 	return ..()
 
 /obj/machinery/field/CanPass(obj/mover as obj, turf/target, height=0)
-	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure))
+	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
 		bump(mover)
 		return 0
 	return ..()
