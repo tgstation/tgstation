@@ -1,4 +1,4 @@
-/obj/item/clothing/shoes/proc/step_action(mob/living/carbon/human/H)
+/obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
 
 /obj/item/clothing/shoes/syndigaloshes
 	desc = "A pair of brown shoes. They seem to have extra grip."
@@ -77,15 +77,12 @@
 	item_color = "clown"
 	var/footstep = 1	//used for squeeks whilst walking
 
-/obj/item/clothing/shoes/clown_shoes/step_action(mob/living/carbon/human/H)
-	if(H.m_intent == "run")
-		if(footstep > 1)
-			playsound(src, "clownstep", 50, 1)
-			footstep = 0
-		else
-			footstep++
+/obj/item/clothing/shoes/clown_shoes/step_action()
+	if(footstep > 1)
+		playsound(src, "clownstep", 50, 1)
+		footstep = 0
 	else
-		playsound(src, "clownstep", 20, 1)
+		footstep++
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"

@@ -52,3 +52,11 @@
 
 /mob/living/carbon/human/mob_negates_gravity()
 	return shoes && shoes.negates_gravity()
+
+/mob/living/carbon/human/Move(NewLoc, direct)
+	..()
+	if(shoes)
+		if(loc == NewLoc)
+			var/obj/item/clothing/shoes/S = shoes
+			S.step_action()
+
