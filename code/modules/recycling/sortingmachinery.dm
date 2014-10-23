@@ -152,7 +152,9 @@
 			return
 	else if(istype(target, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/O = target
-		if(use(3) && !O.opened)
+		if(O.opened)
+			return
+		if(use(3))
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			P.icon_state = "deliverycrate"
 			P.wrapped = O
@@ -162,7 +164,9 @@
 			return
 	else if(istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
-		if(use(3) && !O.opened)
+		if(O.opened)
+			return
+		if(use(3))
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			P.wrapped = O
 			O.welded = 1
