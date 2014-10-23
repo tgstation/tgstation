@@ -18,18 +18,21 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	var/cleanspeed = 50 //slower than mop
 
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
 	icon_state = "soapnt"
 
 /obj/item/weapon/soap/deluxe
-	desc = "A deluxe Waffle Co. brand bar of soap. Smells of condoms."
+	desc = "A deluxe Waffle Co. brand bar of soap. Smells of comdoms."
 	icon_state = "soapdeluxe"
+	cleanspeed = 40 //same speed as mop because deluxe -- captain gets one of these
 
 /obj/item/weapon/soap/syndie
-	desc = "An untrustworthy bar of soap. Smells of fear."
+	desc = "An untrustworthy bar of soap made of strong chemical agents that dissolve blood faster."
 	icon_state = "soapsyndie"
+	cleanspeed = 10 //much faster than mop so it is useful for traitors who want to clean crime scenes
 
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
@@ -43,18 +46,22 @@
 	if(user.client && (target in user.client.screen))
 		user << "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>"
 	else if(istype(target,/obj/effect/decal/cleanable))
-		user << "<span class='notice'>You scrub \the [target.name] out.</span>"
-		qdel(target)
+		user.visible_message("<span class='warning'>[user] begins to scrub \the [target.name] out with [src].</span>")
+		if(do_after(user, src.cleanspeed))
+			user << "<span class='notice'>You scrub \the [target.name] out.</span>"
+			qdel(target)
 	else
-		user << "<span class='notice'>You clean \the [target.name].</span>"
-		var/obj/effect/decal/cleanable/C = locate() in target
-		qdel(C)
-		target.clean_blood()
+		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name] with [src].</span>")
+		if(do_after(user, src.cleanspeed))
+			user << "<span class='notice'>You clean \the [target.name].</span>"
+			var/obj/effect/decal/cleanable/C = locate() in target
+			qdel(C)
+			target.clean_blood()
 	return
 
 /obj/item/weapon/soap/attack(mob/target as mob, mob/user as mob)
 	if(target && user && ishuman(target) && ishuman(user) && !target.stat && !user.stat && user.zone_sel &&user.zone_sel.selecting == "mouth" )
-		user.visible_message("<span class='danger'>\the [user] washes \the [target]'s mouth out with soap!</span>")
+		user.visible_message("<span class='danger'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		return
 	..()
 

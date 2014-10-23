@@ -40,7 +40,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	A = null
 
 	if(istype(turf))
-		user.visible_message("<span class='warning'>[user] begins to clean \the [turf].</span>")
+		user.visible_message("<span class='warning'>[user] begins to clean \the [turf] with [src].</span>")
 
 		if(do_after(user, 40))
 			clean(turf)

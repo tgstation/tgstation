@@ -34,7 +34,7 @@
 
 	w_class = 4
 	max_w_class = 2
-	storage_slots = 21
+	storage_slots = 30
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
 
