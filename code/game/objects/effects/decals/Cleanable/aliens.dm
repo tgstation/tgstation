@@ -61,3 +61,12 @@
 
 /mob/living/carbon/alien/xeno_acid_blood(var/dmg)
 	return //Alien blood doesn't harm aliens
+
+/mob/living/carbon/human/xeno_acid_blood(var/dmg)
+	if(shoes && shoes.unacidable)
+		return
+	..()
+
+
+
+
