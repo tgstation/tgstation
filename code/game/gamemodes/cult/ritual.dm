@@ -105,6 +105,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(istype(user, /mob/living/simple_animal/construct/harvester))
 			attack_hand(user)
 
+	attack_paw(mob/living/M as mob)
+		if(ismonkey(M))
+			attack_hand(M)
+
 	attack_hand(mob/living/user as mob)
 		if(!iscultist(user))
 			user << "You can't mouth the arcane scratchings without fumbling over them."

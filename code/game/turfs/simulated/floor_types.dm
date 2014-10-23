@@ -110,6 +110,13 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/engine/cult/narsie//version that spawns on Nar-Sie's path
+	name = "engraved floor"
+	desc = "something that goes beyond your understanding went this way"
+	icon_state = "cult-narsie"
+	luminosity = 1
+	l_color = "#3e0000"
+
 
 /turf/simulated/floor/engine/n20
 	New()

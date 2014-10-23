@@ -122,7 +122,9 @@ var/list/sacrificed = list()
 			M << "<font color=\"red\"><b>And you were able to force it out of your mind. You now know the truth, there's something horrible out there, stop it and its minions at all costs.</b></font>"
 			return 0
 
-	return fizzle()
+	usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
+	usr.show_message("\red The markings pulse with a small burst of light, then fall dark.", 3, "\red You hear a faint fizzle.", 2)
+	usr << "<span class='note'> You remembered the words correctly, but the rune isn't working. Maybe your ritual is missing something important.</span>"
 
 
 
@@ -226,7 +228,9 @@ var/list/sacrificed = list()
 			usr.see_invisible = SEE_INVISIBLE_OBSERVER
 			usr.seer = 1
 		return
-	return fizzle()
+	usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
+	usr.show_message("\red The markings pulse with a small burst of light, then fall dark.", 3, "\red You hear a faint fizzle.", 2)
+	usr << "<span class='note'> You remembered the words correctly, but the rune isn't reacting. Maybe you should position yourself differently.</span>"
 
 /////////////////////////////////////////EIGHTH RUNE
 
@@ -1050,84 +1054,105 @@ var/list/sacrificed = list()
 	var/mob/living/user = usr
 	if(!istype(src,/obj/effect/rune))
 		usr.whisper("Sa tatha najin")
-		usr.visible_message("<span class='warning'> In flash of red light, a set of armor appears on [usr]...</span>", \
-		"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
-		user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
-		user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
-		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
-		user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
-		//the above update their overlay icons cache but do not call update_icons()
-		//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
-		user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor
-		del(src)
+		if(ishuman(user))
+			usr.visible_message("<span class='warning'> In flash of red light, a set of armor appears on [usr]...</span>", \
+			"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
+			user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
+			user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
+			user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
+			user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+			//the above update their overlay icons cache but do not call update_icons()
+			//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
+			user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor
+		else if(ismonkey(user))
+			var/mob/living/carbon/monkey/K = user
+			K.visible_message("<span class='warning'> The rune disappears with a flash of red light, [K] now looks like the cutest of all followers of Nar-Sie...</span>", \
+			"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor. Might not offer much protection due to its size though.</span>")
+			if(!istype(K.uniform, /obj/item/clothing/monkeyclothes/cultrobes))
+				var/obj/item/clothing/monkeyclothes/cultrobes/CR = new /obj/item/clothing/monkeyclothes/cultrobes(user.loc)
+				K.wearclothes(CR)
+			if(!istype(K.hat, /obj/item/clothing/head/culthood/alt))
+				var/obj/item/clothing/head/culthood/alt/CH = new /obj/item/clothing/head/culthood/alt(user.loc)
+				K.wearhat(CH)
+			K.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(K), slot_back)
+			K.put_in_hands(new /obj/item/weapon/melee/cultblade(K))
 		return
 	else
 		usr.say("Sa tatha najin")
 		for(var/mob/living/M in src.loc)
 			if(iscultist(M))
 				if(ishuman(M))
-					M.visible_message("<span class='warning'> In flash of red light, and a set of armor appears on [usr]...</span>", \
+					M.visible_message("<span class='warning'> In flash of red light, and a set of armor appears on [M]...</span>", \
 					"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
-					M.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
-					M.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
-					M.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
-					M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
-					M.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
-					return
+					M.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(M), slot_head)
+					M.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(M), slot_wear_suit)
+					M.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(M), slot_shoes)
+					M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(M), slot_back)
+					M.put_in_hands(new /obj/item/weapon/melee/cultblade(M))
 				else if(ismonkey(M))
-					M.visible_message("<span class='warning'> The rune disappears with a flash of red light, [usr] now looks like the cutest of all followers of Nar-Sie...</span>", \
+					var/mob/living/carbon/monkey/K = M
+					K.visible_message("<span class='warning'> The rune disappears with a flash of red light, [K] now looks like the cutest of all followers of Nar-Sie...</span>", \
 					"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor. Might not offer much protection due to its size though.</span>")
-					M.icon_state = "cultmonkey1"
-					M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
-					M.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
-					return
+					var/obj/item/clothing/monkeyclothes/cultrobes/CR = new /obj/item/clothing/monkeyclothes/cultrobes(loc)
+					K.wearclothes(CR)
+					var/obj/item/clothing/head/culthood/alt/CH = new /obj/item/clothing/head/culthood/alt(loc)
+					K.wearhat(CH)
+					K.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(K), slot_back)
+					K.put_in_hands(new /obj/item/weapon/melee/cultblade(K))
 				else if(isconstruct(M))
+					var/construct_class
 					if(universe.name == "Hell Rising")
-						var/construct_class = alert(usr, "Please choose which type of construct you wish [M] to become.","Harvester","Juggernaut","Wraith","Artificer")
+						var/list/construct_types = list("Artificer", "Wraith", "Juggernaut", "Harvester")
+						construct_class = input("Please choose which type of construct you wish [M] to become.", "Construct Transformation") in construct_types
 						switch(construct_class)
 							if("Juggernaut")
 								var/mob/living/simple_animal/construct/armoured/C = new /mob/living/simple_animal/construct/armoured (get_turf(src.loc))
 								M.mind.transfer_to(C)
 								del(M)
 								C << "<B>You are now a Juggernaut. Though slow, your shell can withstand extreme punishment, create temporary walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
-
+								ticker.mode.update_cult_icons_added(C.mind)
 							if("Wraith")
 								var/mob/living/simple_animal/construct/wraith/C = new /mob/living/simple_animal/construct/wraith (get_turf(src.loc))
 								M.mind.transfer_to(C)
 								del(M)
 								C << "<B>You are a now Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
-
+								ticker.mode.update_cult_icons_added(C.mind)
 							if("Artificer")
 								var/mob/living/simple_animal/construct/builder/C = new /mob/living/simple_animal/construct/builder (get_turf(src.loc))
 								M.mind.transfer_to(C)
 								del(M)
 								C << "<B>You are now an Artificer. You are incredibly weak and fragile, but you are able to construct new floors and walls, to break some walls apart, to repair allied constructs (by clicking on them), </B><I>and most important of all create new constructs</I><B> (Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
+								ticker.mode.update_cult_icons_added(C.mind)
 							if("Harvester")
 								var/mob/living/simple_animal/construct/harvester/C = new /mob/living/simple_animal/construct/harvester (get_turf(src.loc))
 								M.mind.transfer_to(C)
 								del(M)
 								C << "<B>You are now an Harvester. You are as fast and powerful as Wraiths, but twice as durable.<br>No living (or dead) creature can hide from your eyes, and no door or wall shall place itself between you and your victims.<br>Your role consists of neutralizing any non-cultist living being in the area and transport them to Nar-Sie. To do so, place yourself above an incapacited target and use your \"Harvest\" spell."
+								ticker.mode.update_cult_icons_added(C.mind)
 					else
-						var/construct_class = alert(usr, "Please choose which type of construct you wish [M] to become.",,"Juggernaut","Wraith","Artificer")
+						var/list/construct_types = list("Artificer", "Wraith", "Juggernaut")
+						construct_class = input("Please choose which type of construct you wish [M] to become.", "Construct Transformation") in construct_types
 						switch(construct_class)
 							if("Juggernaut")
 								var/mob/living/simple_animal/construct/armoured/C = new /mob/living/simple_animal/construct/armoured (get_turf(src.loc))
 								M.mind.transfer_to(C)
 								del(M)
 								C << "<B>You are now a Juggernaut. Though slow, your shell can withstand extreme punishment, create temporary walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
-
+								ticker.mode.update_cult_icons_added(C.mind)
 							if("Wraith")
 								var/mob/living/simple_animal/construct/wraith/C = new /mob/living/simple_animal/construct/wraith (get_turf(src.loc))
 								M.mind.transfer_to(C)
 								del(M)
 								C << "<B>You are a now Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
-
+								ticker.mode.update_cult_icons_added(C.mind)
 							if("Artificer")
 								var/mob/living/simple_animal/construct/builder/C = new /mob/living/simple_animal/construct/builder (get_turf(src.loc))
 								M.mind.transfer_to(C)
 								del(M)
 								C << "<B>You are now an Artificer. You are incredibly weak and fragile, but you are able to construct new floors and walls, to break some walls apart, to repair allied constructs (by clicking on them), </B><I>and most important of all create new constructs</I><B> (Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
-					return
+								ticker.mode.update_cult_icons_added(C.mind)
+				del(src)
+				return
 			else
 				usr << "<span class='warning'>Only the followers of Nar-Sie may be given their armor.</span>"
 				M << "<span class='warning'>Only the followers of Nar-Sie may be given their armor.</span>"

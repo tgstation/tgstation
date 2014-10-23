@@ -14,6 +14,7 @@ var/global/narsie_behaviour = "CultStation13"
 	grav_pull = 10 //How many tiles out do we pull?
 	consume_range = 3 //How many tiles out do we eat
 
+	//all the snowflakes that nar-sie won't touch
 	var/list/uneatable_narsie = list(
 		/obj/effect/overlay,
 		/mob/dead,
@@ -42,12 +43,7 @@ var/global/narsie_behaviour = "CultStation13"
 		/turf/simulated/wall/cult
 		)
 
-	var/list/construct_types = list(
-		/mob/living/simple_animal/construct/armoured,
-		/mob/living/simple_animal/construct/wraith,
-		/mob/living/simple_animal/construct/builder
-		)
-
+	//our space stations are different
 	var/list/random_structure = list(
 		/obj/structure/cult/talisman,
 		/obj/structure/cult/forge,
@@ -55,7 +51,8 @@ var/global/narsie_behaviour = "CultStation13"
 		//obj/structure/cult/pylon	Not included on purpose. These are what lights are replaced by.
 		)
 
-	var/list/trash_machinery = list(	//Machinery that gets deleted and isn't replaced with cult structures
+	//Machinery that gets deleted and isn't replaced with cult structures
+	var/list/trash_machinery = list(
 		/obj/machinery/camera,
 		/obj/machinery/power,
 		/obj/machinery/light_switch,
@@ -87,8 +84,9 @@ var/global/narsie_behaviour = "CultStation13"
 		/obj/machinery/meter,
 		/obj/machinery/keycard_auth,
 		/obj/machinery/airlock_sensor,
-		/obj/machinery/turretid
-		)
+		/obj/machinery/turretid,
+		/obj/machinery/bot
+		)//I know just how snowflake heavy those lists are, but the result is worth it.
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
@@ -98,6 +96,8 @@ var/global/narsie_behaviour = "CultStation13"
 	pixel_x = -236
 	pixel_y = -256
 	luminosity = 1
+	l_color = "#3e0000"
+
 
 	current_size = 12
 	consume_range = 12 // How many tiles out do we eat.
@@ -113,8 +113,9 @@ var/global/narsie_behaviour = "CultStation13"
 
 	if(cultspawn)
 		SetUniversalState(/datum/universal_state/hell)
-
+/*
 	updateicon()
+*/
 
 /obj/machinery/singularity/narsie/process()
 	eat()
@@ -127,6 +128,11 @@ var/global/narsie_behaviour = "CultStation13"
 	if (prob(25))
 		mezzer()
 
+/obj/machinery/singularity/narsie/large/eat()
+	set background = BACKGROUND_ENABLED
+	for (var/atom/A in orange(consume_range, src))
+		consume(A)
+
 /obj/machinery/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
@@ -135,6 +141,54 @@ var/global/narsie_behaviour = "CultStation13"
 				M.apply_effect(3, STUN)
 
 
+/obj/machinery/singularity/narsie/Bump(atom/A)
+	if(isturf(A))
+		narsiewall(A)
+	else if(istype(A, /obj/structure/cult))
+		del(A)
+	else
+		consume(A)
+
+/obj/machinery/singularity/narsie/Bumped(atom/A)
+	if(isturf(A))
+		narsiewall(A)
+	else if(istype(A, /obj/structure/cult))
+		del(A)
+	else
+		consume(A)
+
+/obj/machinery/singularity/narsie/move(var/force_move = 0)
+	if(!move_self)
+		return 0
+
+	var/movement_dir = pick(alldirs - last_failed_movement)
+
+	if(force_move)
+		movement_dir = force_move
+
+	if(target && prob(60))
+		movement_dir = get_dir(src,target)
+
+	spawn(0)
+		step(src, movement_dir)
+		narsiefloor(get_turf(loc))
+	spawn(1)
+		step(src, movement_dir)
+		narsiefloor(get_turf(loc))
+	return 1
+
+/obj/machinery/singularity/narsie/proc/narsiefloor(var/turf/T)//leaving "footprints"
+	if(!(istype(T, /turf/simulated/floor/engine/cult/narsie)||istype(T, /turf/simulated/wall/cult)||istype(T, /turf/space)))
+		T.ChangeTurf(/turf/simulated/floor/engine/cult/narsie)
+
+/obj/machinery/singularity/narsie/proc/narsiewall(var/turf/T)
+	T.desc = "An opening has been made on that wall, but who can say if what you seek truly lies on the other side?"
+	T.icon = 'icons/turf/walls.dmi'
+	T.icon_state = "cult-narsie"
+	T.opacity = 0
+	T.density = 0
+	luminosity = 1
+	l_color = "#3e0000"
 
 /obj/machinery/singularity/narsie/consume(const/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
 //NEW BEHAVIOUR
@@ -142,7 +196,7 @@ var/global/narsie_behaviour = "CultStation13"
 		if (is_type_in_list(A, uneatable_narsie))
 			return 0
 	//MOB PROCESSING
-		if (istype(A, /mob/living/))
+		if (istype(A, /mob/living/) && (get_dist(A, src) <= 7))//approximatively matches the size of its sprite, so you won't get gobbled up before you can even see it. hopefully.
 			var/mob/living/M = A
 			if(iscultist(M) && M.client)
 				var/mob/living/simple_animal/construct/harvester/C = new /mob/living/simple_animal/construct/harvester(get_turf(M))
@@ -323,12 +377,14 @@ var/global/narsie_behaviour = "CultStation13"
 	else
 		target << "\red <b>[capname] HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL.</b>"
 
-
+/*
 ////////////////Glow//////////////////
 /obj/machinery/singularity/narsie/proc/updateicon()
 	overlays = 0
 	var/overlay_layer = LIGHTING_LAYER+1
 	overlays += image(icon,"glow-[icon_state]",overlay_layer)
+
+*/
 
 /**
  * Wizard narsie.

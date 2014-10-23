@@ -20,7 +20,7 @@
 	icon_state = "pylon"
 	var/isbroken = 0
 	luminosity = 5
-	l_color = "#B40000"
+	l_color = "#3e0000"
 	var/obj/item/wepon = null
 
 /obj/structure/cult/pylon/attack_hand(mob/M as mob)
