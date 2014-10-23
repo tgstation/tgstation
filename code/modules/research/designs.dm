@@ -2018,6 +2018,15 @@ other types of metals and chemistry for reagents).
 	materials = list ("$metal" = 800, "$glass" = 200)
 	build_path = /obj/item/device/gps/science
 
+/datum/design/mat_synth
+	name = "Material Synthasizer"
+	desc = "A device capable of producing very little rare material with a whole lot of investment."
+	id = "mat_synth"
+	req_tech = list("engineering" = 4, "materials" = 5, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list ("$metal" = 3000, "$glass" = 1500, "$diamond" = 1000, "$uranium" = 3000)
+	build_path = /obj/item/device/material_synth
+
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
 /////////////////////////////////////////

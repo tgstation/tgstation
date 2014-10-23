@@ -549,6 +549,7 @@
 #include "code\game\objects\items\devices\handtv.dm"
 #include "code\game\objects\items\devices\lightreplacer.dm"
 #include "code\game\objects\items\devices\maracas.dm"
+#include "code\game\objects\items\devices\mat_synth.dm"
 #include "code\game\objects\items\devices\megaphone.dm"
 #include "code\game\objects\items\devices\modkit.dm"
 #include "code\game\objects\items\devices\multitool.dm"

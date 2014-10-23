@@ -205,8 +205,7 @@ var/global/list/datum/stack_recipe/phazon_recipes = list()
 	desc = "Holy christ what is this?"
 	icon_state = "sheet-phazon"
 	item_state = "sheet-phazon"
-	m_amt = 7500
-	w_type = RECYK_METAL
+	perunit = 1500
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=9"

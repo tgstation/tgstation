@@ -20,7 +20,9 @@
 		src.modules += new /obj/item/weapon/pipe_dispenser(src)
 		src.modules += new /obj/item/weapon/tile_painter(src)
 		src.modules += new /obj/item/blueprints/mommiprints(src)
+		src.modules += new /obj/item/device/material_synth/cyborg(src)
 
+/*
 		// Added this back in since it made the MoMMI practically useless for engineering stuff.
 		var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
 		M.amount = 50
@@ -56,3 +58,4 @@
 				src.modules += O
 				O:amount = 1
 		return
+*/
