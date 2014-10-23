@@ -1331,13 +1331,10 @@ var/global/list/organ_damage_overlays = list(
 							else
 								switch(total_damage)
 									if(30 to INFINITY)
-										testing("[e.name] adding max overlay")
 										healths.overlays.Add(organ_damage_overlays["[e.name]_max"])
 									if(15 to 30)
-										testing("[e.name] adding mid overlay")
 										healths.overlays.Add(organ_damage_overlays["[e.name]_mid"])
 									if(5 to 15)
-										testing("[e.name] adding min overlay")
 										healths.overlays.Add(organ_damage_overlays["[e.name]_min"])
 					switch(hal_screwyhud)
 						if(1)	healths.icon_state = "health6"
