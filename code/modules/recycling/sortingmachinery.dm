@@ -6,6 +6,7 @@
 	density = 1
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/obj/wrapped = null
+	var/giftwrapped = 0
 	var/sortTag = 0
 
 
@@ -41,12 +42,19 @@
 		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
 		name = "[name] ([str])"
 
-	else if(istype(W, /obj/item/stack/wrapping_paper))
-		user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
-		if(istype(wrapped, /obj/structure/closet/crate))
-			icon_state = "giftcrate"
+	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
+		var/obj/item/stack/wrapping_paper/WP = W
+		if(WP.use(3))
+			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			giftwrapped = 1
+			if(istype(wrapped, /obj/structure/closet/crate))
+				icon_state = "giftcrate"
+			else
+				icon_state = "giftcloset"
+			if(WP.amount <= 0 && !WP.loc) //if we used our last wrapping paper, drop a cardboard tube
+				new /obj/item/weapon/c_tube( get_turf(user) )
 		else
-			icon_state = "giftcloset"
+			user << "<span class='notice'>You need more paper.</span>"
 
 
 /obj/item/smallDelivery
@@ -55,11 +63,12 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrateSmall"
 	var/obj/item/wrapped = null
+	var/giftwrapped = 0
 	var/sortTag = 0
 
 
 /obj/item/smallDelivery/attack_self(mob/user as mob)
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+	if(wrapped && wrapped.loc) //sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = user.loc
 		if(ishuman(user))
 			user.put_in_hands(wrapped)
@@ -87,9 +96,17 @@
 		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
 		name = "[name] ([str])"
 
-	else if(istype(W, /obj/item/stack/wrapping_paper))
-		icon_state = "giftcrate[wrapped.w_class]"
-		user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
+		var/obj/item/stack/wrapping_paper/WP = W
+		if(WP.use(1))
+			icon_state = "giftcrate[wrapped.w_class]"
+			giftwrapped = 1
+			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			if(WP.amount <= 0 && !WP.loc) //if we used our last wrapping paper, drop a cardboard tube
+				new /obj/item/weapon/c_tube( get_turf(user) )
+		else
+			user << "<span class='notice'>You need more paper.</span>"
+
 
 
 /obj/item/stack/packageWrap
@@ -97,8 +114,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
 	flags = NOBLUDGEON
-	w_class = 3.0
 	amount = 25
+	max_amount = 25
 
 
 /obj/item/stack/packageWrap/afterattack(var/obj/target as obj, mob/user as mob, proximity)
@@ -113,11 +130,11 @@
 	if(target in user)
 		return
 
-	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on \ref[target]</font>")
+
 
 	if(istype(target, /obj/item) && !(istype(target, /obj/item/weapon/storage) && !istype(target,/obj/item/weapon/storage/box)))
 		var/obj/item/O = target
-		if(amount > 1)
+		if(use(1))
 			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
 			if(!istype(O.loc, /turf))
 				if(user.client)
@@ -131,33 +148,37 @@
 			P.add_fingerprint(usr)
 			O.add_fingerprint(usr)
 			add_fingerprint(usr)
-			amount -= 1
+		else
+			return
 	else if(istype(target, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/O = target
-		if(amount > 3 && !O.opened)
+		if(use(3) && !O.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			P.icon_state = "deliverycrate"
 			P.wrapped = O
 			O.loc = P
-			amount -= 3
-		else if(amount < 3)
+		else
 			user << "<span class='notice'>You need more paper.</span>"
+			return
 	else if(istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
-		if(amount > 3 && !O.opened)
+		if(use(3) && !O.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			P.wrapped = O
 			O.welded = 1
 			O.loc = P
-			amount -= 3
-		else if(amount < 3)
+		else
 			user << "<span class='notice'>You need more paper.</span>"
+			return
 	else
 		user << "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery.</span>"
-	if(amount <= 0)
-		new /obj/item/weapon/c_tube( loc )
-		qdel(src)
 		return
+
+	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on [target]</font>")
+
+	if(amount <= 0 && !src.loc) //if we used our last wrapping paper, drop a cardboard tube
+		new /obj/item/weapon/c_tube( get_turf(user) )
 	return
 
 
