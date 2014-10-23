@@ -721,7 +721,9 @@
 
 	if(istype(usr,/mob/living/silicon))
 		return
-
+	if(isobserver(user))
+		if(!(..()))
+			return 0
 	if(harvest)
 		harvest(user)
 	else if(dead)
