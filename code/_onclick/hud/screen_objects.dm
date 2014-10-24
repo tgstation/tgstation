@@ -563,7 +563,83 @@
 						M.wearhat(null)
 					else if (istype(M.get_active_hand(), /obj/item/clothing/head))
 						M.wearhat(M.get_active_hand())
-
+		if("wall")
+			if(isconstruct(usr))
+				var/mob/living/simple_animal/construct/builder/C = usr
+				var/obj/effect/proc_holder/spell/S = null
+				for(var/datum/D in C.spell_list)
+					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/wall))
+						S = D
+						break
+				if(S)
+					if(S.cast_check())
+						S.choose_targets()
+		if("floor")
+			if(isconstruct(usr))
+				var/mob/living/simple_animal/construct/builder/C = usr
+				var/obj/effect/proc_holder/spell/S = null
+				for(var/datum/D in C.spell_list)
+					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/floor ))
+						S = D
+						break
+				if(S)
+					if(S.cast_check())
+						S.choose_targets()
+		if("soulstone")
+			if(isconstruct(usr))
+				var/mob/living/simple_animal/construct/builder/C = usr
+				var/obj/effect/proc_holder/spell/S = null
+				for(var/datum/D in C.spell_list)
+					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone ))
+						S = D
+						break
+				if(S)
+					if(S.cast_check())
+						S.choose_targets()
+		if("shell")
+			if(isconstruct(usr))
+				var/mob/living/simple_animal/construct/builder/C = usr
+				var/obj/effect/proc_holder/spell/S = null
+				for(var/datum/D in C.spell_list)
+					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser  ))
+						S = D
+						break
+				if(S)
+					if(S.cast_check())
+						S.choose_targets()
+		if("pylon")
+			if(isconstruct(usr))
+				var/mob/living/simple_animal/construct/builder/C = usr
+				var/obj/effect/proc_holder/spell/S = null
+				for(var/datum/D in C.spell_list)
+					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/pylon ))
+						S = D
+						break
+				if(S)
+					if(S.cast_check())
+						S.choose_targets()
+		if("shift")
+			if(isconstruct(usr))
+				var/mob/living/simple_animal/construct/wraith/C = usr
+				var/obj/effect/proc_holder/spell/S = null
+				for(var/datum/D in C.spell_list)
+					if(istype(D, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift ))
+						S = D
+						break
+				if(S)
+					if(S.cast_check())
+						S.choose_targets()
+		if("juggerwall")
+			if(isconstruct(usr))
+				var/mob/living/simple_animal/construct/armoured/C = usr
+				var/obj/effect/proc_holder/spell/S = null
+				for(var/datum/D in C.spell_list)
+					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall ))
+						S = D
+						break
+				if(S)
+					if(S.cast_check())
+						S.choose_targets()
 		else
 			return 0
 	return 1

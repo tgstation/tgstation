@@ -32,6 +32,14 @@
 			var/spawn_place = pick(targets)
 			if(summon_ignore_prev_spawn_points)
 				targets -= spawn_place
+			var/atom/summoned_object = new summoned_object_type(spawn_place)
+			var/atom/movable/overlay/animation = new /atom/movable/overlay(spawn_place)
+			animation.name = "conjure"
+			animation.density = 0
+			animation.anchored = 1
+			animation.icon = 'icons/effects/effects.dmi'
+			animation.layer = 3
+			animation.master = summoned_object
 			if(ispath(summoned_object_type,/turf))
 				if(istype(get_turf(usr),/turf/simulated/shuttle))
 					usr << "\red You can't build things on shuttles!"
@@ -40,7 +48,6 @@
 				var/N = summoned_object_type
 				O.ChangeTurf(N)
 			else
-				var/atom/summoned_object = new summoned_object_type(spawn_place)
 
 				for(var/varName in newVars)
 					if(varName in summoned_object.vars)
@@ -50,6 +57,7 @@
 					spawn(summon_lifespan)
 						if(summoned_object)
 							del(summoned_object)
+			conjure_animation(animation, spawn_place)
 	else
 		switch(charge_type)
 			if("recharge")
@@ -57,8 +65,10 @@
 			if("charges")
 				charge_counter++//Ditto, just for different spell types
 
-
 	return
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/proc/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
+	del(animation)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/summonEdSwarm //test purposes
 	name = "Dispense Wizard Justice"

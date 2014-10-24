@@ -112,11 +112,13 @@
 	narsimage.pixel_x = 32 * (N.x - src.x) + N.pixel_x
 	narsimage.pixel_y = 32 * (N.y - src.y) + N.pixel_y
 	narsimage.loc = src.loc
+	narsimage.mouse_opacity = 0
 	if(!narglow)
 		narglow = image('icons/obj/narsie.dmi',narsimage.loc,"glow-narsie",LIGHTING_LAYER+2,1)
 	narglow.pixel_x = narsimage.pixel_x
 	narglow.pixel_y = narsimage.pixel_y
 	narglow.loc = narsimage.loc
+	narglow.mouse_opacity = 0
 	src << narsimage
 	src << narglow
 

@@ -2,6 +2,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser
 	charge_max = 1800
+	summon_type = list(/obj/structure/constructshell/cult)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
 	name = "Floor Construction"
@@ -16,6 +17,12 @@
 	summon_type = list(/turf/simulated/floor/engine/cult)
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/floor/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
+	animation.icon_state = "cultfloor"
+	flick("cultfloor",animation)
+	spawn(10)
+		del(animation)
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Lesser Construction"
 	desc = "This spell constructs a cult wall"
@@ -28,6 +35,12 @@
 	range = 0
 	summon_type = list(/turf/simulated/wall/cult)
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/wall/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
+	animation.icon_state = "cultwall"
+	flick("cultwall",animation)
+	spawn(10)
+		del(animation)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"

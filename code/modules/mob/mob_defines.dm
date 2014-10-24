@@ -41,6 +41,13 @@
 	var/obj/screen/m_hat = null
 	var/obj/screen/m_hatbg = null
 
+	//construct spells hud icons
+	var/obj/screen/construct_spell1 = null
+	var/obj/screen/construct_spell2 = null
+	var/obj/screen/construct_spell3 = null
+	var/obj/screen/construct_spell4 = null
+	var/obj/screen/construct_spell5 = null
+
 	//thou shall always be able to see the Geometer of Blood
 	var/image/narsimage = null
 	var/image/narglow = null
