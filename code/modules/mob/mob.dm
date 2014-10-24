@@ -309,6 +309,8 @@ var/list/slot_equipment_priority = list( \
 		return
 	if(src.status_flags & FAKEDEATH)
 		return
+	if(!(A in view(src.loc)))
+		return
 	if(istype(A, /obj/effect/decal/point))
 		return
 
