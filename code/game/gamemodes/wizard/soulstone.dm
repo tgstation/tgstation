@@ -10,7 +10,6 @@
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted = "empty"
 
-
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
@@ -76,6 +75,9 @@
 					src.icon_state = "soulstone"
 		attack_self(U)
 
+/obj/item/device/soulstone/cultify()
+	return
+
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
 	name = "empty shell"
@@ -83,6 +85,9 @@
 	icon_state = "construct"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 	flags = FPRINT | TABLEPASS
+
+/obj/structure/constructshell/cultify()
+	return
 
 /obj/structure/constructshell/cult
 	icon_state = "construct-cult"

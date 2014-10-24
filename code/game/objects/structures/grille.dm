@@ -12,6 +12,11 @@
 	var/health = 10
 	var/destroyed = 0
 
+/obj/structure/grille/cultify()
+	var/turf/T = get_turf(src)
+	T.ChangeTurf(/turf/simulated/wall/cult)
+	..()
+
 /obj/structure/grille/fence/east_west
 	//width=80
 	//height=42

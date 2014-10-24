@@ -110,6 +110,9 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/engine/cult/cultify()
+	return
+
 /turf/simulated/floor/engine/cult/narsie//version that spawns on Nar-Sie's path
 	name = "engraved floor"
 	desc = "something that goes beyond your understanding went this way"
@@ -178,9 +181,19 @@
 	density = 1
 	blocks_air = 1
 
+/turf/simulated/shuttle/wall/cultify()
+	ChangeTurf(/turf/simulated/wall/cult)
+	cultification()
+	return
+
 /turf/simulated/shuttle/floor
 	name = "floor"
 	icon_state = "floor"
+
+/turf/simulated/shuttle/floor/cultify()
+	ChangeTurf(/turf/simulated/floor/engine/cult)
+	cultification()
+	return
 
 /turf/simulated/shuttle/plating
 	name = "plating"
@@ -190,6 +203,11 @@
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
 	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
 	icon_state = "floor4"
+
+/turf/simulated/shuttle/floor4/cultify()
+	ChangeTurf(/turf/simulated/floor/engine/cult)
+	cultification()
+	return
 
 /turf/simulated/floor/beach
 	name = "Beach"
@@ -249,6 +267,9 @@
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
 							FF.update_icon() //so siding get updated properly
+
+/turf/simulated/floor/carpet/cultify()
+	return
 
 /turf/simulated/floor/carpet/arcade
 	name = "Arcade Carpet"

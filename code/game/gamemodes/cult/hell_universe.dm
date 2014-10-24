@@ -24,15 +24,11 @@ In short:
 	*/
 
 /datum/universal_state/hell/DecayTurf(var/turf/T)
-	if(istype(T,/turf/simulated/wall) && !istype(T,/turf/simulated/wall/cult))
-		T.ChangeTurf(/turf/simulated/wall/cult)
-		return
-	if(istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/engine/cult) && !istype(T,/turf/simulated/floor/carpet))
-		T.ChangeTurf(/turf/simulated/floor/engine/cult)
-		for(var/obj/machinery/light/L in T.contents)
-			new /obj/structure/cult/pylon(L.loc)
-			qdel(L)
-		return
+	T.cultify()
+	for(var/obj/machinery/light/L in T.contents)
+		new /obj/structure/cult/pylon(L.loc)
+		qdel(L)
+	return
 
 
 // Apply changes when entering state

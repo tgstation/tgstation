@@ -65,6 +65,10 @@ var/global/ingredientLimit = 10
 	var/obj/item/ingredient	=	null //Current ingredient
 	var/list/foodChoices	=	list() //Null if not offered
 
+/obj/machinery/cooking/cultify()
+	new /obj/structure/cult/talisman(loc)
+	..()
+
 /obj/machinery/cooking/New()
 	if(src.foodChoices)
 		src.foodChoices = src.getFoodChoices()

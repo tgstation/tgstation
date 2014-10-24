@@ -266,6 +266,7 @@
 #include "code\game\gamemodes\cult\ritual.dm"
 #include "code\game\gamemodes\cult\runes.dm"
 #include "code\game\gamemodes\cult\talisman.dm"
+#include "code\game\gamemodes\cult\trash_machinery.dm"
 #include "code\game\gamemodes\endgame\endgame.dm"
 #include "code\game\gamemodes\endgame\supermatter_cascade\blob.dm"
 #include "code\game\gamemodes\endgame\supermatter_cascade\portal.dm"

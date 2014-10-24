@@ -1,6 +1,10 @@
 var/list/sacrificed = list()
 
 /obj/effect/rune
+
+/obj/effect/rune/cultify()
+	return
+
 /////////////////////////////////////////FIRST RUNE
 /obj/effect/rune/proc/teleport(var/key)
 	var/mob/living/user = usr

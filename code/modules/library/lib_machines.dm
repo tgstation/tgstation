@@ -32,6 +32,10 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/author
 	var/SQLquery
 
+/obj/machinery/librarypubliccomp/cultify()
+	new /obj/structure/cult/tome(loc)
+	..()
+
 /obj/machinery/librarypubliccomp/attack_hand(var/mob/user as mob)
 	if(istype(user,/mob/dead))
 		user << "<span class='danger'>Nope.</span>"
@@ -141,6 +145,10 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
 	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+
+/obj/machinery/librarycomp/cultify()
+	new /obj/structure/cult/tome(loc)
+	..()
 
 /obj/machinery/librarycomp/attack_hand(var/mob/user as mob)
 	if(istype(user,/mob/dead))

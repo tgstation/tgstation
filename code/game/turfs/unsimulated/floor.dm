@@ -22,3 +22,15 @@
 	else
 		step(user.pulling, get_dir(user.pulling.loc, src))
 	return
+
+/turf/unsimulated/floor/cult
+	name = "engraved floor"
+	icon_state = "cult"
+
+/turf/unsimulated/floor/cultify()
+	ChangeTurf(/turf/unsimulated/floor/cult)
+	cultification()
+	return
+
+/turf/unsimulated/floor/cult/cultify()
+	return

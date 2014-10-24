@@ -23,6 +23,9 @@
 	autoignition_temperature = AUTOIGNITION_WOOD
 	fire_fuel = 10
 
+/obj/structure/bookcase/cultify()
+	return
+
 /obj/structure/bookcase/initialize()
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/weapon/book))
@@ -163,6 +166,10 @@
 	var/title		 // The real name of the book.
 	var/carved = 0	 // Has the book been hollowed out for use as a secret storage item?
 	var/obj/item/store	//What's in the book?
+
+/obj/item/weapon/book/cultify()
+	new /obj/item/weapon/tome(loc)
+	..()
 
 /obj/item/weapon/book/attack_self(var/mob/user as mob)
 	if(carved)

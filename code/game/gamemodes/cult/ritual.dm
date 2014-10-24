@@ -492,6 +492,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		else
 			usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
 
+/obj/item/weapon/tome/cultify()
+	return
+
 /obj/item/weapon/tome/imbued //admin tome, spawns working runes without waiting
 	w_class = 2.0
 	var/cultistsonly = 1

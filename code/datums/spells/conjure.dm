@@ -110,3 +110,7 @@
 	icon_state = "m_shield_cult"
 	l_color = "#B40000"
 	luminosity = 2
+
+
+/obj/effect/forcefield/cult/cultify()
+	return

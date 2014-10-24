@@ -296,6 +296,9 @@
 
 	update_nearby_tiles()
 
+/obj/machinery/door/cultify()
+	qdel(src)
+
 /obj/machinery/door/Destroy()
 	update_nearby_tiles()
 	..()

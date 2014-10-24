@@ -55,6 +55,10 @@
 	var/obj/machinery/account_database/linked_db
 	var/datum/money_account/linked_account
 
+/obj/machinery/vending/cultify()
+	new /obj/structure/cult/forge(loc)
+	..()
+
 /obj/machinery/vending/New()
 	..()
 	wires = new(src)

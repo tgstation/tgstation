@@ -16,78 +16,15 @@ var/global/narsie_behaviour = "CultStation13"
 
 	//all the snowflakes that nar-sie won't touch
 	var/list/uneatable_narsie = list(
-		/obj/effect/overlay,
 		/mob/dead,
 		/mob/camera,
 		/mob/new_player,
-		/obj/effect/rune,
-		/obj/effect/decal/cleanable/blood,
-		/obj/effect/decal/remains,
-		/obj/effect/forcefield/cult,
 		/mob/living/simple_animal/construct,
 		/mob/living/simple_animal/hostile/scarybat/cult,
 		/mob/living/simple_animal/hostile/creature/cult,
 		/mob/living/simple_animal/hostile/faithless/cult,
-		/obj/item/weapon/tome,
-		/obj/item/weapon/melee/cultblade,
-		/obj/item/weapon/table_parts/wood,
-		/obj/item/device/soulstone,
-		/obj/structure/constructshell,
-		/obj/structure/cult,
-		/obj/structure/bookcase,
-		/obj/structure/stool/bed/chair/wood/wings,
-		/obj/structure/mineral_door/wood,
-		/obj/structure/table/woodentable,
-		/obj/structure/bookcase,
-		/turf/simulated/floor/carpet,
-		/turf/simulated/floor/engine/cult,
-		/turf/simulated/wall/cult
 		)
 
-	//our space stations are different
-	var/list/random_structure = list(
-		/obj/structure/cult/talisman,
-		/obj/structure/cult/forge,
-		/obj/structure/cult/tome
-		//obj/structure/cult/pylon	Not included on purpose. These are what lights are replaced by.
-		)
-
-	//Machinery that gets deleted and isn't replaced with cult structures
-	var/list/trash_machinery = list(
-		/obj/machinery/camera,
-		/obj/machinery/power,
-		/obj/machinery/light_switch,
-		/obj/machinery/firealarm,
-		/obj/machinery/alarm,
-		/obj/machinery/atm,
-		/obj/machinery/hologram,
-		/obj/machinery/atmospherics,
-		/obj/machinery/status_display,
-		/obj/machinery/newscaster,
-		/obj/machinery/media,
-		/obj/machinery/door_control,
-		/obj/machinery/access_button,
-		/obj/machinery/embedded_controller,
-		/obj/machinery/navbeacon,
-		/obj/machinery/gateway,
-		/obj/machinery/space_heater,
-		/obj/machinery/crema_switch,
-		/obj/machinery/portable_atmospherics,
-		/obj/machinery/pos,
-		/obj/machinery/requests_console,
-		/obj/machinery/computer/security/telescreen,
-		/obj/machinery/conveyor_switch,
-		/obj/machinery/conveyor,
-		/obj/machinery/vending/wallmed1,
-		/obj/machinery/flasher,
-		/obj/machinery/flasher_button,
-		/obj/machinery/cell_charger,
-		/obj/machinery/meter,
-		/obj/machinery/keycard_auth,
-		/obj/machinery/airlock_sensor,
-		/obj/machinery/turretid,
-		/obj/machinery/bot
-		)//I know just how snowflake heavy those lists are, but the result is worth it.
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
@@ -139,7 +76,7 @@ var/global/narsie_behaviour = "CultStation13"
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				M << "\red You feel your sanity crumble away in an instant as you gaze upon [src.name]..."
+				M << "<span class='danger'> You feel your sanity crumble away in an instant as you gaze upon [src.name]...</span>"
 				M.apply_effect(3, STUN)
 
 
@@ -174,13 +111,15 @@ var/global/narsie_behaviour = "CultStation13"
 	spawn(0)
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
-		for (var/mob/M in orange(consume_range+10, src))
-			M.see_narsie(src)
+		for(var/mob/M in mob_list)
+			if(M.client && M.z == src.z && get_dist(src,M) <= (src.consume_range+10))
+				M.see_narsie(src)
 	spawn(1)
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
-		for (var/mob/M in orange(consume_range+10, src))
-			M.see_narsie(src)
+		for(var/mob/M in mob_list)
+			if(M.client && M.z == src.z && get_dist(src,M) <= (src.consume_range+10))
+				M.see_narsie(src)
 	return 1
 
 /obj/machinery/singularity/narsie/proc/narsiefloor(var/turf/T)//leaving "footprints"
@@ -211,49 +150,8 @@ var/global/narsie_behaviour = "CultStation13"
 			M.dust()
 	//ITEM PROCESSING
 		else if (istype(A, /obj/))
-			if(istype(A, /obj/item/))
-				if(istype(A, /obj/item/weapon/table_parts))
-					new /obj/item/weapon/table_parts/wood(A.loc)
-				else if(istype(A, /obj/item/device/flashlight/lamp))
-					new /obj/structure/cult/pylon(A.loc)
-			else if(istype(A, /obj/machinery/) && !is_type_in_list(A, trash_machinery))
-				if(istype(A, /obj/machinery/light))
-					new /obj/structure/cult/pylon(A.loc)
-				else if((istype(A, /obj/machinery/computer)) || (istype(A, /obj/machinery/librarycomp)))
-					new /obj/structure/cult/tome(A.loc)
-				else if(istype(A, /obj/machinery/cooking))
-					new /obj/structure/cult/talisman(A.loc)
-				else if(istype(A, /obj/machinery/vending))
-					new /obj/structure/cult/forge(A.loc)
-				else if(istype(A, /obj/machinery/door/unpowered/shuttle))
-					new /obj/structure/mineral_door/wood(A.loc)
-				else if(!istype(A, /obj/machinery/door))
-					var/I = pick(random_structure)
-					new I(A.loc)
-				if (A && !istype(A, /obj/structure/reagent_dispensers/fueltank))
-					A.ex_act(1)
-			else if(istype(A, /obj/structure/))
-				if(istype(A, /obj/structure/grille))
-					var/turf/F0 = get_turf(A)
-					F0.ChangeTurf(/turf/simulated/wall/cult)
-					var/turf/simulated/wall/cult/F1 = F0
-					F1.del_suppress_resmoothing=1 // Reduce lag from wallsmoothing.
-				else if(istype(A, /obj/structure/table))
-					new /obj/structure/table/woodentable(A.loc)
-				else if(istype(A, /obj/structure/shuttle/engine/propulsion))
-					var/turf/F20 = get_turf(A)
-					F20.ChangeTurf(/turf/simulated/wall/cult)
-					var/turf/simulated/wall/cult/F21 = F20
-					F21.del_suppress_resmoothing=1
-				else if(istype(A, /obj/structure/shuttle/engine/heater))
-					new /obj/structure/cult/pylon(A.loc)
-				else if(istype(A, /obj/structure/stool))
-					var/obj/structure/stool/bed/chair/wood/wings/I2 = new /obj/structure/stool/bed/chair/wood/wings(A.loc)
-					I2.dir = A.dir
-				if (A && !istype(A, /obj/structure/reagent_dispensers/fueltank))
-					A.ex_act(1)
-			if (A)
-				qdel(A)
+			var/obj/O = A
+			O.cultify()
 
 	//TURF PROCESSING
 		else if (isturf(A))
@@ -274,24 +172,10 @@ var/global/narsie_behaviour = "CultStation13"
 					if (101 == AM.invisibility)
 						continue
 
-					spawn (0)
-						step_towards(AM, src)
-
 			if (dist <= consume_range && !istype(A, /turf/space))
 				var/turf/T = A
-				if (istype(T,/turf/simulated/shuttle/wall))
-					T.icon = 'icons/turf/walls.dmi'
-					T.icon_state = "cult"
-				else if(istype(T,/turf/simulated/wall)|| istype(T,/turf/unsimulated/wall))
-					var/turf/simulated/wall/W = T
-					if(!istype(T,/turf/unsimulated/wall))
-						W.del_suppress_resmoothing=1 // Reduce lag from wallsmoothing.
-					W.ChangeTurf(/turf/simulated/wall/cult)
-				else if(istype(T,/turf/simulated/floor) || istype(T,/turf/simulated/shuttle/floor) || istype(T,/turf/simulated/shuttle/floor4) || istype(T,/turf/unsimulated/floor))
-					var/turf/simulated/floor/F = T
-					F.ChangeTurf(/turf/simulated/floor/engine/cult)
-				else if(!istype(T,/turf/unsimulated/beach))
-					T.ChangeTurf(/turf/space)
+				T.cultify()
+
 //OLD BEHAVIOUR
 	else if(narsie_behaviour == "Nar-Singulo")
 		if (is_type_in_list(A, uneatable))
@@ -375,13 +259,13 @@ var/global/narsie_behaviour = "CultStation13"
 /obj/machinery/singularity/narsie/proc/acquire(const/mob/food)
 	var/capname = uppertext(name)
 
-	target << "\blue <b>[capname] HAS LOST INTEREST IN YOU.</b>"
+	target << "<span class='notice'><b>[capname] HAS LOST INTEREST IN YOU.</b></span>"
 	target = food
 
 	if (ishuman(target))
-		target << "\red <b>[capname] HUNGERS FOR YOUR SOUL.</b>"
+		target << "<span class='danger'>[capname] HUNGERS FOR YOUR SOUL.</span>"
 	else
-		target << "\red <b>[capname] HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL.</b>"
+		target << "<span class='danger'>[capname] HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL.</span>"
 
 /*
 ////////////////Glow//////////////////

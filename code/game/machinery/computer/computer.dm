@@ -9,6 +9,10 @@
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
 
+/obj/machinery/computer/cultify()
+	new /obj/structure/cult/tome(loc)
+	..()
+
 /obj/machinery/computer/New()
 	..()
 	if(ticker)
