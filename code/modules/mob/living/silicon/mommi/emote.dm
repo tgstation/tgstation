@@ -62,16 +62,16 @@
 
 		if ("clap")
 			if (!src.restrained())
-				message = "<B>[src]</B> clangs \his utility claws together in a crude simulation of applause."
+				message = "<B>[src]</B> clangs its utility claws together in a crude simulation of applause."
 				m_type = 2
 		if ("flap")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps \his utility arms as through they were wings."
+				message = "<B>[src]</B> flaps its utility arms as through they were wings."
 				m_type = 2
 
 		if ("aflap")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps his utility arms ANGRILY!"
+				message = "<B>[src]</B> flaps its utility arms ANGRILY!"
 				m_type = 2
 
 		if ("custom")
@@ -111,7 +111,7 @@
 			m_type = 1
 
 		if ("nod")
-			message = "<B>[src]</B> bobs \his body in a rough approximation of nodding."
+			message = "<B>[src]</B> bobs its body in a rough approximation of nodding."
 			m_type = 1
 
 		if ("deathgasp")
