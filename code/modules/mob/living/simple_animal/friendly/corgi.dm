@@ -133,7 +133,7 @@
 
 					//The objects that corgis can wear on their backs.
 					var/list/allowed_types = list(
-						/obj/item/clothing/suit/armor/vest,
+						/obj/item/clothing/suit/armor/vest/slim,
 						/obj/item/device/radio,
 						/obj/item/device/radio/off,
 						/obj/item/clothing/suit/cardborg,
