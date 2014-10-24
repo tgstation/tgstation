@@ -71,15 +71,14 @@
 	flags_inv = HIDEEARS
 	strip_delay = 80
 
-/obj/item/clothing/head/HoS/dermal
-	name = "Dermal Armor Patch"
-	desc = "An armored implant that automatically integrates just below the scalp for robust protection without sacrificing style."
-	icon_state = "dermal"
-	item_state = "dermal"
-	flags_inv = 0
+/obj/item/clothing/head/HoS/police
+	name = "head of security police hat"
+	desc = "A robust, additionally armored version of a standard police cap in a tactical black color. For the classic look."
+	icon_state = "policehelmblack"
+	item_state = "policehelmblack"
 
 /obj/item/clothing/head/warden
-	name = "warden's hat"
+	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "policehelm"
 	armor = list(melee = 60, bullet = 5, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
