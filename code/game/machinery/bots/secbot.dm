@@ -32,7 +32,8 @@
 		/obj/item/weapon/gun/energy/laser/bluetag,\
 		/obj/item/weapon/gun/energy/laser/redtag,\
 		/obj/item/weapon/gun/energy/laser/practice,\
-		/obj/item/weapon/melee/telebaton)
+		/obj/item/weapon/melee/telebaton,\
+		/obj/item/weapon/gun/energy/kinetic_accelerator)
 
 
 /obj/machinery/bot/secbot/beepsky
