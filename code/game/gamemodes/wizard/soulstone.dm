@@ -10,9 +10,18 @@
 	var/imprinted = "empty"
 
 
+/obj/item/device/soulstone/pickup(mob/living/user as mob)
+	if(!iscultist(user) && !iswizard(user))
+		user << "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>"
+		user.Dizzy(120)
+
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 /obj/item/device/soulstone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	if(!iscultist(user) && !iswizard(user))
+		user.Paralyse(5)
+		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
+		return
 	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 		return ..()
 	if(istype(M, /mob/living/carbon/human/dummy))
@@ -26,6 +35,10 @@
 
 /obj/item/device/soulstone/attack_self(mob/user)
 	if (!in_range(src, user))
+		return
+	if(!iscultist(user) && !iswizard(user))
+		user.Paralyse(5)
+		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
 		return
 	user.set_machine(src)
 	var/dat = "<TT><B>Soul Stone</B><BR>"
