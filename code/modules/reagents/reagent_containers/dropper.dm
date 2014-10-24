@@ -19,7 +19,7 @@
 			if(filled)
 				if(istype(target, /obj/machinery/artifact))
 					src.reagents.clear_reagents()
-					user << "\blue You squirt the solution onto the [target]!"
+					<span class='notice'>You squirt the solution onto the [target]!</span>
 					filled = 0
 					icon_state = "dropper[filled]"
 			return
