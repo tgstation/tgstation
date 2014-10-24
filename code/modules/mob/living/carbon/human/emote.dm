@@ -550,8 +550,6 @@
 				if (!muzzled)
 					if (auto == 1)
 						if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
-							return
-						else
 							message = "<B>[src]</B> screams in agony!"
 							var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
 							if (src.gender == FEMALE) //Females have their own screams. Trannys be damned.
