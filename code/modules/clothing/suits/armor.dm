@@ -16,6 +16,12 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/armor/vest/slim
+	name = "slim armor"
+	icon_state = "armorslim"
+	item_state = "armorslim"
+	armor = list(melee = 40, bullet = 15, laser = 40, energy = 10, bomb = 15, bio = 0, rad = 0)
+
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
 	desc = "A greatcoat enchanced with a special alloy for some protection and style."
