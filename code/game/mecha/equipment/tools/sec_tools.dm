@@ -1,4 +1,4 @@
-#define MECH_JAIL_TIME 30
+#define MECH_JAIL_TIME 10
 
 /obj/item/mecha_parts/mecha_equipment/tool/jail
 	name = "Mounted Jail Cell"
@@ -10,10 +10,7 @@
 	construction_cost = list("iron"=7500,"glass"=10000)
 	reliability = 1000
 	equip_cooldown = 50 //very long time to actually load someone up
-	var/mob/living/carbon/cell1 = null
-	var/mob/living/carbon/cell2 = null
-	var/ctimer1 = 0
-	var/ctimer2 = 0
+	var/list/cells = list("cell1" = list("mob" = null, "timer" = 0), "cell2" = list("mob" = null, "timer" = 0))
 	var/datum/global_iterator/pr_mech_jail
 	salvageable = 0
 
@@ -35,14 +32,34 @@
 /obj/item/mecha_parts/mecha_equipment/tool/jail/destroy()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
-	if(cell1) //safety nets
-		cell1.loc = get_turf(src)
-	if(cell2)
-		cell2.loc = get_turf(src)
+	for(var/list/cell in cells) //safety nets
+		var/celldetails = cells[cell]
+		if(celldetails["mob"])
+			var/mob/living/carbon/occupant = celldetails["mob"]
+			occupant.loc = get_turf(src)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/jail/Exit(atom/movable/O)
 	return 0
+
+//is there an open cell for a mob?
+//returns the cell that's got a space
+/obj/item/mecha_parts/mecha_equipment/tool/jail/proc/CellFree()
+	for(var/cell in cells)
+		var/list/celldetails = cells[cell]
+		if(!celldetails["mob"])
+			return celldetails
+	return
+
+//are all our cells empty?
+/obj/item/mecha_parts/mecha_equipment/tool/jail/proc/AllFree()
+	var/allfree = 1
+	for(var/cell in cells)
+		var/list/celldetails = cells[cell]
+		if(celldetails["mob"])
+			allfree = 0
+			break
+	return allfree
 
 /obj/item/mecha_parts/mecha_equipment/tool/jail/action(var/mob/living/carbon/target)
 	if(!action_checks(target))
@@ -52,7 +69,7 @@
 	if(target.buckled)
 		occupant_message("[target] will not fit into the jail cell because they are buckled to [target.buckled].")
 		return
-	if(cell1 && cell2)
+	if(!CellFree())
 		occupant_message("The jail cells are already occupied")
 		return
 	if(!(target.handcuffed || target.legcuffed))
@@ -69,16 +86,14 @@
 	if(do_after_cooldown(target))
 		if(chassis.loc!=C || target.loc!=T)
 			return
-		if(cell1 && cell2)
+		if(!CellFree())
 			occupant_message("<font color=\"red\"><B>The jail cells are already occupied!</B></font>")
 			return
 		target.forceMove(src)
-		if(!cell1)
-			cell1 = target
-			ctimer1 = MECH_JAIL_TIME
-		else if (!cell2)
-			cell2 = target
-			ctimer2 = MECH_JAIL_TIME
+		var/list/chosencell = CellFree()
+		chosencell["mob"] = target
+		chosencell["timer"] = MECH_JAIL_TIME
+		if(!CellFree())
 			set_ready_state(0)
 		target.reset_view(src)
 		/*
@@ -86,38 +101,37 @@
 		target.client.perspective = EYE_PERSPECTIVE
 		target.client.eye = chassis
 		*/
-		pr_mech_jail.start()
+		if(CellFree()) //because the process can't have been already going if both cells were empty
+			pr_mech_jail.start()
 		occupant_message("<font color='blue'>[target] successfully loaded into [src].")
 		chassis.visible_message("[chassis] loads [target] into [src].")
 		log_message("[target] loaded.")
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/jail/proc/go_out(var/mob/living/carbon/ejected, ejectedtimer)
+/obj/item/mecha_parts/mecha_equipment/tool/jail/proc/go_out(var/list/L)
+	var/mob/living/ejected = L["mob"]
 	if(!ejected)
 		return
 	ejected.forceMove(get_turf(src))
 	occupant_message("[ejected] ejected.")
 	log_message("[ejected] ejected.")
-	ejectedtimer = 0
+	L["timer"] = 0
 	ejected.reset_view()
 	/*
 	if(occupant.client)
 	occupant.client.eye = occupant.client.mob
 	occupant.client.perspective = MOB_PERSPECTIVE
 	*/
-	if(cell1 == ejected) //I really don't know why these are necessary. Just accept that they are
-		cell1 = null
-	if(cell2 == ejected)
-		cell2 = null
+	L["mob"] = null
 	ejected = null
-	if(!cell1 && !cell2)
+	if(AllFree())
 		pr_mech_jail.stop()
 		set_ready_state(1)
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/jail/detach()
-	if(cell1 || cell2)
+	if(!AllFree())
 		occupant_message("Unable to detach [src] - equipment occupied.")
 		return
 	pr_mech_jail.stop()
@@ -127,24 +141,24 @@
 	var/output = ..()
 	if(output)
 		var/temp = ""
-		if(cell1)
-			temp = "<br />\[Occupant: [cell1] (Health: [cell1.health]%)\]<br />|Time left: [ctimer1]|<a href='?src=\ref[src];ejectcell1=1'>Eject</a>"
-		if(cell2)
-			temp = temp + "<br />\[Occupant: [cell2] (Health: [cell2.health]%)\]<br />|Time left: [ctimer2]|<a href='?src=\ref[src];ejectcell2=1'>Eject</a>"
+		for(var/cell in cells)
+			var/list/celldetails = cells[cell]
+			var/mob/living/carbon/occupant = celldetails["mob"]
+			var/timer = celldetails["timer"]
+			temp += "<br />\[Occupant: [occupant ? "[occupant] (Health: [occupant.health]%)" : "none"]\]<br />|Time left: [timer * 3]|<a href='?src=\ref[src];eject[cell]=1'>Eject</a>"
 		return "[output] [temp]"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/jail/Topic(href,href_list)
 	..()
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
-	if(filter.get("ejectcell1"))
-		go_out(cell1, ctimer1)
-	if(filter.get("ejectcell2"))
-		go_out(cell2, ctimer2)
+	for(var/cell in cells)
+		if(filter.get("eject[cell]"))
+			go_out(cells[cell])
 	return
 
 /datum/global_iterator/mech_jail/process(var/obj/item/mecha_parts/mecha_equipment/tool/jail/J)
-	log_admin("Timer 1: [J.ctimer1], Timer 2: [J.ctimer2]")
+	//log_admin("Timer 1: [J.ctimer1], Timer 2: [J.ctimer2]")
 	if(!J.chassis)
 		J.set_ready_state(1)
 		return stop()
@@ -152,24 +166,19 @@
 		J.set_ready_state(1)
 		J.log_message("Deactivated.")
 		J.occupant_message("[src] deactivated - no power.")
-		J.go_out(J.cell1, J.ctimer1)
-		J.go_out(J.cell2, J.ctimer2)
+		for(var/cell in J.cells)
+			J.go_out(J.cells[cell])
 		return stop()
-	if(!J.cell1 && !J.cell2)
-		return
-	if (J.cell1)
-		J.ctimer1--
-		if (J.ctimer1 <= 0)
-			J.go_out(J.cell1, J.ctimer1)
-		if(J.ctimer1 == 5)
-			J.occupant_message("<span class='warning'>Occupant [J.cell1] ejected in 5 seconds!</span>")
-	if (J.cell2)
-		J.ctimer2--
-		if (J.ctimer2 <= 0)
-			J.go_out(J.cell2, J.ctimer2)
-		if(J.ctimer1 == 5)
-			J.occupant_message("<span class='warning'>Occupant [J.cell2] ejected in 5 seconds!</span>")
-	//log_admin("Current cells of [M] and [N]")
+	if(J.AllFree())
+		return stop()
+	for(var/cell in J.cells)
+		var/list/thiscell = J.cells[cell]
+		if (thiscell["mob"])
+			thiscell["timer"]--
+			if (thiscell["timer"] <= 0)
+				J.go_out(thiscell)
+			else if(thiscell["timer"] == 1)
+				J.occupant_message("<span class='warning'>[thiscell["mob"]] will be ejected in 3 seconds!</span>")
 	J.chassis.use_power(J.energy_drain)
 	J.update_equip_info()
 	return
