@@ -519,4 +519,11 @@
 	desc = "Cheap Nanotrasen Laptop."
 	icon_state = "medlaptop"
 
+	machine_flags = 0
+
+	anchored = 0
+	density = 0
+
 	l_color = "#00FF00"
+
+

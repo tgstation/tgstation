@@ -14,6 +14,7 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 500
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -45,43 +46,8 @@ obj/machinery/gibber/New()
 	if(operating)
 		user << "<span class='notice'>[src] is currently gibbing something!</span>"
 		return
-	if(istype(O,/obj/item/weapon/wrench))
-		if(!anchored)
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 30))
-				anchored = 1
-				user << "You wrench [src] in place."
-			return
-		else
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 30))
-				anchored = 0
-				user << "You unwrench [src]."
-			return
-	if(!anchored)
-		user << "<span class='warning'>[src] must be anchored first!</span>"
-		return
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			user << "You open the maintenance hatch of [src]."
-			//src.icon_state = "autolathe_t"
-		else
-			user << "You close the maintenance hatch of [src]."
-			//src.icon_state = "autolathe"
-		opened = !opened
-		return 1
-	else if(istype(O, /obj/item/weapon/crowbar))
-		if (opened)
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return 1
+
+	..()
 	if(istype(O,/obj/item/weapon/grab))
 		return handleGrab(O,user)
 	else

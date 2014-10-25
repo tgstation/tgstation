@@ -10,6 +10,17 @@
 	var/display_color = "blue"
 	var/category = CAT_NORMAL
 
+/* TODO: Add this to deconstruction for vending machines
+/obj/item/compressed_vend
+	name = "compressed sale cartridge"
+	desc = "A compressed matter variant used to load vending machines."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "rcd"
+	item_state = "rcdammo"
+	var/list/products
+	var/list/contraband
+	var/list/premium
+*/
 
 /obj/machinery/vending
 	name = "Vendomat"
@@ -52,6 +63,8 @@
 	var/obj/item/weapon/coin/coin
 	var/datum/wires/vending/wires = null
 
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK // | CROWDESTROY
+
 	var/obj/machinery/account_database/linked_db
 	var/datum/money_account/linked_account
 
@@ -84,6 +97,11 @@
 		wires.Destroy()
 		wires = null
 
+/*	var/obj/item/compressed_vend/cvc = new(src.loc)
+	cvc.products = products
+	cvc.contraband = contraband
+	cvc.premium = premium
+*/
 	..()
 
 /obj/machinery/vending/proc/reconnect_database()
@@ -139,20 +157,16 @@
 			product_records += R
 //		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 
-/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/emag))
+/obj/machinery/vending/emag(mob/user)
+	if(!emagged)
 		emagged = 1
-		user << "You short out the product lock on [src]"
-		return
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		panel_open = !panel_open
-		user << "You [panel_open ? "open" : "close"] the maintenance panel."
-		overlays.Cut()
-		if(panel_open)
-			overlays += image(icon, "[initial(icon_state)]-panel")
-		updateUsrDialog()
-		return
-	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
+		user << "You short out the product lock on \the [src]"
+		return 1
+	return -1
+
+/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			attack_hand(user)
 		return
@@ -174,8 +188,6 @@
 				usr << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
 		else
 			usr << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"*/
-	else
-		..()
 
 //H.wear_id
 /obj/machinery/vending/proc/connect_account(var/obj/item/W)
@@ -560,21 +572,6 @@
 		throw_item.throw_at(target, 16, 3)
 	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
 	return 1
-
-
-/obj/machinery/vending/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
-	if(!prob(prb))
-		return 0
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
-	if(electrocute_mob(user, get_area(src), src, 0.7))
-		return 1
-	else
-		return 0
-
 /*
  * Vending machine types
  */

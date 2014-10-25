@@ -883,7 +883,21 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define AUTOIGNITION_WOOD  573.15
 #define AUTOIGNITION_PAPER 519.15
 
+////////////////////////
+//// MACHINE FLAGS /////
+////////////////////////
+
+//used to define machine behaviour in attackbys and other code situations
+#define EMAGGABLE		1	//can we emag it? If this is flagged, the machine calls emag()
+#define SCREWTOGGLE		2	//does it toggle panel_open when hit by a screwdriver?
+#define CROWDESTROY		4	//does hitting a panel_open machine with a crowbar disassemble it?
+#define WRENCHMOVE		8	//does hitting it with a wrench toggle its anchored state?
+#define FIXED2WORK		16	//does it need to be anchored to work? Try to use this with WRENCHMOVE
+#define EJECTNOTDEL		32 	//when we destroy the machine, does it remove all its items or destroy them?
+
+/////////////////////////
 //gun shit - prepare to have various things added to this
 #define SILENCECOMP 1 		//Silencer-compatible
 #define AUTOMAGDROP 2		//Does the mag drop when it's empty?
 #define EMPTYCASINGS 4		//Does the gun eject empty casings?
+

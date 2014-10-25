@@ -24,13 +24,14 @@
 	var/hack_wire
 	var/disable_wire
 	var/shock_wire
-	var/opened = 0
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/output
 	var/has_output = 0
 	var/stopped = 1
 	var/base_state = ""
 	var/build_time = 0
+
+	machine_flags = SCREWTOGGLE | CROWDESTROY
 
 	var/list/datum/rnd_queue_item/production_queue = list()
 	var/list/datum/materials/materials = list()
@@ -56,6 +57,7 @@
 	w -= src.disable_wire
 
 	base_state = icon_state
+	icon_state_open = "[base_state]_t"
 
 	for(var/oredata in typesof(/datum/material) - /datum/material)
 		var/datum/material/ore_datum = new oredata
@@ -83,26 +85,10 @@
 	del(src)
 	return
 
-/obj/machinery/r_n_d/proc/emag()
-	return
-
-/obj/machinery/r_n_d/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
-	if(!prob(prb))
-		return 0
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
-		return 1
-	else
-		return 0
-
 /obj/machinery/r_n_d/attack_hand(mob/user as mob)
 	if (shocked)
 		shock(user,50)
-	if(opened)
+	if(panel_open)
 		var/dat as text
 		dat += "[src.name] Wires:<BR>"
 		for(var/wire in src.wires)
@@ -155,32 +141,50 @@
 				src.shock(usr,50)
 	src.updateUsrDialog()
 
+/obj/machinery/r_n_d/togglePanelOpen(var/item/toggleitem, mob/user)
+	if(..())
+		if (panel_open && linked_console)
+			linked_console.linked_machines -= src
+			switch(src.type)
+				if(/obj/machinery/r_n_d/protolathe)
+					linked_console.linked_lathe = null
+				if(/obj/machinery/r_n_d/destructive_analyzer)
+					linked_console.linked_destroy = null
+				if(/obj/machinery/r_n_d/circuit_imprinter)
+					linked_console.linked_imprinter = null
+			linked_console = null
+			overlays -= "[base_state]_link"
+	return 1
+
+/obj/machinery/r_n_d/crowbarDestroy(mob/user)
+	if(..() == 1)
+		for(var/matID in materials)
+			var/datum/material/M = materials[matID]
+			var/obj/item/stack/sheet/sheet = new M.sheettype(src.loc)
+			var/available_num_sheets = round(M.stored/sheet.perunit)
+			if(available_num_sheets>0)
+				sheet.amount = available_num_sheets
+				M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
+				materials[M.id]=M
+			else
+				del sheet
+		return 1
+	return -1
+
 /obj/machinery/r_n_d/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			if(linked_console)
-				linked_console.linked_machines -= src
-				switch(src.type)
-					if(/obj/machinery/r_n_d/protolathe)
-						linked_console.linked_lathe = null
-					if(/obj/machinery/r_n_d/destructive_analyzer)
-						linked_console.linked_destroy = null
-					if(/obj/machinery/r_n_d/circuit_imprinter)
-						linked_console.linked_imprinter = null
-				linked_console = null
-				overlays -= "[base_state]_link"
-			icon_state = "[base_state]_t"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "[base_state]"
-			user << "You close the maintenance hatch of [src]."
-		return
+	if (disabled)
+		return 1
+	if (busy)
+		user << "\red The [src.name] is busy. Please wait for completion of previous operation."
+		return 1
+	if (stat)
+		return 1
+	if( ..() )
+		return 1
 	if (istype(O, /obj/item/device/multitool))
-		if(!opened && has_output)
+		if(!panel_open && has_output)
 			var/result = input("Set your location as output?") in list("Yes","No","Machine Location")
 			switch(result)
 				if("Yes")
@@ -202,42 +206,10 @@
 						del(output)
 					output=src
 					user << "\blue Output set."
-		return
-	if (opened)
-		if(istype(O, /obj/item/weapon/crowbar))
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
-					reagents.trans_to(I, reagents.total_volume)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			for(var/id in materials)
-				var/datum/material/material=materials[id]
-				if(material.stored >= material.cc_per_sheet)
-					var/obj/item/stack/sheet/S=new material.sheettype(src.loc)
-					S.amount = round(material.stored / material.cc_per_sheet)
-			del(src)
 			return 1
-		else
-			user << "\red You can't load the [src.name] while it's opened."
-			return 1
-	if (disabled)
-		return
 	if (!linked_console && !(istype(src, /obj/machinery/r_n_d/fabricator))) //fabricators get a free pass because they aren't tied to a console
 		user << "\The [src.name] must be linked to an R&D console first!"
 		return 0
-	if (busy)
-		user << "\red The [src.name] is busy. Please wait for completion of previous operation."
-		return 1
-	if (stat)
-		return 1
-	if(istype(O, /obj/item/weapon/card/emag))
-		emag()
-		return
 	if(istype(O,/obj/item/stack/sheet) && takes_material_input)
 		var/accepted = 1
 		if(allowed_materials && allowed_materials.len)
