@@ -26,3 +26,17 @@
 
 /datum/round_event/spooky/announce()
 	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
+
+//Eyeball migration
+/datum/round_event_control/carp_migration/eyeballs
+	name = "Eyeball Migration"
+	typepath = /datum/round_event/carp_migration/eyeballs
+	holidayID = "Halloween"
+	weight = 25
+	earliest_start = 0
+
+/datum/round_event/carp_migration/eyeballs/start()
+	for(var/obj/effect/landmark/C in landmarks_list)
+		if(C.name == "carpspawn")
+			new /mob/living/simple_animal/hostile/carp/eyeball(C.loc)
+

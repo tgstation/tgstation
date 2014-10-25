@@ -74,7 +74,7 @@
 		return M.click_action(A,src)
 
 	if(restrained())
-		changeNext_move(10)   //Doing shit in cuffs shall be vey slow
+		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
 		RestrainedClickOn(A)
 		return
 
@@ -202,7 +202,7 @@
 	return
 /atom/proc/ShiftClick(var/mob/user)
 	if(user.client && user.client.eye == user)
-		examine()
+		user.examinate(src)
 	return
 
 /*

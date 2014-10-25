@@ -52,7 +52,7 @@
 	melee_damage_upper = 25
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
-	weapon1 = /obj/item/weapon/melee/energy/sword/red
+	weapon1 = /obj/item/weapon/melee/energy/sword/saber/red
 	weapon2 = /obj/item/weapon/shield/energy
 	attacktext = "slashes"
 	status_flags = 0
@@ -158,6 +158,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	mob_size = 0
 
 /mob/living/simple_animal/hostile/viscerator/Die()
 	..()

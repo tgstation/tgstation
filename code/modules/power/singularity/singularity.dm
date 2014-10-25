@@ -25,9 +25,7 @@
 	var/event_chance = 15 //Prob for event each tick
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
-	var/teleport_del = 0
 	var/last_warning
-	var/list/uneatable = list(/turf/space, /obj/effect/overlay)
 
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -212,7 +210,6 @@
 		var/dist = get_dist(X, src)
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
-			if(is_type_in_list(X, uneatable))	continue
 			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
 
@@ -244,60 +241,7 @@
 
 
 /obj/machinery/singularity/proc/consume(var/atom/A)
-	var/gain = 0
-	if(is_type_in_list(A, uneatable))
-		return 0
-	if (istype(A,/mob/living))//Mobs get gibbed
-		var/mob/living/M = A
-		gain = 20
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.mind)
-
-				if((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer") )
-					gain = 100
-
-				if(H.mind.assigned_role == "Clown")
-					gain = rand(-300, 300) // HONK
-
-		investigate_log(" has consumed [key_name(M)].","singulo") //Oh that's where the clown ended up!
-		M.gib()
-		sleep(1)
-	else if(istype(A,/obj/))
-
-		if (istype(A,/obj/item/weapon/storage/backpack/holding))
-			var/dist = max((current_size - 2),1)
-			explosion(src.loc,(dist),(dist*2),(dist*4))
-			return
-
-		if(istype(A, /obj/machinery/singularity))//Welp now you did it
-			var/obj/machinery/singularity/S = A
-			src.energy += (S.energy/2)//Absorb most of it
-			qdel(S)
-			var/dist = max((current_size - 2),1)
-			explosion(src.loc,(dist),(dist*2),(dist*4))
-			return//Quits here, the obj should be gone, hell we might be
-
-		if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2
-			var/obj/O = A
-			O.x = 2
-			O.y = 2
-			O.z = 2
-		else
-			A.ex_act(1.0)
-			if(A && isnull(A.gc_destroyed))
-				qdel(A)
-		gain = 2
-	else if(isturf(A))
-		var/turf/T = A
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-				if(O.invisibility == 101)
-					src.consume(O)
-		T.ChangeTurf(/turf/space)
-		gain = 2
+	var/gain = A.singularity_act(current_size)
 	src.energy += gain
 	return
 
@@ -438,12 +382,11 @@
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
-					H << "<span class='notice'>You look directly into The [src.name], good thing you had your protective eyewear on!</span>"
+					H << "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>"
 					return
-		M << "<span class='danger'>You look directly into The [src.name] and feel weak.</span>"
 		M.apply_effect(3, STUN)
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='userdanger'>[] stares blankly at The []!</span>", M, src), 1)
+		M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \
+						"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>")
 	return
 
 
@@ -458,3 +401,10 @@
 		if(get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(energy)
 	return
+
+/obj/machinery/singularity/singularity_act()
+	var/gain = (energy/2)
+	var/dist = max((current_size - 2),1)
+	explosion(src.loc,(dist),(dist*2),(dist*4))
+	qdel(src)
+	return(gain)

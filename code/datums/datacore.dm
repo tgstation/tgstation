@@ -81,7 +81,7 @@
 
 var/record_id_num = 1001
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
-	if(H.mind && (H.mind.need_job_assign))
+	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
 		if(H.mind.assigned_role)
 			assignment = H.mind.assigned_role

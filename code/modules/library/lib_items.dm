@@ -16,7 +16,7 @@
 	icon_state = "bookempty"
 	anchored = 0
 	density = 1
-	opacity = 1
+	opacity = 0
 	var/state = 0
 
 
@@ -265,6 +265,7 @@
 			var/obj/item/weapon/storage/book/B = new
 			B.name = src.name
 			B.title = src.title
+			B.icon_state = src.icon_state
 			if(user.l_hand == src || user.r_hand == src)
 				qdel(src)
 				user.put_in_hands(B)

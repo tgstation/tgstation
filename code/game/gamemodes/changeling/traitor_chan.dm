@@ -3,7 +3,7 @@
 	config_tag = "traitorchan"
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	restricted_jobs = list("AI", "Cyborg")
-	required_players = 20
+	required_players = 0
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
 
@@ -25,6 +25,9 @@
 /datum/game_mode/traitor/changeling/pre_setup()
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
+
+	if(config.protect_assistant_from_antagonist)
+		restricted_jobs += "Assistant"
 
 	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
 

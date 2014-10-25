@@ -1566,6 +1566,20 @@ datum/reagent/toxin/spore/on_mob_life(var/mob/living/M as mob)
 	M.eye_blurry = max(M.eye_blurry, 3)
 	return
 
+
+datum/reagent/toxin/spore_burning
+	name = "Burning Spore Toxin"
+	id = "spore_burning"
+	description = "A burning spore cloud."
+	reagent_state = LIQUID
+	color = "#9ACD32"
+	toxpwr = 0.5
+
+datum/reagent/toxin/spore_burning/on_mob_life(var/mob/living/M as mob)
+	..()
+	M.adjust_fire_stacks(2)
+	M.IgniteMob()
+
 datum/reagent/toxin/chloralhydrate
 	name = "Chloral Hydrate"
 	id = "chloralhydrate"
@@ -1689,8 +1703,7 @@ datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(get_turf(O))
 			I.desc = "Looks like this was \an [O] some time ago."
-			for(var/mob/M in viewers(5, O))
-				M << "<span class='danger'> \the [O] melts.</span>"
+			O.visible_message("<span class='danger'> \the [O] melts.</span>")
 			qdel(O)
 
 datum/reagent/toxin/acid/polyacid

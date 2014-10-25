@@ -1,4 +1,5 @@
 /obj/machinery/atmospherics/binary
+	icon = 'icons/obj/atmospherics/binary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
 	use_power = 1
@@ -11,6 +12,8 @@
 
 	var/datum/pipe_network/network1
 	var/datum/pipe_network/network2
+
+	var/showpipe = 0
 
 /obj/machinery/atmospherics/binary/New()
 	..()
@@ -28,6 +31,33 @@
 
 	air1.volume = 200
 	air2.volume = 200
+
+//Separate this because we don't need to update pipe icons if we just are going to change the state
+/obj/machinery/atmospherics/binary/proc/update_icon_nopipes()
+	return
+
+/obj/machinery/atmospherics/binary/update_icon()
+	update_icon_nopipes()
+
+	underlays.Cut()
+	if(showpipe)
+		var/connected = 0
+
+		//Add intact pieces
+		if(node1)
+			connected = icon_addintact(node1, connected)
+
+		if(node2)
+			connected = icon_addintact(node2, connected)
+
+		//Add broken pieces
+		icon_addbroken(connected)
+
+/obj/machinery/atmospherics/binary/hide(var/intact)
+	showpipe = !intact
+	update_icon()
+
+	..(intact)
 
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/binary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
@@ -74,6 +104,9 @@
 		if(target.initialize_directions & get_dir(target,src))
 			node2 = target
 			break
+
+	if(level == 2)
+		showpipe = 1
 
 	update_icon()
 
@@ -122,10 +155,11 @@
 	if(reference==node1)
 		del(network1)
 		node1 = null
-
 	else if(reference==node2)
 		del(network2)
 		node2 = null
+
+	update_icon()
 
 	return null
 

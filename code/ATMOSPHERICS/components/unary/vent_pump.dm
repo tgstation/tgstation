@@ -1,6 +1,5 @@
 /obj/machinery/atmospherics/unary/vent_pump
-	icon = 'icons/obj/atmospherics/vent_pump.dmi'
-	icon_state = "off"
+	icon_state = "vent_map"
 
 	name = "air vent"
 	desc = "Has a valve and pump attached to it"
@@ -34,15 +33,14 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/on
 	on = 1
-	icon_state = "out"
+	icon_state = "vent_out"
 
 /obj/machinery/atmospherics/unary/vent_pump/siphon
 	pump_direction = 0
-	icon_state = "off"
 
 /obj/machinery/atmospherics/unary/vent_pump/siphon/on
 	on = 1
-	icon_state = "in"
+	icon_state = "vent_in"
 
 /obj/machinery/atmospherics/unary/vent_pump/New()
 	..()
@@ -65,19 +63,23 @@
 	..()
 	air_contents.volume = 1000
 
-/obj/machinery/atmospherics/unary/vent_pump/update_icon()
-	if(welded)
-		icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]weld"
-		return
-	if(on && !(stat & (NOPOWER|BROKEN)))
-		if(pump_direction)
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
-		else
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
-	else
-		icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
+/obj/machinery/atmospherics/unary/vent_pump/update_icon_nopipes()
+	overlays.Cut()
+	if(showpipe)
+		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "vent_cap", initialize_directions)
 
-	return
+	if(welded)
+		icon_state = "vent_welded"
+		return
+
+	if(!node || !on || stat & (NOPOWER|BROKEN))
+		icon_state = "vent_off"
+		return
+
+	if(pump_direction)
+		icon_state = "vent_out"
+	else
+		icon_state = "vent_in"
 
 /obj/machinery/atmospherics/unary/vent_pump/process()
 	..()
@@ -260,20 +262,6 @@
 	update_icon()
 	return
 
-/obj/machinery/atmospherics/unary/vent_pump/hide(var/i) //to make the little pipe section invisible, the icon changes.
-	if(welded)
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]weld"
-		return
-	if(on&&node)
-		if(pump_direction)
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
-		else
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
-	else
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-		on = 0
-	return
-
 /obj/machinery/atmospherics/unary/vent_pump/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
 		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
@@ -298,18 +286,17 @@
 	else
 		return ..()
 
-/obj/machinery/atmospherics/unary/vent_pump/examine()
-	set src in oview(1)
+/obj/machinery/atmospherics/unary/vent_pump/examine(mob/user)
 	..()
 	if(welded)
-		usr << "It seems welded shut."
+		user << "It seems welded shut."
 
 /obj/machinery/atmospherics/unary/vent_pump/power_change()
 	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
-		update_icon()
+	update_icon_nopipes()
 
 /obj/machinery/atmospherics/unary/vent_pump/Destroy()
 	if(initial_loc)
@@ -355,7 +342,7 @@
 			index = "[T.loc.name]\[[i]\]"
 		vents[index] = temp_vent
 	if(!vents.len)
-		L << "<span class='warning'> There are no available vents to travel to, they could be welded. </span>"
+		L << "<span class='warning'>There are no available vents to travel to, they could be welded. </span>"
 		return
 
 	var/obj/selection = input(L,"Select a destination.", "Duct System") as null|anything in sortList(vents)
@@ -366,20 +353,22 @@
 	if(iscarbon(L) && L.ventcrawler < 2) // lesser ventcrawlers can't bring items
 		for(var/obj/item/carried_item in L.contents)
 			if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant
-				L << "<span class='warning'> You can't be carrying items or have items equipped when vent crawling!</span>"
+				L << "<span class='warning'>You can't be carrying items or have items equipped when vent crawling!</span>"
 				return
 
 	var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
 	if(!target_vent)
 		return
+		
+	for(var/mob/O in viewers(L, null))
+		O.show_message(text("<B>[L] scrambles into the ventilation ducts!</B>"), 1)
 
-	L.visible_message("<B>[L] scrambles into the ventillation ducts!</B>")
-
-	target_vent.audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+	for(var/mob/O in hearers(target_vent,null))
+		O.show_message("You hear something squeezing through the ventilation ducts.",2)
 
 	if(target_vent.welded)		//the vent can be welded while they scrolled through the list.
 		target_vent = src
-		L << "<span class='warning'> The vent you were heading to appears to be welded.</span>"
+		L << "<span class='warning'>The vent you were heading to appears to be welded.</span>"
 	L.loc = target_vent.loc
 	var/area/new_area = get_area(L.loc)
 	if(new_area)

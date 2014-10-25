@@ -5,7 +5,7 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
-	var/obj/item/device/flash/bulb = null
+	var/obj/item/device/flash/handheld/bulb = null
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
@@ -23,7 +23,7 @@
 	density = 1
 
 /obj/machinery/flasher/New()
-	bulb = new /obj/item/device/flash(src)
+	bulb = new /obj/item/device/flash/handheld(src)
 
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)
@@ -46,7 +46,7 @@
 			bulb = null
 			power_change()
 
-	else if (istype(W, /obj/item/device/flash))
+	else if (istype(W, /obj/item/device/flash/handheld))
 		if (!bulb)
 			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
 			user.drop_item()

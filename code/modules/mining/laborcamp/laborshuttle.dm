@@ -1,5 +1,6 @@
 /obj/machinery/computer/shuttle/labor
 	name = "labor shuttle console"
+	desc = "Used to call and send the labor camp shuttle."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	circuit = /obj/item/weapon/circuitboard/labor_shuttle

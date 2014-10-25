@@ -22,7 +22,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = 0
-
+	var/real = 1 //0 for the toy, 1 for real. Sure I could istype, but fuck that.
 	var/strength = 5
 
 	var/attached = 0
@@ -44,16 +44,17 @@ var/const/MAX_ACTIVE_TIME = 400
 	user.unEquip(src)
 	Attach(M)
 
-/obj/item/clothing/mask/facehugger/examine()
+/obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
+	if(!real)//So that giant red text about probisci doesn't show up.
+		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			usr << "<span class='userdanger'>[src] is not moving.</span>"
+			user << "<span class='userdanger'>[src] is not moving.</span>"
 		if(CONSCIOUS)
-			usr << "<span class='userdanger'>[src] seems to be active.</span>"
+			user << "<span class='userdanger'>[src] seems to be active!</span>"
 	if (sterile)
-		usr << "<span class='userdanger'>It looks like the proboscis has been removed.</span>"
-	return
+		user << "<span class='userdanger'>It looks like the proboscis has been removed.</span>"
 
 /obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m)
 	if(O.force)
@@ -136,7 +137,8 @@ var/const/MAX_ACTIVE_TIME = 400
 			if(W.flags & NODROP)	return 0
 			target.unEquip(W)
 
-			target.visible_message("<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
+			target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
+									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
 
 		src.loc = target
 		target.equip_to_slot(src, slot_wear_mask,,0)
@@ -165,7 +167,8 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(!sterile)
 		//target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
-		target.visible_message("<span class='userdanger'>[src] falls limp after violating [target]'s face!</span>")
+		target.visible_message("<span class='danger'>[src] falls limp after violating [target]'s face!</span>", \
+								"<span class='userdanger'>[src] falls limp after violating [target]'s face!</span>")
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
@@ -179,7 +182,8 @@ var/const/MAX_ACTIVE_TIME = 400
 			src.loc = get_turf(C)
 			C.facehugger = null
 	else
-		target.visible_message("<span class='userdanger'>[src] violates [target]'s face!</span>")
+		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", \
+								"<span class='userdanger'>[src] violates [target]'s face!</span>")
 	return
 
 /obj/item/clothing/mask/facehugger/proc/GoActive()

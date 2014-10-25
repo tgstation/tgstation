@@ -14,6 +14,7 @@
 	speed = 1
 	maxHealth = 250
 	health = 250
+	mob_size = 2
 
 	pixel_x = -16
 
@@ -39,7 +40,7 @@
 /mob/living/simple_animal/hostile/tree/FindTarget()
 	. = ..()
 	if(.)
-		emote("me", 1, "growls at [.]")
+		emote("me", 1, "growls at [.].")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	. =..()

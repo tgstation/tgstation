@@ -21,12 +21,12 @@
 	icon_state_off = "switch-up"
 
 
-/obj/structure/powerswitch/examine()
+/obj/structure/powerswitch/examine(mob/user)
 	..()
 	if(on)
-		usr << "The switch is in the on position"
+		user << "The switch is in the on position"
 	else
-		usr << "The switch is in the off position"
+		user << "The switch is in the off position"
 
 /obj/structure/powerswitch/attack_ai(mob/user)
 	user << "\red You're an AI. This is a manual switch. It's not going to work."

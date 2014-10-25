@@ -20,6 +20,13 @@
 	keyslot1 = new /obj/item/device/encryptionkey/
 	recalculateChannels()
 
+/obj/item/device/radio/headset/Destroy()
+	qdel(keyslot1)
+	qdel(keyslot2)
+	keyslot1 = null
+	keyslot2 = null
+	..()
+
 /obj/item/device/radio/headset/talk_into(mob/living/M as mob, message, channel)
 	if (!listening)
 		return

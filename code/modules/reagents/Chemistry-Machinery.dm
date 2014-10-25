@@ -4,6 +4,7 @@
 
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
+	desc = "Creates and dispenses chemicals."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -242,6 +243,7 @@
 
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
+	desc = "Used to bottle chemicals to create pills."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -509,6 +511,7 @@
 
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
+	desc = "Used to create condiments and other cooking supplies."
 	condi = 1
 
 ////////////////////////////////////////////////////////////////////////
@@ -516,6 +519,7 @@
 
 /obj/machinery/computer/pandemic
 	name = "PanD.E.M.I.C 2200"
+	desc = "Used to work with viruses."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -704,7 +708,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		if(!R.total_volume||!R.reagent_list.len)
 			dat += "The beaker is empty<BR>"
 		else if(!Blood)
-			dat += "No blood sample found in beaker"
+			dat += "No blood sample found in beaker."
 		else if(!Blood.data)
 			dat += "No blood data found in beaker."
 		else
@@ -745,6 +749,10 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 									english_symptoms += S.name
 								dat += english_list(english_symptoms)
 
+						else
+							dat += "No detectable virus in the sample."
+			else
+				dat += "No detectable virus in the sample."
 
 			dat += "<BR><b>Contains antibodies to:</b> "
 			if(Blood.data["resistances"])
@@ -805,6 +813,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 /obj/machinery/reagentgrinder
 
 		name = "All-In-One Grinder"
+		desc = "Used to grind things up into raw materials."
 		icon = 'icons/obj/kitchen.dmi'
 		icon_state = "juicer1"
 		layer = 2.9

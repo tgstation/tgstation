@@ -41,7 +41,7 @@
 		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
 		name = "[name] ([str])"
 
-	else if(istype(W, /obj/item/weapon/wrapping_paper))
+	else if(istype(W, /obj/item/stack/wrapping_paper))
 		user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
 		if(istype(wrapped, /obj/structure/closet/crate))
 			icon_state = "giftcrate"
@@ -87,21 +87,21 @@
 		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
 		name = "[name] ([str])"
 
-	else if(istype(W, /obj/item/weapon/wrapping_paper))
+	else if(istype(W, /obj/item/stack/wrapping_paper))
 		icon_state = "giftcrate[wrapped.w_class]"
 		user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
 
 
-/obj/item/weapon/packageWrap
+/obj/item/stack/packageWrap
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
 	flags = NOBLUDGEON
 	w_class = 3.0
-	var/amount = 25.0
+	amount = 25
 
 
-/obj/item/weapon/packageWrap/afterattack(var/obj/target as obj, mob/user as mob, proximity)
+/obj/item/stack/packageWrap/afterattack(var/obj/target as obj, mob/user as mob, proximity)
 	if(!proximity) return
 	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
 		return
@@ -158,13 +158,6 @@
 		new /obj/item/weapon/c_tube( loc )
 		qdel(src)
 		return
-	return
-
-
-/obj/item/weapon/packageWrap/examine()
-	if(src in usr)
-		usr << "<span class='notice'>There are [amount] units of package wrap left.</span>"
-	..()
 	return
 
 

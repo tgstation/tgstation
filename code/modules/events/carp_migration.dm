@@ -19,17 +19,9 @@
 /datum/round_event/carp_migration/start()
 	for(var/obj/effect/landmark/C in landmarks_list)
 		if(C.name == "carpspawn")
-			new /mob/living/simple_animal/hostile/carp(C.loc)
+			if(prob(95))
+				new /mob/living/simple_animal/hostile/carp(C.loc)
+			else
+				new /mob/living/simple_animal/hostile/carp/megacarp(C.loc)
 
 
-//Eyeball migration
-/datum/round_event_control/carp_migration/eyeballs
-	name = "Eyeball Migration"
-	typepath = /datum/round_event/carp_migration/eyeballs
-	weight = 0
-	earliest_start = 0
-
-/datum/round_event/carp_migration/eyeballs/start()
-	for(var/obj/effect/landmark/C in landmarks_list)
-		if(C.name == "carpspawn")
-			new /mob/living/simple_animal/hostile/carp/eyeball(C.loc)

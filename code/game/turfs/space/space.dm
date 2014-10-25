@@ -70,6 +70,10 @@
 				var/turf/T = get_step(L.loc,turn(A.dir, 180))
 				L.pulling.loc = T
 
+		//now we're on the new z_level, proceed the space drifting
+		if ((A && A.loc))
+			A.loc.Entered(A)
+
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A)
 	var/cur_x
 	var/cur_y
@@ -122,7 +126,19 @@
 		else if (y >= (world.maxy - TRANSITIONEDGE - 1)) 	//north
 			destination_y = TRANSITIONEDGE + 1
 
-/datum/controller/game_controller/proc/setup_map_transistions() //listamania
+/*
+  Set the space turf transitions for the "space cube"
+
+  Connections:
+     ___     ___
+   /_A_/|  /_F_/|
+  |   |C| |   |E|
+  |_B_|/  |_D_|/
+
+  Note that all maps except F are oriented with north towards A. A and F are oriented with north towards D.
+  The characters on the second cube should be upside down in this illustration, but aren't because of a lack of unicode support.
+*/
+proc/setup_map_transitions() //listamania
 
 	var/list/unplaced_z_levels = 			accessable_z_levels
 	var/list/free_zones = 					list("A", "B", "C", "D", "E", "F")
@@ -134,10 +150,16 @@
 	var/list/z_level_order = 				list()
 	var/z_level
 	var/placement
+	var/total_processed = 0
 
 	for(var/turf/space/S in world) //Define the transistions of the z levels
+		total_processed++
 		if (S.x == TRANSITIONEDGE || S.x == (world.maxx - TRANSITIONEDGE - 1) || S.y == TRANSITIONEDGE || S.y == (world.maxy - TRANSITIONEDGE - 1))
 			turfs_needing_transition += S
+
+	//if we've processed lots of turfs, switch to background processing to prevent being mistaken for an infinite loop
+	if(total_processed > 450000)
+		set background = 1
 
 	while(free_zones.len != 0) //Assign the sides of the cube
 		if(!unplaced_z_levels) //if we're somehow unable to fill the cube, pad with deep space
@@ -187,3 +209,6 @@
 			S.transition = directions[Z_NORTH]
 
 		S.Assign_Destination()
+
+/turf/space/singularity_act()
+	return

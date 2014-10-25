@@ -1,5 +1,5 @@
 /datum/round_event_control/anomaly/anomaly_bluespace
-	name = "Bluespace Anomaly"
+	name = "Anomaly: Bluespace"
 	typepath = /datum/round_event/anomaly/anomaly_bluespace
 	max_occurrences = 1
 	weight = 5
@@ -7,7 +7,7 @@
 /datum/round_event/anomaly/anomaly_bluespace
 	startWhen = 3
 	announceWhen = 10
-	endWhen = 55
+	endWhen = 95
 
 
 /datum/round_event/anomaly/anomaly_bluespace/announce()
@@ -21,7 +21,7 @@
 
 
 /datum/round_event/anomaly/anomaly_bluespace/end()
-	if(newAnomaly)//If it hasn't been neutralized, it's time to warp half the station away jeez
+	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to warp half the station away jeez
 		var/turf/T = pick(get_area_turfs(impact_area))
 		if(T)
 				// Calculate new position (searches through beacons in world)
@@ -52,9 +52,7 @@
 				var/x_distance = TO.x - FROM.x
 				for (var/atom/movable/A in range(12, FROM )) // iterate thru list of mobs in the area
 					if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
-					if(A.anchored && istype(A, /obj/machinery)) continue
-					if(istype(A, /obj/structure/disposalpipe )) continue
-					if(istype(A, /obj/structure/cable )) continue
+					if(A.anchored) continue
 
 					var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 					if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving

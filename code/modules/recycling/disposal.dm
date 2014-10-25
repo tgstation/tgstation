@@ -128,11 +128,8 @@
 	if(I)
 		I.loc = src
 
-	user << "<span class='notice'>You place \the [I] into \the [src].</span>"
-	for(var/mob/M in viewers(src))
-		if(M == user)
-			continue
-		M.show_message("[user.name] places \the [I] into \the [src].", 3)
+	user.visible_message("<span class='notice'>[user.name] places \the [I] into \the [src].</span>", \
+						"<span class='notice'>You place \the [I] into \the [src].</span>")
 
 	update()
 
@@ -151,7 +148,7 @@
 								"<span class='notice'>[user] starts climbing into [src].</span>")
 	else
 		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
-								"<span class='userdanger'>[user] starts putting [target] into [src].</span>")
+								"<span class='userdanger'>[user] starts putting [target] into [src]!</span>")
 	if(do_mob(usr, target, 20))
 		if (target.client)
 			target.client.perspective = EYE_PERSPECTIVE
@@ -441,21 +438,19 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-/obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0)
 	if (istype(mover,/obj/item) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(75))
 			I.loc = src
-			for(var/mob/M in viewers(src))
-				M.show_message("\the [I] lands in \the [src].", 3)
+			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
 		else
-			for(var/mob/M in viewers(src))
-				M.show_message("\the [I] bounces off of \the [src]'s rim!", 3)
+			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")
 		return 0
 	else
-		return ..(mover, target, height, air_group)
+		return ..(mover, target, height)
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
