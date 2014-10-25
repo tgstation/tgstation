@@ -1,4 +1,10 @@
 //spooky halloween stuff. only tick on halloween!!!
+/datum/round_event/spooky/start() //This has to be here because else you get errors with spooky storage not being a defined type.
+	..()
+	for(var/mob/living/carbon/human/H)
+		for(var/obj/item/weapon/storage/backpack/b in H.contents)
+			new /obj/item/weapon/storage/spooky(b)
+
 //uses super seekrit double proc definition stuffs. remember to call ..()!
 /*/mob/dead/observer/say(var/message) //this doesn't actually work vOv
 	..()
