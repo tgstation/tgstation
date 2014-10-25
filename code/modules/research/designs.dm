@@ -36,7 +36,7 @@ other types of metals and chemistry for reagents).
 #define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
 #define	AUTOLATHE	4	//Uses glass/metal only.
 #define CRAFTLATHE	8	//Uses fuck if I know. For use eventually.
-#define MECHFAB		16 //Remember, objects utilising this flag should have construction_time and construction_cost vars.
+#define MECHFAB		16	//Remember, objects built under fabricators need DESIGNS
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 /datum/design						//Datum for object designs, used in construction
@@ -954,6 +954,54 @@ other types of metals and chemistry for reagents).
 	req_tech = list("combat" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	category = "Exosuit_Equipment"
+	locked = 1
+
+/datum/design/mech_lmg
+	name = "Exosuit Weapon Design (Ultra AC 2)"
+	desc = "Allows for the construction of Ultra AC 2."
+	id = "mech_lmg"
+	build_type = MECHFAB
+	req_tech = list("combat" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
+	category = "Exosuit_Equipment"
+	locked = 1
+
+/datum/design/mech_taser
+	name = "Exosuit Weapon Design (PBT \"Pacifier\" mounted taser)"
+	desc = "Allows for the construction of PBT \"Pacifier\" mounted taser."
+	id = "mech_taser"
+	build_type = MECHFAB
+	req_tech = list("combat" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
+	category = "Exosuit_Equipment"
+	locked = 1
+
+/datum/design/mech_honker
+	name = "Exosuit Weapon Design (HoNkER BlAsT 5000)"
+	desc = "Allows for the construction of HoNkER BlAsT 5000."
+	id = "mech_honker"
+	build_type = MECHFAB
+	req_tech = list("combat" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/honker
+	category = "Exosuit_Equipment"
+
+/datum/design/mech_mousetrap
+	name = "Exosuit Weapon Design (Mousetrap Mortar)"
+	desc = "Allows for the construction of Mousetrap Mortar."
+	id = "mech_mousetrap"
+	build_type = MECHFAB
+	req_tech = list("combat" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar
+	category = "Exosuit_Equipment"
+
+/datum/design/mech_banana
+	name = "Exosuit Weapon Design (Banana Mortar)"
+	desc = "Allows for the construction of Banana Mortar."
+	id = "mech_banana"
+	build_type = MECHFAB
+	req_tech = list("combat" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
+	category = "Exosuit_Equipment"
 
 /datum/design/mech_bolas
 	name = "Exosuit Weapon Design (PCMK-6 Bolas Launcher)"
@@ -963,6 +1011,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("combat" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas
 	category = "Exosuit_Equipment"
+	locked = 1
 
 /datum/design/mech_laser
 	name = "Exosuit Weapon Design (CH-PS \"Immolator\" Laser)"
@@ -972,6 +1021,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("combat" = 3, "magnets" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	category = "Exosuit_Equipment"
+	locked = 1
 
 /datum/design/mech_laser_heavy
 	name = "Exosuit Weapon Design (CH-LC \"Solaris\" Laser Cannon)"
@@ -981,6 +1031,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("combat" = 4, "magnets" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	category = "Exosuit_Equipment"
+	locked = 1
 
 /datum/design/mech_grenade_launcher
 	name = "Exosuit Weapon Design (SGL-6 Grenade Launcher)"
@@ -990,6 +1041,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("combat" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
 	category = "Exosuit_Equipment"
+	locked = 1
 
 /datum/design/clusterbang_launcher
 	name = "Exosuit Module Design (SOP-6 Clusterbang Launcher)"
@@ -999,6 +1051,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("combat"= 5, "materials" = 5, "syndicate" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited
 	category = "Exosuit_Equipment"
+	locked = 1
 
 /datum/design/mech_wormhole_gen
 	name = "Exosuit Module Design (Localized Wormhole Generator)"
@@ -1092,13 +1145,67 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
 	category = "Exosuit_Equipment"
 
+/datum/design/drill
+	name = "Exosuit Module Design (Mining Drill)"
+	desc = "A mech-mountable mining drill."
+	id = "mech_drill"
+	build_type = MECHFAB
+	req_tech = list("materials" = 1, "engineering" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill
+	category = "Exosuit_Equipment"
+
 /datum/design/mech_diamond_drill
 	name = "Exosuit Module Design (Diamond Mining Drill)"
-	desc = "An upgraded version of the standard drill"
+	desc = "An upgraded version of the standard drill."
 	id = "mech_diamond_drill"
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "engineering" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
+	category = "Exosuit_Equipment"
+
+/datum/design/mech_hydro_clamp
+	name = "Exosuit Module Design (Hydraulic Clamp)"
+	desc = "A hydraulic clamp for lifting heavy objects."
+	id = "mech_hydro_clamp"
+	build_type = MECHFAB
+	req_tech = list("materials" = 1, "engineering" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
+	category = "Exosuit_Equipment"
+
+/datum/design/mech_cable
+	name = "Exosuit Module Design (Cable Layer)"
+	desc = "An automatic cable layer for mechs."
+	id = "mech_cable"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
+	category = "Exosuit_Equipment"
+
+/datum/design/mech_extinguisher
+	name = "Exosuit Module Design (Extinguisher)"
+	desc = "An extinguisher for mechs."
+	id = "mech_extinguisher"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
+	category = "Exosuit_Equipment"
+
+/datum/design/mech_generator_plasma
+	name = "Exosuit Module Design (Plasma Generator)"
+	desc = "A power generator that runs on burning plasma."
+	id = "mech_generator_plasma"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/generator
+	category = "Exosuit_Equipment"
+
+/datum/design/mech_sleeper
+	name = "Exosuit Module Design (Mounted Sleeper)"
+	desc = "A mech-mountable sleeper for treating the ill."
+	id = "mech_sleeper"
+	build_type = MECHFAB
+	req_tech = list("biotech" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/sleeper
 	category = "Exosuit_Equipment"
 
 /datum/design/mech_generator_nuclear
@@ -1110,6 +1217,33 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
 	category = "Exosuit_Equipment"
 
+/datum/design/mech_phazon_core
+	name = "Exosuit Module Design (Phase Core)"
+	desc = "Compressed bluespace core of a Phazon mech."
+	id = "mech_phazon_core"
+	build_type = MECHFAB
+	req_tech = list("bluespace" = 1)
+	build_path = /obj/item/mecha_parts/part/phazon_phase_array
+	category = "Exosuit_Equipment"
+
+
+/datum/design/firefighter_chassis
+	name = "Exosuit Structure (Firefighter chassis)"
+	desc = "Used to build a Ripley Firefighter chassis."
+	id = "firef_chassis"
+	req_tech = list("engineering" = 1)
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/firefighter
+	category = "Exosuit_Equipment"
+
+/datum/design/mech_tracker
+	name = "Exosuit Tracking Device"
+	desc = "Exosuit tracker, for tracking exosuits."
+	id = "mech_tracker"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 1)
+	build_path = /obj/item/mecha_parts/mecha_tracking
+	category = "Misc"
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
@@ -1603,16 +1737,6 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list("$metal" = 7000, "$glass" = 7000)
 	build_path = /obj/item/stack/nanopaste
-
-/datum/design/medical_module_surgery
-	name = "medical module board"
-	desc = "Used to give a medical cyborg surgery tools."
-	id = "medical_module_surgery"
-	req_tech = list("biotech" = 3, "engineering" = 3)
-	build_type = MECHFAB
-	materials = list("$metal" = 80000, "$glass" = 20000)
-	build_path = /obj/item/borg/upgrade/medical/surgery
-	category = "Robotic_Upgrade_Modules"
 
 /datum/design/robotanalyzer
 	name = "Cyborg Analyzer"
@@ -2127,6 +2251,7 @@ other types of metals and chemistry for reagents).
 /////////////////////////////////////////
 //////////////Borg Upgrades//////////////
 /////////////////////////////////////////
+
 /datum/design/borg_syndicate_module
 	name = "Borg Illegal Weapons Upgrade"
 	desc = "Allows for the construction of illegal upgrades for cyborgs"
@@ -2135,6 +2260,70 @@ other types of metals and chemistry for reagents).
 	req_tech = list("combat" = 4, "syndicate" = 3)
 	build_path = /obj/item/borg/upgrade/syndicate
 	category = "Cyborg Upgrade Modules"
+
+/datum/design/medical_module_surgery
+	name = "medical module board"
+	desc = "Used to give a medical cyborg surgery tools."
+	id = "medical_module_surgery"
+	req_tech = list("biotech" = 3, "engineering" = 3)
+	build_type = MECHFAB
+	materials = list("$metal" = 80000, "$glass" = 20000)
+	build_path = /obj/item/borg/upgrade/medical/surgery
+	category = "Robotic_Upgrade_Modules"
+
+/datum/design/borg_reset_board
+	name = "cyborg reset module"
+	desc = "Used to reset cyborgs to their default module."
+	id = "borg_reset_board"
+	req_tech = list("engineering" = 1)
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/reset
+	category = "Robotic_Upgrade_Modules"
+
+/datum/design/borg_rename_board
+	name = "cyborg rename module"
+	desc = "Used to rename cyborgs."
+	id = "borg_rename_board"
+	req_tech = list("engineering" = 1)
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/rename
+	category = "Robotic_Upgrade_Modules"
+
+/datum/design/borg_restart_board
+	name = "cyborg restart module"
+	desc = "Used to restart cyborgs."
+	id = "borg_restart_board"
+	req_tech = list("engineering" = 1)
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/restart
+	category = "Robotic_Upgrade_Modules"
+
+/datum/design/borg_vtec_board
+	name = "cyborg VTEC module"
+	desc = "Used to upgrade a borg's speed."
+	id = "borg_vtec_board"
+	req_tech = list("engineering" = 1)
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/vtec
+	category = "Robotic_Upgrade_Modules"
+
+/datum/design/borg_tasercooler_board
+	name = "cyborg taser cooling module"
+	desc = "Used to upgrade cyborg taser cooling."
+	id = "borg_tasercooler_board"
+	req_tech = list("combat" = 1)
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/tasercooler
+	category = "Robotic_Upgrade_Modules"
+
+/datum/design/borg_jetpack_board
+	name = "cyborg jetpack module"
+	desc = "Used to give cyborgs a jetpack."
+	id = "borg_jetpack_board"
+	req_tech = list("engineering" = 1)
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/jetpack
+	category = "Robotic_Upgrade_Modules"
 
 /////////////////////////////////////////
 //////////Teleporter Machines////////////

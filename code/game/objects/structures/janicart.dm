@@ -9,8 +9,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
 	origin_tech = "engineering=2;materials=2"
-	construction_time = 50
-	construction_cost = list("metal"=20000)
+	materials = list("metal"=20000)
 
 /obj/structure/stool/bed/chair/vehicle/janicart
 	name = "janicart"

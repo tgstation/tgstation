@@ -18,27 +18,18 @@
 #define	MECH_SCREEN_SPACE_POD	12
 #define	MECH_SCREEN_MISC		13
 
-
+#define MECH_BUILD_TIME 100
 
 /obj/machinery/r_n_d/fabricator/mech
 	name = "Exosuit Fabricator"
-	desc = "Nothing is being built."
+	desc = "A specialised fabricator for robotic and mechatronic components."
 	req_one_access = list(access_robotics)
-	time_coeff = 1.5 //can be upgraded with research
-	resource_coeff = 1.5 //can be upgraded with research
-	has_mat_overlays = 1
+
+	research_flags = NANOTOUCH | HASOUTPUT | HASMAT_OVER | TAKESMATIN | ACCESS_EMAG | LOCKBOXES
 
 	nano_file = "exofab.tmpl"
 
-	locked_parts = list(
-		/obj/item/mecha_parts/mecha_equipment/weapon
-	)
-
-	unlocked_parts = list(
-		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
-		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
-		/obj/item/mecha_parts/mecha_equipment/weapon/honker
-	)
+	build_time = MECH_BUILD_TIME
 
 	screen = MECH_SCREEN_MAIN
 	part_sets = list( //set names must be unique

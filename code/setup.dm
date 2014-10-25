@@ -887,3 +887,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define SILENCECOMP 1 		//Silencer-compatible
 #define AUTOMAGDROP 2		//Does the mag drop when it's empty?
 #define EMPTYCASINGS 4		//Does the gun eject empty casings?
+
+///////////////////////
+///////RESEARCH////////
+///////////////////////
+//used in rdmachines, to define certain behaviours
+//bitflags are my waifu - Comic
+#define CONSOLECONTROL		1	//does the console control it? can't be interacted if not linked
+#define HASOUTPUT			2	//does it have an output? - mainly for fabricators
+#define TAKESMATIN			4	//does it takes materials (sheets) - mainly for fabricators
+#define NANOTOUCH			8	//does it have a nanoui when you smack it with your hand? - mainly for fabricators
+#define HASMAT_OVER			16	//does it have overlays for when you load materials in? - mainly for fabricators
+#define ACCESS_EMAG			32	//does it lose all its access when smacked by an emag? incompatible with CONSOLECONTROl, for obvious reasons
+#define LOCKBOXES			64	//does it spawn a lockbox around a design which is said to be locked? - for fabricators

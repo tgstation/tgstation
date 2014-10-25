@@ -27,17 +27,18 @@
 	var/opened = 0
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/output
-	var/has_output = 0
-	var/stopped = 1
+	var/stopped = 0
 	var/base_state = ""
 	var/build_time = 0
+
+	var/nano_file = ""
 
 	var/list/datum/rnd_queue_item/production_queue = list()
 	var/list/datum/materials/materials = list()
 	var/max_material_storage = 0
-	var/has_mat_overlays = 0 //whether it has an overlay when you load a material
-	var/takes_material_input = 0 //whether it takes materials into storage (destructive analyzer doesn't)
 	var/list/allowed_materials[0]
+
+	var/research_flags //see setup.dm for details of these
 
 /obj/machinery/r_n_d/New()
 	..()
@@ -62,7 +63,7 @@
 		materials[ore_datum.id]=ore_datum
 
 	// Define initial output.
-	if(has_output)
+	if(research_flags &HASOUTPUT)
 		output = src
 		for(var/direction in cardinal)
 			var/O = locate(/obj/machinery/mineral/output, get_step(src, dir))
@@ -164,11 +165,11 @@
 			if(linked_console)
 				linked_console.linked_machines -= src
 				switch(src.type)
-					if(/obj/machinery/r_n_d/protolathe)
+					if(/obj/machinery/r_n_d/fabricator/protolathe)
 						linked_console.linked_lathe = null
 					if(/obj/machinery/r_n_d/destructive_analyzer)
 						linked_console.linked_destroy = null
-					if(/obj/machinery/r_n_d/circuit_imprinter)
+					if(/obj/machinery/r_n_d/fabricator/circuit_imprinter)
 						linked_console.linked_imprinter = null
 				linked_console = null
 				overlays -= "[base_state]_link"
@@ -180,7 +181,7 @@
 			user << "You close the maintenance hatch of [src]."
 		return
 	if (istype(O, /obj/item/device/multitool))
-		if(!opened && has_output)
+		if(!opened && research_flags &HASOUTPUT)
 			var/result = input("Set your location as output?") in list("Yes","No","Machine Location")
 			switch(result)
 				if("Yes")
@@ -238,7 +239,7 @@
 	if(istype(O, /obj/item/weapon/card/emag))
 		emag()
 		return
-	if(istype(O,/obj/item/stack/sheet) && takes_material_input)
+	if(istype(O,/obj/item/stack/sheet) && research_flags &TAKESMATIN)
 		var/accepted = 1
 		if(allowed_materials && allowed_materials.len)
 			if( !(O.type in allowed_materials) )
@@ -272,7 +273,7 @@
 			if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
 				amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
 
-			if(has_mat_overlays)
+			if(research_flags &HASMAT_OVER)
 				update_icon()
 				overlays += "[base_state]_[stack.name]"
 				sleep(10)
@@ -309,40 +310,6 @@
 	else
 		return null
 
-/obj/machinery/r_n_d/proc/build_thing(var/datum/rnd_queue_item/I)
-	var/key=I.key
-	var/datum/design/being_built=I.thing
-	flick("[base_state]_ani",src)
-	sleep(build_time)
-	for(var/M in being_built.materials)
-		if(!check_mat(being_built, M))
-			src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete item.\"</font>")
-			stopped=1
-			return 0
-		if(copytext(M,1,2) == "$")
-			var/matID=copytext(M,2)
-			var/datum/material/material=materials[matID]
-			material.stored = max(0, (material.stored-being_built.materials[M]))
-			materials[matID]=material
-		else
-			reagents.remove_reagent(M, being_built.materials[M])
-	if(being_built.build_path)
-		//message_admins("Building the item and aiming it at [output.loc]")
-		var/obj/new_item = new being_built.build_path(src)
-		if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-			new_item.investigate_log("built by [key]","singulo")
-		new_item.reliability = being_built.reliability
-		if(hacked)
-			being_built.reliability = max((reliability / 2), 0)
-		if(being_built.locked)
-			var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(output.loc)
-			new_item.loc = L
-			L.name += " ([new_item.name])"
-		else
-			new_item.loc = output.loc
-		return 1
-	return 0
-
 /obj/machinery/r_n_d/proc/check_mat(var/datum/design/being_built, var/M, var/num_requested=1)
 	if(copytext(M,1,2) == "$")
 		var/matID=copytext(M,2)
@@ -356,26 +323,24 @@
 				return n
 	return 0
 
-/obj/machinery/r_n_d/proc/enqueue(var/key, var/datum/design/thing_to_build)
+/obj/machinery/r_n_d/proc/enqueue(var/datum/design/thing_to_build)
 	if(production_queue.len>=RESEARCH_MAX_Q_LEN)
 		return 0
-	production_queue.Add(new /datum/rnd_queue_item(key,thing_to_build))
+	production_queue.Add(new thing_to_build)
 	//stopped=1
 	return 1
+
 /obj/machinery/r_n_d/proc/queue_pop()
-	var/datum/rnd_queue_item/I = production_queue[1]
+	var/datum/design/I = production_queue[1]
 	production_queue.Remove(I)
 	return I
 
-/obj/machinery/r_n_d/process()
-	if(busy || stopped)
-		return
-	if(production_queue.len==0)
-		stopped=1
-		return
-	busy=1
-	spawn(0)
-		var/datum/rnd_queue_item/I = queue_pop()
-		if(!build_thing(I))
-			production_queue.Add(I)
-		busy=0
+/obj/machinery/r_n_d/proc/FindDesign(var/part as anything)
+	if(!ispath(part))
+		var/obj/thispart = part
+		part = thispart.type
+	for(var/thisdesign in typesof(/datum/design))
+		var/datum/design/D = thisdesign
+		if(initial(D.build_path) == part)
+			return D
+	return

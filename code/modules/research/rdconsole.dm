@@ -40,14 +40,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
 
 	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
-	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
-	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
+	var/obj/machinery/r_n_d/fabricator/protolathe/linked_lathe = null				//Linked Protolathe
+	var/obj/machinery/r_n_d/fabricator/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
 	var/list/obj/machinery/linked_machines = list()
 	var/list/research_machines = list(
-		/obj/machinery/r_n_d/protolathe,
+		/obj/machinery/r_n_d/fabricator/protolathe,
 		/obj/machinery/r_n_d/destructive_analyzer,
-		/obj/machinery/r_n_d/circuit_imprinter,
+		/obj/machinery/r_n_d/fabricator/circuit_imprinter,
 		/obj/machinery/r_n_d/fabricator/mech
 		)
 
@@ -118,13 +118,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			D.update_icon()
 	for(var/obj/machinery/r_n_d/D in linked_machines)
 		switch(D.type)
-			if(/obj/machinery/r_n_d/protolathe)
+			if(/obj/machinery/r_n_d/fabricator/protolathe)
 				if(!linked_lathe)
 					linked_lathe = D
 			if(/obj/machinery/r_n_d/destructive_analyzer)
 				if(!linked_destroy)
 					linked_destroy = D
-			if(/obj/machinery/r_n_d/circuit_imprinter)
+			if(/obj/machinery/r_n_d/fabricator/circuit_imprinter)
 				if(!linked_imprinter)
 					linked_imprinter = D
 	return

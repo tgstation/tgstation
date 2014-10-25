@@ -5,27 +5,29 @@ Similar to an autolathe, you load glass and metal sheets (but not other objects)
 it creates. All the menus and other manipulation commands are in the R&D console.
 */
 
-/obj/machinery/r_n_d/protolathe
+#define PROTOLATHE_BUILD_TIME	1
+
+/obj/machinery/r_n_d/fabricator/protolathe
 	name = "Protolathe"
 	icon_state = "protolathe"
 	flags = OPENCONTAINER
 
 	max_material_storage = 100000 //All this could probably be done better with a list but meh.
-	takes_material_input = 1
-	has_mat_overlays = 1
-	has_output = 1
-	build_time = 8
+	build_time = PROTOLATHE_BUILD_TIME
+	build_number = 2
 
 	l_color = "#7BF9FF"
 
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
+	research_flags = CONSOLECONTROL | HASOUTPUT | TAKESMATIN | HASMAT_OVER | LOCKBOXES
 
-/obj/machinery/r_n_d/protolathe/New()
+/obj/machinery/r_n_d/fabricator/protolathe/power_change()
+	..()
+	if(!(stat & (BROKEN|NOPOWER)))
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
+
+/obj/machinery/r_n_d/fabricator/protolathe/New()
 	. = ..()
 
 	component_parts = newlist(
@@ -41,7 +43,7 @@ it creates. All the menus and other manipulation commands are in the R&D console
 	RefreshParts()
 
 
-/obj/machinery/r_n_d/protolathe/RefreshParts()
+/obj/machinery/r_n_d/fabricator/protolathe/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		T += G.reagents.maximum_volume
@@ -52,7 +54,7 @@ it creates. All the menus and other manipulation commands are in the R&D console
 		T += M.rating
 	max_material_storage = T * 75000
 
-/obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/fabricator/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
 	if (O.is_open_container())
 		return 1

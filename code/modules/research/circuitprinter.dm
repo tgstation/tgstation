@@ -4,16 +4,19 @@ a /datum/desgin on the linked R&D console. You can then print them out in a fasi
 using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 */
-/obj/machinery/r_n_d/circuit_imprinter
+
+#define IMPRINTER_BUILD_TIME	1
+
+/obj/machinery/r_n_d/fabricator/circuit_imprinter
 	name = "Circuit Imprinter"
 	icon_state = "circuit_imprinter"
 	flags = OPENCONTAINER
 
 	max_material_storage = 75000
-	takes_material_input = 1
-	build_time = 20
+	build_time = IMPRINTER_BUILD_TIME
+	build_number = 1
 
-	has_output = 1
+	research_flags = HASOUTPUT | TAKESMATIN | CONSOLECONTROL
 
 	allowed_materials=list(
 		/obj/item/stack/sheet/glass,
@@ -36,7 +39,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		/obj/item/stack/sheet/mineral/uqill
 	)
 
-/obj/machinery/r_n_d/circuit_imprinter/New()
+/obj/machinery/r_n_d/fabricator/circuit_imprinter/New()
 	. = ..()
 
 	component_parts = newlist(
@@ -49,7 +52,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	RefreshParts()
 
-/obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
+/obj/machinery/r_n_d/fabricator/circuit_imprinter/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		T += G.reagents.maximum_volume
@@ -60,7 +63,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		T += M.rating
 	max_material_storage = T * 75000
 
-/obj/machinery/r_n_d/circuit_imprinter/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/fabricator/circuit_imprinter/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
 	if (O.is_open_container())
 		return 0

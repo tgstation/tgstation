@@ -6,7 +6,7 @@
 	origin_tech = "programming=2;biotech=3"
 	energy_drain = 20
 	range = MELEE
-	construction_cost = list("iron"=5000,"glass"=10000)
+	materials = list("iron"=5000,"glass"=10000)
 	reliability = 1000
 	equip_cooldown = 20
 	var/mob/living/carbon/occupant = null
@@ -401,7 +401,7 @@
 	equip_cooldown = 10
 	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
 	construction_time = 200
-	construction_cost = list("iron"=3000,"glass"=2000)
+	materials = list("iron"=3000,"glass"=2000)
 
 	New()
 		..()
