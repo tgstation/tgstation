@@ -1213,7 +1213,7 @@ window "mainwindow"
 		right-click = false
 		saved-params = "is-checked"
 		on-size = ""
-		text = "Say"
+		text = "Chat"
 		image = ""
 		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"\"saybutton.is-checked=true?mebutton.is-checked=false\"\"saybutton.is-checked=true?oocbutton.is-checked=false\""
 		is-flat = false
