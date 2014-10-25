@@ -3,6 +3,7 @@
 	desc = "Don't shine it in your eyes!"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pointer"
+	item_state_icon = 'icons/obj/bureaucracy.dmi'
 	item_state = "pen"
 	var/pointer_icon_state
 	flags = CONDUCT

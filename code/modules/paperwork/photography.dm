@@ -15,7 +15,8 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
-	item_state = "electropack"
+	item_state_icon = 'icons/obj/clothing/back.dmi'
+	item_state = "electropack" //double wut
 	w_class = 1.0
 
 
@@ -26,6 +27,7 @@
 	name = "photo"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
+	item_state_icon = 'icons/obj/bureaucracy.dmi'
 	item_state = "paper"
 	w_class = 1.0
 	var/icon/img		//Big photo image
@@ -90,6 +92,7 @@
 	name = "photo album"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
+	item_state_icon = 'icons/obj/storage.dmi'
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
 
@@ -102,7 +105,8 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A polaroid camera."
 	icon_state = "camera"
-	item_state = "electropack"
+	item_state_icon = 'icons/obj/clothing/back.dmi'
+	item_state = "electropack" //triple wut
 	w_class = 2.0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT

@@ -80,6 +80,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	desc = "Used to build newscasters, just secure to the wall."
 	icon_state = "newscaster"
 	item_state = "syringe_kit"
+	item_state_icon = 'icons/obj/storage.dmi'
 	m_amt = 14000
 	g_amt = 8000
 

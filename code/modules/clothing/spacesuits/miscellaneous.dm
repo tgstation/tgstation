@@ -24,7 +24,6 @@
 	name = "deathsquad helmet"
 	desc = "That's not red paint. That's real blood."
 	icon_state = "deathsquad"
-	item_state = "deathsquad"
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
 	strip_delay = 130
 
@@ -61,12 +60,10 @@
 	name = "NASA Void Helmet"
 	desc = "An old, NASA Centcom branch designed, dark red space suit helmet."
 	icon_state = "void"
-	item_state = "void"
 
 /obj/item/clothing/suit/space/nasavoid
 	name = "NASA Voidsuit"
 	icon_state = "void"
-	item_state = "void"
 	desc = "An old, NASA Centcom branch designed, dark red Space suit."
 	slowdown = 1
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/multitool)
@@ -83,7 +80,6 @@
 	name = "Santa's suit"
 	desc = "Festive!"
 	icon_state = "santa"
-	item_state = "santa"
 	slowdown = 0
 	flags = STOPSPRESSUREDMAGE
 	allowed = list(/obj/item) //for stuffing exta special presents
@@ -94,7 +90,6 @@
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	item_state = "pirate"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
 	strip_delay = 40
@@ -104,7 +99,6 @@
 	name = "pirate coat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	item_state = "pirate"
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0

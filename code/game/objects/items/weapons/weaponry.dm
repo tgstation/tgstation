@@ -24,7 +24,6 @@
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
-	item_state = "nullrod"
 	slot_flags = SLOT_BELT
 	force = 15
 	throw_speed = 3
@@ -40,7 +39,6 @@
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
-	item_state = "sord"
 	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
@@ -56,7 +54,6 @@
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
-	item_state = "claymore"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -76,7 +73,6 @@
 	name = "katana"
 	desc = "Woefully underpowered in D20"
 	icon_state = "katana"
-	item_state = "katana"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
@@ -99,6 +95,7 @@ obj/item/weapon/wirerod
 	name = "wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
 	icon_state = "wiredrod"
+	item_state_icon = 'icons/obj/items.dmi'
 	item_state = "rods"
 	flags = CONDUCT
 	force = 9

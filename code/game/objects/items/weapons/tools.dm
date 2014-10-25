@@ -57,26 +57,19 @@
 /obj/item/weapon/screwdriver/New()
 	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
 		if ("red")
-			icon_state = "screwdriver2"
-			item_state = "screwdriver"
-		if ("blue")
 			icon_state = "screwdriver"
-			item_state = "screwdriver_blue"
+		if ("blue")
+			icon_state = "screwdriver_blue"
 		if ("purple")
-			icon_state = "screwdriver3"
-			item_state = "screwdriver_purple"
+			icon_state = "screwdriver_purple"
 		if ("brown")
-			icon_state = "screwdriver4"
-			item_state = "screwdriver_brown"
+			icon_state = "screwdriver_brown"
 		if ("green")
-			icon_state = "screwdriver5"
-			item_state = "screwdriver_green"
+			icon_state = "screwdriver_green"
 		if ("cyan")
-			icon_state = "screwdriver6"
-			item_state = "screwdriver_cyan"
+			icon_state = "screwdriver_cyan"
 		if ("yellow")
-			icon_state = "screwdriver7"
-			item_state = "screwdriver_yellow"
+			icon_state = "screwdriver_yellow"
 
 	if (prob(75))
 		src.pixel_y = rand(0, 16)
@@ -111,8 +104,7 @@
 
 /obj/item/weapon/wirecutters/New()
 	if(prob(50))
-		icon_state = "cutters-y"
-		item_state = "cutters_yellow"
+		icon_state = "cutters_yellow"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/restraints/handcuffs/cable))
@@ -131,7 +123,6 @@
 	name = "welding tool"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
-	item_state = "welder"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 3
@@ -442,7 +433,6 @@
 	slot_flags = SLOT_BELT
 	force = 5
 	throwforce = 7
-	item_state = "crowbar"
 	w_class = 2
 	m_amt = 50
 	origin_tech = "engineering=1"
@@ -450,8 +440,7 @@
 
 /obj/item/weapon/crowbar/red
 	icon = 'icons/obj/items.dmi'
-	icon_state = "red_crowbar"
-	item_state = "crowbar_red"
+	icon_state = "crowbar_red"
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"

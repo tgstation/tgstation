@@ -1,7 +1,7 @@
 /obj/item/weapon/dnainjector
 	name = "\improper DNA injector"
 	desc = "This injects the person with DNA."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/syringe.dmi'
 	icon_state = "dnainjector"
 	throw_speed = 3
 	throw_range = 5

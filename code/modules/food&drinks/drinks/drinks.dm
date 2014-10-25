@@ -95,7 +95,6 @@
 	desc = "A golden cup"
 	name = "golden cup"
 	icon_state = "golden_cup"
-	item_state = "" //nope :(
 	w_class = 4
 	force = 14
 	throwforce = 10
@@ -130,7 +129,6 @@
 	desc = "A big bag of flour. Good for baking!"
 	icon = 'icons/obj/food.dmi'
 	icon_state = "flour"
-	item_state = "flour"
 
 /obj/item/weapon/reagent_containers/food/drinks/flour/New()
 	..()

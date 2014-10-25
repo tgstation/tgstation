@@ -44,6 +44,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	item_state_icon = 'icons/obj/storage.dmi'
 	item_state = "syringe_kit"
 	m_amt = 30000
 	throwforce = 2

@@ -60,13 +60,12 @@
 
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 15.0
 	throwforce = 10.0
-	item_state = "pickaxe"
 	w_class = 4.0
 	m_amt = 3750 //one sheet, but where can you make them?
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
@@ -76,7 +75,6 @@
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
-	item_state = "spickaxe"
 	digspeed = 30
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
@@ -92,7 +90,6 @@
 /obj/item/weapon/pickaxe/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
-	item_state = "jackhammer"
 	digspeed = 15 //faster than drill, but cannot dig
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for clearing large areas of rock."
@@ -100,7 +97,6 @@
 /obj/item/weapon/pickaxe/gold
 	name = "golden pickaxe"
 	icon_state = "gpickaxe"
-	item_state = "gpickaxe"
 	digspeed = 20
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
@@ -108,7 +104,8 @@
 /obj/item/weapon/pickaxe/plasmacutter
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
-	item_state = "gun"
+	item_state_icon = 'icons/obj/gun.dmi'
+	item_state = "gun" //why
 	w_class = 3.0 //it is smaller than the pickaxe
 	damtype = "fire"
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
@@ -118,7 +115,6 @@
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
-	item_state = "dpickaxe"
 	digspeed = 10
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
@@ -134,7 +130,6 @@
 /obj/item/weapon/pickaxe/borgdrill
 	name = "cyborg mining drill"
 	icon_state = "jackhammer"
-	item_state = "jackhammer"
 	digspeed = 15
 	desc = ""
 
@@ -143,13 +138,12 @@
 /obj/item/weapon/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 8.0
 	throwforce = 4.0
-	item_state = "shovel"
 	w_class = 3.0
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
@@ -158,8 +152,8 @@
 /obj/item/weapon/shovel/spade
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
+	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "spade"
-	item_state = "spade"
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0

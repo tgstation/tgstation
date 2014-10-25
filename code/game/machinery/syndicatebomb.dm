@@ -175,6 +175,7 @@
 	desc = "A powerful secondary explosive of syndicate design and unknown composition, it should be stable under normal conditions..."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
+	item_state_icon = 'icons/obj/weapons.dmi'
 	item_state = "eshield0"
 	w_class = 3.0
 	origin_tech = "syndicate=6;combat=5"
@@ -281,6 +282,7 @@
 	desc = "Nothing good can come of pressing a button this garish..."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	w_class = 1.0
 	origin_tech = "syndicate=2"

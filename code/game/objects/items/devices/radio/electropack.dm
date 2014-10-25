@@ -1,9 +1,8 @@
 /obj/item/device/electropack
 	name = "electropack"
 	desc = "Dance my monkeys! DANCE!!!"
-	icon = 'icons/obj/radio.dmi'
+	icon = 'icons/obj/clothing/back.dmi'
 	icon_state = "electropack0"
-	item_state = "electropack"
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	w_class = 5.0

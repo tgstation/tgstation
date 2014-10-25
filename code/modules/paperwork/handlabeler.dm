@@ -66,5 +66,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
-	item_state = "electropack"
+	item_state_icon = 'icons/obj/clothing/back.dmi'
+	item_state = "electropack" //wut
 	w_class = 1.0

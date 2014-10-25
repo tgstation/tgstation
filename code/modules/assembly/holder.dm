@@ -1,6 +1,6 @@
 /obj/item/device/assembly_holder
 	name = "Assembly"
-	icon = 'icons/obj/assemblies/new_assemblies.dmi'
+	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "holder"
 	item_state = "assembly"
 	flags = CONDUCT

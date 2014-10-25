@@ -4,7 +4,6 @@
 	desc = "It looks like it could use some more flair."
 	name = "bartender's uniform"
 	icon_state = "ba_suit"
-	item_state = "ba_suit"
 	item_color = "ba_suit"
 
 
@@ -52,7 +51,6 @@
 	name = "clown suit"
 	desc = "<i>'HONK!'</i>"
 	icon_state = "clown"
-	item_state = "clown"
 	item_color = "clown"
 	fitted = 0
 	can_adjust = 0
@@ -92,25 +90,21 @@
 
 /obj/item/clothing/under/lawyer/black
 	icon_state = "lawyer_black"
-	item_state = "lawyer_black"
 	item_color = "lawyer_black"
 
 
 /obj/item/clothing/under/lawyer/female
 	icon_state = "black_suit_fem"
-	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
 
 
 /obj/item/clothing/under/lawyer/red
 	icon_state = "lawyer_red"
-	item_state = "lawyer_red"
 	item_color = "lawyer_red"
 
 
 /obj/item/clothing/under/lawyer/blue
 	icon_state = "lawyer_blue"
-	item_state = "lawyer_blue"
 	item_color = "lawyer_blue"
 
 
@@ -118,7 +112,6 @@
 	name = "blue suit"
 	desc = "A classy suit and tie"
 	icon_state = "bluesuit"
-	item_state = "bluesuit"
 	item_color = "bluesuit"
 	can_adjust = 1
 
@@ -126,7 +119,6 @@
 /obj/item/clothing/under/lawyer/purpsuit
 	name = "purple suit"
 	icon_state = "lawyer_purp"
-	item_state = "lawyer_purp"
 	item_color = "lawyer_purp"
 	fitted = 0
 	can_adjust = 1
@@ -145,7 +137,6 @@
 	name = "sensible suit"
 	desc = "It's very... sensible."
 	icon_state = "red_suit"
-	item_state = "red_suit"
 	item_color = "red_suit"
 	can_adjust = 0
 
@@ -154,7 +145,6 @@
 	name = "mime's outfit"
 	desc = "It's not very colourful."
 	icon_state = "mime"
-	item_state = "mime"
 	item_color = "mime"
 
 
@@ -162,5 +152,4 @@
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
-	item_state = "miner"
 	item_color = "miner"

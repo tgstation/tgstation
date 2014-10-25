@@ -95,7 +95,6 @@
 	desc = "A beaker. It can hold up to 50 units."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
-	item_state = "beaker"
 	m_amt = 0
 	g_amt = 500
 
@@ -185,7 +184,6 @@
 	desc = "It's a bucket."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "bucket"
-	item_state = "bucket"
 	m_amt = 200
 	g_amt = 0
 	w_class = 3.0
@@ -224,7 +222,6 @@
 	name = "canister"
 	icon = 'icons/obj/tank.dmi'
 	icon_state = "canister"
-	item_state = "canister"
 	m_amt = 300
 	g_amt = 0
 	w_class = 4.0

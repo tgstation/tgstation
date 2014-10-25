@@ -18,7 +18,6 @@
 	name = "white suit"
 	desc = "A white suit, suitable for an excellent host"
 	icon_state = "scratch"
-	item_state = "scratch"
 	item_color = "scratch"
 	can_adjust = 0
 
@@ -42,7 +41,6 @@
 	name = "waiter's outfit"
 	desc = "It's a very smart uniform with a special pocket for tip."
 	icon_state = "waiter"
-	item_state = "waiter"
 	item_color = "waiter"
 	can_adjust = 0
 
@@ -73,7 +71,6 @@
 	name = "sexy-clown suit"
 	desc = "It makes you look HONKable!"
 	icon_state = "sexyclown"
-	item_state = "sexyclown"
 	item_color = "sexyclown"
 	fitted = 0
 	can_adjust = 0
@@ -153,7 +150,6 @@
 	name = "rainbow"
 	desc = "rainbow"
 	icon_state = "rainbow"
-	item_state = "rainbow"
 	item_color = "rainbow"
 	can_adjust = 0
 
@@ -200,7 +196,6 @@
 	name = "executive suit"
 	desc = "A formal trouser suit for women, intended for the station's finest."
 	icon_state = "black_suit_fem"
-	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
 
 /obj/item/clothing/under/suit_jacket/red
@@ -215,7 +210,6 @@
 	name = "charcoal suit"
 	desc = "A charcoal suit and red tie. Very professional."
 	icon_state = "charcoal_suit"
-	item_state = "charcoal_suit"
 	item_color = "charcoal_suit"
 	can_adjust = 0
 
@@ -223,7 +217,6 @@
 	name = "navy suit"
 	desc = "A navy suit and red tie, intended for the station's finest."
 	icon_state = "navy_suit"
-	item_state = "navy_suit"
 	item_color = "navy_suit"
 	can_adjust = 0
 
@@ -231,7 +224,6 @@
 	name = "burgundy suit"
 	desc = "A burgundy suit and black tie. Somewhat formal."
 	icon_state = "burgundy_suit"
-	item_state = "burgundy_suit"
 	item_color = "burgundy_suit"
 	can_adjust = 0
 
@@ -239,7 +231,6 @@
 	name = "checkered suit"
 	desc = "That's a very nice suit you have there. Shame if something were to happen to it, eh?"
 	icon_state = "checkered_suit"
-	item_state = "checkered_suit"
 	item_color = "checkered_suit"
 	can_adjust = 0
 
@@ -247,7 +238,6 @@
 	name = "tan suit"
 	desc = "A tan suit with a yellow tie. Smart, but casual."
 	icon_state = "tan_suit"
-	item_state = "tan_suit"
 	item_color = "tan_suit"
 	can_adjust = 0
 
@@ -264,7 +254,6 @@
 	name = "schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
 	icon_state = "schoolgirl"
-	item_state = "schoolgirl"
 	item_color = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = 0
@@ -282,7 +271,6 @@
 	name = "pirate outfit"
 	desc = "Yarr."
 	icon_state = "pirate"
-	item_state = "pirate"
 	item_color = "pirate"
 	can_adjust = 0
 
@@ -290,7 +278,6 @@
 	name = "soviet uniform"
 	desc = "For the Motherland!"
 	icon_state = "soviet"
-	item_state = "soviet"
 	item_color = "soviet"
 	can_adjust = 0
 
@@ -298,7 +285,6 @@
 	name = "redcoat uniform"
 	desc = "Looks old."
 	icon_state = "redcoat"
-	item_state = "redcoat"
 	item_color = "redcoat"
 	can_adjust = 0
 
@@ -306,7 +292,6 @@
 	name = "kilt"
 	desc = "Includes shoes and plaid"
 	icon_state = "kilt"
-	item_state = "kilt"
 	item_color = "kilt"
 	body_parts_covered = CHEST|GROIN|FEET
 	fitted = 0
@@ -316,7 +301,6 @@
 	name = "sexy mime outfit"
 	desc = "The only time when you DON'T enjoy looking at someone's rack."
 	icon_state = "sexymime"
-	item_state = "sexymime"
 	item_color = "sexymime"
 	body_parts_covered = CHEST|GROIN|LEGS
 	fitted = 0
@@ -326,7 +310,6 @@
 	name = "gladiator uniform"
 	desc = "Are you not entertained? Is that not why you are here?"
 	icon_state = "gladiator"
-	item_state = "gladiator"
 	item_color = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = 0
@@ -336,7 +319,6 @@
 	name = "sundress"
 	desc = "Makes you want to frolic in a field of daisies."
 	icon_state = "sundress"
-	item_state = "sundress"
 	item_color = "sundress"
 	body_parts_covered = CHEST|GROIN
 	fitted = 0

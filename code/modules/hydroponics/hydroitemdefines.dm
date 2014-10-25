@@ -19,7 +19,7 @@
 	icon = 'icons/obj/hydroponics.dmi'
 	name = "weed-spray"
 	icon_state = "weedspray"
-	item_state = "spray"
+	item_state = "spraycan"
 	volume = 100
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
@@ -41,7 +41,7 @@
 	icon = 'icons/obj/hydroponics.dmi'
 	name = "pest-spray"
 	icon_state = "pestspray"
-	item_state = "spray"
+	item_state = "spraycan"
 	volume = 100
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
@@ -61,9 +61,8 @@
 /obj/item/weapon/minihoe // -- Numbers
 	name = "mini hoe"
 	desc = "It's used for removing weeds or scratching your back."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "hoe"
-	item_state = "hoe"
 	flags = CONDUCT
 	force = 5.0
 	throwforce = 7.0

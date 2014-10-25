@@ -2,6 +2,7 @@
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteless yellow colour."
 	icon_state = "cargosoft"
+	item_state_icon = 'icons/obj/clothing/hats.dmi'
 	item_state = "helmet"
 	item_color = "cargo"
 	var/flipped = 0

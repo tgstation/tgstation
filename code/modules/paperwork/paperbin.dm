@@ -2,6 +2,7 @@
 	name = "paper bin"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
+	item_state_icon = 'icons/obj/items.dmi'
 	item_state = "sheet-metal"
 	throwforce = 0
 	w_class = 3

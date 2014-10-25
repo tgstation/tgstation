@@ -2,7 +2,6 @@
 	name = "Powered armor"
 	desc = "Not for rookies."
 	icon_state = "swat"
-	item_state = "swat"
 	w_class = 4//bulky item
 
 	protective_temperature = 1000
@@ -198,7 +197,6 @@
 	desc = "Not for rookies."
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
 	see_face = 0.0
-	item_state = "swat"
 	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
 	var/obj/item/clothing/suit/powered/parent
 
@@ -236,7 +234,6 @@
 	icon_state = "swat"
 	desc = "Not for rookies."
 	flags = FPRINT | TABLEPASS
-	item_state = "swat"
 	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
 
 /obj/item/clothing/shoes/powered
@@ -244,7 +241,6 @@
 	icon_state = "swat"
 	desc = "Not for rookies."
 	flags = FPRINT | TABLEPASS
-	item_state = "swat"
 	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
 
 

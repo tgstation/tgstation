@@ -4,7 +4,6 @@
 	name = "chef's hat"
 	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
 	icon_state = "chef"
-	item_state = "chef"
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
 	put_on_delay = 10
@@ -75,7 +74,6 @@
 	name = "Dermal Armor Patch"
 	desc = "An armored implant that automatically integrates just below the scalp for robust protection without sacrificing style."
 	icon_state = "dermal"
-	item_state = "dermal"
 	flags_inv = 0
 
 /obj/item/clothing/head/warden

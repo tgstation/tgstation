@@ -5,6 +5,7 @@
 	icon_state = "scroll"
 	var/uses = 4.0
 	w_class = 2.0
+	item_state_icon = 'icons/obj/bureaucracy.dmi'
 	item_state = "paper"
 	throw_speed = 3
 	throw_range = 7

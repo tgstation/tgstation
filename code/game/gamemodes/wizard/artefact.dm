@@ -8,7 +8,6 @@
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	item_state = "render"
 	force = 15
 	throwforce = 10
 	w_class = 3

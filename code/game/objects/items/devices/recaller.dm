@@ -4,7 +4,7 @@
 	name = "suspicious device"
 	desc = "A strange device of sorts. Hard to really make out what it actually does just by looking."
 	icon_state = "recaller"
-	item_state = "walkietalkie"
+	item_state = "walkietalkie" //I can't find this item_state so I'll leave this here
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 3

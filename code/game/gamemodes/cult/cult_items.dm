@@ -2,7 +2,6 @@
 	name = "cult blade"
 	desc = "An arcane weapon wielded by the followers of Nar-Sie"
 	icon_state = "cultblade"
-	item_state = "cultblade"
 	flags = CONDUCT
 	w_class = 4
 	force = 30
@@ -44,17 +43,14 @@
 
 /obj/item/clothing/head/culthood/alt
 	icon_state = "cult_hoodalt"
-	item_state = "cult_hoodalt"
 
 /obj/item/clothing/suit/cultrobes/alt
 	icon_state = "cultrobesalt"
-	item_state = "cultrobesalt"
 
 /obj/item/clothing/suit/cultrobes
 	name = "cult robes"
 	desc = "A set of armored robes worn by the followers of Nar-Sie"
 	icon_state = "cultrobes"
-	item_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
@@ -67,7 +63,6 @@
 /obj/item/clothing/head/magus
 	name = "magus helm"
 	icon_state = "magus"
-	item_state = "magus"
 	desc = "A helm worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
@@ -77,7 +72,6 @@
 	name = "magus robes"
 	desc = "A set of armored robes worn by the followers of Nar-Sie"
 	icon_state = "magusred"
-	item_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
@@ -88,13 +82,11 @@
 	name = "cult helmet"
 	desc = "A space worthy helmet used by the followers of Nar-Sie"
 	icon_state = "cult_helmet"
-	item_state = "cult_helmet"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/cult
 	name = "cult armor"
 	icon_state = "cult_armor"
-	item_state = "cult_armor"
 	desc = "A bulky suit of armor, bristling with spikes. It looks space proof."
 	w_class = 3
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/emergency_oxygen)

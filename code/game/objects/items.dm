@@ -1,6 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
+	var/item_state_icon = null
 	var/item_state = null
 	var/hitsound = null
 	var/throwhitsound = null

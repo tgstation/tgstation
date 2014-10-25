@@ -411,11 +411,7 @@
 	remove_overlay(HANDS_LAYER)
 	var/list/hands_overlays = list()
 	if(r_hand)
-		var/r_state = r_hand.item_state
-		if(!r_state)
-			r_state = r_hand.icon_state
-
-		hands_overlays += image("icon"='icons/mob/items_righthand.dmi', "icon_state"="[r_state]", "layer"=-HANDS_LAYER)
+		hands_overlays += update_inv_slot_image(r_hand, "_r", HANDS_LAYER)
 
 		if(client && hud_used)
 			r_hand.layer = 20
@@ -423,11 +419,7 @@
 			client.screen |= r_hand
 
 	if(l_hand)
-		var/l_state = l_hand.item_state
-		if(!l_state)
-			l_state = l_hand.icon_state
-
-		hands_overlays += image("icon"='icons/mob/items_lefthand.dmi', "icon_state"="[l_state]", "layer"=-HANDS_LAYER)
+		hands_overlays += update_inv_slot_image(l_hand, "_l", HANDS_LAYER)
 
 		if(client && hud_used)
 			l_hand.layer = 20
@@ -454,10 +446,12 @@
 			head.screen_loc = ui_drone_head
 			client.screen += head
 
-
-		var/image/head_overlay = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+		var/image/head_overlay
 		if(istype(head, /obj/item/clothing/mask))
-			head_overlay.icon = 'icons/mob/mask.dmi'
+			head_overlay = update_inv_slot_image(head, "_mask", HEAD_LAYER) //yes, really
+		else
+			head_overlay = update_inv_slot_image(head, "_head", HEAD_LAYER)
+
 		head_overlay.color = head.color
 		head_overlay.alpha = head.alpha
 		head_overlay.pixel_y = -15

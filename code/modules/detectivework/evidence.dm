@@ -5,7 +5,6 @@
 	desc = "An empty evidence bag."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
-	item_state = ""
 	w_class = 1
 
 /obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user,proximity)

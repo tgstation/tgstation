@@ -39,7 +39,7 @@
 		if(client && hud_used)
 			client.screen += wear_mask
 		overlays -= overlays_standing[M_MASK_LAYER]
-		var/image/standing	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "[wear_mask.icon_state]", "layer" = -M_MASK_LAYER)
+		var/image/standing	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "[wear_mask.icon_state]_mask", "layer" = -M_MASK_LAYER)
 		if(!istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA )
 			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood")
 		overlays_standing[M_MASK_LAYER]	= standing
@@ -58,10 +58,8 @@
 		r_hand.screen_loc = ui_rhand
 		if(client && hud_used)
 			client.screen += r_hand
-		var/t_state = r_hand.item_state
-		if(!t_state)	t_state = r_hand.icon_state
 		overlays -= overlays_standing[M_R_HAND_LAYER]
-		overlays_standing[M_R_HAND_LAYER]	= image("icon" = 'icons/mob/items_righthand.dmi', "icon_state" = t_state, "layer" = -M_R_HAND_LAYER)
+		overlays_standing[M_R_HAND_LAYER]	= update_inv_slot_image(r_hand, "_r", M_R_HAND_LAYER)
 		overlays += overlays_standing[M_R_HAND_LAYER]
 	else
 		overlays -= overlays_standing[M_R_HAND_LAYER]
@@ -77,10 +75,8 @@
 		l_hand.screen_loc = ui_lhand
 		if(client && hud_used)
 			client.screen += l_hand
-		var/t_state = l_hand.item_state
-		if(!t_state)	 t_state = l_hand.icon_state
 		overlays -= overlays_standing[M_L_HAND_LAYER]
-		overlays_standing[M_L_HAND_LAYER]	= image("icon" = 'icons/mob/items_lefthand.dmi', "icon_state" = t_state, "layer" = -M_L_HAND_LAYER)
+		overlays_standing[M_L_HAND_LAYER]	= update_inv_slot_image(l_hand, "_l", M_L_HAND_LAYER)
 		overlays += overlays_standing[M_L_HAND_LAYER]
 	else
 		overlays -= overlays_standing[M_L_HAND_LAYER]
@@ -94,7 +90,7 @@
 		if(client && hud_used)
 			client.screen += back
 		overlays -= overlays_standing[M_BACK_LAYER]
-		overlays_standing[M_BACK_LAYER]	= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]", "layer" = -M_BACK_LAYER)
+		overlays_standing[M_BACK_LAYER]	= update_inv_slot_image(back, "_back", M_BACK_LAYER)
 		overlays += overlays_standing[M_BACK_LAYER]
 	else
 		overlays -= overlays_standing[M_BACK_LAYER]

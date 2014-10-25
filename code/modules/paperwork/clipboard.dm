@@ -2,7 +2,6 @@
 	name = "clipboard"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "clipboard"
-	item_state = "clipboard"
 	throwforce = 0
 	w_class = 2.0
 	throw_speed = 3

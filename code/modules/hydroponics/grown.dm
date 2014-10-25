@@ -456,7 +456,6 @@
 	desc = "It's an excellent prop for a clown."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana"
-	item_state = "banana"
 	trash = /obj/item/weapon/grown/bananapeel
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/add_juice()

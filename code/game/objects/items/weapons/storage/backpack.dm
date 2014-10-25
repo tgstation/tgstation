@@ -12,8 +12,8 @@
 /obj/item/weapon/storage/backpack
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
+	icon = 'icons/obj/clothing/back.dmi'
 	icon_state = "backpack"
-	item_state = "backpack"
 	w_class = 4
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
@@ -88,37 +88,31 @@
 	name = "Giggles von Honkerton"
 	desc = "It's a backpack made by Honk! Co."
 	icon_state = "clownpack"
-	item_state = "clownpack"
 
 /obj/item/weapon/storage/backpack/mime
 	name = "Parcel Parceaux"
 	desc = "A silent backpack made for those silent workers. Silence Co."
 	icon_state = "mimepack"
-	item_state = "mimepack"
 
 /obj/item/weapon/storage/backpack/medic
 	name = "medical backpack"
 	desc = "It's a backpack especially designed for use in a sterile environment."
 	icon_state = "medicalpack"
-	item_state = "medicalpack"
 
 /obj/item/weapon/storage/backpack/security
 	name = "security backpack"
 	desc = "It's a very robust backpack."
 	icon_state = "securitypack"
-	item_state = "securitypack"
 
 /obj/item/weapon/storage/backpack/captain
 	name = "captain's backpack"
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
 	icon_state = "captainpack"
-	item_state = "captainpack"
 
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"
 	desc = "It's a tough backpack for the daily grind of station life."
 	icon_state = "engiepack"
-	item_state = "engiepack"
 
 /*
  * Satchel Types

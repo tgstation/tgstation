@@ -122,13 +122,11 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/silver
 	desc = "A silver card which shows honour and dedication."
-	icon_state = "silver"
-	item_state = "silver_id"
+	icon_state = "silver-id"
 
 /obj/item/weapon/card/id/gold
 	desc = "A golden card which shows power and might."
-	icon_state = "gold"
-	item_state = "gold_id"
+	icon_state = "gold-id"
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
@@ -175,8 +173,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
-	icon_state = "gold"
-	item_state = "gold_id"
+	icon_state = "gold-id"
 	registered_name = "Captain"
 	assignment = "Captain"
 	New()
@@ -197,8 +194,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
-	icon_state = "orange"
-	item_state = "orange-id"
+	icon_state = "orange-id"
 	assignment = "Prisoner"
 	registered_name = "Scum"
 	var/goal = 0 //How far from freedom?

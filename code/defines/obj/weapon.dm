@@ -127,7 +127,6 @@
 	desc = "A great tool to drag someone else's drinks across the bar."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "stick"
-	item_state = "stick"
 	force = 3.0
 	throwforce = 5.0
 	throw_speed = 2
@@ -175,6 +174,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
 	w_class = 2.0
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	flags = CONDUCT
 
@@ -250,7 +250,6 @@
 	desc = "The most robust cigars on the planet."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarpacket"
-	item_state = "cigarpacket"
 	w_class = 1
 	throwforce = 2
 	var/cigarcount = 6
@@ -270,7 +269,6 @@
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
-	item_state = "RPED"
 	w_class = 5
 	can_hold = list(/obj/item/weapon/stock_parts)
 	storage_slots = 14

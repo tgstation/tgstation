@@ -16,8 +16,8 @@
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
+	icon = 'icons/obj/clothing/ears.dmi'
 	icon_state = "earmuffs"
-	item_state = "earmuffs"
 	strip_delay = 15
 	put_on_delay = 25
 
@@ -153,7 +153,6 @@ BLIND     // can't see anything
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
 	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
-	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -168,8 +167,7 @@ BLIND     // can't see anything
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
-	icon_state = "space"
-	item_state = "s_suit"
+	icon_state = "s_suit"
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
@@ -256,7 +254,7 @@ BLIND     // can't see anything
 
 atom/proc/generate_female_clothing(index,t_color,icon)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"="[t_color]_s")
-	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
+	var/icon/female_s				= icon("icon"='icons/obj/clothing/uniforms.dmi', "icon_state"="female_s")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
 	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
 	female_clothing_icons[index] = female_clothing_icon

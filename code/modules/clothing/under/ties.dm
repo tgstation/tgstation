@@ -3,7 +3,6 @@
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/ties.dmi'
 	icon_state = "bluetie"
-	item_state = ""	//no inhands
 	item_color = "bluetie"
 	slot_flags = 0
 	w_class = 2.0
@@ -33,7 +32,6 @@
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
-	item_state = "waistcoat"
 	item_color = "waistcoat"
 
 /obj/item/clothing/tie/stethoscope

@@ -2,7 +2,6 @@
 	name = "laser gun"
 	desc = "A basic energy-based laser gun that fires concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser"
-	item_state = "laser"
 	w_class = 3.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"

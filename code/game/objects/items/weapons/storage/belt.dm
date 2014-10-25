@@ -2,8 +2,7 @@
 	name = "belt"
 	desc = "Can hold various things."
 	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "utilitybelt"
-	item_state = "utility"
+	icon_state = "utility"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
@@ -38,8 +37,7 @@
 /obj/item/weapon/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
-	icon_state = "utilitybelt"
-	item_state = "utility"
+	icon_state = "utility"
 	can_hold = list(
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/screwdriver,
@@ -79,8 +77,7 @@
 /obj/item/weapon/storage/belt/medical
 	name = "medical belt"
 	desc = "Can hold various medical equipment."
-	icon_state = "medicalbelt"
-	item_state = "medical"
+	icon_state = "medical"
 	can_hold = list(
 		/obj/item/device/healthanalyzer,
 		/obj/item/weapon/dnainjector,
@@ -102,8 +99,7 @@
 /obj/item/weapon/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
-	icon_state = "securitybelt"
-	item_state = "security"//Could likely use a better one.
+	icon_state = "security"
 	storage_slots = 5
 	max_w_class = 3 //Because the baton wouldn't fit otherwise. - Neerti
 	can_hold = list(
@@ -130,7 +126,6 @@
 	name = "soul stone belt"
 	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away"
 	icon_state = "soulstonebelt"
-	item_state = "soulstonebelt"
 	storage_slots = 6
 	can_hold = list(
 		/obj/item/device/soulstone
@@ -149,8 +144,7 @@
 /obj/item/weapon/storage/belt/champion
 	name = "championship belt"
 	desc = "Proves to the world that you are the strongest!"
-	icon_state = "championbelt"
-	item_state = "champion"
+	icon_state = "champion"
 	storage_slots = 1
 	can_hold = list(
 		/obj/item/clothing/mask/luchador
@@ -159,14 +153,12 @@
 /obj/item/weapon/storage/belt/military
 	name = "military belt"
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
-	icon_state = "militarybelt"
-	item_state = "military"
+	icon_state = "military"
 
 /obj/item/weapon/storage/belt/wands
 	name = "wand belt"
 	desc = "A belt designed to hold various rods of power. A veritable fanny pack of exotic magic."
 	icon_state = "soulstonebelt"
-	item_state = "soulstonebelt"
 	storage_slots = 6
 	can_hold = list(
 		/obj/item/weapon/gun/magic/wand
@@ -189,7 +181,6 @@
 	name = "janibelt"
 	desc = "A belt used to hold most janitorial supplies."
 	icon_state = "janibelt"
-	item_state = "janibelt"
 	storage_slots = 6
 	max_w_class = 4 // Set to this so the  light replacer can fit.
 	can_hold = list(

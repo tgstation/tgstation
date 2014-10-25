@@ -35,7 +35,6 @@
 	name = "\improper Magus helm"
 	desc = "A mysterious helmet that hums with an unearthly power"
 	icon_state = "magus"
-	item_state = "magus"
 
 
 /obj/item/clothing/suit/wizrobe
@@ -75,13 +74,11 @@
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power"
 	icon_state = "magusblue"
-	item_state = "magusblue"
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power"
 	icon_state = "magusred"
-	item_state = "magusred"
 
 
 /obj/item/clothing/suit/wizrobe/fake

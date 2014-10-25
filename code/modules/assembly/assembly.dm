@@ -1,7 +1,7 @@
 /obj/item/device/assembly
 	name = "assembly"
 	desc = "A small electronic device that should never exist."
-	icon = 'icons/obj/assemblies/new_assemblies.dmi'
+	icon = 'icons/obj/assemblies.dmi'
 	icon_state = ""
 	flags = CONDUCT
 	w_class = 2.0

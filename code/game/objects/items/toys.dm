@@ -29,7 +29,6 @@
 	desc = "A translucent balloon. There's nothing in it."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
-	item_state = "balloon-empty"
 
 /obj/item/toy/balloon/New()
 	create_reagents(10)
@@ -78,10 +77,8 @@
 /obj/item/toy/balloon/update_icon()
 	if(src.reagents.total_volume >= 1)
 		icon_state = "waterballoon"
-		item_state = "balloon"
 	else
 		icon_state = "waterballoon-e"
-		item_state = "balloon-empty"
 
 /obj/item/toy/syndicateballoon
 	name = "syndicate balloon"
@@ -92,7 +89,6 @@
 	force = 0
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
-	item_state = "syndballoon"
 	w_class = 4.0
 
 /*
@@ -189,7 +185,6 @@
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
-	item_state = "crossbow"
 	w_class = 2.0
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
@@ -300,7 +295,6 @@
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
-	item_state = "sword0"
 	var/active = 0.0
 	w_class = 2.0
 	flags = NOSHIELD
@@ -314,16 +308,13 @@
 		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
 		if(hacked)
 			icon_state = "swordrainbow"
-			item_state = "swordrainbow"
 		else
 			icon_state = "swordblue"
-			item_state = "swordblue"
 		w_class = 4
 	else
 		user << "<span class='notice'>You push the plastic blade back down into the handle.</span>"
 		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
 		icon_state = "sword0"
-		item_state = "sword0"
 		w_class = 2
 	add_fingerprint(user)
 	return
@@ -391,7 +382,6 @@
 	desc = "Woefully underpowered in D20."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "katana"
-	item_state = "katana"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 5

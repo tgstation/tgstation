@@ -12,7 +12,6 @@
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
-	item_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
@@ -20,7 +19,6 @@
 	name = "armored coat"
 	desc = "A greatcoat enchanced with a special alloy for some protection and style."
 	icon_state = "hos"
-	item_state = "hos"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
@@ -76,7 +74,6 @@
 	name = "ablative armor vest"
 	desc = "A vest that excels in protecting the wearer against energy projectiles."
 	icon_state = "armor_reflec"
-	item_state = "armor_reflec"
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 10, laser = 80, energy = 50, bomb = 0, bio = 0, rad = 0)
 	reflect_chance = 40
@@ -106,7 +103,6 @@
 	desc = "Someone seperated our Research Director from his own head!"
 	var/active = 0.0
 	icon_state = "reactiveoff"
-	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
 	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
@@ -144,7 +140,6 @@
 	name = "\improper Centcom armor"
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
-	item_state = "centcom"
 	w_class = 4//bulky item
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
@@ -178,10 +173,8 @@
 	name = "thunderdome suit"
 	desc = "Reddish armor."
 	icon_state = "tdred"
-	item_state = "tdred"
 
 /obj/item/clothing/suit/armor/tdome/green
 	name = "thunderdome suit"
 	desc = "Pukish armor."	//classy.
 	icon_state = "tdgreen"
-	item_state = "tdgreen"

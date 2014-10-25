@@ -644,6 +644,7 @@
 	desc = "A replacement light bulb."
 	icon_state = "lbulb"
 	base_state = "lbulb"
+	item_state_icon = 'icons/obj/chemical.dmi'
 	item_state = "contvapour"
 	g_amt = 100
 	brightness = 4

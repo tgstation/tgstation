@@ -3,6 +3,7 @@
 	desc = "A handy-dandy hologaphic projector that displays a janitorial sign."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "signmaker"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	force = 5
 	w_class = 2

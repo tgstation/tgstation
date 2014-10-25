@@ -17,7 +17,6 @@
 		return
 	on = !on
 	icon_state = "hardsuit[on]-[item_color]"
-//	item_state = "hardsuit[on]-[item_color]"
 	user.update_inv_head()	//so our mob-overlays update
 
 	if(on)	user.AddLuminosity(brightness_on)

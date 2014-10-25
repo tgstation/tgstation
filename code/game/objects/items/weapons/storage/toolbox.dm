@@ -2,8 +2,7 @@
 	name = "toolbox"
 	desc = "Danger. Very robust."
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "red"
-	item_state = "toolbox_red"
+	icon_state = "toolbox_red"
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
@@ -19,8 +18,7 @@
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
-	icon_state = "red"
-	item_state = "toolbox_red"
+	icon_state = "toolbox_red"
 
 /obj/item/weapon/storage/toolbox/emergency/New()
 	..()
@@ -34,8 +32,7 @@
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"
-	icon_state = "blue"
-	item_state = "toolbox_blue"
+	icon_state = "toolbox_blue"
 
 /obj/item/weapon/storage/toolbox/mechanical/New()
 	..()
@@ -48,8 +45,7 @@
 
 /obj/item/weapon/storage/toolbox/electrical
 	name = "electrical toolbox"
-	icon_state = "yellow"
-	item_state = "toolbox_yellow"
+	icon_state = "toolbox_yellow"
 
 /obj/item/weapon/storage/toolbox/electrical/New()
 	..()
@@ -67,8 +63,7 @@
 
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
-	icon_state = "syndicate"
-	item_state = "toolbox_syndi"
+	icon_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"
 	force = 15.0
 	throwforce = 18.0
@@ -86,8 +81,7 @@
 
 /obj/item/weapon/storage/toolbox/drone
 	name = "mechanical toolbox"
-	icon_state = "blue"
-	item_state = "toolbox_blue"
+	icon_state = "toolbox_blue"
 
 /obj/item/weapon/storage/toolbox/drone/New()
 	..()

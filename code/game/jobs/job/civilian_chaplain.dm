@@ -51,7 +51,7 @@ Chaplain
 				for(var/turf/T in A.contents)
 					if(T.icon_state == "carpetsymbol")
 						T.dir = 8
-		if("athiest")
+		if("atheist")
 			for(var/area/chapel/main/A in world)
 				for(var/turf/T in A.contents)
 					if(T.icon_state == "carpetsymbol")

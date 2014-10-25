@@ -264,6 +264,7 @@ datum/design/security_hud_night
 	desc = "A disk for storing device design data for construction in lathes."
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
+	item_state_icon = 'icons/obj/card.dmi'
 	item_state = "card-id"
 	w_class = 1.0
 	m_amt = 30

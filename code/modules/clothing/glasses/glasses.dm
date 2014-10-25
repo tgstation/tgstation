@@ -27,13 +27,13 @@
 	name = "eyepatch"
 	desc = "Yarr."
 	icon_state = "eyepatch"
-	item_state = "eyepatch"
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
 	desc = "Such a dapper eyepiece!"
 	icon_state = "monocle"
-	item_state = "headset" // lol
+	item_state_icon = 'icons/obj/clothing/ears.dmi'
+	item_state = "headset" // lol //FUCK YOU. NOT FUNNY.
 
 /obj/item/clothing/glasses/material
 	name = "Optical Material Scanner"
@@ -48,19 +48,16 @@
 	name = "Prescription Glasses"
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
-	item_state = "glasses"
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "Prescription Glasses"
 	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
-	item_state = "hipster_glasses"
 
 /obj/item/clothing/glasses/gglasses
 	name = "Green Glasses"
 	desc = "Forest green glasses, like the kind you'd wear when hatching a nasty scheme."
 	icon_state = "gglasses"
-	item_state = "gglasses"
 
 /obj/item/clothing/glasses/sunglasses
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
@@ -75,7 +72,6 @@
 	name = "welding goggles"
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
 	icon_state = "welding-g"
-	item_state = "welding-g"
 	action_button_name = "Toggle Welding Goggles"
 	flash_protect = 2
 	tint = 2
@@ -99,7 +95,6 @@
 	name = "blindfold"
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
-	item_state = "blindfold"
 //	vision_flags = BLIND	//handled in life.dm/handle_regular_hud_updates()
 	flash_protect = 2
 	tint = 3			// to make them blind
@@ -107,7 +102,6 @@
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
 	icon_state = "bigsunglasses"
-	item_state = "bigsunglasses"
 
 /obj/item/clothing/glasses/thermal
 	name = "Optical Thermal Scanner"
@@ -147,10 +141,10 @@
 	name = "Optical Thermal Eyepatch"
 	desc = "An eyepatch with built-in thermal optics"
 	icon_state = "eyepatch"
-	item_state = "eyepatch"
 
 /obj/item/clothing/glasses/thermal/jensen
 	name = "Optical Thermal Implants"
 	desc = "A set of implantable lenses designed to augment your vision"
 	icon_state = "thermalimplants"
+	item_state_icon = 'icons/obj/storage.dmi'
 	item_state = "syringe_kit"

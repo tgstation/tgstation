@@ -12,7 +12,6 @@
 	name = "blue laser tag armor"
 	desc = "Blue Pride, Station Wide"
 	icon_state = "bluetag"
-	item_state = "bluetag"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
@@ -21,7 +20,6 @@
 	name = "red laser tag armor"
 	desc = "Pew pew pew"
 	icon_state = "redtag"
-	item_state = "redtag"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
@@ -33,14 +31,12 @@
 	name = "pirate coat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	item_state = "pirate"
 
 
 /obj/item/clothing/suit/hgpirate
 	name = "pirate captain coat"
 	desc = "Yarr."
 	icon_state = "hgpirate"
-	item_state = "hgpirate"
 	flags_inv = HIDEJUMPSUIT
 
 
@@ -48,7 +44,6 @@
 	name = "cyborg suit"
 	desc = "Suit for a cyborg costume."
 	icon_state = "death"
-	item_state = "death"
 	flags = CONDUCT
 	fire_resist = T0C+5200
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -58,21 +53,18 @@
 	name = "great coat"
 	desc = "A Nazi great coat"
 	icon_state = "nazi"
-	item_state = "nazi"
 
 
 /obj/item/clothing/suit/johnny_coat
 	name = "johnny~~ coat"
 	desc = "Johnny~~"
 	icon_state = "johnny"
-	item_state = "johnny"
 
 
 /obj/item/clothing/suit/justice
 	name = "justice suit"
 	desc = "this pretty much looks ridiculous"
 	icon_state = "justice"
-	item_state = "justice"
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
@@ -80,7 +72,6 @@
 	name = "judge's robe"
 	desc = "This robe commands authority."
 	icon_state = "judge"
-	item_state = "judge"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/spacecash)
 	flags_inv = HIDEJUMPSUIT
@@ -90,14 +81,12 @@
 	name = "coveralls"
 	desc = "A set of denim overalls."
 	icon_state = "overalls"
-	item_state = "overalls"
 	body_parts_covered = CHEST|GROIN|LEGS
 
 
 /obj/item/clothing/suit/syndicatefake
 	name = "black and red space suit replica"
 	icon_state = "syndicate-black-red"
-	item_state = "syndicate-black-red"
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = 3
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
@@ -108,7 +97,6 @@
 	name = "\improper Hastur's robe"
 	desc = "Robes not meant to be worn by man"
 	icon_state = "hastur"
-	item_state = "hastur"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -117,7 +105,6 @@
 	name = "\improper Imperium monk suit"
 	desc = "Have YOU killed a xenos today?"
 	icon_state = "imperium_monk"
-	item_state = "imperium_monk"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
@@ -127,7 +114,6 @@
 	name = "chicken suit"
 	desc = "A suit made long ago by the ancient empire KFC."
 	icon_state = "chickensuit"
-	item_state = "chickensuit"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
@@ -136,7 +122,6 @@
 	name = "monkey suit"
 	desc = "A suit that looks like a primate"
 	icon_state = "monkeysuit"
-	item_state = "monkeysuit"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -156,7 +141,6 @@
 	name = "cardborg suit"
 	desc = "An ordinary cardboard box with holes cut in the sides."
 	icon_state = "cardborg"
-	item_state = "cardborg"
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
@@ -164,25 +148,21 @@
 	name = "poncho"
 	desc = "Your classic, non-racist poncho."
 	icon_state = "classicponcho"
-	item_state = "classicponcho"
 
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"
 	desc = "Your classic, non-racist poncho. This one is green."
 	icon_state = "greenponcho"
-	item_state = "greenponcho"
 
 /obj/item/clothing/suit/poncho/red
 	name = "red poncho"
 	desc = "Your classic, non-racist poncho. This one is red."
 	icon_state = "redponcho"
-	item_state = "redponcho"
 
 /obj/item/clothing/suit/poncho/ponchoshame
 	name = "poncho of shame"
 	desc = "Forced to live on your shameful acting as a fake mexican, you and your poncho have grown inseperable. Literally."
 	icon_state = "ponchoshame"
-	item_state = "ponchoshame"
 	flags = NODROP
 
 /*
@@ -193,7 +173,6 @@
 	name = "straight jacket"
 	desc = "A suit that completely restrains the wearer."
 	icon_state = "straight_jacket"
-	item_state = "straight_jacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	strip_delay = 60
@@ -202,13 +181,11 @@
 	name = "worn shirt"
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
 	icon_state = "ianshirt"
-	item_state = "ianshirt"
 
 /obj/item/clothing/suit/nerdshirt
 	name = "gamer shirt"
 	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would someone wear this?"
 	icon_state = "nerdshirt"
-	item_state = "nerdshirt"
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"

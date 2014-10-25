@@ -45,6 +45,7 @@
 
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 
 	flags = CONDUCT

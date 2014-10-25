@@ -465,7 +465,6 @@ obj/structure/cable/proc/avail()
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil_red"
-	item_state = "coil_red"
 	amount = MAXCOIL
 	item_color = "red"
 	desc = "A coil of power cable."
@@ -816,7 +815,6 @@ obj/structure/cable/proc/avail()
 /obj/item/stack/cable_coil/blue
 	item_color = "blue"
 	icon_state = "coil_blue"
-	item_state = "coil_blue"
 
 /obj/item/stack/cable_coil/green
 	item_color = "green"

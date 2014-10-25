@@ -2,7 +2,6 @@
 	name = "syringe gun"
 	desc = "A spring loaded rifle designed to fit syringes, used to incapacitate unruly patients from a distance."
 	icon_state = "syringegun"
-	item_state = "syringegun"
 	w_class = 3
 	throw_speed = 3
 	throw_range = 7

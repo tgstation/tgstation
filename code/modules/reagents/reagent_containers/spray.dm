@@ -3,7 +3,6 @@
 	desc = "A spray bottle, with an unscrewable top."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cleaner"
-	item_state = "cleaner"
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -105,7 +104,6 @@
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "pepperspray"
-	item_state = "pepperspray"
 	volume = 40
 	spray_maxrange = 4
 	amount_per_transfer_from_this = 5
@@ -121,7 +119,6 @@
 	desc = "A seemingly innocent sunflower...with a twist."
 	icon = 'icons/obj/harvest.dmi'
 	icon_state = "sunflower"
-	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
 	volume = 10
 
@@ -138,7 +135,6 @@
 	desc = "A utility used to spray large amounts of reagents in a given area."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "chemsprayer"
-	item_state = "chemsprayer"
 	throwforce = 0
 	w_class = 3.0
 	spray_maxrange = 7
@@ -241,7 +237,6 @@
 	desc = "Kills those pesky weeds!"
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "plantbgone"
-	item_state = "plantbgone"
 	volume = 100
 
 

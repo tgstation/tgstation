@@ -2,7 +2,6 @@
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses."
 	icon_state = "chain"
-	item_state = "chain"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 10
@@ -22,8 +21,7 @@
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "baton"
-	item_state = "classic_baton"
+	icon_state = "classic_baton"
 	slot_flags = SLOT_BELT
 	force = 10
 
@@ -73,7 +71,6 @@
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "telebaton_0"
-	item_state = "telebaton_0"
 	slot_flags = SLOT_BELT
 	w_class = 2
 	force = 3
@@ -85,6 +82,7 @@
 	if(on)
 		user << "<span class ='warning'>You extend the baton.</span>"
 		icon_state = "telebaton_1"
+		item_state_icon = 'icons/obj/weapons.dmi'
 		item_state = "nullrod"
 		w_class = 4 //doesnt fit in backpack when its on for balance
 		force = 10 //seclite damage
@@ -92,7 +90,7 @@
 	else
 		user << "<span class ='notice'>You collapse the baton.</span>"
 		icon_state = "telebaton_0"
-		item_state = "telebaton_0" //no sprite in other words
+		item_state = null
 		slot_flags = SLOT_BELT
 		w_class = 2
 		force = 3 //not so robust now

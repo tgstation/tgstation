@@ -3,6 +3,7 @@
 	icon_state = "shield0"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	throwforce = 5.0
 	throw_speed = 3
@@ -12,7 +13,7 @@
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_item = /obj/item/weapon/cigbutt
-	var/saved_icon = 'icons/obj/clothing/masks.dmi'
+	var/saved_icon = 'icons/obj/cigarettes.dmi'
 	var/saved_icon_state = "cigbutt"
 	var/saved_overlays = null
 	var/saved_underlays = null

@@ -13,7 +13,6 @@
 	name = "powdered wig"
 	desc = "A powdered wig."
 	icon_state = "pwig"
-	item_state = "pwig"
 
 /obj/item/clothing/head/that
 	name = "top-hat"
@@ -51,7 +50,6 @@
 /obj/item/clothing/head/syndicatefake
 	name = "black space-helmet replica"
 	icon_state = "syndicate-helm-black-red"
-	item_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -61,7 +59,6 @@
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
 	flags = HEADCOVERSEYES|BLOCKHAIR
-	item_state="cueball"
 	flags_inv = 0
 
 /obj/item/clothing/head/that
@@ -75,14 +72,12 @@
 	name = "green bandana"
 	desc = "It's a green bandana with some fine nanotech lining."
 	icon_state = "greenbandana"
-	item_state = "greenbandana"
 	flags_inv = 0
 
 /obj/item/clothing/head/cardborg
 	name = "cardborg helmet"
 	desc = "A helmet made out of a box."
 	icon_state = "cardborg_h"
-	item_state = "cardborg_h"
 	flags = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
@@ -90,24 +85,19 @@
 	name = "justice hat"
 	desc = "fight for what's righteous!"
 	icon_state = "justicered"
-	item_state = "justicered"
 	flags = HEADCOVERSEYES|BLOCKHAIR
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
-	item_state = "justiceblue"
 
 /obj/item/clothing/head/justice/yellow
 	icon_state = "justiceyellow"
-	item_state = "justiceyellow"
 
 /obj/item/clothing/head/justice/green
 	icon_state = "justicegreen"
-	item_state = "justicegreen"
 
 /obj/item/clothing/head/justice/pink
 	icon_state = "justicepink"
-	item_state = "justicepink"
 
 /obj/item/clothing/head/rabbitears
 	name = "rabbit ears"
@@ -124,31 +114,26 @@
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	item_state = "pirate"
 
 /obj/item/clothing/head/hgpiratecap
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "hgpiratecap"
-	item_state = "hgpiratecap"
 
 /obj/item/clothing/head/bandana
 	name = "pirate bandana"
 	desc = "Yarr."
 	icon_state = "bandana"
-	item_state = "bandana"
 
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
-	item_state = "bowler"
 
 /obj/item/clothing/head/witchwig
 	name = "witch costume wig"
 	desc = "Eeeee~heheheheheheh!"
 	icon_state = "witch"
-	item_state = "witch"
 	flags = BLOCKHAIR
 
 /obj/item/clothing/head/chicken
@@ -163,7 +148,6 @@
 	name = "bear pelt hat"
 	desc = "Fuzzy."
 	icon_state = "bearpelt"
-	item_state = "bearpelt"
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
@@ -176,25 +160,21 @@
 /obj/item/clothing/head/fedora
 	name = "fedora"
 	icon_state = "fedora"
-	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
 	icon_state = "sombrero"
-	item_state = "sombrero"
 	desc = "You feel mexican just wearing this."
 
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
 	icon_state = "greensombrero"
-	item_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
 	icon_state = "shamebrero"
-	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	flags = NODROP
 
@@ -203,7 +183,6 @@
 	name = "warning cone"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cone"
-	item_state = "cone"
 	force = 1.0
 	throwforce = 3.0
 	throw_speed = 2

@@ -3,7 +3,6 @@
 	desc = "A hand-held emergency light."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
-	item_state = "flashlight"
 	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -103,7 +102,6 @@
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff."
 	icon_state = "penlight"
-	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
 
@@ -112,7 +110,6 @@
 	name = "seclite"
 	desc = "A robust flashlight used by security."
 	icon_state = "seclite"
-	item_state = "seclite"
 	force = 9 // Not as good as a stun baton.
 	brightness_on = 5 // A little better than the standard flashlight.
 	hitsound = 'sound/weapons/genhit1.ogg'
@@ -122,7 +119,6 @@
 	name = "desk lamp"
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
-	item_state = "lamp"
 	brightness_on = 5
 	w_class = 4
 	flags = CONDUCT
@@ -135,7 +131,6 @@
 /obj/item/device/flashlight/lamp/green
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
-	item_state = "lampgreen"
 	brightness_on = 5
 
 
@@ -155,7 +150,6 @@
 	w_class = 2.0
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
-	item_state = "flare"
 	action_button_name = null	//just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
@@ -209,7 +203,6 @@
 	w_class = 4
 	brightness_on = 7
 	icon_state = "torch"
-	item_state = "torch_off"
 	on_damage = 10
 
 
@@ -219,7 +212,6 @@
 	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "slime"
-	item_state = "slime"
 	w_class = 2
 	slot_flags = SLOT_BELT
 	m_amt = 0

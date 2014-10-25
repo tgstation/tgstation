@@ -3,7 +3,6 @@
 	name = "taser gun"
 	desc = "A low-capacity, energy-based stun gun used by security teams to subdue targets at range."
 	icon_state = "taser"
-	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 
@@ -56,7 +55,6 @@
 	name = "mini energy crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
 	icon_state = "crossbow"
-	item_state = "crossbow"
 	w_class = 2.0
 	m_amt = 2000
 	origin_tech = "combat=2;magnets=2;syndicate=5"

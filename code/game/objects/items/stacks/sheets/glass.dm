@@ -264,7 +264,7 @@
 /obj/item/weapon/shard
 	name = "shard"
 	desc = "A nasty looking shard of glass."
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "large"
 	w_class = 1.0
 	force = 5.0
