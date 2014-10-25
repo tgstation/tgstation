@@ -169,9 +169,8 @@
 		if(-INFINITY to 100)	overlays += "0"
 
 /obj/item/weapon/gun/energy/temperature/proc/update_user()
-	var/mob/living/carbon/M = new /mob/living/carbon
 	if (istype(loc,/mob/living/carbon))
-		M = loc
+		var/mob/living/carbon/M = loc
 		M.update_inv_back()
 		M.update_inv_l_hand()
 		M.update_inv_r_hand()
