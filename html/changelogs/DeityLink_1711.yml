@@ -1,14 +1,28 @@
 author: Deity Link
 delete-after: true
 changes:
-  - tweak: tweaked the Pylon, Forge, and Tome sprites of cult.dmi (set their animation speeds to much nicer looking onces)
-  - tweak: Red Pylons light color now bright red.
-  - tweak: Red Pylons can now be broken like light fixtures leaving a passable broken pylon that can be attacked again to completely erase it.
-  - rscadd: Artificers now have a "Red Pylon" spell. 10 seconds cooldown. Places a Red Pylon (or repair a broken one) under them.<br>Pylons have collisions but can be broken very easily even bare-handed. Their main use is as a light source.
-  - tweak: when floor tiles periodically  decay once <span class="redletter">narsie has risen</span>, they will now spawn a Pylon in place of any light fixtures that were on that tile
-  - imageadd: <span class="redletter">NARSIE HAS GOTTEN A NEW LOOK</span>, upgraded sprites for narsie, now with twice more pixels!
-  - rscadd: coded new interactions with the environnement for <span class="redletter">narsie</span>:<br>Floor tiles (except carpets) and Wall tiles are replaced with their cult counterparts.<br>Grilles are replaced with cult walls.<br>Light bulbs are replaced with Red Pylons.<br>Chairs become pretty wooden chairs.<br>Tables become wooden tables.<br>Most machines and all computers get replaced by various cult structures, unused up to now.<br>Cultists become constructs on contact with narsie.
-  - tweak: the monsters spawned across the universe once <span class="redletter">narsie has risen</span> aren't affected by narsie, and do not attack constructs or cultists either.
-  - rscadd: once the shuttle docks after <span class="redletter">narsie has risen</span>, All the monsters will make their way toward the station's escape hallway.
-  - rscadd: added a button in the Admin Secret menu that lets them choose <span class="redletter">narsie</span>'s behaviour (either the above mentionned new interactions, or going back to the old oversized singulo. Defaults with the new interactions).
-  - tweak: once <span class="redletter">narsie has risen</span>, the rune count cap is increased by 9000. Mostly for fluff.
+  - tweak: tweaked cult structucture sprites a little.
+  - tweak: red pylons now emit red light.
+  - tweak: red pylons have collisions, but can be broken just like light bulbs.
+  - rscadd: Artificers can spawn red pylons (20 seconds recharge time).
+  - tweak: in hell, cultified floor tiles convert light bulbs to red pylons.
+  - imageadd: <span class="redletter">NARSIE HAS GOTTEN A NEW LOOK</span>, twice more pixels! And his eyes glow in the dark.
+  - rscadd: <span class="redletter">NAR-SIE</span> now converts the station:<br>Floor tiles (except carpets) and Wall tiles are replaced with their cult counterparts.<br>Grilles are replaced with cult walls.<br>Light bulbs are replaced with Red Pylons..<br>External airlocks become wooden doors.<br>Books become arcane tomes.<br>Chairs become pretty wooden chairs.<br>Tables become wooden tables.<br>Most machines and all computers get replaced by various cult structures, unused up to now.
+  - tweak: <span class="redletter">NAR-SIE</span> ignores hell monsters (faithless/bats/creatures), constructs and shades.
+  - rscadd: once the shuttle docks, all the hell monsters will make their way toward escape (a few seconds of lag occur at the exact moment it docks).
+  - rscadd: admins can toggle <span class="redletter">NAR-SIE</span>'s behaviour to use either the new one or the old one at any time.
+  - tweak: once <span class="redletter">NAR-SIE HAS RISEN</span>, the rune count cap is removed.
+  - rscadd: constructs now have HUD icons for their spells. The icon updates depending on the spell's availability.
+  - rscadd: cult armor rune now lets you change a construct's type.
+  - rscadd: cultists get turned by <span class="redletter">NAR-SIE</span> into Harvester constructs:<br>Harvester constructs are as fast and powerful as wraith, and twice as durable,<br>they can see mobs through walls,<br>they can use runes and talismans, and write new runes every 10 seconds (without need for a tome or for cult words),<br>they can disintegrate doors in a radius of 3 tiles every 10 seconds,<br>they can teleport themselves and any other living mob on their tile back to NAR-SIE at anytime (unless that mob is carrying a null rod).
+  - rscadd: once <span class="redletter">NAR-SIE HAS RISEN</span>, pre-existing constructs can be turned into Harvesters by cult armor runes.
+  - rscadd: ghosts that touch <span class="redletter">NAR-SIE</span> become visible to the living.
+  - imageadd: these ghosts get provided with a new sprite.
+  - imageadd: added pretty spess overlay for once <span class="redletter">NAR-SIE HAS RISEN</span>.
+  - imageadd: added animations for a few runes (convert, teleport, imbue talisman, sacrifice).
+  - imageadd: added animations for tiles getting converted/doors getting disintegrated.
+  - rscadd: arcane tomes can FINALLY be put onto bookshelves (spellbooks as well, why not).
+  - imageadd: new sprite for construct shells.
+  - imageadd: cultists turned into monkeys can summon monkey-sized cult armor.
+  - tweak: <span class="redletter">NAR-SIE</span>'s sprite will now render even when he's hidden behind walls or when he's over 12 tiles from the player.
+  - rscadd: <span class="redletter">NAR-SIE</span> now leaves "footsteps". those footsteps may open path through walls.
