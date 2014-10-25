@@ -14,7 +14,15 @@
 	afterattack(obj/target, mob/user , flag)
 		if(!user.Adjacent(target))
 			return
-		if(!target.reagents) return
+			
+		if(!target.reagents)
+			if(filled)
+				if(istype(target, /obj/machinery/artifact))
+					src.reagents.clear_reagents()
+					user << "<span class='notice'>You squirt the solution onto the [target]!</span>"
+					filled = 0
+					icon_state = "dropper[filled]"
+			return
 
 		if(filled)
 
