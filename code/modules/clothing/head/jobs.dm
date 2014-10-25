@@ -63,19 +63,18 @@
 //Security
 
 /obj/item/clothing/head/HoS
-	name = "head of security hat"
-	desc = "The robust hat of the Head of Security. For showing the officers who's in charge."
+	name = "head of security cap"
+	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
 	armor = list(melee = 80, bullet = 60, laser = 50, energy = 10, bomb = 25, bio = 10, rad = 0)
 	flags = 0
 	flags_inv = HIDEEARS
 	strip_delay = 80
 
-/obj/item/clothing/head/HoS/police
-	name = "head of security police hat"
-	desc = "A robust, additionally armored version of a standard police cap in a tactical black color. For the classic look."
-	icon_state = "policehelmblack"
-	item_state = "policehelmblack"
+/obj/item/clothing/head/HoS/drill
+	name = "head of security drill hat"
+	desc = "A robust drill hat for the Head of Security. For keeping the officers in line."
+	icon_state = "hosdrill"
 
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
