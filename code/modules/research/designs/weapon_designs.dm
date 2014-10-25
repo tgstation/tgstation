@@ -141,6 +141,16 @@ datum/design/ionrifle
 	build_path = /obj/item/weapon/gun/energy/ionrifle
 	locked = 1
 
+datum/design/portalgun
+	name = "Portal Gun"
+	desc = "A gun that shoots portals. For testing purposes only."
+	id = "portalgun"
+	req_tech = list("combat" = 6, "materials" = 6, "bluespace" = 4)
+	build_type = PROTOLATHE
+	materials = list("$silver" = 1000, "$metal" = 5000, "$diamond" = 3000)
+	build_path = /obj/item/weapon/gun/energy/portalgun
+	locked = 1
+
 datum/design/reciever
 	name = "Modular Reciever"
 	desc = "A prototype modular reciever and trigger assembly for a variety of firearms."

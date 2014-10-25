@@ -149,3 +149,24 @@ obj/item/projectile/kinetic/New()
 /obj/item/effect/kinetic_blast/New()
 	spawn(4)
 		qdel(src)
+
+/obj/item/projectile/beam/portal
+	name = "beam"
+	icon_state = "spark"
+	hitsound = "sparks"
+	damage = 3
+	var/obj/item/weapon/gun/energy/portalgun/gun
+
+/obj/item/projectile/beam/portal/New(var/obj/item/ammo_casing/energy/portal/casing)
+	gun = casing.gun
+
+/obj/item/ammo_casing/energy/portal/New(var/obj/item/weapon/gun/energy/portalgun/pg)
+	gun = pg
+
+/obj/item/projectile/beam/portal/on_hit(var/atom/target)
+	if(ismob(target))
+		..()
+		return
+	if(!gun)
+		qdel(src)
+	gun.create_portal(get_turf(src))
