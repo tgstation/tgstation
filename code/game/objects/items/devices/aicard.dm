@@ -63,6 +63,8 @@
 			dat += "<br>"
 			dat += {"<a href='byond://?src=\ref[src];choice=Wireless'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</a>"}
 			dat += "<br>"
+			dat += {"<a href='byond://?src=\ref[src];choice=Radio'>[A.radio_enabled ? "Disable" : "Enable"] Subspace Radio</a>"}
+			dat += "<br>"
 			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
 	user << browse(dat, "window=aicard")
 	onclose(user, "aicard")
@@ -110,4 +112,10 @@
 					overlays -= image('icons/obj/aicards.dmi', "aicard-on")
 				else
 					overlays += image('icons/obj/aicards.dmi', "aicard-on")
+
+		if ("Radio")
+			for(var/mob/living/silicon/ai/A in src)
+				A.radio_enabled = !A.radio_enabled
+				A << "Your Subspace Transceiver has been [A.radio_enabled ? "enabled" : "disabled"]!"
+				U << "You [A.radio_enabled ? "Enable" : "Disnable"] the AI's Subspace Transceiver."
 	attack_self(U)
