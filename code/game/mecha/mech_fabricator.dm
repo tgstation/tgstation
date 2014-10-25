@@ -32,7 +32,7 @@
 
 	locked_parts = list(
 		/obj/item/mecha_parts/mecha_equipment/weapon,
-		/obj/item/mecha_parts/mecha_equipmet/tool/jail
+		/obj/item/mecha_parts/mecha_equipment/tool/jail
 	)
 
 	unlocked_parts = list(
