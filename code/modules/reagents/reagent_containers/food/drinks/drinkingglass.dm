@@ -9,6 +9,8 @@
 	volume = 50
 	g_amt = 500
 	force = 5
+	smashtext = ""  //due to inconsistencies in the names of the drinks just don't say anything
+	smashname = "broken glass"
 
 //removed smashing - now uses smashing proc from drinks.dm - Hinaichigo
 //also now produces a broken glass when smashed instead of just a shard
