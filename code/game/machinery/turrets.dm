@@ -299,7 +299,8 @@
 
 /obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
 	user.changeNext_move(10)
-	..()
+	if(..())
+		return 1
 	playsound(get_turf(src), 'sound/weapons/smash.ogg', 60, 1)
 	src.spark_system.start()
 	src.health -= W.force * 0.5
@@ -346,6 +347,8 @@
 
 	ghost_read=0
 
+	machine_flags = EMAGGABLE
+
 /obj/machinery/turretid/New()
 	..()
 	if(!control_area)
@@ -362,21 +365,24 @@
 	//don't have to check if control_area is path, since get_area_all_atoms can take path.
 	return
 
-/obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
-	if(stat & BROKEN) return
-	if (istype(user, /mob/living/silicon))
-		return src.attack_hand(user)
-
-	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+/obj/machinery/turretid/emag(mob/user)
+	if(!emagged)
 		user << "\red You short out the turret controls' access analysis module."
 		emagged = 1
 		locked = 0
 		if(user.machine==src)
 			src.attack_hand(user)
+		return 1
+	return
 
-		return
+/obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
+	if(stat & BROKEN) return
+	if (istype(user, /mob/living/silicon))
+		return src.attack_hand(user)
 
-	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
+	..()
+
+	if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
 			if(emagged)
 				user << "<span class='notice'>The turret control is unresponsive.</span>"

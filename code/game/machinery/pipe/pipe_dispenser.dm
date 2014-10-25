@@ -6,6 +6,7 @@
 	anchored = 1
 	var/unwrenched = 0
 	var/wait = 0
+	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -118,34 +119,26 @@
 		user.drop_item()
 		del(W)
 		return
-	else if (istype(W, /obj/item/weapon/wrench))
-		if (unwrenched==0)
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to unfasten \the [src] from the floor..."
-			if (do_after(user, 40))
-				user.visible_message( \
-					"[user] unfastens \the [src].", \
-					"\blue You have unfastened \the [src]. Now it can be pulled somewhere else.", \
-					"You hear ratchet.")
-				src.anchored = 0
-				src.stat |= MAINT
-				src.unwrenched = 1
-				if (usr.machine==src)
-					usr << browse(null, "window=pipedispenser")
-		else /*if (unwrenched==1)*/
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to fasten \the [src] to the floor..."
-			if (do_after(user, 20))
-				user.visible_message( \
-					"[user] fastens \the [src].", \
-					"\blue You have fastened \the [src]. Now it can dispense pipes.", \
-					"You hear ratchet.")
-				src.anchored = 1
-				src.stat &= ~MAINT
-				src.unwrenched = 0
-				power_change()
 	else
 		return ..()
+
+/obj/machinery/pipedispenser/wrenchAnchor(mob/user)
+	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+	user << "\blue You begin to [anchored ? "un" : ""]fasten \the [src] from the floor..."
+	if (do_after(user, 40))
+		user.visible_message( \
+			"[user] unfastens \the [src].", \
+			"\blue You have [anchored ? "un" : ""]fastened \the [src]. Now it can [anchored ? "be pulled somewhere else" : "dispense pipes"].", \
+			"You hear ratchet.")
+		src.anchored = !src.anchored
+		src.unwrenched = !src.unwrenched
+		if (unwrenched==0)
+			src.stat |= MAINT
+			if (usr.machine==src)
+				usr << browse(null, "window=pipedispenser")
+		else
+			src.stat &= ~MAINT
+			power_change()
 
 
 /obj/machinery/pipedispenser/disposal

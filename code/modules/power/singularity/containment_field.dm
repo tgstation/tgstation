@@ -50,7 +50,7 @@
 
 
 
-/obj/machinery/containment_field/proc/shock(const/mob/living/user)
+/obj/machinery/containment_field/shock(const/mob/living/user)
 	if(hasShocked)
 		return 0
 

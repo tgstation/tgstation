@@ -35,6 +35,8 @@
 	ghost_read=0
 	ghost_write=0
 
+	machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK
+
 /obj/machinery/shield_gen/New()
 	spawn(10)
 		for(var/obj/machinery/shield_capacitor/possible_cap in range(1, src))
@@ -44,8 +46,36 @@
 	field = new/list()
 	..()
 
+/obj/machinery/shield_gen/emag(mob/user)
+	if(prob(75))
+		src.locked = !src.locked
+		user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+		updateDialog()
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
+		return 1
+	playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
+	return
+
+/obj/machinery/shield_gen/wrenchAnchor(mob/user)
+	if(..())
+		for(var/obj/machinery/shield_capacitor/cap in range(1, src))
+			if(!src.anchored && owned_capacitor == cap)
+				owned_capacitor = null
+				break
+			else if(src.anchored && !owned_capacitor)
+				owned_capacitor = cap
+				break
+			cap.updateDialog()
+			updateDialog()
+		return 1
+	return
+
 /obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/id))
+	if(..())
+		return 1
+	else if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = W
 		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
 			src.locked = !src.locked
@@ -53,32 +83,6 @@
 			updateDialog()
 		else
 			user << "\red Access denied."
-	else if(istype(W, /obj/item/weapon/card/emag))
-		if(prob(75))
-			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
-			updateDialog()
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-
-	else if(istype(W, /obj/item/weapon/wrench))
-		src.anchored = !src.anchored
-		src.visible_message("\blue \icon[src] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
-
-		spawn(0)
-			for(var/obj/machinery/shield_gen/gen in range(1, src))
-				if(get_dir(src, gen) == src.dir)
-					if(!src.anchored && gen.owned_capacitor == src)
-						gen.owned_capacitor = null
-						break
-					else if(src.anchored && !gen.owned_capacitor)
-						gen.owned_capacitor = src
-						break
-					gen.updateDialog()
-					updateDialog()
-	else
-		..()
 
 /obj/machinery/shield_gen/attack_paw(user as mob)
 	return src.attack_hand(user)

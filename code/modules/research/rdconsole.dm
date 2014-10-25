@@ -110,7 +110,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in area_contents(areaMaster)) //any machine in the room, just for funsies
-		if(D.linked_console != null || D.disabled || D.opened)
+		if(D.linked_console != null || D.disabled || D.panel_open)
 			continue
 		if(D.type in research_machines)
 			linked_machines += D
@@ -171,12 +171,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		user.drop_item()
 		D.loc = src
 		user << "\blue You add the disk to the machine!"
-	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "\blue You you disable the security protocols"
 	src.updateUsrDialog()
 	return
+
+/obj/machinery/computer/rdconsole/emag(mob/user)
+	playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
+	emagged = 1
+	user << "\blue You you disable the security protocols"
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())

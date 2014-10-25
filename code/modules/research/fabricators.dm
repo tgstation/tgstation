@@ -93,6 +93,15 @@
 			src.visible_message("\icon[src] <b>[src]</b> beeps: \"No records in User DB\"")
 	return
 
+/*
+/obj/machinery/r_n_d/fabricator/crowbarDestroy(mob/user)
+	if(..())
+		for(var/obj/I in src.contents) //remove any stuff loaded, like for fridges
+			qdel(I)
+		return 1
+	return -1
+*/
+
 //takes all the items in a list, and gets the ones which aren't designs and turns them into designs
 //basically, we call this whenever we add something that isn't a design to part_sets
 /obj/machinery/r_n_d/fabricator/proc/convert_part_set(set_name as text)

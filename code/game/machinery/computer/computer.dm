@@ -8,6 +8,7 @@
 	active_power_usage = 300
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
+	machine_flags = EMAGGABLE | SCREWTOGGLE | WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/computer/New()
 	..()
@@ -98,28 +99,35 @@
 	stat |= BROKEN
 	update_icon()
 
+/obj/machinery/computer/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if(!circuit) //we can't disassemble with no circuit, so add some fucking circuits if you want disassembly
+		return
+	playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+	user.visible_message(	"[user] begins to unscrew \the [src]'s monitor.",
+							"You begin to unscrew the monitor...")
+	if(do_after(user, 20))
+		var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+		var/obj/item/weapon/circuitboard/M = new circuit( A )
+		A.circuit = M
+		A.anchored = 1
+		for (var/obj/C in src)
+			C.loc = src.loc
+		if (src.stat & BROKEN)
+			user << "<span class='notice'>\icon[src] The broken glass falls out.</span>"
+			getFromPool(/obj/item/weapon/shard, loc)
+			A.state = 3
+			A.icon_state = "3"
+		else
+			user << "<span class='notice'>\icon[src] You disconnect the monitor.</span>"
+			A.state = 4
+			A.icon_state = "4"
+		Destroy(src)
+		return 1
+	return
 
 /obj/machinery/computer/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-		user <<"<span class='notice'>You begin to unscrew the monitor...</span>"
-		if(do_after(user, 20))
-			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			var/obj/item/weapon/circuitboard/M = new circuit( A )
-			A.circuit = M
-			A.anchored = 1
-			for (var/obj/C in src)
-				C.loc = src.loc
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				getFromPool(/obj/item/weapon/shard, loc)
-				A.state = 3
-				A.icon_state = "3"
-			else
-				user << "\blue You disconnect the monitor."
-				A.state = 4
-				A.icon_state = "4"
-			del(src)
+	if(..())
+		return
 	else
 		src.attack_hand(user)
 	return
