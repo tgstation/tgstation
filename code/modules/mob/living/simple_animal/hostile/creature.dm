@@ -29,6 +29,9 @@
 	max_n2 = 0
 	minbodytemp = 0
 
+/mob/living/simple_animal/hostile/creature/cult/cultify()
+	return
+
 /mob/living/simple_animal/hostile/creature/cult/Life()
 	..()
 	if(emergency_shuttle.location == 1)

@@ -26,6 +26,9 @@
 	faction = "cult"
 	var/list/construct_spells = list()
 
+/mob/living/simple_animal/construct/cultify()
+	return
+
 /mob/living/simple_animal/construct/New()
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
@@ -318,8 +321,8 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "harvester"
 	icon_living = "harvester"
-	maxHealth = 200
-	health = 200
+	maxHealth = 150
+	health = 150
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "violently stabs"
@@ -530,6 +533,29 @@
 
 /mob/living/simple_animal/construct/harvester/Life()
 	..()
+	if(healths)
+		switch(health)
+			if(150 to INFINITY)		healths.icon_state = "harvester_health0"
+			if(125 to 149)			healths.icon_state = "harvester_health1"
+			if(100 to 124)			healths.icon_state = "harvester_health2"
+			if(75 to 99)			healths.icon_state = "harvester_health3"
+			if(50 to 74)			healths.icon_state = "harvester_health4"
+			if(25 to 49)			healths.icon_state = "harvester_health5"
+			if(1 to 24)				healths.icon_state = "harvester_health6"
+			else					healths.icon_state = "harvester_health7"
+
+	if(construct_spell1)
+		if(runecooldown < 10)
+			construct_spell1.icon_state = "spell_rune-off"
+		else
+			construct_spell1.icon_state = "spell_rune"
+
+	if(construct_spell2)
+		if(doorcooldown < 10)
+			construct_spell2.icon_state = "spell_breakdoor-off"
+		else
+			construct_spell2.icon_state = "spell_breakdoor"
+
 	if(runecooldown < 10)
 		runecooldown++
 	if(doorcooldown < 10)

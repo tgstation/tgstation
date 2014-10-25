@@ -63,6 +63,9 @@
 	else
 		..()
 
+/obj/item/weapon/paper/talisman/attack_animal(var/mob/living/simple_animal/M as mob)
+	if(istype(M, /mob/living/simple_animal/construct/harvester))
+		attack_self(M)
 
 /obj/item/weapon/paper/talisman/proc/supply(var/key)
 	if (!src.uses)

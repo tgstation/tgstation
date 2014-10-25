@@ -69,6 +69,9 @@
 	var/shuttletarget = null
 	var/enroute = 0
 
+/mob/living/simple_animal/hostile/scarybat/cult/cultify()
+	return
+
 /mob/living/simple_animal/hostile/scarybat/cult/Life()
 	..()
 	if(emergency_shuttle.location == 1)

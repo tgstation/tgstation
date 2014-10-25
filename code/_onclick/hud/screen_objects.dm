@@ -640,6 +640,20 @@
 				if(S)
 					if(S.cast_check())
 						S.choose_targets()
+		if("rune")
+			if(isconstruct(usr))
+				var/mob/living/simple_animal/construct/harvester/C = usr
+				C.harvesterune()
+
+		if("breakdoor")
+			if(isconstruct(usr))
+				var/mob/living/simple_animal/construct/harvester/C = usr
+				C.harvesterknock()
+
+		if("harvest")
+			if(isconstruct(usr))
+				var/mob/living/simple_animal/construct/harvester/C = usr
+				C.harvesterharvest()
 		else
 			return 0
 	return 1

@@ -9,6 +9,9 @@
 	ghostize()
 	..()
 
+/mob/proc/cultify()
+	return
+
 /mob/New()
 	. = ..()
 	mob_list += src

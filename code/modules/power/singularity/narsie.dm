@@ -14,16 +14,6 @@ var/global/narsie_behaviour = "CultStation13"
 	grav_pull = 10 //How many tiles out do we pull?
 	consume_range = 3 //How many tiles out do we eat
 
-	//all the snowflakes that nar-sie won't touch
-	var/list/uneatable_narsie = list(
-		/mob/camera,
-		/mob/new_player,
-		/mob/living/simple_animal/construct,
-		/mob/living/simple_animal/hostile/scarybat/cult,
-		/mob/living/simple_animal/hostile/creature/cult,
-		/mob/living/simple_animal/hostile/faithless/cult
-		)
-
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
@@ -142,53 +132,11 @@ var/global/narsie_behaviour = "CultStation13"
 /obj/machinery/singularity/narsie/consume(const/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
 //NEW BEHAVIOUR
 	if(narsie_behaviour == "CultStation13")
-		if (is_type_in_list(A, uneatable_narsie))
-			return 0
 	//MOB PROCESSING
-		if (istype(A, /mob/dead/) && (get_dist(A, src) <= 7))
-			if(A.icon_state != "ghost-narsie")
-				var/mob/dead/D = A
-				D.icon = 'icons/mob/mob.dmi'
-				D.icon_state = "ghost-narsie"
-				D.overlays = 0
-				if(istype(D.mind.current, /mob/living/carbon/human/))
-					var/mob/living/carbon/human/H = D.mind.current
-					D.overlays += H.overlays_standing[6]
-					D.overlays += H.overlays_standing[9]
-					D.overlays += H.overlays_standing[10]
-					D.overlays += H.overlays_standing[11]
-					D.overlays += H.overlays_standing[12]
-					D.overlays += H.overlays_standing[14]
-					D.overlays += H.overlays_standing[18]
-					D.overlays += H.overlays_standing[19]
-				D.invisibility = 0
-				G << "<span class='sinister'>Even as a non-corporal being, you can feel Nar-Sie's presence altering you. You are now visible to everyone.</span>"
-		else if (istype(A, /mob/living/) && (get_dist(A, src) <= 7))//approximatively matches the size of its sprite, so you won't get gobbled up before you can even see it. hopefully.
-			var/mob/living/M = A
-			if(iscultist(M) && M.client)
-				var/mob/living/simple_animal/construct/harvester/C = new /mob/living/simple_animal/construct/harvester(get_turf(M))
-				M.mind.transfer_to(C)
-				C << "<span class='sinister'>The Geometer of Blood is overjoyed to be reunited with its followers, and accepts your body in sacrifice. As reward, you have been gifted with the shell of an Harvester.<br>Your tendrils can use and draw runes without need for a tome, your eyes can see beings through walls, and your mind can open any door. Use these assets to serve Nar-Sie and bring him any remaining living human in the world.<br>You can teleport yourself back to Nar-Sie along with any being under yourself at any time using your \"Harvest\" spell.</span>"
-				M.dust()
-			else if(M.client)
-				var/mob/dead/G = (M.ghostize())
-				G.icon = 'icons/mob/mob.dmi'
-				G.icon_state = "ghost-narsie"
-				G.overlays = 0
-				if(istype(G.mind.current, /mob/living/carbon/human/))
-					var/mob/living/carbon/human/H = G.mind.current
-					G.overlays += H.overlays_standing[6]
-					G.overlays += H.overlays_standing[9]
-					G.overlays += H.overlays_standing[10]
-					G.overlays += H.overlays_standing[11]
-					G.overlays += H.overlays_standing[12]
-					G.overlays += H.overlays_standing[14]
-					G.overlays += H.overlays_standing[18]
-					G.overlays += H.overlays_standing[19]
-				G.invisibility = 0
-				G << "<span class='sinister'>You feel relieved as what's left of your soul finally escapes its prison of flesh.</span>"
-			else
-				M.dust()
+		if (istype(A, /mob/) && (get_dist(A, src) <= 7))
+			var/mob/M = A
+			M.cultify()
+
 	//ITEM PROCESSING
 		else if (istype(A, /obj/))
 			var/obj/O = A
@@ -207,9 +155,6 @@ var/global/narsie_behaviour = "CultStation13"
 					continue
 
 				if (dist > consume_range && canPull(AM))
-					if (is_type_in_list(AM, uneatable_narsie))
-						continue
-
 					if (101 == AM.invisibility)
 						continue
 
