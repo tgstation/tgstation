@@ -31,6 +31,11 @@ In short:
 	return
 
 
+/datum/universal_state/hell/OnTurfChange(var/turf/T)
+	var/turf/space/spess = T
+	if(istype(spess))
+		spess.overlays += "hell01"
+
 // Apply changes when entering state
 /datum/universal_state/hell/OnEnter()
 	/*
@@ -71,6 +76,9 @@ In short:
 */
 
 		A.updateicon()
+
+	for(var/turf/space/spess in world)
+		spess.overlays += "hell01"
 
 	for(var/turf/T in world)
 		if(istype(T,/turf/simulated/floor) && prob(1))
