@@ -229,10 +229,6 @@
 		icon_state = "hair_hitop"
 		gender = MALE
 
-	mohawk
-		name = "Mohawk"
-		icon_state = "hair_d"
-		species_allowed = list("Human","Unathi")
 	jensen
 		name = "Adam Jensen Hair"
 		icon_state = "hair_jensen"
@@ -778,3 +774,7 @@
 		icon_state = "default"
 		icon = 'icons/mob/human_races/r_skrell.dmi'
 		species_allowed = list("Skrell")
+
+/datum/sprite_accessory/hair/mohawk
+	name = "Mohawk"
+	icon_state = "mohawk"
