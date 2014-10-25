@@ -116,12 +116,11 @@
 			if(3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
 			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/atmospheric_technician(H), slot_w_uniform)
-		//H.equip_or_collect(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		H.equip_or_collect(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		//H.equip_or_collect(new /obj/item/device/pda/atmos(H), slot_l_store)
 		H.equip_or_collect(new /obj/item/weapon/storage/belt/utility/atmostech(H), slot_belt)
 		if(H.backbag == 1)
 			H.equip_or_collect(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
 		else
 			H.equip_or_collect(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
-		H.equip_or_collect(new /obj/item/clothing/shoes/blue(H), slot_shoes)
 		return 1
