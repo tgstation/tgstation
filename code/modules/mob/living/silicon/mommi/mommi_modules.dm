@@ -36,18 +36,19 @@
 		var/obj/item/stack/sheet/glass/cyborg/G = new /obj/item/stack/sheet/glass/cyborg(src)
 		G.amount = 50
 		src.modules += G
-
+*/
 		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 		W.amount = 50
 		W.max_amount = 50 // Override MAXCOIL
 		src.modules += W
 		return
+
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
-			/obj/item/stack/sheet/metal/cyborg,
-			/obj/item/stack/sheet/glass,
+			// /obj/item/stack/sheet/metal/cyborg,
+			// /obj/item/stack/sheet/glass,
 			/obj/item/weapon/cable_coil,
-			/obj/item/stack/sheet/rglass/cyborg,
+			// /obj/item/stack/sheet/rglass/cyborg,
 		)
 		for (var/T in what)
 			if (!(locate(T) in src.modules))
@@ -58,4 +59,3 @@
 				src.modules += O
 				O:amount = 1
 		return
-*/

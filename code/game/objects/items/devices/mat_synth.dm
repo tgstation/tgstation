@@ -1,6 +1,10 @@
 #define MAX_MATSYNTH_MATTER 60
 #define MAT_SYNTH_ROBO 100
 
+#define MAT_COST_COMMON		1
+#define MAT_COST_MEDIUM		5
+#define MAT_COST_RARE		15
+
 /obj/item/device/material_synth
 	name = "material synthesizer"
 	desc = "A device capable of producing very little material with a great deal of investment. Use wisely."
@@ -82,11 +86,11 @@
 			if(isrobot(user))
 				var/mob/living/silicon/robot/r_user = user
 				if(active_material && r_user.cell.charge)
-					var/modifier = 1
+					var/modifier = MAT_COST_COMMON
 					if(initial(active_material.perunit) < 3750)
-						modifier = 3
+						modifier = MAT_COST_MEDIUM
 					if(initial(active_material.perunit) < 2000)
-						modifier = 5
+						modifier = MAT_COST_RARE
 					var/tospawn = max(0, round(input("How many sheets of [mat_name] do you want to synthesize?") as num))
 					if(tospawn)
 						if(TakeCost(tospawn, modifier, r_user))
