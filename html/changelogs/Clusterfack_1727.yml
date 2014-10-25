@@ -1,4 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-  - fix:Stopped the emergency shuttle from leaving structures in place when it arrives (i.e. grilles)
