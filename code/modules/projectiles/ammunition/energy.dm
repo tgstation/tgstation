@@ -121,3 +121,11 @@
 	select_name  = "disable"
 	e_cost = 50
 	fire_sound = "sound/weapons/taser.ogg"
+
+/obj/item/ammo_casing/energy/portal
+	projectile_type = /obj/item/projectile/beam/portal
+	select_name  = "portal"
+	e_cost = 0
+	fire_sound = "sound/weapons/pulse3.ogg"
+	var/obj/item/weapon/gun/energy/portalgun/gun = null
+

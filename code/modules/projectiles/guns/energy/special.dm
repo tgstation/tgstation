@@ -135,3 +135,62 @@
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	cell_type = "/obj/item/weapon/stock_parts/cell"
+
+
+/obj/item/weapon/gun/energy/portalgun
+	name = "portal gun"
+	desc = "Creates temporary rifts in reality that are still connected in bluespace. For testing purposes only."
+	ammo_type = list(/obj/item/ammo_casing/energy/portal)
+	item_state = null
+	icon_state = "portalgun"
+	var/obj/effect/portal/blue
+	var/obj/effect/portal/orange
+	var/blue_portal_next = 1
+
+/obj/item/weapon/gun/energy/portalgun/update_icon()
+	if(blue_portal_next)
+		icon_state = "portalgun"
+	else
+		icon_state = "portalgun1"
+	return
+
+/obj/item/weapon/gun/energy/portalgun/attack_self(var/mob/living/user as mob)
+	blue_portal_next = !blue_portal_next
+	user << "<span class='notice'>You toggle the button on the side of [src].</span>"
+	update_icon()
+
+/obj/item/weapon/gun/energy/portalgun/proc/create_portal(var/turf/target)
+	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(target), null, src)
+	P.precision = 0
+	if(blue_portal_next)
+		qdel(blue)
+		blue = P
+	else
+		qdel(orange)
+		P.icon_state = "portal1"
+		orange = P
+	if(orange && blue)
+		blue.target = get_turf(orange)
+		orange.target = get_turf(blue)
+
+/obj/item/weapon/gun/energy/portalgun/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
+	..()
+	if(target != src)
+		blue_portal_next = !blue_portal_next
+		update_icon()
+		if(!user)
+			return
+		if(user.hand)
+			user.update_inv_l_hand(0)
+		else
+			user.update_inv_r_hand(0)
+
+/obj/item/weapon/gun/energy/portalgun/proc/portal_destroyed(var/obj/effect/portal/P)
+	if(P.icon_state == "portal")
+		blue = null
+		if(orange)
+			orange.target = null
+	else
+		orange = null
+		if(blue)
+			blue.target = null
