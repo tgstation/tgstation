@@ -14,7 +14,8 @@
 
 /obj/structure/grille/cultify()
 	var/turf/T = get_turf(src)
-	T.ChangeTurf(/turf/simulated/wall/cult)
+	if(T)
+		T.ChangeTurf(/turf/simulated/wall/cult)
 	..()
 
 /obj/structure/grille/fence/east_west

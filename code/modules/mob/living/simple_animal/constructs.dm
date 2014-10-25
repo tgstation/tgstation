@@ -330,6 +330,9 @@
 	var/doorcooldown = 10
 	var/runecooldown = 10
 
+/mob/living/simple_animal/construct/harvester/New()
+	..()
+	sight |= SEE_MOBS
 
 ////////////////Glow//////////////////
 /mob/living/simple_animal/construct/proc/updateicon()
