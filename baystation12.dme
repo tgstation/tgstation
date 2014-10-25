@@ -1183,6 +1183,7 @@
 #include "code\modules\mob\living\simple_animal\worm.dm"
 #include "code\modules\mob\living\simple_animal\friendly\cat.dm"
 #include "code\modules\mob\living\simple_animal\friendly\corgi.dm"
+#include "code\modules\mob\living\simple_animal\friendly\corgi_powers.dm"
 #include "code\modules\mob\living\simple_animal\friendly\crab.dm"
 #include "code\modules\mob\living\simple_animal\friendly\farm_animals.dm"
 #include "code\modules\mob\living\simple_animal\friendly\lizard.dm"

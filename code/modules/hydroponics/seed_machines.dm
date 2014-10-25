@@ -104,7 +104,7 @@
 
 	if(open)
 		if(istype(W, /obj/item/weapon/crowbar))
-			dismantle()
+			crowbarDestroy(user)
 			return
 
 	if(istype(W,/obj/item/weapon/disk/botany))

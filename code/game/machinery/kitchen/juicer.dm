@@ -22,6 +22,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = "watermelonjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = "poisonberryjuice",
 	)
+	machine_flags = WRENCHMOVE
 
 /obj/machinery/juicer/New()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
@@ -32,6 +33,7 @@
 
 
 /obj/machinery/juicer/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	..()
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
 		if (beaker)
@@ -155,20 +157,19 @@
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 
-/obj/structure/closet/crate/juice
-	New()
-		..()
-		new/obj/machinery/juicer(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+/obj/structure/closet/crate/juice/New()
+	..()
+	new/obj/machinery/juicer(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
 

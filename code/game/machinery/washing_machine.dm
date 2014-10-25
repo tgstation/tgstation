@@ -13,7 +13,6 @@
 	//6 = blood, open door
 	//7 = blood, closed door
 	//8 = blood, running
-	var/panel = 0
 	//0 = closed
 	//1 = open
 	var/hacked = 1 //Bleh, screw hacking, let's have it hacked by default.
@@ -21,6 +20,8 @@
 	//1 = hacked
 	var/gibs_ready = 0
 	var/obj/crayon
+
+	machine_flags = SCREWTOGGLE | WRENCHMOVE
 
 /obj/machinery/washing_machine/verb/start()
 	set name = "Start Washing"
@@ -126,7 +127,7 @@
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				del(H)
-				
+
 			for(var/T in typesof(/obj/item/weapon/cable_coil))
 				var/obj/item/weapon/cable_coil/test = new T
 				if(test._color == color)
@@ -135,7 +136,7 @@
 					del(test)
 					break
 				del(test)
-				
+
 			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
 				for(var/obj/item/clothing/under/J in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
@@ -178,8 +179,8 @@
 					H._color = color
 					H.name = new_softcap_name
 					H.desc = new_desc
-					
-			if(ccoil_test) 
+
+			if(ccoil_test)
 				for(var/obj/item/weapon/cable_coil/H in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
 					H._color = color
@@ -206,22 +207,18 @@
 
 
 /obj/machinery/washing_machine/update_icon()
-	icon_state = "wm_[state][panel]"
+	icon_state = "wm_[state][panel_open]"
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	/*if(istype(W,/obj/item/weapon/screwdriver))
-		panel = !panel
-		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
-	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
+	if(..())
+		update_icon()
+		return 1
+	else if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
 				user.drop_item()
 				crayon = W
 				crayon.loc = src
-			else
-				..()
-		else
-			..()
 	else if(istype(W,/obj/item/weapon/grab))
 		if( (state == 1) && hacked)
 			var/obj/item/weapon/grab/G = W
@@ -229,8 +226,6 @@
 				G.affecting.loc = src
 				del(G)
 				state = 3
-		else
-			..()
 	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
 		istype(W,/obj/item/clothing/under) || \
 		istype(W,/obj/item/clothing/mask) || \
@@ -288,8 +283,6 @@
 				user << "\blue You can't put the item in right now."
 		else
 			user << "\blue The washing machine is full."
-	else
-		..()
 	update_icon()
 
 /obj/machinery/washing_machine/attack_hand(mob/user as mob)

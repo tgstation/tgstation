@@ -158,121 +158,125 @@ for reference:
 	var/locked = 0.0
 //	req_access = list(access_maint_tunnels)
 
-	New()
-		..()
+	machine_flags = EMAGGABLE
 
-		src.icon_state = "barrier[src.locked]"
+/obj/machinery/deployable/barrier/New()
+	..()
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weapon/card/id/))
-			if (src.allowed(user))
-				if	(src.emagged < 2.0)
-					src.locked = !src.locked
-					src.anchored = !src.anchored
-					src.icon_state = "barrier[src.locked]"
-					if ((src.locked == 1.0) && (src.emagged < 2.0))
-						user << "Barrier lock toggled on."
-						return
-					else if ((src.locked == 0.0) && (src.emagged < 2.0))
-						user << "Barrier lock toggled off."
-						return
-				else
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-					s.set_up(2, 1, src)
-					s.start()
-					visible_message("\red BZZzZZzZZzZT")
-					return
-			return
-		else if (istype(W, /obj/item/weapon/card/emag))
-			if (src.emagged == 0)
-				src.emagged = 1
-				src.req_access = null
-				user << "You break the ID authentication lock on the [src]."
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-				visible_message("\red BZZzZZzZZzZT")
-				return
-			else if (src.emagged == 1)
-				src.emagged = 2
-				user << "You short out the anchoring mechanism on the [src]."
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-				visible_message("\red BZZzZZzZZzZT")
-				return
-		else if (istype(W, /obj/item/weapon/wrench))
-			if (src.health < src.maxhealth)
-				src.health = src.maxhealth
-				src.emagged = 0
-				src.req_access = list(access_security)
-				visible_message("\red [user] repairs the [src]!")
-				return
-			else if (src.emagged > 0)
-				src.emagged = 0
-				src.req_access = list(access_security)
-				visible_message("\red [user] repairs the [src]!")
-				return
-			return
-		else
-			switch(W.damtype)
-				if("fire")
-					src.health -= W.force * 0.75
-				if("brute")
-					src.health -= W.force * 0.5
-				else
-			if (src.health <= 0)
-				src.explode()
-			..()
+	src.icon_state = "barrier[src.locked]"
 
-	ex_act(severity)
-		switch(severity)
-			if(1.0)
-				src.explode()
-				return
-			if(2.0)
-				src.health -= 25
-				if (src.health <= 0)
-					src.explode()
-				return
-	emp_act(severity)
-		if(stat & (BROKEN|NOPOWER))
-			return
-		if(prob(50/severity))
-			locked = !locked
-			anchored = !anchored
-			icon_state = "barrier[src.locked]"
-
-	meteorhit()
-		src.explode()
+/obj/machinery/deployable/barrier/emag(mob/user)
+	if (src.emagged == 0)
+		src.emagged = 1
+		src.req_access = null
+		user << "You break the ID authentication lock on the [src]."
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(2, 1, src)
+		s.start()
+		visible_message("\red BZZzZZzZZzZT")
+		return
+	else if (src.emagged == 1)
+		src.emagged = 2
+		user << "You short out the anchoring mechanism on the [src]."
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(2, 1, src)
+		s.start()
+		visible_message("\red BZZzZZzZZzZT")
 		return
 
-	blob_act()
-		src.health -= 25
+/obj/machinery/deployable/barrier/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if (istype(W, /obj/item/weapon/card/id/))
+		if (src.allowed(user))
+			if	(src.emagged < 2.0)
+				src.locked = !src.locked
+				src.anchored = !src.anchored
+				src.icon_state = "barrier[src.locked]"
+				if ((src.locked == 1.0) && (src.emagged < 2.0))
+					user << "Barrier lock toggled on."
+					return
+				else if ((src.locked == 0.0) && (src.emagged < 2.0))
+					user << "Barrier lock toggled off."
+					return
+			else
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+				visible_message("\red BZZzZZzZZzZT")
+				return
+		return
+	else if (istype(W, /obj/item/weapon/wrench))
+		if (src.health < src.maxhealth)
+			src.health = src.maxhealth
+			src.emagged = 0
+			src.req_access = list(access_security)
+			visible_message("\red [user] repairs the [src]!")
+			return
+		else if (src.emagged > 0)
+			src.emagged = 0
+			src.req_access = list(access_security)
+			visible_message("\red [user] repairs the [src]!")
+			return
+		return
+	else
+		switch(W.damtype)
+			if("fire")
+				src.health -= W.force * 0.75
+			if("brute")
+				src.health -= W.force * 0.5
+			else
 		if (src.health <= 0)
 			src.explode()
+		..()
+
+/obj/machinery/deployable/barrier/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			src.explode()
+			return
+		if(2.0)
+			src.health -= 25
+			if (src.health <= 0)
+				src.explode()
+			return
+
+/obj/machinery/deployable/barrier/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
 		return
+	if(prob(50/severity))
+		locked = !locked
+		anchored = !anchored
+		icon_state = "barrier[src.locked]"
 
-	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
-		if(air_group || (height==0))
-			return 1
-		if(istype(mover) && mover.checkpass(PASSTABLE))
-			return 1
-		else
-			return 0
+/obj/machinery/deployable/barrier/meteorhit()
+	src.explode()
+	return
 
-	proc/explode()
+/obj/machinery/deployable/barrier/blob_act()
+	src.health -= 25
+	if (src.health <= 0)
+		src.explode()
+	return
 
-		visible_message("\red <B>[src] blows apart!</B>")
-		var/turf/Tsec = get_turf(src)
+/obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
+	if(air_group || (height==0))
+		return 1
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return 1
+	else
+		return 0
+
+/obj/machinery/deployable/barrier/proc/explode()
+	visible_message("\red <B>[src] blows apart!</B>")
+	var/turf/Tsec = get_turf(src)
 
 	/*	var/obj/item/stack/rods/ =*/
-		new /obj/item/stack/rods(Tsec)
+	new /obj/item/stack/rods(Tsec)
 
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
 
-		explosion(src.loc,-1,-1,0)
-		if(src)
-			qdel(src)
+	explosion(src.loc,-1,-1,0)
+	if(src)
+		qdel(src)

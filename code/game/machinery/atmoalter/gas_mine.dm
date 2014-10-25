@@ -17,6 +17,8 @@
 
 	var/light_color = "#FFFFFF"
 
+	machine_flags = WRENCHMOVE | FIXED2WORK
+
 /obj/machinery/atmospherics/miner/New()
 	..()
 	air_contents = new
@@ -25,6 +27,12 @@
 	AddAir()
 	air_contents.update_values()
 	update_icon()
+
+/obj/machinery/atmospherics/miner/wrenchAnchor(mob/user)
+	..()
+	if(on)
+		on = 0
+		update_icon()
 
 // Critical equipment.
 /obj/machinery/atmospherics/miner/ex_act(severity)
@@ -43,8 +51,9 @@
 
 /obj/machinery/atmospherics/miner/attack_hand(var/mob/user)
 	..()
-	on=!on
-	update_icon()
+	if(anchored)
+		on=!on
+		update_icon()
 
 /obj/machinery/atmospherics/miner/attack_ai(var/mob/user)
 	..()

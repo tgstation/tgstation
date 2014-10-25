@@ -7,7 +7,8 @@ obj/machinery/recharger/defibcharger/wallcharger
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 150
-	var/opened = 0
+
+	machine_flags = SCREWTOGGLE | CROWDESTROY //| WRENCHMOVE | FIXED2WORK if we want it to be wrenchable
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -72,7 +73,22 @@ obj/machinery/recharger/defibcharger/wallcharger/process()
 			else
 				icon_state = "wrecharger2"
 
+/obj/machinery/recharger/defibcharger/wallcharger/togglePanelOpen(var/obj/toggleitem, var/mob/user)
+	if(charging)
+		user << "<span class='warning'>Not while [src] is charging!</span>"
+		return
+	return(..())
+
+/obj/machinery/recharger/defibcharger/wallcharger/crowbarDestroy()
+	if(..() == 1)
+		if(charging)
+			charging.loc = src.loc
+		return 1
+	return -1
+
 obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
+	if(..())
+		return
 	if(istype(user,/mob/living/silicon))
 		return
 	if(istype(G, /obj/item/weapon/melee/defibrillator))
@@ -96,41 +112,3 @@ obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as o
 		charging = G
 		use_power = 2
 		update_icon()
-	/*if(istype(G, /obj/item/weapon/wrench)) If you want the defibrillator's to be ananchorable, uncomment this
-		if(charging)
-			user << "\red Remove the defibrillator first!"
-			return
-		anchored = !anchored
-		user << "You [anchored ? "attached" : "detached"] the recharger."
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)*/
-	if(istype(G, /obj/item/weapon/screwdriver))
-		if(charging)
-			user << "<span class='warning'>Not while [src] is charging!</span>"
-			return
-		if(!opened)
-			src.opened = 1
-			//src.icon_state = "wrecharger1"
-			user << "You open the maintenance hatch of [src]"
-			return
-		else
-			src.opened = 0
-			//src.icon_state = "wrecharger1_t"
-			user << "You close the maintenance hatch of [src]"
-		return 1
-	if(opened)
-		if(charging)
-			user << "<span class='warning'>Not while [src] is charging!</span>"
-			return
-		if(istype(G, /obj/item/weapon/crowbar))
-			user << "You begin to remove the circuits from the [src]."
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			if(do_after(user, 50))
-				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-				M.state = 2
-				M.icon_state = "box_1"
-				for(var/obj/I in component_parts)
-					if(I.reliability != 100 && crit_fail)
-						I.crit_fail = 1
-					I.loc = src.loc
-				del(src)
-				return 1

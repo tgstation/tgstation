@@ -4,6 +4,7 @@
 	name = "Pod Launch Control"
 	desc = "A controll for launching pods. Some people prefer firing Mechas."
 	icon_state = "computer_generic"
+	circuit = /obj/item/weapon/circuitboard/pod
 	var/id_tag = 1.0
 	var/obj/machinery/mass_driver/connected = null
 	var/timing = 0.0
@@ -47,62 +48,6 @@
 		if(M.id_tag == id_tag)
 			M.close()
 			return
-	return
-
-
-/obj/machinery/computer/pod/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if(stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
-				getFromPool(/obj/item/weapon/shard, loc)
-
-				//generate appropriate circuitboard. Accounts for /pod/old computer types
-				var/obj/item/weapon/circuitboard/pod/M = null
-				if(istype(src, /obj/machinery/computer/pod/old))
-					M = new /obj/item/weapon/circuitboard/olddoor( A )
-					if(istype(src, /obj/machinery/computer/pod/old/syndicate))
-						M = new /obj/item/weapon/circuitboard/syndicatedoor( A )
-					if(istype(src, /obj/machinery/computer/pod/old/swf))
-						M = new /obj/item/weapon/circuitboard/swfdoor( A )
-				else //it's not an old computer. Generate standard pod circuitboard.
-					M = new /obj/item/weapon/circuitboard/pod( A )
-
-				for (var/obj/C in src)
-					C.loc = loc
-				M.id_tag = id_tag
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
-
-				//generate appropriate circuitboard. Accounts for /pod/old computer types
-				var/obj/item/weapon/circuitboard/pod/M = null
-				if(istype(src, /obj/machinery/computer/pod/old))
-					M = new /obj/item/weapon/circuitboard/olddoor( A )
-					if(istype(src, /obj/machinery/computer/pod/old/syndicate))
-						M = new /obj/item/weapon/circuitboard/syndicatedoor( A )
-					if(istype(src, /obj/machinery/computer/pod/old/swf))
-						M = new /obj/item/weapon/circuitboard/swfdoor( A )
-				else //it's not an old computer. Generate standard pod circuitboard.
-					M = new /obj/item/weapon/circuitboard/pod( A )
-
-				for (var/obj/C in src)
-					C.loc = loc
-				M.id_tag = id_tag
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	else
-		attack_hand(user)
 	return
 
 
@@ -195,7 +140,7 @@
 	icon_state = "old"
 	name = "DoorMex Control Computer"
 	title = "Door Controls"
-
+	circuit = /obj/item/weapon/circuitboard/olddoor
 
 
 /obj/machinery/computer/pod/old/syndicate
@@ -203,7 +148,7 @@
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
 	req_access = list(access_syndicate)
-
+	circuit = /obj/item/weapon/circuitboard/syndicatedoor
 	l_color = "#000000"
 
 /obj/machinery/computer/pod/old/syndicate/attack_hand(var/mob/user as mob)
@@ -216,3 +161,4 @@
 /obj/machinery/computer/pod/old/swf
 	name = "Magix System IV"
 	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
+	circuit = /obj/item/weapon/circuitboard/swfdoor

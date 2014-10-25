@@ -57,6 +57,8 @@
 
 	var/datum/effect/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
 
+	machine_flags = EMAGGABLE
+
 	New()
 		..()
 		icon_state = "[lasercolor]grey_target_prism"
@@ -284,8 +286,16 @@ Status: []<BR>"},
 				src.icon_state = "[lasercolor]grey_target_prism"
 				stat |= NOPOWER
 
-
-
+/obj/machinery/porta_turret/emag(mob/user)
+	if(!emagged)
+		user << "\red You short out [src]'s threat assessment circuits."
+		spawn(0)
+			for(var/mob/O in hearers(src, null))
+				O.show_message("\red [src] hums oddly...", 1)
+		emagged = 1
+		src.on = 0 // turns off the turret temporarily
+		sleep(60) // 6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+		on = 1 // turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 /obj/machinery/porta_turret/attackby(obj/item/W as obj, mob/user as mob)
 	if(stat & BROKEN)
 		if(istype(W, /obj/item/weapon/crowbar))
@@ -306,22 +316,11 @@ Status: []<BR>"},
 			else
 				user << "You remove the turret but did not manage to salvage anything."
 			del(src)
+		return
 
+	..()
 
-	if ((istype(W, /obj/item/weapon/card/emag)) && (!src.emagged))
-		// Emagging the turret makes it go bonkers and stun everyone. It also makes
-		// the turret shoot much, much faster.
-
-		user << "\red You short out [src]'s threat assessment circuits."
-		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("\red [src] hums oddly...", 1)
-		emagged = 1
-		src.on = 0 // turns off the turret temporarily
-		sleep(60) // 6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-		on = 1 // turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
-
-	else if((istype(W, /obj/item/weapon/wrench)) && (!on))
+	if((istype(W, /obj/item/weapon/wrench)) && (!on))
 		if(raised) return
 		// This code handles moving the turret around. After all, it's a portable turret!
 
@@ -359,7 +358,6 @@ Status: []<BR>"},
 				spawn()
 					sleep(60)
 					attacked = 0
-		..()
 
 
 

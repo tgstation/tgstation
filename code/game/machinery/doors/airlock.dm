@@ -316,7 +316,7 @@ About the new airlock wires panel:
 	..(user)
 
 /obj/machinery/door/Bumped(atom/AM)
-	if (p_open)
+	if (panel_open)
 		return
 
 	..(AM)
@@ -395,7 +395,7 @@ About the new airlock wires panel:
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
 // The preceding comment was borrowed from the grille's shock script
-/obj/machinery/door/airlock/proc/shock(mob/user, prb)
+/obj/machinery/door/airlock/shock(mob/user, prb)
 	if((stat & (NOPOWER)) || !src.arePowerSystemsOn())		// unpowered, no shock
 		return 0
 	if(hasShocked)
@@ -422,9 +422,9 @@ About the new airlock wires panel:
 			icon_state = "door_locked"
 		else
 			icon_state = "door_closed"
-		if (p_open || welded)
+		if (panel_open || welded)
 			var/L[0]
-			if (p_open)
+			if (panel_open)
 				L += "panel_open"
 
 			if (welded)
@@ -441,14 +441,14 @@ About the new airlock wires panel:
 	switch(animation)
 		if("opening")
 			if(overlays) overlays.Cut()
-			if(p_open)
+			if(panel_open)
 				spawn(2) // The only work around that works. Downside is that the door will be gone for a millisecond.
 					flick("o_door_opening", src)  //can not use flick due to BYOND bug updating overlays right before flicking
 			else
 				flick("door_opening", src)
 		if("closing")
 			if(overlays) overlays.Cut()
-			if(p_open)
+			if(panel_open)
 				flick("o_door_closing", src)
 			else
 				flick("door_closing", src)
@@ -647,7 +647,7 @@ About the new airlock wires panel:
 	//testing("in range: [am_in_range], turf ok: [turf_ok]")
 	if(am_in_range && turf_ok)
 		usr.set_machine(src)
-		if(p_open)
+		if(panel_open)
 			var/obj/item/device/multitool/P = get_multitool(usr)
 			if(P && istype(P))
 				if("set_id" in href_list)
@@ -942,12 +942,21 @@ About the new airlock wires panel:
 			// TODO: analyze the called proc
 			if (shock(user, 100))
 				return
-	if (!p_open)
+	if (!panel_open)
 		..(user)
 	//else
 	//	// TODO: logic for adding fingerprints when interacting with wires
 	//	wires.Interact(user)
 
+	return
+
+// huehue you cannot screwdrive an operating door
+// neither closed door ;)
+/obj/machinery/door/airlock/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if (density && !operating)
+		panel_open = !panel_open
+		update_icon()
+		return 1
 	return
 
 /obj/machinery/door/airlock/attackby(obj/item/I as obj, mob/user as mob)
@@ -972,17 +981,11 @@ About the new airlock wires panel:
 					welded = null
 
 				update_icon()
-	// huehue you cannot screwdrive an operating door
-	// neither closed door ;)
-	else if (istype(I, /obj/item/weapon/screwdriver))
-		if (density && !operating)
-			p_open = !p_open
-			update_icon()
 	else if (istype(I, /obj/item/weapon/wirecutters))
-		if (!operating && p_open)
+		if (!operating && panel_open)
 			wires.Interact(user)
 	else if (istype(I, /obj/item/device/multitool))
-		if (!operating && p_open)
+		if (!operating && panel_open)
 			wires.Interact(user)
 			update_multitool_menu(user)
 		attack_hand(user)
@@ -1000,7 +1003,7 @@ About the new airlock wires panel:
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0
-		if( beingcrowbarred && (operating == -1 || density && welded && !operating && src.p_open && (!src.arePowerSystemsOn() || stat & NOPOWER) && !src.locked) )
+		if( beingcrowbarred && (operating == -1 || density && welded && !operating && src.panel_open && (!src.arePowerSystemsOn() || stat & NOPOWER) && !src.locked) )
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			// TODO: refactor the called proc
@@ -1153,7 +1156,7 @@ About the new airlock wires panel:
 				spawn (20)
 					del(S)
 
-				L.emote("scream")
+				L.emote("scream",,, 1)
 
 				if (istype(loc, /turf/simulated))
 					T.add_blood(L)

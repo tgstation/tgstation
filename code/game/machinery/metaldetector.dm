@@ -336,17 +336,9 @@
 		if ((src.anchored))
 			src.flash()
 
-/obj/machinery/detector/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
-		add_fingerprint(user)
-		src.anchored = !src.anchored
-
-		if (!src.anchored)
-			user.show_message(text("\red [src] can now be moved."))
-			src.overlays.Cut()
-
-		else if (src.anchored)
-			user.show_message(text("\red [src] is now secured."))
+/obj/machinery/detector/wrenchAnchor(mob/user)
+	if(..() == 1)
+		if(anchored)
 			src.overlays += "[base_state]-s"
 
 

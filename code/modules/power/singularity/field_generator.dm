@@ -32,6 +32,8 @@ field_generator power level display
 	var/list/obj/machinery/field_generator/connected_gens
 	var/clean_up = 0
 
+	machine_flags = WRENCHMOVE | FIXED2WORK
+
 
 /obj/machinery/field_generator/update_icon()
 	overlays.Cut()
@@ -97,30 +99,22 @@ field_generator power level display
 		user << "The [src] needs to be firmly secured to the floor first."
 		return 0
 
+/obj/machinery/field_generator/wrenchAnchor(mob/user)
+	if(active)
+		user << "Turn off the [src] first."
+		return
+	if(state == 2)
+		user << "\red The [src.name] needs to be unwelded from the floor."
+		return
+	return ..()
+
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if(active)
 		user << "The [src] needs to be off."
 		return
-	else if(istype(W, /obj/item/weapon/wrench))
-		switch(state)
-			if(0)
-				state = 1
-				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] secures [src.name] to the floor.", \
-					"You secure the external reinforcing bolts to the floor.", \
-					"You hear ratchet")
-				src.anchored = 1
-			if(1)
-				state = 0
-				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
-					"You undo the external reinforcing bolts.", \
-					"You hear ratchet")
-				src.anchored = 0
-			if(2)
-				user << "\red The [src.name] needs to be unwelded from the floor."
-				return
+	else if(..())
+		return
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(state)
@@ -151,9 +145,7 @@ field_generator power level display
 						user << "You cut the [src] free from the floor."
 				else
 					return
-	else
-		..()
-		return
+	return
 
 
 /obj/machinery/field_generator/emp_act()
