@@ -222,8 +222,11 @@
 				"\blue [M] gives [src] a [pick("hug","warm embrace")].", \
 				"\blue You hug [src].", \
 				)
+			/*
 			if(prob(10))
 				src.emote("fart")
+			>>>/goon/
+			*/
 			/* VG-EDIT Killing people through hugs, one overdose at a time.
 			reagents.add_reagent("paracetamol", 1)
 			*/
