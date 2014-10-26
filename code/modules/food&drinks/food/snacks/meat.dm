@@ -61,6 +61,11 @@
 	icon_state = "skeletonmeat"
 	desc = "There's a point where this needs to stop and clearly we have passed it"
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/zombie
+	name = "-meat (rotten)"
+	icon_state = "lizardmeat" //Close enough.
+	desc = "Halfway to becoming fertilizer for your garden."
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 	//same as plain meat
 
