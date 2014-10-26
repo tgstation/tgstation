@@ -218,6 +218,10 @@
 
 // the smaller bulb light fixture
 
+/obj/machinery/light/cultify()
+	new /obj/structure/cult/pylon(loc)
+	qdel(src)
+
 /obj/machinery/light/small
 	icon_state = "bulb1"
 	base_state = "bulb"

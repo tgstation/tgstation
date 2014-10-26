@@ -10,6 +10,10 @@
 	var/processing = 0
 	machine_flags = EMAGGABLE | SCREWTOGGLE | WRENCHMOVE | FIXED2WORK
 
+/obj/machinery/computer/cultify()
+	new /obj/structure/cult/tome(loc)
+	..()
+
 /obj/machinery/computer/New()
 	..()
 	if(ticker)

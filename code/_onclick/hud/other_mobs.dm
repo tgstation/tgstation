@@ -98,6 +98,8 @@
 		constructtype = "artificer"
 	else if(istype(mymob,/mob/living/simple_animal/construct/wraith))
 		constructtype = "wraith"
+	else if(istype(mymob,/mob/living/simple_animal/construct/harvester))
+		constructtype = "harvester"
 
 	if(constructtype)
 		mymob.fire = new /obj/screen()
@@ -126,3 +128,77 @@
 	mymob.client.screen = null
 
 	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin, mymob.zone_sel)
+
+	switch(constructtype)
+		if("artificer")
+			mymob.construct_spell1 = new /obj/screen()
+			mymob.construct_spell1.icon = 'icons/mob/screen1_construct.dmi'
+			mymob.construct_spell1.icon_state = "spell_wall"
+			mymob.construct_spell1.name = "wall"
+			mymob.construct_spell1.screen_loc = ui_construct_spell1
+
+			mymob.construct_spell2 = new /obj/screen()
+			mymob.construct_spell2.icon = 'icons/mob/screen1_construct.dmi'
+			mymob.construct_spell2.icon_state = "spell_soulstone"
+			mymob.construct_spell2.name = "soulstone"
+			mymob.construct_spell2.screen_loc = ui_construct_spell2
+
+			mymob.construct_spell3 = new /obj/screen()
+			mymob.construct_spell3.icon = 'icons/mob/screen1_construct.dmi'
+			mymob.construct_spell3.icon_state = "spell_floor"
+			mymob.construct_spell3.name = "floor"
+			mymob.construct_spell3.screen_loc = ui_construct_spell3
+
+			mymob.construct_spell4 = new /obj/screen()
+			mymob.construct_spell4.icon = 'icons/mob/screen1_construct.dmi'
+			mymob.construct_spell4.icon_state = "spell_shell"
+			mymob.construct_spell4.name = "shell"
+			mymob.construct_spell4.screen_loc = ui_construct_spell4
+
+			mymob.construct_spell5 = new /obj/screen()
+			mymob.construct_spell5.icon = 'icons/mob/screen1_construct.dmi'
+			mymob.construct_spell5.icon_state = "spell_pylon"
+			mymob.construct_spell5.name = "pylon"
+			mymob.construct_spell5.screen_loc = ui_construct_spell5
+
+			mymob.client.screen += list(mymob.construct_spell1, mymob.construct_spell2, mymob.construct_spell3, mymob.construct_spell4, mymob.construct_spell5)
+
+		if("wraith")
+			mymob.construct_spell1 = new /obj/screen()
+			mymob.construct_spell1.icon = 'icons/mob/screen1_construct.dmi'
+			mymob.construct_spell1.icon_state = "spell_shift"
+			mymob.construct_spell1.name = "shift"
+			mymob.construct_spell1.screen_loc = ui_construct_spell1
+
+			mymob.client.screen += mymob.construct_spell1
+
+		if("juggernaut")
+			mymob.construct_spell1 = new /obj/screen()
+			mymob.construct_spell1.icon = 'icons/mob/screen1_construct.dmi'
+			mymob.construct_spell1.icon_state = "spell_juggerwall"
+			mymob.construct_spell1.name = "juggerwall"
+			mymob.construct_spell1.screen_loc = ui_construct_spell1
+
+			mymob.client.screen += mymob.construct_spell1
+
+		if("harvester")
+			mymob.construct_spell1 = new /obj/screen()
+			mymob.construct_spell1.icon = 'icons/mob/screen1_construct.dmi'
+			mymob.construct_spell1.icon_state = "spell_rune"
+			mymob.construct_spell1.name = "rune"
+			mymob.construct_spell1.screen_loc = ui_construct_spell1
+
+			mymob.construct_spell2 = new /obj/screen()
+			mymob.construct_spell2.icon = 'icons/mob/screen1_construct.dmi'
+			mymob.construct_spell2.icon_state = "spell_breakdoor"
+			mymob.construct_spell2.name = "breakdoor"
+			mymob.construct_spell2.screen_loc = ui_construct_spell2
+
+			mymob.construct_spell3 = new /obj/screen()
+			mymob.construct_spell3.icon = 'icons/mob/screen1_construct.dmi'
+			mymob.construct_spell3.icon_state = "spell_harvest"
+			mymob.construct_spell3.name = "harvest"
+			mymob.construct_spell3.screen_loc = ui_construct_spell3
+
+			mymob.client.screen += list(mymob.construct_spell1, mymob.construct_spell2, mymob.construct_spell3)
+

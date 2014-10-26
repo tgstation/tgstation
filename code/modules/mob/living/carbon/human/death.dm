@@ -55,7 +55,7 @@
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)	return
-	if(healths)		healths.icon_state = "health5"
+	if(healths)		healths.icon_state = "health7"
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
