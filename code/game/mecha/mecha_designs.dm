@@ -16,6 +16,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/ripley
 	category = "Ripley"
+	materials = list("$iron"=20000)
 
 /datum/design/ripley/torso
 	name = "Exosuit Structure (Ripley torso)"
@@ -25,6 +26,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_torso
 	category = "Ripley"
+	materials = list("$iron"=40000,"$glass"=15000)
 
 /datum/design/ripley/l_arm
 	name = "Exosuit Structure (Ripley left arm)"
@@ -34,6 +36,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_left_arm
 	category = "Ripley"
+	materials = list("$iron"=25000)
 
 /datum/design/ripley/r_arm
 	name = "Exosuit Structure (Ripley right arm)"
@@ -43,6 +46,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_right_arm
 	category = "Ripley"
+	materials = list("$iron"=25000)
 
 /datum/design/ripley/l_leg
 	name = "Exosuit Structure (Ripley left leg)"
@@ -52,6 +56,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_left_leg
 	category = "Ripley"
+	materials = list("$iron"=30000)
 
 /datum/design/ripley/r_leg
 	name = "Exosuit Structure (Ripley right leg)"
@@ -61,6 +66,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_right_leg
 	category = "Ripley"
+	materials = list("$iron"=30000)
 
 ////////////////
 ////ODYSSEUS////
@@ -74,6 +80,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/odysseus
 	category = "Odysseus"
+	materials = list("$iron"=20000)
 
 /datum/design/odysseus/torso
 	name = "Exosuit Structure (Odysseus torso)"
@@ -83,6 +90,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_torso
 	category = "Odysseus"
+	materials = list("$iron"=25000)
 
 /datum/design/odysseus/l_arm
 	name = "Exosuit Structure (Odysseus left arm)"
@@ -92,6 +100,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_left_arm
 	category = "Odysseus"
+	materials = list("$iron"=10000)
 
 /datum/design/odysseus/r_arm
 	name = "Exosuit Structure (Odysseus right arm)"
@@ -101,6 +110,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_right_arm
 	category = "Odysseus"
+	materials = list("$iron"=10000)
 
 /datum/design/odysseus/l_leg
 	name = "Exosuit Structure (Odysseus left leg)"
@@ -110,6 +120,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_left_leg
 	category = "Odysseus"
+	materials = list("$iron"=15000)
 
 /datum/design/odysseus/r_leg
 	name = "Exosuit Structure (Odysseus right leg)"
@@ -119,6 +130,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_right_leg
 	category = "Odysseus"
+	materials = list("$iron"=15000)
 
 /datum/design/odysseus/head
 	name = "Exosuit Structure (Odysseus head)"
@@ -128,6 +140,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_head
 	category = "Odysseus"
+	materials = list("$iron"=2000,"$glass"=10000)
 
 ////////////////
 /////GYGAX//////
@@ -140,6 +153,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/gygax
 	category = "Gygax"
+	materials = list("$iron"=25000)
 
 /datum/design/gygax/torso
 	name = "Exosuit Structure (Gygax torso)"
@@ -149,6 +163,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_torso
 	category = "Gygax"
+	materials = list("$iron"=50000,"$glass"=20000)
 
 /datum/design/gygax/l_arm
 	name = "Exosuit Structure (Gygax left arm)"
@@ -158,6 +173,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_left_arm
 	category = "Gygax"
+	materials = list("$iron"=30000)
 
 /datum/design/gygax/r_arm
 	name = "Exosuit Structure (Gygax right arm)"
@@ -167,6 +183,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_right_arm
 	category = "Gygax"
+	materials = list("$iron"=30000)
 
 /datum/design/gygax/l_leg
 	name = "Exosuit Structure (Gygax left leg)"
@@ -176,6 +193,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_left_leg
 	category = "Gygax"
+	materials = list("$iron"=35000)
 
 /datum/design/gygax/r_leg
 	name = "Exosuit Structure (Gygax right leg)"
@@ -185,6 +203,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_right_leg
 	category = "Gygax"
+	materials = list("$iron"=35000)
 
 /datum/design/gygax/head
 	name = "Exosuit Structure (Gygax head)"
@@ -194,6 +213,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_head
 	category = "Gygax"
+	materials = list("$iron"=20000,"$glass"=10000)
 
 /datum/design/gygax/armor
 	name = "Exosuit Structure (Gygax plates)"
@@ -203,6 +223,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_armour
 	category = "Gygax"
+	materials = list("$iron"=50000,"$diamond"=10000)
 
 ///////////////
 ////DURAND/////
@@ -216,6 +237,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/durand
 	category = "Durand"
+	materials = list("$iron"=25000)
 
 /datum/design/durand/torso
 	name = "Exosuit Structure (Durand torso)"
@@ -225,6 +247,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_torso
 	category = "Durand"
+	materials = list("$iron"=55000,"$glass"=20000,"$silver"=10000)
 
 /datum/design/durand/l_arm
 	name = "Exosuit Structure (Durand left arm)"
@@ -234,6 +257,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_left_arm
 	category = "Durand"
+	materials = list("$iron"=35000,"$silver"=3000)
 
 /datum/design/durand/r_arm
 	name = "Exosuit Structure (Durand right arm)"
@@ -243,6 +267,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_right_arm
 	category = "Durand"
+	materials = list("$iron"=35000,"$silver"=3000)
 
 /datum/design/durand/l_leg
 	name = "Exosuit Structure (Durand left leg)"
@@ -252,6 +277,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_left_leg
 	category = "Durand"
+	materials = list("$iron"=40000,"$silver"=3000)
 
 /datum/design/durand/r_leg
 	name = "Exosuit Structure (Durand right leg)"
@@ -261,6 +287,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_right_leg
 	category = "Durand"
+	materials = list("$iron"=40000,"$silver"=3000)
 
 /datum/design/durand/head
 	name = "Exosuit Structure (Durand head)"
@@ -270,6 +297,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_head
 	category = "Durand"
+	materials = list("$iron"=25000,"$glass"=10000,"$silver"=3000)
 
 /datum/design/durand/armor
 	name = "Exosuit Structure (Durand plates)"
@@ -279,6 +307,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_armour
 	category = "Durand"
+	materials = list("$iron"=50000,"uranium"=10000)
 
 ////////////////
 ////HONK////////
@@ -290,7 +319,8 @@
 	req_tech = list("combat" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/honker
-	category = "H.O.N.K."
+	category = "HONK"
+	materials = list("$iron"=20000)
 
 /datum/design/honker/torso
 	name = "Exosuit Structure (H.O.N.K. torso)"
@@ -299,7 +329,8 @@
 	req_tech = list("combat" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/honker_torso
-	category = "H.O.N.K."
+	category = "HONK"
+	materials = list("$iron"=35000,"$glass"=10000,"$clown"=10000)
 
 /datum/design/honker/l_arm
 	name = "Exosuit Structure (H.O.N.K. left arm)"
@@ -308,7 +339,8 @@
 	req_tech = list("combat" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/honker_left_arm
-	category = "H.O.N.K."
+	category = "HONK"
+	materials = list("$iron"=20000,"$clown"=5000)
 
 /datum/design/honker/r_arm
 	name = "Exosuit Structure (H.O.N.K. right arm)"
@@ -317,7 +349,8 @@
 	req_tech = list("combat" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/honker_right_arm
-	category = "H.O.N.K."
+	category = "HONK"
+	materials = list("$iron"=20000,"$clown"=5000)
 
 /datum/design/honker/l_leg
 	name = "Exosuit Structure (H.O.N.K. left leg)"
@@ -326,7 +359,8 @@
 	req_tech = list("combat" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/honker_left_leg
-	category = "H.O.N.K."
+	category = "HONK"
+	materials = list("$iron"=20000,"$clown"=5000)
 
 /datum/design/honker/r_leg
 	name = "Exosuit Structure (H.O.N.K. right leg)"
@@ -335,7 +369,8 @@
 	req_tech = list("combat" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/honker_right_leg
-	category = "H.O.N.K."
+	category = "HONK"
+	materials = list("$iron"=20000,"$clown"=5000)
 
 /datum/design/honker/head
 	name = "Exosuit Structure (H.O.N.K. head)"
@@ -344,7 +379,8 @@
 	req_tech = list("combat" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/honker_head
-	category = "H.O.N.K."
+	category = "HONK"
+	materials = list("$iron"=15000,"$glass"=5000,"$clown"=5000)
 
 //////////////
 /////PHAZON///
@@ -358,6 +394,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/phazon
 	category = "Phazon"
+	materials = list("$iron"=25000)
 
 /datum/design/phazon/torso
 	name = "Exosuit Structure (Phazon torso)"
@@ -367,6 +404,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_torso
 	category = "Phazon"
+	materials = list("$iron"=35000,"$glass"=10000,"$plasma"=20000, "$phazon"=5000)
 
 /datum/design/phazon/l_arm
 	name = "Exosuit Structure (Phazon left arm)"
@@ -376,6 +414,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_left_arm
 	category = "Phazon"
+	materials = list("$iron"=20000,"$plasma"=10000, "$phazon"=2500)
 
 /datum/design/phazon/r_arm
 	name = "Exosuit Structure (Phazon right arm)"
@@ -385,6 +424,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_right_arm
 	category = "Phazon"
+	materials = list("$iron"=20000,"$plasma"=10000, "$phazon"=2500)
 
 /datum/design/phazon/l_leg
 	name = "Exosuit Structure (Phazon left leg)"
@@ -394,6 +434,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_left_leg
 	category = "Phazon"
+	materials = list("$iron"=20000,"$plasma"=10000, "$phazon"=2500)
 
 /datum/design/phazon/r_leg
 	name = "Exosuit Structure (Phazon right leg)"
@@ -403,6 +444,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_right_leg
 	category = "Phazon"
+	materials = list("$iron"=20000,"$plasma"=10000, "$phazon"=2500)
 
 /datum/design/phazon/head
 	name = "Exosuit Structure (Phazon head)"
@@ -412,3 +454,4 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_head
 	category = "Phazon"
+	materials = list("$iron"=15000,"$glass"=5000,"$plasma"=10000, "$phazon"=2500)

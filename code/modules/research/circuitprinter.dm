@@ -10,6 +10,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/fabricator/circuit_imprinter
 	name = "Circuit Imprinter"
 	icon_state = "circuit_imprinter"
+	desc = "A fabricator capable of etching circuit designs onto glass and minerals."
 	flags = OPENCONTAINER
 
 	max_material_storage = 75000

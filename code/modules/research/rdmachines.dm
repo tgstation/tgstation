@@ -1,15 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
-
-/datum/rnd_queue_item
-	var/key
-	var/datum/design/thing
-
-	New(var/K,var/datum/design/D)
-		key=K
-		thing=D
-
 /obj/machinery/r_n_d
 	name = "R&D Device"
 	icon = 'icons/obj/machines/research.dmi'
@@ -86,9 +77,6 @@
 	del(src)
 	return
 
-/obj/machinery/r_n_d/proc/emag()
-	return
-
 /obj/machinery/r_n_d/attack_hand(mob/user as mob)
 	if (shocked)
 		shock(user,50)
@@ -152,11 +140,11 @@
 		if (panel_open && linked_console)
 			linked_console.linked_machines -= src
 			switch(src.type)
-				if(/obj/machinery/r_n_d/protolathe)
+				if(/obj/machinery/r_n_d/fabricator/protolathe)
 					linked_console.linked_lathe = null
 				if(/obj/machinery/r_n_d/destructive_analyzer)
 					linked_console.linked_destroy = null
-				if(/obj/machinery/r_n_d/circuit_imprinter)
+				if(/obj/machinery/r_n_d/fabricator/circuit_imprinter)
 					linked_console.linked_imprinter = null
 			linked_console = null
 			overlays -= "[base_state]_link"
@@ -299,18 +287,6 @@
 			if (reagents.has_reagent(M, being_built.materials[M]))
 				return n
 	return 0
-
-/obj/machinery/r_n_d/proc/enqueue(var/datum/design/thing_to_build)
-	if(production_queue.len>=RESEARCH_MAX_Q_LEN)
-		return 0
-	production_queue.Add(new thing_to_build)
-	//stopped=1
-	return 1
-
-/obj/machinery/r_n_d/proc/queue_pop()
-	var/datum/design/I = production_queue[1]
-	production_queue.Remove(I)
-	return I
 
 /obj/machinery/r_n_d/proc/FindDesign(var/part as anything)
 	if(!ispath(part))

@@ -23,6 +23,8 @@
 /obj/machinery/r_n_d/fabricator/mech
 	name = "Exosuit Fabricator"
 	desc = "A specialised fabricator for robotic and mechatronic components."
+	icon = 'icons/obj/robotics.dmi'
+	icon_state = "fab"
 	req_one_access = list(access_robotics)
 
 	research_flags = NANOTOUCH | HASOUTPUT | HASMAT_OVER | TAKESMATIN | ACCESS_EMAG | LOCKBOXES
@@ -86,7 +88,7 @@
 						/obj/item/mecha_parts/part/durand_right_leg,
 						/obj/item/mecha_parts/part/durand_armour
 					),
-	"Honk"=list(
+	"HONK"=list(
 						/obj/item/mecha_parts/chassis/honker,
 						/obj/item/mecha_parts/part/honker_torso,
 						/obj/item/mecha_parts/part/honker_head,

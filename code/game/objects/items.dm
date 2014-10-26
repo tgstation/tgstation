@@ -41,7 +41,6 @@
 
 	var/nonplant_seed_type
 
-	var/list/materials = list() //let's get this done right
 
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))
@@ -783,7 +782,3 @@
 		return 1
 
 	return 0
-
-//we just give the materials list
-/obj/item/getMaterials()
-	return materials

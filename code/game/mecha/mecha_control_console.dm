@@ -85,7 +85,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
 	origin_tech = "programming=2;magnets=2"
-	materials = list("metal"=500)
 
 	proc/get_mecha_info()
 		if(!in_mecha())

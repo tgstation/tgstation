@@ -6,7 +6,6 @@
 	w_class = 3
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
-	materials = list("$metal"=500,"$glass"=500,"$silver"=200,"$gold"=200,"$plasma"=100,"$diamond"=10)
 	var/searching = 0
 	var/askDelay = 10 * 60 * 1
 	//var/mob/living/carbon/brain/brainmob = null

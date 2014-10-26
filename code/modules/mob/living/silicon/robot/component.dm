@@ -130,7 +130,6 @@
 /obj/item/robot_parts/robot_component
 	icon = 'icons/robot_component.dmi'
 	icon_state = "working"
-	materials = list("metal"=5000)
 
 /obj/item/robot_parts/robot_component/binary_communication_device
 	name = "binary communication device"

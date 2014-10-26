@@ -262,10 +262,3 @@ a {
 
 /obj/proc/container_resist()
 	return
-
-//returns the materials a thing is made of
-//for items, this is just the materials var
-//for machines, this is the sum of all the parts
-//you should always use getMaterials instead of accessing vars directly
-/obj/proc/getMaterials()
-	return

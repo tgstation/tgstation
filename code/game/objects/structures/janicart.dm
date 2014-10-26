@@ -8,8 +8,6 @@
 	desc = "This device upgrades the janicart to automatically clean surfaces when driving."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
-	origin_tech = "engineering=2;materials=2"
-	materials = list("metal"=20000)
 
 /obj/structure/stool/bed/chair/vehicle/janicart
 	name = "janicart"

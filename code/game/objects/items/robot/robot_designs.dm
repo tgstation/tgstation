@@ -3,13 +3,14 @@
 #define MECHFAB		16 //from designs.dm
 
 /datum/design/robot/chassis
-	name = "Cyborg Component (Robot chassis)"
-	desc = "Used to build a Robot chassis."
+	name = "Cyborg Component (Robot endoskeleton)"
+	desc = "Used to build a Robot endoskeleton."
 	id = "robot_chassis"
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_suit
 	category = "Robot"
+	materials = list("$iron"=50000)
 
 /datum/design/robot/torso
 	name = "Cyborg Component (Robot torso)"
@@ -19,6 +20,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/chest
 	category = "Robot"
+	materials = list("$iron"=40000)
 
 /datum/design/robot/l_arm
 	name = "Cyborg Component (Robot left arm)"
@@ -28,6 +30,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/l_arm
 	category = "Robot"
+	materials = list("$iron"=18000)
 
 /datum/design/robot/r_arm
 	name = "Cyborg Component (Robot right arm)"
@@ -37,6 +40,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/r_arm
 	category = "Robot"
+	materials = list("$iron"=18000)
 
 /datum/design/robot/l_leg
 	name = "Cyborg Component (Robot left leg)"
@@ -46,6 +50,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/l_leg
 	category = "Robot"
+	materials = list("$iron"=15000)
 
 /datum/design/robot/r_leg
 	name = "Cyborg Component (Robot right leg)"
@@ -55,6 +60,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/r_leg
 	category = "Robot"
+	materials = list("$iron"=15000)
 
 /datum/design/robot/head
 	name = "Cyborg Component (Robot head)"
@@ -64,6 +70,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/head
 	category = "Robot"
+	materials = list("$iron"=25000)
 
 /datum/design/robot/binary_commucation_device
 	name = "Cyborg Component (Binary Communication Device)"
@@ -72,6 +79,7 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/binary_communication_device
+	materials = list("$iron"=5000)
 
 /datum/design/robot/radio
 	name = "Cyborg Component (Radio)"
@@ -80,6 +88,7 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/radio
+	materials = list("$iron"=5000)
 
 /datum/design/robot/actuator
 	name = "Cyborg Component (Actuator)"
@@ -88,6 +97,7 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/actuator
+	materials = list("$iron"=5000)
 
 /datum/design/robot/diagnosis_unit
 	name = "Cyborg Component (Diagnosis Unit)"
@@ -96,6 +106,7 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/diagnosis_unit
+	materials = list("$iron"=5000)
 
 /datum/design/robot/camera
 	name = "Cyborg Component (Camera)"
@@ -104,6 +115,7 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/camera
+	materials = list("$iron"=5000)
 
 /datum/design/robot/armour
 	name = "Cyborg Component (Armor)"
@@ -112,3 +124,4 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/armour
+	materials = list("$iron"=5000)

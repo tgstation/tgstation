@@ -10,6 +10,7 @@ it creates. All the menus and other manipulation commands are in the R&D console
 /obj/machinery/r_n_d/fabricator/protolathe
 	name = "Protolathe"
 	icon_state = "protolathe"
+	desc = "A fabricator capable of producing prototypes from research schematics."
 	flags = OPENCONTAINER
 
 	max_material_storage = 100000 //All this could probably be done better with a list but meh.

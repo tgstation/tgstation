@@ -2,12 +2,10 @@
 #define FAB_SCREEN_HEIGHT		750
 
 #define FAB_TIME_BASE			100
+#define FAB_MAX_QUEUE			20
 
 /obj/machinery/r_n_d/fabricator
-	icon = 'icons/obj/robotics.dmi'
-	icon_state = "fab"
 	desc = "A fabricator. What kind, you don't know."
-	var/build_state = "Nothing's being built."
 	idle_power_usage = 20
 	active_power_usage = 5000
 
@@ -24,7 +22,7 @@
 
 	var/part_set
 	var/obj/being_built
-	var/time_variable = FAB_TIME_BASE //time modifier for each machine. Protolathes have low time variable, mechfabs have high
+	build_time = FAB_TIME_BASE //time modifier for each machine. Protolathes have low time variable, mechfabs have high
 	var/list/queue = list()
 	var/processing_queue = 0
 	var/screen = 0
@@ -43,14 +41,16 @@
 
 /obj/machinery/r_n_d/fabricator/examine()
 	..()
-	usr <<"[build_state]"
-	return
+	if(being_built)
+		usr << "It's building [src.being_built]"
+	else
+		usr << "Nothing's being built."
 
 /obj/machinery/r_n_d/fabricator/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-	max_material_storage = (187500+(T * 37500))
+	max_material_storage = (initial(max_material_storage)+(T * 37500))
 
 	T = 0
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
@@ -107,13 +107,14 @@
 /obj/machinery/r_n_d/fabricator/proc/convert_part_set(set_name as text)
 	var/list/parts = part_sets[set_name]
 	if(istype(parts, /list))
-		for(var/i=1;i<=parts.len;i++)
-			var/thispart = parts[i]
+		var/loop_len = parts.len
+		for(var/i=1;i<=loop_len;i++)
+			var/thispart = parts[1]
 			if(thispart && ispath(thispart))
-				parts[i] = FindDesign(thispart)
+				parts += FindDesign(thispart)
 			//debug below
-			if(!istype(parts[i], /datum/design))
-				parts.Cut(i, i++) //quick, sweep it under the rug
+			if(!istype(parts[loop_len], /datum/design))
+				parts.Cut(loop_len, loop_len++) //quick, sweep it under the rug
 	return
 
 //creates a set with the name and the list of things you give it
@@ -130,17 +131,22 @@
 /obj/machinery/r_n_d/fabricator/process()
 	if(busy || stopped)
 		return
-	if(production_queue.len==0)
+	if(queue.len==0)
 		stopped=1
 		return
 	busy=1
 	spawn(0)
 		var/datum/design/I = queue_pop()
 		if(!build_part(I))
-			production_queue.Add(I)
+			queue.Add(I)
 		busy=0
 
-//adds a type to a part list
+/obj/machinery/r_n_d/fabricator/proc/queue_pop()
+	var/datum/design/D = queue[1]
+	queue -= D
+	return D
+
+//adds a design to a part list
 /obj/machinery/r_n_d/fabricator/proc/add_part_to_set(set_name as text, var/datum/design/part)
 	if(!part || !istype(part))
 		return 0
@@ -179,7 +185,7 @@
 		return
 
 	for(var/M in part.materials)
-		if(!check_mat(being_built, M))
+		if(!check_mat(part, M))
 			src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete item.\"</font>")
 			stopped=1
 			return 0
@@ -191,19 +197,17 @@
 		else
 			reagents.remove_reagent(M, part.materials[M])
 
-	src.being_built = new part.type(src)
+	src.being_built = new part.build_path(src)
 
 	src.busy = 1
-	src.build_state = "It's building [src.being_built]."
-	src.overlays += "[base_state]-active"
+	src.overlays += "[base_state]-ani"
 	src.use_power = 2
 	src.updateUsrDialog()
+	message_admins("We're going building with [get_construction_time_w_coeff(part)]")
 	sleep(get_construction_time_w_coeff(part))
 	src.use_power = 1
-	src.overlays -= "[base_state]-active"
-	src.build_state = initial(src.build_state)
+	src.overlays -= "[base_state]-ani"
 	if(being_built)
-		being_built.materials = part.materials
 		if(part.locked && research_flags &LOCKBOXES)
 			var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox //Make a lockbox
 			being_built.loc = L //Put the thing in the lockbox
@@ -247,8 +251,8 @@
 	if(!queue.len)
 		return
 
-	var/obj/part_path = text2path(src.queue[1])
-	var/obj/item/part = new part_path()
+	var/first_item = text2path(src.queue[1])
+	var/datum/design/part = new first_item
 	//var/obj/item/part = listgetindex(src.queue, 1)
 	if(!part)
 		remove_from_queue(1)
@@ -256,9 +260,6 @@
 			return process_queue()
 		else
 			return
-	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("materials")))//If it shouldn't be printed
-		remove_from_queue(1)//Take it out of the quene
-		return process_queue()//Then reprocess it
 	while(part)
 		if(stat&(NOPOWER|BROKEN))
 			return 0
@@ -267,8 +268,8 @@
 		if(!queue.len)
 			return
 		else
-			part_path = text2path(src.queue[1])
-			part = new part_path()
+			del(part)
+			part = new (text2path(src.queue[1]))
 	src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue processing finished successfully\".")
 	return 1
 
@@ -353,7 +354,7 @@
 	return round(part.materials[resource]*resource_coeff, roundto)
 
 /obj/machinery/r_n_d/fabricator/proc/get_construction_time_w_coeff(var/datum/design/part as obj, var/roundto=1)
-	return round(TechTotal(part)*time_variable*time_coeff, roundto)
+	return round(TechTotal(part)*/*(MatTotal(part)/100)**/build_time*time_coeff, roundto)
 
 /obj/machinery/r_n_d/fabricator/proc/TechTotal(var/datum/design/part)
 	var/total = 0
@@ -361,6 +362,12 @@
 		total += part.req_tech[tech]
 	return total
 
+/obj/machinery/r_n_d/fabricator/proc/MatTotal(var/datum/design/part)
+	var/total = 0
+	for(var/matID in part.materials)
+		total += part.materials[matID]
+	log_admin("[total] for [part.name]")
+	return total
 
 /obj/machinery/r_n_d/fabricator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
@@ -372,9 +379,8 @@
 	var/queue_list[0]
 
 	for(var/i=1;i<=queue.len;i++)
-		var/obj/part_path = text2path(queue[i])
-		var/obj/Part = new part_path()
-		queue_list.Add(list(list("name" = Part.name, "commands" = list("remove_from_queue" = i))))
+		var/datum/design/part = queue[i]
+		queue_list.Add(list(list("name" = part.name, "commands" = list("remove_from_queue" = i))))
 
 	data["queue"] = queue_list
 	data["screen"]=screen
@@ -387,10 +393,14 @@
 	data["materials"] = materials_list
 
 	var/parts_list[0] // setup a list to get all the information for parts
+
 	for(var/set_name in part_sets)
 		var/list/set_name_list = list()
-		for(var/obj/Part in part_sets[set_name])
-			set_name_list.Add(list(list("name" = Part.name, "cost" = output_part_cost(Part), "time" = get_construction_time_w_coeff(Part)/10, "command1" = list("add_to_queue" = Part.type), "command2" = list("build" = Part.type))))
+		var/i = 0
+		for(var/datum/design/Part in part_sets[set_name])
+			message_admins("Adding the [Part.name] to the list")
+			i++
+			set_name_list += list("name" = Part.name, "cost" = output_part_cost(Part), "time" = get_construction_time_w_coeff(Part)/10, "command1" = list("add_to_queue" = "[i][set_name]"), "command2" = list("build" = "[i][set_name]"))
 		parts_list[set_name] = set_name_list
 	data["parts"] = parts_list // assigning the parts data to the data sent to UI
 
@@ -400,8 +410,10 @@
 		ui.set_initial_data(data)
 		ui.open()
 
-
-
+/obj/machinery/r_n_d/fabricator/proc/getTopicDesign(var/stringinput = "")
+	var/part_list = part_sets["[copytext(stringinput, 2)]"]
+	var/index = text2num(copytext(stringinput, 1, 2))
+	return part_list[index]
 
 /obj/machinery/r_n_d/fabricator/Topic(href, href_list)
 
@@ -413,22 +425,23 @@
 	if(href_list["remove_from_queue"])
 		remove_from_queue(filter.getNum("remove_from_queue"))
 		return 1
+
 	if(href_list["eject"])
 		var/num = input("Enter amount to eject", "Amount", "5") as num
 		if(num)
 			amount = Clamp(round(text2num(num), 5), 0, 50)
 		remove_material(href_list["eject"], amount)
 		return 1
+
 	if(href_list["build"])
-		var/obj/part_path = text2path(href_list["build"])
-		var/obj/part = new part_path()
-		if(!processing_queue)
+		var/datum/design/part = getTopicDesign(href_list["build"])
+		if(!processing_queue && part)
 			build_part(part)
 		return 1
 
 	if(href_list["add_to_queue"])
-		var/datum/design/part = href_list["add_to_queue"]
-		if(queue.len > 20)
+		var/datum/design/part = getTopicDesign(href_list["add_to_queue"])
+		if(queue.len > FAB_MAX_QUEUE)
 			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue is full, please clear or finish.\".")
 			return
 
@@ -437,7 +450,7 @@
 
 	if(href_list["queue_part_set"])
 		var/set_name = href_list["queue_part_set"]
-		if(queue.len > 20)
+		if(queue.len > FAB_MAX_QUEUE)
 			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue is full, please clear or finish.\".")
 			return
 		add_part_set_to_queue(set_name)
