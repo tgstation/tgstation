@@ -420,8 +420,8 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	if(temp)
 		dat = temp
 	else
-		dat += {"Shuttle Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>
-		<HR>Supply Points: [supply_shuttle.points]<BR>
+		dat += {"<div class='statusDisplay'>Shuttle Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>
+		<HR>Supply Points: [supply_shuttle.points]<BR></div>
 
 		<BR>\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>
@@ -451,22 +451,21 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			//all_supply_groups
 			//Request what?
 			last_viewed_group = "categories"
-			temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
+			temp = "<div class='statusDisplay'><b>Supply points: [supply_shuttle.points]</b><BR>"
+			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR></div><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/cat in all_supply_groups )
 				temp += "<A href='?src=\ref[src];order=[cat]'>[get_supply_group_name(cat)]</A><BR>"
 		else
 			last_viewed_group = href_list["order"]
 			var/cat = text2num(last_viewed_group)
-			temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>"
+			temp = "<div class='statusDisplay'><b>Supply points: [supply_shuttle.points]</b><BR>"
+			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><BR></div><BR>"
 			temp += "<b>Request from: [get_supply_group_name(cat)]</b><BR><BR>"
 			for(var/supply_name in supply_shuttle.supply_packs )
 				var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
 				if(N.hidden || N.contraband || N.group != cat) continue												//Have to send the type instead of a reference to
 				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
-
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
 			say("[world.time - reqtime] seconds remaining until another requisition form may be printed.")
@@ -556,19 +555,20 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 	if (temp)
 		dat = temp
 	else
-		dat += {"<BR><B>Supply shuttle</B><HR>
+		dat += {"<div class='statusDisplay'><B>Supply shuttle</B><HR>
 		\nLocation: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Away"]<BR>
-		<HR>\nSupply Points: [supply_shuttle.points]<BR>\n<BR>
+		<HR>\nSupply Points: [supply_shuttle.points]<BR>\n</div><BR>
 		[supply_shuttle.moving ? "\n*Must be away to order items*<BR>\n<BR>":supply_shuttle.at_station ? "\n*Must be away to order items*<BR>\n<BR>":"\n<A href='?src=\ref[src];order=categories'>Order items</A><BR>\n<BR>"]
 		[supply_shuttle.moving ? "\n*Shuttle already called*<BR>\n<BR>":supply_shuttle.at_station ? "\n<A href='?src=\ref[src];send=1'>Send away</A><BR>\n<BR>":"\n<A href='?src=\ref[src];send=1'>Send to station</A><BR>\n<BR>"]
 		[supply_shuttle.shuttle_loan ? (supply_shuttle.shuttle_loan.dispatched ? "\n*Shuttle loaned to Centcom*<BR>\n<BR>" : "\n<A href='?src=\ref[src];send=1;loan=1'>Loan shuttle to Centcom (5 mins duration)</A><BR>\n<BR>") : "\n*No pending external shuttle requests*<BR>\n<BR>"]
 		\n<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR>\n<BR>
 		\n<A href='?src=\ref[src];vieworders=1'>View orders</A><BR>\n<BR>
 		\n<A href='?src=\ref[user];mach_close=computer'>Close</A><BR>
-		<HR>\n<B>Central Command messages</B><BR> [supply_shuttle.centcom_message ? supply_shuttle.centcom_message : "Remember to stamp and send back the supply manifests."]"}
+		<HR>\n<B>Central Command messages:</B><BR> [supply_shuttle.centcom_message ? supply_shuttle.centcom_message : "Remember to stamp and send back the supply manifests."]"}
 
-	user << browse(dat, "window=computer;size=700x450")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "Supply Shuttle Console", 700, 455)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
@@ -635,16 +635,16 @@ var/global/datum/controller/supply_shuttle/supply_shuttle
 			//all_supply_groups
 			//Request what?
 			last_viewed_group = "categories"
-			temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
+			temp = "<div class='statusDisplay'><b>Supply points: [supply_shuttle.points]</b><BR>"
+			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR></div><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/cat in all_supply_groups )
 				temp += "<A href='?src=\ref[src];order=[cat]'>[get_supply_group_name(cat)]</A><BR>"
 		else
 			last_viewed_group = href_list["order"]
 			var/cat = text2num(last_viewed_group)
-			temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>"
+			temp = "<div class='statusDisplay'><b>Supply points: [supply_shuttle.points]</b><BR>"
+			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><BR></div><BR>"
 			temp += "<b>Request from: [get_supply_group_name(cat)]</b><BR><BR>"
 			for(var/supply_name in supply_shuttle.supply_packs )
 				var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
