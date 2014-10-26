@@ -20,9 +20,6 @@
 
 /obj/machinery/computer/security/attack_hand(var/mob/user as mob)
 	if(!stat)
-		if (src.z > 6)
-			user << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
-			return
 
 		if (!network)
 			ERROR("A computer lacks a network at [x],[y],[z].")
@@ -36,6 +33,8 @@
 
 		var/list/L = list()
 		for (var/obj/machinery/camera/C in cameranet.cameras)
+			if((z > 6 || C.z > 6) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
+				continue
 			L.Add(C)
 
 		camera_sort(L)
