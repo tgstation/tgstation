@@ -364,18 +364,6 @@ datum/objective/steal/check_completion()
 				return 1
 	return 0
 
-var/global/list/possible_items_special = list()
-datum/objective/steal/special //ninjas are so special they get their own subtype good for them
-
-datum/objective/steal/special/New()
-	..()
-	if(!possible_items_special.len)
-		init_subtypes(/datum/objective_item/special,possible_items)
-		init_subtypes(/datum/objective_item/stack,possible_items)
-
-datum/objective/steal/special/find_target()
-	return set_target(pick(possible_items_special))
-
 
 
 datum/objective/steal/exchange
@@ -409,72 +397,6 @@ datum/objective/steal/exchange/backstab/set_faction(var/faction)
 		targetinfo = new/datum/objective_item/unique/docs_blue
 	explanation_text = "Do not give up or lose [targetinfo.name]."
 	steal_target = targetinfo.targetitem
-
-
-datum/objective/download
-	dangerrating = 10
-
-datum/objective/download/proc/gen_amount_goal()
-	target_amount = rand(10,20)
-	explanation_text = "Download [target_amount] research level\s."
-	return target_amount
-
-datum/objective/download/check_completion()
-	if(!ishuman(owner.current))
-		return 0
-	if(!owner.current || owner.current.stat == 2)
-		return 0
-	if(!(istype(owner.current:wear_suit, /obj/item/clothing/suit/space/space_ninja)&&owner.current:wear_suit:s_initialized))
-		return 0
-	var/current_amount
-	var/obj/item/clothing/suit/space/space_ninja/S = owner.current:wear_suit
-	if(!S.stored_research.len)
-		return 0
-	else
-		for(var/datum/tech/current_data in S.stored_research)
-			if(current_data.level>1)	current_amount+=(current_data.level-1)
-	if(current_amount<target_amount)	return 0
-	return 1
-
-
-
-datum/objective/capture
-	dangerrating = 10
-
-datum/objective/capture/proc/gen_amount_goal()
-		target_amount = rand(5,10)
-		explanation_text = "Accumulate [target_amount] capture point\s. It is better if they remain relatively unharmed."
-		return target_amount
-
-datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
-	var/captured_amount = 0
-	var/area/centcom/holding/A = locate()
-	for(var/mob/living/carbon/human/M in A)//Humans.
-		if(M.stat==2)//Dead folks are worth less.
-			captured_amount+=0.5
-			continue
-		captured_amount+=1
-	for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
-		captured_amount+=0.1
-	for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
-		if(M.stat==2)
-			captured_amount+=0.5
-			continue
-		captured_amount+=1
-	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
-		if(istype(M, /mob/living/carbon/alien/humanoid/queen))//Queens are worth three times as much as humans.
-			if(M.stat==2)
-				captured_amount+=1.5
-			else
-				captured_amount+=3
-			continue
-		if(M.stat==2)
-			captured_amount+=1
-			continue
-		captured_amount+=2
-	if(captured_amount<target_amount)
-		return 0
-	return 1
 
 
 

@@ -244,7 +244,6 @@
 	if(ismob(D))
 		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
-		body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
 		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
 		body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
 		body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
@@ -524,17 +523,6 @@ body
 
 			src.give_disease(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
-
-		else if(href_list["ninja"])
-			if(!check_rights(R_FUN))	return
-
-			var/mob/M = locate(href_list["ninja"])
-			if(!istype(M))
-				usr << "This can only be used on instances of type /mob"
-				return
-
-			src.cmd_admin_ninjafy(M)
-			href_list["datumrefresh"] = href_list["ninja"]
 
 		else if(href_list["gib"])
 			if(!check_rights(R_FUN))	return

@@ -129,7 +129,7 @@
 		user = null
 	if(!src.requiresID())
 		user = null
-	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)))
 		flick("door_spark", src)
 		sleep(6)
 		open()

@@ -1285,7 +1285,6 @@ var/global/list/common_tools = list(
 		istype(W, /obj/item/weapon/wirecutters)                   || \
 		istype(W, /obj/item/weapon/circular_saw)                  || \
 		istype(W, /obj/item/weapon/melee/energy/sword)            || \
-		istype(W, /obj/item/weapon/melee/energy/blade)            || \
 		istype(W, /obj/item/weapon/shovel)                        || \
 		istype(W, /obj/item/weapon/kitchenknife)                  || \
 		istype(W, /obj/item/weapon/butch)						  || \

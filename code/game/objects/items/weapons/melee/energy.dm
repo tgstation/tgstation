@@ -166,29 +166,3 @@
 	name = "energy cutlass"
 	desc = "Arrrr matey."
 	icon_state = "cutlass0"
-
-/obj/item/weapon/melee/energy/blade
-	name = "energy blade"
-	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
-	icon_state = "blade"
-	force = 30	//Normal attacks deal esword damage
-	hitsound = 'sound/weapons/blade1.ogg'
-	throwforce = 1//Throwing or dropping the item deletes it.
-	throw_speed = 3
-	throw_range = 1
-	w_class = 4.0//So you can't hide it in your pocket or some such.
-	flags = NOSHIELD
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	var/datum/effect/effect/system/spark_spread/spark_system
-
-//Most of the other special functions are handled in their own files. aka special snowflake code so kewl
-/obj/item/weapon/melee/energy/blade/New()
-	spark_system = new /datum/effect/effect/system/spark_spread()
-	spark_system.set_up(5, 0, src)
-	spark_system.attach(src)
-
-/obj/item/weapon/melee/energy/blade/dropped()
-	qdel(src)
-
-/obj/item/weapon/melee/energy/blade/proc/throw()
-	qdel(src)

@@ -126,37 +126,6 @@
 				T = pick(empty_shuttle_turfs)
 				new /obj/effect/decal/cleanable/ash(T)
 
-			if(SPIDER_GIFT)
-				var/datum/supply_order/O = new /datum/supply_order()
-				O.ordernum = supply_shuttle.ordernum
-				O.object = new /datum/supply_packs/emergency/specialops()
-				O.orderedby = "Spider Clan"
-				supply_shuttle.shoppinglist += O
-
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider/nurse)
-				if(prob(50))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider/hunter)
-
-				var/turf/T = pick(empty_shuttle_turfs)
-				empty_shuttle_turfs.Remove(T)
-
-				new /obj/effect/decal/remains/human(T)
-				new /obj/item/clothing/shoes/space_ninja(T)
-				new /obj/item/clothing/mask/balaclava(T)
-
-				T = pick(empty_shuttle_turfs)
-				new /obj/effect/spider/stickyweb(T)
-				T = pick(empty_shuttle_turfs)
-				new /obj/effect/spider/stickyweb(T)
-				T = pick(empty_shuttle_turfs)
-				new /obj/effect/spider/stickyweb(T)
-				T = pick(empty_shuttle_turfs)
-				new /obj/effect/spider/stickyweb(T)
-				T = pick(empty_shuttle_turfs)
-				new /obj/effect/spider/stickyweb(T)
-
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list()
 

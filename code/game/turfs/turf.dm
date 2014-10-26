@@ -228,15 +228,6 @@
 	src.ChangeTurf(/turf/space)
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 
-/turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf
-	for(var/mob/living/M in src)
-		if(M==U)
-			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
-		M.adjustBruteLoss(damage)
-		M.Paralyse(damage/5)
-	for(var/obj/mecha/M in src)
-		M.take_damage(damage*2, "brute")
-
 /turf/proc/Bless()
 	flags |= NOJAUNT
 

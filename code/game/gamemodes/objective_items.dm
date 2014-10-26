@@ -143,37 +143,6 @@ datum/objective_item/unique/docs_blue
 	targetitem = /obj/item/documents/syndicate/blue
 	difficulty = 10
 
-//Old ninja objectives.
-datum/objective_item/special/pinpointer
-	name = "the captain's pinpointer"
-	targetitem = /obj/item/weapon/pinpointer
-	difficulty = 10
-
-datum/objective_item/special/aegun
-	name = "an advanced energy gun"
-	targetitem = /obj/item/weapon/gun/energy/gun/nuclear
-	difficulty = 10
-
-datum/objective_item/special/ddrill
-	name = "a diamond drill"
-	targetitem = /obj/item/weapon/pickaxe/diamonddrill
-	difficulty = 10
-
-datum/objective_item/special/boh
-	name = "a bag of holding"
-	targetitem = /obj/item/weapon/storage/backpack/holding
-	difficulty = 10
-
-datum/objective_item/special/hypercell
-	name = "a hyper-capacity cell"
-	targetitem = /obj/item/weapon/stock_parts/cell/hyper
-	difficulty = 5
-
-datum/objective_item/special/laserpointer
-	name = "a laser pointer"
-	targetitem = /obj/item/device/laser_pointer
-	difficulty = 5
-
 //Stack objectives get their own subtype
 datum/objective_item/stack
 	name = "5 cardboards"
