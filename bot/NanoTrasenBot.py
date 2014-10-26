@@ -902,34 +902,42 @@ while True:
                      print truesender+":"+temdata
                   arg = temdata
                   check = temdata.lower()
-			  
-				 if cache_youtube_links == True:
-					result = YTCV2(arg)
-				 else:
-					result = YTCV2(arg,0)
-				 if type(result) == str:
-					### To remove ="
-					if result[0:4] == 'nt="':
-					   result = result[4:]
-					   pass
-					elif result[0:2] == '="':
-					   result = result[2:]
-					   pass
-					else:
-					   pass
-					if "&quot;" in result:
-					   result.replace("&quot;",'"')
-					if len(temporal_list) == 1:
-					   conn.privmsg(targetchannel,sender+" : "+result)
-					   break
-					else:
-					   temporal_list2.append(result)
-				 else:
-					if len(temporal_list) == 1:
-					   conn.privmsg(targetchannel,sender+" : The video does not exist")
-					   break
-					else:
-					   temporal_list2.append("The video does not exist")
+                  if check[0:5] == "https":
+                     if len(temporal_list) == 1:
+                        #commenting out rather then remove the if and else because this uses odd spaced based indenting that doesn't seem to play well with notepad++ and im not fucking with that. attempting to do so broke everything already and i can't into python. so this works
+                        #conn.privmsg(targetchannel,sender+" :Secure Youtube does NOT exist")
+                        #break
+                     else:
+                        #temporal_list2.append("Secure Youtube does NOT exist")
+                     break
+                  else:
+                     if cache_youtube_links == True:
+                        result = YTCV2(arg)
+                     else:
+                        result = YTCV2(arg,0)
+                     if type(result) == str:
+                        ### To remove ="
+                        if result[0:4] == 'nt="':
+                           result = result[4:]
+                           pass
+                        elif result[0:2] == '="':
+                           result = result[2:]
+                           pass
+                        else:
+                           pass
+                        if "&quot;" in result:
+                           result.replace("&quot;",'"')
+                        if len(temporal_list) == 1:
+                           conn.privmsg(targetchannel,sender+" : "+result)
+                           break
+                        else:
+                           temporal_list2.append(result)
+                     else:
+                        if len(temporal_list) == 1:
+                           conn.privmsg(targetchannel,sender+" : The video does not exist")
+                           break
+                        else:
+                           temporal_list2.append("The video does not exist")
                if len(temporal_list) == 1:
                   pass
                else:
