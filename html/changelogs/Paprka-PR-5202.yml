@@ -1,5 +1,0 @@
-author: Paprika
-delete-after: True
-changes:
-  - rscadd: "Added a second roboticist roundstart job slot."
-  - rscadd: "Added a third cargo tech job slot."

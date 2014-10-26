@@ -207,3 +207,6 @@ proc/setup_map_transitions() //listamania
 			S.transition = directions[Z_NORTH]
 
 		S.Assign_Destination()
+
+/turf/space/singularity_act()
+	return

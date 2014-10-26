@@ -347,3 +347,13 @@
 			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 			return 1
 	return 0 // no success. Used in clown pda and wet floors
+
+/turf/singularity_act()
+	if(intact)
+		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
+			if(O.level != 1)
+				continue
+			if(O.invisibility == 101)
+				O.singularity_act()
+	ChangeTurf(/turf/space)
+	return(2)

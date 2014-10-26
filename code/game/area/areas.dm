@@ -381,12 +381,15 @@
 		// find the turf to move things to
 		var/turf/D = locate(T.x, throwy - 1, T.z)
 		for(var/atom/movable/AM as mob|obj in T)
-			//mobs take damage
-			if(istype(AM, /mob/living))
-				var/mob/living/living_mob = AM
-				living_mob.Paralyse(10)
-				living_mob.take_organ_damage(80)
-				living_mob.anchored = 0 //Unbuckle them so they can be moved
+			if(ismob(AM))
+				if(istype(AM, /mob/living))//mobs take damage
+					var/mob/living/living_mob = AM
+					living_mob.Paralyse(10)
+					living_mob.take_organ_damage(80)
+					living_mob.anchored = 0 //Unbuckle them so they can be moved
+				else
+					continue
+
 			//Anything not bolted down is moved, everything else is destroyed
 			if(!AM.anchored)
 				AM.Move(D, SOUTH)
@@ -395,5 +398,7 @@
 		if(istype(T, /turf/simulated))
 			del(T)
 
-	for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
-		qdel(bug)
+	/*for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
+		if(ismob(bug))
+			continue
+		qdel(bug)*/
