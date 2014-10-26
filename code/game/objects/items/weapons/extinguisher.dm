@@ -67,27 +67,29 @@
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
+		if(usr.buckled && isobj(usr.buckled))
 			spawn(0)
 				var/obj/B = usr.buckled
 				var/movementdirection = turn(direction,180)
-				B.Move(get_step(usr,movementdirection), movementdirection)
+				step(B, movementdirection)
 				sleep(1)
-				B.Move(get_step(usr,movementdirection), movementdirection)
+				step(B, movementdirection)
 				sleep(1)
-				B.Move(get_step(usr,movementdirection), movementdirection)
+				step(B, movementdirection)
 				sleep(1)
-				B.Move(get_step(usr,movementdirection), movementdirection)
+				step(B, movementdirection)
 				sleep(2)
-				B.Move(get_step(usr,movementdirection), movementdirection)
+				step(B, movementdirection)
 				sleep(2)
-				B.Move(get_step(usr,movementdirection), movementdirection)
+				step(B, movementdirection)
 				sleep(3)
-				B.Move(get_step(usr,movementdirection), movementdirection)
+				step(B, movementdirection)
 				sleep(3)
-				B.Move(get_step(usr,movementdirection), movementdirection)
+				step(B, movementdirection)
 				sleep(3)
-				B.Move(get_step(usr,movementdirection), movementdirection)
+				step(B, movementdirection)
+
+		else user.newtonian_move(turn(direction, 180))
 
 		var/turf/T = get_turf(target)
 		var/turf/T1 = get_step(T,turn(direction, 90))
@@ -118,9 +120,5 @@
 					if(W.loc == my_target) break
 					sleep(2)
 
-		if(!has_gravity(user))
-			user.inertia_dir = get_dir(target, user)
-			step(user, user.inertia_dir)
 	else
 		return ..()
-	return

@@ -22,6 +22,25 @@
 	unbuckle()
 	..()
 
+/obj/structure/stool/bed/Move(atom/newloc, direct) //Some bed children move
+	. = ..()
+	if(buckled_mob && buckled_mob.loc != loc)
+		if(!buckled_mob.Move(loc, get_dir(buckled_mob, loc)))
+			loc = buckled_mob.loc //we gotta go back
+			inertia_dir = 0
+			buckled_mob.inertia_dir = 0
+			return 0
+
+/obj/structure/stool/bed/Process_Spacemove(var/movement_dir = 0)
+	if(buckled_mob)
+		return buckled_mob.Process_Spacemove(movement_dir)
+	return ..()
+
+/obj/structure/stool/bed/CanPass(atom/movable/mover, turf/target, height=1.5)
+	if(mover == buckled_mob)
+		return 1
+	return ..()
+
 /obj/structure/stool/bed/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
@@ -49,9 +68,10 @@
 			buckled_mob.anchored = initial(buckled_mob.anchored)
 			buckled_mob.update_canmove()
 
-			var/M = buckled_mob
+			var/mob/M = buckled_mob
 			buckled_mob = null
 
+			M.newtonian_move(inertia_dir)
 			afterbuckle(M)
 	return
 
@@ -135,13 +155,6 @@
 		icon_state = "down"
 		M.pixel_y -= buckled_pixel_y_offset
 
-/obj/structure/stool/bed/roller/Move()
-	..()
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)
-			buckled_mob.loc = src.loc
-		else
-			buckled_mob = null
 
 /obj/item/roller
 	name = "roller bed"
