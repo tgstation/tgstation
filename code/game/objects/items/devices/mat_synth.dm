@@ -104,11 +104,11 @@
 					return
 			else
 				if(active_material && matter)
-					var/modifier = 1
+					var/modifier = MAT_COST_COMMON
 					if(initial(active_material.perunit) < 3750) //synthesizing is EXPENSIVE
-						modifier = 3
+						modifier = MAT_COST_MEDIUM
 					if(initial(active_material.perunit) < 2000)
-						modifier = 5
+						modifier = MAT_COST_RARE
 					var/tospawn = Clamp(round(input("How many sheets of [mat_name] do you want to synthesize? (0 - [matter / modifier])") as num), 0, round(matter / modifier))
 					if(tospawn)
 						var/obj/item/stack/sheet/spawned_sheet = new active_material(get_turf(src))
