@@ -20,17 +20,17 @@
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id))
 		if(src.broken)
-			user << "<span class='rose>It appears to be broken.</span>"
+			user << "<span class='rose'>It appears to be broken.</span>"
 			return
 		if(src.allowed(user))
 			src.locked = !( src.locked )
 			if(src.locked)
 				src.icon_state = src.icon_locked
-				user << "<span class='rose>You lock the [src.name]!</span>"
+				user << "<span class='rose'>You lock the [src.name]!</span>"
 				return
 			else
 				src.icon_state = src.icon_closed
-				user << "<span class='rose>You unlock the [src.name]!</span>"
+				user << "<span class='rose'>You unlock the [src.name]!</span>"
 				return
 		else
 			user << "<span class='warning'>Access Denied</span>"
@@ -173,18 +173,18 @@
 	if (istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/ID = O
 		if(src.broken)
-			user << "<span class='rose>It appears to be broken.</span>"
+			user << "<span class='rose'>It appears to be broken.</span>"
 			return
 		else
 			src.locked = !( src.locked )
 			if(src.locked)
 				src.icon_state = src.icon_locked
-				user << "<span class='rose>You lock the [src.name]!</span>"
+				user << "<span class='rose'>You lock the [src.name]!</span>"
 				tracked_access = "The tracker reads: 'Last locked by [ID.registered_name]'."
 				return
 			else
 				src.icon_state = src.icon_closed
-				user << "<span class='rose>You unlock the [src.name]!</span>"
+				user << "<span class='rose'>You unlock the [src.name]!</span>"
 				tracked_access = "The tracker reads: 'Last unlocked by [ID.registered_name].'"
 				return
 	else
