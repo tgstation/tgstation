@@ -135,7 +135,7 @@ datum/mind
 		)
 		var/text = ""
 
-		if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
+		if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey) || istype(current, /mob/living/simple_animal/construct))
 			/** REVOLUTION ***/
 			text = "revolution"
 			if (ticker.mode.config_tag=="revolution")

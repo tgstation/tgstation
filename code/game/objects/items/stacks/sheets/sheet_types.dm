@@ -154,6 +154,9 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	icon_state = "sheet-wood"
 	origin_tech = "materials=1;biotech=1"
 
+/obj/item/stack/sheet/wood/cultify()
+	return
+
 /obj/item/stack/sheet/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
 	return ..()

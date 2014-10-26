@@ -120,6 +120,16 @@ Class Procs:
 
 	var/inMachineList = 1 // For debugging.
 
+/obj/machinery/cultify()
+	var/list/random_structure = list(
+		/obj/structure/cult/talisman,
+		/obj/structure/cult/forge,
+		/obj/structure/cult/tome
+		)
+	var/I = pick(random_structure)
+	new I(loc)
+	..()
+
 /obj/machinery/New()
 	machines += src
 	return ..()
