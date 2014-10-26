@@ -115,12 +115,12 @@
 //And when an object or action applies a force on src, see newtonian_move() below
 //Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
 //Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
-//movement_dir == 0 when stopping or any dir when trying to move or otherwise apply a force in that direction
+//movement_dir == 0 when stopping or any dir when trying to move
 /atom/movable/proc/Process_Spacemove(var/movement_dir = 0)
 	if(has_gravity(src))
 		return 1
 
-	if(throwing || pulledby)
+	if(pulledby)
 		return 1
 
 	if(locate(/obj/structure/lattice) in orange(1, get_turf(src))) //Not realistic but makes pushing things in space easier

@@ -207,6 +207,8 @@
 			. = ..()
 
 		moving = 0
+		if(mob && .)
+			mob.throwing = 0
 
 		return .
 
@@ -340,7 +342,7 @@
 
 	if(movement_dir && dense_object_backup)
 		if(dense_object_backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-			src << "<span class='info'>You push off of [dense_object_backup] to propel yourself.</caution>"
+			src << "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>"
 
 
 		return 1
