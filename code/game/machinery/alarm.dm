@@ -851,7 +851,8 @@ table tr:first-child th:first-child { border: none;}
 	else
 		stat |= NOPOWER
 	spawn(rand(0,15))
-		update_icon()
+		if(loc)
+			update_icon()
 
 /*
 AIR ALARM CIRCUIT
@@ -1084,10 +1085,10 @@ FIRE ALARM
 /obj/machinery/firealarm/power_change()
 	if(powered(ENVIRON))
 		stat &= ~NOPOWER
-		update_icon()
 	else
-		spawn(rand(0,15))
-			stat |= NOPOWER
+		stat |= NOPOWER
+	spawn(rand(0,15))
+		if(loc)
 			update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user as mob)
