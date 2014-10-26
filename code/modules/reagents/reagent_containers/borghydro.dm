@@ -12,8 +12,9 @@ Borg Hypospray
 	name = "cyborg hypospray"
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "hypo"
 	icon_state = "borghypo"
+	item_state_icon = 'icons/obj/syringe.dmi'
+	item_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = null

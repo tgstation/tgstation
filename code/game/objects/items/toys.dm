@@ -108,6 +108,7 @@
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
+	item_state_icon = 'icons/obj/gun.dmi'
 	item_state = "gun"
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT

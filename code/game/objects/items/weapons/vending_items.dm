@@ -4,6 +4,7 @@
 
 	icon = 'icons/obj/vending_restock.dmi'
 	icon_state = "refill_snack"
+	item_state_icon = 'icons/obj/vending_restock.dmi'
 	item_state = "restock_unit"
 	flags = CONDUCT
 	force = 7.0

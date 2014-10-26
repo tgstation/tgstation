@@ -18,7 +18,6 @@
 	name = "white gloves"
 	desc = "These look pretty fancy."
 	icon_state = "latex"
-	item_state = "lgloves"
 	item_color="mime"
 
 	redcoat

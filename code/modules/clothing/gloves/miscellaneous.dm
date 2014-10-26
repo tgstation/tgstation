@@ -2,7 +2,6 @@
 	desc = "Regal blue gloves, with a nice gold trim. Swanky."
 	name = "captain's gloves"
 	icon_state = "captain"
-	item_state = "egloves"
 	item_color = "captain"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
@@ -14,6 +13,7 @@
 	desc = "beep boop borp"
 	name = "cyborg gloves"
 	icon_state = "black"
+	item_state_icon = 'icons/obj/clothing/gloves.dmi'
 	item_state = "r_hands"
 	siemens_coefficient = 1.0
 
@@ -21,6 +21,7 @@
 	name = "combat gloves"
 	desc = "These tactical gloves are fire and shock resistant."
 	icon_state = "black"
+	item_state_icon = 'icons/obj/clothing/gloves.dmi'
 	item_state = "swat_gl"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
@@ -34,7 +35,6 @@
 	name = "latex gloves"
 	desc = "Sterile latex gloves."
 	icon_state = "latex"
-	item_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
 	item_color="white"
@@ -47,7 +47,6 @@
 	name = "botanist's leather gloves"
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin.  They're also quite warm."
 	icon_state = "leather"
-	item_state = "ggloves"
 	permeability_coefficient = 0.9
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT

@@ -875,6 +875,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "golem's face"
 	desc = "the imposing face of an adamantine golem"
 	icon_state = "golem"
+	item_state_icon = 'icons/obj/clothing/masks.dmi'
 	siemens_coefficient = 0
 	unacidable = 1
 	flags = ABSTRACT | NODROP
@@ -890,6 +891,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /obj/item/clothing/head/space/golem
 	icon_state = "golem"
+	item_state_icon = 'icons/obj/clothing/hats.dmi'
 	item_state = "dermal"
 	item_color = "dermal"
 	name = "golem's head"

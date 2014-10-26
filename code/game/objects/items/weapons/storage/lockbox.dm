@@ -4,7 +4,7 @@
 	name = "lockbox"
 	desc = "A locked box."
 	icon_state = "lockbox+l"
-	item_state_icon = 'icons/obj/syringe.dmi'
+	item_state_icon = 'icons/obj/storage.dmi'
 	item_state = "syringe_kit"
 	w_class = 4
 	max_w_class = 3

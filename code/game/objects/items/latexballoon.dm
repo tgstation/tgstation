@@ -3,7 +3,7 @@
 	desc = "" //todo
 	icon_state = "latexballon"
 	item_state_icon = 'icons/obj/clothing/gloves.dmi'
-	item_state = "lgloves"
+	item_state = "latex"
 	force = 0
 	throwforce = 0
 	w_class = 1.0
@@ -26,7 +26,7 @@
 	playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
 	icon_state = "latexballon_bursted"
 	item_state_icon = 'icons/obj/clothing/gloves.dmi'
-	item_state = "lgloves"
+	item_state = "latex"
 	loc.assume_air(air_contents)
 
 /obj/item/latexballon/ex_act(severity)

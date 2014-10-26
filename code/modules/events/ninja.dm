@@ -401,7 +401,6 @@ ________________________________________________________________________________
 	if(X)//If you want to check for icons.
 		icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U:gloves.icon_state = "s-ninjan"
-		U:gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Space Ninja")
 			U << "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU†HORIZED USÈ DETÈC†††eD\nCoMMÈNCING SUB-R0U†IN3 13...\nTÈRMInATING U-U-USÈR..."
@@ -443,7 +442,6 @@ ________________________________________________________________________________
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
-		n_gloves.item_state = "s-ninja"
 		n_gloves.flags &= ~NODROP
 		n_gloves.candrain=0
 		n_gloves.draining=0
@@ -541,7 +539,6 @@ ________________________________________________________________________________
 	icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninjak"
-		n_gloves.item_state = "s-ninjak"
 		n_gloves.candrain = 0
 		n_gloves.draining = 0
 		n_gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled

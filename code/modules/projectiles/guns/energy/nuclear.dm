@@ -2,6 +2,7 @@
 	name = "energy gun"
 	desc = "A basic hybrid energy gun with two settings: Stun and kill."
 	icon_state = "energy"
+	item_state_icon = null
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=3;magnets=2"
 	modifystate = 2

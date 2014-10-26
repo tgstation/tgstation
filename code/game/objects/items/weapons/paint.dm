@@ -8,6 +8,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
 	item_color = "FFFFFF"
+	item_state_icon = 'icons/obj/items.dmi'
 	item_state = "paintcan"
 	w_class = 3.0
 	var/paintleft = 10

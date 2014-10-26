@@ -2,6 +2,8 @@
 	name = "stunbaton"
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
+	item_state_icon = 'icons/obj/weapons.dmi'
+	item_state = "stunbaton"
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
@@ -157,6 +159,7 @@
 	name = "stunprod"
 	desc = "An improvised stun baton."
 	icon_state = "stunprod_nocell"
+	item_state_icon = 'icons/obj/weapons.dmi'
 	item_state = "prod"
 	force = 3
 	throwforce = 5

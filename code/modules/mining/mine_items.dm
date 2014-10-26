@@ -82,6 +82,7 @@
 /obj/item/weapon/pickaxe/drill
 	name = "mining drill" // Can dig sand as well!
 	icon_state = "handdrill"
+	item_state_icon = 'icons/obj/mining.dmi'
 	item_state = "jackhammer"
 	digspeed = 30
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
@@ -122,6 +123,7 @@
 /obj/item/weapon/pickaxe/diamonddrill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
 	icon_state = "diamonddrill"
+	item_state_icon = 'icons/obj/mining.dmi'
 	item_state = "jackhammer"
 	digspeed = 5 //Digs through walls, girders, and can dig up sand
 	origin_tech = "materials=6;powerstorage=4;engineering=5"

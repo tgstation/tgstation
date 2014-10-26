@@ -19,6 +19,7 @@
 	icon = 'icons/obj/hydroponics.dmi'
 	name = "weed-spray"
 	icon_state = "weedspray"
+	item_state_icon = 'icons/obj/hydroponics.dmi'
 	item_state = "spraycan"
 	volume = 100
 	flags = OPENCONTAINER
@@ -41,6 +42,7 @@
 	icon = 'icons/obj/hydroponics.dmi'
 	name = "pest-spray"
 	icon_state = "pestspray"
+	item_state_icon = 'icons/obj/hydroponics.dmi'
 	item_state = "spraycan"
 	volume = 100
 	flags = OPENCONTAINER

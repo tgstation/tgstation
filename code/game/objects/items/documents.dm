@@ -3,6 +3,7 @@
 	desc = "\"Top Secret\" documents printed on special copy-protected paper."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "docs_generic"
+	item_state_icon = 'icons/obj/bureaucracy.dmi'
 	item_state = "paper"
 	throwforce = 0
 	w_class = 1.0

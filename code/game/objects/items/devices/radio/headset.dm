@@ -3,6 +3,8 @@
 	desc = "An updated, modular intercom that fits over the head. Takes encryption keys"
 	icon = 'icons/obj/clothing/ears.dmi'
 	icon_state = "headset"
+	item_state_icon = 'icons/obj/clothing/ears.dmi'
+	item_state = "headset"
 	g_amt = 0
 	m_amt = 75
 	subspace_transmission = 1

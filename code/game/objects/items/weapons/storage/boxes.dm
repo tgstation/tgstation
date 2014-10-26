@@ -505,6 +505,7 @@
 	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
+	item_state_icon = null
 	item_state = "zippo"
 	storage_slots = 10
 	w_class = 1

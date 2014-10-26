@@ -296,12 +296,12 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 		usr << "You cannot wear this suit any differently."
 		return
 	if(src.adjusted == 1)
-		src.item_color = initial(item_color)
-		src.item_color = src.suit_color //colored jumpsuits are shit and break without this
+		src.icon_state = initial(icon_state)
+		src.icon_state = src.suit_color //colored jumpsuits are shit and break without this
 		usr << "You adjust the suit back to normal."
 		src.adjusted = 0
 	else
-		src.item_color += "_d"
+		src.icon_state += "_d"
 		usr << "You adjust the suit to wear it more casually."
 		src.adjusted = 1
 	usr.update_inv_w_uniform()

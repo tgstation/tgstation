@@ -12,6 +12,7 @@
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination."
 	icon_state = "bio"
+	item_state_icon = 'icons/obj/clothing/suits.dmi'
 	item_state = "bio_suit"
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01

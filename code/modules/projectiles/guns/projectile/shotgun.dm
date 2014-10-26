@@ -2,6 +2,7 @@
 	name = "shotgun"
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
+	item_state = "shotgun"
 	w_class = 4.0
 	force = 10
 	flags =  CONDUCT

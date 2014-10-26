@@ -686,6 +686,7 @@
 	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incredibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "lazarus_hypo"
+	item_state_icon = 'icons/obj/syringe.dmi'
 	item_state = "hypo"
 	throwforce = 0
 	w_class = 2.0
@@ -741,6 +742,7 @@
 	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
 	name = "mining scanner"
 	icon_state = "mining1"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "analyzer"
 	w_class = 2.0
 	flags = CONDUCT

@@ -62,7 +62,6 @@
 			var/new_jumpsuit_item_state = ""
 			var/new_jumpsuit_name = ""
 			var/new_glove_icon_state = ""
-			var/new_glove_item_state = ""
 			var/new_glove_name = ""
 			var/new_shoe_icon_state = ""
 			var/new_shoe_name = ""
@@ -87,7 +86,6 @@
 				//world << "DEBUG: [wash_color] == [J.item_color]"
 				if(wash_color == G.item_color)
 					new_glove_icon_state = G.icon_state
-					new_glove_item_state = G.item_state
 					new_glove_name = G.name
 					qdel(G)
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
@@ -132,10 +130,9 @@
 					J.name = new_jumpsuit_name
 					J.desc = new_desc
 					J.suit_color = wash_color
-			if(new_glove_icon_state && new_glove_item_state && new_glove_name)
+			if(new_glove_icon_state && new_glove_name)
 				for(var/obj/item/clothing/gloves/G in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
-					G.item_state = new_glove_item_state
 					G.icon_state = new_glove_icon_state
 					G.item_color = wash_color
 					G.name = new_glove_name

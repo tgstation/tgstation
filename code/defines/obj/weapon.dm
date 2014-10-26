@@ -83,6 +83,7 @@
 	desc = "A cane used by a true gentlemen. Or a clown."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
+	item_state_icon = 'icons/obj/weapons.dmi'
 	item_state = "stick"
 	force = 5.0
 	throwforce = 5

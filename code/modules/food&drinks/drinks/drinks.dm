@@ -116,6 +116,7 @@
 	name = "Space Milk"
 	desc = "It's milk. White and nutritious goodness!"
 	icon_state = "milk"
+	item_state_icon = 'icons/obj/drinks.dmi'
 	item_state = "carton"
 
 /obj/item/weapon/reagent_containers/food/drinks/milk/New()
@@ -140,6 +141,7 @@
 	name = "SoyMilk"
 	desc = "It's soy milk. White and nutritious goodness!"
 	icon_state = "soymilk"
+	item_state_icon = 'icons/obj/drinks.dmi'
 	item_state = "carton"
 
 /obj/item/weapon/reagent_containers/food/drinks/soymilk/New()
@@ -163,6 +165,7 @@
 	name = "Duke Purple Tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	icon_state = "tea"
+	item_state_icon = 'icons/obj/drinks.dmi'
 	item_state = "coffee"
 
 /obj/item/weapon/reagent_containers/food/drinks/tea/New()
@@ -186,6 +189,7 @@
 	name = "Dutch Hot Coco"
 	desc = "Made in Space South America."
 	icon_state = "tea"
+	item_state_icon = 'icons/obj/drinks.dmi'
 	item_state = "coffee"
 
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate/New()
@@ -220,6 +224,7 @@
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
+	item_state_icon = 'icons/obj/drinks.dmi'
 	item_state = "beer"
 
 /obj/item/weapon/reagent_containers/food/drinks/ale/New()

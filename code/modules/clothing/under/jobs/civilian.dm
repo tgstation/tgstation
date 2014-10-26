@@ -35,6 +35,7 @@
 	desc = "It's a black jumpsuit, often worn by religious folk."
 	name = "chaplain's jumpsuit"
 	icon_state = "chaplain"
+	item_state_icon = 'icons/obj/clothing/uniforms.dmi'
 	item_state = "bl_suit"
 	item_color = "chapblack"
 	can_adjust = 0

@@ -2,6 +2,7 @@
 	name = "universal recorder"
 	desc = "A device that can record to cassette tapes, and play them. It automatically translates the content in playback."
 	icon_state = "taperecorder_empty"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "analyzer"
 	w_class = 2
 	flags = HEAR
@@ -244,6 +245,7 @@
 	name = "tape"
 	desc = "A magnetic tape that can hold up to ten minutes of content."
 	icon_state = "tape_white"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "analyzer"
 	w_class = 1
 	m_amt = 20

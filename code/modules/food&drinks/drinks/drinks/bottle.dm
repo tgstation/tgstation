@@ -122,6 +122,7 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
+	item_state_icon = 'icons/obj/drinks.dmi'
 	item_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")

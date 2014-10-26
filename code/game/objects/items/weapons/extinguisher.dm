@@ -3,6 +3,7 @@
 	desc = "A traditional red fire extinguisher."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "fire_extinguisher0"
+	item_state_icon = 'icons/obj/items.dmi'
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT

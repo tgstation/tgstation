@@ -6,6 +6,7 @@
 	desc = "A small bottle."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
+	item_state_icon = 'icons/obj/chemical.dmi'
 	item_state = "atoxinbottle"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30)

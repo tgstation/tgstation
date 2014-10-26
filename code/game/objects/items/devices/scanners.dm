@@ -15,6 +15,7 @@ MASS SPECTROMETER
 	var/on = 0
 	slot_flags = SLOT_BELT
 	w_class = 2
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	m_amt = 150
 	origin_tech = "magnets=1;engineering=1"
@@ -65,6 +66,7 @@ MASS SPECTROMETER
 /obj/item/device/healthanalyzer
 	name = "health analyzer"
 	icon_state = "health"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	flags = CONDUCT
@@ -176,6 +178,7 @@ MASS SPECTROMETER
 	desc = "A hand-held environmental scanner which reports current gas levels."
 	name = "analyzer"
 	icon_state = "atmos"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "analyzer"
 	w_class = 2.0
 	flags = CONDUCT
@@ -243,6 +246,7 @@ MASS SPECTROMETER
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "analyzer"
 	w_class = 2.0
 	flags = CONDUCT | OPENCONTAINER
@@ -313,6 +317,7 @@ MASS SPECTROMETER
 /obj/item/device/slime_scanner
 	name = "slime scanner"
 	icon_state = "adv_spectrometer"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "analyzer"
 	origin_tech = "biotech=1"
 	w_class = 2.0

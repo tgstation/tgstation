@@ -2,6 +2,7 @@
 	name = "Assembly"
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "holder"
+	item_state_icon = 'icons/obj/assemblies.dmi'
 	item_state = "assembly"
 	flags = CONDUCT
 	throwforce = 5

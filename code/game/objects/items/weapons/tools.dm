@@ -123,6 +123,7 @@
 	name = "welding tool"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
+	item_state_icon = 'icons/obj/items.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 3

@@ -2,6 +2,7 @@
 	name = "smoke bomb"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
+	item_state_icon = null
 	det_time = 20
 	slot_flags = SLOT_BELT
 	var/datum/effect/effect/system/bad_smoke_spread/smoke

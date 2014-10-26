@@ -2,6 +2,8 @@
 	name = "laser gun"
 	desc = "A basic energy-based laser gun that fires concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser"
+	item_state_icon = 'icons/obj/gun.dmi'
+	item_state = "laser"
 	w_class = 3.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
@@ -18,7 +20,6 @@ obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
-
 
 /obj/item/weapon/gun/energy/laser/captain
 	icon_state = "caplaser"
@@ -76,6 +77,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser cannon"
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
+	item_state_icon = null
 	item_state = "laser"
 	w_class = 4.0
 	force = 10
@@ -89,6 +91,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "xray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts that pass through multiple soft targets and heavier materials"
 	icon_state = "xray"
+	item_state_icon = 'icons/obj/gun.dmi'
 	item_state = "laser"
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)

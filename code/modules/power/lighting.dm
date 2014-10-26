@@ -635,6 +635,7 @@
 	desc = "A replacement light tube."
 	icon_state = "ltube"
 	base_state = "ltube"
+	item_state_icon = 'icons/obj/lighting.dmi'
 	item_state = "c_tube"
 	g_amt = 100
 	brightness = 8

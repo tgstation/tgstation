@@ -3,6 +3,7 @@
 	desc = "It's a gun. It's pretty terrible, though."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "detective"
+	item_state_icon = 'icons/obj/gun.dmi'
 	item_state = "gun"
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT

@@ -2,6 +2,7 @@
 	name = "ion rifle"
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
+	item_state_icon = null
 	origin_tech = "combat=2;magnets=4"
 	w_class = 5
 	flags =  CONDUCT
@@ -57,6 +58,7 @@
 	name = "meteor gun"
 	desc = "For the love of god, make sure you're aiming this the right way!"
 	icon_state = "riotgun"
+	item_state_icon = 'icons/obj/gun.dmi'
 	item_state = "c20r"
 	w_class = 4
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
@@ -128,5 +130,6 @@
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
+	item_state_icon = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	cell_type = "/obj/item/weapon/stock_parts/cell"

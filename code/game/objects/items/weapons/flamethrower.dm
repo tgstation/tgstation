@@ -3,6 +3,7 @@
 	desc = "You are a firestarter!"
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
+	item_state_icon = 'icons/obj/flamethrower.dmi'
 	item_state = "flamethrower_0"
 	flags = CONDUCT
 	force = 3.0

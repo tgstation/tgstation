@@ -275,19 +275,19 @@ Please contact me on #coderbus IRC. ~Carnie x
 				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
 			client.screen += w_uniform				//Either way, add the item to the HUD
 
-		var/image/standing = update_inv_slot_image(w_uniform, "_s_e", UNIFORM_LAYER, w_uniform.icon_state, w_uniform.item_color)
+		var/image/standing = update_inv_slot_image(w_uniform, "_s_e", UNIFORM_LAYER)
 		overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted == 1)
-				overlays_standing[UNIFORM_LAYER]	=  wear_female_version(w_uniform.item_color, w_uniform.icon, UNIFORM_LAYER)
+				overlays_standing[UNIFORM_LAYER]	=  wear_female_version(w_uniform.icon_state, w_uniform.icon, UNIFORM_LAYER)
 
 		if(w_uniform.blood_DNA)
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
 
 		if(U.hastie)
-			standing.overlays += update_inv_slot_image(U.hastie, "_tie", null, U.hastie.item_color)
+			standing.overlays += update_inv_slot_image(U.hastie, "_tie", null)
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//

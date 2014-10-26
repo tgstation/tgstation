@@ -145,6 +145,7 @@
 	desc = "A fire extinguisher nozzle attached to a water tank."
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "misteratmos"
+	item_state_icon = null
 	safety = 0
 	var/obj/item/weapon/watertank/tank
 
