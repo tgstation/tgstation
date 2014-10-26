@@ -4,6 +4,7 @@
 	damage = 0
 	damage_type = BURN
 	flag = "energy"
+	color = "#FFFF00"
 
 
 /obj/item/projectile/energy/electrode
