@@ -215,12 +215,15 @@
 			"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\
 			"You hear metal strain, and a door [density ? "open" : "close"].")
 
+
 		if(density)
 			spawn(0)
 				open()
 		else
 			spawn(0)
 				close()
+		log_admin("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
+
 		return
 	var/access_granted = 0
 	var/users_name
@@ -276,7 +279,6 @@
 		if(!users_to_open)
 			users_to_open = list()
 		users_to_open += users_name
-
 	var/needs_to_close = 0
 	if(density)
 		if(alarmed)
@@ -286,12 +288,12 @@
 	else
 		spawn()
 			close()
+	log_admin("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
 
 	if(needs_to_close)
 		spawn(50)
-			if(alarmed)
-				nextstate = CLOSED
-
+			if(alarmed && !density)
+				close()
 /obj/machinery/door/firedoor/open()
 	..()
 	latetoggle()
@@ -300,7 +302,7 @@
 	ASSERT(istype(A)) // This worries me.
 	var/alarmed = A.doors_down || A.fire
 	if(alarmed)
-		spawn(5)
+		spawn(50)
 			close()
 
 /obj/machinery/door/firedoor/close()
