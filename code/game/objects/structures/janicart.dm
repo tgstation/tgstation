@@ -82,7 +82,7 @@
 		if(do_after(user, 30))
 			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
 			reagents.reaction(src.loc)
-			spawn(5) src.reagents.clear_reagents()
+			src.reagents.clear_reagents()
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
 	user.set_machine(src)
