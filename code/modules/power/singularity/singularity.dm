@@ -208,25 +208,6 @@
 		var/obj/machinery/singularity/S = src
 		if(dist > consume_range)
 			X.singularity_pull(S, current_size)
-			/*if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
-				step_towards(X,src)
-
-			else if(istype(X,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-
-				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(!M.magpulse)
-						step_towards(H,src)
-				else
-					step_towards(H,src)
-
-				if(current_size >= 5)
-					var/list/handlist = list(H.l_hand, H.r_hand)
-					for(var/obj/item/hand in handlist)
-						if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && H.unEquip(hand))
-							step_towards(hand, src)
-							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"*/
 		else if(dist <= consume_range)
 			consume(X)
 	return
