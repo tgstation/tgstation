@@ -830,7 +830,7 @@
 	apply_damage(I.force, I.damtype, affecting, armor, H)
 
 	var/bloody = 0
-	if(((I.damtype == BRUTE) && prob(25 + (I.force * 2))))
+	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 		if(affecting.status == ORGAN_ORGANIC)
 			I.add_blood(H)	//Make the weapon bloody, not the person.
 			if(prob(I.force * 2))	//blood spatter!
@@ -875,7 +875,7 @@
 						H.update_inv_glasses(0)
 
 			if("chest")	//Easier to score a stun but lasts less time
-				if(H.stat == CONSCIOUS && prob(I.force + 10))
+				if(H.stat == CONSCIOUS && I.force && prob(I.force + 10))
 					H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
 					H.apply_effect(5, WEAKEN, armor)
