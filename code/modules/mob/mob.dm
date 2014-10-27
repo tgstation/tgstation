@@ -325,6 +325,15 @@ var/list/slot_equipment_priority = list( \
 
 	usr.visible_message("<b>[src]</b> points to [A]")
 
+//yep, still the same deal
+/mob/verb/pulled(atom/movable/AM as mob|obj in oview(1))
+	set name = "Pull"
+	set category = "Object"
+
+	if(AM.Adjacent(src))
+		src.start_pulling(AM)
+	return
+
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
