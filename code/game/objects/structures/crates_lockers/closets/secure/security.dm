@@ -73,6 +73,7 @@
 	new /obj/item/clothing/under/hosformalfem(src)
 	new /obj/item/clothing/under/hosformalmale(src)
 	new /obj/item/clothing/suit/armor/hos/trenchcoat(src)
+	new /obj/item/clothing/under/rank/head_of_security/jensen(src)
 	new /obj/item/clothing/head/HoS/dermal(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos/alt(src)
