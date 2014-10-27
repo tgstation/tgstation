@@ -73,6 +73,7 @@ var/list/sacrificed = list()
 	var/runecount = 0
 	var/obj/effect/rune/IP = null
 	var/mob/living/user = usr
+	var/swapping[] = null
 	for(var/obj/effect/rune/R in world)
 		if(R == src)
 			continue
@@ -92,11 +93,26 @@ var/list/sacrificed = list()
 		user.visible_message("<span class='warning'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 		"<span class='warning'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 		"<span class='warning'>You smell ozone.</span>")
-		for(var/obj/O in src.loc)
+
+		swapping = new/list()
+		for(var/obj/O in IP.loc)//filling a list with all the teleportable atoms on the other rune
+			if(!O.anchored)
+				swapping += O
+		for(var/mob/M in IP.loc)
+			swapping += M
+
+		for(var/obj/O in src.loc)//sending the items on the rune to the other rune
 			if(!O.anchored)
 				O.loc = IP.loc
 		for(var/mob/M in src.loc)
 			M.loc = IP.loc
+
+		for(var/obj/O in swapping)//bringing the items previously marked from the other rune to our rune
+			O.loc = src.loc
+		for(var/mob/M in swapping)
+			M.loc = src.loc
+
+		swapping = null
 		return
 	return fizzle()
 
