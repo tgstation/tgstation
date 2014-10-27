@@ -42,11 +42,10 @@ proc
 		var/list/layers = list() // Associative list of [overlay = layer]
 		var/hash = "" // Hash of overlay combination
 
-		if(!dir)
-			if (is_type_in_list(A, directional)||!is_type_in_list(A, exception))
-				dir = A.dir
-			else
-				dir = 2//ugly fix for atoms showing invisible on pictures if they don't have a 4-directional icon_state sprite and their dir isn't south(2)
+		if (is_type_in_list(A, directional)&&!is_type_in_list(A, exception))
+			dir = A.dir
+		else
+			dir = 2//ugly fix for atoms showing invisible on pictures if they don't have a 4-directional icon_state sprite and their dir isn't south(2)
 
 		// Add the atom's icon itself
 		if(A.icon)
@@ -127,7 +126,7 @@ proc
 
 			add = icon(I:icon || A.icon
 			         , I:icon_state || (I:icon && (A.icon_state in icon_states(I:icon)) && A.icon_state)
-			         , (iscarbon(A) ? 2 : dir)
+			         , dir
 			         , 1
 			         , 0)
 
