@@ -1,4 +1,0 @@
-author: phil235
-delete-after: True
-changes: 
-  - experiment: "girders and displaced girders now have a chance to let projectiles pass through them."
