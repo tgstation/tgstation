@@ -203,14 +203,12 @@
 
 /obj/machinery/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 1
-	// Let's just make this one loop.
 	for(var/atom/X in orange(grav_pull,src))
 		var/dist = get_dist(X, src)
-		// Movable atoms only
-		if(dist > consume_range && istype(X, /atom/movable))
-			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
+		var/obj/machinery/singularity/S = src
+		if(dist > consume_range)
+			X.singularity_pull(S, current_size)
+			/*if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
 
 			else if(istype(X,/mob/living/carbon/human))
@@ -228,15 +226,9 @@
 					for(var/obj/item/hand in handlist)
 						if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && H.unEquip(hand))
 							step_towards(hand, src)
-							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"
-
-				H.apply_effect(current_size * 3, IRRADIATE)
-		// Turf and movable atoms
-		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
+							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"*/
+		else if(dist <= consume_range)
 			consume(X)
-
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 0
 	return
 
 
