@@ -13,72 +13,73 @@
 
 	l_color = "#B40000"
 
-	attack_ai(var/mob/user as mob)
-		src.add_hiddenprint(user)
-		return attack_hand(user)
+/obj/machinery/computer/security/attack_ai(var/mob/user as mob)
+	src.add_hiddenprint(user)
+	return attack_hand(user)
 
 
-	attack_paw(var/mob/user as mob)
-		return attack_hand(user)
+/obj/machinery/computer/security/attack_paw(var/mob/user as mob)
+	return attack_hand(user)
 
 
-	check_eye(var/mob/user as mob)
-		if ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
-			return null
-		user.reset_view(current)
-		return 1
+/obj/machinery/computer/security/check_eye(var/mob/user as mob)
+	if ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
+		return null
+	user.reset_view(current)
+	return 1
 
 
-	attack_hand(var/mob/user as mob)
-		if (src.z > 6)
-			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
-			return
-		if(stat & (NOPOWER|BROKEN))	return
-
-		if(!isAI(user))
-			user.set_machine(src)
-
-		var/list/L = list()
-		for (var/obj/machinery/camera/C in cameranet.cameras)
-			L.Add(C)
-
-		camera_sort(L)
-
-		var/list/D = list()
-		D["Cancel"] = "Cancel"
-		for(var/obj/machinery/camera/C in L)
-			var/list/tempnetwork = C.network&network
-			if(tempnetwork.len)
-				D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
-
-		var/t = input(user, "Which camera should you change to?") as null|anything in D
-		if(!t)
-			user.unset_machine()
-			return 0
-
-		var/obj/machinery/camera/C = D[t]
-
-		if(t == "Cancel")
-			user.unset_machine()
-			return 0
-
-		if(C)
-			if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
-				if(!C.can_use() && !isAI(user))
-					src.current = null
-				return 0
-			else
-				if(isAI(user))
-					var/mob/living/silicon/ai/A = user
-					A.eyeobj.setLoc(get_turf(C))
-					A.client.eye = A.eyeobj
-				else
-					src.current = C
-					use_power(50)
-
-				spawn(5)
-					attack_hand(user)
+/obj/machinery/computer/security/attack_hand(var/mob/user as mob)
+	if (src.z > 6)
+		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 		return
+	if(stat & (NOPOWER|BROKEN))	return
+
+	if(!isAI(user))
+		user.set_machine(src)
+
+	var/list/L = list()
+	for (var/obj/machinery/camera/C in cameranet.cameras)
+		L.Add(C)
+
+	camera_sort(L)
+
+	var/list/D = list()
+	D["Cancel"] = "Cancel"
+	for(var/obj/machinery/camera/C in L)
+		var/list/tempnetwork = C.network&network
+		if(tempnetwork.len)
+			D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
+
+	var/t = input(user, "Which camera should you change to?") as null|anything in D
+	if(!t)
+		user.unset_machine()
+		return 0
+	user.set_machine(src)
+
+	var/obj/machinery/camera/C = D[t]
+
+	if(t == "Cancel")
+		user.unset_machine()
+		return 0
+
+	if(C)
+		if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
+			if(!C.can_use() && !isAI(user))
+				src.current = null
+			return 0
+		else
+			if(isAI(user))
+				var/mob/living/silicon/ai/A = user
+				A.eyeobj.setLoc(get_turf(C))
+				A.client.eye = A.eyeobj
+			else
+				src.current = C
+				use_power(50)
+
+			spawn(5)
+				attack_hand(user)
+	return
 
 
 
