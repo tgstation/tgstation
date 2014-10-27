@@ -125,6 +125,7 @@ var/midicon = null
 var/endicon = null
 var/diary = null
 var/diaryofmeanpeople = null
+var/admin_diary = null
 var/href_logfile = null
 var/station_name = null
 var/game_version = "adsfasdfasdf"

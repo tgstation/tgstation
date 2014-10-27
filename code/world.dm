@@ -15,13 +15,21 @@
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
 	endicon = rotate_icon('icons/obj/lightning.dmi', "lightningend")
 	*/
-	//logs
+
+	// logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
+
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
-	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+	admin_diary = file("data/logs/[date_string] admin only.log")
+
+	var/log_start = "---------------------\n\[[time_stamp()]\]WORLD: starting up..."
+
+	diary << log_start
+	diaryofmeanpeople << log_start
+	admin_diary << log_start
+
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	if(byond_version < RECOMMENDED_VERSION)
