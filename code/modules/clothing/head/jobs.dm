@@ -66,7 +66,7 @@
 	name = "head of security cap"
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
-	armor = list(melee = 80, bullet = 30, laser = 50, energy = 25, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 65, bullet = 30, laser = 50, energy = 25, bomb = 25, bio = 0, rad = 0)
 	flags = 0
 	flags_inv = HIDEEARS
 	strip_delay = 80
