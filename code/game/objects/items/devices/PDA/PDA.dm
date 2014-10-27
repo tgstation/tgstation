@@ -44,6 +44,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
+	var/datum/chatroom/chat_channel = "" //name of our current NTRC channel, without the #
+	var/datum/event/ntrc_event //our ntrc event trigger
+	var/nick = "" //our NTRC nick
+	var/list/ntrclog = list() //NTRC message log
+
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-medical"
@@ -283,7 +288,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
-				//dat += "<li><a href='byond://?src=\red[src];choice=chatroom'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
 
 				if (cartridge)
 					if (cartridge.access_clown)
@@ -425,16 +430,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<br>"
 
 			if (5)
-				dat += "<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat</h4>"
+				if(!nick)
+					nick = copytext(sanitize(owner), 1, 9)
+				dat += "<h4><img src=pda_chatroom.png> Space Station 13 Nanotrasen Relay Chat Network</h4>"
 
-				dat += "<h4><img src=pda_menu.png> Detected Channels</h4>: <li>"
-				for(var/datum/chatroom/C in chatrooms)
-					dat += "<a href='byond://?src=\ref[src];pdachannel=[C.name]'>#[html_encode(lowertext(C.name))]"
-					if(C.password != "")
-						dat += " <img src=pda_locked.png>"
-					dat += "</li>"
+				if(!chat_channel)
+					dat += "<a href='byond://?src=\ref[src];choice=Set Nick'><img src=pda_status.png>[strip_html_properly(nick)]</a>"
+					dat += "<h4><img src=pda_menu.png> Detected Channels</h4>"
+					for(var/C in chatchannels)
+						dat += "<li><a href='byond://?src=\ref[src];choice=Set Channel;C=[C]'>#[html_encode(C)]</a></li>"
 
+				else
 
+					dat += "<a href='byond://?src=\ref[src];choice=Set Nick'>[strip_html_properly(nick)]</a> | "
+					dat += "<a href='byond://?src=\ref[src];choice=Set Channel'>#[strip_html_properly(chat_channel)]</a> | "
+					dat += "<a href='byond://?src=\ref[src];choice=NTRC Message'>Write message</a><br>"
+					dat += ntrclog[chat_channel]
 
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
@@ -502,8 +513,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				mode = 3
 			if("4")//Redirects to hub
 				mode = 0
-			if("chatroom") // chatroom hub
-				mode = 5
 
 
 //MAIN FUNCTIONS===================================
@@ -605,6 +614,40 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else
 					U << browse(null, "window=pda")
 					return
+
+
+//CHATROOM FUNCTIONS====================================
+
+			if("Set Nick")
+				var/t = input(U, "Please enter nickname", name, null) as text
+				nick = copytext(sanitize(t), 1, 9)
+
+			if("Set Channel")
+				var/t = href_list["C"]
+				if(!t)
+					if(chat_channel)
+						var/datum/chatroom/C = chatchannels[chat_channel]
+						C.events.clearEvent("msg_chat", ntrc_event)
+					chat_channel = ""
+				else
+					chat_channel = t
+					var/datum/chatroom/C = chatchannels[chat_channel]
+					var/ret = C.parse_msg(src,nick,"/join")
+					if(findtextEx(ret,"ERR_",1,5))
+						ntrclog[chat_channel] = "<font color=\"red\">[ret]</font><br>" + ntrclog[chat_channel]
+					else
+						ntrc_event = ret
+
+			if("NTRC Message")
+				var/t = input(U, "Please enter message", name, null) as text
+				t = strip_html_properly(t)
+				var/datum/chatroom/C = chatchannels[chat_channel]
+				if(C)
+					var/ret = C.parse_msg(src,nick,t)
+					if(findtextEx(ret,"ERR_",1,5))
+						ntrclog[chat_channel] = "<font color=\"red\">[ret]</font><br>" + ntrclog[chat_channel]
+					else if(ret == 0)
+						ntrclog[chat_channel] = "<font color=\"red\">Failure</font><br>" + ntrclog[chat_channel]
 
 
 //SYNDICATE FUNCTIONS===================================
@@ -772,7 +815,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.overlays += image('icons/obj/pda.dmi', "pda-r")
 	else
 		U << "<span class='notice'>ERROR: Server isn't responding.</span>"
-
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -1075,6 +1117,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	emped += 1
 	spawn(200 * severity)
 		emped -= 1
+
+//ntrc handler proc
+/obj/item/device/pda/proc/msg_chat(channel as text, sender as text, message as text)
+	var/msg = "<b>[strip_html_properly(sender)]</b>| [strip_html_properly(message)]<br>"
+	if(!channel)
+		for(var/C in ntrclog)
+			ntrclog[C] = msg + ntrclog[C]
+	else
+		ntrclog[channel] = msg + ntrclog[channel]
 
 /proc/get_viewable_pdas()
 	. = list()
