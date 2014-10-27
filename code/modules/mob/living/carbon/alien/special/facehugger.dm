@@ -13,7 +13,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	desc = "It has some sort of a tube at the end of its tail."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
-	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
 	throw_range = 5

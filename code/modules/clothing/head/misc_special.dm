@@ -16,7 +16,6 @@
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
-	item_state = "welding"
 	m_amt = 1750
 	g_amt = 400
 //	var/up = 0
@@ -89,17 +88,14 @@
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
-	item_state = "ushankadown"
 	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"
-		src.item_state = "ushankaup"
 		user << "You raise the ear flaps on the ushanka."
 	else
 		src.icon_state = "ushankadown"
-		src.item_state = "ushankadown"
 		user << "You lower the ear flaps on the ushanka."
 
 /*
@@ -109,7 +105,6 @@
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat0_pumpkin"
-	item_state = "hardhat0_pumpkin"
 	item_color = "pumpkin"
 	flags = HEADCOVERSEYES | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -140,7 +135,6 @@
 	name = "novelty reindeer hat"
 	desc = "Some fake antlers and a very fake red nose."
 	icon_state = "hardhat0_reindeer"
-	item_state = "hardhat0_reindeer"
 	item_color = "reindeer"
 	flags_inv = 0
 	action_button_name = "Toggle Nose Light"

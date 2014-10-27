@@ -2,7 +2,6 @@
 	desc = "A pair of brown shoes. They seem to have extra grip."
 	name = "brown shoes"
 	icon_state = "brown"
-	item_state = "brown"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
@@ -16,7 +15,6 @@
 	name = "\improper SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "jackboots"
-	item_state = "jackboots"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
 	strip_delay = 70
@@ -79,7 +77,6 @@
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
-	item_state = "jackboots"
 	item_color = "hosred"
 	strip_delay = 50
 	put_on_delay = 50
@@ -88,7 +85,6 @@
 	name = "boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."
 	icon_state = "cult"
-	item_state = "cult"
 	item_color = "cult"
 
 	cold_protection = FEET
@@ -111,6 +107,5 @@
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
 	icon_state = "roman"
-	item_state = "roman"
 	strip_delay = 100
 	put_on_delay = 100

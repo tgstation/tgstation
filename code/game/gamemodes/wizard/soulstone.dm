@@ -2,6 +2,7 @@
 	name = "Soul Stone Shard"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
 	w_class = 1.0

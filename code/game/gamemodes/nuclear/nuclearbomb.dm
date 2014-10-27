@@ -223,6 +223,7 @@ var/bomb_set
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	item_state = "card-id"
+	item_state_icon = 'icons/obj/card.dmi'
 	w_class = 1.0
 
 /obj/item/weapon/disk/nuclear/New()

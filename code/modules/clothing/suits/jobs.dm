@@ -7,7 +7,6 @@
 	name = "apron"
 	desc = "A basic blue apron."
 	icon_state = "apron"
-	item_state = "apron"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/minihoe,/obj/item/weapon/reagent_containers/spray/pestspray,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
@@ -27,7 +26,6 @@
 	name = "chaplain hoodie"
 	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"
-	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
 
@@ -36,7 +34,6 @@
 	name = "nun robe"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun"
-	item_state = "nun"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/emergency_oxygen)
@@ -46,7 +43,6 @@
 	name = "chef's apron"
 	desc = "An apron used by a high class chef."
 	icon_state = "chef"
-	item_state = "chef"
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -57,7 +53,6 @@
 	name = "A classic chef's apron."
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
-	item_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
 
@@ -78,14 +73,12 @@
 	name = "noir trenchcoat"
 	desc = "A hard-boiled private investigator's grey trenchcoat."
 	icon_state = "greydet"
-	item_state = "greydet"
 
 //Engineering
 /obj/item/clothing/suit/hazardvest
 	name = "hazard vest"
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
-	item_state = "hazard"
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/t_scanner,)
 
@@ -94,7 +87,6 @@
 	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue_open"
-	item_state = "suitjacket_blue_open"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 
@@ -102,7 +94,6 @@
 	name = "purple suit jacket"
 	desc = "A foppish dress jacket."
 	icon_state = "suitjacket_purp"
-	item_state = "suitjacket_purp"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 
@@ -127,21 +118,18 @@
 	name = "security officer's jacket"
 	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
 	icon_state = "officerbluejacket"
-	item_state = "officerbluejacket"
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/security/warden
 	name = "warden's jacket"
 	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
 	icon_state = "wardenbluejacket"
-	item_state = "wardenbluejacket"
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/security/hos
 	name = "head of security's jacket"
 	desc = "This piece of clothing was specifically designed for asserting superior authority."
 	icon_state = "hosbluejacket"
-	item_state = "hosbluejacket"
 	body_parts_covered = CHEST|ARMS
 
 

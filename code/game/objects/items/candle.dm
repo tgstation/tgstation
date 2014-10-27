@@ -4,7 +4,6 @@
 	desc = "a candle"
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
-	item_state = "candle1"
 	w_class = 1
 
 	var/wax = 200

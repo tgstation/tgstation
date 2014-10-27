@@ -26,6 +26,7 @@
 	var/function = "storage"
 	var/data = "null"
 	var/special = null
+	item_state_icon = 'icons/obj/card.dmi'
 	item_state = "card-id"
 
 /obj/item/weapon/card/data/verb/label(t as text)
@@ -57,6 +58,7 @@
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
+	item_state_icon = 'icons/obj/card.dmi'
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 
@@ -64,6 +66,7 @@
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
+	item_state_icon = 'icons/obj/card.dmi'
 	item_state = "card-id"
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
@@ -122,13 +125,13 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/silver
 	desc = "A silver card which shows honour and dedication."
-	icon_state = "silver"
-	item_state = "silver_id"
+	icon_state = "silver-id"
+	item_state_icon = null
 
 /obj/item/weapon/card/id/gold
 	desc = "A golden card which shows power and might."
-	icon_state = "gold"
-	item_state = "gold_id"
+	icon_state = "gold-id"
+	item_state_icon = null
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
@@ -175,8 +178,8 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
-	icon_state = "gold"
-	item_state = "gold_id"
+	icon_state = "gold-id"
+	item_state_icon = null
 	registered_name = "Captain"
 	assignment = "Captain"
 	New()
@@ -197,8 +200,8 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
-	icon_state = "orange"
-	item_state = "orange-id"
+	icon_state = "orange-id"
+	item_state_icon = null
 	assignment = "Prisoner"
 	registered_name = "Scum"
 	var/goal = 0 //How far from freedom?

@@ -2,6 +2,7 @@
 	name = "implanter"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implanter0"
+	item_state_icon = 'icons/obj/syringe.dmi'
 	item_state = "syringe_0"
 	throw_speed = 3
 	throw_range = 5

@@ -75,6 +75,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	singular_name = "plasteel sheet"
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
+	item_state_icon = 'icons/obj/items.dmi'
 	item_state = "sheet-metal"
 	m_amt = 6000
 	throwforce = 10.0

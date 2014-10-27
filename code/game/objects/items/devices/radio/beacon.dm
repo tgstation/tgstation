@@ -2,7 +2,8 @@
 	name = "tracking beacon"
 	desc = "A beacon used by a teleporter."
 	icon_state = "beacon"
-	item_state = "signaler"
+	item_state_icon = 'icons/obj/assemblies.dmi'
+	item_state = "signaller"
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
 

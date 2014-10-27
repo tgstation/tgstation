@@ -4,7 +4,6 @@
 	name = "hypospray"
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "hypo"
 	icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
@@ -64,7 +63,6 @@
 	name = "inaprovaline medipen" //lol epipen is copyrighted
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
 	icon_state = "medipen"
-	item_state = "medipen"
 	amount_per_transfer_from_this = 10
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits

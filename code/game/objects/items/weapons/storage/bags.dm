@@ -30,6 +30,7 @@
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag0"
+	item_state_icon = 'icons/obj/janitor.dmi'
 	item_state = "trashbag"
 
 	w_class = 4

@@ -7,6 +7,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
+	item_state_icon = 'icons/obj/drinks.dmi'
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
@@ -121,6 +122,7 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
+	item_state_icon = 'icons/obj/drinks.dmi'
 	item_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")

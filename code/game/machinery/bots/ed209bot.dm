@@ -73,7 +73,6 @@
 	desc = "Some sort of bizarre assembly."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed209_frame"
-	item_state = "ed209_frame"
 	var/build_step = 0
 	var/created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron I guess
 	var/lasercolor = ""
@@ -871,10 +870,8 @@ Auto Patrol: []"},
 				user << "<span class='notice'>You add the robot leg to [src].</span>"
 				name = "legs/frame assembly"
 				if(build_step == 1)
-					item_state = "ed209_leg"
 					icon_state = "ed209_leg"
 				else
-					item_state = "ed209_legs"
 					icon_state = "ed209_legs"
 
 		if(2)
@@ -888,7 +885,6 @@ Auto Patrol: []"},
 				build_step++
 				user << "<span class='notice'>You add the armor to [src].</span>"
 				name = "vest/legs/frame assembly"
-				item_state = "[lasercolor]ed209_shell"
 				icon_state = "[lasercolor]ed209_shell"
 
 		if(3)
@@ -917,7 +913,6 @@ Auto Patrol: []"},
 			build_step++
 			user << "<span class='notice'>You add the helmet to [src].</span>"
 			name = "covered and shielded frame assembly"
-			item_state = "[lasercolor]ed209_hat"
 			icon_state = "[lasercolor]ed209_hat"
 
 		if(5)
@@ -927,7 +922,6 @@ Auto Patrol: []"},
 				build_step++
 				user << "<span class='notice'>You add the prox sensor to [src].</span>"
 				name = "covered, shielded and sensored frame assembly"
-				item_state = "[lasercolor]ed209_prox"
 				icon_state = "[lasercolor]ed209_prox"
 
 		if(6)
@@ -962,7 +956,6 @@ Auto Patrol: []"},
 					return
 			build_step++
 			user << "<span class='notice'>You add [W] to [src].</span>"
-			src.item_state = "[lasercolor]ed209_taser"
 			src.icon_state = "[lasercolor]ed209_taser"
 			user.drop_item()
 			qdel(W)

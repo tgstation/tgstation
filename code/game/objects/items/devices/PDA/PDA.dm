@@ -9,6 +9,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	w_class = 1.0
 	slot_flags = SLOT_ID | SLOT_BELT

@@ -12,7 +12,8 @@
 	desc = "PRESENTS!!!! eek!"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "giftcrate3"
-	item_state = "gift1"
+	item_state_icon = 'icons/obj/storage.dmi'
+	item_state = "gift"
 
 
 /obj/item/weapon/a_gift/New()

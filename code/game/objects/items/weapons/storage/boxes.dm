@@ -23,6 +23,7 @@
 	name = "box"
 	desc = "It's just an ordinary box."
 	icon_state = "box"
+	item_state_icon = 'icons/obj/syringe.dmi'
 	item_state = "syringe_kit"
 	var/foldable = /obj/item/stack/sheet/cardboard
 
@@ -504,6 +505,7 @@
 	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
+	item_state_icon = null
 	item_state = "zippo"
 	storage_slots = 10
 	w_class = 1
@@ -524,6 +526,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "light"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
+	item_state_icon = 'icons/obj/syringe.dmi'
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots=21

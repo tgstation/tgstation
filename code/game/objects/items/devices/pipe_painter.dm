@@ -5,7 +5,7 @@
 	name = "pipe painter"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler1"
-	item_state = "flight"
+	item_state = "flight" //I can't find this sprite so I'll just leave this here I guess
 	var/list/modes = list(
 		"grey"		= rgb(255,255,255),
 		"red"			= rgb(255,0,0),

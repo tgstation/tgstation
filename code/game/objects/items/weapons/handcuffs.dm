@@ -53,6 +53,7 @@
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_red"
+	item_state_icon = 'icons/obj/power.dmi'
 	item_state = "coil_red"
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
@@ -65,6 +66,7 @@
 
 /obj/item/weapon/restraints/handcuffs/cable/blue
 	icon_state = "cuff_blue"
+	item_state_icon = 'icons/obj/power.dmi'
 	item_state = "coil_blue"
 
 /obj/item/weapon/restraints/handcuffs/cable/green
@@ -112,7 +114,6 @@
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	icon_state = "cuff_white"
-	item_state = "coil_white"
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
 

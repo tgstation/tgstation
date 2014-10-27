@@ -4,6 +4,7 @@
 	name = "lockbox"
 	desc = "A locked box."
 	icon_state = "lockbox+l"
+	item_state_icon = 'icons/obj/storage.dmi'
 	item_state = "syringe_kit"
 	w_class = 4
 	max_w_class = 3
@@ -96,6 +97,7 @@
 	name = "medal box"
 	desc = "A locked box used to store medals of honor."
 	icon_state = "medalbox+l"
+	item_state_icon = 'icons/obj/syringe.dmi'
 	item_state = "syringe_kit"
 	w_class = 3
 	max_w_class = 2

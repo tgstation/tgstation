@@ -64,10 +64,9 @@
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/item/weapon/beach_ball
-	icon = 'icons/misc/beach.dmi'
-	icon_state = "ball"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "beachball"
 	name = "beach ball"
-	item_state = "beachball"
 	density = 0
 	anchored = 0
 	w_class = 1.0

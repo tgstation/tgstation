@@ -5,7 +5,6 @@
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	w_class = 3.0
-	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 
@@ -262,33 +261,28 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
 	alloweat = 1
 	icon_state = "sexyclown"
-	item_state = "sexyclown"
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
 	alloweat = 1
 	icon_state = "mime"
-	item_state = "mime"
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
 	alloweat = 1
 	icon_state = "monkeymask"
-	item_state = "monkeymask"
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
 	alloweat = 1
 	icon_state = "sexymime"
-	item_state = "sexymime"
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
 	icon_state = "death_commando_mask"
-	item_state = "death_commando_mask"
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"

@@ -2,7 +2,6 @@
 	name = "remote signaling device"
 	desc = "Used to remotely activate devices."
 	icon_state = "signaller"
-	item_state = "signaler"
 	m_amt = 400
 	g_amt = 120
 	origin_tech = "magnets=1"
@@ -175,6 +174,7 @@ Code:
 	name = "anomaly core"
 	desc = "The neutralized core of an anomaly. It'd probably be valuable for research."
 	icon_state = "anomaly core"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 
 /obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)

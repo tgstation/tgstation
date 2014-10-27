@@ -4,7 +4,6 @@
 	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "waterbackpack"
-	item_state = "waterbackpack"
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	slowdown = 1
@@ -74,7 +73,6 @@
 	desc = "A mister nozzle attached to a water tank."
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "mister"
-	item_state = "mister"
 	w_class = 4.0
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
@@ -111,7 +109,6 @@
 	name = "backpack water tank"
 	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
 	icon_state = "waterbackpackjani"
-	item_state = "waterbackpackjani"
 
 /obj/item/weapon/watertank/janitor/New()
 	..()
@@ -123,7 +120,6 @@
 	desc = "A janitorial spray nozzle attached to a watertank, designed to clean up large messes."
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "misterjani"
-	item_state = "misterjani"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null
 
@@ -139,7 +135,6 @@
 	name = "backpack water tank"
 	desc = "A backpack watertank with fire extinguisher nozzle, intended to fight fires. Shouldn't toxins have one of these?"
 	icon_state = "waterbackpackatmos"
-	item_state = "waterbackpackatmos"
 	volume = 100
 
 /obj/item/weapon/watertank/atmos/make_noz()
@@ -150,7 +145,7 @@
 	desc = "A fire extinguisher nozzle attached to a water tank."
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "misteratmos"
-	item_state = "misteratmos"
+	item_state_icon = null
 	safety = 0
 	var/obj/item/weapon/watertank/tank
 

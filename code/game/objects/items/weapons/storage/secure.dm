@@ -148,8 +148,7 @@
 /obj/item/weapon/storage/secure/briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "secure"
-	item_state = "sec-case"
+	icon_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
 	force = 8.0
 	hitsound = "swing_hit"

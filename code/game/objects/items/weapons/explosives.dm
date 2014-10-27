@@ -6,6 +6,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "plastic-explosive0"
+	item_state_icon = 'icons/obj/assemblies.dmi'
 	item_state = "plasticx"
 	flags = NOBLUDGEON
 	w_class = 2.0

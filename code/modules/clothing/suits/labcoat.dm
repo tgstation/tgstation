@@ -2,7 +2,6 @@
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills."
 	icon_state = "labcoat"
-	item_state = "labcoat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/paper,/obj/item/weapon/melee/telebaton)
@@ -26,13 +25,11 @@
 	name = "chief medical officer's labcoat"
 	desc = "Bluer than the standard model."
 	icon_state = "labcoat_cmo"
-	item_state = "labcoat_cmo"
 
 /obj/item/clothing/suit/labcoat/mad
 	name = "\improper The Mad's labcoat"
 	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."
 	icon_state = "labgreen"
-	item_state = "labgreen"
 
 /obj/item/clothing/suit/labcoat/genetics
 	name = "geneticist labcoat"

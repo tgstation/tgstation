@@ -1,7 +1,9 @@
 /obj/item/device/radio/headset
 	name = "radio headset"
 	desc = "An updated, modular intercom that fits over the head. Takes encryption keys"
+	icon = 'icons/obj/clothing/ears.dmi'
 	icon_state = "headset"
+	item_state_icon = 'icons/obj/clothing/ears.dmi'
 	item_state = "headset"
 	g_amt = 0
 	m_amt = 75
@@ -42,7 +44,6 @@
 /obj/item/device/radio/headset/syndicate
 	origin_tech = "syndicate=3"
 	icon_state = "syndie_headset"
-	item_state = "syndie_headset"
 
 /obj/item/device/radio/headset/syndicate/New()
 	..()
@@ -69,7 +70,6 @@
 /obj/item/device/radio/headset/headset_sec/alt
 	name = "security bowman headset"
 	icon_state = "sec_headset_alt"
-	item_state = "sec_headset_alt"
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -124,7 +124,6 @@
 	name = "\proper the captain's bowman headset"
 	desc = "The headset of the boss. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "com_headset_alt"
-	item_state = "com_headset_alt"
 
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -143,7 +142,6 @@
 /obj/item/device/radio/headset/heads/hos/alt
 	name = "\proper the head of security's bowman headset"
 	icon_state = "com_headset_alt"
-	item_state = "com_headset_alt"
 
 /obj/item/device/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"

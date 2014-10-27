@@ -52,7 +52,6 @@
 	var/state = null
 	var/det_time = 100.0
 	w_class = 2.0
-	item_state = "flashbang"
 	throw_speed = 3
 	throw_range = 7
 	flags = FPRINT | TABLEPASS | CONDUCT

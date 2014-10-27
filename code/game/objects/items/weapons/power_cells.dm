@@ -3,7 +3,6 @@
 	desc = "A rechargable electrochemical power cell."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
-	item_state = "cell"
 	origin_tech = "powerstorage=1"
 	force = 5.0
 	throwforce = 5.0

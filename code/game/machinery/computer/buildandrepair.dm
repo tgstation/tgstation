@@ -17,6 +17,7 @@
 	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	origin_tech = "programming=2"
 	var/id = null

@@ -75,6 +75,7 @@
 	desc = "Some sort of bizarre assembly made from a proximity sensor, helmet, and signaler."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "helmet_signaler"
+	item_state_icon = 'icons/obj/clothing/hats.dmi'
 	item_state = "helmet"
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess

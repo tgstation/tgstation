@@ -264,11 +264,12 @@
 /obj/item/weapon/shard
 	name = "shard"
 	desc = "A nasty looking shard of glass."
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "large"
 	w_class = 1.0
 	force = 5.0
 	throwforce = 10.0
+	item_state_icon = 'icons/obj/items.dmi'
 	item_state = "shard-glass"
 	g_amt = MINERAL_MATERIAL_AMOUNT
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")

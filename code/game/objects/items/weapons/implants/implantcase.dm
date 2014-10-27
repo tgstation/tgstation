@@ -1,7 +1,9 @@
 /obj/item/weapon/implantcase
 	name = "glass case"
 	desc = "A case containing an implant."
+	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-0"
+	item_state_icon = 'icons/obj/items.dmi'
 	item_state = "implantcase"
 	throw_speed = 2
 	throw_range = 5

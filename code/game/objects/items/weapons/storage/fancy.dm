@@ -143,7 +143,6 @@
 	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
-	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 0
 	slot_flags = SLOT_BELT
@@ -188,7 +187,6 @@
 	name = "\improper DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "Dpacket"
-	item_state = "Dpacket"
 
 
 /obj/item/weapon/storage/fancy/rollingpapers

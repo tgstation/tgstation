@@ -1,6 +1,7 @@
 /obj/item/device/onetankbomb
 	name = "bomb"
 	icon = 'icons/obj/tank.dmi'
+	item_state_icon = 'icons/obj/assemblies.dmi'
 	item_state = "assembly"
 	throwforce = 5
 	w_class = 3.0

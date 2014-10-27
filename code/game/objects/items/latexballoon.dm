@@ -2,7 +2,8 @@
 	name = "latex glove"
 	desc = "" //todo
 	icon_state = "latexballon"
-	item_state = "lgloves"
+	item_state_icon = 'icons/obj/clothing/gloves.dmi'
+	item_state = "latex"
 	force = 0
 	throwforce = 0
 	w_class = 1.0
@@ -16,6 +17,7 @@
 		return
 	src.air_contents = tank.remove_air_volume(3)
 	icon_state = "latexballon_blow"
+	item_state_icon = 'icons/obj/items.dmi'
 	item_state = "latexballon"
 
 /obj/item/latexballon/proc/burst()
@@ -23,7 +25,8 @@
 		return
 	playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
 	icon_state = "latexballon_bursted"
-	item_state = "lgloves"
+	item_state_icon = 'icons/obj/clothing/gloves.dmi'
+	item_state = "latex"
 	loc.assume_air(air_contents)
 
 /obj/item/latexballon/ex_act(severity)

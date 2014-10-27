@@ -63,7 +63,6 @@
 	name = "bomb suit"
 	desc = "A suit designed for safety when handling explosives."
 	icon_state = "bombsuit"
-	item_state = "bombsuit"
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -83,12 +82,10 @@
 
 /obj/item/clothing/head/bomb_hood/security
 	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
 
 
 /obj/item/clothing/suit/bomb_suit/security
 	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
 
 /*

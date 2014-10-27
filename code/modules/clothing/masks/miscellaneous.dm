@@ -2,6 +2,7 @@
 	name = "muzzle"
 	desc = "To stop that awful noise."
 	icon_state = "muzzle"
+	item_state_icon = 'icons/obj/clothing/glasses.dmi'
 	item_state = "blindfold"
 	flags = MASKCOVERSMOUTH
 	w_class = 2
@@ -20,7 +21,6 @@
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
-	item_state = "sterile"
 	w_class = 1
 	flags = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
@@ -43,7 +43,6 @@
 	name = "pig mask"
 	desc = "A rubber pig mask."
 	icon_state = "pig"
-	item_state = "pig"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
@@ -52,7 +51,6 @@
 	name = "horse head mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
 	icon_state = "horsehead"
-	item_state = "horsehead"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2

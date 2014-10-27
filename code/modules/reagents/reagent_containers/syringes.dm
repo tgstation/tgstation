@@ -8,8 +8,9 @@
 	name = "syringe"
 	desc = "A syringe that can hold up to 15 units."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "syringe_0"
 	icon_state = "0"
+	item_state_icon = 'icons/obj/syringe.dmi'
+	item_state = "syringe_0"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null	//list(5, 10, 15)
 	volume = 15

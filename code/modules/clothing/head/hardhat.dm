@@ -2,7 +2,6 @@
 	name = "hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat0_yellow"
-	item_state = "hardhat0_yellow"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	item_color = "yellow" //Determines used sprites: hardhat[on]_[item_color] and hardhat[on]_[item_color]2 (lying down sprite)
@@ -16,7 +15,6 @@
 			return
 		on = !on
 		icon_state = "hardhat[on]_[item_color]"
-		item_state = "hardhat[on]_[item_color]"
 		user.update_inv_head()	//so our mob-overlays update
 
 		if(on)	user.AddLuminosity(brightness_on)
@@ -37,12 +35,10 @@
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"
-	item_state = "hardhat0_orange"
 	item_color = "orange"
 
 /obj/item/clothing/head/hardhat/red
 	icon_state = "hardhat0_red"
-	item_state = "hardhat0_red"
 	item_color = "red"
 	name = "firefighter helmet"
 	flags = STOPSPRESSUREDMAGE
@@ -53,7 +49,6 @@
 
 /obj/item/clothing/head/hardhat/white
 	icon_state = "hardhat0_white"
-	item_state = "hardhat0_white"
 	item_color = "white"
 	flags = STOPSPRESSUREDMAGE
 	heat_protection = HEAD
@@ -63,6 +58,5 @@
 
 /obj/item/clothing/head/hardhat/dblue
 	icon_state = "hardhat0_dblue"
-	item_state = "hardhat0_dblue"
 	item_color = "dblue"
 

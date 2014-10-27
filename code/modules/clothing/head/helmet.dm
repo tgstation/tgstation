@@ -3,7 +3,6 @@
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon_state = "helmet"
 	flags = HEADCOVERSEYES
-	item_state = "helmet"
 	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
 	cold_protection = HEAD
@@ -26,7 +25,6 @@
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust, space-worthy helmet with a nanotrasen logo on the top."
 	icon_state = "swat"
-	item_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -44,7 +42,6 @@
 	name = "\improper Thunderdome helmet"
 	desc = "<i>'Let the battle commence!'</i>"
 	icon_state = "thunderdome"
-	item_state = "thunderdome"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -57,21 +54,18 @@
 	desc = "An ancient helmet made of bronze and leather."
 	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
 	icon_state = "roman"
-	item_state = "roman"
 	strip_delay = 100
 
 /obj/item/clothing/head/helmet/roman/legionaire
 	name = "roman legionaire helmet"
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
-	item_state = "roman_c"
 
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
 	flags = HEADCOVERSEYES|BLOCKHAIR
-	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 obj/item/clothing/head/helmet/redtaghelm
@@ -79,7 +73,6 @@ obj/item/clothing/head/helmet/redtaghelm
 	desc = "They have chosen their own end."
 	icon_state = "redtaghelm"
 	flags = HEADCOVERSEYES
-	item_state = "redtaghelm"
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES
@@ -89,7 +82,6 @@ obj/item/clothing/head/helmet/bluetaghelm
 	desc = "They'll need more men."
 	icon_state = "bluetaghelm"
 	flags = HEADCOVERSEYES
-	item_state = "bluetaghelm"
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES

@@ -375,7 +375,7 @@
 /obj/item/weapon/mining_voucher
 	name = "mining voucher"
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
 	w_class = 1
 
@@ -407,8 +407,9 @@
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
 	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	throwforce = 0
 	w_class = 2.0
@@ -467,9 +468,8 @@
 
 /obj/item/weapon/resonator
 	name = "resonator"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
-	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vaccuum."
 	w_class = 3
 	force = 10
@@ -686,6 +686,7 @@
 	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incredibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "lazarus_hypo"
+	item_state_icon = 'icons/obj/syringe.dmi'
 	item_state = "hypo"
 	throwforce = 0
 	w_class = 2.0
@@ -741,6 +742,7 @@
 	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
 	name = "mining scanner"
 	icon_state = "mining1"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "analyzer"
 	w_class = 2.0
 	flags = CONDUCT
@@ -828,7 +830,6 @@
 /obj/item/weapon/tank/jetpack/carbondioxide/mining
 	name = "mining jetpack"
 	icon_state = "jetpack-mining"
-	item_state = "jetpack-mining"
 	desc = "A tank of compressed carbon dioxide for miners to use as propulsion in local space. The compact size allows for easy storage at the cost of capacity."
 	volume = 40
 	throw_range = 7

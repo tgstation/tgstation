@@ -14,7 +14,6 @@
 	desc = "Maybe you'll engineer your own half-man, half-pig creature some day. Its fabric provides minor protection from biological contaminants."
 	name = "research director's suit"
 	icon_state = "rdwhimsy"
-	item_state = "rdwhimsy"
 	item_color = "rdwhimsy"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)
 	can_adjust = 1
@@ -23,6 +22,7 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has markings that denote the wearer as a scientist."
 	name = "scientist's jumpsuit"
 	icon_state = "toxins"
+	item_state_icon = 'icons/obj/clothing/uniforms.dmi'
 	item_state = "w_suit"
 	item_color = "toxinswhite"
 	permeability_coefficient = 0.50
@@ -33,6 +33,7 @@
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
 	name = "chemist's jumpsuit"
 	icon_state = "chemistry"
+	item_state_icon = 'icons/obj/clothing/uniforms.dmi'
 	item_state = "w_suit"
 	item_color = "chemistrywhite"
 	permeability_coefficient = 0.50
@@ -54,6 +55,7 @@
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
 	name = "geneticist's jumpsuit"
 	icon_state = "genetics"
+	item_state_icon = 'icons/obj/clothing/uniforms.dmi'
 	item_state = "w_suit"
 	item_color = "geneticswhite"
 	permeability_coefficient = 0.50
@@ -63,6 +65,7 @@
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
 	name = "virologist's jumpsuit"
 	icon_state = "virology"
+	item_state_icon = 'icons/obj/clothing/uniforms.dmi'
 	item_state = "w_suit"
 	item_color = "virologywhite"
 	permeability_coefficient = 0.50
@@ -118,6 +121,7 @@
 	desc = "It's made of a special fiber which provides minor protection against biohazards."
 	name = "geneticist's jumpsuit"
 	icon_state = "genetics_new"
+	item_state_icon = 'icons/obj/clothing/uniforms.dmi'
 	item_state = "w_suit"
 	item_color = "genetics_new"
 	permeability_coefficient = 0.50

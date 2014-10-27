@@ -37,7 +37,6 @@
 	name = "\improper C-20r SMG"
 	desc = "A lightweight, compact bullpup SMG. Uses .45 rounds in medium-capacity magazines and has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
-	item_state = "c20r"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/c20m
@@ -118,7 +117,7 @@
 	name = "\improper Bulldog shotgun"
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
 	icon_state = "bulldog"
-	item_state = "bulldog"
+	item_state_icon = null
 	w_class = 3.0
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
@@ -150,7 +149,6 @@
 	name = "tommy gun"
 	desc = "A genuine Chicago Typewriter."
 	icon_state = "tommygun"
-	item_state = "tommygun"
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45

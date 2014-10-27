@@ -849,7 +849,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "adamantine skin"
 	desc = "a golem's skin"
 	icon_state = "golem"
-	item_state = "golem"
 	item_color = "golem"
 	flags = ABSTRACT | NODROP
 	has_sensor = 0
@@ -858,7 +857,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "adamantine shell"
 	desc = "a golem's thick outter shell"
 	icon_state = "golem"
-	item_state = "golem"
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
@@ -870,7 +868,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "golem's feet"
 	desc = "sturdy adamantine feet"
 	icon_state = "golem"
-	item_state = null
 	flags = NOSLIP | ABSTRACT | NODROP
 
 
@@ -878,7 +875,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "golem's face"
 	desc = "the imposing face of an adamantine golem"
 	icon_state = "golem"
-	item_state = "golem"
+	item_state_icon = 'icons/obj/clothing/masks.dmi'
 	siemens_coefficient = 0
 	unacidable = 1
 	flags = ABSTRACT | NODROP
@@ -888,13 +885,13 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "golem's hands"
 	desc = "strong adamantine hands"
 	icon_state = "golem"
-	item_state = null
 	siemens_coefficient = 0
 	flags = ABSTRACT | NODROP
 
 
 /obj/item/clothing/head/space/golem
 	icon_state = "golem"
+	item_state_icon = 'icons/obj/clothing/hats.dmi'
 	item_state = "dermal"
 	item_color = "dermal"
 	name = "golem's head"

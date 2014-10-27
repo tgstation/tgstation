@@ -3,6 +3,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
 	w_class = 100.0
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	flags = CONDUCT
 

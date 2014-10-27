@@ -74,11 +74,8 @@
 
 /mob/living/carbon/alien/humanoid/update_inv_r_hand(update_icons = 1)
 	if(r_hand)
-		var/t_state = r_hand.item_state
-		if(!t_state)
-			t_state = r_hand.icon_state
 		r_hand.screen_loc = ui_rhand
-		overlays_standing[X_R_HAND_LAYER]	= image("icon" = 'icons/mob/items_righthand.dmi', "icon_state" = t_state)
+		overlays_standing[X_R_HAND_LAYER]	= update_inv_slot_image(r_hand, "_r", null)
 	else
 		overlays_standing[X_R_HAND_LAYER]	= null
 	if(update_icons)
@@ -86,11 +83,8 @@
 
 /mob/living/carbon/alien/humanoid/update_inv_l_hand(update_icons = 1)
 	if(l_hand)
-		var/t_state = l_hand.item_state
-		if(!t_state)
-			t_state = l_hand.icon_state
 		l_hand.screen_loc = ui_lhand
-		overlays_standing[X_L_HAND_LAYER]	= image("icon" = 'icons/mob/items_lefthand.dmi', "icon_state" = t_state)
+		overlays_standing[X_L_HAND_LAYER]	= update_inv_slot_image(l_hand, "_l", null)
 	else
 		overlays_standing[X_L_HAND_LAYER]	= null
 	if(update_icons)

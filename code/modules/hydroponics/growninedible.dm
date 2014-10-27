@@ -252,7 +252,6 @@
 	desc = "A peel from a banana."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
-	item_state = "banana_peel"
 	w_class = 1.0
 	throwforce = 0
 	throw_speed = 3
@@ -271,7 +270,6 @@
 	desc = "A reminder of meals gone by."
 	icon = 'icons/obj/harvest.dmi'
 	icon_state = "corncob"
-	item_state = "corncob"
 	w_class = 1.0
 	throwforce = 0
 	throw_speed = 3

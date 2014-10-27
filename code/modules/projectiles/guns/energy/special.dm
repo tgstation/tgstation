@@ -2,7 +2,7 @@
 	name = "ion rifle"
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
-	item_state = null	//so the human update icon uses the icon_state instead.
+	item_state_icon = null
 	origin_tech = "combat=2;magnets=4"
 	w_class = 5
 	flags =  CONDUCT
@@ -24,7 +24,6 @@
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
 	icon_state = "flora"
-	item_state = "obj/item/gun.dmi"
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
@@ -59,6 +58,7 @@
 	name = "meteor gun"
 	desc = "For the love of god, make sure you're aiming this the right way!"
 	icon_state = "riotgun"
+	item_state_icon = 'icons/obj/gun.dmi'
 	item_state = "c20r"
 	w_class = 4
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
@@ -92,7 +92,6 @@
 	desc = "The pen is mightier than the sword."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
-	item_state = "pen"
 	w_class = 1
 
 
@@ -106,7 +105,6 @@
 	name = "proto-kinetic accelerator"
 	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
 	icon_state = "kineticgun"
-	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 	var/overheat = 0
@@ -132,6 +130,6 @@
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
-	item_state = null
+	item_state_icon = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	cell_type = "/obj/item/weapon/stock_parts/cell"

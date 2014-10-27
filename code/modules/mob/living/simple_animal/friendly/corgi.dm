@@ -462,9 +462,9 @@
 
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/corgi/puppy))
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
+			overlays += image('icons/mob/alien.dmi',"facehugger_corgipuppy")
 		else
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+			overlays += image('icons/mob/alien.dmi',"facehugger_corgi")
 
 	return
 

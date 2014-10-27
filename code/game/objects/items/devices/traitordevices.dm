@@ -24,6 +24,7 @@ effective or pretty fucking useless.
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	origin_tech = "magnets=3;combat=3;syndicate=3"
 
@@ -72,6 +73,7 @@ effective or pretty fucking useless.
 /obj/item/device/rad_laser
 	name = "health analyzer"
 	icon_state = "health"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject. A strange microlaser is hooked on to the scanning end."
 	flags = CONDUCT

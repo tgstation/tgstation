@@ -29,5 +29,4 @@
 	name = "boots"
 	desc = "Nanotrasen-issue hard-toe safety boots."
 	icon_state = "secshoes"
-	item_state = "secshoes"
 	color = "hosred"

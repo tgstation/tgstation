@@ -32,6 +32,7 @@ Buildable meters
 	force = 7
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
+	item_state_icon = 'icons/obj/pipe-item.dmi'
 	item_state = "buildpipe"
 	w_class = 3
 	level = 2
@@ -594,6 +595,7 @@ Buildable meters
 	desc = "A meter that can be laid on pipes"
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
+	item_state_icon = 'icons/obj/pipe-item.dmi'
 	item_state = "buildpipe"
 	w_class = 4
 

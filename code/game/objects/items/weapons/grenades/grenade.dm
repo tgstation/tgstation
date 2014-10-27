@@ -4,6 +4,7 @@
 	w_class = 2.0
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
+	item_state_icon = 'icons/obj/grenade.dmi'
 	item_state = "flashbang"
 	throw_speed = 3
 	throw_range = 7

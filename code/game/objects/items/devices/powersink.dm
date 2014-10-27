@@ -4,6 +4,7 @@
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
 	icon_state = "powersink0"
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	w_class = 4.0
 	flags = CONDUCT

@@ -173,6 +173,7 @@
 	//If you insist on changing the order, you'll have to change every sort junction to reflect the new order. --Pete
 
 	w_class = 1
+	item_state_icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
