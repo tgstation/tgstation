@@ -1,8 +1,11 @@
 #define FAB_SCREEN_WIDTH		1040
 #define FAB_SCREEN_HEIGHT		750
 
-#define FAB_TIME_BASE			100
+#define FAB_TIME_BASE			5
 #define FAB_MAX_QUEUE			20
+
+#define FAB_MAT_BASEMOD			100
+
 
 /obj/machinery/r_n_d/fabricator
 	desc = "A fabricator. What kind, you don't know."
@@ -18,7 +21,6 @@
 	var/sync = 0
 	var/amount = 5
 	var/build_number = 8
-	var/build_delay = 0
 
 	var/part_set
 	var/obj/being_built
@@ -42,7 +44,7 @@
 /obj/machinery/r_n_d/fabricator/examine()
 	..()
 	if(being_built)
-		usr << "It's building [src.being_built]"
+		usr << "It's building \a [src.being_built]."
 	else
 		usr << "Nothing's being built."
 
@@ -107,14 +109,20 @@
 /obj/machinery/r_n_d/fabricator/proc/convert_part_set(set_name as text)
 	var/list/parts = part_sets[set_name]
 	if(istype(parts, /list))
-		var/loop_len = parts.len
-		for(var/i=1;i<=loop_len;i++)
-			var/thispart = parts[1]
-			if(thispart && ispath(thispart))
-				parts += FindDesign(thispart)
+		for(var/i=1;i<=parts.len;i++)
+			var/thispart = parts[i]
+			if(thispart && ispath(thispart) && !istype(thispart, /datum/design))
+				var/design = FindDesign(thispart)
+				if(design)
+					parts[i] = new design
+				else
+					parts.Cut(i, i++)
+					i--
 			//debug below
-			if(!istype(parts[loop_len], /datum/design))
-				parts.Cut(loop_len, loop_len++) //quick, sweep it under the rug
+			/*
+			if(!istype(parts[i], /datum/design))
+				parts.Cut(i, i++) //quick, sweep it under the rug
+			*/
 	return
 
 //creates a set with the name and the list of things you give it
@@ -177,7 +185,7 @@
 		if(copytext(M,1,2) == "$")
 			var/matID=copytext(M,2)
 			var/datum/material/material=materials[matID]
-			output += "[output ? " | " : null][get_resource_cost_w_coeff(part,matID)] [material.processed_name]"
+			output += "[output ? " | " : null][get_resource_cost_w_coeff(part,"$[matID]")] [material.processed_name]"
 	return output
 
 /obj/machinery/r_n_d/fabricator/proc/build_part(var/datum/design/part)
@@ -200,13 +208,13 @@
 	src.being_built = new part.build_path(src)
 
 	src.busy = 1
-	src.overlays += "[base_state]-ani"
+	src.overlays += "[base_state]_ani"
 	src.use_power = 2
 	src.updateUsrDialog()
-	message_admins("We're going building with [get_construction_time_w_coeff(part)]")
+	//message_admins("We're going building with [get_construction_time_w_coeff(part)]")
 	sleep(get_construction_time_w_coeff(part))
 	src.use_power = 1
-	src.overlays -= "[base_state]-ani"
+	src.overlays -= "[base_state]_ani"
 	if(being_built)
 		if(part.locked && research_flags &LOCKBOXES)
 			var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox //Make a lockbox
@@ -214,28 +222,31 @@
 			L.name += " ([being_built.name])"
 			being_built = L //Building the lockbox now, with the thing in it
 		being_built.loc = get_turf(output)
+		src.visible_message("\icon [src] \The [src] beeps: \"Succesfully completed \the [being_built.name].\"")
 		src.being_built = null
 	src.updateUsrDialog()
 	src.busy = 0
 	return 1
 
-
-/obj/machinery/r_n_d/fabricator/proc/add_part_set_to_queue(set_name)
-	var/part_set_name = part_sets
-	var/list/set_parts = part_set_name[set_name]
-	if(set_name in part_set_name)
-		for(var/i = 1; i < set_parts.len; i ++)
-			if(part_set_name["Robot"] && i>7)
+//max_length is, from the top of the list, the parts you want to queue down to
+/obj/machinery/r_n_d/fabricator/proc/add_part_set_to_queue(set_name, max_length)
+	var/list/set_parts = part_sets[set_name]
+	if(set_name in part_sets)
+		for(var/i = 1; i <= set_parts.len; i++)
+			if(max_length > 0 &&  i > max_length)
 				break
-			var/obj/P = set_parts[i]
-			var/obj/Part = P.type
-			add_to_queue("[Part]")
-	src.visible_message("\icon[src] <b>[src]</b> beeps: [set_name] parts were added to the queue\".")
+			var/datum/design/D = set_parts[i]
+			add_to_queue(D)
+	src.visible_message("\icon[src] <b>[src]</b> beeps: \"[set_name] parts were added to the queue\".")
 	return
 
-/obj/machinery/r_n_d/fabricator/proc/add_to_queue(part)
+/obj/machinery/r_n_d/fabricator/proc/add_to_queue(var/datum/design/part)
 	if(!istype(queue))
 		queue = list()
+	if(!istype(part))
+		part = FindDesign(part)
+	if(!part)
+		return
 	if(part)
 		//src.visible_message("\icon[src] <b>[src]</b> beeps: [part.name] was added to the queue\".")
 		queue[++queue.len] = part
@@ -251,9 +262,8 @@
 	if(!queue.len)
 		return
 
-	var/first_item = text2path(src.queue[1])
-	var/datum/design/part = new first_item
-	//var/obj/item/part = listgetindex(src.queue, 1)
+	var/datum/design/part = src.queue[1]
+
 	if(!part)
 		remove_from_queue(1)
 		if(src.queue.len)
@@ -268,11 +278,9 @@
 		if(!queue.len)
 			return
 		else
-			del(part)
-			part = new (text2path(src.queue[1]))
+			part = src.queue[1]
 	src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue processing finished successfully\".")
 	return 1
-
 
 
 /obj/machinery/r_n_d/fabricator/proc/convert_designs()
@@ -322,6 +330,9 @@
 	var/new_data=0
 	var/found = 0
 	var/obj/machinery/computer/rdconsole/console
+	if(busy)
+		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Please wait for completion of current operation.\"")
+		return
 	if(linked_console)
 		console = linked_console
 	else
@@ -353,21 +364,14 @@
 /obj/machinery/r_n_d/fabricator/proc/get_resource_cost_w_coeff(var/datum/design/part as obj,var/resource as text, var/roundto=1)
 	return round(part.materials[resource]*resource_coeff, roundto)
 
+//produces the adjusted time taken to build a component
+//different fabricators have different modifiers
+//this is in the works, so expect to edit it over time
+//MatTotal is a time modifier based on the total material cost of the design, divided by FAB_MAT_BASEMOD
+//build_time is a var unique to each fabricator. It's mostly one, but bigger machines get higher build_time
+//time_coeff is set by the machine components
 /obj/machinery/r_n_d/fabricator/proc/get_construction_time_w_coeff(var/datum/design/part as obj, var/roundto=1)
-	return round(TechTotal(part)*/*(MatTotal(part)/100)**/build_time*time_coeff, roundto)
-
-/obj/machinery/r_n_d/fabricator/proc/TechTotal(var/datum/design/part)
-	var/total = 0
-	for(var/tech in part.req_tech)
-		total += part.req_tech[tech]
-	return total
-
-/obj/machinery/r_n_d/fabricator/proc/MatTotal(var/datum/design/part)
-	var/total = 0
-	for(var/matID in part.materials)
-		total += part.materials[matID]
-	log_admin("[total] for [part.name]")
-	return total
+	return round(/*TechTotal(part)*/(MatTotal(part)/FAB_MAT_BASEMOD)*build_time*time_coeff, roundto)
 
 /obj/machinery/r_n_d/fabricator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
@@ -395,12 +399,14 @@
 	var/parts_list[0] // setup a list to get all the information for parts
 
 	for(var/set_name in part_sets)
+		//message_admins("Assiging parts to [set_name]")
+		var/list/parts = part_sets[set_name]
 		var/list/set_name_list = list()
 		var/i = 0
-		for(var/datum/design/Part in part_sets[set_name])
-			message_admins("Adding the [Part.name] to the list")
+		for(var/datum/design/part in parts)
+			//message_admins("Adding the [part.name] to the list")
 			i++
-			set_name_list += list("name" = Part.name, "cost" = output_part_cost(Part), "time" = get_construction_time_w_coeff(Part)/10, "command1" = list("add_to_queue" = "[i][set_name]"), "command2" = list("build" = "[i][set_name]"))
+			set_name_list.Add(list(list("name" = part.name, "cost" = output_part_cost(part), "time" = get_construction_time_w_coeff(part)/10, "command1" = list("add_to_queue" = "[i][set_name]"), "command2" = list("build" = "[i][set_name]"))))
 		parts_list[set_name] = set_name_list
 	data["parts"] = parts_list // assigning the parts data to the data sent to UI
 
@@ -453,7 +459,10 @@
 		if(queue.len > FAB_MAX_QUEUE)
 			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue is full, please clear or finish.\".")
 			return
-		add_part_set_to_queue(set_name)
+		if(set_name == "Robot")
+			add_part_set_to_queue(set_name, 7)
+		else
+			add_part_set_to_queue(set_name)
 		return 1
 
 	if(href_list["clear_queue"])

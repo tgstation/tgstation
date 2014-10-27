@@ -947,7 +947,7 @@ other types of metals and chemistry for reagents).
 ////////////////////////////////////////
 
 /datum/design/mech_scattershot
-	name = "Exosuit Weapon Design (LBX AC 10 \"Scattershot\")"
+	name = "Weapon Design (LBX AC 10 \"Scattershot\")"
 	desc = "Allows for the construction of LBX AC 10."
 	id = "mech_scattershot"
 	build_type = MECHFAB
@@ -958,7 +958,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_lmg
-	name = "Exosuit Weapon Design (Ultra AC 2)"
+	name = "Weapon Design (Ultra AC 2)"
 	desc = "Allows for the construction of Ultra AC 2."
 	id = "mech_lmg"
 	build_type = MECHFAB
@@ -969,7 +969,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_taser
-	name = "Exosuit Weapon Design (PBT \"Pacifier\" mounted taser)"
+	name = "Weapon Design (PBT \"Pacifier\" Taser)"
 	desc = "Allows for the construction of PBT \"Pacifier\" mounted taser."
 	id = "mech_taser"
 	build_type = MECHFAB
@@ -980,7 +980,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_honker
-	name = "Exosuit Weapon Design (HoNkER BlAsT 5000)"
+	name = "Weapon Design (HoNkER BlAsT 5000)"
 	desc = "Allows for the construction of HoNkER BlAsT 5000."
 	id = "mech_honker"
 	build_type = MECHFAB
@@ -990,7 +990,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=20000,"$clown"=10000)
 
 /datum/design/mech_mousetrap
-	name = "Exosuit Weapon Design (Mousetrap Mortar)"
+	name = "Weapon Design (Mousetrap Mortar)"
 	desc = "Allows for the construction of Mousetrap Mortar."
 	id = "mech_mousetrap"
 	build_type = MECHFAB
@@ -1000,7 +1000,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=20000,"$clown"=5000)
 
 /datum/design/mech_banana
-	name = "Exosuit Weapon Design (Banana Mortar)"
+	name = "Weapon Design (Banana Mortar)"
 	desc = "Allows for the construction of Banana Mortar."
 	id = "mech_banana"
 	build_type = MECHFAB
@@ -1010,7 +1010,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=20000,"$clown"=5000)
 
 /datum/design/mech_bolas
-	name = "Exosuit Weapon Design (PCMK-6 Bolas Launcher)"
+	name = "Weapon Design (PCMK-6 Bolas Launcher)"
 	desc = "Allows for the construction of PCMK-6 Bolas Launcher."
 	id = "mech_bolas"
 	build_type = MECHFAB
@@ -1021,7 +1021,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=20000)
 
 /datum/design/mech_laser
-	name = "Exosuit Weapon Design (CH-PS \"Immolator\" Laser)"
+	name = "Weapon Design (CH-PS \"Immolator\" Laser)"
 	desc = "Allows for the construction of CH-PS Laser."
 	id = "mech_laser"
 	build_type = MECHFAB
@@ -1032,7 +1032,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_laser_heavy
-	name = "Exosuit Weapon Design (CH-LC \"Solaris\" Laser Cannon)"
+	name = "Weapon Design (CH-LC \"Solaris\" Laser Cannon)"
 	desc = "Allows for the construction of CH-LC Laser Cannon."
 	id = "mech_laser_heavy"
 	build_type = MECHFAB
@@ -1043,7 +1043,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_grenade_launcher
-	name = "Exosuit Weapon Design (SGL-6 Grenade Launcher)"
+	name = "Weapon Design (SGL-6 Grenade Launcher)"
 	desc = "Allows for the construction of SGL-6 Grenade Launcher."
 	id = "mech_grenade_launcher"
 	build_type = MECHFAB
@@ -1054,7 +1054,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/clusterbang_launcher
-	name = "Exosuit Module Design (SOP-6 Clusterbang Launcher)"
+	name = "Module Design (SOP-6 Clusterbang Launcher)"
 	desc = "A weapon that violates the Geneva Convention at 6 rounds per minute"
 	id = "clusterbang_launcher"
 	build_type = MECHFAB
@@ -1065,7 +1065,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=20000,"$gold"=6000,"$uranium"=6000)
 
 /datum/design/mech_wormhole_gen
-	name = "Exosuit Module Design (Localized Wormhole Generator)"
+	name = "Module Design (Localized Wormhole Generator)"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	id = "mech_wormhole_gen"
 	build_type = MECHFAB
@@ -1075,7 +1075,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_teleporter
-	name = "Exosuit Module Design (Teleporter Module)"
+	name = "Module Design (Teleporter Module)"
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	id = "mech_teleporter"
 	build_type = MECHFAB
@@ -1085,7 +1085,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_rcd
-	name = "Exosuit Module Design (RCD Module)"
+	name = "Module Design (RCD Module)"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	id = "mech_rcd"
 	build_type = MECHFAB
@@ -1095,7 +1095,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=30000,"$plasma"=25000,"$silver"=20000,"$gold"=20000)
 
 /datum/design/mech_gravcatapult
-	name = "Exosuit Module Design (Gravitational Catapult Module)"
+	name = "Module Design (Gravitational Catapult Module)"
 	desc = "An exosuit mounted Gravitational Catapult."
 	id = "mech_gravcatapult"
 	build_type = MECHFAB
@@ -1105,7 +1105,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_repair_droid
-	name = "Exosuit Module Design (Repair Droid Module)"
+	name = "Module Design (Repair Droid Module)"
 	desc = "Automated Repair Droid. BEEP BOOP"
 	id = "mech_repair_droid"
 	build_type = MECHFAB
@@ -1116,7 +1116,7 @@ other types of metals and chemistry for reagents).
 
 /* MISSING
 /datum/design/mech_plasma_generator
-	name = "Exosuit Module Design (Plasma Converter Module)"
+	name = "Module Design (Plasma Converter Module)"
 	desc = "Exosuit-mounted plasma converter."
 	id = "mech_plasma_generator"
 	build_type = MECHFAB
@@ -1126,7 +1126,7 @@ other types of metals and chemistry for reagents).
 */
 
 /datum/design/mech_energy_relay
-	name = "Exosuit Module Design (Tesla Energy Relay)"
+	name = "Module Design (Tesla Energy Relay)"
 	desc = "Tesla Energy Relay"
 	id = "mech_energy_relay"
 	build_type = MECHFAB
@@ -1136,7 +1136,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000,"$gold"=2000,"$silver"=3000,"$glass"=2000)
 
 /datum/design/mech_ccw_armor
-	name = "Exosuit Module Design(Reactive Armor Booster Module)"
+	name = "Module Design(Reactive Armor Booster Module)"
 	desc = "Exosuit-mounted armor booster."
 	id = "mech_ccw_armor"
 	build_type = MECHFAB
@@ -1146,7 +1146,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=20000,"$silver"=5000)
 
 /datum/design/mech_proj_armor
-	name = "Exosuit Module Design(Reflective Armor Booster Module)"
+	name = "Module Design(Reflective Armor Booster Module)"
 	desc = "Exosuit-mounted armor booster."
 	id = "mech_proj_armor"
 	build_type = MECHFAB
@@ -1156,7 +1156,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=20000,"$gold"=5000)
 
 /datum/design/mech_syringe_gun
-	name = "Exosuit Module Design(Syringe Gun)"
+	name = "Module Design(Syringe Gun)"
 	desc = "Exosuit-mounted syringe gun and chemical synthesizer."
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
@@ -1165,8 +1165,8 @@ other types of metals and chemistry for reagents).
 	category = "Exosuit_Equipment"
 	materials = list("$iron"=3000,"$glass"=2000)
 
-/datum/design/drill
-	name = "Exosuit Module Design (Mining Drill)"
+/datum/design/mech_drill
+	name = "Module Design (Mining Drill)"
 	desc = "A mech-mountable mining drill."
 	id = "mech_drill"
 	build_type = MECHFAB
@@ -1176,7 +1176,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_diamond_drill
-	name = "Exosuit Module Design (Diamond Mining Drill)"
+	name = "Module Design (Diamond Mining Drill)"
 	desc = "An upgraded version of the standard drill."
 	id = "mech_diamond_drill"
 	build_type = MECHFAB
@@ -1186,7 +1186,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000,"$diamond"=6500)
 
 /datum/design/mech_hydro_clamp
-	name = "Exosuit Module Design (Hydraulic Clamp)"
+	name = "Module Design (Hydraulic Clamp)"
 	desc = "A hydraulic clamp for lifting heavy objects."
 	id = "mech_hydro_clamp"
 	build_type = MECHFAB
@@ -1196,7 +1196,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_cable
-	name = "Exosuit Module Design (Cable Layer)"
+	name = "Module Design (Cable Layer)"
 	desc = "An automatic cable layer for mechs."
 	id = "mech_cable"
 	build_type = MECHFAB
@@ -1206,7 +1206,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_extinguisher
-	name = "Exosuit Module Design (Extinguisher)"
+	name = "Module Design (Extinguisher)"
 	desc = "An extinguisher for mechs."
 	id = "mech_extinguisher"
 	build_type = MECHFAB
@@ -1216,7 +1216,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000)
 
 /datum/design/mech_generator_plasma
-	name = "Exosuit Module Design (Plasma Generator)"
+	name = "Module Design (Plasma Generator)"
 	desc = "A power generator that runs on burning plasma."
 	id = "mech_generator_plasma"
 	build_type = MECHFAB
@@ -1226,7 +1226,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000,"$silver"=500,"$glass"=1000)
 
 /datum/design/mech_sleeper
-	name = "Exosuit Module Design (Mounted Sleeper)"
+	name = "Module Design (Mounted Sleeper)"
 	desc = "A mech-mountable sleeper for treating the ill."
 	id = "mech_sleeper"
 	build_type = MECHFAB
@@ -1236,7 +1236,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=5000,"$glass"=10000)
 
 /datum/design/mech_generator_nuclear
-	name = "Exosuit Module Design (ExoNuclear Reactor)"
+	name = "Module Design (ExoNuclear Reactor)"
 	desc = "Compact nuclear reactor module"
 	id = "mech_generator_nuclear"
 	build_type = MECHFAB
@@ -1246,7 +1246,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=10000,"$silver"=500,"$glass"=1000)
 
 /datum/design/mech_phazon_array
-	name = "Exosuit Module Design (Phase Array)"
+	name = "Module Design (Phase Array)"
 	desc = "Compressed bluespace core of a Phazon mech."
 	id = "mech_phazon_array"
 	build_type = MECHFAB
@@ -1256,7 +1256,7 @@ other types of metals and chemistry for reagents).
 	materials = list("$iron"=5000,"$phazon"=2000)
 
 /datum/design/firefighter_chassis
-	name = "Exosuit Structure (Firefighter chassis)"
+	name = "Structure (Firefighter chassis)"
 	desc = "Used to build a Ripley Firefighter chassis."
 	id = "firef_chassis"
 	req_tech = list("engineering" = 1)
@@ -1622,7 +1622,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/rdserver
 
 /datum/design/mechfab
-	name = "Exosuit Fabricator Board"
+	name = "Fabricator Board"
 	desc = "The circuit board for an Exosuit Fabricator"
 	id = "mechfab"
 	req_tech = list("programming" = 3, "engineering" = 3)
@@ -2370,8 +2370,11 @@ other types of metals and chemistry for reagents).
 	name = "Janicart Upgrade Module"
 	desc = "Used to allow the janicart to clean surfaces while moving."
 	id = "janicart_upgrade"
+	build_type = PROTOLATHE | MECHFAB
+	build_path = /obj/item/mecha_parts/janicart_upgrade
 	req_tech = list("engineering" = 1, "materials" = 1)
-	materials = list("$iron"=20000)
+	materials = list("$iron"=10000)
+	category = "Misc"
 
 /////////////////////////////////////////
 //////////Teleporter Machines////////////

@@ -18,7 +18,7 @@
 #define	MECH_SCREEN_SPACE_POD	12
 #define	MECH_SCREEN_MISC		13
 
-#define MECH_BUILD_TIME 100
+#define MECH_BUILD_TIME 1
 
 /obj/machinery/r_n_d/fabricator/mech
 	name = "Exosuit Fabricator"
@@ -32,6 +32,7 @@
 	nano_file = "exofab.tmpl"
 
 	build_time = MECH_BUILD_TIME
+	build_number = 16
 
 	screen = MECH_SCREEN_MAIN
 	part_sets = list( //set names must be unique
