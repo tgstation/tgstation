@@ -33,7 +33,7 @@
 
 		var/list/L = list()
 		for (var/obj/machinery/camera/C in cameranet.cameras)
-			if((z > 6 || C.z > 6) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
+			if((z > 7 || C.z > 7) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
 				continue
 			L.Add(C)
 
