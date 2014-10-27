@@ -2,7 +2,7 @@
 /client/verb/toggle_ghost_ears()
 	set name = "Show/Hide GhostEars"
 	set category = "Preferences"
-	set desc = ".Toggle Between seeing all mob speech, and only speech of nearby mobs"
+	set desc = "Toggle Between seeing all mob speech, and only speech of nearby mobs"
 	prefs.toggles ^= CHAT_GHOSTEARS
 	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"]."
 	prefs.save_preferences_sqlite(src, ckey)
@@ -11,7 +11,7 @@
 /client/verb/toggle_ghost_sight()
 	set name = "Show/Hide GhostSight"
 	set category = "Preferences"
-	set desc = ".Toggle Between seeing all mob emotes, and only emotes of nearby mobs"
+	set desc = "Toggle Between seeing all mob emotes, and only emotes of nearby mobs"
 	prefs.toggles ^= CHAT_GHOSTSIGHT
 	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"]."
 	prefs.save_preferences_sqlite(src, ckey)
@@ -20,7 +20,7 @@
 /client/verb/toggle_ghost_radio()
 	set name = "Enable/Disable GhostRadio"
 	set category = "Preferences"
-	set desc = ".Toggle between hearing all radio chatter, or only from nearby speakers"
+	set desc = "Toggle between hearing all radio chatter, or only from nearby speakers"
 	prefs.toggles ^= CHAT_GHOSTRADIO
 	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTRADIO) ? "hear all radio chat in the world" : "only hear from nearby speakers"]."
 	prefs.save_preferences_sqlite(src, ckey)
@@ -29,7 +29,7 @@
 /client/verb/toggle_ghost_pda()
 	set name = "Enable/Disable GhostPDA"
 	set category = "Preferences"
-	set desc = ".Toggle between hearing all PDA messages, or none"
+	set desc = "Toggle between hearing all PDA messages, or none"
 	prefs.toggles ^= CHAT_GHOSTPDA
 	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTPDA) ? "hear all PDA messages in the world" : "hear no PDA messages at all"]."
 	prefs.save_preferences_sqlite(src, ckey)
