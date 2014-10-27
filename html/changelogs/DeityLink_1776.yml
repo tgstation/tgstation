@@ -1,0 +1,8 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixing areas with colored lights showing all white on pictures.
+  - bugfix: Fixed many objects and some turfs not appearing at all on pictures (all the doors, the kitchen's floor, etc...)
+  - bugfix: Fixed many objects not appearing on pictures if they have been pulled in certain directions.
+  - tweak: Mobs will now always appear to face south on pictures. A necessary evil related to human species and limbs. humanoids would always face south while their clothes would face their actual direction, causing an ugly dissonance. If someone can make humans face their actual direction on pictures and not just their clothes, please do. I am unable to.
+  - bugfix: Mobs that are lying on the ground now appear as such pictures.
