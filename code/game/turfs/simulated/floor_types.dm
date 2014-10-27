@@ -184,7 +184,7 @@
 	icon_state = "floor"
 
 /turf/simulated/shuttle/floor/cultify()
-	if(!((icon_state != "cult")||(icon_state != "cult-narsie")))
+	if((icon_state != "cult")&&(icon_state != "cult-narsie"))
 		name = "engraved floor"
 		icon_state = "cult"
 		cultification()
@@ -200,7 +200,7 @@
 	icon_state = "floor4"
 
 /turf/simulated/shuttle/floor4/cultify()
-	if(!((icon_state != "cult")||(icon_state != "cult-narsie")))
+	if((icon_state != "cult")&&(icon_state != "cult-narsie"))
 		name = "engraved floor"
 		icon_state = "cult"
 		cultification()

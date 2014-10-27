@@ -421,6 +421,19 @@
 	spawn(10)
 		del(c_animation)
 
+/turf/proc/invocanimation(var/animation_type)
+	c_animation = new /atom/movable/overlay(src)
+	c_animation.name = "invocanimation"
+	c_animation.density = 0
+	c_animation.anchored = 1
+	c_animation.icon = 'icons/effects/effects.dmi'
+	c_animation.layer = 5
+	c_animation.master = src
+	c_animation.icon_state = "[animation_type]"
+	flick("invocanimation",c_animation)
+	spawn(10)
+		del(c_animation)
+
 /turf/proc/cultify()
 	ChangeTurf(/turf/space)
 	return

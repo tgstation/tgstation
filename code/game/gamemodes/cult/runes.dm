@@ -51,7 +51,10 @@ var/list/sacrificed = list()
 			user.visible_message("<span class='warning'> [user] disappears in a flash of red light!</span>", \
 			"<span class='warning'> You feel as your body gets dragged through a tunnel of viscera !</span>", \
 			"<span class='warning'> You hear a sickening crunch and sloshing of viscera.</span>")
-		invocation("rune_teleport")
+
+		if(istype(src,/obj/effect/rune))
+			invocation("rune_teleport")
+
 		user.loc = allrunesloc[rand(1,index)]
 		return
 	if(istype(src,/obj/effect/rune))
