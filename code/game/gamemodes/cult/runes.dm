@@ -873,7 +873,7 @@ var/list/sacrificed = list()
 		if(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked)
 			cultist.loc:locked = 0
 		for(var/mob/living/carbon/C in users)
-			user.take_overall_damage(15, 0)
+			user.take_overall_damage(10, 0)
 			C.say("Khari[pick("'","`")]d! Gual'te nikka!")
 		del(src)
 	return fizzle()
@@ -899,13 +899,16 @@ var/list/sacrificed = list()
 		if(cultist.buckled || cultist.handcuffed || (!isturf(cultist.loc) && !istype(cultist.loc, /obj/structure/closet)))
 			user << "<span class='warning'>You cannot summon the [cultist], for his shackles of blood are strong</span>"
 			return fizzle()
+		var/turf/T = get_turf(cultist)
+		T.invocanimation("rune_teleport")
 		cultist.loc = src.loc
 		cultist.lying = 1
 		cultist.regenerate_icons()
+		T << visible_message("<span class='warning'>[cultist] suddenly disappears in a flash of red light!</span>")
 		for(var/mob/living/carbon/human/C in orange(1,src))
 			if(iscultist(C) && !C.stat)
 				C.say("N'ath reth sh'yro eth d[pick("'","`")]rekkathnor!")
-				C.take_overall_damage(25, 0)
+				C.take_overall_damage(15, 0)
 		user.visible_message("<span class='warning'>The rune disappears with a flash of red light, and in its place now a body lies.</span>", \
 		"<span class='warning'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
 		"<span class='warning'>You hear a pop and smell ozone.</span>")
