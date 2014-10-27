@@ -195,8 +195,11 @@
 		if(istype(A, /obj/item/blueprints))
 			blueprints = 1
 
+	/*
 	for(var/turf/T in turfs)
 		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+	//Turfs are atoms as well, duh, they render perfectly well without that part of the code. Plus that part was causing tiles with colored lightning to appear all white.
+	*/
 
 	return res
 
