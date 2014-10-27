@@ -239,6 +239,7 @@
 
 /obj/item/proc/dropped(mob/user as mob)
 	..()
+	layer = initial(layer) //nothing bad can come from this right?
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
