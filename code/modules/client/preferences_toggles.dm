@@ -24,7 +24,16 @@
 	prefs.toggles ^= CHAT_GHOSTRADIO
 	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTRADIO) ? "hear all radio chat in the world" : "only hear from nearby speakers"]."
 	prefs.save_preferences_sqlite(src, ckey)
-	feedback_add_details("admin_verb","TGR")
+	feedback_add_details("admin_verb","TGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/toggle_ghost_pda()
+	set name = "Enable/Disable GhostPDA"
+	set category = "Preferences"
+	set desc = ".Toggle between hearing all PDA messages, or none"
+	prefs.toggles ^= CHAT_GHOSTPDA
+	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTPDA) ? "hear all PDA messages in the world" : "no PDA messages at all"]."
+	prefs.save_preferences_sqlite(src, ckey)
+	feedback_add_details("admin_verb","TGP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide RadioChatter"
