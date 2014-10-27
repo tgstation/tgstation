@@ -1,2 +1,3 @@
 author: N3X15
-changes: []
+changes: 
+ - bugfix: "VLC is now used for all media, fixing issues with Windows Media Player."
