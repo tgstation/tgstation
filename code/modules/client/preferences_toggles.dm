@@ -31,7 +31,7 @@
 	set category = "Preferences"
 	set desc = ".Toggle between hearing all PDA messages, or none"
 	prefs.toggles ^= CHAT_GHOSTPDA
-	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTPDA) ? "hear all PDA messages in the world" : "no PDA messages at all"]."
+	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTPDA) ? "hear all PDA messages in the world" : "hear no PDA messages at all"]."
 	prefs.save_preferences_sqlite(src, ckey)
 	feedback_add_details("admin_verb","TGP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
