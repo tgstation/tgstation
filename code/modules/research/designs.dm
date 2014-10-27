@@ -849,7 +849,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("bluespace" = 10, "programming" = 4)
 	build_type = MECHFAB
 	materials = list("$iron" = 5000, "$phazon" = 2000)
-	category = "Misc"
+	category = "Exosuit_Equipment"
 	build_path = /obj/item/mecha_parts/part/phazon_phase_array
 
 /datum/design/gygax_main
@@ -1244,16 +1244,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
 	category = "Exosuit_Equipment"
 	materials = list("$iron"=10000,"$silver"=500,"$glass"=1000)
-
-/datum/design/mech_phazon_array
-	name = "Module Design (Phase Array)"
-	desc = "Compressed bluespace core of a Phazon mech."
-	id = "mech_phazon_array"
-	build_type = MECHFAB
-	req_tech = list("bluespace" = 1)
-	build_path = /obj/item/mecha_parts/part/phazon_phase_array
-	category = "Exosuit_Equipment"
-	materials = list("$iron"=5000,"$phazon"=2000)
 
 /datum/design/firefighter_chassis
 	name = "Structure (Firefighter chassis)"
