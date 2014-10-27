@@ -228,7 +228,7 @@
 				spawn(0) src.interact(usr)
 		else
 			if (S.amount >= max_amount)
-				return 1
+				return
 			var/to_transfer as num
 			if (user.get_inactive_hand()==src)
 				to_transfer = 1
