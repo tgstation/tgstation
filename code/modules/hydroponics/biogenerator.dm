@@ -127,6 +127,9 @@
 			if("void")
 				dat += "<div class='statusDisplay'>Error: No growns inside.<BR>Please, put growns into reactor.</div>"
 				menustat = "menu"
+			if("beakerfull")
+				dat += "<div class='statusDisplay'>Container full. Unable to create product.</div>"
+				menustat = "menu"
 		if(beaker)
 			dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
 			dat += "<A href='?src=\ref[src];activate=1'>Activate</A><A href='?src=\ref[src];detach=1'>Detach Container</A>"
@@ -205,9 +208,15 @@
 /obj/machinery/biogenerator/proc/create_product(var/create)
 	switch(create)
 		if("milk")
+			if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				menustat = "beakerfull"
+				return 0
 			if (check_cost(20/efficiency)) return 0
 			else beaker.reagents.add_reagent("milk",10)
 		if("cream")
+			if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				menustat = "beakerfull"
+				return 0
 			if (check_cost(30/efficiency)) return 0
 			else beaker.reagents.add_reagent("cream",10)
 		if("meat")
