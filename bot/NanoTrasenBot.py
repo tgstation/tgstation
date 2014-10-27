@@ -904,10 +904,11 @@ while True:
                   check = temdata.lower()
                   if check[0:5] == "https":
                      if len(temporal_list) == 1:
-                        conn.privmsg(targetchannel,sender+" :Secure Youtube does NOT exist")
-                        break
+                        #commenting out rather then remove the if and else because this uses odd spaced based indenting that doesn't seem to play well with notepad++ and im not fucking with that. attempting to do so broke everything already and i can't into python. so this works
+                        #conn.privmsg(targetchannel,sender+" :Secure Youtube does NOT exist")
+                        #break
                      else:
-                        temporal_list2.append("Secure Youtube does NOT exist")
+                        #temporal_list2.append("Secure Youtube does NOT exist")
                      break
                   else:
                      if cache_youtube_links == True:
