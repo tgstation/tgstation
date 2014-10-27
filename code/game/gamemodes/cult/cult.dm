@@ -11,7 +11,6 @@
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
 	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0
-	if(sacrifice_target = mind) return 0
 	for(var/obj/item/weapon/implant/loyalty/L in mind.current)
 		if(L && (L.imp_in == mind.current))//Checks to see if the person contains an implant, then checks that the implant is actually inside of them
 			return 0
@@ -96,7 +95,7 @@
 			sacrifice_target = pick(possible_targets)
 		if(!sacrifice_target)
 			for(var/datum/mind/possible_target in ticker.minds)
-				if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && !(player.mind in cult))
+				if(ishuman(possible_target.current) && (possible_target.current.stat != 2) && !(possible_target in cult))
 					possible_targets += possible_target
 			sacrifice_target = pick(possible_targets)
 	for(var/datum/mind/cult_mind in cult)
