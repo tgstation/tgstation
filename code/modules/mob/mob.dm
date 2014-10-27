@@ -298,6 +298,34 @@ var/list/slot_equipment_priority = list( \
 	face_atom(A)
 	A.examine(src)
 
+//same as above
+/mob/verb/pointed(atom/A as mob|obj|turf in view())
+	set name = "Point To"
+	set category = "Object"
+
+	if(!src || !isturf(src.loc))
+		return
+	if(src.stat || src.restrained())
+		return
+	if(src.status_flags & FAKEDEATH)
+		return
+	if(!(A in view(src.loc)))
+		return
+	if(istype(A, /obj/effect/decal/point))
+		return
+
+	var/tile = get_turf(A)
+	if (!tile)
+		return
+
+	var/obj/P = new /obj/effect/decal/point(tile)
+	spawn (20)
+		if(P)
+			P.loc = null
+
+	usr.visible_message("<b>[src]</b> points to [A]")
+
+
 /mob/verb/mode()
 	set name = "Activate Held Object"
 	set category = "Object"
