@@ -123,7 +123,7 @@ var/global/datum/controller/occupations/job_master
 	return
 
 
-//This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until�
+//This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
 /datum/controller/occupations/proc/FillHeadPosition()
@@ -276,7 +276,7 @@ var/global/datum/controller/occupations/job_master
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
 	for(var/mob/new_player/player in unassigned)
-		if(player.client.prefs.userandomjob)
+		if(player.client.prefs.userandomjob || jobban_isbanned(player, "Assistant"))
 			GiveRandomJob(player)
 
 	Debug("DO, Standard Check end")
