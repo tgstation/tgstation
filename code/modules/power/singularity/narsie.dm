@@ -106,13 +106,13 @@ var/global/narsie_behaviour = "CultStation13"
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
 		for(var/mob/M in mob_list)
-			if(M.client && M.z == src.z && get_dist(src,M) <= (src.consume_range+10))
+			if(M.client)
 				M.see_narsie(src)
 	spawn(1)
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
 		for(var/mob/M in mob_list)
-			if(M.client && M.z == src.z && get_dist(src,M) <= (src.consume_range+10))
+			if(M.client)
 				M.see_narsie(src)
 	return 1
 
