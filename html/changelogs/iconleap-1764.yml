@@ -1,0 +1,6 @@
+author: iconleap
+
+delete-after: True
+
+changes: 
+  - tweak: Use s_html library by Spuzzum (hex2num, invertHTML and num2hex replaced by this).
