@@ -206,7 +206,7 @@
 		return 0
 
 /obj/machinery/biogenerator/proc/check_container_volume(var/reagent_amount)
-	if(beaker.reagents.total_volume + reagent_amount >= beaker.reagents.maximum_volume)
+	if(beaker.reagents.total_volume + reagent_amount > beaker.reagents.maximum_volume)
 		menustat = "nobeakerspace"
 		return 1
 
