@@ -17,6 +17,8 @@
 /obj/machinery/door/window/New()
 	..()
 
+	machine_flags |= EMAGGABLE
+
 	if (src.req_access && src.req_access.len)
 		src.icon_state = "[src.icon_state]"
 		src.base_state = src.icon_state
@@ -202,13 +204,7 @@
 		//don't care who they are or what they have, act as if they're NOTHING
 		user = null
 
-	if (src.allowed(user))
-		if (src.density)
-			open()
-		else
-			close()
-
-	else if (src.density)
+	if (!src.allowed(user) && src.density)
 		flick(text("[]deny", src.base_state), src)
 
 	return
