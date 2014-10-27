@@ -25,7 +25,7 @@
 	icon_state = "soapnt"
 
 /obj/item/weapon/soap/deluxe
-	desc = "A deluxe Waffle Co. brand bar of soap. Smells of comdoms."
+	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
 	icon_state = "soapdeluxe"
 	cleanspeed = 40 //same speed as mop because deluxe -- captain gets one of these
 
