@@ -634,7 +634,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					var/datum/chatroom/C = chatchannels[chat_channel]
 					var/ret = C.parse_msg(src,nick,"/join")
 					if(findtextEx(ret,"ERR_",1,5))
-						ntrclog[chat_channel] = "<font color=\"red\">[ret]</font><br>" + ntrclog[chat_channel]
+						ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
 					else
 						ntrc_event = ret
 
@@ -645,9 +645,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(C)
 					var/ret = C.parse_msg(src,nick,t)
 					if(findtextEx(ret,"ERR_",1,5))
-						ntrclog[chat_channel] = "<font color=\"red\">[ret]</font><br>" + ntrclog[chat_channel]
+						ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
 					else if(ret == 0)
-						ntrclog[chat_channel] = "<font color=\"red\">Failure</font><br>" + ntrclog[chat_channel]
+						ntrclog[chat_channel] = "Failure<br>" + ntrclog[chat_channel]
 
 
 //SYNDICATE FUNCTIONS===================================
