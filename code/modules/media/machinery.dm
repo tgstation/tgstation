@@ -103,3 +103,11 @@
 /obj/machinery/media/Destroy()
 	disconnect_media_source()
 	..()
+
+// Needed, or jukeboxes will fail to unhook from previous areas.
+/obj/machinery/media/jukebox/wrenchAnchor(var/mob/user)
+	..(user)
+	if(!anchor)
+		disconnect_media_source()
+	else
+		update_media_source()
