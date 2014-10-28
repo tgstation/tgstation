@@ -122,6 +122,8 @@ var/global/loopModeNames=list(
 	..()
 	if(emagged && !(stat & (NOPOWER|BROKEN)))
 		playing = 1
+		if(current_song)
+			update_music()
 	update_icon()
 
 /obj/machinery/media/jukebox/update_icon()
