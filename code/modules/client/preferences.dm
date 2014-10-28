@@ -191,6 +191,7 @@ datum/preferences
 			<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</b></a><br>
 			<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</b></a><br>
 			<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles & CHAT_GHOSTRADIO) ? "Nearest Speakers" : "All Chatter"]</b></a><br>
+			<b>Ghost PDA:</b> <a href='?_src_=prefs;preference=ghost_pda'><b>[(toggles & CHAT_GHOSTPDA) ? "No PDA Messages" : "All PDA Messages"]</b></a><br>
 			<b>Special Windows:</b><a href='?_src_=prefs;preference=special_popup'><b>[special_popup ? "Yes" : "No"]</b></a><br>"}
 		// END AUTOFIX
 		if(config.allow_Metadata)
@@ -246,6 +247,12 @@ datum/preferences
 					organ_name = "heart"
 				if("eyes")
 					organ_name = "eyes"
+				if("lungs")
+					organ_name = "lungs"
+				if("liver")
+					organ_name = "liver"
+				if("kidneys")
+					organ_name = "kidneys"
 
 			if(status == "cyborg")
 				++ind
@@ -484,6 +491,8 @@ datum/preferences
 		HTML += ShowDisabilityState(user,DISABILITY_FLAG_FAT,        "Obese")
 		HTML += ShowDisabilityState(user,DISABILITY_FLAG_EPILEPTIC,  "Seizures")
 		HTML += ShowDisabilityState(user,DISABILITY_FLAG_DEAF,       "Deaf")
+		/*HTML += ShowDisabilityState(user,DISABILITY_FLAG_COUGHING,   "Coughing")
+		HTML += ShowDisabilityState(user,DISABILITY_FLAG_TOURETTES,   "Tourettes") Still working on it! -Angelite*/
 
 
 		// AUTOFIXED BY fix_string_idiocy.py
@@ -1056,7 +1065,7 @@ datum/preferences
 										organ_data[second_limb] = "amputated"
 
 					if("organs")
-						var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
+						var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes", "Lungs", "Liver", "Kidneys")
 						if(!organ_name) return
 
 						var/organ = null
@@ -1065,6 +1074,12 @@ datum/preferences
 								organ = "heart"
 							if("Eyes")
 								organ = "eyes"
+							if("Lungs")
+								organ = "lungs"
+							if("Liver")
+								organ = "liver"
+							if("Kidneys")
+								organ = "kidneys"
 
 						var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
 						if(!new_state) return
@@ -1144,6 +1159,9 @@ datum/preferences
 
 					if("ghost_radio")
 						toggles ^= CHAT_GHOSTRADIO
+
+					if("ghost_pda")
+						toggles ^= CHAT_GHOSTPDA
 
 					if("save")
 						if(world.timeofday >= (lastPolled + POLLED_LIMIT))
@@ -1254,6 +1272,10 @@ datum/preferences
 			character.disabilities|=EPILEPSY
 		if(disabilities & DISABILITY_FLAG_DEAF)
 			character.sdisabilities|=DEAF
+		/*if(disabilities & DISABILITY_FLAG_COUGHING)
+			character.sdisabilities|=COUGHING
+		if(disabilities & DISABILITY_FLAG_TOURETTES)
+			character.sdisabilities|=TOURETTES Still working on it. - Angelite */
 
 		if(underwear > underwear_m.len || underwear < 1)
 			underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES

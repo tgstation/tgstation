@@ -84,6 +84,7 @@
 	R.updatename("Default")
 	R.status_flags |= CANPUSH
 	R.updateicon()
+	R.luminosity = 0 //flashlight fix
 
 	return 1
 

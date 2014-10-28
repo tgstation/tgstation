@@ -41,6 +41,8 @@
 		return
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(W == src)
+			return // HOLY FUCKING SHIT WHY STORAGE CODE, WHY - pomf
 		if(crit_fail)
 			user << "\red The Bluespace generator isn't working."
 			return
@@ -89,6 +91,13 @@
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "cultpack"
 	item_state = "cultpacknew"
+
+/obj/item/weapon/storage/backpack/cultify()
+	new /obj/item/weapon/storage/backpack/cultpack(loc)
+	..()
+
+/obj/item/weapon/storage/backpack/cultpack/cultify()
+	return
 
 /obj/item/weapon/storage/backpack/clown
 	name = "Giggles Von Honkerton"

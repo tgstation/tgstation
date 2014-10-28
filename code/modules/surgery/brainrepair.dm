@@ -16,7 +16,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		var/datum/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
-		return (sponge && sponge.damage > 0 && sponge.damage <= 20) && affected.open == 3
+		return (sponge && sponge.damage > 0 && sponge.damage <= 20) && affected.open == 3 && target_zone == "head"
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts taking bone chips out of [target]'s brain with \the [tool].", \
@@ -48,7 +48,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		var/datum/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
-		return (sponge && sponge.damage > 20) && affected.open == 3
+		return (sponge && sponge.damage > 20) && affected.open == 3 && target_zone == "head"
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts mending hematoma in [target]'s brain with \the [tool].", \

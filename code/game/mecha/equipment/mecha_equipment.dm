@@ -108,21 +108,23 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
-	moveto = moveto || get_turf(chassis)
-	if(src.Move(moveto))
-		chassis.equipment -= src
-		if(chassis.selected == src)
-			chassis.selected = null
-		update_chassis_page()
-		chassis.log_message("[src] removed from equipment.")
-		chassis = null
-		set_ready_state(1)
+	if(!moveto)
+		moveto = get_turf(chassis)
+	src.loc = moveto
+	chassis.equipment -= src
+	if(chassis.selected == src)
+		chassis.selected = null
+	update_chassis_page()
+	chassis.log_message("[src] removed from equipment.")
+	chassis = null
+	set_ready_state(1)
 	return
 
 
 /obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)
+	testing("[src] topic")
 	if(href_list["detach"])
-		src.detach()
+		detach()
 	return
 
 

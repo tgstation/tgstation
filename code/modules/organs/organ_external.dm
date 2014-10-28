@@ -433,7 +433,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			// let the GC handle the deletion of the wound
 
 		// Internal wounds get worse over time. Low temperatures (cryo) stop them.
-		if(W.internal && !W.is_treated() && owner.bodytemperature >= 170)
+		if(W.internal && !W.is_treated() && owner.bodytemperature >= 170 && !(owner.species && owner.species.flags & NO_BLOOD))
 			if(!owner.reagents.has_reagent("bicaridine"))	//bicard stops internal wounds from growing bigger with time, and also stop bleeding
 				W.open_wound(0.1 * wound_update_accuracy)
 				owner.vessel.remove_reagent("blood",0.05 * W.damage * wound_update_accuracy)

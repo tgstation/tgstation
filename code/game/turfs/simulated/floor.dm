@@ -586,3 +586,10 @@ turf/simulated/floor/proc/update_icon()
 		if(wet_overlay)
 			overlays -= wet_overlay
 			wet_overlay = null
+
+/turf/simulated/floor/cultify()
+	if((icon_state != "cult")&&(icon_state != "cult-narsie"))
+		name = "engraved floor"
+		icon_state = "cult"
+		cultification()
+	return

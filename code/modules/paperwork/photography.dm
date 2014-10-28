@@ -180,7 +180,7 @@
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
 
 	for(var/atom/A in sorted)
-		var/icon/img = getFlatIcon(A)
+		var/icon/img = getFlatIcon(A,A.dir,0)
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying)
 
@@ -195,8 +195,11 @@
 		if(istype(A, /obj/item/blueprints))
 			blueprints = 1
 
+	/*
 	for(var/turf/T in turfs)
 		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+	//Turfs are atoms as well, duh, they render perfectly well without that part of the code. Plus that part was causing tiles with colored lightning to appear all white.
+	*/
 
 	return res
 

@@ -21,6 +21,10 @@
 
 	req_access = list(access_security)
 
+/obj/machinery/detector/New(loc)
+	..(loc)
+	machine_flags |= WRENCHMOVE | FIXED2WORK
+
 /obj/machinery/detector/proc/assess_perp(mob/living/carbon/human/perp as mob)
 	var/threatcount = 0
 	if(!(istype(perp, /mob/living/carbon)))
@@ -159,19 +163,18 @@
 		icon_state = "[base_state]1"
 //		src.sd_SetLuminosity(0)
 
-/obj/machinery/detector/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wirecutters))
+/obj/machinery/detector/attackby(obj/item/W, mob/user)
+	if(..(W, user) == 1)
+		return 1 // resolved for click code!
+
+	/*if (istype(W, /obj/item/weapon/wirecutters))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
 			user.visible_message("\red [user] has disconnected the detector array!", "\red You disconnect the detector array!")
 		if (!src.disable)
 			user.visible_message("\red [user] has connected the detector array!", "\red You connect the detector array!")
-
-
-
-
-
+	*/
 
 /obj/machinery/detector/Topic(href, href_list)
 	if(..()) return

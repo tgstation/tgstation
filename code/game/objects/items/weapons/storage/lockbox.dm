@@ -17,75 +17,75 @@
 	var/icon_broken = "lockbox+b"
 
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weapon/card/id))
-			if(src.broken)
-				user << "\red It appears to be broken."
+/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/card/id))
+		if(src.broken)
+			user << "<span class='rose'>It appears to be broken.</span>"
+			return
+		if(src.allowed(user))
+			src.locked = !( src.locked )
+			if(src.locked)
+				src.icon_state = src.icon_locked
+				user << "<span class='rose'>You lock the [src.name]!</span>"
 				return
-			if(src.allowed(user))
-				src.locked = !( src.locked )
-				if(src.locked)
-					src.icon_state = src.icon_locked
-					user << "\red You lock the [src.name]!"
-					return
-				else
-					src.icon_state = src.icon_closed
-					user << "\red You unlock the [src.name]!"
-					return
 			else
-				user << "\red Access Denied"
-		else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
-			broken = 1
-			locked = 0
-			desc = "It appears to be broken."
-			icon_state = src.icon_broken
-			if(istype(W, /obj/item/weapon/melee/energy/blade))
-				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-				spark_system.set_up(5, 0, src.loc)
-				spark_system.start()
-				playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
-				playsound(get_turf(src), "sparks", 50, 1)
-				for(var/mob/O in viewers(user, 3))
-					O.show_message(text("\blue The locker has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
-			else
-				for(var/mob/O in viewers(user, 3))
-					O.show_message(text("\blue The locker has been broken by [] with an electromagnetic card!", user), 1, text("You hear a faint electrical spark."), 2)
-
-		if(!locked)
-			..()
+				src.icon_state = src.icon_closed
+				user << "<span class='rose'>You unlock the [src.name]!</span>"
+				return
 		else
-			user << "\red Its locked!"
-		return
-
-
-	show_to(mob/user as mob)
-		if(locked)
-			user << "\red Its locked!"
+			user << "<span class='warning'>Access Denied</span>"
+	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
+		broken = 1
+		locked = 0
+		desc = "It appears to be broken."
+		icon_state = src.icon_broken
+		if(istype(W, /obj/item/weapon/melee/energy/blade))
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, src.loc)
+			spark_system.start()
+			playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(get_turf(src), "sparks", 50, 1)
+			for(var/mob/O in viewers(user, 3))
+				O.show_message(text("<span class='notice'>The locker has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class='warning>You hear metal being sliced and sparks flying.</span>"), 2)
 		else
-			..()
-		return
+			for(var/mob/O in viewers(user, 3))
+				O.show_message(text("<span class='notice'>The locker has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
 
-	bullet_act(var/obj/item/projectile/Proj)
-		// WHY MUST WE DO THIS
-		// WHY
-		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-			if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
-				health -= Proj.damage
+	if(!locked)
 		..()
-		if(health <= 0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
-			del(src)
-		return
+	else
+		user << "\red Its locked!"
+	return
 
-	ex_act(severity)
-		var/newsev = max(3,severity+1)
-		for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
+
+/obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
+	if(locked)
+		user << "\red Its locked!"
+	else
+		..()
+	return
+
+/obj/item/weapon/storage/lockbox/bullet_act(var/obj/item/projectile/Proj)
+	// WHY MUST WE DO THIS
+	// WHY
+	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+			health -= Proj.damage
+	..()
+	if(health <= 0)
+		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
-			A.ex_act(newsev)
-		newsev=4-severity
-		if(prob(newsev*25)+25) // 1=100, 2=75, 3=50
-			qdel(src)
+		del(src)
+	return
+
+/obj/item/weapon/storage/lockbox/ex_act(severity)
+	var/newsev = max(3,severity+1)
+	for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
+		A.loc = src.loc
+		A.ex_act(newsev)
+	newsev=4-severity
+	if(prob(newsev*25)+25) // 1=100, 2=75, 3=50
+		qdel(src)
 
 /obj/item/weapon/storage/lockbox/emp_act(severity)
 	..()
@@ -157,3 +157,35 @@
 	New()
 		..()
 		new /obj/item/weapon/grenade/flashbang/clusterbang(src)
+
+/obj/item/weapon/storage/lockbox/unlockable
+	name = "semi-secure lockbox"
+	desc = "A securable locked box. Can't lock anything, but can track whoever used it."
+	req_access = list()
+	var/tracked_access = "It doesn't look like it's ever been used."
+
+/obj/item/weapon/storage/lockbox/unlockable/examine()
+	..()
+	usr << tracked_access
+	return 1
+
+/obj/item/weapon/storage/lockbox/unlockable/attackby(obj/O as obj, mob/user as mob)
+	if (istype(O, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/ID = O
+		if(src.broken)
+			user << "<span class='rose'>It appears to be broken.</span>"
+			return
+		else
+			src.locked = !( src.locked )
+			if(src.locked)
+				src.icon_state = src.icon_locked
+				user << "<span class='rose'>You lock the [src.name]!</span>"
+				tracked_access = "The tracker reads: 'Last locked by [ID.registered_name]'."
+				return
+			else
+				src.icon_state = src.icon_closed
+				user << "<span class='rose'>You unlock the [src.name]!</span>"
+				tracked_access = "The tracker reads: 'Last unlocked by [ID.registered_name].'"
+				return
+	else
+		..()
