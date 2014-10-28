@@ -44,7 +44,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
-	var/datum/chatroom/chat_channel = "" //name of our current NTRC channel, without the #
+	var/chat_channel = "#ss13" //name of our current NTRC channel
 	var/datum/event/ntrc_event //our ntrc event trigger
 	var/nick = "" //our NTRC nick
 	var/list/ntrclog = list() //NTRC message log
@@ -430,21 +430,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<br>"
 
 			if (5)
-				if(!nick)
+				if(!nick) //first time join
 					nick = copytext(sanitize(owner), 1, 9)
-				dat += "<h4><img src=pda_chatroom.png> Space Station 13 Nanotrasen Relay Chat Network</h4>"
+					var/datum/chatroom/C = chatchannels[chat_channel]
+					C.parse_msg(src, nick, "/join [chat_channel]")
+				dat += "<h4><img src=pda_chatroom.png> SS13 Nanotrasen Relay Chat Network</h4>"
 
-				if(!chat_channel)
-					dat += "<a href='byond://?src=\ref[src];choice=Set Nick'><img src=pda_status.png>[strip_html_properly(nick)]</a>"
-					dat += "<h4><img src=pda_menu.png> Detected Channels</h4>"
-					for(var/C in chatchannels)
-						dat += "<li><a href='byond://?src=\ref[src];choice=Set Channel;C=[C]'>#[html_encode(C)]</a></li>"
-
-				else
-
-					dat += "<a href='byond://?src=\ref[src];choice=Set Nick'>[strip_html_properly(nick)]</a> | "
-					dat += "<a href='byond://?src=\ref[src];choice=Set Channel'>#[strip_html_properly(chat_channel)]</a> | "
-					dat += "<a href='byond://?src=\ref[src];choice=NTRC Message'>Write message</a><br>"
+				dat += "<a href='byond://?src=\ref[src];choice=Set Nick'>[nick]</a> | "
+				dat += "<a href='byond://?src=\ref[src];choice=Set Channel'>[chat_channel]</a> | "
+				dat += "<a href='byond://?src=\ref[src];choice=NTRC Message'>Write message</a><br>"
+				if(chat_channel)
 					dat += ntrclog[chat_channel]
 
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
@@ -513,6 +508,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				mode = 3
 			if("4")//Redirects to hub
 				mode = 0
+			if("5")//Chatroom
+				mode = 5
 
 
 //MAIN FUNCTIONS===================================
@@ -619,28 +616,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //CHATROOM FUNCTIONS====================================
 
 			if("Set Nick")
-				var/t = input(U, "Please enter nickname", name, null) as text
+				var/t = stripped_input(U, "Please enter nickname", name, null) as text
 				nick = copytext(sanitize(t), 1, 9)
 
 			if("Set Channel")
-				var/t = href_list["C"]
-				if(!t)
-					if(chat_channel)
-						var/datum/chatroom/C = chatchannels[chat_channel]
-						C.events.clearEvent("msg_chat", ntrc_event)
-					chat_channel = ""
-				else
-					chat_channel = t
+				var/t = stripped_input(U, "Please enter channel", name, (chat_channel)) as text
+
+				if(t && t in chatchannels)
+					ntrclog[chat_channel] = "<hr>" + ntrclog[chat_channel]
 					var/datum/chatroom/C = chatchannels[chat_channel]
-					var/ret = C.parse_msg(src,nick,"/join")
-					if(findtextEx(ret,"ERR_",1,5))
-						ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
-					else
-						ntrc_event = ret
+					chat_channel = t
+					var/ret = C.parse_msg(src, nick, "/join [chat_channel]")
+					if(ret == "ERR_AUTH")
+						ntrclog[chat_channel] = "Please use /auth password to authenticate and then join again." + ntrclog[chat_channel]
 
 			if("NTRC Message")
-				var/t = input(U, "Please enter message", name, null) as text
-				t = strip_html_properly(t)
+				var/t = msg_input(U) as text
 				var/datum/chatroom/C = chatchannels[chat_channel]
 				if(C)
 					var/ret = C.parse_msg(src,nick,t)
@@ -710,8 +701,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			else//Cartridge menu linking
 				mode = text2num(href_list["choice"])
-				cartridge.mode = mode
-				cartridge.unlock()
+				if(cartridge)
+					cartridge.mode = mode
+					cartridge.unlock()
 	else//If not in range, can't interact or not using the pda.
 		U.unset_machine()
 		U << browse(null, "window=pda")
@@ -743,39 +735,38 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			id.loc = get_turf(src)
 		id = null
 
-/obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
-
+/obj/item/device/pda/proc/msg_input(var/mob/living/U = usr)
 	var/t = input(U, "Please enter message", name, null) as text
 	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-	if (!t || !istype(P))
+	if (!t || toff)
 		return
 	if (!in_range(src, U) && loc != U)
 		return
-
-	if (isnull(P)||P.toff || toff)
+	if(!can_use(U))
 		return
+	if(emped)
+		t = Gibberish(t, 100)
+	return t
+
+/obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
+
+	var/t = msg_input(U)
 
 	if (last_text && world.time < last_text + 5)
 		return
 
-	if(!can_use(U))
+	if (isnull(P) || P.toff || !istype(P))
 		return
 
 	last_text = world.time
-	// check if telecomms I/O route 1459 is stable
-	//var/telecomms_intact = telecomms_process(P.owner, owner, t)
 	var/obj/machinery/message_server/useMS = null
 	if(message_servers)
 		for (var/obj/machinery/message_server/MS in message_servers)
 		//PDAs are now dependant on the Message Server.
 			if(MS.active)
 				useMS = MS
-				break
 
 	var/datum/signal/signal = src.telecomms_process()
-
-	if(emped)
-		t = Gibberish(t, 100)
 
 	var/useTC = 0
 	if(signal)
@@ -1126,6 +1117,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			ntrclog[C] = msg + ntrclog[C]
 	else
 		ntrclog[channel] = msg + ntrclog[channel]
+	if (!silent)
+		loc.audible_message("\icon[src] *[ttone]*", null, 3)
 
 /proc/get_viewable_pdas()
 	. = list()
