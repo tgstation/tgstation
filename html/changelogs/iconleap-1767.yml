@@ -1,0 +1,6 @@
+author: iconleap
+
+delete-after: True
+
+changes: 
+  - bugfix: Make threat detectors usable again.
