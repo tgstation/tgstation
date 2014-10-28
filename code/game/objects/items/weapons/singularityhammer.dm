@@ -36,9 +36,8 @@
 
 
 /obj/item/weapon/twohanded/singularityhammer/proc/vortex(var/turf/pull as turf, mob/wielder as mob)
-	var/mob/S = wielder
 	for(var/atom/X in orange(5,pull))
-		/*if(istype(X, /atom/movable))
+		if(istype(X, /atom/movable))
 			if(X == wielder) continue
 			if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
 				step_towards(X,pull)
@@ -53,8 +52,7 @@
 				H.apply_effect(1, WEAKEN, 0)
 				step_towards(H,pull)
 				step_towards(H,pull)
-				step_towards(H,pull)*/
-		X.singularity_act(S)
+				step_towards(H,pull)
 	return
 
 
