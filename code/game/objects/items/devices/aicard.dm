@@ -117,5 +117,4 @@
 			for(var/mob/living/silicon/ai/A in src)
 				A.radio_enabled = !A.radio_enabled
 				A << "Your Subspace Transceiver has been [A.radio_enabled ? "enabled" : "disabled"]!"
-				U << "You [A.radio_enabled ? "Enable" : "Disable"] the AI's Subspace Transceiver."
 	attack_self(U)

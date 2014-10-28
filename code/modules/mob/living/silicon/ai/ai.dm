@@ -96,7 +96,7 @@ var/list/ai_list = list()
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
-		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/control_integrated_radio,)
+		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/control_integrated_radio)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -113,7 +113,7 @@ var/list/ai_list = list()
 			src << "To use something, simply click on it."
 			src << "Use say :b to speak to your cyborgs through binary."
 			src << "For department channels, use the following say commands:"
-			src << ":o AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
+			src << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
 			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
 				show_laws()
 				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
