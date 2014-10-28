@@ -113,10 +113,10 @@
 			else
 				user.take_organ_damage(2*force)
 			return
-		if(isrobot(M))
+		if(isrobot(target))
 			..()
 			return
-		if(!isliving(M))
+		if(!isliving(target))
 			return
 		if (user.a_intent == "harm")
 			if(!..()) return
