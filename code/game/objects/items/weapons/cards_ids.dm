@@ -60,7 +60,99 @@
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
-	var/uses = 10
+
+	/**
+	 * Number of uses left.  -1 = infinite
+	 * (Note: Some devices can use more than 1 use, so this is just called "energy")
+	 * @since 10-28-2014
+	 */
+	var/energy = -1
+
+	/**
+	 * Max energy per emag.  -1 = infinite
+	 * @since 10-28-2014
+	 */
+	var/max_energy = -1
+
+	/**
+	 * Every X ticks, add [recharge_rate] energy.
+	 * @since 10-28-2014
+	 */
+	var/recharge_ticks = 0
+
+	/**
+	 * Every [recharge_ticks] ticks, add X energy.
+	 * @since 10-28-2014
+	 */
+	var/recharge_rate = 0
+
+	var/nticks=0
+
+/obj/item/weapon/card/emag/New(var/loc, var/disable_tuning=0)
+	..(loc)
+
+	// For standardized subtypes, once they're established.
+	if(disable_tuning)
+		return
+
+	// Tuning tools.
+	//////////////////
+	if(config.emag_energy != -1)
+		max_energy = config.emag_energy
+
+		if(config.emag_starts_charged)
+			energy = max_energy
+
+	if(config.emag_recharge_rate != 0)
+		recharge_rate = config.emag_recharge_rate
+
+	if(config.emag_recharge_ticks > 0)
+		recharge_ticks = config.emag_recharge_ticks
+
+/obj/item/weapon/card/emag/process()
+	if(energy < max_energy)
+		// Specified number of ticks has passed?  Add charge.
+		if(nticks >= recharge_ticks)
+			nticks = 0
+			energy = min(energy + recharge_rate, max_energy)
+		nticks ++
+	else
+		nticks = 0
+		processing_objects.Remove(src)
+
+/obj/item/weapon/card/emag/proc/canUse(var/mob/user, var/obj/machinery/M)
+	// We've already checked for emaggability.  All we do here is check cost.
+
+	// Infinite uses?  Just return true.
+	if(energy < 0)
+		return 1
+
+	var/cost=M.getEmagCost(user,src)
+
+	// Free to emag?  Return true every time.
+	if(cost == 0)
+		return 1
+
+	if(energy >= cost)
+		energy -= cost
+
+		// Start recharging, if we're supposed to.
+		if(energy < max_energy && recharge_rate && recharge_ticks)
+			if(!(src in processing_objects))
+				processing_objects.Add(src)
+
+		return 1
+
+	return 0
+
+/obj/item/weapon/card/emag/examine()
+	..()
+	if(energy==-1)
+		usr << "\The [name] has a tiny fusion generator for power."
+	else
+		usr << "This [name] has [energy]MJ left in its capacitor ([max_energy]MJ capacity)."
+	if(recharge_rate && recharge_ticks)
+		usr << "A small label on a thermocouple notes that it recharges at a rate of [recharge_rate]MJ for every [recharge_ticks>1?"":recharge_ticks] oscillator tick[recharge_ticks>1?"s":""]."
 
 /obj/item/weapon/card/id
 	name = "identification card"

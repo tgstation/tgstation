@@ -147,6 +147,11 @@
 	var/assistantlimit = 0 //enables assistant limiting
 	var/assistantratio = 2 //how many assistants to security members
 
+	var/emag_energy = -1
+	var/emag_starts_charged = 1
+	var/emag_recharge_rate = 0
+	var/emag_recharge_ticks = 0
+
 /datum/configuration/New()
 	. = ..()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -544,6 +549,14 @@
 					config.limbs_can_break = value
 				if("respawn_delay")
 					config.respawn_delay = value
+				if("emag_energy")
+					config.emag_energy = value
+				if("emag_starts_charged")
+					config.emag_starts_charged = value
+				if("emag_recharge_rate")
+					config.emag_recharge_rate = value
+				if("emag_recharge_ticks")
+					config.emag_recharge_ticks = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
