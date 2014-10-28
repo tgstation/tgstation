@@ -130,6 +130,10 @@ var/global/ingredientLimit = 10
 	if(istype(I,/obj/item/weapon/grab) || istype(I,/obj/item/tk_grab)) . = "It won't fit."
 	else if(istype(I,/obj/item/weapon/disk/nuclear)) . = "It's the fucking nuke disk!"
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks) || deepFriedEverything) . = "valid"
+	else if(istype(I,/obj/item/organ))
+		var/obj/item/organ/organ = I
+		if(organ.robotic) . = "That's a prosthetic. It wouldn't taste very good."
+		else . = "valid"
 	else . = "It's not edible food."
 	return
 
