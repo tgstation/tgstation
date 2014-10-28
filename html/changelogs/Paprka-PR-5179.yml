@@ -1,4 +1,0 @@
-author: Paprika
-delete-after: True
-changes:
-  - experiment: "Allowed constructs to assist in activating most runes. This includes conversion runes, but does NOT include sacrifice runes."

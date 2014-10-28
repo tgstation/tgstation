@@ -315,9 +315,9 @@
 
 	return
 
-/mob/living/Move(a, b, flag)
-	if (buckled)
-		return
+/mob/living/Move(atom/newloc, direct)
+	if (buckled && buckled.loc != newloc && !buckled.anchored)
+		return buckled.Move(newloc, direct)
 
 	if (restrained())
 		stop_pulling()
@@ -328,7 +328,7 @@
 		for(var/mob/living/M in range(src, 1))
 			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
 				t7 = null
-	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
+	if (t7 && pulling && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
 		var/turf/T = loc
 		. = ..()
 
@@ -395,12 +395,12 @@
 										if(check_dna_integrity(M)) //blood DNA
 											var/mob/living/carbon/DNA_helper = pulling
 											H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
-						pulling.Move(T)
+						pulling.Move(T, get_dir(pulling, T))
 						if(M)
 							M.start_pulling(t)
 				else
 					if (pulling)
-						pulling.Move(T)
+						pulling.Move(T, get_dir(pulling, T))
 	else
 		stop_pulling()
 		. = ..()
