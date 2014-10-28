@@ -217,7 +217,11 @@
 	src.overlays -= "[base_state]_ani"
 	if(being_built)
 		if(part.locked && research_flags &LOCKBOXES)
-			var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox //Make a lockbox
+			var/obj/item/weapon/storage/lockbox/L
+			if(research_flags &TRUELOCKS)
+				L = new/obj/item/weapon/storage/lockbox(src) //Make a lockbox
+			else
+				L = new /obj/item/weapon/storage/lockbox/unlockable(src) //Make an unlockable lockbox
 			being_built.loc = L //Put the thing in the lockbox
 			L.name += " ([being_built.name])"
 			being_built = L //Building the lockbox now, with the thing in it
