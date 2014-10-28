@@ -396,4 +396,4 @@
 		for(var/armour_value in armor) //but is weakened
 			armor[armour_value] = max(armor[armour_value]-acidpwr,0)
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
-			desc += "it looks slightly melted..."
+			desc += " it looks slightly melted..." //needs a space at the start, formatting
