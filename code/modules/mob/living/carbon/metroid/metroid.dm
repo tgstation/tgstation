@@ -35,7 +35,6 @@
 
 	var/attacked = 0 // determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
 	var/tame = 0 // if set to 1, the slime will not eat humans ever, or attack them
-	var/rabid = 0 // if set to 1, the slime will attack and eat anything it comes in contact with
 
 	var/list/Friends = list() // A list of potential friends
 	var/list/FriendsWeight = list() // A list containing values respective to Friends. This determines how many times a slime "likes" something. If the slime likes it more than 2 times, it becomes a friend
@@ -849,17 +848,20 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		if(M.stat)
 			user << "\red The slime is dead!"
 			return..()
-		if(M.mind)
-			user << "\red The slime resists!"
-			return ..()
 		var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
 		pet.icon_state = "[M.colour] baby slime"
 		pet.icon_living = "[M.colour] baby slime"
 		pet.icon_dead = "[M.colour] baby slime dead"
 		pet.colour = "[M.colour]"
-		user <<"You feed the slime the potion, removing it's powers and calming it."
+		user <<"You feed the slime the potion, removing its powers and calming it."
+		if(M.mind)
+			M.mind.transfer_to(pet)
 		del (M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+		var/newname = ""
+		if(pet.mind)//leaving the player-controlled slimes the ability to choose their new name
+			newname = copytext(sanitize(input(pet, "You have been fed a docility potion, what shall we call you?", "Give yourself a new name", "pet slime") as null|text),1,MAX_NAME_LEN)
+		else
+			newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
@@ -880,17 +882,20 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		if(M.stat)
 			user << "\red The slime is dead!"
 			return..()
-		if(M.mind)
-			user << "\red The slime resists!"
-			return ..()
 		var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
 		pet.icon_state = "[M.colour] adult slime"
 		pet.icon_living = "[M.colour] adult slime"
 		pet.icon_dead = "[M.colour] baby slime dead"
 		pet.colour = "[M.colour]"
-		user <<"You feed the slime the potion, removing it's powers and calming it."
+		user <<"You feed the slime the potion, removing its powers and calming it."
+		if(M.mind)
+			M.mind.transfer_to(pet)
 		del (M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+		var/newname = ""
+		if(pet.mind)//leaving the player-controlled slimes the ability to choose their new name
+			newname = copytext(sanitize(input(pet, "You have been fed an advanced docility potion, what shall we call you?", "Give yourself a new name", "pet slime") as null|text),1,MAX_NAME_LEN)
+		else
+			newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
@@ -1111,6 +1116,25 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/slime/has_eyes()
 	return 0
+
+/mob/living/carbon/slime/proc/rabid()
+	if(stat)
+		return
+	if(client)
+		return
+	if(isslimeadult(src))
+		var/mob/living/simple_animal/hostile/slime/adult/pet = new /mob/living/simple_animal/hostile/slime/adult(loc)
+		pet.icon_state = "[colour] adult slime eat"
+		pet.icon_living = "[colour] adult slime eat"
+		pet.icon_dead = "[colour] baby slime dead"
+		pet.colour = "[colour]"
+	else
+		var/mob/living/simple_animal/hostile/slime/pet = new /mob/living/simple_animal/hostile/slime(loc)
+		pet.icon_state = "[colour] baby slime eat"
+		pet.icon_living = "[colour] baby slime eat"
+		pet.icon_dead = "[colour] baby slime dead"
+		pet.colour = "[colour]"
+	del (src)
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 

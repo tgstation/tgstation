@@ -65,8 +65,8 @@
 			if(150 to 900) hungry = 1
 			if(0 to 149) starving = 1
 	AIproc = 1
-	//world << "AIproc [AIproc] && stat != 2 [stat] && (attacked > 0 [attacked] || starving [starving] || hungry [hungry] || rabid [rabid] || Victim [Victim] || Target [Target]"
-	while(AIproc && stat != 2 && (attacked > 0 || starving || hungry || rabid || Victim))
+	//world << "AIproc [AIproc] && stat != 2 [stat] && (attacked > 0 [attacked] || starving [starving] || hungry [hungry] || Victim [Victim] || Target [Target]"
+	while(AIproc && stat != 2 && (attacked > 0 || starving || hungry || Victim))
 		if(Victim) // can't eat AND have this little process at the same time
 			//world << "break 1"
 			break
@@ -353,7 +353,6 @@
 					M.powerlevel = round(powerlevel/4)
 					M.Friends = Friends
 					M.tame = tame
-					M.rabid = rabid
 					M.Discipline = Discipline
 					if(i != 1) step_away(M,src)
 					feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
@@ -367,7 +366,6 @@
 				A.powerlevel = max(0, powerlevel-1)
 				A.Friends = Friends
 				A.tame = tame
-				A.rabid = rabid
 				del(src)
 
 
@@ -386,12 +384,8 @@
 
 	if(Discipline > 0)
 
-		if(Discipline >= 5 && rabid)
-			if(prob(60)) rabid = 0
-
 		if(prob(10))
 			Discipline--
-
 
 	if(!client)
 
@@ -510,7 +504,7 @@
 					Target = targets[1] // closest target
 
 			if(targets.len > 0)
-				if(attacked > 0 || rabid)
+				if(attacked > 0 )
 					Target = targets[1] //closest mob probably attacked it, so override Target and attack the nearest!
 
 
