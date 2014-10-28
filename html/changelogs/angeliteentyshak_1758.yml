@@ -1,6 +1,0 @@
-author: Angelite Entyshak
-
-delete-after: True
-
-changes:
-  -bugfix:  Certain mobs can no longer be forced to walk indefinately by targeting guns with allowing hostages to walk. (I probably fucked up wording this.)
