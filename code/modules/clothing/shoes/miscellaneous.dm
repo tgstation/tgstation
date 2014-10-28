@@ -8,6 +8,7 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
+	unacidable = 1
 
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
@@ -22,6 +23,7 @@
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
 	strip_delay = 70
+	unacidable = 1
 
 /obj/item/clothing/shoes/swat/combat
 	name = "combat boots"
@@ -45,6 +47,7 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	unacidable = 1
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -67,6 +70,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 50
 	put_on_delay = 50
+	unacidable = 1
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
@@ -92,6 +96,7 @@
 	item_color = "hosred"
 	strip_delay = 50
 	put_on_delay = 50
+	unacidable = 1
 
 /obj/item/clothing/shoes/cult
 	name = "boots"
@@ -104,6 +109,7 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	unacidable = 1
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
