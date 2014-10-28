@@ -348,11 +348,6 @@
 		return 1
 	return 0
 
-/mob/newtonian_move(direction)
-	if(buckled && !buckled.anchored)
-		return buckled.newtonian_move(direction)
-	return ..()
-
 /mob/proc/mob_has_gravity(turf/T)
 	return has_gravity(src, T)
 

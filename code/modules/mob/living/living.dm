@@ -316,7 +316,7 @@
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if (buckled && newloc != buckled.loc)
+	if (buckled && buckled.loc != newloc && !buckled.anchored)
 		return buckled.Move(newloc, direct)
 
 	if (restrained())

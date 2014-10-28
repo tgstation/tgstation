@@ -24,12 +24,15 @@
 
 /obj/structure/stool/bed/Move(atom/newloc, direct) //Some bed children move
 	. = ..()
-	if(buckled_mob && buckled_mob.loc != loc)
-		if(!buckled_mob.Move(loc, get_dir(buckled_mob, loc)))
+	if(buckled_mob)
+		buckled_mob.buckled = null
+		if(!buckled_mob.Move(loc, direct))
 			loc = buckled_mob.loc //we gotta go back
-			inertia_dir = 0
-			buckled_mob.inertia_dir = 0
-			return 0
+			last_move = buckled_mob.last_move
+			inertia_dir = last_move
+			buckled_mob.inertia_dir = last_move
+			. = 0
+		buckled_mob.buckled = src
 
 /obj/structure/stool/bed/Process_Spacemove(var/movement_dir = 0)
 	if(buckled_mob)

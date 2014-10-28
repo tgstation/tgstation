@@ -67,7 +67,7 @@
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && isobj(usr.buckled))
+		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored)
 			spawn(0)
 				var/obj/B = usr.buckled
 				var/movementdirection = turn(direction,180)
