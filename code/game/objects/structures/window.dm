@@ -234,38 +234,17 @@
 		var/newrods = new /obj/item/stack/rods(loc)
 		transfer_fingerprints_to(newrods)
 
-/obj/structure/window/verb/rotate()
-	set name = "Rotate Window Counter-Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
+/obj/structure/window/MouseDrop(over,src_loc,over_loc)
+	..()
 	if(anchored)
-		usr << "It is fastened to the floor therefore you can't rotate it!"
+		usr << "It is fastened to the floor, therefore you can't rotate it!"
 		return 0
-
-	dir = turn(dir, 90)
-//	updateSilicate()
-	air_update_turf(1)
-	ini_dir = dir
-	add_fingerprint(usr)
-	return
-
-
-/obj/structure/window/verb/revrotate()
-	set name = "Rotate Window Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(anchored)
-		usr << "It is fastened to the floor therefore you can't rotate it!"
-		return 0
-
-	dir = turn(dir, 270)
-//	updateSilicate()
-	air_update_turf(1)
-	ini_dir = dir
-	add_fingerprint(usr)
-	return
+	var/d = get_dir_sane(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		dir = d
+		air_update_turf(1)
+		ini_dir = dir
+		add_fingerprint(usr)
 
 
 /*

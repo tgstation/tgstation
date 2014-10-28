@@ -139,3 +139,15 @@
 	if(src && isnull(gc_destroyed))
 		qdel(src)
 	return 2
+
+/obj/proc/get_sane(mob/user as mob)
+	if(!user || !isturf(user.loc) || !(src in view(1)))
+		return 0
+	if(user.stat || user.restrained())
+		return 0
+	return 1
+
+/obj/proc/get_dir_sane(mob/user as mob, source, target)
+	if(!get_sane(user))
+		return
+	return get_dir(source,target)

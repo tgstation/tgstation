@@ -31,17 +31,11 @@ var/list/doppler_arrays = list()
 			user << "<span class='notice'>You unfasten [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 
-/obj/machinery/doppler_array/verb/rotate()
-	set name = "Rotate Tachyon-doppler Dish"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!usr || !isturf(usr.loc))
-		return
-	if(usr.stat || usr.restrained())
-		return
-	src.dir = turn(src.dir, 90)
-	return
+/obj/machinery/doppler_array/MouseDrop(over,src_loc,over_loc)
+	..()
+	var/d = get_dir_sane(usr,src_loc,over_loc)
+	if(d in cardinal)
+		dir = d
 
 /obj/machinery/doppler_array/proc/sense_explosion(var/x0,var/y0,var/z0,var/devastation_range,var/heavy_impact_range,var/light_impact_range,
 												  var/took,var/orig_dev_range,var/orig_heavy_range,var/orig_light_range)

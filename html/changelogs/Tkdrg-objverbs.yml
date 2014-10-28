@@ -1,0 +1,4 @@
+author: Tkdrg
+delete-after: true
+changes:
+  - tweak: The object verbs Rotate, Flip, and such have been replaced with a new system. Drag the object towards a cardinal direction to set it, and, if the object is flippable, drag it to the same direction as its current one to flip it. Affected objects: doppler array, pipe, disposals pipe, transit tubes, chairs, windows, windoors, emitters and PA parts.

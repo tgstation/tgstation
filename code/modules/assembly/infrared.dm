@@ -125,13 +125,12 @@
 	if(usr)
 		attack_self(usr)
 
-/obj/item/device/assembly/infra/verb/rotate()//This could likely be better
-	set name = "Rotate Infrared Laser"
-	set category = "Object"
-	set src in usr
+/obj/item/device/assembly/infra/MouseDrop(over,src_loc,over_loc)
+	..()
+	var/d = get_dir_sane(usr,src_loc,over_loc)
+	if(d && d in cardinal)
+		dir = d
 
-	dir = turn(dir, 90)
-	return
 
 
 
