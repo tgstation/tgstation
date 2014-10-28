@@ -1222,7 +1222,6 @@
 #include "code\modules\reagents\grenade_launcher.dm"
 #include "code\modules\reagents\reagent_containers.dm"
 #include "code\modules\reagents\reagent_dispenser.dm"
-#include "code\modules\reagents\SPACETOBREATH.dm"
 #include "code\modules\reagents\syringe_gun.dm"
 #include "code\modules\reagents\reagent_containers\borghydro.dm"
 #include "code\modules\reagents\reagent_containers\dropper.dm"
