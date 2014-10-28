@@ -309,3 +309,7 @@
 		spawn(50)
 			if(O)	qdel(O)
 	return
+
+/turf/simulated/wall/singularity_pull(S, current_size)
+	if(current_size >= 7)
+		dismantle_wall()
