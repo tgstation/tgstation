@@ -588,3 +588,12 @@ turf/simulated/floor/proc/update_icon()
 					icon_state = icon_plating
 					burnt = 0
 					broken = 0
+
+/turf/simulated/floor/singularity_pull(S, current_size)
+	if(current_size >= 5)
+		if(!broken && !burnt && !is_plating() && src)
+			new floor_tile.type(src)
+		if(current_size >= 9)
+			ReplaceWithLattice()
+			return
+		else make_plating()
