@@ -1480,8 +1480,13 @@ datum
 				else
 					send_admin_alert(holder, reaction_name="red slime + blood (Slime Frenzy) in a grenade")
 				for(var/mob/living/carbon/slime/slime in viewers(get_turf(holder.my_atom), null))
-					slime.tame = 0
-					slime.rabid = 1
+					slime.rabid()
+					holder.my_atom.visible_message("<span class='warning'>The [slime] is driven into a frenzy !</span>")
+				for(var/mob/living/simple_animal/slime/slime in viewers(get_turf(holder.my_atom), null))
+					slime.rabid()
+					holder.my_atom.visible_message("<span class='warning'>The [slime] is driven into a frenzy !</span>")
+				for(var/mob/living/simple_animal/adultslime/slime in viewers(get_turf(holder.my_atom), null))
+					slime.rabid()
 					holder.my_atom.visible_message("<span class='warning'>The [slime] is driven into a frenzy !</span>")
 
 //Pink

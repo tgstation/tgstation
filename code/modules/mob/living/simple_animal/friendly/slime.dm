@@ -69,7 +69,7 @@
 	overlays += "aslime-:33"
 
 
-/mob/living/simple_animal/slime/adult/Die()
+/mob/living/simple_animal/adultslime/Die()
 	var/mob/living/simple_animal/slime/S1 = new /mob/living/simple_animal/slime (src.loc)
 	S1.icon_state = "[src.colour] baby slime"
 	S1.icon_living = "[src.colour] baby slime"
@@ -81,3 +81,28 @@
 	S2.icon_dead = "[src.colour] baby slime dead"
 	S2.colour = "[src.colour]"
 	del(src)
+
+
+/mob/living/simple_animal/slime/proc/rabid()
+	if(stat)
+		return
+	if(client)
+		return
+	var/mob/living/simple_animal/hostile/slime/pet = new /mob/living/simple_animal/hostile/slime(loc)
+	pet.icon_state = "[colour] baby slime eat"
+	pet.icon_living = "[colour] baby slime eat"
+	pet.icon_dead = "[colour] baby slime dead"
+	pet.colour = "[colour]"
+	del (src)
+
+/mob/living/simple_animal/adultslime/proc/rabid()
+	if(stat)
+		return
+	if(client)
+		return
+	var/mob/living/simple_animal/hostile/slime/adult/pet = new /mob/living/simple_animal/hostile/slime/adult(loc)
+	pet.icon_state = "[colour] baby adult eat"
+	pet.icon_living = "[colour] baby adult eat"
+	pet.icon_dead = "[colour] baby slime dead"
+	pet.colour = "[colour]"
+	del (src)
