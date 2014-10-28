@@ -311,5 +311,10 @@
 	return
 
 /turf/simulated/wall/singularity_pull(S, current_size)
-	if(current_size >= 7)
-		dismantle_wall()
+	if(current_size >= 9)
+		if(prob(50))
+			dismantle_wall()
+		return
+	if(current_size == 7)
+		if(prob(30))
+			dismantle_wall()
