@@ -775,7 +775,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		usr << "Admin only."
 		return
-	for(var/obj/machinery/telecomms/server/S in world)
+	for(var/obj/machinery/telecomms/server/S in telecomms_list)
 		var/datum/TCS_Compiler/C = S.Compiler
 		S.rawcode = ""
 		C.Compile("")
