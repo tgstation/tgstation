@@ -22,6 +22,7 @@
 	var/obj/item/ammo_casing/chambered = null
 	var/trigger_guard = 1
 	var/sawn_desc = null
+	var/large_gun = 0
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -85,6 +86,11 @@
 			if(H.dna && NOGUNS in H.dna.species.specflags)
 				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
 				return
+
+	if(large_gun)
+		if(user.get_inactive_hand())
+			user << "<span class='warning'>[src] is too heavy to aim with one hand!</span>"
+			return
 
 	add_fingerprint(user)
 

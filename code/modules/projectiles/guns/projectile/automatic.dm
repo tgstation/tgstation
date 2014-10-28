@@ -72,6 +72,7 @@
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0
+	large_gun = 1
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
