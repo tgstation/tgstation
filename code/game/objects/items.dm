@@ -379,5 +379,6 @@
 
 /obj/item/singularity_pull(S, current_size)
 	if(current_size >= 5)
-		throw_at(S,14,3)
+		spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
+			throw_at(S,14,3)
 	else ..()
