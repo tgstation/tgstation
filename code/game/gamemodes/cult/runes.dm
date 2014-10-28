@@ -94,7 +94,7 @@ var/list/sacrificed = list()
 		"<span class='warning'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 		"<span class='warning'>You smell ozone.</span>")
 
-		swapping = new/list()
+		swapping = list()
 		for(var/obj/O in IP.loc)//filling a list with all the teleportable atoms on the other rune
 			if(!O.anchored)
 				swapping += O
@@ -112,7 +112,7 @@ var/list/sacrificed = list()
 		for(var/mob/M in swapping)
 			M.loc = src.loc
 
-		swapping = null
+		swapping = 0
 		return
 	return fizzle()
 
