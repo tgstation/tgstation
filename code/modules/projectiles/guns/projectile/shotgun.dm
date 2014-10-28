@@ -137,7 +137,6 @@
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/improvised
 	sawn_desc = "I'm just here for the gasoline."
-	trigger_guard = 0
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
