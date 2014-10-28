@@ -858,7 +858,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			M.mind.transfer_to(pet)
 		del (M)
 		var/newname = ""
-		if(pet.mind)//leaving the player-controlled slimes the ability to choose their new name
+		if(pet.client)//leaving the player-controlled slimes the ability to choose their new name
 			newname = copytext(sanitize(input(pet, "You have been fed a docility potion, what shall we call you?", "Give yourself a new name", "pet slime") as null|text),1,MAX_NAME_LEN)
 		else
 			newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
@@ -892,7 +892,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			M.mind.transfer_to(pet)
 		del (M)
 		var/newname = ""
-		if(pet.mind)//leaving the player-controlled slimes the ability to choose their new name
+		if(pet.client)//leaving the player-controlled slimes the ability to choose their new name
 			newname = copytext(sanitize(input(pet, "You have been fed an advanced docility potion, what shall we call you?", "Give yourself a new name", "pet slime") as null|text),1,MAX_NAME_LEN)
 		else
 			newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
