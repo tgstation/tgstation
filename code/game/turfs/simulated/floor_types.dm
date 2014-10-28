@@ -113,13 +113,6 @@
 /turf/simulated/floor/engine/cult/cultify()
 	return
 
-/turf/simulated/floor/engine/cult/narsie//version that spawns on Nar-Sie's path
-	name = "engraved floor"
-	desc = "something that goes beyond your understanding went this way"
-	icon_state = "cult-narsie"
-	luminosity = 1
-	l_color = "#3e0000"
-
 
 /turf/simulated/floor/engine/n20
 	New()
@@ -191,8 +184,10 @@
 	icon_state = "floor"
 
 /turf/simulated/shuttle/floor/cultify()
-	ChangeTurf(/turf/simulated/floor/engine/cult)
-	cultification()
+	if((icon_state != "cult")&&(icon_state != "cult-narsie"))
+		name = "engraved floor"
+		icon_state = "cult"
+		cultification()
 	return
 
 /turf/simulated/shuttle/plating
@@ -205,8 +200,10 @@
 	icon_state = "floor4"
 
 /turf/simulated/shuttle/floor4/cultify()
-	ChangeTurf(/turf/simulated/floor/engine/cult)
-	cultification()
+	if((icon_state != "cult")&&(icon_state != "cult-narsie"))
+		name = "engraved floor"
+		icon_state = "cult"
+		cultification()
 	return
 
 /turf/simulated/floor/beach

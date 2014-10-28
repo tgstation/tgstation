@@ -229,7 +229,7 @@
 		if (!istype(user.loc,/turf))
 			user << "<span class='warning'> You do not have enough space to write a proper rune.</span>"
 			return
-		var/list/runes = list("Teleport", "Item Teleport", "Spawn a Tome", "Change Construct Type", "Convert", "EMP", "Drain Blood", "See Invisible", "Resurrect", "Hide Runes", "Reveal Runes", "Astral Journey", "Manifest a Ghost", "Imbue Talisman", "Sacrifice", "Wall", "Free Cultist", "Summon Cultist", "Deafen", "Blind", "BloodBoil", "Communicate", "Stun")
+		var/list/runes = list("Teleport", "Teleport Other", "Spawn a Tome", "Change Construct Type", "Convert", "EMP", "Drain Blood", "See Invisible", "Resurrect", "Hide Runes", "Reveal Runes", "Astral Journey", "Manifest a Ghost", "Imbue Talisman", "Sacrifice", "Wall", "Free Cultist", "Summon Cultist", "Deafen", "Blind", "BloodBoil", "Communicate", "Stun")
 		r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 		var/obj/effect/rune/R = new /obj/effect/rune(user.loc)
 		switch(r)
@@ -244,7 +244,7 @@
 					R.word2=cultwords["self"]
 					R.word3=beacon
 					R.check_icon()
-			if("Item Teleport")
+			if("Teleport Other")
 				if(user.runecooldown >= 10)
 					user.runecooldown = 0
 					var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")

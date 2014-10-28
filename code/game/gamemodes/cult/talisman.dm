@@ -10,6 +10,7 @@
 	return
 
 /obj/item/weapon/paper/talisman/New()
+	..()
 	pixel_x=0
 	pixel_y=0
 
@@ -29,7 +30,11 @@
 			if("revealrunes")
 				call(/obj/effect/rune/proc/revealrunes)(src)
 			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
+				var/turf/T1 = get_turf(user)
 				call(/obj/effect/rune/proc/teleport)(imbue)
+				var/turf/T2 = get_turf(user)
+				if(T1!=T2)
+					T1.invocanimation("rune_teleport")
 			if("communicate")
 				//If the user cancels the talisman this var will be set to 0
 				delete = call(/obj/effect/rune/proc/communicate)()
