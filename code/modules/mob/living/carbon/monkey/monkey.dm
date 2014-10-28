@@ -409,12 +409,8 @@
 /mob/living/carbon/monkey/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	if(wear_mask)
 		if(!wear_mask.unacidable)
-			if(wear_mask.acid_act(acidpwr))
-				src << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-				update_inv_wear_mask()
-			else
-				src << "<span class='warning'>Your mask is weakened, but protects you from the acid!</span>"
-			return
+			wear_mask.acid_act(acidpwr)
+			update_inv_wear_mask()
 		else
 			src << "<span class='warning'>Your mask protects you from the acid.</span>"
 		return
