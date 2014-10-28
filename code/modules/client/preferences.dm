@@ -191,6 +191,7 @@ datum/preferences
 			<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</b></a><br>
 			<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</b></a><br>
 			<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles & CHAT_GHOSTRADIO) ? "Nearest Speakers" : "All Chatter"]</b></a><br>
+			<b>Ghost PDA:</b> <a href='?_src_=prefs;preference=ghost_pda'><b>[(toggles & CHAT_GHOSTPDA) ? "No PDA Messages" : "All PDA Messages"]</b></a><br>
 			<b>Special Windows:</b><a href='?_src_=prefs;preference=special_popup'><b>[special_popup ? "Yes" : "No"]</b></a><br>"}
 		// END AUTOFIX
 		if(config.allow_Metadata)
@@ -1144,6 +1145,9 @@ datum/preferences
 
 					if("ghost_radio")
 						toggles ^= CHAT_GHOSTRADIO
+
+					if("ghost_pda")
+						toggles ^= CHAT_GHOSTPDA
 
 					if("save")
 						if(world.timeofday >= (lastPolled + POLLED_LIMIT))
