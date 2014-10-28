@@ -36,13 +36,12 @@
 	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/weapon/nullrod/verb/holy_reskin()
+/obj/item/weapon/nullrod/verb/holy_reskin(mob/M, mob/usr)
 	set name = "Reskin Holy Weapon"
 	set category = "Object"
 	set desc = "Click to choose another holy weapon."
 
-	var/mob/M = usr
-	var/holy_reskin = input(usr, "Please choose your holy weapon.","Choose your holy weapon.",null) as null|anything in list("Null Rod","Crucifix","Holy Whip","Blessed Stake")
+	var/holy_reskin = input(usr, "Please choose your holy weapon.","Choose your holy weapon.",null) as null|anything in list("Null Rod","Crucifix","Holy Whip")
 
 	if(src && !M.stat && in_range(M,src))
 		switch(holy_reskin)
@@ -58,10 +57,6 @@
 				name = "holy whip"
 				icon_state = "chapchain"
 				item_state = "chain"
-			if("Blessed Stake")
-				name = "blessed stake"
-				icon_state = "stake"
-				item_state = "nullrod"
 			else
 				return
 		M.update_inv_l_hand()
