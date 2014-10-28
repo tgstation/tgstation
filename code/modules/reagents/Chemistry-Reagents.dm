@@ -1633,78 +1633,20 @@ datum/reagent/toxin/acid
 	reagent_state = LIQUID
 	color = "#DB5008" // rgb: 219, 80, 8
 	toxpwr = 1
-	var/meltprob = 10
+	var/acidpwr = 10 //the amount of protection removed from the armour
 
-datum/reagent/toxin/acid/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//magic numbers everywhere
-	if(!istype(M, /mob/living))
+datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/volume)
+	if(!istype(C))
 		return
-	if(method == TOUCH)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
+	if(method != TOUCH)
+		if(!C.unacidable)
+			C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
+			return
 
-			if(H.head)
-				if(prob(meltprob) && !H.head.unacidable)
-					H << "<span class='danger'>Your headgear melts away but protects you from the acid!</span>"
-					qdel(H.head)
-					H.update_inv_head(0)
-					H.update_hair(0)
-				else
-					H << "<span class='warning'>Your headgear protects you from the acid.</span>"
-				return
-
-			if(H.wear_mask)
-				if(prob(meltprob) && !H.wear_mask.unacidable)
-					H << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-					qdel(H.wear_mask)
-					H.update_inv_wear_mask(0)
-					H.update_hair(0)
-				else
-					H << "<span class='warning'>Your mask protects you from the acid.</span>"
-				return
-
-			if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
-				if(prob(meltprob) && !H.glasses.unacidable)
-					H << "<span class='danger'>Your glasses melts away!</span>"
-					qdel(H.glasses)
-					H.update_inv_glasses(0)
-
-		else if(ismonkey(M))
-			var/mob/living/carbon/monkey/MK = M
-			if(MK.wear_mask)
-				if(!MK.wear_mask.unacidable)
-					MK << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-					qdel(MK.wear_mask)
-					MK.update_inv_wear_mask(0)
-				else
-					MK << "<span class='warning'>Your mask protects you from the acid.</span>"
-				return
-
-		if(!M.unacidable)
-			if(istype(M, /mob/living/carbon/human) && volume >= 3)
-				var/mob/living/carbon/human/H = M
-				var/obj/item/organ/limb/affecting = H.get_organ("head")
-				if(affecting)
-					if(affecting.take_damage(4*toxpwr, 2*toxpwr))
-						H.update_damage_overlays(0)
-					if(prob(meltprob)) //Applies disfigurement
-						H.emote("scream")
-						H.facial_hair_style = "Shaved"
-						H.hair_style = "Bald"
-						H.update_hair(0)
-						H.status_flags |= DISFIGURED
-			else
-				M.take_organ_damage(min(6*toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
-	else
-		if(!M.unacidable)
-			M.take_organ_damage(min(6*toxpwr, volume * toxpwr))
+	C.acid_act(acidpwr, toxpwr, volume)
 
 datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
-	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
-		if(!O.unacidable)
-			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(get_turf(O))
-			I.desc = "Looks like this was \an [O] some time ago."
-			O.visible_message("<span class='danger'> \the [O] melts.</span>")
-			qdel(O)
+	O.acid_act(acidpwr, toxpwr, volume)
 
 datum/reagent/toxin/acid/polyacid
 	name = "Polytrinic acid"
@@ -1713,7 +1655,7 @@ datum/reagent/toxin/acid/polyacid
 	reagent_state = LIQUID
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
-	meltprob = 30
+	acidpwr = 20
 
 datum/reagent/toxin/coffeepowder
 	name = "Coffee Grounds"
