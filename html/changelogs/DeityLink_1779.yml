@@ -1,9 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - tweak: Narsie now converts floor tiles by changing their icon, rather than using changeTurf().
-  - bugfix: Replacing a hundred of /red with <span class='warning'.
-  - bugfix: Fixing Teleport talismans not working.
-  - tweak: The Teleport Other rune now actually swaps the objects and mobs between the two runes rather than just sending them from the touched rune to the other.
-  - tweak: Reduced the self-inflicted damage of both this rune and the Free Cultist rune (Because sending 3 cultists into crit to summon one sounds a bit wonky to me, take_overall_damage ain't no joke).
-  - imageadd: Added animations for the Summon Cultist rune. (and people near the cultist before he gets summoned get a message)
