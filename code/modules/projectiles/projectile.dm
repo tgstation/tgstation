@@ -137,6 +137,9 @@
 	else
 		return 1
 
+/obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
+	return 1 //Bullets don't drift in space
+
 
 /obj/item/projectile/process()
 	if(kill_count < 1)
