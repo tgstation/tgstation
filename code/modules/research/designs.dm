@@ -2280,7 +2280,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("combat" = 4, "syndicate" = 3)
 	build_path = /obj/item/borg/upgrade/syndicate
 	category = "Cyborg Upgrade Modules"
-	materials = list("m$etal"=10000,"$glass"=15000,"$diamond" = 10000)
+	materials = list("$iron"=10000,"$glass"=15000,"$diamond" = 10000)
 
 /datum/design/medical_module_surgery
 	name = "medical module board"

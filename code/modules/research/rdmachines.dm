@@ -15,7 +15,6 @@
 	var/hack_wire
 	var/disable_wire
 	var/shock_wire
-	var/opened = 0
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/output
 	var/stopped = 0
@@ -80,7 +79,7 @@
 /obj/machinery/r_n_d/attack_hand(mob/user as mob)
 	if (shocked)
 		shock(user,50)
-	if(opened)
+	if(panel_open)
 		var/dat as text
 		dat += "[src.name] Wires:<BR>"
 		for(var/wire in src.wires)
@@ -178,7 +177,7 @@
 	if( ..() )
 		return 1
 	if (istype(O, /obj/item/device/multitool))
-		if(!opened && research_flags &HASOUTPUT)
+		if(!panel_open && research_flags &HASOUTPUT)
 			var/result = input("Set your location as output?") in list("Yes","No","Machine Location")
 			switch(result)
 				if("Yes")
