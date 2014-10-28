@@ -60,9 +60,9 @@
 
 
 var/global/loopModeNames=list(
-	JUKEMODE_SHUFFLE = "Shuffle",
+	JUKEMODE_SHUFFLE     = "Shuffle",
 	JUKEMODE_REPEAT_SONG = "Single",
-	JUKEMODE_PLAY_ONCE= "Once",
+	JUKEMODE_PLAY_ONCE   = "Once",
 )
 /obj/machinery/media/jukebox
 	name = "Jukebox"

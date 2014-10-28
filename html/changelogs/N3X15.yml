@@ -1,3 +1,4 @@
 author: N3X15
 changes: 
  - bugfix: "VLC is now used for all media, fixing issues with Windows Media Player."
+ - bugfix: "Jukeboxes properly unhook from areas when unwrenched."

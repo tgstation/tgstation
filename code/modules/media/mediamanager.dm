@@ -3,7 +3,7 @@
  *
  * Concept stolen from D2K5
  *
- * Rewritten (except for player HTML) by N3X15
+ * Rewritten by N3X15
  ***********************/
 
 // Uncomment to test the mediaplayer
