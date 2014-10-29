@@ -200,7 +200,7 @@
 
 	else if (href_list["stationary"])
 		stationary_mode = !stationary_mode
-		path = new()
+		path = list()
 		updateicon()
 
 	else if (href_list["virus"])
@@ -298,7 +298,7 @@
 		patient = null
 		mode = BOT_IDLE
 		last_found = world.time
-		path = new()
+		path = list()
 
 	if(!patient)
 		if(!shut_up && prob(1))
@@ -317,14 +317,16 @@
 		return
 
 	//Patient has moved away from us!
-	else if(patient && (path.len) && (get_dist(patient,path[path.len]) > 2))
-		path = new()
+	else if(patient && path && path.len && (get_dist(patient,path[path.len]) > 2))
+		path = list()
 		mode = BOT_IDLE
 		last_found = world.time
 
 	if(!stationary_mode && patient && path.len == 0 && (get_dist(src,patient) > 1))
 		spawn(0)
 			path = AStar(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
+			if(!path)
+				path = list()
 
 	if(path.len > 0 && patient)
 		if(!bot_move(patient))
