@@ -49,6 +49,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/nick = "" //our NTRC nick
 	var/list/ntrclog = list() //NTRC message log
 
+	var/noreturn = 0 //whether the PDA can use the Return button, used for the aiPDA
+
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-medical"
@@ -191,13 +193,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/ai
 	icon_state = "NONE"
 	ttone = "data"
+	mode = 5
+	noreturn = 1
 	detonate = 0
 
 /obj/item/device/pda/ai/attack_self(mob/user as mob)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
-	return
+	..()
 
 /obj/item/device/pda/ai/pai
 	ttone = "assist"
@@ -262,7 +266,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if ((!isnull(cartridge)) && (mode == 0))
 		dat += " | <a href='byond://?src=\ref[src];choice=Eject'><img src=pda_eject.png> Eject [cartridge]</a>"
-	if (mode)
+	if (mode && !noreturn)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=pda_menu.png> Return</a>"
 	dat += " | <a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 
@@ -1074,6 +1078,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		//0
 		aiPDA.silent = !aiPDA.silent
 		usr << "<span class='notice'>PDA ringer toggled [(aiPDA.silent ? "Off" : "On")]!</span>"
+	else
+		usr << "You do not have a PDA. You should make an issue report about this."
+
+/mob/living/silicon/ai/verb/cmd_use_chatroom()
+	set category = "AI Commands"
+	set name = "PDA - Chatrooms"
+	if(usr.stat == 2)
+		usr << "You can't do that because you are dead!"
+		return
+	if(!isnull(aiPDA))
+		aiPDA.mode = 5
+		aiPDA.attack_self(src)
 	else
 		usr << "You do not have a PDA. You should make an issue report about this."
 
