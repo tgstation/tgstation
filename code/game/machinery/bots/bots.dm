@@ -234,34 +234,36 @@
 			user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
 		else
 			user << "<span class='warning'>Maintenance panel is locked.</span>"
-	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
-		if(health < maxhealth)
-			if(open)
-				var/obj/item/weapon/weldingtool/WT = W
-				if(!WT.isOn())
-					user << "<span class='warning'>The welder must be on for this task.</span>"
-				health = min(maxhealth, health+10)
-				user.visible_message("<span class='danger'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
-			else
-				user << "<span class='notice'>Unable to repair with the maintenance panel closed.</span>"
-		else
-			user << "<span class='notice'>[src] does not need a repair.</span>"
 	else if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
 		Emag(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(W.force) //if force is non-zero
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(5, 1, src)
-			switch(W.damtype)
-				if("fire")
-					health -= W.force * fire_dam_coeff
-					s.start()
-				if("brute")
-					health -= W.force * brute_dam_coeff
-					s.start()
-			..()
-			healthcheck()
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+			if(health >= maxhealth)
+				user << "<span class='warning'>[src] does not need a repair.</span>"
+				return
+			if(!open)
+				user << "<span class='warning'>Unable to repair with the maintenance panel closed.</span>"
+				return
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.remove_fuel(0, user))
+				health = min(maxhealth, health+10)
+				user.visible_message("<span class='notice'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
+			else
+				user << "<span class='warning'>The welder must be on for this task.</span>"
+		else
+			if(W.force) //if force is non-zero
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(5, 1, src)
+				switch(W.damtype)
+					if("fire")
+						health -= W.force * fire_dam_coeff
+						s.start()
+					if("brute")
+						health -= W.force * brute_dam_coeff
+						s.start()
+				..()
+				healthcheck()
 
 
 /obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)

@@ -520,8 +520,8 @@
 		src.visible_message("The [A] fastens firmly to [src].")
 		return
 	if(prob(src.deflect_chance) || istype(A, /mob))
-		src.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
-		src.visible_message("The [A] bounces off the [src.name] armor")
+		src.occupant_message("<span class='notice'>[A] bounces off the armor.</span>")
+		src.visible_message("[A] bounces off the [src.name] armor")
 		src.log_append_to_last("Armor saved.")
 		if(istype(A, /mob/living))
 			var/mob/living/M = A
@@ -738,19 +738,22 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.remove_fuel(0,user))
-			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
-				clearInternalDamage(MECHA_INT_TANK_BREACH)
-				user << "<span class='notice'>You repair the damaged gas tank.</span>"
-		else
-			return
 		if(src.health<initial(src.health))
-			user << "<span class='notice'>You repair some damage to [src.name].</span>"
-			src.health += min(10, initial(src.health)-src.health)
+			if (WT.remove_fuel(0,user))
+				if (hasInternalDamage(MECHA_INT_TANK_BREACH))
+					clearInternalDamage(MECHA_INT_TANK_BREACH)
+					user << "<span class='notice'>You repair the damaged gas tank.</span>"
+				else
+					user.visible_message("<span class='notice'>[user] repairs some damage to [src.name].</span>")
+					src.health += min(10, initial(src.health)-src.health)
+			else
+				user << "<span class='warning'>The welder must be on for this task.</span>"
+				return 1
 		else
-			user << "The [src.name] is at full integrity"
-		return
+			user << "<span class='warning'>The [src.name] is at full integrity.</span>"
+		return 1
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
 		if(!user.unEquip(W))

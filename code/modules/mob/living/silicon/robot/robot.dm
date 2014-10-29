@@ -397,29 +397,30 @@
 		return
 
 	if (istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (src == user)
 			user << "<span class='warning'>You lack the reach to be able to repair yourself.</span>"
-			return
+			return 1
 		if (src.health >= src.maxHealth)
 			user << "<span class='warning'>[src] is already in good condition.</span>"
-			return
-		if (WT.remove_fuel(0))
+			return 1
+		if (WT.remove_fuel(0, user))
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("<span class='danger'>[user] has fixed some of the dents on [src]!</span>"), 1)
+			visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
+			return 0
 		else
-			return
+			user << "<span class='warning'>The welder must be on for this task.</span>"
+			return 1
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
 			adjustFireLoss(-30)
 			updatehealth()
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("<span class='danger'>[user] has fixed some of the burnt wires on [src]!</span>"), 1)
+			visible_message("<span class='notice'>[user] has fixed some of the burnt wires on [src].</span>")
 		else
 			user << "<span class='warning'>You need one length of cable to repair [src].</span>"
 
