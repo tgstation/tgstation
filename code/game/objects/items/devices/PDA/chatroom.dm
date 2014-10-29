@@ -96,8 +96,6 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 			return register_auth(client,nick,cmd[2])
 		if("mute")
 			return mute_nick(client,nick,cmd[2])
-		if("new")
-			return new_channel(client,nick,cmd[2])
 		if("pass")
 			return new_pass(client,nick,cmd[2])
 
@@ -140,6 +138,8 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 	return 0
 
 /datum/chatroom/proc/channel_join(client,nick,channel) //join
+	if(!dd_hasprefix(channel,"#"))
+		channel = "#" + channel
 	if(channel == name)
 		if(nick in banned || nick in users)
 			return 0
@@ -148,6 +148,10 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 		evlist[nick] = events.addEvent("msg_chat",client,"msg_chat")
 		return 1
 	else
+		if(!(channel in chatchannels))
+			var/ret = new_channel(client,nick,channel)
+			if(!ret)
+				return 0
 		channel_part(client,nick)
 		var/datum/chatroom/C = chatchannels[channel]
 		return C.parse_msg(client,nick,"/join [channel]")
@@ -219,9 +223,10 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 		return 1
 	return 0
 
-/datum/chatroom/proc/new_channel(client,nick,target) //new
-	if(!(target in chatchannels))
-		chatchannels[target] = new /datum/chatroom()
+/datum/chatroom/proc/new_channel(client,nick,target) //called by join
+	if(target in chatchannels)
+		return 0
+	chatchannels[target] = new /datum/chatroom()
 	var/datum/chatroom/C = chatchannels[target]
 	C.name = target
 	C.operators += nick
