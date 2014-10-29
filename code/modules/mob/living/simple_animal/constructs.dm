@@ -238,5 +238,5 @@
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
-/mob/living/simple_animal/construct/harvester/Process_Spacemove(var/check_drift = 0)
+/mob/living/simple_animal/construct/harvester/Process_Spacemove(var/movement_dir = 0)
 	return 1

@@ -1,4 +1,0 @@
-author: phil235
-delete-after: True
-changes: 
-  - rscadd: "Closets and its children can no longer contain a near infinite amount of mobs. Large mobs (juggernaut, alien emperess, etc) don't fit, small mobs (mouse, parrot, etc) still fit in the same amounts, human-sized mob (humanoid, slime, etc) fit but maximum two per body bag and three for all the other closets. Adding bluespace body bag to R&D, it can hold even large mobs and in large amounts."

@@ -102,7 +102,6 @@
 	var/obj/item/stack/sheet/s
 	var/dat
 
-	dat += text("<b>Ore Redemption Machine</b><br><br>")
 	dat += text("This machine only accepts ore. Gibtonite and Slag are not accepted.<br><br>")
 	dat += text("Current unclaimed points: [points]<br>")
 
@@ -115,6 +114,8 @@
 	for(var/O in stack_list)
 		s = stack_list[O]
 		if(s.amount > 0)
+			if(O == stack_list[1])
+				dat += "<br>"		//just looks nicer
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
 	if((/obj/item/stack/sheet/metal in stack_list) && (/obj/item/stack/sheet/mineral/plasma in stack_list))
@@ -123,10 +124,11 @@
 		if(min(metalstack.amount, plasmastack.amount))
 			dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];plasteel=1'>Smelt</A><BR>")
 
-	dat += text("<HR><b>Mineral Value List:</b><BR>[get_ore_values()]")
+	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
-	user << browse("[dat]", "window=console_stacking_machine")
-
+	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/machinery/mineral/ore_redemption/proc/get_ore_values()
@@ -274,19 +276,20 @@
 
 /obj/machinery/mineral/equipment_vendor/interact(mob/user)
 	var/dat
-	dat += text("<b>Mining Equipment vendor</b><br><br>")
-
+	dat +="<div class='statusDisplay'>"
 	if(istype(inserted_id))
 		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
 	else
 		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>"
-
-	dat += "<HR><b>Equipment point cost list:</b><BR><table border='0' width='200'>"
+	dat += "</div>"
+	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='200'>"
 	for(var/datum/data/mining_equipment/prize in prize_list)
 		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=\ref[src];purchase=\ref[prize]'>Purchase</A></td></tr>"
 	dat += "</table>"
 
-	user << browse("[dat]", "window=mining_equipment_vendor")
+	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 350)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
@@ -453,8 +456,7 @@
 					shake_camera(L, 20, 1)
 					spawn(20)
 						if(L)
-							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>", \
-												"<span class='userdanger'>You throw up from travelling through the [src.name]!</span>")
+							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>", "<span class='userdanger'>You throw up from travelling through the [src.name]!</span>")
 							L.nutrition -= 20
 							L.adjustToxLoss(-3)
 							var/turf/T = get_turf(L)
