@@ -10,6 +10,16 @@
 	..()
 	del(src)
 
+//mob verbs are a lot faster than object verbs
+//for more info on why this is not atom/pull, see examinate() in mob.dm
+/mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
+	set name = "Pull"
+	set category = "Object"
+
+	if(AM.Adjacent(src))
+		src.start_pulling(AM)
+	return
+
 /mob/living/verb/succumb(var/whispered as null)
 	set hidden = 1
 	if (InCritical())

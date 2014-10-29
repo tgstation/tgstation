@@ -79,6 +79,8 @@ var/next_mob_id = 0
 
 /mob/visible_message(var/message, var/self_message, var/blind_message)
 	for(var/mob/M in viewers(src))
+		if(M.see_invisible < invisibility)
+			continue //can't view the invisible
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
@@ -91,10 +93,6 @@ var/next_mob_id = 0
 /atom/proc/visible_message(var/message, var/blind_message)
 	for(var/mob/M in viewers(src))
 		M.show_message( message, 1, blind_message, 2)
-
-
-
-
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -299,15 +297,14 @@ var/list/slot_equipment_priority = list( \
 	A.examine(src)
 
 //same as above
+//note: ghosts can point, this is intended as visible_message was changed to handle that properly
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
 
 	if(!src || !isturf(src.loc))
 		return
-	if(src.stat || src.restrained())
-		return
-	if(src.status_flags & FAKEDEATH)
+	if(src.restrained() || (src.status_flags & FAKEDEATH))
 		return
 	if(!(A in view(src.loc)))
 		return
@@ -321,19 +318,41 @@ var/list/slot_equipment_priority = list( \
 	var/obj/P = new /obj/effect/decal/point(tile)
 	spawn (20)
 		if(P)
-			P.loc = null
+			qdel(P)
 
 	usr.visible_message("<b>[src]</b> points to [A]")
 
-//yep, still the same deal
-/mob/verb/pulled(atom/movable/AM as mob|obj in oview(1))
-	set name = "Pull"
-	set category = "Object"
+//this and stop_pulling really ought to be /mob/living procs
+/mob/proc/start_pulling(var/atom/movable/AM)
+	if ( !AM || !src || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+		return
+	if (!( AM.anchored ))
+		AM.add_fingerprint(src)
 
-	if(AM.Adjacent(src))
-		src.start_pulling(AM)
-	return
+		// If we're pulling something then drop what we're currently pulling and pull this instead.
+		if(pulling)
+			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+			if(AM == pulling)
+				return
+			stop_pulling()
 
+		src.pulling = AM
+		AM.pulledby = src
+		if(ismob(AM))
+			var/mob/M = AM
+			if(!iscarbon(src))
+				M.LAssailant = null
+			else
+				M.LAssailant = usr
+
+/mob/verb/stop_pulling()
+
+	set name = "Stop Pulling"
+	set category = "IC"
+
+	if(pulling)
+		pulling.pulledby = null
+		pulling = null
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -603,39 +622,6 @@ var/list/slot_equipment_priority = list( \
 	if(!Adjacent(usr))	return
 	if(istype(M, /mob/living/silicon/ai))	return
 	show_inv(usr)
-
-
-/mob/verb/stop_pulling()
-
-	set name = "Stop Pulling"
-	set category = "IC"
-
-	if(pulling)
-		pulling.pulledby = null
-		pulling = null
-
-/mob/proc/start_pulling(var/atom/movable/AM)
-	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
-		return
-	if (!( AM.anchored ))
-		AM.add_fingerprint(src)
-
-		// If we're pulling something then drop what we're currently pulling and pull this instead.
-		if(pulling)
-			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-			if(AM == pulling)
-				return
-			stop_pulling()
-
-		src.pulling = AM
-		AM.pulledby = src
-		if(ismob(AM))
-			var/mob/M = AM
-			if(!iscarbon(src))
-				M.LAssailant = null
-			else
-				M.LAssailant = usr
-
 
 /mob/proc/can_use_hands()
 	return
