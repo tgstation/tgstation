@@ -24,12 +24,25 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 	var/frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
+/* What's going on in this block?
+	If the proc isn't set to not be modified by air, the following steps occur:
+	 - The atmospheric pressure of the turf where the sound is played is determined
+	 - A calculation is made as to the fraction of one atmosphere that the pressure is at, in tenths e.g. 0.1, 0.3, 0.7, never exceeding 1
+	 - If the proc has extrarange, the fraction of this extrarange that applies is equal to that of the pressure of the tile
+	 - If the proc has NO extrarange, the fraction of the 7 range is used, so a sound only trasmits to those in the screen at regular pressure
+	 - This means that at low or 0 pressure, sound doesn't trasmit from the tile at all! How cool is that?
+*/
 	if(gas_modified)
-		var/atmosphere
-		if(turf_source.air)
+		var/atmosphere = 0
+		if(istype(turf_source, /turf/simulated))
+			var/turf/simulated/TS = turf_source
+			if(!TS.zone)
+				if(turf_source.air)
+					atmosphere = turf_source.air.return_pressure()
+			else if(TS.zone.air)
+				atmosphere = TS.zone.air.return_pressure()
+		else if(turf_source.air)
 			atmosphere = turf_source.air.return_pressure()
-		else
-			atmosphere = 0
 		//message_admins("We're starting off with [atmosphere] and [extrarange]")
 		if(extrarange)
 			extrarange = -7 + min ( round( extrarange * round(atmosphere/101.325, 0.1), 1 ), extrarange )
