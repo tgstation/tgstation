@@ -636,3 +636,6 @@
 	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
 	gib()
 	return(gain)
+
+/mob/living/singularity_pull(S)
+	step_towards(src,S)
