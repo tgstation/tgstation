@@ -119,12 +119,12 @@ Class Procs:
 	/**
 	 * Machine construction/destruction/emag flags.
 	 */
-	var/machine_flags = 0 // This is what you use for flags.
+	var/machine_flags = 0
 
 	/**
-	 * Emag energy cost.
+	 * Emag energy cost (in MJ).
 	 */
-	var/emag_cost = 0     // Emag energy cost.
+	var/emag_cost = 1
 
 	var/inMachineList = 1 // For debugging.
 

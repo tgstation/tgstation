@@ -104,6 +104,7 @@ var/global/loopModeNames=list(
 	var/state_base = "jukebox2"
 
 	machine_flags = WRENCHMOVE | FIXED2WORK | EMAGGABLE
+	emag_cost = 0 // because fun/unlimited uses.
 
 /obj/machinery/media/jukebox/New(loc)
 	..(loc)
