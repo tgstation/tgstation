@@ -84,7 +84,7 @@ obj/item/weapon/gun/energy/laser/retro
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
-
+	large_gun = 1
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
