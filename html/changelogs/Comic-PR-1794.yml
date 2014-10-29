@@ -1,0 +1,6 @@
+author: Comic
+
+delete-after: True
+
+changes: 
+  - tweak: Sounds that start in space should no longer be heard. Sounds in low atmosphere no longer travel as far.
