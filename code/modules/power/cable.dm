@@ -21,6 +21,8 @@ If d1 = 0 and d2 = dir, it's a O-X cable, getting from the center of the tile to
 If d1 = dir1 and d2 = dir2, it's a full X-X cable, getting from dir1 to dir2
 By design, d1 is the smallest direction and d2 is the highest
 */
+atom/movable/storedcable
+	parent_type = /obj/item/stack/cable_coil
 
 /obj/structure/cable
 	level = 1 //is underfloor
@@ -34,6 +36,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	var/cable_color = "red"
+	var/atom/movable/storedcable/stored
 
 /obj/structure/cable/yellow
 	cable_color = "yellow"
@@ -67,7 +70,6 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/New()
 	..()
 
-
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 
 	var/dash = findtext(icon_state, "-")
@@ -81,6 +83,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(level==1) hide(T.intact)
 	cable_list += src //add it to the global cable list
 
+	if(d1)
+		stored = new/atom/movable/storedcable(src, 2, cable_color)
+	if(d2)
+		stored = new/atom/movable/storedcable(src, 1, cable_color)
 
 /obj/structure/cable/Destroy()					// called when a cable is deleted
 	if(powernet)
@@ -130,15 +136,8 @@ By design, d1 is the smallest direction and d2 is the highest
 		if (shock(user, 50))
 			return
 
-		var/obj/newcable
-		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			newcable = new/obj/item/stack/cable_coil(T, 2, cable_color)
-		else
-			newcable = new/obj/item/stack/cable_coil(T, 1, cable_color)
-
 		visible_message("<span class='warning'>[user] cuts the cable.</span>")
-
-		newcable.add_fingerprint(user)
+		stored.loc = T
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 
 		qdel(src)
@@ -450,6 +449,11 @@ obj/structure/cable/proc/avail()
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network
 
+/obj/structure/cable/singularity_pull(S, current_size)
+	if(current_size >= 9)
+		var/turf/T = loc
+		stored.loc = T
+		qdel(src)
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
 ///////////////////////////////////////////////
