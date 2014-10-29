@@ -31,6 +31,7 @@ var/list/ai_list = list()
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/camera/siliconcam/aicamera = null
+	var/obj/machinery/bot/Bot
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -54,6 +55,8 @@ var/list/ai_list = list()
 	var/last_paper_seen = null
 	var/can_shunt = 1
 	var/last_announcement = "" // For AI VOX, if enabled
+	var/turf/waypoint //Holds the turf of the currently selected waypoint.
+	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
@@ -94,7 +97,7 @@ var/list/ai_list = list()
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
-		/mob/living/silicon/ai/proc/toggle_camera_light)
+		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -355,6 +358,24 @@ var/list/ai_list = list()
 			A.ai_actual_track(target)
 		return
 
+	if (href_list["callbot"]) //Command a bot to move to a selected location.
+		Bot = locate(href_list["callbot"]) in machines
+		if(!Bot || Bot.remote_disabled || src.control_disabled)
+			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
+		waypoint_mode = 1
+		src << "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>"
+		return
+
+	if (href_list["interface"]) //Remotely connect to a bot!
+		Bot = locate(href_list["interface"]) in machines
+		if(!Bot || Bot.remote_disabled || src.control_disabled)
+			return
+		Bot.attack_ai(src)
+
+	if (href_list["botrefresh"]) //Refreshes the bot control panel.
+		botcall()
+		return
+
 	else if (href_list["faketrack"])
 		var/mob/target = locate(href_list["track"]) in mob_list
 		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
@@ -448,6 +469,61 @@ var/list/ai_list = list()
 	//machine = src
 
 	return 1
+
+/mob/living/silicon/ai/proc/botcall()
+	set category = "AI Commands"
+	set name = "Access Robot Control"
+	set desc = "Wirelessly control various automatic robots."
+	if(stat == 2)
+		src << "<span class='danger'>Critical error. System offline.</span>"
+		return
+
+	if(control_disabled)
+		src << "Wireless communication is disabled."
+		return
+	var/turf/ai_current_turf = get_turf(src)
+	var/ai_Zlevel = ai_current_turf.z
+	var/d
+	var/area/bot_area
+	d += "<A HREF=?src=\ref[src];botrefresh=\ref[Bot]>Query network status</A><br>"
+	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
+
+	for (Bot in machines)
+		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
+			bot_area = get_area(Bot)
+			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!) </span>[Bot.name]" : Bot.name]</td>"
+			//If the bot is on, it will display the bot's current mode status. If the bot is not mode, it will just report "Idle". "Inactive if it is not on at all.
+			d += "<td width='30%'>[Bot.on ? "[Bot.mode ? "<span class='average'>[ Bot.mode_name[Bot.mode] ]</span>": "<span class='good'>Idle</span>"]" : "<span class='bad'>Inactive</span>"]</td>"
+			d += "<td width='30%'>[bot_area.name]</td>"
+			d += "<td width='10%'><A HREF=?src=\ref[src];interface=\ref[Bot]>Interface</A></td>"
+			d += "<td width='10%'><A HREF=?src=\ref[src];callbot=\ref[Bot]>Call</A></td>"
+			d += "</tr>"
+			d = format_text(d)
+
+	var/datum/browser/popup = new(src, "botcall", "Remote Robot Control", 700, 400)
+	popup.set_content(d)
+	popup.open()
+
+/mob/living/silicon/ai/proc/set_waypoint(var/atom/A)
+	var/turf/turf_check = get_turf(A)
+		//The target must be in view of a camera or near the core.
+	if(turf_check in range(get_turf(src)))
+		call_bot(turf_check)
+	else if(cameranet && cameranet.checkTurfVis(turf_check))
+		call_bot(turf_check)
+	else
+		src << "<span class='danger'>Selected location is not visible.</span>"
+
+/mob/living/silicon/ai/proc/call_bot(var/turf/waypoint)
+
+	if(!Bot)
+		return
+
+	if(Bot.calling_ai && Bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
+		src << "<span class='danger'>Interface error. Unit is already in use.</span>"
+		return
+
+	Bot.call_bot(src, waypoint)
 
 /mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 	if (stat == 2)
