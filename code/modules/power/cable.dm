@@ -21,7 +21,7 @@ If d1 = 0 and d2 = dir, it's a O-X cable, getting from the center of the tile to
 If d1 = dir1 and d2 = dir2, it's a full X-X cable, getting from dir1 to dir2
 By design, d1 is the smallest direction and d2 is the highest
 */
-atom/movable/storedcable
+/datum/storedcable
 	parent_type = /obj/item/stack/cable_coil
 
 /obj/structure/cable
@@ -36,7 +36,7 @@ atom/movable/storedcable
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	var/cable_color = "red"
-	var/atom/movable/storedcable/stored //ayy lmao
+	var/datum/storedcable/stored //ayy lmao
 
 /obj/structure/cable/yellow
 	cable_color = "yellow"
@@ -84,9 +84,9 @@ atom/movable/storedcable
 	cable_list += src //add it to the global cable list
 
 	if(d1)
-		stored = new/atom/movable/storedcable(src, 2, cable_color)
+		stored = new/datum/storedcable(src, 2, cable_color)
 	if(d2)
-		stored = new/atom/movable/storedcable(src, 1, cable_color)
+		stored = new/datum/storedcable(src, 1, cable_color)
 
 /obj/structure/cable/Destroy()					// called when a cable is deleted
 	if(powernet)
