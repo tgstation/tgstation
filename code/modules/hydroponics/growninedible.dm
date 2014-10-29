@@ -265,6 +265,20 @@
 		var/weaken = Clamp(potency / 20, 0.5, 5)
 		M.slip(stun, weaken, src)
 
+//===================banana shoes peels================================
+/obj/item/weapon/grown/bananapeel/specialpeel //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
+	name = "synthesized banana peel"
+	desc = "A synthetic banana peel."
+
+/obj/item/weapon/grown/bananapeel/specialpeel/New(newloc, new_potency = 5)
+	..()
+
+/obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
+	..()
+	if(istype(AM, /mob/living/carbon)) //aahhhh
+		qdel(src)
+
+//=====================================================================
 
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
