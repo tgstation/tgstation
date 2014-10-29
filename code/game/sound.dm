@@ -12,7 +12,8 @@ var/list/gib_sound = list('sound/effects/gib1.ogg', 'sound/effects/gib2.ogg', 's
 var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voice/mommi_comment2.ogg', 'sound/voice/mommi_comment3.ogg', 'sound/voice/mommi_comment5.ogg', 'sound/voice/mommi_comment6.ogg', 'sound/voice/mommi_comment7.ogg', 'sound/voice/mommi_comment8.ogg')
 //var/list/gun_sound = list('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
 
-/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff)
+//gas_modified controls if a sound is affected by how much gas there is in the atmosphere of the source
+/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff, var/gas_modified = 1)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -22,6 +23,19 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 
 	var/frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
+
+	if(gas_modified)
+		var/atmosphere
+		if(turf_source.air)
+			atmosphere = turf_source.air.return_pressure()
+		else
+			atmosphere = 0
+		//message_admins("We're starting off with [atmosphere] and [extrarange]")
+		if(extrarange)
+			extrarange = -7 + min ( round( extrarange * round(atmosphere/101.325, 0.1), 1 ), extrarange )
+		else
+			extrarange = -7 + min( round(7 * round(atmosphere/101.325, 0.1), 1 ), 10 )
+		//message_admins("We've adjusted the sound of [source] at [turf_source.loc] to have a range of [7 + extrarange]")
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
