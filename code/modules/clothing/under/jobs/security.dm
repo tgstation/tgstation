@@ -2,7 +2,6 @@
  * Contains:
  *		Security
  *		Detective
- *		Head of Security + Jensen cosplay gear
  *		Navy uniforms
  */
 

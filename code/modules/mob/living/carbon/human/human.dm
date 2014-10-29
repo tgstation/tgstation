@@ -43,7 +43,7 @@
 	return ..()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
+	if ((!( yes ) || now_pushing || buckled))
 		return
 	now_pushing = 1
 	if (ismob(AM))
@@ -111,7 +111,7 @@
 			if(pulling == AM)
 				stop_pulling()
 			var/t = get_dir(src, AM)
-			AM.Move(get_step(AM, t))
+			AM.Move(get_step(AM, t), t)
 		now_pushing = 0
 
 /mob/living/carbon/human/Stat()
