@@ -1,8 +1,8 @@
 //banana flavored chaos and horror ahead
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes
-	desc = "Lost prototype of advanced clown tech. Powered by bananium, these shoes leave a trail of chaos in their wake."
 	name = "mk-honk prototype shoes"
+	desc = "Lost prototype of advanced clown tech. Powered by bananium, these shoes leave a trail of chaos in their wake."
 	icon_state = "clown_prototype_off"
 	var/on = 0
 	var/bananium = 0
@@ -16,7 +16,7 @@
 		else
 			footstep++
 
-		new/obj/item/weapon/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
+		new/obj/item/weapon/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180)), 5) //honk
 		bananium -= 100
 		if(bananium < 100)
 			on = !on
