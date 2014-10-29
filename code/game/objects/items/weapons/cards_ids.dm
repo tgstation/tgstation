@@ -148,11 +148,14 @@
 /obj/item/weapon/card/emag/examine()
 	..()
 	if(energy==-1)
-		usr << "\The [name] has a tiny fusion generator for power."
+		usr << "<span class=\"info\">\The [name] has a tiny fusion generator for power.</span>"
 	else
-		usr << "This [name] has [energy]MJ left in its capacitor ([max_energy]MJ capacity)."
+		var/class="info"
+		if(energy/max_energy < 0.1 /* 10% energy left */)
+			class="warning"
+		usr << "<span class=\"[class]\">This [name] has [energy]MJ left in its capacitor ([max_energy]MJ capacity).</span>"
 	if(recharge_rate && recharge_ticks)
-		usr << "A small label on a thermocouple notes that it recharges at a rate of [recharge_rate]MJ for every [recharge_ticks>1?"":recharge_ticks] oscillator tick[recharge_ticks>1?"s":""]."
+		usr << "<span class=\"info\">A small label on a thermocouple notes that it recharges at a rate of [recharge_rate]MJ for every [recharge_ticks<=1?"":"[recharge_ticks] "]oscillator tick[recharge_ticks>1?"s":""].</span>"
 
 /obj/item/weapon/card/id
 	name = "identification card"
