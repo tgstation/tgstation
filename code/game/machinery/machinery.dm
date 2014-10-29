@@ -84,6 +84,8 @@ Class Procs:
    process()                  'game/machinery/machine.dm'
       Called by the 'master_controller' once per game tick for each machine that is listed in the 'machines' list.
 
+	is_operational()
+		Returns 0 if the machine is unpowered, broken or undergoing maintenance, 1 if not
 
 	Compiled by Aygar
 */
@@ -208,6 +210,11 @@ Class Procs:
 		return 1
 	add_fingerprint(usr)
 	return 0
+
+/obj/machinery/proc/is_operational()
+	return !(stat & (NOPOWER|BROKEN|MAINT))
+
+////////////////////////////////////////////////////////////////////////////////////////////
 
 /mob/proc/canUseTopic() //TODO: once finished, place these procs on the respective mob files
 	return
