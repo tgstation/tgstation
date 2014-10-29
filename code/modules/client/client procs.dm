@@ -163,7 +163,7 @@ var/next_external_rsc = 0
 	if(!dbcon.IsConnected())
 		return
 
-	var/sql_ckey = sql_sanitize_text(src.ckey)
+	var/sql_ckey = sanitizeSQL(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	query.Execute()
@@ -198,9 +198,9 @@ var/next_external_rsc = 0
 	if(src.holder && src.holder.rank)
 		admin_rank = src.holder.rank.name
 
-	var/sql_ip = sql_sanitize_text(src.address)
-	var/sql_computerid = sql_sanitize_text(src.computer_id)
-	var/sql_admin_rank = sql_sanitize_text(admin_rank)
+	var/sql_ip = sanitizeSQL(src.address)
+	var/sql_computerid = sanitizeSQL(src.computer_id)
+	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 
 	if(sql_id)
