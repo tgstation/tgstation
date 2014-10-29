@@ -450,7 +450,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 				dat += "<a href='byond://?src=\ref[src];choice=Set Nick'>[nick]</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=Set Channel'>[chat_channel]</a> | "
-				dat += "<a href='byond://?src=\ref[src];choice=NTRC Message'>Write message</a><br>"
+				dat += "<a href='byond://?src=\ref[src];choice=NTRC Message'>Write message</a> | "
+				dat += "<a href='byond://?src=\ref[src];choice=NTRC Help'>Help</a><br>"
 				if(chat_channel)
 					dat += ntrclog[chat_channel]
 
@@ -651,6 +652,21 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
 					else if(ret == 0)
 						ntrclog[chat_channel] = "Failure<br>" + ntrclog[chat_channel]
+					var/list/lt = text2list(t)
+					if(lt[1] == "/join")
+						chat_channel = lt[2]
+
+			if("NTRC Help")
+				var/helptext = "<b>NTRC reference:</b><br><br>"
+				helptext += "<i>General commands</i><br>"
+				helptext += "/join #channel<br>/part<br>/who<br>/topic<br>/register password<br>/auth password<br><br>"
+				helptext += "<i>Moderation commands</i><br>"
+				helptext += "/ban targetnick<br>/unban targetnick<br>/kick targetnick<br>/mute targetnick<br><br>"
+				helptext += "<i>Management commands</i><br>"
+				helptext += "/topic topictext<br>/opself channelpassword<br>/pass newchannelpassword<br>/op targetnick<br>"
+				helptext += "/deop targetnick<br>/del <i>WARNING: DELETES THE CHANNEL</i>"
+				usr << browse(helptext, "window=ntrchelp;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
+
 
 
 //SYNDICATE FUNCTIONS===================================

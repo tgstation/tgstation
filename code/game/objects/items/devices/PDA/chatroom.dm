@@ -141,7 +141,7 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 	if(!dd_hasprefix(channel,"#"))
 		channel = "#" + channel
 	if(channel == name)
-		if(nick in banned || nick in users)
+		if((nick in banned) || (nick in users))
 			return 0
 		users += nick
 		get_topic(client,nick)
