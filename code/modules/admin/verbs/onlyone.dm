@@ -12,7 +12,7 @@
 
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = H.mind
-		steal_objective.set_target("nuclear authentication disk")
+		steal_objective.set_target(new /datum/objective_item/steal/nukedisc)
 		H.mind.objectives += steal_objective
 
 		var/datum/objective/hijack/hijack_objective = new
