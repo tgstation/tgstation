@@ -36,7 +36,7 @@ atom/movable/storedcable
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	var/cable_color = "red"
-	var/atom/movable/storedcable/stored
+	var/atom/movable/storedcable/stored //ayy lmao
 
 /obj/structure/cable/yellow
 	cable_color = "yellow"
