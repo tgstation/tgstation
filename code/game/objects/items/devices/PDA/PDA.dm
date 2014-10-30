@@ -45,11 +45,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	var/chat_channel = "#ss13" //name of our current NTRC channel
-	var/datum/event/ntrc_event //our ntrc event trigger
 	var/nick = "" //our NTRC nick
 	var/list/ntrclog = list() //NTRC message log
 
-	var/noreturn = 0 //whether the PDA can use the Return button, used for the aiPDA
+	var/noreturn = 0 //whether the PDA can use the Return button, used for the aiPDA chatroom
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -635,36 +634,40 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Set Channel")
 				var/t = stripped_input(U, "Please enter channel", name, (chat_channel)) as text
 
-				if(t && t in chatchannels)
+				if(t)
 					ntrclog[chat_channel] = "<hr>" + ntrclog[chat_channel]
 					var/datum/chatroom/C = chatchannels[chat_channel]
+					if(!findtext(t,"#",1,2))
+						t = "#" + t
 					chat_channel = t
-					var/ret = C.parse_msg(src, nick, "/join [chat_channel]")
-					if(ret == "ERR_AUTH")
-						ntrclog[chat_channel] = "Please use /auth password to authenticate and then join again." + ntrclog[chat_channel]
+					C.parse_msg(src, nick, "/join [chat_channel]")
 
 			if("NTRC Message")
 				var/t = msg_input(U) as text
 				var/datum/chatroom/C = chatchannels[chat_channel]
 				if(C)
+					var/lt = text2list(t, " ")
+					if(lt[1] == "/join")
+						if(!findtext(lt[2],"#",1,2))
+							lt[2] = "#" + lt[2]
 					var/ret = C.parse_msg(src,nick,t)
 					if(findtextEx(ret,"ERR_",1,5))
 						ntrclog[chat_channel] = "[ret]<br>" + ntrclog[chat_channel]
-					else if(ret == 0)
-						ntrclog[chat_channel] = "Failure<br>" + ntrclog[chat_channel]
-					var/list/lt = text2list(t)
-					if(lt[1] == "/join")
-						chat_channel = lt[2]
+					else
+						if(ret == 0)
+							ntrclog[chat_channel] = "Failure<br>" + ntrclog[chat_channel]
+						else
+							if(lt[1] == "/join")
+								chat_channel = lt[2]
 
 			if("NTRC Help")
 				var/helptext = "<b>NTRC reference:</b><br><br>"
 				helptext += "<i>General commands</i><br>"
-				helptext += "/join #channel<br>/part<br>/who<br>/topic<br>/register password<br>/auth password<br><br>"
+				helptext += "/join #channel<br>/part<br>/log amountoflines<br>/who<br>/topic<br>/register<br><br>"
 				helptext += "<i>Moderation commands</i><br>"
 				helptext += "/ban targetnick<br>/unban targetnick<br>/kick targetnick<br>/mute targetnick<br><br>"
 				helptext += "<i>Management commands</i><br>"
-				helptext += "/topic topictext<br>/opself channelpassword<br>/pass newchannelpassword<br>/op targetnick<br>"
-				helptext += "/deop targetnick<br>/del <i>WARNING: DELETES THE CHANNEL</i>"
+				helptext += "/topic topictext<br>/op targetnick<br>/deop targetnick<br>/delchannel"
 				usr << browse(helptext, "window=ntrchelp;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 
 

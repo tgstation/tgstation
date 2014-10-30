@@ -6,20 +6,15 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 
 /datum/chatroom
 	var/name = "#ss13"
-	var/channelpassword = ""
-	var/topic = "Welcome to #ss13! The best NTRC channel in this sector of the galaxy!" // topic message for the chatroom
+	var/topic = "Welcome to the best NTRC channel in this sector of the galaxy!" // topic message for the chatroom
 	var/list/operators = list() // chat operators
 	var/list/logs = list() // chat logs
 	var/list/muted = list() // muted users
 	var/list/banned = list() // banned users
 	var/list/auth = list() // authenticated clients
-	var/list/pass = list() // user passwords
 	var/list/users = list() // current users
 	var/datum/events/events = new ()
 	var/list/datum/event/evlist = list()
-
-/datum/chatroom/New()
-	channelpassword = rand()
 
 //parse_msg() is the exposed interface chat
 //clients should interact with parse_msg() and parse_msg() only
@@ -55,9 +50,6 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 /datum/chatroom/proc/handle_command(client,nick,command) //command parser
 	var/list/cmd=text2list(command, " ")
 
-	if(cmd[1] == "auth" && cmd.len > 1) //parsed here to avoid triggering ERR_AUTH
-		return attempt_auth(client,nick,cmd[2])
-
 	if(!get_auth(client,nick))
 		return "ERR_AUTH"
 
@@ -69,10 +61,12 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 				return set_topic(client,nick,cmd[2])
 		if("part")
 			return channel_part(client,nick)
-		if("del")
+		if("delchannel")
 			return delete_channel(client,nick)
 		if("who")
 			return get_who(client, nick)
+		if("register")
+			return register_auth(client,nick)
 
 	if(cmd.len == 1)
 		return "ERR_ARGS"
@@ -80,8 +74,8 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 	switch(cmd[1]) //commands with 1 arg
 		if("join")
 			return channel_join(client,nick,cmd[2])
-		if("opself")
-			return operator_auth(client,nick,cmd[2])
+		if("log")
+			return get_log(client,nick,cmd[2])
 		if("op")
 			return make_op(client,nick,cmd[2])
 		if("deop")
@@ -92,12 +86,8 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 			return unban(client,nick,cmd[2])
 		if("kick")
 			return kick(client,nick,cmd[2])
-		if("register")
-			return register_auth(client,nick,cmd[2])
 		if("mute")
 			return mute_nick(client,nick,cmd[2])
-		if("pass")
-			return new_pass(client,nick,cmd[2])
 
 	return "ERR_WCMD"
 
@@ -112,24 +102,18 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 	return 1
 
 /datum/chatroom/proc/get_auth(client,nick) //check auth
-	if(!pass[nick] || (auth[nick] == client))
+	if((!(nick in auth)) || (auth[nick] == client))
 		return 1
 	return 0
 
 //chat commands go here
-/datum/chatroom/proc/attempt_auth(client,nick,password) //auth
-	if(pass[nick] == password)
-		auth[nick] = client
-		return 1
-	return 0
-
-/datum/chatroom/proc/register_auth(client,nick,password) //register
-	if(pass[nick] && (get_auth(client,nick) != client))
+/datum/chatroom/proc/register_auth(client,nick) //register
+	if(!get_auth(client,nick))
 		return 0
-	pass[nick] = password
+	auth[nick] = client
 	return 1
 
-/datum/chatroom/proc/delete_channel(client,nick) //delete
+/datum/chatroom/proc/delete_channel(client,nick) //delchannel
 	if(nick in operators)
 		for(var/event in events.events)
 			events.clearEvent("msg_chat",event)
@@ -138,7 +122,7 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 	return 0
 
 /datum/chatroom/proc/channel_join(client,nick,channel) //join
-	if(!dd_hasprefix(channel,"#"))
+	if(!findtext(channel,"#",1,2))
 		channel = "#" + channel
 	if(channel == name)
 		if((nick in banned) || (nick in users))
@@ -160,12 +144,6 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 	users -= nick
 	events.clearEvent("msg_chat",evlist[nick])
 	return 1
-
-/datum/chatroom/proc/operator_auth(client,nick,pass) //opself
-	if(pass == channelpassword)
-		operators += nick
-		return 1
-	return 0
 
 /datum/chatroom/proc/make_op(client,nick,target) //op
 	if(nick in operators)
@@ -204,17 +182,18 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 	return 0
 
 /datum/chatroom/proc/get_topic(client,nick) //topic
-	call(client,"msg_chat")(name,"NTbot",topic)
+	call(client,"msg_chat")(name,"NTbot","TOPIC: [topic]")
 	return 1
 
 /datum/chatroom/proc/get_who(client,nick) //who
 	for(var/user in users)
-		call(client,"msg_chat")(name,"NTbot",user)
+		call(client,"msg_chat")(name,"NTbot","WHO: [user]")
 	return 1
 
 /datum/chatroom/proc/get_log(client,nick,lines) //log
 	for(var/i=0;i<lines;i++)
-		call(client,"msg_chat")(name,"NTbot",logs[logs.len-i])
+		var/mylog = logs[logs.len-i]
+		call(client,"msg_chat")(name,"NTbot","LOG[i]: [mylog]")
 	return 1
 
 /datum/chatroom/proc/mute_nick(client,nick,target) //mute
@@ -231,9 +210,3 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 	C.name = target
 	C.operators += nick
 	return 1
-
-/datum/chatroom/proc/new_pass(client,nick,target) //pass
-	if(nick in operators)
-		channelpassword = target
-		return 1
-	return 0
