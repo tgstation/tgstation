@@ -235,7 +235,7 @@ proc/wabbajack(mob/living/M)
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-			qdel(M)
+			del(M)
 			return new_mob
 
 /obj/item/projectile/magic/animate
