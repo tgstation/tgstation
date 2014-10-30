@@ -328,7 +328,7 @@
 		var/mob/living/carbon/M = slipper
 		if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 			return 0
-		if(!M.lying)
+		if(!M.lying && (M.status_flags & CANWEAKEN)) // we slip those who are standing and can fall.
 			var/olddir = M.dir
 			M.Stun(s_amount)
 			M.Weaken(w_amount)
