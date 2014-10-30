@@ -15,8 +15,8 @@
 #define VERM_BATS    4
 
 /datum/event/infestation
-	announceWhen = 10
-	endWhen = 11
+	announceWhen = 15
+	endWhen = 20
 	var/location
 	var/locstring
 	var/vermin

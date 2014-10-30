@@ -1,5 +1,5 @@
 /datum/event/prison_break
-	announceWhen	= 50
+	announceWhen	= 30
 	oneShot			= 1
 
 	var/releaseWhen = 25
