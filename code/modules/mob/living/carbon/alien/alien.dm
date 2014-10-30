@@ -158,9 +158,6 @@
 /mob/living/carbon/alien/SpeciesCanConsume()
 	return 1 // Aliens can eat, and they can be fed food/drink
 
-/mob/living/carbon/alien/Process_Spaceslipping()
-	return 0 // Don't slip in space.
-
 /mob/living/carbon/alien/Stat()
 
 	statpanel("Status")

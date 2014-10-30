@@ -392,7 +392,7 @@
 
 			//Anything not bolted down is moved, everything else is destroyed
 			if(!AM.anchored)
-				AM.Move(D)
+				AM.Move(D, SOUTH)
 			else
 				qdel(AM)
 		if(istype(T, /turf/simulated))

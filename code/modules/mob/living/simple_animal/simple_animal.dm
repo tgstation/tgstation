@@ -115,8 +115,10 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
-					Move(get_step(src,pick(cardinal)))
-					turns_since_move = 0
+					var/anydir = pick(cardinal)
+					if(Process_Spacemove(anydir))
+						Move(get_step(src, anydir), anydir)
+						turns_since_move = 0
 
 	//Speaking
 	if(!client && speak_chance)
