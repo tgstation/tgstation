@@ -1,0 +1,12 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Water now directly damages slimes, even when not used from a fire extinguisher of sprayer.
+  - rscadd: Water will as well deal some small toxin damage to "humanoid slimes" (green extract mutation)
+  - tweak: Water calms down rabid slimes.
+  - bugfix: Fixed an issue that prevented Greys from taking any damage when they were splashed with water. The damage is brute and may cause bleeding.
+  - tweak: Showers now clean items and mobs at every process(), rather than only when turned on.
+  - rscadd: Showers now actually apply some water to things that they clean. (things like monkey cubes and Greys will react in consequence)
+  - rscadd: Placing a beaker or other container under a shower will slowly fill it with water.
+  - rscadd: Showers now actually wet the floor as well. No running!
+  - experiment: Did some backend changes that'll allow in the future to replace which liquid is being sprayed by showers.

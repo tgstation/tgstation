@@ -249,7 +249,14 @@ datum
 					M.adjust_fire_stacks(-(volume / 10))
 					if(M.fire_stacks <= 0)
 						M.ExtinguishMob()
-					return
+
+				// Water now directly damages slimes instead of being a turf check
+				if(isslime(M))
+					M.adjustToxLoss(rand(15,20))
+
+				if(istype(M,/mob/living/simple_animal/hostile/slime))
+					var/mob/living/simple_animal/hostile/slime/S = M
+					S.calm()
 
 				// Grays treat water like acid.
 				if(ishuman(M))
@@ -277,15 +284,7 @@ datum
 							if(!M.unacidable)
 								M.take_organ_damage(min(15, volume * 2))
 
-			reaction_turf(var/turf/simulated/T, var/volume)
-				if (!istype(T)) return
-				src = null
-				if(volume >= 3)
-					T.wet(800)
-				for(var/mob/living/carbon/slime/M in T)
-					M.adjustToxLoss(rand(15,20))
-				for(var/mob/living/carbon/human/H in T)
-					if(H.dna.mutantrace == "slime")
+					else if(H.dna.mutantrace == "slime")
 						var/chance = 1
 						var/block  = 0
 
@@ -302,6 +301,13 @@ datum
 
 						if(prob(chance) && !block)
 							H.adjustToxLoss(rand(1,3))
+
+			reaction_turf(var/turf/simulated/T, var/volume)
+				if (!istype(T)) return
+				src = null
+				if(volume >= 3)
+					T.wet(800)
+
 
 				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot && !istype(T, /turf/space))
