@@ -208,6 +208,11 @@
 	icon_state = "robustgpacket"
 	item_state = "robustgpacket"
 
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold/New()
+	..()
+	for(var/i = 1 to storage_slots)
+		reagents.add_reagent("gold",0.2)
+
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_carp
 	name = "\improper Carp Classic packet"
 	desc = "Since 2313."
@@ -223,12 +228,12 @@
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/New()
 	..()
 	for(var/i = 1 to storage_slots)
-		reagents.add_reagent("doctorsdelight",90)
+		reagents.add_reagent("doctorsdelight",15)
 
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_midori
 	name = "\improper Midori Tabako packet"
-	desc = "You can't understand the description, but the packet smells funny."
+	desc = "You can't understand the runes, but the packet smells funny."
 	icon_state = "midoripacket"
 	item_state = "midoripacket"
 
@@ -237,6 +242,14 @@
 	desc = "Is your weight slowing you down? Having trouble running away from gravitational singularities? Can't stop stuffing your mouth? Smoke Shady Jim's Super Slims and watch all that fat burn away. Guaranteed results!"
 	icon_state = "shadyjimpacket"
 	item_state = "shadyjimpacket"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims/New()
+	..()
+	for(var/i = 1 to storage_slots)
+		reagents.add_reagent("lipozine",4)
+		reagents.add_reagent("ammonia",2)
+		reagents.add_reagent("plantbgone",1)
+		reagents.add_reagent("toxin",1.5)
 
 /obj/item/weapon/storage/fancy/rollingpapers
 	name = "rolling paper pack"
