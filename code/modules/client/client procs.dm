@@ -137,7 +137,8 @@ var/next_external_rsc = 0
 
 	if (!ticker || ticker.current_state == GAME_STATE_PREGAME)
 		spawn (rand(10,150))
-			sync_client_with_db()
+			if (src)
+				sync_client_with_db()
 	else
 		sync_client_with_db()
 
