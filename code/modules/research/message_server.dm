@@ -147,6 +147,8 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 		value = num
 
 /datum/feedback_variable/proc/get_value()
+	if (!isnum(value))
+		return 0
 	return value
 
 /datum/feedback_variable/proc/get_variable()
@@ -292,7 +294,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 		if (sqlrowlist != "")
 			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
 
-		sqlrowlist += "(null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
+		sqlrowlist += "(null, Now(), [round_id], \"[sanitizeSQL(FV.get_variable())]\", [FV.get_value()], \"[sanitizeSQL(FV.get_details())]\")"
 
 	if (sqlrowlist == "")
 		return
@@ -304,8 +306,6 @@ var/obj/machinery/blackbox_recorder/blackbox
 proc/feedback_set(var/variable,var/value)
 	if (!blackbox) return
 
-	variable = sanitizeSQL(variable)
-
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
 	if (!FV) return
@@ -314,8 +314,6 @@ proc/feedback_set(var/variable,var/value)
 
 proc/feedback_inc(var/variable,var/value)
 	if (!blackbox) return
-
-	variable = sanitizeSQL(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -326,8 +324,6 @@ proc/feedback_inc(var/variable,var/value)
 proc/feedback_dec(var/variable,var/value)
 	if (!blackbox) return
 
-	variable = sanitizeSQL(variable)
-
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
 	if (!FV) return
@@ -337,9 +333,6 @@ proc/feedback_dec(var/variable,var/value)
 proc/feedback_set_details(var/variable,var/details)
 	if (!blackbox) return
 
-	variable = sanitizeSQL(variable)
-	details = sanitizeSQL(details)
-
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
 	if(!FV) return
@@ -348,9 +341,6 @@ proc/feedback_set_details(var/variable,var/details)
 
 proc/feedback_add_details(var/variable,var/details)
 	if (!blackbox) return
-
-	variable = sanitizeSQL(variable)
-	details = sanitizeSQL(details)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
