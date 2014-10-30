@@ -6,15 +6,14 @@
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
-	var/construction_time = 120
-	var/construction_cost = list("metal"=10000)
 	var/locked = 0
 	var/require_module = 0
 	var/installed = 0
 	w_type=RECYK_ELECTRONIC
 
+/*
 /obj/item/borg/upgrade/recycle(var/datum/materials/rec)
-	for(var/material in construction_cost)
+	for(var/material in materials)
 		var/rec_mat=material
 		var/CCPS=CC_PER_SHEET_MISC
 		if(rec_mat=="metal")
@@ -22,8 +21,9 @@
 			CCPS=CC_PER_SHEET_METAL
 		if(rec_mat=="glass")
 			CCPS=CC_PER_SHEET_GLASS
-		rec.addAmount(material,construction_cost[material]/CCPS)
+		rec.addAmount(material,materials[material]/CCPS)
 	return w_type
+*/
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
@@ -41,7 +41,6 @@
 	name = "medical module board"
 	desc = "Used to give a medical cyborg advanced care tools."
 	icon_state = "cyborg_upgrade"
-	construction_cost = list("metal"=80000 , "glass"=6000)
 	require_module = 1
 
 /obj/item/borg/upgrade/medical/surgery/action(var/mob/living/silicon/robot/R)
@@ -93,7 +92,6 @@
 	name = "robot reclassification board"
 	desc = "Used to rename a cyborg."
 	icon_state = "cyborg_upgrade1"
-	construction_cost = list("metal"=35000)
 	var/heldname = "default name"
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user as mob)
@@ -110,7 +108,6 @@
 /obj/item/borg/upgrade/restart
 	name = "robot emergency restart module"
 	desc = "Used to force a restart of a disabled-but-repaired robot, bringing it back online."
-	construction_cost = list("metal"=60000 , "glass"=5000)
 	icon_state = "cyborg_upgrade1"
 
 
@@ -131,7 +128,6 @@
 /obj/item/borg/upgrade/vtec
 	name = "robotic VTEC Module"
 	desc = "Used to kick in a robot's VTEC systems, increasing their speed."
-	construction_cost = list("metal"=80000 , "glass"=6000 , "gold"= 5000)
 	icon_state = "cyborg_upgrade2"
 	require_module = 1
 
@@ -148,7 +144,6 @@
 /obj/item/borg/upgrade/tasercooler
 	name = "robotic Rapid Taser Cooling Module"
 	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate."
-	construction_cost = list("metal"=80000 , "glass"=6000 , "gold"= 2000, "diamond" = 500)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
@@ -183,7 +178,6 @@
 /obj/item/borg/upgrade/jetpack
 	name = "mining robot jetpack"
 	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
-	construction_cost = list("metal"=10000,"plasma"=15000,"uranium" = 20000)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
@@ -205,7 +199,6 @@
 /obj/item/borg/upgrade/syndicate/
 	name = "Illegal Equipment Module"
 	desc = "Unlocks the hidden, deadlier functions of a robot"
-	construction_cost = list("metal"=10000,"glass"=15000,"diamond" = 10000)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 

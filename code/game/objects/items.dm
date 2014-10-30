@@ -41,6 +41,7 @@
 
 	var/nonplant_seed_type
 
+
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))
 		var/mob/H = src.loc
