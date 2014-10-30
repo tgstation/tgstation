@@ -1,5 +1,5 @@
 var/bomb_set
-
+var/list/nuclearbomb_list = list()
 /obj/machinery/nuclearbomb
 	name = "nuclear fission explosive"
 	desc = "Uh oh. RUN!!!!"
@@ -18,6 +18,9 @@ var/bomb_set
 	var/previous_level = ""
 	var/lastentered = ""
 
+/obj/machinery/nuclearbomb/New()
+	..()
+	nuclearbomb_list.Add(src)
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
