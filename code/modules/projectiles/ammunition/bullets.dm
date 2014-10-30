@@ -75,6 +75,11 @@
 	m_amt = 12500
 	w_type = RECYK_METAL
 
+	update_icon()
+		desc = "[initial(desc)][BB ? "" : " This one is spent"]"
+		overlays = list()
+		if(!BB)
+			overlays += icon('icons/obj/ammo.dmi', "emptyshell")
 
 /obj/item/ammo_casing/shotgun/blank
 	name = "shotgun shell"
@@ -84,14 +89,7 @@
 	m_amt = 250
 	w_type = RECYK_METAL
 
-/obj/item/ammo_casing/shotgun/empty
-	name = "shotgun shell"
-	desc = "This one has been spent."
-	icon_state = "emptyshell"
-	projectile_type = ""
-	m_amt = 250
-	spent = 1 //just to stop people loading a gun with it. This should never go to 0 on the empty
-	w_type = RECYK_METAL
+
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"

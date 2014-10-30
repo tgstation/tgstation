@@ -68,7 +68,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","clu
 	update_icon()
 		return
 
-	load_into_chamber()
+	process_chambered()
 		if(!..()) return 0
 		var/obj/item/projectile/change/P=in_chamber
 		if(P && istype(P))
