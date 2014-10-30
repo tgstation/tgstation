@@ -503,9 +503,9 @@
 		for(var/datum/disease/D in M.viruses)
 			dat += {"<h4>Infection Detected.</h4><br>
 					 Name: [D.name]<br>
-					 Type: [D.spread]<br>
+					 Type: [D.spread_text]<br>
 					 Stage: [D.stage]/[D.max_stages]<br>
-					 Possible Cure: [D.cure]<br>
+					 Possible Cure: [D.cure_text]<br>
 					"}
 		dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
 	return dat

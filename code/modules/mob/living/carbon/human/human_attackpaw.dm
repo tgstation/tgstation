@@ -16,5 +16,5 @@
 		apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
 
 		for(var/datum/disease/D in M.viruses)
-			contract_disease(D,1,0)
+			ContractDisease(D)
 	return

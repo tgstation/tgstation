@@ -1,14 +1,14 @@
 /datum/disease/cold9
 	name = "The Cold"
 	max_stages = 3
-	spread = "On contact"
-	spread_type = CONTACT_GENERAL
-	cure = "Common Cold Anti-bodies & Spaceacillin"
-	cure_id = "spaceacillin"
+	spread_text = "On contact"
+	spread_flags = CONTACT_GENERAL
+	cure_text = "Common Cold Anti-bodies & Spaceacillin"
+	cures = list("spaceacillin")
 	agent = "ICE9-rhinovirus"
-	affected_species = list("Human")
+	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "If left untreated the subject will slow, as if partly frozen."
-	severity = "Medium"
+	severity = MEDIUM
 
 /datum/disease/cold9/stage_act()
 	..()
