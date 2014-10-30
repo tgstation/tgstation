@@ -9,7 +9,7 @@ For the materials datum, it assumes you need reagents unless specified otherwise
 you use one of the material IDs below. These are NOT ids in the usual sense (they aren't defined in the object or part of a datum),
 they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
 The currently supporting non-reagent materials:
-- $metal (/obj/item/stack/metal). One sheet = 3750 units.
+- $iron (/obj/item/stack/metal). One sheet = 3750 units. NB: do not use $metal. It is outdated and will cause issues
 - $glass (/obj/item/stack/glass). One sheet = 3750 units.
 - $plasma (/obj/item/stack/plasma). One sheet = 3750 units.
 - $silver (/obj/item/stack/silver). One sheet = 3750 units.
@@ -2168,7 +2168,7 @@ other types of metals and chemistry for reagents).
 	id = "mat_synth"
 	req_tech = list("engineering" = 4, "materials" = 5, "powerstorage" = 3)
 	build_type = PROTOLATHE
-	materials = list ("$metal" = 3000, "$glass" = 1500, "$diamond" = 1000, "$uranium" = 3000)
+	materials = list ("$iron" = 3000, "$glass" = 1500, "$diamond" = 1000, "$uranium" = 3000)
 	build_path = /obj/item/device/material_synth
 
 /////////////////////////////////////////
