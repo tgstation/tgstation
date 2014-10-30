@@ -409,7 +409,7 @@ obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 
 
 obj/machinery/bot/proc/bot_step(var/dest)
-	if(path.len > 1)
+	if(path && path.len > 1)
 		step_to(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
 			path -= path[1]
@@ -449,6 +449,7 @@ obj/machinery/bot/proc/bot_step(var/dest)
 	else
 		calling_ai << "<span class='danger'>Failed to calculate a valid route. Ensure destination is clear of obstructions and within range.</span>"
 		calling_ai = null
+		path = list()
 
 /obj/machinery/bot/proc/call_mode() //Handles preparing a bot for a call, as well as calling the move proc.
 //Handles the bot's movement during a call.
