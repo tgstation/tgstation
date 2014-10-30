@@ -17,6 +17,8 @@
 /obj/machinery/door/window/New()
 	..()
 
+	machine_flags |= EMAGGABLE
+
 	if (src.req_access && src.req_access.len)
 		src.icon_state = "[src.icon_state]"
 		src.base_state = src.icon_state
@@ -170,24 +172,15 @@
 	return src.attackby(user, user)
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
-
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating)
 		return
 
-	//Emags and ninja swords? You may pass.
-	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
-		src.operating = -1
-		if(istype(I, /obj/item/weapon/melee/energy/blade))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(get_turf(src), "sparks", 50, 1)
-			playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
-			visible_message("\blue The glass door was sliced open by [user]!")
-		flick("[src.base_state]spark", src)
-		sleep(6)
-		open()
+	..()
+
+	//ninja swords? You may pass.
+	if (src.density && istype(I, /obj/item/weapon/melee/energy/blade))
+		hackOpen(I, user)
 		return 1
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
@@ -206,24 +199,33 @@
 			del(src)
 		return
 
-
 	src.add_fingerprint(user)
 	if (!src.requiresID())
 		//don't care who they are or what they have, act as if they're NOTHING
 		user = null
 
-	if (src.allowed(user))
-		if (src.density)
-			open()
-		else
-			close()
-
-	else if (src.density)
+	if (!src.allowed(user) && src.density)
 		flick(text("[]deny", src.base_state), src)
 
 	return
 
+/obj/machinery/door/window/emag(mob/user)
+	var used_emag = (/obj/item/weapon/card/emag in user.contents) //TODO: Find a better way of checking this
+	return hackOpen(used_emag, user)
 
+/obj/machinery/door/window/proc/hackOpen(obj/item/I, mob/user)
+	src.operating = -1
+	if(istype(I, /obj/item/weapon/melee/energy/blade))
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(get_turf(src), "sparks", 50, 1)
+		playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
+		visible_message("\blue The glass door was sliced open by [user]!")
+	flick("[src.base_state]spark", src)
+	sleep(6)
+	open()
+	return 1
 
 /obj/machinery/door/window/brigdoor
 	name = "Secure Door"
@@ -233,69 +235,3 @@
 	req_access = list(access_security)
 	var/id_tag = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
-
-
-/obj/machinery/door/window/northleft
-	dir = NORTH
-
-/obj/machinery/door/window/eastleft
-	dir = EAST
-
-/obj/machinery/door/window/westleft
-	dir = WEST
-
-/obj/machinery/door/window/southleft
-	dir = SOUTH
-
-/obj/machinery/door/window/northright
-	dir = NORTH
-	icon_state = "right"
-	base_state = "right"
-
-/obj/machinery/door/window/eastright
-	dir = EAST
-	icon_state = "right"
-	base_state = "right"
-
-/obj/machinery/door/window/westright
-	dir = WEST
-	icon_state = "right"
-	base_state = "right"
-
-/obj/machinery/door/window/southright
-	dir = SOUTH
-	icon_state = "right"
-	base_state = "right"
-
-/obj/machinery/door/window/brigdoor/northleft
-	dir = NORTH
-
-/obj/machinery/door/window/brigdoor/eastleft
-	dir = EAST
-
-/obj/machinery/door/window/brigdoor/westleft
-	dir = WEST
-
-/obj/machinery/door/window/brigdoor/southleft
-	dir = SOUTH
-
-/obj/machinery/door/window/brigdoor/northright
-	dir = NORTH
-	icon_state = "rightsecure"
-	base_state = "rightsecure"
-
-/obj/machinery/door/window/brigdoor/eastright
-	dir = EAST
-	icon_state = "rightsecure"
-	base_state = "rightsecure"
-
-/obj/machinery/door/window/brigdoor/westright
-	dir = WEST
-	icon_state = "rightsecure"
-	base_state = "rightsecure"
-
-/obj/machinery/door/window/brigdoor/southright
-	dir = SOUTH
-	icon_state = "rightsecure"
-	base_state = "rightsecure"
-

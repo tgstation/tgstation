@@ -431,7 +431,7 @@
 		spawn(FARMBOT_EMAG_DELAY)
 			mode = 0
 
-		if ( prob(50) ) // better luck next time little guy
+		if ( prob(30) ) // better luck next time little guy
 			src.visible_message("\red <b>[src] swings wildly at [target] with a minihoe, missing completely!</b>")
 
 		else // yayyy take that weeds~
@@ -439,7 +439,7 @@
 			var /mob/living/carbon/human/human = target
 
 			src.visible_message("\red <B>[src] [attackVerb] [human]!</B>")
-			var/damage = 5
+			var/damage = 15
 			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 			var/datum/organ/external/affecting = human.get_organ(ran_zone(dam_zone))
 			var/armor = human.run_armor_check(affecting, "melee")

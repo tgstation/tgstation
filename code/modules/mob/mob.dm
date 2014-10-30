@@ -9,6 +9,9 @@
 	ghostize()
 	..()
 
+/mob/proc/cultify()
+	return
+
 /mob/New()
 	. = ..()
 	mob_list += src
@@ -105,6 +108,27 @@
 
 /mob/proc/Life()
 	return
+
+/mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N)
+	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)))
+		if(!narsimage)
+			narsimage = image('icons/obj/narsie.dmi',src.loc,"narsie",9,1)
+		narsimage.pixel_x = 32 * (N.x - src.x) + N.pixel_x
+		narsimage.pixel_y = 32 * (N.y - src.y) + N.pixel_y
+		narsimage.loc = src.loc
+		narsimage.mouse_opacity = 0
+		if(!narglow)
+			narglow = image('icons/obj/narsie.dmi',narsimage.loc,"glow-narsie",LIGHTING_LAYER+2,1)
+		narglow.pixel_x = narsimage.pixel_x
+		narglow.pixel_y = narsimage.pixel_y
+		narglow.loc = narsimage.loc
+		narglow.mouse_opacity = 0
+		src << narsimage
+		src << narglow
+	else
+		if(narsimage)
+			del(narsimage)
+			del(narglow)
 
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)

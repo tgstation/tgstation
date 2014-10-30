@@ -21,6 +21,8 @@ var/list/camera_names=list()
 	var/obj/item/weapon/camera_assembly/assembly = null
 	var/light_on = 0
 
+	machine_flags = SCREWTOGGLE
+
 	//OTHER
 
 	var/view_range = 7
@@ -108,7 +110,7 @@ var/list/camera_names=list()
 	src.view_range = num
 	cameranet.updateVisibility(src, 0)
 
-/obj/machinery/camera/proc/shock(var/mob/living/user)
+/obj/machinery/camera/shock(var/mob/living/user)
 	if(!istype(user))
 		return
 	user.electrocute_act(10, src)
@@ -129,10 +131,7 @@ var/list/camera_names=list()
 	if(istype(W, /obj/item/weapon/screwdriver))
 		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
-		panel_open = !panel_open
-		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
-		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+		togglePanelOpen(W, user, icon_state, icon_state)
 
 	else if((istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool)) && panel_open)
 		wires.Interact(user)

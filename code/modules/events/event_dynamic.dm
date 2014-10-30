@@ -43,7 +43,7 @@ var/list/event_last_fired = list()
 
 	if(active_with_role["AI"] > 0 || active_with_role["Cyborg"] > 0)
 		possibleEvents[/datum/event/ionstorm] = 30
-	possibleEvents[/datum/event/grid_check] = 20 //May cause lag
+	//possibleEvents[/datum/event/grid_check] = 20 //May cause lag
 	possibleEvents[/datum/event/electrical_storm] = 10
 	possibleEvents[/datum/event/wallrot] = 30
 

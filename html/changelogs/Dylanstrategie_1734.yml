@@ -1,4 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - tweak: Chameleon Projectors now force mobs into the object layer (and back) AND are no longer anchored. This should fix a large amount of problems, existing and potential

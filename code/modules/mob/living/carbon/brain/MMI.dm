@@ -16,10 +16,6 @@
 		/obj/item/robot_parts/l_arm = 1
 	)
 
-	var/list/construction_cost = list("metal"=1000,"glass"=500)
-	var/construction_time = 75
-	//these vars are so the mecha fabricator doesn't shit itself anymore. --NEO
-
 	req_access = list(access_robotics)
 
 	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.

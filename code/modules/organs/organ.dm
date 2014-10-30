@@ -139,6 +139,8 @@
 						spark_system.start()
 						spawn(10)
 							del(spark_system)
+					if(!isturf(c_hand.loc) || !istype(c_hand.loc, /obj/structure/closet))
+						c_hand.loc = get_turf(c_hand)
 
 			else if(E.name in list("l_leg","l_foot","r_leg","r_foot") && !lying)
 				if (!E.is_usable() || malfunction || (broken && !(E.status & ORGAN_SPLINTED)))
@@ -147,7 +149,7 @@
 	// standing is poor
 	if(leg_tally <= 0 && !paralysis && !(lying || resting) && prob(5))
 		if(species && species.flags & NO_PAIN)
-			emote("scream")
+			emote("scream",,, 1)
 		emote("collapse")
 		paralysis = 10
 

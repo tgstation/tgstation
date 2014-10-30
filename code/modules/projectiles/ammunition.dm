@@ -10,16 +10,20 @@
 	var/caliber = ""							//Which kind of guns it can be loaded into
 	var/projectile_type = ""//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
-	var/spent = 0 //whether or not the thing has been shot. Can't load empty bullets!
 
 
 	New()
 		..()
 		if(projectile_type)
 			BB = new projectile_type(src)
+		update_icon()
+
+	update_icon()
 		pixel_x = rand(-10.0, 10)
 		pixel_y = rand(-10.0, 10)
 		dir = pick(cardinal)
+		icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
+		desc = "[initial(desc)][BB ? "" : " This one is spent"]"
 
 
 //Boxes of ammo
@@ -63,13 +67,13 @@
 			var/accepted = 0
 			if((exact && (AC.type == text2path(ammo_type))) || (!exact && istype(AC, text2path(ammo_type))))//if it's the exact type we want, or the general class
 				accepted = 1
-			if(!AC.spent && accepted && stored_ammo.len < max_ammo) //spent means fired. Spent shots can't be loaded into guns or magazines
+			if(AC.BB && accepted && stored_ammo.len < max_ammo)
 				stored_ammo += AC
 				user.drop_item(AC)
 				AC.loc = src
 				user << "<span class='notice'>You successfully load the [src] with \the [AC]</span>"
 				update_icon()
-			else if(AC.spent)
+			else if(!AC.BB)
 				user << "<span class='notice'>You can't load a spent bullet.</span>"
 			else if (stored_ammo.len == max_ammo)
 				user << "<span class='notice'>\The [src] can't hold any more shells.</span>"
@@ -174,3 +178,17 @@
 		bullets_from.update_icon()
 		target.update_icon()
 		return bullets_loaded
+
+	proc/get_round(var/keep = 0)
+		if(!ammo_count())
+			return null
+		else
+			var/b = stored_ammo[stored_ammo.len]
+			stored_ammo -= b
+			if(keep)
+				stored_ammo.Insert(1,b)
+			else
+				update_icon()
+			return b
+	proc/ammo_count()
+		return stored_ammo.len

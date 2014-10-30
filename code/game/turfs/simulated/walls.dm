@@ -441,3 +441,8 @@
 /turf/simulated/wall/ChangeTurf(var/newtype)
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
 	..(newtype)
+
+/turf/simulated/wall/cultify()
+	ChangeTurf(/turf/simulated/wall/cult)
+	cultification()
+	return

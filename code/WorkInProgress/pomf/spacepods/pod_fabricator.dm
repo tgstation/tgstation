@@ -4,7 +4,9 @@
 
 /obj/machinery/r_n_d/fabricator/pod
 	name = "Spacepod Fabricator"
-	desc = "Nothing is being built."
+	desc = "Used for producing all the spacepod goodies."
+	icon = 'icons/obj/robotics.dmi'
+	icon_state = "fab"
 	build_number = 32
 	nano_file = "podfab.tmpl"
 	req_one_access = list(access_engine, access_research, access_robotics, access_eva)
@@ -23,14 +25,14 @@
 						/obj/item/pod_parts/core
 						),
 	"Pod_Weaponry" = list(
+						/obj/item/device/spacepod_equipment/weaponry/taser
 						),
 	"Misc" = list(
 						)
 	)
 
-	locked_parts = list(
-		/obj/item/device/spacepod_equipment/weaponry //lock up the guns, yeah
-	)
+	research_flags = NANOTOUCH | HASOUTPUT | HASMAT_OVER | TAKESMATIN | ACCESS_EMAG | LOCKBOXES
+
 
 /obj/machinery/r_n_d/fabricator/pod/New()
 	. = ..()

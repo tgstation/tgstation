@@ -80,6 +80,188 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 
 		<div class="commit sansserif">
+			<h2 class="date">2014.10.30</h2>
+			<h3 class="author">Comic updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added the material synthesizer, which takes in matter and is capable of producing rare materials. Available through research, to help improve access to rare materials in exchange for metal and glass.</li>
+				<li class="experiment">Added the material synthesizer to MoMMIs. Use it to scan materials, make materials, and fill machines with materials.</li>
+				<li class="rscdel">Removed material modules from MoMMIs. All previous modules can now be made with the synthesizer.</li>
+				<li class="rscadd">Added alternate jumpsuits to lockers and wardrobes. Play dressup in your spacemen!</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Water now directly damages slimes, even when not used from a fire extinguisher of sprayer.</li>
+				<li class="rscadd">Water will as well deal some small toxin damage to "humanoid slimes" (green extract mutation)</li>
+				<li class="tweak">Water calms down rabid slimes.</li>
+				<li class="bugfix">Fixed an issue that prevented Greys from taking any damage when they were splashed with water. The damage is brute and may cause bleeding.</li>
+				<li class="tweak">Showers now clean items and mobs at every process(), rather than only when turned on.</li>
+				<li class="rscadd">Showers now actually apply some water to things that they clean. (things like monkey cubes and Greys will react in consequence)</li>
+				<li class="rscadd">Placing a beaker or other container under a shower will slowly fill it with water.</li>
+				<li class="rscadd">Showers now actually wet the floor as well. No running!</li>
+				<li class="experiment">Did some backend changes that'll allow in the future to replace which liquid is being sprayed by showers.</li>
+			</ul>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Switch up some values for specific events</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.29</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="experiment">The Red Slime Extract + Blood reaction will now actually make slimes rabid! When rabid they behave like any hostile monster.</li>
+				<li class="experiment">Player-controlled slimes may now be tamed with docility potions. However the slime will be the one who gets to choose his name.</li>
+				<li class="tweak">Tame slimes can become rabid, unless they are player controlled (more to code later in that aspect)</li>
+				<li class="rscadd">Rabid slimes may be calmed and turned into normal slimes again by lowering their body temperature bellow (dark blue slimes or a temperature gun really comes handy there)</li>
+				<li class="tweak">Slimes spawned from killed adult slimes will be rabid. (they were supposed to be rabid according to the half-implemented rabid code)</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added Trainer's Belt to Miner's Equipment Storage buy list, sprite thanks to skowron.</li>
+				<li class="rscadd">Added the ability to rename mobs in a lazarus capsule using a pen.</li>
+				<li class="rscadd">Miner has an antag item now, a trainer's belt that contains 6 random hostile mobs.</li>
+				<li class="tweak">Lazarus revived mobs now only share a faction with the owner, this means you can fight mobs now!</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.28</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Narsie now converts floor tiles by changing their icon, rather than using changeTurf().</li>
+				<li class="bugfix">Replacing a hundred of /red with <span class='warning'.</li>
+				<li class="bugfix">Fixing Teleport talismans not working.</li>
+				<li class="tweak">The Teleport Other rune now actually swaps the objects and mobs between the two runes rather than just sending them from the touched rune to the other.</li>
+				<li class="tweak">Reduced the self-inflicted damage of both this rune and the Free Cultist rune (Because sending 3 cultists into crit to summon one sounds a bit wonky to me, take_overall_damage ain't no joke).</li>
+				<li class="imageadd">Added animations for the Summon Cultist rune. (and people near the cultist before he gets summoned get a message)</li>
+			</ul>
+			<h3 class="author">Wild Bill updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Re-added bots to emergency crate</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.27</h2>
+			<h3 class="author">Angelite Entyshak updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Certain mobs can no longer be forced to walk indefinately by targeting guns with allowing hostages to walk. (I probably fucked up wording this.)</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixing areas with colored lights showing all white on pictures.</li>
+				<li class="bugfix">Fixed many objects and some turfs not appearing at all on pictures (all the doors, the kitchen's floor, etc...)</li>
+				<li class="bugfix">Fixed many objects not appearing on pictures if they have been pulled in certain directions.</li>
+				<li class="tweak">Mobs will now always appear to face south on pictures. A necessary evil related to human species and limbs. humanoids would always face south while their clothes would face their actual direction, causing an ugly dissonance. If someone can make humans face their actual direction on pictures and not just their clothes, please do. I am unable to.</li>
+				<li class="bugfix">Mobs that are lying on the ground now appear as such pictures.</li>
+				<li class="bugfix">fixed windoors not properly staying open when you click on them</li>
+				<li class="bugfix">fixed windoors not being emaggable</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">VLC is now used for all media, fixing issues with Windows Media Player.</li>
+				<li class="bugfix">Jukeboxes properly unhook from areas when unwrenched.</li>
+			</ul>
+			<h3 class="author">iconleap updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Make threat detectors usable again.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.26</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">tweaked cult structucture sprites a little.</li>
+				<li class="tweak">red pylons now emit red light.</li>
+				<li class="tweak">red pylons have collisions, but can be broken just like light bulbs.</li>
+				<li class="rscadd">Artificers can spawn red pylons (20 seconds recharge time).</li>
+				<li class="tweak">in hell, cultified floor tiles convert light bulbs to red pylons.</li>
+				<li class="imageadd"><span class="redletter">NARSIE HAS GOTTEN A NEW LOOK</span>, twice more pixels! And his eyes glow in the dark.</li>
+				<li class="rscadd"><span class="redletter">NAR-SIE</span> now converts the station:<br>Floor tiles (except carpets) and Wall tiles are replaced with their cult counterparts.<br>Grilles are replaced with cult walls.<br>Light bulbs are replaced with Red Pylons..<br>External airlocks become wooden doors.<br>Books become arcane tomes.<br>Chairs become pretty wooden chairs.<br>Tables become wooden tables.<br>Most machines and all computers get replaced by various cult structures, unused up to now.</li>
+				<li class="tweak"><span class="redletter">NAR-SIE</span> ignores hell monsters (faithless/bats/creatures), constructs and shades.</li>
+				<li class="rscadd">once the shuttle docks, all the hell monsters will make their way toward escape (a few seconds of lag occur at the exact moment it docks).</li>
+				<li class="rscadd">admins can toggle <span class="redletter">NAR-SIE</span>'s behaviour to use either the new one or the old one at any time.</li>
+				<li class="tweak">once <span class="redletter">NAR-SIE HAS RISEN</span>, the rune count cap is removed.</li>
+				<li class="rscadd">constructs now have HUD icons for their spells. The icon updates depending on the spell's availability.</li>
+				<li class="rscadd">cult armor rune now lets you change a construct's type.</li>
+				<li class="rscadd">cultists get turned by <span class="redletter">NAR-SIE</span> into Harvester constructs:<br>Harvester constructs are as fast and powerful as wraith, and twice as durable,<br>they can see mobs through walls,<br>they can use runes and talismans, and write new runes every 10 seconds (without need for a tome or for cult words),<br>they can disintegrate doors in a radius of 3 tiles every 10 seconds,<br>they can teleport themselves and any other living mob on their tile back to NAR-SIE at anytime (unless that mob is carrying a null rod).</li>
+				<li class="rscadd">once <span class="redletter">NAR-SIE HAS RISEN</span>, pre-existing constructs can be turned into Harvesters by cult armor runes.</li>
+				<li class="rscadd">ghosts that touch <span class="redletter">NAR-SIE</span> become visible to the living.</li>
+				<li class="imageadd">these ghosts get provided with a new sprite.</li>
+				<li class="imageadd">added pretty spess overlay for once <span class="redletter">NAR-SIE HAS RISEN</span>.</li>
+				<li class="imageadd">added animations for a few runes (convert, teleport, imbue talisman, sacrifice).</li>
+				<li class="imageadd">added animations for tiles getting converted/doors getting disintegrated.</li>
+				<li class="rscadd">arcane tomes can FINALLY be put onto bookshelves (spellbooks as well, why not).</li>
+				<li class="imageadd">new sprite for construct shells.</li>
+				<li class="imageadd">cultists turned into monkeys can summon monkey-sized cult armor.</li>
+				<li class="tweak"><span class="redletter">NAR-SIE</span>'s sprite will now render even when he's hidden behind walls or when he's over 12 tiles from the player.</li>
+				<li class="rscadd"><span class="redletter">NAR-SIE</span> now leaves "footsteps". those footsteps may open path through walls.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Anybody can force open a firelock with a crowbar now.</li>
+				<li class="tweak">AI can now open or close firelocks.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.25</h2>
+			<h3 class="author">Angelite Entyshak updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">added colored hats to the hat vendor</li>
+			</ul>
+			<h3 class="author">Cutelildick updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The Excavation Gear Belt now actually holds damn Pickaxes, Hand Picks, and Welders.</li>
+				<li class="bugfix">Anomaly Harvester now charges batteries at the variable rate of chargemaxlevel / effectrange</li>
+				<li class="bugfix">Anomaly Analyzer now properly identifies Touch, Aura, and Pulse types.</li>
+				<li class="bugfix">The Anomaly Battery Utilizer menu is no longer a piece of shit and infinite range.</li>
+				<li class="bugfix">The Anomaly Battery Utilizer now actually works with Aura and Pulse types of effects.</li>
+				<li class="tweak">Large Artifact secondary effects now appear in the Analyzer all of the time, no activation needed.</li>
+				<li class="tweak">Large Artifacts now only accept reagents from glasses, beakers, and droppers.</li>
+				<li class="tweak">Droppers now properly lose their reagents when used on Large Artifacts.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Gave detective thermals again for now.</li>
+				<li class="bugfix">Fixed mohawks.</li>
+				<li class="bugfix">Fixed erroneously removing brainchips or fixing a bleeder in your target's head when targetting anything but the head.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.24</h2>
+			<h3 class="author">Clusterfack updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Stopped the emergency shuttle from leaving structures in place when it arrives (i.e. grilles)</li>
+			</ul>
+			<h3 class="author">Skowron updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Screams of agony are now audible. Tators beware!</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.23</h2>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added hud indicator for external organ damage.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.22</h2>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Chameleon Projectors now force mobs into the object layer (and back) AND are no longer anchored. This should fix a large amount of problems, existing and potential</li>
+				<li class="tweak">Syringes, beakers, toolboxes, pills and chemistry bottles now recycle</li>
+				<li class="tweak">Beaker glass cost changed slightly</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
 			<h2 class="date">2014.10.21</h2>
 			<h3 class="author">Deity Link updated:</h3>
 			<ul class="changes bgimages16">

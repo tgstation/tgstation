@@ -696,6 +696,7 @@ var/list/TAGGERLOCATIONS = list(
 #define CHAT_LOOC		4096
 #define CHAT_GHOSTRADIO 8192
 #define SOUND_STREAMING 16384 // /vg/
+#define CHAT_GHOSTPDA   32768
 
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC|SOUND_STREAMING)
@@ -883,7 +884,31 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define AUTOIGNITION_WOOD  573.15
 #define AUTOIGNITION_PAPER 519.15
 
+//used to define machine behaviour in attackbys and other code situations
+#define EMAGGABLE 1 //can we emag it? If this is flagged, the machine calls emag()
+#define SCREWTOGGLE 2 //does it toggle panel_open when hit by a screwdriver?
+#define CROWDESTROY 4 //does hitting a panel_open machine with a crowbar disassemble it?
+#define WRENCHMOVE 8 //does hitting it with a wrench toggle its anchored state?
+#define FIXED2WORK 16 //does it need to be anchored to work? Try to use this with WRENCHMOVE
+#define EJECTNOTDEL 32 //when we destroy the machine, does it remove all its items or destroy them?
+
 //gun shit - prepare to have various things added to this
 #define SILENCECOMP 1 		//Silencer-compatible
 #define AUTOMAGDROP 2		//Does the mag drop when it's empty?
 #define EMPTYCASINGS 4		//Does the gun eject empty casings?
+
+///////////////////////
+///////RESEARCH////////
+///////////////////////
+//used in rdmachines, to define certain behaviours
+//bitflags are my waifu - Comic
+
+//NB TRUELOCKS should ONLY be used for machines that produce stuff that's not good in an emergency i.e. a gun fabricator. Be very careful with it
+#define CONSOLECONTROL		1	//does the console control it? can't be interacted if not linked
+#define HASOUTPUT			2	//does it have an output? - mainly for fabricators
+#define TAKESMATIN			4	//does it takes materials (sheets) - mainly for fabricators
+#define NANOTOUCH			8	//does it have a nanoui when you smack it with your hand? - mainly for fabricators
+#define HASMAT_OVER			16	//does it have overlays for when you load materials in? - mainly for fabricators
+#define ACCESS_EMAG			32	//does it lose all its access when smacked by an emag? incompatible with CONSOLECONTROl, for obvious reasons
+#define LOCKBOXES			64	//does it spawn a lockbox around a design which is said to be locked? - for fabricators
+#define TRUELOCKS			128 //does it make a truly locked lockbox? If not set, the lockboxes made are unlockable by any crew with an ID

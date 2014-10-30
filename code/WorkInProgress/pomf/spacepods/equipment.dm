@@ -59,8 +59,6 @@
 /obj/item/device/spacepod_equipment
 	name = "equipment"
 	var/obj/spacepod/my_atom
-	var/construction_time = 150
-	var/construction_cost = list("iron" = 15000)
 // base item for spacepod weapons
 
 /obj/item/device/spacepod_equipment/weaponry

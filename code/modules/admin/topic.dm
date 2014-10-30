@@ -1616,9 +1616,12 @@
 		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\""
 
 	else if(href_list["CentcommFaxView"])
-		var/info = locate(href_list["CentcommFaxView"])
-
-		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[info]</BODY></HTML>", "window=Centcomm Fax Message")
+		var/obj/item/weapon/paper/P = locate(href_list["CentcommFaxView"])
+		var/info_2 = ""
+		if(P.img)
+			usr << browse_rsc(P.img.img, "tmp_photo.png")
+			info_2 = "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' /><br>"
+		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[info_2][P.info]</BODY></HTML>", "window=Centcomm Fax Message")
 
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
@@ -2441,6 +2444,16 @@
 				feedback_add_details("admin_secrets_fun_used","OO")
 				usr.client.only_one()
 //				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+			if("togglenarsie")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","NA")
+				var/choice = input("How do you wish for narsie to interact with her surroundings?") in list("CultStation13", "Nar-Singulo")
+				if(choice == "CultStation13")
+					message_admins("[key_name_admin(usr)] has set narsie's behaviour to \"CultStation13\".")
+					narsie_behaviour = "CultStation13"
+				if(choice == "Nar-Singulo")
+					message_admins("[key_name_admin(usr)] has set narsie's behaviour to \"Nar-Singulo\".")
+					narsie_behaviour = "Nar-Singulo"
 			if("hellonearth")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","NS")

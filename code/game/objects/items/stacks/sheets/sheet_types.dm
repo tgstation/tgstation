@@ -118,6 +118,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-plasteel"
 	m_amt = 3750 // Was 7500, which doesn't make any fucking sense
+	perunit = 2875 //average of plasma and metal
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=2"
@@ -153,6 +154,9 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 	origin_tech = "materials=1;biotech=1"
+
+/obj/item/stack/sheet/wood/cultify()
+	return
 
 /obj/item/stack/sheet/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes

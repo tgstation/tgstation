@@ -36,7 +36,7 @@
 	isHandgun()
 		return 0
 
-/obj/item/weapon/gun/energy/pulse_rifle/cyborg/load_into_chamber()
+/obj/item/weapon/gun/energy/pulse_rifle/cyborg/process_chambered()
 	if(in_chamber)
 		return 1
 	if(isrobot(src.loc))

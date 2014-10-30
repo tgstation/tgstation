@@ -1290,19 +1290,6 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 
 	..()
 
-/obj/machinery/power/apc/proc/shock(mob/user, prb)
-	if(!prob(prb))
-		return 0
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
-	if(isalien(user))
-		return 0
-	if (electrocute_mob(user, src, src))
-		return 1
-	else
-		return 0
-
 /obj/machinery/power/apc/proc/setsubsystem(val)
 	if(cell && cell.charge > 0)
 		return (val==1) ? 0 : val

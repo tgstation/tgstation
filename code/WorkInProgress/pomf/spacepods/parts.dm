@@ -5,8 +5,6 @@
 /obj/item/pod_parts/core
 	name="Space Pod Core"
 	icon_state = "core"
-	construction_cost = list("iron"=5000,"glass"=5000,"uranium"=1000,"plasma"=5000)
-	construction_time = 150
 	flags = FPRINT | CONDUCT
 	origin_tech = "materials=4;plasma=3;bluespace=2;engineering=3"
 
@@ -16,8 +14,6 @@
 	flags = CONDUCT
 	density = 0
 	anchored = 0
-	construction_cost = list("iron"=15000,"glass"=5000)
-	construction_time = 100
 	var/link_to = null
 	var/link_angle = 0
 
@@ -126,6 +122,4 @@
 	name = "civilian pod armor"
 	icon = 'icons/pods/pod_parts.dmi'
 	icon_state = "pod_armor_civ"
-	construction_cost = list("iron"=15000,"glass"=5000,"plasma"=10000)
-	construction_time = 120
 	desc = "Spacepod armor. This is the civilian version. It looks rather flimsy."
