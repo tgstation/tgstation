@@ -556,6 +556,7 @@
 #include "code\game\objects\items\weapons\cigs_lighters.dm"
 #include "code\game\objects\items\weapons\clown_items.dm"
 #include "code\game\objects\items\weapons\cosmetics.dm"
+#include "code\game\objects\items\weapons\defib.dm"
 #include "code\game\objects\items\weapons\dice.dm"
 #include "code\game\objects\items\weapons\dna_injector.dm"
 #include "code\game\objects\items\weapons\explosives.dm"

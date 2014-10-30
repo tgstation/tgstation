@@ -189,6 +189,40 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	return
 
+/obj/structure/closet/wardrobe/white/medical
+	name = "medical doctor's wardrobe"
+
+/obj/structure/closet/wardrobe/white/medical/New()
+	new /obj/item/clothing/under/rank/nursesuit (src)
+	new /obj/item/clothing/head/nursehat (src)
+	new /obj/item/clothing/suit/labcoat/emt(src)
+	new /obj/item/clothing/suit/labcoat/emt(src)
+	new /obj/item/clothing/suit/labcoat/emt(src)
+	switch(pick("blue", "green", "purple"))
+		if ("blue")
+			new /obj/item/clothing/under/rank/medical/blue(src)
+		if ("green")
+			new /obj/item/clothing/under/rank/medical/green(src)
+		if ("purple")
+			new /obj/item/clothing/under/rank/medical/purple(src)
+	switch(pick("blue", "green", "purple"))
+		if ("blue")
+			new /obj/item/clothing/under/rank/medical/blue(src)
+		if ("green")
+			new /obj/item/clothing/under/rank/medical/green(src)
+		if ("purple")
+			new /obj/item/clothing/under/rank/medical/purple(src)
+	switch(pick("blue", "green", "purple"))
+		if ("blue")
+			new /obj/item/clothing/under/rank/medical/blue(src)
+		if ("green")
+			new /obj/item/clothing/under/rank/medical/green(src)
+		if ("purple")
+			new /obj/item/clothing/under/rank/medical/purple(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	return
 
 /obj/structure/closet/wardrobe/pjs
 	name = "pajama wardrobe"
