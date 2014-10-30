@@ -93,10 +93,6 @@
 		loopsanity--
 		A.HasProximity(M, 1)
 
-/turf/proc/is_plating()
-	return 0
-/turf/proc/is_asteroid_floor()
-	return 0
 /turf/proc/is_plasteel_floor()
 	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.

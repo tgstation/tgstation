@@ -48,29 +48,3 @@
 		return
 	else
 		..()
-
-/*
-/obj/item/stack/tile/plasteel/attack_self(mob/user as mob)
-	if (usr.stat)
-		return
-	var/T = user.loc
-	if (!( istype(T, /turf) ))
-		user << "\red You must be on the ground!"
-		return
-	if (!( istype(T, /turf/space) ))
-		user << "\red You cannot build on or repair this turf!"
-		return
-	src.build(T)
-	src.add_fingerprint(user)
-	use(1)
-	return
-*/
-
-/obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
-	S.ChangeTurf(/turf/simulated/floor/plating)
-//	var/turf/simulated/floor/W = S.ReplaceWithFloor()
-//	W.make_plating()
-	return
-
-
-

@@ -37,7 +37,7 @@
 		else
 			user << "<span class='notice'>Reinforcing the floor...</span>"
 			if(do_after(user, 30))
-				if (R.get_amount() >= 2 && is_plating())
+				if (R.get_amount() >= 2)
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
