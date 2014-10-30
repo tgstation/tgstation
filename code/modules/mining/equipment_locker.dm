@@ -734,15 +734,15 @@
 	..()
 	if(!tripped)
 		if(contained_mob)
-			dump_contents()
+			dump_contents(user)
 			tripped = 1
 		else
-			take_contents()
+			take_contents(user)
 			tripped = 1
 
 
 
-/obj/item/device/mobcapsule/proc/insert(var/atom/movable/AM)
+/obj/item/device/mobcapsule/proc/insert(var/atom/movable/AM, mob/user)
 
 	if(contained_mob)
 		return -1
@@ -759,7 +759,7 @@
 		return 0
 	else if(AM.density || AM.anchored)
 		return 0
-	//AM.loc = src
+	AM.loc = src
 	contained_mob = AM
 	return 1
 
@@ -769,7 +769,7 @@
 	capsuleowner = user
 
 
-/obj/item/device/mobcapsule/proc/dump_contents()
+/obj/item/device/mobcapsule/proc/dump_contents(mob/user)
 	/*
 	//Cham Projector Exception
 	for(var/obj/effect/dummy/chameleon/AD in src)
@@ -784,10 +784,12 @@
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
 */
-	contained_mob.loc = src.loc
-	if(contained_mob.client)
-		contained_mob.client.eye = contained_mob.client.mob
-		contained_mob.client.perspective = MOB_PERSPECTIVE
+	if(contained_mob)
+		contained_mob.loc = src.loc
+		if(contained_mob.client)
+			contained_mob.client.eye = contained_mob.client.mob
+			contained_mob.client.perspective = MOB_PERSPECTIVE
+		contained_mob = null
 
 /obj/item/device/mobcapsule/attack_self(mob/user)
 	colorindex += 1
@@ -796,14 +798,14 @@
 	icon_state = "mobcap[colorindex]"
 	update_icon()
 
-/obj/item/device/mobcapsule/proc/take_contents(atom/target)
+/obj/item/device/mobcapsule/proc/take_contents(mob/user)
 	for(var/mob/living/simple_animal/AM in src.loc)
-		if(istype(AM, /mob/living/simple_animal))
+		if(istype(AM))
 			var/mob/living/simple_animal/M = AM
 			var/mob/living/simple_animal/hostile/H = M
 			for(var/things in H.friends)
 				if(capsuleowner in H.friends)
-					if(insert(AM) == -1) // limit reached
+					if(insert(AM, user) == -1) // limit reached
 						break
 
 

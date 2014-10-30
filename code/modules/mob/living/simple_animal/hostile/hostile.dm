@@ -30,8 +30,9 @@
 	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
 /mob/living/simple_animal/hostile/Life()
-
 	. = ..()
+	if(istype(loc, /obj/item/device/mobcapsule))
+		return 0
 	if(!.)
 		walk(src, 0)
 		return 0
