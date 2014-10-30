@@ -148,21 +148,30 @@ Buildable meters
 //called when a turf is attacked with a pipe item
 // place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
 
-// rotates the pipe item
+// rotate the pipe item clockwise
 
-/obj/item/pipe/MouseDrop(over,src_loc,over_loc)
-	..()
-	var/d = get_dir_sane(usr,src_loc,over_loc)
-	if(d && d in cardinal)
-		if(d == dir)
-			flip_pipe()
-		else
-			dir = d
-			fixdir()
+/obj/item/pipe/verb/rotate()
+	set category = "Object"
+	set name = "Rotate Pipe"
+	set src in view(1)
 
-// flips the pipe item
+	if ( usr.stat || usr.restrained() )
+		return
 
-/obj/item/pipe/proc/flip_pipe()
+	src.dir = turn(src.dir, -90)
+
+	fixdir()
+
+	return
+
+/obj/item/pipe/verb/flip()
+	set category = "Object"
+	set name = "Flip Pipe"
+	set src in view(1)
+
+	if ( usr.stat || usr.restrained() )
+		return
+
 	if (pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER))
 		src.dir = turn(src.dir, flipped ? 45 : -45)
 		flipped = !flipped
@@ -171,6 +180,8 @@ Buildable meters
 	src.dir = turn(src.dir, -180)
 
 	fixdir()
+
+	return
 
 /obj/item/pipe/Move()
 	..()
@@ -271,10 +282,7 @@ Buildable meters
 			dir = 4
 
 /obj/item/pipe/attack_self(mob/user as mob)
-	if(usr.stat || usr.restrained())
-		return
-	src.dir = turn(src.dir, -90)
-	fixdir()
+	return rotate()
 
 /obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	..()
