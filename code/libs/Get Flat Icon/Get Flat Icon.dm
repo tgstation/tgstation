@@ -29,7 +29,8 @@ var/list/directional = list(
 	/obj/machinery/atmospherics/pipe,
 	/obj/structure/window,
 	/obj/structure/window/full,
-	/obj/structure/stool/bed/chair
+	/obj/structure/stool/bed/chair,
+	/obj/structure/table
 	)
 
 var/list/exception = list(

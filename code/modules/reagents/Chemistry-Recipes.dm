@@ -1663,7 +1663,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/device/camera/P = new /obj/item/device/camera
+				var/obj/item/device/camera/sepia/P = new /obj/item/device/camera/sepia
 				P.loc = get_turf(holder.my_atom)
 
 		slimefilm
