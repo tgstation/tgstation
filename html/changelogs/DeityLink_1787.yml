@@ -1,8 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - experiment: The Red Slime Extract + Blood reaction will now actually make slimes rabid! When rabid they behave like any hostile monster.
-  - experiment: Player-controlled slimes may now be tamed with docility potions. However the slime will be the one who gets to choose his name.
-  - tweak: Tame slimes can become rabid, unless they are player controlled (more to code later in that aspect)
-  - rscadd: Rabid slimes may be calmed and turned into normal slimes again by lowering their body temperature bellow 0ÅãC (dark blue slimes or a temperature gun really comes handy there)
-  - tweak: Slimes spawned from killed adult slimes will be rabid. (they were supposed to be rabid according to the half-implemented rabid code)

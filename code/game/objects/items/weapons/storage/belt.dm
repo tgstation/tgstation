@@ -222,3 +222,45 @@
 		"/obj/item/device/wormhole_jaunter",
 		"/obj/item/weapon/lazarus_injector",
 		"/obj/item/weapon/anobattery")
+
+/obj/item/weapon/storage/belt/lazarus
+	name = "trainer's belt"
+	desc = "For the pokemo- mining master, holds your lazarus capsules."
+	icon_state = "lazarusbelt"
+	item_state = "lazbelt"
+	w_class = 4
+	max_w_class = 4
+	max_combined_w_class = 28
+	can_hold = list("/obj/item/device/mobcapsule")
+
+/obj/item/weapon/storage/belt/lazarus/New()
+	..()
+	update_icon()
+
+
+/obj/item/weapon/storage/belt/lazarus/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]_[contents.len]"
+
+/obj/item/weapon/storage/belt/lazarus/attackby(obj/item/W, mob/user)
+	var/amount = contents.len
+	. = ..()
+	if(amount != contents.len)
+		update_icon()
+
+/obj/item/weapon/storage/belt/lazarus/remove_from_storage(obj/item/W as obj, atom/new_location)
+	..()
+	update_icon()
+
+
+/obj/item/weapon/storage/belt/lazarus/antag/New(loc, mob/user)
+	var/list/critters = typesof(/mob/living/simple_animal/hostile) - /mob/living/simple_animal/hostile
+	critters = shuffle(critters)
+	while(contents.len <=6)
+		var/obj/item/device/mobcapsule/MC = new /obj/item/device/mobcapsule(src)
+		var/chosen = pick(critters)
+		critters -= chosen
+		var/mob/living/simple_animal/hostile/NM = new chosen(MC)
+		NM.faction = "lazarus \ref[user]"
+		NM.friends += user
+	..()
