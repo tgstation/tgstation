@@ -38,7 +38,7 @@
 /mob/living/simple_animal/hostile/blobspore/blob_act()
 	return
 
-/mob/living/simple_animal/hostile/blobspore/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/simple_animal/hostile/blobspore/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/blob))
 		return 1
 	return ..()
@@ -131,6 +131,7 @@
 	maxbodytemp = 360
 	force_threshold = 10
 	environment_smash = 3
+	mob_size = 2
 
 
 /mob/living/simple_animal/hostile/blobbernaut/AttackingTarget()

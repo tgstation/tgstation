@@ -51,8 +51,8 @@
 	icon_state = "head"
 	construction_time = 350
 	construction_cost = list("metal"=5000)
-	var/obj/item/device/flash/flash1 = null
-	var/obj/item/device/flash/flash2 = null
+	var/obj/item/device/flash/handheld/flash1 = null
+	var/obj/item/device/flash/handheld/flash2 = null
 
 /obj/item/robot_parts/robot_suit
 	name = "cyborg endoskeleton"

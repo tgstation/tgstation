@@ -151,7 +151,7 @@
 			step(AM, t)
 		now_pushing = null
 
-/mob/living/carbon/slime/Process_Spacemove()
+/mob/living/carbon/slime/Process_Spacemove(var/movement_dir = 0)
 	return 2
 
 /mob/living/carbon/slime/Stat()

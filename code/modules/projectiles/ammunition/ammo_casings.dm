@@ -70,6 +70,16 @@
 	m_amt = 250
 
 
+/obj/item/ammo_casing/shotgun/improvised
+	name = "improvised shell"
+	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
+	icon_state = "gshell"
+	projectile_type = /obj/item/projectile/bullet/pellet/weak
+	m_amt = 250
+	pellets = 5
+	variance = 0.8
+
+
 /obj/item/ammo_casing/shotgun/stunslug
 	name = "taser slug"
 	desc = "A stunning taser slug."

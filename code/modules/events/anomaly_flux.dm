@@ -1,13 +1,13 @@
 /datum/round_event_control/anomaly/anomaly_flux
-	name = "Energetic Flux"
+	name = "Anomaly: Hyper-Energetic Flux"
 	typepath = /datum/round_event/anomaly/anomaly_flux
-	max_occurrences = 2
-	weight = 15
+	max_occurrences = 5
+	weight = 20
 
 /datum/round_event/anomaly/anomaly_flux
 	startWhen = 3
 	announceWhen = 20
-	endWhen = 60
+	endWhen = 80
 
 
 /datum/round_event/anomaly/anomaly_flux/announce()
@@ -21,6 +21,6 @@
 
 
 /datum/round_event/anomaly/anomaly_flux/end()
-	if(newAnomaly)//If it hasn't been neutralized, it's time to blow up.
+	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to blow up.
 		explosion(newAnomaly, -1, 3, 5, 5)
 		qdel(newAnomaly)

@@ -52,8 +52,6 @@
 	if ((!(A) || src != A.loc))
 		return
 
-	inertial_drift(A)
-
 	if(transition)
 
 		if(destination_x)
@@ -71,8 +69,8 @@
 				L.pulling.loc = T
 
 		//now we're on the new z_level, proceed the space drifting
-		if ((A && A.loc))
-			A.loc.Entered(A)
+		sleep(0)//Let a diagonal move finish, if necessary
+		A.newtonian_move(A.inertia_dir)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A)
 	var/cur_x
@@ -209,3 +207,6 @@ proc/setup_map_transitions() //listamania
 			S.transition = directions[Z_NORTH]
 
 		S.Assign_Destination()
+
+/turf/space/singularity_act()
+	return

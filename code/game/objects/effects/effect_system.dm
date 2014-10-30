@@ -370,8 +370,8 @@ steam.start() -- spawns the effect
 	return
 
 
-/obj/effect/effect/bad_smoke/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/effect/effect/bad_smoke/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0) return 1
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
 		B.damage = (B.damage/2)
@@ -684,9 +684,9 @@ steam.start() -- spawns the effect
 
 /datum/effect/effect/system/ion_trail_follow/set_up(atom/atom)
 	attach(atom)
-	oldposition = get_turf(atom)
 
-/datum/effect/effect/system/ion_trail_follow/start()
+
+/datum/effect/effect/system/ion_trail_follow/start() //Whoever is responsible for this abomination of code should become an hero
 	if(!src.on)
 		src.on = 1
 		src.processing = 1
@@ -696,26 +696,22 @@ steam.start() -- spawns the effect
 		if(T != src.oldposition)
 			if(!has_gravity(T))
 				var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
-				src.oldposition = T
 				I.dir = src.holder.dir
 				flick("ion_fade", I)
 				I.icon_state = "blank"
 				spawn( 20 )
 					if(I)
 						I.delete()
-			spawn(2)
-				if(src.on)
-					src.processing = 1
-					src.start()
-		else
-			spawn(2)
-				if(src.on)
-					src.processing = 1
-					src.start()
+			src.oldposition = T
+		spawn(2)
+			if(src.on)
+				src.processing = 1
+				src.start()
 
 /datum/effect/effect/system/ion_trail_follow/proc/stop()
 	src.processing = 0
 	src.on = 0
+	oldposition = null
 
 
 
@@ -993,8 +989,7 @@ steam.start() -- spawns the effect
 	else
 		user << "<span class='notice'>You hit the metal foam to no effect.</span>"
 
-/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	if(air_group) return 0
+/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return !density
 
 /obj/structure/foamedmetal/CanAtmosPass()

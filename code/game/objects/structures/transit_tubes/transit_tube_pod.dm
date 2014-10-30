@@ -55,6 +55,11 @@
 	for(var/atom/movable/M in src.contents)
 		M.loc = src.loc
 
+/obj/structure/transit_tube_pod/Process_Spacemove()
+	if(moving) //No drifting while moving in the tubes
+		return 1
+	else return ..()
+
 /obj/structure/transit_tube_pod/proc/follow_tube(var/reverse_launch)
 	if(moving)
 		return
@@ -97,7 +102,7 @@
 
 			if(current_tube == null)
 				dir = next_dir
-				Move(get_step(loc, dir)) // Allow collisions when leaving the tubes.
+				Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
 				break
 
 			last_delay = current_tube.enter_delay(src, next_dir)
@@ -111,22 +116,6 @@
 				break
 
 		density = 1
-
-		// If the pod is no longer in a tube, move in a line until stopped or slowed to a halt.
-		//  /turf/inertial_drift appears to only work on mobs, and re-implementing some of the
-		//  logic allows a gradual slowdown and eventual stop when passing over non-space turfs.
-		if(!current_tube && last_delay <= 10)
-			do
-				sleep(last_delay)
-
-				if(!istype(loc, /turf/space))
-					last_delay++
-
-				if(last_delay > 10)
-					break
-
-			while(isturf(loc) && Move(get_step(loc, dir)))
-
 		moving = 0
 
 
