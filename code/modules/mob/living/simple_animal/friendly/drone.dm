@@ -142,6 +142,10 @@
 
 	..()
 
+/mob/living/simple_animal/drone/Destroy()
+	qdel(access_card) //Otherwise it ends up on the floor!
+	..()
+
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
 		if(health < health_repair_max)

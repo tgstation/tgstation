@@ -32,6 +32,8 @@
 	if(!.)
 		walk(src, 0)
 		return 0
+	if(ranged)
+		ranged_cooldown--
 	if(client)
 		return 0
 	if(!stat)
@@ -50,8 +52,6 @@
 				AttackTarget()
 				DestroySurroundings()
 
-		if(ranged)
-			ranged_cooldown--
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
@@ -303,3 +303,8 @@
 		if(A.Adjacent(src))
 			A.attack_animal(src)
 		return 1
+
+/mob/living/simple_animal/hostile/RangedAttack(var/atom/A, var/params) //Player firing
+	if(ranged && ranged_cooldown <= 0)
+		OpenFire(A)
+	..()
