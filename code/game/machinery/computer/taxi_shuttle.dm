@@ -18,7 +18,7 @@
 
 	l_color = "#B40000"
 
-/obj/machinery/computer/taxi_shuttle/proc/taxi_move_to(area/destination as area, area/transit as area)
+/obj/machinery/computer/taxi_shuttle/proc/taxi_move_to(area/destination as area, area/transit as area, var/wait_time)
 	if(moving)
 		return
 	if(lastMove + TAXI_SHUTTLE_COOLDOWN > world.time)
@@ -27,8 +27,8 @@
 	if(curr_location == dest_location)
 		return
 
-	broadcast("Taxi [letter] will move in 3 seconds.")
-	sleep(30)
+	broadcast("Taxi [letter] will move in [wait_time / 10] seconds.")
+	sleep(wait_time)
 	moving = 1
 	lastMove = world.time
 
@@ -97,7 +97,7 @@
 
 	for(var/place in href_list)
 		if(href_list[place])
-			callTo(place)
+			callTo(place, 30)
 
 	add_fingerprint(usr)
 	updateUsrDialog()
@@ -121,19 +121,19 @@
 /obj/machinery/computer/taxi_shuttle/taxi_a/New()
 	curr_location= locate(/area/shuttle/taxi_a/engineering_cargo_station)
 
-/obj/machinery/computer/taxi_shuttle/taxi_a/callTo(var/place = "")
+/obj/machinery/computer/taxi_shuttle/taxi_a/callTo(var/place = "", var/wait_time)
 	switch(place)
 		if("med_sili")
-			if (taxi_move_to(/area/shuttle/taxi_a/medcal_silicon_station, /area/shuttle/taxi_a/transit))
+			if (taxi_move_to(/area/shuttle/taxi_a/medcal_silicon_station, /area/shuttle/taxi_a/transit, wait_time))
 				return 1
 		if("engi_cargo")
-			if (taxi_move_to(/area/shuttle/taxi_a/engineering_cargo_station, /area/shuttle/taxi_a/transit))
+			if (taxi_move_to(/area/shuttle/taxi_a/engineering_cargo_station, /area/shuttle/taxi_a/transit, wait_time))
 				return 1
 		if("sec_sci")
-			if (taxi_move_to(/area/shuttle/taxi_a/security_science_station, /area/shuttle/taxi_a/transit))
+			if (taxi_move_to(/area/shuttle/taxi_a/security_science_station, /area/shuttle/taxi_a/transit, wait_time))
 				return 1
 		if("abandoned")
-			if (taxi_move_to(/area/shuttle/taxi_a/abandoned_station, /area/shuttle/taxi_a/transit))
+			if (taxi_move_to(/area/shuttle/taxi_a/abandoned_station, /area/shuttle/taxi_a/transit, wait_time))
 				return 1
 	return
 
@@ -149,18 +149,18 @@
 /obj/machinery/computer/taxi_shuttle/taxi_b/New()
 	curr_location= locate(/area/shuttle/taxi_b/engineering_cargo_station)
 
-/obj/machinery/computer/taxi_shuttle/taxi_b/callTo(var/place = "")
+/obj/machinery/computer/taxi_shuttle/taxi_b/callTo(var/place = "", var/wait_time)
 	switch(place)
 		if("med_sili")
-			if (taxi_move_to(/area/shuttle/taxi_b/medcal_silicon_station, /area/shuttle/taxi_b/transit))
+			if (taxi_move_to(/area/shuttle/taxi_b/medcal_silicon_station, /area/shuttle/taxi_b/transit, wait_time))
 				return 1
 		if("engi_cargo")
-			if (taxi_move_to(/area/shuttle/taxi_b/engineering_cargo_station, /area/shuttle/taxi_b/transit))
+			if (taxi_move_to(/area/shuttle/taxi_b/engineering_cargo_station, /area/shuttle/taxi_b/transit, wait_time))
 				return 1
 		if("sec_sci")
-			if (taxi_move_to(/area/shuttle/taxi_b/security_science_station, /area/shuttle/taxi_b/transit))
+			if (taxi_move_to(/area/shuttle/taxi_b/security_science_station, /area/shuttle/taxi_b/transit, wait_time))
 				return 1
 		if("abandoned")
-			if (taxi_move_to(/area/shuttle/taxi_b/abandoned_station, /area/shuttle/taxi_b/transit))
+			if (taxi_move_to(/area/shuttle/taxi_b/abandoned_station, /area/shuttle/taxi_b/transit, wait_time))
 				return 1
 	return
