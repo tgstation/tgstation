@@ -6911,7 +6911,7 @@
 "cCU" = (/obj/machinery/hologram/holopad,/turf/simulated/floor{dir = 8; icon_state = "neutralfull"},/area/engineering/ce)
 "cCV" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/stool/bed/chair{dir = 1},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor{dir = 8; icon_state = "neutralfull"},/area/engineering/ce)
 "cCW" = (/obj/machinery/power/apc{dir = 4; pixel_x = 24},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor{dir = 8; icon_state = "neutralfull"},/area/engineering/ce)
-"cCX" = (/obj/structure/closet/wardrobe/atmospherics_yellow,/turf/simulated/floor,/area/engineering/break_room)
+"cCX" = (/obj/structure/closet/wardrobe/engineering_yellow,/turf/simulated/floor,/area/engineering/break_room)
 "cCY" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/table,/obj/item/device/t_scanner,/obj/item/device/radio/headset/headset_eng,/obj/item/device/multitool{pixel_x = 5},/turf/simulated/floor,/area/engineering/break_room)
 "cCZ" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/table,/obj/item/clothing/gloves/black,/obj/item/clothing/gloves/black,/obj/item/weapon/crowbar,/obj/item/weapon/storage/box/lights/mixed,/turf/simulated/floor,/area/engineering/break_room)
 "cDa" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor,/area/engineering/break_room)
