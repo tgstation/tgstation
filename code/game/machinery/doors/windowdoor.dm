@@ -17,7 +17,7 @@
 /obj/machinery/door/window/New()
 	..()
 
-	machine_flags |= EMAGGABLE
+	machine_flags |= EMAGGABLE // Why is this here?
 
 	if (src.req_access && src.req_access.len)
 		src.icon_state = "[src.icon_state]"

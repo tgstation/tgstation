@@ -116,7 +116,15 @@ Class Procs:
 	var/custom_aghost_alerts=0
 	var/panel_open = 0
 
-	var/machine_flags = 0//this is what you use for flags.
+	/**
+	 * Machine construction/destruction/emag flags.
+	 */
+	var/machine_flags = 0
+
+	/**
+	 * Emag energy cost (in MJ).
+	 */
+	var/emag_cost = 1
 
 	var/inMachineList = 1 // For debugging.
 
@@ -447,29 +455,49 @@ Class Procs:
 		return 1
 	return -1
 
+/**
+ * Handle emags.
+ * @param user /mob The mob that used the emag.
+ */
 /obj/machinery/proc/emag(mob/user as mob)
-	return
+	// Disable emaggability.
+	machine_flags &= ~EMAGGABLE
+
+/**
+ * Returns the cost of emagging this machine (emag_cost by default)
+ * @param user /mob The mob that used the emag.
+ * @param emag /obj/item/weapon/card/emag The emag used on this device.
+ * @return number Cost to emag.
+ */
+/obj/machinery/proc/getEmagCost(var/mob/user, var/obj/item/weapon/card/emag/emag)
+	return emag_cost
 
 /obj/machinery/attackby(var/obj/O, var/mob/user)
-	if(istype(O, /obj/item/weapon/card/emag) && machine_flags &EMAGGABLE)
-		emag(user)
-		return
-	if(istype(O, /obj/item/weapon/wrench) && machine_flags &WRENCHMOVE) //make sure this is BEFORE the fixed2work check
+	if(istype(O, /obj/item/weapon/card/emag) && machine_flags & EMAGGABLE)
+		var/obj/item/weapon/card/emag/E = O
+		if(E.canUse(user,src))
+			emag(user)
+			return
+
+	if(istype(O, /obj/item/weapon/wrench) && machine_flags & WRENCHMOVE) //make sure this is BEFORE the fixed2work check
 		if(!panel_open)
 			return wrenchAnchor(user)
 		else
 			user <<"<span class='warning'>\The [src]'s maintenance panel must be closed first!</span>"
 			return -1 //we return -1 rather than 0 for the if(..()) checks
-	if(istype(O, /obj/item/weapon/screwdriver) && machine_flags &SCREWTOGGLE)
+
+	if(istype(O, /obj/item/weapon/screwdriver) && machine_flags & SCREWTOGGLE)
 		return togglePanelOpen(O, user)
-	if(istype(O, /obj/item/weapon/crowbar) && machine_flags &CROWDESTROY)
+
+	if(istype(O, /obj/item/weapon/crowbar) && machine_flags & CROWDESTROY)
 		if(panel_open)
 			if(crowbarDestroy(user) == 1)
 				qdel(src)
 				return 1
 			else
 				return -1
-	if(!anchored && machine_flags &FIXED2WORK)
+
+	if(!anchored && machine_flags & FIXED2WORK)
 		return user << "<span class='warning'>\The [src] must be anchored first!</span>"
 
 /obj/machinery/proc/shock(mob/user, prb, var/siemenspassed = -1)
