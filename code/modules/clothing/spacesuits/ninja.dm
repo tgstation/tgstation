@@ -5,6 +5,7 @@
 	item_state = "s-ninja_mask"
 	allowed = list(/obj/item/weapon/stock_parts/cell)
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 25)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	strip_delay = 12
 
 

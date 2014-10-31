@@ -4,7 +4,7 @@
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
 	desc = "A special helmet designed for only the most fashionable of military figureheads."
-	flags_inv = HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	permeability_coefficient = 0.01
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
 
@@ -25,6 +25,7 @@
 	desc = "That's not red paint. That's real blood."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
 	strip_delay = 130
 
@@ -97,6 +98,7 @@
 	item_state = "pirate"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
+	flags_inv = 0
 	strip_delay = 40
 	put_on_delay = 20
 
