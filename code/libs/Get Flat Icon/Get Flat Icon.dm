@@ -30,7 +30,8 @@ var/list/directional = list(
 	/obj/structure/window,
 	/obj/structure/window/full,
 	/obj/structure/stool/bed/chair,
-	/obj/structure/table
+	/obj/structure/table,
+	/obj/machinery/light
 	)
 
 var/list/exception = list(
