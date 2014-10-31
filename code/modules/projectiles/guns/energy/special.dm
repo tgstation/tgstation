@@ -149,7 +149,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","clu
 /obj/item/weapon/gun/energy/floragun/afterattack(obj/target, mob/user, flag)
 	if(flag && istype(target,/obj/machinery/portable_atmospherics/hydroponics))
 		var/obj/machinery/portable_atmospherics/hydroponics/tray = target
-		if(load_into_chamber())
+		if(process_chambered())
 			user.visible_message("\red <b> \The [user] fires \the [src] into \the [tray]!</b>")
 			Fire(target,user)
 		return
