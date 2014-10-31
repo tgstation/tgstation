@@ -99,7 +99,7 @@ proc/DB_ban_isappearancebanned(var/playerckey)
 	if(!dbcon.IsConnected())
 		return
 
-	var/sqlplayerckey = sql_sanitize_text(ckey(playerckey))
+	var/sqlplayerckey = sanitizeSQL(ckey(playerckey))
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM [format_table_name("ban")] WHERE CKEY = '[sqlplayerckey]' AND ((bantype = 'APPEARANCE_PERMABAN') OR (bantype = 'APPEARANCE_TEMPBAN' AND expiration_time > Now())) AND unbanned != 1")
 	query.Execute()
