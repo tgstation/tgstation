@@ -341,7 +341,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 				result = scan_target
 		if(REPLACE_TILE)
 			F = scan_target
-			if(F.is_plating()) //The floor must not already have a tile.
+			if(istype(F, /turf/simulated/floor/plating)) //The floor must not already have a tile.
 				result = F
 		if(FIX_TILE)	//Selects only damaged floors.
 			F = scan_target
@@ -349,7 +349,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 				result = F
 		if(TILE_EMAG) //Emag mode! Rip up the floor and cause breaches to space!
 			F = scan_target
-			if(!F.is_plating())
+			if(!istype(F, /turf/simulated/floor/plating))
 				result = F
 		else //If no special processing is needed, simply return the result.
 			result = scan_target
@@ -368,8 +368,6 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		mode = BOT_IDLE
 		target = null
 		return
-	var/turf/simulated/floor/F
-	var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
 	anchored = 1
 	icon_state = "floorbot-c"
 	if(istype(target_turf, /turf/space/)) //If we are fixing an area not part of pure space, it is
@@ -378,23 +376,21 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		spawn(50)
 			if(mode == BOT_REPAIRING)
 				if(autotile) //Build the floor and include a tile.
-					F = target_turf.ChangeTurf(/turf/simulated/floor)
+					target_turf.ChangeTurf(/turf/simulated/floor)
 				else //Build a hull plating without a floor tile.
-					T.build(loc)
+					target_turf.ChangeTurf(/turf/simulated/floor/plating)
 				mode = BOT_IDLE
 				amount -= 1
 				updateicon()
 				anchored = 0
 				target = null
 	else
-		F = target_turf
-
+		var/turf/simulated/floor/F = target_turf
 		mode = BOT_REPAIRING
 		visible_message("<span class='notice'> [src] begins repairing the floor.</span>")
 		spawn(50)
 			if(mode == BOT_REPAIRING)
-				F = target_turf
-				F.make_plasteel_floor(T)
+				F.make_floor(/turf/simulated/floor)
 				mode = BOT_IDLE
 				amount -= 1
 				updateicon()
