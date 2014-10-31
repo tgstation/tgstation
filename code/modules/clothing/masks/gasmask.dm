@@ -234,7 +234,7 @@
 	return message
 
 
-/obj/item/clothing/mask/gas/clown_hat
+/*/obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
 	alloweat = 1
@@ -269,7 +269,7 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 	desc = "The traditional mime's mask. It has an eerie facial posture."
 	alloweat = 1
 	icon_state = "mime"
-	item_state = "mime"
+	item_state = "mime"*/
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
@@ -278,12 +278,12 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
 
-/obj/item/clothing/mask/gas/sexymime
+/*/obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
 	alloweat = 1
 	icon_state = "sexymime"
-	item_state = "sexymime"
+	item_state = "sexymime"*/
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"

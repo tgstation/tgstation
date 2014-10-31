@@ -34,7 +34,8 @@ Chaplain
 			new /obj/item/weapon/grown/bananapeel(B)
 
 			if(B.icon_state == "honk1")
-				H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
+			//	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
+				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/clown_hat(H), slot_l_hand)
 
 		if("bible")
 			for(var/area/chapel/main/A in world)
