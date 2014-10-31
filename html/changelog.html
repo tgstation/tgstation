@@ -80,6 +80,30 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 
 		<div class="commit sansserif">
+			<h2 class="date">2014.10.31</h2>
+			<h3 class="author">Comic updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">All lockboxes made by Science machines can now be unlocked with any ID, but will track who uses them.</li>
+				<li class="tweak">Bar and crematorium backrooms now require maintenance access as well as their departmental access.</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed a bug where tables wouldn't appear properly on pictures.</li>
+				<li class="rscadd">Cameras produced from the Sepia Slime Extract + Plasma reaction will take pictures in sepia.</li>
+				<li class="tweak">Sepia Cameras pictures will show invisible mobs (such as Ghosts, booooo)</li>
+				<li class="tweak">Dead monkeys can now be directly drag'n'dropped into Xenobiology's Monkey Recycler.</li>
+				<li class="tweak">Dead slimes and monkeys can now be directly drag'n'dropped into Xenobiology's Slime Processor.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Ported bay12's hydro port, and xenobotany.</li>
+				<li class="rscadd">HYDROPONICS <br>Closed hydro trays are now possible, taking atmospherics from a portables connector beneath them.<br>Lysis-isolation centrifuge and ballistic delivery system are in, allowing for gene modifications.<br>The plant analyzer has been rewritten from the ground up to be more useful and immersive.</li>
+				<li class="rscadd">SEEDS AND PLANTS<br>Seed/plant/product data is stored in a set of global seed datums.<br>These datums can diverge to form new species and be manipulated via genetic engineering.<br>These datums handle harvesting and mutating independantly of hydroponics trays.<br>Mutant species varieties are now handled in a modular way.<br>Plants now have ideal heat, light and pressure values, as well as tolerances for differences.<br>Plants can produce multiple different kinds of product.<br>Reagent information is held in the datums rather than the product item.<br>Arbitrary living products are now possible (current legit case is dionaea).<br>Bioluminescent plants and vines are both possible.<br></li>
+				<li class="rscadd">SPACE VINES<br>Space vines are now plantsegments pathwise in view of future intentions to make them more general.<br>Spawned event kudzu should be identical to the current master implementation as it has no seed datum and ignores all the new code.<br>Space vines now make use of seed data if spawned with a reference and can be harvested from.<br>Vines now cause physical damage if they are carnivorous, and inject reagents if their seed data includes them.<br>Vines will die if they find themselves in area outside of their tolerance.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
 			<h2 class="date">2014.10.30</h2>
 			<h3 class="author">Comic updated:</h3>
 			<ul class="changes bgimages16">
