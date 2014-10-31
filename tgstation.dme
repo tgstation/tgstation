@@ -809,6 +809,7 @@
 #include "code\modules\clothing\masks\breath.dm"
 #include "code\modules\clothing\masks\gasmask.dm"
 #include "code\modules\clothing\masks\miscellaneous.dm"
+#include "code\modules\clothing\shoes\bananashoes.dm"
 #include "code\modules\clothing\shoes\colour.dm"
 #include "code\modules\clothing\shoes\magboots.dm"
 #include "code\modules\clothing\shoes\miscellaneous.dm"
