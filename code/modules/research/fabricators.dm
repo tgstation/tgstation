@@ -41,6 +41,11 @@
 
 	files = new /datum/research(src) //Setup the research data holder.
 
+/obj/machinery/r_n_d/fabricator/update_icon()
+	..()
+	if(being_built)
+		overlays += "[base_state]_ani"
+
 /obj/machinery/r_n_d/fabricator/examine()
 	..()
 	if(being_built)
@@ -177,6 +182,11 @@
 			part_sets.Cut(i,++i)
 			return 1
 	return
+
+/obj/machinery/r_n_d/fabricator/proc/remove_part_from_set(set_name as text, var/datum/design/part)
+	var/part_set = part_sets[set_name]
+	part_set -= part
+	return 1
 
 //gets all the mats for a design, and returns a formatted string
 /obj/machinery/r_n_d/fabricator/proc/output_part_cost(var/datum/design/part)

@@ -48,7 +48,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		/obj/machinery/r_n_d/fabricator/protolathe,
 		/obj/machinery/r_n_d/destructive_analyzer,
 		/obj/machinery/r_n_d/fabricator/circuit_imprinter,
-		/obj/machinery/r_n_d/fabricator/mech
+		/obj/machinery/r_n_d/fabricator/mech,
+		/obj/machinery/r_n_d/fabricator/mechanic_fab,
+		/obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker,
+		/obj/machinery/r_n_d/reverse_engine,
+		/obj/machinery/r_n_d/blueprinter
 		)
 
 	var/screen = 1.0	//Which screen is currently showing.

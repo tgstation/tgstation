@@ -547,6 +547,42 @@ other types of metals and chemistry for reagents).
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pipedispenser/disposal
 
+/datum/design/reverse_engine
+	name = "Circuit Design (Reverse Engine)"
+	desc = "Allows for the construction of circuit boards used to build a Reverse Engine."
+	id = "reverse_engine"
+	req_tech = list("materials" = 6, "programming" = 4, "engineering"= 3, "bluespace"= 3, "powerstorage" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/reverse_engine
+
+/datum/design/blueprinter
+	name = "Circuit Design (Blueprint Printer)"
+	desc = "Allows for the construction of circuit boards used to build a Blueprint Printer."
+	id = "blueprinter"
+	req_tech = list("engineering" = 3, "programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/blueprinter
+
+/datum/design/general_fab
+	name = "Circuit Design (General Fabricator)"
+	desc = "Allows for the construction of circuit boards used to build a General Fabricator."
+	id = "gen_fab"
+	req_tech = list("materials" = 3, "engineering" = 2, "programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/generalfab
+
+/datum/design/flatpacker
+	name = "Circuit Design (Flatpack Fabricator)"
+	desc = "Allows for the construction of circuit boards used to build a Flatpack Fabricator."
+	id = "flatpacker"
+	req_tech = list("materials" = 5, "engineering" = 4, "powerstorage" = 3, "programming" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/flatpacker
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////
