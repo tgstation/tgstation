@@ -1068,9 +1068,7 @@ var/global/list/organ_damage_overlays = list(
 			else if(sleeping)
 				handle_dreams()
 				adjustHalLoss(-3)
-				if (mind)
-					if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
-						sleeping = max(sleeping-1, 0)
+				sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS
 				if( prob(2) && health && !hal_crit )
