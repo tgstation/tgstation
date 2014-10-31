@@ -85,7 +85,7 @@
 	pass_flags = PASSTABLE
 	var/heavy = 0
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
-	var/z_original
+	var/z_original = 1
 
 	var/meteordrop = /obj/item/weapon/ore/iron
 	var/dropamt = 2
@@ -93,6 +93,7 @@
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
 		qdel(src)
+		return
 	return ..()
 
 /obj/effect/meteor/Destroy()
