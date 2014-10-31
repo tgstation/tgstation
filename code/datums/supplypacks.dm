@@ -1039,6 +1039,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containername = "replacement lights"
 
+/datum/supply_packs/misc/noslipfloor
+	name = "High-traction floor tiles"
+	contains = list(/obj/item/stack/tile/noslip)
+	amount = 20
+	cost = 20
+	containername = "high-traction floor tiles"
+
 
 ///////////// Costumes
 
