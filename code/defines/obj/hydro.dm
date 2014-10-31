@@ -1218,7 +1218,7 @@
 	if(istype(user.loc,/turf/space))
 		return
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
-	new /obj/effect/spacevine_controller(user.loc)
+	new /obj/effect/plantsegment_controller(user.loc)
 	del(src)
 
 

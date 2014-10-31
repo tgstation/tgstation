@@ -34,7 +34,7 @@
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/vend_delay = 10	//How long does it take to vend?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
-
+	var/delay_product_spawn // If set, uses sleep() in product spawn proc (mostly for seeds to retrieve correct names).
 	// To be filled out at compile time
 	var/list/products	= list()	// For each, use the following pattern:
 	var/list/contraband	= list()	// list(/type/path = amount,/type/path2 = amount2)
@@ -144,7 +144,6 @@
 
 		var/atom/temp = new typepath(null)
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
-		R.product_name = temp.name
 		R.product_path = typepath
 		R.amount = amount
 		R.price = price
@@ -159,6 +158,13 @@
 		else
 			R.category=CAT_NORMAL
 			product_records += R
+
+		if(delay_product_spawn)
+			sleep(1)
+			R.product_name = temp.name
+		else
+			R.product_name = temp.name
+
 //		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 
 /obj/machinery/vending/emag(mob/user)
@@ -774,7 +780,7 @@
 	product_ads = "We like plants!;Don't you want some?;The greenest thumbs ever.;We like big plants.;Soft soil..."
 	icon_state = "nutri"
 	icon_deny = "nutri-deny"
-	products = list(/obj/item/beezeez = 45,/obj/item/nutrient/ez = 35,/obj/item/nutrient/l4z = 25,/obj/item/nutrient/rh = 15,/obj/item/weapon/pestspray = 20,
+	products = list(/obj/item/beezeez = 45,/obj/item/weapon/reagent_containers/glass/fertilizer/ez = 35,/obj/item/weapon/reagent_containers/glass/fertilizer/l4z = 25,/obj/item/weapon/reagent_containers/glass/fertilizer/rh = 15,/obj/item/weapon/plantspray/pests = 20,
 					/obj/item/weapon/reagent_containers/syringe = 5,/obj/item/weapon/storage/bag/plants = 5)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5)
 
@@ -789,9 +795,9 @@
 					/obj/item/seeds/sunflowerseed = 3,/obj/item/seeds/tomatoseed = 3,/obj/item/seeds/towermycelium = 3,/obj/item/seeds/wheatseed = 3,/obj/item/seeds/appleseed = 3,
 					/obj/item/seeds/poppyseed = 3,/obj/item/seeds/ambrosiavulgarisseed = 3,/obj/item/seeds/whitebeetseed = 3,/obj/item/seeds/sugarcaneseed = 3,/obj/item/seeds/watermelonseed = 3,/obj/item/seeds/limeseed = 3,
 					/obj/item/seeds/lemonseed = 3,/obj/item/seeds/orangeseed = 3,/obj/item/seeds/grassseed = 3,/obj/item/seeds/cocoapodseed = 3,
-					/obj/item/seeds/cabbageseed = 3,/obj/item/seeds/grapeseed = 3,/obj/item/seeds/pumpkinseed = 3,/obj/item/seeds/cherryseed = 3,/obj/item/seeds/plastiseed = 3,/obj/item/seeds/riceseed = 3,/obj/item/seeds/synthmeatseed = 3)
+					/obj/item/seeds/cabbageseed = 3,/obj/item/seeds/grapeseed = 3,/obj/item/seeds/pumpkinseed = 3,/obj/item/seeds/cherryseed = 3,/obj/item/seeds/plastiseed = 3,/obj/item/seeds/riceseed = 3)//,/obj/item/seeds/synthmeatseed = 3)
 	contraband = list(/obj/item/seeds/amanitamycelium = 2,/obj/item/seeds/glowshroom = 2,/obj/item/seeds/libertymycelium = 2,/obj/item/seeds/nettleseed = 2,
-						/obj/item/seeds/plumpmycelium = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/harebell = 3,/obj/item/seeds/synthbuttseed = 3)
+						/obj/item/seeds/plumpmycelium = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/harebell = 3)//,/obj/item/seeds/synthbuttseed = 3)
 	premium = list(/obj/item/toy/waterflower = 1)
 
 
