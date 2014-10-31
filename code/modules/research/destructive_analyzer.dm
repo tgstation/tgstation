@@ -13,8 +13,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 1
 
-	takes_material_input = 0
-	has_output = 0
+	research_flags = CONSOLECONTROL
 
 /obj/machinery/r_n_d/destructive_analyzer/New()
 	. = ..()

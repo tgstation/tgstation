@@ -290,7 +290,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/protolathe
 	name = "Circuit board (Protolathe)"
-	build_path = "/obj/machinery/r_n_d/protolathe"
+	build_path = "/obj/machinery/r_n_d/fabricator/protolathe"
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	frame_desc = "Requires 2 Matter Bins, 2 Manipulators, and 2 Beakers."
@@ -310,7 +310,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/circuit_imprinter
 	name = "Circuit board (Circuit Imprinter)"
-	build_path = "/obj/machinery/r_n_d/circuit_imprinter"
+	build_path = "/obj/machinery/r_n_d/fabricator/circuit_imprinter"
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	frame_desc = "Requires 1 Matter Bin, 1 Manipulator, and 2 Beakers."

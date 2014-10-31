@@ -1415,3 +1415,10 @@
 			return
 	else
 		src << "Your icon has been set. You now require a module reset to change it."
+
+/mob/living/silicon/robot/rejuvenate()
+	..()
+	for(var/datum/robot_component/component in components)
+		component.electronics_damage = 0
+		component.brute_damage = 0
+		component.installed = 1

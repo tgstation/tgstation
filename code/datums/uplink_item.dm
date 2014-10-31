@@ -46,10 +46,10 @@ var/list/uplink_items = list()
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/job = null
 
-/datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
+/datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U, mob/user)
 	U.uses -= max(cost, 0)
 	feedback_add_details("traitor_uplink_items_bought", name)
-	return new item(loc)
+	return new item(loc,user)
 
 /datum/uplink_item/proc/buy(var/obj/item/device/uplink/hidden/U, var/mob/user)
 
@@ -69,7 +69,7 @@ var/list/uplink_items = list()
 		if(cost > U.uses)
 			return 0
 
-		var/obj/I = spawn_item(get_turf(user), U)
+		var/obj/I = spawn_item(get_turf(user), U, user)
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/A = user
@@ -89,6 +89,14 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/jobspecific
 	category = "Job Specific Tools"
+
+//Shaft Miner
+/datum/uplink_item/jobspecific/mastertrainer
+	name = "Master Trainer's Belt"
+	desc = "A Trainer's belt containing 6 random hostile mobs loyal to you alone."
+	item = /obj/item/weapon/storage/belt/lazarus/antag
+	cost = 4
+	job = list("Shaft Miner")
 
 //Clown
 /datum/uplink_item/jobspecific/clowngrenade

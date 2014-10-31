@@ -93,7 +93,11 @@
 
 		if(possible_targets.len > 0)
 			sacrifice_target = pick(possible_targets)
-
+		if(!sacrifice_target)
+			for(var/datum/mind/possible_target in ticker.minds)
+				if(ishuman(possible_target.current) && (possible_target.current.stat != 2) && !(possible_target in cult))
+					possible_targets += possible_target
+			sacrifice_target = pick(possible_targets)
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
 		grant_runeword(cult_mind.current)

@@ -41,6 +41,8 @@
 		return
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(W == src)
+			return // HOLY FUCKING SHIT WHY STORAGE CODE, WHY - pomf
 		if(crit_fail)
 			user << "\red The Bluespace generator isn't working."
 			return

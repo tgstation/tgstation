@@ -29,6 +29,7 @@
 	var/spam_flag = 0
 
 	var/log=""
+	var/obj/item/weapon/photo/img
 
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
@@ -53,11 +54,15 @@
 // I didn't like the idea that people can read tiny pieces of paper from across the room.
 // Now you need to be next to the paper in order to read it.
 	if(in_range(usr, src))
+		var/info_2 = ""
+		if(img)
+			usr << browse_rsc(img.img, "tmp_photo.png")
+			info_2 = "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' /><br><a href='?src=\ref[src];picture=1'>Remove</a><br>"
 		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_2][stars(info)][stamps]</BODY></HTML>", "window=[name]")
 			onclose(usr, "[name]")
 		else
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_2][info][stamps]</BODY></HTML>", "window=[name]")
 			onclose(usr, "[name]")
 	else
 		usr << "<span class='notice'>It is too far away.</span>"
@@ -197,6 +202,13 @@
 	if(!usr || (usr.stat || usr.restrained()))
 		return
 
+	if(href_list["picture"])
+		if(!ishuman(usr))
+			return
+		var/mob/living/carbon/human/H = usr
+		H.put_in_hands(img)
+		img = null
+
 	if(href_list["write"])
 		var/id = href_list["write"]
 		//var/t = strip_html_simple(input(usr, "What text do you wish to add to " + (id=="end" ? "the end of the paper" : "field "+id) + "?", "[name]", null),8192) as message
@@ -276,7 +288,14 @@
 		overlays += stampoverlay
 
 		user << "<span class='notice'>You stamp [src] with your rubber stamp.</span>"
-
+	else if(istype(P, /obj/item/weapon/photo))
+		if(img)
+			user << "<span class='notice'>This paper already has a photo attached.</span>"
+			return
+		img = P
+		user.drop_item(P)
+		P.loc = src
+		user << "<span class='notice'>You attach the photo to the piece of paper.</span>"
 	add_fingerprint(user)
 	return
 

@@ -119,7 +119,7 @@
 	if(proximity_flag == 0) // not adjacent
 		return
 
-	if(istype(target, /obj/machinery/door/airlock))
+	if(istype(target, /obj/machinery/door/airlock) || istype(target, /obj/machinery/door/firedoor))
 		var/turf = get_turf(target)
 
 		if(locate(tape_type) in turf) //Don't you dare stack tape // can be remove for a new feature

@@ -384,6 +384,8 @@ obj/item/weapon/grenade/chem_grenade/exgrenade
 		B2.reagents.add_reagent("phosphorus", 25)
 		B2.reagents.add_reagent("sugar", 25)
 
+		detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+
 		beakers += B1
 		beakers += B2
 		icon_state = "grenade"

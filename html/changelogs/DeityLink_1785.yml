@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed a bug where tables wouldn't appear properly on pictures.
+  - rscadd: Cameras produced from the Sepia Slime Extract + Plasma reaction will take pictures in sepia.
+  - tweak: Sepia Cameras pictures will show invisible mobs (such as Ghosts, booooo)

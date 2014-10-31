@@ -68,7 +68,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","clu
 /obj/item/weapon/gun/energy/staff/update_icon()
 	return
 
-/obj/item/weapon/gun/energy/staff/load_into_chamber()
+/obj/item/weapon/gun/energy/staff/process_chambered()
 	if(!..()) return 0
 	var/obj/item/projectile/change/P=in_chamber
 	if(P && istype(P))
@@ -147,7 +147,6 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","clu
 	return
 
 /obj/item/weapon/gun/energy/floragun/afterattack(obj/target, mob/user, flag)
-
 	if(flag && istype(target,/obj/machinery/portable_atmospherics/hydroponics))
 		var/obj/machinery/portable_atmospherics/hydroponics/tray = target
 		if(load_into_chamber())
@@ -267,13 +266,13 @@ obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user as mob)
 	var/charge_tick = 0
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/New()
-		..()
-		processing_objects.Add(src)
+	..()
+	processing_objects.Add(src)
 
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/Destroy()
-		processing_objects.Remove(src)
-		..()
+	processing_objects.Remove(src)
+	..()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
 	charge_tick++

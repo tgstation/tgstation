@@ -106,19 +106,22 @@ var/global/narsie_behaviour = "CultStation13"
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
 		for(var/mob/M in mob_list)
-			if(M.client && M.z == src.z && get_dist(src,M) <= (src.consume_range+10))
+			if(M.client)
 				M.see_narsie(src)
 	spawn(1)
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
 		for(var/mob/M in mob_list)
-			if(M.client && M.z == src.z && get_dist(src,M) <= (src.consume_range+10))
+			if(M.client)
 				M.see_narsie(src)
 	return 1
 
 /obj/machinery/singularity/narsie/proc/narsiefloor(var/turf/T)//leaving "footprints"
-	if(!(istype(T, /turf/simulated/floor/engine/cult/narsie)||istype(T, /turf/simulated/wall/cult)||istype(T, /turf/space)))
-		T.ChangeTurf(/turf/simulated/floor/engine/cult/narsie)
+	if(!(istype(T, /turf/simulated/wall/cult)||istype(T, /turf/space)))
+		if(T.icon_state != "cult-narsie")
+			T.desc = "something that goes beyond your understanding went this way"
+			T.icon_state = "cult-narsie"
+			T.luminosity = 1
 
 /obj/machinery/singularity/narsie/proc/narsiewall(var/turf/T)
 	T.desc = "An opening has been made on that wall, but who can say if what you seek truly lies on the other side?"
@@ -127,7 +130,6 @@ var/global/narsie_behaviour = "CultStation13"
 	T.opacity = 0
 	T.density = 0
 	luminosity = 1
-	l_color = "#3e0000"
 
 /obj/machinery/singularity/narsie/consume(const/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
 //NEW BEHAVIOUR
