@@ -111,7 +111,7 @@ BLIND     // can't see anything
 			usr << "You push \the [src] out of the way."
 			gas_transfer_coefficient = null
 			permeability_coefficient = null
-			flags = null
+			flags = flags & BLOCKHAIR // BLOCKHAIR should not be removed in order to assure hair is updated when the mask is removed
 			flags_inv = null
 			src.mask_adjusted = 1
 		usr.update_inv_wear_mask()
