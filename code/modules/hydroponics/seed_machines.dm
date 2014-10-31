@@ -44,7 +44,7 @@
 
 	var/open = 0
 	var/active = 0
-	var/action_time = 100
+	var/action_time = 50
 	var/last_action = 0
 	var/eject_disk = 0
 	var/failed_task = 0
