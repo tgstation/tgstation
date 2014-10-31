@@ -1,9 +1,19 @@
-/* Diffrent misc types of tiles
+/* Diffrent misc types of tiles & the tile prototype
  * Contains:
+ 		Tile
  *		Grass
  *		Wood
  *		Carpet
  */
+
+/*
+ * Tile
+ */
+/obj/item/stack/tile
+	name = "broken tile"
+	singular_name = "broken tile"
+	desc = "A broken tile. This should not exist."
+	var/turf_type = null
 
 /*
  * Grass
@@ -20,6 +30,7 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "biotech=1"
+	turf_type = /turf/simulated/floor/grass
 
 /*
  * Wood
@@ -36,6 +47,8 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "biotech=1"
+	turf_type = /turf/simulated/floor/wood
+
 /*
  * Carpets
  */
@@ -50,3 +63,4 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
+	turf_type = /turf/simulated/floor/carpet
