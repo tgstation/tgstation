@@ -34,6 +34,18 @@
 
 		else
 			user << "\red The machine only accepts monkeys!"
+	else if(istype(O, /mob/living/carbon/monkey))
+		var/mob/living/carbon/monkey/target = O
+		if(target.stat == 0)
+			user << "\red The monkey is struggling far too much to put it in the recycler."
+		else
+			user.drop_item()
+			del(target)
+			user << "\blue You stuff the monkey in the machine."
+			playsound(get_turf(src), 'sound/machines/juicer.ogg', 50, 1)
+			use_power(500)
+			src.grinded++
+			user << "\blue The machine now has [grinded] monkeys worth of material stored."
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(var/mob/user as mob)
@@ -48,3 +60,6 @@
 	else
 		user << "\red The machine needs at least 3 monkeys worth of material to produce a monkey cube. It only has [grinded]."
 	return
+
+/obj/machinery/monkey_recycler/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	attackby(O,user)
