@@ -2,7 +2,6 @@
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
 
-	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 
 	//Properties for open tiles (/floor)
@@ -62,7 +61,7 @@
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
 		if(border_obstacle.flags&ON_BORDER)
-			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
+			if(!border_obstacle.CanPass(mover, mover.loc, 1) && (forget != border_obstacle))
 				mover.Bump(border_obstacle, 1)
 				return 0
 		else
@@ -75,7 +74,7 @@
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle in large_dense)
-		if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
+		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
 			mover.Bump(obstacle, 1)
 			return 0
 	return 1 //Nothing found to block so return success!
@@ -85,12 +84,7 @@
 		var/mob/O = M
 		if(!O.lastarea)
 			O.lastarea = get_area(O.loc)
-		var/has_gravity = O.mob_has_gravity(src)
-		O.update_gravity(has_gravity)
-		if(!has_gravity)
-			inertial_drift(O)
-		else if(!istype(src, /turf/space))
-			O.inertia_dir = 0
+		O.update_gravity(O.mob_has_gravity())
 
 	var/loopsanity = 100
 	for(var/atom/A in range(1))
@@ -99,53 +93,10 @@
 		loopsanity--
 		A.HasProximity(M, 1)
 
-/turf/proc/is_plating()
-	return 0
-/turf/proc/is_asteroid_floor()
-	return 0
 /turf/proc/is_plasteel_floor()
-	return 0
-/turf/proc/is_light_floor()
-	return 0
-/turf/proc/is_grass_floor()
-	return 0
-/turf/proc/is_wood_floor()
-	return 0
-/turf/proc/is_gold_floor()
-	return 0
-/turf/proc/is_silver_floor()
-	return 0
-/turf/proc/is_plasma_floor()
-	return 0
-/turf/proc/is_uranium_floor()
-	return 0
-/turf/proc/is_bananium_floor()
-	return 0
-/turf/proc/is_diamond_floor()
-	return 0
-/turf/proc/is_carpet_floor()
 	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
-
-/turf/proc/inertial_drift(atom/movable/A as mob|obj)
-	if(!(A.last_move))
-		return
-	if (A.pulledby)
-		return
-	if((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
-		var/mob/M = A
-		if(M.Process_Spacemove(1))
-			M.inertia_dir  = 0
-			return
-		spawn(5)
-			if((M && !(M.anchored) && (M.loc == src)))
-				if(M.inertia_dir & M.last_move)
-					step(M, M.inertia_dir)
-					return
-				M.inertia_dir = M.last_move
-				step(M, M.inertia_dir)
-	return
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
@@ -352,7 +303,7 @@
 		var/mob/living/carbon/M = slipper
 		if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 			return 0
-		if(!M.lying)
+		if(!M.lying && (M.status_flags & CANWEAKEN)) // we slip those who are standing and can fall.
 			var/olddir = M.dir
 			M.Stun(s_amount)
 			M.Weaken(w_amount)
@@ -371,3 +322,13 @@
 			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 			return 1
 	return 0 // no success. Used in clown pda and wet floors
+
+/turf/singularity_act()
+	if(intact)
+		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
+			if(O.level != 1)
+				continue
+			if(O.invisibility == 101)
+				O.singularity_act()
+	ChangeTurf(/turf/space)
+	return(2)

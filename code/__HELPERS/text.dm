@@ -25,6 +25,19 @@
  * Text sanitization
  */
 
+//this proc strips html properly, but it's not lazy like the other procs.
+//this means that it doesn't just remove < and > and call it a day. seriously, who the fuck thought that would be useful.
+/proc/strip_html_properly(var/input)
+	var/opentag = 1 //These store the position of < and > respectively.
+	var/closetag = 1
+	while(1)
+		opentag = findtext(input, "<")
+		closetag = findtext(input, ">")
+		if(!closetag || !opentag)
+			break
+		input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
+	return input
+
 //Simply removes < and > and limits the length of the message
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
 	var/list/strip_chars = list("<",">")
@@ -363,16 +376,3 @@ var/list/binary = list("0","1")
 		temp = findtextEx(haystack, ascii2text(text2ascii(needles,i)), start, end)	//Note: ascii2text(text2ascii) is faster than copytext()
 		if(temp)	end = temp
 	return end
-
-//this proc strips html properly, but it's not lazy like the other procs.
-//this means that it doesn't just remove < and > and call it a day. seriously, who the fuck thought that would be useful.
-/proc/strip_html_properly(var/input)
-	var/opentag = 1 //These store the position of < and > respectively.
-	var/closetag = 1
-	while(1)
-		opentag = findtext(input, "<")
-		closetag = findtext(input, ">")
-		if(!closetag || !opentag)
-			break
-		input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
-	return input

@@ -50,6 +50,11 @@
 	user.update_inv_r_hand()
 	qdel(src)
 
+/obj/item/weapon/storage/box/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/stack/packageWrap))
+		return 0
+	..()
+
 
 /obj/item/weapon/storage/box/survival
 
@@ -183,12 +188,12 @@
 
 /obj/item/weapon/storage/box/flashes/New()
 	..()
-	new /obj/item/device/flash(src)
-	new /obj/item/device/flash(src)
-	new /obj/item/device/flash(src)
-	new /obj/item/device/flash(src)
-	new /obj/item/device/flash(src)
-	new /obj/item/device/flash(src)
+	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/flash/handheld(src)
 
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"

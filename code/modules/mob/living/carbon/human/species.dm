@@ -578,13 +578,13 @@
 
 		else
 			switch(H.radiation)
-				if(1 to 49)
+				if(0 to 50)
 					H.radiation--
 					if(prob(25))
 						H.adjustToxLoss(1)
 						H.updatehealth()
 
-				if(50 to 74)
+				if(50 to 75)
 					H.radiation -= 2
 					H.adjustToxLoss(1)
 					if(prob(5))
@@ -617,13 +617,24 @@
 
 /datum/species/proc/movement_delay(var/mob/living/carbon/human/H)
 	var/mspeed = 0
+	if(H.status_flags & GOTTAGOFAST)
+		mspeed -= 1
 
 	if(!has_gravity(H))
-		return -1	//It's hard to be slowed down in space by... anything
-	else if(H.status_flags & GOTTAGOFAST)
-		return -1
+		mspeed += 2 //Carefully propelling yourself along the walls is actually quite slow
 
-	mspeed = 0
+		if(istype(H.back, /obj/item/weapon/tank/jetpack))
+			var/obj/item/weapon/tank/jetpack/J = H.back
+			if(J.allow_thrust(0.01, H))
+				mspeed -= 3
+
+		if(H.l_hand) //Having your hands full makes movement harder when you're weightless. You try climbing around while holding a gun!
+			mspeed += 0.5
+		if(H.r_hand)
+			mspeed += 0.5
+		if(H.r_hand && H.l_hand)
+			mspeed += 0.5
+
 	var/health_deficiency = (100 - H.health + H.staminaloss)
 	if(health_deficiency >= 40)
 		mspeed += (health_deficiency / 25)

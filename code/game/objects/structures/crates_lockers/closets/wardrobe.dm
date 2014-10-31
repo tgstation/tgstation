@@ -38,17 +38,6 @@
 	new /obj/item/clothing/head/beret/sec(src)
 	return
 
-/obj/structure/closet/wardrobe/hos
-	name = "\proper head of security's wardrobe"
-	icon_state = "red"
-	icon_closed = "red"
-
-/obj/structure/closet/wardrobe/hos/New()
-	new /obj/item/clothing/under/hosformalfem(src)
-	new /obj/item/clothing/under/hosformalmale(src)
-	new /obj/item/clothing/under/rank/head_of_security/jensen(src)
-	return
-
 /obj/structure/closet/wardrobe/pink
 	name = "pink wardrobe"
 	icon_state = "pink"
@@ -72,6 +61,8 @@
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/under/color/black(src)
+	if(prob(25))
+		new /obj/item/clothing/suit/jacket/leather(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
@@ -328,6 +319,10 @@
 	icon_closed = "mixed"
 
 /obj/structure/closet/wardrobe/mixed/New()
+	if(prob(25))
+		new /obj/item/clothing/suit/jacket(src)
+	if(prob(25))
+		new /obj/item/clothing/suit/jacket(src)
 	new /obj/item/clothing/under/color/white(src)
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/yellow(src)

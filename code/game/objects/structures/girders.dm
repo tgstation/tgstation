@@ -1,9 +1,11 @@
 /obj/structure/girder
+	name = "girder"
 	icon_state = "girder"
 	anchored = 1
 	density = 1
 	layer = 2
 	var/state = 0
+	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 
 /obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob)
 	add_fingerprint(user)
@@ -180,6 +182,17 @@
 		..()
 
 
+/obj/structure/girder/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0)
+		return 1
+	if(istype(mover) && mover.checkpass(PASSGRILLE))
+		return prob(girderpasschance)
+	else
+		if(istype(mover, /obj/item/projectile))
+			return prob(girderpasschance)
+		else
+			return 0
+
 /obj/structure/girder/blob_act()
 	if(prob(40))
 		qdel(src)
@@ -206,12 +219,16 @@
 	return
 
 /obj/structure/girder/displaced
+	name = "displaced girder"
 	icon_state = "displaced"
 	anchored = 0
+	girderpasschance = 25
 
 /obj/structure/girder/reinforced
+	name = "reinforced girder"
 	icon_state = "reinforced"
 	state = 2
+	girderpasschance = 0
 
 /obj/structure/cultgirder
 	icon= 'icons/obj/cult.dmi'

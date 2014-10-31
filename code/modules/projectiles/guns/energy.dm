@@ -68,6 +68,8 @@
 	var/ratio = power_supply.charge / power_supply.maxcharge
 	ratio = Ceiling(ratio*4) * 25
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(power_supply.charge < shot.e_cost)
+		ratio = 0 //so the icon changes to empty if the charge isn't zero but not enough for a shot.
 	switch(modifystate)
 		if (0)
 			icon_state = "[initial(icon_state)][ratio]"

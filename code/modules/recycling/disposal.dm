@@ -438,19 +438,19 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-/obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0)
 	if (istype(mover,/obj/item) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(75))
 			I.loc = src
-			visible_message("\the [I] lands in \the [src].")
+			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
 		else
-			visible_message("\the [I] bounces off of \the [src]'s rim!")
+			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")
 		return 0
 	else
-		return ..(mover, target, height, air_group)
+		return ..(mover, target, height)
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
@@ -692,12 +692,10 @@
 
 	var/turf/target
 
-	if(istype(T, /turf/simulated/floor)) //intact floor, pop the tile
-		var/turf/simulated/floor/F = T
-		if(F.floor_tile)
-			F.floor_tile.loc = H //It took me a day to figure out this was the right way to do it.
-		F.floor_tile = null //So it doesn't get deleted in make_plating()
-		F.make_plating()
+	if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/plating)) //intact floor, pop the tile
+		var/turf/simulated/floor/myturf = T
+		new myturf.floor_tile(T)
+		myturf.make_plating()
 
 	if(direction)		// direction is specified
 		if(istype(T, /turf/space)) // if ended in space, then range is unlimited

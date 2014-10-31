@@ -25,7 +25,7 @@
 	CheckHardness()
 
 /obj/structure/statue/attack_hand(mob/user)
-	visible_message("<span class='danger'>[user] rubs some dust off from the [name]'s surface.</span>")
+	visible_message("<span class='notice'>[user] rubs some dust off from the [name]'s surface.</span>")
 
 /obj/structure/statue/CanAtmosPass()
 	return !density

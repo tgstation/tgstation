@@ -49,6 +49,7 @@
 					),
 	"Ripley"=list(
 						/obj/item/mecha_parts/chassis/ripley,
+						/obj/item/mecha_parts/chassis/firefighter,
 						/obj/item/mecha_parts/part/ripley_torso,
 						/obj/item/mecha_parts/part/ripley_left_arm,
 						/obj/item/mecha_parts/part/ripley_right_arm,
@@ -93,7 +94,17 @@
 						/obj/item/mecha_parts/part/honker_right_arm,
 						/obj/item/mecha_parts/part/honker_left_leg,
 						/obj/item/mecha_parts/part/honker_right_leg
-						),
+					),
+	"Phazon"=list(
+						/obj/item/mecha_parts/chassis/phazon,
+						/obj/item/mecha_parts/part/phazon_torso,
+						/obj/item/mecha_parts/part/phazon_head,
+						/obj/item/mecha_parts/part/phazon_left_arm,
+						/obj/item/mecha_parts/part/phazon_right_arm,
+						/obj/item/mecha_parts/part/phazon_left_leg,
+						/obj/item/mecha_parts/part/phazon_right_leg,
+						/obj/item/mecha_parts/part/phazon_armor
+					),
 	"Exosuit Equipment"=list(
 						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 						/obj/item/mecha_parts/mecha_equipment/tool/drill,
@@ -101,8 +112,7 @@
 						/obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
 						/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
 						/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun,
-						/obj/item/mecha_parts/chassis/firefighter,
-						///obj/item/mecha_parts/mecha_equipment/repair_droid,
+						/obj/item/mecha_parts/mecha_equipment/repair_droid,
 						/obj/item/mecha_parts/mecha_equipment/generator,
 						///obj/item/mecha_parts/mecha_equipment/jetpack, //TODO MECHA JETPACK SPRITE MISSING
 						/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
@@ -729,15 +739,17 @@
 			return 0
 	var/result = 0
 	var/obj/item/stack/sheet/res = new type(src)
-	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
-	res.amount = min(total_amount,res.max_amount)
-	if(res.amount>0)
+	if(amount>0 && amount<=50)
+		var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
+		res.amount = min(amount,total_amount)
 		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
 		res.Move(src.loc)
 		result = res.amount
 	else
+		result = 0
 		qdel(res)
 	return result
+
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)

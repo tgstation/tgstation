@@ -117,7 +117,6 @@
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/used
-	name = "used zipties"
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_white_used"
 

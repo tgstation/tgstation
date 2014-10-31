@@ -33,6 +33,9 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
+	if(config.protect_assistant_from_antagonist)
+		restricted_jobs += "Assistant"
+
 	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)

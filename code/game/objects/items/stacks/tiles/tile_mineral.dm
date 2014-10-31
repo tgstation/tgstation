@@ -10,6 +10,7 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "plasma=1"
+	turf_type = /turf/simulated/floor/mineral/plasma
 
 /obj/item/stack/tile/mineral/uranium
 	name = "uranium tile"
@@ -23,6 +24,7 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "material=1"
+	turf_type = /turf/simulated/floor/mineral/uranium
 
 /obj/item/stack/tile/mineral/gold
 	name = "gold tile"
@@ -36,6 +38,7 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "material=1"
+	turf_type = /turf/simulated/floor/mineral/gold
 
 /obj/item/stack/tile/mineral/silver
 	name = "silver tile"
@@ -49,6 +52,7 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "material=1"
+	turf_type = /turf/simulated/floor/mineral/silver
 
 /obj/item/stack/tile/mineral/diamond
 	name = "diamond tile"
@@ -62,6 +66,7 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "material=2"
+	turf_type = /turf/simulated/floor/mineral/diamond
 
 /obj/item/stack/tile/mineral/bananium
 	name = "bananium tile"
@@ -75,4 +80,5 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "material=1"
+	turf_type = /turf/simulated/floor/mineral/bananium
 

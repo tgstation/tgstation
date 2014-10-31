@@ -57,7 +57,6 @@
 	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
 
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
-	var/datum/global_iterator/pr_inertial_movement //controls intertial movement in spesss
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
 
@@ -130,12 +129,10 @@
 	internal_tank = null
 
 	qdel(pr_int_temp_processor)
-	qdel(pr_inertial_movement)
 	qdel(pr_give_air)
 	qdel(pr_internal_damage)
 	qdel(spark_system)
 	pr_int_temp_processor = null
-	pr_inertial_movement = null
 	pr_give_air = null
 	pr_internal_damage = null
 	spark_system = null
@@ -183,7 +180,6 @@
 
 /obj/mecha/proc/add_iterators()
 	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
-	pr_inertial_movement = new /datum/global_iterator/mecha_intertial_movement(null,0)
 	pr_give_air = new /datum/global_iterator/mecha_tank_give_air(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
 
@@ -205,13 +201,6 @@
 
 	return 1
 
-
-
-/obj/mecha/proc/check_for_support()
-	if(locate(/obj/structure/grille, orange(1, src)) || locate(/obj/structure/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
-		return 1
-	else
-		return 0
 
 /obj/mecha/examine(mob/user)
 	..()
@@ -304,11 +293,15 @@
 ////////  Movement procs  ////////
 //////////////////////////////////
 
-/obj/mecha/Move()
+/obj/mecha/Move(atom/newloc, direct)
 	. = ..()
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
-	return
+
+/obj/mecha/Process_Spacemove(var/movement_dir = 0)
+	if(occupant)
+		return occupant.Process_Spacemove(movement_dir) //We'll just say you used the clamp to grab the wall
+	return ..()
 
 /obj/mecha/relaymove(mob/user,direction)
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
@@ -331,7 +324,7 @@
 /obj/mecha/proc/dyndomove(direction)
 	if(!can_move)
 		return 0
-	if(pr_inertial_movement && src.pr_inertial_movement.active())
+	if(!Process_Spacemove(direction))
 		return 0
 	if(!has_charge(step_energy_drain))
 		return 0
@@ -341,14 +334,9 @@
 	else if(src.dir!=direction)
 		move_result = mechturn(direction)
 	else
-		move_result	= mechstep(direction)
+		move_result = mechstep(direction)
 	if(move_result)
 		can_move = 0
-		use_power(step_energy_drain)
-		if(istype(src.loc, /turf/space))
-			if(!src.check_for_support() && pr_inertial_movement)
-				src.pr_inertial_movement.start(list(src,direction))
-				src.log_message("Movement control lost. Inertial movement started.")
 		if(do_after(step_in))
 			can_move = 1
 		return 1
@@ -468,9 +456,10 @@
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		user.visible_message("<span class='userdanger'>[user] hits [src.name], doing some damage.</span>", "<span class='userdanger'>You hit [src.name] with all your might. The metal creaks and bends.</span>")
+		user.visible_message("<span class='danger'>[user] hits [src.name], doing some damage.</span>", "<span class='danger'>You hit [src.name] with all your might. The metal creaks and bends.</span>")
+		src.occupant_message("<span class='userdanger'>[user] hits [src.name], doing some damage.</span>")
 	else
-		user.visible_message("<span class='userdanger'>[user] hits [src.name]. Nothing happens</span>","<span class='userdanger'>You hit [src.name] with no visible effect.</span>")
+		user.visible_message("<span class='danger'>[user] hits [src.name]. Nothing happens</span>","<span class='danger'>You hit [src.name] with no visible effect.</span>")
 		src.log_append_to_last("Armor saved.")
 	return
 
@@ -480,12 +469,14 @@
 
 /obj/mecha/attack_alien(mob/user as mob)
 	src.log_message("Attack by alien. Attacker - [user].",1)
+	user.changeNext_move(CLICK_CD_MELEE) //Now stompy alien killer mechs are actually scary to aliens!
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 		user << "<span class='danger'>You slash at the armored suit!</span>"
 		visible_message("<span class='danger'>The [user] slashes at [src.name]'s armor!</span>")
+		src.occupant_message("<span class='userdanger'>The [user] slashes at [src.name]'s armor!</span>")
 	else
 		src.log_append_to_last("Armor saved.")
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
@@ -504,12 +495,13 @@
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			src.take_damage(damage)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-			visible_message("<span class='danger'><B>[user]</B> [user.attacktext] [src]!</span>")
+			visible_message("<span class='danger'>[user] [user.attacktext] [src]!</span>")
+			src.occupant_message("<span class='userdanger'>[user] [user.attacktext] [src]!</span>")
 			add_logs(user, src, "attacked", admin=0)
 		else
 			src.log_append_to_last("Armor saved.")
 			playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
-			src.occupant_message("<span class='notice'>The [user]'s attack is stopped by the armor.</span>")
+			src.occupant_message("<span class='notice'>[user]'s attack is stopped by the armor.</span>")
 			visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
 			add_logs(user, src, "attacked", admin=0)
 	return
@@ -537,6 +529,8 @@
 	else if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)
+			src.occupant_message("<span class='userdanger'>[src.name] is hit by [A].</span>")
+			src.visible_message("<span class='danger'>[src.name] is hit by [A].</span>")
 			src.take_damage(O.throwforce)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 	return
@@ -562,6 +556,8 @@
 		ignore_threshold = 1
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		src.take_damage(Proj.damage,Proj.flag)
+		src.occupant_message("<span class='userdanger'>[src.name] is hit by [Proj]!</span>")
+		src.visible_message("<span class='danger'>[src.name] is hit by [Proj].</span>")
 		src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
 	Proj.on_hit(src)
 	return
@@ -644,7 +640,7 @@
 		return 0
 	else
 		src.occupant_message("<span class='userdanger'>[user] hits [src] with [W].</span>")
-		user.visible_message("<span class='userdanger'>[user] hits [src] with [W].</span>", "<span class='userdanger'>You hit [src] with [W].</span>")
+		user.visible_message("<span class='danger'>[user] hits [src] with [W].</span>", "<span class='danger'>You hit [src] with [W].</span>")
 		src.take_damage(W.force,W.damtype)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		return 1
@@ -653,7 +649,7 @@
 ////// AttackBy //////
 //////////////////////
 
-/obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/mecha/attackby(obj/item/W as obj, mob/user as mob)
 
 	if(istype(W, /obj/item/device/mmi))
 		if(mmi_move_inside(W,user))
@@ -764,7 +760,7 @@
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
 
-	else
+	else if(!(W.flags&NOBLUDGEON))
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
 /*
 		src.log_message("Attacked by [W]. Attacker - [user]")
@@ -784,8 +780,6 @@
 */
 	return
 
-
-
 /*
 /obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
 	if(!istype(user, /mob/living/silicon/ai))
@@ -796,6 +790,8 @@
 	user << browse(output, "window=mecha_attack_ai")
 	return
 */
+
+
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
@@ -1706,16 +1702,6 @@ var/year_integer = text2num(year) // = 2013???
 			return stop()
 		return
 
-/datum/global_iterator/mecha_intertial_movement //inertial movement in space
-	delay = 7
-
-	process(var/obj/mecha/mecha as obj,direction)
-		if(direction)
-			if(!step(mecha, direction)||mecha.check_for_support())
-				src.stop()
-		else
-			src.stop()
-		return
 
 /datum/global_iterator/mecha_internal_damage // processing internal damage
 

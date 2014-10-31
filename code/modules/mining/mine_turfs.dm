@@ -490,6 +490,9 @@
 //	spawn(2)
 //O		updateMineralOverlays()
 
+/turf/simulated/floor/plating/asteroid/burn_tile()
+	return
+
 /turf/simulated/floor/plating/asteroid/ex_act(severity)
 	switch(severity)
 		if(3.0)

@@ -247,9 +247,8 @@ proc/check_panel(mob/M)
 
 /obj/effect/fake_attacker/attackby(var/obj/item/weapon/P as obj, mob/user as mob)
 	step_away(src,my_target,2)
-	for(var/mob/M in oviewers(world.view,my_target))
-		M << "<span class='userdanger'>[my_target] flails around wildly.</span>"
-	my_target.show_message("<span class='userdanger'>[src] has been attacked by [my_target] </span>", 1) //Lazy.
+	my_target.visible_message("<span class='danger'>[my_target] flails around wildly.</span>", \
+							"<span class='userdanger'>[src] has been attacked by [my_target] </span>")
 
 	src.health -= P.force
 
@@ -261,7 +260,7 @@ proc/check_panel(mob/M)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				O << "<span class='userdanger'>[my_target] stumbles around.</span>"
+				O << "<span class='danger'>[my_target] stumbles around.</span>"
 
 /obj/effect/fake_attacker/New()
 	..()

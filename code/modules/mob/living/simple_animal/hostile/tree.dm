@@ -14,6 +14,7 @@
 	speed = 1
 	maxHealth = 250
 	health = 250
+	mob_size = 2
 
 	pixel_x = -16
 
