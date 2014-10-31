@@ -82,6 +82,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
+	/client/proc/configFood, /*configure the new cooking machines*/
 	/client/proc/forceEvent
 	)
 var/list/admin_verbs_spawn = list(
@@ -517,3 +518,30 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		src.holder.output_ai_laws()
 
+/client/proc/configFood()
+	set name = "Configure Cooking Machines"
+	set category = "Debug"
+	. = (alert("Deep Fried Everything?",,"Yes","No")=="Yes")
+	if(.)	deepFriedEverything = 1
+	else	deepFriedEverything = 0
+	. = (alert("Cereal Cereal Cereal?",,"Yes","No")=="Yes")
+	if(.)	foodNesting = 1
+	else	foodNesting = 0
+	. = (input("Deep Fried Nutriment? (1 to 50)"))
+	. = text2num(.)
+	if(isnum(.) && (. in 1 to 50)) deepFriedNutriment = .
+	else usr << "That wasn't a valid number."
+	. = (input("Ingredient Limit? (1 to 100)"))
+	. = text2num(.)
+	if(isnum(.) && (. in 1 to 100)) ingredientLimit = .
+	else usr << "That wasn't a valid number."
+	log_admin("[key_name(usr)] set deepFriedEverything to [deepFriedEverything].")
+	log_admin("[key_name(usr)] set foodNesting to [foodNesting].")
+	log_admin("[key_name(usr)] set deepFriedNutriment to [deepFriedNutriment]")
+	log_admin("[key_name(usr)] set ingredientLimit to [ingredientLimit]")
+
+	message_admins("[key_name(usr)] set deepFriedEverything to [deepFriedEverything].")
+	message_admins("[key_name(usr)] set foodNesting to [foodNesting].")
+	message_admins("[key_name(usr)] set deepFriedNutriment to [deepFriedNutriment]")
+	message_admins("[key_name(usr)] set ingredientLimit to [ingredientLimit]")
+	return
