@@ -2,7 +2,7 @@
 
 /obj/item/weapon/defibrillator
 	name = "defibrillator"
-	desc = "A device that uses detachable paddles placed on the patient to resuscitation incapacitated patients."
+	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
@@ -10,7 +10,7 @@
 	force = 5
 	throwforce = 6
 	w_class = 4
-	origin_tech = "biotech=3"
+	origin_tech = "biotech=4"
 	action_button_name = "Toggle Paddles"
 
 	var/on = 0 //if the paddles are equipped (1) or on the defib (0)
@@ -188,7 +188,6 @@
 	force = 0
 	throwforce = 6
 	w_class = 4
-	origin_tech = "biotech=3"
 
 	var/revivecost = 1000
 	var/cooldown = 0
