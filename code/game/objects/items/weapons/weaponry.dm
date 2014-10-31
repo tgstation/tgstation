@@ -22,7 +22,7 @@
 
 /obj/item/weapon/nullrod
 	name = "null rod"
-	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
+	desc = "A holy weapon embibed with immense power; its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	slot_flags = SLOT_BELT
@@ -35,6 +35,32 @@
 /obj/item/weapon/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
+
+/obj/item/weapon/nullrod/verb/holy_reskin(mob/M, mob/usr)
+	set name = "Reskin Holy Weapon"
+	set category = "Object"
+	set desc = "Click to choose another holy weapon."
+
+	var/holy_reskin = input(usr, "Please choose your holy weapon.","Choose your holy weapon.",null) as null|anything in list("Null Rod","Crucifix","Holy Whip")
+
+	if(src && !M.stat && in_range(M,src))
+		switch(holy_reskin)
+			if("Null Rod")
+				name = "null rod"
+				icon_state = "nullrod"
+				item_state = "nullrod"
+			if("Crucifix")
+				name = "crucifix"
+				icon_state = "crucifix"
+				item_state = "crucifix"
+			if("Holy Whip")
+				name = "holy whip"
+				icon_state = "chapchain"
+				item_state = "chain"
+			else
+				return
+		M.update_inv_l_hand()
+		M.update_inv_r_hand()
 
 /obj/item/weapon/sord
 	name = "\improper SORD"
