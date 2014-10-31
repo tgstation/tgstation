@@ -125,7 +125,8 @@ var/global/ingredientLimit = 10
 	return
 
 /obj/machinery/cooking/proc/makeFood(var/foodType)
-	new foodType(src.loc,src.ingredient)
+	var/obj/item/I = new foodType(src.loc,src.ingredient)
+	I.name = "[src.ingredient.name] [I.name]"
 	qdel(src.ingredient)
 	src.ingredient = null
 	return

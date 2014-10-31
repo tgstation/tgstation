@@ -12,6 +12,7 @@
 	volume = 50
 	flags = OPENCONTAINER
 
+	// This is fucking horrible.
 	var/list/can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
@@ -29,7 +30,8 @@
 		/obj/machinery/hydroponics,
 		/obj/machinery/biogenerator,
 		/mob/living/simple_animal/cow,
-		/mob/living/simple_animal/hostile/retaliate/goat
+		/mob/living/simple_animal/hostile/retaliate/goat,
+		/obj/machinery/cooking/icemachine
 	)
 
 
