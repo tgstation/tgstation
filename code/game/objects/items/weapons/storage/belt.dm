@@ -253,6 +253,15 @@
 	..()
 	update_icon()
 
+/obj/item/weapon/storage/belt/lazarus/antag
+	name = "master trainer's belt"
+	desc = "For the pokemo- mining master, holds your lazarus capsules."
+	icon_state = "lazarusbelt"
+	item_state = "lazbelt"
+	w_class = 4
+	max_w_class = 4
+	max_combined_w_class = 28
+	can_hold = list("/obj/item/device/mobcapsule")
 
 /obj/item/weapon/storage/belt/lazarus/antag/New(loc, mob/user)
 	var/list/critters = typesof(/mob/living/simple_animal/hostile) - /mob/living/simple_animal/hostile
