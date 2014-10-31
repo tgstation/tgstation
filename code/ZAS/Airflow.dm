@@ -396,13 +396,13 @@ mob/living/carbon/human/airflow_hit(atom/A)
 	var/b_loss = airflow_speed * zas_settings.Get(/datum/ZAS_Setting/airflow_damage)
 
 	var/blocked = run_armor_check("head","melee")
-	apply_damage(b_loss/3, BRUTE, "head", blocked, 0, "Airflow")
+	apply_damage(b_loss/3, BRUTE, "head", blocked, 0, used_weapon = "Airflow")
 
 	blocked = run_armor_check("chest","melee")
-	apply_damage(b_loss/3, BRUTE, "chest", blocked, 0, "Airflow")
+	apply_damage(b_loss/3, BRUTE, "chest", blocked, 0, used_weapon = "Airflow")
 
 	blocked = run_armor_check("groin","melee")
-	apply_damage(b_loss/3, BRUTE, "groin", blocked, 0, "Airflow")
+	apply_damage(b_loss/3, BRUTE, "groin", blocked, 0, used_weapon = "Airflow")
 
 	if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || AirflowCanPush())
 		if(airflow_speed > 10)
