@@ -29,8 +29,8 @@
 /turf/simulated/floor/mineral/bananium
 	name = "bananium floor"
 	icon_state = "bananium"
-	mineral = "clown"
-	floortype = "clown"
+	mineral = "bananium"
+	floortype = "bananium"
 	floor_tile = new/obj/item/stack/tile/mineral/bananium
 
 /turf/simulated/floor/mineral/bananium/airless
