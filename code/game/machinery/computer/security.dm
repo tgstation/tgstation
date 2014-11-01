@@ -607,6 +607,7 @@ What a mess.*/
 
 					if ("Change Criminal Status")
 						if (active2)
+							var/old_field = active2.fields["criminal"]
 							switch(href_list["criminal2"])
 								if("none")
 									active2.fields["criminal"] = "None"
@@ -618,6 +619,7 @@ What a mess.*/
 									active2.fields["criminal"] = "Parolled"
 								if("released")
 									active2.fields["criminal"] = "Discharged"
+							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [usr.name] ([usr.key]).", "secrecords")
 
 					if ("Delete Record (Security) Execute")
 						if (active2)
