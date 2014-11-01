@@ -125,7 +125,7 @@
 	assume_air(adding)
 
 /turf/simulated/floor/engine/singularity_pull(S, current_size)
-	if(current_size >= 9)
+	if(current_size >= STAGE_FIVE)
 		if(builtin_tile)
 			if(prob(30))
 				builtin_tile.loc = src
