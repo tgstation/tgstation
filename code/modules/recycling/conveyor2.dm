@@ -120,6 +120,7 @@
 		if(!(stat & BROKEN))
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 			C.id = id
+			transfer_fingerprints_to(C)
 		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
 		return
@@ -260,6 +261,7 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
+		transfer_fingerprints_to(C)
 		user << "<span class='notice'>You deattach the conveyor switch.</span>"
 		qdel(src)
 
@@ -305,10 +307,17 @@
 /obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
 	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
 		return
-	for(var/obj/machinery/conveyor/CB in A)
+	var/cdir = get_dir(A, user)
+	if(!(cdir in cardinal) || A == user.loc)
 		return
-	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A,user.dir)
+	for(var/obj/machinery/conveyor/CB in A)
+		if(CB.dir == cdir || CB.dir == turn(cdir,180))
+			return
+		cdir |= CB.dir
+		qdel(CB)
+	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A,cdir)
 	C.id = id
+	transfer_fingerprints_to(C)
 	qdel(src)
 
 /obj/item/conveyor_switch_construct
@@ -334,7 +343,8 @@
 	if(!found)
 		user << "\icon[src]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>"
 		return
-	new/obj/machinery/conveyor_switch(A, id)
+	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
+	transfer_fingerprints_to(NC)
 	qdel(src)
 
 /obj/item/weapon/paper/conveyor
