@@ -135,6 +135,8 @@
 	heavy = 1
 	meteordrop = /obj/item/weapon/ore/uranium
 
+//////////////////////////
+//Spookoween meteors
 /obj/effect/meteor/pumpkin
 	name = "PUMPKING"
 	desc = "THE PUMPKING'S COMING!"
@@ -142,17 +144,13 @@
 	icon_state = "pumpkin"
 	hits = 10
 	heavy = 1
-	meteordrop = /obj/item/clothing/head/hardhat/pumpkinhead
-	meteorsound = 'sound/hallucinations/im_here1.ogg'
 	dropamt = 1
-	bound_width = 96
-	bound_height = 96
 
 /obj/effect/meteor/pumpkin/New()
 	..()
-	if(prob(50))
-		meteordrop = /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
-		meteorsound = 'sound/hallucinations/im_here2.ogg'
+	meteordrop = pick(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin)
+	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
+//////////////////////////
 
 /obj/effect/meteor/meaty
 	name = "meaty ore"

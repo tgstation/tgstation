@@ -268,3 +268,8 @@
 	else if(!d_state)
 		return attack_hand(user)
 	return
+
+/turf/simulated/wall/r_wall/singularity_pull(S, current_size)
+	if(current_size >= 9)
+		if(prob(30))
+			dismantle_wall()

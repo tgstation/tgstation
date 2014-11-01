@@ -168,3 +168,22 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		return 1
 	return 0
+
+/turf/simulated/floor/singularity_pull(S, current_size)
+	if(current_size == 5)
+		if(prob(30))
+			if(builtin_tile)
+				builtin_tile.loc = src
+				make_plating()
+	else if(current_size == 7)
+		if(prob(50))
+			if(builtin_tile)
+				builtin_tile.loc = src
+				make_plating()
+	else if(current_size >= 9)
+		if(builtin_tile)
+			if(prob(70))
+				builtin_tile.loc = src
+				make_plating()
+		else if(prob(50))
+			ReplaceWithLattice()
