@@ -115,6 +115,8 @@
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+	heat_protection = HEAD												//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/hardsuit/syndi
 	icon_state = "hardsuit-syndi"
@@ -125,6 +127,8 @@
 	w_class = 3
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 
 	//Wizard hardsuit

@@ -27,6 +27,8 @@
 	item_state = "deathsquad"
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
 	strip_delay = 130
+	heat_protection = HEAD												//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/deathsquad
 	name = "deathsquad suit"
@@ -37,6 +39,8 @@
 	armor = list(melee = 80, bullet = 80, laser = 50,energy = 50, bomb = 100, bio = 100, rad = 100)
 	slowdown = 1
 	strip_delay = 130
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 /obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "officer's beret"
