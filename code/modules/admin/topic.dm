@@ -1138,22 +1138,29 @@
 		message_admins("\blue [key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]")
 
 	else if(href_list["sendtoprison"])
-		if(!check_rights(R_ADMIN))	return
+		// Reworked to be useful for investigating shit.
+		if(!check_rights(R_ADMIN))
+			return
 
-		if(alert(usr, "Send to admin prison for the round?", "Message", "Yes", "No") != "Yes")
+		if(alert(usr, "Warp to prison?", "Message", "Yes", "No") != "Yes")
 			return
 
 		var/mob/M = locate(href_list["sendtoprison"])
+
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob"
 			return
+
 		if(istype(M, /mob/living/silicon/ai))
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
 			return
 
 		var/turf/prison_cell = pick(prisonwarp)
-		if(!prison_cell)	return
 
+		if(!prison_cell)
+			return
+
+		/*
 		var/obj/structure/closet/secure_closet/brig/locker = new /obj/structure/closet/secure_closet/brig(prison_cell)
 		locker.opened = 0
 		locker.locked = 1
@@ -1165,18 +1172,31 @@
 				I.loc = locker
 				I.layer = initial(I.layer)
 				I.dropped(M)
+
 		M.update_icons()
+		*/
 
 		//so they black out before warping
 		M.Paralyse(5)
+		M.visible_message(
+			"<span class=\"sinister\">You hear the sound of cell doors slamming shut, and [M.name] suddenly vanishes!</span>",
+			"<span class=\"sinister\">You hear the sound of cell doors slamming shut!</span>")
+
 		sleep(5)
-		if(!M)	return
+
+		if(!M)
+			return
+
+		// TODO: play sound here.  Thinking of using Wolfenstein 3D's cell door closing sound.
 
 		M.loc = prison_cell
+
+		/*
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/prisoner = M
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), slot_w_uniform)
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), slot_shoes)
+		*/
 
 		M << "\red You have been sent to the prison station!"
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
