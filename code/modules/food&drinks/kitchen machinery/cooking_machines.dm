@@ -95,7 +95,7 @@ var/global/ingredientLimit = 50
 /obj/machinery/cooking/proc/validateIngredient(var/obj/item/I)
 	if(istype(I,/obj/item/weapon/grab) || istype(I,/obj/item/tk_grab)) . = "It won't fit."
 	else if(istype(I,/obj/item/weapon/disk/nuclear)) . = "It's the fucking nuke disk!"
-	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks) || deepFriedEverything) . = "valid"
+	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks)) . = "valid"
 	else if(istype(I,/obj/item/organ)) . = "valid"
 	else . = "It's not edible food."
 	return
@@ -125,8 +125,8 @@ var/global/ingredientLimit = 50
 	return
 
 /obj/machinery/cooking/proc/makeFood(var/foodType)
-	var/obj/item/I = new foodType(src.loc,src.ingredient)
-	I.attackby(src.ingredient)
+	var/obj/item/weapon/reagent_containers/food/snacks/customizable/I = new foodType(src.loc,src.ingredient)
+	I.ingredients += src.ingredient
 	src.ingredient = null
 	return
 
@@ -139,9 +139,15 @@ var/global/ingredientLimit = 50
 	icon_state_on = "mixer_on"
 	cookSound = 'sound/machines/juicer.ogg'
 
+/obj/machinery/cooking/candy/validateIngredient(var/obj/item/I)
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks)) . = "valid"
+	else . = "That isn't food!"
+	return
+
+
 /obj/machinery/cooking/candy/makeFood(var/foodType)
-	var/obj/item/I = new foodType(src.loc,src.ingredient)
-	I.attackby(src.ingredient)
+	var/obj/item/weapon/reagent_containers/food/snacks/customizable/I = new foodType(src.loc,src.ingredient)
+	I.ingredients += src.ingredient
 	src.ingredient = null
 	return
 
@@ -205,6 +211,11 @@ var/global/ingredientLimit = 50
 
 /obj/machinery/cooking/deepfryer/validateIngredient(var/obj/item/I)
 	. = ..()
+	if(istype(I,/obj/item/weapon/grab) || istype(I,/obj/item/tk_grab)) . = "It won't fit."
+	else if(istype(I,/obj/item/weapon/disk/nuclear)) . = "It's the fucking nuke disk!"
+	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks) || deepFriedEverything) . = "valid"
+	else if(istype(I,/obj/item/organ)) . = "valid"
+	else . = "It's not edible food."
 	if((. == "valid") && (!foodNesting))
 		if(findtext(I.name,"fried")) . = "It's already deep-fried."
 		else if(findtext(I.name,"grilled")) . = "It's already grilled."
@@ -223,6 +234,13 @@ var/global/ingredientLimit = 50
 	qdel(src.ingredient)
 	return
 
+/obj/machinery/cooking/deepfryer/attackby(obj/item/I,mob/user)
+	if(istype(I,/obj/item/weapon/card/emag) && !deepFriedEverything)
+		user << "You use the deep fryer to scramble the DeepFry Co.'s master server locks. You can now deep fry anything!"
+		deepFriedEverything = 1
+		return
+	else
+		..()
 // Grill ///////////////////////////////////////////////////////
 
 /obj/machinery/cooking/deepfryer/grill
