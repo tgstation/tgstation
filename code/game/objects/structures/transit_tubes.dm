@@ -561,7 +561,7 @@ obj/structure/ex_act(severity)
 	if(text in direction_table)
 		return direction_table[text]
 
-	var/list/split_text = stringsplit(text, "-")
+	var/list/split_text = text2list(text, "-")
 
 	// If the first token is D, the icon_state represents
 	//  a purely decorative tube, and doesn't actually

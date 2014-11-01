@@ -297,6 +297,7 @@
 			var/mob/living/carbon/C
 			check_heat(C)
 		wash(O)
+		O.clean_blood()
 		watersource.reagents.reaction(O, TOUCH)
 		if(istype(O, /obj/item/weapon/reagent_containers/glass))
 			var/obj/item/weapon/reagent_containers/glass/G = O

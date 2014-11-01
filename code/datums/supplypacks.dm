@@ -341,17 +341,18 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	group = "Hydroponics"
 
 /datum/supply_packs/exoticseeds
-	name = "Exotic Seeds Crate"
-	contains = list(/obj/item/seeds/nettleseed,
+	name = "Exotic seeds crate"
+	contains = list(/obj/item/seeds/replicapod,
 					/obj/item/seeds/replicapod,
-					/obj/item/seeds/replicapod,
-					/obj/item/seeds/replicapod,
-					/obj/item/seeds/plumpmycelium,
 					/obj/item/seeds/libertymycelium,
-					/obj/item/seeds/amanitamycelium,
 					/obj/item/seeds/reishimycelium,
-					/obj/item/seeds/bananaseed,
-					/obj/item/seeds/eggyseed)
+					/obj/item/seeds/random,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random,
+					/obj/item/seeds/kudzuseed)
 	cost = 15
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "Exotic Seeds crate"
@@ -862,6 +863,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containertype = "/obj/structure/closet/crate"
 	containername = "Arts and Crafts crate"
 	group = "Supplies"
+
 
 /datum/supply_packs/randomised/contraband
 	num_contained = 5

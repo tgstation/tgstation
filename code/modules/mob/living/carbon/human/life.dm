@@ -171,6 +171,8 @@ var/global/list/organ_damage_overlays = list(
 
 		handle_medical_side_effects()
 
+		handle_equipment()
+
 	handle_stasis_bag()
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
@@ -1068,9 +1070,7 @@ var/global/list/organ_damage_overlays = list(
 			else if(sleeping)
 				handle_dreams()
 				adjustHalLoss(-3)
-				if (mind)
-					if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
-						sleeping = max(sleeping-1, 0)
+				sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS
 				if( prob(2) && health && !hal_crit )
@@ -1771,6 +1771,21 @@ var/global/list/organ_damage_overlays = list(
 			hud_list[SPECIALROLE_HUD] = holder
 	hud_updateflag = 0
 
+/mob/living/carbon/human/proc/handle_equipment()
+	if(head)
+		if(istype(head, /obj/item/weapon/reagent_containers/glass/bucket))
+			var/obj/item/weapon/reagent_containers/glass/bucket/B = head
+			if(B.reagents.total_volume)
+				for(var/atom/movable/O in loc)
+					B.reagents.reaction(O, TOUCH)
+				B.reagents.reaction(loc, TOUCH)
+				visible_message("<span class='warning'>The bucket's content spills on [src]</span>")
+				spawn(5) B.reagents.clear_reagents()
+
+
+
 // Need this in species.
 //#undef HUMAN_MAX_OXYLOSS
 //#undef HUMAN_CRIT_MAX_OXYLOSS
+
+

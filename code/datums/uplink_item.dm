@@ -125,7 +125,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/jobspecific/ambrosiacruciatus
 	name = "Ambrosia Cruciatus Seeds"
 	desc = "Part of the notorious Ambrosia family, this species is nearly indistinguishable from Ambrosia Vulgaris- but its' branches contain a revolting toxin. Eight units are enough to drive victims insane after a three-minute delay."
-	item = /obj/item/seeds/ambrosiavulgarisseed/cruciatus
+	item = /obj/item/seeds/ambrosiacruciatusseed
 	cost = 2
 	job = list("Botanist")
 

@@ -375,21 +375,19 @@
 
 		if ("point")
 			if (!src.restrained())
-				var/mob/M = null
-				if (param)
-					for (var/atom/A as mob|obj|turf|area in view(null, null))
-						if (param == A.name)
-							M = A
+				var/atom/object_pointed = null
+
+				if(param)
+					for(var/atom/visible_object as turf | obj | mob in view())
+						if(param == visible_object.name)
+							object_pointed = visible_object
 							break
 
-				if (!M)
+				if(isnull(object_pointed))
 					message = "<B>[src]</B> points."
 				else
-					M.point()
+					pointed(object_pointed)
 
-				if (M)
-					message = "<B>[src]</B> points to [M]."
-				else
 			m_type = 1
 
 		if ("raise")

@@ -1116,6 +1116,9 @@ datum
 					/mob/living/simple_animal/hostile/syndicate/ranged/space,
 					/mob/living/simple_animal/hostile/alien/queen/large,
 					/mob/living/simple_animal/hostile/faithless,
+					/mob/living/simple_animal/hostile/faithless/cult,
+					/mob/living/simple_animal/hostile/scarybat/cult,
+					/mob/living/simple_animal/hostile/creature/cult,
 					// /mob/living/simple_animal/hostile/panther,
 					// /mob/living/simple_animal/hostile/snake,
 					/mob/living/simple_animal/hostile/retaliate,
@@ -1127,7 +1130,10 @@ datum
 					/mob/living/simple_animal/hostile/asteroid/goliath,
 					/mob/living/simple_animal/hostile/asteroid/hivelord,
 					/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-					/mob/living/simple_animal/hostile/carp/holocarp
+					/mob/living/simple_animal/hostile/carp/holocarp,
+					/mob/living/simple_animal/hostile/slime,
+					/mob/living/simple_animal/hostile/slime/adult,
+					/mob/living/simple_animal/hostile/mining_drone,
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
@@ -1191,7 +1197,14 @@ datum
 					/mob/living/simple_animal/hostile/asteroid/goliath,
 					/mob/living/simple_animal/hostile/asteroid/hivelord,
 					/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-					/mob/living/simple_animal/hostile/carp/holocarp
+					/mob/living/simple_animal/hostile/carp/holocarp,
+					/mob/living/simple_animal/hostile/faithless/cult,
+					/mob/living/simple_animal/hostile/scarybat/cult,
+					/mob/living/simple_animal/hostile/creature/cult,
+					/mob/living/simple_animal/hostile/slime,
+					/mob/living/simple_animal/hostile/slime/adult,
+					/mob/living/simple_animal/hostile/hivebot/tele,//this thing spawns hostile mobs
+					/mob/living/simple_animal/hostile/mining_drone,
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
@@ -1226,7 +1239,13 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 
-				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
+				var/blocked = list(
+					/obj/item/weapon/reagent_containers/food/snacks,
+					/obj/item/weapon/reagent_containers/food/snacks/snackbar,
+					/obj/item/weapon/reagent_containers/food/snacks/grown,
+					)
+
+				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - blocked
 				// BORK BORK BORK
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -1247,6 +1266,17 @@ datum
 					var/obj/B = new chosen
 					if(B)
 						B.loc = get_turf(holder.my_atom)
+
+						if (istype(B,/obj/item/weapon/reagent_containers/food/snacks/meat/human))
+							B.name = "human-meat"
+						if (istype(B,/obj/item/weapon/reagent_containers/food/snacks/human))
+							B.name = "human-meat burger"
+						if (istype(B,/obj/item/weapon/reagent_containers/food/snacks/fortunecookie))
+							var/obj/item/weapon/paper/paper = new /obj/item/weapon/paper(B)
+							paper.info = pick("power to the slimes","have a slime day","today, you will meet a very special slime","stay away from cold showers")
+							var/obj/item/weapon/reagent_containers/food/snacks/fortunecookie/cookie = B
+							cookie.trash = paper
+
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
 								step(B, pick(NORTH,SOUTH,EAST,WEST))
@@ -1262,7 +1292,13 @@ datum
 
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
-				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks
+				var/blocked = list(
+					/obj/item/weapon/reagent_containers/food/drinks,
+					)
+				blocked += typesof(/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable)	//silver-slime spawned customizable food is borked
+				blocked += typesof(/obj/item/weapon/reagent_containers/food/drinks/golden_cup)		//was probably never intended to spawn outside admin events
+
+				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/drinks) - blocked
 				// BORK BORK BORK
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -1283,6 +1319,18 @@ datum
 					var/obj/B = new chosen
 					if(B)
 						B.loc = get_turf(holder.my_atom)
+
+						if (istype(B,/obj/item/weapon/reagent_containers/food/drinks/sillycup))
+							B.reagents.add_reagent("water", 10)
+
+
+						if (istype(B,/obj/item/weapon/reagent_containers/food/drinks/flask))
+							B.reagents.add_reagent("whiskey", 60)
+
+
+						if (istype(B,/obj/item/weapon/reagent_containers/food/drinks/shaker))
+							B.reagents.add_reagent("gargleblaster", 100)
+
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
 								step(B, pick(NORTH,SOUTH,EAST,WEST))
@@ -1668,7 +1716,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/device/camera/P = new /obj/item/device/camera
+				var/obj/item/device/camera/sepia/P = new /obj/item/device/camera/sepia
 				P.loc = get_turf(holder.my_atom)
 
 		slimefilm

@@ -49,6 +49,8 @@
 	autoclose = 1
 	var/busy = 0
 
+	emag_cost = 1 // in MJ
+
 /obj/machinery/door/airlock/Destroy()
 	if(wires)
 		wires.Destroy()
@@ -105,6 +107,7 @@
 	name = "Vault"
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
+	emag_cost = 2 // in MJ
 	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity //Until somebody makes better sprites.
 
 /obj/machinery/door/airlock/freezer
@@ -284,6 +287,7 @@
 	name = "High Tech Security Airlock"
 	icon = 'icons/obj/doors/hightechsecurity.dmi'
 	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity
+	emag_cost = 2 // in MJ
 
 /*
 About the new airlock wires panel:

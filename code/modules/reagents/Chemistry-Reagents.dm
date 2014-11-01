@@ -156,6 +156,11 @@ datum
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]
 
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					H.bloody_body(self.data["donor"])
+					H.bloody_hands(self.data["donor"])
+
 			on_merge(var/data)
 				if(data["blood_colour"])
 					color = data["blood_colour"]
@@ -996,7 +1001,7 @@ datum
 								H << "\red Your mask protects you from the acid!"
 							return
 
-						if(H.head)
+						if(H.head && !istype(H.head, /obj/item/weapon/reagent_containers/glass/bucket))
 							if(prob(15) && !H.head.unacidable)
 								del(H.head)
 								H.update_inv_head()
@@ -1079,7 +1084,7 @@ datum
 								H << "\red Your mask protects you from the acid!"
 							return
 
-						if(H.head)
+						if(H.head && !istype(H.head, /obj/item/weapon/reagent_containers/glass/bucket))
 							if(prob(15) && !H.head.unacidable)
 								del(H.head)
 								H.update_inv_head()
@@ -1482,18 +1487,34 @@ datum
 								H.update_inv_shoes(0)
 					M.clean_blood()
 
-		plantbgone
+		//Reagents used for plant fertilizers.
+		toxin/fertilizer
+			name = "fertilizer"
+			id = "fertilizer"
+			description = "A chemical mix good for growing plants with."
+			reagent_state = LIQUID
+
+			color = "#664330" // rgb: 102, 67, 48
+
+		toxin/fertilizer/eznutrient
+			name = "EZ Nutrient"
+			id = "eznutrient"
+
+		toxin/fertilizer/left4zed
+			name = "Left-4-Zed"
+			id = "left4zed"
+
+		toxin/fertilizer/robustharvest
+			name = "Robust Harvest"
+			id = "robustharvest"
+
+		toxin/plantbgone
 			name = "Plant-B-Gone"
 			id = "plantbgone"
 			description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 			reagent_state = LIQUID
 			color = "#49002E" // rgb: 73, 0, 46
 
-			on_mob_life(var/mob/living/carbon/M)
-				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1.0)
-				..()
-				return
 
 			// Clear off wallrot fungi
 			reaction_turf(var/turf/T, var/volume)
@@ -1513,10 +1534,20 @@ datum
 					alien_weeds.healthcheck()
 				else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
 					del(O)
-				else if(istype(O,/obj/effect/spacevine))
+				else if(istype(O,/obj/effect/plantsegment))
 					if(prob(50)) del(O) //Kills kudzu too.
-				// Damage that is done to growing plants is separately
-				// at code/game/machinery/hydroponics at obj/item/hydroponics
+				else if(istype(O,/obj/machinery/portable_atmospherics/hydroponics))
+					var/obj/machinery/portable_atmospherics/hydroponics/tray = O
+
+					if(tray.seed)
+						tray.health -= rand(30,50)
+						if(tray.pestlevel > 0)
+							tray.pestlevel -= 2
+						if(tray.weedlevel > 0)
+							tray.weedlevel -= 3
+						tray.toxins += 4
+						tray.check_level_sanity()
+						tray.update_icon()
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				src = null
@@ -1528,7 +1559,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
 							if(H.species.flags & IS_PLANT) //plantmen take a LOT of damage
-								H.adjustToxLoss(10)
+								H.adjustToxLoss(50)
 
 		plasma
 			name = "Plasma"

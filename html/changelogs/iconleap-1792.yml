@@ -1,0 +1,6 @@
+author: iconleap
+
+delete-after: True
+
+changes: 
+  - tgs: Makes point into a mob verb (https://github.com/tgstation/-tg-station/pull/5445)

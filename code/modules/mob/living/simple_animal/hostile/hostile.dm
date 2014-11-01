@@ -119,6 +119,13 @@
 			return 0
 		if(iscultist(L) && (faction == "cult"))
 			return 0
+		if(isslime(L) && (faction == "slimesummon"))
+			return 0
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.dna)
+				if((H.dna.mutantrace == "slime") && (faction == "slimesummon"))
+					return 0
 		if(L in friends)
 			return 0
 		return 1

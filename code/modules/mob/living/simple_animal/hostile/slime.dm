@@ -15,7 +15,7 @@
 	response_harm   = "stomps on"
 	attacktext = "glomps"
 	attack_sound = 'sound/weapons/welderattack.ogg'
-	faction = "slime"
+	faction = "slimesummon"
 	speed = 4
 	var/colour = "grey"
 

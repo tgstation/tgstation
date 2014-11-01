@@ -192,4 +192,5 @@
 	src.visible_message("<span class='notice'>[src] is done.</span>", \
 		"You hear [src] stop")
 
-
+/obj/machinery/processor/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	attackby(O,user)
