@@ -1,4 +1,4 @@
-/mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null)
+/mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null, var/auto)
 	var/param = null
 
 	if (findtext(act, "-", 1, null))
@@ -375,21 +375,19 @@
 
 		if ("point")
 			if (!src.restrained())
-				var/mob/M = null
-				if (param)
-					for (var/atom/A as mob|obj|turf|area in view(null, null))
-						if (param == A.name)
-							M = A
+				var/atom/object_pointed = null
+
+				if(param)
+					for(var/atom/visible_object as turf | obj | mob in view())
+						if(param == visible_object.name)
+							object_pointed = visible_object
 							break
 
-				if (!M)
+				if(isnull(object_pointed))
 					message = "<B>[src]</B> points."
 				else
-					M.point()
+					pointed(object_pointed)
 
-				if (M)
-					message = "<B>[src]</B> points to [M]."
-				else
 			m_type = 1
 
 		if ("raise")
@@ -548,8 +546,19 @@
 				m_type = 1
 			else
 				if (!muzzled)
-					message = "<B>[src]</B> screams!"
-					m_type = 2
+					if (auto == 1)
+						if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
+							message = "<B>[src]</B> screams in agony!"
+							var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
+							if (src.gender == FEMALE) //Females have their own screams. Trannys be damned.
+								screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
+							var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
+							playsound(get_turf(src), scream, 50, 0)
+							m_type = 2
+							lastScream = world.time
+					else
+						message = "<B>[src]</B> screams!"
+						m_type = 2
 				else
 					message = "<B>[src]</B> makes a very loud noise."
 					m_type = 2
@@ -573,7 +582,10 @@
 							continue
 					if(!miming)
 						message = "<b>[src]</b> [fart]."
-						playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
+						if(mind && mind.assigned_role == "Clown")
+							playsound(get_turf(src), pick('sound/items/bikehorn.ogg','sound/items/AirHorn.ogg'), 50, 1)
+						else
+							playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
 					else
 						message = "<b>[src]</b> [fart]"
 						//Mimes can't fart.

@@ -5,6 +5,9 @@
 	w_type=NOT_RECYCLABLE
 	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
 
+/obj/effect/overlay/cultify()
+	return
+
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
 	icon='icons/effects/beam.dmi'

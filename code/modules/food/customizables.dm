@@ -66,7 +66,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable
 	trash = /obj/item/trash/plate
 	bitesize = 2
-	
+
 	var/ingMax = 600
 	var/list/ingredients = list()
 	var/stackIngredients = 0
@@ -102,7 +102,10 @@
 		else if(i == src.ingredients.len) . += "and [S.name]"
 		else . += ", [S.name]"
 		i++
-		src.name = "[.] [src.name]"
+		if(length("[.] [src.name]") >= 100)
+			src.name = "A hot mess"
+		else
+			src.name = "[.] [src.name]"
 		if(src.fullyCustom)
 			I = image(S.icon,,S.icon_state)
 			I.pixel_x = rand(-1,1)

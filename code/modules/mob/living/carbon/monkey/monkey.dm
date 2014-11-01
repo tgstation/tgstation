@@ -211,7 +211,7 @@
 		if(hat)
 			oldhat = hat
 			hat = null
-		hat = usr.get_active_hand()
+		hat = H
 		usr.drop_item()
 		hat.loc = src
 		regenerate_icons()
@@ -229,7 +229,7 @@
 		if(uniform)
 			olduniform = uniform
 			uniform = null
-		uniform = usr.get_active_hand()
+		uniform = C
 		usr.drop_item()
 		uniform.loc = src
 		regenerate_icons()

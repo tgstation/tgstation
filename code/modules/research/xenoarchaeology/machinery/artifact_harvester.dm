@@ -12,6 +12,7 @@
 	var/obj/item/weapon/anobattery/inserted_battery
 	var/obj/machinery/artifact/cur_artifact
 	var/obj/machinery/artifact_scanpad/owned_scanner = null
+	var/chargerate = 0
 
 /obj/machinery/artifact_harvester/New()
 	..()
@@ -74,11 +75,13 @@
 		return
 
 	if(harvesting > 0)
-		//gain a bit of charge
-		inserted_battery.stored_charge += 0.5
+		//chargerate is chargemaxlevel/effectrange
+		//creates variable charging rates, with the minimum being 0.5
+		inserted_battery.stored_charge += chargerate
 
 		//check if we've finished
 		if(inserted_battery.stored_charge >= inserted_battery.capacity)
+			inserted_battery.stored_charge = inserted_battery.capacity //Prevents overcharging
 			use_power = 1
 			harvesting = 0
 			cur_artifact.anchored = 0
@@ -158,6 +161,7 @@
 				if(inserted_battery.battery_effect)
 					matching_effecttype = (inserted_battery.battery_effect.type == cur_artifact.my_effect.type)
 				if(!inserted_battery.battery_effect || (matching_id && matching_effecttype))
+					chargerate = cur_artifact.my_effect.chargelevelmax / cur_artifact.my_effect.effectrange
 					harvesting = 1
 					use_power = 2
 					cur_artifact.anchored = 1

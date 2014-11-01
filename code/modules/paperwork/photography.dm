@@ -114,6 +114,14 @@
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info
 
+/obj/item/device/camera/sepia
+	name = "camera"
+	desc = "This one takes pictures in sepia."
+	icon_state = "sepia-polaroid"
+	item_state = "sepia-polaroid"
+	icon_on = "sepia-camera"
+	icon_off = "sepia-camera_off"
+
 /obj/item/device/camera/examine()
 	set src in view(1)
 	..()
@@ -164,7 +172,8 @@
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
-			if(A.invisibility) continue
+			if(A.invisibility)
+				continue
 			atoms.Add(A)
 
 	var/list/sorted = list()
@@ -180,7 +189,7 @@
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
 
 	for(var/atom/A in sorted)
-		var/icon/img = getFlatIcon(A)
+		var/icon/img = getFlatIcon(A,A.dir,0)
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying)
 
@@ -195,8 +204,58 @@
 		if(istype(A, /obj/item/blueprints))
 			blueprints = 1
 
+	/*
 	for(var/turf/T in turfs)
 		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+	//Turfs are atoms as well, duh, they render perfectly well without that part of the code. Plus that part was causing tiles with colored lightning to appear all white.
+	*/
+
+	return res
+
+
+/obj/item/device/camera/sepia/camera_get_icon(list/turfs, turf/center)
+	var/atoms[] = list()
+	for(var/turf/T in turfs)
+		atoms.Add(T)
+		for(var/atom/movable/A in T)
+			if(A.invisibility)
+				if(!istype(A, /mob/))
+					continue
+			atoms.Add(A)
+
+	var/list/sorted = list()
+	var/j
+	for(var/i = 1 to atoms.len)
+		var/atom/c = atoms[i]
+		for(j = sorted.len, j > 0, --j)
+			var/atom/c2 = sorted[j]
+			if(c2.layer <= c.layer)
+				break
+		sorted.Insert(j+1, c)
+
+	var/icon/res = icon('icons/effects/96x96.dmi', "")
+
+	for(var/atom/A in sorted)
+		var/icon/img = getFlatIcon(A,A.dir,0)
+		if(istype(A, /mob/living) && A:lying)
+			img.Turn(A:lying)
+
+		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
+		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		if(istype(A, /atom/movable))
+			offX += A:step_x
+			offY += A:step_y
+
+		res.Blend(img, blendMode2iconMode(A.blend_mode), offX, offY)
+
+		if(istype(A, /obj/item/blueprints))
+			blueprints = 1
+
+	/*
+	for(var/turf/T in turfs)
+		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+	//Turfs are atoms as well, duh, they render perfectly well without that part of the code. Plus that part was causing tiles with colored lightning to appear all white.
+	*/
 
 	return res
 
@@ -251,9 +310,6 @@
 	else
 		aipicture(user, temp, mobs, blueprints)
 
-
-
-
 /obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	user.put_in_hands(P)
@@ -271,6 +327,31 @@
 		P.blueprints = 1
 		blueprints = 0
 
+/obj/item/device/camera/sepia/printpicture(mob/user, icon/temp, mobs, flag) //Creates photos in sepia
+	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
+	user.put_in_hands(P)
+	var/icon/small_img = icon(temp)
+	var/icon/ic = icon('icons/obj/items.dmi',"photo")
+	small_img.Scale(8, 8)
+	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+	P.icon = ic
+	P.img = temp
+	P.desc = mobs
+	P.pixel_x = rand(-10, 10)
+	P.pixel_y = rand(-10, 10)
+
+	if(blueprints)
+		P.blueprints = 1
+		blueprints = 0
+
+	var/icon/I1 = icon(P.icon, P.icon_state)
+	var/icon/I2 = icon(P.img)
+
+	I1.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(112,66,20))//Sepia magic formula
+	I2.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(112,66,20))
+
+	P.icon = I1
+	P.img = I2
 
 /obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs) //instead of printing a picture like a regular camera would, we do this instead for the AI
 

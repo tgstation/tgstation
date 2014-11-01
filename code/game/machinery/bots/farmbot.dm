@@ -93,7 +93,7 @@
 
 /obj/machinery/bot/farmbot/proc/get_total_ferts()
 	var total_fert = 0
-	for (var/obj/item/nutrient/fert in contents)
+	for (var/obj/item/weapon/reagent_containers/glass/fertilizer/fert in contents)
 		total_fert++
 	return total_fert
 
@@ -155,7 +155,7 @@
 		setting_ignoreMushrooms = !setting_ignoreMushrooms
 	else if (href_list["eject"] )
 		flick("farmbot_hatch",src)
-		for (var/obj/item/nutrient/fert in contents)
+		for (var/obj/item/weapon/reagent_containers/glass/fertilizer/fert in contents)
 			fert.loc = get_turf(src)
 
 	src.updateUsrDialog()
@@ -170,7 +170,7 @@
 		else
 			user << "\red Access denied."
 
-	else if (istype(W, /obj/item/nutrient))
+	else if (istype(W, /obj/item/weapon/reagent_containers/glass/fertilizer))
 		if ( get_total_ferts() >= Max_Fertilizers )
 			user << "The fertilizer storage is full!"
 			return
@@ -212,7 +212,7 @@
 	if ( tank )
 		tank.loc = Tsec
 
-	for ( var/obj/item/nutrient/fert in contents )
+	for ( var/obj/item/weapon/reagent_containers/glass/fertilizer/fert in contents )
 		if ( prob(50) )
 			fert.loc = Tsec
 
@@ -267,15 +267,15 @@
 		target = null
 		return 0
 
-	if ( !emagged && !istype(target,/obj/machinery/hydroponics) && !istype(target,/obj/structure/sink) ) // Humans are not plants!
+	if ( !emagged && !istype(target,/obj/machinery/portable_atmospherics/hydroponics) && !istype(target,/obj/structure/sink) ) // Humans are not plants!
 		mode = 0
 		target = null
 		return 0
 
 	if ( mode == FARMBOT_MODE_FERTILIZE )
 		//Find which fertilizer to use
-		var/obj/item/nutrient/fert
-		for ( var/obj/item/nutrient/nut in contents )
+		var/obj/item/weapon/reagent_containers/glass/fertilizer/fert
+		for ( var/obj/item/weapon/reagent_containers/glass/fertilizer/nut in contents )
 			fert = nut
 			break
 		if ( !fert )
@@ -317,7 +317,7 @@
 				target = source
 				mode = FARMBOT_MODE_REFILL
 				return 1
-		for ( var/obj/machinery/hydroponics/tray in view(7,src) )
+		for ( var/obj/machinery/portable_atmospherics/hydroponics/tray in view(7,src) )
 			var newMode = GetNeededMode(tray)
 			if ( newMode )
 				mode = newMode
@@ -325,12 +325,8 @@
 				return 1
 		return 0
 
-/obj/machinery/bot/farmbot/proc/GetNeededMode(obj/machinery/hydroponics/tray)
-	if ( !tray.planted || tray.dead )
-		return 0
-	if ( tray.myseed.plant_type == 1 && setting_ignoreWeeds )
-		return 0
-	if ( tray.myseed.plant_type == 2 && setting_ignoreMushrooms )
+/obj/machinery/bot/farmbot/proc/GetNeededMode(obj/machinery/portable_atmospherics/hydroponics/tray)
+	if ( !tray.seed || tray.dead )
 		return 0
 
 	if ( setting_water && tray.waterlevel <= 10 && tank && tank.reagents.total_volume >= 1 )
@@ -387,7 +383,7 @@
 		src.frustration++
 
 
-/obj/machinery/bot/farmbot/proc/fertilize(obj/item/nutrient/fert)
+/obj/machinery/bot/farmbot/proc/fertilize(var/obj/item/weapon/reagent_containers/glass/fertilizer/fert)
 	if ( !fert )
 		target = null
 		mode = 0
@@ -405,12 +401,11 @@
 		return 1
 
 	else // feed them plants~
-		var /obj/machinery/hydroponics/tray = target
+		var/obj/machinery/portable_atmospherics/hydroponics/tray = target
 		tray.nutrilevel = 10
-		tray.yieldmod = fert.yieldmod
-		tray.mutmod = fert.mutmod
+		fert.reagents.trans_to(tray.reagents, fert.reagents.total_volume)
 		del fert
-		tray.updateicon()
+		//tray.updateicon()
 		icon_state = "farmbot_fertile"
 		mode = FARMBOT_MODE_WAITING
 
@@ -431,7 +426,7 @@
 		spawn(FARMBOT_EMAG_DELAY)
 			mode = 0
 
-		if ( prob(50) ) // better luck next time little guy
+		if ( prob(30) ) // better luck next time little guy
 			src.visible_message("\red <b>[src] swings wildly at [target] with a minihoe, missing completely!</b>")
 
 		else // yayyy take that weeds~
@@ -439,7 +434,7 @@
 			var /mob/living/carbon/human/human = target
 
 			src.visible_message("\red <B>[src] [attackVerb] [human]!</B>")
-			var/damage = 5
+			var/damage = 15
 			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 			var/datum/organ/external/affecting = human.get_organ(ran_zone(dam_zone))
 			var/armor = human.run_armor_check(affecting, "melee")
@@ -450,9 +445,9 @@
 		spawn(FARMBOT_ACTION_DELAY)
 			mode = 0
 
-		var /obj/machinery/hydroponics/tray = target
+		var /obj/machinery/portable_atmospherics/hydroponics/tray = target
 		tray.weedlevel = 0
-		tray.updateicon()
+		//tray.updateicon()
 
 /obj/machinery/bot/farmbot/proc/water()
 	if ( !tank || tank.reagents.total_volume < 1 )
@@ -479,7 +474,7 @@
 		spawn(FARMBOT_EMAG_DELAY)
 			mode = 0
 	else
-		var /obj/machinery/hydroponics/tray = target
+		var /obj/machinery/portable_atmospherics/hydroponics/tray = target
 		var/b_amount = tank.reagents.get_reagent_amount("water")
 		if(b_amount > 0 && tray.waterlevel < 100)
 			if(b_amount + tray.waterlevel > 100)
@@ -489,11 +484,11 @@
 			playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 
 	//		Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
-			tray.toxic -= round(b_amount/4)
-			if (tray.toxic < 0 ) // Make sure it won't go overboard
-				tray.toxic = 0
+			tray.toxins -= round(b_amount/4)
+			if (tray.toxins < 0 ) // Make sure it won't go overboard
+				tray.toxins = 0
 
-		tray.updateicon()
+		//tray.updateicon()
 		mode = FARMBOT_MODE_WAITING
 		spawn(FARMBOT_ACTION_DELAY)
 			mode = 0

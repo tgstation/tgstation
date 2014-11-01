@@ -22,13 +22,32 @@
 // Associative list of [md5 values = Icon] for determining if the icon already exists
 var/list/_flatIcons = list()
 
+var/list/directional = list(
+	/obj/machinery/door/window,
+	/obj/machinery/power/emitter,
+	/obj/structure/disposalpipe,
+	/obj/machinery/atmospherics/pipe,
+	/obj/structure/window,
+	/obj/structure/window/full,
+	/obj/structure/stool/bed/chair,
+	/obj/structure/table,
+	/obj/machinery/light
+	)
+
+var/list/exception = list(
+	/obj/structure/window/full
+	)
+
 proc
 	getFlatIcon(atom/A, dir, cache=1) // 1 = use cache, 2 = override cache, 0 = ignore cache
 
 		var/list/layers = list() // Associative list of [overlay = layer]
 		var/hash = "" // Hash of overlay combination
 
-		if(!dir) dir = A.dir // dir defaults to A's dir
+		if (is_type_in_list(A, directional)&&!is_type_in_list(A, exception))
+			dir = A.dir
+		else
+			dir = 2//ugly fix for atoms showing invisible on pictures if they don't have a 4-directional icon_state sprite and their dir isn't south(2)
 
 		// Add the atom's icon itself
 		if(A.icon)
@@ -109,9 +128,14 @@ proc
 
 			add = icon(I:icon || A.icon
 			         , I:icon_state || (I:icon && (A.icon_state in icon_states(I:icon)) && A.icon_state)
-			         , (I:dir != SOUTH ? I:dir : dir)
+			         , dir
 			         , 1
 			         , 0)
+
+			if(iscarbon(A))
+				var/mob/living/carbon/C = A
+				if(C.lying && !isalienadult(C))//because adult aliens have their own resting sprite
+					add.Turn(90)
 
 			// Find the new dimensions of the flat icon to fit the added overlay
 			addX1 = min(flatX1, I:pixel_x+1)

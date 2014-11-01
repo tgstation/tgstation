@@ -32,6 +32,10 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/author
 	var/SQLquery
 
+/obj/machinery/librarypubliccomp/cultify()
+	new /obj/structure/cult/tome(loc)
+	..()
+
 /obj/machinery/librarypubliccomp/attack_hand(var/mob/user as mob)
 	if(istype(user,/mob/dead))
 		user << "<span class='danger'>Nope.</span>"
@@ -141,6 +145,10 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
 	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+
+/obj/machinery/librarycomp/cultify()
+	new /obj/structure/cult/tome(loc)
+	..()
 
 /obj/machinery/librarycomp/attack_hand(var/mob/user as mob)
 	if(istype(user,/mob/dead))
@@ -276,11 +284,14 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	user << browse(dat, "window=library")
 	onclose(user, "library")
 
-/obj/machinery/librarycomp/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (src.density && istype(W, /obj/item/weapon/card/emag) && !src.emagged)
+/obj/machinery/librarycomp/emag(mob/user)
+	if(!emagged)
 		src.emagged = 1
 		user << "\blue You override the library computer's printing restrictions."
-		return
+		return 1
+	return
+
+/obj/machinery/librarycomp/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
@@ -288,7 +299,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		for (var/mob/V in hearers(src))
 			V.show_message("[src] lets out a low, short blip.", 2)
 	else
-		..()
+		return ..()
 
 /obj/machinery/librarycomp/Topic(href, href_list)
 	if(..())
@@ -439,10 +450,14 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	density = 1
 	var/obj/item/weapon/book/cache		// Last scanned book
 
+	machine_flags = WRENCHMOVE | FIXED2WORK
+
 /obj/machinery/libraryscanner/attackby(var/obj/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/book))
 		user.drop_item()
 		O.loc = src
+	else
+		return ..()
 
 /obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
 	if(istype(user,/mob/dead))
@@ -506,4 +521,4 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		b.icon_state = "book[rand(1,7)]"
 		del(O)
 	else
-		..()
+		return ..()

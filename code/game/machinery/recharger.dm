@@ -12,6 +12,8 @@
 
 	var/obj/item/weapon/charging = null
 
+	machine_flags = WRENCHMOVE | FIXED2WORK
+
 
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
@@ -36,14 +38,14 @@
 		charging = G
 		use_power = 2
 		update_icon()
-	else if(istype(G, /obj/item/weapon/wrench))
-		if(charging)
-			user << "<span class='notice'>Remove the charging item first!</span>"
-			return
-		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		return
+	..()
 
+/obj/machinery/recharger/wrenchAnchor(mob/user)
+	if(charging)
+		user << "<span class='notice'>Remove the charging item first!</span>"
+		return
+	..()
 
 /obj/machinery/recharger/attack_hand(mob/user)
 	if(issilicon(user))

@@ -7,7 +7,6 @@
 	origin_tech = "biotech=2;combat=4"
 	energy_drain = 20
 	range = MELEE
-	construction_cost = list("iron"=7500,"glass"=10000)
 	reliability = 1000
 	equip_cooldown = 50 //very long time to actually load someone up
 	var/list/cells = list("cell1" = list("mob" = null, "timer" = 0), "cell2" = list("mob" = null, "timer" = 0))

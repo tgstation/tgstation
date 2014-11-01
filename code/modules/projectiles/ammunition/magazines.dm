@@ -10,8 +10,8 @@
 	icon_state = "9x19p"
 	origin_tech = "combat=2"
 	ammo_type = "/obj/item/ammo_casing/c9mm"
-	max_ammo = 18
-	sprite_modulo = 18
+	max_ammo = 8
+	sprite_modulo = 8
 	multiple_sprites = 1
 
 /obj/item/ammo_storage/magazine/mc9mm/empty
@@ -24,11 +24,20 @@
 	ammo_type = "/obj/item/ammo_casing/a12mm"
 	max_ammo = 20
 	multiple_sprites = 1
-	sprite_modulo = 10
+	sprite_modulo = 2
 
 
 /obj/item/ammo_storage/magazine/a12mm/empty
 	starting_ammo = 0
+
+/obj/item/ammo_storage/magazine/smg9mm
+	name = "magazine (9mm)"
+	icon_state = "smg9mm"
+	origin_tech = "combat=3"
+	ammo_type = "/obj/item/ammo_casing/c9mm"
+	max_ammo = 18
+	sprite_modulo = 3
+	multiple_sprites = 1
 
 /obj/item/ammo_storage/magazine/a50
 	name = "magazine (.50)"
@@ -37,7 +46,7 @@
 	ammo_type = "/obj/item/ammo_casing/a50"
 	max_ammo = 7
 	multiple_sprites = 1
-	sprite_modulo = 7
+	sprite_modulo = 1
 
 /obj/item/ammo_storage/magazine/a50/empty
 	starting_ammo = 0
@@ -70,6 +79,15 @@
 	icon_state = "45"
 	origin_tech = "combat=2"
 	ammo_type = "/obj/item/ammo_casing/c45"
-	max_ammo = 10
+	max_ammo = 8
 	multiple_sprites = 1
-	sprite_modulo = 10
+	sprite_modulo = 1
+
+/obj/item/ammo_storage/magazine/uzi45 //Uzi mag
+	name = "magazine (.45)"
+	icon_state = "uzi45"
+	origin_tech = "combat=2"
+	ammo_type = "/obj/item/ammo_casing/c45"
+	max_ammo = 16
+	multiple_sprites = 1
+	sprite_modulo = 2

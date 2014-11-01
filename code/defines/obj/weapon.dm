@@ -633,6 +633,10 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
+/obj/item/weapon/table_parts/cultify()
+	new /obj/item/weapon/table_parts/wood(loc)
+	..()
+
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
 	desc = "Hard table parts. Well...harder..."
@@ -647,6 +651,9 @@
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
 	flags = null
+
+/obj/item/weapon/table_parts/wood/cultify()
+	return
 
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
@@ -787,8 +794,8 @@
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
 /obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob)
-	if(istype(A, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(A,1))
+	if(istype(A, /obj/effect/plantsegment))
+		for(var/obj/effect/plantsegment/B in orange(A,1))
 			if(prob(80))
 				del B
 		del A

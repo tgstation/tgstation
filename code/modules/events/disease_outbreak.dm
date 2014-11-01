@@ -1,12 +1,12 @@
 /datum/event/disease_outbreak
-	announceWhen	= 15
+	announceWhen	= 90
 
 
 /datum/event/disease_outbreak/announce()
 	biohazard_alert()
 
 /datum/event/disease_outbreak/setup()
-	announceWhen = rand(15, 30)
+	announceWhen = rand(30, 150) //Thanks Doc
 
 /datum/event/disease_outbreak/start()
 	var/virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)

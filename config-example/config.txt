@@ -37,6 +37,9 @@ LOG_SAY
 ## log admin actions
 LOG_ADMIN
 
+## log admin actions at a single log file
+LOG_ADMIN_ONLY
+
 ## log client access (logon/logoff)
 LOG_ACCESS
 

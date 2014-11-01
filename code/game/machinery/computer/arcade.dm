@@ -13,6 +13,9 @@
 	var/gameover = 0
 	var/blocked = 0 //Player cannot attack/heal while set
 
+	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+	emag_cost = 0 // because fun
+
 	l_color = "#00FF00"
 
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
@@ -233,45 +236,22 @@
 	src.blocked = 0
 	return
 
+/obj/machinery/computer/arcade/emag(mob/user as mob)
+	temp = "If you die in the game, you die for real!"
+	player_hp = 30
+	player_mp = 10
+	enemy_hp = 45
+	enemy_mp = 20
+	gameover = 0
+	blocked = 0
 
-/obj/machinery/computer/arcade/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		temp = "If you die in the game, you die for real!"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
-		gameover = 0
-		blocked = 0
+	emagged = 1
 
-		emagged = 1
+	enemy_name = "Cuban Pete"
+	name = "Outbomb Cuban Pete"
 
-		enemy_name = "Cuban Pete"
-		name = "Outbomb Cuban Pete"
+	src.updateUsrDialog()
 
-
-		src.updateUsrDialog()
-	else if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			var/obj/item/weapon/circuitboard/arcade/M = new /obj/item/weapon/circuitboard/arcade( A )
-			for (var/obj/C in src)
-				C.loc = src.loc
-			A.circuit = M
-			A.anchored = 1
-
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				getFromPool(/obj/item/weapon/shard, loc)
-				A.state = 3
-				A.icon_state = "3"
-			else
-				user << "\blue You disconnect the monitor."
-				A.state = 4
-				A.icon_state = "4"
-
-			del(src)
 /obj/machinery/computer/arcade/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))
 		..(severity)

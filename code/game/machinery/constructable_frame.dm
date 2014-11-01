@@ -290,7 +290,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/protolathe
 	name = "Circuit board (Protolathe)"
-	build_path = "/obj/machinery/r_n_d/protolathe"
+	build_path = "/obj/machinery/r_n_d/fabricator/protolathe"
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	frame_desc = "Requires 2 Matter Bins, 2 Manipulators, and 2 Beakers."
@@ -310,7 +310,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/circuit_imprinter
 	name = "Circuit board (Circuit Imprinter)"
-	build_path = "/obj/machinery/r_n_d/circuit_imprinter"
+	build_path = "/obj/machinery/r_n_d/fabricator/circuit_imprinter"
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	frame_desc = "Requires 1 Matter Bin, 1 Manipulator, and 2 Beakers."
@@ -597,6 +597,26 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/matter_bin" = 4,
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 2)
+
+/obj/item/weapon/circuitboard/smartfridge/medbay
+	name = "Circuit Board (Medbay SmartFridge)"
+	build_path = "/obj/machinery/smartfridge/secure/medbay"
+
+/obj/item/weapon/circuitboard/smartfridge/chemistry
+	name = "Circuit Board (Chemical SmartFridge)"
+	build_path = "/obj/machinery/smartfridge/chemistry"
+
+/obj/item/weapon/circuitboard/smartfridge/extract
+	name = "Circuit Board (Extract SmartFridge)"
+	build_path = "/obj/machinery/smartfridge/extract"
+
+/obj/item/weapon/circuitboard/smartfridge/seeds
+	name = "Circuit Board (Megaseed Servitor)"
+	build_path = "/obj/machinery/smartfridge/seeds"
+
+/obj/item/weapon/circuitboard/smartfridge/drinks
+	name = "Circuit Board (Drinks Showcase)"
+	build_path = "/obj/machinery/smartfridge/drinks"
 
 /obj/item/weapon/circuitboard/hydroponics
 	name = "Circuit Board (Hydroponics Tray)"

@@ -41,7 +41,7 @@
 		else
 			return 0
 
-	proc/load_into_chamber()
+	proc/process_chambered()
 		return 0
 
 	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
@@ -107,7 +107,7 @@
 			user << "<span class='warning'>[src] is not ready to fire again!"
 		return
 
-	if(!load_into_chamber()) //CHECK
+	if(!process_chambered()) //CHECK
 		return click_empty(user)
 
 	if(!in_chamber)
@@ -166,7 +166,7 @@
 		user.update_inv_r_hand()
 
 /obj/item/weapon/gun/proc/can_fire()
-	return load_into_chamber()
+	return process_chambered()
 
 /obj/item/weapon/gun/proc/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)
 	return in_chamber.check_fire(target,user)
@@ -191,7 +191,7 @@
 			M.visible_message("\blue [user] decided life was worth living")
 			mouthshoot = 0
 			return
-		if (load_into_chamber())
+		if (process_chambered())
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
 			if(silenced)
 				playsound(user, fire_sound, 10, 1)
@@ -213,7 +213,7 @@
 			mouthshoot = 0
 			return
 
-	if (src.load_into_chamber())
+	if (src.process_chambered())
 		//Point blank shooting if on harm intent or target we were targeting.
 		if(user.a_intent == "hurt")
 			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")

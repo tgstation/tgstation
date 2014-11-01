@@ -1480,8 +1480,13 @@ datum
 				else
 					send_admin_alert(holder, reaction_name="red slime + blood (Slime Frenzy) in a grenade")
 				for(var/mob/living/carbon/slime/slime in viewers(get_turf(holder.my_atom), null))
-					slime.tame = 0
-					slime.rabid = 1
+					slime.rabid()
+					holder.my_atom.visible_message("<span class='warning'>The [slime] is driven into a frenzy !</span>")
+				for(var/mob/living/simple_animal/slime/slime in viewers(get_turf(holder.my_atom), null))
+					slime.rabid()
+					holder.my_atom.visible_message("<span class='warning'>The [slime] is driven into a frenzy !</span>")
+				for(var/mob/living/simple_animal/adultslime/slime in viewers(get_turf(holder.my_atom), null))
+					slime.rabid()
 					holder.my_atom.visible_message("<span class='warning'>The [slime] is driven into a frenzy !</span>")
 
 //Pink
@@ -1663,7 +1668,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-				var/obj/item/device/camera/P = new /obj/item/device/camera
+				var/obj/item/device/camera/sepia/P = new /obj/item/device/camera/sepia
 				P.loc = get_turf(holder.my_atom)
 
 		slimefilm

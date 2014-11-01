@@ -60,9 +60,9 @@
 
 
 var/global/loopModeNames=list(
-	JUKEMODE_SHUFFLE = "Shuffle",
+	JUKEMODE_SHUFFLE     = "Shuffle",
 	JUKEMODE_REPEAT_SONG = "Single",
-	JUKEMODE_PLAY_ONCE= "Once",
+	JUKEMODE_PLAY_ONCE   = "Once",
 )
 /obj/machinery/media/jukebox
 	name = "Jukebox"
@@ -103,6 +103,9 @@ var/global/loopModeNames=list(
 
 	var/state_base = "jukebox2"
 
+	machine_flags = WRENCHMOVE | FIXED2WORK | EMAGGABLE
+	emag_cost = 0 // because fun/unlimited uses.
+
 /obj/machinery/media/jukebox/New(loc)
 	..(loc)
 	if(department)
@@ -120,6 +123,8 @@ var/global/loopModeNames=list(
 	..()
 	if(emagged && !(stat & (NOPOWER|BROKEN)))
 		playing = 1
+		if(current_song)
+			update_music()
 	update_icon()
 
 /obj/machinery/media/jukebox/update_icon()
@@ -262,29 +267,8 @@ var/global/loopModeNames=list(
 	if(istype(W, /obj/item/device/multitool))
 		update_multitool_menu(user)
 		return 1
-	if(istype(W, /obj/item/weapon/card/emag))
-		current_song = 0
-		if(!emagged)
-			playlist_id = "emagged"
-			last_reload=world.time
-			playlist=null
-			loop_mode = JUKEMODE_SHUFFLE
-			emagged = 1
-			playing = 1
-			user.visible_message("\red [user.name] slides something into the [src.name]'s card-reader.","\red You short out the [src.name].")
-			update_icon()
-			update_music()
-	else if(istype(W,/obj/item/weapon/wrench))
-		var/un = !anchored ? "" : "un"
-		user.visible_message("\blue [user.name] begins [un]locking \the [src.name]'s casters.","\blue You begin [un]locking \the [src.name]'s casters.")
-		if(do_after(user,30))
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = !anchored
-			user.visible_message("\blue [user.name] [un]locks \the [src.name]'s casters.","\red You [un]lock \the [src.name]'s casters.")
-			playing = emagged
-			update_music()
-			update_icon()
-	else if(istype(W,/obj/item/weapon/card/id))
+	..()
+	if(istype(W,/obj/item/weapon/card/id))
 		if(!selected_song || screen!=JUKEBOX_SCREEN_PAYMENT)
 			visible_message("\blue The machine buzzes.","\red You hear a buzz.")
 			return
@@ -329,6 +313,27 @@ var/global/loopModeNames=list(
 
 			successful_purchase()
 		attack_hand(user)
+
+/obj/machinery/media/jukebox/emag(mob/user)
+	current_song = 0
+	if(!emagged)
+		playlist_id = "emagged"
+		last_reload=world.time
+		playlist=null
+		loop_mode = JUKEMODE_SHUFFLE
+		emagged = 1
+		playing = 1
+		user.visible_message("\red [user.name] slides something into the [src.name]'s card-reader.","\red You short out the [src.name].")
+		update_icon()
+		update_music()
+		return 1
+	return
+
+/obj/machinery/media/jukebox/wrenchAnchor(mob/user)
+	if(..())
+		playing = emagged
+		update_music()
+		update_icon()
 
 /obj/machinery/media/jukebox/proc/successful_purchase()
 		next_song = selected_song

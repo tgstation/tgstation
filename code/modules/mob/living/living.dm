@@ -29,6 +29,33 @@
 					special_role = null
 					current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now..(You don't remember who enslaved you)</B></FONT>"
 				*/
+
+/mob/living/cultify()
+	if(iscultist(src) && client)
+		var/mob/living/simple_animal/construct/harvester/C = new /mob/living/simple_animal/construct/harvester(get_turf(src))
+		mind.transfer_to(C)
+		C << "<span class='sinister'>The Geometer of Blood is overjoyed to be reunited with its followers, and accepts your body in sacrifice. As reward, you have been gifted with the shell of an Harvester.<br>Your tendrils can use and draw runes without need for a tome, your eyes can see beings through walls, and your mind can open any door. Use these assets to serve Nar-Sie and bring him any remaining living human in the world.<br>You can teleport yourself back to Nar-Sie along with any being under yourself at any time using your \"Harvest\" spell.</span>"
+		dust()
+	else if(client)
+		var/mob/dead/G = (ghostize())
+		G.icon = 'icons/mob/mob.dmi'
+		G.icon_state = "ghost-narsie"
+		G.overlays = 0
+		if(istype(G.mind.current, /mob/living/carbon/human/))
+			var/mob/living/carbon/human/H = G.mind.current
+			G.overlays += H.overlays_standing[6]//ID
+			G.overlays += H.overlays_standing[9]//Ears
+			G.overlays += H.overlays_standing[10]//Suit
+			G.overlays += H.overlays_standing[11]//Glasses
+			G.overlays += H.overlays_standing[12]//Belt
+			G.overlays += H.overlays_standing[14]//Back
+			G.overlays += H.overlays_standing[18]//Head
+			G.overlays += H.overlays_standing[19]//Handcuffs
+		G.invisibility = 0
+		G << "<span class='sinister'>You feel relieved as what's left of your soul finally escapes its prison of flesh.</span>"
+	else
+		dust()
+
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))

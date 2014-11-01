@@ -38,7 +38,8 @@
 
 
 /obj/machinery/computer/syndicate_station/attackby(obj/item/I as obj, mob/user as mob)
-	return attack_hand(user)
+	if(!..())
+		return attack_hand(user)
 
 /obj/machinery/computer/syndicate_station/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)

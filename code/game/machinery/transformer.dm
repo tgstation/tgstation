@@ -64,7 +64,7 @@
 		return
 
 	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-	H.emote("scream") // It is painful
+	H.emote("scream",,, 1) // It is painful
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
 	H.handle_regular_hud_updates() // Make sure they see the pain.
 
