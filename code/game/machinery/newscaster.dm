@@ -17,6 +17,7 @@
 	var/icon/img = null
 	var/time_stamp = ""
 	var/list/datum/feed_comment/comments = list()
+	var/locked = 0
 
 /datum/feed_channel
 	var/channel_name=""
@@ -373,7 +374,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]:<br>"
 							for(var/datum/feed_comment/comment in MESSAGE.comments)
 								dat+="[comment.body]<br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
-							dat+="<a href='?src=\ref[src];new_comment=\ref[MESSAGE]'>Comment</a><br>"
+							if(MESSAGE.locked)
+								dat+="<b>Comments locked</b><br>"
+							else
+								dat+="<a href='?src=\ref[src];new_comment=\ref[MESSAGE]'>Comment</a><br>"
 				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
@@ -410,6 +414,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
 						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 						dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+						dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=\ref[src];lock_comment=\ref[MESSAGE]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
+						for(var/datum/feed_comment/comment in MESSAGE.comments)
+							dat+="[comment.body] <a href='?src=\ref[src];del_comment=\ref[comment];del_comment_msg=\ref[MESSAGE]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[10]'>Back</A>"
 			if(13)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
@@ -747,6 +754,19 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				FC.body = cominput
 				FC.time_stamp = worldtime2text()
 				FM.comments += FC
+				log_comment("[usr]/([usr.ckey]) as [scanned_user] commented on message [FM.body] -- [FC.body]")
+			updateUsrDialog()
+
+		else if(href_list["del_comment"])
+			var/datum/feed_comment/FC = locate(href_list["del_comment"])
+			var/datum/feed_message/FM = locate(href_list["del_comment_msg"])
+			FM.comments -= FC
+			qdel(FC)
+			updateUsrDialog()
+
+		else if(href_list["lock_comment"])
+			var/datum/feed_message/FM = locate(href_list["lock_comment"])
+			FM.locked ^= 1
 			updateUsrDialog()
 
 		else if(href_list["refresh"])
