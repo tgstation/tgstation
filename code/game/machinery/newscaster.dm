@@ -2,6 +2,11 @@
 //################### NEWSCASTERS BE HERE! ####
 //###-Agouri###################################
 
+/datum/feed_comment
+	var/author = ""
+	var/body = ""
+	var/time_stamp = ""
+
 /datum/feed_message
 	var/author =""
 	var/body =""
@@ -11,6 +16,7 @@
 	var/is_admin_message = 0
 	var/icon/img = null
 	var/time_stamp = ""
+	var/list/datum/feed_comment/comments = list()
 
 /datum/feed_channel
 	var/channel_name=""
@@ -364,6 +370,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author] </FONT>\] - ([MESSAGE.time_stamp])</FONT><BR>"
+							dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]:<br>"
+							for(var/datum/feed_comment/comment in MESSAGE.comments)
+								dat+="[comment.body]<br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
+							dat+="<a href='?src=\ref[src];new_comment=\ref[MESSAGE]'>Comment</a><br>"
 				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
@@ -727,6 +737,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.viewing_channel = FC
 			src.screen = 12
 			src.updateUsrDialog()
+
+		else if(href_list["new_comment"])
+			var/datum/feed_message/FM = locate(href_list["new_comment"])
+			var/cominput = copytext(stripped_input(usr, "Write your message:", "New comment", null),1,141)
+			if(cominput)
+				var/datum/feed_comment/FC = new/datum/feed_comment
+				FC.author = scanned_user
+				FC.body = cominput
+				FC.time_stamp = worldtime2text()
+				FM.comments += FC
+			updateUsrDialog()
 
 		else if(href_list["refresh"])
 			src.updateUsrDialog()
