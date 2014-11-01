@@ -726,7 +726,8 @@
 /obj/item/add_blood(mob/living/carbon/human/M as mob)
 	if (!..())
 		return 0
-
+	if(!M)
+		return
 	if(istype(src, /obj/item/weapon/melee/energy))
 		return
 
