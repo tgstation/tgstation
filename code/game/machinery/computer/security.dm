@@ -413,6 +413,7 @@ What a mess.*/
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 
 			if ("Purge All Records")
+				investigate_log("[usr.name] ([usr.key]) has purged all the security records.", "records")
 				for(var/datum/data/record/R in data_core.security)
 					del(R)
 				temp = "All Security records deleted."
@@ -619,14 +620,16 @@ What a mess.*/
 									active2.fields["criminal"] = "Parolled"
 								if("released")
 									active2.fields["criminal"] = "Discharged"
-							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [usr.name] ([usr.key]).", "secrecords")
+							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [usr.name] ([usr.key]).", "records")
 
 					if ("Delete Record (Security) Execute")
+						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", "records")
 						if (active2)
 							del(active2)
 
 					if ("Delete Record (ALL) Execute")
 						if (active1)
+							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", "records")
 							for(var/datum/data/record/R in data_core.medical)
 								if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 									del(R)
