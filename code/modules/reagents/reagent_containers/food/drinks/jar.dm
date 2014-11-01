@@ -10,7 +10,7 @@
 	g_amt=500
 	New()
 		..()
-		reagents.add_reagent("slime", 50)
+		reagents.add_reagent("slimejelly", 50)
 
 	on_reagent_change()
 		if (reagents.reagent_list.len > 0)
