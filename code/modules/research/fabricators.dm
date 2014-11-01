@@ -421,8 +421,13 @@
 		ui.open()
 
 /obj/machinery/r_n_d/fabricator/proc/getTopicDesign(var/stringinput = "")
-	var/part_list = part_sets["[copytext(stringinput, 2)]"]
-	var/index = text2num(copytext(stringinput, 1, 2))
+	var/final_digit = 0
+	for(var/i = 1, i <= lentext(stringinput), i++)
+		if(!text2num(copytext(stringinput, i, i++)))
+			final_digit = i
+			break
+	var/part_list = part_sets[copytext(stringinput, final_digit + 1)]
+	var/index = text2num(copytext(stringinput, 1, final_digit))
 	return part_list[index]
 
 /obj/machinery/r_n_d/fabricator/Topic(href, href_list)
