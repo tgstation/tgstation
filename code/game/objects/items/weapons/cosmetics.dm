@@ -45,9 +45,6 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
-			user << "<span class='notice'>Remove [ H == user ? "your" : "their" ] mask!</span>"
-			return
 		if(H.lip_style)	//if they already have lipstick on
 			user << "<span class='notice'>You need to wipe off the old lipstick first!</span>"
 			return
