@@ -8,22 +8,93 @@
  *			worldtime2text
  */
 
-//Attaches each element of a list to a single string seperated by 'seperator'.
-/proc/dd_list2text(var/list/the_list, separator)
-	var/total = the_list.len
-	if(!total)
-		return
-	var/count = 2
-	var/newText = "[the_list[1]]"
-	while(count <= total)
-		if(separator)
-			newText += separator
-		newText += "[the_list[count]]"
-		count++
-	return newText
+// Concatenates a list of strings into a single string.  A seperator may optionally be provided.
+/proc/list2text(list/ls, sep)
+	if(ls.len <= 1) // Early-out code for empty or singleton lists.
+		return ls.len ? ls[1] : ""
 
+	var/l = ls.len // Made local for sanic speed.
+	var/i = 0 // Incremented every time a list index is accessed.
 
-//slower then dd_list2text, but correctly processes associative lists.
+	if(sep != null)
+		// Macros expand to long argument lists like so: sep, ls[++i], sep, ls[++i], sep, ls[++i], etc...
+		#define S1    sep, ls[++i]
+		#define S4    S1,  S1,  S1,  S1
+		#define S16   S4,  S4,  S4,  S4
+		#define S64   S16, S16, S16, S16
+
+		. = "[ls[++i]]" // Make sure the initial element is converted to text.
+
+		// Having the small concatenations come before the large ones boosted speed by an average of at least 5%.
+		if(l-1 & 0x01) // 'i' will always be 1 here.
+			. = text("[][][]", ., S1) // Append 1 element if the remaining elements are not a multiple of 2.
+		if(l-i & 0x02)
+			. = text("[][][][][]", ., S1, S1) // Append 2 elements if the remaining elements are not a multiple of 4.
+		if(l-i & 0x04)
+			. = text("[][][][][][][][][]", ., S4) // And so on....
+		if(l-i & 0x08)
+			. = text("[][][][][][][][][][][][][][][][][]", ., S4, S4)
+		if(l-i & 0x10)
+			. = text("[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]", ., S16)
+		if(l-i & 0x20)
+			. = text("[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]", ., S16, S16)
+		if(l-i & 0x40)
+			. = text("[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]", ., S64)
+		while(l > i) // Chomp through the rest of the list, 128 elements at a time.
+			. = text("[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]", ., S64, S64)
+
+		#undef S64
+		#undef S16
+		#undef S4
+		#undef S1
+
+	else
+		// Macros expand to long argument lists like so: ls[++i], ls[++i], ls[++i], etc...
+		#define S1    ls[++i]
+		#define S4    S1,  S1,  S1,  S1
+		#define S16   S4,  S4,  S4,  S4
+		#define S64   S16, S16, S16, S16
+
+		. = "[ls[++i]]" // Make sure the initial element is converted to text.
+
+		if(l-1 & 0x01) // 'i' will always be 1 here.
+			. += S1 // Append 1 element if the remaining elements are not a multiple of 2.
+		if(l-i & 0x02)
+			. = text("[][][]", ., S1, S1) // Append 2 elements if the remaining elements are not a multiple of 4.
+		if(l-i & 0x04)
+			. = text("[][][][][]", ., S4) // And so on...
+		if(l-i & 0x08)
+			. = text("[][][][][][][][][]", ., S4, S4)
+		if(l-i & 0x10)
+			. = text("[][][][][][][][][][][][][][][][][]", ., S16)
+		if(l-i & 0x20)
+			. = text("[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]", ., S16, S16)
+		if(l-i & 0x40)
+			. = text("[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]", ., S64)
+		while(l > i) // Chomp through the rest of the list, 128 elements at a time.
+			. = text("[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]\
+	            [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]", ., S64, S64)
+
+		#undef S64
+		#undef S16
+		#undef S4
+		#undef S1
+
+//slower then list2text, but correctly processes associative lists.
 proc/tg_list2text(list/list, glue=",")
 	if(!istype(list) || !list.len)
 		return
@@ -47,56 +118,31 @@ proc/tg_list2text(list/list, glue=",")
 		i++
 	return output
 
-//Converts a text string into a list by splitting the string at each seperator found in text (discarding the seperator)
-//Returns an empty list if the text cannot be split, or the split text in a list.
-//Not giving a "" seperator will cause the text to be broken into a list of single letters.
-/proc/text2list(text, seperator="\n")
+//Converts a string into a list by splitting the string at each delimiter found. (discarding the seperator)
+/proc/text2list(text, delimiter="\n")
+	var/delim_len = length(delimiter)
+	if(delim_len < 1) return list(text)
 	. = list()
+	var/last_found = 1
+	var/found
+	do
+		found = findtext(text, delimiter, last_found, 0)
+		. += copytext(text, last_found, found)
+		last_found = found + delim_len
+	while(found)
 
-	var/text_len = length(text)					//length of the input text
-	var/seperator_len = length(seperator)		//length of the seperator text
-
-	if(text_len >= seperator_len)
-		var/i
-		var/last_i = 1
-
-		for(i=1,i<=(text_len+1-seperator_len),i++)
-			if( cmptext(copytext(text,i,i+seperator_len), seperator) )
-				if(i != last_i)
-					. += copytext(text,last_i,i)
-				last_i = i + seperator_len
-
-		if(last_i <= text_len)
-			. += copytext(text, last_i, 0)
-	else
-		. += text
-	return .
-
-//Converts a text string into a list by splitting the string at each seperator found in text (discarding the seperator)
-//Returns an empty list if the text cannot be split, or the split text in a list.
-//Not giving a "" seperator will cause the text to be broken into a list of single letters.
 //Case Sensitive!
-/proc/text2listEx(text, seperator="\n")
+/proc/text2listEx(text, delimiter="\n")
+	var/delim_len = length(delimiter)
+	if(delim_len < 1) return list(text)
 	. = list()
-
-	var/text_len = length(text)					//length of the input text
-	var/seperator_len = length(seperator)		//length of the seperator text
-
-	if(text_len >= seperator_len)
-		var/i
-		var/last_i = 1
-
-		for(i=1,i<=(text_len+1-seperator_len),i++)
-			if( cmptextEx(copytext(text,i,i+seperator_len), seperator) )
-				if(i != last_i)
-					. += copytext(text,last_i,i)
-				last_i = i + seperator_len
-
-		if(last_i <= text_len)
-			. += copytext(text, last_i, 0)
-	else
-		. += text
-	return .
+	var/last_found = 1
+	var/found
+	do
+		found = findtextEx(text, delimiter, last_found, 0)
+		. += copytext(text, last_found, found)
+		last_found = found + delim_len
+	while(found)
 
 //Splits the text of a file at seperator and returns them in a list.
 /proc/file2list(filename, seperator="\n")

@@ -82,7 +82,7 @@ var/const/VOX_DELAY = 600
 	if(!message || announcing_vox > world.time)
 		return
 
-	var/list/words = stringsplit(trim(message), " ")
+	var/list/words = text2list(trim(message), " ")
 	var/list/incorrect_words = list()
 
 	if(words.len > 30)
