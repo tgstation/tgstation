@@ -765,6 +765,8 @@
 #include "code\libs\db\db.dm"
 #include "code\libs\Get Flat Icon\Get Flat Icon.dm"
 #include "code\libs\IconProcs\IconProcs.dm"
+#include "code\libs\s_html\hexadecimal.dm"
+#include "code\libs\s_html\inverthtml.dm"
 #include "code\modules\admin\admin.dm"
 #include "code\modules\admin\admin_investigate.dm"
 #include "code\modules\admin\admin_memo.dm"
