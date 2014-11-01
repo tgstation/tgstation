@@ -146,3 +146,6 @@
 			anchored = 0
 			step_towards(src,S)
 	else step_towards(src,S)
+
+/obj/proc/Deconstruct()
+	qdel(src)

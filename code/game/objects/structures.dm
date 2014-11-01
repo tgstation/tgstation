@@ -21,6 +21,3 @@
 	if(opacity)
 		UpdateAffectingLights()
 	..()
-
-/obj/structure/proc/Deconstruct()
-	qdel(src)

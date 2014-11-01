@@ -22,12 +22,12 @@
 	var/flush_every_ticks = 30 //Every 30 ticks it will look whether it is ready to flush
 	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 	var/last_sound = 0
-
+	var/obj/structure/disposalconstruct/stored
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
 /obj/machinery/disposal/New()
 	..()
-
+	stored = new /obj/structure/disposalconstruct(src)
 	trunk_check()
 
 	air_contents = new/datum/gas_mixture()
@@ -47,6 +47,10 @@
 /obj/machinery/disposal/Destroy()
 	eject()
 	..()
+
+/obj/machinery/disposal/singularity_pull(S, current_size)
+	if(current_size >= 9)
+		Deconstruct()
 
 /obj/machinery/disposal/initialize()
 	// this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
@@ -92,13 +96,7 @@
 				if(do_after(user,20))
 					if(!src || !W.isOn()) return
 					user << "<span class='notice'>You've sliced the floorweld off \the [src].</span>"
-					var/obj/structure/disposalconstruct/C = new (src.loc)
-					src.transfer_fingerprints_to(C)
-					C.ptype = 6 // 6 = disposal unit
-					C.anchored = 1
-					C.density = 1
-					C.update()
-					qdel(src)
+					Deconstruct()
 				return
 			else
 				return
@@ -452,6 +450,16 @@
 	else
 		return ..(mover, target, height)
 
+/obj/machinery/disposal/Deconstruct()
+	if(stored)
+		var/turf/T = loc
+		stored.loc = T
+		src.transfer_fingerprints_to(stored)
+		stored.ptype = 6 // 6 = disposal unit
+		stored.anchored = 1
+		stored.density = 1
+		stored.update()
+	..()
 // virtual disposal object
 // travels through pipes in lieu of actual items
 // contents will be items flushed by the disposal
@@ -601,11 +609,30 @@
 	var/health = 10 	// health points 0-10
 	layer = 2.3			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
+	var/obj/structure/disposalconstruct/stored
 
 	// new pipe, set the icon_state as on map
 /obj/structure/disposalpipe/New()
 	..()
 	base_icon_state = icon_state
+	stored = new /obj/structure/disposalconstruct(src)
+	switch(base_icon_state)
+		if("pipe-s")
+			stored.ptype = 0
+		if("pipe-c")
+			stored.ptype = 1
+		if("pipe-j1")
+			stored.ptype = 2
+		if("pipe-j2")
+			stored.ptype = 3
+		if("pipe-y")
+			stored.ptype = 4
+		if("pipe-t")
+			stored.ptype = 5
+		if("pipe-j1s")
+			stored.ptype = 9
+		if("pipe-j2s")
+			stored.ptype = 10
 	return
 
 
@@ -812,39 +839,25 @@
 			// check if anything changed over 2 seconds
 			if(do_after(user,30))
 				if(!src || !W.isOn()) return
-				welded()
+				Deconstruct()
 				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
 		else
 			return
 
 // called when pipe is cut with welder
-/obj/structure/disposalpipe/proc/welded()
+/obj/structure/disposalpipe/Deconstruct()
+	var/turf/T = loc
+	stored.loc = T
+	transfer_fingerprints_to(stored)
+	stored.dir = dir
+	stored.density = 0
+	stored.anchored = 1
+	stored.update()
+	..()
 
-	var/obj/structure/disposalconstruct/C = new (src.loc)
-	switch(base_icon_state)
-		if("pipe-s")
-			C.ptype = 0
-		if("pipe-c")
-			C.ptype = 1
-		if("pipe-j1")
-			C.ptype = 2
-		if("pipe-j2")
-			C.ptype = 3
-		if("pipe-y")
-			C.ptype = 4
-		if("pipe-t")
-			C.ptype = 5
-		if("pipe-j1s")
-			C.ptype = 9
-		if("pipe-j2s")
-			C.ptype = 10
-	src.transfer_fingerprints_to(C)
-	C.dir = dir
-	C.density = 0
-	C.anchored = 1
-	C.update()
-
-	qdel(src)
+/obj/structure/disposalpipe/singularity_pull(S, current_size)
+	if(current_size >= 9)
+		Deconstruct()
 
 // *** TEST verb
 //client/verb/dispstop()
@@ -1128,7 +1141,7 @@
 			user << "<span class='notice'>You start slicing the disposal pipe.</span>"
 			if(do_after(user,30))
 				if(!src || !W.isOn()) return
-				welded()
+				Deconstruct()
 				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
 		else
 			return
@@ -1178,10 +1191,8 @@
 // called when welded
 // for broken pipe, remove and turn into scrap
 
-/obj/structure/disposalpipe/broken/welded()
-//	var/obj/item/scrap/S = new(src.loc)
-//	S.set_components(200,0,0)
-	qdel(src)
+/obj/structure/disposalpipe/broken/Deconstruct()
+	..()
 
 // the disposal outlet machine
 
