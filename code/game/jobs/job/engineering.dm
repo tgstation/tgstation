@@ -145,7 +145,7 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_or_collect(new /obj/item/device/radio/headset/headset_eng(H), slot_ears)
+		H.equip_or_collect(new /obj/item/device/radio/headset/headset_engsci(H), slot_ears)
 		switch(H.backbag)
 			if(2) H.equip_or_collect(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
 			if(3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_eng(H), slot_back)
@@ -155,9 +155,13 @@
 		//H.equip_or_collect(new /obj/item/device/pda/atmos(H), slot_l_store)
 		H.equip_or_collect(new /obj/item/weapon/storage/belt/utility/complete(H), slot_belt)
 		if(!(H.flags&DISABILITY_FLAG_NEARSIGHTED)) //Does this work?
-			H.equip_or_collect(new /obj/item/clothing/glasses/welding(H), slot_glasses)
+			var/obj/item/clothing/glasses/welding/W = new (H)
+			W.toggle()
+			H.equip_or_collect(W, slot_glasses)
 		else
-			H.equip_or_collect(new /obj/item/clothing/head/welding(H), slot_head)
+			var/obj/item/clothing/head/welding/W = new (H)
+			W.toggle()
+			H.equip_or_collect(W, slot_head)
 		if(H.backbag == 1)
 			H.equip_or_collect(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
 		else

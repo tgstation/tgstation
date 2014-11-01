@@ -208,6 +208,14 @@ var/list/uplink_items = list()
 	cost = 4
 	job = list("Atmospheric Technician")
 
+//Mechanic
+/datum/uplink_item/jobspecific/dev_analyser
+	name = "Modified Device Analyser"
+	desc = "A device analyser with the safety features disabled. Allows the user to replicate any kind of Syndicate equipment."
+	item = /obj/item/device/device_analyser/syndicate
+	cost = 4
+	job = list("Mechanic")
+
 // DANGEROUS WEAPONS
 
 /datum/uplink_item/dangerous

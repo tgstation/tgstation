@@ -74,6 +74,8 @@
 		var/obj/item/I = O
 		techlist = ConvertReqString2List(I.origin_tech) //our tech is simply the item requirement
 
+	if(!techlist) //this don't fly
+		return 0
 	if(techlist && techlist["syndicate"] && src.syndi_filter)
 		return 0
 	return 1
