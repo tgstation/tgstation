@@ -302,7 +302,7 @@
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
-						if(H.health <= -100 && !H.suiciding && prob(chance) && !isghosted && tplus < tlimit)
+						if(H.health <= -100 && !H.suiciding && prob(chance) && !isghosted && tplus < tlimit && !NOCLONE in H.mutations)
 							tobehealed = health + threshold
 							tobehealed -= 5 //They get 5 health in crit to heal the person or inject stabilizers
 							H.adjustOxyLoss(tobehealed)
