@@ -179,6 +179,7 @@
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
 	var/operated = 1			// true if just operated
+	var/convdir = 0				// 0 is two way switch, 1 and -1 means one way
 
 	var/id = "" 				// must match conveyor IDs to control them
 
@@ -222,13 +223,17 @@
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
+	src.add_fingerprint(user)
 	if(position == 0)
-		if(last_pos < 0)
-			position = 1
-			last_pos = 0
+		if(convdir)   //is it a oneway switch
+			position = convdir
 		else
-			position = -1
-			last_pos = 0
+			if(last_pos < 0)
+				position = 1
+				last_pos = 0
+			else
+				position = -1
+				last_pos = 0
 	else
 		last_pos = position
 		position = 0
@@ -243,21 +248,6 @@
 			S.update()
 
 /obj/machinery/conveyor_switch/oneway
-	var/convdir = 1 //Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.)
+	convdir = 1 //Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.)
 	desc = "A conveyor control switch. It appears to only go in one direction."
 
-// attack with hand, switch position
-/obj/machinery/conveyor_switch/oneway/attack_hand(mob/user)
-	if(position == 0)
-		position = convdir
-	else
-		position = 0
-
-	operated = 1
-	update()
-
-	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in world)
-		if(S.id == src.id)
-			S.position = position
-			S.update()
