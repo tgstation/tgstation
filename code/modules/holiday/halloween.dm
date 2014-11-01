@@ -1,9 +1,5 @@
 //spooky halloween stuff. only tick on halloween!!!
-/datum/round_event/spooky/start() //This has to be here because else you get errors with spooky storage not being a defined type.
-	..()
-	for(var/mob/living/carbon/human/H)
-		for(var/obj/item/weapon/storage/backpack/b in H.contents)
-			new /obj/item/weapon/storage/spooky(b)
+
 
 //uses super seekrit double proc definition stuffs. remember to call ..()!
 /*/mob/dead/observer/say(var/message) //this doesn't actually work vOv
@@ -37,18 +33,6 @@
 ///////////HALLOWEEN CONTENT///////////
 ///////////////////////////////////////
 
-//spooky foods
-/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull
-	name = "skull cookie"
-	desc = "Spooky! It's got delicious calcium flavouring!"
-	icon = 'icons/obj/halloween_items.dmi'
-	icon_state = "skeletoncookie"
-
-/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin
-	name = "coffin cookie"
-	desc = "Spooky! It's got delicious coffee flavouring!"
-	icon = 'icons/obj/halloween_items.dmi'
-	icon_state = "coffincookie"
 
 //spooky recipes
 
@@ -65,24 +49,6 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin
-
-//spooky items
-
-/obj/item/weapon/storage/spooky
-	name = "trick-o-treat bag"
-	desc = "A Pumpkin shaped bag that holds all sorts of goodies!"
-	icon = 'icons/obj/halloween_items.dmi'
-	icon_state = "treatbag"
-
-/obj/item/weapon/storage/spooky/New()
-	..()
-	for(var/distrobuteinbag=0 to 6)
-		var/type = pick(/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull,
-		/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin,
-		/obj/item/weapon/reagent_containers/food/snacks/candy_corn,
-		/obj/item/weapon/reagent_containers/food/snacks/candy,
-		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar)
-		new type(src)
 
 //////////////////////////////
 //Spookoween trapped closets//
@@ -139,11 +105,14 @@
 		playsound(src.loc, pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg','sound/spookoween/girlscream.ogg'), 300, 1)
 		trapped = 0
 		spawn(60)
-			if(trapped_mob.loc != loc)
+			if(trapped_mob && trapped_mob.loc && trapped_mob.loc != loc)
 				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
 				smoke.set_up(1,0, trapped_mob.loc, 0)
 				smoke.start()
 				trapped_mob.loc = loc
+			if(gc_destroyed)
+				qdel(trapped_mob)
+				return
 			src.close()
 			trapped = SPOOKY_SKELETON
 		return
@@ -159,10 +128,11 @@
 		trapped = 0
 		qdel(src)
 		spawn(120)
-			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
-			smoke.set_up(1,0, F.loc, 0)
-			smoke.start()
-			qdel(F)
+			if(F && F.loc)
+				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
+				smoke.set_up(1,0, F.loc, 0)
+				smoke.start()
+				qdel(F)
 		return
 
 	if(trapped == SCARY_BATS)
@@ -173,7 +143,6 @@
 			new /mob/living/simple_animal/hostile/retaliate/bat (loc)
 		trapped = 0
 		return
-
 
 	if(trapped == INSANE_CLOWN)
 		src.visible_message("<span class='userdanger'><font size='5'>...</font></span>");

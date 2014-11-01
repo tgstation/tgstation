@@ -14,7 +14,6 @@
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
-	last_move = direct
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -49,6 +48,7 @@
 		last_move = 0
 		return
 
+	last_move = direct
 	src.move_speed = world.timeofday - src.l_move_time
 	src.l_move_time = world.timeofday
 

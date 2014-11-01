@@ -186,17 +186,18 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 			if (!bot_move(target))
 				add_to_ignore(target)
 				target = null
+				path = list()
 				return
 			mode = BOT_MOVING
 		else if (!bot_move(target))
 			target = null
 			mode = BOT_IDLE
-
-		if(loc == target.loc)
-			clean(target)
-			path = list()
-			target = null
 			return
+
+	if(target && loc == target.loc)
+		clean(target)
+		path = list()
+		target = null
 
 	oldloc = loc
 
