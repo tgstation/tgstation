@@ -35,7 +35,7 @@
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	..()
-	if(shoes)
+	if(shoes && !istype(get_turf(src),/turf/space))
 		if(loc == NewLoc)
 			var/obj/item/clothing/shoes/S = shoes
 			S.step_action()
