@@ -140,6 +140,15 @@
 		qdel(src)
 	return 2
 
+/obj/singularity_pull(S, current_size)
+	if(anchored)
+		if(current_size >= 9)
+			anchored = 0
+			step_towards(src,S)
+	else step_towards(src,S)
+
+//the following are used for MouseDrop() in the various rotate/flip items
+//note that get_sane does check for view(1), so the name is a bit misleading
 /obj/proc/get_sane(mob/user as mob)
 	if(!user || !isturf(user.loc) || !(src in view(1)))
 		return 0
@@ -151,3 +160,4 @@
 	if(!get_sane(user))
 		return
 	return get_dir(source,target)
+

@@ -784,6 +784,7 @@
 		var/mob/M = locate(href_list["boot2"])
 		if (ismob(M))
 			if(!check_if_greater_rights_than(M.client))
+				usr << "<span class='danger'>Error: They have more rights than you do.</span>"
 				return
 			M << "<span class='danger'>You have been kicked from the server.</span>"
 			log_admin("[key_name(usr)] booted [key_name(M)].")

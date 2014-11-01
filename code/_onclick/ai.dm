@@ -58,6 +58,10 @@
 		aicamera.camera_mode_off()
 		aicamera.captureimage(A, usr)
 		return
+	if(waypoint_mode)
+		set_waypoint(A)
+		waypoint_mode = 0
+		return
 
 	/*
 		AI restrained() currently does nothing

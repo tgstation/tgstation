@@ -68,13 +68,5 @@
 		emagged = 1
 		desc = desc + " The display flickers slightly."
 
-/obj/item/clothing/glasses/hud/security/jensenshades
-	name = "Augmented shades"
-	desc = "Polarized bioneural eyewear, designed to augment your vision."
-	icon_state = "jensenshades"
-	item_state = "jensenshades"
-	vision_flags = SEE_MOBS
-	invis_view = 2
-
 /obj/item/clothing/glasses/hud/security/process_hud(var/mob/M)
 	process_data_hud(M,DATA_HUD_SECURITY,DATA_HUD_ADVANCED)
