@@ -10,7 +10,7 @@
 	if(!ticker || meteorwavecurrent)
 		return
 	meteorwavecurrent = 1
-	meteor_wave_delay = (rand(15,30))*10 //Between 15 and 30 seconds, makes everything more chaotic
+	meteor_wave_delay = (rand(10,20))*10 //Between 10 and 20 seconds, makes everything more chaotic
 	for(var/i = 0 to number)
 		spawn(rand(5,10)) //0.5 to 1 seconds between meteors
 			spawn_meteor()
