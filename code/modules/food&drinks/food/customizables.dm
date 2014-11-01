@@ -13,28 +13,32 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/I,mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
-		new/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich(get_turf(src),I)
+		var/obj/item/weapon/reagent_containers/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich(get_turf(src),I)
+		A.attackby(I, user)
 		qdel(src)
 	else . = ..()
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/I,mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
-		new/obj/item/weapon/reagent_containers/food/snacks/customizable/burger(get_turf(src),I)
+		var/obj/item/weapon/reagent_containers/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/burger(get_turf(src),I)
+		A.attackby(I, user)
 		qdel(src)
 	else . = ..()
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough/attackby(obj/item/I,mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
-		new/obj/item/weapon/reagent_containers/food/snacks/customizable/pizza(get_turf(src),I)
+		var/obj/item/weapon/reagent_containers/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/pizza(get_turf(src),I)
+		A.attackby(I, user)
 		qdel(src)
 	else . = ..()
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti/attackby(obj/item/I,mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
-		new/obj/item/weapon/reagent_containers/food/snacks/customizable/pasta(get_turf(src),I)
+		var/obj/item/weapon/reagent_containers/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/pasta(get_turf(src),I)
+		A.attackby(I, user)
 		qdel(src)
 	else . = ..()
 	return
@@ -84,53 +88,61 @@
 		user << "<span class='warning'>How about no.</span>"
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
-		user.drop_item()
+		if(user)
+			user.drop_item()
 		S.loc = src
 		src.ingredients += S
 		S.reagents.trans_to(src,S.reagents.total_volume)
 		src.update()
-		user << "<span class='notice'>You add the [I.name] to the [src.name].</span>"
+		if(user)
+			user << "<span class='notice'>You add the [I.name] to the [src.name].</span>"
 	else . = ..()
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/update()
-	var/i = 1
-	var/image/I
-	src.overlays.Cut()
-	for(var/obj/item/weapon/reagent_containers/food/snacks/S in src.ingredients)
-		if(i == 1) . += "[S.name]"
-		else if(i == src.ingredients.len) . += "and [S.name]"
-		else . += ", [S.name]"
+	var/fullname = "" //We need to build this from the contents of the var.
+	var/i = 0
+
+	overlays.Cut()
+
+	for(var/obj/item/weapon/reagent_containers/food/snacks/O in ingredients)
+
 		i++
-		if(length("[.] [src.name]") >= 100)
-			src.name = "A hot mess"
+		if(i == 1)
+			fullname += "[O.name]"
+		else if(i == ingredients.len)
+			fullname += " and [O.name]"
 		else
-			src.name = "[.] [src.name]"
-		if(src.fullyCustom)
-			I = image(S.icon,,S.icon_state)
-			I.pixel_x = rand(-1,1)
-			I.pixel_y = rand(-1,1)
-			src.overlays += I
-			src.overlays += I.overlays
-		else
-			I = new(src.icon,"[initial(src.icon_state)]_filling")
-			if(S.filling_color == "#FFFFFF") I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
-			else I.color = S.filling_color
-			if(src.stackIngredients)
-				I.pixel_x = rand(-1,1)
+			fullname += ", [O.name]"
+
+		if(!fullyCustom)
+			var/image/I = new(src.icon, "[src.icon_state]_filling")
+			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))
+				var/obj/item/weapon/reagent_containers/food/snacks/food = O
+				if(!food.filling_color == "#FFFFFF")
+					I.color = food.filling_color
+				else
+					I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
+			if(stackIngredients)
+				I.pixel_x = pick(list(-1,0,1))
 				I.pixel_y = (i*2)+1
-			else src.overlays.Cut()
-			src.overlays += I
-	if(src.addTop)
-		I = image(src.icon,,"src.[icon_state]_top")
-		I.pixel_x = rand(-1,1)
-		I.pixel_y = (ingredients.len*2)+1
-		src.overlays += I
-	if(!src.overlays.len)
-		I = new(src.icon,"[initial(src.icon_state)]_filling")
-		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
-		src.overlays += I
-	return
+			overlays += I
+		else
+			var/image/F = new(O.icon, O.icon_state)
+			F.pixel_x = pick(list(-1,0,1))
+			F.pixel_y = pick(list(-1,0,1))
+			overlays += F
+			overlays += O.overlays
+
+	if(addTop)
+		var/image/T = new(src.icon, "[src.icon_state]_top")
+		T.pixel_x = pick(list(-1,0,1))
+		T.pixel_y = (ingredients.len * 2)+1
+		overlays += T
+
+	name = lowertext("[fullname] [initial(src.name)]")
+	if(length(name) > 80) name = "[pick(list("absurd","colossal","enormous","ridiculous","massive","oversized","cardiac-arresting","pipe-clogging","edible but sickening","sickening","gargantuan","mega","belly-burster","chest-burster"))] [initial(src.name)]"
+	w_class = n_ceil(Clamp((ingredients.len/2),1,3))
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/Destroy()
 	for(. in src.ingredients) qdel(.)
@@ -264,7 +276,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
 	name = "burger bun"
 	desc = "A bun for a burger. Delicious."
-
+	icon_state = "burger"
+	stackIngredients = 1
+	addTop = 1
 // Customizable Drinks /////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable
@@ -285,9 +299,11 @@
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		if(src.ingredients.len < src.ingMax)
 			var/obj/item/weapon/reagent_containers/food/snacks/S = I
-			user.drop_item()
+			if(user)
+				user.drop_item()
 			S.loc = src
-			user << "<span class='notice'>You add the [S.name] to the [src.name].</span>"
+			if(user)
+				user << "<span class='notice'>You add the [S.name] to the [src.name].</span>"
 			S.reagents.trans_to(src,S.reagents.total_volume)
 			src.ingredients += S
 			src.update()

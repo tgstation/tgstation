@@ -14,7 +14,7 @@
 var/global/deepFriedEverything = 0
 var/global/deepFriedNutriment = 0
 var/global/foodNesting = 0
-var/global/ingredientLimit = 10
+var/global/ingredientLimit = 50
 
 // Base (Oven) /////////////////////////////////////////////////
 
@@ -126,8 +126,7 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/proc/makeFood(var/foodType)
 	var/obj/item/I = new foodType(src.loc,src.ingredient)
-	I.name = "[src.ingredient.name] [I.name]"
-	qdel(src.ingredient)
+	I.attackby(src.ingredient)
 	src.ingredient = null
 	return
 
@@ -140,19 +139,9 @@ var/global/ingredientLimit = 10
 	icon_state_on = "mixer_on"
 	cookSound = 'sound/machines/juicer.ogg'
 
-/obj/machinery/cooking/candy/validateIngredient(var/obj/item/I)
-	. = ..()
-	if((. == "valid") && (!foodNesting))
-		for(. in src.foodChoices)
-			if(findtext(I.name,.))
-				. = "It's already candy."
-				break
-	return
-
 /obj/machinery/cooking/candy/makeFood(var/foodType)
 	var/obj/item/I = new foodType(src.loc,src.ingredient)
-	I.name = "[src.ingredient.name] [I.name]"
-	qdel(src.ingredient)
+	I.attackby(src.ingredient)
 	src.ingredient = null
 	return
 

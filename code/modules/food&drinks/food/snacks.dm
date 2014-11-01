@@ -14,7 +14,7 @@
 	var/potency = null
 	var/dry = 0
 	var/deepfried = 0
-	var/filling_color
+	var/filling_color = "#FFFFFF"
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
