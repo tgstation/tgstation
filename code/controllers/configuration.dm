@@ -8,6 +8,7 @@
 	var/log_access = 0					// log login/logout
 	var/log_say = 0						// log client say
 	var/log_admin = 0					// log admin actions
+	var/log_admin_only = FALSE
 	var/log_debug = 1					// log debug output
 	var/log_game = 0					// log game events
 	var/log_vote = 0					// log voting
@@ -233,6 +234,9 @@
 
 				if ("log_admin")
 					config.log_admin = 1
+
+				if("log_admin_only")
+					config.log_admin_only = TRUE
 
 				if ("log_debug")
 					config.log_debug = text2num(value)
