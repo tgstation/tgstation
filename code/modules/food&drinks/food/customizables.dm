@@ -45,13 +45,6 @@
 
 // Custom Meals ////////////////////////////////////////////////
 
-/obj/item/trash/plate/attackby(obj/item/I,mob/user)
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
-		new/obj/item/weapon/reagent_containers/food/snacks/customizable/fullycustom(get_turf(src),I)
-		qdel(src)
-	else . = ..()
-	return
-
 /obj/item/trash/bowl
 	name = "bowl"
 	desc = "An empty bowl. Put some food in it to start making a soup."
