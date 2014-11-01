@@ -139,3 +139,10 @@
 	if(src && isnull(gc_destroyed))
 		qdel(src)
 	return 2
+
+/obj/singularity_pull(S, current_size)
+	if(anchored)
+		if(current_size >= 9)
+			anchored = 0
+			step_towards(src,S)
+	else step_towards(src,S)
