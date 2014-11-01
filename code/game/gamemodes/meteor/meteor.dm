@@ -13,7 +13,7 @@
 	var/meteordelay = 2400 //Final meteor delay, failsafe as above
 	var/nometeors = 1 //Can we send the meteors ?
 	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
-	required_players = 0
+	required_players = 20
 
 	uplink_welcome = "EVIL METEOR Uplink Console:"
 	uplink_uses = 10
