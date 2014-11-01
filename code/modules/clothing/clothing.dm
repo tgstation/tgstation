@@ -3,8 +3,8 @@
 	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
-	var/visor_flags = null
-	var/visor_flags_inv = null
+	var/visor_flags = 0			// flags that are added/removed when an item is adjusted up/down
+	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -102,8 +102,8 @@ BLIND     // can't see anything
 			src.icon_state = initial(icon_state)
 			gas_transfer_coefficient = initial(gas_transfer_coefficient)
 			permeability_coefficient = initial(permeability_coefficient)
-			flags = initial(flags)
-			flags_inv = initial(flags_inv)
+			flags |= visor_flags
+			flags_inv |= visor_flags_inv
 			usr << "You push \the [src] back into place."
 			src.mask_adjusted = 0
 		else
@@ -111,8 +111,8 @@ BLIND     // can't see anything
 			usr << "You push \the [src] out of the way."
 			gas_transfer_coefficient = null
 			permeability_coefficient = null
-			flags = null
-			flags_inv = null
+			flags &= ~visor_flags
+			flags_inv &= ~visor_flags_inv
 			src.mask_adjusted = 1
 		usr.update_inv_wear_mask()
 
