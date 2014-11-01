@@ -1,6 +1,6 @@
 #define METEOR_TEMPERATURE
 
-/var/meteor_wave_delay = 200 //Failsafe wait between waves in tenths of seconds
+/var/meteor_wave_delay = 225 //Failsafe wait between waves in tenths of seconds
 //Set it above 100 (10s delay) if you want to minimize lag for some reason
 
 /var/meteors_in_wave = 10 //Failsafe in case a number isn't called
@@ -10,9 +10,9 @@
 	if(!ticker || meteorwavecurrent)
 		return
 	meteorwavecurrent = 1
-	meteor_wave_delay = (rand(10,30))*10 //Between 10 and 30 seconds, makes everything more chaotic
+	meteor_wave_delay = (rand(10,20))*10 //Between 10 and 20 seconds, makes everything more chaotic
 	for(var/i = 0 to number)
-		spawn(rand(5,15)) //0.5 to 1.5 seconds between meteors
+		spawn(rand(5,10)) //0.5 to 1 seconds between meteors
 			spawn_meteor()
 	spawn(meteor_wave_delay)
 		meteorwavecurrent = 0
@@ -25,7 +25,7 @@
 	var/endy
 	var/turf/pickedstart
 	var/turf/pickedgoal
-	var/max_i = 3 //number of tries to spawn meteor. Was 10, now 3 as an attempt to minimize lag
+	var/max_i = 3 //Try only three times maximum
 
 
 	do
@@ -102,12 +102,12 @@
 		if(A)
 			A.meteorhit(src)
 			playsound(get_turf(src), "explosion", 50, 1) //Medium boom
-			explosion(src.loc, 1, 3, 4, 8, 0) //Medium meteor, medium boom
+			explosion(src.loc, 2, 4, 6, 8, 0) //Medium meteor, medium boom
 			qdel(src)
 
 /obj/effect/meteor/ex_act(severity)
 
-	if (severity < 4)
+	if(severity < 4)
 		qdel(src)
 	return
 
