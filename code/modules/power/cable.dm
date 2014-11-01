@@ -188,7 +188,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	return
 
 /obj/structure/cable/singularity_pull(S, current_size)
-	if(current_size >= 9)
+	if(current_size >= STAGE_FIVE)
 		Deconstruct()
 
 obj/structure/cable/proc/cableColor(var/colorC)

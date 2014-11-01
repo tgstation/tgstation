@@ -170,17 +170,17 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	return 0
 
 /turf/simulated/floor/singularity_pull(S, current_size)
-	if(current_size == 5)
+	if(current_size == STAGE_THREE)
 		if(prob(30))
 			if(builtin_tile)
 				builtin_tile.loc = src
 				make_plating()
-	else if(current_size == 7)
+	else if(current_size == STAGE_FOUR)
 		if(prob(50))
 			if(builtin_tile)
 				builtin_tile.loc = src
 				make_plating()
-	else if(current_size >= 9)
+	else if(current_size >= STAGE_FIVE)
 		if(builtin_tile)
 			if(prob(70))
 				builtin_tile.loc = src

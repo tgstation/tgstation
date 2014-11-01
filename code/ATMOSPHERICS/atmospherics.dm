@@ -137,5 +137,5 @@ Pipelines + Other Objects -> Pipe network
 	return img
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
-	if(current_size >= 9)
+	if(current_size >= STAGE_FIVE)
 		Deconstruct()
