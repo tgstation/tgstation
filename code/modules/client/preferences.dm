@@ -533,7 +533,10 @@ datum/preferences
 					ResetJobs()
 					SetChoices(user)
 				if("random")
-					userandomjob = !userandomjob
+					if(jobban_isbanned(user, "Assistant"))
+						userandomjob = 1
+					else
+						userandomjob = !userandomjob
 					SetChoices(user)
 				if("setJobLevel")
 					UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
