@@ -302,7 +302,7 @@
 
 	if(!usr)
 		return
-	if (usr.stat != 0)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.go_out()
 	add_fingerprint(usr)

@@ -96,13 +96,15 @@
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
 
-	verb/dissolve_contents()
-		set name = "Activate Seed Extraction"
-		set category = "Object"
-		set desc = "Activate to convert your plants into plantable seeds."
-		for(var/obj/item/O in contents)
-			seedify(O, 1)
-		close_all()
+/obj/item/weapon/storage/bag/plants/portaseeder/verb/dissolve_contents()
+	set name = "Activate Seed Extraction"
+	set category = "Object"
+	set desc = "Activate to convert your plants into plantable seeds."
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+	for(var/obj/item/O in contents)
+		seedify(O, 1)
+	close_all()
 
 
 // -----------------------------

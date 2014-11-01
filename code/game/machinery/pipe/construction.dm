@@ -155,7 +155,7 @@ Buildable meters
 	set name = "Rotate Pipe"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained() )
+	if ( usr.stat || usr.restrained() || !usr.canmove )
 		return
 
 	src.dir = turn(src.dir, -90)
@@ -169,7 +169,7 @@ Buildable meters
 	set name = "Flip Pipe"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained() )
+	if ( usr.stat || usr.restrained() || !usr.canmove )
 		return
 
 	if (pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER))

@@ -33,8 +33,11 @@
 	set category = "Object"
 	set src in usr
 
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+
 	if (t)
-		src.name = text("data disk- '[]'", t)
+		src.name = "data disk- '[t]'"
 	else
 		src.name = "data disk"
 	src.add_fingerprint(usr)
