@@ -14,7 +14,7 @@
 	action_button_name = "Toggle Paddles"
 
 	var/on = 0 //if the paddles are equipped (1) or on the defib (0)
-	var/emagged = 0 //if you can zap people with the defibs on harm mode
+	var/safety = 1 //if you can zap people with the defibs on harm mode
 	var/powered = 0 //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/weapon/twohanded/shockpaddles/paddles
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
@@ -54,7 +54,7 @@
 		overlays += "defibunit-powered"
 	if(!bcell)
 		overlays += "defibunit-nocell"
-	if(emagged)
+	if(!safety)
 		overlays += "defibunit-emagged"
 
 /obj/item/weapon/defibrillator/proc/update_charge()
@@ -90,12 +90,12 @@
 			user << "<span class='notice'>You install a cell in [src].</span>"
 
 	if(istype(W, /obj/item/weapon/card/emag))
-		if(emagged == 0)
-			emagged = 1
-			usr << "<span class='notice'>[W] disables [src]'s safety protocols"
+		if(safety)
+			safety = 0
+			user << "<span class='warning'>You silently disable [src]'s safety protocols with the [W]."
 		else
-			emagged = 0
-			usr << "<span class='notice'>[W] enables [src]'s safety protocols"
+			safety = 1
+			user << "<span class='notice'>You silently enable [src]'s safety protocols with the [W]."
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(bcell)
@@ -106,6 +106,22 @@
 
 	update_icon()
 	return
+
+/obj/item/weapon/defibrillator/emp_act(severity)
+	if(bcell)
+		deductcharge(1000 / severity)
+		if(bcell.reliability != 100 && prob(50/severity))
+			bcell.reliability -= 10 / severity
+	if(safety)
+		safety = 0
+		src.visible_message("<span class='notice'>[src] beeps: Safety protocols disabled!</span>")
+		playsound(get_turf(src), 'sound/machines/twobeep.ogg', 50, 0)
+	else
+		safety = 1
+		src.visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
+		playsound(get_turf(src), 'sound/machines/twobeep.ogg', 50, 0)
+	update_icon()
+	..()
 
 /obj/item/weapon/defibrillator/verb/toggle_paddles()
 	set name = "Toggle Paddles"
@@ -251,10 +267,10 @@
 		user << "<span class='notice'>The instructions on [defib] don't mention how to revive that...</span>"
 		return
 	else
-		if(user.a_intent == "harm" && defib.emagged)
+		if(user.a_intent == "harm" && !defib.safety)
 			busy = 1
 			H.visible_message("<span class='danger'>[M.name] has been touched with [src] by [user]!</span>")
-			H.Weaken(10)
+			H.adjustStaminaLoss(50)
 			H.adjustFireLoss(10)
 			H.updatehealth() //forces health update before next life tick
 			playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
