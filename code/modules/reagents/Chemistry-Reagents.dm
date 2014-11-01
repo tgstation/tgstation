@@ -156,6 +156,11 @@ datum
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]
 
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					H.bloody_body(self.data["donor"])
+					H.bloody_hands(self.data["donor"])
+
 			on_merge(var/data)
 				if(data["blood_colour"])
 					color = data["blood_colour"]
@@ -996,7 +1001,7 @@ datum
 								H << "\red Your mask protects you from the acid!"
 							return
 
-						if(H.head)
+						if(H.head && !istype(H.head, /obj/item/weapon/reagent_containers/glass/bucket))
 							if(prob(15) && !H.head.unacidable)
 								del(H.head)
 								H.update_inv_head()
@@ -1079,7 +1084,7 @@ datum
 								H << "\red Your mask protects you from the acid!"
 							return
 
-						if(H.head)
+						if(H.head && !istype(H.head, /obj/item/weapon/reagent_containers/glass/bucket))
 							if(prob(15) && !H.head.unacidable)
 								del(H.head)
 								H.update_inv_head()

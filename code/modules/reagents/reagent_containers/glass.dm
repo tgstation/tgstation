@@ -314,6 +314,7 @@
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
 	flags = FPRINT | OPENCONTAINER
+	slot_flags = SLOT_HEAD
 
 	attackby(var/obj/D, mob/user as mob)
 		if(isprox(D))

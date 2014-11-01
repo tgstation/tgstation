@@ -57,6 +57,7 @@
 	filling_color = "#FF0000"
 	gender = PLURAL
 	plantname = "cherry"
+	slot_flags = SLOT_EARS
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	name = "poppy"
