@@ -122,7 +122,7 @@
 			T.Entered(W)
 
 		W.dropped(src)
-		update_icons()
+		//update_icons() // Redundant as u_equip will handle updating the specific overlay
 		return 1
 	return 0
 
