@@ -29,6 +29,8 @@
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
 	on = !on
 
 	var/mob/living/carbon/human/user = usr
