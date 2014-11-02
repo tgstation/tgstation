@@ -64,7 +64,7 @@
 	return 0
 
 /mob/proc/put_in_hand_check(var/obj/item/W)
-	if(lying && !(W.flags & ABSTRACT))
+	if(lying) //&& !(W.flags & ABSTRACT))
 		return 0
 
 	if(!isitem(W))
