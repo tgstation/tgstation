@@ -24,6 +24,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	faction = "cult"
+	supernatural = 1
 	var/list/construct_spells = list()
 
 /mob/living/simple_animal/construct/cultify()
@@ -388,6 +389,31 @@
 			if(pulling)								pullin.icon_state = "pull1"
 			else									pullin.icon_state = "pull0"
 
+		if(construct_spell1)
+			construct_spell1.overlays = 0
+			if(purge)
+				construct_spell1.overlays += "silence"
+
+		if(construct_spell2)
+			construct_spell2.overlays = 0
+			if(purge)
+				construct_spell2.overlays += "silence"
+
+		if(construct_spell3)
+			construct_spell3.overlays = 0
+			if(purge)
+				construct_spell3.overlays += "silence"
+
+		if(construct_spell4)
+			construct_spell4.overlays = 0
+			if(purge)
+				construct_spell4.overlays += "silence"
+
+		if(construct_spell5)
+			construct_spell5.overlays = 0
+			if(purge)
+				construct_spell5.overlays += "silence"
+
 /mob/living/simple_animal/construct/armoured/Life()
 	..()
 	if(healths)
@@ -401,7 +427,6 @@
 			if(1 to 41)				healths.icon_state = "juggernaut_health6"
 			else					healths.icon_state = "juggernaut_health7"
 
-	if(construct_spell1)
 		var/obj/effect/proc_holder/spell/S = null
 		for(var/datum/D in spell_list)
 			if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall))

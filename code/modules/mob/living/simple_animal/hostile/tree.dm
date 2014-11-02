@@ -67,5 +67,5 @@
 /mob/living/simple_animal/hostile/tree/festivus/Die()
 	..()
 	visible_message("\red <b>[src]</b> is hacked into pieces!")
-	new /obj/item/stack/rods(loc)
+	new /obj/item/weapon/nullrod(loc)
 	del(src)

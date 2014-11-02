@@ -65,6 +65,10 @@
 	var/scan_ready = 1
 	var/species //Sorry, no spider+corgi buttbabies.
 
+	//Null rod stuff
+	var/supernatural = 0
+	var/purge = 0
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -105,6 +109,9 @@
 		AdjustWeakened(-1)
 	if(paralysis)
 		AdjustParalysis(-1)
+
+	if(purge)
+		purge -= 1
 
 	//Movement
 	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored && (ckey == null))
@@ -420,6 +427,9 @@
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
 				damage = 0
+			if(supernatural && istype(O,/obj/item/weapon/nullrod))
+				damage *= 2
+				purge = 3
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
@@ -430,12 +440,13 @@
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 
-
-
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later
 
 	tally = speed
+
+	if(purge)//Purged creatures will move more slowly. The more time before their purge stops, the slower they'll move. (muh dotuh)
+		tally *= purge
 
 	return tally+config.animal_delay
 

@@ -56,6 +56,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(usr.z == 2 && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
 		return 0
 
+	if(istype(usr, /mob/living/simple_animal))
+		var/mob/living/simple_animal/S = src
+		if(S.purge)
+			C << "<span class='warning'>The nullrod's power interferes with your own!</span>"
+			return 0
+
 	if(!skipcharge)
 		switch(charge_type)
 			if("recharge")
