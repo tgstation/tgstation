@@ -273,8 +273,8 @@
 	else
 		return
 
-/obj/machinery/bot/medbot/process()
-	if (!..())
+/obj/machinery/bot/medbot/bot_process()
+	if (!main_process())
 		return
 
 	if(mode == BOT_HEALING)

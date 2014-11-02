@@ -189,8 +189,8 @@ Auto Patrol: []"},
 		declare_arrests = 0
 		icon_state = "secbot[on]"
 
-/obj/machinery/bot/secbot/process()
-	if (!..())
+/obj/machinery/bot/secbot/bot_process()
+	if (!main_process())
 		return
 
 	switch(mode)
@@ -314,14 +314,14 @@ Auto Patrol: []"},
 	last_found = world.time
 	frustration = 0
 	spawn(0)
-		process() //ensure bot quickly responds
+		bot_process() //ensure bot quickly responds
 
 /obj/machinery/bot/secbot/proc/back_to_hunt()
 	anchored = 0
 	frustration = 0
 	mode = BOT_HUNT
 	spawn(0)
-		process() //ensure bot quickly responds
+		bot_process() //ensure bot quickly responds
 // look for a criminal in view of the bot
 
 /obj/machinery/bot/secbot/proc/look_for_perp()
@@ -346,7 +346,7 @@ Auto Patrol: []"},
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
 			spawn(0)
-				process()	// ensure bot quickly responds to a perp
+				bot_process()	// ensure bot quickly responds to a perp
 			break
 		else
 			continue
