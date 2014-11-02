@@ -141,8 +141,8 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		if(istype(D, T))
 			return D
 
-/obj/machinery/bot/cleanbot/process()
-	if (!..())
+/obj/machinery/bot/cleanbot/bot_process()
+	if (!main_process())
 		return
 
 	if(mode == BOT_CLEANING)

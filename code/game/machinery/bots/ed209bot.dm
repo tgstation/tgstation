@@ -206,8 +206,8 @@ Auto Patrol[]"},
 		icon_state = "[lasercolor]ed209[on]"
 		set_weapon()
 
-/obj/machinery/bot/ed209/process()
-	if (!..())
+/obj/machinery/bot/ed209/bot_process()
+	if (!main_process())
 		return
 
 	if(disabled)

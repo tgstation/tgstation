@@ -210,10 +210,7 @@
 	else
 		return 0
 
-/obj/machinery/bot/process() //Master process which handles code common across most bots.
-
-	set background = BACKGROUND_ENABLED
-
+/obj/machinery/bot/proc/main_process() //Master process which handles code common across most bots.
 	if(!on)
 		return
 
@@ -225,6 +222,13 @@
 			bot_summon()
 			return
 	return 1 //Successful completion. Used to prevent child process() continuing if this one is ended early.
+
+/obj/machinery/bot/proc/bot_process()
+
+/obj/machinery/bot/process()
+	set background = BACKGROUND_ENABLED
+	spawn(0)
+		bot_process()
 
 
 /obj/machinery/bot/attackby(obj/item/weapon/W as obj, mob/user as mob)
