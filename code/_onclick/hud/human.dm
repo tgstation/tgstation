@@ -264,7 +264,6 @@
 	mymob.healths.screen_loc = ui_health
 
 	mymob.healthdoll = new /obj/screen()
-	mymob.healthdoll.icon_state = "healthdoll_OVERLAY"
 	mymob.healthdoll.name = "health doll"
 	mymob.healthdoll.screen_loc = ui_healthdoll
 

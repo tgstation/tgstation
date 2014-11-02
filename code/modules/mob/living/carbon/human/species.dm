@@ -533,7 +533,7 @@
 						icon_num = 2
 					//if(0 to comparison) //probably unnecessary
 
-				H.healthdoll.overlays += image(icon = 'icons/mob/zone_health.dmi', icon_state = "[L][icon_num]")
+				H.healthdoll.overlays += image('icons/mob/screen_gen.dmi', "[L][icon_num]")
 		else
 			H.healthdoll.icon_state = "healthdoll_DEAD"
 
