@@ -617,6 +617,7 @@ datum/reagent/ryetalyn/on_mob_life(var/mob/living/M as mob)
 	M.mutations = list()
 	M.disabilities = 0
 	M.sdisabilities = 0
+	M.jitteriness = 0
 
 	// Might need to update appearance for hulk etc.
 	if(needs_update && ishuman(M))
