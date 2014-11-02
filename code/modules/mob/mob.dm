@@ -304,7 +304,9 @@ var/list/slot_equipment_priority = list( \
 
 	if(!src || !isturf(src.loc))
 		return
-	if(src.restrained() || (src.status_flags & FAKEDEATH))
+	if(src.stat || !src.canmove || src.restrained())
+		return
+	if(src.status_flags & FAKEDEATH)
 		return
 	if(!(A in view(src.loc)))
 		return
@@ -726,7 +728,6 @@ var/list/slot_equipment_priority = list( \
 		canmove = 1
 	if(buckled)
 		lying = 90 * bed
-		anchored = buckled
 	else
 		if((ko || resting) && !lying)
 			fall(ko)

@@ -7,6 +7,7 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
+MrStonedOne = Host
 Gun Hog = Game Master
 razharas = Game Master
 Niknakflak = Game Master
@@ -66,3 +67,4 @@ cookingboy3 = Game Master
 limeliz = Game Master
 steelpoint = Game Master
 phil235 = Game Master
+xxnoob = Game Master

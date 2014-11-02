@@ -86,42 +86,6 @@
 	return
 
 
-/atom/movable/Move(NewLoc, direct)
-	if (direct & (direct - 1))
-		if (direct & 1)
-			if (direct & 4)
-				if (step(src, NORTH))
-					step(src, EAST)
-				else
-					if (step(src, EAST))
-						step(src, NORTH)
-			else
-				if (direct & 8)
-					if (step(src, NORTH))
-						step(src, WEST)
-					else
-						if (step(src, WEST))
-							step(src, NORTH)
-		else
-			if (direct & 2)
-				if (direct & 4)
-					if (step(src, SOUTH))
-						step(src, EAST)
-					else
-						if (step(src, EAST))
-							step(src, SOUTH)
-				else
-					if (direct & 8)
-						if (step(src, SOUTH))
-							step(src, WEST)
-						else
-							if (step(src, WEST))
-								step(src, SOUTH)
-	else
-		. = ..()
-	return
-
-
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
@@ -167,14 +131,13 @@
 	if(!mob.lastarea)
 		mob.lastarea = get_area(mob.loc)
 
-	if(!has_gravity(mob))
-		if(!mob.Process_Spacemove(0))
-			return 0
-
 
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
+
+	if(!mob.Process_Spacemove(direct))
+		return 0
 
 	if(isturf(mob.loc))
 
@@ -244,6 +207,8 @@
 			. = ..()
 
 		moving = 0
+		if(mob && .)
+			mob.throwing = 0
 
 		return .
 
@@ -342,51 +307,46 @@
 ///Called by /client/Move()
 ///For moving in space
 ///Return 1 for movement 0 for none
-/mob/proc/Process_Spacemove(var/check_drift = 0)
-	//First check to see if we can do things
-	if(!canmove)
-		return 0
+/mob/Process_Spacemove(var/movement_dir = 0)
 
-	if(!isturf(loc))	//if they're in a disposal unit, for example
+	if(..())
 		return 1
 
-	var/dense_object = 0
-	for(var/turf/turf in oview(1,src))
-		if(istype(turf,/turf/space))
+	var/atom/movable/dense_object_backup
+	for(var/atom/A in orange(1, get_turf(src)))
+		if(isarea(A))
 			continue
 
-		if(!turf.density && !mob_negates_gravity())
-			continue
+		else if(isturf(A))
+			var/turf/turf = A
+			if(istype(turf,/turf/space))
+				continue
 
-		dense_object++
-		break
+			if(!turf.density && !mob_negates_gravity())
+				continue
 
-	if(!dense_object && (locate(/obj/structure/lattice) in oview(1, src)))
-		dense_object++
+			return 1
 
-	//Lastly attempt to locate any dense objects we could push off of
-	//TODO: If we implement objects drifing in space this needs to really push them
-	//Due to a few issues only anchored and dense objects will now work.
-	if(!dense_object)
-		for(var/obj/O in oview(1, src))
-			if((O) && (O.density) && (O.anchored))
-				dense_object++
-				break
+		else
+			var/atom/movable/AM = A
+			if(AM == buckled) //Kind of unnecessary but let's just be sure
+				continue
+			if(AM.density)
+				if(AM.anchored)
+					if(istype(AM, /obj/item/projectile)) //"You grab the bullet and push off of it!" No
+						continue
+					return 1
+				if(pulling == AM)
+					continue
+				dense_object_backup = AM
 
-	//Nothing to push off of so end here
-	if(!dense_object)
-		return 0
+	if(movement_dir && dense_object_backup)
+		if(dense_object_backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
+			src << "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>"
 
-	//Check to see if we slipped
-	if(prob(Process_Spaceslipping(5)))
-		src << "<span class='boldnotice'>You slipped!</span>"
-		src.inertia_dir = src.last_move
-		step(src, src.inertia_dir)
-		return 0
 
-	//If not then we can reset inertia and move
-	inertia_dir = 0
-	return 1
+		return 1
+	return 0
 
 /mob/proc/mob_has_gravity(turf/T)
 	return has_gravity(src, T)
@@ -394,21 +354,16 @@
 /mob/proc/mob_negates_gravity()
 	return 0
 
-/mob/proc/Process_Spaceslipping(var/prob_slip = 5)
-	//Setup slipage
-	//If knocked out we might just hit it and stop.  This makes it possible to get dead bodies and such.
-	if(stat)
-		prob_slip = 0  // Changing this to zero to make it line up with the comment.
-
-	prob_slip = round(prob_slip)
-	return(prob_slip)
-
 /mob/proc/Move_Pulled(var/atom/A)
 	if (!canmove || restrained() || !pulling)
 		return
 	if (pulling.anchored)
 		return
 	if (!pulling.Adjacent(src))
+		return
+	if (A == loc && pulling.density)
+		return
+	if (!Process_Spacemove(get_dir(pulling.loc, A)))
 		return
 	if (ismob(pulling))
 		var/mob/M = pulling

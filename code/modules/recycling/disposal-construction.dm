@@ -88,7 +88,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(usr.stat)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 
 	if(anchored)
@@ -102,7 +102,7 @@
 	set name = "Flip Pipe"
 	set category = "Object"
 	set src in view(1)
-	if(usr.stat)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 
 	if(anchored)

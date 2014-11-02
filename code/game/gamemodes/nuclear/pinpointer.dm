@@ -77,7 +77,7 @@
 			point_at(location)
 		if(mode == 2)
 			point_at(target)
-		usr << "<span class='notice'>You activate the pinpointer.,/span>"
+		usr << "<span class='notice'>You activate the pinpointer.</span>"
 	else
 		active = 0
 		icon_state = "pinoff"
@@ -88,6 +88,9 @@
 	set category = "Object"
 	set name = "Toggle Pinpointer Mode"
 	set src in view(1)
+
+	if(usr.stat || usr.restrained() || !usr.canmove)
+		return
 
 	active = 0
 	icon_state = "pinoff"
