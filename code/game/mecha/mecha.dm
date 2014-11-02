@@ -201,6 +201,13 @@
 
 	return 1
 
+obj/mecha/proc/can_use(mob/user)
+	if(user != src.occupant)
+		return 0
+	if(user && ismob(user))
+		if(!usr.stat && !usr.restrained() && usr.canmove)
+			return 1
+	return 0
 
 /obj/mecha/examine(mob/user)
 	..()
@@ -866,8 +873,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)			return
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 	if(possible_port)
@@ -889,8 +896,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)			return
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	if(disconnect())
 		src.occupant_message("<span class='notice'>[name] disconnects from the port.</span>")
@@ -905,8 +912,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)		return
-	if(usr != occupant)	return
+	if(!can_use(usr))
+		return
 
 	lights = !lights
 	if(lights)	AddLuminosity(lights_power)
@@ -922,8 +929,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)			return
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	use_internal_tank = !use_internal_tank
 	src.occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
@@ -1059,7 +1066,8 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=src.occupant)
+
+	if(!can_use(usr))
 		return
 	//pr_update_stats.start()
 	src.occupant << browse(src.get_stats_html(), "window=exosuit")
@@ -1080,7 +1088,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	src.go_out()
 	add_fingerprint(usr)

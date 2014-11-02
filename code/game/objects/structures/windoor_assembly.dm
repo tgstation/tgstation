@@ -304,7 +304,7 @@ obj/structure/windoor_assembly/Destroy()
 	if(anchored)
 		usr << "It is fastened to the floor, therefore you can't rotate it!"
 		return 0
-	var/d = get_dir_sane(usr,src_loc,over_loc)
+	var/d = get_drop_dir(usr,src_loc,over_loc)
 	if(d && d in cardinal)
 		if(d == dir)
 			facing = (facing == "r") ? "l" : "r" //flips the facing

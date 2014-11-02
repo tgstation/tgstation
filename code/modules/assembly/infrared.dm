@@ -127,10 +127,9 @@
 
 /obj/item/device/assembly/infra/MouseDrop(over,src_loc,over_loc)
 	..()
-	var/d = get_dir_sane(usr,src_loc,over_loc)
+	var/d = get_drop_dir(usr,src_loc,over_loc)
 	if(d && d in cardinal)
 		dir = d
-
 
 
 

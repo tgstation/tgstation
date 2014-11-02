@@ -93,7 +93,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (anchored)
 		usr << "It is fastened to the floor!"
 		return
-	var/d = get_dir_sane(usr,src_loc,over_loc)
+	var/d = get_drop_dir(usr,src_loc,over_loc)
 	if(d && d in cardinal)
 		dir = d
 
@@ -270,7 +270,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (anchored)
 		usr << "It is fastened to the floor!"
 		return
-	var/d = get_dir_sane(usr,src_loc,over_loc)
+	var/d = get_drop_dir(usr,src_loc,over_loc)
 	if(d && d in cardinal)
 		dir = d
 

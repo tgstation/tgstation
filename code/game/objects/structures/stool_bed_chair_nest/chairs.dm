@@ -62,13 +62,12 @@
 
 /obj/structure/stool/bed/chair/MouseDrop(over,src_loc,over_loc)
 	..()
-	var/d = get_dir_sane(usr,src_loc,over_loc)
+	var/d = get_drop_dir(usr,src_loc,over_loc)
 	if(d && d in cardinal)
 		dir = d
 		handle_layer()
 		if(buckled_mob)
 			buckled_mob.dir = dir
-
 
 /obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return

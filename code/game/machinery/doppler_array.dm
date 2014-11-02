@@ -33,7 +33,7 @@ var/list/doppler_arrays = list()
 
 /obj/machinery/doppler_array/MouseDrop(over,src_loc,over_loc)
 	..()
-	var/d = get_dir_sane(usr,src_loc,over_loc)
+	var/d = get_drop_dir(usr,src_loc,over_loc)
 	if(d in cardinal)
 		dir = d
 

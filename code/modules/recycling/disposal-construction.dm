@@ -88,7 +88,7 @@
 	if(anchored)
 		usr << "You must unfasten the pipe before rotating it."
 		return
-	var/d = get_dir_sane(usr,src_loc,over_loc)
+	var/d = get_drop_dir(usr,src_loc,over_loc)
 	if(d && d in cardinal)
 		if(d == dir) //flip
 			dir = turn(dir, 180)
@@ -104,7 +104,6 @@
 		else
 			dir = d
 		update()
-
 
 // returns the type path of disposalpipe corresponding to this item dtype
 /obj/structure/disposalconstruct/proc/dpipetype()

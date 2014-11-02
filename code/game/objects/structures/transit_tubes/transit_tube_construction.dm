@@ -44,7 +44,7 @@
 	..()
 	var/list/split_text = text2list(icon_state, "-")
 	var/main_angle = dir2angle(text2dir_extended(split_text[1]))
-	var/d = get_dir_sane(usr,src_loc,over_loc)
+	var/d = get_drop_dir(usr,src_loc,over_loc)
 	if(d && d in cardinal)
 		var/new_angle = dir2angle(d)
 		if(new_angle == main_angle)
@@ -81,7 +81,7 @@
 
 /obj/structure/c_transit_tube/MouseDrop(over,src_loc,over_loc)
 	..()
-	var/d = get_dir_sane(usr,src_loc,over_loc)
+	var/d = get_drop_dir(usr,src_loc,over_loc)
 	if(d && d in cardinal)
 		dir = d
 
