@@ -19,7 +19,6 @@
 	var/obj/screen/fire = null
 	var/obj/screen/bodytemp = null
 	var/obj/screen/healths = null
-	var/obj/screen/healthdoll = null
 	var/obj/screen/throw_icon = null
 	var/obj/screen/nutrition_icon = null
 	var/obj/screen/pressure = null
@@ -32,6 +31,7 @@
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
 	var/obj/screen/leap_icon = null
+	var/obj/screen/healthdoll = null
 
 	var/damageoverlaytemp = 0
 	var/computer_id = null

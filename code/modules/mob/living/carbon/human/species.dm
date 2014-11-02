@@ -510,8 +510,9 @@
 						else					H.healths.icon_state = "health6"
 
 	if(H.healthdoll)
-		H.healthdoll.overlays.Cut() //Hud's have overlays too, but it's still a bit weird
-		if(H.stat != DEAD) //fuck "2"
+		if(H.stat == DEAD)
+			H.healthdoll.icon_state = "healthdoll_DEAD"
+		else
 			H.healthdoll.icon_state = "healthdoll_OVERLAY"
 			for(var/obj/item/organ/limb/L in H.organs)
 				var/damage = L.burn_dam + L.brute_dam
@@ -531,11 +532,10 @@
 						icon_num = 3
 					if((comparison) to (comparison*2))
 						icon_num = 2
-					//if(0 to comparison) //probably unnecessary
+					//if(0 to comparison)
 
+				H.healthdoll.overlays.Cut()
 				H.healthdoll.overlays += image('icons/mob/screen_gen.dmi', "[L][icon_num]")
-		else
-			H.healthdoll.icon_state = "healthdoll_DEAD"
 
 	if(H.nutrition_icon)
 		switch(H.nutrition)
