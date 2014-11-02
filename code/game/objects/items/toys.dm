@@ -132,6 +132,7 @@
 	g_amt = 10
 	m_amt = 10
 	w_type = RECYK_MISC
+	melt_temperature = MELTPOINT_PLASTIC
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -188,6 +189,8 @@
 	w_class = 1.0
 	g_amt = 10
 	m_amt = 10
+	melt_temperature = MELTPOINT_PLASTIC
+	w_type = RECYK_MISC
 	var/amount_left = 7.0
 
 	update_icon()

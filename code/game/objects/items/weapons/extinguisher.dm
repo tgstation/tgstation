@@ -14,6 +14,7 @@
 	force = 10.0
 	m_amt = 90 // TODO: Check against autolathe.
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	var/max_water = 50
 	var/last_use = 1.0

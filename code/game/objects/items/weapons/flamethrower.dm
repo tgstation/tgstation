@@ -12,6 +12,7 @@
 	w_class = 3.0
 	m_amt = 500
 	w_type = RECYK_MISC
+	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "combat=1;plasmatech=1"
 	var/status = 0
 	var/throw_amount = 100

@@ -1530,6 +1530,7 @@
 	w_class = 2.0
 	m_amt = 50
 	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 
 // *************************************

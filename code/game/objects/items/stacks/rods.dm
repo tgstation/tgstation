@@ -13,6 +13,7 @@
 	max_amount = 60
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	w_type=RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL
 
 /obj/item/stack/rods/recycle(var/datum/materials/rec)
 	rec.addAmount("iron",amount/2)

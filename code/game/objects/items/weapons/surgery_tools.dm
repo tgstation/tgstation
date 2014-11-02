@@ -18,6 +18,7 @@
 	icon_state = "retractor"
 	m_amt = 10000
 	g_amt = 5000 // OH COME ON, WHERE THE FUCK IS THERE ANY GLASS IN A GODDAMN RETRACTOR
+	melt_temperature = MELTPOINT_STEEL
 	w_type = RECYK_METAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
