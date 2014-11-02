@@ -297,32 +297,28 @@ var/list/slot_equipment_priority = list( \
 	A.examine(src)
 
 //same as above
-//note: ghosts can point, this is intended as visible_message was changed to handle that properly
+//note: ghosts can point, this is intended
+//visible_message will handle invisibility properly
+//overriden here and in /mob/dead/observer for different point span classes and sanity checks
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || !isturf(src.loc))
-		return
-	if(src.stat || !src.canmove || src.restrained())
-		return
-	if(src.status_flags & FAKEDEATH)
-		return
-	if(!(A in view(src.loc)))
-		return
+	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
+		return 0
 	if(istype(A, /obj/effect/decal/point))
-		return
+		return 0
 
 	var/tile = get_turf(A)
 	if (!tile)
-		return
+		return 0
 
 	var/obj/P = new /obj/effect/decal/point(tile)
 	spawn (20)
 		if(P)
 			qdel(P)
 
-	usr.visible_message("<b>[src]</b> points to [A]")
+	return 1
 
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(var/atom/movable/AM)

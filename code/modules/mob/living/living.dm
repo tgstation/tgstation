@@ -20,6 +20,17 @@
 		src.start_pulling(AM)
 	return
 
+//same as above
+/mob/living/pointed(atom/A as mob|obj|turf in view())
+	if(src.stat || !src.canmove || src.restrained())
+		return 0
+	if(src.status_flags & FAKEDEATH)
+		return 0
+	if(!..())
+		return 0
+	usr.visible_message("<b>[src]</b> points to [A]")
+	return 1
+
 /mob/living/verb/succumb(var/whispered as null)
 	set hidden = 1
 	if (InCritical())
