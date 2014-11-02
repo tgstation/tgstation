@@ -123,7 +123,7 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/RefreshParts()
 	var/temp_rating = 0
-	var/temp_reliability = 0
+//	var/temp_reliability = 0 //unused
 	var/consumption_coeff = 0
 	for(var/obj/item/weapon/stock_parts/SP in component_parts)
 		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
@@ -132,9 +132,9 @@ display round(lastgen) and plasmatank amount
 			temp_rating += SP.rating
 		else
 			consumption_coeff += SP.rating
-	for(var/obj/item/weapon/CP in component_parts)
+/*	for(var/obj/item/weapon/CP in component_parts)
 		temp_reliability += CP.reliability
-	reliability = min(round(temp_reliability / 4), 100)
+	reliability = min(round(temp_reliability / 4), 100)*/
 	power_gen = round(initial(power_gen) * temp_rating * 2)
 	consumption = consumption_coeff
 
