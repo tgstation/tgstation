@@ -1255,6 +1255,17 @@ other types of metals and chemistry for reagents).
 	category = "Exosuit_Equipment"
 	materials = list("$iron"=25000)
 
+
+/datum/design/mech_jail_cell
+	name = "Exosuit Module Design (Mounted Jail Cell)"
+	desc = "Exosuit-controlled secure holding cell"
+	id = "mech_jail_cell"
+	build_type = MECHFAB
+	req_tech = list("biotech" = 2, "combat" = 4)
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/jail
+	category = "Exosuit_Equipment"
+	materials = list("$iron"=7500,"$glass"=10000)
+
 /datum/design/mech_tracker
 	name = "Exosuit Tracking Device"
 	desc = "Exosuit tracker, for tracking exosuits."
@@ -1264,6 +1275,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/mecha_parts/mecha_tracking
 	category = "Misc"
 	materials = list("$iron"=500)
+
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
