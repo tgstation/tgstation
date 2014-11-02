@@ -40,14 +40,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
 
 	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
-	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
-	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
+	var/obj/machinery/r_n_d/fabricator/protolathe/linked_lathe = null				//Linked Protolathe
+	var/obj/machinery/r_n_d/fabricator/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
 	var/list/obj/machinery/linked_machines = list()
 	var/list/research_machines = list(
-		/obj/machinery/r_n_d/protolathe,
+		/obj/machinery/r_n_d/fabricator/protolathe,
 		/obj/machinery/r_n_d/destructive_analyzer,
-		/obj/machinery/r_n_d/circuit_imprinter,
+		/obj/machinery/r_n_d/fabricator/circuit_imprinter,
 		/obj/machinery/r_n_d/fabricator/mech
 		)
 
@@ -118,13 +118,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			D.update_icon()
 	for(var/obj/machinery/r_n_d/D in linked_machines)
 		switch(D.type)
-			if(/obj/machinery/r_n_d/protolathe)
+			if(/obj/machinery/r_n_d/fabricator/protolathe)
 				if(!linked_lathe)
 					linked_lathe = D
 			if(/obj/machinery/r_n_d/destructive_analyzer)
 				if(!linked_destroy)
 					linked_destroy = D
-			if(/obj/machinery/r_n_d/circuit_imprinter)
+			if(/obj/machinery/r_n_d/fabricator/circuit_imprinter)
 				if(!linked_imprinter)
 					linked_imprinter = D
 	return
@@ -365,14 +365,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
 				//screen = 0.3
-				var/n=text2num(href_list["n"])
-				if(n>10)
-					n=10
-				if(n<1)
-					n=1
+				var/n = Clamp(text2num(href_list["n"]), 0, RESEARCH_MAX_Q_LEN - linked_lathe.queue.len)
 				for(var/i=1;i<=n;i++)
 					use_power(power)
-					linked_lathe.enqueue(usr.key,being_built)
+					linked_lathe.queue += being_built
 				if(href_list["now"]=="1")
 					linked_lathe.stopped=0
 				updateUsrDialog()
@@ -381,7 +377,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(linked_imprinter)
 			var/datum/design/being_built = null
 
-			if(linked_imprinter.production_queue.len >= RESEARCH_MAX_Q_LEN)
+			if(linked_imprinter.queue.len >= RESEARCH_MAX_Q_LEN)
 				usr << "<span class=\"warning\">Maximum number of items in production queue exceeded.</span>"
 				return
 
@@ -394,17 +390,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/M in being_built.materials)
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
-				var/n=text2num(href_list["n"])
-				if(n>10)
-					n=10
-				if(n<1)
-					n=1
+				var/n = Clamp(text2num(href_list["n"]), 0, RESEARCH_MAX_Q_LEN - linked_imprinter.queue.len)
 				for(var/i=1;i<=n;i++)
-					if(linked_imprinter.enqueue(usr.key,being_built))
-						use_power(power)
-					else
-						usr << "<span class=\"warning\">Maximum number of items in production queue exceeded.</span>"
-						break
+					linked_imprinter.queue += being_built
+					use_power(power)
 				if(href_list["now"]=="1")
 					linked_imprinter.stopped=0
 				updateUsrDialog()
@@ -426,19 +415,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		switch(href_list["device"])
 			if("protolathe")
 				if(linked_lathe)
-					linked_lathe.production_queue.Cut(i,i+1)
+					linked_lathe.queue.Cut(i,i+1)
 			if("imprinter")
 				if(linked_imprinter)
-					linked_imprinter.production_queue.Cut(i,i+1)
+					linked_imprinter.queue.Cut(i,i+1)
 
 	else if(href_list["clearQ"]) //Causes the protolathe to dispose of all it's reagents.
 		switch(href_list["device"])
 			if("protolathe")
 				if(linked_lathe)
-					linked_lathe.production_queue.Cut()
+					linked_lathe.queue.Cut()
 			if("imprinter")
 				if(linked_imprinter)
-					linked_imprinter.production_queue.Cut()
+					linked_imprinter.queue.Cut()
 
 	else if(href_list["setProtolatheStopped"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
 		linked_lathe.stopped=(href_list["setProtolatheStopped"]=="1")
@@ -524,9 +513,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(screen!=3.3)
 		options += "<A href='?src=\ref[src];menu=3.3'>Chemical Storage</A>"
 	if(screen!=3.4)
-		options += "<A href='?src=\ref[src];menu=3.4'>Production Queue</A> ([linked_lathe.production_queue.len])"
+		options += "<A href='?src=\ref[src];menu=3.4'>Production Queue</A> ([linked_lathe.queue.len])"
 	return {"\[<A href='?src=\ref[src];menu=1.0'>Main Menu</A>\]
-	<div class="header">[dd_list2text(options," || ")]</div><hr />"}
+	<div class="header">[list2text(options," || ")]</div><hr />"}
 
 /obj/machinery/computer/rdconsole/proc/CircuitImprinterHeader()
 	var/list/options=list()
@@ -537,9 +526,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(screen!=4.2)
 		options += "<A href='?src=\ref[src];menu=4.2'>Chemical Storage</A>"
 	if(screen!=4.4)
-		options += "<A href='?src=\ref[src];menu=4.4'>Production Queue</A> ([linked_imprinter.production_queue.len])"
+		options += "<A href='?src=\ref[src];menu=4.4'>Production Queue</A> ([linked_imprinter.queue.len])"
 	return {"\[<A href='?src=\ref[src];menu=1.0'>Main Menu</A>\]
-	<div class=\"header\">[dd_list2text(options," || ")]</div><hr />"}
+	<div class=\"header\">[list2text(options," || ")]</div><hr />"}
 
 /obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
@@ -872,9 +861,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(3.4) //Protolathe Queue Management
 			dat += protolathe_header()+"Production Queue<BR><HR><ul>"
-			for(var/i=1;i<=linked_lathe.production_queue.len;i++)
-				var/datum/rnd_queue_item/I=linked_lathe.production_queue[i]
-				dat += "<li>Name: [I.thing.name]"
+			for(var/i=1;i<=linked_lathe.queue.len;i++)
+				var/datum/design/I=linked_lathe.queue[i]
+				dat += "<li>Name: [I.name]"
 				if(linked_lathe.stopped)
 					dat += "<A href='?src=\ref[src];removeQItem=[i];device=protolathe'>(Remove)</A></li>"
 			dat += "</ul><A href='?src=\ref[src];clearQ=1;device=protolathe'>Remove All Queued Items</A><br />"
@@ -964,9 +953,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(4.4) //Imprinter Queue Management
 			dat += CircuitImprinterHeader()+"Production Queue<BR><HR><ul>"
-			for(var/i=1;i<=linked_imprinter.production_queue.len;i++)
-				var/datum/rnd_queue_item/I=linked_imprinter.production_queue[i]
-				dat += "<li>Name: [I.thing.name]"
+			for(var/i=1;i<=linked_imprinter.queue.len;i++)
+				var/datum/design/I=linked_imprinter.queue[i]
+				dat += "<li>Name: [I.name]"
 				if(linked_imprinter.stopped)
 					dat += "<A href='?src=\ref[src];removeQItem=[i];device=imprinter'>(Remove)</A></li>"
 			dat += "</ul><A href='?src=\ref[src];clearQ=1;device=imprinter'>Remove All Queued Items</A><br />"

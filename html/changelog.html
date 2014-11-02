@@ -80,7 +80,98 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 
 		<div class="commit sansserif">
+			<h2 class="date">2014.10.31</h2>
+			<h3 class="author">Comic updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">All lockboxes made by Science machines can now be unlocked with any ID, but will track who uses them.</li>
+				<li class="tweak">Bar and crematorium backrooms now require maintenance access as well as their departmental access.</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed a bug where tables wouldn't appear properly on pictures.</li>
+				<li class="rscadd">Cameras produced from the Sepia Slime Extract + Plasma reaction will take pictures in sepia.</li>
+				<li class="tweak">Sepia Cameras pictures will show invisible mobs (such as Ghosts, booooo)</li>
+				<li class="tweak">Dead monkeys can now be directly drag'n'dropped into Xenobiology's Monkey Recycler.</li>
+				<li class="tweak">Dead slimes and monkeys can now be directly drag'n'dropped into Xenobiology's Slime Processor.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Ported bay12's hydro port, and xenobotany.</li>
+				<li class="rscadd">HYDROPONICS <br>Closed hydro trays are now possible, taking atmospherics from a portables connector beneath them.<br>Lysis-isolation centrifuge and ballistic delivery system are in, allowing for gene modifications.<br>The plant analyzer has been rewritten from the ground up to be more useful and immersive.</li>
+				<li class="rscadd">SEEDS AND PLANTS<br>Seed/plant/product data is stored in a set of global seed datums.<br>These datums can diverge to form new species and be manipulated via genetic engineering.<br>These datums handle harvesting and mutating independantly of hydroponics trays.<br>Mutant species varieties are now handled in a modular way.<br>Plants now have ideal heat, light and pressure values, as well as tolerances for differences.<br>Plants can produce multiple different kinds of product.<br>Reagent information is held in the datums rather than the product item.<br>Arbitrary living products are now possible (current legit case is dionaea).<br>Bioluminescent plants and vines are both possible.<br></li>
+				<li class="rscadd">SPACE VINES<br>Space vines are now plantsegments pathwise in view of future intentions to make them more general.<br>Spawned event kudzu should be identical to the current master implementation as it has no seed datum and ignores all the new code.<br>Space vines now make use of seed data if spawned with a reference and can be harvested from.<br>Vines now cause physical damage if they are carnivorous, and inject reagents if their seed data includes them.<br>Vines will die if they find themselves in area outside of their tolerance.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.30</h2>
+			<h3 class="author">Comic updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added the material synthesizer, which takes in matter and is capable of producing rare materials. Available through research, to help improve access to rare materials in exchange for metal and glass.</li>
+				<li class="experiment">Added the material synthesizer to MoMMIs. Use it to scan materials, make materials, and fill machines with materials.</li>
+				<li class="rscdel">Removed material modules from MoMMIs. All previous modules can now be made with the synthesizer.</li>
+				<li class="rscadd">Added alternate jumpsuits to lockers and wardrobes. Play dressup in your spacemen!</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Water now directly damages slimes, even when not used from a fire extinguisher of sprayer.</li>
+				<li class="rscadd">Water will as well deal some small toxin damage to "humanoid slimes" (green extract mutation)</li>
+				<li class="tweak">Water calms down rabid slimes.</li>
+				<li class="bugfix">Fixed an issue that prevented Greys from taking any damage when they were splashed with water. The damage is brute and may cause bleeding.</li>
+				<li class="tweak">Showers now clean items and mobs at every process(), rather than only when turned on.</li>
+				<li class="rscadd">Showers now actually apply some water to things that they clean. (things like monkey cubes and Greys will react in consequence)</li>
+				<li class="rscadd">Placing a beaker or other container under a shower will slowly fill it with water.</li>
+				<li class="rscadd">Showers now actually wet the floor as well. No running!</li>
+				<li class="experiment">Did some backend changes that'll allow in the future to replace which liquid is being sprayed by showers.</li>
+			</ul>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Switch up some values for specific events</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.29</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="experiment">The Red Slime Extract + Blood reaction will now actually make slimes rabid! When rabid they behave like any hostile monster.</li>
+				<li class="experiment">Player-controlled slimes may now be tamed with docility potions. However the slime will be the one who gets to choose his name.</li>
+				<li class="tweak">Tame slimes can become rabid, unless they are player controlled (more to code later in that aspect)</li>
+				<li class="rscadd">Rabid slimes may be calmed and turned into normal slimes again by lowering their body temperature bellow (dark blue slimes or a temperature gun really comes handy there)</li>
+				<li class="tweak">Slimes spawned from killed adult slimes will be rabid. (they were supposed to be rabid according to the half-implemented rabid code)</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added Trainer's Belt to Miner's Equipment Storage buy list, sprite thanks to skowron.</li>
+				<li class="rscadd">Added the ability to rename mobs in a lazarus capsule using a pen.</li>
+				<li class="rscadd">Miner has an antag item now, a trainer's belt that contains 6 random hostile mobs.</li>
+				<li class="tweak">Lazarus revived mobs now only share a faction with the owner, this means you can fight mobs now!</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2014.10.28</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Narsie now converts floor tiles by changing their icon, rather than using changeTurf().</li>
+				<li class="bugfix">Replacing a hundred of /red with <span class='warning'.</li>
+				<li class="bugfix">Fixing Teleport talismans not working.</li>
+				<li class="tweak">The Teleport Other rune now actually swaps the objects and mobs between the two runes rather than just sending them from the touched rune to the other.</li>
+				<li class="tweak">Reduced the self-inflicted damage of both this rune and the Free Cultist rune (Because sending 3 cultists into crit to summon one sounds a bit wonky to me, take_overall_damage ain't no joke).</li>
+				<li class="imageadd">Added animations for the Summon Cultist rune. (and people near the cultist before he gets summoned get a message)</li>
+			</ul>
+			<h3 class="author">Wild Bill updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Re-added bots to emergency crate</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
 			<h2 class="date">2014.10.27</h2>
+			<h3 class="author">Angelite Entyshak updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Certain mobs can no longer be forced to walk indefinately by targeting guns with allowing hostages to walk. (I probably fucked up wording this.)</li>
+			</ul>
 			<h3 class="author">Deity Link updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Fixing areas with colored lights showing all white on pictures.</li>
@@ -88,6 +179,17 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 				<li class="bugfix">Fixed many objects not appearing on pictures if they have been pulled in certain directions.</li>
 				<li class="tweak">Mobs will now always appear to face south on pictures. A necessary evil related to human species and limbs. humanoids would always face south while their clothes would face their actual direction, causing an ugly dissonance. If someone can make humans face their actual direction on pictures and not just their clothes, please do. I am unable to.</li>
 				<li class="bugfix">Mobs that are lying on the ground now appear as such pictures.</li>
+				<li class="bugfix">fixed windoors not properly staying open when you click on them</li>
+				<li class="bugfix">fixed windoors not being emaggable</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">VLC is now used for all media, fixing issues with Windows Media Player.</li>
+				<li class="bugfix">Jukeboxes properly unhook from areas when unwrenched.</li>
+			</ul>
+			<h3 class="author">iconleap updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Make threat detectors usable again.</li>
 			</ul>
 		</div>
 

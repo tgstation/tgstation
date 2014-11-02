@@ -19,8 +19,6 @@
 	melt_temperature = MELTPOINT_STEEL // Rugged
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
-	var/construction_cost = list("metal"=750,"glass"=75)
-	var/construction_time=100
 
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>"
@@ -77,8 +75,6 @@
 	icon_state = "scell"
 	maxcharge = 20000
 	g_amt = 70
-	construction_cost = list("metal"=750,"glass"=100)
-
 /obj/item/weapon/cell/super/empty/New()
 	..()
 	charge = 0
@@ -89,7 +85,6 @@
 	icon_state = "hpcell"
 	maxcharge = 30000
 	g_amt = 80
-	construction_cost = list("metal"=500,"glass"=150,"gold"=200,"silver"=200)
 
 /obj/item/weapon/cell/hyper/empty/New()
 	..()

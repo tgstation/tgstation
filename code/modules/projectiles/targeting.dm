@@ -186,8 +186,8 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 			I.lower_aim()
 			return
 		if(m_intent == "run" && T.client.target_can_move == 1 && T.client.target_can_run == 0 && (ishuman(T)))
-			src << "\red Your move intent is now set to walk, as your targeter permits it."  //Self explanitory.
-			set_m_intent("walk")
+			src << "<spanclass='warning'> Your captive is allowing you to walk. Make sure to change your move intent to walk before trying to move, or you will be fired upon.</span>"  //Self explanitory.
+			//set_m_intent("walk") -there's a real fucked up exploit behind this, so it's been removed. Needs testing. -Angelite-
 
 		//Processing the aiming. Should be probably in separate object with process() but lasy.
 		while(targeted_by && T.client)

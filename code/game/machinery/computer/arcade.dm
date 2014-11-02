@@ -14,6 +14,7 @@
 	var/blocked = 0 //Player cannot attack/heal while set
 
 	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+	emag_cost = 0 // because fun
 
 	l_color = "#00FF00"
 

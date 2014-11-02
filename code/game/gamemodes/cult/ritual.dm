@@ -96,7 +96,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		del(src)
 		return
 	else if(istype(I, /obj/item/weapon/nullrod))
-		user << "\blue You disrupt the vile magic with the deadening field of the null rod!"
+		user << "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>"
 		del(src)
 		return
 	return
@@ -178,7 +178,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	else
 		usr.whisper(pick("B'ADMINES SP'WNIN SH'T","IC'IN O'OC","RO'SHA'M I'SA GRI'FF'N ME'AI","TOX'IN'S O'NM FI'RAH","IA BL'AME TOX'IN'S","FIR'A NON'AN RE'SONA","A'OI I'RS ROUA'GE","LE'OAN JU'STA SP'A'C Z'EE SH'EF","IA PT'WOBEA'RD, IA A'DMI'NEH'LP"))
 	for (var/mob/V in viewers(src))
-		V.show_message("\red The markings pulse with a small burst of light, then fall dark.", 3, "\red You hear a faint fizzle.", 2)
+		V.show_message("<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='warning'>You hear a faint fizzle.</span>", 2)
 	return
 
 /obj/effect/rune/proc/check_icon()
@@ -356,8 +356,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	if(istype(M,/mob/dead))
 		M.invisibility = 0
 		user.visible_message( \
-			"\red [user] drags the ghost to our plan of reality!", \
-			"\red You drag the ghost to our plan of reality!" \
+			"<span class='warning'>[user] drags the ghost to our plan of reality!</span>", \
+			"<span class='warning'>You drag the ghost to our plan of reality!</span>" \
 		)
 		return
 	if(!istype(M))

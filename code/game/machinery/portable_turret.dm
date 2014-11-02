@@ -453,7 +453,7 @@ Status: []<BR>"},
 			if(C.stat)
 				continue
 			// Ignore lazarus-injected mobs.
-			if(C.faction == "lazarus")
+			if(dd_hasprefix(C.faction, "lazarus"))
 				continue
 			targets += C
 

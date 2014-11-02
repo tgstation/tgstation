@@ -119,6 +119,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-plasteel"
 	m_amt = 3750 // Was 7500, which doesn't make any fucking sense
+	perunit = 2875 //average of plasma and metal
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=2"

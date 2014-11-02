@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: fixed windoors not properly staying open when you click on them
-  - bugfix: fixed windoors not being emaggable

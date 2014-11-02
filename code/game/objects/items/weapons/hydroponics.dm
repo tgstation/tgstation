@@ -132,9 +132,25 @@
 /*
  * Sunflower & NovaFlower
  */
+
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
 	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
+
+/obj/item/weapon/grown/novaflower
+	name = "novaflower"
+	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
+	icon = 'icons/obj/harvest.dmi'
+	icon_state = "novaflower"
+	damtype = "fire"
+	force = 0
+	flags = TABLEPASS
+	slot_flags = SLOT_HEAD
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	attack_verb = list("seared", "heated", "whacked", "steamed")
 
 /obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return
@@ -142,13 +158,6 @@
 		M << "\red You are heated by the warmth of the of the [name]!"
 		M.bodytemperature += potency/2 * TEMPERATURE_DAMAGE_COEFFICIENT
 
-/obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user as mob,proximity)
-	if(!proximity) return
-	if(endurance > 0)
-		endurance -= rand(1,(endurance/3)+1)
-	else
-		usr << "All the petals have fallen off the [name] from violent whacking."
-		del(src)
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)

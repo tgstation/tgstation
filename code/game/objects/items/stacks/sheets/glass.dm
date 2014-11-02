@@ -327,6 +327,8 @@
 	origin_tech = "materials=3;plasmatech=2"
 	created_window = /obj/structure/window/plasmabasic
 	full_window = /obj/structure/window/full/plasmabasic
+
+	perunit = 2875 //average of plasma and glass
 	melt_temperature = MELTPOINT_STEEL+500
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
@@ -368,6 +370,7 @@
 	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
 	full_window = /obj/structure/window/full/plasmareinforced
+	perunit = 2875
 
 /obj/item/stack/sheet/glass/plasmarglass/recycle(var/datum/materials/rec)
 	rec.addAmount("plasma",1*src.amount)

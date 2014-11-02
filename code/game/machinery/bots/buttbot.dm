@@ -31,7 +31,7 @@ Here it is: Buttbot.
 		playsound(get_turf(src), 'sound/misc/fart.ogg', 50, 1)
 		sincelastfart = world.timeofday
 
-		
+
 
 
 /obj/machinery/bot/buttbot/proc/speak(var/message)
@@ -60,7 +60,7 @@ Here it is: Buttbot.
 
 			split_phrase[index] = "butt"
 
-		speak(sanitize(dd_list2text(split_phrase," ")))
+		speak(sanitize(list2text(split_phrase," ")))
 
 
 

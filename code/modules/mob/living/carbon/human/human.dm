@@ -751,7 +751,7 @@
 							usr.u_equip(place_item)
 							equip_to_slot_if_possible(place_item, slot_wear_id, 0, 1)
 					// Update strip window
-					if(usr.machine == src && in_range(src, usr))
+					if(in_range(src, usr))
 						show_inv(usr)
 
 				else if(!pickpocket)
@@ -760,6 +760,7 @@
 			else
 				spawn( 0 )
 					O.process()
+					spawn(HUMAN_STRIP_DELAY)	if(in_range(src, usr)) show_inv(usr)
 					return
 
 
@@ -1487,6 +1488,8 @@
 /mob/living/carbon/human/add_blood(mob/living/carbon/human/M as mob)
 	if (!..())
 		return 0
+	if(!M)
+		return
 	//if this blood isn't already in the list, add it
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.

@@ -2,16 +2,16 @@ datum/event/organ_failure
 	var/severity = 1
 
 datum/event/organ_failure/setup()
-	announceWhen = rand(0, 300)
+	announceWhen = rand(0, 150)
 	endWhen = announceWhen + 1
-	severity = rand(1, 3)
+	severity = rand(1, 4)
 
 datum/event/organ_failure/announce()
 	biohazard_alert(rand(3,7))
 datum/event/organ_failure/start()
 	var/list/candidates = list()	//list of candidate keys
 	for(var/mob/living/carbon/human/G in player_list)
-		if(G.mind && G.mind.current && G.mind.current.stat != DEAD && G.health > 70)
+		if(G.mind && G.mind.current && G.mind.current.stat != DEAD)
 			candidates += G
 	if(!candidates.len)	return
 	candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
@@ -25,6 +25,6 @@ datum/event/organ_failure/start()
 			candidates.Remove(C) // Bad candidate.
 			severity--
 			continue
-		I.damage = I.min_bruised_damage
+		I.damage += rand(5,10)*severity //Goes from small organ bruise to assplosion
 		candidates.Remove(C)
 		severity--

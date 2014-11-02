@@ -48,21 +48,21 @@
 	cost=10
 	name="E-Z-Nutrient"
 	other_amounts=list(5)
-	result=/obj/item/nutrient/ez
+	result=/obj/item/weapon/reagent_containers/glass/fertilizer/ez
 
 /datum/biogen_recipe/nutrient/l4z
 	id="l4z"
 	cost=20
 	name="Left 4 Zed"
 	other_amounts=list(5)
-	result=/obj/item/nutrient/l4z
+	result=/obj/item/weapon/reagent_containers/glass/fertilizer/l4z
 
 /datum/biogen_recipe/nutrient/rh
 	id="rh"
 	cost=25
 	name="Robust Harvest"
 	other_amounts=list(5)
-	result=/obj/item/nutrient/rh
+	result=/obj/item/weapon/reagent_containers/glass/fertilizer/rh
 
 /datum/biogen_recipe/leather
 	category="Leather"
@@ -105,7 +105,7 @@
 	id="pest"
 	name="Pest Spray"
 	other_amounts=list(5)
-	result=/obj/item/weapon/pestspray
+	result=/obj/item/weapon/plantspray/pests
 
 /datum/biogen_recipe/misc/beez
 	cost=40
