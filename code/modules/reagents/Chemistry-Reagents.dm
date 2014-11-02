@@ -1211,6 +1211,9 @@ datum
 				M.disabilities = 0
 				M.sdisabilities = 0
 
+				//Makes it more obvious that it worked.
+				M.jitteriness = 0
+
 				// Might need to update appearance for hulk etc.
 				if(needs_update && ishuman(M))
 					var/mob/living/carbon/human/H = M
