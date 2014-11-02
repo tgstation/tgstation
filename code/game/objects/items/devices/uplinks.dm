@@ -100,7 +100,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	if (href_list["buy_item"])
 
 		var/item = href_list["buy_item"]
-		var/list/split = stringsplit(item, ":") // throw away variable
+		var/list/split = text2list(item, ":") // throw away variable
 
 		if(split.len == 2)
 			// Collect category and number
