@@ -515,7 +515,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(screen!=3.4)
 		options += "<A href='?src=\ref[src];menu=3.4'>Production Queue</A> ([linked_lathe.queue.len])"
 	return {"\[<A href='?src=\ref[src];menu=1.0'>Main Menu</A>\]
-	<div class="header">[dd_list2text(options," || ")]</div><hr />"}
+	<div class="header">[list2text(options," || ")]</div><hr />"}
 
 /obj/machinery/computer/rdconsole/proc/CircuitImprinterHeader()
 	var/list/options=list()
@@ -528,7 +528,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(screen!=4.4)
 		options += "<A href='?src=\ref[src];menu=4.4'>Production Queue</A> ([linked_imprinter.queue.len])"
 	return {"\[<A href='?src=\ref[src];menu=1.0'>Main Menu</A>\]
-	<div class=\"header\">[dd_list2text(options," || ")]</div><hr />"}
+	<div class=\"header\">[list2text(options," || ")]</div><hr />"}
 
 /obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
