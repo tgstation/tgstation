@@ -1471,6 +1471,7 @@
 #include "code\modules\surgery\encased.dm"
 #include "code\modules\surgery\eye.dm"
 #include "code\modules\surgery\face.dm"
+#include "code\modules\surgery\genderchange.dm"
 #include "code\modules\surgery\generic.dm"
 #include "code\modules\surgery\headreattach.dm"
 #include "code\modules\surgery\implant.dm"

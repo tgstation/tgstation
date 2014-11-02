@@ -127,5 +127,6 @@ proc/sort_surgeries()
 	var/appendix =	0
 	var/ribcage = 0
 	var/butt = 0
+	var/genitals = 0
 	var/head_reattach = 0
 	var/current_organ
