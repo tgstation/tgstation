@@ -883,6 +883,7 @@
 #include "code\modules\clothing\spacesuits\ert.dm"
 #include "code\modules\clothing\spacesuits\miscellaneous.dm"
 #include "code\modules\clothing\spacesuits\ninja.dm"
+#include "code\modules\clothing\spacesuits\plasmamen.dm"
 #include "code\modules\clothing\spacesuits\rig.dm"
 #include "code\modules\clothing\spacesuits\syndi.dm"
 #include "code\modules\clothing\spacesuits\void.dm"
