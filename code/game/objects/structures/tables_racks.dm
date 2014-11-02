@@ -1,11 +1,12 @@
 /* Tables and Racks
  * Contains:
  *		Tables
- *		Wooden tables
- *		Reinforced tables
+ *		Glass Tables
+ *		Wooden Tables
+ *		Reinforced Tables
  *		Racks
+ *		Rack Parts
  */
-
 
 /*
  * Tables
@@ -20,8 +21,9 @@
 	anchored = 1.0
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.")
-	var/parts = /obj/item/weapon/table_parts
+	var/frame = /obj/structure/table_frame
 	var/busy = 0
+	var/health = 15
 
 /obj/structure/table/New()
 	..()
@@ -195,69 +197,34 @@
 
 /obj/structure/table/blob_act()
 	if(prob(75))
-		if(istype(src, /obj/structure/table/woodentable))
-			new /obj/item/weapon/table_parts/wood( src.loc )
-			qdel(src)
-			return
-		new /obj/item/weapon/table_parts( src.loc )
+		table_destroy(1)
 		qdel(src)
 		return
 
-/obj/structure/table/attack_paw(mob/user)
-	if(HULK in user.mutations)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		visible_message("<span class='danger'>[user] smashes the table apart!</span>")
-		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced(loc)
-		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood(loc)
-		else
-			new /obj/item/weapon/table_parts(loc)
-		density = 0
-		qdel(src)
-
-
 /obj/structure/table/attack_alien(mob/user)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
-	if(istype(src, /obj/structure/table/reinforced))
-		new /obj/item/weapon/table_parts/reinforced(loc)
-	else if(istype(src, /obj/structure/table/woodentable))
-		new/obj/item/weapon/table_parts/wood(loc)
-	else
-		new /obj/item/weapon/table_parts(loc)
-	density = 0
-	qdel(src)
-
+	table_destroy(1)
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced(loc)
-		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood(loc)
-		else
-			new /obj/item/weapon/table_parts(loc)
-		density = 0
-		qdel(src)
+		table_destroy(1)
 
-
-
+/obj/structure/table/attack_paw(mob/user)
+	attack_hand(user)
 
 /obj/structure/table/attack_hand(mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced(loc)
-		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood(loc)
-		else
-			new /obj/item/weapon/table_parts(loc)
-		density = 0
-		qdel(src)
+		table_destroy(1)
 	else
-		..()
+		playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
+		user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
+							 "<span class='warning'>You kick [src].</span>")
+		health -= rand(1,2)
+	healthcheck()
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -304,14 +271,14 @@
 		qdel(I)
 		return
 
-	if (istype(I, /obj/item/weapon/wrench))
+	if (istype(I, /obj/item/weapon/screwdriver))
 		if(istype(src, /obj/structure/table/reinforced))
 			var/obj/structure/table/reinforced/RT = src
 			if(RT.status == 1)
-				table_destroy(2, user)
+				table_destroy(2)
 				return
 		else
-			table_destroy(2, user)
+			table_destroy(2)
 			return
 
 	if (istype(I, /obj/item/weapon/storage/bag/tray))
@@ -336,14 +303,19 @@
 		SS.start()
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
-		table_destroy(1, user)
+		user.visible_message("<span class='notice'>The [src.name] was sliced apart by [user]!</span>")
+		table_destroy(1)
 		return
 
 	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;
 		if(user.drop_item())
 			I.Move(loc)
 
-/obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
+/obj/structure/table/proc/healthcheck()
+	if(health <= 0)
+		table_destroy(1)
+	return
+
 
 /*
 Destroy type values:
@@ -351,47 +323,100 @@ Destroy type values:
 2 = Deconstruction.
 */
 
+/obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
+
 	if(destroy_type == 1)
-		user.visible_message("<span class='notice'>The table was sliced apart by [user]!</span>")
-		new parts( src.loc )
+		if(istype(src, /obj/structure/table/reinforced))
+			new /obj/item/stack/sheet/plasteel(src.loc)
+			new /obj/item/stack/rods(src.loc)
+		else if(istype(src, /obj/structure/table/wood))
+			new/obj/item/stack/sheet/mineral/wood(src.loc)
+			new/obj/item/stack/sheet/mineral/wood(src.loc)
+		else if(istype(src, /obj/structure/table/wood/poker))
+			new/obj/item/stack/tile/carpet(src.loc)
+			new/obj/item/stack/sheet/mineral/wood(src.loc)
+		else if(istype(src, /obj/structure/table/glass))
+			new /obj/item/stack/sheet/glass(src.loc)
+			new /obj/item/stack/rods(src.loc)
+		else
+			new /obj/item/stack/sheet/metal(src.loc)
+			new /obj/item/stack/rods(src.loc)
+		density = 0
 		qdel(src)
 		return
 
 	if(destroy_type == 2)
-		user << "<span class='notice'>Now disassembling the [src.name]</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user << "<span class='notice'>Now disassembling [src]</span>"
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if (do_after(user, 50))
-			new parts( src.loc )
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			new frame(src.loc)
+			if(istype(src, /obj/structure/table/reinforced))
+				new /obj/item/stack/sheet/plasteel(src.loc)
+			else if(istype(src, /obj/structure/table/wood))
+				new/obj/item/stack/sheet/mineral/wood(src.loc)
+			else if(istype(src, /obj/structure/table/wood/poker))
+				new/obj/item/stack/tile/carpet(src.loc)
+			else if(istype(src, /obj/structure/table/glass))
+				new /obj/item/stack/sheet/glass(src.loc)
+			else
+				new /obj/item/stack/sheet/metal(src.loc)
 			qdel(src)
 		return
 
+/*
+ * TABLE CLIMBING
+ */
 
+/obj/structure/table/MouseDrop_T(mob/target, mob/living/carbon/human/user)
+	if(istype(target) && user == target && istype(user))
+		if(user.canmove)
+			climb_table(user)
+
+/obj/structure/table/proc/climb_table(mob/user)
+	src.add_fingerprint(user)
+	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
+								"<span class='notice'>[user] starts climbing onto [src].</span>")
+	if(do_mob(user, user, 20))
+		user.pass_flags += PASSTABLE
+		step(user,get_dir(user,src.loc))
+		user.pass_flags -= PASSTABLE
+		user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
+									"<span class='notice'>[user] climbs onto [src].</span>")
+		add_logs(user, src, "climbed onto")
+		user.Stun(2)
+
+
+/*
+ * Glass tables
+ */
+/obj/structure/table/glass
+	name = "glass table"
+	desc = "What did I say about leaning on the glass tables? Now you need surgery."
+	icon_state = "glass_table"
 
 /*
  * Wooden tables
  */
-/obj/structure/table/woodentable
+/obj/structure/table/wood
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
 	icon_state = "woodtable"
-	parts = /obj/item/weapon/table_parts/wood
+	frame = /obj/item/weapon/table_frame/wood
 
 
-/obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
+/obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
 	icon_state = "pokertable"
-	parts = /obj/item/weapon/table_parts/wood/poker
 
 /*
  * Reinforced tables
  */
 /obj/structure/table/reinforced
 	name = "reinforced table"
-	desc = "A version of the four legged table. It is stronger."
+	desc = "A reinforced version of the four legged table, much harder to simply deconstruct."
 	icon_state = "reinftable"
-	parts = /obj/item/weapon/table_parts/reinforced
+	frame = /obj/item/weapon/table_frame/reinforced
 	var/status = 2
 
 
@@ -416,23 +441,17 @@ Destroy type values:
 			return
 	..()
 
-/obj/structure/table/MouseDrop_T(mob/target, mob/living/carbon/human/user)
-	if(istype(target) && user == target && istype(user))
-		if(user.canmove)
-			climb_table(user)
 
-/obj/structure/table/proc/climb_table(mob/user)
-	src.add_fingerprint(user)
-	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
-								"<span class='notice'>[user] starts climbing onto [src].</span>")
-	if(do_mob(user, user, 20))
-		user.pass_flags += PASSTABLE
-		step(user,get_dir(user,src.loc))
-		user.pass_flags -= PASSTABLE
-		user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
-									"<span class='notice'>[user] climbs onto [src].</span>")
-		add_logs(user, src, "climbed onto")
-		user.Stun(2)
+/obj/structure/table/reinforced/attack_paw(mob/user)
+	attack_hand(user)
+
+/obj/structure/table/reinforced/attack_hand(mob/user)
+	if(HULK in user.mutations)
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		table_destroy(1)
+	else
+		return
 
 /*
  * Racks
@@ -445,6 +464,7 @@ Destroy type values:
 	density = 1
 	anchored = 1.0
 	throwpass = 1	//You can throw objects over this, despite it's density.
+	var/health = 5
 
 /obj/structure/rack/ex_act(severity)
 	switch(severity)
@@ -505,22 +525,20 @@ Destroy type values:
 	return 1
 
 
-/obj/structure/rack/attack_hand(mob/user)
-	if(HULK in user.mutations)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		new /obj/item/weapon/rack_parts(loc)
-		density = 0
-		qdel(src)
+/obj/structure/rack/attack_paw(mob/user as mob)
+	attack_hand(user)
 
+/obj/structure/rack/attack_hand(mob/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE)
+	playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
+	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
+						 "<span class='warning'>You kick [src].</span>")
 
-/obj/structure/rack/attack_paw(mob/user)
 	if(HULK in user.mutations)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		new /obj/item/weapon/rack_parts(loc)
-		density = 0
-		qdel(src)
+		health -= 5
+	else
+		health -= rand(1,2)
+	healthcheck()
 
 
 /obj/structure/rack/attack_alien(mob/user)
@@ -538,3 +556,31 @@ Destroy type values:
 		qdel(src)
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
+
+/obj/structure/rack/proc/healthcheck()
+	if(health <= 0)
+		density = 0
+		var/obj/item/weapon/rack_parts/newparts = new(loc)
+		transfer_fingerprints_to(newparts)
+	return
+
+/*
+ * Rack Parts
+ */
+
+/obj/item/weapon/rack_parts/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/metal( user.loc )
+		qdel(src)
+		return
+	return
+
+/obj/item/weapon/rack_parts/attack_self(mob/user as mob)
+	user << "<span class='notice'>Constructing rack...</span>"
+	if (do_after(user, 50))
+		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
+		R.add_fingerprint(user)
+		user.drop_item()
+		qdel(src)
+		return

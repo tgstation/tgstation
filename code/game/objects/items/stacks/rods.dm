@@ -1,3 +1,7 @@
+var/global/list/datum/stack_recipe/rod_recipes = list ( \
+	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+	)
+
 /obj/item/stack/rods
 	name = "metal rod"
 	desc = "Some rods. Can be used for building, or something."
@@ -13,6 +17,10 @@
 	max_amount = 60
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
+
+/obj/item/stack/rods/New(var/loc, var/amount=null)
+	recipes = rod_recipes
+	return ..()
 
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
 	..()
@@ -37,34 +45,16 @@
 		return
 	..()
 
-
-/obj/item/stack/rods/attack_self(mob/user as mob)
-	src.add_fingerprint(user)
-
-	if(!istype(user.loc,/turf)) return 0
-
-	if (locate(/obj/structure/grille, usr.loc))
-		for(var/obj/structure/grille/G in usr.loc)
-			if (G.destroyed)
-				G.health = 10
-				G.density = 1
-				G.destroyed = 0
-				G.icon_state = "grille"
-				use(1)
-			else
-				return 1
-	else
-		if(get_amount() < 2)
-			user << "<span class='notice'>You need at least two rods to do this.</span>"
-			return
-		usr << "<span class='notice'>Assembling grille...</span>"
-		if (!do_after(usr, 10))
-			return
-		var/obj/structure/grille/F = new /obj/structure/grille/ ( usr.loc )
-		usr << "<span class='notice'>You assemble a grille.</span>"
-		F.add_fingerprint(usr)
-		use(2)
-	return
+/obj/item/stack/rods/attack(var/obj/structure/grille/G, mob/user)
+	..()
+	if(istype(G, /obj/structure/grille))
+		if (G.destroyed)
+			user << "<span class='notice'>You rebuild the broken grille.</span>"
+			G.health = 10
+			G.density = 1
+			G.destroyed = 0
+			G.icon_state = "grille"
+			use(1)
 
 /obj/item/stack/rods/cyborg/
 	m_amt = 0
