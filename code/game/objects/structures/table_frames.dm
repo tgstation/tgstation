@@ -2,7 +2,6 @@
  * Contains:
  *		Frames
  *		Wooden Frames
- *		Reinforced Frames
  */
 
 
@@ -19,7 +18,35 @@
 	anchored = 0
 	layer = 2.8
 
-/obj/structure/table_frame/attackby()
+/obj/structure/table_frame/attackby(var/obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/wrench))
+		user << "<span class='notice'>Now disassembling [src].</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 40))
+			new /obj/item/stack/rods(src.loc)
+			qdel(src)
+			return
+	if(istype(I, /obj/item/stack/sheet/plasteel))
+		user << "<span class='notice'>Now adding the [I] to the [src].</span>"
+		if(do_after(user, 50))
+			new /obj/structure/table/reinforced(src.loc)
+			qdel(src)
+			I.use(1)
+			return
+	if(istype(I, /obj/item/stack/sheet/metal))
+		user << "<span class='notice'>Now adding the [I] to the [src].</span>"
+		if(do_after(user, 20))
+			new /obj/structure/table(src.loc)
+			qdel(src)
+			I.use(1)
+			return
+	if(istype(I, /obj/item/stack/sheet/glass))
+		user << "<span class='notice'>Now adding the [I] to the [src].</span>"
+		if(do_after(user, 20))
+			new /obj/structure/table/glass(src.loc)
+			qdel(src)
+			I.use(1)
+			return
 
 /*
  * Wooden Frames
@@ -30,14 +57,25 @@
 	desc = "Four wooden legs with four framing wooden rods for a wooden table. You could easily pass through this."
 	icon_state = "wood_frame"
 
- /*
- * Reinforced Frames
- */
-
-/obj/structure/table_frame/reinforced
-	name = "reinforced table frame"
-	desc = "Four metal legs with four framing rods for a table. They seem especially reinforced."
-	icon_state = "reinforced_frame"
-	density = 1
-	anchored = 1
-	throwpass = 1
+/obj/structure/table_frame/wood/attackby(var/obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/wrench))
+		user << "<span class='notice'>Now disassembling [src].</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 40))
+			new /obj/item/stack/sheet/mineral/wood(src.loc)
+			qdel(src)
+			return
+	if(istype(I, /obj/item/stack/sheet/mineral/wood))
+		user << "<span class='notice'>Now adding the [I] to the [src].</span>"
+		if(do_after(user, 20))
+			new /obj/structure/table/wood(src.loc)
+			qdel(src)
+			I.use(1)
+			return
+	if(istype(I, /obj/item/stack/tile/carpet))
+		user << "<span class='notice'>Now adding the [I] to the [src].</span>"
+		if(do_after(user, 20))
+			new /obj/structure/table/wood/poker(src.loc)
+			qdel(src)
+			I.use(1)
+			return

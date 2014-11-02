@@ -346,9 +346,9 @@ Destroy type values:
 		return
 
 	if(destroy_type == 2)
-		user << "<span class='notice'>Now disassembling [src]</span>"
+		user << "<span class='notice'>Now disassembling [src].</span>"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if (do_after(user, 50))
+		if (do_after(user, 30))
 			new frame(src.loc)
 			if(istype(src, /obj/structure/table/reinforced))
 				new /obj/item/stack/sheet/plasteel(src.loc)
@@ -401,7 +401,7 @@ Destroy type values:
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
 	icon_state = "woodtable"
-	frame = /obj/item/weapon/table_frame/wood
+	frame = /obj/structure/table_frame/wood
 
 
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
@@ -416,7 +416,6 @@ Destroy type values:
 	name = "reinforced table"
 	desc = "A reinforced version of the four legged table, much harder to simply deconstruct."
 	icon_state = "reinftable"
-	frame = /obj/item/weapon/table_frame/reinforced
 	var/status = 2
 
 
@@ -452,6 +451,7 @@ Destroy type values:
 		table_destroy(1)
 	else
 		return
+
 
 /*
  * Racks
