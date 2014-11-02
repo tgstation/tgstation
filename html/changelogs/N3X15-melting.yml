@@ -1,0 +1,6 @@
+author: N3X15
+delete-after: true
+changes:
+- rscadd: "Slag can now contain minerals for recycling purposes."
+- rscadd: "Ores can be recycled."
+- rscadd: "Coins can be recycled."

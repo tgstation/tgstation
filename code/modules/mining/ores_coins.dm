@@ -4,8 +4,15 @@
 	name = "Rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore2"
+	w_type = RECYK_MISC
 	var/material=null
 	var/datum/geosample/geologic_data
+
+/obj/item/weapon/ore/recycle(var/datum/materials/rec)
+	if(material==null)
+		return NOT_RECYCLABLE
+	rec.addAmount(material, 1)
+	return w_type
 
 /obj/item/weapon/ore/uranium
 	name = "Uranium ore"
@@ -72,8 +79,16 @@
 
 /obj/item/weapon/ore/slag
 	name = "Slag"
-	desc = "Completely useless"
+	desc = "Completely useless unless recycled."
 	icon_state = "slag"
+
+	var/datum/materials/mats=new
+
+/obj/item/weapon/ore/slag/recycle(var/datum/materials/rec)
+	if(mats.getVolume() > 0)
+		return NOT_RECYCLABLE
+	rec.addFrom(mats) // NOT removeFrom.
+	return RECYK_MISC
 
 /obj/item/weapon/ore/mauxite
 	name = "mauxite ore"
@@ -276,6 +291,12 @@
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 0)
+
+/obj/item/weapon/coin/recycle(var/datum/materials/rec)
+	if(material==null)
+		return NOT_RECYCLABLE
+	rec.addAmount(material, 0.2) // 5 coins per sheet.
+	return w_type
 
 /obj/item/weapon/coin/gold
 	material="gold"
