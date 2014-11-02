@@ -37,6 +37,7 @@
 	src.backup_body = ""
 	src.backup_author = ""
 	src.img = null
+	src.locked = 0
 
 /datum/feed_channel/proc/clear()
 	src.channel_name = ""
@@ -62,7 +63,7 @@
 	newChannel.is_admin_channel = adminChannel
 	network_channels += newChannel
 
-/datum/feed_network/proc/SubmitArticle(var/msg, var/author, var/channel_name, var/obj/item/weapon/photo/photo, var/adminMessage = 0, var/allow_comments = 0)
+/datum/feed_network/proc/SubmitArticle(var/msg, var/author, var/channel_name, var/obj/item/weapon/photo/photo, var/adminMessage = 0, var/allow_comments = 1)
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = author
 	newMsg.body = msg
@@ -379,9 +380,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 									dat+="[MESSAGE.caption]<BR>"
 								dat+="<BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author] </FONT>\] - ([MESSAGE.time_stamp])</FONT><BR>"
-							dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]:<br>"
+							dat+="<b><font size=1>[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]</font></b><br>"
 							for(var/datum/feed_comment/comment in MESSAGE.comments)
-								dat+="[comment.body]<br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
+								dat+="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
 							if(MESSAGE.locked)
 								dat+="<b>Comments locked</b><br>"
 							else
