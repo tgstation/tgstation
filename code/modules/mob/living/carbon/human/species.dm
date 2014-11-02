@@ -535,7 +535,7 @@
 						icon_num = 2
 					//if(0 to comparison)
 
-				H.healthdoll.overlays += image('icons/mob/screen_gen.dmi', "[L][icon_num]")
+				H.healthdoll.overlays += image('icons/mob/screen_gen.dmi', "[L.name][icon_num]")
 
 	if(H.nutrition_icon)
 		switch(H.nutrition)
