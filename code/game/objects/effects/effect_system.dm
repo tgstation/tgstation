@@ -957,6 +957,7 @@ steam.start() -- spawns the effect
 
 /obj/structure/foamedmetal/attack_animal(var/mob/living/simple_animal/M)
 	if(M.environment_smash >= 1)
+		M.do_attack_animation()
 		M << "<span class='notice'>You smash apart the foam wall.</span>"
 		qdel(src)
 		return

@@ -122,6 +122,7 @@
 
 /obj/structure/alien/resin/attack_alien(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation()
 	if(islarva(user))
 		return
 	user.visible_message("<span class='danger'>[user] claws at the resin!</span>")

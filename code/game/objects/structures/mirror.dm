@@ -70,6 +70,7 @@
 
 
 /obj/structure/mirror/attack_alien(mob/user as mob)
+	user.do_attack_animation()
 	if(islarva(user)) return
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
@@ -82,6 +83,7 @@
 	if(!isanimal(user)) return
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0) return
+	M.do_attack_animation()
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
@@ -90,6 +92,7 @@
 
 
 /obj/structure/mirror/attack_slime(mob/user as mob)
+	user.do_attack_animation()
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return

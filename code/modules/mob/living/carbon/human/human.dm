@@ -222,6 +222,7 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
+		M.do_attack_animation()
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
@@ -243,7 +244,7 @@
 
 
 		else
-
+			L.do_attack_animation()
 			var/damage = rand(1, 3)
 			visible_message("<span class='danger'>[L] bites [src]!</span>", \
 					"<span class='userdanger'>[L] bites [src]!</span>")
@@ -261,6 +262,7 @@
 
 	if (health > -100)
 
+		M.do_attack_animation()
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
 

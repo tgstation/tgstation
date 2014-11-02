@@ -127,7 +127,16 @@ var/next_mob_id = 0
 		M.show_message( message, 2, deaf_message, 1)
 
 
-
+mob/proc/do_attack_animation()
+	var/pixel_x_diff = 0
+	var/pixel_y_diff = 0
+	switch(src.dir)
+		if(1) pixel_y_diff = 8
+		if(2) pixel_y_diff = -8
+		if(4) pixel_x_diff = 8
+		if(8) pixel_y_diff = -8
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
+	animate(pixel_x = initial(pixel_x), pixel_y = initial(pixel_y), time = 2)
 
 /mob/proc/movement_delay()
 	return 0

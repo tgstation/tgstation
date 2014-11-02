@@ -246,6 +246,7 @@
 
 	if (Victim) return // can't attack while eating!
 
+	M.do_attack_animation()
 	visible_message("<span class='danger'> The [M.name] has glomped [src]!</span>", \
 			"<span class='userdanger'> The [M.name] has glomped [src]!</span>")
 	var/damage = rand(1, 3)
@@ -263,6 +264,7 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
+		M.do_attack_animation()
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
@@ -292,6 +294,7 @@
 		if ("help")
 			help_shake_act(M)
 		else
+			M.do_attack_animation()
 			if (M.is_muzzled())
 				return
 
@@ -313,7 +316,7 @@
 
 
 		else
-
+			L.do_attack_animation()
 			attacked += 10
 			visible_message("<span class='danger'>[L] bites [src]!</span>", \
 					"<span class='userdanger'>[L] bites [src]!</span>")
@@ -410,6 +413,7 @@
 
 		else
 
+			M.do_attack_animation()
 			var/damage = rand(1, 9)
 
 			attacked += 10
@@ -457,7 +461,7 @@
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 
 		if ("harm")
-
+			M.do_attack_animation()
 			if (prob(95))
 				attacked += 10
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
@@ -493,6 +497,7 @@
 			visible_message("<span class='warning'> [M] has grabbed [name] passively!</span>")
 
 		if ("disarm")
+			M.do_attack_animation()
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			attacked += 10

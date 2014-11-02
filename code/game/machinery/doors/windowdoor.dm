@@ -200,6 +200,7 @@
 	take_damage(damage)
 
 /obj/machinery/door/window/attack_alien(mob/user as mob)
+	user.do_attack_animation()
 	if(islarva(user))
 		return
 	attack_generic(user, 25)
@@ -208,12 +209,14 @@
 	if(!isanimal(user))
 		return
 	var/mob/living/simple_animal/M = user
+	M.do_attack_animation()
 	if(M.melee_damage_upper <= 0)
 		return
 	attack_generic(M, M.melee_damage_upper)
 
 
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user as mob)
+	user.do_attack_animation()
 	if(!user.is_adult)
 		return
 	attack_generic(user, 25)

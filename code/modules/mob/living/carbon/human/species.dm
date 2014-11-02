@@ -722,6 +722,7 @@
 
 		if("harm")
 			add_logs(M, H, "punched")
+			M.do_attack_animation()
 
 			var/atk_verb = "punch"
 			if(H.lying)
@@ -822,6 +823,8 @@
 
 /datum/species/proc/spec_attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/obj/item/organ/limb/affecting, var/hit_area, var/intent, var/obj/item/organ/limb/target_limb, target_area, var/mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
+	if(user != src)
+		user.do_attack_animation()
 	if((user != H) && H.check_shields(I.force, "the [I.name]"))
 		return 0
 
@@ -914,6 +917,8 @@
 	var/showname = "."
 	if(user)
 		showname = " by [user]!"
+		if(user != src)
+			user.do_attack_animation()
 	if(!(user in viewers(I, null)))
 		showname = "."
 

@@ -205,6 +205,7 @@
 
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation()
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the table apart!</span>")
 		if(istype(src, /obj/structure/table/reinforced))
@@ -218,6 +219,7 @@
 
 
 /obj/structure/table/attack_alien(mob/user)
+	user.do_attack_animation()
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	if(istype(src, /obj/structure/table/reinforced))
 		new /obj/item/weapon/table_parts/reinforced(loc)
@@ -231,6 +233,7 @@
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		user.do_attack_animation()
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced(loc)
@@ -246,6 +249,7 @@
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation()
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		if(istype(src, /obj/structure/table/reinforced))
@@ -516,6 +520,7 @@ Destroy type values:
 
 /obj/structure/rack/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation()
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		new /obj/item/weapon/rack_parts(loc)
@@ -524,6 +529,7 @@ Destroy type values:
 
 
 /obj/structure/rack/attack_alien(mob/user)
+	user.do_attack_animation()
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	new /obj/item/weapon/rack_parts(loc)
 	density = 0
@@ -532,6 +538,7 @@ Destroy type values:
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		user.do_attack_animation()
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		new /obj/item/weapon/rack_parts(loc)
 		density = 0
