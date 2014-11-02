@@ -18,6 +18,7 @@
 	var/time_stamp = ""
 	var/list/datum/feed_comment/comments = list()
 	var/locked = 0
+	var/caption = ""
 
 /datum/feed_channel
 	var/channel_name=""
@@ -61,14 +62,16 @@
 	newChannel.is_admin_channel = adminChannel
 	network_channels += newChannel
 
-/datum/feed_network/proc/SubmitArticle(var/msg, var/author, var/channel_name, var/obj/item/weapon/photo/photo, var/adminMessage = 0)
+/datum/feed_network/proc/SubmitArticle(var/msg, var/author, var/channel_name, var/obj/item/weapon/photo/photo, var/adminMessage = 0, var/allow_comments = 0)
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = author
 	newMsg.body = msg
 	newMsg.time_stamp = "[worldtime2text()]"
 	newMsg.is_admin_message = adminMessage
+	newMsg.locked = !allow_comments
 	if(photo)
 		newMsg.img = photo.img
+		newMsg.caption = photo.scribble
 	for(var/datum/feed_channel/FC in network_channels)
 		if(FC.channel_name == channel_name)
 			FC.messages += newMsg                  //Adding message to the network's appropriate feed_channel
@@ -158,6 +161,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/c_locked=0;        //Will our new channel be locked to public submissions?
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
 	var/datum/feed_channel/viewing_channel = null
+	var/allow_comments = 1
 	luminosity = 0
 	anchored = 1
 
@@ -300,6 +304,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
 				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> [src.msg] <BR>"
 				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>:</B>  [(src.photo ? "Photo Attached" : "No Photo")]</BR>"
+				dat+="<B><A href='?src=\ref[src];set_comment=1'>Comments [allow_comments ? "Enabled" : "Disabled"]</A></B><BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
 			if(4)
 				dat+="Feed story successfully submitted to [src.channel_name].<BR><BR>"
@@ -369,7 +374,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							dat+="-[MESSAGE.body] <BR>"
 							if(MESSAGE.img)
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
-								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
+								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
+								if(MESSAGE.caption)
+									dat+="[MESSAGE.caption]<BR>"
+								dat+="<BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author] </FONT>\] - ([MESSAGE.time_stamp])</FONT><BR>"
 							dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]:<br>"
 							for(var/datum/feed_comment/comment in MESSAGE.comments)
@@ -567,7 +575,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
 			else
-				news_network.SubmitArticle(msg, scanned_user, channel_name, photo)
+				news_network.SubmitArticle(msg, scanned_user, channel_name, photo, allow_comments)
 				feedback_inc("newscaster_stories",1)
 				src.screen=4
 			src.updateUsrDialog()
@@ -767,6 +775,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		else if(href_list["lock_comment"])
 			var/datum/feed_message/FM = locate(href_list["lock_comment"])
 			FM.locked ^= 1
+			updateUsrDialog()
+
+		else if(href_list["set_comment"])
+			allow_comments ^= 1
 			updateUsrDialog()
 
 		else if(href_list["refresh"])
