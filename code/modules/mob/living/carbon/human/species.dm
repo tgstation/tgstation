@@ -510,6 +510,7 @@
 						else					H.healths.icon_state = "health6"
 
 	if(H.healthdoll)
+		H.healthdoll.overlays.Cut()
 		if(H.stat == DEAD)
 			H.healthdoll.icon_state = "healthdoll_DEAD"
 		else
@@ -534,7 +535,6 @@
 						icon_num = 2
 					//if(0 to comparison)
 
-				H.healthdoll.overlays.Cut()
 				H.healthdoll.overlays += image('icons/mob/screen_gen.dmi', "[L][icon_num]")
 
 	if(H.nutrition_icon)
