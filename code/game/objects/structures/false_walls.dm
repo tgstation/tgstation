@@ -268,7 +268,7 @@
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon_state = ""
-	mineral = "clown"
+	mineral = "bananium"
 
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"

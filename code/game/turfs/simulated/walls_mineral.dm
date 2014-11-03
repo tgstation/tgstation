@@ -5,6 +5,10 @@
 	var/last_event = 0
 	var/active = null
 
+/turf/simulated/wall/mineral/New()
+	sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+	..()
+
 /turf/simulated/wall/mineral/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
@@ -29,13 +33,18 @@
 	icon_state = "diamond0"
 	walltype = "diamond"
 	mineral = "diamond"
+	slicing_duration = 200   //diamond wall takes twice as much time to slice
+
+/turf/simulated/wall/mineral/diamond/thermitemelt(mob/user as mob)
+	return
 
 /turf/simulated/wall/mineral/clown
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
-	icon_state = "clown0"
-	walltype = "clown"
-	mineral = "clown"
+	icon_state = "bananium0"
+	walltype = "bananium"
+	mineral = "bananium"
+
 
 /turf/simulated/wall/mineral/sandstone
 	name = "sandstone wall"
@@ -93,7 +102,6 @@
 	..()
 
 /turf/simulated/wall/mineral/plasma/proc/PlasmaBurn(temperature)
-	spawn(2)
 	new /obj/structure/girder(src)
 	src.ChangeTurf(/turf/simulated/floor)
 	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
