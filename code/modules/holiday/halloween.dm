@@ -88,7 +88,7 @@
 		trapped = HOWLING_GHOST
 		return
 	else
-		var/mob/living/carbon/human/H = new (loc)
+		var/mob/living/carbon/human/H = new(loc)
 		H.makeSkeleton()
 		H.health = 1e5
 		insert(H)
@@ -100,64 +100,53 @@
 	if(!trapped)
 		return
 
-	if(trapped == SPOOKY_SKELETON)
+	else if(trapped == SPOOKY_SKELETON)
 		src.visible_message("<span class='userdanger'><font size='5'>BOO!</font></span>");
-		playsound(src.loc, pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg','sound/spookoween/girlscream.ogg'), 300, 1)
+		playsound(loc, pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg','sound/spookoween/girlscream.ogg'), 300, 1)
 		trapped = 0
 		spawn(60)
-			if(trapped_mob && trapped_mob.loc && trapped_mob.loc != loc)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
+			if(trapped_mob && trapped_mob.loc)
+				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new()
 				smoke.set_up(1,0, trapped_mob.loc, 0)
 				smoke.start()
-				trapped_mob.loc = loc
-			if(gc_destroyed)
 				qdel(trapped_mob)
-				return
-			src.close()
-			trapped = SPOOKY_SKELETON
-		return
 
-	if(trapped == ANGRY_FAITHLESS)
+	else if(trapped == HOWLING_GHOST)
+		src.visible_message("<span class='userdanger'><font size='5'>Woo Woo</font></span>");
+		playsound(src.loc, 'sound/spookoween/ghosty_wind.ogg', 300, 1)
+		new /mob/living/simple_animal/shade/howling_ghost (loc)
+		trapped = 0
+
+	else if(trapped == SCARY_BATS)
+		src.visible_message("<span class='userdanger'><font size='5'>Protect your hair!!!</font></span>");
+		playsound(src.loc, 'sound/spookoween/bats.ogg', 300, 1)
+		var/number = rand(2,5)
+		for(var/i=0,i < number,i++)
+			new /mob/living/simple_animal/hostile/retaliate/bat (loc)
+		trapped = 0
+
+	else if(trapped == ANGRY_FAITHLESS)
 		src.visible_message("<span class='userdanger'>The closet bursts open!</span>");
-		src.visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN !!!</font></span>");
+		src.visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN!!!</font></span>");
 		playsound(src.loc, 'sound/hallucinations/wail.ogg', 300, 1)
 		var/mob/living/simple_animal/hostile/faithless/F = new (loc)
-		F.health =1e5
+		F.health = 1e5
 		F.stance = HOSTILE_STANCE_ATTACK
 		F.GiveTarget(usr)
 		trapped = 0
-		qdel(src)
 		spawn(120)
 			if(F && F.loc)
 				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
 				smoke.set_up(1,0, F.loc, 0)
 				smoke.start()
 				qdel(F)
-		return
 
-	if(trapped == SCARY_BATS)
-		src.visible_message("<span class='userdanger'><font size='5'>Protect your hairs !!!</font></span>");
-		playsound(src.loc, 'sound/spookoween/bats.ogg', 300, 1)
-		var/number = rand(1,4)
-		for(var/i=0,i < number,i++)
-			new /mob/living/simple_animal/hostile/retaliate/bat (loc)
-		trapped = 0
-		return
-
-	if(trapped == INSANE_CLOWN)
+	else if(trapped == INSANE_CLOWN)
 		src.visible_message("<span class='userdanger'><font size='5'>...</font></span>");
 		playsound(src.loc, 'sound/spookoween/scary_clown_appear.ogg', 300, 1)
 		var/mob/living/simple_animal/hostile/retaliate/clown/insane/IC = new (loc)
 		IC.GiveTarget(usr)
 		trapped = 0
-		return
-
-	if(trapped == HOWLING_GHOST)
-		src.visible_message("<span class='userdanger'><font size='5'>Woo Woo</font></span>");
-		playsound(src.loc, 'sound/spookoween/ghosty_wind.ogg', 300, 1)
-		new /mob/living/simple_animal/shade/howling_ghost (loc)
-		trapped = 0
-		return
 
 //don't spawn in crates
 /obj/structure/closet/crate/trigger_spooky_trap()
@@ -172,8 +161,8 @@
 ////////////////////
 
 /mob/living/simple_animal/shade/howling_ghost
-	name ="Ghost"
-	real_name = "Ghost"
+	name = "ghost"
+	real_name = "ghost"
 	icon = 'icons/mob/mob.dmi'
 	maxHealth = 1e6
 	health = 1e6
@@ -236,7 +225,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane
 	name = "Insane Clown"
-	desc = "May the HonkMother have mercy..."
+	desc = "Some clowns do not manage to be accepted, and go insane. This is one of them."
 	icon_state = "scary_clown"
 	icon_living = "scary_clown"
 	icon_dead = "scary_clown"
@@ -248,7 +237,6 @@
 	heat_damage_per_tick = 0
 	cold_damage_per_tick = 0
 	unsuitable_atmos_damage = 0
-
 	var/timer
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/New()
@@ -295,12 +283,11 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O,/obj/item/weapon/nullrod))
 		if(prob(5))
-			visible_message("<span class='notice'>[src] finally found the peace it deserves. HONK for the HonkMother !</span>");
+			visible_message("<span class='notice'>[src] finally found the peace it deserves. You hear honks echoing off into the distance.</span>")
 			playsound(src.loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 			qdel(src)
-			return
 		else
-			visible_message("<span class='userdanger'>It seems to be resisting the effect!!!</span>");
-			return
-	..()
+			visible_message("<span class='userdanger'>It seems to be resisting the effect!</span>")
+	else
+		..()
 
