@@ -57,6 +57,7 @@
 //	item_state = "rig[on]-[_color]"
 	if(on)	user.SetLuminosity(user.luminosity + brightness_on)
 	else	user.SetLuminosity(user.luminosity - brightness_on)
+	user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/plasmaman/pickup(mob/user)
 	if(on)
