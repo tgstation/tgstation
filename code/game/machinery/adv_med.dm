@@ -8,7 +8,7 @@
 	density = 1
 	anchored = 1
 	idle_power_usage = 125
-	active_power_usage = 500
+	active_power_usage = 250
 	machine_flags = 0
 
 	var/mob/living/carbon/occupant
