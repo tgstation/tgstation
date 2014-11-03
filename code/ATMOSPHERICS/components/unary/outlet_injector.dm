@@ -48,8 +48,7 @@
 		loc.assume_air(removed)
 		air_update_turf()
 
-		if(network)
-			network.update = 1
+		parent.update = 1
 
 	return 1
 
@@ -66,8 +65,7 @@
 
 		loc.assume_air(removed)
 
-		if(network)
-			network.update = 1
+		parent.update = 1
 
 	flick("inje_inject", src)
 

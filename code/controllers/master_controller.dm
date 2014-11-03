@@ -267,9 +267,9 @@ var/global/pipe_processing_killed = 0
 		processing_objects -= Object
 
 /datum/controller/game_controller/proc/process_pipenets()
-	last_thing_processed = /datum/pipe_network
-	for(var/datum/pipe_network/Network in pipe_networks)
-		Network.process()
+	last_thing_processed = /datum/pipeline
+	for(var/datum/pipeline/P in pipe_networks)
+		P.process()
 
 /datum/controller/game_controller/proc/process_powernets()
 	last_thing_processed = /datum/powernet
