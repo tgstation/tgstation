@@ -76,6 +76,11 @@
 	desc = "A robust drill hat for the Head of Security. For keeping the officers in line."
 	icon_state = "hosdrill"
 
+/obj/item/clothing/head/HoS/formal
+	name = "formal head of security cap"
+	desc = "A robust formal cap for special occasions."
+	icon_state = "hosformal"
+
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
