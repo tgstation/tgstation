@@ -326,6 +326,7 @@
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card) )
 		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation()
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return
 		var/aforce = I.force
