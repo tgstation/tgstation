@@ -14,30 +14,28 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-			return
-		if(no_light)
-			return
-		on = !on
-		icon_state = "rig[on]-[_color]"
-//		item_state = "rig[on]-[_color]"
+/obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+		return
+	if(no_light)
+		return
+	on = !on
+	icon_state = "rig[on]-[_color]"
 
-		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
-		else	user.SetLuminosity(user.luminosity - brightness_on)
+	if(on)	user.SetLuminosity(user.luminosity + brightness_on)
+	else	user.SetLuminosity(user.luminosity - brightness_on)
+	user.update_inv_head()
 
-	pickup(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity + brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(0)
+/obj/item/clothing/head/helmet/space/rig/pickup(mob/user)
+	if(on)
+		user.SetLuminosity(user.luminosity + brightness_on)
+		SetLuminosity(0)
 
-	dropped(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity - brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
+/obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
+	if(on)
+		user.SetLuminosity(user.luminosity - brightness_on)
+		SetLuminosity(brightness_on)
 
 /obj/item/clothing/suit/space/rig
 	name = "engineering hardsuit"
