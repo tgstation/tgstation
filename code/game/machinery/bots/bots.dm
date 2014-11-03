@@ -84,16 +84,6 @@
 	"Waiting for clear path","Calculating navigation path","Pinging beacon network","Unable to reach destination")
 	//This holds text for what the bot is mode doing, reported on the AI's bot control interface.
 
-	var/tickerPeriod = 10 //in deciseconds
-
-//Controller for bots so they cannot lag the MC.
-/obj/machinery/bot/proc/ticker()
-	while(src && !src.gc_destroyed)
-		bot_process()
-		sleep(src.tickerPeriod)
-	return
-
-
 /obj/machinery/bot/proc/turn_on()
 	if(stat)	return 0
 	on = 1
@@ -113,8 +103,6 @@
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
 
-	spawn()
-		ticker() //Activates the bot's controller.
 
 /obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.
 	if(radio_controller)
