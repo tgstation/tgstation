@@ -22,6 +22,8 @@
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
+	var/framestack = /obj/item/stack/rods
+	var/buildstack = /obj/item/stack/sheet/metal
 	var/busy = 0
 	var/health = 15
 
@@ -251,24 +253,26 @@
 		step(O, get_dir(O, src))
 	return
 
+/obj/structure/table/proc/tablepush(obj/item/I, mob/user)
+	if(get_dist(src, user) < 2)
+		var/obj/item/weapon/grab/G = I
+		if(G.affecting.buckled)
+			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return
+		if(G.state < GRAB_AGGRESSIVE)
+			user << "<span class='notice'>You need a better grip to do that!</span>"
+			return
+		if(!G.confirm())
+			return
+		G.affecting.loc = src.loc
+		G.affecting.Weaken(5)
+		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
+									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
+	qdel(I)
 
 /obj/structure/table/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/weapon/grab))
-		if(get_dist(src, user) < 2)
-			var/obj/item/weapon/grab/G = I
-			if(G.affecting.buckled)
-				user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
-				return
-			if(G.state < GRAB_AGGRESSIVE)
-				user << "<span class='notice'>You need a better grip to do that!</span>"
-				return
-			if(!G.confirm())
-				return
-			G.affecting.loc = src.loc
-			G.affecting.Weaken(5)
-			G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
-										"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
-		qdel(I)
+		tablepush(I, user)
 		return
 
 	if (istype(I, /obj/item/weapon/screwdriver))
@@ -323,43 +327,24 @@ Destroy type values:
 2 = Deconstruction.
 */
 
+#define TBL_DESTROY 1
+#define TBL_DECONSTRUCT 2
+
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user as mob)
 
-	if(destroy_type == 1)
-		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/stack/sheet/plasteel(src.loc)
-			new /obj/item/stack/rods(src.loc)
-		else if(istype(src, /obj/structure/table/wood))
-			new/obj/item/stack/sheet/mineral/wood(src.loc)
-			new/obj/item/stack/sheet/mineral/wood(src.loc)
-		else if(istype(src, /obj/structure/table/wood/poker))
-			new/obj/item/stack/tile/carpet(src.loc)
-			new/obj/item/stack/sheet/mineral/wood(src.loc)
-		else if(istype(src, /obj/structure/table/glass))
-			new /obj/item/stack/sheet/glass(src.loc)
-			new /obj/item/stack/rods(src.loc)
-		else
-			new /obj/item/stack/sheet/metal(src.loc)
-			new /obj/item/stack/rods(src.loc)
-		density = 0
+	if(destroy_type == TBL_DESTROY)
+		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+		new framestack(src.loc)
+		new buildstack(src.loc)
 		qdel(src)
 		return
 
-	if(destroy_type == 2)
+	if(destroy_type == TBL_DECONSTRUCT)
 		user << "<span class='notice'>Now disassembling [src].</span>"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if (do_after(user, 30))
 			new frame(src.loc)
-			if(istype(src, /obj/structure/table/reinforced))
-				new /obj/item/stack/sheet/plasteel(src.loc)
-			else if(istype(src, /obj/structure/table/wood))
-				new/obj/item/stack/sheet/mineral/wood(src.loc)
-			else if(istype(src, /obj/structure/table/wood/poker))
-				new/obj/item/stack/tile/carpet(src.loc)
-			else if(istype(src, /obj/structure/table/glass))
-				new /obj/item/stack/sheet/glass(src.loc)
-			else
-				new /obj/item/stack/sheet/metal(src.loc)
+			new buildstack(src.loc)
 			qdel(src)
 		return
 
@@ -393,21 +378,48 @@ Destroy type values:
 	name = "glass table"
 	desc = "What did I say about leaning on the glass tables? Now you need surgery."
 	icon_state = "glass_table"
+	buildstack = /obj/item/stack/sheet/glass
+	health = 8
+
+/obj/structure/table/glass/tablepush(obj/item/I, mob/user)
+	if(get_dist(src, user) < 2)
+		var/obj/item/weapon/grab/G = I
+		if(G.affecting.buckled)
+			user << "<span class='notice'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
+			return
+		if(G.state < GRAB_AGGRESSIVE)
+			user << "<span class='notice'>You need a better grip to do that!</span>"
+			return
+		if(!G.confirm())
+			return
+		G.affecting.loc = src.loc
+		G.affecting.Weaken(5)
+		G.affecting.visible_message("<span class='danger'>[G.assailant] smashes [G.affecting] into [src].</span>", \
+									"<span class='userdanger'>[G.assailant] smashes [G.affecting] into [src].</span>")
+		playsound(src.loc, "shatter", 50, 1)
+		new frame(src.loc)
+		new /obj/item/weapon/shard(src.loc)
+		new /obj/item/weapon/shard(src.loc)
+		qdel(src)
+	qdel(I)
 
 /*
  * Wooden tables
  */
+
 /obj/structure/table/wood
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
 	icon_state = "woodtable"
 	frame = /obj/structure/table_frame/wood
-
+	framestack = /obj/item/stack/sheet/mineral/wood
+	buildstack = /obj/item/stack/sheet/mineral/wood
 
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
 	icon_state = "pokertable"
+	buildstack = /obj/item/stack/tile/carpet
 
 /*
  * Reinforced tables
@@ -417,7 +429,7 @@ Destroy type values:
 	desc = "A reinforced version of the four legged table, much harder to simply deconstruct."
 	icon_state = "reinftable"
 	var/status = 2
-
+	buildstack = /obj/item/stack/sheet/plasteel
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool))
