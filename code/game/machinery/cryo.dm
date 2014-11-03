@@ -61,7 +61,7 @@
 				process_occupant()
 
 	if(abs(temperature_archived-air_contents.temperature) > 1)
-		network.update = 1
+		parent.update = 1
 
 	updateDialog()
 	return 1
