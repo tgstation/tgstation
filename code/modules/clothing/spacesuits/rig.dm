@@ -22,7 +22,6 @@
 		return
 	on = !on
 	icon_state = "rig[on]-[_color]"
-//	item_state = "rig[on]-[_color]"
 
 	if(on)	user.SetLuminosity(user.luminosity + brightness_on)
 	else	user.SetLuminosity(user.luminosity - brightness_on)
@@ -31,13 +30,11 @@
 /obj/item/clothing/head/helmet/space/rig/pickup(mob/user)
 	if(on)
 		user.SetLuminosity(user.luminosity + brightness_on)
-//		user.UpdateLuminosity()
 		SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
 	if(on)
 		user.SetLuminosity(user.luminosity - brightness_on)
-//		user.UpdateLuminosity()
 		SetLuminosity(brightness_on)
 
 /obj/item/clothing/suit/space/rig
