@@ -10,7 +10,7 @@
 	desc = "If left untreated subject will regurgitate butterflies."
 	severity = "Medium"
 
-/datum/disease/beesease/stage_act()
+/datum/disease/anxiety/stage_act()
 	..()
 	switch(stage)
 		if(2) //also changes say, see say.dm
