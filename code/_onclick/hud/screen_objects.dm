@@ -120,7 +120,7 @@
 	name = "toggle internals"
 	icon_state = "internal0"
 
-/obj/scren/internals/Click()
+/obj/screen/internals/Click()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
