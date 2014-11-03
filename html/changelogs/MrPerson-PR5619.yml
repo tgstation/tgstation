@@ -1,0 +1,5 @@
+author: MrPerson
+delete-after: True
+changes: 
+  - rscadd: "You can use AI Upload modules directly on unslaved cyborgs to change their laws. The panel has to be open to do this."
+  - bugfix: "Newly emagged cyborgs get locked down for a little bit until their new laws get shown. Thank you to whoever bitched about it on singulo and filed an issue report."

@@ -487,7 +487,7 @@
 			user << "You need to close the wire panel to do that."
 			return
 		if(!cell)
-			user << "You need to install a power cell to do that,"
+			user << "You need to install a power cell to do that."
 			return
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
