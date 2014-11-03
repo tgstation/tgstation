@@ -25,8 +25,9 @@
 /obj/structure/grille/attack_paw(mob/user as mob)
 	attack_hand(user)
 
-/obj/structure/grille/attack_hand(mob/user as mob)
+/obj/structure/grille/attack_hand(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation()
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] hits [src].</span>", \
 						 "<span class='warning'>You hit [src].</span>", \
@@ -40,7 +41,7 @@
 		health -= rand(1,2)
 	healthcheck()
 
-/obj/structure/grille/attack_alien(mob/user as mob)
+/obj/structure/grille/attack_alien(mob/living/user as mob)
 	user.do_attack_animation()
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 	user.changeNext_move(CLICK_CD_MELEE)

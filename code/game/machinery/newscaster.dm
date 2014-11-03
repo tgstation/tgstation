@@ -732,7 +732,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 
-/obj/machinery/newscaster/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/newscaster/attackby(obj/item/I as obj, mob/living/user as mob)
 
 /*	if (istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda) ) //Name verification for channels or messages
 		if(src.screen == 4 || src.screen == 5)

@@ -1,4 +1,4 @@
-/mob/living/carbon/human/attack_paw(mob/M as mob)
+/mob/living/carbon/human/attack_paw(mob/living/M as mob)
 	..()
 	if (M.a_intent == "help")
 		help_shake_act(M)

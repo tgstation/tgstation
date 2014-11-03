@@ -449,8 +449,9 @@
 	else
 		qdel(src)
 
-/obj/mecha/attack_hand(mob/user as mob)
+/obj/mecha/attack_hand(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
+	user.do_attack_animation()
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
@@ -467,7 +468,7 @@
 	return src.attack_hand(user)
 
 
-/obj/mecha/attack_alien(mob/user as mob)
+/obj/mecha/attack_alien(mob/living/user as mob)
 	src.log_message("Attack by alien. Attacker - [user].",1)
 	user.changeNext_move(CLICK_CD_MELEE) //Now stompy alien killer mechs are actually scary to aliens!
 	user.do_attack_animation()
@@ -627,9 +628,9 @@
 		src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
 	return
 
-/obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
-
+	user.do_attack_animation()
 	src.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(src.deflect_chance))
 		user << "<span class='danger'>The [W] bounces off [src.name] armor.</span>"

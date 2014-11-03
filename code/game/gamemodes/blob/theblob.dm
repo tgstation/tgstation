@@ -149,7 +149,7 @@
 	L.blob_act()
 
 
-/obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation()
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)

@@ -92,7 +92,7 @@
 	if(prob(50))
 		dismantle_wall()
 
-/turf/simulated/wall/attack_paw(mob/user as mob)
+/turf/simulated/wall/attack_paw(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if ((HULK in user.mutations))
 		user.do_attack_animation()

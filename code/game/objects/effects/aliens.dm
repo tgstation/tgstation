@@ -109,8 +109,9 @@
 	healthcheck()
 
 
-/obj/structure/alien/resin/attack_hand(mob/user)
+/obj/structure/alien/resin/attack_hand(mob/living/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation()
 		user.visible_message("<span class='danger'>[user] destroys [src]!</span>")
 		health = 0
 		healthcheck()
@@ -120,7 +121,7 @@
 	return attack_hand(user)
 
 
-/obj/structure/alien/resin/attack_alien(mob/user)
+/obj/structure/alien/resin/attack_alien(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation()
 	if(islarva(user))
@@ -133,7 +134,7 @@
 	healthcheck()
 
 
-/obj/structure/alien/resin/attackby(obj/item/I, mob/user)
+/obj/structure/alien/resin/attackby(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	health -= I.force
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)

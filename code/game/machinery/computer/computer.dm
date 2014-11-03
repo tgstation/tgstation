@@ -110,7 +110,7 @@
 	. = ..()
 	return
 
-/obj/machinery/computer/attack_paw(mob/user)
+/obj/machinery/computer/attack_paw(mob/living/user)
 	user.do_attack_animation()
 	if(circuit)
 		if(prob(10))
@@ -123,7 +123,7 @@
 	"<span class='danger'>You smash against the [src.name] with your paws.</span>",\
 	"<span class='danger'>You hear a clicking sound.</span>")
 
-/obj/machinery/computer/attack_alien(mob/user)
+/obj/machinery/computer/attack_alien(mob/living/user)
 	user.do_attack_animation()
 	if(circuit)
 		if(prob(80))

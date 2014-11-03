@@ -328,7 +328,7 @@
 
 // attack with item - insert light (if right type), otherwise try to break the light
 
-/obj/machinery/light/attackby(obj/item/W, mob/user)
+/obj/machinery/light/attackby(obj/item/W, mob/living/user)
 
 	//Light replacer code
 	if(istype(W, /obj/item/device/lightreplacer))

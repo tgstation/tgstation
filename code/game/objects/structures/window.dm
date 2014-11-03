@@ -134,12 +134,12 @@
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 
 
-/obj/structure/window/attack_alien(mob/user as mob)
+/obj/structure/window/attack_alien(mob/living/user as mob)
 	user.do_attack_animation()
 	if(islarva(user)) return
 	attack_generic(user, 15)
 
-/obj/structure/window/attack_animal(mob/user as mob)
+/obj/structure/window/attack_animal(mob/living/user as mob)
 	if(!isanimal(user)) return
 	var/mob/living/simple_animal/M = user
 	M.do_attack_animation()
@@ -153,7 +153,7 @@
 	attack_generic(user, rand(10, 15))
 
 
-/obj/structure/window/attackby(obj/item/I, mob/user)
+/obj/structure/window/attackby(obj/item/I, mob/living/user)
 	if(!can_be_reached(user))
 		return 1 //returning 1 will skip the afterattack()
 	add_fingerprint(user)

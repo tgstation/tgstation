@@ -56,7 +56,7 @@
 	..()
 
 
-/obj/structure/mirror/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/mirror/attackby(obj/item/I as obj, mob/living/user as mob)
 	user.do_attack_animation()
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
@@ -70,7 +70,7 @@
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 70, 1)
 
 
-/obj/structure/mirror/attack_alien(mob/user as mob)
+/obj/structure/mirror/attack_alien(mob/living/user as mob)
 	user.do_attack_animation()
 	if(islarva(user)) return
 	if(shattered)
@@ -80,7 +80,7 @@
 	shatter()
 
 
-/obj/structure/mirror/attack_animal(mob/user as mob)
+/obj/structure/mirror/attack_animal(mob/living/user as mob)
 	if(!isanimal(user)) return
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0) return
@@ -92,7 +92,7 @@
 	shatter()
 
 
-/obj/structure/mirror/attack_slime(mob/user as mob)
+/obj/structure/mirror/attack_slime(mob/living/user as mob)
 	user.do_attack_animation()
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)

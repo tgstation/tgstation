@@ -203,7 +203,7 @@
 		qdel(src)
 		return
 
-/obj/structure/table/attack_paw(mob/user)
+/obj/structure/table/attack_paw(mob/living/user)
 	if(HULK in user.mutations)
 		user.do_attack_animation()
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -218,7 +218,7 @@
 		qdel(src)
 
 
-/obj/structure/table/attack_alien(mob/user)
+/obj/structure/table/attack_alien(mob/living/user)
 	user.do_attack_animation()
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	if(istype(src, /obj/structure/table/reinforced))
@@ -247,7 +247,7 @@
 
 
 
-/obj/structure/table/attack_hand(mob/user)
+/obj/structure/table/attack_hand(mob/living/user)
 	if(HULK in user.mutations)
 		user.do_attack_animation()
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
@@ -509,8 +509,9 @@ Destroy type values:
 	return 1
 
 
-/obj/structure/rack/attack_hand(mob/user)
+/obj/structure/rack/attack_hand(mob/living/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation()
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		new /obj/item/weapon/rack_parts(loc)
@@ -518,7 +519,7 @@ Destroy type values:
 		qdel(src)
 
 
-/obj/structure/rack/attack_paw(mob/user)
+/obj/structure/rack/attack_paw(mob/living/user)
 	if(HULK in user.mutations)
 		user.do_attack_animation()
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -528,7 +529,7 @@ Destroy type values:
 		qdel(src)
 
 
-/obj/structure/rack/attack_alien(mob/user)
+/obj/structure/rack/attack_alien(mob/living/user)
 	user.do_attack_animation()
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	new /obj/item/weapon/rack_parts(loc)

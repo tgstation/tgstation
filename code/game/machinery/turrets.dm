@@ -413,7 +413,7 @@
 	return attack_hand(user)
 
 
-/obj/machinery/gun_turret/attack_alien(mob/user as mob)
+/obj/machinery/gun_turret/attack_alien(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation()
 	user.visible_message("[user] slashes at [src]", "You slash at [src]")
