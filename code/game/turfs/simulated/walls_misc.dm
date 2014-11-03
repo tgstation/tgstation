@@ -4,6 +4,18 @@
 	icon_state = "cult"
 	walltype = "cult"
 
+/turf/simulated/wall/cult/break_wall()
+	playsound(src, 'sound/items/Welder.ogg', 100, 1)
+	new /obj/effect/decal/cleanable/blood(src)
+	new /obj/structure/cultgirder(src)
+
+/turf/simulated/wall/cult/devastate_wall()
+	new /obj/effect/decal/cleanable/blood(src)
+	new /obj/effect/decal/remains/human(src)
+
+/turf/simulated/wall/vault
+	icon_state = "rockvault"
+
 /turf/simulated/wall/rust
 	name = "rusted wall"
 	desc = "A rusted metal wall."

@@ -5,6 +5,19 @@
 	var/last_event = 0
 	var/active = null
 
+/turf/simulated/wall/mineral/break_wall()
+	playsound(src, 'sound/items/Welder.ogg', 100, 1)
+	var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+	new M( src )
+	new M( src )
+	return (new /obj/structure/girder(src))
+
+/turf/simulated/wall/mineral/devastate_wall()
+	var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+	new M( src )
+	new M( src )
+	new /obj/item/stack/sheet/metal( src )
+
 /turf/simulated/wall/mineral/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
@@ -29,6 +42,10 @@
 	icon_state = "diamond0"
 	walltype = "diamond"
 	mineral = "diamond"
+	slicing_duration = 200   //diamond wall takes twice as much time to slice
+
+/turf/simulated/wall/mineral/diamond/thermitemelt(mob/user as mob)
+	return
 
 /turf/simulated/wall/mineral/clown
 	name = "bananium wall"
