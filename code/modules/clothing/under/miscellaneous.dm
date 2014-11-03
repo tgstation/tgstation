@@ -361,7 +361,7 @@
 
 /obj/item/clothing/under/assistantformal
 	name = "assistant's formal uniform"
-	desc = "An assistant's formal-wear. Why an assistant needs formal-wear is still unknown."
+	desc = "An assistant's formal wear. Why an assistant needs formal-wear is still unknown."
 	icon_state = "assistant_formal"
 	item_state = "gy_suit"
 	item_color = "assistant_formal"

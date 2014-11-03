@@ -50,8 +50,8 @@
  * Head of Security
  */
 /obj/item/clothing/under/rank/head_of_security
-	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
 	name = "head of security's jumpsuit"
+	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
 	icon_state = "hos"
 	item_state = "r_suit"
 	item_color = "hosred"
@@ -71,15 +71,15 @@
 	item_color = "officerblueclothes"
 
 /obj/item/clothing/under/rank/head_of_security/navyblue
-	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
 	name = "head of security's uniform"
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
 	icon_state = "hosblueclothes"
 	item_state = "hosblueclothes"
 	item_color = "hosblueclothes"
 
 /obj/item/clothing/under/rank/warden/navyblue
-	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
 	name = "warden's uniform"
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
 	icon_state = "wardenblueclothes"
 	item_state = "wardenblueclothes"
 	item_color = "wardenblueclothes"
