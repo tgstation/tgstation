@@ -1,0 +1,7 @@
+author: N3X15
+delete-after: true
+changes:
+- rscadd: "Objects can melt into puddles of slag.  Cooled slag puddles can be broken up with sufficiently-hefty weapons, like fire extinguishers and toolboxes."
+- rscadd: "Slag can now contain minerals for recycling purposes."
+- rscadd: "Ores can be recycled."
+- rscadd: "Coins can be recycled."

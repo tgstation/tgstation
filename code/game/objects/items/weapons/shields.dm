@@ -15,6 +15,7 @@
 	w_class = 4.0
 	g_amt = 7500
 	m_amt = 1000
+	melt_temperature = MELTPOINT_GLASS
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
@@ -34,7 +35,7 @@
 				cooldown = world.time
 		else
 			..()
-			
+
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
@@ -68,7 +69,7 @@
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
-	
+
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</b>"
 		return (BRUTELOSS)

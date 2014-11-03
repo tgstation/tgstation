@@ -19,6 +19,7 @@ REAGENT SCANNER
 	item_state = "electronic"
 	m_amt = 150
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "magnets=1;engineering=1"
 
 /obj/item/device/t_scanner/Destroy()
@@ -86,6 +87,7 @@ REAGENT SCANNER
 	throw_range = 10
 	m_amt = 200
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
 
@@ -239,6 +241,7 @@ REAGENT SCANNER
 	m_amt = 30
 	g_amt = 20
 	w_type = RECYK_ELECTRONIC
+	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "magnets=1;engineering=1"
 
 /obj/item/device/analyzer/attack_self(mob/user as mob)

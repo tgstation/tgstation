@@ -927,6 +927,7 @@ Code shamelessly copied from apc_frame
 	icon_state = "alarm_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt = 2*CC_PER_SHEET_METAL
+	melt_temperature = MELTPOINT_STEEL
 	w_type = RECYK_METAL
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -1240,6 +1241,7 @@ Code shamelessly copied from apc_frame
 	icon_state = "fire_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt=2*CC_PER_SHEET_METAL
+	melt_temperature = MELTPOINT_STEEL
 	w_type = RECYK_METAL
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
