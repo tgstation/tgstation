@@ -147,7 +147,7 @@ RCD
 		return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
-	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
+	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/wall)))
 		return 0
 
 	switch(mode)
@@ -167,7 +167,7 @@ RCD
 					if(do_after(user, 20))
 						if(!useResource(3, user)) return 0
 						activate()
-						A:ChangeTurf(/turf/simulated/wall)
+						new /obj/structure/wall(A)
 						return 1
 				return 0
 
@@ -186,8 +186,8 @@ RCD
 				return 0
 
 		if(3)
-			if(istype(A, /turf/simulated/wall))
-				if(istype(A, /turf/simulated/wall/r_wall) && !canRwall)
+			if(istype(A, /obj/structure/wall))
+				if(istype(A, /obj/structure/wall/r_wall) && !canRwall)
 					return 0
 				if(checkResource(5, user))
 					user << "Deconstructing Wall..."
@@ -195,7 +195,7 @@ RCD
 					if(do_after(user, 40))
 						if(!useResource(5, user)) return 0
 						activate()
-						A:ChangeTurf(/turf/simulated/floor/plating)
+						qdel(A)
 						return 1
 				return 0
 

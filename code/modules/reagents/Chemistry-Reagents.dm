@@ -633,11 +633,11 @@ datum/reagent/thermite
 	reagent_state = SOLID
 	color = "#673910" // rgb: 103, 57, 16
 
-datum/reagent/thermite/reaction_turf(var/turf/T, var/volume)
+datum/reagent/thermite/reaction_obj(var/obj/O, var/volume)
 	src = null
-	if(volume >= 1 && istype(T, /turf/simulated/wall))
-		var/turf/simulated/wall/Wall = T
-		if(istype(Wall, /turf/simulated/wall/r_wall))
+	if(volume >= 1 && istype(O, /obj/structure/wall))
+		var/obj/structure/wall/Wall = O
+		if(istype(Wall, /obj/structure/wall/r_wall))
 			Wall.thermite = Wall.thermite+(volume*2.5)
 		else
 			Wall.thermite = Wall.thermite+(volume*10)

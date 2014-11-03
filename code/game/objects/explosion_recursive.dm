@@ -9,6 +9,12 @@
 /obj
 	var/explosion_resistance
 
+/obj/structure/wall
+	explosion_resistance = 5
+
+/obj/structure/wall/r_wall
+	explosion_resistance = 15
+
 
 
 var/list/explosion_turfs = list()
@@ -87,12 +93,6 @@ proc/explosion_rec(turf/epicenter, power)
 
 /turf/simulated/shuttle/wall
 	explosion_resistance = 5
-
-/turf/simulated/wall
-	explosion_resistance = 5
-
-/turf/simulated/wall/r_wall
-	explosion_resistance = 15
 
 //Code-wise, a safe value for power is something up to ~25 or ~30.. This does quite a bit of damage to the station.
 //direction is the direction that the spread took to come to this tile. So it is pointing in the main blast direction - meaning where this tile should spread most of it's force.

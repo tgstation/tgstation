@@ -21,7 +21,11 @@ proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/list/walltypes, 
 			if(x == 0 || x == x_size-1 || y == 0 || y == y_size-1)
 				var/wall = pickweight(walltypes)//totally-solid walls are pretty boring.
 				T = cur_loc
-				T.ChangeTurf(wall)
+				if(ispath(wall, /turf))
+					T.ChangeTurf(wall)
+				else
+					T.ChangeTurf(/turf/simulated/floor/plating)
+					new wall(T)
 				room_turfs["walls"] += T
 
 
@@ -47,7 +51,7 @@ proc/make_mining_asteroid_secret()
 
 	var/areapoints = 0
 	var/theme = "organharvest"
-	var/list/walltypes = list(/turf/simulated/wall=3, /turf/simulated/mineral/random=1)
+	var/list/walltypes = list(/obj/structure/wall=3, /turf/simulated/mineral/random=1)
 	var/list/floortypes = list(/turf/simulated/floor)
 	var/list/treasureitems = list()//good stuff. only 1 is created per room.
 	var/list/fluffitems = list()//lesser items, to help fill out the room and enhance the theme.
@@ -58,7 +62,7 @@ proc/make_mining_asteroid_secret()
 
 	switch(pick(possiblethemes))//what kind of room is this gonna be?
 		if("organharvest")
-			walltypes = list(/turf/simulated/wall/r_wall=2,/turf/simulated/wall=2,/turf/simulated/mineral/random/high_chance=1)
+			walltypes = list(/obj/structure/wall/r_wall=2,/obj/structure/wall=2,/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor,/turf/simulated/floor/engine)
 			treasureitems = list(/obj/machinery/bot/medbot/mysterious=1, /obj/item/weapon/circular_saw=1, /obj/structure/closet/critter/cat=2)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=5,/obj/item/organ/appendix=2,/obj/structure/closet/crate/freezer=2,
@@ -67,7 +71,7 @@ proc/make_mining_asteroid_secret()
 
 		if("cult")
 			theme = "cult"
-			walltypes = list(/turf/simulated/wall/cult=3,/turf/simulated/mineral/random/high_chance=1)
+			walltypes = list(/obj/structure/wall/cult=3,/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor/engine/cult)
 			treasureitems = list(/obj/item/device/soulstone=1, /obj/item/clothing/suit/space/cult=1, /obj/item/weapon/bedsheet/cult=2,
 								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)
@@ -77,7 +81,7 @@ proc/make_mining_asteroid_secret()
 
 		if("wizden")
 			theme = "wizden"
-			walltypes = list(/turf/simulated/wall/mineral/plasma=3,/turf/simulated/mineral/random/high_chance=1)
+			walltypes = list(/obj/structure/wall/mineral/plasma=3,/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor/wood)
 			treasureitems = list(/obj/item/weapon/veilrender/vealrender=2, /obj/item/weapon/spellbook/oneuse/blind=1,/obj/item/clothing/head/wizard/red=2,
 							/obj/item/weapon/spellbook/oneuse/forcewall=1, /obj/item/weapon/spellbook/oneuse/smoke=1, /obj/structure/constructshell = 1, /obj/item/toy/katana=3)
@@ -102,7 +106,7 @@ proc/make_mining_asteroid_secret()
 
 		if("hitech")
 			theme = "hitech"
-			walltypes = list(/turf/simulated/wall/r_wall=5,/turf/simulated/mineral/random=1)
+			walltypes = list(/obj/structure/wall/r_wall=5,/turf/simulated/mineral/random=1)
 			floortypes = list(/turf/simulated/floor/greengrid,/turf/simulated/floor/bluegrid)
 			treasureitems = list(/obj/item/weapon/stock_parts/cell/hyper=1, /obj/machinery/chem_dispenser/constructable=1,/obj/machinery/computer/telescience=1, /obj/machinery/r_n_d/protolathe=1,
 								/obj/machinery/biogenerator=1)
@@ -131,7 +135,7 @@ proc/make_mining_asteroid_secret()
 			theme = "poly"
 			x_size = 5
 			y_size = 5
-			walltypes = list(/turf/simulated/wall/mineral/clown)
+			walltypes = list(/obj/structure/wall/mineral/clown)
 			floortypes= list(/turf/simulated/floor/engine)
 			treasureitems = list(/obj/item/weapon/spellbook=1,/obj/mecha/combat/marauder=1,/obj/machinery/wish_granter=1)
 			fluffitems = list(/obj/item/weapon/melee/energy/axe)*/

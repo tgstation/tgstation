@@ -20,7 +20,7 @@
 		for(var/j = lowBoundY,j<=hiBoundY,j++)
 			var/turf/T = locate(i,j,z)
 			if(i == lowBoundX || i == hiBoundX || j == lowBoundY || j == hiBoundY)
-				T.ChangeTurf(/turf/simulated/wall/vault)
+				new /obj/structure/wall/vault(T)
 			else
 				T.ChangeTurf(/turf/simulated/floor/vault)
 			T.icon_state = "[type]vault"

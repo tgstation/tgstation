@@ -2,7 +2,7 @@
 	force = 30
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
-	var/list/destroyable_obj = list(/obj/mecha, /obj/structure/window, /obj/structure/grille, /turf/simulated/wall)
+	var/list/destroyable_obj = list(/obj/mecha, /obj/structure/window, /obj/structure/grille, /obj/structure/wall)
 	internal_damage_threshold = 50
 	maint_access = 0
 	damage_absorption = list("brute"=0.7,"fire"=1,"bullet"=0.7,"laser"=0.85,"energy"=1,"bomb"=0.8)
@@ -80,7 +80,7 @@
 				if(istype(target, target_type) && hascall(target, "attackby"))
 					src.occupant_message("You hit [target].")
 					src.visible_message("<span class='userdanger'>[src.name] hits [target]</span>")
-					if(!istype(target, /turf/simulated/wall))
+					if(!istype(target, /obj/structure/wall))
 						target:attackby(src,src.occupant)
 					else if(prob(5))
 						target:dismantle_wall(1)

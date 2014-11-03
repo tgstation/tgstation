@@ -1,76 +1,86 @@
-/turf/simulated/wall
+/obj/structure/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'icons/turf/walls.dmi'
-	var/mineral = "metal"
 	opacity = 1
 	density = 1
-	blocks_air = 1
-
-	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
-
+	anchored = 1
+	var/thermite = 0
+	var/mineral = "metal"
+//	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+//	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 	var/walltype = "metal"
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
+	var/slicing_duration = 100  //default time taken to slice the wall
+	var/sheet_type = /obj/item/stack/sheet/metal
+	var/obj/item/stack/sheet/builtin_sheet = null
 
-/turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
-	var/newgirder = null
-	if(istype(src,/turf/simulated/wall/r_wall))
-		if(!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			newgirder = new /obj/structure/girder/reinforced(src)
-			new /obj/item/stack/sheet/plasteel( src )
-		else
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/plasteel( src )
-	else if(istype(src,/turf/simulated/wall/cult))
-		if(!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			new /obj/effect/decal/cleanable/blood(src)
-			new /obj/structure/cultgirder(src)
-		else
-			new /obj/effect/decal/cleanable/blood(src)
-			new /obj/effect/decal/remains/human(src)
+/obj/structure/wall/New()
+	..()
+	relativewall_neighbours()
+	if(sheet_type)
+		builtin_sheet = new sheet_type
 
+/obj/structure/wall/Destroy()
+	spawn(10)
+		relativewall_neighbours()
+
+	//WHY THE FUCK ARE GLOWSHROOMS HERE. WHY. WHY. WHY.
+	for(var/direction in cardinal)
+		for(var/obj/effect/glowshroom/shroom in get_step(src,direction))
+			if(!shroom.floor) //shrooms drop to the floor
+				shroom.floor = 1
+				shroom.icon_state = "glowshroomf"
+				shroom.pixel_x = 0
+				shroom.pixel_y = 0
+	..()
+
+/obj/structure/wall/proc/relativewall()
+	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+
+	for(var/obj/structure/wall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(mineral == W.mineral)
+				junction |= get_dir(src,W)
+	icon_state = "[walltype][junction]"
+
+/obj/structure/wall/proc/relativewall_neighbours()
+	for(var/obj/structure/wall/W in range(src,1))
+		W.relativewall()
+		W.update_icon()//Refreshes the wall to make sure the icons don't desync
+
+/obj/structure/wall/proc/dismantle_wall(devastated=0, explode=0)
+	if(devastated)
+		devastate_wall()
 	else
-		if(!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			newgirder = new /obj/structure/girder(src)
-			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
-			else
-				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-				new M( src )
-				new M( src )
-		else
-			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
-			else
-				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-				new M( src )
-				new M( src )
-				new /obj/item/stack/sheet/metal( src )
-
-	if(newgirder)
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		var/newgirder = break_wall()
 		transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
-			P.roll_and_drop(src)
+			P.roll_and_drop(loc)
 		else
-			O.loc = src
-	ChangeTurf(/turf/simulated/floor/plating)
+			O.loc = loc
 
-/turf/simulated/wall/ex_act(severity)
+	qdel(src)
+
+/obj/structure/wall/proc/break_wall()
+		builtin_sheet.amount = 2
+		builtin_sheet.loc = loc
+		return (new /obj/structure/girder(loc))
+
+/obj/structure/wall/proc/devastate_wall()
+		builtin_sheet.amount = 2
+		builtin_sheet.loc = loc
+		new /obj/item/stack/sheet/metal(loc)
+
+
+/obj/structure/wall/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			//SN src = null
-			src.ChangeTurf(/turf/space)
+			dismantle_wall(1,1)
 			return
 		if(2.0)
 			if (prob(50))
@@ -78,21 +88,16 @@
 			else
 				dismantle_wall(1,1)
 		if(3.0)
-			var/proba
-			if (istype(src, /turf/simulated/wall/r_wall))
-				proba = 15
-			else
-				proba = 40
-			if (prob(proba))
+			if (prob(hardness))
 				dismantle_wall(0,1)
 		else
 	return
 
-/turf/simulated/wall/blob_act()
+/obj/structure/wall/blob_act()
 	if(prob(50))
 		dismantle_wall()
 
-/turf/simulated/wall/attack_paw(mob/user as mob)
+/obj/structure/wall/attack_paw(mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if ((HULK in user.mutations))
 		if (prob(hardness))
@@ -108,23 +113,17 @@
 
 	return src.attack_hand(user)
 
-/turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
+
+/obj/structure/wall/attack_animal(var/mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	if(M.environment_smash >= 2)
-		if(istype(src, /turf/simulated/wall/r_wall))
-			if(M.environment_smash == 3)
-				dismantle_wall(1)
-				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-				M << "<span class='notice'>You smash through the wall.</span>"
-			else
-				M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
-		else
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			M << "<span class='notice'>You smash through the wall.</span>"
-			dismantle_wall(1)
-			return
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		M << "<span class='notice'>You smash through the wall.</span>"
+		dismantle_wall(1)
+		return
 
-/turf/simulated/wall/attack_hand(mob/user as mob)
+
+/obj/structure/wall/attack_hand(mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (HULK in user.mutations)
 		if (prob(hardness))
@@ -144,7 +143,8 @@
 	..()
 	return
 
-/turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+/obj/structure/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -153,6 +153,8 @@
 	//get the user's location
 	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
 
+	add_fingerprint(user)
+
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
 		if(is_hot(W))
@@ -160,130 +162,107 @@
 
 		if( istype(W, /obj/item/weapon/melee/energy/blade) )
 			var/obj/item/weapon/melee/energy/blade/EB = W
-
 			EB.spark_system.start()
 			user << "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>"
 			playsound(src, "sparks", 50, 1)
 			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
-
 		return
 
-
 	var/turf/T = user.loc	//get user's location for delay checks
-	var/slicing_duration = 100  //default time taken to slice the wall
-	if( mineral == "diamond" )
-		slicing_duration = 200   //diamond wall takes twice as much time
 
-	//DECONSTRUCTION
-	add_fingerprint(user)
+	//the istype cascade has been spread among various procs for easy overriding
+	if(try_wallmount(W,user,T) || try_decon(W,user,T) || try_destroy(W,user,T))
+		return
 
+	return attack_hand(user)
+
+
+/obj/structure/wall/proc/try_wallmount(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+	//check for wall mounted frames
+	if(istype(W,/obj/item/apc_frame))
+		var/obj/item/apc_frame/AH = W
+		AH.try_build(src)
+		return 1
+	else if(istype(W,/obj/item/newscaster_frame))
+		var/obj/item/newscaster_frame/AH = W
+		AH.try_build(src)
+		return 1
+	else if(istype(W,/obj/item/alarm_frame))
+		var/obj/item/alarm_frame/AH = W
+		AH.try_build(src)
+		return 1
+	else if(istype(W,/obj/item/firealarm_frame))
+		var/obj/item/firealarm_frame/AH = W
+		AH.try_build(src)
+		return 1
+	else if(istype(W,/obj/item/light_fixture_frame))
+		var/obj/item/light_fixture_frame/AH = W
+		AH.try_build(src)
+		return 1
+	//Poster stuff
+	else if(istype(W,/obj/item/weapon/contraband/poster))
+		place_poster(W,user)
+		return 1
+
+	return 0
+
+
+/obj/structure/wall/proc/try_decon(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-
 			if(do_after(user, slicing_duration))
-				if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )
-					return
+				if( !src || !user || !WT || !WT.isOn() || !T )
+					return 1
 				if( user.loc == T && user.get_active_hand() == WT )
 					user << "<span class='notice'>You remove the outer plating.</span>"
 					dismantle_wall()
-		else
-			return
-
+					return 1
 	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
-
 		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-
 		if(do_after(user, slicing_duration*0.6))  // plasma cutter is faster than welding tool
-			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
-				return
-
+			if( !src || !user || !W || !T )
+				return 1
 			if( user.loc == T && user.get_active_hand() == W )
 				user << "<span class='notice'>You remove the outer plating.</span>"
 				dismantle_wall()
 				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", "<span class='warning'>You hear metal being sliced apart.</span>")
-		return
+				return 1
+	return 0
 
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
 
+/obj/structure/wall/proc/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+	if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
-
 		if(do_after(user, slicing_duration*0.6))  // diamond drill is faster than welding tool slicing
-			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
-				return
-
+			if( !src || !user || !W || !T )
+				return 1
 			if( user.loc == T && user.get_active_hand() == W )
 				user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
 				dismantle_wall()
 				visible_message("<span class='warning'>The wall was drilled through by [user]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
-		return
-
+				return 1
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/obj/item/weapon/melee/energy/blade/EB = W
-
 		EB.spark_system.start()
 		user << "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>"
 		playsound(src, "sparks", 50, 1)
-
 		if(do_after(user, slicing_duration*0.7))  //energy blade slicing is faster than welding tool slicing
-			if( !istype(src, /turf/simulated/wall) || !user || !EB || !T )
-				return
-
+			if( !src || !user || !EB || !T )
+				return 1
 			if( user.loc == T && user.get_active_hand() == W )
 				EB.spark_system.start()
 				playsound(src, "sparks", 50, 1)
 				playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
 				dismantle_wall(1)
 				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>")
-		return
+				return 1
+	return 0
 
-	else if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/newscaster_frame))
-		var/obj/item/newscaster_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/alarm_frame))
-		var/obj/item/alarm_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
-		AH.try_build(src)
-		return
-
-	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
-		place_poster(W,user)
-		return
-
-	else
-		return attack_hand(user)
-	return
-
-/turf/simulated/wall/proc/thermitemelt(mob/user as mob)
-	if(mineral == "diamond")
-		return
-
+/obj/structure/wall/proc/thermitemelt(mob/user as mob)
 	overlays = list()
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 	O.name = "thermite"
@@ -298,10 +277,11 @@
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 	if(thermite >= 50)
-		var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
+		var/turf/simulated/floor/F = get_turf(src)
 		F.burn_tile()
 		F.icon_state = "wall_thermite"
 		F.add_hiddenprint(user)
+		dismantle_wall(1)
 		spawn(max(100,300-thermite))
 			if(O)	qdel(O)
 	else
@@ -310,7 +290,7 @@
 			if(O)	qdel(O)
 	return
 
-/turf/simulated/wall/singularity_pull(S, current_size)
+/obj/structure/wall/singularity_pull(S, current_size)
 	if(current_size >= 9)
 		if(prob(50))
 			dismantle_wall()
@@ -318,3 +298,9 @@
 	if(current_size == 7)
 		if(prob(30))
 			dismantle_wall()
+
+/obj/structure/wall/CanAtmosPass()
+	return 0
+
+/obj/structure/wall/proc/radiate() //for uranium walls
+	return

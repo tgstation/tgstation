@@ -30,9 +30,7 @@
 	return
 
 /obj/structure/alien/resin/Destroy()
-	var/turf/T = loc
-	loc = null
-	T.relativewall_neighbours()
+	relativewall_neighbours(src)
 	..()
 
 /obj/structure/alien/resin/Move()
@@ -42,6 +40,22 @@
 
 /obj/structure/alien/resin/CanAtmosPass()
 	return !density
+
+/obj/structure/alien/resin/proc/relativewall_neighbours(ignore = null)
+	for(var/obj/structure/alien/resin/W in range(src,1))
+		W.relativewall(ignore)
+		W.update_icon()
+	return
+
+/obj/structure/alien/resin/proc/relativewall(ignore = null)
+	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+
+	for(var/obj/structure/alien/resin/W in orange(src,1))
+		if(W == ignore) continue
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			junction |= get_dir(src,W)
+	var/obj/structure/alien/resin/resin = src
+	resin.icon_state = "[resin.resintype][junction]"
 
 /obj/structure/alien/resin/wall
 	name = "resin wall"
@@ -463,8 +477,8 @@
 	if(ticks >= target_strength)
 		target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")
 
-		if(istype(target, /turf/simulated/wall))
-			var/turf/simulated/wall/W = target
+		if(istype(target, /obj/structure/wall))
+			var/obj/structure/wall/W = target
 			W.dismantle_wall(1)
 		else
 			qdel(target)

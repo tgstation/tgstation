@@ -36,38 +36,6 @@
 	..(loc)
 
 
-/*/obj/item/weapon/contraband/poster/attack(mob/M as mob, mob/user as mob)
-	src.add_fingerprint(user)
-	if(resulting_poster)
-		resulting_poster.add_fingerprint(user)
-	..()*/
-
-/*/obj/item/weapon/contraband/poster/attack(atom/A, mob/user as mob) //This shit is handled through the wall's attackby()
-	if(istype(A, /turf/simulated/wall))
-		if(resulting_poster == null)
-			return
-		else
-			var/turf/simulated/wall/W = A
-			var/check = 0
-			var/stuff_on_wall = 0
-			for(var/obj/O in W.contents) //Let's see if it already has a poster on it or too much stuff
-				if(istype(O,/obj/structure/sign/poster))
-					check = 1
-					break
-				stuff_on_wall++
-				if(stuff_on_wall == 3)
-					check = 1
-					break
-
-			if(check)
-				user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
-				return
-
-			resulting_poster.loc = W //Looks like it's uncluttered enough. Place the poster
-			W.contents += resulting_poster
-
-			qdel(src)*/
-
 
 
 //############################## THE ACTUAL DECALS ###########################
@@ -334,7 +302,7 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user)
 
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
-/turf/simulated/wall/proc/place_poster(obj/item/weapon/contraband/poster/P, mob/user)
+/obj/structure/wall/proc/place_poster(obj/item/weapon/contraband/poster/P, mob/user)
 	if(!P.resulting_poster)	return
 
 	var/stuff_on_wall = 0
@@ -361,7 +329,7 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user)
 	sleep(17)
 	if(!D)	return
 
-	if(istype(src,/turf/simulated/wall) && user && user.loc == temp_loc)	//Let's check if everything is still there
+	if(src && user && user.loc == temp_loc)	//Let's check if everything is still there
 		user << "<span class='notice'>You place the poster!</span>"
 	else
 		D.roll_and_drop(temp_loc)

@@ -91,16 +91,16 @@ Doesn't work on other aliens/AI.*/
 			// OBJ CHECK
 			if(isobj(O))
 				var/obj/I = O
+				// R WALL
+				if(istype(I, /obj/structure/wall/r_wall))
+					src << "<span class='noticealien'>You cannot dissolve this object.</span>"
+					return
 				if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
 					src << "<span class='noticealien'>You cannot dissolve this object.</span>"
 					return
 			// TURF CHECK
 			else if(istype(O, /turf/simulated))
 				var/turf/T = O
-				// R WALL
-				if(istype(T, /turf/simulated/wall/r_wall))
-					src << "<span class='noticealien'>You cannot dissolve this object.</span>"
-					return
 				// R FLOOR
 				if(istype(T, /turf/simulated/floor/engine))
 					src << "<span class='noticealien'>You cannot dissolve this object.</span>"

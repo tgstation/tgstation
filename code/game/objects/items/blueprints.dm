@@ -208,11 +208,11 @@
 		return BORDER_SPACE
 	if (get_area_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
-	if (istype(T2, /turf/simulated/wall))
-		return BORDER_2NDTILE
 	if (!istype(T2, /turf/simulated))
 		return BORDER_BETWEEN
 
+	if (locate(/obj/structure/wall) in T2)
+		return BORDER_2NDTILE
 	for (var/obj/structure/window/W in T2)
 		if(turn(dir,180) == W.dir)
 			return BORDER_BETWEEN
@@ -222,8 +222,6 @@
 		if(turn(dir,180) == D.dir)
 			return BORDER_BETWEEN
 	if (locate(/obj/machinery/door) in T2)
-		return BORDER_2NDTILE
-	if (locate(/obj/structure/falsewall) in T2)
 		return BORDER_2NDTILE
 
 	return BORDER_NONE

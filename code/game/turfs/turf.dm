@@ -4,21 +4,17 @@
 
 	var/intact = 1
 
-	//Properties for open tiles (/floor)
 	var/oxygen = 0
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
 	var/toxins = 0
 
-	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
 	var/heat_capacity = 1
 
-	//Properties for both
 	var/temperature = T20C
 
 	var/blocks_air = 0
-	var/icon_old = null
 
 	var/PathNode/PNode = null //associated PathNode in the A* algorithm
 

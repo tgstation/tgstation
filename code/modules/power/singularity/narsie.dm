@@ -95,13 +95,17 @@
 		C.gib()
 		return
 
+	if(istype(A,/obj/structure/wall) && !istype(A, /obj/structure/wall/cult))
+		if(prob(20))
+			var/newloc = get_turf(A)
+			qdel(A)
+			new /obj/structure/wall/cult(newloc)
+
 	if(isturf(A))
 		var/turf/T = A
 		if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/engine/cult))
 			if(prob(20)) T.ChangeTurf(/turf/simulated/floor/engine/cult)
 
-		else if(istype(T,/turf/simulated/wall) && !istype(T, /turf/simulated/wall/cult))
-			if(prob(20)) T.ChangeTurf(/turf/simulated/wall/cult)
 	return
 
 

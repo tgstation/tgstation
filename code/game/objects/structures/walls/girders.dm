@@ -3,7 +3,7 @@
 	icon_state = "girder"
 	anchored = 1
 	density = 1
-	layer = 2
+//	layer = 2 // commenting to avoid being above pipes when a wall is deconstructed -tk
 	var/state = 0
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 
@@ -84,7 +84,7 @@
 				if(!anchored)
 					if (S.use(2))
 						user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
-						var/obj/structure/falsewall/F = new (loc)
+						var/obj/structure/wall/false/F = new (loc)
 						transfer_fingerprints_to(F)
 						qdel(src)
 					else
@@ -101,8 +101,8 @@
 						S.use(2)
 						user << "<span class='notice'>You added the plating!</span>"
 						var/turf/Tsrc = get_turf(src)
-						Tsrc.ChangeTurf(/turf/simulated/wall)
-						for(var/turf/simulated/wall/X in Tsrc.loc)
+						new /obj/structure/wall(Tsrc)
+						for(var/obj/structure/wall/X in Tsrc.loc)
 							if(X)
 								transfer_fingerprints_to(X)
 						qdel(src)
@@ -115,7 +115,7 @@
 						return
 					S.use(2)
 					user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
-					var/obj/structure/falsewall/reinforced/FW = new (loc)
+					var/obj/structure/wall/false/reinforced/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
 				else
@@ -127,8 +127,8 @@
 							S.use(1)
 							user << "<span class='notice'>Wall fully reinforced!</span>"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
-							for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
+							new /obj/structure/wall/r_wall(Tsrc)
+							for(var/obj/structure/wall/r_wall/X in Tsrc.loc)
 								if(X)	transfer_fingerprints_to(X)
 							qdel(src)
 						return
@@ -164,8 +164,9 @@
 					S.use(2)
 					user << "<span class='notice'>You added the plating!</span>"
 					var/turf/Tsrc = get_turf(src)
-					Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[M]"))
-					for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
+					var/mywall = text2path("/obj/structure/wall/mineral/[M]")
+					new mywall(Tsrc)
+					for(var/obj/structure/wall/mineral/X in Tsrc.loc)
 						if(X)	transfer_fingerprints_to(X)
 					qdel(src)
 				return
