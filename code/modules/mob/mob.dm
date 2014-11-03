@@ -314,6 +314,7 @@ var/list/slot_equipment_priority = list( \
 		return 0
 
 	var/obj/P = new /obj/effect/decal/point(tile)
+	P.invisibility = invisibility
 	spawn (20)
 		if(P)
 			qdel(P)
