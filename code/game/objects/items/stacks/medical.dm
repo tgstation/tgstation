@@ -94,7 +94,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>The [affecting.display_name] is cut wide open, you'll need more than a bandage!</span>"
+				user << "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, you'll need more than a bandage!</span>"
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
@@ -125,7 +125,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>The [affecting.display_name] is cut wide open, you'll need more than some ointment!</span>"
+				user << "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, you'll need more than some ointment!</span>"
 
 /obj/item/stack/medical/bruise_pack/tajaran
 	name = "\improper S'rendarr's Hand leaf"
@@ -185,7 +185,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>The [affecting.display_name] is cut wide open, even bioglue won't do!</span>"
+				user << "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, even bioglue won't do!</span>"
 
 /obj/item/stack/medical/advanced/ointment
 	name = "advanced burn kit"
@@ -218,7 +218,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>The [affecting.display_name] is cut wide open, even a regenerative membrane won't do!</span>"
+				user << "<span class='notice'>[H]'s [affecting.display_name] is cut wide open, even a regenerative membrane won't do!</span>"
 
 /obj/item/stack/medical/splint
 	name = "medical splints"
