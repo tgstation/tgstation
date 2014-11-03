@@ -2,9 +2,21 @@ var/list/sacrificed = list()
 
 /obj/effect/rune
 	var/atom/movable/overlay/c_animation = null
+	var/nullblock = 0
 
 /obj/effect/rune/cultify()
 	return
+
+/obj/effect/rune/proc/findNullRod(var/atom/target)
+	if(istype(target,/obj/item/weapon/nullrod))
+		var/turf/T = get_turf(target)
+		nullblock = 1
+		T.nullding()
+		return 1
+	else if(target.contents)
+		for(var/atom/A in target.contents)
+			findNullRod(A)
+	return 0
 
 /obj/effect/rune/proc/invocation(var/animation_icon)
 	c_animation = new /atom/movable/overlay(src.loc)
@@ -90,6 +102,20 @@ var/list/sacrificed = list()
 			culcount++
 	if(culcount>=3)
 		user.say("Sas[pick("'","`")]so c'arta forbici tarem!")
+
+		nullblock = 0
+		for(var/turf/T1 in range(src,1))
+			findNullRod(T1)
+		if(nullblock)
+			user.visible_message("<span class='warning'>A nearby null rod seems to be blocking the transfer.</span>")
+			return
+
+		for(var/turf/T2 in range(IP,1))
+			findNullRod(T2)
+		if(nullblock)
+			user.visible_message("<span class='warning'>A null rod seems to be blocking the transfer on the other side.</span>")
+			return
+
 		user.visible_message("<span class='warning'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 		"<span class='warning'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 		"<span class='warning'>You smell ozone.</span>")
@@ -144,8 +170,14 @@ var/list/sacrificed = list()
 			continue
 		if(M.stat==2)
 			continue
-		invocation("rune_convert")
 		usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
+		nullblock = 0
+		for(var/turf/T in range(M,1))
+			findNullRod(T)
+		if(nullblock)
+			usr.visible_message("<span class='warning'>Something is blocking the conversion!</span>")
+			return 0
+		invocation("rune_convert")
 		M.visible_message("<span class='warning'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
 		"<span class='danger'>AAAAAAHHHH!.</span>", \
 		"<span class='warning'>You hear an anguished scream.</span>")
@@ -212,10 +244,14 @@ var/list/sacrificed = list()
 		if(R.word1==cultwords["travel"] && R.word2==cultwords["blood"] && R.word3==cultwords["self"])
 			for(var/mob/living/carbon/D in R.loc)
 				if(D.stat!=2)
-					var/bdrain = rand(1,25)
-					D << "<span class='warning'>You feel weakened.</span>"
-					D.take_overall_damage(bdrain, 0)
-					drain += bdrain
+					nullblock = 0
+					for(var/turf/T in range(D,1))
+						findNullRod(T)
+					if(!nullblock)
+						var/bdrain = rand(1,25)
+						D << "<span class='warning'>You feel weakened.</span>"
+						D.take_overall_damage(bdrain, 0)
+						drain += bdrain
 	if(!drain)
 		return fizzle()
 	usr.say ("Yu[pick("'","`")]gular faras desdae. Havas mithum javara. Umathar uf'kal thenar!")
@@ -302,8 +338,14 @@ var/list/sacrificed = list()
 						is_sacrifice_target = 1
 					else
 						if(N.stat!= DEAD)
-							body_to_sacrifice = N
-							break find_sacrifice
+							nullblock = 0
+							for(var/turf/T in range(N,1))
+								findNullRod(T)
+							if(nullblock)
+								return fizzle()
+							else
+								body_to_sacrifice = N
+								break find_sacrifice
 
 	if(!body_to_sacrifice)
 		if (is_sacrifice_target)
@@ -636,6 +678,12 @@ var/list/sacrificed = list()
 			cultsinrange += C
 			C.say("Barhah hra zar[pick("'","`")]garis!")
 	for(var/mob/H in victims)
+		nullblock = 0
+		for(var/turf/T in range(H,1))
+			findNullRod(T)
+		if(nullblock)
+			usr << "<span class='warning'>The presence of a null rod is perturbing the ritual.</span>"
+			return
 		if (ticker.mode.name == "cult")
 			if(H.mind == ticker.mode:sacrifice_target)
 				if(cultsinrange.len >= 3)
@@ -918,85 +966,51 @@ var/list/sacrificed = list()
 /////////////////////////////////////////TWENTIETH RUNES
 
 /obj/effect/rune/proc/deafen()
-	if(istype(src,/obj/effect/rune))
-		var/affected = 0
-		for(var/mob/living/carbon/C in range(7,src))
-			if (iscultist(C))
-				continue
-			var/obj/item/weapon/nullrod/N = locate() in C
-			if(N)
-				continue
-			C.ear_deaf += 50
-			C.show_message("<span class='warning'>The world around you suddenly becomes quiet.</span>", 3)
-			affected++
-			if(prob(1))
-				C.sdisabilities |= DEAF
-		if(affected)
-			usr.say("Sti[pick("'","`")] kaliedir!")
-			usr << "<span class='warning'>The world becomes quiet as the deafening rune dissipates into fine dust.</span>"
-			del(src)
-		else
-			return fizzle()
+	var/affected = 0
+	for(var/mob/living/carbon/C in range(7,src))
+		if (iscultist(C))
+			continue
+		nullblock = 0
+		for(var/turf/T in range(C,1))
+			findNullRod(T)
+		if(nullblock)
+			continue
+		C.ear_deaf += 50
+		C.show_message("<span class='warning'>The world around you suddenly becomes quiet.</span>", 3)
+		affected++
+		if(prob(1))
+			C.sdisabilities |= DEAF
+	if(affected)
+		usr.say("Sti[pick("'","`")] kaliedir!")
+		usr << "<span class='warning'>The world becomes quiet as the deafening rune dissipates into fine dust.</span>"
+		del(src)
 	else
-		var/affected = 0
-		for(var/mob/living/carbon/C in range(7,usr))
-			if (iscultist(C))
-				continue
-			var/obj/item/weapon/nullrod/N = locate() in C
-			if(N)
-				continue
-			C.ear_deaf += 30
-			//talismans is weaker.
-			C.show_message("\<span class='warning'>The world around you suddenly becomes quiet.</span>", 3)
-			affected++
-		if(affected)
-			usr.whisper("Sti[pick("'","`")] kaliedir!")
-			usr << "<span class='warning'>Your talisman turns into gray dust, deafening everyone around.</span>"
-			for (var/mob/V in orange(1,src))
-				if(!(iscultist(V)))
-					V.show_message("<span class='warning'>Dust flows from [usr]'s hands for a moment, and the world suddenly becomes quiet..</span>", 3)
-	return
+		return fizzle()
 
 /obj/effect/rune/proc/blind()
-	if(istype(src,/obj/effect/rune))
-		var/affected = 0
-		for(var/mob/living/carbon/C in viewers(src))
-			if (iscultist(C))
-				continue
-			var/obj/item/weapon/nullrod/N = locate() in C
-			if(N)
-				continue
-			C.eye_blurry += 50
-			C.eye_blind += 20
-			if(prob(5))
-				C.disabilities |= NEARSIGHTED
-				if(prob(10))
-					C.sdisabilities |= BLIND
-			C.show_message("<span class='warning'>Suddenly you see red flash that blinds you.</span>", 3)
-			affected++
-		if(affected)
-			usr.say("Sti[pick("'","`")] kaliesin!")
-			usr << "<span class='warning'>The rune flashes, blinding those who not follow the Nar-Sie, and dissipates into fine dust.</span>"
-			del(src)
-		else
-			return fizzle()
+	var/affected = 0
+	for(var/mob/living/carbon/C in viewers(src))
+		if (iscultist(C))
+			continue
+		nullblock = 0
+		for(var/turf/T in range(C,1))
+			findNullRod(T)
+		if(nullblock)
+			continue
+		C.eye_blurry += 50
+		C.eye_blind += 20
+		if(prob(5))
+			C.disabilities |= NEARSIGHTED
+			if(prob(10))
+				C.sdisabilities |= BLIND
+		C << "<span class='warning'>Suddenly you see red flash that blinds you.</span>"
+		affected++
+	if(affected)
+		usr.say("Sti[pick("'","`")] kaliesin!")
+		usr << "<span class='warning'>The rune flashes, blinding those who not follow the Nar-Sie, and dissipates into fine dust.</span>"
+		del(src)
 	else
-		var/affected = 0
-		for(var/mob/living/carbon/C in view(2,usr))
-			if (iscultist(C))
-				continue
-			var/obj/item/weapon/nullrod/N = locate() in C
-			if(N)
-				continue
-			C.eye_blurry += 30
-			C.eye_blind += 10
-			//talismans is weaker.
-			affected++
-			C.show_message("<span class='warning'>You feel a sharp pain in your eyes, and the world disappears into darkness..</span>", 3)
-		if(affected)
-			usr.whisper("Sti[pick("'","`")] kaliesin!")
-			usr << "<span class='warning'>Your talisman turns into gray dust, blinding those who not follow the Nar-Sie.</span>"
-	return
+		return fizzle()
 
 
 /obj/effect/rune/proc/bloodboil() //cultists need at least one DANGEROUS rune. Even if they're all stealthy.
@@ -1015,8 +1029,10 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/M in viewers(usr))
 			if(iscultist(M))
 				continue
-			var/obj/item/weapon/nullrod/N = locate() in M
-			if(N)
+			nullblock = 0
+			for(var/turf/T in range(M,1))
+				findNullRod(T)
+			if(nullblock)
 				continue
 			M.take_overall_damage(51,51)
 			M << "<span class='warning'>Your blood boils!</span>"
@@ -1065,11 +1081,14 @@ var/list/sacrificed = list()
 
 //////////             Rune 24 (counting burningblood, which kinda doesnt work yet.)
 
-/obj/effect/rune/proc/runestun(var/mob/living/T as mob)
-	if(istype(src,/obj/effect/rune))   ///When invoked as rune, flash and stun everyone around.
-		usr.say("Fuu ma[pick("'","`")]jin!")
-		for(var/mob/living/L in viewers(src))
+/obj/effect/rune/proc/runestun(var/mob/living/T as mob)///When invoked as rune, flash and stun everyone around.
+	usr.say("Fuu ma[pick("'","`")]jin!")
+	for(var/mob/living/L in viewers(src))
 
+		nullblock = 0
+		for(var/turf/TU in range(L,1))
+			findNullRod(TU)
+		if(!nullblock)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				flick("e_flash", C.flash)
@@ -1077,34 +1096,14 @@ var/list/sacrificed = list()
 					C.stuttering = 1
 				C.Weaken(1)
 				C.Stun(1)
-				C.show_message("<span class='warning'>The rune explodes in a bright flash.</span>", 3)
+				C.visible_message("<span class='warning'>The rune explodes in a bright flash.</span>")
 
 			else if(issilicon(L))
 				var/mob/living/silicon/S = L
 				S.Weaken(5)
-				S.show_message("<span class='warning'>BZZZT... The rune has exploded in a bright flash.</span>", 3)
-		del(src)
-	else                        ///When invoked as talisman, stun and mute the target mob.
-		usr.say("Dream sign ''Evil sealing talisman'[pick("'","`")]!")
-		var/obj/item/weapon/nullrod/N = locate() in T
-		if(N)
-			for(var/mob/O in viewers(T, null))
-				O.show_message(text("<span class='warning'><B>[] invokes a talisman at [], but they are unaffected!</B></span>", usr, T), 1)
-		else
-			for(var/mob/O in viewers(T, null))
-				O.show_message(text("<span class='warning'><B>[] invokes a talisman at []</B></span>", usr, T), 1)
-
-			if(issilicon(T))
-				T.Weaken(15)
-
-			else if(iscarbon(T))
-				var/mob/living/carbon/C = T
-				flick("e_flash", C.flash)
-				if (!(M_HULK in C.mutations))
-					C.silent += 15
-				C.Weaken(25)
-				C.Stun(25)
-		return
+				S.visible_message("<span class='warning'>BZZZT... The rune has exploded in a bright flash.</span>")
+	del(src)
+	return
 
 /////////////////////////////////////////TWENTY-FIFTH RUNE
 

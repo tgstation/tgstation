@@ -57,9 +57,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		return 0
 
 	if(istype(usr, /mob/living/simple_animal))
-		var/mob/living/simple_animal/S = src
-		if(S.purge)
-			C << "<span class='warning'>The nullrod's power interferes with your own!</span>"
+		var/mob/living/simple_animal/SA = usr
+		if(SA.purge)
+			SA << "<span class='warning'>The nullrod's power interferes with your own!</span>"
 			return 0
 
 	if(!skipcharge)

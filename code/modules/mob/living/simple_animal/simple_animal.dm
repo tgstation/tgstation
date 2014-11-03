@@ -446,6 +446,8 @@
 	tally = speed
 
 	if(purge)//Purged creatures will move more slowly. The more time before their purge stops, the slower they'll move. (muh dotuh)
+		if(tally <= 0)
+			tally = 1
 		tally *= purge
 
 	return tally+config.animal_delay

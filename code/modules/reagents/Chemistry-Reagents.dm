@@ -682,10 +682,10 @@ datum
 				if(!holder) return
 				if(ishuman(M))
 					if((M.mind in ticker.mode.cult) && prob(10))
-						M << "\blue A cooling sensation from inside you brings you an untold calmness."
+						M << "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>"
 						ticker.mode.remove_cultist(M.mind)
 						for(var/mob/O in viewers(M, null))
-							O.show_message(text("\blue []'s eyes blink and become clearer.", M), 1) // So observers know it worked.
+							O.show_message(text("<span class='notice'>[]'s eyes blink and become clearer.</span>", M), 1) // So observers know it worked.
 					// Vamps react to this like acid
 					if(((M.mind in ticker.mode.vampires) || M.mind.vampire) && prob(10))
 						if(!(VAMP_FULL in M.mind.vampire.powers))
@@ -702,11 +702,11 @@ datum
 							var/mob/living/carbon/human/H=M
 							if(method == TOUCH)
 								if(H.wear_mask)
-									H << "\red Your mask protects you from the holy water!"
+									H << "<span class='warning'>Your mask protects you from the holy water!</span>"
 									return
 
 								if(H.head)
-									H << "\red Your helmet protects you from the holy water!"
+									H << "<span class='warning'>\red Your helmet protects you from the holy water!</span>"
 									return
 								if(!M.unacidable)
 									if(prob(15) && volume >= 30)
@@ -721,6 +721,12 @@ datum
 						else
 							if(!M.unacidable)
 								M.take_organ_damage(min(15, volume * 2))
+				return
+
+			reaction_turf(var/turf/T, var/volume)
+				src = null
+				if(volume >= 5)
+					T.holy = 1
 				return
 
 		serotrotium

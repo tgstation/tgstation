@@ -31,7 +31,7 @@ var/list/directional = list(
 	/obj/structure/window/full,
 	/obj/structure/stool/bed/chair,
 	/obj/structure/table,
-	/obj/machinery/light
+	/obj/machinery/light,
 	)
 
 var/list/exception = list(
@@ -136,6 +136,9 @@ proc
 				var/mob/living/carbon/C = A
 				if(C.lying && !isalienadult(C))//because adult aliens have their own resting sprite
 					add.Turn(90)
+
+			if(isobserver(A))
+				add.ChangeOpacity(0.5)
 
 			// Find the new dimensions of the flat icon to fit the added overlay
 			addX1 = min(flatX1, I:pixel_x+1)

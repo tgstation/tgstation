@@ -25,6 +25,8 @@
 	minbodytemp = 0
 	faction = "cult"
 	supernatural = 1
+	var/nullblock = 0
+
 	var/list/construct_spells = list()
 
 /mob/living/simple_animal/construct/cultify()
@@ -123,6 +125,9 @@
 		var/damage = O.force
 		if (O.damtype == HALLOSS)
 			damage = 0
+		if(istype(O,/obj/item/weapon/nullrod))
+			damage *= 2
+			purge = 3
 		adjustBruteLoss(damage)
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
@@ -132,6 +137,7 @@
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
+
 
 /mob/living/simple_animal/construct/airflow_stun()
 	return
@@ -388,6 +394,10 @@
 		if(pullin)
 			if(pulling)								pullin.icon_state = "pull1"
 			else									pullin.icon_state = "pull0"
+
+		if(purged)
+			if(purge > 0)							purged.icon_state = "purge1"
+			else									purged.icon_state = "purge0"
 
 		if(construct_spell1)
 			construct_spell1.overlays = 0

@@ -32,7 +32,6 @@
 	var/atom/movable/following = null
 	incorporeal_move = 1
 
-
 /mob/dead/observer/New(var/mob/body=null, var/flags=1)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
@@ -54,14 +53,21 @@
 
 		// NEW SPOOKY BAY GHOST ICONS
 		//////////////
+
+		/*//What's the point of that? The icon and overlay renders without problem even with just the bottom part. I putting the old code in comment. -Deity Link
 		if (ishuman(body))
 			var/mob/living/carbon/human/H = body
 			icon = H.stand_icon
-			overlays = H.overlays_standing
+			overlays = H.overlays_standing//causes issue with sepia cameras
 		else
 			icon = body.icon
 			icon_state = body.icon_state
 			overlays = body.overlays
+		*/
+
+		icon = body.icon
+		icon_state = body.icon_state
+		overlays = body.overlays
 
 		// No icon?  Ghost icon time.
 		if(isnull(icon) || isnull(icon_state))
@@ -114,6 +120,14 @@
 				"\red You get the feeling that the ghost can't become any more visible." \
 			)
 
+	if(istype(W,/obj/item/weapon/storage/bible) || istype(W,/obj/item/weapon/nullrod))
+		var/mob/dead/M = src
+		if(src.invisibility == 0)
+			M.invisibility = 60
+			user.visible_message( \
+				"<span class='warning'>[user] banishes the ghost from our plan of reality!</span>", \
+				"<span class='warning'>You banish the ghost from our plan of reality!</span>" \
+			)
 
 /mob/dead/observer/get_multitool(var/active_only=0)
 	return ghostMulti
@@ -146,6 +160,11 @@ Works together with spawning an observer, noted above.
 	if(medHUD)
 		process_medHUD(src)
 
+	if(visible)
+		if(invisibility == 0)
+			visible.icon_state = "visible1"
+		else
+			visible.icon_state = "visible0"
 
 // Direct copied from medical HUD glasses proc, used to determine what health bar to put over the targets head.
 /mob/dead/proc/RoundHealth(var/health)
@@ -417,11 +436,23 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!thearea)	return
 
 	var/list/L = list()
-	for(var/turf/T in get_area_turfs(thearea.type))
-		L+=T
+	var/holyblock = 0
+
+	if((usr.invisibility == 0) || (usr.mind in ticker.mode.cult))
+		for(var/turf/T in get_area_turfs(thearea.type))
+			if(!T.holy)
+				L+=T
+			else
+				holyblock = 1
+	else
+		for(var/turf/T in get_area_turfs(thearea.type))
+			L+=T
 
 	if(!L || !L.len)
-		usr << "No area available."
+		if(holyblock)
+			usr << "<span class='warning'>This area has been entirely made into sacred grounds, you cannot enter it while you are in this plane of existence!</span>"
+		else
+			usr << "No area available."
 
 	usr.loc = pick(L)
 
@@ -437,23 +468,28 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
-	if(target && target != src)
-		if(following && following == target)
+	if(target)
+		var/turf/targetloc = get_turf(target)
+		if(targetloc.holy && ((src.invisibility == 0) || (src.mind in ticker.mode.cult)))
+			usr << "<span class='warning'>You cannot follow a mob standing on holy grounds!</span>"
 			return
-		following = target
-		src << "\blue Now following [target]"
-		spawn(0)
-			var/turf/pos = get_turf(src)
-			while(loc == pos && target && following == target && client)
-				var/turf/T = get_turf(target)
-				if(!T)
-					break
-				// To stop the ghost flickering.
-				if(loc != T)
-					loc = T
-				pos = loc
-				sleep(15)
-			following = null
+		if(target != src)
+			if(following && following == target)
+				return
+			following = target
+			src << "<span class='notice'>Now following [target]</span>"
+			spawn(0)
+				var/turf/pos = get_turf(src)
+				while(loc == pos && target && following == target && client)
+					var/turf/T = get_turf(target)
+					if(!T)
+						break
+					// To stop the ghost flickering.
+					if(loc != T)
+						loc = T
+					pos = loc
+					sleep(15)
+				following = null
 
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
@@ -473,6 +509,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if (!target)//Make sure we actually have a target
 			return
 		else
+			var/turf/targetloc = get_turf(target)
+			if(targetloc.holy && ((src.invisibility == 0) || (src.mind in ticker.mode.cult)))
+				usr << "<span class='warning'>The mob that you are trying to follow is standing on holy grounds, you cannot reach him!</span>"
+				return
 			var/mob/M = dest[target] //Destination mob
 			var/mob/A = src			 //Source mob
 			var/turf/T = get_turf(M) //Turf of the destination mob
