@@ -402,7 +402,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								new_item.m_amt /= coeff
 								new_item.g_amt /= coeff
 								if(linked_lathe.hacked)
-									//R = max((reliability / 2), 0) //this line was like this before, no idea why, it was always 50
 									R = max((new_item.reliability/2), 0)
 								if(O)
 									var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(linked_lathe.loc)
