@@ -29,15 +29,15 @@
 		usr << "<span class=\"warning\">Jesus, it's hot!</span>"
 
 	var/list/bits=list()
-	for(var/mat_id in mats)
+	for(var/mat_id in mats.storage)
 		var/datum/material/mat=mats.getMaterial(mat_id)
-		if(mat.stored>0)
+		if(mat.stored > 0)
 			bits.Add(mat.processed_name)
 
 	if(bits.len>0)
 		usr << "<span class=\"info\">It appears to contain bits of [english_list(bits)].</span>"
 	else
-		usr << "<span class=\"info\">It appears to be completely worthless.</span>"
+		usr << "<span class=\"warning\">It appears to be completely worthless.</span>"
 
 /obj/effect/decal/slag/solidify()
 	icon_state="slagcold"

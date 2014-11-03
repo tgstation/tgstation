@@ -19,18 +19,21 @@
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
 	material="uranium"
+	melt_temperature = 1070+T0C
 
 /obj/item/weapon/ore/iron
 	name = "Iron ore"
 	icon_state = "Iron ore"
 	origin_tech = "materials=1"
 	material="iron"
+	melt_temperature = MELTPOINT_STEEL
 
 /obj/item/weapon/ore/glass
 	name = "Sand"
 	icon_state = "Glass ore"
 	origin_tech = "materials=1"
 	material="glass"
+	melt_temperature = MELTPOINT_GLASS
 
 	attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
 		var/location = get_turf(user)
@@ -45,18 +48,21 @@
 	icon_state = "Plasma ore"
 	origin_tech = "materials=2"
 	material="plasma"
+	melt_temperature = MELTPOINT_STEEL+500
 
 /obj/item/weapon/ore/silver
 	name = "Silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
 	material="silver"
+	melt_temperature = 961+T0C
 
 /obj/item/weapon/ore/gold
 	name = "Gold ore"
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
 	material="gold"
+	melt_temperature = 1064+T0C
 
 /obj/item/weapon/ore/diamond
 	name = "Diamond ore"
@@ -69,6 +75,7 @@
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
 	material="clown"
+	melt_temperature = MELTPOINT_GLASS
 
 /obj/item/weapon/ore/phazon
 	name = "Phazite"
@@ -76,11 +83,14 @@
 	icon_state = "Phazon ore"
 	origin_tech = "materials=7"
 	material="phazon"
+	melt_temperature = MELTPOINT_GLASS
 
 /obj/item/weapon/ore/slag
 	name = "Slag"
 	desc = "Completely useless unless recycled."
 	icon_state = "slag"
+
+	// melt_temperature is automatically adjusted.
 
 	var/datum/materials/mats=new
 
@@ -303,12 +313,14 @@
 	name = "Gold coin"
 	icon_state = "coin_gold"
 	credits = 5
+	melt_temperature=1064+T0C
 
 /obj/item/weapon/coin/silver
 	material="silver"
 	name = "Silver coin"
 	icon_state = "coin_silver"
 	credits = 1
+	melt_temperature=961+T0C
 
 /obj/item/weapon/coin/diamond
 	material="diamond"
@@ -321,30 +333,35 @@
 	name = "Iron coin"
 	icon_state = "coin_iron"
 	credits = 0.01
+	melt_temperature=MELTPOINT_STEEL
 
 /obj/item/weapon/coin/plasma
 	material="plasma"
 	name = "Solid plasma coin"
 	icon_state = "coin_plasma"
 	credits = 0.1
+	melt_temperature=MELTPOINT_STEEL+500
 
 /obj/item/weapon/coin/uranium
 	material="uranium"
 	name = "Uranium coin"
 	icon_state = "coin_uranium"
 	credits = 25
+	melt_temperature=1070+T0C
 
 /obj/item/weapon/coin/clown
 	material="clown"
 	name = "Bananaium coin"
 	icon_state = "coin_clown"
 	credits = 1000
+	melt_temperature=MELTPOINT_GLASS
 
 /obj/item/weapon/coin/phazon
 	material="phazon"
 	name = "Phazon coin"
 	icon_state = "coin_phazon"
 	credits = 2000
+	melt_temperature=MELTPOINT_GLASS
 
 /obj/item/weapon/coin/adamantine
 	material="adamantine"
