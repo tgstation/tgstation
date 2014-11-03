@@ -213,6 +213,8 @@
 	var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
 	if((1 - thermal_protection) > 0.0001)
 		bodytemperature += BODYTEMP_HEATING_MAX
+	else
+		bodytemperature += 16
 	return
 
 /mob/living/carbon/human/IgniteMob()

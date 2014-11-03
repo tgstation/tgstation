@@ -17,6 +17,7 @@
 	var/last_use = 1.0
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
+	var/power = 5
 
 /obj/item/weapon/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -43,16 +44,26 @@
 	user << "The safety is [safety ? "on" : "off"]."
 	return
 
-/obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	//TODO; Add support for reagents in water.
-
-	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
-		var/obj/o = target
-		o.reagents.trans_to(src, max_water)
+/obj/item/weapon/extinguisher/proc/AttemptRefill(atom/target, mob/user)
+	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
+		var/safety_save = safety
+		safety = 1
+		var/obj/structure/reagent_dispensers/watertank/W = target
+		W.reagents.trans_to(src, max_water)
 		user << "<span class='notice'>\The [src] is now refilled</span>"
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-		return
+		safety = safety_save
+		return 1
+	else
+		return 0
 
+/obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
+	//TODO; Add support for reagents in water.
+	if(target.loc == user)//No more spraying yourself when putting your extinguisher away
+		return
+	var/Refill = AttemptRefill(target, user)
+	if(Refill)
+		return
 	if (!safety)
 		if (src.reagents.total_volume < 1)
 			usr << "<span class='danger'>\The [src] is empty.</span>"
@@ -107,7 +118,7 @@
 				R.my_atom = W
 				if(!W || !src) return
 				src.reagents.trans_to(W,1)
-				for(var/b=0, b<5, b++)
+				for(var/b=0, b<power, b++)
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return
 					W.reagents.reaction(get_turf(W))
