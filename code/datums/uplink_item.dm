@@ -399,7 +399,14 @@ var/list/uplink_items = list()
 	name = "Binary Translator Key"
 	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
-	cost = 6
+	cost = 5
+	surplus = 75
+
+/datum/uplink_item/device_tools/encryptionkey
+	name = "Syndicate Encryption Key"
+	desc = "A key, that when inserted into a radio headset, allows you to listen to all station department channels as well as talk on an encrypted Syndicate channel."
+	item = /obj/item/device/encryptionkey/syndicate
+	cost = 5
 	surplus = 75
 
 /datum/uplink_item/device_tools/ai_detector

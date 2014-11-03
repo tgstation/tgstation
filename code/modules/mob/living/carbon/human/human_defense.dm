@@ -151,7 +151,7 @@ emp_act
 		apply_damage(I.force, I.damtype, affecting, armor , I)
 
 		var/bloody = 0
-		if(((I.damtype == BRUTE) && prob(25 + (I.force * 2))))
+		if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 			if(affecting.status == ORGAN_ORGANIC)
 				I.add_blood(src)	//Make the weapon bloody, not the person.
 				if(prob(I.force * 2))	//blood spatter!
@@ -196,7 +196,7 @@ emp_act
 							update_inv_glasses(0)
 
 				if("chest")	//Easier to score a stun but lasts less time
-					if(stat == CONSCIOUS && prob(I.force + 10))
+					if(stat == CONSCIOUS && I.force && prob(I.force + 10))
 						visible_message("<span class='danger'>[src] has been knocked down!</span>", \
 										"<span class='userdanger'>[src] has been knocked down!</span>")
 						apply_effect(5, WEAKEN, armor)

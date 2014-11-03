@@ -266,8 +266,10 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	set category = "Object"
 	set src in usr
 	var/mob/M = usr
-	if (istype(M, /mob/dead/)) return
-	if (usr.stat) return
+	if (istype(M, /mob/dead/))
+		return
+	if (!can_use(usr))
+		return
 	if(src.has_sensor >= 2)
 		usr << "The controls are locked."
 		return 0
@@ -292,7 +294,7 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	set name = "Adjust Jumpsuit Style"
 	set category = "Object"
 	set src in usr
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 	if(!can_adjust)
 		usr << "You cannot wear this suit any differently."
@@ -313,8 +315,10 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	set name = "Remove Accessory"
 	set category = "Object"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(!istype(usr, /mob/living))
+		return
+	if(!can_use(usr))
+		return
 
 	if(hastie)
 		hastie.transform *= 2
@@ -336,7 +340,7 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 	..()
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(can_use(usr))
 		if(up)
 			up = !up
 			flags |= (visor_flags)
@@ -360,3 +364,9 @@ atom/proc/generate_female_clothing(index,t_color,icon)
 		usr.update_inv_glasses(0)
 	if(istype(src, /obj/item/clothing/mask))
 		usr.update_inv_wear_mask(0)
+
+/obj/item/clothing/proc/can_use(mob/user)
+	if(user && ismob(user))
+		if(!user.stat && user.canmove && !user.restrained())
+			return 1
+	return 0

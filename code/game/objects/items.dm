@@ -80,7 +80,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() || !usr.canmove)
 		return
 
 	var/turf/T = src.loc
@@ -377,8 +377,13 @@
 		transfer_blood = 0
 		bloody_hands_mob = null
 
+/obj/item/singularity_pull(S, current_size)
+	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
+		if(current_size >= 7)
+			throw_at(S,14,3)
+		else ..()
 
-/obj/item/acid_act(var/acidpwr, var/toxpwr, var/acid_volume) //Returns 1 if the object melted, 0 if it survived
+/obj/item/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	. = 1
 	for(var/V in armor)
 		if(armor[V] > 0)

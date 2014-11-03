@@ -684,9 +684,9 @@ steam.start() -- spawns the effect
 
 /datum/effect/effect/system/ion_trail_follow/set_up(atom/atom)
 	attach(atom)
-	oldposition = get_turf(atom)
 
-/datum/effect/effect/system/ion_trail_follow/start()
+
+/datum/effect/effect/system/ion_trail_follow/start() //Whoever is responsible for this abomination of code should become an hero
 	if(!src.on)
 		src.on = 1
 		src.processing = 1
@@ -696,26 +696,22 @@ steam.start() -- spawns the effect
 		if(T != src.oldposition)
 			if(!has_gravity(T))
 				var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
-				src.oldposition = T
 				I.dir = src.holder.dir
 				flick("ion_fade", I)
 				I.icon_state = "blank"
 				spawn( 20 )
 					if(I)
 						I.delete()
-			spawn(2)
-				if(src.on)
-					src.processing = 1
-					src.start()
-		else
-			spawn(2)
-				if(src.on)
-					src.processing = 1
-					src.start()
+			src.oldposition = T
+		spawn(2)
+			if(src.on)
+				src.processing = 1
+				src.start()
 
 /datum/effect/effect/system/ion_trail_follow/proc/stop()
 	src.processing = 0
 	src.on = 0
+	oldposition = null
 
 
 

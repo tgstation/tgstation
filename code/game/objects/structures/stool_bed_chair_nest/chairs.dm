@@ -11,6 +11,10 @@
 		handle_layer()
 	return
 
+/obj/structure/stool/bed/chair/Move(atom/newloc, direct)
+	..()
+	handle_rotation()
+
 /obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/assembly/shock_kit))
@@ -30,10 +34,10 @@
 		rotate()
 	return
 
-/obj/structure/stool/bed/chair/proc/handle_rotation(direction)	//making this into a seperate proc so office chairs can call it on Move()
+/obj/structure/stool/bed/chair/proc/handle_rotation(direction)
 	if(buckled_mob)
 		buckled_mob.buckled = null //Temporary, so Move() succeeds.
-		if(!buckled_mob.Move(direction))
+		if(!direction || !buckled_mob.Move(get_step(src, direction), direction))
 			buckled_mob.buckled = src
 			dir = buckled_mob.dir
 			return 0
@@ -62,7 +66,7 @@
 	else
 		if(!usr || !isturf(usr.loc))
 			return
-		if(usr.stat || usr.restrained())
+		if(usr.stat || usr.restrained() || !usr.canmove)
 			return
 		spin()
 
@@ -126,11 +130,6 @@
 
 /obj/structure/stool/bed/chair/office
 	anchored = 0
-
-/obj/structure/stool/bed/chair/office/Move(direction)
-	if(handle_rotation(direction))
-		..()
-	handle_layer()
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"

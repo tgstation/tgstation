@@ -297,12 +297,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>"
+						if(istype(cartridge.radio, /obj/item/radio/integrated/floorbot))
+							dat += "<li><a href='byond://?src=\ref[src];choice=51'><img src=pda_floorbot.png> Floorbot Access</a></li>"
 						dat += "</ul>"
 					if (cartridge.access_medical)
 						dat += "<h4>Medical Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=44'><img src=pda_medical.png> Medical Records</a></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=Medical Scan'><img src=pda_scanner.png> [scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
+					if(istype(cartridge.radio, /obj/item/radio/integrated/medbot))
+						dat += "<li><a href='byond://?src=\ref[src];choice=52'><img src=pda_medbot.png> Medibot Access</a></li>"
+						dat += "</ul>"
+					else
 						dat += "</ul>"
 					if (cartridge.access_security)
 						dat += "<h4>Security Functions</h4>"
@@ -325,6 +331,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if (cartridge)
 					if (cartridge.access_janitor)
 						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
+						if(istype(cartridge.radio, /obj/item/radio/integrated/cleanbot))
+							dat += "<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_cleanbot.png> Cleanbot Access</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
 					if (cartridge.access_reagent_scanner)
@@ -467,9 +475,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					mode = 0
 				else
 					mode = round(mode/10)
-					if(mode==4)//Fix for cartridges. Redirects to hub.
+					if(mode==4 || mode == 5)//Fix for cartridges. Redirects to hub.
 						mode = 0
-					else if(mode >= 40 && mode <= 49)//Fix for cartridges. Redirects to refresh the menu.
+					else if(mode >= 40 && mode <= 59)//Fix for cartridges. Redirects to refresh the menu.
 						cartridge.mode = mode
 						cartridge.unlock()
 			if ("Authenticate")//Checks for ID
@@ -755,7 +763,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
 
 		if (!P.silent)
-			P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
+			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
+		P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))

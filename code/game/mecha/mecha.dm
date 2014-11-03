@@ -57,7 +57,6 @@
 	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
 
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
-	var/datum/global_iterator/pr_inertial_movement //controls intertial movement in spesss
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
 
@@ -130,12 +129,10 @@
 	internal_tank = null
 
 	qdel(pr_int_temp_processor)
-	qdel(pr_inertial_movement)
 	qdel(pr_give_air)
 	qdel(pr_internal_damage)
 	qdel(spark_system)
 	pr_int_temp_processor = null
-	pr_inertial_movement = null
 	pr_give_air = null
 	pr_internal_damage = null
 	spark_system = null
@@ -183,7 +180,6 @@
 
 /obj/mecha/proc/add_iterators()
 	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
-	pr_inertial_movement = new /datum/global_iterator/mecha_intertial_movement(null,0)
 	pr_give_air = new /datum/global_iterator/mecha_tank_give_air(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
 
@@ -205,13 +201,13 @@
 
 	return 1
 
-
-
-/obj/mecha/proc/check_for_support()
-	if(locate(/obj/structure/grille, orange(1, src)) || locate(/obj/structure/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
-		return 1
-	else
+obj/mecha/proc/can_use(mob/user)
+	if(user != src.occupant)
 		return 0
+	if(user && ismob(user))
+		if(!usr.stat && !usr.restrained() && usr.canmove)
+			return 1
+	return 0
 
 /obj/mecha/examine(mob/user)
 	..()
@@ -304,11 +300,15 @@
 ////////  Movement procs  ////////
 //////////////////////////////////
 
-/obj/mecha/Move()
+/obj/mecha/Move(atom/newloc, direct)
 	. = ..()
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
-	return
+
+/obj/mecha/Process_Spacemove(var/movement_dir = 0)
+	if(occupant)
+		return occupant.Process_Spacemove(movement_dir) //We'll just say you used the clamp to grab the wall
+	return ..()
 
 /obj/mecha/relaymove(mob/user,direction)
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
@@ -331,7 +331,7 @@
 /obj/mecha/proc/dyndomove(direction)
 	if(!can_move)
 		return 0
-	if(pr_inertial_movement && src.pr_inertial_movement.active())
+	if(!Process_Spacemove(direction))
 		return 0
 	if(!has_charge(step_energy_drain))
 		return 0
@@ -341,14 +341,9 @@
 	else if(src.dir!=direction)
 		move_result = mechturn(direction)
 	else
-		move_result	= mechstep(direction)
+		move_result = mechstep(direction)
 	if(move_result)
 		can_move = 0
-		use_power(step_energy_drain)
-		if(istype(src.loc, /turf/space))
-			if(!src.check_for_support() && pr_inertial_movement)
-				src.pr_inertial_movement.start(list(src,direction))
-				src.log_message("Movement control lost. Inertial movement started.")
 		if(do_after(step_in))
 			can_move = 1
 		return 1
@@ -532,8 +527,8 @@
 		src.visible_message("The [A] fastens firmly to [src].")
 		return
 	if(prob(src.deflect_chance) || istype(A, /mob))
-		src.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
-		src.visible_message("The [A] bounces off the [src.name] armor")
+		src.occupant_message("<span class='notice'>[A] bounces off the armor.</span>")
+		src.visible_message("[A] bounces off the [src.name] armor")
 		src.log_append_to_last("Armor saved.")
 		if(istype(A, /mob/living))
 			var/mob/living/M = A
@@ -750,19 +745,22 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.remove_fuel(0,user))
-			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
-				clearInternalDamage(MECHA_INT_TANK_BREACH)
-				user << "<span class='notice'>You repair the damaged gas tank.</span>"
-		else
-			return
 		if(src.health<initial(src.health))
-			user << "<span class='notice'>You repair some damage to [src.name].</span>"
-			src.health += min(10, initial(src.health)-src.health)
+			if (WT.remove_fuel(0,user))
+				if (hasInternalDamage(MECHA_INT_TANK_BREACH))
+					clearInternalDamage(MECHA_INT_TANK_BREACH)
+					user << "<span class='notice'>You repair the damaged gas tank.</span>"
+				else
+					user.visible_message("<span class='notice'>[user] repairs some damage to [src.name].</span>")
+					src.health += min(10, initial(src.health)-src.health)
+			else
+				user << "<span class='warning'>The welder must be on for this task.</span>"
+				return 1
 		else
-			user << "The [src.name] is at full integrity"
-		return
+			user << "<span class='warning'>The [src.name] is at full integrity.</span>"
+		return 1
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
 		if(!user.unEquip(W))
@@ -878,8 +876,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)			return
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 	if(possible_port)
@@ -901,8 +899,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)			return
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	if(disconnect())
 		src.occupant_message("<span class='notice'>[name] disconnects from the port.</span>")
@@ -917,8 +915,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)		return
-	if(usr != occupant)	return
+	if(!can_use(usr))
+		return
 
 	lights = !lights
 	if(lights)	AddLuminosity(lights_power)
@@ -934,8 +932,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)			return
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	use_internal_tank = !use_internal_tank
 	src.occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
@@ -1071,7 +1069,8 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=src.occupant)
+
+	if(!can_use(usr))
 		return
 	//pr_update_stats.start()
 	src.occupant << browse(src.get_stats_html(), "window=exosuit")
@@ -1092,7 +1091,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	src.go_out()
 	add_fingerprint(usr)
@@ -1714,16 +1714,6 @@ var/year_integer = text2num(year) // = 2013???
 			return stop()
 		return
 
-/datum/global_iterator/mecha_intertial_movement //inertial movement in space
-	delay = 7
-
-	process(var/obj/mecha/mecha as obj,direction)
-		if(direction)
-			if(!step(mecha, direction)||mecha.check_for_support())
-				src.stop()
-		else
-			src.stop()
-		return
 
 /datum/global_iterator/mecha_internal_damage // processing internal damage
 

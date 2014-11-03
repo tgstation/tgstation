@@ -40,6 +40,15 @@
 	return
 
 
+/obj/machinery/singularity/Move(atom/newloc, direct)
+	if(current_size >= 9 || check_turfs_in(direct))
+		last_failed_movement = 0//Reset this because we moved
+		return ..()
+	else
+		last_failed_movement = direct
+		return 0
+
+
 /obj/machinery/singularity/attack_hand(mob/user as mob)
 	consume(user)
 	return 1
@@ -203,40 +212,13 @@
 
 /obj/machinery/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 1
-	// Let's just make this one loop.
 	for(var/atom/X in orange(grav_pull,src))
 		var/dist = get_dist(X, src)
-		// Movable atoms only
-		if(dist > consume_range && istype(X, /atom/movable))
-			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
-				step_towards(X,src)
-
-			else if(istype(X,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-
-				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(!M.magpulse)
-						step_towards(H,src)
-				else
-					step_towards(H,src)
-
-				if(current_size >= 5)
-					var/list/handlist = list(H.l_hand, H.r_hand)
-					for(var/obj/item/hand in handlist)
-						if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && H.unEquip(hand))
-							step_towards(hand, src)
-							H << "<span class='warning'>\The [src] pulls \the [hand] from your grip!</span>"
-
-				H.apply_effect(current_size * 3, IRRADIATE)
-		// Turf and movable atoms
-		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
+		var/obj/machinery/singularity/S = src
+		if(dist > consume_range)
+			X.singularity_pull(S, current_size)
+		else if(dist <= consume_range)
 			consume(X)
-
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 0
 	return
 
 
@@ -258,20 +240,7 @@
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 
-	if(current_size >= 9)//The superlarge one does not care about things in its way
-		spawn(0)
-			step(src, movement_dir)
-		spawn(1)
-			step(src, movement_dir)
-		return 1
-	else if(check_turfs_in(movement_dir))
-		last_failed_movement = 0//Reset this because we moved
-		spawn(0)
-			step(src, movement_dir)
-		return 1
-	else
-		last_failed_movement = movement_dir
-	return 0
+	step(src, movement_dir)
 
 
 /obj/machinery/singularity/proc/check_turfs_in(var/direction = 0, var/step = 0)
