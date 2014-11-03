@@ -110,23 +110,23 @@
 		var/mob/dead/M = src
 		if(src.invisibility != 0)
 			M.invisibility = 0
-			user.visible_message( \
-				"\red [user] drags ghost, [M], to our plan of reality!", \
-				"\red You drag [M] to our plan of reality!" \
+			user.visible_message(
+				"<span class='warning'>[user] drags ghost, [M], to our plan of reality!</span>",
+				"<span class='warning'>You drag [M] to our plan of reality!</span>"
 			)
 		else
-			user.visible_message ( \
-				"\red [user] just tried to smash his book into that ghost!  It's not very effective", \
-				"\red You get the feeling that the ghost can't become any more visible." \
+			user.visible_message (
+				"<span class='warning'>[user] just tried to smash his book into that ghost!  It's not very effective</span>",
+				"<span class='warning'>You get the feeling that the ghost can't become any more visible.</span>"
 			)
 
 	if(istype(W,/obj/item/weapon/storage/bible) || istype(W,/obj/item/weapon/nullrod))
 		var/mob/dead/M = src
 		if(src.invisibility == 0)
 			M.invisibility = 60
-			user.visible_message( \
-				"<span class='warning'>[user] banishes the ghost from our plan of reality!</span>", \
-				"<span class='warning'>You banish the ghost from our plan of reality!</span>" \
+			user.visible_message(
+				"<span class='warning'>[user] banishes the ghost from our plan of reality!</span>",
+				"<span class='warning'>You banish the ghost from our plan of reality!</span>"
 			)
 
 /mob/dead/observer/get_multitool(var/active_only=0)
