@@ -38,17 +38,6 @@
 	new /obj/item/clothing/head/beret/sec(src)
 	return
 
-/obj/structure/closet/wardrobe/hos
-	name = "\proper head of security's wardrobe"
-	icon_state = "red"
-	icon_closed = "red"
-
-/obj/structure/closet/wardrobe/hos/New()
-	new /obj/item/clothing/under/hosformalfem(src)
-	new /obj/item/clothing/under/hosformalmale(src)
-	new /obj/item/clothing/under/rank/head_of_security/jensen(src)
-	return
-
 /obj/structure/closet/wardrobe/pink
 	name = "pink wardrobe"
 	icon_state = "pink"

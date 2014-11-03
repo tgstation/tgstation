@@ -75,8 +75,7 @@
 		var/datum/mind/trotsky = pick(head_revolutionaries)
 		antag_candidates += trotsky
 		head_revolutionaries -= trotsky
-
-	heads_to_kill = heads
+		update_rev_icons_removed(trotsky)
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		log_game("[rev_mind.key] (ckey) has been selected as a head rev")
@@ -164,6 +163,7 @@
 	rev_obj.target = head_mind
 	rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
 	rev_mind.objectives += rev_obj
+	heads_to_kill += head_mind
 
 ////////////////////////////////////////////
 //Checks if new heads have joined midround//

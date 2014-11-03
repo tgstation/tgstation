@@ -739,15 +739,17 @@
 			return 0
 	var/result = 0
 	var/obj/item/stack/sheet/res = new type(src)
-	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
-	res.amount = min(total_amount,res.max_amount)
-	if(res.amount>0)
+	if(amount>0 && amount<=50)
+		var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
+		res.amount = min(amount,total_amount)
 		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
 		res.Move(src.loc)
 		result = res.amount
 	else
+		result = 0
 		qdel(res)
 	return result
+
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)

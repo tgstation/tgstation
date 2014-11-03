@@ -76,7 +76,7 @@
 	var/mob/M = usr
 	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
 
-	if(src && input && !M.stat && in_range(M,src))
+	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
 		name = input
 		M << "You name the gun [input]. Say hello to your new friend."
 		return 1
@@ -95,7 +95,7 @@
 	options["The Peacemaker"] = "detective_peacemaker"
 	var/choice = input(M,"What do you want to skin the gun to?","Reskin Gun") in options
 
-	if(src && choice && !M.stat && in_range(M,src))
+	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
 		icon_state = options[choice]
 		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
 		return 1

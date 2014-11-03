@@ -80,7 +80,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() || !usr.canmove)
 		return
 
 	var/turf/T = src.loc
@@ -376,3 +376,9 @@
 	if(.)
 		transfer_blood = 0
 		bloody_hands_mob = null
+
+/obj/item/singularity_pull(S, current_size)
+	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
+		if(current_size >= 7)
+			throw_at(S,14,3)
+		else ..()

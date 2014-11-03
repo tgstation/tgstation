@@ -304,7 +304,8 @@ obj/structure/windoor_assembly/Destroy()
 	set name = "Rotate Windoor Assembly"
 	set category = "Object"
 	set src in oview(1)
-
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
 	if (src.anchored)
 		usr << "It is fastened to the floor; therefore, you can't rotate it!"
 		return 0
@@ -325,6 +326,8 @@ obj/structure/windoor_assembly/Destroy()
 	set name = "Flip Windoor Assembly"
 	set category = "Object"
 	set src in oview(1)
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
 
 	if(src.facing == "l")
 		usr << "The windoor will now slide to the right."

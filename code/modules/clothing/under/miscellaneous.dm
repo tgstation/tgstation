@@ -14,14 +14,6 @@
 	item_state = "w_suit"
 	can_adjust = 0
 
-/obj/item/clothing/under/scratch
-	name = "white suit"
-	desc = "A white suit, suitable for an excellent host"
-	icon_state = "scratch"
-	item_state = "scratch"
-	item_color = "scratch"
-	can_adjust = 0
-
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
 	name = "amish suit"

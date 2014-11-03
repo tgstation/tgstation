@@ -156,7 +156,7 @@
 	name = "janicart"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "pussywagon"
-	anchored = 1
+	anchored = 0
 	density = 1
 	flags = OPENCONTAINER
 	//copypaste sorry
@@ -206,18 +206,13 @@
 	if(user.stat || user.stunned || user.weakened || user.paralysis)
 		unbuckle()
 	if(istype(user.l_hand, /obj/item/key) || istype(user.r_hand, /obj/item/key))
+		if(!Process_Spacemove(direction))
+			return
 		step(src, direction)
 		update_mob()
 		handle_rotation()
 	else
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>"
-
-
-/obj/structure/stool/bed/chair/janicart/Move()
-	..()
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)
-			buckled_mob.loc = loc
 
 
 /obj/structure/stool/bed/chair/janicart/buckle_mob(mob/M, mob/user)

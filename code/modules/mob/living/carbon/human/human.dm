@@ -43,7 +43,7 @@
 	return ..()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
+	if ((!( yes ) || now_pushing || buckled))
 		return
 	now_pushing = 1
 	if (ismob(AM))
@@ -111,7 +111,7 @@
 			if(pulling == AM)
 				stop_pulling()
 			var/t = get_dir(src, AM)
-			AM.Move(get_step(AM, t))
+			AM.Move(get_step(AM, t), t)
 		now_pushing = 0
 
 /mob/living/carbon/human/Stat()
@@ -717,3 +717,15 @@
 	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
 	gib()
 	return(gain)
+
+/mob/living/carbon/human/singularity_pull(S, current_size)
+	if(current_size >= 5)
+		var/list/handlist = list(l_hand, r_hand)
+		for(var/obj/item/hand in handlist)
+			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
+				step_towards(hand, src)
+				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
+	apply_effect(current_size * 3, IRRADIATE)
+	if(mob_negates_gravity())
+		return
+	..()

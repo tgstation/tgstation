@@ -14,6 +14,7 @@ var/list/admin_verbs_default = list(
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/secrets,
 	/client/proc/reload_admins,
+	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel		/*admin-pm list*/
 	)
@@ -184,7 +185,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_debug_del_all,
 	/client/proc/enable_debug_verbs,
 	/proc/possess,
-	/proc/release
+	/proc/release,
+	/client/proc/reload_admins
 	)
 
 /client/proc/add_admin_verbs()

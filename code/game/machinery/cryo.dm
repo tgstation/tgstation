@@ -4,6 +4,7 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1.0
+	interact_offline = 1
 	layer = 4
 
 	var/on = 0
@@ -45,7 +46,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
-	if(!node)
+	if(!node || !is_operational())
 		return
 	if(!on)
 		updateDialog()
@@ -97,11 +98,17 @@
 		user << "Seems empty."
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		if(state_open == 1)
+	if(..())
+		return
+
+	//powerless interaction
+	if(!is_operational())
+		user.unset_machine()//essential to prevent infinite loops of opening/closing the machine
+		if(state_open)
 			close_machine()
 		else
 			open_machine()
+
 	else
 		ui_interact(user)
 
@@ -258,7 +265,7 @@
 	if(state_open)
 		icon_state = "cell-open"
 		return
-	if(on)
+	if(on && is_operational())
 		if(occupant)
 			icon_state = "cell-occupied"
 		else
@@ -266,6 +273,9 @@
 	else
 		icon_state = "cell-off"
 
+/obj/machinery/atmospherics/unary/cryo_cell/power_change()
+	..()
+	update_icon()
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
 	if(air_contents.total_moles() < 10)
