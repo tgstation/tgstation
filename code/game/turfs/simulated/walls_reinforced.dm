@@ -16,8 +16,7 @@
 	return (new /obj/structure/girder/reinforced(src))
 
 /turf/simulated/wall/r_wall/devastate_wall()
-	new /obj/item/stack/sheet/metal( src )
-	new /obj/item/stack/sheet/metal( src )
+	new /obj/item/stack/sheet/metal(src, 2)
 	new /obj/item/stack/sheet/plasteel( src )
 
 /turf/simulated/wall/r_wall/attack_animal(var/mob/living/simple_animal/M)

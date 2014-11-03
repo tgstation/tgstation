@@ -15,14 +15,10 @@
 	var/slicing_duration = 100  //default time taken to slice the wall
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
-	var/newgirder = null
-
 	if(devastated)
 		devastate_wall()
 	else
-		newgirder = break_wall()
-
-	if(newgirder)
+		var/newgirder = break_wall()
 		transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
@@ -37,14 +33,11 @@
 
 /turf/simulated/wall/proc/break_wall()
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		new /obj/item/stack/sheet/metal( src )
-		new /obj/item/stack/sheet/metal( src )
+		new /obj/item/stack/sheet/metal(src, 2)
 		return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
-		new /obj/item/stack/sheet/metal( src )
-		new /obj/item/stack/sheet/metal( src )
-		new /obj/item/stack/sheet/metal( src )
+		new /obj/item/stack/sheet/metal(src, 3)
 
 
 /turf/simulated/wall/ex_act(severity)

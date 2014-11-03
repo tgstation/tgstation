@@ -8,15 +8,13 @@
 /turf/simulated/wall/mineral/break_wall()
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 	var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-	new M( src )
-	new M( src )
+	new M(src, 2)
 	return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/mineral/devastate_wall()
 	var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-	new M( src )
-	new M( src )
-	new /obj/item/stack/sheet/metal( src )
+	new M(src, 2)
+	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/mineral/gold
 	name = "gold wall"
@@ -110,7 +108,6 @@
 	..()
 
 /turf/simulated/wall/mineral/plasma/proc/PlasmaBurn(temperature)
-	spawn(2)
 	new /obj/structure/girder(src)
 	src.ChangeTurf(/turf/simulated/floor)
 	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
