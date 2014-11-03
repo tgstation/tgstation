@@ -305,7 +305,7 @@ var/list/slot_equipment_priority = list( \
 
 	if(!src || !isturf(src.loc))
 		return
-	if(src.stat || src.restrained())
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if(src.status_flags & FAKEDEATH)
 		return

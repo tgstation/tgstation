@@ -112,7 +112,7 @@
 /obj/machinery/clonepod/attack_paw(mob/user as mob)
 	return attack_hand(user)
 /obj/machinery/clonepod/attack_hand(mob/user as mob)
-	if ((isnull(src.occupant)) || (stat & NOPOWER))
+	if (isnull(src.occupant) || !is_operational())
 		return
 	if ((!isnull(src.occupant)) && (src.occupant.stat != 2))
 		var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
@@ -205,7 +205,7 @@
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
 
-	if(stat & NOPOWER) //Autoeject if power is lost
+	if(!is_operational()) //Autoeject if power is lost
 		if (src.occupant)
 			src.locked = 0
 			src.go_out()
@@ -302,7 +302,7 @@
 
 	if(!usr)
 		return
-	if (usr.stat != 0)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.go_out()
 	add_fingerprint(usr)

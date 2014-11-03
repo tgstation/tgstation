@@ -201,6 +201,13 @@
 
 	return 1
 
+obj/mecha/proc/can_use(mob/user)
+	if(user != src.occupant)
+		return 0
+	if(user && ismob(user))
+		if(!usr.stat && !usr.restrained() && usr.canmove)
+			return 1
+	return 0
 
 /obj/mecha/examine(mob/user)
 	..()
@@ -520,8 +527,8 @@
 		src.visible_message("The [A] fastens firmly to [src].")
 		return
 	if(prob(src.deflect_chance) || istype(A, /mob))
-		src.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
-		src.visible_message("The [A] bounces off the [src.name] armor")
+		src.occupant_message("<span class='notice'>[A] bounces off the armor.</span>")
+		src.visible_message("[A] bounces off the [src.name] armor")
 		src.log_append_to_last("Armor saved.")
 		if(istype(A, /mob/living))
 			var/mob/living/M = A
@@ -738,19 +745,22 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.remove_fuel(0,user))
-			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
-				clearInternalDamage(MECHA_INT_TANK_BREACH)
-				user << "<span class='notice'>You repair the damaged gas tank.</span>"
-		else
-			return
 		if(src.health<initial(src.health))
-			user << "<span class='notice'>You repair some damage to [src.name].</span>"
-			src.health += min(10, initial(src.health)-src.health)
+			if (WT.remove_fuel(0,user))
+				if (hasInternalDamage(MECHA_INT_TANK_BREACH))
+					clearInternalDamage(MECHA_INT_TANK_BREACH)
+					user << "<span class='notice'>You repair the damaged gas tank.</span>"
+				else
+					user.visible_message("<span class='notice'>[user] repairs some damage to [src.name].</span>")
+					src.health += min(10, initial(src.health)-src.health)
+			else
+				user << "<span class='warning'>The welder must be on for this task.</span>"
+				return 1
 		else
-			user << "The [src.name] is at full integrity"
-		return
+			user << "<span class='warning'>The [src.name] is at full integrity.</span>"
+		return 1
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
 		if(!user.unEquip(W))
@@ -866,8 +876,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)			return
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 	if(possible_port)
@@ -889,8 +899,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)			return
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	if(disconnect())
 		src.occupant_message("<span class='notice'>[name] disconnects from the port.</span>")
@@ -905,8 +915,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)		return
-	if(usr != occupant)	return
+	if(!can_use(usr))
+		return
 
 	lights = !lights
 	if(lights)	AddLuminosity(lights_power)
@@ -922,8 +932,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr.stat)			return
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	use_internal_tank = !use_internal_tank
 	src.occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
@@ -1059,7 +1069,8 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=src.occupant)
+
+	if(!can_use(usr))
 		return
 	//pr_update_stats.start()
 	src.occupant << browse(src.get_stats_html(), "window=exosuit")
@@ -1080,7 +1091,8 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(usr != src.occupant)	return
+	if(!can_use(usr))
+		return
 
 	src.go_out()
 	add_fingerprint(usr)
