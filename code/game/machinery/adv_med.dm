@@ -2,15 +2,13 @@
 
 
 /obj/machinery/bodyscanner
-	name = "Body Scanner"
+	name = "body scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scanner_0"
 	density = 1
-
 	anchored = 1
 	idle_power_usage = 125
 	active_power_usage = 250
-
 	machine_flags = 0
 
 	var/mob/living/carbon/occupant
@@ -45,7 +43,7 @@
 	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
 		return
 	if(occupant)
-		user << "\blue <B>The body scanner is already occupied!</B>"
+		user << "<span class='notice'>\The [src] is already occupied!</span>"
 		return
 	if(isrobot(user))
 		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
@@ -55,18 +53,18 @@
 	if(!istype(L) || L.buckled)
 		return
 	if(L.abiotic())
-		user << "\blue <B>Subject cannot have abiotic items on.</B>"
+		user << "<span class='notice'>Subject cannot have abiotic items on.</span>"
 		return
-	for(var/mob/living/carbon/slime/M in range(1,L))
+	for(var/mob/living/carbon/slime/M in range(1, L))
 		if(M.Victim == L)
-			usr << "[L.name] will not fit into the body scanner because they have a slime latched onto their head."
+			usr << "<span class='notice'>[L] will not fit into \the [src] because they have a slime latched onto their head.</span>"
 			return
 	if(L == user)
-		visible_message("[user] climbs into the body scanner.", 3)
+		visible_message("[user] climbs into \the [src].")
 	else
-		visible_message("[user] puts [L.name] into the body scanner.", 3)
+		visible_message("[user] places [L] into \the [src].")
 
-	if (L.client)
+	if(L.client)
 		L.client.perspective = EYE_PERSPECTIVE
 		L.client.eye = src
 	L.loc = src
@@ -78,11 +76,8 @@
 	src.add_fingerprint(user)
 	return
 
-/*/obj/machinery/bodyscanner/allow_drop()
-	return 0*/
-
 /obj/machinery/bodyscanner/relaymove(mob/user as mob)
-	if (user.stat)
+	if(user.stat)
 		return
 	src.go_out()
 	return
@@ -92,7 +87,7 @@
 	set category = "Object"
 	set name = "Eject Body Scanner"
 
-	if (usr.stat != 0)
+	if(usr.stat != 0)
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -103,13 +98,13 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if (usr.stat != 0)
+	if(usr.stat != 0)
 		return
-	if (src.occupant)
-		usr << "\blue <B>The scanner is already occupied!</B>"
+	if(src.occupant)
+		usr << "<span class='notice'>\The [src] is already occupied!</span>"
 		return
-	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
+	if(usr.abiotic())
+		usr << "<span class='notice'>Subject cannot have abiotic items on.</span>"
 		return
 	usr.pulling = null
 	usr.client.perspective = EYE_PERSPECTIVE
@@ -118,19 +113,17 @@
 	src.occupant = usr
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
-		//O = null
 		del(O)
-		//Foreach goto(124)
 	src.add_fingerprint(usr)
 	return
 
 /obj/machinery/bodyscanner/proc/go_out()
-	if ((!( src.occupant ) || src.locked))
+	if((!( src.occupant ) || src.locked))
 		return
 	for(var/obj/O in src)
 		O.loc = src.loc
-		//Foreach goto(30)
-	if (src.occupant.client)
+
+	if(src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
 	src.occupant.loc = src.loc
@@ -140,16 +133,16 @@
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G as obj, user as mob)
 	..()
-	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
+	if((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
-	if (src.occupant)
-		user << "\blue <B>The scanner is already occupied!</B>"
+	if(src.occupant)
+		user << "<span class='notice'>\The [src] is already occupied!</span>"
 		return
-	if (G.affecting.abiotic())
-		user << "\blue <B>Subject cannot have abiotic items on.</B>"
+	if(G.affecting.abiotic())
+		user << "<span class='notice'>Subject cannot have abiotic items on.</span>"
 		return
 	var/mob/M = G.affecting
-	if (M.client)
+	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
 	M.loc = src
@@ -157,9 +150,7 @@
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
 		O.loc = src.loc
-		//Foreach goto(154)
 	src.add_fingerprint(user)
-	//G = null
 	del(G)
 	return
 
@@ -169,26 +160,20 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-				//Foreach goto(35)
-			//SN src = null
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-					//Foreach goto(108)
-				//SN src = null
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-					//Foreach goto(181)
-				//SN src = null
 				qdel(src)
 				return
 		else
@@ -201,22 +186,18 @@
 		del(src)
 
 /obj/machinery/body_scanconsole/ex_act(severity)
-
 	switch(severity)
 		if(1.0)
-			//SN src = null
 			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				//SN src = null
 				qdel(src)
 				return
 		else
 	return
 
 /obj/machinery/body_scanconsole/blob_act()
-
 	if(prob(50))
 		del(src)
 
@@ -236,7 +217,7 @@
 	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/loyalty, /obj/item/weapon/implant/tracking)
 	var/delete
 	var/temphtml
-	name = "Body Scanner Console"
+	name = "body scanner console"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scannerconsole"
 	density = 1
@@ -245,7 +226,7 @@
 
 /obj/machinery/body_scanconsole/New()
 	..()
-	spawn( 5 )
+	spawn(5)
 		src.connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
 		return
 	return
@@ -260,27 +241,6 @@
 	else
 		use_power = 1
 
-/*
-	if(stat & (NOPOWER|BROKEN))
-		return
-	use_power(250) // power stuff
-
-	var/mob/M //occupant
-	if (!( src.status )) //remove this
-		return
-	if ((src.connected && src.connected.occupant)) //connected & occupant ok
-		M = src.connected.occupant
-	else
-		if (istype(M, /mob))
-		//do stuff
-		else
-			src.temphtml = "Process terminated due to lack of occupant in scanning chamber."
-			src.status = null
-	src.updateDialog()
-	return
-*/
-
-
 /obj/machinery/body_scanconsole/attack_paw(user as mob)
 	return src.attack_hand(user)
 
@@ -294,19 +254,19 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(!connected || (connected.stat & (NOPOWER|BROKEN)))
-		user << "\red This console is not connected to a functioning body scanner."
+		user << "<span class='warning'>This console is not connected to a functioning body scanner.</span>"
 		return
 	if(!ishuman(connected.occupant))
-		user << "\red This device can only scan compatible lifeforms."
+		user << "<span class='warning'>This device can only scan compatible lifeforms.</span>"
 		return
 
 	var/dat
-	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
+	if(src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
 		src.delete = src.delete
-	else if (!src.delete && src.temphtml) //Window in buffer - its a menu, dont add clear message
+	else if(!src.delete && src.temphtml) //Window in buffer - its a menu, dont add clear message
 		dat = text("[]<BR><BR><A href='?src=\ref[];clear=1'>Main Menu</A>", src.temphtml, src)
 	else
-		if (src.connected) //Is something connected?
+		if(src.connected) //Is something connected?
 			dat = format_occupant_data(src.connected.get_occupant_data())
 			dat += "<HR><A href='?src=\ref[src];print=1'>Print</A><BR>"
 		else
@@ -318,22 +278,22 @@
 
 
 /obj/machinery/body_scanconsole/Topic(href, href_list)
-	if (..())
+	if(..())
 		return
 
-	if (href_list["print"])
-		if (!src.connected)
+	if(href_list["print"])
+		if(!src.connected)
 			usr << "\icon[src]<span class='warning'>Error: No body scanner connected.</span>"
 			return
 		var/mob/living/carbon/human/occupant = src.connected.occupant
-		if (!src.connected.occupant)
-			usr << "\icon[src]<span class='warning'>The body scanner is empty.</span>"
+		if(!src.connected.occupant)
+			usr << "\icon[src]<span class='warning'>\The [src.connected] is empty.</span>"
 			return
-		if (!istype(occupant,/mob/living/carbon/human))
-			usr << "\icon[src]<span class='warning'>The body scanner cannot scan that lifeform.</span>"
+		if(!istype(occupant,/mob/living/carbon/human))
+			usr << "\icon[src]<span class='warning'>\The [src.connected] cannot scan that lifeform.</span>"
 			return
 		var/obj/item/weapon/paper/R = new(src.loc)
-		R.name = "Body scan report"
+		R.name = "paper - 'body scan report'"
 		R.info = format_occupant_data(src.connected.get_occupant_data())
 
 
@@ -383,7 +343,7 @@
 		else
 			aux = "Dead"
 	dat += text("[]\tHealth %: [] ([])</font><br>", (occ["health"] > 50 ? "<font color='blue'>" : "<font color='red'>"), occ["health"], aux)
-	if (occ["virus_present"])
+	if(occ["virus_present"])
 		dat += "<font color='red'>Viral pathogen detected in blood stream.</font><br>"
 	dat += text("[]\t-Brute Damage %: []</font><br>", (occ["bruteloss"] < 60 ? "<font color='blue'>" : "<font color='red'>"), occ["bruteloss"])
 	dat += text("[]\t-Respiratory Damage %: []</font><br>", (occ["oxyloss"] < 60 ? "<font color='blue'>" : "<font color='red'>"), occ["oxyloss"])
@@ -464,7 +424,7 @@
 			if (INFECTION_LEVEL_THREE to INFINITY)
 				infected = "Septic:"
 
-		if (e.implants.len)
+		if(e.implants.len)
 			var/unknown_body = 0
 			for(var/I in e.implants)
 				if(is_type_in_list(I,known_implants))
