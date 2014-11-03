@@ -52,17 +52,8 @@
 
 /obj/machinery/ai_slipper/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
-	return attack_hand(user)
-
-/obj/machinery/ai_slipper/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if((get_dist(src, user) > 1))
-		if(!istype(user, /mob/living/silicon))
-			user << text("Too far away.")
-			user.unset_machine()
-			user << browse(null, "window=ai_slipper")
-			return
 
 	user.set_machine(src)
 	var/loc = src.loc
