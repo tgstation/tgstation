@@ -202,6 +202,11 @@
 		..()
 	return
 
+/obj/structure/window/mech_melee_attack(obj/mecha/M)
+	if(..())
+		hit(M.force, 1)
+
+
 /obj/structure/window/proc/can_be_reached(mob/user)
 	if(!is_fulltile())
 		if(get_dir(user,src) & dir)

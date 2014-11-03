@@ -227,3 +227,37 @@ emp_act
 					L.take_damage(0,5)
 					src.Stun(5)
 	..()
+
+/mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
+
+	if(M.occupant.a_intent == "harm")
+		if(M.damtype == "brute")
+			step_away(src,M,15)
+		var/obj/item/organ/limb/temp = get_organ(pick("chest", "chest", "chest", "head"))
+		if(temp)
+			var/update = 0
+			switch(M.damtype)
+				if("brute")
+					Paralyse(1)
+					update |= temp.take_damage(rand(M.force/2, M.force), 0)
+					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+				if("fire")
+					update |= temp.take_damage(0, rand(M.force/2, M.force))
+					playsound(src, 'sound/items/Welder.ogg', 50, 1)
+				if("tox")
+					M.mech_toxin_damage(src)
+				else
+					return
+			if(update)
+				update_damage_overlays(0)
+			updatehealth()
+
+		M.occupant_message("<span class='danger'>You hit [src].</span>")
+		visible_message("<span class='danger'>[src] has been hit by [M.name].</span>", \
+								"<span class='userdanger'>[src] has been hit by [M.name].</span>")
+		add_logs(M.occupant, M, "attacked", object=src, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYE: [uppertext(M.damtype)])")
+
+	else
+		..()
+
+	return
