@@ -369,7 +369,7 @@
 
 	else if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
 
-
+		user.do_attack_animation()
 		if(prob(1+W.force * 5))
 
 			user.visible_message("<span class='danger'>[user.name] smashed the light!</span>", \
@@ -382,7 +382,7 @@
 			broken()
 
 		else
-			user.visible_message("<span class='warning'>[user.name] hits the light.</span>")
+			user.visible_message("<span class='danger'>[user.name] hits the light.</span>")
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)

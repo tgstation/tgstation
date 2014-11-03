@@ -21,7 +21,7 @@
 	if(fireaxe)
 		hasaxe = 1
 
-	if (isrobot(usr) || src.locked)
+	if (isrobot(user) || src.locked)
 		if(istype(O, /obj/item/device/multitool))
 			user << "<span class = 'caution'> Resetting circuitry...</span>"
 			playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
@@ -40,6 +40,7 @@
 					spawn(10) update_icon()
 				return
 			else
+				user.do_attack_animation()
 				playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
 			if(W.force < 15)
 				user << "<span class = 'warning'> The cabinet's protective glass glances off the hit.</span>"

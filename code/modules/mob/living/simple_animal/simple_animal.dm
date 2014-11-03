@@ -437,6 +437,7 @@
 			harvest()
 
 	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation()
 	var/damage = 0
 	if(O.force)
 		if(O.force >= force_threshold)

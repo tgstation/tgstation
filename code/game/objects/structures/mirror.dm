@@ -57,6 +57,7 @@
 
 
 /obj/structure/mirror/attackby(obj/item/I as obj, mob/user as mob)
+	user.do_attack_animation()
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return

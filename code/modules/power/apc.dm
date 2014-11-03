@@ -599,6 +599,7 @@
 				(istype(W, /obj/item/device/multitool) || \
 				istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/assembly/signaler)))
 				return src.attack_hand(user)
+			user.do_attack_animation()
 			user.visible_message("<span class='danger'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
 				"<span class='danger'>You hit the [src.name] with your [W.name]!</span>", \
 				"You hear bang")

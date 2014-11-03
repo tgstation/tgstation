@@ -758,24 +758,25 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if (src.isbroken)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
 		for (var/mob/O in hearers(5, src.loc))
-			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
+			O.show_message("<span class='danger'>[user.name] further abuses the shattered [src.name].</span>")
 	else
 		if(istype(I, /obj/item/weapon) )
+			user.do_attack_animation()
 			var/obj/item/weapon/W = I
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))
-					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
+					O.show_message("<span class='danger'>[user.name] hits the [src.name] with the [W.name] with no visible effect.</span>" )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 			else
 				src.hitstaken++
 				if(src.hitstaken==3)
 					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] smashes the [src.name]!" )
+						O.show_message("<span class='danger'>[user.name] smashes the [src.name]!</span>" )
 					src.isbroken=1
 					playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 				else
 					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
+						O.show_message("<span class='danger'>[user.name] forcefully slams the [src.name] with the [I.name]!</span>" )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
 			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
