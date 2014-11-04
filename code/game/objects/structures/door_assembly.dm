@@ -267,7 +267,7 @@ obj/structure/door_assembly/New()
 	anchored = 1
 	density = 1
 	state = 1
-	mineral = "clown"
+	mineral = "bananium"
 
 /obj/structure/door_assembly/door_assembly_sandstone
 	name = "sandstone airlock assembly"
